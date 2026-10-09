@@ -1,0 +1,112 @@
+import Quillen.Waldhausen.QuillenComparison.RowEssentialSurjective
+import Quillen.Waldhausen.QuillenComparison.Factorization
+import Quillen.Waldhausen.QuillenComparison.ComparisonHom
+import Quillen.Topology.Realization.BisimplicialEquivalence
+
+/-! # The canonical exact-category Q/S equivalence
+
+The row comparison is an actual categorical equivalence, proved by
+full-faithful span reconstruction and essential surjectivity. Rowwise
+realization equivalence, partial edgewise subdivision and classification
+diagonal contraction then prove that the prescribed Q/S map realizes to a
+homotopy equivalence. Both sides of its based zigzag retain the chosen zero
+vertices, giving the canonical isomorphism on the already-defined K-groups.
+-/
+
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits Opposite
+open scoped Simplicial
+universe v u
+
+namespace Quillen.Waldhausen.QuillenComparison
+
+variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
+variable (E : Quillen.ExactStructure C)
+
+/-- The rowwise categorical equivalences give an equivalence of the actual
+bisimplicial diagonal realizations. -/
+def rowComparisonHomotopyEquiv :
+    ContinuousMap.HomotopyEquiv
+      |TheoremA.diagonalSSet (Edgewise.ε.op ⋙ rowNerve E)|
+      |TheoremA.diagonalSSet (chainCoreNerve (Q E.deflation E.inflation))| :=
+  BisimplicialRealization.diagonalRealizationHomotopyEquiv (rowChainNerveMap E)
+    (fun n ↦ MixedNerve.realizationEquivalence.{u, v, max u v} (rowChainEquivalence E ⦋n⦌))
+    (fun _ ↦ rfl)
+
+@[simp]
+theorem rowComparisonHomotopyEquiv_toFun :
+    (rowComparisonHomotopyEquiv E).toFun =
+      (SSet.toTop.map (TheoremA.diagonalMap (rowChainNerveMap E))).hom := rfl
+
+/-- The row-coordinate Q comparison is an actual realization homotopy equivalence. -/
+def rowsToQHomotopyEquiv :
+    ContinuousMap.HomotopyEquiv
+      |TheoremA.diagonalSSet (Edgewise.ε.op ⋙ rowNerve E)|
+      |nerve (Q E.deflation E.inflation)| :=
+  (rowComparisonHomotopyEquiv E).trans
+    ((TopCat.homeoOfIso (SSet.toTop.mapIso
+      (chainCoreDiagonalIso (Q E.deflation E.inflation)).symm)).toHomotopyEquiv.trans
+        (Classification.realizationHomotopyEquiv (Q E.deflation E.inflation)))
+
+@[simp]
+theorem rowsToQHomotopyEquiv_toFun :
+    (rowsToQHomotopyEquiv E).toFun = (SSet.toTop.map (rowsToQ E)).hom := by
+  simp only [rowsToQHomotopyEquiv, ContinuousMap.HomotopyEquiv.trans,
+    rowComparisonHomotopyEquiv_toFun, rowsToQ, Functor.map_comp]
+  rfl
+
+/-- The canonical Q/S comparison map itself realizes to a homotopy equivalence. -/
+def realizationComparisonHomotopyEquiv :
+    ContinuousMap.HomotopyEquiv (SubdivisionSpace E) E.KSpace := by
+  let h := (subdivisionToRowsHomotopyEquiv E).trans (rowsToQHomotopyEquiv E)
+  have hh : h.toFun = (realizationComparison E).hom := by
+    change (rowsToQHomotopyEquiv E).toFun.comp (subdivisionToRowsHomotopyEquiv E).toFun = _
+    rw [rowsToQHomotopyEquiv_toFun, subdivisionToRowsHomotopyEquiv_toFun]
+    change (SSet.toTop.map (subdivisionToRows E) ≫ SSet.toTop.map (rowsToQ E)).hom = _
+    rw [← Functor.map_comp, comparisonMap_factorization]
+    rfl
+  exact {
+    toFun := (realizationComparison E).hom
+    invFun := h.invFun
+    left_inv := by rw [← hh]; exact h.left_inv
+    right_inv := by rw [← hh]; exact h.right_inv }
+
+@[simp]
+theorem realizationComparisonHomotopyEquiv_toFun :
+    (realizationComparisonHomotopyEquiv E).toFun = (realizationComparison E).hom := rfl
+
+@[simp]
+theorem realizationComparisonHomotopyEquiv_basepoint :
+    realizationComparisonHomotopyEquiv E (subdivisionBasepoint E) = E.kBasepoint :=
+  realizationComparison_basepoint E
+
+/-- The original exact-category S-delooping and Quillen Q-space have the same
+homotopy type, by the canonical comparison zigzag. -/
+def deloopingHomotopyEquiv :
+    ContinuousMap.HomotopyEquiv (ofExactCategory E).Delooping E.KSpace :=
+  (Edgewise.realizationHomotopyEquiv
+    (sSet E.inflation (MorphismProperty.isomorphisms C))).symm.trans
+      (realizationComparisonHomotopyEquiv E)
+
+/-- The right leg of the canonical based comparison zigzag is a K-group isomorphism. -/
+def subdivisionComparisonKEquiv (n : ℕ) : SubdivisionK E n ≃* E.K n :=
+  homotopyEquivPiEquiv (realizationComparisonHomotopyEquiv E)
+    (realizationComparison_basepoint E) n
+
+@[simp]
+theorem subdivisionComparisonKEquiv_toMonoidHom (n : ℕ) :
+    (subdivisionComparisonKEquiv E n).toMonoidHom = subdivisionComparisonK E n := rfl
+
+/-- The canonical comparison between the already-defined Waldhausen and
+Quillen K-groups, with no equivalence hypothesis among its inputs. -/
+def comparisonKEquiv (n : ℕ) : (ofExactCategory E).K n ≃* E.K n :=
+  (subdivisionKEquiv E n).symm.trans (subdivisionComparisonKEquiv E n)
+
+/-- Its underlying map is exactly the previously constructed canonical comparison. -/
+@[simp]
+theorem comparisonKEquiv_toMonoidHom (n : ℕ) :
+    (comparisonKEquiv E n).toMonoidHom = comparisonK E n := rfl
+
+end Quillen.Waldhausen.QuillenComparison

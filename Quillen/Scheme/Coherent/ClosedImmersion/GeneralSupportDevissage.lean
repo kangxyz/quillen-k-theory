@@ -1,0 +1,106 @@
+import Quillen.Scheme.Coherent.ClosedImmersion.GeneralNilpotence
+import Quillen.Scheme.Coherent.GlobalLocalization
+import Quillen.Devissage.FiltrationSubcategory
+import Quillen.Devissage.FiltrationFunctor
+import Quillen.Devissage.FiltrationRefinement
+import Quillen.Devissage.Homotopical
+
+/-!
+# Actual closed-support dévissage on a noetherian scheme
+
+The finite filtration comes from the actual epimorphic closed pullback unit.
+Its kernels vanish after finitely many steps by the proved affine ideal-power
+and finite-cover argument. The resulting filtration is transported through
+the genuine supported-coherent small presentation.
+-/
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+universe u
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+attribute [local instance] Abelian.hasFiniteBiproducts
+
+namespace Quillen.CoherentScheme.ClosedImmersion.General
+variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsNoetherian X]
+  (i : Z ⟶ X) [IsClosedImmersion i]
+
+/-- The genuine finite coherent filtration by actual closed-image factors. -/
+theorem coherentClosedFiltration (M : Coherent X)
+    (hM : coherentSupportedAway (openMap i) M) :
+    Nonempty ((coherentExactStructure X).Filtration (coherentKilled i) M) :=
+  ReflectorDevissage.exists_filtration_of_eventually_zero (coherentAdjunction i).unit
+    (coherentKilled i) (fun _ ↦ (coherentPushforward i).obj_mem_essImage _)
+      M (kernelIterate_eventually_zero i M hM)
+
+abbrev SmallSupport := (coherentGlobalSmallSupport (openMap i)).FullSubcategory
+
+/-- The actual coherent object represented by the compatible small support category. -/
+abbrev supportRepresentation : SmallSupport i ⥤ Coherent X :=
+  (coherentGlobalSmallSupport (openMap i)).ι ⋙ (equivSmallModel.{u+1} (Coherent X)).inverse
+
+/-- The actual annihilated property in that genuine support presentation. -/
+abbrev supportKilled : ObjectProperty (SmallSupport i) :=
+  (coherentKilled i).inverseImage (supportRepresentation i)
+
+instance supportRepresentation_preservesFiniteLimits : PreservesFiniteLimits (supportRepresentation i) := by
+  let : PreservesFiniteLimits (coherentGlobalSmallSupport (openMap i)).ι :=
+    Devissage.inclusion_preservesFiniteLimits _
+  exact comp_preservesFiniteLimits _ _
+
+instance supportRepresentation_preservesFiniteColimits : PreservesFiniteColimits (supportRepresentation i) := by
+  let : PreservesFiniteColimits (coherentGlobalSmallSupport (openMap i)).ι :=
+    Devissage.inclusion_preservesFiniteColimits _
+  exact comp_preservesFiniteColimits _ _
+
+instance supportKilled_containsZero : (supportKilled i).ContainsZero := by
+  dsimp [supportKilled]
+  infer_instance
+instance supportKilled_subobjects : (supportKilled i).IsClosedUnderSubobjects := by
+  dsimp [supportKilled]
+  infer_instance
+instance supportKilled_quotients : (supportKilled i).IsClosedUnderQuotients := by
+  dsimp [supportKilled]
+  infer_instance
+instance supportKilled_finiteProducts : (supportKilled i).IsClosedUnderFiniteProducts where
+  isClosedUnderLimitsOfShape J _ := {
+    limitsOfShape_le := by
+      rintro M ⟨p⟩
+      exact (coherentKilled i).prop_of_isLimit
+        (isLimitOfPreserves (supportRepresentation i) p.isLimit)
+        (fun j ↦ p.prop_diag_obj j) }
+
+instance supportPresentationInverse_additive :
+    (coherentGlobalSmallSupportEquivalence (openMap i)).inverse.Additive := by
+  let := preservesBinaryBiproducts_of_preservesBinaryProducts
+    (coherentGlobalSmallSupportEquivalence (openMap i)).inverse
+  exact Functor.additive_of_preservesBinaryBiproducts _
+
+/-- The inverse of the canonical support presentation, as an exact functor. -/
+def supportPresentationExact :
+    ExactFunctor (supportedCoherentExactStructure (openMap i))
+      (abelianExactStructure (SmallSupport i)) where
+  toFunctor := (coherentGlobalSmallSupportEquivalence (openMap i)).inverse
+  map_conflation _ h := h.map_of_exact _
+
+/-- Genuine geometric finite filtrations give the small dévissage hypothesis. -/
+theorem supportFiltrationHypothesis : Devissage.FiltrationHypothesis (supportKilled i) := by
+  intro M
+  let E := coherentGlobalSmallSupportEquivalence (openMap i)
+  let N := E.functor.obj M
+  obtain ⟨F⟩ := coherentClosedFiltration i N.obj N.property
+  let F' := F.toFullSubcategory (coherentSupportedAway (openMap i)) N.property
+  have hp (Q : SupportedCoherent (openMap i)) (hQ : coherentKilled i Q.obj) :
+      supportKilled i (E.inverse.obj Q) :=
+    (coherentKilled i).prop_of_iso
+      ((coherentSupportedAway (openMap i)).ι.mapIso (E.counitIso.app Q)).symm hQ
+  let F'' := (supportPresentationExact i).mapFiltration hp F'
+  exact ⟨F''.ofIso (E.unitIso.app M).symm⟩
+
+/-- The canonical annihilated-object inclusion is a genuine homotopical
+K-equivalence onto the actual compatible supported term. -/
+def supportDevissageKEquiv (n : ℕ) :
+    (Devissage.subcategoryExactStructure (supportKilled i)).K n ≃*
+      CoherentGlobalSupportedG (openMap i) n :=
+  Devissage.KEquiv (supportKilled i) (supportFiltrationHypothesis i) n
+
+end Quillen.CoherentScheme.ClosedImmersion.General

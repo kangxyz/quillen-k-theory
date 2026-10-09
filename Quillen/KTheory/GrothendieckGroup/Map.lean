@@ -1,0 +1,48 @@
+import Quillen.KTheory.GrothendieckGroup.Basic
+import Quillen.CategoryTheory.ExactCategory.Functor
+
+/-! # Exact-functor maps on algebraic Grothendieck groups
+
+These are algebraic Grothendieck groups. Their comparison with the homotopical
+K₀ remains a separate theorem.
+-/
+
+noncomputable section
+universe v₁ v₂ v₃ u₁ u₂ u₃
+open CategoryTheory CategoryTheory.Limits
+
+namespace Quillen.ExactFunctor
+variable {C : Type u₁} {D : Type u₂} {B : Type u₃}
+  [Category.{v₁} C] [Category.{v₂} D] [Category.{v₃} B]
+  [Preadditive C] [HasFiniteBiproducts C]
+  [Preadditive D] [HasFiniteBiproducts D]
+  [Preadditive B] [HasFiniteBiproducts B]
+  {EC : Quillen.ExactStructure C} {ED : Quillen.ExactStructure D}
+  {EB : Quillen.ExactStructure B}
+
+/-- Exact functors send the defining conflation relations to relations. -/
+def grothendieckMap (F : ExactFunctor EC ED) : EC.GrothendieckGroup →+ ED.GrothendieckGroup :=
+  EC.grothendieckLift (fun X => ED.grothendieckClass (F.toFunctor.obj X))
+    (fun S hS => ED.grothendieckClass_additive (F.map_conflation S hS))
+
+@[simp]
+lemma grothendieckMap_class (F : ExactFunctor EC ED) (X : C) :
+    F.grothendieckMap (EC.grothendieckClass X) =
+      ED.grothendieckClass (F.toFunctor.obj X) :=
+  EC.grothendieckLift_class _ _ X
+
+@[simp]
+lemma grothendieckMap_id :
+    (ExactFunctor.id EC).grothendieckMap = AddMonoidHom.id EC.GrothendieckGroup := by
+  apply EC.grothendieck_hom_ext
+  intro X
+  simp [ExactFunctor.id]
+
+@[simp]
+lemma grothendieckMap_comp (F : ExactFunctor EC ED) (G : ExactFunctor ED EB) :
+    (F.comp G).grothendieckMap = G.grothendieckMap.comp F.grothendieckMap := by
+  apply EC.grothendieck_hom_ext
+  intro X
+  simp [ExactFunctor.comp]
+
+end Quillen.ExactFunctor

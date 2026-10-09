@@ -1,0 +1,93 @@
+import Mathlib.CategoryTheory.Bicategory.Basic
+
+/-!
+# The category of isomorphism classes of 1-morphisms
+
+For a bicategory `B`, `Quillen.IsoQuotient B` has the same objects as `B` and
+1-morphisms modulo invertible 2-morphisms. Whiskering makes composition
+well-defined; the unitors and associator prove the category laws in the quotient.
+
+No choice of representatives is used to define composition.
+-/
+
+universe w v u
+
+open CategoryTheory
+
+namespace Quillen
+
+/-- The objects of the category obtained by identifying isomorphic 1-morphisms
+in a bicategory. The wrapper keeps its category structure separate from the
+original bicategory structure. -/
+structure IsoQuotient (B : Type u) where
+  /-- The corresponding object of the original bicategory. -/
+  obj : B
+
+namespace IsoQuotient
+
+variable {B : Type u} [Bicategory.{w, v} B]
+
+/-- Two parallel 1-morphisms are equivalent precisely when there is an
+invertible 2-morphism between them. -/
+def homSetoid (X Y : B) : Setoid (X ⟶ Y) where
+  r f g := Nonempty (f ≅ g)
+  iseqv :=
+    { refl := fun f => ⟨Iso.refl f⟩
+      symm := fun ⟨e⟩ => ⟨e.symm⟩
+      trans := fun ⟨e⟩ ⟨e'⟩ => ⟨e.trans e'⟩ }
+
+/-- Composition of 1-morphisms respects isomorphism, by right and left
+whiskering the given invertible 2-morphisms. -/
+theorem comp_respects_iso {X Y Z : B} {f f' : X ⟶ Y} {g g' : Y ⟶ Z}
+    (hf : Nonempty (f ≅ f')) (hg : Nonempty (g ≅ g')) :
+    Nonempty (f ≫ g ≅ f' ≫ g') := by
+  obtain ⟨ef⟩ := hf
+  obtain ⟨eg⟩ := hg
+  exact ⟨(Bicategory.whiskerRightIso ef g).trans (Bicategory.whiskerLeftIso f' eg)⟩
+
+/-- The category of 1-morphisms modulo invertible 2-morphisms. -/
+instance category : Category.{v} (IsoQuotient B) where
+  Hom X Y := Quotient (homSetoid X.obj Y.obj)
+  id X := Quotient.mk _ (𝟙 X.obj)
+  comp := Quotient.map₂ (fun f g => f ≫ g)
+    (fun _ _ hf _ _ hg => comp_respects_iso hf hg)
+  id_comp := by
+    rintro X Y ⟨f⟩
+    exact Quotient.sound ⟨Bicategory.leftUnitor f⟩
+  comp_id := by
+    rintro X Y ⟨f⟩
+    exact Quotient.sound ⟨Bicategory.rightUnitor f⟩
+  assoc := by
+    rintro W X Y Z ⟨f⟩ ⟨g⟩ ⟨h⟩
+    exact Quotient.sound ⟨Bicategory.associator f g h⟩
+
+/-- The morphism represented by a 1-morphism of the bicategory. -/
+def mkHom {X Y : B} (f : X ⟶ Y) : mk X ⟶ mk Y :=
+  Quotient.mk (homSetoid X Y) f
+
+/-- Every quotient morphism has a representative. -/
+theorem mkHom_surjective (X Y : B) :
+    Function.Surjective (mkHom : (X ⟶ Y) → (mk X ⟶ mk Y)) := by
+  rintro ⟨f⟩
+  exact ⟨f, rfl⟩
+
+/-- Equality in the quotient is exactly isomorphism of 1-morphisms. -/
+theorem mkHom_eq_iff {X Y : B} (f g : X ⟶ Y) :
+    mkHom f = mkHom g ↔ Nonempty (f ≅ g) :=
+  Quotient.eq
+
+/-- Invertible 2-morphisms become equalities of quotient morphisms. -/
+theorem mkHom_eq_of_iso {X Y : B} {f g : X ⟶ Y} (e : f ≅ g) :
+    mkHom f = mkHom g :=
+  Quotient.sound ⟨e⟩
+
+@[simp]
+theorem mkHom_id (X : B) : mkHom (𝟙 X) = 𝟙 (mk X) := rfl
+
+@[simp]
+theorem mkHom_comp {X Y Z : B} (f : X ⟶ Y) (g : Y ⟶ Z) :
+    mkHom (f ≫ g) = mkHom f ≫ mkHom g := rfl
+
+end IsoQuotient
+
+end Quillen

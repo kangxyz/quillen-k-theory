@@ -1,0 +1,14 @@
+import Quillen.Scheme.Coherent.Affine.ComparisonGTheory
+#print axioms Quillen.CoherentScheme.finite_globalSections_of_generatingSections
+#print axioms Quillen.CoherentScheme.finite_globalSections_of_presentation
+#print axioms Quillen.CoherentScheme.affineFiniteSheaf_exists_generatingSections
+#print axioms Quillen.CoherentScheme.affineFiniteSheaf_restrict
+#print axioms Quillen.CoherentScheme.coherent_spec_iff
+#print axioms Quillen.CoherentScheme.coherentAffineEquivalence
+#print axioms Quillen.CoherentScheme.coherentSpecModuleEquivalence
+#print axioms Quillen.CoherentScheme.coherentSpec_essentiallySmall
+#print axioms Quillen.CoherentScheme.coherentToAffineExact
+#print axioms Quillen.CoherentScheme.affineToCoherentExact
+#print axioms Quillen.CoherentScheme.specGAffineEquiv
+#print axioms Quillen.CoherentScheme.specGRingEquiv
+#print axioms Quillen.CoherentScheme.specGRingEquiv_toMonoidHom

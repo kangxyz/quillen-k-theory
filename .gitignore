@@ -1,0 +1,14 @@
+.lake/
+*.olean
+*.ilean
+*.trace
+*.olean.hash
+*.ilean.hash
+*.olean.private
+*.olean.server
+__pycache__/
+*.py[cod]
+.DS_Store
+/logs/
+/Scratch/
+/.vscode/

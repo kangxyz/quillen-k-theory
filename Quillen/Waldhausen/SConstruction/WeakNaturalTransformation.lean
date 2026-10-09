@@ -1,0 +1,62 @@
+import Quillen.Waldhausen.SConstruction.WeakGridHomotopy
+
+/-! # Weak natural transformations give actual S-construction homotopies
+
+The endpoints are the existing postcomposition maps of the original exact
+functors. The construction uses the genuine nerve-direction cylinder.
+-/
+
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor Opposite MonoidalCategory
+open scoped Simplicial
+universe v u
+
+namespace Quillen.Waldhausen
+
+variable {C D : Type u} [Category.{v} C] [Category.{v} D]
+  (V : Structure C) (W : Structure D) {F G : C ⥤ D}
+  (hF : IsExact V.cof V.weq W.cof W.weq F)
+  (hG : IsExact V.cof V.weq W.cof W.weq G)
+  (η : F ⟶ G) (hη : ∀ X, W.weq (η.app X))
+
+/-- The actual cylinder between the existing S-construction postcomposition maps. -/
+def weakNaturalTransformationCylinder : sSet V.cof V.weq ⊗ Δ[1] ⟶ sSet W.cof W.weq :=
+  ((bisimplicialDiagonalIso V).inv ▷ Δ[1]) ≫
+    weakGridFamilyCylinder W (bisimplicialSSetMap V.cof V.weq hF)
+      (bisimplicialSSetMap V.cof V.weq hG)
+      (fun _ _ A ↦ whiskerLeft A.1 η) (fun _ _ A p ↦ hη (A.1.obj p))
+      (fun _ _ _ ↦ HEq.rfl) ≫ (bisimplicialDiagonalIso W).hom
+
+@[simp] theorem weakNaturalTransformationCylinder_app_val
+    (n : SimplexCategoryᵒᵖ) (z : (sSet V.cof V.weq ⊗ Δ[1]).obj n) :
+    ((weakNaturalTransformationCylinder V W hF hG η hη).app n z).1 =
+      nerveCylinderDiagram (whiskerLeft z.1.1 η) z.2.down := rfl
+
+@[simp] theorem weakNaturalTransformationCylinder_zero :
+    SSet.ι₀ ≫ weakNaturalTransformationCylinder V W hF hG η hη = sSetMap hF := by
+  ext n A
+  apply Subtype.ext
+  exact nerveCylinderDiagram_zero (whiskerLeft A.1 η)
+
+@[simp] theorem weakNaturalTransformationCylinder_one :
+    SSet.ι₁ ≫ weakNaturalTransformationCylinder V W hF hG η hη = sSetMap hG := by
+  ext n A
+  apply Subtype.ext
+  exact nerveCylinderDiagram_one (whiskerLeft A.1 η)
+
+/-- Pointwise weak transformations between genuine exact functors induce a
+simplicial homotopy of their original S-maps. -/
+def weakNaturalTransformationHomotopy : SSet.Homotopy (sSetMap hF) (sSetMap hG) where
+  h := weakNaturalTransformationCylinder V W hF hG η hη
+  h₀ := weakNaturalTransformationCylinder_zero V W hF hG η hη
+  h₁ := weakNaturalTransformationCylinder_one V W hF hG η hη
+  rel := by ext n z; exact z.1.property.elim
+
+/-- The homotopy of actual realization maps, with the exact original endpoints. -/
+def weakNaturalTransformationRealizationHomotopy :
+    (deloopingMap hF).hom.Homotopy (deloopingMap hG).hom :=
+  realizationSimplicialHomotopy (weakNaturalTransformationHomotopy V W hF hG η hη)
+
+end Quillen.Waldhausen

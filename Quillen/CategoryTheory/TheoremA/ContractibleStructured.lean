@@ -1,0 +1,44 @@
+import Quillen.CategoryTheory.TheoremA.ContractibleComma
+import Quillen.CategoryTheory.TheoremB.StructuredComparison
+
+/-! The structured-comma form of the proved Quillen Theorem A, retaining the
+canonical forward map under opposite-category realization. -/
+noncomputable section
+universe u
+open CategoryTheory Opposite
+namespace Quillen.TheoremA
+variable {C D : Type u} [SmallCategory C] [SmallCategory D] (F : C ⥤ D)
+
+/-- Quillen A in its dual, structured-comma orientation. -/
+def contractibleStructuredClassifyingHomotopyEquiv
+    (h : ∀ d : D, ContractibleSpace (ClassifyingSpace (StructuredArrow d F))) :
+    ContinuousMap.HomotopyEquiv (ClassifyingSpace C) (ClassifyingSpace D) := by
+  have hop (d : Dᵒᵖ) : ContractibleSpace (ClassifyingSpace (CostructuredArrow F.op d)) := by
+    letI := h d.unop
+    exact (TheoremB.structuredCommaOppositeEquiv F d.unop).symm.contractibleSpace
+  let e := (TopCat.homeoOfIso (classifyingOppositeIso C)).symm.toHomotopyEquiv.trans
+    ((contractibleCommaClassifyingHomotopyEquiv F.op hop).trans
+      (TopCat.homeoOfIso (classifyingOppositeIso D)).toHomotopyEquiv)
+  have he : e.toFun = (classifyingSpaceMap F).hom := by
+    ext x
+    change ((classifyingOppositeIso C).inv ≫ classifyingSpaceMap F.op ≫
+      (classifyingOppositeIso D).hom) x = (classifyingSpaceMap F) x
+    rw [classifyingOppositeIso_naturality]
+    simp
+  exact { e with
+    toFun := (classifyingSpaceMap F).hom
+    left_inv := by simpa only [he] using e.left_inv
+    right_inv := by simpa only [he] using e.right_inv }
+
+@[simp] theorem contractibleStructuredClassifyingHomotopyEquiv_toFun
+    (h : ∀ d : D, ContractibleSpace (ClassifyingSpace (StructuredArrow d F))) :
+    (contractibleStructuredClassifyingHomotopyEquiv F h).toFun =
+      (classifyingSpaceMap F).hom := rfl
+
+/-- The structured-comma form transfers contractibility from the target. -/
+theorem contractibleSpace_of_structured_comma
+    (h : ∀ d : D, ContractibleSpace (ClassifyingSpace (StructuredArrow d F)))
+    [ContractibleSpace (ClassifyingSpace D)] : ContractibleSpace (ClassifyingSpace C) :=
+  (contractibleStructuredClassifyingHomotopyEquiv F h).contractibleSpace
+
+end Quillen.TheoremA

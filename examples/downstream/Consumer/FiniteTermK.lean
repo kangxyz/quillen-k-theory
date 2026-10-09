@@ -1,0 +1,47 @@
+import Quillen.Library
+
+/-! The original evaluation/insertion K-maps on actual finite term strata. -/
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Limits HomologicalComplex Quillen Quillen.Waldhausen
+open Quillen.Waldhausen.GilletWaldhausen
+universe u v
+namespace Consumer
+attribute [local instance] Abelian.hasFiniteBiproducts
+section
+variable {A : Type (max u v)} [Category.{v} A] [Abelian A]
+variable (P : ObjectProperty A) [P.ContainsZero] [P.IsClosedUnderIsomorphisms]
+  [(abelianExactStructure A).IsExtensionClosed P]
+local instance finiteTermConsumerProducts : P.IsClosedUnderFiniteProducts :=
+  (abelianExactStructure A).extensionClosed_finiteProducts P
+
+def actual_finite_term_K_equivalence (a : ℤ) (m k : ℕ) :
+    (ofExactCategory (fixedTermsExactStructure P a (a + (m : ℤ) - 1))).K k ≃*
+      (Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) :=
+  finiteTermKEquiv P a m k
+
+theorem actual_finite_term_K_forward (a : ℤ) (m k : ℕ)
+    (x : (ofExactCategory (fixedTermsExactStructure P a (a + (m : ℤ) - 1))).K k) (i : Fin m) :
+    actual_finite_term_K_equivalence P a m k x i =
+      KMap (finiteTermEvaluationExact P a (a + (m : ℤ) - 1) (a + (i : ℤ))).waldhausenExact k x := rfl
+
+theorem actual_finite_term_K_inverse (a : ℤ) (m k : ℕ)
+    (x : Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) :
+    let := Additivity.KCommGroup (ofExactCategory (fixedTermsExactStructure P a (a + (m : ℤ) - 1))) k
+    (actual_finite_term_K_equivalence P a m k).symm x =
+      ∏ i : Fin m, KMap (finiteTermSingleExact P a (a + (m : ℤ) - 1) (a + (i : ℤ))
+        (by omega) (by have := i.isLt; omega)).waldhausenExact k (x i) := rfl
+
+theorem actual_empty_term_K_zero (a : ℤ) (k : ℕ)
+    (x : (ofExactCategory (fixedTermsExactStructure P a (a + (0 : ℤ) - 1))).K k) : x = 1 := by
+  have h := finiteTerm_KMap_layers P a (a + (0 : ℤ) - 1) 0 (by omega) k x
+  simpa using h
+end
+
+/-- No regularity, noetherianity, or resolution property is used for this
+isomorphism-weak finite strict-perfect stratum. -/
+def actual_scheme_finite_term_K (X : AlgebraicGeometry.Scheme.{u}) (a : ℤ) (m k : ℕ) :=
+  finiteTermKEquiv.{u, u+1} (SchemeSheaf.finiteLocallyFree X) a m k
+
+end Consumer

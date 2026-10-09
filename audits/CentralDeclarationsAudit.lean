@@ -1,0 +1,412 @@
+import Quillen.CategoryTheory.TheoremB.MappingCylinderTargetCollar
+import Quillen.CategoryTheory.TheoremB.FiberwiseBridgeTargetCollar
+import Quillen.CategoryTheory.TheoremB.NormalizedFirstCollar
+import Quillen.Topology.CubicalSubdivision.FaceContainment
+import Quillen.Topology.CubicalSubdivision.IncidentCharts
+import Quillen.Topology.CubicalSubdivision.ControlledLifting
+import Quillen.Topology.CubicalSubdivision.ControlledChartLifting
+import Quillen.Waldhausen.Fibration.AllWeak.CanonicalFiberFactorization
+import Quillen.Topology.HomotopyFiber.CommonBaseSquare
+import Quillen.Topology.Pushout.CompactParameterSquare
+import Quillen.Topology.HELP.BoundaryTrackCover
+import Quillen.Topology.HomotopyFiber.ContractibleBaseWeak
+import Quillen.Topology.HELP.WeakFiberCube
+import Quillen.CategoryTheory.TheoremB.CompactMappingCylinderWeakBoundary
+import Quillen.Topology.Maps.SumSubtype
+import Quillen.CategoryTheory.TheoremB.CompactMappingCylinderParameters
+import Quillen.CategoryTheory.TheoremB.CompactMappingCylinderTimes
+import Quillen.CategoryTheory.TheoremB.CompactMappingCylinderLiftFormula
+import Quillen.CategoryTheory.TheoremB.CompactMappingCylinderLiftDescent
+import Quillen.CategoryTheory.TheoremB.CompactMappingCylinderLifting
+import Quillen.Topology.HELP.CompactVerticalCancellation
+import Quillen.CategoryTheory.TheoremB.CompactMappingCylinderVerticalHELP
+import Quillen.CategoryTheory.TheoremB.CompactMappingCylinderBoundary
+import Quillen.Topology.HELP.WeakFiniteBased
+import Quillen.Topology.HELP.CubicalHorn
+import Quillen.Topology.HELP.WeakCubeFilling
+import Quillen.Topology.HELP.WeakFinite
+import Quillen.Topology.HELP.FiniteCharacterization
+import Quillen.Topology.HomotopyFiber.CommonBaseSquareTransport
+import Quillen.Waldhausen.Fibration.RelativeRows.TotalFiber
+import Quillen.Waldhausen.Fibration.AllWeak.TotalFiberSquare
+import Quillen.Topology.Realization.DoubleCylinder
+import Quillen.Topology.Realization.DoubleCylinderCompactGraph
+import Quillen.Waldhausen.SConstruction.WeakNaturalTransformationNaturality
+import Quillen.Topology.Realization.HomotopyNaturality
+import Quillen.Waldhausen.Fibration.AllWeak.NullhomotopyNaturality
+import Quillen.Topology.Maps.CompactParameterQuotient
+import Quillen.Topology.Realization.CompactGraph
+import Quillen.Topology.Pushout.CompactParameter
+import Quillen.Topology.HomotopyLifting.Compact.Stationary
+import Quillen.Topology.HomotopyLifting.Compact.ParallelLifts
+import Quillen.Topology.HomotopyLifting.Compact.OverBaseCorrection
+import Quillen.Topology.HomotopyLifting.Compact.FiberwiseExtension
+import Quillen.Topology.HomotopyLifting.Compact.FiberwiseBoundaryCorrection
+import Quillen.CategoryTheory.TheoremB.DoubleCylinderFiberCoordinates
+import Quillen.CategoryTheory.TheoremB.CollarFiberCoordinates
+import Quillen.CategoryTheory.TheoremB.CompactCollarFiberComparison
+import Quillen.CategoryTheory.TheoremB.CompactCollarHomotopyFiberInput
+import Quillen.Waldhausen.Fibration.AllWeak.RelativeInclusion
+import Quillen.CategoryTheory.TheoremB.CompactCollarFibers
+import Quillen.Topology.FiberwiseMappingPath.BaseChange
+import Quillen.Topology.FiberwiseMappingPath.BaseChangeLifting
+import Quillen.Topology.HomotopyFiber.ContractibleSource
+import Quillen.Waldhausen.Fibration.AllWeak.OrdinaryRows
+import Quillen.CategoryTheory.TheoremB.CompactMappingCylinderFibers
+import Quillen.Waldhausen.Fibration.AllWeak.AcyclicEquivalence
+import Quillen.Waldhausen.Fibration.AllWeak.AcyclicInclusion
+import Quillen.Waldhausen.Fibration.AllWeak.RelativeContractible
+import Quillen.Topology.FiberwiseMappingPath.BoundaryLifting
+import Quillen.Topology.FiberwiseMappingPath.Locality
+import Quillen.Topology.FiberwiseMappingPath.LocalFiberHELP
+import Quillen.Topology.FiberwiseMappingPath.Basic
+import Quillen.Topology.FiberwiseMappingPath.Restriction
+import Quillen.Topology.HomotopyLifting.FiberwiseExtension
+import Quillen.Topology.HomotopyLifting.FiberwiseBoundaryCorrection
+import Quillen.Topology.HELP.ContractibleTestFullOverBase
+import Quillen.Waldhausen.Fibration.RelativeRows.CoarseEvaluation
+import Quillen.Topology.HomotopyLifting.VariableTime
+import Quillen.Topology.HomotopyLifting.Stationary
+import Quillen.Topology.HomotopyLifting.ParallelLifts
+import Quillen.Topology.HomotopyLifting.OverBaseCorrection
+import Quillen.Topology.HomotopyLifting.CubeDuration
+import Quillen.Topology.HELP.ContractibleTestOverBase
+import Quillen.Topology.HomotopyLifting.CubeOverBase
+import Quillen.Waldhausen.Fibration.MixedNerves.TotalEvaluation
+import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationRealization
+import Quillen.Waldhausen.Fibration.MixedNerves.TotalRealization
+import Quillen.Waldhausen.SConstruction.Rows.NerveFunctoriality
+import Quillen.Topology.CubicalSubdivision.BoundaryWeakEquivalence
+import Quillen.Waldhausen.Fibration.MixedNerves.RowRealization
+import Quillen.Topology.CubicalSubdivision.LocalLifting
+import Quillen.Waldhausen.Fibration.RelativeRows.CubicalLifting
+import Quillen.Waldhausen.Fibration.MixedNerves.TransposeNerves
+import Quillen.Waldhausen.Fibration.MixedNerves.ConstantDiagonal
+import Quillen.Waldhausen.Fibration.RelativeRows.WeakInterchange
+import Quillen.Topology.CubicalSubdivision.StagePasting
+import Quillen.Topology.CubicalSubdivision.FaceBoundaryTopology
+import Quillen.Topology.CubicalSubdivision.OuterBoundary
+import Quillen.Topology.CubicalSubdivision.FaceCover
+import Quillen.Waldhausen.Fibration.TrivialCofibrations.Classifying
+import Quillen.Waldhausen.Fibration.Rows.TrivialCofibrationCylinder
+import Quillen.Waldhausen.Fibration.Rows.SecondEndpoint
+import Quillen.Topology.CubicalSubdivision.Walls
+import Quillen.Topology.CubicalSubdivision.FaceIntersections
+import Quillen.Waldhausen.Fibration.RelativeRows.ComplexChainReplacement
+import Quillen.Topology.HELP.CubeBoundaryHomeomorph
+import Quillen.Topology.CubicalSubdivision.Cover
+import Quillen.Topology.CubicalSubdivision.Pasting
+import Quillen.Topology.HELP.FiberwiseWeakEquivalence
+import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationWeakEquivalence
+import Quillen.Waldhausen.Fibration.Rows.ExtensionAxiom
+import Quillen.Waldhausen.Fibration.Rows.ComplexFactorization
+import Quillen.Waldhausen.Fibration.RelativeRows.Completion
+import Quillen.Waldhausen.Fibration.Rows.NestedWeakEquivalences
+import Quillen.Waldhausen.Fibration.RelativeRows.RealizationLifting
+import Quillen.Topology.HomotopyGroups.ProductWeakEquivalence
+import Quillen.Topology.Realization.TwoSidedBarFiberHomotopyEquivalence
+import Quillen.Topology.HELP.FiberwiseRealizationEquivalence
+import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationFullFaithful
+import Quillen.Waldhausen.Fibration.RelativeRows.TransitionHELP
+import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationWeakMaps
+import Quillen.Waldhausen.Fibration.RelativeRows.TransitionCartesian
+import Quillen.Topology.HomotopyFiber.BasepointHELP
+import Quillen.Topology.HomotopyPullback.WeakCoproduct
+import Quillen.Topology.HomotopyPullback.WeakPasting
+import Quillen.Waldhausen.Fibration.ComplexChainReplacement
+import Quillen.Topology.HELP.ContractibleTest
+import Quillen.Waldhausen.Fibration.RelativeRows.LocalFiber
+import Quillen.Topology.HomotopyFiber.ContractibleBaseHELP
+import Quillen.Topology.Realization.TwoSidedBarFiberEquivalence
+import Quillen.Topology.HomotopyFiber.WeakSquareTransport
+import Quillen.Waldhausen.GilletWaldhausen.FineProductDecomposition
+import Quillen.Waldhausen.Fibration.RelativeRows.TailSection
+import Quillen.Waldhausen.Fibration.RelativeRows.FirstTailSSet
+import Quillen.Topology.HomotopyFiber.CartesianDetection
+import Quillen.Topology.Realization.TwoSidedBarEquivalence
+import Quillen.PerfectComplexes.SingleComparison
+import Quillen.Topology.HomotopyFiber.WeakSourceEquivalence
+import Quillen.Topology.Realization.SplitFiberCompactHELP
+import Quillen.Waldhausen.GilletWaldhausen.GlobalEulerReduction
+import Quillen.Topology.HomotopyFiber.WeakContractibility
+import Quillen.Topology.HomotopyFiber.WeakSourcePositive
+import Quillen.Waldhausen.GilletWaldhausen.AcyclicInclusionInjective
+import Quillen.Waldhausen.Fibration.RelativeRows.SplitFiberZero
+import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
+import Quillen.Algebra.FiniteAdjacentSection
+import Quillen.Waldhausen.Fibration.RelativeRows.Tail
+import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleIncidence
+import Quillen.Waldhausen.GilletWaldhausen.FibrationModelKEquivalence
+import Quillen.Topology.Realization.ProductFiberHELP
+import Quillen.Topology.HomotopyFiber.FiberDetection
+import Quillen.Topology.HomotopyFiber.Connected
+import Quillen.Topology.HELP.Composition
+import Quillen.Topology.HomotopyGroups.PathTransport
+import Quillen.Waldhausen.SConstruction.Rows.JointFunctor
+import Quillen.Waldhausen.GilletWaldhausen.FiniteTermKEquivalence
+import Quillen.Topology.Realization.ProductFiber
+import Quillen.Waldhausen.SConstruction.Connected
+import Quillen.Waldhausen.Fibration.CanonicalFiberMap
+import Quillen.Waldhausen.QuillenComparison.ExactAdditivity
+import Quillen.Waldhausen.ExtensionCategory.ProductKEquivalence
+import Quillen.Waldhausen.Cylinder.JointExact
+import Quillen.Waldhausen.SConstruction.Rows.Functoriality
+import Quillen.Waldhausen.SConstruction.Rows.GridBridge
+import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationKMap
+import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsSSetColimit
+import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationExact
+import Quillen.Waldhausen.Cylinder.Pushout
+import Quillen.Waldhausen.ExtensionCategory.KEquivalence
+import Quillen.Waldhausen.Fibration.ComplexExtension
+import Quillen.Waldhausen.Fibration.AcyclicSubcategory
+import Quillen.Waldhausen.Additivity.BasedAdditivity
+import Quillen.Waldhausen.ExtensionCategory.Realization
+import Quillen.Waldhausen.GilletWaldhausen.BoundedSSetColimit
+import Quillen.Waldhausen.GilletWaldhausen.CycleEvaluationSequence
+import Quillen.Waldhausen.Cylinder.AmbientRelative
+import Quillen.Waldhausen.Additivity.RealizedAdditivity
+import Quillen.Waldhausen.QuillenComparison.ExactNaturality
+import Quillen.Waldhausen.ExtensionCategory.Cofiber
+import Quillen.Waldhausen.GilletWaldhausen.AdjacentTruncation
+import Quillen.Waldhausen.GilletWaldhausen.FixedBounds
+import Quillen.Waldhausen.Cylinder.Subcategory
+import Quillen.Scheme.VectorBundle.KernelClosure
+import Quillen.Devissage.Homotopical
+import Quillen.CategoryTheory.TheoremA.ContractibleComma
+import Quillen.Topology.Realization.SimplexBoundaryHEP
+import Quillen.KTheory.Functor
+import Quillen.Topology.Realization.ProductSimplex
+import Quillen.Localization.Serre.BasedFiberComparison
+import Quillen.Localization.Serre.FiberComparison
+import Quillen.KTheory.Map.Functoriality
+import Quillen.Topology.ClassifyingSpace.Equivalence
+import Quillen.Topology.Realization.HomotopyBridge
+import Quillen.Topology.HomotopyFiber.LESTail
+import Quillen.Topology.HomotopyFiber.LESNaturality
+import Quillen.Devissage.Grothendieck
+import Quillen.Topology.HomotopyFiber.LES
+import Quillen.Topology.HomotopyFiber.Components
+import Quillen.Topology.Realization.PrismGluing
+import Quillen.CategoryTheory.QConstruction.ZeroEndomorphisms
+import Quillen.KTheory.Map.CoherenceData
+import Quillen.Topology.HomotopyFiber.Sequence
+import Quillen.Localization.Serre.GrothendieckExactness
+import Quillen.Topology.HomotopyEquiv.Based
+import Quillen.Topology.Realization.Connectivity
+import Quillen.Topology.Realization.Homotopy
+import Quillen.Topology.Realization.NerveHomotopy
+import Quillen.Topology.HomotopyFiber.Map
+import Quillen.Devissage.FullyFaithful
+import Quillen.Topology.HomotopyFiber.Exactness
+import Quillen.Devissage.Setup
+import Quillen.Localization.Serre.Localization
+import Quillen.Topology.HomotopyFiber.Basic
+import Quillen.Devissage.Filtration
+import Quillen.KTheory.Map.Basic
+import Quillen.KTheory.GrothendieckGroup.Map
+import Quillen.Topology.HomotopyGroups.Map
+import Quillen.Examples.Abelian
+import Quillen.CategoryTheory.ExactCategory.Abelian
+import Quillen.CategoryTheory.QConstruction.Connected
+import Quillen.CategoryTheory.QConstruction.Functor
+import Quillen.KTheory.Basic
+
+/-! Kernel-level dependency audit of the central constructions. -/
+
+#print axioms Quillen.IsoQuotient.comp_respects_iso
+#print axioms Quillen.IsoQuotient.category
+#print axioms Quillen.Q.mkHom_eq_iff_apexIso
+#print axioms Quillen.ExactStructure.inflation_of_isKernel
+#print axioms Quillen.ExactStructure.inflation_of_isPullback
+#print axioms Quillen.classifyingSpacePoint
+#print axioms Quillen.shiftedHomotopyGroupGroup
+#print axioms Quillen.shiftedHomotopyGroupCommGroup
+#print axioms Quillen.ExactStructure.K
+#print axioms Quillen.abelianExactStructure
+#print axioms Quillen.ExactStructure.qCategory_isConnected
+#print axioms Quillen.QCompatibleFunctor.mapQ
+#print axioms Quillen.QCompatibleFunctor.mapQ_comp
+#print axioms Quillen.piMap
+#print axioms Quillen.shiftedHomotopyGroupMap
+#print axioms Quillen.shiftedHomotopyGroupMap_comp
+#print axioms Quillen.Examples.integerSplitSequence_conflation
+#print axioms Quillen.ExactFunctor.map_isPullback
+#print axioms Quillen.ExactFunctor.mapQ
+#print axioms Quillen.ExactFunctor.KMap
+#print axioms Quillen.ExactStructure.grothendieck_universal
+#print axioms Quillen.ExactFunctor.grothendieckMap
+#print axioms Quillen.ExactFunctor.grothendieckMap_surjective_of_filtrations
+#print axioms Quillen.ExactFunctor.KMap_id
+#print axioms Quillen.Devissage.grothendieckMap_surjective
+#print axioms Quillen.SerreLocalization.quotientKMap
+#print axioms Quillen.SerreLocalization.quotientGrothendieckMap_surjective
+#print axioms Quillen.HomotopyFiber.lift
+#print axioms Quillen.HomotopyFiber.piMap_projection_comp
+#print axioms Quillen.HomotopyFiber.piMap_range_projection_eq_ker
+#print axioms Quillen.Devissage.mapQFullyFaithful
+#print axioms Quillen.naturalTransformationNerveHomotopy
+#print axioms Quillen.HomotopyFiber.map
+#print axioms Quillen.realization_exists_simplex
+#print axioms Quillen.ExactStructure.kSpace_pathConnected
+#print axioms Quillen.SerreLocalization.quotientGrothendieckEquiv
+#print axioms Quillen.BasedHomotopyEquiv.piEquiv
+#print axioms Quillen.HomotopyFiber.iteratedFiberEquivLoops
+#print axioms Quillen.HomotopyFiber.piMap_range_loopInclusion_eq_ker_projection
+#print axioms Quillen.ExactFunctor.normalizedQCompIso
+#print axioms Quillen.ExactFunctor.normalizedQCompIso_hom_base
+#print axioms Quillen.Devissage.grothendieckEquiv
+#print axioms Quillen.HomotopyFiber.positiveLongExactSequence
+#print axioms Quillen.HomotopyFiber.piZero_exact
+#print axioms Quillen.realizationPrismHomeomorph
+#print axioms Quillen.ExactStructure.qZero_endomorphism_eq_id
+#print axioms Quillen.ExactFunctor.KMap_comp
+#print axioms Quillen.realizationCylinderIso
+#print axioms Quillen.realizationSimplicialHomotopy
+#print axioms Quillen.HomotopyFiber.lowDegreeExactSequence
+#print axioms Quillen.HomotopyFiber.connectingHom_natural
+#print axioms Quillen.adjunctionClassifyingHomotopyEquiv
+#print axioms Quillen.SerreLocalization.localizationFiberComparison
+#print axioms Quillen.SerreLocalization.quotientInclusionNullhomotopy
+#print axioms Quillen.SerreLocalization.basedLocalizationFiberComparison_basepoint
+#print axioms Quillen.SerreLocalization.localizationFiberComparisonHom_projection
+#print axioms Quillen.SerreLocalization.quotientKMap_comp_inclusion
+#print axioms Quillen.SmallExactCategory.KFunctor
+#print axioms Quillen.realizationProductSimplexHomeomorph
+#print axioms Quillen.simplexBoundary_homotopy_extension
+
+#print axioms Quillen.TheoremA.contractibleCommaClassifyingHomotopyEquiv
+#print axioms Quillen.TheoremA.sequentialCoconeHomotopyEquiv
+
+#print axioms Quillen.Devissage.classifyingHomotopyEquiv
+#print axioms Quillen.Devissage.KEquiv
+#print axioms Quillen.Devissage.KEquiv_toMonoidHom
+#print axioms Quillen.piMap_bijective_of_homotopyEquiv
+
+#print axioms Quillen.Waldhausen.Additivity.deloopingMap_additivity
+#print axioms Quillen.Waldhausen.QuillenComparison.comparisonKEquiv_exactFunctor_naturality
+#print axioms Quillen.Waldhausen.ExtensionCategory.waldhausenStructure
+#print axioms Quillen.Waldhausen.ExtensionCategory.isCofibrationSequence
+#print axioms Quillen.Waldhausen.GilletWaldhausen.adjacentTruncation_isCofibrationSequence
+#print axioms Quillen.Waldhausen.GilletWaldhausen.fixedBoundsTruncLEIdentityIso
+#print axioms Quillen.Waldhausen.SplitFactorization.subcategoryRelativeJoint_cof
+#print axioms Quillen.SchemeSheaf.finiteLocallyFree_kernel
+
+#print axioms Quillen.Waldhausen.Additivity.KMap_additivity
+#print axioms Quillen.Waldhausen.ExtensionCategory.realizationHomotopyEquiv
+#print axioms Quillen.Waldhausen.ExtensionCategory.realizationHomotopyEquiv_toFun
+#print axioms Quillen.Waldhausen.GilletWaldhausen.boundedSSetCocone_isColimit
+#print axioms Quillen.Waldhausen.GilletWaldhausen.boundedAcyclicCycleEvaluation_isCofibrationSequence
+#print axioms Quillen.Waldhausen.SplitFactorization.subcategoryRelativeJoint_ambient_cof
+
+#print axioms Quillen.Waldhausen.ExtensionCategory.KEquiv
+#print axioms Quillen.Waldhausen.ExtensionCategory.KEquiv_toMonoidHom
+#print axioms Quillen.Waldhausen.ExtensionCategory.KEquiv_symm_toMonoidHom
+#print axioms Quillen.Waldhausen.KMap_eq_of_weakNatTrans
+#print axioms Quillen.Waldhausen.Fibration.complexSubcategory_extensionAxiom
+#print axioms Quillen.Waldhausen.Fibration.acyclicStructure
+
+#print axioms Quillen.Waldhausen.GilletWaldhausen.boundedTermsStupidLayer_isCofibrationSequence
+#print axioms Quillen.Waldhausen.SplitFactorization.middleFunctor_map_isPushout
+
+#print axioms Quillen.Waldhausen.Product.KEquiv
+#print axioms Quillen.Waldhausen.ExtensionCategory.productKEquiv
+#print axioms Quillen.Waldhausen.Additivity.K_mul_comm
+#print axioms Quillen.Waldhausen.Additivity.KMap_additivity_mul
+#print axioms Quillen.ExactStructure.K_mul_comm
+#print axioms Quillen.ExactFunctor.KMap_conflation_additivity
+#print axioms Quillen.Waldhausen.SplitFactorization.subcategoryJointFunctor_quasiExact
+#print axioms Quillen.Waldhausen.SplitFactorization.subcategoryJointFunctor_isoExact
+#print axioms Quillen.Waldhausen.GilletWaldhausen.boundedTermsSSetCocone_isColimit
+#print axioms Quillen.Waldhausen.GilletWaldhausen.fixedTermsStupidTruncGE_KMap_zero
+
+#print axioms Quillen.Waldhausen.Fibration.canonicalFiberMap
+#print axioms Quillen.Waldhausen.Fibration.canonicalFiberMap_basepoint
+#print axioms Quillen.Waldhausen.Fibration.canonicalFiberKMap_projection
+#print axioms Quillen.Waldhausen.Fibration.changeWeak_KMap_comp_acyclic
+
+#print axioms Quillen.ProductRealization.fiberInclusion_bijective
+#print axioms Quillen.Waldhausen.delooping_pathConnected
+#print axioms Quillen.Waldhausen.ExtensionCategory.transpose_exact
+#print axioms Quillen.Waldhausen.QuotientRows.jointOnRows_exact
+#print axioms Quillen.Waldhausen.GilletWaldhausen.finiteTermKEquiv
+#print axioms Quillen.Waldhausen.GilletWaldhausen.finiteTermKEquiv_apply
+#print axioms Quillen.Waldhausen.GilletWaldhausen.finiteTermKEquiv_symm_apply
+
+#print axioms Quillen.pathTransport_naturality
+#print axioms Quillen.homotopyGroupMap_bijective_iff_of_path
+#print axioms Quillen.Waldhausen.GilletWaldhausen.finiteCycleKEquiv
+#print axioms Quillen.Waldhausen.GilletWaldhausen.finiteCycle_KMap_incidence
+#print axioms Quillen.Waldhausen.GilletWaldhausen.boundedAcyclicFiberKEquiv_inclusion
+#print axioms Quillen.FiniteAdjacentComplex.euler_eq_one_iff
+#print axioms Quillen.FiniteAdjacentComplex.existsUnique_incidence_coordinate
+#print axioms Quillen.Waldhausen.Fibration.RelativeRows.firstTail_exact
+#print axioms Quillen.Waldhausen.Fibration.RelativeRows.tailFunctor_reindex
+
+#print axioms Quillen.IsWeakHomotopyEquivalence.isEmpty_target
+#print axioms Quillen.isWeakHomotopyEquivalence_of_connected
+
+#print axioms Quillen.Waldhausen.GilletWaldhausen.boundedAcyclicTermsInclusion_KMap_injective
+#print axioms Quillen.Waldhausen.Fibration.RelativeRows.fiber_reindex
+
+#print axioms Quillen.HomotopyFiber.piMap_mapOver_bijective
+#print axioms Quillen.HomotopyFiber.subsingleton_homotopyGroup_of_adjacent
+
+#print axioms Quillen.Waldhausen.GilletWaldhausen.finiteTerm_existsUnique_acyclic_single
+#print axioms Quillen.Waldhausen.GilletWaldhausen.boundedTerms_existsUnique_acyclic_single_zero
+
+#print axioms Quillen.TwoSidedBar.dropRealizationHomotopyEquiv
+#print axioms Quillen.TwoSidedBar.evaluationRealizationHomotopyEquiv
+#print axioms Quillen.HomotopyFiber.mapOver_isWeakHomotopyEquivalence
+#print axioms Quillen.CompactHomotopyExtensionLiftingProperty.cancel_first
+#print axioms Quillen.CompactHomotopyExtensionLiftingProperty.cancel_second
+
+#print axioms Quillen.HomotopyFiber.map_isWeakHomotopyEquivalence
+#print axioms Quillen.Waldhausen.GilletWaldhausen.boundedTermsAcyclicSingleKEquiv
+#print axioms Quillen.Waldhausen.GilletWaldhausen.boundedTermsAcyclicSingleKEquiv_coarse
+#print axioms Quillen.PerfectComplexes.vectorBundleSComparison_eq_changeWeak_comp_fineSingle
+
+#print axioms Quillen.Waldhausen.Fibration.RelativeRows.firstTailSSetRealizationHomotopyEquiv
+#print axioms Quillen.Waldhausen.Fibration.RelativeRows.rowFiberInclusion_bijective
+
+#print axioms Quillen.strictHELP_on_contracted_test
+
+#print axioms Quillen.Waldhausen.Fibration.MixedNerves.totalCofEvaluationHomotopyEquiv
+#print axioms Quillen.Waldhausen.Fibration.MixedNerves.totalCofEvaluationHomotopyEquiv_toFun
+#print axioms Quillen.Waldhausen.Fibration.MixedNerves.totalCoarseEvaluationHomotopyEquiv
+#print axioms Quillen.Waldhausen.Fibration.MixedNerves.coarseSSetIso
+#print axioms Quillen.Waldhausen.Fibration.RelativeRows.relativeFiltrationTotalHomotopyEquiv
+#print axioms Quillen.Waldhausen.Fibration.RelativeRows.relativeFiltrationTotalHomotopyEquiv_toFun
+
+#print axioms Quillen.strictHELP_over_contracted_test
+#print axioms Quillen.strictHELP_over_cube_of_fiberHELP
+
+#print axioms Quillen.Waldhausen.Fibration.RelativeRows.coarseEvaluationHomotopyEquiv
+#print axioms Quillen.Waldhausen.Fibration.RelativeRows.coarseEvaluationHomotopyEquiv_toFun
+#print axioms Quillen.Waldhausen.Fibration.RelativeRows.totalFiberInclusion_coarseEvaluation
+#print axioms Quillen.Waldhausen.Fibration.RelativeRows.coarseEvaluation_basepoint
+#print axioms Quillen.Waldhausen.Fibration.RelativeRows.totalFiberInclusion_basepoint
+
+#print axioms Quillen.fullHELP_over_contracted_test
+
+#print axioms Quillen.FiberwiseMappingPath.inclusionHomotopyEquiv
+#print axioms Quillen.FiberwiseMappingPath.restrictionHomeomorph
+#print axioms Quillen.FiberwiseMappingPath.isWeakHomotopyEquivalence_of_local_fiberHELP
+
+#print axioms Quillen.Waldhausen.Fibration.AllWeak.contraction
+#print axioms Quillen.Waldhausen.Fibration.AllWeak.relativeTotal_contractible
+
+#print axioms Quillen.IsWeakHomotopyEquivalence.cube_fullHELP
+
+#print axioms Quillen.IsWeakHomotopyEquivalence.mappingPath_endpoint_boundaryLifting
+
+#print axioms Quillen.isWeakHomotopyEquivalence_iff_finiteCubeHELP
+
+#print axioms Quillen.TheoremB.CompactMappingCylinder.compactHomotopyLiftingProperty_of_realizationModel
+
+#print axioms Quillen.TheoremB.CompactMappingCylinder.source_endpoint_boundaryLifting_of_realizationModel
+
+#print axioms Quillen.Waldhausen.Fibration.AllWeak.relativeTailFiberMap_totalTailFiberComparison
+
+#print axioms Quillen.NormalizedOpenGluing.Data.firstEndCollarStrongDeformationRetract_over
+#print axioms Quillen.NormalizedOpenGluing.Data.firstEndCollar_cover
+#print axioms Quillen.CubicalSubdivision.exists_lift_of_controlled_chart_cover

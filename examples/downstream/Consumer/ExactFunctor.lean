@@ -1,0 +1,33 @@
+import Quillen.KTheory.API
+noncomputable section
+universe u
+open CategoryTheory CategoryTheory.Limits Quillen
+
+namespace Consumer
+variable {C D T : Type u} [Category.{u} C] [Category.{u} D] [Category.{u} T]
+  [Preadditive C] [HasFiniteBiproducts C] [Preadditive D] [HasFiniteBiproducts D]
+  [Preadditive T] [HasFiniteBiproducts T]
+  (E : ExactStructure C) (E' : ExactStructure D) (E'' : ExactStructure T)
+
+-- Construct a real bundled exact category from user-supplied exact structure data.
+def bundled : SmallExactCategory.{u} := SmallExactCategory.ofExactStructure E
+
+abbrev kGroupInstance (n : ℕ) : Group (E.K n) := inferInstance
+theorem identity_map (n : ℕ) (x : E.K n) : (ExactFunctor.id E).KMap n x = x := by simp
+
+theorem composition_map (F : ExactFunctor E E') (G : ExactFunctor E' E'') (n : ℕ) (x : E.K n) :
+    (F.comp G).KMap n x = G.KMap n (F.KMap n x) := by simp
+
+theorem bundled_functor_map (F : ExactFunctor E E') (n : ℕ) (x : E.K n) :
+    (SmallExactCategory.KFunctor n).map
+      (show bundled E ⟶ bundled E' from F) x = F.KMap n x := rfl
+
+-- The public equivalence keeps the original canonical forward homomorphism.
+theorem equivalence_forward_map (F : ExactFunctor E E') [F.mapQ.IsEquivalence] (n : ℕ) :
+    (F.KEquivOfMapQIsEquivalence n).toMonoidHom = F.KMap n :=
+  F.KEquivOfMapQIsEquivalence_toMonoidHom n
+
+theorem naturally_isomorphic_maps (F G : ExactFunctor E E')
+    (e : F.toFunctor ≅ G.toFunctor) (n : ℕ) : F.KMap n = G.KMap n :=
+  ExactFunctor.KMap_eq_of_natIso e n
+end Consumer

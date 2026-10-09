@@ -1,0 +1,87 @@
+import Quillen.Waldhausen.Additivity.NormalizedMixedDiagrams
+import Quillen.Waldhausen.Additivity.DeformationMap
+import Quillen.Topology.Realization.MixedOrdinalBisimplicial
+
+/-! # The chosen-zero normalized deformation maps -/
+
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+set_option maxHeartbeats 1000000
+open CategoryTheory CategoryTheory.Limits Opposite
+open Quillen.MixedOrdinalCylinder
+universe u v
+
+namespace Quillen.Waldhausen.Additivity
+
+variable {C D : Type u} [Category.{v} C] [Category.{v} D]
+variable (V : Structure C) (W : Structure D) {F G : C ⥤ D} (a : F ⟶ G)
+variable (hF : IsExact V.cof V.weq W.cof W.weq F)
+variable (hG : IsExact V.cof V.weq W.cof W.weq G)
+variable (hc : IsCofibrationTransformation W a V)
+
+/-- The actual mixed-cylinder deformation is a bisimplicial map. Its values
+are the genuine pushouts, not chosen equivalences or unspecified fillers. -/
+def normalizedMixedMap : outerCylinder (bisimplicialSSet V) ⟶ bisimplicialSSet W where
+  app n := {
+    app m := ↾fun s ↦ ⟨normalizedMixedGrid V W a hF hG hc s.1 s.2.1,
+      normalizedMixedGrid_isSimplex₂ V W a hF hG hc s.1 s.2.2⟩
+    naturality m m' ν := by
+      apply ConcreteCategory.hom_ext
+      intro s
+      apply Subtype.ext
+      exact (normalizedMixedGrid_inner V W a hF hG hc ν.unop s.1 s.2.1).symm }
+  naturality n n' μ := by
+    apply NatTrans.ext
+    funext m
+    apply ConcreteCategory.hom_ext
+    intro s
+    apply Subtype.ext
+    exact (normalizedMixedGrid_outer V W a hF hG hc μ.unop s.1 s.2.1).symm
+
+/-- The auxiliary identity endpoint uses actual identity-interval arrows. -/
+def normalizedIdentityMap : bisimplicialSSet V ⟶ bisimplicialSSet W where
+  app n := {
+    app m := ↾fun A ↦ ⟨normalizedIntervalDiagram V W a hF hG hc (𝟙 n.unop) (𝟙 n.unop) (fun _ ↦ le_rfl) A.1,
+      normalizedIntervalDiagram_isSimplex₂ V W a hF hG hc _ _ _ A.2⟩
+    naturality _ _ _ := by ext A; rfl }
+  naturality _ _ _ := by ext m A; rfl
+
+/-- The zero-cut restriction agrees exactly with the actual identity deformation. -/
+theorem normalizedMixedMap_zero :
+    outerZeroSection (bisimplicialSSet V) ≫ normalizedMixedMap V W a hF hG hc =
+      normalizedIdentityMap V W a hF hG hc := by
+  ext n m A
+  apply Subtype.ext
+  exact normalizedMixedGrid_zero V W a hF hG hc A.1
+
+/-- The auxiliary one endpoint uses the two actual halves of ordinary subdivision. -/
+def normalizedSeparatedMap :
+    OrdinalSubdivision.δ.op ⋙ bisimplicialSSet V ⟶ bisimplicialSSet W where
+  app n := {
+    app m := ↾fun A ↦ ⟨normalizedIntervalDiagram V W a hF hG hc (Edgewise.left n.unop n.unop)
+        (Edgewise.right n.unop n.unop) (left_le_right n.unop) A.1,
+      normalizedIntervalDiagram_isSimplex₂ V W a hF hG hc _ _ _ A.2⟩
+    naturality _ _ _ := by ext A; rfl }
+  naturality n n' μ := by
+    ext m A
+    apply Subtype.ext
+    change intervalArrows (Edgewise.left n'.unop n'.unop) (Edgewise.right n'.unop n'.unop)
+        (left_le_right n'.unop) (gridMap₂ (OrdinalSubdivision.δ.map μ.unop) (𝟙 m.unop) ⋙ A.1) ⋙
+        normalizedPushoutFunctor V W a hF hG hc =
+      (gridMap₂ μ.unop (𝟙 m.unop) ⋙ intervalArrows (Edgewise.left n.unop n.unop)
+        (Edgewise.right n.unop n.unop) (left_le_right n.unop) A.1) ⋙ normalizedPushoutFunctor V W a hF hG hc
+    rw [intervalArrows_input, intervalArrows_outer]
+    exact congrArg (fun T ↦ T ⋙ normalizedPushoutFunctor V W a hF hG hc)
+      (intervalArrows_congr (OrdinalSubdivision.first.naturality μ.unop).symm
+        (OrdinalSubdivision.second.naturality μ.unop).symm A.1)
+
+/-- The one-cut restriction agrees exactly with the separated-half deformation. -/
+theorem normalizedMixedMap_one :
+    outerOneSection (bisimplicialSSet V) ≫ normalizedMixedMap V W a hF hG hc =
+      normalizedSeparatedMap V W a hF hG hc := by
+  ext n m A
+  apply Subtype.ext
+  exact normalizedMixedGrid_one V W a hF hG hc A.1
+
+end Quillen.Waldhausen.Additivity

@@ -1,0 +1,10 @@
+name = "quillen-consumer"
+version = "0.1.0"
+defaultTargets = ["Consumer"]
+
+[[lean_lib]]
+name = "Consumer"
+
+[[require]]
+name = "quillen-k-theory"
+path = "../.."

@@ -1,0 +1,90 @@
+import Mathlib.CategoryTheory.Limits.FunctorCategory.EpiMono
+import Quillen.CategoryTheory.TheoremA.ReplacementInvariance
+import Quillen.Topology.Realization.MonomorphismEmbedding
+import Quillen.CategoryTheory.TheoremB.SequentialCompact
+
+/-!
+# Compact cartesian assembly for actual replacement skeleta
+
+The base-restricted replacement tower has T₁ stages and closed-embedding
+successor maps. Consequently the sequential cartesian theorem applies to
+its actual diagonal realization. The geometric finite-stage cartesian
+comparisons remain explicit inputs; a stagewise equivalence of total spaces
+is neither assumed nor substituted for them.
+-/
+noncomputable section
+open CategoryTheory Limits Topology
+open scoped Simplicial
+universe u
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+
+namespace Quillen.TheoremA
+
+variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
+
+/-- Every realized stage of a base-restricted replacement is T₁. -/
+instance realizedReplacementSkeleton_t1Space (n : ℕ) :
+    T1Space ((realizedReplacementSkeleton H).obj n) :=
+  inferInstanceAs (T1Space |diagonalSSet ((replacementSkeleton H).obj n)|)
+
+/-- Every transition of the actual realized base-skeleton tower is a
+closed embedding, not merely a cofibration. -/
+theorem realizedReplacementSkeleton_isClosedEmbedding {n m : ℕ} (f : n ⟶ m) :
+    IsClosedEmbedding ((realizedReplacementSkeleton H).map f) := by
+  let i := diagonalFunctor.map ((replacementSkeleton H).map f)
+  have : Mono i := by
+    apply (NatTrans.mono_iff_mono_app i).mpr
+    intro p
+    change Mono ((((replacementSkeleton H).map f).app p).app p)
+    infer_instance
+  exact realization_mono_isClosedEmbedding i
+
+/-- Closed-embedding hypotheses for the canonical sequential assembly. -/
+theorem realizedReplacementSkeleton_closedEmbeddings (n : ℕ) :
+    IsClosedEmbedding ((realizedReplacementSkeleton H).map (homOfLE (Nat.le_succ n))) :=
+  realizedReplacementSkeleton_isClosedEmbedding H _
+
+end Quillen.TheoremA
+
+namespace Quillen.TheoremB
+open TheoremA SequentialCartesian
+
+variable {D : Type u} [SmallCategory D] {H K : D ⥤ SSet.{u}} (η : H ⟶ K)
+
+/-- Finite-stage pullbacks for the actual diagonal-realized replacement
+map. These are the geometric comparisons needed by cartesian gluing. -/
+abbrev ReplacementStagePullback (k n : ℕ) (h : k ≤ n) :=
+  StagePullback (realizedReplacementSkeletonMap η) k n h
+
+/-- The actual stage-to-total-realization homotopy pullback. -/
+abbrev ReplacementColimitPullback (k : ℕ) :=
+  ColimitPullback (realizedReplacementSkeletonMap η)
+    (realizedReplacementSkeletonCocone H) (realizedReplacementSkeletonIsColimit H)
+    (realizedReplacementSkeletonCocone K) k
+
+/-- The specified canonical stage-to-total comparison. Its source is the
+actual realized base restriction, not a finite-cell approximation. -/
+abbrev replacementSkeletonComparison (k : ℕ) :=
+  colimitComparison (realizedReplacementSkeletonMap η)
+    (realizedReplacementSkeletonCocone H) (realizedReplacementSkeletonIsColimit H)
+    (realizedReplacementSkeletonCocone K) k
+
+/-- The only remaining input for weak cartesian assembly of the actual
+simplicial replacement is finite-stage homotopy cartesianness. Separation,
+closed embeddings, the actual colimit, and compact relative homotopy
+factorization have all been proved. -/
+theorem replacementSkeletonComparison_bijective (k : ℕ)
+    (e : ∀ n (h : k ≤ n), ContinuousMap.HomotopyEquiv
+      ((realizedReplacementSkeleton H).obj k) (ReplacementStagePullback η k n h))
+    (he : ∀ n h, (e n h).toFun = stageComparison (realizedReplacementSkeletonMap η) k n h)
+    (x : (realizedReplacementSkeleton H).obj k) (q : ℕ) :
+    Function.Bijective (homotopyGroupMap (N := Fin q)
+      (replacementSkeletonComparison η k) (x := x) rfl) :=
+  colimitComparison_homotopyGroupMap_bijective (realizedReplacementSkeletonMap η)
+    (realizedReplacementSkeletonCocone H) (realizedReplacementSkeletonIsColimit H)
+    (realizedReplacementSkeletonCocone K) (realizedReplacementSkeletonIsColimit K)
+    (realizedReplacementSkeleton_closedEmbeddings H)
+    (realizedReplacementSkeleton_closedEmbeddings K) k e he x q
+
+end Quillen.TheoremB

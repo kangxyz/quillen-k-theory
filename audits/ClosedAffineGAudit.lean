@@ -1,0 +1,10 @@
+import Quillen.Scheme.Coherent.Affine.ClosedDevissage
+#print axioms Quillen.PrincipalSupportDevissage.filtrationHypothesis
+#print axioms Quillen.FiniteModuleLocalization.principalFiltrationHypothesis
+#print axioms Quillen.FiniteModuleLocalization.principalDevissageKMap_bijective
+#print axioms Quillen.FiniteModuleLocalization.smallClosedEquivalence
+#print axioms Quillen.FiniteModuleLocalization.closedSupportGEquiv
+#print axioms Quillen.FiniteModuleLocalization.closedSupportGEquiv_pushforward
+#print axioms Quillen.FiniteModuleLocalization.principalClosedLocalization_longExact
+
+#print axioms Quillen.FiniteModuleLocalization.closedSupportedKMap_bijective

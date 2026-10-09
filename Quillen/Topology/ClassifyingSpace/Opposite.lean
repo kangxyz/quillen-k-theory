@@ -1,0 +1,46 @@
+import Quillen.CategoryTheory.TheoremA.ColumnOpposite
+import Quillen.Topology.Realization.Opposite
+
+/-! The classifying spaces of a category and its opposite agree naturally,
+by actual reversal of nerve chains and topological simplex coordinates. -/
+noncomputable section
+open CategoryTheory Opposite
+open scoped Simplicial
+universe u
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+namespace Quillen
+variable {C D : Type u} [SmallCategory C] [SmallCategory D]
+
+/-- Reversing nerve chains is natural in the original functor. -/
+theorem nerveOppositeIso_naturality (F : C ⥤ D) :
+    SSet.opFunctor.map (nerveMap F) ≫ (TheoremA.nerveOppositeIso (C := D)).hom =
+      (TheoremA.nerveOppositeIso (C := C)).hom ≫ nerveMap F.op := by
+  ext p c : 4
+  refine CategoryTheory.Functor.hext (fun i ↦ rfl) ?_
+  intro i j f
+  rfl
+
+/-- Natural topological identification of opposite classifying spaces. -/
+def classifyingOppositeIso (C : Type u) [SmallCategory C] :
+    ClassifyingSpace Cᵒᵖ ≅ ClassifyingSpace C :=
+  (SSet.toTop.mapIso (TheoremA.nerveOppositeIso (C := C))).symm ≪≫
+    realizationOppositeNatIso.app (nerve C)
+
+/-- Opposite realization retains the exact map of classifying spaces. -/
+theorem classifyingOppositeIso_naturality (F : C ⥤ D) :
+    classifyingSpaceMap F.op ≫ (classifyingOppositeIso D).hom =
+      (classifyingOppositeIso C).hom ≫ classifyingSpaceMap F := by
+  have h := congrArg SSet.toTop.map (nerveOppositeIso_naturality F)
+  simp only [Functor.map_comp] at h
+  have h₁ : classifyingSpaceMap F.op ≫
+      SSet.toTop.map (TheoremA.nerveOppositeIso (C := D)).inv =
+      SSet.toTop.map (TheoremA.nerveOppositeIso (C := C)).inv ≫
+        SSet.toTop.map (SSet.opFunctor.map (nerveMap F)) := by
+    exact (CommSq.vert_inv
+      (g := SSet.toTop.mapIso (TheoremA.nerveOppositeIso (C := C)))
+      (h := SSet.toTop.mapIso (TheoremA.nerveOppositeIso (C := D))) (CommSq.mk h)).w
+  have h₂ := realizationOppositeNatIso.hom.naturality (nerveMap F)
+  exact ((CommSq.mk h₁).vert_comp (CommSq.mk h₂)).w
+
+end Quillen

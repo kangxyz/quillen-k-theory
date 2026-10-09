@@ -1,0 +1,13 @@
+import Quillen.Scheme.Coherent.PrincipalLocalization
+import Quillen.Scheme.Coherent.Affine.ComparisonGTheory
+#print axioms Quillen.CoherentScheme.coherentPrincipalRestrictionSquare
+#print axioms Quillen.CoherentScheme.coherentPrincipalRestriction_isLocalization_kernel
+#print axioms Quillen.CoherentScheme.coherentPrincipalRestriction_isLocalization
+#print axioms Quillen.CoherentScheme.coherentPrincipalSmallSupportEquivalence
+#print axioms Quillen.CoherentScheme.coherentPrincipalSupportedGEquiv
+#print axioms Quillen.CoherentScheme.globalPrincipalInclusionGMap
+#print axioms Quillen.CoherentScheme.globalPrincipalConnectingHom
+#print axioms Quillen.CoherentScheme.global_principal_localization_longExact
+#print axioms Quillen.CoherentScheme.global_principal_localization_GZero_tail
+#print axioms Quillen.CoherentScheme.globalPrincipal_GZero_surjective
+#print axioms Quillen.CoherentScheme.specGRingEquiv

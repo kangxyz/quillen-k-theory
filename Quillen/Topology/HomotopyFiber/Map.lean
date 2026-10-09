@@ -1,0 +1,66 @@
+import Quillen.Topology.HomotopyFiber.Basic
+
+/-! # Maps of actual homotopy fibers
+
+A strictly commutative square induces a continuous map of the path-space
+homotopy fibers. Identity and composition are proved pointwise.
+-/
+
+noncomputable section
+universe u₁ u₂ u₃ v₁ v₂ v₃
+open unitInterval
+
+namespace Quillen.HomotopyFiber
+variable {X₁ : Type u₁} {X₂ : Type u₂} {X₃ : Type u₃}
+  {Y₁ : Type v₁} {Y₂ : Type v₂} {Y₃ : Type v₃}
+  [TopologicalSpace X₁] [TopologicalSpace X₂] [TopologicalSpace X₃]
+  [TopologicalSpace Y₁] [TopologicalSpace Y₂] [TopologicalSpace Y₃]
+  {f₁ : C(X₁, Y₁)} {f₂ : C(X₂, Y₂)} {f₃ : C(X₃, Y₃)}
+
+/-- Functoriality of homotopy fibers under a commutative square. -/
+def map (u : C(X₁, X₂)) (v : C(Y₁, Y₂)) (sq : v.comp f₁ = f₂.comp u)
+    (y : Y₁) : C(HomotopyFiber f₁ y, HomotopyFiber f₂ (v y)) where
+  toFun z := ⟨(u z.1.1, v.comp z.1.2),
+    (congrArg v z.2.1).trans (ContinuousMap.congr_fun sq z.1.1), congrArg v z.2.2⟩
+  continuous_toFun := by
+    apply Continuous.subtype_mk
+    apply Continuous.prodMk
+    · fun_prop
+    · exact (ContinuousMap.continuous_postcomp v).comp (by fun_prop)
+
+@[simp]
+lemma projection_map (u : C(X₁, X₂)) (v : C(Y₁, Y₂))
+    (sq : v.comp f₁ = f₂.comp u) (y : Y₁) :
+    (projection f₂ (v y)).comp (map u v sq y) = u.comp (projection f₁ y) := by
+  ext z
+  rfl
+
+@[simp]
+lemma map_id (f : C(X₁, Y₁)) (y : Y₁) :
+    map (f₁ := f) (f₂ := f) (ContinuousMap.id X₁) (ContinuousMap.id Y₁) rfl y =
+      ContinuousMap.id (HomotopyFiber f y) := by
+  ext z
+  rfl
+
+@[simp]
+lemma map_comp (u : C(X₁, X₂)) (v : C(Y₁, Y₂)) (sq : v.comp f₁ = f₂.comp u)
+    (u' : C(X₂, X₃)) (v' : C(Y₂, Y₃)) (sq' : v'.comp f₂ = f₃.comp u') (y : Y₁) :
+    map (u'.comp u) (v'.comp v)
+      (show (v'.comp v).comp f₁ = f₃.comp (u'.comp u) by
+        ext x
+        exact (congrArg v' (ContinuousMap.congr_fun sq x)).trans
+          (ContinuousMap.congr_fun sq' (u x))) y =
+      (map u' v' sq' (v y)).comp (map u v sq y) := by
+  ext z
+  rfl
+
+/-- The induced fiber map preserves the distinguished constant-path points. -/
+lemma map_basepoint (u : C(X₁, X₂)) (v : C(Y₁, Y₂))
+    (sq : v.comp f₁ = f₂.comp u) (x : X₁) (y : Y₁) (h : f₁ x = y) :
+    map u v sq y (basepoint f₁ y x h) =
+      basepoint f₂ (v y) (u x)
+        ((ContinuousMap.congr_fun sq x).symm.trans (congrArg v h)) := by
+  apply Subtype.ext
+  rfl
+
+end Quillen.HomotopyFiber
