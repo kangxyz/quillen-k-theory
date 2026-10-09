@@ -1,3 +1,0 @@
-import Quillen.Scheme.Coherent.Localization.GluingQuasicoherent
-#print axioms Quillen.CoherentScheme.quasicoherent_prod
-#print axioms Quillen.CoherentScheme.exists_quasicoherent_glued_subobject

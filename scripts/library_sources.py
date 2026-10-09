@@ -98,6 +98,19 @@ def source_modules(root: Path) -> set[Path]:
         path.relative_to(root) for path in (root / 'Quillen').rglob('*.lean')}
 
 
+def test_modules(root: Path) -> set[Path]:
+    """Positive trust tests have a separate generated integration root."""
+    if not (root / 'QuillenTest').exists() and not (root / 'QuillenTest.lean').exists():
+        return set()
+    return {Path('QuillenTest.lean')} | {
+        path.relative_to(root) for path in (root / 'QuillenTest').rglob('*.lean')}
+
+
+def downstream_sources(root: Path) -> set[Path]:
+    return {path.relative_to(root) for path in (root / 'examples/downstream').rglob('*.lean')
+            if '.lake' not in path.relative_to(root).parts}
+
+
 def import_closure(root: Path, entrypoints: list[str | Path]) -> set[Path]:
     seen: set[Path] = set()
     pending = [Path(path) for path in entrypoints]

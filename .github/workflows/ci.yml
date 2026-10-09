@@ -44,4 +44,4 @@ jobs:
       - name: Build the complete library and audit the independent client
         run: |
           lean --version
-          bash scripts/audit.sh --rehash
+          bash scripts/check.sh --rehash

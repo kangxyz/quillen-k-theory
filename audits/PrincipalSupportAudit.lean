@@ -1,4 +1,0 @@
-import Quillen.Devissage.CentralEndomorphism
-#print axioms Quillen.FiniteModuleLocalization.principalFiltrationHypothesis
-#print axioms Quillen.FiniteModuleLocalization.principalDevissageKEquiv
-#print axioms Quillen.FiniteModuleLocalization.principalDevissageKMap_bijective

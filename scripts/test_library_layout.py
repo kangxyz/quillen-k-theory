@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """Behavioral regression tests for library boundaries and enrollment."""
 from pathlib import Path
-import json
 import tempfile
 import unittest
 
@@ -18,10 +17,6 @@ class LayoutGuardTests(unittest.TestCase):
         self.write('Quillen/Algebra/A.lean', 'import Mathlib.Data.Nat.Basic\n')
         self.write('Quillen/Algebra/B.lean', 'import Quillen.Algebra.A\n')
         self.write('Quillen/Library.lean', 'import Quillen.Algebra.B\n')
-        self.write('docs/module-migration.json', json.dumps({
-            'modules': [{'old': 'Quillen/Old.lean', 'new': 'Quillen/Algebra/A.lean',
-                         'body_sha256': 'historical-only'}],
-            'removed_aliases': [{'old': 'Quillen/Obsolete.lean'}]}))
         self.generate()
 
     def tearDown(self):
@@ -43,11 +38,6 @@ class LayoutGuardTests(unittest.TestCase):
     def test_current_publication_tree_passes(self):
         errors, _ = check_layout(ROOT)
         self.assertEqual(errors, [])
-
-    def test_proof_changes_and_stale_checkpoint_are_not_permanent_gates(self):
-        self.write('Quillen/Algebra/A.lean', '-- future mathematical development\n')
-        self.write('CHECKPOINT.json', json.dumps({'source_modules': []}))
-        self.assertEqual(check_layout(self.root)[0], [])
 
     def test_missing_enrollment_even_for_orphan_module(self):
         self.write('Quillen/Algebra/Orphan.lean', '')
@@ -93,29 +83,6 @@ def s := "import Tests.Bad"
         self.write('Quillen/Algebra/A.lean', 'import Quillen.Library\n')
         self.rejected('Implementation imports broad facade')
 
-    def test_obsolete_path_and_consumer_alias_import_rejected(self):
-        self.write('Quillen/Old.lean', '')
-        self.rejected('Obsolete module still present')
-        (self.root / 'Quillen/Old.lean').unlink()
-        self.write('examples/Client.lean', 'import Quillen.Obsolete\n')
-        self.rejected('Obsolete imports')
-
-    def test_obsolete_name_can_be_reused_as_current_family_facade(self):
-        manifest = {'removed_aliases': [{'old': 'Quillen/Algebra.lean'}]}
-        self.write('docs/module-migration.json', json.dumps(manifest))
-        self.assertEqual(check_layout(self.root)[0], [])
-        self.write('Quillen/Algebra.lean', 'import Quillen.Algebra.A\n')
-        self.assertEqual(check_layout(self.root)[0], [])
-
-    def test_manual_future_facade_reuses_historical_name_without_registry(self):
-        self.write('docs/module-migration.json', json.dumps({
-            'removed_aliases': [{'old': 'Quillen/Future.lean'}]}))
-        self.write('Quillen/Future/A.lean', '')
-        self.write('Quillen/Future.lean', 'import Quillen.Future.A\n\ndef answer : Nat := 42\n')
-        self.write('examples/Client.lean', 'import Quillen.Future\n')
-        self.generate()
-        self.assertEqual(check_layout(self.root)[0], [])
-
     def test_extra_family_and_facade_supported(self):
         self.write('Quillen/Future/X.lean', '')
         self.generate()
@@ -130,6 +97,48 @@ def s := "import Tests.Bad"
         self.assertEqual(import_cycles(graph), [])
         graph['M2000'] = {'M0'}
         self.assertTrue(import_cycles(graph))
+
+
+    def test_trust_tests_accept_production_imports_and_require_enrollment(self):
+        self.write('QuillenTest/Axioms.lean', 'import Quillen\n')
+        self.generate()
+        self.assertEqual(check_layout(self.root)[0], [])
+        self.write('QuillenTest/NewPositiveTest.lean', 'import Quillen.Algebra.A\n')
+        self.rejected('missing enrollment')
+        self.generate()
+        self.assertEqual(check_layout(self.root)[0], [])
+
+    def test_core_cannot_import_test_root_or_test_leaf(self):
+        self.write('QuillenTest/Check.lean', 'import Quillen.Algebra.A\n')
+        self.generate()
+        for imported in ('QuillenTest', 'QuillenTest.Check'):
+            with self.subTest(imported=imported):
+                self.write('Quillen/Algebra/B.lean', 'import ' + imported + '\n')
+                self.rejected('Forbidden library import')
+
+    def test_trust_test_cycle_is_detected(self):
+        self.write('QuillenTest/A.lean', 'import QuillenTest.B\n')
+        self.write('QuillenTest/B.lean', 'import QuillenTest.A\n')
+        self.generate()
+        self.rejected('Project import cycle')
+
+    def test_unresolved_test_import_is_detected(self):
+        self.write('QuillenTest/A.lean', 'import QuillenTest.Missing\n')
+        self.generate()
+        self.rejected('Unresolved local import')
+
+    def test_downstream_imports_resolve_in_independent_package(self):
+        self.write('examples/downstream/Consumer.lean', 'import Consumer.RealClient\n')
+        self.write('examples/downstream/Consumer/RealClient.lean', 'import Quillen.Library\n')
+        self.assertEqual(check_layout(self.root)[0], [])
+        self.write('examples/downstream/Consumer/RealClient.lean', 'import Consumer.Missing\n')
+        self.rejected('Unresolved local import')
+
+    def test_manual_future_facade_and_leaf_both_enrolled(self):
+        self.write('Quillen/Future/A.lean', '')
+        self.write('Quillen/Future.lean', 'import Quillen.Future.A\n\ndef answer : Nat := 42\n')
+        self.generate()
+        self.assertEqual(check_layout(self.root)[0], [])
 
 
 if __name__ == '__main__':

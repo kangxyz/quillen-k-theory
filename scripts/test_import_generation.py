@@ -135,5 +135,23 @@ class ImportGenerationTests(unittest.TestCase):
         self.assertEqual(project_imports(facade.read_text()), ['Quillen.Future.Leaf'])
 
 
+    def test_trust_root_enrolls_all_tests_without_core_imports(self):
+        directory = self.root / 'QuillenTest'
+        directory.mkdir()
+        (directory / 'Axioms.lean').write_text('import Quillen\n')
+        self.generate()
+        self.assertEqual(project_imports((self.root / 'Quillen.lean').read_text()),
+                         ['Quillen.Algebra', 'Quillen.Algebra.A', 'Quillen.Algebra.Z',
+                          'Quillen.Examples.Client', 'Quillen.Library', 'Quillen.Resolution',
+                          'Quillen.Scheme'])
+        self.assertEqual(lean_imports((self.root / 'QuillenTest.lean').read_text()),
+                         ['QuillenTest.Axioms'])
+        (directory / 'Future.lean').write_text('import Quillen.Algebra.A\n')
+        self.assertEqual(stale_files(self.root), [Path('QuillenTest.lean')])
+        self.generate()
+        self.assertEqual(lean_imports((self.root / 'QuillenTest.lean').read_text()),
+                         ['QuillenTest.Axioms', 'QuillenTest.Future'])
+
+
 if __name__ == '__main__':
     unittest.main()

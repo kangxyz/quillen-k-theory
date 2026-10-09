@@ -4,7 +4,7 @@ import argparse
 from pathlib import Path
 import sys
 
-from library_sources import module_name, source_modules
+from library_sources import module_name, source_modules, test_modules
 
 ROOT = Path(__file__).resolve().parents[1]
 # Example clients are enrolled at the root without a generated family facade.
@@ -47,6 +47,12 @@ def generated_files(root: Path) -> dict[Path, str]:
         [module_name(path) for path in modules],
         '# Quillen library\n\nThe exhaustive import surface for all project source modules.\n'
         'Use thematic facades or individual module imports for smaller dependencies.')
+    tests = test_modules(root) - {Path('QuillenTest.lean')}
+    if test_modules(root):
+        outputs[Path('QuillenTest.lean')] = render_imports(
+            [module_name(path) for path in tests],
+            '# Quillen trust tests\n\nAll positive trust tests for the production library.\n'
+            'Tests are compiled separately and are never imported by production modules.')
     return outputs
 
 
@@ -70,7 +76,7 @@ def main() -> int:
     else:
         # Recheck ownership before any writes: another editor may have created
         # or taken over a family facade after discovery.
-        conflicts = [path for path in outputs if path != Path('Quillen.lean')
+        conflicts = [path for path in outputs if path not in {Path('Quillen.lean'), Path('QuillenTest.lean')}
                      and (args.root / path).exists()
                      and not (args.root / path).read_text().startswith(GENERATED_MARKER)]
         if conflicts:
@@ -80,7 +86,8 @@ def main() -> int:
         for path, content in outputs.items():
             (args.root / path).write_text(content)
     print(f'Generated imports {"checked" if args.check else "written"}: '
-          f'{len(outputs)} files; {len(source_modules(args.root))} source modules.')
+          f'{len(outputs)} files; {len(source_modules(args.root))} library modules; '
+          f'{len(test_modules(args.root))} trust-test modules.')
     return 0
 
 

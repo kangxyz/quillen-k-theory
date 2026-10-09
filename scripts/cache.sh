@@ -9,14 +9,10 @@ done < <(python3 - <<'PY'
 from pathlib import Path
 import sys
 sys.path.insert(0, 'scripts')
-from library_sources import lean_imports, source_modules
+from library_sources import downstream_sources, lean_imports, source_modules, test_modules
 
 root = Path.cwd()
-sources = {root / path for path in source_modules(root)}
-sources.update((root / 'examples/downstream/Consumer').rglob('*.lean'))
-sources.update(root / path for path in [
-    'examples/downstream/Consumer.lean', 'examples/downstream/Audit.lean',
-    'audits/LibraryAudit.lean', 'audits/CentralDeclarationsAudit.lean'])
+sources = {root / path for path in source_modules(root) | test_modules(root) | downstream_sources(root)}
 modules = {name for path in sources for name in lean_imports(path.read_text())
            if name == 'Mathlib' or name.startswith('Mathlib.')}
 if not modules:

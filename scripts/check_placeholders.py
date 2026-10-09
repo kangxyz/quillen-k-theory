@@ -1,51 +1,46 @@
 #!/usr/bin/env python3
-"""Reject proof placeholders/custom assumptions, ignoring Lean comments and strings.
+"""Reject proof placeholders and custom axioms in library, tests and client.
 
-The kernel dependency audit in audits/LibraryAudit.lean remains the authoritative check.
+QuillenTest/Axioms.lean performs the authoritative kernel dependency audit.
 """
+import argparse
 from pathlib import Path
 import re
 import sys
 
-root = Path(__file__).resolve().parents[1]
-failed = False
-sources = [root / 'Quillen.lean', *sorted((root / 'Quillen').rglob('*.lean'))]
-sources += [p for folder in ['examples', 'audits'] for p in (root / folder).rglob('*.lean')
-            if '.lake' not in p.relative_to(root).parts]
-for path in sources:
-    source = path.read_text()
-    clean = list(source)
-    i, depth, quoted = 0, 0, False
-    while i < len(source):
-        if depth:
-            if source.startswith('/-', i):
-                clean[i:i+2] = '  '; depth += 1; i += 2
-            elif source.startswith('-/', i):
-                clean[i:i+2] = '  '; depth -= 1; i += 2
-            else:
-                if source[i] != '\n': clean[i] = ' '
-                i += 1
-        elif quoted:
-            if source[i] == '\\' and i + 1 < len(source):
-                clean[i:i+2] = '  '; i += 2
-            else:
-                if source[i] == '"': quoted = False
-                if source[i] != '\n': clean[i] = ' '
-                i += 1
-        elif source.startswith('--', i):
-            end = source.find('\n', i)
-            if end == -1: end = len(source)
-            clean[i:end] = ' ' * (end-i); i = end
-        elif source.startswith('/-', i):
-            clean[i:i+2] = '  '; depth = 1; i += 2
-        elif source[i] == '"':
-            clean[i] = ' '; quoted = True; i += 1
-        else:
-            i += 1
-    for match in re.finditer(r'\b(sorry|admit|axiom)\b', ''.join(clean)):
-        line = source.count('\n', 0, match.start()) + 1
-        print(f'{path.relative_to(root)}:{line}: forbidden token {match.group()}')
-        failed = True
-if failed:
-    sys.exit(1)
-print('Source-token audit passed: no proof placeholders or custom assumptions.')
+from library_sources import (downstream_sources, source_modules,
+                             strip_comments_and_strings, test_modules)
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def check_placeholders(root: Path) -> list[str]:
+    errors = []
+    sources = source_modules(root) | test_modules(root) | downstream_sources(root)
+    for relative in sorted(sources):
+        source = (root / relative).read_text()
+        clean = strip_comments_and_strings(source)
+        for match in re.finditer(r'\b(sorry|admit|axiom)\b', clean):
+            line = source.count('\n', 0, match.start()) + 1
+            errors.append(f'{relative}:{line}: forbidden token {match.group()}')
+    return errors
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--root', type=Path, default=ROOT)
+    args = parser.parse_args()
+    try:
+        errors = check_placeholders(args.root)
+    except OSError as error:
+        print(f'Source-token check failed: {error}', file=sys.stderr)
+        return 1
+    if errors:
+        print('\n'.join(errors), file=sys.stderr)
+        return 1
+    print('Source-token check passed: no proof placeholders or custom assumptions.')
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

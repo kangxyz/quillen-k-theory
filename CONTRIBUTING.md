@@ -1,116 +1,83 @@
 # Contributing
 
-This library is under active development. Extend the mathematics at its natural
-object owner, keep hypotheses visible, and preserve the meanings of existing
-declarations. A successful Lean build certifies the encoded statement, so review
-the statement and its mathematical interpretation as well as its proof.
+Contributions should provide reusable mathematical definitions, proofs, or
+interfaces. Keep theorem hypotheses explicit and use the conventions of
+[mathlib](https://leanprover-community.github.io/contribute/style.html).
 
-## Add a module
+## Adding mathematics
 
-1. Put completed definitions and proofs in `Quillen/<Subject>/<Topic>.lean`.
-   Extend an existing mathematical directory when it fits. A new subject can
-   introduce a new directory; there is no fixed list of allowed subjects.
-2. Import the smallest modules needed by the implementation. Do not import
-   `Quillen`, a generated whole-family entrypoint, tests, audits, or a downstream
-   client from implementation code. This keeps the dependency graph reusable
-   and prevents cycles.
-3. Add a module docstring explaining its objects, main declarations, assumptions,
-   and references. Use English, descriptive names, and the applicable
-   [mathlib style](https://leanprover-community.github.io/contribute/style.html)
-   and [documentation conventions](https://leanprover-community.github.io/contribute/doc.html).
-   New file headers should identify authors and Apache-2.0 licensing.
-4. Run `python3 scripts/generate_imports.py`. The complete entrypoint discovers
-   all library modules. Generated family entrypoints discover their subjects'
-   modules; the existing hand-maintained `Library`, `Scheme`, and `Resolution`
-   entrypoints retain their public API selection.
-5. Add a useful client example or regression probe when it exercises a public
-   API, a subtle premise, or a previously broken behavior. Clients belong under
-   `examples/downstream/Consumer/`; library code must never depend on them.
-   Add its import to `examples/downstream/Consumer.lean`.
-6. Run the checks below and update the relevant API/scope documentation when the
-   theorem family's meaning or public import changes.
+Place source in `Quillen/<Subject>/<Topic>.lean`, extending the nearest existing
+mathematical owner. New subjects can introduce new directories. Add a module
+docstring describing the objects, main declarations, assumptions, and references.
+Use English for maintained text and identifiers; identify authors and Apache-2.0
+licensing in new file headers.
 
-Unfinished proofs and exploratory files stay outside `Quillen/` and the
-production import graph. An explicit hypothesis can support a conditional
-theorem, but do not disguise a missing theorem as an axiom or assume the desired
-conclusion. `sorry`, `admit`, custom axioms, and nonstandard axiom dependencies
-are rejected by the release checks.
+Implementation modules should import their precise dependencies. Whole-library
+and whole-family entrypoints are intended for clients; importing them from an
+implementation can introduce unnecessary dependencies or a cycle. Library code
+must not import `QuillenTest` or downstream clients.
 
-## Checks
-
-Fast structural checks:
+After adding or moving modules, regenerate the import surfaces:
 
 ```sh
-python3 scripts/generate_imports.py --check
-python3 scripts/check_library_layout.py
-python3 scripts/check_placeholders.py
-python3 -m unittest discover -s scripts -p 'test_*.py'
+python3 scripts/generate_imports.py
 ```
 
-For an individual module during development:
+The generator discovers the current source tree. It does not require a fixed
+list of subjects or a source inventory. It preserves manually maintained
+facades and updates generated files. `Quillen.Library`, `Quillen.Scheme`, and
+`Quillen.Resolution` remain selected public entrypoints.
+
+Keep incomplete proofs and development probes outside the library and its test
+entrypoints. A theorem with an explicit hypothesis is a conditional result;
+neither a placeholder nor an axiom is a substitute for the missing proof.
+
+## Tests and checks
+
+Use `QuillenTest/` for maintained library tests and
+`examples/downstream/Consumer/` for examples that exercise the public API from
+another Lake package. Test an important property, interface, or regression;
+temporary inspection programs and lists of declaration names do not belong in
+the maintained test suite.
+
+Run:
 
 ```sh
-lake build Quillen.CategoryTheory.ExactCategory.Basic
+bash scripts/check.sh --rehash
 ```
 
-Before integrating a change:
+This checks import generation and module boundaries, builds the library and
+tests, compiles the downstream package, and replays the axiom audits. The allowed
+foundation axioms are `propext`, `Classical.choice`, and `Quot.sound`.
+
+For faster iteration, build the module being changed:
 
 ```sh
-bash scripts/audit.sh --rehash
+lake build Quillen.KTheory.API
 ```
 
-The final command builds the complete library and public entrypoints, builds
-the separately configured downstream package, and replays the kernel axiom
-audits even if Lake reused build products. CI runs the same procedure. The
-lexical placeholder check is an early diagnostic; the declaration dependency
-audit is the trust check.
+## API evolution
 
-Historical proofs are not permanently frozen by hashes or a migration ledger.
-Edit them normally, explain any changed assumptions or API, and run the relevant
-checks. Historical checkpoint claims remain historical; update current scope
-documentation from the current source.
+Prefer a single definition of each mathematical object and computation lemmas
+for its canonical maps. Keep natural declaration namespaces even when source
+files move. Document public import, namespace, or hypothesis changes for users.
 
-## Public APIs and compatibility
+The library currently uses `0.x` versions. Breaking changes require a minor
+version bump and migration notes; compatible corrections use patch releases.
+When practical, retain deprecated aliases or small compatibility modules for
+one minor release. Consumers should pin a release tag or commit.
 
-Use natural mathematical namespaces. Module paths describe dependency ownership
-and need not exactly match declaration namespaces. Prefer small modules and
-computation lemmas for the actual maps over duplicate definitions or aliases of
-whole developments.
+Update [Scope.md](docs/Scope.md) when the mathematical coverage changes, and the
+[library guide](docs/Library.md) when public interfaces change.
 
-`Quillen.Library`, `Quillen.Scheme`, `Quillen.Resolution`, and the modules listed
-in the library guide are preferred client entrypoints. Other canonical modules
-are also importable, but their implementation APIs may change more frequently.
-Avoid growing `Quillen.Library` for every new helper: the generated complete
-root already enrolls all source modules for checking.
+## Dependency updates
 
-While the version is `0.x`, publish breaking import, namespace, hypothesis, or
-toolchain changes with a minor-version bump and migration notes. Use a patch
-release for compatible corrections. Preserve deprecated declaration aliases or
-small compatibility modules for one minor release when practical; record
-intentional removals and their replacements. Do not generate a second copy of
-the mathematical implementation to preserve compatibility.
+Ordinary checks use the committed toolchain and manifests. Do not run
+`lake update` merely to check a source change.
 
-Consumers should use a release tag or exact commit, rather than an unpinned
-branch. A theorem's premises remain part of its API even when its name stays
-the same.
+For an intentional upgrade, update the root and downstream toolchains and
+manifests together, obtain the matching cache, and run the complete checks.
+Explain any affected API or theorem hypotheses. Keep dependency upgrades separate
+from unrelated mathematical changes when possible.
 
-## Dependency upgrades
-
-Ordinary builds use the committed `lean-toolchain`, `lakefile.toml`, and
-`lake-manifest.json`. Do not run `lake update` just to check a change.
-
-An intentional upgrade must update the Lean/mathlib pins, both root and
-downstream manifests/toolchains, obtain the matching third-party cache, build
-the complete library, run the audits, and explain any statement or API changes.
-Keep dependency upgrades separate from unrelated mathematical edits when
-possible. Cache contents are never committed.
-
-## Releases
-
-Run the complete checks on the exact release commit. Record the toolchain,
-dependency revisions, mathematical scope, and actual results in release notes.
-Tag that commit, update the package version, and give downstream users a pinned
-dependency example. Incomplete theorem families must remain identified as open;
-an import path or a green build does not close them.
-
-Contributions are licensed under the repository's Apache-2.0 license.
+Contributions are licensed under Apache-2.0.

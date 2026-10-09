@@ -1,8 +1,0 @@
-import Quillen.Resolution.LengthOne
-#print axioms Quillen.Resolution.inclusionKMap_bijective_of_length_one
-#print axioms Quillen.Resolution.KEquivOfLengthOne
-#print axioms Quillen.Resolution.KEquivOfLengthOne_toMonoidHom
-#print axioms Quillen.Resolution.classifyingHomotopyEquivOfLengthOne
-#print axioms Quillen.Resolution.fullQClassifyingHomotopyEquiv
-#print axioms Quillen.Resolution.inheritedQClassifyingHomotopyEquiv
-#print axioms Quillen.ExactStructure.admissibleSubobjectClosed_of_resolutionLength_one

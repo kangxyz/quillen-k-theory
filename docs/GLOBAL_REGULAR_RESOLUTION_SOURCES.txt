@@ -1,8 +1,0 @@
-Quillen/Scheme/VectorBundle/Locality.lean
-Quillen/Scheme/Regular/KernelClosure.lean
-Quillen/Scheme/Regular/Regularity.lean
-Quillen/Scheme/Regular/ResolutionProperty.lean
-Quillen/Scheme/Regular/AffineChartDimension.lean
-Quillen/Scheme/Regular/ChartBounds.lean
-Quillen/Scheme/Regular/GlobalResolution.lean
-Quillen/Scheme/Regular/GlobalComparison.lean
