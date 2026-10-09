@@ -14,13 +14,13 @@ the hypotheses of the available results and the remaining comparison theorems.
 
 ## Installation
 
-Use Lean **4.34.0** and add the following dependency to `lakefile.toml`:
+Use Lean **4.34.1** and add the following dependency to `lakefile.toml`:
 
 ```toml
 [[require]]
 name = "quillen-k-theory"
 git = "https://github.com/kangxyz/quillen-k-theory.git"
-rev = "v0.1.0"
+rev = "v0.1.1"
 ```
 
 Resolve the new dependency with `lake update quillen-k-theory`, then build your
