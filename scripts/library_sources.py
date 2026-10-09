@@ -100,10 +100,10 @@ def source_modules(root: Path) -> set[Path]:
 
 def test_modules(root: Path) -> set[Path]:
     """Positive trust tests have a separate generated integration root."""
-    if not (root / 'QuillenTest').exists() and not (root / 'QuillenTest.lean').exists():
+    if not (root / 'Tests').exists() and not (root / 'Tests.lean').exists():
         return set()
-    return {Path('QuillenTest.lean')} | {
-        path.relative_to(root) for path in (root / 'QuillenTest').rglob('*.lean')}
+    return {Path('Tests.lean')} | {
+        path.relative_to(root) for path in (root / 'Tests').rglob('*.lean')}
 
 
 def downstream_sources(root: Path) -> set[Path]:

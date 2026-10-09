@@ -47,9 +47,9 @@ def generated_files(root: Path) -> dict[Path, str]:
         [module_name(path) for path in modules],
         '# Quillen library\n\nThe exhaustive import surface for all project source modules.\n'
         'Use thematic facades or individual module imports for smaller dependencies.')
-    tests = test_modules(root) - {Path('QuillenTest.lean')}
+    tests = test_modules(root) - {Path('Tests.lean')}
     if test_modules(root):
-        outputs[Path('QuillenTest.lean')] = render_imports(
+        outputs[Path('Tests.lean')] = render_imports(
             [module_name(path) for path in tests],
             '# Quillen trust tests\n\nAll positive trust tests for the production library.\n'
             'Tests are compiled separately and are never imported by production modules.')
@@ -76,7 +76,7 @@ def main() -> int:
     else:
         # Recheck ownership before any writes: another editor may have created
         # or taken over a family facade after discovery.
-        conflicts = [path for path in outputs if path not in {Path('Quillen.lean'), Path('QuillenTest.lean')}
+        conflicts = [path for path in outputs if path not in {Path('Quillen.lean'), Path('Tests.lean')}
                      and (args.root / path).exists()
                      and not (args.root / path).read_text().startswith(GENERATED_MARKER)]
         if conflicts:

@@ -15,7 +15,7 @@ licensing in new file headers.
 Implementation modules should import their precise dependencies. Whole-library
 and whole-family entrypoints are intended for clients; importing them from an
 implementation can introduce unnecessary dependencies or a cycle. Library code
-must not import `QuillenTest` or downstream clients.
+must not import `Tests` or downstream clients.
 
 After adding or moving modules, regenerate the import surfaces:
 
@@ -34,7 +34,7 @@ neither a placeholder nor an axiom is a substitute for the missing proof.
 
 ## Tests and checks
 
-Use `QuillenTest/` for maintained library tests and
+Use `Tests/` for maintained library tests and
 `examples/downstream/Consumer/` for examples that exercise the public API from
 another Lake package. Test an important property, interface, or regression;
 temporary inspection programs and lists of declaration names do not belong in
@@ -58,9 +58,10 @@ lake build Quillen.KTheory.API
 
 ## API evolution
 
-Prefer a single definition of each mathematical object and computation lemmas
-for its canonical maps. Keep natural declaration namespaces even when source
-files move. Document public import, namespace, or hypothesis changes for users.
+Reuse a model's existing objects and canonical maps when extending it. Give
+distinct constructions their own interfaces and state the hypotheses of
+comparison theorems. Keep natural declaration namespaces even when source files
+move. Document public import, namespace, or hypothesis changes for users.
 
 The library currently uses `0.x` versions. Breaking changes require a minor
 version bump and migration notes; compatible corrections use patch releases.

@@ -50,7 +50,7 @@ class LayoutGuardTests(unittest.TestCase):
         self.rejected('Stale generated imports')
 
     def test_library_test_import_bypasses_are_rejected(self):
-        for imported in ('Consumer.Bad', 'Tests.Bad', 'QuillenTest.Bad',
+        for imported in ('Consumer.Bad', 'Tests.Bad', '«Tests».Bad',
                          'audits.Bad', 'Quillen.Tests.Bad', '«Consumer».Bad'):
             with self.subTest(imported=imported):
                 self.write('Quillen/Algebra/A.lean',
@@ -100,30 +100,30 @@ def s := "import Tests.Bad"
 
 
     def test_trust_tests_accept_production_imports_and_require_enrollment(self):
-        self.write('QuillenTest/Axioms.lean', 'import Quillen\n')
+        self.write('Tests/Axioms.lean', 'import Quillen\n')
         self.generate()
         self.assertEqual(check_layout(self.root)[0], [])
-        self.write('QuillenTest/NewPositiveTest.lean', 'import Quillen.Algebra.A\n')
+        self.write('Tests/NewPositiveTest.lean', 'import Quillen.Algebra.A\n')
         self.rejected('missing enrollment')
         self.generate()
         self.assertEqual(check_layout(self.root)[0], [])
 
     def test_core_cannot_import_test_root_or_test_leaf(self):
-        self.write('QuillenTest/Check.lean', 'import Quillen.Algebra.A\n')
+        self.write('Tests/Check.lean', 'import Quillen.Algebra.A\n')
         self.generate()
-        for imported in ('QuillenTest', 'QuillenTest.Check'):
+        for imported in ('Tests', 'Tests.Check'):
             with self.subTest(imported=imported):
                 self.write('Quillen/Algebra/B.lean', 'import ' + imported + '\n')
                 self.rejected('Forbidden library import')
 
     def test_trust_test_cycle_is_detected(self):
-        self.write('QuillenTest/A.lean', 'import QuillenTest.B\n')
-        self.write('QuillenTest/B.lean', 'import QuillenTest.A\n')
+        self.write('Tests/A.lean', 'import Tests.B\n')
+        self.write('Tests/B.lean', 'import Tests.A\n')
         self.generate()
         self.rejected('Project import cycle')
 
     def test_unresolved_test_import_is_detected(self):
-        self.write('QuillenTest/A.lean', 'import QuillenTest.Missing\n')
+        self.write('Tests/A.lean', 'import Tests.Missing\n')
         self.generate()
         self.rejected('Unresolved local import')
 

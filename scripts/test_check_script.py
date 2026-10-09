@@ -51,8 +51,8 @@ fi
             'python3 scripts/check_library_layout.py',
             'python3 scripts/check_placeholders.py',
             'python3 -m unittest discover -s scripts -p test_*.py',
-            'lake --rehash build Quillen QuillenTest',
-            'lake env lean -j2 QuillenTest/Axioms.lean',
+            'lake --rehash build Quillen Tests',
+            'lake env lean -j2 Tests/Axioms.lean',
             'lake --rehash build',
             'lake env lean -j2 Audit.lean',
         ]

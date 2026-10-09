@@ -10,6 +10,8 @@ entrypoints and generated whole-topic imports are also available.
 | `Quillen.CategoryTheory.ExactCategory.Basic` | Exact structures and conflations |
 | `Quillen.CategoryTheory.QConstruction.Basic` | Quillen's Q-construction |
 | `Quillen.KTheory.API` | K-groups, exact-functor maps, equivalences, and small models |
+| `Quillen.Waldhausen.Basic` | Waldhausen structures, cofibrations, and weak equivalences |
+| `Quillen.Waldhausen.KTheory` | Connective K-groups from the S-construction |
 | `Quillen.Devissage.Homotopical` | Finite-filtration dévissage |
 | `Quillen.Localization.Serre.LocalizationTheorem` | Connective Serre localization |
 | `Quillen.GTheory.FiniteModules.LocalizationSequence` | Finite-module G-localization |
@@ -45,6 +47,18 @@ the composite pointwise:
 `SmallExactCategory.ofExactStructure E` bundles the input, and
 `SmallExactCategory.KFunctor n` gives the corresponding group-valued functor.
 These interfaces reuse the same K-groups and canonical maps.
+
+## Waldhausen's S-construction
+
+For `W : Quillen.Waldhausen.Structure C`, the structure specifies cofibrations,
+weak equivalences, and a zero object. `W.Delooping` realizes the diagonal of
+the S-construction nerve, `W.kBasepoint` is its chosen point, and `W.K n` gives
+the associated connective groups.
+
+This interface is separate from exact-category Q-theory. The canonical
+comparison for exact categories is provided by
+`Quillen.Waldhausen.QuillenComparison.Equivalence`. Other models and comparison
+maps retain their own hypotheses.
 
 ## Localization and dévissage
 

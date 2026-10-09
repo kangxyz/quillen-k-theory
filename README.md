@@ -2,18 +2,12 @@
 
 [![CI](https://github.com/kangxyz/quillen-k-theory/actions/workflows/ci.yml/badge.svg)](https://github.com/kangxyz/quillen-k-theory/actions/workflows/ci.yml)
 
-A Lean 4 library for exact categories and connective algebraic K-theory, built
-on mathlib.
+A Lean library for Quillen K-theory and related mathematics, built on mathlib.
 
-For an exact category $\mathcal E$, the K-groups are defined by
-
-$$
-K_n(\mathcal E) = \pi_{n+1}(BQ\mathcal E, 0), \qquad n \geq 0.
-$$
-
-The library develops functoriality, dévissage, Serre localization, and geometric
-K/G-theory, together with categorical homotopy, Waldhausen S-constructions, and
-perfect-complex models.
+The library includes exact categories, Quillen's Q-construction, Waldhausen's
+S-construction, and geometric K/G-theory, together with their algebraic,
+categorical, and homotopical foundations. Its current models are connective;
+the project is open to further constructions and comparisons.
 
 The project is under development. See [mathematical scope](docs/Scope.md) for
 the hypotheses of the available results and the remaining comparison theorems.
@@ -45,7 +39,7 @@ import Quillen.KTheory.API
 
 ## Example
 
-Exact functors induce the canonical maps on K-groups:
+In the exact-category interface, exact functors induce maps on K-groups:
 
 ```lean
 import Quillen.KTheory.API

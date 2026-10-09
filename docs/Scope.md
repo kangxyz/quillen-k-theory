@@ -1,8 +1,9 @@
 # Mathematical scope
 
-The library develops connective K-theory through exact categories and Quillen's
-Q-construction. It is not yet a complete formalization of algebraic K-theory.
-The Lean statements specify the exact hypotheses of each result.
+The library develops algebraic K-theory through several constructions, including
+Quillen's Q-construction and Waldhausen's S-construction. The present models are
+connective, and the formalization is incomplete. The Lean statements specify
+the objects, hypotheses, and comparisons of each result.
 
 ## Available interfaces and results
 

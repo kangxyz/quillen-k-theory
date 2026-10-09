@@ -9,7 +9,7 @@ from library_sources import (downstream_sources, lean_imports, module_name,
                              module_path, source_modules, test_modules)
 
 ROOT = Path(__file__).resolve().parents[1]
-FORBIDDEN = {'audit', 'audits', 'consumer', 'test', 'tests', 'quillentest'}
+FORBIDDEN = {'audit', 'audits', 'consumer', 'test', 'tests'}
 
 
 def import_cycles(graph: dict[str, set[str]]) -> list[str]:
@@ -38,7 +38,7 @@ def import_cycles(graph: dict[str, set[str]]) -> list[str]:
 def check_layout(root: Path) -> tuple[list[str], int]:
     errors = []
     modules, tests = source_modules(root), test_modules(root)
-    loose = {path.name for path in root.glob('*.lean')} - {'Quillen.lean', 'QuillenTest.lean'}
+    loose = {path.name for path in root.glob('*.lean')} - {'Quillen.lean', 'Tests.lean'}
     if loose:
         errors.append(f'Unclassified project-root Lean files: {sorted(loose)}')
     stale = stale_files(root)
@@ -66,7 +66,7 @@ def check_layout(root: Path) -> tuple[list[str], int]:
             # Production and trust-test modules resolve in the root package;
             # independently configured Consumer modules resolve in their package.
             target = None
-            if parts[0] in {'Quillen', 'QuillenTest'}:
+            if parts[0] in {'Quillen', 'Tests'}:
                 target = root / module_path(imported)
             elif relative in clients and parts[0] in client_roots:
                 target = client_root / module_path(imported)
@@ -77,7 +77,7 @@ def check_layout(root: Path) -> tuple[list[str], int]:
                 errors.append(f'Implementation imports broad facade in {relative}: {imported}')
         if relative in modules | tests:
             graph[module_name(relative)] = {name for name in imports
-                if name.split('.')[0] in {'Quillen', 'QuillenTest'}}
+                if name.split('.')[0] in {'Quillen', 'Tests'}}
     errors.extend('Project import cycle: ' + cycle for cycle in import_cycles(graph))
     return errors, len(modules)
 

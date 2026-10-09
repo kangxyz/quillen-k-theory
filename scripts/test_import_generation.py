@@ -136,7 +136,7 @@ class ImportGenerationTests(unittest.TestCase):
 
 
     def test_trust_root_enrolls_all_tests_without_core_imports(self):
-        directory = self.root / 'QuillenTest'
+        directory = self.root / 'Tests'
         directory.mkdir()
         (directory / 'Axioms.lean').write_text('import Quillen\n')
         self.generate()
@@ -144,13 +144,13 @@ class ImportGenerationTests(unittest.TestCase):
                          ['Quillen.Algebra', 'Quillen.Algebra.A', 'Quillen.Algebra.Z',
                           'Quillen.Examples.Client', 'Quillen.Library', 'Quillen.Resolution',
                           'Quillen.Scheme'])
-        self.assertEqual(lean_imports((self.root / 'QuillenTest.lean').read_text()),
-                         ['QuillenTest.Axioms'])
+        self.assertEqual(lean_imports((self.root / 'Tests.lean').read_text()),
+                         ['Tests.Axioms'])
         (directory / 'Future.lean').write_text('import Quillen.Algebra.A\n')
-        self.assertEqual(stale_files(self.root), [Path('QuillenTest.lean')])
+        self.assertEqual(stale_files(self.root), [Path('Tests.lean')])
         self.generate()
-        self.assertEqual(lean_imports((self.root / 'QuillenTest.lean').read_text()),
-                         ['QuillenTest.Axioms', 'QuillenTest.Future'])
+        self.assertEqual(lean_imports((self.root / 'Tests.lean').read_text()),
+                         ['Tests.Axioms', 'Tests.Future'])
 
 
 if __name__ == '__main__':

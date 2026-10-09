@@ -17,9 +17,9 @@ python3 scripts/generate_imports.py --check
 python3 scripts/check_library_layout.py
 python3 scripts/check_placeholders.py
 python3 -m unittest discover -s scripts -p 'test_*.py'
-lake "${lake_args[@]}" build Quillen QuillenTest
+lake "${lake_args[@]}" build Quillen Tests
 # Replay explicitly: cached olean files do not re-execute run_cmd trust tests.
-lake env lean -j2 QuillenTest/Axioms.lean
+lake env lean -j2 Tests/Axioms.lean
 consumer="$PWD/examples/downstream"
 mkdir -p "$consumer/.lake"
 # The client has its own package configuration, manifest and build outputs.

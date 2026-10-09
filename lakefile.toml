@@ -1,6 +1,6 @@
 name = "quillen-k-theory"
 version = "0.1.0"
-description = "Exact categories, Quillen K/G-theory, and homotopical foundations"
+description = "A Lean library for Quillen K-theory and related mathematics."
 keywords = ["math", "algebraic-k-theory", "category-theory", "topology"]
 homepage = "https://github.com/kangxyz/quillen-k-theory"
 license = "Apache-2.0"
@@ -10,7 +10,7 @@ defaultTargets = ["Quillen"]
 name = "Quillen"
 
 [[lean_lib]]
-name = "QuillenTest"
+name = "Tests"
 
 [[require]]
 name = "mathlib"

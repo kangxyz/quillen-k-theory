@@ -11,7 +11,7 @@ proofs, rather than creating empty layers for a future programme.
 | `Quillen/` | Reusable mathematics |
 | `Quillen.lean` | Generated complete import surface |
 | `Quillen/<Subject>.lean` | Whole-topic imports; generated or manually maintained |
-| `QuillenTest/` | Maintained tests and the library axiom audit |
+| `Tests/` | Maintained tests and the library axiom audit |
 | `examples/downstream/` | Independently configured client package |
 | `docs/` | Reader documentation for the library |
 | `scripts/` | Import generation, cache acquisition, and checks |
