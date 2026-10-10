@@ -1,4 +1,12 @@
-import Quillen.Resolution.Union
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Resolution.Union
 
 /-!
 # Quillen's finite-resolution theorem
@@ -14,6 +22,8 @@ closure of every finite-length stratum, and identifies the ambient Q-nerve
 with their genuine filtered colimit. No homotopy equivalence or comma
 contractibility is part of the input.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -71,7 +81,9 @@ def KEquiv (h : E.ResolutionHypothesis P) (n : ℕ) :
   MulEquiv.ofBijective (inclusionKMap E P n) (inclusionKMap_bijective E P h n)
 
 /-- The forward homomorphism is the original canonical inclusion map. -/
-@[simp] theorem KEquiv_toMonoidHom (h : E.ResolutionHypothesis P) (n : ℕ) :
-    (KEquiv E P h n).toMonoidHom = inclusionKMap E P n := rfl
+@[simp] theorem KEquiv_coe (h : E.ResolutionHypothesis P) (n : ℕ) :
+    (↑(KEquiv E P h n) : (ExactSubcategory.exactStructure E P).K n →* E.K n) = inclusionKMap E P
+        n := rfl
+
 
 end Quillen.Resolution

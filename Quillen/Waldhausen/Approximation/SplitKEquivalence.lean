@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Approximation.SplitDeloopingEquivalence
-import Quillen.Topology.HomotopyGroups.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Approximation.SplitDeloopingEquivalence
+public import Quillen.Topology.HomotopyGroups.Equivalence
 
 /-!
 # The canonical change-of-cofibrations K-map is an equivalence
@@ -8,6 +16,8 @@ The forward map is the previously defined `splitComplexSubcategoryKMap`,
 including its canonical zero-object rebasing. Its bijectivity follows from
 the constructed equivalence of the actual S-construction realizations.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -101,9 +111,11 @@ def splitComplexSubcategoryKEquiv (n : ℕ) :
   MulEquiv.ofBijective (splitComplexSubcategoryKMap P n)
     (splitComplexSubcategoryKMap_bijective P hcone n)
 
-@[simp]
-theorem splitComplexSubcategoryKEquiv_toMonoidHom (n : ℕ) :
-    (splitComplexSubcategoryKEquiv P hcone n).toMonoidHom =
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem splitComplexSubcategoryKEquiv_coe (n : ℕ) :
+    (↑(splitComplexSubcategoryKEquiv P hcone n) : (splitComplexSubcategory P).K n →*
+        (complexSubcategory P).K n) =
       splitComplexSubcategoryKMap P n := rfl
+
 
 end Quillen.Waldhausen

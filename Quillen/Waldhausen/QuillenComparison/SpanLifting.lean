@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.QuillenComparison.SpanNaturality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.SpanNaturality
 
 /-! # Lifting Q-naturality to the unique apex isomorphism
 
@@ -6,6 +14,8 @@ Equality in Q is exactly equality up to an isomorphism of actual admissible
 span apices. Commuting endpoint isomorphisms therefore lift uniquely to the
 span representatives; no quotient relation beyond apex isomorphism is used.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

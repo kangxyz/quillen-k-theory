@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Duality.ComplexSubcategory
-import Quillen.Waldhausen.Fibration.Rows.EquivalenceJoint
+module
+
+public import Quillen.Waldhausen.Duality.ComplexSubcategory
+public import Quillen.Waldhausen.Fibration.Rows.EquivalenceJoint
 
 /-!
 # Actual joint cocylinders through the opposite cochain equivalence
@@ -18,6 +20,8 @@ universal property, factorization equation, and quasi-isomorphism projection.
 The only extra closure assumption is the original negative shift; all cone
 and exactness properties are discharged from the actual structures.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -1,9 +1,19 @@
-import Quillen.Topology.HELP.StrictHomotopyEquiv
-import Quillen.Topology.HomotopyFiber.BoundaryCorrection
-import Quillen.Topology.HELP.Compact
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.StrictHomotopyEquiv
+public import Quillen.Topology.HomotopyFiber.BoundaryCorrection
+public import Quillen.Topology.HELP.Compact
 
 /-! Actual homotopy equivalences satisfy HELP with the whole prescribed
 boundary homotopy retained exactly. -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory
@@ -15,7 +25,7 @@ namespace Quillen.TheoremA
 No based/relative inverse data are assumed. -/
 theorem homotopyEquiv_HELP {A B X Y : TopCat.{u}} {i : A ⟶ B}
     (hi : homotopyExtensionProperty i) (e : ContinuousMap.HomotopyEquiv X Y)
-    (a : C(A,X)) (b : C(B,Y)) (H : (e.toFun.comp a).Homotopy (b.comp i.hom)) :
+    (a : C(A, X)) (b : C(B, Y)) (H : (e.toFun.comp a).Homotopy (b.comp i.hom)) :
     ∃ c : C(B,X), c.comp i.hom = a ∧ ∃ K : (e.toFun.comp c).Homotopy b,
       ∀ t x, K (t,i x) = H (t,x) := by
   obtain ⟨Q,hQ₀,hQA⟩ := homotopyExtensionProperty_continuous hi Y b

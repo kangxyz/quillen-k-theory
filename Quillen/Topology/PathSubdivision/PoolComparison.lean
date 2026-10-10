@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.HomotopyPullback.CompactComparison
-import Quillen.Topology.HomotopyGroups.WeakLocality
-import Quillen.Topology.PathSubdivision.SlabCover
+module
+
+public import Quillen.Topology.HomotopyPullback.CompactComparison
+public import Quillen.Topology.HomotopyGroups.WeakLocality
+public import Quillen.Topology.PathSubdivision.SlabCover
 
 /-!
 # Weak comparison with the actual one-chart and two-chart path pools
@@ -17,6 +19,8 @@ The local assumption is universal strict-pullback comparison weakness, not a
 compactness assumption on an open parameter locus. Compact HLP of each local
 restriction is a proved sufficient input.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,14 +32,14 @@ namespace Quillen
 specified universe. No lifting operation or global inverse is part of this
 hypothesis. -/
 def UniversalStrictPullbackComparison {E B : Type u}
-    [TopologicalSpace E] [TopologicalSpace B] (p : C(E,B)) : Prop :=
+    [TopologicalSpace E] [TopologicalSpace B] (p : C(E, B)) : Prop :=
   ∀ (D : Type u) [TopologicalSpace D] (f : C(D,B)),
     IsWeakHomotopyEquivalence (HomotopyPullback.strictPullbackInclusion p f)
 
 /-- Actual compact HLP supplies the universal comparison premise. -/
 theorem CompactHomotopyLiftingProperty.universalStrictPullbackComparison
     {E B : Type u} [TopologicalSpace E] [TopologicalSpace B]
-    {p : C(E,B)} (hp : CompactHomotopyLiftingProperty p) :
+    {p : C(E, B)} (hp : CompactHomotopyLiftingProperty p) :
     UniversalStrictPullbackComparison p :=
   fun _ _ f ↦ HomotopyPullback.strictPullbackInclusion_isWeakHomotopyEquivalence_of_compact p f hp
 
@@ -43,7 +47,7 @@ namespace PathSubdivision
 open HomotopyPullback CubicalSubdivision
 variable {D E B : Type u}
   [TopologicalSpace D] [TopologicalSpace E] [TopologicalSpace B]
-  (p : C(E,B)) (γ : C(D,C(unitInterval,B)))
+  (p : C(E, B)) (γ : C(D, C(unitInterval, B)))
 
 /-- The endpoint of the original family, with no choice of a path representative. -/
 def endpoint : C(D,B) := ⟨fun d ↦ γ d 1,by fun_prop⟩
@@ -170,7 +174,8 @@ theorem poolComparison_chart_naturality
     (P : Set (HomotopyPullback p (endpoint γ)))
     (hP : ∀ z : StrictPool p γ,strictPullbackInclusion p (endpoint γ) z ∈ P)
     (U : Set B) (hU : chartSet p γ U ⊆ P) :
-    ((poolChartHomeomorph p γ P U hU).trans (chartTargetHomeomorph p γ U)).toHomotopyEquiv.toFun.comp
+    ((poolChartHomeomorph p γ P U hU).trans (chartTargetHomeomorph p γ
+      U)).toHomotopyEquiv.toFun.comp
       (restriction (poolComparison p γ P hP) {z : P | z.1 ∈ chartSet p γ U}) =
     (strictPullbackInclusion (restriction p U) (chartEndpoint γ U)).comp
       (chartSourceHomeomorph p γ U).toHomotopyEquiv.toFun := rfl
@@ -197,7 +202,7 @@ abbrev TwoPool (U V : Set B) := chartSet p γ U ∪ chartSet p γ V
 
 /-- The canonical pool comparison stores the literal constant terminal path. -/
 def twoPoolComparison (U V : Set B)
-    (hcover : ∀ d,γ d ∈ pathSet U ∨ γ d ∈ pathSet V) :
+    (hcover : ∀ d, γ d ∈ pathSet U ∨ γ d ∈ pathSet V) :
     C(StrictPool p γ,TwoPool p γ U V) :=
   poolComparison p γ (TwoPool p γ U V) (fun z ↦ by
     rcases hcover z.1.1 with h | h
@@ -210,27 +215,27 @@ def twoPoolForget (U V : Set B) :
     C(TwoPool p γ U V,HomotopyPullback p (endpoint γ)) := ⟨Subtype.val,by fun_prop⟩
 
 @[simp] theorem twoPoolForget_comparison (U V : Set B)
-    (hcover : ∀ d,γ d ∈ pathSet U ∨ γ d ∈ pathSet V) :
+    (hcover : ∀ d, γ d ∈ pathSet U ∨ γ d ∈ pathSet V) :
     (twoPoolForget p γ U V).comp (twoPoolComparison p γ U V hcover) =
       strictPullbackInclusion p (endpoint γ) := rfl
 
 @[simp] theorem twoPoolComparison_parameter (U V : Set B)
-    (hcover : ∀ d,γ d ∈ pathSet U ∨ γ d ∈ pathSet V) (z : StrictPool p γ) :
+    (hcover : ∀ d, γ d ∈ pathSet U ∨ γ d ∈ pathSet V) (z : StrictPool p γ) :
     (twoPoolComparison p γ U V hcover z).1.1.1 = z.1.1 := rfl
 
 @[simp] theorem twoPoolComparison_source (U V : Set B)
-    (hcover : ∀ d,γ d ∈ pathSet U ∨ γ d ∈ pathSet V) (z : StrictPool p γ) :
+    (hcover : ∀ d, γ d ∈ pathSet U ∨ γ d ∈ pathSet V) (z : StrictPool p γ) :
     (twoPoolComparison p γ U V hcover z).1.1.2.1 = z.1.2 := rfl
 
 @[simp] theorem twoPoolComparison_path (U V : Set B)
-    (hcover : ∀ d,γ d ∈ pathSet U ∨ γ d ∈ pathSet V) (z : StrictPool p γ) :
+    (hcover : ∀ d, γ d ∈ pathSet U ∨ γ d ∈ pathSet V) (z : StrictPool p γ) :
     (twoPoolComparison p γ U V hcover z).1.1.2.2 =
       ContinuousMap.const unitInterval (γ z.1.1 1) := rfl
 
 /-- Enter the same pool from an original lift of the slab's initial value,
 using the entire original family path as the free stored path. -/
 def twoPoolEntrance (U V : Set B)
-    (hcover : ∀ d,γ d ∈ pathSet U ∨ γ d ∈ pathSet V) :
+    (hcover : ∀ d, γ d ∈ pathSet U ∨ γ d ∈ pathSet V) :
     C({z : D × E // p z.2 = γ z.1 0},TwoPool p γ U V) where
   toFun z := ⟨⟨(z.1.1,z.1.2,γ z.1.1),z.2.symm,rfl⟩,by
     rcases hcover z.1.1 with h | h
@@ -239,17 +244,17 @@ def twoPoolEntrance (U V : Set B)
   continuous_toFun := by fun_prop
 
 @[simp] theorem twoPoolEntrance_parameter (U V : Set B)
-    (hcover : ∀ d,γ d ∈ pathSet U ∨ γ d ∈ pathSet V)
+    (hcover : ∀ d, γ d ∈ pathSet U ∨ γ d ∈ pathSet V)
     (z : {z : D × E // p z.2 = γ z.1 0}) :
     (twoPoolEntrance p γ U V hcover z).1.1.1 = z.1.1 := rfl
 
 @[simp] theorem twoPoolEntrance_source (U V : Set B)
-    (hcover : ∀ d,γ d ∈ pathSet U ∨ γ d ∈ pathSet V)
+    (hcover : ∀ d, γ d ∈ pathSet U ∨ γ d ∈ pathSet V)
     (z : {z : D × E // p z.2 = γ z.1 0}) :
     (twoPoolEntrance p γ U V hcover z).1.1.2.1 = z.1.2 := rfl
 
 @[simp] theorem twoPoolEntrance_path (U V : Set B)
-    (hcover : ∀ d,γ d ∈ pathSet U ∨ γ d ∈ pathSet V)
+    (hcover : ∀ d, γ d ∈ pathSet U ∨ γ d ∈ pathSet V)
     (z : {z : D × E // p z.2 = γ z.1 0}) :
     (twoPoolEntrance p γ U V hcover z).1.1.2.2 = γ z.1.1 := rfl
 
@@ -258,7 +263,7 @@ whole-path charts and their actual overlap. The original parameter space and
 its open chart loci need not be compact or locally compact. -/
 theorem twoPoolComparison_isWeakHomotopyEquivalence
     (U V : Set B) (hU : IsOpen U) (hV : IsOpen V)
-    (hcover : ∀ d,γ d ∈ pathSet U ∨ γ d ∈ pathSet V)
+    (hcover : ∀ d, γ d ∈ pathSet U ∨ γ d ∈ pathSet V)
     (hpU : UniversalStrictPullbackComparison (restriction p U))
     (hpV : UniversalStrictPullbackComparison (restriction p V))
     (hpUV : UniversalStrictPullbackComparison (restriction p (U ∩ V))) :
@@ -289,7 +294,7 @@ theorem twoPoolComparison_isWeakHomotopyEquivalence
 arbitrary-parameter pool comparison. No global HLP is assumed. -/
 theorem twoPoolComparison_isWeakHomotopyEquivalence_of_compact
     (U V : Set B) (hU : IsOpen U) (hV : IsOpen V)
-    (hcover : ∀ d,γ d ∈ pathSet U ∨ γ d ∈ pathSet V)
+    (hcover : ∀ d, γ d ∈ pathSet U ∨ γ d ∈ pathSet V)
     (hpU : CompactHomotopyLiftingProperty (restriction p U))
     (hpV : CompactHomotopyLiftingProperty (restriction p V))
     (hpUV : CompactHomotopyLiftingProperty (restriction p (U ∩ V))) :

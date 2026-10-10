@@ -1,12 +1,22 @@
-import Quillen.Topology.Realization.PrismCoordinates
-import Mathlib.Topology.Order.Lattice
-import Mathlib.Tactic.FieldSimp
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.PrismCoordinates
+public import Mathlib.Topology.Order.Lattice
+public import Mathlib.Tactic.FieldSimp
 
 /-! # Explicit simplex-boundary cylinder retraction
 
 Radial projection away from the point at height two over the barycenter retracts
 `Δⁿ × I` onto `(∂Δⁿ × I) ∪ (Δⁿ × {0})`. The formula works in dimension zero.
 -/
+@[expose] public section
+
 
 noncomputable section
 

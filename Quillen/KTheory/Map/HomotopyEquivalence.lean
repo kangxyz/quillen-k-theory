@@ -1,5 +1,13 @@
-import Quillen.KTheory.Map.Functoriality
-import Quillen.Topology.HomotopyGroups.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.Map.Functoriality
+public import Quillen.Topology.HomotopyGroups.Equivalence
 
 /-!
 # Canonical K-group maps from unbased classifying-space equivalences
@@ -8,6 +16,8 @@ The exact functor's normalized Q-functor already preserves the actual zero
 basepoints. An unbased homotopy equivalence with that forward map therefore
 suffices to prove its original K-map bijective in every nonnegative degree.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v u
@@ -40,10 +50,11 @@ def KEquivOfHomotopyEquiv (F : ExactFunctor EC ED)
     EC.K n ≃* ED.K n :=
   MulEquiv.ofBijective (F.KMap n) (F.KMap_bijective_of_homotopyEquiv e he n)
 
-@[simp]
-theorem KEquivOfHomotopyEquiv_toMonoidHom (F : ExactFunctor EC ED)
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem KEquivOfHomotopyEquiv_coe (F : ExactFunctor EC ED)
     (e : ContinuousMap.HomotopyEquiv EC.KSpace ED.KSpace)
     (he : e.toFun = (classifyingSpaceMap F.normalizedQ).hom) (n : ℕ) :
-    (F.KEquivOfHomotopyEquiv e he n).toMonoidHom = F.KMap n := rfl
+    (↑(F.KEquivOfHomotopyEquiv e he n) : EC.K n →* ED.K n) = F.KMap n := rfl
+
 
 end Quillen.ExactFunctor

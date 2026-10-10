@@ -1,4 +1,12 @@
-import Quillen.Resolution.Theorem
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Resolution.Theorem
 
 /-!
 # Public Quillen finite-resolution theorem
@@ -9,3 +17,4 @@ and the standard resolving closure conditions. No uniform bound is required.
 The exact Q-inclusion is the forward map of the classifying-space homotopy
 equivalence. Length-one and uniformly bounded specializations remain available.
 -/
+@[expose] public section

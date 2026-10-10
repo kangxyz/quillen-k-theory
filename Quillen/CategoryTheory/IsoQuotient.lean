@@ -1,4 +1,12 @@
-import Mathlib.CategoryTheory.Bicategory.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.CategoryTheory.Bicategory.Basic
 
 /-!
 # The category of isomorphism classes of 1-morphisms
@@ -9,6 +17,8 @@ well-defined; the unitors and associator prove the category laws in the quotient
 
 No choice of representatives is used to define composition.
 -/
+@[expose] public section
+
 
 universe w v u
 

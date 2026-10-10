@@ -1,6 +1,15 @@
-import Quillen.Waldhausen.Cylinder.AmbientRelative
-import Quillen.Waldhausen.Cylinder.SubcategoryPreservation
-import Quillen.Waldhausen.ExtensionCategory.Embeddings
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Cylinder.AmbientRelative
+public import Quillen.Waldhausen.Cylinder.SubcategoryPreservation
+public import Quillen.Waldhausen.ExtensionCategory.Embeddings
+public import Quillen.Waldhausen.SplitComplexes.FunctorialFactorization
 
 /-! # The actual cylinder as a functor of cofibration arrows
 
@@ -9,6 +18,8 @@ The target uses the genuine Reedy cofibrations on cofibration arrows. Relative
 cofibration preservation is derived from the actual cylinder quotient, rather
 than included as an input cylinder axiom.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

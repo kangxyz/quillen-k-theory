@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.SConstruction.Rows.Reindex
-import Quillen.Waldhausen.ExtensionCategory.Functoriality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.Reindex
+public import Quillen.Waldhausen.ExtensionCategory.Functoriality
 
 /-! # Genuine exact-functor postcomposition of quotient rows
 
@@ -7,6 +15,8 @@ The all-triples Reedy condition is preserved by the proved exact
 cofibration-arrow functor. Actual row pushouts are preserved by their
 pointwise universal properties and the original exact functor.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v' u'' v''
@@ -80,9 +90,13 @@ theorem postcompose_exact (n : SimplexCategory) :
     postcompose V V (IsExact.id V.cof V.weq) n = 𝟭 (Obj V n) := by
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 
-@[simp] theorem postcompose_comp (U : Structure E) {G : D ⥤ E}
+/-- Composition simplifies by combining the two displayed maps with their actual intermediate data.
+-/
+@[simp] theorem postcompose_comp_postcompose (U : Structure E) {G : D ⥤ E}
     (hG : IsExact W.cof W.weq U.cof U.weq G) (n : SimplexCategory) :
-    postcompose V U (hF.comp hG) n = postcompose V W hF n ⋙ postcompose W U hG n := by
+    postcompose V W hF n ⋙ postcompose W U hG n =
+      postcompose V U (hF.comp hG) n := by
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
+
 
 end Quillen.Waldhausen.QuotientRows

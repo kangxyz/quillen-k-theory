@@ -1,8 +1,18 @@
-import Quillen.Topology.Realization.ProductSimplex
-import Quillen.Topology.Realization.SimplexHomotopy
-import Quillen.CategoryTheory.TheoremB.Naturality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.ProductSimplex
+public import Quillen.Topology.Realization.SimplexHomotopy
+public import Quillen.CategoryTheory.TheoremB.Naturality
 
 /-! Two-simplex coherence for inverse natural-isomorphism homotopies. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite MonoidalCategory CartesianMonoidalCategory Convexity
 open scoped Simplicial Topology unitInterval
@@ -158,9 +168,16 @@ def triangleEdge (i j : Fin 3) (t : unitInterval) : StdSimplex ℝ (Fin 3) :=
 private theorem triangleEdge_face (i : Fin 3) (t : unitInterval) :
     triangleEdge (i.succAbove 0) (i.succAbove 1) t =
       StdSimplex.map (SimplexCategory.δ i).toOrderHom (StdSimplex.homeomorphI.symm t) := by
-  change _ = StdSimplex.map (SimplexCategory.δ i).toOrderHom
-    (StdSimplex.duple 0 1 (sub_nonneg.mpr t.2.2) t.2.1 (by ring))
-  rw [StdSimplex.map_duple]
+  have ht : StdSimplex.homeomorphI.symm t =
+      StdSimplex.duple 0 1 (unitInterval.nonneg (unitInterval.symm t))
+        (unitInterval.nonneg t) (by simp) := by
+    apply StdSimplex.homeomorphI.injective
+    apply Subtype.ext
+    rw [Homeomorph.apply_symm_apply, StdSimplex.homeomorphI_apply_coe,
+      StdSimplex.weights_duple, Finsupp.add_apply,
+      Finsupp.single_eq_of_ne (by decide : (1 : Fin 2) ≠ 0),
+      Finsupp.single_eq_same, zero_add]
+  rw [ht, StdSimplex.map_duple]
   rfl
 
 /-- The barycentric family restricts on each edge to its transformation. -/

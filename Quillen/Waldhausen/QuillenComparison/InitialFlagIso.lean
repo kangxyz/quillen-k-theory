@@ -1,7 +1,17 @@
-import Quillen.Waldhausen.QuillenComparison.InitialFlag
-import Quillen.Waldhausen.QuillenComparison.RowFaithful
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.InitialFlag
+public import Quillen.Waldhausen.QuillenComparison.RowFaithful
 
 /-! # Exact row isomorphisms from compatible initial subobjects -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -47,7 +57,8 @@ def initialFlagIsoOfTop {F G : Row E n}
   NatIso.ofComponents e (by
     intro i j f
     let : Mono ((initialFlag E G).map (homOfLE (Fin.le_last j))) :=
-      E.mono_of_inflation (G.simplex.cofibration 0 0 j (Fin.last n.len) (Fin.zero_le _) (Fin.le_last j))
+      E.mono_of_inflation (G.simplex.cofibration 0 0 j (Fin.last n.len) (Fin.zero_le _)
+        (Fin.le_last j))
     apply (cancel_mono ((initialFlag E G).map (homOfLE (Fin.le_last j)))).1
     rw [Category.assoc, ← h j, ← Category.assoc, ← CategoryTheory.Functor.map_comp]
     rw [Category.assoc, ← CategoryTheory.Functor.map_comp]

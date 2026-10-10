@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremB.RowDegeneracies
-import Mathlib.AlgebraicTopology.SimplicialSet.Splitting
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.RowDegeneracies
+public import Mathlib.AlgebraicTopology.SimplicialSet.Splitting
 
 /-!
 # The splitting of the realized simplicial replacement
@@ -8,6 +16,8 @@ The Eilenberg–Zilber decomposition of base chains splits each topological
 replacement row into the nondegenerate base summands and all their unique
 degeneracies. The splitting uses the actual realization topologies.
 -/
+@[expose] public section
+
 
 noncomputable section
 

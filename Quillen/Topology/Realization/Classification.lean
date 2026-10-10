@@ -1,5 +1,13 @@
-import Mathlib.AlgebraicTopology.SimplicialSet.Nerve
-import Mathlib.CategoryTheory.Iso
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.AlgebraicTopology.SimplicialSet.Nerve
+public import Mathlib.CategoryTheory.Iso
 
 /-!
 # A rectangular model of the classification diagonal
@@ -8,6 +16,8 @@ An n-simplex is a square ordinal diagram whose vertical arrows are
 isomorphisms. Diagonal evaluation maps it to the ordinary nerve, and
 constant vertical diagrams give a strict section.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -29,10 +39,13 @@ def gridMap {m n : SimplexCategory} (α : m ⟶ n) : Grid m ⥤ Grid n :=
   (show Monotone (fun p : Grid m ↦ (α.toOrderHom p.1, α.toOrderHom p.2)) from
     fun _ _ h ↦ ⟨α.toOrderHom.monotone h.1, α.toOrderHom.monotone h.2⟩).functor
 
+/-- The diagonal functor from the ordinal vertex category into the square grid, sending `i` to
+`(i, i)`. -/
 def diagonal (n : SimplexCategory) : Fin (n.len + 1) ⥤ Grid n :=
   (show Monotone (fun i : Fin (n.len + 1) ↦ ((i, i) : Grid n)) from
     fun _ _ h ↦ ⟨h, h⟩).functor
 
+/-- The second-coordinate projection from the square grid to the ordinal vertex category. -/
 def second (n : SimplexCategory) : Grid n ⥤ Fin (n.len + 1) :=
   (show Monotone (fun p : Grid n ↦ p.2) from fun _ _ h ↦ h.2).functor
 
@@ -45,7 +58,7 @@ def IsVerticalIso (F : Grid n ⥤ D) : Prop :=
 
 theorem IsVerticalIso.precomp {m : SimplexCategory} {F : Grid n ⥤ D}
     (hF : IsVerticalIso F) (α : m ⟶ n) : IsVerticalIso (gridMap α ⋙ F) :=
-  fun s t i h ↦ hF _ _ _ (α.toOrderHom.monotone h)
+  fun _ _ _ h ↦ hF _ _ _ (α.toOrderHom.monotone h)
 
 /-- The diagonal classification simplicial set in the rectangular-grid model. -/
 def sSet (D : Type u) [Category.{v} D] : SSet.{max u v} where
@@ -110,7 +123,7 @@ theorem transport_trans (F : Grid n ⥤ D) (hF : IsVerticalIso F)
 theorem transport_hom_of_le (F : Grid n ⥤ D) (hF : IsVerticalIso F)
     (s t i : Fin (n.len + 1)) (hst : s ≤ t) :
     (transport F hF s t i).hom = verticalMap F s t i hst := by
-  haveI : IsIso (verticalMap F 0 s i (Fin.zero_le _)) := hF 0 s i (Fin.zero_le _)
+  have : IsIso (verticalMap F 0 s i (Fin.zero_le _)) := hF 0 s i (Fin.zero_le _)
   change inv (verticalMap F 0 s i (Fin.zero_le _)) ≫ verticalMap F 0 t i (Fin.zero_le _) = _
   rw [← verticalMap_comp F 0 s t i (Fin.zero_le _) hst]
   simp

@@ -1,6 +1,14 @@
-import Quillen.Topology.HomotopyFiber.ContractibleBase
-import Quillen.Topology.HELP.StrictPullback
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceCancellation
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.ContractibleBase
+public import Quillen.Topology.HELP.StrictPullback
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceCancellation
 
 /-! # Original weak maps over contracted bases
 
@@ -8,6 +16,8 @@ Genuine strict-fiber inclusion equivalences and actual pullback fiber
 homeomorphisms transfer the complete empty-aware weak property. No HELP
 property on arbitrary compact pairs is inferred.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -19,7 +29,7 @@ variable {E F B : Type u} [TopologicalSpace E] [TopologicalSpace F] [Topological
 /-- The original total map is weak when its actual strict-fiber map is
 weak over an explicitly contracted base of genuine fibrations. -/
 theorem weak_of_strictFiber_contraction
-    (p : C(E,B)) (q : C(F,B)) (f : C(E,F)) (sq : q.comp f = p)
+    (p : C(E, B)) (q : C(F, B)) (f : C(E, F)) (sq : q.comp f = p)
     (hp : HomotopyLiftingProperty p) (hq : HomotopyLiftingProperty q)
     (b : B) (H : (ContinuousMap.id B).Homotopy (ContinuousMap.const B b))
     (hf : IsWeakHomotopyEquivalence (strictMapOver p q f sq b)) :
@@ -37,8 +47,8 @@ variable {E F B D : Type u}
 /-- Literal strict pullback maps retain the original fiber weak equivalence
 under the genuine fiber homeomorphisms. -/
 theorem strictPullbackMapOver_fiber_weak
-    (p : C(E,B)) (q : C(F,B)) (f : C(E,F)) (sq : q.comp f = p)
-    (r : C(D,B)) (d : D)
+    (p : C(E, B)) (q : C(F, B)) (f : C(E, F)) (sq : q.comp f = p)
+    (r : C(D, B)) (d : D)
     (hf : IsWeakHomotopyEquivalence (HomotopyFiber.strictMapOver p q f sq (r d))) :
     IsWeakHomotopyEquivalence
       (HomotopyFiber.strictMapOver (strictBaseProjection p r) (strictBaseProjection q r)

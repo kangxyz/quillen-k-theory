@@ -1,6 +1,14 @@
-import Quillen.Topology.HomotopyFiber.WeakContractibility
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceCancellation
-import Quillen.CategoryTheory.TheoremB.FibrationFiber
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.WeakContractibility
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceCancellation
+public import Quillen.Topology.HomotopyLifting.Basic
 
 /-! # Actual fibers of weak equivalences at all points
 
@@ -9,6 +17,8 @@ spaces and its endpoint projection has covering-homotopy lifting. This
 transfers the pointed LES calculation to arbitrary points of every actual
 homotopy fiber. No continuous choice of inverse paths is made.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -66,7 +76,8 @@ theorem pathConnectedSpace_of_weakEquivalence (f : C(X, Y))
   let z := Classical.choice (nonempty_of_weakEquivalence f hf y)
   let := subsingleton_of_weakEquivalence f hf y z 0
   let : Subsingleton (ZerothHomotopy (HomotopyFiber f y)) :=
-    (HomotopyGroup.pi0EquivZerothHomotopy (X := HomotopyFiber f y) (x := z)).symm.injective.subsingleton
+    (HomotopyGroup.pi0EquivZerothHomotopy (X := HomotopyFiber f y) (x :=
+      z)).symm.injective.subsingleton
   exact pathConnectedSpace_iff_zerothHomotopy.2 ⟨⟨ZerothHomotopy.mk z⟩, inferInstance⟩
 
 end HomotopyFiber

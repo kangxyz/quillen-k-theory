@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.ExtensionCategory.IsomorphicSources
-import Quillen.Waldhausen.ExtensionCategory.Functoriality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.IsomorphicSources
+public import Quillen.Waldhausen.ExtensionCategory.Functoriality
 
 /-! # Genuine Reedy cube tests with isomorphic horizontal sources
 
@@ -8,6 +16,8 @@ outer relative comparison has isomorphic source. Its target cofibration is
 proved using the original target-face relative pushout, not merely from
 pointwise cofibrations.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

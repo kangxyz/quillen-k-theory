@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationEquivalence
-import Quillen.Waldhausen.Fibration.MixedChainReplacement
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationEquivalence
+public import Quillen.Waldhausen.Fibration.MixedChainReplacement
 
 /-! # Actual relative-row replacement of an original coarse-weak chain
 
@@ -9,6 +17,8 @@ row. The natural projection is the original cylinder projection preceded by
 the inverse of the actual quotient-by-zero isomorphism. It is coarse-weak;
 no fine comparison or homotopy equivalence is asserted for that projection.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -55,7 +65,8 @@ def replacementInitialIso (n : SimplexCategory) :
         ((replacementChainFunctor N D n).obj G).property.2
         ((finiteReplacement D n.len).map f.hom))
 
-/-- The original cylinder projection, transported through the actual quotient-by-zero isomorphism. -/
+/-- The original cylinder projection, transported through the actual quotient-by-zero
+isomorphism. -/
 def relativeReplacementProjection (n : SimplexCategory) :
     relativeReplacement N D n ⋙ initialFiltrationFunctor N n ⟶ (coarseWeakChains N n).ι :=
   (replacementInitialIso N D n).inv ≫
@@ -63,14 +74,14 @@ def relativeReplacementProjection (n : SimplexCategory) :
 
 /-- Every projection component is literally the original two displayed factors. -/
 @[simp] theorem relativeReplacementProjection_app (n : SimplexCategory)
-    (F : CoarseWeakChain N n) (i : Fin (n.len+1)) :
+    (F : CoarseWeakChain N n) (i : Fin (n.len + 1)) :
     ((relativeReplacementProjection N D n).app F).app i =
       ((replacementInitialIso N D n).inv.app F).app i ≫
         ((finiteProjection D n.len).app F.obj).app i := rfl
 
 /-- The displayed natural projection is genuinely coarse-weak at each original vertex. -/
 theorem relativeReplacementProjection_coarse (n : SimplexCategory)
-    (F : CoarseWeakChain N n) (i : Fin (n.len+1)) :
+    (F : CoarseWeakChain N n) (i : Fin (n.len + 1)) :
     N.coarse.weq (((relativeReplacementProjection N D n).app F).app i) :=
   N.coarse.weq.comp_mem _ _ (N.coarse.weq_iso _ inferInstance)
     (MixedChainReplacement.finiteProjection_coarse N D n.len F.obj i)

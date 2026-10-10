@@ -3,8 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.ReedyLifting
-import Quillen.Waldhausen.ExtensionCategory.TransposeExact
+module
+
+public import Quillen.Waldhausen.Approximation.ReedyLifting
+public import Quillen.Waldhausen.ExtensionCategory.TransposeExact
+public import Quillen.Waldhausen.SplitComplexes.Approximation
 
 /-!
 # Semantic consumers of branching Reedy approximation
@@ -14,6 +17,8 @@ cofibrations. They retain the original four component maps, exercise strict
 commuting comparison cubes and transposition, and instantiate the construction
 for the genuine split-to-ambient complex comparison.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

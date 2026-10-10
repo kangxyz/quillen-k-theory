@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.Cylinder.Subcategory
-import Quillen.Waldhausen.ArrowCategory.Structure
-import Quillen.Waldhausen.Additivity.SplitSequence
-import Quillen.Waldhausen.ExtensionCategory.ExactTransport
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Cylinder.Subcategory
+public import Quillen.Waldhausen.ArrowCategory.Structure
+public import Quillen.Waldhausen.Additivity.SplitSequence
+public import Quillen.Waldhausen.ExtensionCategory.ExactTransport
 
 /-! # The actual joint-endpoint source functor
 
@@ -12,6 +20,8 @@ with the already exact sum of the two actual arrow evaluations. This proves
 structural exactness for any Waldhausen structure on the same full subcategory,
 in particular for both inherited isomorphism and quasi-isomorphism structures.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -72,13 +82,17 @@ def subcategoryJointSourceCoproductIso (f : Arrow P.FullSubcategory) :
     f.left ⨿ f.right ≅ subcategoryJointSource P f :=
   (coprodIsCoprod _ _).coconePointUniqueUpToIso (subcategoryJointSourceCofanIsColimit P f)
 
-@[reassoc (attr := simp)] theorem subcategoryJointSourceCoproductIso_inl (f : Arrow P.FullSubcategory) :
-    coprod.inl ≫ (subcategoryJointSourceCoproductIso P f).hom = (subcategoryJointSourceInl P).app f :=
+@[reassoc (attr := simp)] theorem subcategoryJointSourceCoproductIso_inl (f : Arrow
+    P.FullSubcategory) :
+    coprod.inl ≫ (subcategoryJointSourceCoproductIso P f).hom = (subcategoryJointSourceInl
+      P).app f :=
   IsColimit.comp_coconePointUniqueUpToIso_hom (coprodIsCoprod f.left f.right)
     (subcategoryJointSourceCofanIsColimit P f) (Discrete.mk WalkingPair.left)
 
-@[reassoc (attr := simp)] theorem subcategoryJointSourceCoproductIso_inr (f : Arrow P.FullSubcategory) :
-    coprod.inr ≫ (subcategoryJointSourceCoproductIso P f).hom = (subcategoryJointSourceInr P).app f :=
+@[reassoc (attr := simp)] theorem subcategoryJointSourceCoproductIso_inr (f : Arrow
+    P.FullSubcategory) :
+    coprod.inr ≫ (subcategoryJointSourceCoproductIso P f).hom = (subcategoryJointSourceInr
+      P).app f :=
   IsColimit.comp_coconePointUniqueUpToIso_hom (coprodIsCoprod f.left f.right)
     (subcategoryJointSourceCofanIsColimit P f) (Discrete.mk WalkingPair.right)
 
@@ -105,7 +119,8 @@ theorem subcategoryJointSourceFunctor_isExact (W : Structure P.FullSubcategory) 
       W.cof W.weq (subcategoryJointSourceFunctor P) :=
   ExtensionCategory.isExact_of_natIso (ArrowCategory.waldhausenStructure W) W
     (Additivity.sumFunctor_isExact (ArrowCategory.waldhausenStructure W) W
-      (ArrowCategory.source_exact W) (ArrowCategory.target_exact W)) (subcategoryJointSourceSumIso P)
+      (ArrowCategory.source_exact W) (ArrowCategory.target_exact W))
+        (subcategoryJointSourceSumIso P)
 
 variable [P.ContainsZero] [P.IsClosedUnderIsomorphisms]
 

@@ -1,7 +1,16 @@
-import Quillen.Waldhausen.Cylinder.Subcategory
-import Quillen.Waldhausen.Cylinder.ZeroEndpoint
-import Quillen.Waldhausen.Cylinder.Pushout
-import Quillen.Waldhausen.ArrowCategory.Structure
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Cylinder.Subcategory
+public import Quillen.Waldhausen.Cylinder.ZeroEndpoint
+public import Quillen.Waldhausen.Cylinder.Pushout
+public import Quillen.Waldhausen.ArrowCategory.Structure
+public import Quillen.Waldhausen.SplitComplexes.FunctorialFactorization
 
 /-! # Actual middle-cylinder preservation in full complex subcategories
 
@@ -10,6 +19,8 @@ along inherited admissible maps. It preserves both componentwise isomorphisms
 and componentwise quasi-isomorphisms. All statements concern the unchanged
 identity-cone cylinder and the actual full-subcategory maps.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

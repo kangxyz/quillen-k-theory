@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyGroups.Map
-import Mathlib.Topology.Homotopy.Contractible
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyGroups.Map
+public import Mathlib.Topology.Homotopy.Contractible
 
 /-!
 # The actual topological homotopy fiber
@@ -9,6 +17,8 @@ The homotopy fiber of `f : X → Y` over `y` consists of pairs `(x, γ)` with
 This is infrastructure for localization; no fiber-sequence or long-exact-sequence
 theorem is asserted merely by defining this space.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u v

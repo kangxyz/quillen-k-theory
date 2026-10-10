@@ -1,8 +1,16 @@
-import Quillen.KTheory.FundamentalGroup.Basic
-import Quillen.CategoryTheory.QConstruction.Connected
-import Quillen.KTheory.GrothendieckGroup.Basic
-import Quillen.Topology.ClassifyingSpace.PointedFunctor
-import Mathlib.GroupTheory.Subgroup.Centralizer
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.FundamentalGroup.Basic
+public import Quillen.CategoryTheory.QConstruction.Connected
+public import Quillen.KTheory.GrothendieckGroup.Basic
+public import Quillen.Topology.ClassifyingSpace.PointedFunctor
+public import Mathlib.GroupTheory.Subgroup.Centralizer
 
 /-!
 # Canonical object classes in homotopical Quillen K₀
@@ -12,6 +20,8 @@ the object itself. Their realized paths form its canonical based K₀ loop.
 We work with the genuine fundamental groupoid and the standard π₁ group
 isomorphism. The full Grothendieck comparison is not assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v u w
@@ -261,7 +271,7 @@ instance kZeroObjectSubgroup_isMulCommutative : IsMulCommutative E.kZeroObjectSu
 
 open scoped IsMulCommutative in
 /-- The canonical-generator subgroup is unconditionally commutative. -/
-instance kZeroObjectSubgroup_commGroup : CommGroup E.kZeroObjectSubgroup := inferInstance
+instance instCommGroupKZeroObjectSubgroup : CommGroup E.kZeroObjectSubgroup := inferInstance
 
 /-- An object class regarded as an element of the canonical-generator subgroup. -/
 def kZeroObjectClassInSubgroup (X : C) : E.kZeroObjectSubgroup :=

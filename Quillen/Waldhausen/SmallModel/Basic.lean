@@ -3,10 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.CategoryTheory.Category.ULift
-import Quillen.Waldhausen.Functoriality.KMap
-import Quillen.Topology.HomotopyGroups.Equivalence
-import Quillen.Waldhausen.Fibration.AcyclicSubcategory
+module
+
+public import Mathlib.CategoryTheory.Category.ULift
+public import Quillen.Waldhausen.Functoriality.KMap
+public import Quillen.Topology.HomotopyGroups.Equivalence
+public import Quillen.Waldhausen.Fibration.AcyclicSubcategory
 
 /-!
 # A genuine common-universe model of a Waldhausen category
@@ -15,6 +17,8 @@ import Quillen.Waldhausen.Fibration.AcyclicSubcategory
 morphism classes are pulled back from the original category. The actual
 S-constructions are simplicially isomorphic by exact up/down postcomposition.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology
@@ -128,10 +132,12 @@ def smallModelKEquiv (n : ℕ) : W.K n ≃* W.smallModel.K n :=
   homotopyEquivPiEquiv W.smallModelDeloopingHomeomorph.toHomotopyEquiv
     W.smallModelDeloopingHomeomorph_basepoint n
 
-@[simp] theorem smallModelKEquiv_toMonoidHom (n : ℕ) :
-    (W.smallModelKEquiv n).toMonoidHom =
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem smallModelKEquiv_coe (n : ℕ) :
+    (↑(W.smallModelKEquiv n) : W.K n →* W.smallModel.K n) =
       piMap n W.smallModelDeloopingHomeomorph.toHomotopyEquiv.toFun
         W.smallModelDeloopingHomeomorph_basepoint := rfl
+
 
 end Structure
 
@@ -161,7 +167,8 @@ theorem smallModelSSetIso_naturality (hF : IsExact W.cof W.weq W'.cof W'.weq F) 
 theorem smallModelDeloopingHomeomorph_naturality
     (hF : IsExact W.cof W.weq W'.cof W'.weq F) :
     W'.smallModelDeloopingHomeomorph.toHomotopyEquiv.toFun.comp (deloopingMap hF).hom =
-      (deloopingMap hF.smallModel).hom.comp W.smallModelDeloopingHomeomorph.toHomotopyEquiv.toFun := by
+      (deloopingMap hF.smallModel).hom.comp
+          W.smallModelDeloopingHomeomorph.toHomotopyEquiv.toFun := by
   change (SSet.toTop.map (sSetMap hF) ≫ SSet.toTop.map W'.smallModelSSetIso.hom).hom =
     (SSet.toTop.map W.smallModelSSetIso.hom ≫ SSet.toTop.map (sSetMap hF.smallModel)).hom
   rw [← SSet.toTop.map_comp, ← SSet.toTop.map_comp, smallModelSSetIso_naturality]
@@ -171,7 +178,8 @@ theorem smallModelKEquiv_naturality_of_zeroEq
     (hF : IsExact W.cof W.weq W'.cof W'.weq F) (h0 : F.obj W.zero = W'.zero) (n : ℕ) :
     (W'.smallModelKEquiv n).toMonoidHom.comp (KMap hF n) =
       (KMap hF.smallModel n).comp (W.smallModelKEquiv n).toMonoidHom := by
-  rw [Structure.smallModelKEquiv_toMonoidHom, Structure.smallModelKEquiv_toMonoidHom,
+  simp only [MulEquiv.toMonoidHom_eq_coe]
+  rw [Structure.smallModelKEquiv_coe, Structure.smallModelKEquiv_coe,
     KMap_eq_piMap_of_zeroEq hF h0,
     KMap_eq_piMap_of_zeroEq hF.smallModel (congrArg AsSmall.up.obj h0),
     ← homotopyGroupMapHom_comp, ← homotopyGroupMapHom_comp]

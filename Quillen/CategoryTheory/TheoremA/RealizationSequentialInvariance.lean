@@ -1,7 +1,15 @@
-import Quillen.CategoryTheory.TheoremA.SequentialHomotopyInvariance
-import Quillen.CategoryTheory.TheoremA.RealizationCofibrationEquiv
-import Quillen.CategoryTheory.TheoremA.RealizationColimitHomotopy
-import Quillen.Topology.HomotopyFiber.SourceEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.SequentialHomotopyInvariance
+public import Quillen.CategoryTheory.TheoremA.RealizationCofibrationEquiv
+public import Quillen.CategoryTheory.TheoremA.RealizationColimitHomotopy
+public import Quillen.Topology.HomotopyFiber.SourceEquivalence
 
 /-!
 # Coherent inverse maps for sequential diagrams of cofibrations
@@ -17,6 +25,8 @@ strong deformation retractions. It supplies an actual equivalence of
 colimits with the canonical induced map as its forward map. The direct
 map-level strictification below is also useful independently.
 -/
+@[expose] public section
+
 
 noncomputable section
 

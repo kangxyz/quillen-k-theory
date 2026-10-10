@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyFiber.FiberDetection
-import Quillen.Topology.HomotopyFiber.Connected
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.FiberDetection
+public import Quillen.Topology.HomotopyFiber.Connected
 
 /-! # Detecting the canonical homotopy-pullback comparison on actual fibers
 
@@ -7,6 +15,8 @@ The fiber of the canonical comparison is related to the original square's
 fiber map by an explicit path-prefix/suffix homotopy. This is the missing
 map identification needed to apply the genuine long exact sequence.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

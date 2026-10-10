@@ -1,5 +1,13 @@
-import Quillen.Topology.CubicalSubdivision.BoundaryLifting
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.BoundaryLifting
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
 
 /-! # Original weak equivalence from genuine finite cube-boundary lifting
 
@@ -7,6 +15,8 @@ The proof uses only literal n-cube and (n+1)-cube lifting. The latter supplies
 homotopies of original generalized loops with their complete boundaries fixed.
 No lifting property for arbitrary compact pairs is inferred.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -16,7 +26,7 @@ universe u v w
 namespace Quillen.CubicalSubdivision
 open TheoremA
 variable {E : Type u} {F : Type v} [TopologicalSpace E] [TopologicalSpace F]
-  {f : C(E,F)}
+  {f : C(E, F)}
 
 /-- The empty boundary of the actual zero-cube gives strict point-surjectivity. -/
 theorem BoundaryLifting.surjective (hf : BoundaryLifting f) : Function.Surjective f := by
@@ -29,8 +39,8 @@ theorem BoundaryLifting.surjective (hf : BoundaryLifting f) : Function.Surjectiv
 /-- Transport only the test parameters along the actual boundary homeomorphism.
 The source and target spaces retain their independent universes. -/
 theorem BoundaryLifting.presentation (hf : BoundaryLifting f) (n : ℕ)
-    (a : C((CubicalTests.boundaryPresentation.{w} n).space,E))
-    (b : C(CubicalTests.cube.{w} n,F))
+    (a : C((CubicalTests.boundaryPresentation.{w} n).space, E))
+    (b : C(CubicalTests.cube.{w} n, F))
     (hab : ∀ z, f (a z) = b ((CubicalTests.boundaryPresentation n).map z)) :
     ∃ c : C(CubicalTests.cube.{w} n,E),
       (∀ z,c ((CubicalTests.boundaryPresentation n).map z) = a z) ∧ f.comp c = b := by
@@ -56,9 +66,9 @@ theorem BoundaryLifting.presentation (hf : BoundaryLifting f) (n : ℕ)
 /-- The actual relative cylinder-boundary test is the next canonical cube
 boundary, via the existing literal first-coordinate homeomorphism. -/
 theorem BoundaryLifting.cylinder (hf : BoundaryLifting f) (n : ℕ)
-    (a : C(CylinderBoundary (CubicalTests.boundaryPresentation.{w} n).map,E))
-    (b : C(CubicalTests.cube.{w} n × unitInterval,F))
-    (hab : ∀ z,f (a z) = b (cylinderBoundaryMap (CubicalTests.boundaryPresentation n).map z)) :
+    (a : C(CylinderBoundary (CubicalTests.boundaryPresentation.{w} n).map, E))
+    (b : C(CubicalTests.cube.{w} n × unitInterval, F))
+    (hab : ∀ z, f (a z) = b (cylinderBoundaryMap (CubicalTests.boundaryPresentation n).map z)) :
     ∃ c : C(CubicalTests.cube.{w} n × unitInterval,E),
       (∀ z,c (cylinderBoundaryMap (CubicalTests.boundaryPresentation n).map z) = a z) ∧
         f.comp c = b := by
@@ -66,7 +76,8 @@ theorem BoundaryLifting.cylinder (hf : BoundaryLifting f) (n : ℕ)
   let b' := b.comp ⟨e.symm,e.symm.continuous⟩
   have hab' (z : (CubicalTests.boundaryPresentation.{w} (n+1)).space) :
       f (a z) = b' ((CubicalTests.boundaryPresentation (n+1)).map z) := by
-    change f (a z) = b (e.symm (e (cylinderBoundaryMap (CubicalTests.boundaryPresentation n).map z)))
+    change f (a z) = b (e.symm (e (cylinderBoundaryMap (CubicalTests.boundaryPresentation n).map
+      z)))
     rw [Homeomorph.symm_apply_apply]
     exact hab z
   obtain ⟨c,hc,he⟩ := hf.presentation (n+1) a b' hab'

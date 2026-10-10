@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.BoundedAcyclicBasedStrata
-import Quillen.Topology.FilteredRealization.BasedGroups
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedAcyclicBasedStrata
+public import Quillen.Topology.FilteredRealization.BasedGroups
 
 /-! # Actual finite-stage coverage and equality detection for bounded-acyclic K-groups
 
@@ -9,6 +17,8 @@ then transport their conclusions to the original canonical KMaps of the
 original inherited isomorphism models. No categorywide uniform bound,
 transition equivalence, or injectivity of realization maps is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -31,7 +41,8 @@ theorem boundedAcyclicBasedInclusion_basepoint (N : ℕ) :
 /-- The actual original transition retains the chosen stage points exactly. -/
 theorem boundedAcyclicBasedTransition_basepoint {N M : ℕ} (h : N ≤ M) :
     SSet.toTop.map (boundedStratumSSetTransition P (MorphismProperty.isomorphisms _) h)
-      (boundedAcyclicBasedStructure P N).kBasepoint = (boundedAcyclicBasedStructure P M).kBasepoint :=
+      (boundedAcyclicBasedStructure P N).kBasepoint = (boundedAcyclicBasedStructure P
+        M).kBasepoint :=
   deloopingMap_basepoint_of_zeroEq (boundedAcyclicBasedTransitionExact P h) rfl
 
 /-- Every actual bounded-acyclic K-class is the image of an original finite-stratum K-class. -/
@@ -42,12 +53,13 @@ theorem boundedAcyclic_KMap_jointlySurjective (k : ℕ)
   obtain ⟨j, y, hy⟩ := FilteredRealization.piMap_jointlySurjective
     (boundedSSetDiagram P (MorphismProperty.isomorphisms _))
     (boundedSSetCocone P (MorphismProperty.isomorphisms _))
-    (boundedSSetCocone_isColimit P (MorphismProperty.isomorphisms _))
+    (boundedSSetCoconeIsColimit P (MorphismProperty.isomorphisms _))
     (fun j ↦ (boundedAcyclicBasedStructure P (boundedStageRank j)).kBasepoint)
     (ofExactCategory (boundedAcyclicExactStructure P)).kBasepoint
     (fun {_ _} f ↦ boundedAcyclicBasedTransition_basepoint P (leOfHom (AsSmall.down.map f)))
     (fun j ↦ boundedAcyclicBasedInclusion_basepoint P (boundedStageRank j)) k x
-  refine ⟨boundedStageRank j, KMap (boundedAcyclicBasedToOriginalExact P (boundedStageRank j)) k y, ?_⟩
+  refine ⟨boundedStageRank j, KMap (boundedAcyclicBasedToOriginalExact P (boundedStageRank j)) k
+    y, ?_⟩
   rw [boundedAcyclicBasedInclusion_KMap, KMap_eq_piMap_of_zeroEq
     (boundedAcyclicBasedInclusionExact P (boundedStageRank j)) rfl k]
   exact hy
@@ -76,7 +88,7 @@ theorem boundedAcyclic_KMap_eq_eventually (N k : ℕ)
   obtain ⟨j, f, hf⟩ := FilteredRealization.piMap_eq_eventually
     (boundedSSetDiagram P (MorphismProperty.isomorphisms _))
     (boundedSSetCocone P (MorphismProperty.isomorphisms _))
-    (boundedSSetCocone_isColimit P (MorphismProperty.isomorphisms _))
+    (boundedSSetCoconeIsColimit P (MorphismProperty.isomorphisms _))
     (fun j ↦ (boundedAcyclicBasedStructure P (boundedStageRank j)).kBasepoint)
     (ofExactCategory (boundedAcyclicExactStructure P)).kBasepoint
     (fun {_ _} f ↦ boundedAcyclicBasedTransition_basepoint P (leOfHom (AsSmall.down.map f)))

@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.SplitComplexes.FactorizationQuotient
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SplitComplexes.FactorizationQuotient
 
 /-!
 # Split-cofibration factorizations inside cone-closed subcategories
@@ -9,6 +17,8 @@ identified quotient in the chosen full subcategory. This proves the
 factorization property there; no approximation or K-equivalence theorem is
 an assumption or a conclusion.
 -/
+@[expose] public section
+
 
 noncomputable section
 

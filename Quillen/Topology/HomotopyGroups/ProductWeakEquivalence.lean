@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyGroups.Product
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyGroups.Product
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
 
 /-! # Complete weak equivalences for literal topological product maps
 
@@ -8,6 +16,8 @@ This proves the projection-pair bijection also in degree zero. Strict
 naturality and actual paired component paths then prove the complete weak
 property of the original product map, with empty factors included.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 universe w u v u' v'
@@ -63,8 +73,8 @@ of original group-homomorphism projections. -/
     homotopyProdMap (Fin (n + 1)) x y = (piProdMap n x y : _ → _) := rfl
 
 /-- Strict naturality under the literal product continuous map. -/
-theorem homotopyProdMap_naturality (N : Type w) (f : C(X,X')) (g : C(Y,Y'))
-    (x : X) (y : Y) (a : HomotopyGroup N (X × Y) (x,y)) :
+theorem homotopyProdMap_naturality (N : Type w) (f : C(X, X')) (g : C(Y, Y'))
+    (x : X) (y : Y) (a : HomotopyGroup N (X × Y) (x, y)) :
     homotopyProdMap N (f x) (g y) (homotopyGroupMap (f.prodMap g) rfl a) =
       _root_.Prod.map (homotopyGroupMap f (x := x) rfl)
         (homotopyGroupMap g (x := y) rfl) (homotopyProdMap N x y a) := by
@@ -72,7 +82,7 @@ theorem homotopyProdMap_naturality (N : Type w) (f : C(X,X')) (g : C(Y,Y'))
 
 /-- Complete weak equivalences are preserved by the original ordinary
 product map, including component surjectivity and all empty-factor cases. -/
-theorem IsWeakHomotopyEquivalence.prodMap {f : C(X,X')} {g : C(Y,Y')}
+theorem IsWeakHomotopyEquivalence.prodMap {f : C(X, X')} {g : C(Y, Y')}
     (hf : IsWeakHomotopyEquivalence f) (hg : IsWeakHomotopyEquivalence g) :
     IsWeakHomotopyEquivalence (f.prodMap g) where
   component_surjective := by
@@ -108,13 +118,13 @@ theorem IsWeakHomotopyEquivalence.prodMap {f : C(X,X')} {g : C(Y,Y')}
       (homotopyProdMap_bijective (Fin n) (f x) (g y)) _).1 hcomp
 
 /-- The literal left-factor weak map, with an arbitrary untouched factor. -/
-theorem IsWeakHomotopyEquivalence.prodMap_id {f : C(X,X')}
+theorem IsWeakHomotopyEquivalence.prodMap_id {f : C(X, X')}
     (hf : IsWeakHomotopyEquivalence f) (Y : Type v) [TopologicalSpace Y] :
     IsWeakHomotopyEquivalence (f.prodMap (ContinuousMap.id Y)) :=
   hf.prodMap (isWeakHomotopyEquivalence_id Y)
 
 /-- The literal right-factor weak map, with an arbitrary untouched factor. -/
-theorem IsWeakHomotopyEquivalence.id_prodMap {g : C(Y,Y')}
+theorem IsWeakHomotopyEquivalence.id_prodMap {g : C(Y, Y')}
     (hg : IsWeakHomotopyEquivalence g) (X : Type u) [TopologicalSpace X] :
     IsWeakHomotopyEquivalence ((ContinuousMap.id X).prodMap g) :=
   (isWeakHomotopyEquivalence_id X).prodMap hg

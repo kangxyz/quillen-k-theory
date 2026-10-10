@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.GradedRows
-import Quillen.Topology.Realization.BisimplicialWeakEquivalence
-import Quillen.Topology.Realization.TwoSidedBarContraction
+module
+
+public import Quillen.Waldhausen.Cofinality.GradedRows
+public import Quillen.Topology.Realization.BisimplicialWeakEquivalence
+public import Quillen.Topology.Realization.TwoSidedBar.AugmentationEquivalence
 
 /-! # Original coarse S-realization compared with actual realized row grades
 
@@ -15,6 +17,8 @@ complete weak comparison of the original coarse S-realization with the
 simplicial set of genuinely realized row grades. No arbitrary grade tuple,
 K-zero presentation, group-space calculation or cofinality endpoint is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial
@@ -32,7 +36,8 @@ def gradeBisimplicial : SimplexCategoryᵒᵖ ⥤ SSet.{u} :=
 
 /-- Original weak-row chains map to the grade of their actual first row. -/
 def gradeNerveMap : weakRowNerve d.coarseStructure ⟶ d.gradeBisimplicial where
-  app n := nerveMap (d.rowProjection n.unop) ≫ (TwoSidedBar.discreteNerveIso (d.RowGrade n.unop)).hom
+  app n := nerveMap (d.rowProjection n.unop) ≫ (TwoSidedBar.discreteNerveIso (d.RowGrade
+    n.unop)).hom
   naturality n m α := by
     ext k F : 4
     rfl
@@ -44,7 +49,8 @@ theorem gradeNerveMap_row_weak (n : ℕ) :
     rw [← d.rowProjectionHomotopyEquiv_toFun]
     exact isWeakHomotopyEquivalence_of_homotopyEquiv (d.rowProjectionHomotopyEquiv ⦋n⦌)
   simpa only [IsRealizationWeakEquivalence, gradeNerveMap, Functor.map_comp, TopCat.hom_comp,
-    classifyingSpaceMap, ClassifyingSpace, weakRowNerve, weakRowCategories, gradeBisimplicial, gradeSSet]
+    classifyingSpaceMap, ClassifyingSpace, weakRowNerve, weakRowCategories, gradeBisimplicial,
+      gradeSSet]
     using (IsRealizationWeakEquivalence.of_isIso
       (TwoSidedBar.discreteNerveIso (d.RowGrade ⦋n⦌)).hom).comp hp
 
@@ -54,7 +60,8 @@ def gradeDiagonalIso : diagonalSSet d.gradeBisimplicial ≅ d.gradeSSet :=
 
 /-- The grading map from the original Waldhausen simplicial set. -/
 def gradeMap : sSet d.coarseStructure.cof d.coarseStructure.weq ⟶ d.gradeSSet :=
-  (sSetWeakRowDiagonalIso d.coarseStructure).hom ≫ diagonalMap d.gradeNerveMap ≫ d.gradeDiagonalIso.hom
+  (sSetWeakRowDiagonalIso d.coarseStructure).hom ≫ diagonalMap d.gradeNerveMap ≫
+    d.gradeDiagonalIso.hom
 
 /-- The literal original coarse grading map is a complete realization weak equivalence. -/
 theorem gradeMap_isRealizationWeakEquivalence : IsRealizationWeakEquivalence d.gradeMap := by

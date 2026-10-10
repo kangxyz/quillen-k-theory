@@ -1,4 +1,14 @@
-import Quillen.Waldhausen.Approximation.FlagRowEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Approximation.FlagRowEquivalence
+public import Quillen.Waldhausen.SplitComplexes.Approximation
+public import Quillen.Waldhausen.SplitComplexes.FunctorialFactorization
 
 /-!
 # Change of cofibrations on actual quasi-isomorphism row categories
@@ -8,6 +18,8 @@ rows induces an actual homotopy equivalence. Its inverse is built from
 initial flags, functorial identity-cone replacement, and canonical quotient
 completion. Only proved closure properties of the complex subcategory enter.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -54,7 +66,8 @@ def splitRowCompositeHomotopyEquiv :
         (complexSubcategory P).weq n)) := by
   letI := splitComplexSubcategory_saturated P
   exact ((rowInitialFlagClassifyingHomotopyEquiv (complexSubcategoryExact P)
-    (splitComplexSubcategory P) (complexSubcategory P) (fun _ _ _ h ↦ h.1) (fun _ _ _ h ↦ h) n).trans
+    (splitComplexSubcategory P) (complexSubcategory P) (fun _ _ _ h ↦ h.1) (fun _ _ _ h ↦ h)
+      n).trans
       (FunctorialFactorization.flagInclusionClassifyingHomotopyEquiv
         (splitSubcategoryFunctorialFactorization P hcone) (complexSubcategory P).cof n.len
           (fun _ _ _ h ↦ h.1))).trans

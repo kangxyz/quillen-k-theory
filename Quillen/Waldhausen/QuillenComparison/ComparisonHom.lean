@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.QuillenComparison.Basepoint
-import Quillen.Topology.Realization.EdgewiseRealization
-import Quillen.Topology.HomotopyGroups.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.Basepoint
+public import Quillen.Topology.Realization.EdgewiseRealization
+public import Quillen.Topology.HomotopyGroups.Equivalence
 
 /-! # The canonical homomorphism from exact S-theory to Quillen K-theory
 
@@ -10,6 +18,8 @@ explicit comparison zigzag into an actual homomorphism between the two
 already-defined K-theories. The Q/S map's equivalence remains a separate
 mathematical theorem; it is not assumed by this construction.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -29,9 +39,11 @@ def subdivisionKEquiv (n : ℕ) : SubdivisionK E n ≃* (ofExactCategory E).K n 
     (Edgewise.realizationHomotopyEquiv (sSet E.inflation (MorphismProperty.isomorphisms C)))
     (realizationEndpoint_basepoint E) n
 
-@[simp]
-theorem subdivisionKEquiv_toMonoidHom (n : ℕ) :
-    (subdivisionKEquiv E n).toMonoidHom = subdivisionEndpointK E n := rfl
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem subdivisionKEquiv_coe (n : ℕ) :
+    (↑(subdivisionKEquiv E n) : SubdivisionK E n →* (ofExactCategory E).K n) =
+        subdivisionEndpointK E n := rfl
+
 
 /-- The canonical comparison homomorphism from the exact-category Waldhausen
 S-model to the existing Quillen Q-model. No comparison equivalence is an input. -/

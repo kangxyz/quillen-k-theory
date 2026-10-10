@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.CyclesExact
-import Quillen.Waldhausen.GilletWaldhausen.TruncationFunctor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.CyclesExact
+public import Quillen.Waldhausen.GilletWaldhausen.TruncationFunctor
 
 /-!
 # Exactness of the genuine acyclic truncation functor
@@ -10,6 +18,8 @@ below the boundary, the actual exact cycle functor at the boundary, and
 zero objects above it. The forward maps remain mathlib's actual truncation
 maps throughout.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -54,7 +64,8 @@ its monomorphic natural inclusion. -/
 instance canonicalTruncLEFunctor_additive (n : ℤ) :
     ((ComplexShape.embeddingUpIntLE n).truncLEFunctor A).Additive where
   map_add {K L} f g := by
-    let : Mono (CochainComplex.ιTruncLE L n) := (CochainComplex.shortComplexTruncLE_shortExact L n).mono_f
+    let : Mono (CochainComplex.ιTruncLE L n) := (CochainComplex.shortComplexTruncLE_shortExact L
+      n).mono_f
     apply (cancel_mono (CochainComplex.ιTruncLE L n)).1
     change CochainComplex.truncLEMap (f + g) n ≫ CochainComplex.ιTruncLE L n =
       (CochainComplex.truncLEMap f n + CochainComplex.truncLEMap g n) ≫ CochainComplex.ιTruncLE L n

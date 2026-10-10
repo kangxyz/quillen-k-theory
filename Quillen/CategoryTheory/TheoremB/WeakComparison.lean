@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianInduction
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianInduction
 
 /-!
 # Quillen's Theorem B on all based homotopy sets
@@ -8,13 +16,15 @@ canonical comma-to-homotopy-fiber comparison is bijective in every finite
 homotopy degree, including degree zero. The finite cartesian stage input
 is proved by simultaneous skeletal induction, rather than assumed.
 -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory Limits
 open scoped Simplicial Topology
 set_option backward.isDefEq.respectTransparency false
 namespace Quillen.TheoremB
-open TheoremA SkeletalCartesian
+open TheoremA Quillen.CartesianRealization.Skeletal
 variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
 
 /-- At every existing source basepoint, the canonical vertex comparison
@@ -62,10 +72,10 @@ def fiberComparisonPiEquiv (h : TransitionHomotopyEquivalences F) (c : C) (n : �
   MulEquiv.ofBijective (piMap n (fiberComparison F (F.obj c)) (fiberComparison_identity F c))
     (fiberComparison_bijective F h c (n + 1))
 
-@[simp]
-theorem fiberComparisonPiEquiv_toMonoidHom
+/-- The monoid-hom coercion is the canonical forward map. -/
+@[simp] theorem fiberComparisonPiEquiv_coe
     (h : TransitionHomotopyEquivalences F) (c : C) (n : ℕ) :
-    (fiberComparisonPiEquiv F h c n).toMonoidHom =
+    ↑(fiberComparisonPiEquiv F h c n) =
       piMap n (fiberComparison F (F.obj c)) (fiberComparison_identity F c) := rfl
 
 end Quillen.TheoremB

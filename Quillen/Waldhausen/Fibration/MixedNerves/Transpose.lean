@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.ChainCategories
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.ChainCategories
 
 /-! # Literal transposition of the two original mixed nerve directions
 
@@ -6,6 +14,8 @@ The operation switches the two original ordinal indices. Every object,
 horizontal arrow and vertical arrow is the corresponding original component;
 only its proved weak/cofibration predicate is repackaged.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 universe u v
@@ -86,17 +96,17 @@ def transposeCoarseEquiv (n k : SimplexCategory) :
 
 @[simp] theorem transposeCoarse_obj_obj (n k : SimplexCategory)
     (F : ComposableArrows (FineWeakCoarseChains N n) k.len)
-    (i : Fin (n.len+1)) (j : Fin (k.len+1)) :
+    (i : Fin (n.len + 1)) (j : Fin (k.len + 1)) :
     ((transposeCoarse N n k F).obj i).obj.obj.obj j = (F.obj j).obj.obj.obj i := rfl
 
 @[simp] theorem transposeCoarse_map_app (n k : SimplexCategory)
     (F : ComposableArrows (FineWeakCoarseChains N n) k.len)
-    {i l : Fin (n.len+1)} (f : i ⟶ l) (j : Fin (k.len+1)) :
+    {i l : Fin (n.len + 1)} (f : i ⟶ l) (j : Fin (k.len + 1)) :
     ((transposeCoarse N n k F).map f).hom.hom.app j = (F.obj j).obj.obj.map f := rfl
 
 @[simp] theorem transposeCoarse_obj_map (n k : SimplexCategory)
     (F : ComposableArrows (FineWeakCoarseChains N n) k.len)
-    (i : Fin (n.len+1)) {j l : Fin (k.len+1)} (f : j ⟶ l) :
+    (i : Fin (n.len + 1)) {j l : Fin (k.len + 1)} (f : j ⟶ l) :
     ((transposeCoarse N n k F).obj i).obj.obj.map f = (F.map f).hom.hom.app i := rfl
 
 /-- Transpose an original fine-weak chain of coarse-weak chains. -/
@@ -170,17 +180,17 @@ def transposeCofEquiv (n k : SimplexCategory) :
 
 @[simp] theorem transposeCof_obj_obj (n k : SimplexCategory)
     (F : ComposableArrows (FineWeakChains N n) k.len)
-    (i : Fin (n.len+1)) (j : Fin (k.len+1)) :
+    (i : Fin (n.len + 1)) (j : Fin (k.len + 1)) :
     ((transposeCof N n k F).obj i).obj.obj.obj j = (F.obj j).obj.obj.obj i := rfl
 
 @[simp] theorem transposeCof_map_app (n k : SimplexCategory)
     (F : ComposableArrows (FineWeakChains N n) k.len)
-    {i l : Fin (n.len+1)} (f : i ⟶ l) (j : Fin (k.len+1)) :
+    {i l : Fin (n.len + 1)} (f : i ⟶ l) (j : Fin (k.len + 1)) :
     ((transposeCof N n k F).map f).hom.hom.app j = (F.obj j).obj.obj.map f := rfl
 
 @[simp] theorem transposeCof_obj_map (n k : SimplexCategory)
     (F : ComposableArrows (FineWeakChains N n) k.len)
-    (i : Fin (n.len+1)) {j l : Fin (k.len+1)} (f : j ⟶ l) :
+    (i : Fin (n.len + 1)) {j l : Fin (k.len + 1)} (f : j ⟶ l) :
     ((transposeCof N n k F).obj i).obj.obj.map f = (F.map f).hom.hom.app i := rfl
 
 end Quillen.Waldhausen.Fibration.MixedNerves

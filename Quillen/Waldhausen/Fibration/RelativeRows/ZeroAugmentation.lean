@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.Index
-import Quillen.Waldhausen.ExtensionCategory.IsomorphicSources
-import Mathlib.CategoryTheory.ComposableArrows.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.Index
+public import Quillen.Waldhausen.ExtensionCategory.IsomorphicSources
+public import Mathlib.CategoryTheory.ComposableArrows.Basic
 
 /-! # Adjoining the actual chosen zero to a finite chain
 
@@ -8,6 +16,8 @@ The original positive-index objects and maps are unchanged. The new maps
 from the initial object are the actual maps from the chosen Waldhausen zero.
 This is an actual functor on all natural transformations of finite chains.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -17,11 +27,11 @@ namespace Quillen.Waldhausen.Fibration.RelativeRows
 variable {C : Type u} [Category.{v} C] (W : Structure C)
 
 /-- The chosen zero followed by all original chain objects. -/
-def zeroAugmentObj {n : ℕ} (F : ComposableArrows C n) : Fin (n+2) → C := Fin.cases W.zero F.obj
+def zeroAugmentObj {n : ℕ} (F : ComposableArrows C n) : Fin (n + 2) → C := Fin.cases W.zero F.obj
 
 /-- The original positive-index maps and the unique original maps from zero. -/
 def zeroAugmentMap {n : ℕ} (F : ComposableArrows C n)
-    (i j : Fin (n+2)) (h : i ≤ j) : zeroAugmentObj W F i ⟶ zeroAugmentObj W F j := by
+    (i j : Fin (n + 2)) (h : i ≤ j) : zeroAugmentObj W F i ⟶ zeroAugmentObj W F j := by
   cases i using Fin.cases with
   | zero => exact W.isZero.to_ _
   | succ i =>
@@ -30,7 +40,7 @@ def zeroAugmentMap {n : ℕ} (F : ComposableArrows C n)
     | succ j => exact F.map (homOfLE (Nat.le_of_succ_le_succ h))
 
 /-- The actual zero-start augmentation of a finite chain. -/
-def zeroAugment {n : ℕ} (F : ComposableArrows C n) : ComposableArrows C (n+1) where
+def zeroAugment {n : ℕ} (F : ComposableArrows C n) : ComposableArrows C (n + 1) where
   obj := zeroAugmentObj W F
   map f := zeroAugmentMap W F _ _ (leOfHom f)
   map_id i := by
@@ -50,11 +60,11 @@ def zeroAugment {n : ℕ} (F : ComposableArrows C n) : ComposableArrows C (n+1) 
 
 @[simp] theorem zeroAugment_obj_zero {n : ℕ} (F : ComposableArrows C n) :
     (zeroAugment W F).obj 0 = W.zero := rfl
-@[simp] theorem zeroAugment_obj_succ {n : ℕ} (F : ComposableArrows C n) (i : Fin (n+1)) :
+@[simp] theorem zeroAugment_obj_succ {n : ℕ} (F : ComposableArrows C n) (i : Fin (n + 1)) :
     (zeroAugment W F).obj i.succ = F.obj i := rfl
 
 @[simp] theorem zeroAugment_map_succ {n : ℕ} (F : ComposableArrows C n)
-    {i j : Fin (n+1)} (h : i ≤ j) :
+    {i j : Fin (n + 1)} (h : i ≤ j) :
     (zeroAugment W F).map (homOfLE (show i.succ ≤ j.succ from Nat.succ_le_succ h)) =
       F.map (homOfLE h) := rfl
 
@@ -74,7 +84,7 @@ def zeroAugmentNatTrans {n : ℕ} {F G : ComposableArrows C n} (α : F ⟶ G) :
       | succ j => exact α.naturality _
 
 /-- Zero augmentation is genuinely functorial on every original chain map. -/
-def zeroAugmentFunctor (n : ℕ) : ComposableArrows C n ⥤ ComposableArrows C (n+1) where
+def zeroAugmentFunctor (n : ℕ) : ComposableArrows C n ⥤ ComposableArrows C (n + 1) where
   obj := zeroAugment W
   map := zeroAugmentNatTrans W
   map_id F := by ext i; cases i using Fin.cases <;> rfl
@@ -85,12 +95,12 @@ def zeroAugmentFunctor (n : ℕ) : ComposableArrows C n ⥤ ComposableArrows C (
     | succ i => rfl
 
 @[simp] theorem zeroAugmentNatTrans_app_succ {n : ℕ} {F G : ComposableArrows C n}
-    (α : F ⟶ G) (i : Fin (n+1)) : (zeroAugmentNatTrans W α).app i.succ = α.app i := rfl
+    (α : F ⟶ G) (i : Fin (n + 1)) : (zeroAugmentNatTrans W α).app i.succ = α.app i := rfl
 
 /-- Actual cofibration chains remain actual cofibration chains after zero augmentation. -/
 theorem zeroAugment_map_cof {n : ℕ} (F : ComposableArrows C n)
-    (hF : ∀ {i j : Fin (n+1)} (f : i ⟶ j), W.cof (F.map f))
-    {i j : Fin (n+2)} (f : i ⟶ j) : W.cof ((zeroAugment W F).map f) := by
+    (hF : ∀ {i j : Fin (n + 1)} (f : i ⟶ j), W.cof (F.map f))
+    {i j : Fin (n + 2)} (f : i ⟶ j) : W.cof ((zeroAugment W F).map f) := by
   cases i using Fin.cases with
   | zero => exact W.cof_zero _
   | succ i =>
@@ -100,14 +110,14 @@ theorem zeroAugment_map_cof {n : ℕ} (F : ComposableArrows C n)
 
 /-- The original pointwise weak maps remain weak, with identity at the added zero. -/
 theorem zeroAugmentNatTrans_weak {n : ℕ} {F G : ComposableArrows C n} (α : F ⟶ G)
-    (hα : ∀ i, W.weq (α.app i)) (i : Fin (n+2)) : W.weq ((zeroAugmentNatTrans W α).app i) := by
+    (hα : ∀ i, W.weq (α.app i)) (i : Fin (n + 2)) : W.weq ((zeroAugmentNatTrans W α).app i) := by
   cases i using Fin.cases with
   | zero => exact W.weq.id_mem _
   | succ i => exact hα i
 
 /-- Include the unchanged original positive indices. -/
-def successorIndex (n : ℕ) : Fin (n+1) ⥤ Fin (n+2) :=
-  (show Monotone (fun i : Fin (n+1) ↦ i.succ) from fun _ _ h ↦ Nat.succ_le_succ h).functor
+def successorIndex (n : ℕ) : Fin (n + 1) ⥤ Fin (n + 2) :=
+  (show Monotone (fun i : Fin (n + 1) ↦ i.succ) from fun _ _ h ↦ Nat.succ_le_succ h).functor
 
 /-- Removing the newly adjoined zero recovers the original chain strictly. -/
 @[simp] theorem successorIndex_zeroAugment {n : ℕ} (F : ComposableArrows C n) :

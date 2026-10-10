@@ -1,0 +1,69 @@
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRestrictionIso
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedHomVanishing
+
+/-!
+# Presentation-independent affine derived Hom vanishing
+
+Transport through the actual canonical spectrum isomorphism proves the
+strict-source Hom-vanishing bound on every affine scheme without a supplied
+presentation. Original lower term support and the exact shifted inequality
+are retained, and the quasicoherent target single needs no projectivity.
+A genuine supplied strict derived model also handles an arbitrary original
+ambient source. Zero reflection uses the actual isomorphism restriction.
+-/
+@[expose] public section
+
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+universe u
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+namespace Quillen.PerfectComplexes
+
+/-- Any affine scheme admits the actual strict-source vanishing theorem with its exact term bound.
+-/
+lemma strictPerfect_derivedHom_single_shift_eq_zero_of_isAffine (X : Scheme.{u}) [IsAffine X]
+    (P : Complex X) (hP : strictPerfect X P) (M : X.Modules) [M.IsQuasicoherent]
+    (a b n : ℤ) (hbound : ∀ i, i < b → IsZero (P.X i)) (hab : a + n < b)
+    (φ : ((toDerived X).obj P)⟦n⟧ ⟶
+      (toDerived X).obj ((_root_.CochainComplex.singleFunctor X.Modules a).obj M)) : φ = 0 := by
+  let R := Γ(X, ⊤)
+  let j : Spec R ⟶ X := X.isoSpec.inv
+  let eP := ((toDerived X).commShiftIso n).app P
+  let ψ := eP.hom ≫ φ
+  let M' := (Scheme.Modules.restrictFunctor j).obj M
+  let eM := (toDerived (Spec R)).mapIso
+    (((Scheme.Modules.restrictFunctor j).mapCochainComplexSingleFunctor a).app M)
+  have hz := Affine.strictPerfect_derivedHom_single_eq_zero R ((restrict j).obj (P⟦n⟧))
+    (strictPerfect_restrict j (strictPerfect_shift hP n)) M' a (b-n)
+    (fun i hi => (Scheme.Modules.restrictFunctor j).map_isZero
+      ((hbound (i+n) (by omega)).of_iso (P.shiftFunctorObjXIso n i (i+n) rfl)))
+    (by omega) (restrictDerivedHom j ψ ≫ eM.hom)
+  have hz' : restrictDerivedHom j ψ = 0 := by
+    apply (cancel_mono eM.hom).mp
+    simpa only [zero_comp] using hz
+  have hψ : ψ = 0 := (restrictDerivedHom_eq_zero_iff j ψ).mp hz'
+  apply (cancel_epi eP.hom).mp
+  simpa only [comp_zero] using hψ
+
+/-- A genuine strict derived model may replace arbitrary original terms on an affine scheme. -/
+lemma derivedHom_single_shift_eq_zero_of_affine_strict_model (X : Scheme.{u}) [IsAffine X]
+    (E : Derived X) (P : Complex X) (hP : strictPerfect X P)
+    (e : (toDerived X).obj P ≅ E) (M : X.Modules) [M.IsQuasicoherent]
+    (a b n : ℤ) (hbound : ∀ i, i < b → IsZero (P.X i)) (hab : a + n < b)
+    (φ : E⟦n⟧ ⟶ (toDerived X).obj ((_root_.CochainComplex.singleFunctor X.Modules a).obj M)) :
+    φ = 0 := by
+  let e' := (shiftFunctor (Derived X) n).mapIso e
+  have hz := strictPerfect_derivedHom_single_shift_eq_zero_of_isAffine X P hP M a b n hbound hab
+    (e'.hom ≫ φ)
+  apply (cancel_epi e'.hom).mp
+  simpa only [comp_zero] using hz
+
+end Quillen.PerfectComplexes

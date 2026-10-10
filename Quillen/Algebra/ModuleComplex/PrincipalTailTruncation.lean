@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.Homology.ProjectiveTailTruncation
-import Quillen.Algebra.ModuleComplex.PrincipalProjectiveLocality
-import Mathlib.Algebra.Homology.ShortComplex.PreservesHomology
+module
+
+public import Quillen.Algebra.Homology.ProjectiveTailTruncation
+public import Quillen.Algebra.ModuleComplex.PrincipalProjectiveLocality
+public import Mathlib.Algebra.Homology.ShortComplex.PreservesHomology
 
 /-!
 # Global projective tail cutoff from actual principal-local models
@@ -18,6 +20,8 @@ truncation is bounded finite-projective with the exact original upper bound;
 its original projection is a quasi-isomorphism. No global homotopy model is
 required, and the generating principal family need not be explicitly finite.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

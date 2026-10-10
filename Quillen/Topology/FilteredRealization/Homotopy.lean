@@ -1,5 +1,13 @@
-import Quillen.Topology.FilteredRealization.Compact
-import Quillen.Topology.HomotopyGroups.WeakEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.FilteredRealization.Compact
+public import Quillen.Topology.HomotopyGroups.WeakEquivalence
 
 /-!
 # Relative compact homotopy lifting in filtered realization colimits
@@ -8,6 +16,8 @@ Compact maps, their cube-boundary constraints, and endpoint-fixed homotopies
 are represented exactly at one later stage. This does not assume that any
 stage-to-colimit map is injective.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Topology
 open scoped Simplicial unitInterval
@@ -24,7 +34,7 @@ include hc
 arrow from any prescribed original stage. -/
 theorem compact_factors_above {T : Type v} [TopologicalSpace T] [CompactSpace T]
     (j : J) (f : C(T, |c.pt|)) :
-    ∃ k, ∃ u : j ⟶ k, ∃ g : C(T, |F.obj k|), (SSet.toTop.map (c.ι.app k)).hom.comp g = f := by
+    ∃ k, ∃ _ : j ⟶ k, ∃ g : C(T, |F.obj k|), (SSet.toTop.map (c.ι.app k)).hom.comp g = f := by
   obtain ⟨l, a, ha⟩ := compact_factors F c hc f
   let k := IsFiltered.max j l
   let v : l ⟶ k := IsFiltered.rightToMax j l

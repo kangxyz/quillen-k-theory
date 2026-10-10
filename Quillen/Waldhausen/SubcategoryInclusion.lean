@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.ComplexSubcategory
-import Quillen.Waldhausen.PointedFunctor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ComplexSubcategory
+public import Quillen.Waldhausen.PointedFunctor
 
 /-!
 # Inclusions between Waldhausen subcategories of complexes
@@ -8,6 +16,8 @@ An inclusion of replete extension-closed full subcategories containing zero
 preserves the actual cofibrations and quasi-isomorphisms. The maps below are
 constructed; no assertion of equivalence or of localization is made.
 -/
+@[expose] public section
+
 
 noncomputable section
 

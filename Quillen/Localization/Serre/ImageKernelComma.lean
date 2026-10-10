@@ -1,12 +1,21 @@
-import Quillen.Localization.Serre.AuxiliaryImages
-import Quillen.Localization.Serre.AuxiliaryBaseChange
-import Quillen.Topology.ClassifyingSpace.FactorContraction
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.AuxiliaryImages
+public import Quillen.Localization.Serre.AuxiliaryBaseChange
+public import Quillen.Topology.ClassifyingSpace.FactorContraction
 
 /-! # Contraction of the image-index structured kernel commas -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-set_option maxHeartbeats 400000
 universe u
 open CategoryTheory CategoryTheory.Limits
 namespace Quillen.SerreLocalization
@@ -59,9 +68,11 @@ def imageKernelCommaRetraction : ImageKernelComma P N T I ⥤ EpiKernelComma P (
         exact congrArg (· ≫ Y.right.hom) ((imageKernelPullbackIso P N T I).hom.naturality f)
       _ = _ := by
         rw [Category.assoc]
-        exact congrArg ((imageKernelPullbackIso P N T I).hom.app X ≫ ·) (CostructuredArrow.w f.right))
+        exact congrArg ((imageKernelPullbackIso P N T I).hom.app X ≫ ·) (CostructuredArrow.w
+          f.right))
   map_id X := by apply CostructuredArrow.hom_ext; exact (imageKernelPullback P N T I).map_id _
-  map_comp f g := by apply CostructuredArrow.hom_ext; exact (imageKernelPullback P N T I).map_comp _ _
+  map_comp f g := by apply CostructuredArrow.hom_ext; exact (imageKernelPullback P N T I).map_comp _
+    _
 
 
 /-- Postcomposing an epimorphism onto the selected subobject gives exactly
@@ -101,16 +112,19 @@ def imageKernelCommaPostcompose : EpiKernelComma P (I.val : C) T ⥤ AuxiliaryKe
         exact congrArg (· ≫ Y.hom) ((imageKernelPostcomposeIso P N I).hom.naturality f.left)
       _ = _ := by rw [Category.assoc, CostructuredArrow.w f])
   map_id X := by apply CostructuredArrow.hom_ext; exact (imageKernelPostcompose P N I).map_id _
-  map_comp f g := by apply CostructuredArrow.hom_ext; exact (imageKernelPostcompose P N I).map_comp _ _
+  map_comp f g := by apply CostructuredArrow.hom_ext; exact (imageKernelPostcompose P N I).map_comp
+    _ _
 
 /-- The section retains the image-index arrow as well as the kernel Q-arrow. -/
 @[implicit_reducible]
 def imageKernelCommaSection : EpiKernelComma P (I.val : C) T ⥤ ImageKernelComma P N T I where
   obj X := StructuredArrow.mk (Y := (imageKernelCommaPostcompose P N T I).obj X)
     (homOfLE (epiAuxiliary_postcompose_image P N I X.left))
-  map f := StructuredArrow.homMk ((imageKernelCommaPostcompose P N T I).map f) (Subsingleton.elim _ _)
+  map f := StructuredArrow.homMk ((imageKernelCommaPostcompose P N T I).map f) (Subsingleton.elim _
+    _)
   map_id X := by apply StructuredArrow.hom_ext; exact (imageKernelCommaPostcompose P N T I).map_id _
-  map_comp f g := by apply StructuredArrow.hom_ext; exact (imageKernelCommaPostcompose P N T I).map_comp _ _
+  map_comp f g := by apply StructuredArrow.hom_ext; exact (imageKernelCommaPostcompose P N T
+    I).map_comp _ _
 
 /-- The canonical pullback inclusion supplies a natural transformation from
 the section of the retraction to the identity on the full structured image comma. -/

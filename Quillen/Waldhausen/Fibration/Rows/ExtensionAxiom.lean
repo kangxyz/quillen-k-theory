@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Fibration.Rows.NestedWeakEquivalences
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.Rows.NestedWeakEquivalences
 
 /-! # The extension axiom on the unchanged coarse quotient-row structure
 
@@ -7,6 +15,8 @@ Only its genuine zero corner is replaced by the chosen coarse zero. The base
 extension axiom then proves pointwise weakness of the original middle map.
 No row equivalence, cylinder, or saturation hypothesis enters.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

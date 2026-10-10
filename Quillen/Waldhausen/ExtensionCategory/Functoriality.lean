@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.ExtensionCategory.Embeddings
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.Embeddings
 
 /-! # Exact postcomposition of actual Reedy cofibration arrows
 
@@ -6,6 +14,8 @@ An exact functor maps the original relative pushout to a displayed relative
 pushout. The choice-free relative criterion then proves the genuine Reedy
 condition, without identifying independently chosen pushout objects.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v' u'' v''
@@ -69,9 +79,13 @@ theorem postcompose_exact :
 @[simp] theorem postcompose_id : postcompose V V (IsExact.id V.cof V.weq) = 𝟭 (Obj V) := by
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 
-@[simp] theorem postcompose_comp (U : Structure E) {G : D ⥤ E}
+/-- Composition simplifies by combining the two displayed maps with their actual intermediate data.
+-/
+@[simp] theorem postcompose_comp_postcompose (U : Structure E) {G : D ⥤ E}
     (hG : IsExact W.cof W.weq U.cof U.weq G) :
-    postcompose V U (hF.comp hG) = postcompose V W hF ⋙ postcompose W U hG := by
+    postcompose V W hF ⋙ postcompose W U hG =
+      postcompose V U (hF.comp hG) := by
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
+
 
 end Quillen.Waldhausen.ExtensionCategory

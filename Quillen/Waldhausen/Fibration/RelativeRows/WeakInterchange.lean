@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.Interchange
-import Quillen.Topology.ClassifyingSpace.Equivalence
-import Mathlib.CategoryTheory.Widesubcategory
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.Interchange
+public import Quillen.Topology.ClassifyingSpace.Equivalence
+public import Mathlib.CategoryTheory.Widesubcategory
 
 /-! # Relative-inner-S interchange on the actual fine-weak categories
 
@@ -8,6 +16,8 @@ The exact inverse transpositions restrict to the original fine weak maps.
 The classifying-space equivalence keeps the original forward and inverse
 maps. No change of weak class is made by this structural interchange.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

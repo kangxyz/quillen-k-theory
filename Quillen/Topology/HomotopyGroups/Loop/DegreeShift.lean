@@ -1,4 +1,12 @@
-import Quillen.Topology.HomotopyGroups.Map
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyGroups.Map
 
 /-!
 # The loop-space degree shift
@@ -8,6 +16,8 @@ between `π_(n+1) X` and `π_n (ΩX)`. Homotopies are curried and uncurried
 relative to the whole cube boundary. In positive outer degree the equivalence
 preserves the existing homotopy-group multiplication.
 -/
+@[expose] public section
+
 
 noncomputable section
 open scoped Topology unitInterval
@@ -17,7 +27,7 @@ universe u
 namespace Quillen
 variable {X : Type u} [TopologicalSpace X] {x : X}
 
-private theorem continuous_finCons {Z : Type*} [TopologicalSpace Z] {n : ℕ}
+theorem continuous_finCons {Z : Type*} [TopologicalSpace Z] {n : ℕ}
     {a : Z → I} {b : Z → (Fin n → I)} (ha : Continuous a) (hb : Continuous b) :
     Continuous (fun z => (Fin.cons (a z) (b z) : Fin (n + 1) → I)) := by
   apply continuous_pi

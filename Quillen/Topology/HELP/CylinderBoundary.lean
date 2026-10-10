@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremA.RealizationPushoutProduct
-import Quillen.Topology.Pushout.CompactHausdorff
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationPushoutProduct
+public import Quillen.Topology.Pushout.CompactHausdorff
 
 /-! # The compact endpoint-relative cylinder boundary
 
@@ -7,6 +15,8 @@ The domain is the actual topological pushout of the side cylinder and the
  two endpoint copies. It makes sense for every HEP map, without assuming an
 embedding. The relative square-extension theorem proves its HEP.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -17,24 +27,33 @@ namespace Quillen.TheoremA
 
 variable {A B : TopCat.{u}} (i : A ⟶ B)
 
+/-- Include two copies of `A` at times zero and one in the cylinder `A × I`. -/
 def cylinderBoundaryEnds (A : TopCat.{u}) : TopCat.of (A ⊕ A) ⟶ TopCat.of (A × unitInterval) :=
   TopCat.ofHom ⟨Sum.elim (fun a ↦ (a, 0)) (fun a ↦ (a, 1)),
     Continuous.sumElim (by fun_prop) (by fun_prop)⟩
 
+/-- Apply the attaching map `i : A ⟶ B` separately to the two endpoint copies of `A`. -/
 def cylinderBoundarySumMap : TopCat.of (A ⊕ A) ⟶ TopCat.of (B ⊕ B) :=
   TopCat.ofHom ⟨Sum.map i i, i.hom.continuous.sumMap i.hom.continuous⟩
 
+/-- The pushout joining the side cylinder `A × I` to the two caps `B ⊕ B` along their endpoint
+copies of `A`; no embedding hypothesis on `i` is needed. -/
 def CylinderBoundary : TopCat.{u} := pushout (cylinderBoundaryEnds A) (cylinderBoundarySumMap i)
 
+/-- The side-cylinder leg of the pushout defining `CylinderBoundary i`. -/
 def cylinderBoundarySide : TopCat.of (A × unitInterval) ⟶ CylinderBoundary i :=
   pushout.inl _ _
 
+/-- The two-cap leg of the pushout defining `CylinderBoundary i`. -/
 def cylinderBoundaryCaps : TopCat.of (B ⊕ B) ⟶ CylinderBoundary i :=
   pushout.inr _ _
 
+/-- The map `A × I ⟶ B × I` applying `i` to the space coordinate and retaining time. -/
 def cylinderBoundarySideMap : TopCat.of (A × unitInterval) ⟶ TopCat.of (B × unitInterval) :=
   TopCat.ofHom ⟨fun z ↦ (i z.1, z.2), by fun_prop⟩
 
+/-- The map from the endpoint-relative cylinder boundary to `B × I`, induced by `i` on the side
+cylinder and the endpoint inclusions on the caps. -/
 def cylinderBoundaryMap : CylinderBoundary i ⟶ TopCat.of (B × unitInterval) :=
   pushout.desc (cylinderBoundarySideMap i) (cylinderBoundaryEnds B) (by
     ext x : 1

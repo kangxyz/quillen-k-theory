@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.SmallModel.Exact
-import Quillen.KTheory.Map.NaturalIso
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Quillen.KTheory.Map.NaturalIso
 
 /-!
 # Functoriality of small-model K-theory
@@ -9,6 +17,7 @@ comparisons. Natural-isomorphism invariance of the zero-normalized K-map
 turns these comparisons into strict identity and composition laws on SmallK.
 No comparison with an out-of-universe realization is required.
 -/
+@[expose] public section
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -82,18 +91,5 @@ theorem smallKMap_comp (F : ExactFunctor EC ED) (G : ExactFunctor ED ET) (n : �
     (F.comp G).smallKMap n = (G.smallKMap n).comp (F.smallKMap n) := by
   exact (KMap_eq_of_natIso (smallModelCompIso F G) n).trans
     (KMap_comp F.smallModel G.smallModel n)
-
-@[simp]
-theorem smallKMap_id_apply (E : ExactStructure C) (n : ℕ) (x : E.SmallK n) :
-    (ExactFunctor.id E).smallKMap n x = x := by
-  rw [smallKMap_id]
-  rfl
-
-@[simp]
-theorem smallKMap_comp_apply (F : ExactFunctor EC ED) (G : ExactFunctor ED ET)
-    (n : ℕ) (x : EC.SmallK n) :
-    (F.comp G).smallKMap n x = G.smallKMap n (F.smallKMap n x) := by
-  rw [smallKMap_comp]
-  rfl
 
 end Quillen.ExactFunctor

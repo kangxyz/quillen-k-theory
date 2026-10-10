@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyLifting.Compact.Stationary
-import Quillen.Topology.HomotopyLifting.ParallelLifts
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyLifting.Compact.Stationary
+public import Quillen.Topology.HomotopyLifting.ParallelLifts
 
 /-! # Compact-parameter coherent parallel-lift correction
 
@@ -7,6 +15,8 @@ The only lifting parameter is the product of the interval with the original
 compact locally compact parameter. The entire zero set and actual
 backtrack coherence are retained.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 open unitInterval
@@ -14,16 +24,16 @@ namespace Quillen
 universe u
 variable {X E B : Type u} [TopologicalSpace X] [TopologicalSpace E] [TopologicalSpace B]
     [CompactSpace X] [LocallyCompactSpace X]
-    (q : C(E,B)) {a b c : C(X,E)} (H : a.Homotopy b) (K : a.Homotopy c)
+    (q : C(E, B)) {a b c : C(X, E)} (H : a.Homotopy b) (K : a.Homotopy c)
 
 /-- The endpoint comparison is vertical and fixed on the displayed zero set.
 No continuous inverse family is an input or a chosen output. -/
 theorem CompactHomotopyLiftingProperty.parallel_lifts_with_coherence
     (hq : CompactHomotopyLiftingProperty q)
-    (hsame : ∀ t x,q (H (t,x)) = q (K (t,x)))
-    (duration : C(X,unitInterval))
-    (hH : ∀ x,duration x = 0 → ∀ t,H (t,x) = a x)
-    (hK : ∀ x,duration x = 0 → ∀ t,K (t,x) = a x) :
+    (hsame : ∀ t x, q (H (t, x)) = q (K (t, x)))
+    (duration : C(X, unitInterval))
+    (hH : ∀ x, duration x = 0 → ∀ t, H (t, x) = a x)
+    (hK : ∀ x, duration x = 0 → ∀ t, K (t, x) = a x) :
     ∃ V : b.Homotopy c,
       HomotopyOver (q.comp b) q V ∧
       (∀ x,duration x = 0 → ∀ t,V (t,x) = a x) ∧
@@ -97,10 +107,10 @@ theorem CompactHomotopyLiftingProperty.parallel_lifts_with_coherence
 fixed; the stronger theorem also records its full two-parameter coherence. -/
 theorem CompactHomotopyLiftingProperty.parallel_lifts
     (hq : CompactHomotopyLiftingProperty q)
-    (hsame : ∀ t x,q (H (t,x)) = q (K (t,x)))
-    (duration : C(X,unitInterval))
-    (hH : ∀ x,duration x = 0 → ∀ t,H (t,x) = a x)
-    (hK : ∀ x,duration x = 0 → ∀ t,K (t,x) = a x) :
+    (hsame : ∀ t x, q (H (t, x)) = q (K (t, x)))
+    (duration : C(X, unitInterval))
+    (hH : ∀ x, duration x = 0 → ∀ t, H (t, x) = a x)
+    (hK : ∀ x, duration x = 0 → ∀ t, K (t, x) = a x) :
     ∃ V : b.Homotopy c,HomotopyOver (q.comp b) q V ∧
       ∀ x,duration x = 0 → ∀ t,V (t,x) = a x := by
   obtain ⟨V,hV,hfix,_⟩ := CompactHomotopyLiftingProperty.parallel_lifts_with_coherence

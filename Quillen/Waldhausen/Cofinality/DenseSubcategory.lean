@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Additivity.SplitSequence
-import Quillen.Waldhausen.Cofinality.Grading
+module
+
+public import Quillen.Waldhausen.Additivity.SplitSequence
+public import Quillen.Waldhausen.Cofinality.Grading
 
 /-! # Actual common-complement relations for a dense cofiber-closed subcategory
 
@@ -12,6 +14,8 @@ Density supplies actual coproduct complements. Original weak invariance and
 extension/cofiber closure, including the chosen zero, construct the common
 complement relation without a K-zero or cofinality conclusion as a premise.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -47,7 +51,8 @@ theorem coprod_mem_iff_left {A B : C} (hB : P B) : P (A ⨿ B) ↔ P A :=
   ⟨fun hAB ↦ h.quotient (Additivity.coprod_inr_cof W A B)
     (Additivity.coprod_inr_cofiber W A B) hB hAB, fun hA ↦ h.coprod_mem hA hB⟩
 
-/-- The chosen original zero is the actual unit of the chosen coproduct, up to its real isomorphism. -/
+/-- The chosen original zero is the actual unit of the chosen coproduct, up to its real
+isomorphism. -/
 def zeroCoprodIso (A : C) : W.zero ⨿ A ≅ A := by
   let : IsIso (W.isZero.to_ W.zero) := W.isZero.isIso W.isZero _
   let : IsIso (coprod.inr : A ⟶ W.zero ⨿ A) :=

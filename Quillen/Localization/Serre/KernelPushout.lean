@@ -1,4 +1,12 @@
-import Quillen.Localization.Serre.AuxiliaryKernel
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.AuxiliaryKernel
 
 /-!
 # Pushing out an auxiliary epimorphism along its kernel
@@ -7,6 +15,8 @@ This constructs the actual enlarged extension used in the kernel-comma
 reflection. The new kernel, quotient, epimorphism, and Serre membership are
 proved from pushout and cokernel universal properties.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -113,7 +123,8 @@ condition, with no extension-lifting hypothesis. -/
 theorem kernelPushoutMap_isoModSerre [Epi X.hom] (hU : P U) :
     P.isoModSerre (kernelPushoutMap X i) := by
   rw [ObjectProperty.isoModSerre_iff_of_epi]
-  let e := (kernelPushoutIsKernel X i).conePointUniqueUpToIso (kernelIsKernel (kernelPushoutMap X i))
+  let e := (kernelPushoutIsKernel X i).conePointUniqueUpToIso (kernelIsKernel (kernelPushoutMap X
+    i))
   exact P.prop_of_iso e hU
 
 /-- The actual enlarged object belongs to the epimorphic auxiliary category. -/

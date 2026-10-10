@@ -1,6 +1,16 @@
-import Quillen.Topology.CubicalSubdivision.FaceBoundary
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.FaceBoundary
 
 /-! # Exact boundary intersections in the finite grid face skeleton -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 namespace Quillen.CubicalSubdivision
@@ -15,8 +25,8 @@ theorem gridVertex_injective (m : ℕ) : Function.Injective (gridVertex m) := by
   exact_mod_cast hi
 
 /-- A moving interval meets a grid vertex only at an actual endpoint. -/
-theorem intervalCell_eq_gridVertex_boundary (m : ℕ) (k : Fin (m+1))
-    (j : Fin (m+2)) (t : unitInterval) (h : intervalCell m k t = gridVertex m j) :
+theorem intervalCell_eq_gridVertex_boundary (m : ℕ) (k : Fin (m + 1))
+    (j : Fin (m + 2)) (t : unitInterval) (h : intervalCell m k t = gridVertex m j) :
     t = 0 ∨ t = 1 := by
   have he := congrArg (fun t : unitInterval ↦ (t : ℝ)) h
   change ((k : ℝ)+t)/(m+1) = (j : ℝ)/(m+1) at he
@@ -118,7 +128,7 @@ theorem face_intersection_boundaries {n m : ℕ} (F G : FaceIndex n m)
 /-- The preimage of the preceding skeleton is exactly the whole boundary.
 This is the actual attaching-subspace identity needed for cellwise lifting. -/
 theorem face_preimage_skeleton {n m r : ℕ} (F : FaceIndex n m)
-    (hF : faceDimension F = r+1) :
+    (hF : faceDimension F = r + 1) :
     (face F) ⁻¹' skeleton n m r = _root_.Cube.boundary (Active F) := by
   ext s
   constructor

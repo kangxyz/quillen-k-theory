@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.ConstantDiagonal
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.ConstantDiagonal
 
 /-! # The prescribed original diagonal evaluation
 
@@ -8,6 +16,8 @@ by nesting, so their original composite is a coarse weak arrow. This defines
 a genuine simplicial map, strictly retracting the original constant-chain
 inclusion. Its realization has that prescribed evaluation as forward map.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial Topology
@@ -40,18 +50,18 @@ def diagonalCoarseChain (k : SimplexCategory)
   Functor.diag _ ⋙ Functor.uncurry.obj (F ⋙ horizontalCoarseDiagram N k)
 
 @[simp] theorem diagonalCoarseChain_obj (k : SimplexCategory)
-    (F : ComposableArrows (HorizontalChains N k) k.len) (i : Fin (k.len+1)) :
+    (F : ComposableArrows (HorizontalChains N k) k.len) (i : Fin (k.len + 1)) :
     ((diagonalCoarseChain N k F).obj i).obj = (F.obj i).obj.obj.obj i := rfl
 
 /-- The arrow is the original horizontal component followed by the original fine arrow. -/
 @[simp] theorem diagonalCoarseChain_map (k : SimplexCategory)
-    (F : ComposableArrows (HorizontalChains N k) k.len) {i j : Fin (k.len+1)} (f : i ⟶ j) :
+    (F : ComposableArrows (HorizontalChains N k) k.len) {i j : Fin (k.len + 1)} (f : i ⟶ j) :
     ((diagonalCoarseChain N k F).map f).hom =
       (F.map f).hom.hom.app i ≫ (F.obj j).obj.obj.map f := rfl
 
 /-- The displayed original composite is genuinely coarse weak. -/
 theorem diagonalCoarseChain_map_weak (k : SimplexCategory)
-    (F : ComposableArrows (HorizontalChains N k) k.len) {i j : Fin (k.len+1)} (f : i ⟶ j) :
+    (F : ComposableArrows (HorizontalChains N k) k.len) {i j : Fin (k.len + 1)} (f : i ⟶ j) :
     N.coarse.weq ((F.map f).hom.hom.app i ≫ (F.obj j).obj.obj.map f) :=
   ((diagonalCoarseChain N k F).map f).property
 end Categorical

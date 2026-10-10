@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.AcyclicSubcategory
-import Quillen.Waldhausen.Functoriality.KMap
-import Quillen.Topology.HomotopyFiber.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.AcyclicSubcategory
+public import Quillen.Waldhausen.Functoriality.KMap
+public import Quillen.Topology.HomotopyFiber.Basic
 
 /-! # The original acyclic-to-homotopy-fiber comparison
 
@@ -9,6 +17,8 @@ homotopy from the zero functor to the acyclic inclusion. The map lies over the
 original inclusion, preserves the original chosen zero, and induces the
 original canonical K-map factorization. No fiber equivalence is asserted.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -22,7 +32,8 @@ variable {C : Type u} [Category.{v} C] {V : Structure C}
 
 /-- The actual zero-to-inclusion transformation; its components are the maps
 that define coarse acyclicity. -/
-def zeroToAcyclicInclusion : zeroFunctor (C := AcyclicCategory N) N.coarse ⟶ acyclicInclusion N where
+def zeroToAcyclicInclusion : zeroFunctor (C := AcyclicCategory N) N.coarse ⟶ acyclicInclusion N
+    where
   app X := N.coarse.isZero.to_ X.obj
   naturality _ _ _ := N.coarse.isZero.eq_of_src _ _
 
@@ -47,7 +58,8 @@ def acyclicNullhomotopy :
     (zeroToAcyclicInclusion N) (zeroToAcyclicInclusion_weak N)).symm
   have he : (deloopingMap (acyclicInclusion_coarse_exact N)).hom =
       (changeWeakMap N).comp (acyclicInclusionMap N) :=
-    congrArg TopCat.Hom.hom (deloopingMap_comp (acyclicInclusion_exact N) (changeWeak_exact N))
+    congrArg TopCat.Hom.hom
+      (deloopingMap_comp_deloopingMap (acyclicInclusion_exact N) (changeWeak_exact N)).symm
   exact {
     toContinuousMap := H.toContinuousMap
     map_zero_left z := (H.map_zero_left z).trans (DFunLike.congr_fun he z)
@@ -60,7 +72,7 @@ theorem acyclicNullhomotopy_fixed_zero (t : unitInterval) :
   weakNaturalTransformationRealizationHomotopy_fixed_zero (acyclicStructure N) N.coarse
     (zeroFunctor_isExact _ _) (acyclicInclusion_coarse_exact N)
     (zeroToAcyclicInclusion N) (zeroToAcyclicInclusion_weak N) rfl
-    (acyclicInclusion_zero_coarse N) (unitInterval.symm t)
+    (by simpa only [acyclicInclusion_zero] using N.coarse_zero.symm) (unitInterval.symm t)
 
 /-- The original change-of-weak-equivalence map retains the chosen zero. -/
 theorem changeWeakMap_basepoint : changeWeakMap N V.kBasepoint = N.coarse.kBasepoint :=
@@ -116,7 +128,7 @@ theorem canonicalFiberKMap_projection (n : ℕ) :
 This is the null-composite half, not a claim of exactness or a fiber theorem. -/
 theorem changeWeak_KMap_comp_acyclic (n : ℕ) :
     (KMap (changeWeak_exact N) n).comp (KMap (acyclicInclusion_exact N) n) = 1 := by
-  rw [← KMap_comp]
+  rw [KMap_comp_KMap]
   have h := KMap_eq_of_weakNatTrans (zeroFunctor_isExact (acyclicStructure N) N.coarse)
     (acyclicInclusion_coarse_exact N) (zeroToAcyclicInclusion N)
     (zeroToAcyclicInclusion_weak N) n

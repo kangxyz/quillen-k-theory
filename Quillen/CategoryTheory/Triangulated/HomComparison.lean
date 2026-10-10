@@ -3,10 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.CategoryTheory.Triangulated.Functor
-import Mathlib.CategoryTheory.Triangulated.Subcategory
-import Mathlib.CategoryTheory.HomCongr
-import Mathlib.Algebra.FiveLemma
+module
+
+public import Mathlib.CategoryTheory.Triangulated.Functor
+public import Mathlib.CategoryTheory.Triangulated.Subcategory
+public import Mathlib.CategoryTheory.HomCongr
+public import Mathlib.Algebra.FiveLemma
 
 /-!
 # Original Hom-map comparison through distinguished triangles
@@ -17,11 +19,12 @@ Both variables, shifts, and isomorphism transport are treated explicitly.
 The resulting source and target object properties are proved triangulated;
 no full-faithfulness or replacement hypothesis is packaged into a new record.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-set_option maxHeartbeats 800000
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated
 open scoped ZeroObject
 namespace Quillen.DerivedHomComparison
@@ -103,6 +106,8 @@ lemma rightComp_exact₃₁ (X : C) (T : Triangle C) (hT : T ∈ distTriang C) :
 
 variable (F : C ⥤ D) [F.Additive] [F.CommShift ℤ] [F.IsTriangulated]
 
+/-- The additive Hom map from `X ⟶ Y⟦n⟧` to `F.obj X ⟶ (F.obj Y)⟦n⟧`, obtained from `F.map` and its
+shift comparison. -/
 def shiftedMapAddHom (X Y : C) (n : ℤ) :
     (X ⟶ Y⟦n⟧) →+ (F.obj X ⟶ (F.obj Y)⟦n⟧) :=
   (Preadditive.rightComp (F.obj X) ((F.commShiftIso n).hom.app Y)).comp F.mapAddHom
@@ -199,6 +204,8 @@ lemma leftComp_exact₁₃ (Y : C) (T : Triangle C) (hT : T ∈ distTriang C) :
 
 variable (F : C ⥤ D) [F.Additive] [F.CommShift ℤ] [F.IsTriangulated]
 
+/-- The additive Hom map from `X⟦n⟧ ⟶ Y` to `(F.obj X)⟦n⟧ ⟶ F.obj Y`, using the inverse shift
+comparison on the source. -/
 def shiftedSourceMapAddHom (X Y : C) (n : ℤ) :
     (X⟦n⟧ ⟶ Y) →+ ((F.obj X)⟦n⟧ ⟶ F.obj Y) :=
   (Preadditive.leftComp (F.obj Y) ((F.commShiftIso n).inv.app X)).comp F.mapAddHom
@@ -256,6 +263,8 @@ variable {C D : Type*} [Category* C] [Category* D]
   [Pretriangulated C] [Pretriangulated D]
   (F : C ⥤ D) [F.Additive] [F.CommShift ℤ] [F.IsTriangulated]
 
+/-- The property of objects `Y` for which the original map of `F` on `Hom(X, Y⟦n⟧)` is bijective
+for every integer shift `n`. -/
 def rightHomComparison (X : C) : ObjectProperty C :=
   fun Y => ∀ n : ℤ, Function.Bijective (F.map : (X ⟶ Y⟦n⟧) → _)
 
@@ -288,6 +297,8 @@ variable {C D : Type*} [Category* C] [Category* D]
   [Pretriangulated C] [Pretriangulated D]
   (F : C ⥤ D) [F.Additive] [F.CommShift ℤ] [F.IsTriangulated]
 
+/-- The property of objects `X` for which the original map of `F` on `Hom(X⟦n⟧, Y)` is bijective
+for every integer shift `n`. -/
 def leftHomComparison (Y : C) : ObjectProperty C :=
   fun X => ∀ n : ℤ, Function.Bijective (F.map : (X⟦n⟧ ⟶ Y) → _)
 

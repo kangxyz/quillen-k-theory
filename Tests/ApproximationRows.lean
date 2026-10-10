@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.Rows
+module
+
+public import Quillen.Waldhausen.Approximation.Rows
 
 /-! Behavioral consumers for actual row approximation and its original maps. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open Quillen.Waldhausen Quillen.Waldhausen.QuotientRows
@@ -44,7 +48,8 @@ variable (h : HasApproximationProperty W V F)
 /-- The unrestricted lift factors each original component exactly. -/
 theorem actual_lift_component_factorization {n : SimplexCategory} {A : Obj W n} {B : Obj V n}
     (f : (postcompose W V hF n).obj A ⟶ B) (p : Interval n) :
-    F.map ((h.rowLiftInclusion hF f).hom.app p) ≫ (h.rowLiftProjection hF f).hom.app p = f.hom.app p :=
+    F.map ((h.rowLiftInclusion hF f).hom.app p) ≫ (h.rowLiftProjection hF f).hom.app p = f.hom.app p
+      :=
   congrArg (fun a ↦ a.hom.app p) (h.rowLift_factorization hF f)
 
 /-- The honest source factorization satisfies every horizontal joint cofibration test. -/
@@ -55,7 +60,8 @@ theorem factorization_joint_test {n : SimplexCategory} (f : Arrow (Obj W n))
   (factorizationOfJointData W J n).cofibration f i j k hij hjk
 
 /-- Its projection is the given base cylinder projection on the original component arrow. -/
-theorem factorization_original_projection {n : SimplexCategory} (f : Arrow (Obj W n)) (p : Interval n) :
+theorem factorization_original_projection {n : SimplexCategory} (f : Arrow (Obj W n)) (p : Interval
+  n) :
     ((factorizationOfJointData W J n).projection.app f).hom.app p =
       J.projection.app (Arrow.mk (f.hom.hom.app p)) := rfl
 

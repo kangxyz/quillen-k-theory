@@ -1,8 +1,18 @@
-import Quillen.Waldhausen.Additivity.NormalizedPushout
-import Quillen.Waldhausen.Additivity.MixedDiagrams
-import Quillen.Topology.Realization.MixedOrdinalEndpoints
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.NormalizedPushout
+public import Quillen.Waldhausen.Additivity.MixedDiagrams
+public import Quillen.Topology.Realization.MixedOrdinalEndpoints
 
 /-! # Chosen-zero normalized mixed-ordinal diagrams -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -22,7 +32,8 @@ variable {n m : SimplexCategory}
 
 /-- The actual mixed-ordinal deformation, with the nerve degree unchanged. -/
 def normalizedMixedGrid (φ : Cut n) (A : Grid₂ (mixedOrdinal φ) m ⥤ C) : Grid₂ n m ⥤ D :=
-  normalizedIntervalDiagram V W a hF hG hc (firstIndex φ) (switchedIndex φ) (firstIndex_le_switchedIndex φ) A
+  normalizedIntervalDiagram V W a hF hG hc (firstIndex φ) (switchedIndex φ)
+    (firstIndex_le_switchedIndex φ) A
 
 /-- Every mixed input gives an actual S-diagram in the original outer degree. -/
 theorem normalizedMixedGrid_isSimplex₂ (φ : Cut n) {A : Grid₂ (mixedOrdinal φ) m ⥤ C}

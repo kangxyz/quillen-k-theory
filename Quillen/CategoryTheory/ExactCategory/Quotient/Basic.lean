@@ -1,8 +1,16 @@
-import Quillen.CategoryTheory.ExactCategory.SFiltering
-import Mathlib.CategoryTheory.Localization.Predicate
-import Mathlib.CategoryTheory.Localization.CalculusOfFractions.Preadditive
-import Mathlib.CategoryTheory.Preadditive.Transfer
-import Mathlib.CategoryTheory.Preadditive.Opposite
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.SFiltering
+public import Mathlib.CategoryTheory.Localization.Predicate
+public import Mathlib.CategoryTheory.Localization.CalculusOfFractions.Preadditive
+public import Mathlib.CategoryTheory.Preadditive.Transfer
+public import Mathlib.CategoryTheory.Preadditive.Opposite
 
 /-!
 # The underlying category of an exact quotient
@@ -16,6 +24,8 @@ The construction needs no s-filtering assumption. Such hypotheses are needed to
 construct the quotient's exact structure and prove exact localization, neither
 of which is asserted or included as an axiom here.
 -/
+@[expose] public section
+
 
 noncomputable section
 

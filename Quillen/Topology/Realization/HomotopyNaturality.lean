@@ -1,4 +1,12 @@
-import Quillen.Topology.Realization.HomotopyBridge
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.HomotopyBridge
 
 /-! # Actual naturality of realized simplicial homotopies
 
@@ -7,6 +15,8 @@ pointwise equality for the entire original realization homotopies.
 The proof uses the proved inverse-cylinder naturality, rather than choosing
 new homotopies with the same endpoints.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 open scoped Simplicial Topology

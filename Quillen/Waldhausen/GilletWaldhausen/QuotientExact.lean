@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.GilletWaldhausen.TruncationExact
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.TruncationExact
 
 /-!
 # Exactness of the actual acyclic truncation quotient
@@ -8,6 +16,8 @@ functor on bounded acyclic complexes. The existing cokernel-boundary
 identification is proved natural, so exactness follows from actual cycles
 at the boundary, original terms above it, and zero terms below it.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

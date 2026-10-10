@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.ModuleComplex.FiniteProjectiveHomology
-import Quillen.Algebra.ModuleComplex.FiniteFreeAttachment
-import Quillen.Algebra.ModuleComplex.PrincipalTailTruncation
+module
+
+public import Quillen.Algebra.ModuleComplex.FiniteProjectiveHomology
+public import Quillen.Algebra.ModuleComplex.FiniteFreeAttachment
+public import Quillen.Algebra.ModuleComplex.PrincipalTailTruncation
 
 /-!
 # A finite-projective single model for the concentrated remainder
@@ -20,6 +22,8 @@ single complex on the original homology to the original complex, inducing its
 identity and a quasi-isomorphism. The local lower *term* bound is essential;
 cohomological concentration alone would not imply projectivity.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -45,7 +49,10 @@ lemma finiteProjective_homology_of_bounded_model
     K.isoHomologyπ (n-1) n (by simp) ((hbelow (n-1) (by omega)).eq_of_src _ _)
   exact ⟨Module.Finite.equiv e.toLinearEquiv, Projective.of_iso e hp⟩
 
-local instance concentratedStandardDerived (S : Type u) [Ring S] : HasDerivedCategory.{u+1} (ModuleCat.{u} S) :=
+/-- The standard derived-category model for modules over `S`, selected locally for the
+concentrated-homology comparisons. -/
+local instance concentratedStandardDerived (S : Type u) [Ring S] : HasDerivedCategory.{u+1}
+  (ModuleCat.{u} S) :=
   HasDerivedCategory.standard _
 
 /-- A principal cover detects the original lower cohomological bound, through
@@ -108,7 +115,8 @@ lemma finiteProjective_homology_of_principal_derived_models
         (DerivedCategory.homologyFunctor _ n).mapIso e ≪≫
         (DerivedCategory.homologyFunctorFactors _ n).app P
     let eF : L.homology n ≅ F.obj (K.homology n) := (K.sc n).mapHomologyIso F
-    obtain ⟨hf, hp⟩ := finiteProjective_homology_of_bounded_model P n b hbelow hb hfinite hprojective
+    obtain ⟨hf, hp⟩ := finiteProjective_homology_of_bounded_model P n b hbelow hb hfinite
+      hprojective
     have : Projective ((K.homology n).localizedModule (Submonoid.powers r.val)) :=
       Projective.of_iso (eH.symm ≪≫ eF) hp
     exact ⟨Module.Finite.equiv (eH.symm ≪≫ eF).toLinearEquiv,

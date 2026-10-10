@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.TransitionCartesian
-import Quillen.Topology.Realization.SplitFiberTransitionHELP
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.TransitionCartesian
+public import Quillen.Topology.Realization.SplitFiberTransitionHELP
 
 /-! # Full compact HELP for the original chosen relative-row fiber transition
 
@@ -7,6 +15,8 @@ The source fiber is over the actual chosen zero tail. The target fiber is over
 its literal image under the actual base restriction. The entire original path
 is postcomposed, with no change to the original square or source map.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

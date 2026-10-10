@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.PathSubdivision.PoolComparison
-import Quillen.Topology.HomotopyPullback.WeakSource
-import Quillen.Topology.FiberwiseMappingPath.BaseChangeLifting
+module
+
+public import Quillen.Topology.PathSubdivision.PoolComparison
+public import Quillen.Topology.HomotopyPullback.WeakSource
+public import Quillen.Topology.FiberwiseMappingPath.BaseChangeLifting
 
 /-!
 # Exact transport of universal strict-pullback comparison weakness
@@ -17,6 +19,8 @@ the genuine source/path-retaining homotopy-pullback map and its exact square.
 It never promotes an ordinary weak equivalence to arbitrary base-change
 weakness, nor infers lifting for the target projection.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -30,7 +34,7 @@ variable {E F B C D : Type u}
 
 /-- Identity base change recovers the actual original map by its source
 and target graph homeomorphisms. -/
-theorem isWeakHomotopyEquivalence_of_baseChangedMap_id (q : C(F,B)) (f : C(E,F))
+theorem isWeakHomotopyEquivalence_of_baseChangedMap_id (q : C(F, B)) (f : C(E, F))
     (h : IsWeakHomotopyEquivalence (baseChangedMap q f (ContinuousMap.id B))) :
     IsWeakHomotopyEquivalence f := by
   have hs := h.comp (isWeakHomotopyEquivalence_of_homotopyEquiv
@@ -38,12 +42,13 @@ theorem isWeakHomotopyEquivalence_of_baseChangedMap_id (q : C(F,B)) (f : C(E,F))
   change IsWeakHomotopyEquivalence
     ((HomotopyPullback.graphHomeomorph q).toHomotopyEquiv.toFun.comp f) at hs
   exact IsWeakHomotopyEquivalence.of_comp_right hs
-    (isWeakHomotopyEquivalence_of_homotopyEquiv (HomotopyPullback.graphHomeomorph q).toHomotopyEquiv)
+    (isWeakHomotopyEquivalence_of_homotopyEquiv (HomotopyPullback.graphHomeomorph
+      q).toHomotopyEquiv)
 
 /-- An injective change of base changes only the matching proof of an
 actual strict pullback. Both original point coordinates remain fixed. -/
-def baseChangeEmbeddingHomeomorph (q : C(F,B)) (g : C(D,B))
-    (i : C(B,C)) (hi : Function.Injective i) :
+def baseChangeEmbeddingHomeomorph (q : C(F, B)) (g : C(D, B))
+    (i : C(B, C)) (hi : Function.Injective i) :
     BaseChangedTarget q g ≃ₜ BaseChangedTarget (i.comp q) (i.comp g) where
   toFun z := ⟨z.1,congrArg i z.2⟩
   invFun z := ⟨z.1,hi z.2⟩
@@ -54,8 +59,8 @@ def baseChangeEmbeddingHomeomorph (q : C(F,B)) (g : C(D,B))
 
 /-- The actual base-changed original map commutes exactly with the matching
 homeomorphisms for an injective base inclusion. -/
-theorem baseChangeEmbeddingHomeomorph_naturality (q : C(F,B)) (f : C(E,F))
-    (g : C(D,B)) (i : C(B,C)) (hi : Function.Injective i) :
+theorem baseChangeEmbeddingHomeomorph_naturality (q : C(F, B)) (f : C(E, F))
+    (g : C(D, B)) (i : C(B, C)) (hi : Function.Injective i) :
     (baseChangeEmbeddingHomeomorph q g i hi).toHomotopyEquiv.toFun.comp
       (baseChangedMap q f g) =
     (baseChangedMap (i.comp q) f (i.comp g)).comp
@@ -63,8 +68,8 @@ theorem baseChangeEmbeddingHomeomorph_naturality (q : C(F,B)) (f : C(E,F))
 
 /-- Weakness proved in the ambient base transfers to the exact original
 chart base. No openness or lifting premise is needed for this identification. -/
-theorem baseChangedMap_isWeak_of_injective_base (q : C(F,B)) (f : C(E,F))
-    (g : C(D,B)) (i : C(B,C)) (hi : Function.Injective i)
+theorem baseChangedMap_isWeak_of_injective_base (q : C(F, B)) (f : C(E, F))
+    (g : C(D, B)) (i : C(B, C)) (hi : Function.Injective i)
     (h : IsWeakHomotopyEquivalence (baseChangedMap (i.comp q) f (i.comp g))) :
     IsWeakHomotopyEquivalence (baseChangedMap q f g) := by
   have hs := h.comp (isWeakHomotopyEquivalence_of_homotopyEquiv
@@ -76,7 +81,7 @@ theorem baseChangedMap_isWeak_of_injective_base (q : C(F,B)) (f : C(E,F))
 
 /-- Base change of an actual source homeomorphism is again an actual
 homeomorphism, retaining the new parameter exactly. -/
-def baseChangedMapHomeomorph (q : C(F,B)) (e : E ≃ₜ F) (g : C(D,B)) :
+def baseChangedMapHomeomorph (q : C(F, B)) (e : E ≃ₜ F) (g : C(D, B)) :
     BaseChangedSource q (e : C(E,F)) g ≃ₜ BaseChangedTarget q g where
   toFun := baseChangedMap q (e : C(E,F)) g
   invFun z := ⟨(z.1.1,e.symm z.1.2),by simpa using z.2⟩
@@ -89,8 +94,8 @@ def baseChangedMapHomeomorph (q : C(F,B)) (e : E ≃ₜ F) (g : C(D,B)) :
   continuous_toFun := by fun_prop
   continuous_invFun := by fun_prop
 
-@[simp] theorem baseChangedMapHomeomorph_toFun (q : C(F,B))
-    (e : E ≃ₜ F) (g : C(D,B)) :
+@[simp] theorem baseChangedMapHomeomorph_toFun (q : C(F, B))
+    (e : E ≃ₜ F) (g : C(D, B)) :
     (baseChangedMapHomeomorph q e g).toHomotopyEquiv.toFun =
       baseChangedMap q (e : C(E,F)) g := rfl
 
@@ -103,14 +108,14 @@ variable {E F B D : Type u}
 /-- The comparison square retains its parameter, original source image and
 full constant path on both sides. -/
 theorem strictPullbackInclusion_source_naturality
-    (q : C(F,B)) (f : C(E,F)) (g : C(D,B)) :
+    (q : C(F, B)) (f : C(E, F)) (g : C(D, B)) :
     (sourceMap g q f).comp (strictPullbackInclusion (q.comp f) g) =
       (strictPullbackInclusion q g).comp (baseChangedMap q f g) := rfl
 
 /-- Sharp transport for one actual base change: original source weakness,
 the displayed source comparison and literal base-change weakness suffice. -/
 theorem strictPullbackInclusion_isWeak_of_source
-    (q : C(F,B)) (f : C(E,F)) (g : C(D,B))
+    (q : C(F, B)) (f : C(E, F)) (g : C(D, B))
     (hf : IsWeakHomotopyEquivalence f)
     (hs : IsWeakHomotopyEquivalence (strictPullbackInclusion (q.comp f) g))
     (hb : IsWeakHomotopyEquivalence (baseChangedMap q f g)) :
@@ -127,19 +132,19 @@ variable {E F B : Type u}
 
 /-- A sharp universal comparison transfer with its ordinary and actual
 base-change weak inputs stated separately. -/
-theorem of_source (q : C(F,B)) (f : C(E,F))
+theorem of_source (q : C(F, B)) (f : C(E, F))
     (hf : IsWeakHomotopyEquivalence f)
     (hs : UniversalStrictPullbackComparison (q.comp f))
-    (hb : ∀ (D : Type u) [TopologicalSpace D] (g : C(D,B)),
+    (hb : ∀ (D : Type u) [TopologicalSpace D] (g : C(D, B)),
       IsWeakHomotopyEquivalence (baseChangedMap q f g)) :
     UniversalStrictPullbackComparison q :=
   fun D _ g ↦ strictPullbackInclusion_isWeak_of_source q f g hf (hs D g) (hb D g)
 
 /-- Universal actual base-change weakness already includes the ordinary
 weakness needed for source transport, by the identity-base graph models. -/
-theorem of_baseChanges (q : C(F,B)) (f : C(E,F))
+theorem of_baseChanges (q : C(F, B)) (f : C(E, F))
     (hs : UniversalStrictPullbackComparison (q.comp f))
-    (hb : ∀ (D : Type u) [TopologicalSpace D] (g : C(D,B)),
+    (hb : ∀ (D : Type u) [TopologicalSpace D] (g : C(D, B)),
       IsWeakHomotopyEquivalence (baseChangedMap q f g)) :
     UniversalStrictPullbackComparison q :=
   of_source q f (isWeakHomotopyEquivalence_of_baseChangedMap_id q f
@@ -147,8 +152,8 @@ theorem of_baseChanges (q : C(F,B)) (f : C(E,F))
 
 /-- An actual chart homeomorphism transfers universal comparison weakness
 without changing the base or assuming a fibration on the chart. -/
-theorem of_homeomorph (q : C(F,B)) (e : E ≃ₜ F)
-    (hs : UniversalStrictPullbackComparison (q.comp (e : C(E,F)))) :
+theorem of_homeomorph (q : C(F, B)) (e : E ≃ₜ F)
+    (hs : UniversalStrictPullbackComparison (q.comp (e : C(E, F)))) :
     UniversalStrictPullbackComparison q :=
   of_baseChanges q (e : C(E,F)) hs (fun _ _ g ↦
     isWeakHomotopyEquivalence_of_homotopyEquiv (baseChangedMapHomeomorph q e g).toHomotopyEquiv)

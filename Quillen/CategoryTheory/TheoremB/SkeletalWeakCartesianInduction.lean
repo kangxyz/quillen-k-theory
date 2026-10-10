@@ -3,18 +3,22 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianAssembly
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianDegeneracies
-import Quillen.CategoryTheory.TheoremB.SequentialWeakCartesian
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianAssembly
+public import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianDegeneracies
+public import Quillen.CategoryTheory.TheoremB.SequentialWeakCartesian
 
 /-! # General weak-cartesian replacement skeleton induction -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 variable {D : Type u} [SmallCategory D] {H J : D ⥤ SSet.{u}} (η : H ⟶ J)
 
@@ -80,7 +84,7 @@ theorem stageRestrictionWeakCartesian (htrans : TransitionWeakCartesian η)
 theorem stageComparison_isWeakHomotopyEquivalence (htrans : TransitionWeakCartesian η)
     (k n : ℕ) (hkn : k ≤ n) :
     IsWeakHomotopyEquivalence
-      (SequentialCartesian.stageComparison (realizedReplacementSkeletonMap η) k n hkn) :=
+      (Quillen.CartesianRealization.Sequential.stageComparison (realizedReplacementSkeletonMap η) k n hkn) :=
   stageWeakCartesian_of_restrictionWeakCartesian η k n hkn
     (stageRestrictionWeakCartesian η htrans k n hkn)
 
@@ -92,4 +96,4 @@ theorem replacementSkeletonComparison_isWeakHomotopyEquivalence
   replacementSkeletonComparison_isWeakHomotopyEquivalence_of_weakStages η k
     (fun n h ↦ stageComparison_isWeakHomotopyEquivalence η htrans k n h)
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

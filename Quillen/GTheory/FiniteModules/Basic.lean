@@ -1,10 +1,18 @@
-import Quillen.Localization.Serre.FiniteProducts
-import Quillen.CategoryTheory.ExactCategory.Abelian
-import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
-import Mathlib.Algebra.Category.FGModuleCat.EssentiallySmall
-import Mathlib.CategoryTheory.Abelian.Subcategory
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.RingTheory.Finiteness.Finsupp
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.FiniteProducts
+public import Quillen.CategoryTheory.ExactCategory.Abelian
+public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
+public import Mathlib.Algebra.Category.FGModuleCat.EssentiallySmall
+public import Mathlib.CategoryTheory.Abelian.Subcategory
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.RingTheory.Finiteness.Finsupp
 
 /-!
 # Finite modules over a noetherian ring
@@ -14,6 +22,8 @@ noetherian ring it is a Serre class, so its full subcategory is abelian. This
 provides the algebraic affine chart for coherent sheaves, rather than assuming
 an abelian structure on a category given an unrelated name.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u v
@@ -69,7 +79,7 @@ instance finiteModule_subobjects : (finiteModule.{u, v} R).IsClosedUnderSubobjec
 instance finiteModule_isSerreClass : (finiteModule.{u, v} R).IsSerreClass where
 
 /-- The usual category of finite modules over a noetherian ring is abelian. -/
-instance finiteModule_abelian : Abelian (FiniteModule.{u, v} R) := inferInstance
+instance instAbelianFiniteModule : Abelian (FiniteModule.{u, v} R) := inferInstance
 
 /-- Its exact structure consists of all short exact sequences. -/
 def finiteModuleExactStructure : ExactStructure (FiniteModule.{u, v} R) :=

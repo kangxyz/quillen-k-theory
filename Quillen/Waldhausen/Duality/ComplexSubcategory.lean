@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.Homology.OppositeSubcategory
-import Quillen.Waldhausen.Duality.ExactCategory
-import Quillen.CategoryTheory.ExactCategory.Functor
+module
+
+public import Quillen.Algebra.Homology.OppositeSubcategory
+public import Quillen.Waldhausen.Duality.ExactCategory
+public import Quillen.CategoryTheory.ExactCategory.Functor
 
 /-!
 # Genuine opposite Waldhausen structures on complex subcategories
@@ -17,6 +19,8 @@ the actual degree-reversing opposite equivalence, and genuine abelian complex
 gluing. The resulting structure is compatible with the original zero-corner
 kernel/cokernel squares.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

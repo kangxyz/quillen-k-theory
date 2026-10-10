@@ -1,6 +1,16 @@
-import Quillen.Topology.Realization.MixedOrdinalCylinder
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.MixedOrdinalCylinder
 
 /-! # The genuine minimum-cut contraction of the mixed cylinder -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite MonoidalCategory
 open scoped Simplicial Topology
@@ -17,7 +27,8 @@ def minCut {n : SimplexCategory} (φ τ : Cut n) : Cut n :=
 @[simp] theorem comp_minCut {n m : SimplexCategory} (α : n ⟶ m) (φ τ : Cut m) :
     α ≫ minCut φ τ = minCut (α ≫ φ) (α ≫ τ) := by ext; rfl
 
-@[simp] theorem minCut_zero {n : SimplexCategory} (φ : Cut n) : minCut φ (zeroCut n) = zeroCut n := by
+@[simp] theorem minCut_zero {n : SimplexCategory} (φ : Cut n) : minCut φ (zeroCut n) = zeroCut n
+    := by
   ext i : 3
   exact min_eq_right (Fin.zero_le _)
 

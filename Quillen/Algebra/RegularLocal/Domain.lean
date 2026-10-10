@@ -1,5 +1,13 @@
-import Quillen.Algebra.RegularLocal.ParameterAvoidance
-import Quillen.Algebra.RegularLocal.ParameterQuotient
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Algebra.RegularLocal.ParameterAvoidance
+public import Quillen.Algebra.RegularLocal.ParameterQuotient
 
 /-!
 # Regular local rings are domains
@@ -8,6 +16,8 @@ The domain theorem is proved by induction on the dimension, using minimal
 parameter quotients, prime avoidance, and Nakayama's lemma. No domain,
 regular-sequence, or finite-resolution hypothesis is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u

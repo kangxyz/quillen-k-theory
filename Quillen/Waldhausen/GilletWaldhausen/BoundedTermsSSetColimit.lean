@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsSSet
-import Quillen.Waldhausen.GilletWaldhausen.BoundedSSetColimit
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsSSet
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedSSetColimit
 
 /-! # The actual filtered simplicial union of bounded termwise strata
 
@@ -8,6 +16,8 @@ Only after that proof is the accepted filtered-realization API applied to
 compact maps and relative homotopies. No global term bound or stagewise
 K-equivalence is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -44,7 +54,7 @@ def boundedTermsSSetCocone : Cocone (boundedTermsSSetDiagram P w) where
 
 /-- The original S-set is genuinely the filtered colimit of its actual
 bounded strata, proved degreewise from finite-grid coverage and injectivity. -/
-def boundedTermsSSetCocone_isColimit : IsColimit (boundedTermsSSetCocone P w) := by
+def boundedTermsSSetCoconeIsColimit : IsColimit (boundedTermsSSetCocone P w) := by
   apply evaluationJointlyReflectsColimits
   intro n
   apply Types.FilteredColimit.isColimitOf'
@@ -62,7 +72,8 @@ theorem boundedTermsSSet_compact_factors {T : Type w} [TopologicalSpace T] [Comp
     ∃ N : ℕ, ∃ g : C(T, |boundedTermsStratumSSet P w N|),
       (SSet.toTop.map (boundedTermsStratumSSetInclusion P w N)).hom.comp g = f := by
   obtain ⟨j, g, hg⟩ := FilteredRealization.compact_factors
-    (boundedTermsSSetDiagram P w) (boundedTermsSSetCocone P w) (boundedTermsSSetCocone_isColimit P w) f
+    (boundedTermsSSetDiagram P w) (boundedTermsSSetCocone P w) (boundedTermsSSetCoconeIsColimit
+      P w) f
   exact ⟨boundedStageRank j, g, hg⟩
 
 /-- Equal compact-source maps from one bounded stage become literally equal
@@ -75,7 +86,8 @@ theorem boundedTermsSSet_compact_eq_eventually {T : Type w} [TopologicalSpace T]
       (SSet.toTop.map (boundedTermsStratumSSetTransition P w h)).hom.comp f =
         (SSet.toTop.map (boundedTermsStratumSSetTransition P w h)).hom.comp g := by
   obtain ⟨j, h, hh⟩ := FilteredRealization.compact_eq_eventually
-    (boundedTermsSSetDiagram P w) (boundedTermsSSetCocone P w) (boundedTermsSSetCocone_isColimit P w)
+    (boundedTermsSSetDiagram P w) (boundedTermsSSetCocone P w) (boundedTermsSSetCoconeIsColimit
+      P w)
     (boundedStageIndex N) f g he
   exact ⟨boundedStageRank j, leOfHom (AsSmall.down.map h), hh⟩
 
@@ -85,7 +97,8 @@ theorem boundedTermsSSet_compact_factors_above {T : Type w} [TopologicalSpace T]
     ∃ M : ℕ, N ≤ M ∧ ∃ g : C(T, |boundedTermsStratumSSet P w M|),
       (SSet.toTop.map (boundedTermsStratumSSetInclusion P w M)).hom.comp g = f := by
   obtain ⟨j, h, g, hg⟩ := FilteredRealization.compact_factors_above
-    (boundedTermsSSetDiagram P w) (boundedTermsSSetCocone P w) (boundedTermsSSetCocone_isColimit P w)
+    (boundedTermsSSetDiagram P w) (boundedTermsSSetCocone P w) (boundedTermsSSetCoconeIsColimit
+      P w)
     (boundedStageIndex N) f
   exact ⟨boundedStageRank j, leOfHom (AsSmall.down.map h), g, hg⟩
 
@@ -99,7 +112,8 @@ theorem boundedTermsSSet_homotopyRel_factors {T : Type w} [TopologicalSpace T] [
       Nonempty (((SSet.toTop.map (boundedTermsStratumSSetTransition P w h)).hom.comp a).HomotopyRel
         ((SSet.toTop.map (boundedTermsStratumSSetTransition P w h)).hom.comp b) S) := by
   obtain ⟨j, h, hH⟩ := FilteredRealization.homotopyRel_factors
-    (boundedTermsSSetDiagram P w) (boundedTermsSSetCocone P w) (boundedTermsSSetCocone_isColimit P w)
+    (boundedTermsSSetDiagram P w) (boundedTermsSSetCocone P w) (boundedTermsSSetCoconeIsColimit
+      P w)
     (boundedStageIndex N) S hS H
   exact ⟨boundedStageRank j, leOfHom (AsSmall.down.map h), hH⟩
 

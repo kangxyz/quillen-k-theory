@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.Realization.TwoSidedBarZeroFiber
+module
+
+public import Quillen.Topology.Realization.TwoSidedBar.ZeroFiber
 
 /-! Semantic tests for the original zero-row chain, both augmentations,
 complete stored paths, finite degree zero, and genuinely empty fibers. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial Topology
@@ -17,7 +21,7 @@ set_option backward.defeqAttrib.useBackward true
 namespace Tests.TwoSidedBarZeroFiber
 open Quillen Quillen.TheoremA Quillen.TwoSidedBar
 variable {H J : SimplexCategoryᵒᵖ ⥤ SSet.{u}} (η : H ⟶ J)
-  (h : TheoremB.SkeletalCartesian.TransitionWeakCartesian
+  (h : Quillen.CartesianRealization.Skeletal.TransitionWeakCartesian
     (Functor.whiskerLeft indexProjection η))
 
 example : barZeroInclusion H ≫ dropMap H =

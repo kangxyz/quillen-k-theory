@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.Algebra.Homology.Factorizations.CM5a
-import Mathlib.Algebra.Homology.CochainComplexOpposite
+module
+
+public import Mathlib.Algebra.Homology.Factorizations.CM5a
+public import Mathlib.Algebra.Homology.CochainComplexOpposite
 
 /-!
 # Bounded-above projective replacements
@@ -14,6 +16,8 @@ bounded-below injective replacement into a bounded-above projective replacement.
 The upper bound is unchanged. Quasi-isomorphisms are transported through the
 actual reindexing and opposite functors, rather than assumed preserved.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

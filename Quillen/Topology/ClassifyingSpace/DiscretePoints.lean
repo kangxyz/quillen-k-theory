@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.ClassifyingSpace.Discrete
-import Quillen.Topology.HomotopyGroups.ZeroPointClass
+module
+
+public import Quillen.Topology.ClassifyingSpace.Discrete
+public import Quillen.Topology.HomotopyGroups.ZeroPointClass
 
 /-!
 # Actual vertices and components of discrete classifying spaces
@@ -13,6 +15,8 @@ The original discrete-realization homeomorphism sends the original vertex to
 its object. Those actual vertices biject onto the original zero-dimensional
 homotopy classes; no chosen equivalence with unspecified forward map is used.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
@@ -31,7 +35,9 @@ lemma constantRealizationIso_point (A : Type u) (a : A) :
     apply SSet.yonedaEquiv.injective
     simp only [Equiv.apply_symm_apply]
     rfl
-  have h := ConcreteCategory.congr_hom (TheoremB.constantRealizationIso_ι A a) default
+  have he := TheoremB.constantRealizationIso_ι_comp A a
+  rw [← Category.assoc, ← Functor.map_comp] at he
+  have h := ConcreteCategory.congr_hom he default
   rw [e] at h
   exact h
 
@@ -54,10 +60,12 @@ lemma discrete_vertex_zeroPointClass_bijective (A : Type u) (a₀ : A) :
   have hf : Function.Bijective f := homotopyGroupMap_bijective_of_homotopyEquiv
     e.toHomotopyEquiv (discreteClassifyingIso_point A a₀) 0
   have he (a : A) : f (zeroPointClass (classifyingSpacePoint (Discrete.mk a₀))
-      (classifyingSpacePoint (Discrete.mk a))) = zeroPointClass (X := TopCat.discrete.obj A) a₀ a := by
+      (classifyingSpacePoint (Discrete.mk a))) = zeroPointClass (X := TopCat.discrete.obj A) a₀
+        a := by
     change homotopyGroupMap _ _ _ = _
     rw [homotopyGroupMap_zeroPointClass]
-    exact congrArg (zeroPointClass (X := TopCat.discrete.obj A) a₀) (discreteClassifyingIso_point A a)
+    exact congrArg (zeroPointClass (X := TopCat.discrete.obj A) a₀)
+      (discreteClassifyingIso_point A a)
   constructor
   · intro a b h
     apply zeroPointClass_injective_of_discrete (X := TopCat.discrete.obj A) a₀

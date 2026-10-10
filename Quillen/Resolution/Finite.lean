@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.ExactCategory.Subcategory
-import Quillen.Devissage.Filtration
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Subcategory
+public import Quillen.Devissage.Filtration
 
 /-!
 # Finite admissible resolutions
@@ -13,6 +21,8 @@ resolving subcategory.  No common bound on the lengths is imposed.
 Reference: Weibel, *The K-book*, V.3.1, pp. 20–21 of chapter V,
 https://sites.math.rutgers.edu/~weibel/Kbook/Kbook.V.pdf.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v u v' u' w

@@ -4,14 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.FiberwiseMappingPath.BaseChange
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceCancellation
+module
+
+public import Quillen.Topology.FiberwiseMappingPath.BaseChange
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceCancellation
 
 /-! # Composition and square cancellation for literal base-changed maps
 
 Every construction keeps the new parameter and the original source point.
 The square theorem transports only an equality of defining predicates.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology
 universe u
@@ -19,21 +23,21 @@ namespace Quillen.FiberwiseMappingPath
 variable {A B C E T D : Type u} [TopologicalSpace A] [TopologicalSpace B]
   [TopologicalSpace C] [TopologicalSpace E] [TopologicalSpace T] [TopologicalSpace D]
 
-@[simp] theorem baseChangedMap_comp (p : C(E,T)) (g : C(B,E)) (i : C(A,B)) (a : C(D,T)) :
+@[simp] theorem baseChangedMap_comp (p : C(E, T)) (g : C(B, E)) (i : C(A, B)) (a : C(D, T)) :
     (baseChangedMap p g a).comp (baseChangedMap (p.comp g) i a) =
       baseChangedMap p (g.comp i) a := rfl
 
 /-- Literal base changes compose, without a preservation theorem for weak maps. -/
-theorem baseChangedMap_comp_isWeak (p : C(E,T)) (g : C(B,E)) (i : C(A,B)) (a : C(D,T))
+theorem baseChangedMap_comp_isWeak (p : C(E, T)) (g : C(B, E)) (i : C(A, B)) (a : C(D, T))
     (hg : IsWeakHomotopyEquivalence (baseChangedMap p g a))
     (hi : IsWeakHomotopyEquivalence (baseChangedMap (p.comp g) i a)) :
     IsWeakHomotopyEquivalence (baseChangedMap p (g.comp i) a) := hg.comp hi
 
 /-- Cancel a genuinely weak left source leg in the original commutative square
 following the same displayed base change on all four corners. -/
-theorem baseChangedMap_isWeak_of_square (p : C(E,T))
-    (i : C(A,B)) (f : C(A,C)) (g : C(B,E)) (j : C(C,E))
-    (hsq : g.comp i = j.comp f) (a : C(D,T))
+theorem baseChangedMap_isWeak_of_square (p : C(E, T))
+    (i : C(A, B)) (f : C(A, C)) (g : C(B, E)) (j : C(C, E))
+    (hsq : g.comp i = j.comp f) (a : C(D, T))
     (hi : IsWeakHomotopyEquivalence (baseChangedMap (p.comp g) i a))
     (hf : IsWeakHomotopyEquivalence (baseChangedMap (p.comp j) f a))
     (hj : IsWeakHomotopyEquivalence (baseChangedMap p j a)) :

@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.SConstruction.Rows.OneRow
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.OneRow
 
 /-! # Original one-step rows and the actual middle-object evaluation
 
@@ -6,6 +14,8 @@ The two diagonal objects are actual zero objects. Their unique zero
 isomorphisms, together with the identity on the original middle object,
 give a genuine natural isomorphism from the canonical one-step row.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial

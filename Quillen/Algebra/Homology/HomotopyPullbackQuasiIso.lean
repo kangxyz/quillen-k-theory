@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.Homology.HomotopyPullback
-import Mathlib.Algebra.Homology.DerivedCategory.HomologySequence
-import Mathlib.Algebra.Homology.CommSq
+module
+
+public import Quillen.Algebra.Homology.HomotopyPullback
+public import Mathlib.Algebra.Homology.DerivedCategory.HomologySequence
+public import Mathlib.Algebra.Homology.CommSq
 
 /-!
 # Original homology and weak gluing for homotopy pullbacks
@@ -17,6 +19,8 @@ Both lift-gluing results follow from the strict projection equations and genuine
 two-out-of-three. No bounds, projectivity, or abstract homotopy-limit hypothesis
 are imposed on the original complexes.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -62,7 +66,7 @@ lemma epi_homologyMap_biprod_desc_of_quasiIso [QuasiIso g] (n : ℤ) :
 /-- Surjectivity in the preceding degree makes the actual homology square
 of the original mapping-cocone projections a genuine pullback square. -/
 lemma homology_homotopyPullback_isPullback (n : ℤ)
-    [Epi (homologyMap (biprod.desc f (-g)) (n-1))] :
+    [Epi (homologyMap (biprod.desc f (-g)) (n - 1))] :
     IsPullback (homologyMap (homotopyPullbackFst f g) n)
       (homologyMap (homotopyPullbackSnd f g) n) (homologyMap f n) (homologyMap g n) := by
   let : HasDerivedCategory C := HasDerivedCategory.standard _
@@ -70,12 +74,12 @@ lemma homology_homotopyPullback_isPullback (n : ℤ)
   let T₀ := CochainComplex.mappingCocone.triangle φ
   have hT := DerivedCategory.mappingCocone_triangle_distinguished φ
   let H := homologyFunctor C (.up ℤ) n
-  have hδ : CochainComplex.homologyδOfTriangle T₀ (n-1) n (by omega) = 0 := by
-    apply (cancel_epi (homologyMap φ (n-1))).mp
+  have hδ : CochainComplex.homologyδOfTriangle T₀ (n - 1) n (by omega) = 0 := by
+    apply (cancel_epi (homologyMap φ (n - 1))).mp
     simpa only [comp_zero, T₀, CochainComplex.mappingCocone.triangle_mor₂] using
-      CochainComplex.homologyMap_homologyδOfTriangle T₀ hT (n-1) n (by omega)
+      CochainComplex.homologyMap_homologyδOfTriangle T₀ hT (n - 1) n (by omega)
   have hmono : Mono (homologyMap T₀.mor₁ n) :=
-    (CochainComplex.homologyMap_exact₁_of_distTriang T₀ hT (n-1) n (by omega)).mono_g hδ
+    (CochainComplex.homologyMap_exact₁_of_distTriang T₀ hT (n - 1) n (by omega)).mono_g hδ
   have hex := CochainComplex.homologyMap_exact₂_of_distTriang T₀ hT n
   let : PreservesBinaryBiproducts H := preservesBinaryBiproducts_of_preservesBinaryProducts H
   let e := H.mapBiprod A B
@@ -116,7 +120,7 @@ lemma quasiIso_homotopyPullbackFst [QuasiIso g] : QuasiIso (homotopyPullbackFst 
   rw [quasiIso_iff]
   intro n
   rw [quasiIsoAt_iff_isIso_homologyMap]
-  have := epi_homologyMap_biprod_desc_of_quasiIso f g (n-1)
+  have := epi_homologyMap_biprod_desc_of_quasiIso f g (n - 1)
   exact (homology_homotopyPullback_isPullback f g n).isIso_fst_of_isIso
 
 /-- The symmetric projection is a quasi-isomorphism when its opposite leg is. -/
@@ -124,9 +128,9 @@ lemma quasiIso_homotopyPullbackSnd [QuasiIso f] : QuasiIso (homotopyPullbackSnd 
   rw [quasiIso_iff]
   intro n
   rw [quasiIsoAt_iff_isIso_homologyMap]
-  have : Epi (homologyMap (biprod.desc f (-g)) (n-1)) := by
-    apply epi_of_epi_fac (show homologyMap (biprod.inl : A ⟶ A ⊞ B) (n-1) ≫
-      homologyMap (biprod.desc f (-g)) (n-1) = homologyMap f (n-1) from ?_)
+  have : Epi (homologyMap (biprod.desc f (-g)) (n - 1)) := by
+    apply epi_of_epi_fac (show homologyMap (biprod.inl : A ⟶ A ⊞ B) (n - 1) ≫
+      homologyMap (biprod.desc f (-g)) (n - 1) = homologyMap f (n - 1) from ?_)
     rw [← homologyMap_comp, biprod.inl_desc]
   exact (homology_homotopyPullback_isPullback f g n).isIso_snd_of_isIso
 

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.FiberwiseMappingPath.BaseChange
-import Quillen.Topology.HomotopyGroups.WeakLocality
+module
+
+public import Quillen.Topology.FiberwiseMappingPath.BaseChange
+public import Quillen.Topology.HomotopyGroups.WeakLocality
 
 /-! # Exact weak chart transport after a displayed base change
 
@@ -14,6 +16,8 @@ pullback. The new parameter and original point coordinates are preserved.
 Weakness is assumed only for that actual base-changed chart map, never inferred
 from ordinary weakness before base change.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,8 +32,8 @@ variable {E F B D A C : Type u}
 /-- The exact restriction over a pulled-back target chart is weak when its
 actual chart model after the same base change is weak. -/
 theorem baseChangedRestriction_isWeak_of_chart
-    (q : C(F,B)) (f : C(E,F)) (g : C(D,B)) (W : Set F)
-    (k : C(A,C)) (r : C(C,B))
+    (q : C(F, B)) (f : C(E, F)) (g : C(D, B)) (W : Set F)
+    (k : C(A, C)) (r : C(C, B))
     (es : {x : E // f x ∈ W} ≃ₜ A) (et : C ≃ₜ W)
     (hsq : ∀ x : {x : E // f x ∈ W},(et (k (es x))).val = f x.val)
     (hbase : ∀ y : C,q (et y).val = r y)

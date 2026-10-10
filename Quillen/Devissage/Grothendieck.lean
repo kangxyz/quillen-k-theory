@@ -1,7 +1,15 @@
-import Quillen.Devissage.Setup
-import Mathlib.CategoryTheory.Abelian.CommSq
-import Mathlib.CategoryTheory.Abelian.ShortExact
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Kernels
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Devissage.Setup
+public import Mathlib.CategoryTheory.Abelian.CommSq
+public import Mathlib.CategoryTheory.Abelian.ShortExact
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Kernels
 
 /-!
 # Filtration sums for algebraic dévissage
@@ -17,6 +25,8 @@ proves additivity on arbitrary short exact sequences, yielding the inverse map.
 No extension closure or finite-length hypothesis is used. This is the algebraic
 theorem, not a comparison with homotopical Quillen `K₀` or higher dévissage.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v u

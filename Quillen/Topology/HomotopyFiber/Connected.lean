@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremB.HomotopyPullbackFibration
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyPullback.Fibration
 
 /-! # Actual path connectedness for fibrations and homotopy pullbacks
 
@@ -6,6 +14,8 @@ Only pointwise paths are chosen. Covering-homotopy lifting turns each base
 path into an actual path from a total-space point to the chosen fiber.
 No continuous choice of paths or fiber inverses is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

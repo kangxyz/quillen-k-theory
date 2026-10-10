@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.QuillenComparison.ExtendedRows
-import Quillen.Waldhausen.QuillenComparison.RecoverSubobjects
-import Quillen.Waldhausen.QuillenComparison.FlagPresentation
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.ExtendedRows
+public import Quillen.Waldhausen.QuillenComparison.RecoverSubobjects
+public import Quillen.Waldhausen.QuillenComparison.FlagPresentation
 
 /-! # The terminal Q-span of the reconstructed extended row
 
@@ -8,6 +16,8 @@ The middle quotient, its initial-flag apex and the final quotient are
 identified by the actual quotient maps. Under these identifications, the
 terminal Q-arrow is represented by the prescribed deflation and inflation.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -38,11 +48,11 @@ def extendedRowInitialIso : extendedPullbackFlag E A p hp r ≅
     (isZero_zero C)
 
 /-- The initial comparison retains the specified cokernel projection. -/
-@[simp]
-theorem extendedRowInitialIso_hom_app (i : Fin (n + 1 + 1 + 1)) :
-    ((extendedRowInitialIso E A hA p hp r hr).app i).hom =
+@[simp] theorem extendedRowInitialIso_hom_app_eq_flagQuotient (i : Fin (n + 1 + 1 + 1)) :
+    (extendedRowInitialIso E A hA p hp r hr).hom.app i =
       flagQuotient E (extendedPullbackFlag E A p hp r)
         (extendedPullbackFlag_inflation E A p hp r hA hr) (interval 0 i (Fin.zero_le _)) := rfl
+
 
 /-- The terminal initial quotient is canonically the prescribed target. -/
 def extendedRowTopIso :
@@ -70,26 +80,35 @@ def extendedRepresentative : Span E.deflation E.inflation
   wr := hr
 
 /-- The apex identification is inverse to its actual initial quotient map. -/
-@[reassoc (attr := simp)]
-theorem extendedRowInitialIso_apex
-    [∀ i : Fin (n + 1), HasPullback p (flagTopMap A i)] :
-    ((extendedRowInitialIso E A hA p hp r hr).app (extendedMiddleInterval n).right).hom ≫
+@[reassoc (attr := simp)] theorem flagQuotient_extendedMiddle_comp_apex [∀ i : Fin (n + 1),
+    HasPullback p (flagTopMap A i)] :
+    flagQuotient E (extendedPullbackFlag E A p hp r)
+      (extendedPullbackFlag_inflation E A p hp r hA hr) (interval 0 (extendedMiddleInterval
+          n).right (Fin.zero_le _)) ≫
       (extendedRowApexIso E A hA p hp r hr).hom =
     eqToHom (extendedPullbackFlag_obj_middle E A p hp r (Fin.last n)) ≫
       pullback.fst p (flagTopMap A (Fin.last n)) := by
+  change ((extendedRowInitialIso E A hA p hp r hr).app (extendedMiddleInterval n).right).hom ≫
+      (extendedRowApexIso E A hA p hp r hr).hom = eqToHom (extendedPullbackFlag_obj_middle E A p
+      hp r (Fin.last n)) ≫ pullback.fst p (flagTopMap A (Fin.last n))
   dsimp only [extendedRowApexIso, Iso.trans_hom, Iso.symm_hom]
   rw [Iso.hom_inv_id_assoc]
   rfl
 
+
 /-- The target identification is inverse to its actual initial quotient map. -/
-@[reassoc (attr := simp)]
-theorem extendedRowInitialIso_top :
-    ((extendedRowInitialIso E A hA p hp r hr).app (Fin.last (n + 1 + 1))).hom ≫
+@[reassoc (attr := simp)] theorem flagQuotient_extendedLast_comp_top :
+    flagQuotient E (extendedPullbackFlag E A p hp r)
+      (extendedPullbackFlag_inflation E A p hp r hA hr) (interval 0 (Fin.last (n + 1 + 1))
+          (Fin.zero_le _)) ≫
       (extendedRowTopIso E A hA p hp r hr).hom =
     eqToHom (extendedPullbackFlag_obj_last E A p hp r) := by
+  change ((extendedRowInitialIso E A hA p hp r hr).app (Fin.last (n + 1 + 1))).hom ≫
+      (extendedRowTopIso E A hA p hp r hr).hom = eqToHom (extendedPullbackFlag_obj_last E A p hp r)
   dsimp only [extendedRowTopIso, Iso.trans_hom, Iso.symm_hom]
   rw [Iso.hom_inv_id_assoc]
   rfl
+
 
 /-- The left leg is the prescribed deflation followed by the old quotient map. -/
 theorem extendedRow_left_leg :
@@ -108,13 +127,14 @@ theorem extendedRow_left_leg :
         (extendedPullbackFlag_inflation E A p hp r hA hr)
         (nestedToInterval (extendedMiddleInterval n)) := by
     dsimp only [e, wholeSpan, initialQuotient, extendedRow, flagRow]
-    rw [extendedRowInitialIso_hom_app, flagQuotient_naturality]
+    rw [Iso.app_hom, extendedRowInitialIso_hom_app_eq_flagQuotient, flagQuotient_naturality]
     change (extendedPullbackFlag E A p hp r).map (𝟙 j) ≫ _ = _
     rw [CategoryTheory.Functor.map_id, Category.id_comp]
   have ht : flagTopMap A (Fin.last n) = 𝟙 _ := A.map_id _
   have hs : pullback.fst p (flagTopMap A (Fin.last n)) ≫ p =
       pullback.snd p (flagTopMap A (Fin.last n)) := by
-    simpa only [ht, Category.comp_id] using (pullback.condition (f := p) (g := flagTopMap A (Fin.last n)))
+    simpa only [ht, Category.comp_id] using (pullback.condition (f := p) (g := flagTopMap A
+        (Fin.last n)))
   apply (cancel_epi (e.app j).hom).1
   calc
     _ = flagQuotient E (extendedPullbackFlag E A p hp r)
@@ -131,7 +151,8 @@ theorem extendedRow_left_leg :
       change _ = ((extendedRowInitialIso E A hA p hp r hr).app
         (extendedMiddleInterval n).right).hom ≫
           (extendedRowApexIso E A hA p hp r hr).hom ≫ (p ≫ _)
-      rw [extendedRowInitialIso_apex_assoc]
+      rw [Iso.app_hom, extendedRowInitialIso_hom_app_eq_flagQuotient,
+    flagQuotient_extendedMiddle_comp_apex_assoc]
       rw [← hs]
       simp only [Category.assoc]
 
@@ -153,11 +174,13 @@ theorem extendedRow_right_leg :
   rw [← Category.assoc, ← hn, Category.assoc]
   change _ ≫ (((extendedRowInitialIso E A hA p hp r hr).app _).hom ≫
     (extendedRowTopIso E A hA p hp r hr).hom) = _
-  rw [extendedRowInitialIso_top]
+  rw [Iso.app_hom, extendedRowInitialIso_hom_app_eq_flagQuotient,
+    flagQuotient_extendedLast_comp_top]
   change _ = ((extendedRowInitialIso E A hA p hp r hr).app
     (extendedMiddleInterval n).right).hom ≫
       (extendedRowApexIso E A hA p hp r hr).hom ≫ r
-  rw [extendedRowInitialIso_apex_assoc]
+  rw [Iso.app_hom, extendedRowInitialIso_hom_app_eq_flagQuotient,
+    flagQuotient_extendedMiddle_comp_apex_assoc]
   exact extendedPullbackFlag_middle_to_last E A p hp r (Fin.last n)
 
 /-- The actual final Q-arrow of the extension has the prescribed representative,

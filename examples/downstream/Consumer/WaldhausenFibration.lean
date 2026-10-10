@@ -1,6 +1,18 @@
-import Quillen.Library
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.CanonicalFiberMap
+public import Quillen.Waldhausen.Cylinder.Subcategory
+public import Quillen.Waldhausen.SConstruction.Rows.JointFunctor
 
 /-! Actual canonical fiber and common-cylinder maps, without a fibration conclusion. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CochainComplex Quillen Quillen.Waldhausen
 open scoped Topology
@@ -21,7 +33,8 @@ theorem actual_acyclic_fiber_projection :
     (HomotopyFiber.projection (changeWeakMap N) N.coarse.kBasepoint).comp
       (actual_acyclic_fiber_map N) = (deloopingMap (acyclicInclusion_exact N)).hom := rfl
 theorem actual_consecutive_K_maps (n : ℕ) :
-    (Waldhausen.KMap (changeWeak_exact N) n).comp (Waldhausen.KMap (acyclicInclusion_exact N) n) = 1 :=
+    (Waldhausen.KMap (changeWeak_exact N) n).comp (Waldhausen.KMap (acyclicInclusion_exact N) n) = 1
+      :=
   changeWeak_KMap_comp_acyclic N n
 end Fiber
 section Cylinder
@@ -48,10 +61,14 @@ theorem actual_joint_cylinder_iso_exact :
       (subcategoryJointFunctor P hcone hshift) := subcategoryJointFunctor_isoExact P hcone hshift
 theorem actual_joint_cylinder_on_rows (n : SimplexCategory) :
     IsExact
-      (ArrowCategory.waldhausenStructure (QuotientRows.waldhausenStructure (complexSubcategory P) n)).cof
-      (ArrowCategory.waldhausenStructure (QuotientRows.waldhausenStructure (complexSubcategory P) n)).weq
-      (ExtensionCategory.waldhausenStructure (QuotientRows.waldhausenStructure (complexSubcategory P) n)).cof
-      (ExtensionCategory.waldhausenStructure (QuotientRows.waldhausenStructure (complexSubcategory P) n)).weq
+      (ArrowCategory.waldhausenStructure (QuotientRows.waldhausenStructure (complexSubcategory P)
+        n)).cof
+      (ArrowCategory.waldhausenStructure (QuotientRows.waldhausenStructure (complexSubcategory P)
+        n)).weq
+      (ExtensionCategory.waldhausenStructure (QuotientRows.waldhausenStructure (complexSubcategory
+        P) n)).cof
+      (ExtensionCategory.waldhausenStructure (QuotientRows.waldhausenStructure (complexSubcategory
+        P) n)).weq
       (QuotientRows.jointOnRows (complexSubcategory P) (complexSubcategory P)
         (subcategoryJointFunctor_quasiExact P hcone hshift) n) :=
   QuotientRows.jointOnRows_exact _ _ (subcategoryJointFunctor_quasiExact P hcone hshift) n

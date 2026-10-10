@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Product.SSet
-import Quillen.Topology.Realization.ProductComparison
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Product.SSet
+public import Quillen.Topology.Realization.ProductComparison
 
 /-! # Actual product K-groups by the original projection maps
 
@@ -7,6 +15,8 @@ The strict S-product isomorphism and compact-source lifting of the canonical
 realization-product comparison give the group equivalence. Its forward map
 is definitionally the pair of the original canonical Waldhausen K-maps.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -97,7 +107,10 @@ theorem KMapPair_bijective (n : ℕ) : Function.Bijective (KMapPair V W n) := by
 def KEquiv (n : ℕ) : (productStructure V W).K n ≃* V.K n × W.K n :=
   MulEquiv.ofBijective (KMapPair V W n) (KMapPair_bijective V W n)
 
-@[simp] theorem KEquiv_toMonoidHom (n : ℕ) :
-    (KEquiv V W n).toMonoidHom = (KMap (fst_exact V W) n).prod (KMap (snd_exact V W) n) := rfl
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem KEquiv_coe (n : ℕ) :
+    (↑(KEquiv V W n) : (productStructure V W).K n →* V.K n × W.K n) = (KMap (fst_exact V W)
+        n).prod (KMap (snd_exact V W) n) := rfl
+
 
 end Quillen.Waldhausen.Product

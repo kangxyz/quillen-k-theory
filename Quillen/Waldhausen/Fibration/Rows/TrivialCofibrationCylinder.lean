@@ -1,11 +1,21 @@
-import Quillen.Waldhausen.Fibration.Rows.SecondEndpoint
-import Quillen.Waldhausen.Fibration.TrivialCofibrations.Category
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.Rows.SecondEndpoint
+public import Quillen.Waldhausen.Fibration.TrivialCofibrations.Category
 
 /-! # Actual row cylinders as structural weak-cofibration comparison data
 
 The data is supplied by the genuine exact joint cylinder, its proved target
 section and its original projection. No comma or nerve comparison is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CochainComplex
 universe u v
@@ -31,10 +41,12 @@ def trivialCofibrationCylinder (hs : SecondEndpointSection N D) (n : SimplexCate
   projection_weak := (factorization N D n).weak
   middle_cof α hl hr := (middle_exact N D n).cofibration α ⟨hl, hr⟩
 
-@[simp] theorem trivialCofibrationCylinder_target (hs : SecondEndpointSection N D) (n : SimplexCategory) :
+@[simp] theorem trivialCofibrationCylinder_target (hs : SecondEndpointSection N D) (n :
+    SimplexCategory) :
     (trivialCofibrationCylinder N D hs n).target = targetInclusion N D n := rfl
 
-@[simp] theorem trivialCofibrationCylinder_projection (hs : SecondEndpointSection N D) (n : SimplexCategory) :
+@[simp] theorem trivialCofibrationCylinder_projection (hs : SecondEndpointSection N D) (n :
+    SimplexCategory) :
     (trivialCofibrationCylinder N D hs n).projection = (factorization N D n).projection := rfl
 end RowFactorization
 
@@ -47,12 +59,14 @@ variable {A : Type u} [Category.{v} A] [Abelian A]
   (hcone : ∀ {K L : CochainComplex A ℤ}, P K → P L → ∀ f : K ⟶ L, P (mappingCone f))
   (hshift : ∀ K, P K → P (K⟦(1 : ℤ)⟧))
 
-/-- The actual complex row cylinder supplies every comparison input, including the second section. -/
+/-- The actual complex row cylinder supplies every comparison input, including the second
+section. -/
 def complexRowTrivialCofibrationCylinder (n : SimplexCategory) :
     TrivialCofibrations.CylinderData
       (RowWeakEquivalences.coarseStructure (complexSubcategoryNested P) n).cof
       (RowWeakEquivalences.coarseStructure (complexSubcategoryNested P) n).weq :=
-  RowFactorization.trivialCofibrationCylinder (complexSubcategoryNested P) (complexJointData P hcone hshift)
+  RowFactorization.trivialCofibrationCylinder (complexSubcategoryNested P) (complexJointData P
+    hcone hshift)
     (complexJointData_secondEndpointSection P hcone hshift) n
 
 end Quillen.Waldhausen.Fibration

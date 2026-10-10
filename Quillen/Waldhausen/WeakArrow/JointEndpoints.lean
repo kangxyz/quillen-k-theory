@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.WeakArrow.JointFunctor
+module
+
+public import Quillen.Waldhausen.WeakArrow.JointFunctor
 
 /-!
 # Original endpoints and projection of the weak-arrow joint functor
@@ -15,11 +17,12 @@ factorization equation holds literally. Every component formula is
 retained by an rfl lemma. No endpoint compatibility is inferred from an
 arbitrary natural isomorphism.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-set_option maxHeartbeats 1800000
 open CategoryTheory CategoryTheory.Limits Opposite
 universe u v u' v'
 namespace Quillen.Waldhausen.WeakArrow
@@ -35,17 +38,21 @@ def opHomMk {X Y : (Obj W F)ᵒᵖ}
   ((objects W F).homMk (show Y.unop.obj ⟶ X.unop.obj from
     ⟨l.unop, r.unop, (congrArg Quiver.Hom.unop w).symm⟩)).op
 
-@[simp] lemma opHomMk_source {X Y : (Obj W F)ᵒᵖ}
+/-- The canonical simplification rule for the underlying construction. -/
+@[simp] theorem opHomMk_unop_source {X Y : (Obj W F)ᵒᵖ}
     (l : (source W F).op.obj X ⟶ (source W F).op.obj Y)
     (r : (target W F).op.obj X ⟶ (target W F).op.obj Y)
     (w : r ≫ Y.unop.obj.hom.op = X.unop.obj.hom.op ≫ F.op.map l) :
-    (source W F).op.map (opHomMk W F l r w) = l := rfl
+    (source W F).map (opHomMk W F l r w).unop = (l).unop := rfl
 
-@[simp] lemma opHomMk_target {X Y : (Obj W F)ᵒᵖ}
+
+/-- The canonical simplification rule for the underlying construction. -/
+@[simp] theorem opHomMk_unop_target {X Y : (Obj W F)ᵒᵖ}
     (l : (source W F).op.obj X ⟶ (source W F).op.obj Y)
     (r : (target W F).op.obj X ⟶ (target W F).op.obj Y)
     (w : r ≫ Y.unop.obj.hom.op = X.unop.obj.hom.op ≫ F.op.map l) :
-    (target W F).op.map (opHomMk W F l r w) = r := rfl
+    (target W F).map (opHomMk W F l r w).unop = (r).unop := rfl
+
 
 lemma op_hom_ext {X Y : (Obj W F)ᵒᵖ} (f g : X ⟶ Y)
     (hl : (source W F).op.map f = (source W F).op.map g)
@@ -135,28 +142,46 @@ lemma jointProjection_weak (f : Arrow (Obj W F)ᵒᵖ) :
       ((jointProjection W F Wd hW Vd hFd Tc Td compat hproj).app f) :=
   ⟨Tc.weak ((source W F).op.mapArrow.obj f), Td.weak ((target W F).op.mapArrow.obj f)⟩
 
-@[simp] lemma jointInl_source (f : Arrow (Obj W F)ᵒᵖ) :
-    (source W F).op.map ((jointInl W F Wd hW Vd hFd Tc Td compat hinl).app f) =
-      Tc.inl.app ((source W F).op.mapArrow.obj f) := rfl
+/-- The canonical simplification rule for the underlying construction. -/
+@[simp] theorem jointInl_unop_source (f : Arrow (Obj W F)ᵒᵖ) :
+    (source W F).map
+      ((jointInl W F Wd hW Vd hFd Tc Td compat hinl).app f).unop = (Tc.inl.app ((source W
+          F).op.mapArrow.obj f)).unop := rfl
 
-@[simp] lemma jointInl_target (f : Arrow (Obj W F)ᵒᵖ) :
-    (target W F).op.map ((jointInl W F Wd hW Vd hFd Tc Td compat hinl).app f) =
-      Td.inl.app ((target W F).op.mapArrow.obj f) := rfl
 
-@[simp] lemma jointInr_source (f : Arrow (Obj W F)ᵒᵖ) :
-    (source W F).op.map ((jointInr W F Wd hW Vd hFd Tc Td compat hinr).app f) =
-      Tc.inr.app ((source W F).op.mapArrow.obj f) := rfl
+/-- The canonical simplification rule for the underlying construction. -/
+@[simp] theorem jointInl_unop_target (f : Arrow (Obj W F)ᵒᵖ) :
+    (target W F).map
+      ((jointInl W F Wd hW Vd hFd Tc Td compat hinl).app f).unop = (Td.inl.app ((target W
+          F).op.mapArrow.obj f)).unop := rfl
 
-@[simp] lemma jointInr_target (f : Arrow (Obj W F)ᵒᵖ) :
-    (target W F).op.map ((jointInr W F Wd hW Vd hFd Tc Td compat hinr).app f) =
-      Td.inr.app ((target W F).op.mapArrow.obj f) := rfl
 
-@[simp] lemma jointProjection_source (f : Arrow (Obj W F)ᵒᵖ) :
-    (source W F).op.map ((jointProjection W F Wd hW Vd hFd Tc Td compat hproj).app f) =
-      Tc.projection.app ((source W F).op.mapArrow.obj f) := rfl
+/-- The canonical simplification rule for the underlying construction. -/
+@[simp] theorem jointInr_unop_source (f : Arrow (Obj W F)ᵒᵖ) :
+    (source W F).map
+      ((jointInr W F Wd hW Vd hFd Tc Td compat hinr).app f).unop = (Tc.inr.app ((source W
+          F).op.mapArrow.obj f)).unop := rfl
 
-@[simp] lemma jointProjection_target (f : Arrow (Obj W F)ᵒᵖ) :
-    (target W F).op.map ((jointProjection W F Wd hW Vd hFd Tc Td compat hproj).app f) =
-      Td.projection.app ((target W F).op.mapArrow.obj f) := rfl
+
+/-- The canonical simplification rule for the underlying construction. -/
+@[simp] theorem jointInr_unop_target (f : Arrow (Obj W F)ᵒᵖ) :
+    (target W F).map
+      ((jointInr W F Wd hW Vd hFd Tc Td compat hinr).app f).unop = (Td.inr.app ((target W
+          F).op.mapArrow.obj f)).unop := rfl
+
+
+/-- The canonical simplification rule for the underlying construction. -/
+@[simp] theorem jointProjection_unop_source (f : Arrow (Obj W F)ᵒᵖ) :
+    (source W F).map
+      ((jointProjection W F Wd hW Vd hFd Tc Td compat hproj).app f).unop = (Tc.projection.app
+          ((source W F).op.mapArrow.obj f)).unop := rfl
+
+
+/-- The canonical simplification rule for the underlying construction. -/
+@[simp] theorem jointProjection_unop_target (f : Arrow (Obj W F)ᵒᵖ) :
+    (target W F).map
+      ((jointProjection W F Wd hW Vd hFd Tc Td compat hproj).app f).unop = (Td.projection.app
+          ((target W F).op.mapArrow.obj f)).unop := rfl
+
 
 end Quillen.Waldhausen.WeakArrow

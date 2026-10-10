@@ -1,17 +1,29 @@
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianBoundary
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianStageCube
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianCoproductAssembly
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianBoundary
+public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianStageCube
+public import Quillen.Topology.Realization.Cartesian.CoproductAssembly
 
 /-! # Actual replacement-stage cartesian cube assembly -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 
+/-- The unique simplex in each degree of the zero-simplex, used to identify point-valued
+replacement stages with their base stages. -/
 local instance pointSimplexUniqueAssembly (p : SimplexCategoryᵒᵖ) :
     Unique ((Δ[0] : SSet.{u}).obj p) :=
   (SSet.stdSimplex.objEquiv (n := ⦋0⦌) (m := p)).unique
@@ -28,6 +40,8 @@ def pointOuterIso (K : SSet.{u}) :
           (@Subsingleton.elim ((Δ[0] : SSet.{u}).obj p) inferInstance _ _)
       right_inv := fun _ ↦ rfl }) (by intros; rfl)
 
+/-- The homeomorphism from the realization of the diagonal outer product of `K` with the
+zero-simplex to the realization of `K`. -/
 abbrev pointOuterHomeomorph (K : SSet.{u}) :
     |diagonalSSet (outerProduct K (Δ[0] : SSet.{u}))| ≃ₜ |K| :=
   TopCat.homeoOfIso (SSet.toTop.mapIso (pointOuterIso K))
@@ -96,10 +110,12 @@ theorem replacementBoundary_cartesian (n : ℕ) :
   apply cartesianCofan
     (fun s : (nerve D).nonDegenerate n ↦ realizationFunctor.obj (replacementCellBoundary H s))
     (fun s : (nerve D).nonDegenerate n ↦ realizationFunctor.obj (replacementCell H s))
-    (fun s : (nerve D).nonDegenerate n ↦ realizationFunctor.obj (replacementCellBoundary pointDiagram s))
+    (fun s : (nerve D).nonDegenerate n ↦ realizationFunctor.obj (replacementCellBoundary
+      pointDiagram s))
     (fun s : (nerve D).nonDegenerate n ↦ realizationFunctor.obj (replacementCell pointDiagram s))
     (realizedCofan (replacementCellBoundary H)) (realizedCofan (replacementCell H))
-    (realizedCofan (replacementCellBoundary pointDiagram)) (realizedCofan (replacementCell pointDiagram))
+    (realizedCofan (replacementCellBoundary pointDiagram)) (realizedCofan (replacementCell
+      pointDiagram))
     (realizedBisimplicialSigmaIsColimit _) (realizedBisimplicialSigmaIsColimit _)
     (realizedBisimplicialSigmaIsColimit _) (realizedBisimplicialSigmaIsColimit _)
     (cellBoundaryProjection (replacementPointAugmentation H) n)
@@ -209,8 +225,10 @@ theorem replacementAttaching_cartesian
       (congrArg TopCat.Hom.hom (cellAttachingSquare (replacementPointAugmentation H) n)) := by
   apply cartesianCofanFixedTarget
     (fun s : (nerve D).nonDegenerate n ↦ realizationFunctor.obj (replacementCellBoundary H s))
-    (fun s : (nerve D).nonDegenerate n ↦ realizationFunctor.obj (replacementCellBoundary pointDiagram s))
-    (realizedCofan (replacementCellBoundary H)) (realizedCofan (replacementCellBoundary pointDiagram))
+    (fun s : (nerve D).nonDegenerate n ↦ realizationFunctor.obj (replacementCellBoundary
+      pointDiagram s))
+    (realizedCofan (replacementCellBoundary H)) (realizedCofan (replacementCellBoundary
+      pointDiagram))
     (realizedBisimplicialSigmaIsColimit _) (realizedBisimplicialSigmaIsColimit _)
     (stageProjection (replacementPointAugmentation H) n)
     (cellBoundaryProjection (replacementPointAugmentation H) n)
@@ -258,4 +276,4 @@ theorem replacementSuccessor_cartesian
   successor_cartesian_of_incoming (replacementPointAugmentation H) n
     (replacementBoundary_cartesian H n) (replacementAttaching_cartesian H htrans n hchart)
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

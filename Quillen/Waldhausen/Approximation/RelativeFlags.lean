@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.RelativeSequence
-import Quillen.Waldhausen.Approximation.FlagLift
+module
+
+public import Quillen.Waldhausen.Approximation.RelativeSequence
+public import Quillen.Waldhausen.Approximation.FlagLift
 
 /-!
 # App2 factorization for genuine finite flags
@@ -16,6 +18,8 @@ This is proved by relative pushout induction, not by assuming diagram lifting.
 The initial source object is retained. If the original transformation was weak,
 the source leg is pointwise weak by App1 and target saturation.
 -/
+@[expose] public section
+
 
 noncomputable section
 

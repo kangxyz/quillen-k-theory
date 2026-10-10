@@ -3,10 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.DenseGrading
-import Quillen.Waldhausen.Cofinality.ZeroGrade
-import Quillen.Waldhausen.CofibrationClosedSubcategory
-import Quillen.Waldhausen.Functoriality.ExactEquivalence
+module
+
+public import Quillen.Waldhausen.Cofinality.DenseGrading
+public import Quillen.Waldhausen.Cofinality.ZeroGrade
+public import Quillen.Waldhausen.CofibrationClosedSubcategory
+public import Quillen.Waldhausen.Functoriality.ExactEquivalence
 
 /-! # Genuine dense-subcategory cofinality for the original inclusion
 
@@ -15,6 +17,8 @@ weak repleteness, extension closure and quotient closure. The original full
 subcategory inclusion, with its actual inherited Waldhausen structure, is
 then transported through the proved original zero-grade fibration.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -59,14 +63,16 @@ def zeroGradeEquivalence : P.FullSubcategory ≌ AcyclicCategory h.grading.neste
     intro A B f
     apply ObjectProperty.hom_ext
     simp [toZeroGrade, fromZeroGrade])
-  counitIso := NatIso.ofComponents (fun _ ↦ (acyclicObjects h.grading.nested).isoMk (Iso.refl _)) (by
+  counitIso := NatIso.ofComponents (fun _ ↦ (acyclicObjects h.grading.nested).isoMk (Iso.refl
+    _)) (by
     intro A B f
     apply ObjectProperty.hom_ext
     simp [toZeroGrade, fromZeroGrade])
 
 /-- The comparison is genuinely exact for the actual inherited cofibrations and fine weak maps. -/
 theorem toZeroGrade_exact : IsExact h.waldhausenStructure.cof h.waldhausenStructure.weq
-    (acyclicStructure h.grading.nested).cof (acyclicStructure h.grading.nested).weq h.toZeroGrade where
+    (acyclicStructure h.grading.nested).cof (acyclicStructure h.grading.nested).weq
+      h.toZeroGrade where
   zero hz := IsZero.of_full_of_faithful_of_isZero (acyclicObjects h.grading.nested).ι _
     (h.inclusion_exact.zero hz)
   cofibration _ hi := hi
@@ -86,12 +92,14 @@ theorem fromZeroGrade_exact : IsExact (acyclicStructure h.grading.nested).cof
     ((acyclicInclusion_exact h.grading.nested).pushout hi hp)
 
 /-- The comparison retains the entire original full inclusion, not just its homotopy class. -/
-@[simp] theorem toZeroGrade_comp_inclusion : h.toZeroGrade ⋙ acyclicInclusion h.grading.nested = P.ι := rfl
+@[simp] theorem toZeroGrade_comp_inclusion : h.toZeroGrade ⋙ acyclicInclusion h.grading.nested =
+    P.ι := rfl
 
 /-- The actual original inclusion KMap factors through the actual membership comparison. -/
 theorem inclusion_KMap_factor (n : ℕ) :
     (KMap (acyclicInclusion_exact h.grading.nested) n).comp (KMap h.toZeroGrade_exact n) =
-      KMap h.inclusion_exact n := (KMap_comp h.toZeroGrade_exact (acyclicInclusion_exact h.grading.nested) n).symm
+      KMap h.inclusion_exact n := (KMap_comp_KMap h.toZeroGrade_exact (acyclicInclusion_exact
+        h.grading.nested) n).symm.symm
 
 end Quillen.Waldhausen.Cofinality.DenseCofiberData
 
@@ -137,7 +145,8 @@ theorem range_inclusion_KMap (n : ℕ) :
   exact range_acyclicInclusion_eq_ker_changeWeak_of_weak h.grading.nested
     (h.grading.canonicalFiberMap_isWeakHomotopyEquivalence D hs) n
 
-/-- The full-subcategory K-zero tail retains the true remaining endpoint and only its proved image. -/
+/-- The full-subcategory K-zero tail retains the true remaining endpoint and only its proved
+image. -/
 theorem inclusion_KZero_exact :
     Function.Injective (KMap h.inclusion_exact 0) ∧
     (KMap h.inclusion_exact 0).range = (KMap (changeWeak_exact h.grading.nested) 0).ker ∧

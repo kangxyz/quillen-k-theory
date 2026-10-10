@@ -1,5 +1,14 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.RowPostcompose
-import Quillen.Waldhausen.Fibration.MixedNerves.RowRealization
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.RowPostcompose
+public import Quillen.Waldhausen.Fibration.MixedNerves.RowRealization
+public import Quillen.Waldhausen.SplitComplexes.Approximation
 
 /-! # The original total mixed inclusion for genuine inner quotient rows
 
@@ -8,6 +17,8 @@ row comparison is the checked original mixed inclusion. The proved
 bisimplicial realization theorem therefore totalizes these actual forward
 maps. No naturality of the chosen row homotopy inverses is required.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CochainComplex
 open scoped Simplicial Topology
@@ -43,14 +54,17 @@ variable {A : Type u} [SmallCategory A] [Abelian A]
 
 /-- The actual complex cylinder supplies the genuine total mixed-inclusion equivalence. -/
 def complexTotalChainInclusionRealizationHomotopyEquiv :
-    ContinuousMap.HomotopyEquiv |TheoremA.diagonalSSet (cofRowDiagonals (complexSubcategoryNested P))|
+    ContinuousMap.HomotopyEquiv |TheoremA.diagonalSSet (cofRowDiagonals
+      (complexSubcategoryNested P))|
       |TheoremA.diagonalSSet (coarseRowDiagonals (complexSubcategoryNested P))| := by
-  letI : (complexSubcategoryNested P).coarse.weq.HasTwoOutOfThreeProperty := complexSubcategory_saturated P
+  letI : (complexSubcategoryNested P).coarse.weq.HasTwoOutOfThreeProperty :=
+    complexSubcategory_saturated P
   exact totalChainInclusionRealizationHomotopyEquiv (complexSubcategoryNested P)
     (complexJointData P hcone hshift) (complexJointData_secondEndpointSection P hcone hshift)
 
 @[simp] theorem complexTotalChainInclusionRealizationHomotopyEquiv_toFun :
     (complexTotalChainInclusionRealizationHomotopyEquiv P hcone hshift).toFun =
-      (SSet.toTop.map (TheoremA.diagonalMap (rowDiagonalInclusion (complexSubcategoryNested P)))).hom := rfl
+      (SSet.toTop.map (TheoremA.diagonalMap (rowDiagonalInclusion (complexSubcategoryNested
+        P)))).hom := rfl
 
 end Quillen.Waldhausen.Fibration.MixedNerves

@@ -1,4 +1,22 @@
-import Quillen.KTheory.API
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.API
+
+/-!
+# Small-model K-theory functoriality examples
+
+Uses the public small-model K-theory maps for essentially small exact categories
+in a shared small universe. The statements record identity, composition, and
+equality of maps induced by naturally isomorphic exact functors.
+-/
+
+@[expose] public section
 noncomputable section
 universe w v₁ v₂ v₃ u₁ u₂ u₃
 open CategoryTheory CategoryTheory.Limits Quillen

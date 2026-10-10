@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.SConstruction.Rows.Reindex
-import Quillen.Waldhausen.SConstruction.Bisimplicial
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.Reindex
+public import Quillen.Waldhausen.SConstruction.Bisimplicial
 
 /-! # Exact agreement with the existing independent S-construction grids
 
@@ -7,6 +15,8 @@ The new full quotient-row objects have precisely the old zero/cofibration/
 quotient predicates. The original nerve-direction weak condition remains
 separate and unchanged.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

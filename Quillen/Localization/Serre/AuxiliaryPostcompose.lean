@@ -1,5 +1,13 @@
-import Quillen.Localization.Serre.AuxiliaryBaseChange
-import Quillen.Localization.Serre.ImageKernelComma
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.AuxiliaryBaseChange
+public import Quillen.Localization.Serre.ImageKernelComma
 
 /-!
 # Postcomposition equivalences for Serre auxiliary categories
@@ -8,6 +16,8 @@ For an arbitrary Serre-isomorphism of bases, the inclusion of the old
 kernel into the composite kernel is natural on actual Q-spans. Comparing
 with the proved kernel equivalences gives the postcomposition equivalence.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -96,9 +106,11 @@ def auxiliaryPostcomposeClassifyingHomotopyEquiv {M N : C} (i : M ⟶ N)
   have h : (eN.toFun.comp f).Homotopic eM.toFun := by
     simpa only [eM, eN, f, auxiliaryKernelClassifyingHomotopyEquiv_toFun,
       classifyingSpaceMap_comp, TopCat.hom_comp] using
-      (show (classifyingSpaceMap (auxiliaryPostcompose P i hi ⋙ auxiliaryKernelFunctor P N)).hom.Homotopic
+      (show (classifyingSpaceMap (auxiliaryPostcompose P i hi ⋙ auxiliaryKernelFunctor P
+        N)).hom.Homotopic
         (classifyingSpaceMap (auxiliaryKernelFunctor P M)).hom from
-        ⟨(classifyingSpaceNaturalTransformationHomotopy (auxiliaryPostcomposeKernelMap P i hi)).symm⟩)
+        ⟨(classifyingSpaceNaturalTransformationHomotopy (auxiliaryPostcomposeKernelMap P i
+          hi)).symm⟩)
   apply TheoremA.homotopyEquivWithMap (eM.trans eN.symm) f
   exact (show f.Homotopic (eN.invFun.comp (eN.toFun.comp f)) from by
     simpa using ContinuousMap.Homotopic.comp eN.left_inv.symm (.refl f)).trans

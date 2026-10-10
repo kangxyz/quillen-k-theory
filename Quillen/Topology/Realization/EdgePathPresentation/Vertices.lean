@@ -1,6 +1,14 @@
-import Quillen.Topology.Realization.EdgePathPresentation.Basic
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.CategoryTheory.InducedCategory
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.EdgePathPresentation.Basic
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.CategoryTheory.InducedCategory
 
 /-!
 # The genuine fundamental groupoid on realized vertices
@@ -13,6 +21,8 @@ The hom sets here are explicitly topological. This equivalence is not an
 identification with the combinatorial groupoid completion; the remaining issue
 is precisely the presentation of these hom sets by simplicial edges.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -49,7 +59,8 @@ instance realizationVertexInclusion_essSurj (X : SSet.{u}) :
     (realizationVertexInclusion X).EssSurj where
   mem_essImage x := by
     obtain ⟨v, hv⟩ := realization_joined_vertex x.as
-    exact ⟨v, ⟨(Groupoid.isoEquivHom (C := FundamentalGroupoid _) _ _).symm (show FundamentalGroupoid.mk (realizationPoint v) ⟶ x from
+    exact ⟨v, ⟨(Groupoid.isoEquivHom (C := FundamentalGroupoid _) _ _).symm (show
+      FundamentalGroupoid.mk (realizationPoint v) ⟶ x from
       ⟦hv.somePath⟧)⟩⟩
 
 instance (X : SSet.{u}) : (realizationVertexInclusion X).IsEquivalence where
@@ -67,7 +78,8 @@ instance classifyingFundamentalGroupoidFunctor_essSurj
     (classifyingFundamentalGroupoidFunctor C).EssSurj where
   mem_essImage x := by
     obtain ⟨c, hc⟩ := classifyingSpace_joined_vertex x.as
-    exact ⟨c, ⟨(Groupoid.isoEquivHom (C := FundamentalGroupoid _) _ _).symm (show FundamentalGroupoid.mk (classifyingSpacePoint c) ⟶ x from
+    exact ⟨c, ⟨(Groupoid.isoEquivHom (C := FundamentalGroupoid _) _ _).symm (show
+      FundamentalGroupoid.mk (classifyingSpacePoint c) ⟶ x from
       ⟦hc.somePath⟧)⟩⟩
 
 end Quillen

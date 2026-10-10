@@ -1,4 +1,12 @@
-import Quillen.Topology.Realization.EdgePathPresentation.Skeleton
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.EdgePathPresentation.Skeleton
 
 /-!
 # Realization takes every simplicial monomorphism to a closed embedding
@@ -8,6 +16,8 @@ relative skeletal colimit. All successor inclusions have already been
 identified with actual closed simplex-boundary attachments. The sequential
 closed-embedding theorem therefore applies to its realization.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Topology
 open scoped Simplicial

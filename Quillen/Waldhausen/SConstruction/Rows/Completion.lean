@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.SConstruction.Rows.Basic
-import Quillen.Waldhausen.ExtensionCategory.Cofiber
-import Quillen.Waldhausen.ExtensionCategory.IsomorphicSources
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.Basic
+public import Quillen.Waldhausen.ExtensionCategory.Cofiber
+public import Quillen.Waldhausen.ExtensionCategory.IsomorphicSources
 
 /-! # Actual cofiber completion of a cofibration flag
 
@@ -10,6 +18,8 @@ are identities; its quotient squares are actual componentwise pushouts.
 Applying the already-proved exact cofiber functor constructs a genuine
 quotient row, without exact-category or abelian hypotheses.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -17,8 +27,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace Quillen.Waldhausen.QuotientRows
 variable {C : Type u} [Category.{v} C] (W : Structure C)
-variable {n : SimplexCategory} (F : Fin (n.len+1) ⥤ C)
-  (hF : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), W.cof (F.map f))
+variable {n : SimplexCategory} (F : Fin (n.len + 1) ⥤ C)
+  (hF : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), W.cof (F.map f))
 
 /-- Every original flag interval, retained as an actual cofibration arrow. -/
 def cofibrationArrowDiagram : Interval n ⥤ ExtensionCategory.Obj W where
@@ -39,7 +49,7 @@ def cofibrationArrowDiagram : Interval n ⥤ ExtensionCategory.Obj W where
 
 /-- Each horizontal interval map satisfies the genuine Reedy cofibration condition. -/
 theorem cofibrationArrowDiagram_horizontal_cof
-    (i j k : Fin (n.len+1)) (hij : i ≤ j) (hjk : j ≤ k) :
+    (i j k : Fin (n.len + 1)) (hij : i ≤ j) (hjk : j ≤ k) :
     ExtensionCategory.cof W ((cofibrationArrowDiagram W F hF).map
       (homOfLE (show interval i j hij ≤ interval i k (hij.trans hjk) from ⟨le_rfl,hjk⟩))) := by
   let f := (cofibrationArrowDiagram W F hF).map
@@ -51,7 +61,7 @@ theorem cofibrationArrowDiagram_horizontal_cof
 
 /-- The interval-arrow quotient square is a genuine pushout in the extension category. -/
 theorem cofibrationArrowDiagram_quotient
-    (i j k : Fin (n.len+1)) (hij : i ≤ j) (hjk : j ≤ k) :
+    (i j k : Fin (n.len + 1)) (hij : i ≤ j) (hjk : j ≤ k) :
     IsPushout
       ((cofibrationArrowDiagram W F hF).map
         (homOfLE (show interval i j hij ≤ interval i k (hij.trans hjk) from ⟨le_rfl,hjk⟩)))
@@ -77,7 +87,7 @@ def cofiberCompletion : Interval n ⥤ C :=
   cofibrationArrowDiagram W F hF ⋙ ExtensionCategory.cofiber W
 
 /-- Diagonal cofibers are genuinely zero, since their original arrows are identities. -/
-theorem cofiberCompletion_zero (i : Fin (n.len+1)) :
+theorem cofiberCompletion_zero (i : Fin (n.len + 1)) :
     IsZero ((cofiberCompletion W F hF).obj (interval i i le_rfl)) := by
   let X := (cofibrationArrowDiagram W F hF).obj (interval i i le_rfl)
   let hi : IsIso ((ExtensionCategory.inclusion W).app X) := by
@@ -101,7 +111,8 @@ def completeCofibrationFlag : Obj W n :=
   ⟨cofiberCompletion W F hF, cofiberCompletion_isRow W F hF⟩
 
 /-- The actual original quotient projection at a completed interval. -/
-def completionQuotient (p : Interval n) : F.obj p.val.2 ⟶ (completeCofibrationFlag W F hF).obj.obj p :=
+def completionQuotient (p : Interval n) : F.obj p.val.2 ⟶ (completeCofibrationFlag W F
+    hF).obj.obj p :=
   (ExtensionCategory.quotient W).app ((cofibrationArrowDiagram W F hF).obj p)
 
 /-- Each completed interval retains the original displayed cofiber square. -/
@@ -110,13 +121,15 @@ theorem completionQuotient_isPushout (p : Interval n) :
       (completionQuotient W F hF p) (W.isZero.to_ ((completeCofibrationFlag W F hF).obj.obj p)) :=
   ExtensionCategory.cofiber_isPushout W ((cofibrationArrowDiagram W F hF).obj p)
 
-@[reassoc (attr := simp)] theorem completionQuotient_naturality {p q : Interval n} (f : p ⟶ q) :
-    F.map (homOfLE (leOfHom f).2) ≫ completionQuotient W F hF q =
-      completionQuotient W F hF p ≫ (cofiberCompletion W F hF).map f :=
-  (ExtensionCategory.quotient W).naturality ((cofibrationArrowDiagram W F hF).map f)
+/-- Naturality simplifies from the displayed quotient followed by a row map. -/
+@[reassoc (attr := simp)] theorem completionQuotient_comp_map {p q : Interval n} (f : p ⟶ q) :
+    completionQuotient W F hF p ≫ (cofiberCompletion W F hF).map f =
+      F.map (homOfLE (leOfHom f).2) ≫ completionQuotient W F hF q :=
+          ((ExtensionCategory.quotient W).naturality ((cofibrationArrowDiagram W F hF).map f)).symm
 
-variable {F} {G : Fin (n.len+1) ⥤ C}
-  (hG : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), W.cof (G.map f))
+
+variable {F} {G : Fin (n.len + 1) ⥤ C}
+  (hG : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), W.cof (G.map f))
 
 /-- Every original flag transformation induces its original square at every interval. -/
 def cofibrationArrowNatTrans (α : F ⟶ G) :
@@ -154,8 +167,8 @@ theorem completeCofibrationFlagMap_weak (α : F ⟶ G) (hα : ∀ i, W.weq (α.a
   exact (ExtensionCategory.cofiber W).map_id _
 
 /-- Completion retains composition of arbitrary original chain transformations. -/
-@[simp] theorem completeCofibrationFlagMap_comp {H : Fin (n.len+1) ⥤ C}
-    (hH : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), W.cof (H.map f))
+@[simp] theorem completeCofibrationFlagMap_comp {H : Fin (n.len + 1) ⥤ C}
+    (hH : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), W.cof (H.map f))
     (α : F ⟶ G) (β : G ⟶ H) :
     completeCofibrationFlagMap W hF hH (α ≫ β) =
       completeCofibrationFlagMap W hF hG α ≫ completeCofibrationFlagMap W hG hH β := by

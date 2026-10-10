@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Additivity.GroupMultiplication
-import Quillen.Waldhausen.Additivity.BasedAdditivity
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.GroupMultiplication
+public import Quillen.Waldhausen.Additivity.BasedAdditivity
 
 /-! # Literal multiplication formulas for canonical Waldhausen K-maps
 
@@ -7,6 +15,8 @@ The actual K-group law is commutative in every degree, including K₀.
 Coproduct and structural cofibration sequences induce its literal existing
 multiplication through the original canonical functorial K-maps.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -49,7 +59,7 @@ theorem KMap_sum_apply
   calc
     KMap (sumFunctor_isExact V W hH hF) n a =
         KMap (coproductFunctor_isExact W) n (KMap (pair_exact V W W hH hF) n a) :=
-      DFunLike.congr_fun (KMap_comp (pair_exact V W W hH hF) (coproductFunctor_isExact W) n) a
+      DFunLike.congr_fun (KMap_comp_KMap (pair_exact V W W hH hF) (coproductFunctor_isExact W) n).symm a
     _ = coproductKMap W n (KMap hH n a, KMap hF n a) := by
       change _ = KMap (coproductFunctor_isExact W) n
         ((Product.KEquiv W W n).symm (KMap hH n a, KMap hF n a))

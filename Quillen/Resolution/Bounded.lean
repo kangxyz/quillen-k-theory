@@ -1,5 +1,13 @@
-import Quillen.Resolution.Strata
-import Quillen.Resolution.SubcategoryComparison
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Resolution.Strata
+public import Quillen.Resolution.SubcategoryComparison
 /-!
 # Quillen resolution with an arbitrary finite common bound
 
@@ -9,6 +17,8 @@ Iterating the proved length-one theorem gives the canonical K-isomorphism
 for any finite bound. The passage to objectwise finite, unbounded lengths
 is a separate union argument.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -36,12 +46,13 @@ abbrev stratumExactInclusion (n : ℕ) :
   exactInclusionOfLE E (E.ResolutionLength P n) (E.ResolutionLength P (n + 1))
     (E.resolutionLength_mono P (Nat.le_succ n))
 
+omit [P.IsClosedUnderFiniteProducts] in
 /-- An object in the next stratum has a length-one admissible resolution
 inside that stratum by objects in the preceding stratum. -/
 theorem adjacentStratum_resolutionLength_one (n : ℕ)
     (X : (E.ResolutionLength P (n + 1)).FullSubcategory) :
     (stratumExactStructure E P (n + 1)).ResolutionLength
-      (restrictedProperty (E.ResolutionLength P n) (E.ResolutionLength P (n + 1)) E) 1 X := by
+      ((E.ResolutionLength P n).inverseImage (E.ResolutionLength P (n + 1)).ι) 1 X := by
   obtain ⟨T⟩ := (E.resolutionLength_succ_iff P n X.obj).1 X.property
   let A : (E.ResolutionLength P (n + 1)).FullSubcategory :=
     ⟨T.syzygy, E.resolutionLength_mono P (Nat.le_succ n) _ T.syzygy_mem⟩
@@ -181,8 +192,10 @@ def KEquivOfBounded (N : ℕ) (h : ∀ X, E.ResolutionLength P N X) (k : ℕ) :
     (ExactSubcategory.exactStructure E P).K k ≃* E.K k :=
   MulEquiv.ofBijective (inclusionKMap E P k) (inclusionKMap_bijective_of_bounded E P N h k)
 
-@[simp] theorem KEquivOfBounded_toMonoidHom
-    (N : ℕ) (h : ∀ X, E.ResolutionLength P N X) (k : ℕ) :
-    (KEquivOfBounded E P N h k).toMonoidHom = inclusionKMap E P k := rfl
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem KEquivOfBounded_coe (N : ℕ) (h : ∀ X, E.ResolutionLength P N X) (k : ℕ) :
+    (↑(KEquivOfBounded E P N h k) : (ExactSubcategory.exactStructure E P).K k →* E.K k) =
+        inclusionKMap E P k := rfl
+
 
 end Quillen.Resolution

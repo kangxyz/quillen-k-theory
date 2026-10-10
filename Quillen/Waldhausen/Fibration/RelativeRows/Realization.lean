@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.ProductSection
-import Quillen.Waldhausen.Fibration.RelativeRows.InitialCutIso
-import Quillen.Waldhausen.Fibration.RelativeRows.FirstTailSSet
-import Quillen.Waldhausen.ExtensionCategory.Realization
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.ProductSection
+public import Quillen.Waldhausen.Fibration.RelativeRows.InitialCutIso
+public import Quillen.Waldhausen.Fibration.RelativeRows.FirstTailSSet
+public import Quillen.Waldhausen.ExtensionCategory.Realization
 
 /-! # Genuine degreewise relative-row additivity
 
@@ -15,6 +23,8 @@ product endpoint uses the genuine product-S isomorphism, without asserting
 that ordinary topological realization preserves arbitrary products. No
 diagonal homotopy-fiber theorem is claimed here.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits MonoidalCategory
 open scoped Simplicial Topology

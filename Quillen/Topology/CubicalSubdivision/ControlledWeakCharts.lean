@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.CubicalSubdivision.ControlledChartLifting
-import Quillen.Topology.HELP.WeakFinite
+module
+
+public import Quillen.Topology.CubicalSubdivision.ControlledChartLifting
+public import Quillen.Topology.HELP.WeakFinite
 
 /-! # Finite controlled HELP from ordinary weak chart maps
 
@@ -14,6 +16,8 @@ path is retained. Local weak equivalences are used only through their proved
 finite mapping-path endpoint lifting. The resulting comparison homotopy is
 ordinary, with the complete original boundary fixed; it is not asserted vertical.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -24,13 +28,13 @@ variable {E B : Type u} {J : Type v} [TopologicalSpace E] [TopologicalSpace B]
 
 /-- A chart of ordinary mapping paths retains the source constraint and
 membership of the entire stored path, not only its terminal endpoint. -/
-def mappingPathChartSet (p : C(E,B)) (R : J → Set E) (W : J → Set B)
+def mappingPathChartSet (p : C(E, B)) (R : J → Set E) (W : J → Set B)
     (j : J) : Set (MappingPath p) :=
   {z | z.val.1 ∈ R j ∧ ∀ t : unitInterval,z.val.2 t ∈ W j}
 
 /-- The genuine endpoint of the original weak restricted map fills every
 finite boundary test with all original path coordinates unchanged. -/
-theorem controlled_mappingPath_chart_boundaryLifting (p : C(E,B))
+theorem controlled_mappingPath_chart_boundaryLifting (p : C(E, B))
     (R : J → Set E) (W : J → Set B) (S : Finset J)
     (hf : IsWeakHomotopyEquivalence (controlledChartMap p R W S)) :
     BoundaryLifting (controlledChartMap (MappingPath.endpoint p)
@@ -88,7 +92,7 @@ theorem controlled_mappingPath_chart_boundaryLifting (p : C(E,B))
 /-- Ordinary strict HELP on the original cube follows from weak maps on all
 nonempty finite chart intersections and a genuine controlling parameter cover.
 The source chart sets need not be open. -/
-theorem exists_strictHELP_of_controlled_weak_chart_cover (p : C(E,B))
+theorem exists_strictHELP_of_controlled_weak_chart_cover (p : C(E, B))
     (R : J → Set E) (W : J → Set B)
     (hloc : ∀ S : Finset J,S.Nonempty →
       IsWeakHomotopyEquivalence (controlledChartMap p R W S))

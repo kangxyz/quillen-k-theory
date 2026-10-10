@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.ExactCategory.Quotient.Basic
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Quotient.Basic
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
 
 /-!
 # Kernels in a right-filtering exact quotient
@@ -10,6 +18,8 @@ isomorphism from an equality, then constructs the kernel lift by clearing the
 zero composite. This is one half of quotient exactness, not an assumed exact
 structure on the quotient.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -113,7 +123,8 @@ variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 
 /-- Kernel preservation for the concrete additive right-filtering quotient,
 with no independently assumed additive quotient structure. -/
-def rightKernel_map (hA : E.RightFiltering A) {S : ShortComplex C} (hS : E.conflation S) :
+def rightMappedConflationKernelIsLimit (hA : E.RightFiltering A)
+    {S : ShortComplex C} (hS : E.conflation S) :
     letI := rightPreadditive E A hA
     letI := rightQ_additive E A hA
     IsLimit (KernelFork.ofι (S.map (Q E A)).f (S.map (Q E A)).zero) := by

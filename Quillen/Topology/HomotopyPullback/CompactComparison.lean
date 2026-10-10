@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.CategoryTheory.TheoremB.FibrationEquivalence
-import Quillen.Topology.HomotopyLifting.Compact.Stationary
-import Quillen.Topology.HELP.StrictFiniteCriterion
+module
+
+public import Quillen.Topology.HomotopyPullback.StrictComparison
+public import Quillen.Topology.HomotopyLifting.Compact.Stationary
+public import Quillen.Topology.HELP.StrictFiniteCriterion
 
 /-!
 # Strict pullback comparison from compact homotopy lifting
@@ -22,6 +24,8 @@ path, and uses its literal remaining tail. Stationary correction fixes the
 whole cube boundary. Strict finite HELP then supplies full finite HELP and
 the empty-aware weak property, including the genuine zero-dimensional test.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -36,7 +40,7 @@ variable {E B X : Type u}
 /-- Compact covering-homotopy lifting is preserved by arbitrary base change.
 The base-change space itself needs no compactness hypothesis. -/
 theorem CompactHomotopyLiftingProperty.baseChange
-    (p : C(E,B)) (f : C(X,B)) (hp : CompactHomotopyLiftingProperty p) :
+    (p : C(E, B)) (f : C(X, B)) (hp : CompactHomotopyLiftingProperty p) :
     CompactHomotopyLiftingProperty (HomotopyPullback.strictBaseProjection p f) := by
   intro D _ _ _ a H hzero
   let a' : C(D,E) := ⟨fun x ↦ (a x).1.2,by fun_prop⟩
@@ -52,7 +56,7 @@ theorem CompactHomotopyLiftingProperty.baseChange
   exact Prod.ext (hzero x) (hL₀ x)
 
 namespace HomotopyPullback
-variable (p : C(E,B)) (f : C(X,B))
+variable (p : C(E, B)) (f : C(X, B))
 
 @[simp] theorem strictPullbackInclusion_parameter
     (z : {z : X × E // p z.2 = f z.1}) :
@@ -73,8 +77,8 @@ displayed homotopy; the base-change parameter stays unchanged. -/
 theorem strictPullbackInclusion_compact_relative
     (hp : CompactHomotopyLiftingProperty p)
     {D : Type u} [TopologicalSpace D] [CompactSpace D] [LocallyCompactSpace D]
-    (b : C(D,HomotopyPullback p f)) (duration : C(D,I))
-    (hfixed : ∀ x,duration x = 0 → ∀ t,(b x).1.2.2 t = p (b x).1.2.1) :
+    (b : C(D, HomotopyPullback p f)) (duration : C(D, I))
+    (hfixed : ∀ x, duration x = 0 → ∀ t, (b x).1.2.2 t = p (b x).1.2.1) :
     ∃ c : C(D,{z : X × E // p z.2 = f z.1}),
       (∀ x,(c x).1.1 = (b x).1.1) ∧
       (∀ x,duration x = 0 → (c x).1.2 = (b x).1.2.1) ∧

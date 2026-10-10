@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationMaps
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationMaps
 
 /-! # Actual nested brutal-truncation inclusions
 
@@ -7,6 +15,8 @@ its unchanged composite into the original complex. Its naturality and strict
 composition are proved using that genuine monomorphism. Each transition is
 split in every degree; no chain splitting is asserted.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

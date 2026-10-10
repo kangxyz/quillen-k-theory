@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.HomotopyGroups.Discrete
+module
+
+public import Quillen.Topology.HomotopyGroups.Discrete
 
 /-!
 # Actual points in the original zero-dimensional homotopy set
@@ -11,6 +13,8 @@ import Quillen.Topology.HomotopyGroups.Discrete
 Every original zero class has an actual point representative, and discreteness
 makes that representative unique. Actual continuous maps preserve these classes.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
@@ -44,7 +48,7 @@ lemma zeroPointClass_injective_of_discrete [DiscreteTopology X] (x : X) :
     (e.trans (H.toHomotopy.map_one_left 0))
 
 lemma homotopyGroupMap_zeroPointClass {Y : Type*} [TopologicalSpace Y]
-    (f : C(X,Y)) {x : X} {y : Y} (h : f x = y) (z : X) :
+    (f : C(X, Y)) {x : X} {y : Y} (h : f x = y) (z : X) :
     homotopyGroupMap f h (zeroPointClass x z) = zeroPointClass y (f z) := rfl
 
 end Quillen

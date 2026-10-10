@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremA.RealizationRows
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationRows
 
 /-!
 # Homotopy extension for subfamilies of replacement-row summands
@@ -8,6 +16,8 @@ extension property, with an explicit extension. This supplies the elementary
 cofibration step for unions of degeneracy summands in a simplicial replacement.
 It does not prove the skeletal gluing theorem for total realizations.
 -/
+@[expose] public section
+
 
 noncomputable section
 

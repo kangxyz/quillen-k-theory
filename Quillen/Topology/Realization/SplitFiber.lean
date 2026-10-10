@@ -1,4 +1,12 @@
-import Quillen.Topology.Realization.ProductFiber
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.ProductFiber
 
 /-! # Actual row fibers from a prescribed split product comparison
 
@@ -7,6 +15,8 @@ with its actual constant-tail splitting, implies every finite homotopy-set
 bijection for the original constant-path fiber inclusion. The input is the
 product comparison itself, not a fiber-equivalence conclusion.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

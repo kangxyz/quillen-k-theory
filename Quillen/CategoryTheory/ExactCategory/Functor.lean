@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.ExactCategory.MatrixDeflation
-import Quillen.CategoryTheory.QConstruction.Functor
-import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.MatrixDeflation
+public import Quillen.CategoryTheory.QConstruction.Functor
+public import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
 
 /-!
 # Exact functors and Q-functoriality
@@ -8,6 +16,8 @@ import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
 The preservation of the pullbacks needed for Q-composition is derived from
 additivity and preservation of conflations.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v₁ v₂ v₃ u₁ u₂ u₃
@@ -22,6 +32,7 @@ variable {C : Type u₁} {D : Type u₂} [Category.{v₁} C] [Category.{v₂} D]
 
 /-- An exact functor is an additive functor preserving the specified conflations. -/
 structure ExactFunctor (E : ExactStructure C) (E' : ExactStructure D) where
+  /-- The underlying functor from the source exact category to the target exact category. -/
   toFunctor : C ⥤ D
   [additive : toFunctor.Additive]
   map_conflation : ∀ (S : ShortComplex C), E.conflation S →

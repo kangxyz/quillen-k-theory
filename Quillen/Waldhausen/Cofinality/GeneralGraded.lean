@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.ZeroGrade
-import Quillen.Waldhausen.SmallModel.Approximation
-import Mathlib.Algebra.Group.ULift
+module
+
+public import Quillen.Waldhausen.Cofinality.ZeroGrade
+public import Quillen.Waldhausen.SmallModel.Approximation
+public import Mathlib.Algebra.Group.ULift
 
 /-! # Original graded cofinality with independent category universes
 
@@ -13,6 +15,8 @@ The honest grading is transported through the actual up/down small model.
 The original coarse K-groups are retained through their based homeomorphism;
 the genuine original fibration then proves the unchanged inclusion results.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -30,7 +34,8 @@ def smallModelGrading : Grading W.smallModel (ULift.{v} G) where
   weak f hf := ULift.ext _ _ (d.weak (AsSmall.down.map f) hf)
   pushout hi hQ := ULift.ext _ _ (d.pushout hi (W.smallModel_down_exact.pushout hi hQ))
 
-/-- The actual coarse small-model structure is unchanged except for proved equality of lifted grades. -/
+/-- The actual coarse small-model structure is unchanged except for proved equality of lifted
+grades. -/
 theorem smallModelGrading_coarseStructure :
     d.smallModelGrading.coarseStructure = d.coarseStructure.smallModel := by
   unfold Grading.coarseStructure Structure.smallModel
@@ -42,7 +47,8 @@ variable (D : RowFactorization.JointData (NestedWeakEquivalences.refl W))
 include D
 
 /-- Original positive coarse K-groups vanish with independent object and hom universes. -/
-theorem coarse_K_succ_subsingleton_general (n : ℕ) : Subsingleton (d.coarseStructure.K (n + 1)) := by
+theorem coarse_K_succ_subsingleton_general (n : ℕ) : Subsingleton (d.coarseStructure.K (n + 1))
+    := by
   let : Subsingleton (d.coarseStructure.smallModel.K (n + 1)) := by
     rw [← d.smallModelGrading_coarseStructure]
     exact d.smallModelGrading.coarse_K_succ_subsingleton D.reflexiveSmallModel.sourceFactorization n
@@ -64,7 +70,8 @@ theorem zeroGrade_KMap_injective_general (n : ℕ) :
     (d.canonicalFiberMap_isWeakHomotopyEquivalence D hs) n b = 1
   rw [Subsingleton.elim b 1, map_one]
 
-/-- Every positive original K-class has an original zero-grade preimage in its original universes. -/
+/-- Every positive original K-class has an original zero-grade preimage in its original
+universes. -/
 theorem zeroGrade_KMap_succ_surjective_general (n : ℕ) :
     Function.Surjective (KMap (acyclicInclusion_exact d.nested) (n + 1)) := by
   let : Subsingleton (d.nested.coarse.K (n + 1)) := d.coarse_K_succ_subsingleton_general D n
@@ -77,7 +84,8 @@ theorem zeroGrade_KMap_succ_surjective_general (n : ℕ) :
 /-- The original positive inclusion KMap is an equivalence with independent category universes. -/
 def zeroGradeKEquivGeneral (n : ℕ) : (acyclicStructure d.nested).K (n + 1) ≃* W.K (n + 1) :=
   MulEquiv.ofBijective (KMap (acyclicInclusion_exact d.nested) (n + 1))
-    ⟨d.zeroGrade_KMap_injective_general D hs (n + 1), d.zeroGrade_KMap_succ_surjective_general D hs n⟩
+    ⟨d.zeroGrade_KMap_injective_general D hs (n + 1), d.zeroGrade_KMap_succ_surjective_general D
+      hs n⟩
 
 /-- The original degree-zero tail retains its exact remaining original coarse endpoint. -/
 theorem zeroGrade_KZero_exact_general :

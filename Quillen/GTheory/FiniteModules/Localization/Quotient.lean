@@ -1,6 +1,16 @@
-import Quillen.GTheory.FiniteModules.Localization.EssentialSurjectivity
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.GTheory.FiniteModules.Localization.EssentialSurjectivity
 
 /-! The genuine Serre quotient description of finite-module localization. -/
+@[expose] public section
+
 noncomputable section
 universe u
 set_option backward.isDefEq.respectTransparency false
@@ -12,6 +22,7 @@ variable {R : Type u} [CommRing R] [IsNoetherianRing R] (S : Submonoid R)
 def scalarMap (M : FGModuleCat.{u} R) (r : R) : M ⟶ M :=
   FGModuleCat.ofHom (r • (LinearMap.id : M →ₗ[R] M))
 
+omit [IsNoetherianRing R] in
 lemma localized_scalarMap (M : FGModuleCat.{u} R) (r : R) :
     ((functor S).map (scalarMap M r)).hom.hom =
       r • (LinearMap.id : M.obj.localizedModule S →ₗ[Localization S] M.obj.localizedModule S) := by
@@ -32,7 +43,7 @@ instance scalarMap_isIso (M : FGModuleCat.{u} R) (s : S) :
     have h := IsLocalizedModule.map_units (M.obj.localizedModuleMkLinearMap S) s
     rw [Module.End.isUnit_iff] at h
     exact h
-  haveI : IsIso ((ModuleCat.isFG (Localization S)).ι.map ((functor S).map (scalarMap M s))) := this
+  have : IsIso ((ModuleCat.isFG (Localization S)).ι.map ((functor S).map (scalarMap M s))) := this
   exact (ModuleCat.isFG (Localization S)).fullyFaithfulι.isIso_of_isIso_map _
 
 lemma scalarMap_mem (M : FGModuleCat.{u} R) (s : S) :
@@ -42,7 +53,7 @@ lemma scalarMap_mem (M : FGModuleCat.{u} R) (s : S) :
 lemma exists_denominator {M N : FGModuleCat.{u} R}
     (φ : (functor S).obj M ⟶ (functor S).obj N) :
     ∃ (g : M ⟶ N) (s : S), (functor S).map (scalarMap M s) ≫ φ = (functor S).map g := by
-  letI : Module.FinitePresentation R M.obj := Module.finitePresentation_of_finite R M
+  let : Module.FinitePresentation R M.obj := Module.finitePresentation_of_finite R M
   let φ' : M.obj.localizedModule S →ₗ[Localization S] N.obj.localizedModule S := φ.hom.hom
   obtain ⟨⟨g, s⟩, h⟩ := IsLocalizedModule.surj S
     (IsLocalizedModule.mapExtendScalars S (M.obj.localizedModuleMkLinearMap S)
@@ -78,12 +89,12 @@ theorem quotientFunctor_fac : (torsion S).isoModSerre.Q ⋙ quotientFunctor S = 
 
 instance quotientFunctor_full : (quotientFunctor S).Full := by
   let Q := (torsion S).isoModSerre.Q
-  haveI : Q.EssSurj := Localization.essSurj Q (torsion S).isoModSerre
+  have : Q.EssSurj := Localization.essSurj Q (torsion S).isoModSerre
   apply Functor.full_of_comp_essSurj (quotientFunctor S) Q
   intro M N φ
   change (functor S).obj M ⟶ (functor S).obj N at φ
   obtain ⟨g, s, hs⟩ := exists_denominator S φ
-  haveI : IsIso (Q.map (scalarMap M s)) :=
+  have : IsIso (Q.map (scalarMap M s)) :=
     Localization.inverts Q (torsion S).isoModSerre _ (scalarMap_mem S M s)
   refine ⟨inv (Q.map (scalarMap M s)) ≫ Q.map g, ?_⟩
   apply (cancel_epi ((functor S).map (scalarMap M s))).mp
@@ -95,7 +106,7 @@ instance quotientFunctor_full : (quotientFunctor S).Full := by
 lemma exists_denominator_equal {M N : FGModuleCat.{u} R} (f g : M ⟶ N)
     (h : (functor S).map f = (functor S).map g) :
     ∃ s : S, scalarMap M s ≫ f = scalarMap M s ≫ g := by
-  letI : Module.FinitePresentation R M.obj := Module.finitePresentation_of_finite R M
+  let : Module.FinitePresentation R M.obj := Module.finitePresentation_of_finite R M
   have h' : IsLocalizedModule.mapExtendScalars S (M.obj.localizedModuleMkLinearMap S)
       (N.obj.localizedModuleMkLinearMap S) (Localization S) f.hom.hom =
     IsLocalizedModule.mapExtendScalars S (M.obj.localizedModuleMkLinearMap S)
@@ -115,7 +126,7 @@ instance quotientFunctor_faithful : (quotientFunctor S).Faithful := by
   intro M N f g h
   simp only [Q, quotientFunctor_map_Q] at h
   obtain ⟨s, hs⟩ := exists_denominator_equal S f g h
-  haveI : IsIso (Q.map (scalarMap M s)) :=
+  have : IsIso (Q.map (scalarMap M s)) :=
     Localization.inverts Q (torsion S).isoModSerre _ (scalarMap_mem S M s)
   apply (cancel_epi (Q.map (scalarMap M s))).mp
   simpa only [← Q.map_comp] using congrArg Q.map hs
@@ -137,7 +148,7 @@ def quotientEquivalence : (torsion S).isoModSerre.Localization ≌ FGModuleCat.{
   (quotientFunctor S).asEquivalence
 
 /-- The quotient equivalence is induced by the actual localization functor. -/
-def quotientEquivalence_fac :
+def quotientEquivalenceFactorsIso :
     (torsion S).isoModSerre.Q ⋙ (quotientEquivalence S).functor ≅ functor S :=
   eqToIso (quotientFunctor_fac S)
 

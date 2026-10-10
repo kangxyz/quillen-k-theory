@@ -1,5 +1,13 @@
-import Mathlib.CategoryTheory.Monoidal.Closed.Types
-import Mathlib.AlgebraicTopology.SimplicialSet.TopAdj
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Closed.Types
+public import Mathlib.AlgebraicTopology.SimplicialSet.TopAdj
 
 /-!
 # Simplicial cylinders preserve colimits
@@ -8,6 +16,8 @@ Taking the product with a fixed simplicial set preserves colimits, computed
 pointwise in types. The pointwise proof works in every universe, without
 requiring the indexing category and value category to have equal universes.
 -/
+@[expose] public section
+
 
 noncomputable section
 

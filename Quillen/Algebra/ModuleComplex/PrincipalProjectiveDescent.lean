@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.ModuleComplex.ProjectiveStabilization
-import Quillen.Algebra.ModuleComplex.PrincipalFreeDescent
+module
+
+public import Quillen.Algebra.ModuleComplex.ProjectiveStabilization
+public import Quillen.Algebra.ModuleComplex.PrincipalFreeDescent
 
 /-!
 # Principal-open descent after projective stabilization
@@ -15,6 +17,8 @@ shift. The comparison is an actual chain-homotopy equivalence, with explicit
 original-ring bounds. This is extension up to a shifted summand and does not
 assert extension of the original complex or remove the K₀ obstruction.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u

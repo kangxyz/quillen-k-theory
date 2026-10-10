@@ -1,7 +1,18 @@
-import Quillen.Waldhausen.Approximation.WeakRowSimplicial
-import Quillen.Waldhausen.QuillenComparison.RowDiagonal
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Approximation.WeakRowSimplicial
+public import Quillen.Waldhausen.Functor
+public import Quillen.Waldhausen.QuillenComparison.RowDiagonal
 
 /-! # The original weak-equivalence grid is the diagonal of the actual row nerve -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -109,7 +120,8 @@ theorem weakRowsGrid_isSimplex (G : ComposableArrows (WeakRow E cof weq n) n.len
 
 /-- Extracting and reassembling the rows retains the original grid functor. -/
 @[simp]
-theorem weakRowsGrid_weakGridRows : weakRowsGrid E cof weq (weakGridRows E cof weq hcof hF) = F := by
+theorem weakRowsGrid_weakGridRows : weakRowsGrid E cof weq (weakGridRows E cof weq hcof hF) = F
+    := by
   refine CategoryTheory.Functor.ext (fun _ ↦ rfl) ?_
   intro p q f
   simp only [eqToHom_refl, Category.id_comp, Category.comp_id]
@@ -117,7 +129,8 @@ theorem weakRowsGrid_weakGridRows : weakRowsGrid E cof weq (weakGridRows E cof w
 
 @[simp]
 theorem weakRow_eqToHom_app {F G : WeakRow E cof weq n} (h : F = G) (p : Interval n) :
-    (eqToHom h : F ⟶ G).val.app p = eqToHom (congrArg (fun R : WeakRow E cof weq n ↦ R.row.diagram.obj p) h) := by
+    (eqToHom h : F ⟶ G).val.app p = eqToHom (congrArg (fun R : WeakRow E cof weq n ↦
+      R.row.diagram.obj p) h) := by
   cases h
   rfl
 
@@ -125,7 +138,8 @@ theorem weakRow_eqToHom_app {F G : WeakRow E cof weq n} (h : F = G) (p : Interva
 @[simp]
 theorem weakGridRows_weakRowsGrid (G : ComposableArrows (WeakRow E cof weq n) n.len) :
     weakGridRows E cof weq hcof (weakRowsGrid_isSimplex E cof weq G) = G := by
-  have hobj (t : Fin (n.len + 1)) : weakGridRow E cof weq hcof (weakRowsGrid_isSimplex E cof weq G) t = G.obj t := by
+  have hobj (t : Fin (n.len + 1)) : weakGridRow E cof weq hcof (weakRowsGrid_isSimplex E cof weq
+    G) t = G.obj t := by
     apply WeakRow.ext
     apply Row.ext
     refine CategoryTheory.Functor.ext (fun _ ↦ rfl) ?_
@@ -152,7 +166,8 @@ def toWeakRowDiagonal : sSet cof weq ⟶
     ext F
     apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 
-/-- The diagonal nerve of the weak-equivalence row category reassembles into the original grid model. -/
+/-- The diagonal nerve of the weak-equivalence row category reassembles into the original grid
+model. -/
 def fromWeakRowDiagonal : TheoremA.diagonalSSet (weakRowNerve E cof weq) ⟶
     sSet cof weq where
   app _ := ↾fun G ↦ ⟨weakRowsGrid E cof weq G, weakRowsGrid_isSimplex E cof weq G⟩
@@ -160,7 +175,8 @@ def fromWeakRowDiagonal : TheoremA.diagonalSSet (weakRowNerve E cof weq) ⟶
     ext G
     rfl
 
-/-- This identifies the genuine existing S-model with its weak-equivalence row category presentation. -/
+/-- This identifies the genuine existing S-model with its weak-equivalence row category
+presentation. -/
 def weakRowDiagonalIso : sSet cof weq ≅
     TheoremA.diagonalSSet (weakRowNerve E cof weq) where
   hom := toWeakRowDiagonal E cof weq hcof

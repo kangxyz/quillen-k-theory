@@ -1,6 +1,14 @@
-import Quillen.Topology.Realization.EdgewiseRealization
-import Quillen.CategoryTheory.TheoremA.Diagonal
-import Quillen.Topology.HomotopyFiber.SourceEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.EdgewiseRealization
+public import Quillen.CategoryTheory.TheoremA.Diagonal
+public import Quillen.Topology.HomotopyFiber.SourceEquivalence
 
 /-!
 # Subdividing one direction of a bisimplicial set
@@ -11,6 +19,8 @@ uses two adjacent composites that are ordinary edgewise endpoint maps and
 homotopy-level two-out-of-six, rather than assuming a rowwise realization
 invariance theorem.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory Opposite

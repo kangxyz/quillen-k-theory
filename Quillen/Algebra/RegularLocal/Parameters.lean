@@ -1,5 +1,13 @@
-import Quillen.Algebra.RegularLocal.Domain
-import Mathlib.RingTheory.Regular.IsSMulRegular
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Algebra.RegularLocal.Domain
+public import Mathlib.RingTheory.Regular.IsSMulRegular
 
 /-!
 # Regular first parameters
@@ -9,6 +17,8 @@ parameter whose quotient is again regular local and has dimension one lower.
 Regularity here is mathlib's embedding-dimension definition, and all domain
 and quotient properties are conclusions rather than extra assumptions.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u

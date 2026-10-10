@@ -3,14 +3,18 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Scheme.VectorBundle.StalkFlat
-import Quillen.PerfectComplexes.Strict
+module
+
+public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.StalkFlat
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Strict
 
 /-! # Actual vector-bundle flat-stalk consumers
 
 The statements retain arbitrary schemes, actual stalk rings, arbitrary
 geometric pullback and the original strict-perfect complex terms.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.SchemeSheaf
 universe u

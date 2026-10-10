@@ -1,7 +1,17 @@
-import Quillen.Topology.HomotopyFiber.Map
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.Map
 
 /-! Actual homotopy fibers are naturally homeomorphic under a strict square
 whose source and target maps are homeomorphisms. -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology
 universe u v w z
@@ -48,6 +58,7 @@ def homeomorphOfSquare (f : C(X, Y)) (g : C(X', Y'))
 @[simp] theorem homeomorphOfSquare_apply (f : C(X, Y)) (g : C(X', Y'))
     (u : X ≃ₜ X') (v : Y ≃ₜ Y') (sq : (v : C(Y, Y')).comp f = g.comp u) (y : Y)
     (a : HomotopyFiber f y) :
-    homeomorphOfSquare f g u v sq y a = map (f₁ := f) (f₂ := g) (u : C(X, X')) (v : C(Y, Y')) sq y a := rfl
+    homeomorphOfSquare f g u v sq y a = map (f₁ := f) (f₂ := g) (u : C(X, X')) (v : C(Y, Y')) sq
+      y a := rfl
 
 end Quillen.HomotopyFiber

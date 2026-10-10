@@ -1,7 +1,17 @@
-import Quillen.Waldhausen.SConstruction.WeakNaturalTransformation
-import Quillen.Waldhausen.SConstruction.NerveCylinderZero
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.WeakNaturalTransformation
+public import Quillen.Waldhausen.SConstruction.NerveCylinderZero
 
 /-! # Based exact-functor homotopies with explicit chosen-zero equalities -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

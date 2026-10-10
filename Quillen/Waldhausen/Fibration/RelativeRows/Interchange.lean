@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.Reindex
-import Quillen.Waldhausen.Fibration.Rows.NestedWeakEquivalences
-import Quillen.Waldhausen.SConstruction.Rows.Interchange
-import Quillen.Waldhausen.SConstruction.Rows.PostcomposeDetection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.Reindex
+public import Quillen.Waldhausen.Fibration.Rows.NestedWeakEquivalences
+public import Quillen.Waldhausen.SConstruction.Rows.Interchange
+public import Quillen.Waldhausen.SConstruction.Rows.PostcomposeDetection
 
 /-! # Actual interchange of relative rows and an inner S-construction
 
@@ -9,6 +17,8 @@ The equivalence keeps the original two interval coordinates. Tail acyclicity
 is detected on the actual inner-row components. No cylinder, extension axiom,
 or weak-equivalence saturation is needed for this structural interchange.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -88,9 +98,11 @@ theorem innerSInverseDiagram_isRow {m n : SimplexCategory}
   zero i := IsZero.of_full_of_faithful_of_isZero (forget N n) _
     (((QuotientRows.transposeRows V (addInitial.obj n) m).obj X.obj).property.zero i)
   cofibration i j k hij hjk :=
-    ((QuotientRows.transposeRows V (addInitial.obj n) m).obj X.obj).property.cofibration i j k hij hjk
+    ((QuotientRows.transposeRows V (addInitial.obj n) m).obj X.obj).property.cofibration i j k
+      hij hjk
   quotient i j k hij hjk := IsPushout.of_map_of_faithful (forget N n)
-    (((QuotientRows.transposeRows V (addInitial.obj n) m).obj X.obj).property.quotient i j k hij hjk)
+    (((QuotientRows.transposeRows V (addInitial.obj n) m).obj X.obj).property.quotient i j k hij
+      hjk)
 
 /-- Genuine inverse interchange into the S-construction of the original relative category. -/
 def innerSInverse (m n : SimplexCategory) :
@@ -143,21 +155,24 @@ def innerSEquivalence (m n : SimplexCategory) :
 theorem innerSInterchange_weak {m n : SimplexCategory}
     {X Y : QuotientRows.Obj (waldhausenStructure N n) m} (f : X ⟶ Y)
     (hf : (QuotientRows.waldhausenStructure (waldhausenStructure N n) m).weq f) :
-    (waldhausenStructure (RowWeakEquivalences.nested N m) n).weq ((innerSInterchange N m n).map f) :=
+    (waldhausenStructure (RowWeakEquivalences.nested N m) n).weq ((innerSInterchange N m n).map
+      f) :=
   fun p q ↦ hf q p
 
 /-- The actual forward functor preserves the full Reedy cofibration predicate. -/
 theorem innerSInterchange_cof {m n : SimplexCategory}
     {X Y : QuotientRows.Obj (waldhausenStructure N n) m} (f : X ⟶ Y)
     (hf : (QuotientRows.waldhausenStructure (waldhausenStructure N n) m).cof f) :
-    (waldhausenStructure (RowWeakEquivalences.nested N m) n).cof ((innerSInterchange N m n).map f) :=
+    (waldhausenStructure (RowWeakEquivalences.nested N m) n).cof ((innerSInterchange N m n).map
+      f) :=
   QuotientRows.transposeRows_cof V (QuotientRows.postcompose_cof _ _ (forget_exact N n) hf)
 
 /-- Inverse cofibrancy follows by actual reflection through the exact full inclusion. -/
 theorem innerSInverse_cof {m n : SimplexCategory}
     {X Y : Obj (RowWeakEquivalences.nested N m) n} (f : X ⟶ Y)
     (hf : (waldhausenStructure (RowWeakEquivalences.nested N m) n).cof f) :
-    (QuotientRows.waldhausenStructure (waldhausenStructure N n) m).cof ((innerSInverse N m n).map f) := by
+    (QuotientRows.waldhausenStructure (waldhausenStructure N n) m).cof ((innerSInverse N m
+      n).map f) := by
   apply QuotientRows.cof_of_postcompose _ _ (forget_exact N n) (fun {_ _} _ h ↦ h)
   exact QuotientRows.transposeRows_cof V hf
 

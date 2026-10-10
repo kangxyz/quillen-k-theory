@@ -1,181 +1,246 @@
 # Perfect-complex localization
 
-The library provides connective K-groups of strict and locally perfect
-complexes, comparisons with vector-bundle K-theory, and localization for
-principal opens of affine schemes. The general open-immersion interface first
-produces a relative Waldhausen model. Identifying that model with perfect
-K-theory of the open is a separate geometric comparison.
+The library provides connective K-theory of strict and locally perfect
+complexes, vector-bundle comparisons, derived pullback, localization, support
+excision, and Mayer–Vietoris. The original restriction maps and relative
+homotopy-fiber boundaries remain the public maps. Localization has an exact
+image endpoint in degree zero. Separate functorial Bass groups are defined by
+cokernel recursion.
 
-This guide records the current models and their public maps. It does not claim
-the full nonconnective Thomason–Trobaugh localization theorem.
+This guide describes those models and comparisons. Full nonconnective
+Thomason–Trobaugh localization remains open; see [Scope.md](Scope.md#spectra-and-bass-groups).
+All declaration names below belong to `Quillen.PerfectComplexes` unless another
+namespace is specified. Their source is under
+`Quillen.AlgebraicGeometry.PerfectComplexes`.
 
-## Complexes, support, and the relative model
+## Complexes and support
 
-The names below belong to `Quillen.PerfectComplexes` unless a namespace is
-specified. For `X : AlgebraicGeometry.Scheme.{u}`:
+For `X : AlgebraicGeometry.Scheme.{u}`, `Complex X` is the category of
+integer-indexed cochain complexes of module sheaves. `strictPerfect X` requires
+globally bounded terms, each finite locally free. `StrictPerfect X` is the
+corresponding full category.
 
-- `Complex X` is the category of integer-indexed cochain complexes of
-  `O_X`-module sheaves.
-- `strictPerfect X` requires a global bound on the terms and finite local
-  freeness of every term. `StrictPerfect X` is the corresponding full category.
-- `Derived X` is the localization of these complexes at quasi-isomorphisms.
-  `locallyPerfect X` requires, near every point, an isomorphism in this
-  localization to a strict perfect complex on that neighborhood.
-  `Perfect X` is the corresponding full category. Its objects need not be
-  termwise quasi-coherent or globally bounded.
-- `StrictK X n` and `PerfectK X n` are the connective S-construction groups,
-  for `n : ℕ`. Their public group universe is `Type (u + 1)`.
+`Derived X` localizes complexes at quasi-isomorphisms. `locallyPerfect X`
+requires an isomorphism in that localization, near each point, to a strict
+perfect complex on the neighborhood; `Perfect X` is its full category. These
+objects need not be termwise quasi-coherent or globally bounded.
+See [Strict.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/Strict.lean) and
+[Local.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/Local.lean).
 
-The definitions are in [Strict.lean](../Quillen/PerfectComplexes/Strict.lean)
-and [Local.lean](../Quillen/PerfectComplexes/Local.lean). The main Waldhausen
-models use quasi-isomorphisms and ambient-monomorphism cofibrations whose
-quotients remain in the specified class. The degreewise split models and
-`splitStrictKEquiv`, `splitPerfectKEquiv` compare the two cofibration choices
-in every nonnegative degree; this is a change of cofibrations, with the same
-weak equivalences.
+`StrictK X n` and `PerfectK X n`, for `n : ℕ`, are the connective S-construction
+groups in `Type (u + 1)`. Their ambient-monomorphism cofibrations have quotients
+in the specified class. `splitStrictKEquiv` and `splitPerfectKEquiv` compare
+these with degreewise split cofibrations, retaining quasi-isomorphisms as weak
+equivalences.
 
-Fix an open immersion `j : U ⟶ X`. A supported perfect complex is a locally
-perfect complex on `X` whose restriction to `U` is acyclic. Thus
-`PerfectSupportedK j n` records cohomological support away from `U`, and
-`perfectSupportedKMap j n` forgets the support condition.
-See [PerfectSupport.lean](../Quillen/PerfectComplexes/PerfectSupport.lean).
+For an open immersion `j : U ⟶ X`, a supported perfect complex is acyclic after
+restriction to `U`. `PerfectSupportedK j n` is its K-group, and
+`perfectSupportedKMap j n` forgets support.
+See [PerfectSupport.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/PerfectSupport.lean).
+
+## Relative localization for every open immersion
 
 `perfectOpenWeakWaldhausen j` retains the objects, cofibrations, and chosen zero
-of `Perfect X`. A map is weak in this relative model exactly when its restricted
-chain map on `U` is a quasi-isomorphism. Its K-groups are `PerfectOpenK j n`.
-The two maps
+of `Perfect X`, with weak equivalences detected by quasi-isomorphism on `U`.
+Its groups `PerfectOpenK j n` fit into the canonical factorization
 
 ```text
-PerfectK X n → PerfectOpenK j n → PerfectK U n
+PerfectK X n --perfectOpenKMap--> PerfectOpenK j n
+            --perfectOpenKRestrict--> PerfectK U n.
 ```
 
-are `perfectOpenKMap j n` and `perfectOpenKRestrict j n`. Their composite is
-`perfectKRestrict j n`. The factorization is stated by
-`perfectOpenKRestrict_comp_perfectOpenKMap`. The displayed intermediate group
-is a relative model on `X`, not an alternative definition of `PerfectK U n`.
-See [OpenFibration.lean](../Quillen/PerfectComplexes/OpenFibration.lean) and
-[OpenFunctor.lean](../Quillen/PerfectComplexes/OpenFunctor.lean).
+The composite is `perfectKRestrict j n`. The relative group is defined on `X`;
+identifying its open endpoint requires a further comparison.
+See [OpenFunctor.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/OpenFunctor.lean).
 
-## Comparisons and functoriality
-
-The following comparison scopes include degree zero.
-
-| Input | Comparison | Source |
-| --- | --- | --- |
-| Any scheme `X` | `vectorBundleToStrictKEquiv X n`, from public `Quillen.Scheme.K X n` to `StrictK X n` | [GilletWaldhausen.lean](../Quillen/PerfectComplexes/GilletWaldhausen.lean) |
-| Any affine scheme `X`, with `IsAffine X` | `affineStrictToPerfectKEquiv X n` and `affineVectorBundleToPerfectKEquiv X n` | [Affine/SchemeKEquivalence.lean](../Quillen/PerfectComplexes/Affine/SchemeKEquivalence.lean) |
-| Any open immersion `j : U ⟶ Spec R` | `Affine.strictToPerfectOpenKEquiv R j n` for the relative models on `Spec R` | [Affine/OpenKEquivalence.lean](../Quillen/PerfectComplexes/Affine/OpenKEquivalence.lean) |
-| Any open immersion `j : U ⟶ Spec R` | `Affine.strictSupportedToPerfectKEquiv R j n` for the supported models on `Spec R` | [Affine/SupportedStrictPerfectKEquivalence.lean](../Quillen/PerfectComplexes/Affine/SupportedStrictPerfectKEquivalence.lean) |
-
-These equivalences have the named canonical comparison maps as their forward
-homomorphisms. The affine results require neither regularity nor noetherianity.
-In the last two rows, `U` need not be affine or quasi-compact. Those comparisons
-do not identify the relative model with absolute K-theory of `U`.
-
-`strictKPullback` is defined for every scheme morphism and gives
-`StrictKFunctor`. The vector-bundle/strict comparison is a natural isomorphism
-for this pullback. `perfectKPullback` is defined for every morphism between
-quasi-compact schemes, using bounded-above flat representatives, and gives
-`PerfectKFunctor` on `Quillen.Scheme.QuasiCompactSchemes`. It agrees with the
-existing flat-pullback and open-restriction maps and satisfies identity,
-composition, and naturality of the strict and vector-bundle comparisons.
-See [PullbackFunctor.lean](../Quillen/PerfectComplexes/PullbackFunctor.lean) and
-[DerivedPullbackFunctor.lean](../Quillen/PerfectComplexes/DerivedPullbackFunctor.lean).
-
-## General relative localization
-
-For every open immersion, `perfectOpenConnectingHom j n` is the homotopy-fiber
-boundary with codomain `PerfectSupportedK j n`. The theorem
-`perfectOpen_positiveLongExactSequence j n` states exactness at the three
-recurring positions:
+The actual homotopy-fiber boundary is `perfectOpenConnectingHom j n`.
+`perfectOpen_positiveLongExactSequence` gives the recurring exact positions in
 
 ```text
 PerfectK X (n+1) → PerfectOpenK j (n+1) → PerfectSupportedK j n
-                → PerfectK X n → PerfectOpenK j n
+                → PerfectK X n → PerfectOpenK j n.
 ```
 
-The arrows are `perfectOpenKMap`, `perfectOpenConnectingHom`, and
-`perfectSupportedKMap` as appropriate. Exactness is equality of the relevant
-homomorphism's range and the next homomorphism's kernel.
-`perfectOpenKMap_zero_surjective j` gives surjectivity onto the relative
-degree-zero group. It does not give surjectivity of `perfectKRestrict j 0`
-onto `PerfectK U 0`.
-See [OpenLongExactSequence.lean](../Quillen/PerfectComplexes/OpenLongExactSequence.lean).
+Exactness is range equals kernel. `perfectOpenKMap_zero_surjective` supplies
+surjectivity onto relative K₀.
+See [OpenLongExactSequence.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/OpenLongExactSequence.lean).
+For an arbitrary open, `PerfectOpenKZeroImage j` is exactly
+`(perfectKRestrict j 0).range`; the general image construction first quotients
+the relative group by its endpoint kernel.
 
-For an arbitrary open immersion, `PerfectOpenKZeroImage j` is defined to be
-exactly `(perfectKRestrict j 0).range`. The general image comparison first
-quotients `PerfectOpenK j 0` by the kernel of its map to this subgroup.
-Injectivity of the endpoint is a further claim.
-See [OpenKZeroImage.lean](../Quillen/PerfectComplexes/OpenKZeroImage.lean).
+## Model comparisons and pullback
 
-## Principal opens of affine schemes
+Every row below includes degree zero and uses its canonical comparison map.
 
-Let `R : CommRingCat.{u}`, `r : R`, and
-`j := CoherentScheme.principalOpen R r`. The source of `j` is
-`Spec (.of (Localization.Away r))` and its target is `Spec R`.
-There is no nonzero, regularity, noetherianity, or non-zero-divisor assumption;
-localization at zero is included.
+| Conditions | Comparison | Source |
+| --- | --- | --- |
+| Every scheme `X` | `vectorBundleToStrictKEquiv X n` | [GilletWaldhausen.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/GilletWaldhausen.lean) |
+| Affine `X` | `affineStrictToPerfectKEquiv`, `affineVectorBundleToPerfectKEquiv` | [Affine/SchemeKEquivalence.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/SchemeKEquivalence.lean) |
+| Every open `j : U ⟶ Spec R` | `Affine.strictToPerfectOpenKEquiv R j n` | [Affine/OpenKEquivalence.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/OpenKEquivalence.lean) |
+| Every open `j : U ⟶ Spec R` | `Affine.strictSupportedToPerfectKEquiv R j n` | [Affine/SupportedStrictPerfectKEquivalence.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/SupportedStrictPerfectKEquivalence.lean) |
+| Quasi-compact `X`, arbitrary localization open `U` and auxiliary open `T` | `boundedFlatPerfectSupportedOpenKEquiv j T n` | [BoundedFlat/SupportedOpenComparison.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/SupportedOpenComparison.lean) |
 
-In `Quillen.PerfectComplexes.Affine`:
+The affine comparisons impose no regularity or noetherianity and allow
+non-quasi-compact opens. The bounded-flat supported relative comparison needs
+no quasi-separatedness and no compactness of either open. These are comparisons
+of the specified models on the ambient scheme; their K₀ statements do not
+supply full open-target surjectivity.
 
-- `principalPerfectOpenKEquiv R r n` identifies `PerfectOpenK j (n+1)`
-  with `PerfectK U (n+1)`. Its forward map is `perfectOpenKRestrict j (n+1)`.
-- `principalPerfectOpenKZeroImageEquiv R r` identifies `PerfectOpenK j 0`
-  with `PerfectOpenKZeroImage j`. The map to `PerfectK U 0` is injective;
-  the equivalence's codomain is the restriction image.
-- `principalPerfectConnectingHom R r n` is `perfectOpenConnectingHom j n`
-  precomposed with the inverse of the positive endpoint equivalence.
-  `principalPerfectConnectingHom_comp_relative` gives its compatibility with
-  the full relative boundary.
+`strictKPullback` accepts every scheme map. `perfectKPullback` accepts arbitrary
+maps between quasi-compact schemes, uses bounded-above flat representatives,
+and gives `PerfectKFunctor`. Its identity, composition, restriction, and
+comparison-naturality laws include zero.
+See [DerivedPullbackFunctor.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/DerivedPullbackFunctor.lean).
 
-Write `K_n(X)` for `PerfectK X n` and `K_n(X on X ∖ U)` for
-`PerfectSupportedK j n` within this paragraph. Then
-`principalPerfect_positiveLongExactSequence R r n` states the recurring
-range-equals-kernel identities in each segment
+## Global qcqs endpoint and connective sequence
+
+Assume `X` is quasi-compact and quasi-separated and `j : U ⟶ X` is an open
+immersion with quasi-compact `U`. In Lean these conditions are
+`[CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace U] [IsOpenImmersion j]`.
+
+`qcqsPerfectOpenKEquiv j n` identifies `PerfectOpenK j (n+1)` with
+`PerfectK U (n+1)` using the original `perfectOpenKRestrict` as forward map.
+`qcqsPerfectOpenKZeroImageEquiv j` identifies relative K₀ with precisely
+`PerfectOpenKZeroImage j`. The endpoint is injective and its image is exactly
+the image of original absolute restriction.
+See [GlobalCofinality.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/GlobalCofinality.lean).
+
+`qcqsPerfectConnectingHom j n` is the relative boundary precomposed with the
+inverse positive endpoint equivalence. Its composite with relative restriction
+is the entire original `perfectOpenConnectingHom`; this equation determines it.
+Writing `Kₙ(X)` for `PerfectK X n` and `Kₙ(X on X ∖ U)` for the supported group,
+`qcqsPerfect_positiveLongExactSequence` gives recurring exactness in
 
 ```text
 Kₙ₊₁(X) → Kₙ₊₁(U) → Kₙ(X on X ∖ U) → Kₙ(X) → Kₙ(U).
 ```
 
-Repeating these maps gives a connective group sequence.
-`principalPerfect_zeroTail R r` supplies its tail
+`qcqsPerfect_zeroTail` supplies
 
 ```text
 K₁(X) → K₁(U) → K₀(X on X ∖ U) → K₀(X) → K₀(U).
 ```
 
-The tail is exact at `K₁(U)`, `K₀(X on X ∖ U)`, and `K₀(X)`.
-No surjectivity onto the last group is asserted. These are connective
-homotopy-theoretic K-groups; this result does not identify K₀ with an algebraic
-Grothendieck presentation or construct a sequence of spectra.
+The tail is exact at `K₁(U)`, the supported K₀, and `K₀(X)`.
+It asserts no surjectivity onto full `K₀(U)`.
+See [GlobalLocalization.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/GlobalLocalization.lean).
+Ordinary open-pair naturality holds for every commuting base-map square with
+qcqs bases and quasi-compact opens, without flat or cartesian assumptions,
+including the boundary into supported K₀.
+See [GlobalLocalizationNaturality.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/GlobalLocalizationNaturality.lean).
 
-The endpoint and exactness APIs are in
-[Affine/PrincipalPerfectCofinality.lean](../Quillen/PerfectComplexes/Affine/PrincipalPerfectCofinality.lean)
-and [Affine/PrincipalPerfectLocalization.lean](../Quillen/PerfectComplexes/Affine/PrincipalPerfectLocalization.lean).
-For a focused import:
+Principal opens of affines are a special case over every commutative ring,
+including zero divisors and localization at zero. The focused interface is
+`Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalPerfectLocalization`.
 
-```lean
-import Quillen.PerfectComplexes.Affine.PrincipalPerfectLocalization
+## Geometric inputs and finite families
 
-#check Quillen.PerfectComplexes.Affine.principalPerfectOpenKEquiv
-#check Quillen.PerfectComplexes.Affine.principalPerfectOpenKZeroImageEquiv
-#check Quillen.PerfectComplexes.Affine.principalPerfect_zeroTail
+The global endpoint uses actual derived roofs, opposite weak-arrow joint data,
+dual approximation, and perfect-complement density. Its public theorem has no
+additional user-supplied roof, cylinder, or density premise.
+
+For qcqs `X` with quasi-compact opens `U,T`, source-supported roofs keep a common
+locally perfect source acyclic on `T`. Targets need not vanish there.
+Finite supported roofs require locally perfect targets; finite supported
+equalities and chain homotopies allow targets with quasi-coherent homology and
+individual lower bounds `(B i).IsGE (b i)`. The target hypotheses apply at every
+index of the given family, including indices outside the selected finite set.
+Empty finite families are included. Infinite families and higher coherence are
+not asserted.
+See [FiniteSupportedRoofs.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/OpenDerivedImage/FiniteSupportedRoofs.lean)
+and [FiniteSupportedEquality.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/OpenDerivedImage/FiniteSupportedEquality.lean).
+
+Supported density extends a locally perfect `E` on `U`, acyclic on `U ∩ T`,
+to a derived retract of a global perfect `P` acyclic on `T`. A constructed
+perfect complement `C` gives `P|U ≅ E ⊕ C`. No fixed self-shift stabilization
+is imposed.
+See [GlobalSupportedDensity.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/GlobalSupportedDensity.lean).
+
+## Auxiliary support and its naturality
+
+For an auxiliary open `T`, `PerfectSupportedOpenK j T n` uses objects acyclic
+on `T`, with weak equivalences detected on `U`. The absolute open endpoint is
+supported away from `j ⁻¹ᵁ T`; the fiber is supported away from `U ∪ T`.
+If `X` is qcqs and `U,T` are quasi-compact, its positive endpoint is
+`qcqsPerfectSupportedOpenKEquiv`, and degree zero identifies the exact restriction
+image. `qcqsPerfectSupportedConnectingHom`,
+`qcqsPerfectSupported_positiveLongExactSequence`, and
+`qcqsPerfectSupported_zeroTail` retain these original maps.
+See [SupportedOpen/GlobalLocalization.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/SupportedOpen/GlobalLocalization.lean).
+
+The actual supported boundary and positive inverse endpoint are natural for
+arbitrary commuting support and localization squares between qcqs ambient
+schemes with quasi-compact localization and auxiliary opens. Neither flatness
+nor cartesianness is required. Relative boundary naturality needs only
+quasi-compact ambient schemes; relative restriction additionally needs
+quasi-compact localization opens.
+See [SupportedOpen/PairNaturality.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/SupportedOpen/PairNaturality.lean).
+Fixed-base inclusions `S ≤ T` and forgetting support also commute with the
+boundaries. See [SupportedOpen/AuxiliaryNaturality.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/SupportedOpen/AuxiliaryNaturality.lean).
+
+## Support excision and Mayer–Vietoris
+
+For any open immersion `j : U ⟶ X` and auxiliary open `T` with
+`j(U) ∪ T = X`, `perfectSupportedExcisionKEquiv` identifies the original
+supported groups on `X` and `U` in every nonnegative degree. Its forward map is
+restriction, and its inverse is the actual exact extension-by-zero map. The
+unit and counit give weak equivalences and realization homotopy inverses.
+No quasi-compactness or quasi-separatedness is assumed.
+See [SupportedOpen/Excision.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/SupportedOpen/Excision.lean).
+
+For a qcqs scheme `X = U ∪ V` with quasi-compact opens, the original restrictions
+and boundary give the connective sequence
+
+```text
+Kₙ₊₁(U) × Kₙ₊₁(V) → Kₙ₊₁(U ∩ V) → Kₙ(X)
+                    → Kₙ(U) × Kₙ(V) → Kₙ(U ∩ V).
 ```
 
-## Remaining scope and references
+`PerfectMayerVietoris.overlapDifference` is the first restricted class multiplied
+by the inverse of the second. `qcqs_positiveExactSequence` supplies the recurring
+positions; `qcqs_completeZeroTail` includes exactness at the local K₀ pair.
+`qcqs_matching_zero_classes_glue` gives a global K₀ class for any matching local
+pair. It does not require either single-open restriction to be surjective.
+See [MayerVietoris.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/MayerVietoris.lean).
 
-The absolute endpoint for arbitrary quasi-compact opens, general-scheme
-geometric replacement and density, global localization and descent, and the
-strict/local comparison on general nonaffine schemes require further work.
-Locally-perfect objects on a non-quasi-compact scheme need not have a uniform
-cohomological bound, so the bounded-above flat enhancement alone does not give
-perfect pullback for every scheme. Spectra, negative K-groups, and nonconnective
-localization remain outside the current theory.
+`SupportedMayerVietoris` gives the supported sequence and matching-class gluing
+with a quasi-compact auxiliary acyclicity open `Z`; its boundary is compatible
+with forgetting support. The geometric cover reflection and cylinder inputs are
+discharged in the qcqs wrappers. No surjectivity onto overlap K₀ or negative
+boundary is asserted.
+See [SupportedOpen/MayerVietoris.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/SupportedOpen/MayerVietoris.lean)
+and [SupportedOpen/MayerVietorisForget.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/SupportedOpen/MayerVietorisForget.lean).
 
-Background sources include Thomason and Trobaugh,
-*Higher Algebraic K-Theory of Schemes and of Derived Categories*
-([paper](https://www.preschema.com/teaching/2020-ss/kdescent/refs/Thomason-Trobaugh%20-%20Higher%20algebraic%20K-theory%20of%20schemes.pdf))
-and the [Stacks Project](https://stacks.math.columbia.edu/).
-These links provide context; a theorem-by-theorem correspondence with the Lean
-development has not been verified. The definitions and signatures linked above
-specify the formalized models and hypotheses.
+## Bass groups, spectra, and remaining scope
+
+`Bass.negativeKFunctor n` recursively takes the two polynomial-to-Laurent
+cokernels, seeded by original homotopical perfect K₀ in additive notation.
+`n : ℕ` denotes degree `-n`. It accepts arbitrary maps between quasi-compact
+schemes. `Bass.supportedNegativeKFunctor` has the analogous supported K₀ seed
+on pairs with quasi-compact ambient scheme and arbitrary vanishing open.
+See [BassNegativeGroups.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/BassNegativeGroups.lean)
+and [Bass/SupportedGroups.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/Bass/SupportedGroups.lean).
+
+`Quillen.Bass.affineSchemeNegativeKIso` compares the affine ring and geometric
+scheme-product recursions naturally in all nonpositive degrees, with literal
+original K₀ in degree zero. `affineBassTransition` constructs one spectral Bass
+step from the actual Laurent unit and inverse, scalar action, and whole
+structure-compatible homotopy. See [Affine/BassStep.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/BassStep.lean).
+Coherent functorial spectral iteration, identification with the cokernel groups,
+the fundamental theorem, and negative localization/descent remain open. These
+groups are not identified with algebraic Grothendieck K₀ or negative stable
+groups of a Bass spectrum.
+
+The connective perfect spectra have arbitrary derived pullback on
+quasi-compact schemes in the constructed categorical stable localization,
+retaining original K-maps and flat pullback. Their negative stable groups still
+vanish. The localized inverse of the bounded-flat inclusion does not assert a
+strict continuous inverse. See [Library.md](Library.md#stable-fibers-and-localization).
+
+Strict/local comparison on arbitrary nonaffine schemes, perfect pullback on
+arbitrary non-quasi-compact schemes, stable cofiber exactness and telescope
+comparisons, projective-bundle and Laurent-boundary calculations, and the
+nonconnective localization theorem require further work. The actual two-chart
+projective line and global sections are available, but higher cohomology and
+perfect pushforward remain separate.
+See [Scope.md](Scope.md) for the precise boundary.

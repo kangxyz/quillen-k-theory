@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.HomotopyPullback.CompactComparison
+module
+
+public import Quillen.Topology.HomotopyPullback.CompactComparison
 
 /-!
 # Compact pullback comparison regression tests
@@ -12,6 +14,8 @@ import Quillen.Topology.HomotopyPullback.CompactComparison
 Keep arbitrary base-change parameters distinct from compact test families,
 and retain complete original boundary points and paths.
 -/
+@[expose] public section
+
 
 noncomputable section
 open Quillen Quillen.HomotopyPullback

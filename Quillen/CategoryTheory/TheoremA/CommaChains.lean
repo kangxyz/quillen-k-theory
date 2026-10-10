@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremA.SimplicialReplacement
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.SimplicialReplacement
 
 /-!
 # Chains in comma categories
@@ -8,6 +16,8 @@ source together with its final arrow `F(cₙ) ⟶ d`. This explicit bijection is
 the categorical ingredient for identifying the other rows of the Theorem A
 bisimplicial replacement with nerves of under categories.
 -/
+@[expose] public section
+
 
 noncomputable section
 

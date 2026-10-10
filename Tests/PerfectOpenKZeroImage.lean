@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.OpenKZeroImage
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenKZeroImage
 
 /-! # Original relative-open degree-zero image consumers
 
@@ -12,6 +14,8 @@ maps. In particular, image membership yields a relative representative,
 while an equivalence of the relative endpoint with the image needs precisely
 injectivity of the original relative restriction.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 universe u

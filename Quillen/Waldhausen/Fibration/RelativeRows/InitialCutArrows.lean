@@ -1,12 +1,22 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.InitialCut
-import Quillen.Waldhausen.SConstruction.Rows.ReedyArrows
-import Quillen.Waldhausen.ExtensionCategory.IsomorphicSourceCubes
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.InitialCut
+public import Quillen.Waldhausen.SConstruction.Rows.ReedyArrows
+public import Quillen.Waldhausen.ExtensionCategory.IsomorphicSourceCubes
 
 /-! # The actual cutoff arrow and its original component cofibrations
 
 The cutoff is regarded as an actual Reedy arrow between relative rows.
 Its component arrow row retains the original cutoff and original maps.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial
@@ -102,11 +112,13 @@ theorem cutArrowRows_map_cof {n : SimplexCategory} {X Y : Obj N n} (f : X ⟶ Y)
       | succ k =>
         let : IsIso ((QuotientRows.horizontalArrow (ExtensionCategory.waldhausenStructure V)
             i.succ j.succ k.succ hij hjk).obj ((cutArrowRows N n).obj X)).obj.hom.hom.left := by
-          change IsIso (X.obj.obj.map (𝟙 (interval (0 : Fin (n.len+1)).succ (0 : Fin (n.len+1)).succ le_rfl)))
+          change IsIso (X.obj.obj.map (𝟙 (interval (0 : Fin (n.len+1)).succ (0 : Fin
+            (n.len+1)).succ le_rfl)))
           infer_instance
         let : IsIso ((QuotientRows.horizontalArrow (ExtensionCategory.waldhausenStructure V)
             i.succ j.succ k.succ hij hjk).obj ((cutArrowRows N n).obj Y)).obj.hom.hom.left := by
-          change IsIso (Y.obj.obj.map (𝟙 (interval (0 : Fin (n.len+1)).succ (0 : Fin (n.len+1)).succ le_rfl)))
+          change IsIso (Y.obj.obj.map (𝟙 (interval (0 : Fin (n.len+1)).succ (0 : Fin
+            (n.len+1)).succ le_rfl)))
           infer_instance
         apply ExtensionCategory.cof_cube_of_horizontal_left_isIso V
         · exact cutArrowRows_map_app_cof N f hf (interval i.succ j.succ hij)

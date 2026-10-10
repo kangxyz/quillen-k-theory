@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Cylinder.JointFunctor
-import Quillen.Waldhausen.Cylinder.JointSource
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Cylinder.JointFunctor
+public import Quillen.Waldhausen.Cylinder.JointSource
 
 /-! # Exactness of the actual complex joint-cylinder functor
 
@@ -8,6 +16,8 @@ target is the cofibration-arrow category with its genuine Reedy structure.
 The theorem is proved for both isomorphism and quasi-isomorphism weak models,
 using the unchanged cylinder maps, actual pushouts, and inherited admissibility.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

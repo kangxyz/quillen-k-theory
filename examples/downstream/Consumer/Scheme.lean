@@ -1,4 +1,23 @@
-import Quillen.Scheme
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.AlgebraicGeometry.Scheme
+
+/-!
+# Scheme K-theory and G-theory interface examples
+
+Uses the global groups and their geometric restriction maps, alongside the
+separately named affine G-theory presentation. The examples record principal
+and arbitrary-open exactness, naturality of K-to-G, and the geometric closed
+pushforward in the principal closed/open sequence.
+-/
+
+@[expose] public section
 noncomputable section
 universe u
 open CategoryTheory AlgebraicGeometry
@@ -11,14 +30,16 @@ abbrev GlobalK (X : AlgebraicGeometry.Scheme.{u}) (n : ℕ) : Type (u + 1) := Qu
 abbrev GlobalG (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X] (n : ℕ) :
     Type (u + 1) := Quillen.Scheme.G X n
 
-theorem geometric_K_map {U X : AlgebraicGeometry.Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (n : ℕ) :
+theorem geometric_K_map {U X : AlgebraicGeometry.Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (n : ℕ)
+  :
     Quillen.Scheme.restrictK j n = (Quillen.SchemeSheaf.vectorBundleExactRestrict j).smallKMap n :=
   Quillen.Scheme.restrictK_eq_smallKMap j n
 
 theorem geometric_G_map {U X : AlgebraicGeometry.Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian U]
     (j : U ⟶ X) [IsOpenImmersion j] (n : ℕ) :
-    Quillen.Scheme.restrictG j n = (Quillen.CoherentScheme.coherentRestrictionExact j).smallKMap n :=
+    Quillen.Scheme.restrictG j n = (Quillen.CoherentScheme.coherentRestrictionExact j).smallKMap n
+      :=
   Quillen.Scheme.restrictG_eq_smallKMap j n
 
 -- The separately named lower-universe affine presentation and its proved LES.

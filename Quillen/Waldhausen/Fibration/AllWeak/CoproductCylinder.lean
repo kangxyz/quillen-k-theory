@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.Fibration.AllWeak.Basic
-import Quillen.Waldhausen.Fibration.Rows.SecondEndpoint
-import Quillen.Waldhausen.ExtensionCategory.Embeddings
-import Quillen.Waldhausen.Additivity.SplitSequence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.AllWeak.Basic
+public import Quillen.Waldhausen.Fibration.Rows.SecondEndpoint
+public import Quillen.Waldhausen.ExtensionCategory.Embeddings
+public import Quillen.Waldhausen.Additivity.SplitSequence
 
 /-! # A genuine coproduct cylinder for the all-weak model
 
@@ -9,6 +17,8 @@ The middle object is the original source-target coproduct, with projection
 `[f,id]`. Its joint arrow is the identity. Exactness into the genuine Reedy
 extension category is proved by exact coproduct and identity embeddings.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

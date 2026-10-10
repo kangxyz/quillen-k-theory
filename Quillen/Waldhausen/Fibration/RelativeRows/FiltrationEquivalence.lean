@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.Completion
-import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationFullFaithful
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.Completion
+public import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationFullFaithful
 
 /-! # The actual quotient-row presentation of coarse-weak cofibration chains
 
@@ -9,6 +17,8 @@ The only extra hypothesis is the structural coarse extension axiom, needed
 to recognize every original relative filtration as coarse-weak. Both functors
 preserve fine weak maps, and the original quotient maps supply their isos.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -20,8 +30,8 @@ variable {C : Type u} [Category.{v} C] {V : Structure C}
 
 /-- The genuine arrow predicates on the unchanged finite-chain category. -/
 def cofibrationWeakChains (n : SimplexCategory) : ObjectProperty (ComposableArrows C n.len) :=
-  fun F ↦ (∀ {i j : Fin (n.len+1)} (f : i ⟶ j), V.cof (F.map f)) ∧
-    (∀ {i j : Fin (n.len+1)} (f : i ⟶ j), N.coarse.weq (F.map f))
+  fun F ↦ (∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), V.cof (F.map f)) ∧
+    (∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), N.coarse.weq (F.map f))
 
 /-- This is only the full subcategory of the original finite-chain category. -/
 abbrev CofibrationWeakChain (n : SimplexCategory) := (cofibrationWeakChains N n).FullSubcategory
@@ -34,12 +44,13 @@ def filtrationPresentation (he : ExtensionAxiom N.coarse) (n : SimplexCategory) 
 
 /-- Forgetting the predicates recovers the literal original filtration functor. -/
 @[simp] theorem filtrationPresentation_forget (he : ExtensionAxiom N.coarse) (n : SimplexCategory) :
-    filtrationPresentation N he n ⋙ (cofibrationWeakChains N n).ι = initialFiltrationFunctor N n := rfl
+    filtrationPresentation N he n ⋙ (cofibrationWeakChains N n).ι = initialFiltrationFunctor N n
+      := rfl
 
 /-- The actual completed map preserves identities. -/
 theorem relativeCompletionMap_id {n : SimplexCategory} (F : ComposableArrows C n.len)
-    (hF : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), V.cof (F.map f))
-    (hw : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), N.coarse.weq (F.map f)) :
+    (hF : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), V.cof (F.map f))
+    (hw : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), N.coarse.weq (F.map f)) :
     relativeCompletionMap N hF hw hF hw (𝟙 F) = 𝟙 (relativeCompletion N F hF hw) := by
   apply ObjectProperty.hom_ext
   change QuotientRows.completeCofibrationFlagMap V _ _ ((zeroAugmentFunctor V n.len).map (𝟙 F)) = _
@@ -48,17 +59,18 @@ theorem relativeCompletionMap_id {n : SimplexCategory} (F : ComposableArrows C n
 
 /-- The actual completed map preserves composition of all original transformations. -/
 theorem relativeCompletionMap_comp {n : SimplexCategory} {F G H : ComposableArrows C n.len}
-    (hF : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), V.cof (F.map f))
-    (hwF : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), N.coarse.weq (F.map f))
-    (hG : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), V.cof (G.map f))
-    (hwG : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), N.coarse.weq (G.map f))
-    (hH : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), V.cof (H.map f))
-    (hwH : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), N.coarse.weq (H.map f))
+    (hF : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), V.cof (F.map f))
+    (hwF : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), N.coarse.weq (F.map f))
+    (hG : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), V.cof (G.map f))
+    (hwG : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), N.coarse.weq (G.map f))
+    (hH : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), V.cof (H.map f))
+    (hwH : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), N.coarse.weq (H.map f))
     (α : F ⟶ G) (β : G ⟶ H) :
     relativeCompletionMap N hF hwF hH hwH (α ≫ β) =
       relativeCompletionMap N hF hwF hG hwG α ≫ relativeCompletionMap N hG hwG hH hwH β := by
   apply ObjectProperty.hom_ext
-  change QuotientRows.completeCofibrationFlagMap V _ _ ((zeroAugmentFunctor V n.len).map (α ≫ β)) = _
+  change QuotientRows.completeCofibrationFlagMap V _ _ ((zeroAugmentFunctor V n.len).map (α ≫
+    β)) = _
   rw [(zeroAugmentFunctor V n.len).map_comp]
   exact QuotientRows.completeCofibrationFlagMap_comp V (zeroAugment_map_cof V F hF)
     (zeroAugment_map_cof V G hG) (zeroAugment_map_cof V H hH)
@@ -100,13 +112,15 @@ def completionFiltrationIso (he : ExtensionAxiom N.coarse) (n : SimplexCategory)
     (relativeCompletionInitialIso N F.obj F.property.1 F.property.2)) (by
       intro F G α
       apply ObjectProperty.hom_ext
-      exact relativeCompletionUnit_naturality N F.property.1 F.property.2 G.property.1 G.property.2 α.hom)
+      exact relativeCompletionUnit_naturality N F.property.1 F.property.2 G.property.1
+        G.property.2 α.hom)
 
 /-- The chain-side comparison retains the original quotient map at every component. -/
 @[simp] theorem completionFiltrationIso_hom_app (he : ExtensionAxiom N.coarse) (n : SimplexCategory)
-    (F : CofibrationWeakChain N n) (i : Fin (n.len+1)) :
+    (F : CofibrationWeakChain N n) (i : Fin (n.len + 1)) :
     ((completionFiltrationIso N he n).hom.app F).hom.app i =
-      QuotientRows.completionQuotient V (zeroAugment V F.obj) (zeroAugment_map_cof V F.obj F.property.1)
+      QuotientRows.completionQuotient V (zeroAugment V F.obj) (zeroAugment_map_cof V F.obj
+        F.property.1)
         (interval 0 i.succ (Fin.zero_le _)) := rfl
 
 /-- On actual rows, full faithfulness descends those same original quotient maps. -/

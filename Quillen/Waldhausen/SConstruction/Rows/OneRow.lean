@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.SConstruction.Rows.Reindex
-import Quillen.Waldhausen.ExtensionCategory.Embeddings
-import Mathlib.CategoryTheory.ComposableArrows.Basic
-import Mathlib.CategoryTheory.Whiskering
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.Reindex
+public import Quillen.Waldhausen.ExtensionCategory.Embeddings
+public import Mathlib.CategoryTheory.ComposableArrows.Basic
+public import Mathlib.CategoryTheory.Whiskering
 
 /-! # The genuine one-step quotient row
 
@@ -9,6 +17,8 @@ The three original interval objects are literally `0`, `X`, `0`. Every
 horizontal relative cofibration test is either the identity-arrow or
 zero-arrow embedding, so exactness uses actual relative pushouts.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial
@@ -20,7 +30,10 @@ variable {C : Type u} [Category.{v} C] (W : Structure C)
 
 /-- The original three interval positions of `[1]`. -/
 def oneIndex : Interval ⦋1⦌ ⥤ Fin 3 :=
-  (show Monotone (fun p : Interval ⦋1⦌ ↦ (⟨p.val.1.val + p.val.2.val, by have hi := p.val.1.isLt; have hj := p.val.2.isLt; change p.val.1.val < 2 at hi; change p.val.2.val < 2 at hj; omega⟩ : Fin 3)) from
+  (show Monotone (fun p : Interval ⦋1⦌ ↦
+    (⟨p.val.1.val + p.val.2.val, by
+      have hi := p.val.1.isLt; have hj := p.val.2.isLt;
+      change p.val.1.val < 2 at hi; change p.val.2.val < 2 at hj; omega⟩ : Fin 3)) from
     fun _ _ h ↦ Nat.add_le_add h.1 h.2).functor
 
 /-- The actual natural map from the chosen constant zero to the identity. -/

@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.ExactCategory.Basic
-import Mathlib.GroupTheory.FreeAbelianGroup
-import Mathlib.GroupTheory.QuotientGroup.Defs
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Basic
+public import Mathlib.GroupTheory.FreeAbelianGroup
+public import Mathlib.GroupTheory.QuotientGroup.Defs
 
 /-!
 # The algebraic Grothendieck group of an exact category
@@ -13,6 +21,8 @@ conflation-additive functions into arbitrary abelian groups.
 This algebraic group is not identified here with `ExactStructure.K E 0`.
 That comparison requires a separate theorem about the Q-construction.
 -/
+@[expose] public section
+
 
 noncomputable section
 

@@ -1,5 +1,13 @@
-import Quillen.KTheory.Map.CoherenceData
-import Quillen.Topology.Realization.HomotopyBridge
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.Map.CoherenceData
+public import Quillen.Topology.Realization.HomotopyBridge
 
 /-!
 # Functoriality of genuine Quillen K-group maps
@@ -9,6 +17,8 @@ zero base object. Its nerve homotopy realizes to a continuous homotopy fixed at
 that basepoint. Homotopy invariance of actual homotopy-group maps therefore
 proves the composition law for the zero-based Quillen K-group homomorphisms.
 -/
+@[expose] public section
+
 
 noncomputable section
 

@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.ExtensionCategory.Realization
-import Quillen.Waldhausen.Functoriality.KEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.Realization
+public import Quillen.Waldhausen.Functoriality.KEquivalence
 
 /-! # Canonical K-theory additivity for the actual extension category
 
@@ -8,6 +16,8 @@ The forward homomorphism is exactly the original canonical K-map of
 of the literal split extension. The target is the actual Waldhausen
 product-category K-theory; no unproved realization-product comparison is used.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -25,8 +35,10 @@ def KEquiv (n : ℕ) : (waldhausenStructure W).K n ≃* (productStructure W W).K
     (realizationHomotopyEquiv_toFun W) n
 
 /-- This is exactly the original canonical source/cofiber homomorphism. -/
-@[simp] theorem KEquiv_toMonoidHom (n : ℕ) :
-    (KEquiv W n).toMonoidHom = KMap (sourceCofiber_exact W) n := rfl
+@[simp] theorem KEquiv_coe (n : ℕ) :
+    (↑(KEquiv W n) : (waldhausenStructure W).K n →* (productStructure W W).K n) = KMap
+        (sourceCofiber_exact W) n := rfl
+
 
 /-- The original canonical split-extension homomorphism, using coproducts
 whose existence is supplied by the Waldhausen axioms. -/
@@ -44,7 +56,7 @@ theorem KEquiv_symm_toMonoidHom (n : ℕ) :
   have h := KMap_eq_of_iso ((split_exact W).comp (sourceCofiber_exact W))
     (IsExact.id (productStructure W W).cof (productStructure W W).weq)
     (splitSourceCofiberIso W) n
-  rw [KMap_comp, KMap_id] at h
+  rw [← KMap_comp_KMap, KMap_id] at h
   ext q
   apply (KEquiv W n).injective
   change (KEquiv W n) ((KEquiv W n).symm q) =

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.CategoryTheory.TheoremB.ReplacementSkeletonCompact
-import Quillen.Topology.HELP.StrictFiniteCriterion
+module
+
+public import Quillen.CategoryTheory.TheoremB.ReplacementSkeletonCompact
+public import Quillen.Topology.HELP.StrictFiniteCriterion
 
 /-!
 # Weak-input sequential cartesian assembly
@@ -15,13 +17,15 @@ stage comparison is weak. Compact factorization retains the complete path
 family; stage injectivity recovers the exact original boundary square. Only
 finite cube HELP is applied. No finite-stage continuous inverse is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory Limits Topology
 open scoped Topology unitInterval Simplicial
 universe u
-namespace Quillen.TheoremB.SequentialCartesian
+namespace Quillen.CartesianRealization.Sequential
 variable {F G : ℕ ⥤ TopCat.{u}} (η : F ⟶ G)
   (c : Cocone F) (hc : IsColimit c) (d : Cocone G) (hd : IsColimit d)
   [∀ n, T1Space (F.obj n)] [∀ n, T1Space (G.obj n)]
@@ -57,11 +61,12 @@ property, with no nonempty-source or ordinary-HE premise. -/
 theorem colimitComparison_isWeakHomotopyEquivalence_of_weakStages (k : ℕ)
     (hstage : ∀ n (h : k ≤ n), IsWeakHomotopyEquivalence (stageComparison η k n h)) :
     IsWeakHomotopyEquivalence (colimitComparison η c hc d k) :=
-  (colimitComparison_finiteCubeStrictHELP_of_weakStages η c hc d hd hF hG k hstage).isWeakHomotopyEquivalence
+  (colimitComparison_finiteCubeStrictHELP_of_weakStages η c hc d hd hF hG k
+    hstage).isWeakHomotopyEquivalence
 
-end Quillen.TheoremB.SequentialCartesian
+end Quillen.CartesianRealization.Sequential
 namespace Quillen.TheoremB
-open TheoremA SequentialCartesian
+open TheoremA Quillen.CartesianRealization.Sequential
 variable {D : Type u} [SmallCategory D] {H J : D ⥤ SSet.{u}} (η : H ⟶ J)
 
 /-- The actual replacement skeleton has all separation, closed-embedding,
@@ -74,7 +79,8 @@ theorem replacementSkeletonComparison_isWeakHomotopyEquivalence_of_weakStages (k
   colimitComparison_isWeakHomotopyEquivalence_of_weakStages (realizedReplacementSkeletonMap η)
     (realizedReplacementSkeletonCocone H) (realizedReplacementSkeletonIsColimit H)
     (realizedReplacementSkeletonCocone J) (realizedReplacementSkeletonIsColimit J)
-    (realizedReplacementSkeleton_closedEmbeddings H) (realizedReplacementSkeleton_closedEmbeddings J)
+    (realizedReplacementSkeleton_closedEmbeddings H) (realizedReplacementSkeleton_closedEmbeddings
+      J)
     k hstage
 
 end Quillen.TheoremB

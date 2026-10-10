@@ -1,9 +1,17 @@
-import Quillen.Topology.Realization.EdgewiseSimplex
-import Quillen.Topology.Realization.EdgewiseCellular
-import Quillen.Topology.ClassifyingSpace.Equivalence
-import Mathlib.CategoryTheory.Limits.Preserves.FunctorCategory
-import Mathlib.CategoryTheory.Limits.FunctorCategory.EpiMono
-import Mathlib.CategoryTheory.Limits.Preorder
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.EdgewiseSimplex
+public import Quillen.Topology.Realization.EdgewiseCellular
+public import Quillen.Topology.ClassifyingSpace.Equivalence
+public import Mathlib.CategoryTheory.Limits.Preserves.FunctorCategory
+public import Mathlib.CategoryTheory.Limits.FunctorCategory.EpiMono
+public import Mathlib.CategoryTheory.Limits.Preorder
 
 /-!
 # The canonical realization equivalence for edgewise subdivision
@@ -13,6 +21,7 @@ simplicial set realizes to a homotopy equivalence. The proof contracts the
 subdivision of each standard simplex, then glues along the actual simplicial
 skeletal cell complex. No realization comparison is assumed as an input.
 -/
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits Opposite
@@ -96,7 +105,7 @@ theorem realizationHomotopyEquiv_naturality {X Y : SSet.{u}} (f : X ⟶ Y) :
   exact congrArg TopCat.Hom.hom (realization_naturality endpointNatTrans f)
 
 /-- The forward equivalence sends every subdivided vertex to its endpoint vertex. -/
-@[simp] theorem realizationHomotopyEquiv_point (X : SSet.{u})
+theorem realizationHomotopyEquiv_point (X : SSet.{u})
     (x : (subdivision X) _⦋0⦌) :
     realizationHomotopyEquiv X (realizationPoint x) =
       realizationPoint ((endpoint X).app _ x) :=
@@ -120,7 +129,7 @@ def vertex {X : SSet.{u}} (x : X _⦋0⦌) : (subdivision X) _⦋0⦌ := X.σ 0 
   exact X.δ_comp_σ_self_apply 0 x
 
 /-- The canonical forward equivalence preserves the original chosen vertex. -/
-@[simp] theorem realizationHomotopyEquiv_vertex {X : SSet.{u}} (x : X _⦋0⦌) :
+theorem realizationHomotopyEquiv_vertex {X : SSet.{u}} (x : X _⦋0⦌) :
     realizationHomotopyEquiv X (realizationPoint (vertex x)) = realizationPoint x := by
   rw [realizationHomotopyEquiv_point, endpoint_vertex]
 

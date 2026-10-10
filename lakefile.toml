@@ -1,16 +1,26 @@
 name = "quillen-k-theory"
-version = "0.2.0"
+version = "0.3.0"
 description = "A Lean library for Quillen K-theory and related mathematics."
 keywords = ["math", "algebraic-k-theory", "category-theory", "topology"]
 homepage = "https://github.com/kangxyz/quillen-k-theory"
 license = "Apache-2.0"
 defaultTargets = ["Quillen"]
+testDriver = "Tests"
+lintDriver = "batteries/runLinter"
+lintDriverArgs = ["Quillen"]
+builtinLint = true
 
 [[lean_lib]]
 name = "Quillen"
+leanOptions = {autoImplicit = false, weak.linter.mathlibStandardSet = true, weak.linter.style.longFile = 1500, warningAsError = true}
 
 [[lean_lib]]
 name = "Tests"
+
+[[lean_exe]]
+name = "lint-style"
+root = "Tools.LintStyle"
+supportInterpreter = true
 
 [[require]]
 name = "mathlib"

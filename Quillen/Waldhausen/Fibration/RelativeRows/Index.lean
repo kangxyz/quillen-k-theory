@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.SConstruction.Rows.Reindex
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.Reindex
 
 /-! # The actual added-initial-vertex indexing of relative quotient rows
 
@@ -6,6 +14,8 @@ The new ordinal is literally `[n+1]`. Every map fixes the added vertex and
 sends the original vertex `i+1` to `α(i)+1`, so tail restriction commutes
 strictly with every original ordinal map.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial
@@ -48,7 +58,8 @@ def tail : 𝟭 SimplexCategory ⟶ addInitial where
 @[simp] theorem tail_apply (n : SimplexCategory) (i : Fin (n.len + 1)) :
     (tail.app n).toOrderHom i = i.succ := rfl
 
-/-- The first relative object is the actual interval from the added vertex to the first tail vertex. -/
+/-- The first relative object is the actual interval from the added vertex to the first tail
+vertex. -/
 def firstInterval (n : SimplexCategory) : Interval (addInitial.obj n) :=
   interval 0 (0 : Fin (n.len + 1)).succ (Fin.zero_le _)
 

@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Approximation.FunctorialFactorization
-import Mathlib.Algebra.Homology.HomotopyCategory.DegreewiseSplit
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SplitComplexes.FactorizationFunctor
+public import Mathlib.Algebra.Homology.HomotopyCategory.DegreewiseSplit
 
 /-!
 # Joint endpoints of the complex cylinder
@@ -9,6 +17,8 @@ form a degreewise split monomorphism. Its actual cokernel is the shifted
 source. The explicit short exact sequence supplies the joint-endpoint
 cofibration condition in any shift-closed full complex subcategory.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -62,7 +72,6 @@ def jointSequenceSplitting (n : ℤ) :
   id := by
     dsimp [jointSequence]
     simp [jointRetraction, degreeRetraction, jointInclusion, jointProjection, inclusion,
-      mappingCone.triangleRotateShortComplexSplitting,
       biprodX_ext_from_iff, biprodX_ext_to_iff,
       mappingCone.ext_from_iff _ (n + 1) n rfl,
       mappingCone.ext_to_iff _ _ (n + 1) rfl]

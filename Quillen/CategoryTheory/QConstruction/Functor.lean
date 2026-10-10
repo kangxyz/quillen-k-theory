@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.QConstruction.Basic
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Pullbacks
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.QConstruction.Basic
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Pullbacks
 
 /-!
 # Functoriality of the restricted-span Q-construction
@@ -12,6 +20,8 @@ Its composition law uses the canonical pullback comparison isomorphism.
 The selective pullback hypothesis below is explicit. `Quillen.ExactFunctor`
 derives it from additivity and preservation of conflations.
 -/
+@[expose] public section
+
 
 noncomputable section
 

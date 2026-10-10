@@ -1,7 +1,15 @@
-import Quillen.Topology.Realization.PrismCoordinates
-import Quillen.Topology.Realization.Cylinder
-import Quillen.Topology.Realization.Connectivity
-import Mathlib.AlgebraicTopology.SimplicialSet.ProdStdSimplexOne
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.PrismCoordinates
+public import Quillen.Topology.Realization.Cylinder
+public import Quillen.Topology.Realization.Connectivity
+public import Mathlib.AlgebraicTopology.SimplicialSet.ProdStdSimplexOne
 
 /-!
 # Cells of the realized standard prism
@@ -10,6 +18,7 @@ This file constructs the canonical continuous cylinder comparison and the
 realized maximal prism cells. The cells cover the entire realization, and
 adjacent cells agree on their common simplicial face.
 -/
+@[expose] public section
 
 noncomputable section
 
@@ -76,7 +85,6 @@ theorem realizationPrismCell_snd {n : ℕ} (i : Fin (n + 1)) :
   rfl
 
 /-- The first prism coordinate collapses the two copies of the split vertex. -/
-@[simp]
 theorem realizationPrismCoordinates_cell_fst {n : ℕ} (i : Fin (n + 1))
     (v : StdSimplex ℝ (Fin (n + 2))) :
     (realizationPrismCoordinates n (realizationPrismCell.{u} i
@@ -90,7 +98,6 @@ theorem realizationPrismCoordinates_cell_fst {n : ℕ} (i : Fin (n + 1))
   rfl
 
 /-- The second prism coordinate is the total mass above the cut. -/
-@[simp]
 theorem realizationPrismCoordinates_cell_snd {n : ℕ} (i : Fin (n + 1))
     (v : StdSimplex ℝ (Fin (n + 2))) :
     ((realizationPrismCoordinates n (realizationPrismCell.{u} i
@@ -99,6 +106,7 @@ theorem realizationPrismCoordinates_cell_snd {n : ℕ} (i : Fin (n + 1))
     ((realizationPrismCell i ≫ SSet.toTop.map (snd Δ[n] Δ[1])) _)) : ℝ) = _
   rw [realizationPrismCell_snd, SimplexCategory.toTopHomeo_naturality_apply,
     Homeomorph.apply_symm_apply]
+  rw [StdSimplex.homeomorphI_apply_coe]
   change (v.map (SSet.stdSimplex.objMk₁.{u} i.succ.castSucc)).weights 1 = _
   classical
   rw [StdSimplex.weights_map, Finsupp.mapDomain_fintype]

@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.SConstruction.Rows.InitialFlag
-import Quillen.Waldhausen.Approximation.RelativeFlags
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.InitialFlag
+public import Quillen.Waldhausen.Approximation.RelativeFlags
 
 /-! # Actual row lifting by initial flags and quotient descent
 
@@ -14,6 +16,8 @@ factorization to the original quotient rows. The first row map here is not
 asserted to be a Reedy cofibration; that is supplied separately by an honest
 source row factorization.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'
@@ -34,10 +38,11 @@ variable {n : SimplexCategory} (L : WeakFlag W.cof W.weq n.len)
 def completionFlagUnit : L.diagram ⟶
     (initialFlagFunctor W n).obj (completeCofibrationFlag W L.diagram L.cofibration) where
   app i := completionQuotient W L.diagram L.cofibration (interval 0 i (Fin.zero_le _))
-  naturality _ _ f := completionQuotient_naturality W L.diagram L.cofibration
-    ((initialFlagIndex n).map f)
+  naturality _ _ f :=
+    (completionQuotient_comp_map W L.diagram L.cofibration
+      ((initialFlagIndex n).map f)).symm
 
-theorem completionFlagUnit_app_isIso (i : Fin (n.len+1)) :
+theorem completionFlagUnit_app_isIso (i : Fin (n.len + 1)) :
     IsIso ((completionFlagUnit W L).app i) := by
   let hzero : IsIso (W.isZero.from_ (L.diagram.obj (interval 0 i (Fin.zero_le _)).val.1)) :=
     L.zero.isIso W.isZero _
@@ -47,12 +52,12 @@ theorem completionFlagUnit_app_isIso (i : Fin (n.len+1)) :
 /-- The comparison is an actual natural isomorphism of original flags. -/
 def completionFlagIso : L.diagram ≅
     (initialFlagFunctor W n).obj (completeCofibrationFlag W L.diagram L.cofibration) := by
-  letI (i : Fin (n.len+1)) : IsIso ((completionFlagUnit W L).app i) :=
+  letI (i : Fin (n.len + 1)) : IsIso ((completionFlagUnit W L).app i) :=
     completionFlagUnit_app_isIso W L i
   exact NatIso.ofComponents (fun i ↦ asIso ((completionFlagUnit W L).app i))
     (fun f ↦ (completionFlagUnit W L).naturality f)
 
-@[simp] theorem completionFlagIso_hom_app (i : Fin (n.len+1)) :
+@[simp] theorem completionFlagIso_hom_app (i : Fin (n.len + 1)) :
     (completionFlagIso W L).hom.app i =
       completionQuotient W L.diagram L.cofibration (interval 0 i (Fin.zero_le _)) := rfl
 
@@ -111,7 +116,8 @@ theorem rowLift_factorization :
   simp only [rowLiftInclusion, rowLiftProjection, extendInitialFlagMap,
     ObjectProperty.homMk_hom, extendInitialFlagAt_initial, NatTrans.comp_app,
     Functor.whiskerRight_app, F.map_comp]
-  rw [Category.assoc, ← Category.assoc (F.map ((completionFlagIso W (rowLiftFlag h hF α)).hom.app i)),
+  rw [Category.assoc, ← Category.assoc (F.map ((completionFlagIso W (rowLiftFlag h hF
+    α)).hom.app i)),
     ← F.map_comp, Iso.hom_inv_id_app, F.map_id, Category.id_comp]
   exact congrArg (fun a ↦ a.app i)
     (relativeFlag_factorization h hF (initialWeakFlag W A) (initialWeakFlag V B)

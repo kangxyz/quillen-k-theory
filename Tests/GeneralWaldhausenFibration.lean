@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Waldhausen.GilletWaldhausen.GeneralComparison
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.GeneralComparison
 
 /-! Genuine mixed-universe consumers of the unchanged original maps. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -42,7 +46,7 @@ example (y : (boundedTermsNested P).coarse.K 0) :
   exact ⟨x, hx, fun z hz ↦ h.injective (hz.trans hx.symm)⟩
 
 example (n : ℕ) :
-    (boundedTermsSingle_coarse_KEquiv_general P n).toMonoidHom =
+    (boundedTermsSingleCoarseKEquivGeneral P n).toMonoidHom =
       KMap (boundedTermsSingle_coarseExact P 0) n :=
-  boundedTermsSingle_coarse_KEquiv_general_toMonoidHom P n
+  boundedTermsSingleCoarseKEquivGeneral_coe P n
 end Quillen.Waldhausen.GilletWaldhausen

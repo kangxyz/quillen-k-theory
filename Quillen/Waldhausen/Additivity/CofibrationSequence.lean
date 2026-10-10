@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Additivity.CofiberEndpoint
-import Quillen.Waldhausen.Additivity.PushoutCofibrations
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.CofiberEndpoint
+public import Quillen.Waldhausen.Additivity.PushoutCofibrations
 
 /-! # Genuine cofibration sequences of exact functors
 
@@ -8,6 +16,8 @@ cofibration condition. They contain no K-theory or realization assertion.
 The zero-arrow endpoint of the deformation is identified naturally with
 the coproduct of the quotient and subobject functors.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -23,13 +33,13 @@ variable (V : Structure C) (W : Structure D)
 /-- The canonical zero map through the chosen zero object. -/
 def zeroMorphism (X Y : C) : X ⟶ Y := V.isZero.from_ X ≫ V.isZero.to_ Y
 
-@[reassoc (attr := simp)]
+@[simp, reassoc]
 theorem comp_zeroMorphism {X Y Z : C} (f : X ⟶ Y) :
     f ≫ zeroMorphism V Y Z = zeroMorphism V X Z := by
   dsimp [zeroMorphism]
   rw [← Category.assoc, V.isZero.eq_of_tgt (f ≫ V.isZero.from_ Y) (V.isZero.from_ X)]
 
-@[reassoc (attr := simp)]
+@[simp, reassoc]
 theorem zeroMorphism_comp {X Y Z : C} (f : Y ⟶ Z) :
     zeroMorphism V X Y ≫ f = zeroMorphism V X Z := by
   dsimp [zeroMorphism]

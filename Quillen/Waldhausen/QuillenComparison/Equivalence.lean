@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.QuillenComparison.RowEssentialSurjective
-import Quillen.Waldhausen.QuillenComparison.Factorization
-import Quillen.Waldhausen.QuillenComparison.ComparisonHom
-import Quillen.Topology.Realization.BisimplicialEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.RowEssentialSurjective
+public import Quillen.Waldhausen.QuillenComparison.Factorization
+public import Quillen.Waldhausen.QuillenComparison.ComparisonHom
+public import Quillen.Topology.Realization.BisimplicialEquivalence
 
 /-! # The canonical exact-category Q/S equivalence
 
@@ -12,6 +20,8 @@ diagonal contraction then prove that the prescribed Q/S map realizes to a
 homotopy equivalence. Both sides of its based zigzag retain the chosen zero
 vertices, giving the canonical isomorphism on the already-defined K-groups.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -77,7 +87,6 @@ def realizationComparisonHomotopyEquiv :
 theorem realizationComparisonHomotopyEquiv_toFun :
     (realizationComparisonHomotopyEquiv E).toFun = (realizationComparison E).hom := rfl
 
-@[simp]
 theorem realizationComparisonHomotopyEquiv_basepoint :
     realizationComparisonHomotopyEquiv E (subdivisionBasepoint E) = E.kBasepoint :=
   realizationComparison_basepoint E
@@ -95,9 +104,11 @@ def subdivisionComparisonKEquiv (n : ℕ) : SubdivisionK E n ≃* E.K n :=
   homotopyEquivPiEquiv (realizationComparisonHomotopyEquiv E)
     (realizationComparison_basepoint E) n
 
-@[simp]
-theorem subdivisionComparisonKEquiv_toMonoidHom (n : ℕ) :
-    (subdivisionComparisonKEquiv E n).toMonoidHom = subdivisionComparisonK E n := rfl
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem subdivisionComparisonKEquiv_coe (n : ℕ) :
+    (↑(subdivisionComparisonKEquiv E n) : SubdivisionK E n →* E.K n) = subdivisionComparisonK E
+        n := rfl
+
 
 /-- The canonical comparison between the already-defined Waldhausen and
 Quillen K-groups, with no equivalence hypothesis among its inputs. -/
@@ -105,8 +116,8 @@ def comparisonKEquiv (n : ℕ) : (ofExactCategory E).K n ≃* E.K n :=
   (subdivisionKEquiv E n).symm.trans (subdivisionComparisonKEquiv E n)
 
 /-- Its underlying map is exactly the previously constructed canonical comparison. -/
-@[simp]
-theorem comparisonKEquiv_toMonoidHom (n : ℕ) :
-    (comparisonKEquiv E n).toMonoidHom = comparisonK E n := rfl
+@[simp] theorem comparisonKEquiv_coe (n : ℕ) :
+    (↑(comparisonKEquiv E n) : (ofExactCategory E).K n →* E.K n) = comparisonK E n := rfl
+
 
 end Quillen.Waldhausen.QuillenComparison

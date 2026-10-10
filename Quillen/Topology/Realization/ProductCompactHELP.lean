@@ -1,5 +1,13 @@
-import Quillen.Topology.Realization.ProductComparison
-import Quillen.Topology.HELP.CompactLifting
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.ProductComparison
+public import Quillen.Topology.HELP.CompactLifting
 
 /-! # Genuine compact HELP for the canonical realization-product map
 
@@ -7,6 +15,8 @@ The exact finite-right-support construction works in every source universe.
 It gives compact HELP, with the entire prescribed boundary homotopy preserved,
 for the original comparison. No unrestricted product homeomorphism is claimed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

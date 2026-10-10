@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianOne
-import Quillen.CategoryTheory.TheoremB.CartesianPushout
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianOne
+public import Quillen.Topology.HomotopyPullback.Pushout
 
 /-!
 # Characteristic charts into actual replacement restrictions
@@ -10,6 +18,8 @@ retain the first-vertex transport in the coefficient. Eilenberg–Zilber then
 reduces arbitrary charts to unique nondegenerate charts through an invertible
 coefficient transition.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
@@ -17,7 +27,7 @@ universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
 
@@ -137,4 +147,4 @@ theorem exists_nondegenerate_in_restriction (A : (nerve D).Subcomplex)
   change (nerve D).map hsec.section_.op ((nerve D).map α.op t.1) ∈ A.obj (op ⦋k⦌) at hh
   simpa only [heq] using hh
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

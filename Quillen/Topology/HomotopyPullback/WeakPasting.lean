@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyPullback.WeakSource
-import Quillen.CategoryTheory.TheoremB.HomotopyPullbackPasting
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyPullback.WeakSource
+public import Quillen.Topology.HomotopyPullback.Pasting
 
 /-! # Pasting original weak-cartesian squares
 
@@ -7,6 +15,8 @@ The prescribed outer comparison factors through the original nested
 comparison. Uniform weak source change and the actual nested-pullback
 homotopy equivalence then give the complete weak conclusion by cancellation.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -16,8 +26,8 @@ namespace Quillen.HomotopyPullback
 variable {X₀ X₁ X₂ B₀ B₁ B₂ : Type u}
   [TopologicalSpace X₀] [TopologicalSpace X₁] [TopologicalSpace X₂]
   [TopologicalSpace B₀] [TopologicalSpace B₁] [TopologicalSpace B₂]
-  (p₀ : C(X₀,B₀)) (p₁ : C(X₁,B₁)) (p₂ : C(X₂,B₂))
-  (a : C(X₀,X₁)) (a' : C(X₁,X₂)) (b : C(B₀,B₁)) (b' : C(B₁,B₂))
+  (p₀ : C(X₀, B₀)) (p₁ : C(X₁, B₁)) (p₂ : C(X₂, B₂))
+  (a : C(X₀, X₁)) (a' : C(X₁, X₂)) (b : C(B₀, B₁)) (b' : C(B₁, B₂))
   (w : p₁.comp a = b.comp p₀) (w' : p₂.comp a' = b'.comp p₁)
 
 /-- The actual nested-coordinate map carries the original outer comparison

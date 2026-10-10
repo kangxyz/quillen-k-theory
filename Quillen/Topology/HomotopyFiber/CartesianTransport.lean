@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.HomotopyFiber.StrictWeakTransport
-import Quillen.CategoryTheory.TheoremB.MappingPathFunctor
+module
+
+public import Quillen.Topology.HomotopyFiber.StrictWeakTransport
+public import Quillen.Topology.MappingPath.Map
 
 /-!
 # Actual homotopy fibers of a weakly cartesian square
@@ -15,6 +17,8 @@ functorial mapping-path strict comparison weak. The two endpoint projections
 are genuine fibrations, so their actual strict fibers give the unchanged
 original homotopy-fiber map. No weakness of the map on bases is required.
 -/
+@[expose] public section
+
 
 noncomputable section
 open scoped Topology
@@ -27,7 +31,7 @@ namespace MappingPath
 
 variable {X Y A B : Type u} [TopologicalSpace X] [TopologicalSpace Y]
   [TopologicalSpace A] [TopologicalSpace B]
-  {p : C(X,A)} {q : C(Y,B)} (u : C(X,Y)) (v : C(A,B))
+  {p : C(X, A)} {q : C(Y, B)} (u : C(X, Y)) (v : C(A, B))
   (w : q.comp u = v.comp p)
 
 /-- A weakly cartesian square becomes the actual weak comparison to the
@@ -51,12 +55,12 @@ namespace HomotopyFiber
 
 variable {X Y A B : Type u} [TopologicalSpace X] [TopologicalSpace Y]
   [TopologicalSpace A] [TopologicalSpace B]
-  {p : C(X,A)} {q : C(Y,B)}
+  {p : C(X, A)} {q : C(Y, B)}
 
 /-- The original fiber map of a weakly cartesian square is weak over every
 point of the original base, retaining the source point and complete path. -/
 theorem map_isWeakHomotopyEquivalence_of_comparison
-    (u : C(X,Y)) (v : C(A,B)) (sq : v.comp p = q.comp u)
+    (u : C(X, Y)) (v : C(A, B)) (sq : v.comp p = q.comp u)
     (h : IsWeakHomotopyEquivalence (HomotopyPullback.comparison q v p u sq.symm))
     (a : A) : IsWeakHomotopyEquivalence (map u v sq a) := by
   let e₁ := (MappingPath.endpointFiberHomeomorph p a).symm

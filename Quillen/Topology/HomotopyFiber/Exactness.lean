@@ -1,4 +1,12 @@
-import Quillen.Topology.HomotopyFiber.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.Basic
 
 /-!
 # Exactness at the source of a map
@@ -12,6 +20,8 @@ image under `f` is nullhomotopic relative to its boundary lifts to the homotopy
 fiber by taking the nullhomotopy paths as its second coordinates. No fibration,
 long-exact-sequence, or localization theorem is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 

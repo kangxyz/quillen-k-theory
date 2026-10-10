@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.DerivedPullbackFunctor
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPullbackFunctor
 
 /-! # Consumers of original perfect derived K-pullback
 
@@ -11,6 +13,8 @@ Arbitrary morphisms of quasi-compact schemes require no flatness hypothesis.
 These tests use actual bounded-flat representatives, uniqueness, composition,
 and the unchanged original comparison maps, including degree zero.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.PerfectComplexes

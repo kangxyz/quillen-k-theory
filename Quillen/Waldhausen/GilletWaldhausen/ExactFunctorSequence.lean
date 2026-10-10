@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Additivity.CofibrationSequence
-import Quillen.Waldhausen.ExactFunctor
-import Quillen.Waldhausen.QuillenComparison.PullbackQuotients
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.CofibrationSequence
+public import Quillen.Waldhausen.ExactFunctor
+public import Quillen.Waldhausen.QuillenComparison.PullbackQuotients
 
 /-!
 # Actual conflation sequences of exact functors are cofibration sequences
@@ -11,6 +19,8 @@ kernel as the target; its comparison is the pullback of an admissible
 inclusion along an admissible epimorphism. No additivity conclusion occurs
 among the hypotheses.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

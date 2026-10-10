@@ -1,5 +1,13 @@
-import Quillen.Topology.Realization.EdgePathPresentation.Basic
-import Quillen.Topology.Realization.SimplexBoundary
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.EdgePathPresentation.Basic
+public import Quillen.Topology.Realization.SimplexBoundary
 
 /-!
 # A genuine open collar of the geometric simplex boundary
@@ -10,6 +18,8 @@ boundary, fixes the boundary at all times, and stays in the neighborhood.
 This is the local geometric input for skeletal path approximation; unlike the
 closed image of a characteristic simplex, the collar really is open.
 -/
+@[expose] public section
+
 
 noncomputable section
 

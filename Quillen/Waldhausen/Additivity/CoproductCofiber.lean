@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Additivity.SplitSequence
-import Quillen.Waldhausen.ExtensionCategory.Product
+module
+
+public import Quillen.Waldhausen.Additivity.SplitSequence
+public import Quillen.Waldhausen.ExtensionCategory.Product
 
 /-! # Actual coproducts of displayed cofiber sequences
 
@@ -12,6 +14,8 @@ The original product pushout and the proved exact sum functor supply the
 actual coproduct cofiber square. Only the genuine original cofibrations and
 original cofiber squares are inputs; no global pushout preservation is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

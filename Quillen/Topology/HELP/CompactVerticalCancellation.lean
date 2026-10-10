@@ -1,5 +1,13 @@
-import Quillen.Topology.HELP.CancelSecond
-import Quillen.Topology.HomotopyLifting.Compact.OverBaseCorrection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.CancelSecond
+public import Quillen.Topology.HomotopyLifting.Compact.OverBaseCorrection
 
 /-! # Full relative homotopy lifting through an actual compact HELP map
 
@@ -7,6 +15,8 @@ The ordinary HELP map lifts the genuine side-and-caps cylinder boundary.
 Compact-parameter base correction keeps that entire boundary literally fixed.
 No strict-fiber equivalence or inverse family is an input.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -19,7 +29,7 @@ open TheoremA
 /-- The product duration vanishes on exactly the whole original cylinder
 boundary, including both caps and every side point. -/
 theorem cylinderBoundary_duration_zero_iff {A D : TopCat.{u}} (i : A ⟶ D)
-    (d : C(D,unitInterval)) (hd : ∀ x,d x = 0 ↔ x ∈ Set.range i)
+    (d : C(D, unitInterval)) (hd : ∀ x, d x = 0 ↔ x ∈ Set.range i)
     (z : D × unitInterval) :
     (d z.1 * z.2) * unitInterval.symm z.2 = 0 ↔ z ∈ Set.range (cylinderBoundaryMap i) := by
   have hside (a : A) (t : unitInterval) :
@@ -63,15 +73,15 @@ theorem cylinderBoundary_duration_zero_iff {A D : TopCat.{u}} (i : A ⟶ D)
 coordinate and the exact prescribed side and both endpoint maps. -/
 theorem compact_vertical_homotopy_lift
     {Y Z B : Type u} [TopologicalSpace Y] [TopologicalSpace Z] [TopologicalSpace B]
-    (p : C(Y,B)) (q : C(Z,B)) (g : C(Y,Z)) (sq : q.comp g = p)
+    (p : C(Y, B)) (q : C(Z, B)) (g : C(Y, Z)) (sq : q.comp g = p)
     (hp : CompactHomotopyLiftingProperty p) (hq : CompactHomotopyLiftingProperty q)
     (hg : CompactHomotopyExtensionLiftingProperty g)
     (A D : TopCat.{u}) [CompactSpace A] [CompactSpace D] [LocallyCompactSpace D]
     (i : A ⟶ D) (hi : homotopyExtensionProperty i)
-    (duration : C(D,unitInterval)) (hzero : ∀ x,duration x = 0 ↔ x ∈ Set.range i)
-    (U V : C(D,Y)) (H : (U.comp i.hom).Homotopy (V.comp i.hom))
+    (duration : C(D, unitInterval)) (hzero : ∀ x, duration x = 0 ↔ x ∈ Set.range i)
+    (U V : C(D, Y)) (H : (U.comp i.hom).Homotopy (V.comp i.hom))
     (K : (g.comp U).Homotopy (g.comp V))
-    (hK : HomotopyOver (p.comp V) q K) (hside : ∀ t a,K (t,i a) = g (H (t,a))) :
+    (hK : HomotopyOver (p.comp V) q K) (hside : ∀ t a, K (t, i a) = g (H (t, a))) :
     ∃ L : U.Homotopy V,HomotopyOver (p.comp V) p L ∧ ∀ t a,L (t,i a) = H (t,a) := by
   let S : TopCat.of (A × unitInterval) ⟶ TopCat.of Y :=
     TopCat.ofHom ⟨fun z ↦ H (z.2,z.1),by fun_prop⟩
@@ -102,7 +112,8 @@ theorem compact_vertical_homotopy_lift
     (cylinderBoundaryMap i) (homotopyExtensionProperty_cylinderBoundaryMap i hi) a.hom k hw
   let d : C(D × unitInterval,unitInterval) :=
     ⟨fun z ↦ (duration z.1 * z.2) * unitInterval.symm z.2,by fun_prop⟩
-  obtain ⟨l',hbase,hfix,_,_,_⟩ := compact_correct_comparison_over_fixed_zero p q g sq hp hq l k J.toHomotopy d (by
+  obtain ⟨l',hbase,hfix,_,_,_⟩ := compact_correct_comparison_over_fixed_zero p q g sq hp hq l k
+    J.toHomotopy d (by
     intro z hz t
     exact J.prop t z ((cylinderBoundary_duration_zero_iff i duration hzero z).mp hz))
   have hb : ∀ x,l' (cylinderBoundaryMap i x) = a x := by

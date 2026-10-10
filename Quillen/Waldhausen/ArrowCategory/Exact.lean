@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.ArrowCategory.Structure
+module
+
+public import Quillen.Waldhausen.ArrowCategory.Structure
 
 /-! # Exact functors on the genuine arrow Waldhausen category -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'
@@ -16,7 +20,8 @@ namespace ArrowCategory
 variable {C : Type u} [Category.{v} C] {D : Type u'} [Category.{v'} D]
   (V : Structure C) (W : Structure D) {F : C ⥤ D}
 
-theorem isZero_of_components (X : Arrow D) (hl : IsZero X.left) (hr : IsZero X.right) : IsZero X where
+theorem isZero_of_components (X : Arrow D) (hl : IsZero X.left) (hr : IsZero X.right) : IsZero X
+    where
   unique_to Y := by
     refine ⟨{ default := Arrow.homMk (hl.to_ _) (hr.to_ _) (hl.eq_of_src _ _), uniq := ?_ }⟩
     intro f

@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremB.Resolution
-import Quillen.Topology.HomotopyFiber.SourceEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.Resolution
+public import Quillen.Topology.HomotopyFiber.SourceEquivalence
 
 /-!
 # The resolved and original homotopy fibers are genuinely equivalent
@@ -10,6 +18,8 @@ equivalence from the resolved target fiber to the fiber of `|N F|`.
 We identify the comma comparison under this equivalence up to an actual
 continuous homotopy, obtained by removing a constant terminal path segment.
 -/
+@[expose] public section
+
 
 noncomputable section
 

@@ -1,11 +1,21 @@
-import Quillen.Topology.Realization.ProductCompactHELP
-import Quillen.Topology.Realization.SplitFiber
-import Quillen.Topology.HomotopyFiber.CompactHELP
-import Quillen.Topology.HELP.Composition
-import Quillen.Topology.HELP.HomotopyEquiv
-import Quillen.Topology.HomotopyGroups.ZeroDetection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.ProductCompactHELP
+public import Quillen.Topology.Realization.SplitFiber
+public import Quillen.Topology.HomotopyFiber.CompactHELP
+public import Quillen.Topology.HELP.Composition
+public import Quillen.Topology.HELP.HomotopyEquiv
+public import Quillen.Topology.HomotopyGroups.ZeroDetection
 
 /-! # Compact HELP and connectedness of actual product-type row fibers -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

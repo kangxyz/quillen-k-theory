@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyFiber.WeakFibers
-import Quillen.Topology.HomotopyGroups.ComponentCriterion
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.WeakFibers
+public import Quillen.Topology.HomotopyGroups.ComponentCriterion
 
 /-! # Weak equivalences detected by all actual homotopy fibers
 
@@ -7,6 +15,8 @@ Nonemptiness is explicit, so this criterion covers empty spaces correctly.
 The component proof uses actual paths in the actual homotopy fiber; positive
 degrees use the original long exact sequence.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -33,7 +43,8 @@ theorem isWeakHomotopyEquivalence_of_fibers (f : C(X, Y))
     let b := basepoint f (f x₁) x₁ rfl
     let := hsub (f x₁) a 0
     let : Subsingleton (ZerothHomotopy (HomotopyFiber f (f x₁))) :=
-      (HomotopyGroup.pi0EquivZerothHomotopy (X := HomotopyFiber f (f x₁)) (x := a)).symm.injective.subsingleton
+      (HomotopyGroup.pi0EquivZerothHomotopy (X := HomotopyFiber f (f x₁)) (x :=
+        a)).symm.injective.subsingleton
     let : PathConnectedSpace (HomotopyFiber f (f x₁)) :=
       pathConnectedSpace_iff_zerothHomotopy.2 ⟨⟨ZerothHomotopy.mk a⟩, inferInstance⟩
     exact (PathConnectedSpace.joined a b).map (projection f (f x₁)).continuous

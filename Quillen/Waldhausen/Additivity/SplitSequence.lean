@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Additivity.CofibrationSequence
-import Quillen.Waldhausen.Additivity.CoproductAlgebra
-import Quillen.Waldhausen.Additivity.PushoutInterchange
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.CofibrationSequence
+public import Quillen.Waldhausen.Additivity.CoproductAlgebra
+public import Quillen.Waldhausen.Additivity.PushoutInterchange
 
 /-! # The actual split cofibration sequence of exact functors
 
@@ -8,6 +16,8 @@ The split sequence has middle functor `H ⨿ F`, subobject inclusion from `F`,
 and quotient `H`. Its relative cofibration condition is proved using an
 actual pushout identification and cobase change, rather than assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -102,7 +112,8 @@ theorem splitRelative_comparison (f : Arrow C) :
       (splitRelativeIso W f).hom ≫ coprod.map (H.map f.hom) (𝟙 (F.obj f.right)) := by
   let ha := fun X ↦ coprod_inr_cof W (H.obj X) (F.obj X)
   have hs := (coprod_map_right_isPushout W (H.obj f.left) (F.map f.hom)).flip
-  let : HasPushout (coprod.inr : F.obj f.left ⟶ H.obj f.left ⨿ F.obj f.left) (F.map f.hom) := hs.hasPushout
+  let : HasPushout (coprod.inr : F.obj f.left ⟶ H.obj f.left ⨿ F.obj f.left) (F.map f.hom) :=
+    hs.hasPushout
   apply (pushoutFunctor_isPushout W (sumInr H F) ha f).hom_ext
   · rw [sourceι_comparison]
     change coprod.map (H.map f.hom) (F.map f.hom) =

@@ -1,5 +1,13 @@
-import Quillen.Topology.CubicalSubdivision.FaceBoundaryTopology
-import Quillen.Topology.CubicalSubdivision.Walls
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.FaceBoundaryTopology
+public import Quillen.Topology.CubicalSubdivision.Walls
 
 /-! # Literal finite cube-boundary lifting and its face-coordinate adapter
 
@@ -7,6 +15,8 @@ The lifting condition uses the original unlifted cube coordinates and permits
 independent source/target universes. Genuine TopCat lifting in any common
 universe implies it by the actual ULift coordinate maps.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 open scoped Topology unitInterval
@@ -16,7 +26,7 @@ universe u v
 /-- Strict right lifting against every actual finite cube boundary, stated
 in original coordinates without a universe restriction on the target. -/
 def BoundaryLifting {E : Type u} {B : Type v} [TopologicalSpace E] [TopologicalSpace B]
-    (p : C(E,B)) : Prop :=
+    (p : C(E, B)) : Prop :=
   ∀ (n : ℕ) (a : C(Boundary n,E)) (b : C(Cube n,B)),
     (∀ t : Boundary n,p (a t) = b t) →
       ∃ c : C(Cube n,E), (∀ t : Boundary n,c t = a t) ∧ p.comp c = b
@@ -24,8 +34,8 @@ def BoundaryLifting {E : Type u} {B : Type v} [TopologicalSpace E] [TopologicalS
 /-- Actual lifted-boundary RLP supplies the original-coordinate condition;
 only the cube and boundary parameters are universe-lifted. -/
 theorem boundaryLifting_of_hasLiftingProperty
-    {E B : Type u} [TopologicalSpace E] [TopologicalSpace B] (p : C(E,B))
-    (hp : ∀ n,HasLiftingProperty (CubicalTests.boundaryInclusion.{u} n) (TopCat.ofHom p)) :
+    {E B : Type u} [TopologicalSpace E] [TopologicalSpace B] (p : C(E, B))
+    (hp : ∀ n, HasLiftingProperty (CubicalTests.boundaryInclusion.{u} n) (TopCat.ofHom p)) :
     BoundaryLifting p := by
   intro n a b hab
   let a' : TopCat.of (CubicalTests.boundary.{u} n) ⟶ TopCat.of E :=
@@ -70,10 +80,10 @@ def faceParamBoundaryHomeomorph {n m : ℕ} (F : FaceIndex n m) :
 /-- Strict finite boundary lifting applies to every actual face parameter
 space, preserving its entire original boundary map. -/
 theorem BoundaryLifting.face {E : Type u} {B : Type v} [TopologicalSpace E] [TopologicalSpace B]
-    {p : C(E,B)} (hp : BoundaryLifting p) {n m : ℕ} (F : FaceIndex n m)
-    (a : C({t : Active F → unitInterval // t ∈ _root_.Cube.boundary (Active F)},E))
-    (b : C((Active F → unitInterval),B))
-    (hab : ∀ t,p (a t) = b t) :
+    {p : C(E, B)} (hp : BoundaryLifting p) {n m : ℕ} (F : FaceIndex n m)
+    (a : C({t : Active F → unitInterval // t ∈ _root_.Cube.boundary (Active F)}, E))
+    (b : C((Active F → unitInterval), B))
+    (hab : ∀ t, p (a t) = b t) :
     ∃ c : C((Active F → unitInterval),E),
       (∀ t : {t : Active F → unitInterval // t ∈ _root_.Cube.boundary (Active F)},c t = a t) ∧
         p.comp c = b := by

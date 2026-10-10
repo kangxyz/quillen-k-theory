@@ -1,4 +1,12 @@
-import Quillen.KTheory.Map.CoherenceData
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.Map.CoherenceData
 
 /-!
 # Naturality of admissible-span representatives
@@ -7,6 +15,8 @@ Commuting isomorphisms of a span and its endpoints induce the expected
 commuting square in the existing Q-category. This is used for the vertical
 isomorphism direction of the exact-category S-construction.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

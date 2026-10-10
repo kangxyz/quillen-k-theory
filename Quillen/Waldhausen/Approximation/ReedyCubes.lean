@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.ReedyReplacement
-import Mathlib.CategoryTheory.Category.Cat
+module
+
+public import Quillen.Waldhausen.Approximation.ReedyReplacement
+public import Mathlib.CategoryTheory.Category.Cat
 
 /-!
 # Finite iteration of genuine Reedy-arrow constructions
@@ -15,6 +17,8 @@ factorization, exact original functors, and their App1/App2 properties transfer
 by finite recursion, without any new diagram-filling or functorial-App2 premise.
 The model is bundled only to express dependent finite iteration in Lean.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -26,8 +30,10 @@ namespace Quillen.Waldhausen
 
 /-- A bundled small Waldhausen category, used for finite dependent recursion. -/
 structure ReedyCubeModel where
+  /-- The type of objects of the small category on which the Reedy construction is iterated. -/
   carrier : Type u
   [category : SmallCategory carrier]
+  /-- The Waldhausen structure on the bundled small category. -/
   waldhausen : Structure carrier
 
 attribute [instance] ReedyCubeModel.category
@@ -41,6 +47,8 @@ def next (M : ReedyCubeModel.{u}) : ReedyCubeModel.{u} where
 
 /-- Exact comparison data retain the original functor and both structures. -/
 structure ExactMap (M : ReedyCubeModel.{u}) (N : ReedyCubeModel.{u'}) where
+  /-- The functor between the two bundled categories, with preservation of the displayed
+  cofibration and weak-equivalence classes recorded by `exact`. -/
   functor : M.carrier ⥤ N.carrier
   exact : IsExact M.waldhausen.cof M.waldhausen.weq N.waldhausen.cof N.waldhausen.weq functor
 

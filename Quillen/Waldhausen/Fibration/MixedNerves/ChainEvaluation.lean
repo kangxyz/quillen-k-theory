@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.DiagonalEvaluation
-import Quillen.Waldhausen.Fibration.MixedNerves.PostcomposeNerves
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.DiagonalEvaluation
+public import Quillen.Waldhausen.Fibration.MixedNerves.PostcomposeNerves
 
 /-! # Prescribed evaluation in the original mixed-chain presentation
 
@@ -8,6 +16,8 @@ original coarse chains. Its exact forward map is a genuine realization
 homotopy equivalence. Naturality retains actual compatible base functors;
 the diagonal arrow comparison uses their proved composition law.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial Topology
@@ -24,12 +34,12 @@ def coarseChainEvaluation : TheoremA.diagonalSSet (coarseChainNerve N) ⟶
   (coarseDiagonalIso N).hom ≫ diagonalEvaluation N
 
 @[simp] theorem coarseChainEvaluation_obj (k : SimplexCategory)
-    (F : ComposableArrows (FineWeakCoarseChains N k) k.len) (i : Fin (k.len+1)) :
+    (F : ComposableArrows (FineWeakCoarseChains N k) k.len) (i : Fin (k.len + 1)) :
     (((coarseChainEvaluation N).app (op k) F).obj i).obj = (F.obj i).obj.obj.obj i := rfl
 
 /-- The exact original coarse arrow is followed by the original fine component. -/
 @[simp] theorem coarseChainEvaluation_map (k : SimplexCategory)
-    (F : ComposableArrows (FineWeakCoarseChains N k) k.len) {i j : Fin (k.len+1)} (f : i ⟶ j) :
+    (F : ComposableArrows (FineWeakCoarseChains N k) k.len) {i j : Fin (k.len + 1)} (f : i ⟶ j) :
     (((coarseChainEvaluation N).app (op k) F).map f).hom =
       (F.obj i).obj.obj.map f ≫ (F.map f).hom.hom.app j := rfl
 

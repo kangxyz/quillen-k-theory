@@ -1,6 +1,14 @@
-import Quillen.Topology.HomotopyFiber.GroupDetection
-import Quillen.Topology.HomotopyGroups.ZeroDetection
-import Quillen.Topology.HomotopyGroups.PathTransport
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.GroupDetection
+public import Quillen.Topology.HomotopyGroups.ZeroDetection
+public import Quillen.Topology.HomotopyGroups.PathTransport
 
 /-! # All-degree fiber detection over a common base
 
@@ -8,6 +16,8 @@ The positive-degree argument is the actual long exact sequence. Genuine
 path connectedness handles dimension zero and transports the resulting
 bijections to every source point. No inverse family is selected.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

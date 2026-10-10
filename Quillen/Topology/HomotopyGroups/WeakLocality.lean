@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.CubicalSubdivision.ControlledWeakCharts
-import Quillen.Topology.CubicalSubdivision.LocalLifting
-import Quillen.Topology.HELP.StrictFiniteCriterion
+module
+
+public import Quillen.Topology.CubicalSubdivision.ControlledWeakCharts
+public import Quillen.Topology.CubicalSubdivision.LocalLifting
+public import Quillen.Topology.HELP.StrictFiniteCriterion
 
 /-! # Ordinary weak equivalences from genuine open target charts
 
@@ -15,6 +17,8 @@ charts. This includes the overlap in the two-open theorem. Ordinary mapping
 paths are controlled throughout their complete tracks before finite face
 pasting, so endpoint-only restriction is never used.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -26,7 +30,7 @@ variable {E B : Type u} [TopologicalSpace E] [TopologicalSpace B]
 
 /-- Removing the vacuous source constraints identifies the actual controlled
 chart map with the original pullback restriction, retaining its forward map. -/
-theorem controlledChartMap_univ_isWeakHomotopyEquivalence (p : C(E,B))
+theorem controlledChartMap_univ_isWeakHomotopyEquivalence (p : C(E, B))
     {J : Type v} (W : J → Set B) (S : Finset J)
     (h : IsWeakHomotopyEquivalence (restriction p {b | ∀ j ∈ S,b ∈ W j})) :
     IsWeakHomotopyEquivalence (controlledChartMap p (fun _ ↦ Set.univ) W S) := by
@@ -43,8 +47,8 @@ theorem controlledChartMap_univ_isWeakHomotopyEquivalence (p : C(E,B))
 /-- The original map is a complete weak homotopy equivalence when its literal
 pullback restrictions are weak on all nonempty finite target-chart intersections.
 Neither openness of source charts nor a global continuous inverse is assumed. -/
-theorem isWeakHomotopyEquivalence_of_open_cover (p : C(E,B))
-    {J : Type v} (W : J → Set B) (hW : ∀ j,IsOpen (W j))
+theorem isWeakHomotopyEquivalence_of_open_cover (p : C(E, B))
+    {J : Type v} (W : J → Set B) (hW : ∀ j, IsOpen (W j))
     (hcover : ∀ b : B,∃ j,b ∈ W j)
     (hloc : ∀ S : Finset J,S.Nonempty →
       IsWeakHomotopyEquivalence (restriction p {b | ∀ j ∈ S,b ∈ W j})) :
@@ -76,7 +80,7 @@ theorem isWeakHomotopyEquivalence_of_open_cover (p : C(E,B))
 
 /-- Two genuine open target charts glue ordinary weak equivalences when the
 literal overlap restriction is also weak. The overlap may be empty. -/
-theorem isWeakHomotopyEquivalence_of_two_open (p : C(E,B))
+theorem isWeakHomotopyEquivalence_of_two_open (p : C(E, B))
     (U V : Set B) (hU : IsOpen U) (hV : IsOpen V)
     (hcover : U ∪ V = Set.univ)
     (h0 : IsWeakHomotopyEquivalence (restriction p U))

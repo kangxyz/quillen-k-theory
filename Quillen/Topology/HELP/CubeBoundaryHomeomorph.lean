@@ -1,4 +1,12 @@
-import Quillen.Topology.HELP.CubeBoundary
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.CubeBoundary
 
 /-! # The canonical presentation is the actual cube boundary
 
@@ -6,6 +14,8 @@ Injectivity is proved using the original side/cap pushout relations. Compactness
 then upgrades the resulting continuous bijection to a homeomorphism with the
 literal boundary subtype. In particular its actual inclusion has HEP.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

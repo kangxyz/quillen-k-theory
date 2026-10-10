@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Fibration.InverseImageWeak
-import Quillen.Waldhausen.WeakArrow.DualStructure
-import Quillen.Waldhausen.WeakArrow.KEquivalence
+module
+
+public import Quillen.Waldhausen.Fibration.InverseImageWeak
+public import Quillen.Waldhausen.WeakArrow.DualStructure
+public import Quillen.Waldhausen.WeakArrow.KEquivalence
 
 /-! # Relative weak classes on the original fine weak-arrow category
 
@@ -13,6 +15,8 @@ The objects remain actual globally weak arrows F(A)→B. Only morphism weak
 classes are enlarged through the original target followed by G. The original
 source, target, diagonal, and stored weak counit are unchanged.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v' u'' v''
@@ -26,7 +30,11 @@ variable {C : Type u} [Category.{v} C] {D : Type u'} [Category.{v'} D]
   (hF : IsExact V.cof V.weq W.cof W.weq F)
   (hG : IsExact W.cof W.weq U.cof U.weq G)
 
+/-- The Waldhausen structure on `C` retaining its cofibrations and detecting weak equivalences
+after the composite `F ⋙ G` in `U`. -/
 abbrev sourceStructure : Structure C := Structure.withInverseImageWeak (hF.comp hG)
+/-- The Waldhausen structure on `D` retaining its cofibrations and detecting weak equivalences
+after `G` in `U`. -/
 abbrev targetStructure : Structure D := Structure.withInverseImageWeak hG
 
 /-- Same fine weak-arrow objects; only the map class is detected after G. -/

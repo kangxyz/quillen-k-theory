@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.Realization
-import Quillen.Topology.Realization.SplitFiber
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.Realization
+public import Quillen.Topology.Realization.SplitFiber
 
 /-! # The original relative-row fiber inclusion in every finite dimension
 
@@ -8,6 +16,8 @@ the actual constant-path fiber inclusion on all finite based homotopy sets,
 including dimension zero. Its projection is exactly the original tail map.
 This is a degreewise statement; the global diagonal fiber step is separate.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial Topology

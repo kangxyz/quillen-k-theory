@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.TheoremB.CartesianProducts
-import Quillen.CategoryTheory.TheoremA.IteratedRealization
-import Quillen.CategoryTheory.TheoremA.Augmentations
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.CartesianProducts
+public import Quillen.CategoryTheory.TheoremA.IteratedRealization
+public import Quillen.CategoryTheory.TheoremA.Augmentations
 
 /-!
 # The actual total replacement projection
@@ -11,6 +19,7 @@ base coend is homeomorphic to the ordinary nerve realization. These
 homeomorphisms identify the total projection with the canonical map of
 simplicial sets, including its direction and all simplex maps.
 -/
+@[expose] public section
 
 noncomputable section
 
@@ -44,14 +53,14 @@ def constantRealizationIso (A : Type u) :
     TheoremA.realizationSigmaIso (fun _ : A ↦ (Δ[0] : SSet.{u})) ≪≫
       TopCat.isoOfHomeo (sigmaPointHomeomorph A)
 
-/-- Each point-simplex summand realizes to its index under the comparison. -/
+/-- The realized summand comparison, with the mapped composition expanded. -/
 @[reassoc (attr := simp)]
-theorem constantRealizationIso_ι (A : Type u) (a : A) :
-    SSet.toTop.map (TheoremA.simplicialSigmaι (fun _ : A ↦ (Δ[0] : SSet.{u})) a ≫
-      (TheoremA.pointSigmaIso A).hom) ≫ (constantRealizationIso A).hom =
-      TopCat.ofHom (ContinuousMap.const |(Δ[0] : SSet.{u})| (show TopCat.discrete.obj A from a)) := by
-  simp only [Functor.map_comp, constantRealizationIso, Iso.trans_hom, Iso.symm_hom,
-    Functor.mapIso_inv, Category.assoc]
+theorem constantRealizationIso_ι_comp (A : Type u) (a : A) :
+    SSet.toTop.map (TheoremA.simplicialSigmaι (fun _ : A ↦ (Δ[0] : SSet.{u})) a) ≫
+      SSet.toTop.map (TheoremA.pointSigmaIso A).hom ≫ (constantRealizationIso A).hom =
+      TopCat.ofHom (ContinuousMap.const |(Δ[0] : SSet.{u})|
+        (show TopCat.discrete.obj A from a)) := by
+  simp only [constantRealizationIso, Iso.trans_hom, Iso.symm_hom, Functor.mapIso_inv]
   rw [← Category.assoc (SSet.toTop.map (TheoremA.pointSigmaIso A).hom),
     ← Functor.map_comp]
   simp only [Iso.hom_inv_id]
@@ -72,7 +81,7 @@ theorem constantRealizationIso_naturality {A B : Type u} (f : A ⟶ B) :
       (TheoremA.pointSigmaIso B).hom := rfl
   simp only [← Category.assoc, ← Functor.map_comp]
   rw [Category.assoc (TheoremA.simplicialSigmaι _ a), heq]
-  simp only [constantRealizationIso_ι]
+  simp only [Functor.map_comp, Category.assoc, constantRealizationIso_ι_comp]
   rfl
 
 /-- Iterated topological realization is a functor, with the already defined
@@ -143,7 +152,7 @@ theorem targetAugmentation_row_projection (p : SimplexCategoryᵒᵖ) :
   rw [← Functor.map_comp_assoc]
   erw [heq]
   rw [Functor.map_comp_assoc]
-  erw [constantRealizationIso_ι]
+  erw [Functor.map_comp, Category.assoc, constantRealizationIso_ι_comp]
   change _ = SSet.toTop.map (TheoremA.simplicialSigmaι _ s) ≫
     (TheoremA.realizationSigmaIso _).hom ≫ (topologicalReplacementProjection H).app p
   rw [TheoremA.realizationSigmaIso_ι_assoc]

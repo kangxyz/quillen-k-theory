@@ -1,7 +1,17 @@
-import Quillen.Topology.Realization.Opposite
-import Quillen.CategoryTheory.TheoremA.IteratedRealization
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.Opposite
+public import Quillen.CategoryTheory.TheoremA.IteratedRealization
 
 /-! Reversing either simplicial direction preserves actual diagonal realization. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial
@@ -84,7 +94,8 @@ theorem outerOppositeRealizationIso_naturality
   change SSet.toTop.map (diagonalMap (Functor.whiskerLeft SimplexCategory.rev.op η)) ≫
       (realizationOppositeNatIso.app (diagonalSSet (SimplexCategory.rev.op ⋙ Y))).inv =
     (realizationOppositeNatIso.app (diagonalSSet (SimplexCategory.rev.op ⋙ X))).inv ≫
-      SSet.toTop.map (SSet.opFunctor.map (diagonalMap (Functor.whiskerLeft SimplexCategory.rev.op η))) at h₁
+      SSet.toTop.map (SSet.opFunctor.map (diagonalMap (Functor.whiskerLeft SimplexCategory.rev.op
+        η))) at h₁
   have h₂ := congrArg SSet.toTop.map (diagonalOuterOppositeIso_naturality η)
   simp only [Functor.map_comp] at h₂
   have h₃ := diagonalIteratedRealizationIso_naturality (Functor.whiskerRight η SSet.opFunctor)

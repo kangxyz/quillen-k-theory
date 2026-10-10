@@ -1,7 +1,17 @@
-import Quillen.CategoryTheory.TheoremA.RealizationBoundary
-import Mathlib.Topology.Piecewise
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationBoundary
+public import Mathlib.Topology.Piecewise
 
 /-! # Both interval endpoints have the homotopy extension property -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -18,7 +28,7 @@ attribute [local instance] Classical.propDecidable
 theorem simplexBoundary_one_cases (b : simplexBoundary 1) :
     b.1 = StdSimplex.single 0 ∨ b.1 = StdSimplex.single 1 := by
   have hs : b.1.weights 0 + b.1.weights 1 = 1 := by
-    simpa [Fin.sum_univ_two] using b.1.total_of_fintype
+    simp
   obtain ⟨i, hi⟩ := b.2
   fin_cases i
   · right
@@ -45,7 +55,7 @@ def boundaryOne : simplexBoundary 1 :=
 lemma boundaryZero_ne_one : boundaryZero ≠ boundaryOne := by
   intro h
   have h' := congrArg (fun b : simplexBoundary 1 ↦ StdSimplex.homeomorphI b.1) h
-  simpa [boundaryZero, boundaryOne] using h'
+  simp [boundaryZero, boundaryOne] at h'
 
 lemma boundary_eq_zero_or_one (b : simplexBoundary 1) : b = boundaryZero ∨ b = boundaryOne := by
   rcases simplexBoundary_one_cases b with h | h
@@ -65,11 +75,11 @@ def intervalEndpointDomainHomeomorph (A : Type u) [TopologicalSpace A] :
   toFun := Sum.elim (fun a ↦ (a, boundaryZero)) (fun a ↦ (a, boundaryOne))
   invFun z := if z.2 = boundaryZero then Sum.inl z.1 else Sum.inr z.1
   left_inv a := by
-    cases a <;> simp [boundaryZero_ne_one, boundaryZero_ne_one.symm]
+    cases a <;> simp [boundaryZero_ne_one.symm]
   right_inv z := by
     rcases z with ⟨a, b⟩
     rcases boundary_eq_zero_or_one b with rfl | rfl <;>
-      simp [boundaryZero_ne_one, boundaryZero_ne_one.symm]
+      simp [boundaryZero_ne_one.symm]
   continuous_toFun := continuous_sum_dom.mpr ⟨by fun_prop, by fun_prop⟩
   continuous_invFun := by
     apply continuous_if

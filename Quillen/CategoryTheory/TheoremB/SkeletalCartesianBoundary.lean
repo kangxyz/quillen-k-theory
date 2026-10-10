@@ -1,7 +1,17 @@
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianDomains
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianCoordinates
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.Cartesian.Domains
+public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianCoordinates
 
 /-! # Actual finite-face assembly of replacement boundary charts -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
@@ -9,7 +19,7 @@ universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
 
@@ -155,4 +165,4 @@ theorem replacementCellAttaching_cartesian
   restrictedSimplexChart_cartesian H htrans ((nerve D).skeleton n) hchart
     s.1 ∂Δ[n] (fun _ a ↦ replacementBaseCell_boundary s a) n
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

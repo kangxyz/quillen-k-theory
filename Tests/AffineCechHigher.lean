@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Scheme.Sheaf.AffineCechHigher
-import Tests.AffineCechSections
+module
+
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineCechHigher
+public import Tests.AffineCechSections
 
 /-!
 # Actual higher Cech consumers over zero divisors and the empty affine scheme
@@ -14,6 +16,8 @@ degree one and every higher degree, including vanishing of actual homology.
 The empty cover of `Spec (ZMod 1)` tests the empty index/ring edge case.
 Geometric localization at the zero coordinate tests the empty principal chart.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Opposite

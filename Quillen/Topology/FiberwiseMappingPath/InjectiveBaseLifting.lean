@@ -4,13 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.FiberwiseMappingPath.BaseChangeLifting
+module
+
+public import Quillen.Topology.FiberwiseMappingPath.BaseChangeLifting
 
 /-! # Vertical endpoint lifting through an injective change of displayed base
 
 Only the proof of verticality changes: the source and every stored path
 value remain literally the same. The ambient base need not have HLP.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 universe u v w z
@@ -19,7 +23,7 @@ variable {E : Type u} {F : Type v} {B : Type w} {T : Type z}
   [TopologicalSpace E] [TopologicalSpace F] [TopologicalSpace B] [TopologicalSpace T]
 
 /-- An injective base inclusion reflects the complete stored-path condition. -/
-def injectiveBaseHomeomorph (q : C(F,B)) (f : C(E,F)) (j : C(B,T))
+def injectiveBaseHomeomorph (q : C(F, B)) (f : C(E, F)) (j : C(B, T))
     (hj : Function.Injective j) : Space (j.comp q) f ≃ₜ Space q f :=
   Homeomorph.setCongr (by
     ext x
@@ -27,13 +31,13 @@ def injectiveBaseHomeomorph (q : C(F,B)) (f : C(E,F)) (j : C(B,T))
       x.2 0 = f x.1 ∧ ∀ t,q (x.2 t) = q (f x.1)
     exact and_congr_right (fun _ ↦ forall_congr' (fun _ ↦ hj.eq_iff)))
 
-@[simp] theorem injectiveBaseHomeomorph_path (q : C(F,B)) (f : C(E,F))
-    (j : C(B,T)) (hj : Function.Injective j) (x : Space (j.comp q) f) (t : unitInterval) :
+@[simp] theorem injectiveBaseHomeomorph_path (q : C(F, B)) (f : C(E, F))
+    (j : C(B, T)) (hj : Function.Injective j) (x : Space (j.comp q) f) (t : unitInterval) :
     (injectiveBaseHomeomorph q f j hj x).val.2 t = x.val.2 t := rfl
 
 /-- Endpoint boundary lifting transfers without changing any boundary path. -/
-theorem endpoint_boundaryLifting_of_injective_base (q : C(F,B)) (f : C(E,F))
-    (j : C(B,T)) (hj : Function.Injective j)
+theorem endpoint_boundaryLifting_of_injective_base (q : C(F, B)) (f : C(E, F))
+    (j : C(B, T)) (hj : Function.Injective j)
     (h : CubicalSubdivision.BoundaryLifting (endpoint q f)) :
     CubicalSubdivision.BoundaryLifting (endpoint (j.comp q) f) := by
   intro n a b hab

@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.Postcompose
-import Quillen.Waldhausen.Fibration.MixedNerves.TransposeNerves
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.Postcompose
+public import Quillen.Waldhausen.Fibration.MixedNerves.TransposeNerves
 
 /-! # Strict functoriality of the original mixed nerves and their transpose
 
@@ -7,6 +15,8 @@ The forward maps are literal postcomposition in both original indices.
 Their identity, composition, inclusion, and transpose squares are proved
 from the actual component formulas. No inverse choices are used.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 universe u v
@@ -35,13 +45,15 @@ def horizontalCofNerveMap : horizontalCofNerve N ⟶ horizontalCofNerve M where
   app k := nerveMap (horizontalCofPostcompose F k.unop)
   naturality _ _ _ := by ext n X; rfl
 
-@[simp] theorem coarseNerveMap_id : coarseNerveMap (CompatibleFunctor.id N) = 𝟙 (coarseChainNerve N) := by
+@[simp] theorem coarseNerveMap_id : coarseNerveMap (CompatibleFunctor.id N) = 𝟙
+    (coarseChainNerve N) := by
   ext n k X : 5
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 @[simp] theorem cofNerveMap_id : cofNerveMap (CompatibleFunctor.id N) = 𝟙 (cofChainNerve N) := by
   ext n k X : 5
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
-@[simp] theorem horizontalNerveMap_id : horizontalNerveMap (CompatibleFunctor.id N) = 𝟙 (horizontalNerve N) := by
+@[simp] theorem horizontalNerveMap_id : horizontalNerveMap (CompatibleFunctor.id N) = 𝟙
+    (horizontalNerve N) := by
   ext n k X : 5
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 @[simp] theorem horizontalCofNerveMap_id :

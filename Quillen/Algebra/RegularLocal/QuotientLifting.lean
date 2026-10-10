@@ -1,7 +1,15 @@
-import Quillen.Scheme.Regular.FiniteProjectiveResolution
-import Mathlib.RingTheory.Regular.Free
-import Mathlib.RingTheory.Regular.IsSMulRegular
-import Mathlib.RingTheory.LocalRing.Module
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.AlgebraicGeometry.Scheme.Regular.FiniteProjectiveResolution
+public import Mathlib.RingTheory.Regular.Free
+public import Mathlib.RingTheory.Regular.IsSMulRegular
+public import Mathlib.RingTheory.LocalRing.Module
 
 /-!
 # Lifting finite free syzygies through a regular parameter
@@ -12,6 +20,8 @@ on the quotient module over the smaller quotient ring produces an actual
 finite free resolution over the original local ring. No K-theory comparison
 or general regular-local theorem is assumed here.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -75,7 +85,8 @@ theorem finiteFreeResolution_of_quotientProjectiveDimension
     ∃ T : (CoherentScheme.finiteModuleExactStructure R).FiniteResolution
       (fun N => Module.Free R N.obj) M, T.length ≤ n := by
   have hne : Ideal.span {x} ≠ ⊤ :=
-    ne_top_of_le_ne_top (maximalIdeal.isMaximal R).ne_top ((Ideal.span_singleton_le_iff_mem (maximalIdeal R)).mpr hx)
+    ne_top_of_le_ne_top (maximalIdeal.isMaximal R).ne_top ((Ideal.span_singleton_le_iff_mem
+      (maximalIdeal R)).mpr hx)
   have : Nontrivial (R ⧸ Ideal.span {x}) := Ideal.Quotient.nontrivial_iff.mpr hne
   have : IsLocalRing (R ⧸ Ideal.span {x}) :=
     IsLocalRing.of_surjective' (Ideal.Quotient.mk (Ideal.span {x})) Ideal.Quotient.mk_surjective
@@ -114,6 +125,7 @@ theorem finiteFreeResolution_of_quotientProjectiveDimension
     obtain ⟨T, hT⟩ := ih K hxK
     exact ⟨.step (ShortComplex.mk i p w) hS hfree T, Nat.succ_le_succ hT⟩
 
+omit [IsLocalRing R] in
 /-- A tower of actual finite free conflations has the expected Ext-defined
 projective-dimension bound. This is proved recursively from exact sequences. -/
 theorem finiteFreeResolution_hasProjectiveDimensionLE
@@ -133,6 +145,7 @@ theorem finiteFreeResolution_hasProjectiveDimensionLE
       infer_instance
     exact (hS'.hasProjectiveDimensionLT_X₃_iff T.length hP').mpr ih
 
+omit [IsLocalRing R] in
 /-- A tower whose length is bounded by `n` supplies the corresponding
 independent projective-dimension bound. -/
 theorem hasProjectiveDimensionLE_of_finiteFreeResolution

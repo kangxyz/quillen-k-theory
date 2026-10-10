@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.ChainCategories
-import Quillen.Waldhausen.Fibration.TrivialCofibrations.Category
-import Quillen.CategoryTheory.ArrowDiagrams
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.ChainCategories
+public import Quillen.Waldhausen.Fibration.TrivialCofibrations.Category
+public import Quillen.CategoryTheory.ArrowDiagrams
 
 /-! # The actual cylinder on original fine-weak chains
 
@@ -10,6 +18,8 @@ fine-square preservation. The endpoint and projection maps retain their
 original components. No Waldhausen structure or comparison equivalence on
 the fine-chain category is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 universe u v
@@ -99,22 +109,22 @@ def chainCylinder (hD : CylinderPreservesFineSquares N D) (k : SimplexCategory) 
     D.middle_cof (((chainArrowDiagram (V := V) k).map α).app i) (hl i) (hr i)
 
 @[simp] theorem chainCylinder_middle_obj (hD : CylinderPreservesFineSquares N D)
-    (k : SimplexCategory) (f : Arrow (FineChain V k)) (i : Fin (k.len+1)) :
+    (k : SimplexCategory) (f : Arrow (FineChain V k)) (i : Fin (k.len + 1)) :
     (((chainCylinder N D hD k).middle.obj f).obj.obj i) =
       D.middle.obj (Arrow.mk (f.hom.hom.app i)) := rfl
 
 @[simp] theorem chainCylinder_inclusion_app (hD : CylinderPreservesFineSquares N D)
-    (k : SimplexCategory) (f : Arrow (FineChain V k)) (i : Fin (k.len+1)) :
+    (k : SimplexCategory) (f : Arrow (FineChain V k)) (i : Fin (k.len + 1)) :
     ((chainCylinder N D hD k).inclusion.app f).hom.app i =
       D.inclusion.app (Arrow.mk (f.hom.hom.app i)) := rfl
 
 @[simp] theorem chainCylinder_target_app (hD : CylinderPreservesFineSquares N D)
-    (k : SimplexCategory) (f : Arrow (FineChain V k)) (i : Fin (k.len+1)) :
+    (k : SimplexCategory) (f : Arrow (FineChain V k)) (i : Fin (k.len + 1)) :
     ((chainCylinder N D hD k).target.app f).hom.app i =
       D.target.app (Arrow.mk (f.hom.hom.app i)) := rfl
 
 @[simp] theorem chainCylinder_projection_app (hD : CylinderPreservesFineSquares N D)
-    (k : SimplexCategory) (f : Arrow (FineChain V k)) (i : Fin (k.len+1)) :
+    (k : SimplexCategory) (f : Arrow (FineChain V k)) (i : Fin (k.len + 1)) :
     ((chainCylinder N D hD k).projection.app f).hom.app i =
       D.projection.app (Arrow.mk (f.hom.hom.app i)) := rfl
 

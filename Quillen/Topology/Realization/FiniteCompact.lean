@@ -1,5 +1,13 @@
-import Quillen.Topology.Realization.FiniteSubcomplex
-import Quillen.Topology.Realization.Prism
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.FiniteSubcomplex
+public import Quillen.Topology.Realization.Prism
 
 /-! # Genuine compactness of finite simplicial realizations
 
@@ -7,6 +15,8 @@ Every realization point lies in the image of an actual nondegenerate simplex.
 For a finite simplicial set, this gives a finite compact cover, without a
 Hausdorff or local-compactness hypothesis on the whole realization.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

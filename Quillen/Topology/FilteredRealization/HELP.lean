@@ -1,4 +1,12 @@
-import Quillen.Topology.FilteredRealization.Homotopy
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.FilteredRealization.Homotopy
 
 /-!
 # Exact compact homotopy-square factorization for filtered realization
@@ -8,6 +16,8 @@ at one later stage. Both endpoint equations are detected simultaneously;
 the lifted homotopy retains its exact image in the colimit. This supplies
 the finite-stage input for homotopy extension and lifting arguments.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Topology
 open scoped Simplicial unitInterval
@@ -43,7 +53,8 @@ theorem compact_square_homotopy_factors
   let left : C(A ⊕ A, |F.obj k|) := ⟨Sum.elim L₀ L₁, L₀.continuous.sumElim L₁.continuous⟩
   let right : C(A ⊕ A, |F.obj k|) :=
     ⟨Sum.elim a₀ (b₀.comp i), a₀.continuous.sumElim (b₀.comp i).continuous⟩
-  have hb (x : B) : SSet.toTop.map (c.ι.app k) (b₀ x) = b x := ContinuousMap.congr_fun hg (Sum.inl x)
+  have hb (x : B) : SSet.toTop.map (c.ι.app k) (b₀ x) = b x := ContinuousMap.congr_fun hg
+    (Sum.inl x)
   have hL (t : unitInterval) (x : A) : SSet.toTop.map (c.ι.app k) (L (t, x)) = H (t, x) :=
     ContinuousMap.congr_fun hg (Sum.inr (t, x))
   have ha (x : A) : SSet.toTop.map (c.ι.app k) (a₀ x) = SSet.toTop.map (c.ι.app j) (a x) := by

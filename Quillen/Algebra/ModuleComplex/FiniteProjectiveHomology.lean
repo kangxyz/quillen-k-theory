@@ -3,13 +3,15 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.GilletWaldhausen.AcyclicCycles
-import Quillen.Algebra.ModuleComplex.PrincipalDenominators
-import Mathlib.Algebra.Category.ModuleCat.Abelian
-import Mathlib.Algebra.Category.ModuleCat.Projective
-import Mathlib.Algebra.Homology.DerivedCategory.TStructure
-import Mathlib.Algebra.Homology.ShortComplex.PreservesHomology
-import Mathlib.RingTheory.Localization.Finiteness
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.AcyclicCycles
+public import Quillen.Algebra.ModuleComplex.PrincipalDenominators
+public import Mathlib.Algebra.Category.ModuleCat.Abelian
+public import Mathlib.Algebra.Category.ModuleCat.Projective
+public import Mathlib.Algebra.Homology.DerivedCategory.TStructure
+public import Mathlib.Algebra.Homology.ShortComplex.PreservesHomology
+public import Mathlib.RingTheory.Localization.Finiteness
 
 /-!
 # Highest homology of finite-projective complexes
@@ -21,11 +23,12 @@ localization and genuine principal-local derived models descend this
 finiteness to an arbitrary original module complex. Rings are arbitrary;
 no finite generation of lower homology over a noncoherent ring is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-set_option maxHeartbeats 1600000
 universe u v
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated
 open HomologicalComplex
@@ -34,7 +37,8 @@ namespace Quillen.ModuleComplex
 open Quillen.Waldhausen.GilletWaldhausen
 variable {R : Type u} [CommRing R]
 
-/-- Actual upper cycle sequences split, making every cycle at or above the cohomological bound finite projective. -/
+/-- Actual upper cycle sequences split, making every cycle at or above the cohomological bound
+  finite projective. -/
 lemma finite_projective_cycles_above_cohomology_bound
     (K : CochainComplex (ModuleCat.{u} R) ℤ) (n b : ℤ) [K.IsLE n]
     (hbound : ∀ i, b < i → IsZero (K.X i))
@@ -61,7 +65,8 @@ lemma finite_projective_cycles_above_cohomology_bound
       have : Epi e.r := epi_of_epi_fac e.retract
       let := hfinite (j-1)
       let := hprojective (j-1)
-      exact ⟨Module.Finite.of_surjective e.r.hom ((ModuleCat.epi_iff_surjective e.r).mp inferInstance),
+      exact ⟨Module.Finite.of_surjective e.r.hom ((ModuleCat.epi_iff_surjective e.r).mp
+        inferInstance),
         e.projective⟩
   · exact top i (by omega)
 
@@ -71,7 +76,8 @@ lemma finite_top_homology_of_boundedAbove_finite_projective
     (hbound : ∀ i, b < i → IsZero (K.X i))
     (hfinite : ∀ i, Module.Finite R (K.X i))
     (hprojective : ∀ i, Projective (K.X i)) : Module.Finite R (K.homology n) := by
-  let := (finite_projective_cycles_above_cohomology_bound K n b hbound hfinite hprojective n le_rfl).1
+  let := (finite_projective_cycles_above_cohomology_bound K n b hbound hfinite hprojective n
+    le_rfl).1
   exact Module.Finite.of_surjective (K.homologyπ n).hom
     ((ModuleCat.epi_iff_surjective (K.homologyπ n)).mp inferInstance)
 
@@ -80,10 +86,13 @@ end Quillen.ModuleComplex
 namespace Quillen.ModuleComplex
 variable {R : Type u} [CommRing R]
 
+/-- The standard derived-category model for modules over `S`, selected locally for the
+principal-local homology comparisons. -/
 local instance standardDerived (S : Type u) [Ring S] : HasDerivedCategory.{u+1} (ModuleCat.{u} S) :=
   HasDerivedCategory.standard _
 
-/-- Genuine principal-local finite-projective derived models make original highest homology finite globally. -/
+/-- Genuine principal-local finite-projective derived models make original highest homology finite
+  globally. -/
 lemma finite_top_homology_of_principal_perfect_models
     (K : CochainComplex (ModuleCat.{u} R) ℤ) (n : ℤ) [K.IsLE n]
     (s : Finset R) (hs : Ideal.span (s : Set R) = ⊤)

@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyFiber.SourceEquivalence
-import Quillen.Topology.HomotopyGroups.WeakEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.SourceEquivalence
+public import Quillen.Topology.HomotopyGroups.WeakEquivalence
 
 /-! # The original loop inclusion for a contractible source
 
@@ -8,6 +16,8 @@ to the existing path space `Path y y`. The accepted canonical change-of-source
 equivalence then makes the original loop inclusion an equivalence when the
 source is contractible. Every path and the displayed source point are retained.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 universe u v

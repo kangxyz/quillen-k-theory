@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianBoundaryAssembly
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianBoundaryAssembly
 
 /-!
 # Arbitrary-coefficient incoming boundary regression consumers
@@ -14,10 +16,12 @@ makes the boundary-to-cell comparison genuinely Cartesian. The assembled
 weak statement uses arbitrary two coefficient diagrams, with the original
 boundary point and full constant path retained.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
-open Quillen Quillen.TheoremB.SkeletalCartesian
+open Quillen Quillen.CartesianRealization.Skeletal
 universe u
 
 example {X Y K L : Type u}

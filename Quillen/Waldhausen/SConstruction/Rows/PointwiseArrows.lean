@@ -1,7 +1,15 @@
-import Quillen.CategoryTheory.ArrowDiagrams
-import Quillen.Waldhausen.SConstruction.Rows.Functoriality
-import Quillen.Waldhausen.ArrowCategory.Structure
-import Quillen.Waldhausen.ExtensionCategory.PostcomposeDetection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ArrowDiagrams
+public import Quillen.Waldhausen.SConstruction.Rows.Functoriality
+public import Quillen.Waldhausen.ArrowCategory.Structure
+public import Quillen.Waldhausen.ExtensionCategory.PostcomposeDetection
 
 /-! # Actual interchange of quotient rows and pointwise arrows
 
@@ -9,6 +17,8 @@ Arrows between original quotient rows are exactly original quotient rows of
 arrows. The two genuine Waldhausen structures agree by their actual component
 and relative pushout tests, not by an assumed row-exactness statement.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -21,13 +31,17 @@ variable {C : Type u} [Category.{v} C] (W : Structure C)
 theorem arrow_isZero_of_components (X : Arrow C) (hl : IsZero X.left) (hr : IsZero X.right) :
     IsZero X where
   unique_to Y := by
-    refine ⟨{ default := Arrow.homMk (hl.to_ Y.left) (hr.to_ Y.right) (hl.eq_of_src _ _), uniq := ?_ }⟩
+    refine ⟨{
+      default := Arrow.homMk (hl.to_ Y.left) (hr.to_ Y.right) (hl.eq_of_src _ _)
+      uniq := ?_ }⟩
     intro f
     apply Arrow.hom_ext
     · exact hl.eq_of_src _ _
     · exact hr.eq_of_src _ _
   unique_from Y := by
-    refine ⟨{ default := Arrow.homMk (hl.from_ Y.left) (hr.from_ Y.right) (hr.eq_of_tgt _ _), uniq := ?_ }⟩
+    refine ⟨{
+      default := Arrow.homMk (hl.from_ Y.left) (hr.from_ Y.right) (hr.eq_of_tgt _ _)
+      uniq := ?_ }⟩
     intro f
     apply Arrow.hom_ext
     · exact hl.eq_of_tgt _ _

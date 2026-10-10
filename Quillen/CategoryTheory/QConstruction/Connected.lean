@@ -1,5 +1,13 @@
-import Quillen.KTheory.Basic
-import Mathlib.CategoryTheory.IsConnected
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.Basic
+public import Mathlib.CategoryTheory.IsConnected
 
 /-! # Connectedness of the Q-category
 
@@ -7,6 +15,8 @@ Every object receives a particular arrow from the vertex represented by zero.
 This proves connectedness of the category, without claiming uniqueness of these
 arrows or that the chosen vertex is an initial or zero object in Q.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v u

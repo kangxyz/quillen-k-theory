@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.CategoryTheory.Abelian.Injective.Resolution
+module
+
+public import Mathlib.CategoryTheory.Abelian.Injective.Resolution
 
 
 /-!
@@ -15,6 +17,8 @@ The maps are the original augmentation, kernel inclusions, and differential
 kernel lifts. These sequences support dimension shifting without replacing
 the resolution or assuming exactness of a functor applied to it.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

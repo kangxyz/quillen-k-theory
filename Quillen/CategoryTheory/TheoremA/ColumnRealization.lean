@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremA.Columns
-import Quillen.Topology.ClassifyingSpace.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.Columns
+public import Quillen.Topology.ClassifyingSpace.Equivalence
 
 /-!
 # Realized source-column equivalences for Quillen's Theorem A
@@ -8,6 +16,7 @@ Every flipped column of the comma replacement maps by a genuine homotopy
 equivalence to the discrete simplicial set of source chains. The proof uses
 the explicit under-category decomposition and its initial objects.
 -/
+@[expose] public section
 
 noncomputable section
 
@@ -21,6 +30,7 @@ set_option backward.defeqAttrib.useBackward true
 
 namespace Quillen.TheoremA
 
+/-- The unique simplex of the standard zero-simplex in each simplicial degree. -/
 local instance pointSimplexUnique (p : SimplexCategoryᵒᵖ) :
     Unique ((Δ[0] : SSet.{u}).obj p) := (SSet.stdSimplex.objEquiv (n := ⦋0⦌) (m := p)).unique
 
@@ -63,11 +73,13 @@ def commaColumnSourceMap (q : SimplexCategoryᵒᵖ) :
         (nerve (StructuredArrow (F.obj (c.obj (Fin.last q.unop.len))) (𝟭 D)))) ≫
     (pointSigmaIso (ComposableArrows C q.unop.len)).hom
 
-/-- On every simplex the canonical augmentation is the underlying source chain. -/
+/-- The augmentation component has the explicit source-chain target. -/
 @[simp]
-theorem commaColumnSourceMap_apply (p q : SimplexCategoryᵒᵖ)
+theorem commaColumnSourceMap_hom_apply (p q : SimplexCategoryᵒᵖ)
     (x : (commaColumn F q).obj p) :
-    (commaColumnSourceMap F q).app p x = x.2 ⋙ CostructuredArrow.proj F (x.1.obj 0) := rfl
+    (ConcreteCategory.hom ((commaColumnSourceMap F q).app p) :
+      TypeCat.Fun ((commaColumn F q).obj p) (ComposableArrows C q.unop.len)) x =
+      x.2 ⋙ CostructuredArrow.proj F (x.1.obj 0) := rfl
 
 /-- An actual homotopy equivalence from each realized column to its source-chain set. -/
 def commaColumnRealizationHomotopyEquiv (q : SimplexCategoryᵒᵖ) :

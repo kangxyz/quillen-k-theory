@@ -1,9 +1,17 @@
-import Quillen.Topology.Realization.HomotopyBridge
-import Quillen.CategoryTheory.TheoremA.SimplicialReplacement
-import Mathlib.Topology.Category.TopCat.Limits.Products
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Products
-import Mathlib.Topology.Homotopy.Equiv
-import Mathlib.Topology.Homotopy.Contractible
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.HomotopyBridge
+public import Quillen.CategoryTheory.TheoremA.SimplicialReplacement
+public import Mathlib.Topology.Category.TopCat.Limits.Products
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Products
+public import Mathlib.Topology.Homotopy.Equiv
+public import Mathlib.Topology.Homotopy.Contractible
 
 /-!
 # Realization of the rows of a simplicial replacement
@@ -16,6 +24,8 @@ the simplicial replacement. The forward map is the canonical induced map.
 This is the rowwise step only. Passing from rowwise homotopy equivalences
 to the realization of a bisimplicial set requires a separate gluing theorem.
 -/
+@[expose] public section
+
 
 noncomputable section
 

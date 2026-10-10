@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyFiber.Sequence
-import Quillen.Topology.HomotopyFiber.Map
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.Sequence
+public import Quillen.Topology.HomotopyFiber.Map
 
 /-!
 # Homotopy invariance of the concrete homotopy fiber
@@ -8,6 +16,8 @@ A continuous homotopy between maps induces an explicit equivalence of their
 path-space homotopy fibers. The two inverse homotopies are constructed by
 shrinking a path followed by its reverse, then removing constant prefixes.
 -/
+@[expose] public section
+
 
 noncomputable section
 open scoped Topology unitInterval
@@ -20,7 +30,7 @@ variable {X : Type u} {Y : Type v} [TopologicalSpace X] [TopologicalSpace Y]
 variable {f g : C(X, Y)}
 
 @[fun_prop]
-private theorem continuous_mulInterval : Continuous (fun z : I × I => z.1 * z.2) := by
+theorem continuous_mulInterval : Continuous (fun z : I × I => z.1 * z.2) := by
   apply Continuous.subtype_mk
   exact (continuous_subtype_val.comp continuous_fst).mul
     (continuous_subtype_val.comp continuous_snd)
@@ -52,7 +62,7 @@ theorem projection_homotopyMap (H : f.Homotopy g) (y : Y) :
 def homotopyPrefix (H : f.Homotopy g) (x : X) (s : I) : Path (f x) (H (s, x)) where
   toFun t := H (s * t, x)
   continuous_toFun := H.continuous.comp (by fun_prop)
-  source' := by simpa using H.map_zero_left x
+  source' := by simp
   target' := by simp
 
 /-- Shrink the two prefixes added by changing the map and changing it back. -/
@@ -130,7 +140,7 @@ theorem cancelHomotopyPrefixes_one (H : f.Homotopy g) (y : Y) (z : HomotopyFiber
     rw [Path.delayReflLeft_zero, Path.delayReflLeft_zero]
     have hp (t : I) : homotopyPrefix H z.1.1 (σ 1) t = f z.1.1 := by
       change H (σ 1 * t, z.1.1) = f z.1.1
-      simpa using H.map_zero_left z.1.1
+      simp
     simp only [Path.trans_apply, Path.symm_apply, Path.refl_apply, Function.comp_apply, hp]
     rfl
 

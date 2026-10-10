@@ -1,5 +1,13 @@
-import Quillen.Topology.Realization.FiniteSubcomplex
-import Mathlib.AlgebraicTopology.SimplicialSet.Presentable
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.FiniteSubcomplex
+public import Mathlib.AlgebraicTopology.SimplicialSet.Presentable
 
 /-!
 # Compact maps and equalities in filtered simplicial realization colimits
@@ -9,6 +17,8 @@ supply exact stage factorization. Equal continuous maps are detected later
 by factoring a finite simplicial source through its finite image in the
 colimit, whose realization is an embedding.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Topology
 open scoped Simplicial unitInterval

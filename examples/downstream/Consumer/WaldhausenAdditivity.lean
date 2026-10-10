@@ -1,6 +1,20 @@
-import Quillen.Library
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.BasedAdditivity
+public import Quillen.Waldhausen.QuillenComparison.ExactNaturality
+public import Quillen.Waldhausen.GilletWaldhausen.AdjacentTruncation
+public import Quillen.Waldhausen.GilletWaldhausen.FixedBounds
+public import Quillen.Waldhausen.ExtensionCategory.KEquivalence
 
 /-! Downstream contracts for the actual additivity and acyclic-filtration interfaces. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Quillen Quillen.Waldhausen
 open Quillen.Waldhausen.Additivity Quillen.Waldhausen.GilletWaldhausen
@@ -31,7 +45,8 @@ variable {C D : Type u} [Category.{v} C] [Category.{v} D]
 
 /-- Canonical Q/S naturality uses both original K-map APIs. -/
 theorem canonical_QS_naturality (n : ℕ) :
-    (QuillenComparison.comparisonKEquiv ED n).toMonoidHom.comp (Waldhausen.KMap F.waldhausenExact n) =
+    (QuillenComparison.comparisonKEquiv ED n).toMonoidHom.comp (Waldhausen.KMap F.waldhausenExact n)
+      =
       (F.KMap n).comp (QuillenComparison.comparisonKEquiv EC n).toMonoidHom :=
   QuillenComparison.comparisonKEquiv_exactFunctor_naturality F n
 end ExactNaturality

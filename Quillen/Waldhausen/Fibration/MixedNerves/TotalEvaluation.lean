@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.ChainEvaluation
-import Quillen.Waldhausen.Fibration.MixedNerves.CoarseRows
-import Quillen.Waldhausen.Fibration.MixedNerves.TotalRealization
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.ChainEvaluation
+public import Quillen.Waldhausen.Fibration.MixedNerves.CoarseRows
+public import Quillen.Waldhausen.Fibration.MixedNerves.TotalRealization
 
 /-! # The prescribed total mixed evaluation into the original coarse S-construction
 
@@ -10,6 +18,8 @@ homotopy equivalence. The genuine coarse-row presentation then identifies the
 target with the original coarse Waldhausen simplicial set. The cofibration
 version uses the separately proved actual cylinder-based inclusion theorem.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial Topology
@@ -26,7 +36,8 @@ def coarseRowEvaluation : coarseRowDiagonals N ⟶ coarseWeakRowNerve N where
   naturality _ _ α := coarseChainEvaluation_naturality.{u,v} (rowReindexCompatible N α.unop)
 
 @[simp] theorem coarseRowEvaluation_app (m : SimplexCategory) :
-    (coarseRowEvaluation N).app (op m) = coarseChainEvaluation (RowWeakEquivalences.nested N m) := rfl
+    (coarseRowEvaluation N).app (op m) = coarseChainEvaluation (RowWeakEquivalences.nested N m)
+      := rfl
 
 /-- The actual coarse-row target is retained while taking the final diagonal. -/
 def coarseRowEvaluationHomotopyEquiv :
@@ -40,7 +51,8 @@ def coarseRowEvaluationHomotopyEquiv :
     (coarseRowEvaluationHomotopyEquiv N).toFun =
       (SSet.toTop.map (TheoremA.diagonalMap (coarseRowEvaluation N))).hom := rfl
 
-/-- The prescribed map into the original coarse S-construction uses only its proved row presentation. -/
+/-- The prescribed map into the original coarse S-construction uses only its proved row
+presentation. -/
 def totalCoarseEvaluation : TheoremA.diagonalSSet (coarseRowDiagonals N) ⟶
     sSet N.coarse.cof N.coarse.weq :=
   TheoremA.diagonalMap (coarseRowEvaluation N) ≫ (coarseSSetIso N).hom
@@ -79,7 +91,8 @@ variable {C : Type u} [SmallCategory C] {V : Structure C}
   (hs : RowFactorization.SecondEndpointSection N D)
   [N.coarse.weq.HasTwoOutOfThreeProperty]
 
-/-- The genuine original-cylinder inclusion theorem gives the cofibration-total evaluation equivalence. -/
+/-- The genuine original-cylinder inclusion theorem gives the cofibration-total evaluation
+equivalence. -/
 def totalCofEvaluationHomotopyEquiv :
     ContinuousMap.HomotopyEquiv |TheoremA.diagonalSSet (cofRowDiagonals N)|
       |sSet N.coarse.cof N.coarse.weq| :=

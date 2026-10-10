@@ -3,10 +3,14 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.OpenLongExactSequence
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenLongExactSequence
 
 /-! Semantic consumers for actual local shifts, relative weak classes, unchanged
 joint cylinders, the original fiber map and the coarse-only connective sequence. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open Quillen Quillen.PerfectComplexes Quillen.Waldhausen Quillen.Waldhausen.Fibration
@@ -57,7 +61,8 @@ example (f : Arrow (Perfect X)) :
 
 example {n : SimplexCategory} (f : Arrow (QuotientRows.Obj (perfectWaldhausen X) n)) :
     (RowFactorization.targetInclusion (perfectOpenNested j) (perfectOpenJointData j) n).app f ≫
-      (RowFactorization.factorization (perfectOpenNested j) (perfectOpenJointData j) n).projection.app f =
+      (RowFactorization.factorization (perfectOpenNested j) (perfectOpenJointData j)
+        n).projection.app f =
       𝟙 f.right :=
   RowFactorization.targetInclusion_projection (perfectOpenNested j) (perfectOpenJointData j)
     (perfectOpenJointData_secondEndpointSection j) f

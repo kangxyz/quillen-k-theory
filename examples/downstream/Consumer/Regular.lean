@@ -1,4 +1,23 @@
-import Quillen.Scheme.Regular
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.AlgebraicGeometry.Scheme.Regular
+
+/-!
+# Regular K-to-G comparison examples
+
+Uses the canonical scheme K-to-G map for principal ideal domains and regular
+affine rings, including the dimension-at-most-one specialization. The nonaffine
+examples retain compactness and the geometric resolution property, identify
+canonical forward maps, and compare the global and affine equivalences.
+-/
+
+@[expose] public section
 noncomputable section
 open AlgebraicGeometry
 universe u

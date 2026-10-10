@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationFixedBounds
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationFixedBounds
 
 /-! # The actual brutal filtration inside each finite term stratum
 
@@ -7,6 +15,8 @@ actual term-bound category. Their original maps give a genuine structural
 cofibration sequence of exact endofunctors, with identity and zero endpoints.
 Only isomorphism weak equivalences are used, and kernel closure is absent.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -27,7 +37,8 @@ theorem HasTermBounds.stupidTruncGE {K : CochainComplex A ℤ} {a b : ℤ}
 
 /-- The original single-term quotient has the same bounds, by its actual epimorphism. -/
 theorem HasTermBounds.stupidLayer {K : CochainComplex A ℤ} {a b : ℤ}
-    (hK : HasTermBounds K a b) (n : ℤ) : HasTermBounds ((stupidTruncGELayerFunctor n).obj K) a b := by
+    (hK : HasTermBounds K a b) (n : ℤ) : HasTermBounds ((stupidTruncGELayerFunctor n).obj K) a b
+      := by
   intro i hi
   have hs := stupidTruncGELayerSequence_degree_shortExact K n i
   let : Epi ((stupidTruncGELayerProjection K n).f i) := hs.epi_g

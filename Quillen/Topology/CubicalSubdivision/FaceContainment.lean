@@ -1,4 +1,12 @@
-import Quillen.Topology.CubicalSubdivision.FaceIntersections
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.FaceIntersections
 
 /-! # Interior intersections determine actual grid-face containment
 
@@ -6,6 +14,8 @@ A canonical cubical face which meets another face at one of its interior
 points lies wholly in that face. This controls all incident chart constraints
 when filling faces in increasing dimension, including zero-dimensional faces.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 namespace Quillen.CubicalSubdivision
@@ -15,7 +25,7 @@ actual grid interval, not just intervals with a common endpoint. -/
 theorem moving_label_eq_of_interior {n m : ℕ} (F G : FaceIndex n m)
     (s : Active F → unitInterval) (t : Active G → unitInterval)
     (hs : s ∉ _root_.Cube.boundary (Active F)) (he : face F s = face G t)
-    (i : Fin n) (k l : Fin (m+1)) (hf : F i = Sum.inr k) (hg : G i = Sum.inr l) : k = l := by
+    (i : Fin n) (k l : Fin (m + 1)) (hf : F i = Sum.inr k) (hg : G i = Sum.inr l) : k = l := by
   have hi := congrFun he i
   rw [face_moving F s i k hf,face_moving G t i l hg] at hi
   by_contra hn

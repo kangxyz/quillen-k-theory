@@ -1,8 +1,16 @@
-import Quillen.GTheory.FiniteModules.SmallModelLocalization
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
-import Mathlib.RingTheory.Ideal.Quotient.Noetherian
-import Mathlib.CategoryTheory.Abelian.Transfer
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.GTheory.FiniteModules.SmallModelLocalization
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
+public import Mathlib.RingTheory.Ideal.Quotient.Noetherian
+public import Mathlib.CategoryTheory.Abelian.Transfer
 
 /-!
 # Finite modules on a principal closed subscheme
@@ -12,6 +20,8 @@ Its essential image consists precisely of finite R-modules killed by f. This
 subcategory is smaller than the f-power-torsion support category; the comparison
 between their G-theories requires dévissage, not a categorical equivalence.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -32,10 +42,11 @@ def closedRestriction : FGModuleCat.{u} (ClosedRing f) ⥤ FGModuleCat.{u} R :=
   ObjectProperty.lift _
     (forget₂ (FGModuleCat (ClosedRing f)) (ModuleCat (ClosedRing f)) ⋙
       ModuleCat.restrictScalars (Ideal.Quotient.mk (Ideal.span {f}))) (fun M ↦ by
-    change Module.Finite R ((ModuleCat.restrictScalars (Ideal.Quotient.mk (Ideal.span {f}))).obj M.obj)
+    change Module.Finite R ((ModuleCat.restrictScalars (Ideal.Quotient.mk (Ideal.span {f}))).obj
+      M.obj)
     let N := (ModuleCat.restrictScalars (Ideal.Quotient.mk (Ideal.span {f}))).obj M.obj
-    haveI : Module.Finite (ClosedRing f) N := M.property
-    haveI : IsScalarTower R (ClosedRing f) N := IsScalarTower.of_algebraMap_smul fun _ _ ↦ rfl
+    have : Module.Finite (ClosedRing f) N := M.property
+    have : IsScalarTower R (ClosedRing f) N := IsScalarTower.of_algebraMap_smul fun _ _ ↦ rfl
     exact Module.Finite.trans (ClosedRing f) N)
 
 @[simp] theorem closedRestriction_obj_obj (M : FGModuleCat.{u} (ClosedRing f)) :
@@ -68,7 +79,8 @@ def fullyFaithfulClosedRestriction : (closedRestriction f).FullyFaithful where
         obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective a
         exact g.hom.hom.map_smul r m }
 
-instance closedRestriction_full : (closedRestriction f).Full := (fullyFaithfulClosedRestriction f).full
+instance closedRestriction_full : (closedRestriction f).Full := (fullyFaithfulClosedRestriction
+  f).full
 instance closedRestriction_faithful : (closedRestriction f).Faithful :=
   (fullyFaithfulClosedRestriction f).faithful
 
@@ -85,10 +97,10 @@ instance closedToKilled_faithful : (closedToKilled f).Faithful where
 instance closedToKilled_essSurj : (closedToKilled f).EssSurj where
   mem_essImage M := by
     have hM : Module.IsTorsionBy R M.obj f := M.property
-    letI : Module (ClosedRing f) M.obj := hM.module
-    letI : IsScalarTower R (ClosedRing f) M.obj :=
+    let : Module (ClosedRing f) M.obj := hM.module
+    let : IsScalarTower R (ClosedRing f) M.obj :=
       IsScalarTower.of_algebraMap_smul fun _ _ ↦ rfl
-    letI : Module.Finite (ClosedRing f) M.obj :=
+    let : Module.Finite (ClosedRing f) M.obj :=
       Module.Finite.of_restrictScalars_finite R (ClosedRing f) M.obj
     refine ⟨FGModuleCat.of (ClosedRing f) M.obj, ⟨?_⟩⟩
     apply ObjectProperty.isoMk
@@ -123,7 +135,8 @@ instance closedRestriction_preservesFiniteLimits : PreservesFiniteLimits (closed
   exact preservesFiniteLimits_of_reflects_of_preserves (closedRestriction f)
     (forget₂ (FGModuleCat R) (ModuleCat R))
 
-instance closedRestriction_preservesFiniteColimits : PreservesFiniteColimits (closedRestriction f) := by
+instance closedRestriction_preservesFiniteColimits : PreservesFiniteColimits (closedRestriction f)
+  := by
   have : PreservesFiniteColimits
       (closedRestriction f ⋙ forget₂ (FGModuleCat R) (ModuleCat R)) := by
     change PreservesFiniteColimits
@@ -145,7 +158,7 @@ instance killed_hasFiniteProducts : HasFiniteProducts (killedBy f).FullSubcatego
 
 /-- The annihilated subcategory is abelian, although it is not generally Serre
 inside all finite R-modules: extensions may only be annihilated by f². -/
-instance killed_abelian : Abelian (killedBy f).FullSubcategory :=
+instance instAbelianKilledBy : Abelian (killedBy f).FullSubcategory :=
   abelianOfEquivalence (closedEquivalence f).inverse
 
 /-- The actual quotient equivalence is an exact functor for standard abelian structures. -/
@@ -175,6 +188,7 @@ def killedInclusionExact : ExactFunctor (abelianExactStructure (killedBy f).Full
   toFunctor := (killedBy f).ι
   map_conflation _ h := h.map_of_exact _
 
+omit [IsNoetherianRing R] in
 /-- Killed modules lie in the genuine principal-open support category. -/
 theorem killedBy_le_torsion : killedBy f ≤ torsion (Submonoid.powers f) := by
   intro M hM
@@ -187,6 +201,7 @@ def closedToSupport : FGModuleCat.{u} (ClosedRing f) ⥤
   ObjectProperty.lift _ (closedRestriction f) fun M ↦
     killedBy_le_torsion f ((closedRestriction f).obj M) (closedRestriction_killed f M)
 
+omit [IsNoetherianRing R] in
 /-- The supported factorization retains the actual restriction-of-scalars functor. -/
 theorem closedToSupport_comp_inclusion :
     closedToSupport f ⋙ (torsion (Submonoid.powers f)).ι = closedRestriction f := rfl

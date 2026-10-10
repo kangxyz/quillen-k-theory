@@ -1,4 +1,12 @@
-import Quillen.Topology.HELP.CubicalHorn
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.CubicalHorn
 
 /-!
 # Actual finite cube fillings from singleton based homotopy sets
@@ -8,6 +16,8 @@ its proved HEP. Its top face is then an original generalized loop. A relative
 nullhomotopy fills the product cube; whole-boundary HEP restores the exact
 original boundary map. No sphere comparison or global contraction is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

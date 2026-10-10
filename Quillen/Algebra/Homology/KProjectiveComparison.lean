@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.Homology.KProjectiveRepresentatives
+module
+
+public import Quillen.Algebra.Homology.KProjectiveRepresentatives
 
 /-!
 # Actual comparisons between K-projective replacements
@@ -12,6 +14,8 @@ Maps from K-projective complexes lift across actual quasi-isomorphisms with
 actual homotopies, homotopies cancel after quasi-isomorphisms, and two genuine
 K-projective resolutions of one complex are chain-homotopy equivalent.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -30,7 +34,7 @@ theorem exists_lift_quasiIso_up_to_homotopy {P Q K : CochainComplex C ℤ}
   let := HasDerivedCategory.standard C
   obtain ⟨g, hg⟩ := exists_chain_representative_of_isKProjective
     (DerivedCategory.Q.map a ≫ inv (DerivedCategory.Q.map q))
-  refine ⟨g, ⟨homotopyOfDerivedEq_of_isKProjective (g ≫ q) a ?_⟩⟩
+  refine ⟨g, ⟨homotopyOfDerivedEqOfIsKProjective (g ≫ q) a ?_⟩⟩
   rw [Functor.map_comp, hg]
   simp
 
@@ -39,7 +43,7 @@ def homotopyOfCompQuasiIso {P Q K : CochainComplex C ℤ}
     [P.IsKProjective] (q : Q ⟶ K) [QuasiIso q] (g h : P ⟶ Q)
     (H : Homotopy (g ≫ q) (h ≫ q)) : Homotopy g h := by
   let := HasDerivedCategory.standard C
-  apply homotopyOfDerivedEq_of_isKProjective
+  apply homotopyOfDerivedEqOfIsKProjective
   apply (cancel_mono (DerivedCategory.Q.map q)).mp
   rw [← Functor.map_comp, ← Functor.map_comp]
   exact DerivedCategory.Q_map_eq_of_homotopy C H

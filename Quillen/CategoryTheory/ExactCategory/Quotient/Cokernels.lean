@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.ExactCategory.Quotient.Basic
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Quotient.Basic
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
 
 /-!
 # One-sided exactness of the left-filtering quotient
@@ -9,6 +17,8 @@ and cokernels of the specified conflations. These are universal-property proofs,
 not extra axioms in a proposed exact structure on the quotient. Kernel preservation
 for the left s-filtering quotient still requires a separate argument.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -81,7 +91,8 @@ lemma exists_cokernel_desc (hA : E.LeftFiltering A) {S : ShortComplex C}
       simp [Functor.map_comp, Category.assoc, MorphismProperty.LeftFraction.map]
 
 /-- The image of a conflation has the actual cokernel universal property. -/
-def cokernel_map (hA : E.LeftFiltering A) {S : ShortComplex C} (hS : E.conflation S) :
+def mappedConflationCokernelIsColimit (hA : E.LeftFiltering A)
+    {S : ShortComplex C} (hS : E.conflation S) :
     IsColimit (CokernelCofork.ofπ ((Q E A).map S.g)
       (show (Q E A).map S.f ≫ (Q E A).map S.g = 0 by
         rw [← Functor.map_comp, S.zero, Functor.map_zero])) := by
@@ -98,18 +109,20 @@ lemma preservesCokernel_of_conflation (hA : E.LeftFiltering A)
     {S : ShortComplex C} (hS : E.conflation S) :
     PreservesColimit (parallelPair S.f 0) (Q E A) :=
   preservesColimit_of_preserves_colimit_cocone (E.cokernel S hS)
-    ((CokernelCofork.isColimitMapCoconeEquiv _ (Q E A)).2 (cokernel_map E A hA hS))
+    ((CokernelCofork.isColimitMapCoconeEquiv _ (Q E A)).2
+      (mappedConflationCokernelIsColimit E A hA hS))
 
 end
 
 /-- Cokernel preservation for the concrete additive quotient structure built
 from left filtering. No additive structure is assumed in this specialization. -/
-def leftCokernel_map (hA : E.LeftFiltering A) {S : ShortComplex C} (hS : E.conflation S) :
+def leftMappedConflationCokernelIsColimit (hA : E.LeftFiltering A)
+    {S : ShortComplex C} (hS : E.conflation S) :
     letI := leftPreadditive E A hA
     letI := leftQ_additive E A hA
     IsColimit (CokernelCofork.ofπ (S.map (Q E A)).g (S.map (Q E A)).zero) := by
   let := leftPreadditive E A hA
   let := leftQ_additive E A hA
-  exact cokernel_map E A hA hS
+  exact mappedConflationCokernelIsColimit E A hA hS
 
 end Quillen.ExactQuotient

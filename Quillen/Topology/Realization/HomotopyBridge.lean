@@ -1,6 +1,14 @@
-import Quillen.Topology.Realization.CylinderIso
-import Quillen.Topology.Realization.CylinderEndpoints
-import Quillen.Topology.Realization.NerveHomotopy
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.CylinderIso
+public import Quillen.Topology.Realization.CylinderEndpoints
+public import Quillen.Topology.Realization.NerveHomotopy
 
 /-!
 # Simplicial homotopies realize to genuine topological homotopies
@@ -10,6 +18,8 @@ colimit preservation. Its endpoint and naturality identities give actual
 continuous homotopies, including relative-to-vertex homotopies required for
 based homotopy-group functoriality.
 -/
+@[expose] public section
+
 
 noncomputable section
 

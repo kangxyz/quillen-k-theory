@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.ExtensionCategory.ArrowPushouts
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.ArrowPushouts
 
 /-! # The pointwise Waldhausen structure on the entire arrow category
 
@@ -6,6 +14,8 @@ Unlike the Reedy category of cofibration arrows, objects here are arbitrary
 arrows and cofibrations are componentwise. All pushouts and gluing are proved
 on the actual source and target squares, without any ambient cocompleteness.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -14,15 +24,20 @@ set_option backward.defeqAttrib.useBackward true
 namespace Quillen.Waldhausen.ArrowCategory
 variable {C : Type u} [Category.{v} C] (W : Structure C)
 
+/-- Commutative squares whose source and target component maps are both cofibrations in `W`. -/
 def cof : MorphismProperty (Arrow C) :=
   W.cof.inverseImage Arrow.leftFunc ⊓ W.cof.inverseImage Arrow.rightFunc
 
+/-- Commutative squares whose source and target component maps are both weak equivalences in
+`W`. -/
 def weq : MorphismProperty (Arrow C) :=
   W.weq.inverseImage Arrow.leftFunc ⊓ W.weq.inverseImage Arrow.rightFunc
 
 instance cof_multiplicative : (cof W).IsMultiplicative := by unfold cof; infer_instance
 instance weq_multiplicative : (weq W).IsMultiplicative := by unfold weq; infer_instance
 
+/-- The identity arrow of the chosen zero object, serving as the zero object of the arrow
+category. -/
 def zero : Arrow C := Arrow.mk (𝟙 W.zero)
 
 theorem isZero : IsZero (zero W) where

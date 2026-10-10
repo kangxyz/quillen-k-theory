@@ -1,7 +1,17 @@
-import Quillen.Waldhausen.Cylinder.RelativeQuotient
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Cylinder.RelativeQuotient
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
 
 /-! # The actual shifted-source quotient of the relative complex cylinder -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -51,7 +61,7 @@ def relativeQuotientIsCokernel :
   have hc : IsColimit (CokernelCofork.ofπ q hq) :=
     CokernelCofork.mapIsColimit c (cokernelIsCokernel α.left)
       (shiftFunctor (CochainComplex A ℤ) (1 : ℤ))
-  exact isCokernel_relative_middle (jointSequenceMap α)
+  exact relativeMiddleCokernelIsColimit (jointSequenceMap α)
     (jointSequence_shortExact g.hom).gIsCokernel k hi hj q hq hc
     (relativeQuotient_zero α h k hi hj)
 

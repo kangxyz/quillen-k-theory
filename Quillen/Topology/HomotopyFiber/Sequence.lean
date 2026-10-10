@@ -1,6 +1,14 @@
-import Quillen.Topology.HomotopyFiber.Exactness
-import Mathlib.Topology.Homotopy.HSpaces
-import Mathlib.Topology.Homotopy.Equiv
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.Exactness
+public import Mathlib.Topology.Homotopy.HSpaces
+public import Mathlib.Topology.Homotopy.Equiv
 
 /-!
 # The iterated homotopy fiber and the loop space
@@ -8,6 +16,8 @@ import Mathlib.Topology.Homotopy.Equiv
 Explicit path-space constructions underlying the next positions of the
 homotopy-fiber sequence.
 -/
+@[expose] public section
+
 
 noncomputable section
 open scoped Topology unitInterval
@@ -87,7 +97,7 @@ theorem loopsRightInverseHomotopy_based (t : I) :
   rfl
 
 @[fun_prop]
-private theorem continuous_intervalMul : Continuous (fun z : I × I => z.1 * z.2) := by
+theorem continuous_intervalMul : Continuous (fun z : I × I => z.1 * z.2) := by
   apply Continuous.subtype_mk
   exact (continuous_subtype_val.comp continuous_fst).mul
     (continuous_subtype_val.comp continuous_snd)
@@ -304,7 +314,8 @@ theorem homotopyGroupMapHom_iterated_leftInverse :
 
 /-- The right inverse on homotopy groups comes from deleting the constant prefix. -/
 theorem homotopyGroupMapHom_iterated_rightInverse :
-    (homotopyGroupMapHom (N := N) (iteratedToLoops f y x h) (iteratedToLoops_basepoint f y x h)).comp
+    (homotopyGroupMapHom (N := N) (iteratedToLoops f y x h) (iteratedToLoops_basepoint f y x
+      h)).comp
       (homotopyGroupMapHom (loopsToIterated f y x h) (loopsToIterated_refl f y x h)) =
         MonoidHom.id (HomotopyGroup N (Path y y) (Path.refl y)) := by
   rw [← homotopyGroupMapHom_comp]

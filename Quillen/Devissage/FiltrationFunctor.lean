@@ -1,6 +1,16 @@
-import Quillen.Devissage.Filtration
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Devissage.Filtration
 
 /-! # Exact functors carry actual finite filtrations to actual finite filtrations -/
+@[expose] public section
+
 noncomputable section
 universe v u v' u'
 open CategoryTheory CategoryTheory.Limits

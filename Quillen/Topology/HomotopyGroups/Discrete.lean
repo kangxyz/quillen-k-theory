@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.HomotopyGroups.Map
-import Mathlib.Topology.Connected.TotallyDisconnected
+module
+
+public import Quillen.Topology.HomotopyGroups.Map
+public import Mathlib.Topology.Connected.TotallyDisconnected
 
 /-!
 # Actual positive homotopy groups of discrete spaces
@@ -12,6 +14,8 @@ import Mathlib.Topology.Connected.TotallyDisconnected
 Continuous positive-dimensional cubes are literally constant; the original
 based homotopy quotient therefore has one element in every positive degree.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

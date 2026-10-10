@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.TransposeNerves
-import Quillen.Waldhausen.Fibration.MixedNerves.Cylinder
-import Quillen.Waldhausen.Fibration.TrivialCofibrations.Classifying
-import Quillen.Topology.Realization.BisimplicialEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.TransposeNerves
+public import Quillen.Waldhausen.Fibration.MixedNerves.Cylinder
+public import Quillen.Waldhausen.Fibration.TrivialCofibrations.Classifying
+public import Quillen.Topology.Realization.BisimplicialEquivalence
 
 /-! # The original mixed weak-cofibration inclusion realizes to an equivalence
 
@@ -13,6 +21,8 @@ fine-weak nerve of coarse-weak chains. The forward map is the unchanged
 inclusion throughout. The topological endpoint explicitly uses a common
 object/hom universe, as required by the proved Quillen-A implementation.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial Topology

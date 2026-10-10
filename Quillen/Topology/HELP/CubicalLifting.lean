@@ -1,6 +1,14 @@
-import Quillen.Topology.HELP.CubeBoundary
-import Quillen.Topology.HELP.StrictCompact
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.CubeBoundary
+public import Quillen.Topology.HELP.StrictCompact
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
 
 /-! # Original finite homotopy sets from compact contracted-test lifting
 
@@ -8,6 +16,8 @@ Actual cubical loop representatives are lifted with their complete boundaries.
 Their homotopies use the actual compact pushout cylinder boundary. Dimension
 zero and component surjectivity are proved, including empty-source cases.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -20,7 +30,7 @@ open TheoremA CubicalTests
 /-- Strict HELP restricted to actual compact HEP pairs with displayed contracted
  target. This does not posit any homotopy-group or weak-equivalence conclusion. -/
 def ContractedStrictHELP {E F : Type u} [TopologicalSpace E] [TopologicalSpace F]
-    (f : C(E,F)) : Prop :=
+    (f : C(E, F)) : Prop :=
   ∀ (A D : TopCat.{u}) [CompactSpace A] [CompactSpace D] (i : A ⟶ D),
     homotopyExtensionProperty i → ∀ (d : D)
     (_HD : (ContinuousMap.id D).Homotopy (ContinuousMap.const D d))
@@ -28,7 +38,7 @@ def ContractedStrictHELP {E F : Type u} [TopologicalSpace E] [TopologicalSpace F
       ∃ c : C(D,E), c.comp i.hom = a ∧ Nonempty ((f.comp c).HomotopyRel b (Set.range i))
 
 variable {E F : Type u} [TopologicalSpace E] [TopologicalSpace F]
-  {f : C(E,F)}
+  {f : C(E, F)}
 
 /-- Ordinary full compact HELP supplies the restricted genuine lifting tests. -/
 theorem CompactHomotopyExtensionLiftingProperty.contractedStrict

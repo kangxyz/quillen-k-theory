@@ -3,10 +3,14 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.BoundedFlatPullback
-import Quillen.Scheme.Sheaf.FlatExtensions
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlatPullback
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatExtensions
 
 /-! Semantic consumers of original local-perfect preservation under arbitrary pullback. -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

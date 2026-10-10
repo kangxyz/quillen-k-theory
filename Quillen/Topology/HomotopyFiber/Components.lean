@@ -1,10 +1,20 @@
-import Quillen.Topology.HomotopyFiber.Exactness
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.Exactness
 
 /-! # Pointed-set exactness, including connected components
 
 The source exactness proof does not require a group operation or a nonempty cube
 index. This version includes the π₀ tail using actual homotopy classes.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe w u v

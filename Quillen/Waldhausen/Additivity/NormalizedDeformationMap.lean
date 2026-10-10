@@ -1,13 +1,22 @@
-import Quillen.Waldhausen.Additivity.NormalizedMixedDiagrams
-import Quillen.Waldhausen.Additivity.DeformationMap
-import Quillen.Topology.Realization.MixedOrdinalBisimplicial
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.NormalizedMixedDiagrams
+public import Quillen.Waldhausen.Additivity.DeformationMap
+public import Quillen.Topology.Realization.MixedOrdinalBisimplicial
 
 /-! # The chosen-zero normalized deformation maps -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-set_option maxHeartbeats 1000000
 open CategoryTheory CategoryTheory.Limits Opposite
 open Quillen.MixedOrdinalCylinder
 universe u v
@@ -42,7 +51,8 @@ def normalizedMixedMap : outerCylinder (bisimplicialSSet V) ⟶ bisimplicialSSet
 /-- The auxiliary identity endpoint uses actual identity-interval arrows. -/
 def normalizedIdentityMap : bisimplicialSSet V ⟶ bisimplicialSSet W where
   app n := {
-    app m := ↾fun A ↦ ⟨normalizedIntervalDiagram V W a hF hG hc (𝟙 n.unop) (𝟙 n.unop) (fun _ ↦ le_rfl) A.1,
+    app m := ↾fun A ↦ ⟨normalizedIntervalDiagram V W a hF hG hc (𝟙 n.unop) (𝟙 n.unop) (fun _ ↦
+      le_rfl) A.1,
       normalizedIntervalDiagram_isSimplex₂ V W a hF hG hc _ _ _ A.2⟩
     naturality _ _ _ := by ext A; rfl }
   naturality _ _ _ := by ext m A; rfl
@@ -70,7 +80,8 @@ def normalizedSeparatedMap :
         (left_le_right n'.unop) (gridMap₂ (OrdinalSubdivision.δ.map μ.unop) (𝟙 m.unop) ⋙ A.1) ⋙
         normalizedPushoutFunctor V W a hF hG hc =
       (gridMap₂ μ.unop (𝟙 m.unop) ⋙ intervalArrows (Edgewise.left n.unop n.unop)
-        (Edgewise.right n.unop n.unop) (left_le_right n.unop) A.1) ⋙ normalizedPushoutFunctor V W a hF hG hc
+        (Edgewise.right n.unop n.unop) (left_le_right n.unop) A.1) ⋙ normalizedPushoutFunctor V
+          W a hF hG hc
     rw [intervalArrows_input, intervalArrows_outer]
     exact congrArg (fun T ↦ T ⋙ normalizedPushoutFunctor V W a hF hG hc)
       (intervalArrows_congr (OrdinalSubdivision.first.naturality μ.unop).symm

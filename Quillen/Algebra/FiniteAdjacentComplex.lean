@@ -1,7 +1,15 @@
-import Mathlib.Algebra.Group.Pi.Basic
-import Mathlib.Algebra.Group.Hom.Instances
-import Mathlib.Algebra.Group.Equiv.Basic
-import Mathlib.Data.Fin.VecNotation
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.Algebra.Group.Pi.Basic
+public import Mathlib.Algebra.Group.Hom.Instances
+public import Mathlib.Algebra.Group.Equiv.Basic
+public import Mathlib.Data.Fin.VecNotation
 
 /-! # Finite adjacent-coordinate incidence and alternating Euler maps
 
@@ -10,6 +18,8 @@ adjacent term coordinates. The original incidence map is injective, and its
 image is exactly the kernel of the alternating Euler homomorphism.
 These are group calculations, with no K-theory or fibration assertion as input.
 -/
+@[expose] public section
+
 noncomputable section
 universe u
 namespace Quillen.FiniteAdjacentComplex
@@ -35,7 +45,7 @@ def euler : (n : ℕ) → (Fin n → G) →* G
 @[simp] theorem euler_zero (x : Fin 0 → G) : euler G 0 x = 1 := rfl
 @[simp] theorem euler_succ (n : ℕ) (x : Fin (n + 1) → G) :
     euler G (n + 1) x = x 0 / euler G n (Fin.tail x) := rfl
-@[simp] theorem euler_cons (n : ℕ) (x : G) (xs : Fin n → G) :
+theorem euler_cons (n : ℕ) (x : G) (xs : Fin n → G) :
     euler G (n + 1) (Fin.cons x xs) = x / euler G n xs := by simp
 
 /-- Extend the actual disk tuple by a unit at its initial boundary. -/
@@ -59,12 +69,13 @@ def incidence (n : ℕ) : (Fin n → G) →* (Fin (n + 1) → G) :=
       (Fin.cons 1 x : Fin (n + 1) → G) i * (Fin.snoc x 1 : Fin (n + 1) → G) i := rfl
 
 /-- At the initial term, only the original first disk contributes. -/
-@[simp] theorem incidence_zero (n : ℕ) (x : Fin (n + 1) → G) :
+theorem incidence_zero (n : ℕ) (x : Fin (n + 1) → G) :
     incidence G (n + 1) x 0 = x 0 := by simp [incidence, prependOne, appendOne]
 
 /-- At the terminal term, only the original last disk contributes. -/
-@[simp] theorem incidence_last (n : ℕ) (x : Fin (n + 1) → G) :
-    incidence G (n + 1) x (Fin.last (n + 1)) = x (Fin.last n) := by simp [incidence, prependOne, appendOne]
+theorem incidence_last (n : ℕ) (x : Fin (n + 1) → G) :
+    incidence G (n + 1) x (Fin.last (n + 1)) = x (Fin.last n) := by simp [incidence, prependOne,
+        appendOne]
 
 /-- The exact recurrence of the original incidence matrix. -/
 theorem incidence_cons (n : ℕ) (x : G) (xs : Fin n → G) :
@@ -102,7 +113,8 @@ theorem incidence_injective (n : ℕ) : Function.Injective (incidence G n) := by
       rw [← Fin.cons_self_tail x, ← Fin.cons_self_tail y, incidence_cons,
         incidence_cons] at ht
       simpa [h0] using ht
-    exact (Fin.cons_self_tail x).symm.trans ((congrArg₂ Fin.cons h0 ht).trans (Fin.cons_self_tail y))
+    exact (Fin.cons_self_tail x).symm.trans ((congrArg₂ Fin.cons h0 ht).trans
+        (Fin.cons_self_tail y))
 
 /-- Unit Euler product is exactly membership in the image of the original
 adjacent disk-incidence homomorphism. -/
@@ -139,11 +151,14 @@ def initialTerm (n : ℕ) : G →* (Fin (n + 1) → G) where
   map_one' := by ext i; cases i using Fin.cases <;> simp
   map_mul' x y := by ext i; cases i using Fin.cases <;> simp
 
-@[simp] theorem euler_initialTerm (n : ℕ) (x : G) :
-    euler G (n + 1) (initialTerm G n x) = x := by
+/-- The canonical simplification rule for the underlying construction. -/
+@[simp] theorem initialTerm_head_div_euler_tail (n : ℕ) (x : G) :
+    initialTerm G n x 0 / euler G n (Fin.tail (initialTerm G n x)) = x := by
   simp [initialTerm]
 
+
 theorem euler_surjective (n : ℕ) : Function.Surjective (euler G (n + 1)) :=
-  fun x => ⟨initialTerm G n x, euler_initialTerm G n x⟩
+  fun x => ⟨initialTerm G n x, by
+    simpa only [euler_succ] using initialTerm_head_div_euler_tail G n x⟩
 
 end Quillen.FiniteAdjacentComplex

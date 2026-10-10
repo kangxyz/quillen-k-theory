@@ -1,5 +1,13 @@
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.Nakayama
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.Nakayama
 
 /-!
 # Parameters avoiding the minimal primes
@@ -9,6 +17,8 @@ in a positive-dimensional noetherian local ring. A separate Nakayama argument
 shows that a prime principal ideal with this avoidance property forces the
 ring itself to be a domain. These statements do not assume regularity.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u

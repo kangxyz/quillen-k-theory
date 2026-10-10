@@ -1,4 +1,12 @@
-import Quillen.Resolution.Closure
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Resolution.Closure
 
 /-!
 # One-step presentations with controlled syzygy
@@ -7,6 +15,8 @@ These are actual kernel–cokernel pairs. They are used to prove closure of
 resolution-length strata without assuming that the resolving objects are
 projective or that comparison morphisms lift against arbitrary epimorphisms.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -20,9 +30,13 @@ variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 
 /-- A conflation resolving `X` by a `P`-object and a `Q`-syzygy. -/
 structure Presentation (P Q : C → Prop) (X : C) where
+  /-- The kernel object of the presentation, required to satisfy `Q`. -/
   syzygy : C
+  /-- The object satisfying `P` that admits the deflation onto `X`. -/
   middle : C
+  /-- The inflation of the syzygy into the middle object. -/
   f : syzygy ⟶ middle
+  /-- The deflation from the middle object onto the object being presented. -/
   g : middle ⟶ X
   zero : f ≫ g = 0
   conflation : E.conflation (ShortComplex.mk f g zero)
@@ -46,7 +60,7 @@ lemma inflation (T : E.Presentation P Q X) : E.inflation T.f :=
   E.inflation_of_conflation T.conflation
 
 /-- The identity presentation uses a genuine zero kernel. -/
-def of_mem (hX : P X) (h₀ : Q (0 : C)) : E.Presentation P Q X where
+def ofMem (hX : P X) (h₀ : Q (0 : C)) : E.Presentation P Q X where
   syzygy := 0
   middle := X
   f := 0
@@ -76,7 +90,7 @@ lemma resolutionLength_succ_iff (n : ℕ) (X : C) :
   · rintro ⟨R, hR⟩
     cases R with
     | of_mem hX =>
-      exact ⟨Presentation.of_mem hX ⟨.of_mem P.prop_zero, Nat.zero_le n⟩⟩
+      exact ⟨Presentation.ofMem hX ⟨.of_mem P.prop_zero, Nat.zero_le n⟩⟩
     | step S hS hP R =>
       exact ⟨⟨S.X₁, S.X₂, S.f, S.g, S.zero, hS, hP,
         ⟨R, Nat.le_of_succ_le_succ hR⟩⟩⟩
@@ -94,8 +108,8 @@ onto an object presented by a `P`-object with `Q`-kernel has `Q`-kernel, provide
 lemma kernel_mem_of_resolutionStep (hPQ : P ≤ Q) {S : ShortComplex C}
     (hS : E.conflation S) (hB : Q S.X₂) (hC : E.ResolutionStep P Q S.X₃) : Q S.X₁ := by
   obtain ⟨T⟩ := hC
-  letI : HasPullback T.g S.g := E.deflation.hasPullback S.g T.deflation
-  letI : HasPullback S.g T.g := hasPullback_symmetry _ _
+  let : HasPullback T.g S.g := E.deflation.hasPullback S.g T.deflation
+  let : HasPullback S.g T.g := hasPullback_symmetry _ _
   have hPB : Q (pullback T.g S.g) :=
     E.prop_pullback Q T.conflation T.syzygy_mem hB S.g
   have hPB' : Q (pullback S.g T.g) := Q.prop_of_iso (pullbackSymmetry _ _) hPB

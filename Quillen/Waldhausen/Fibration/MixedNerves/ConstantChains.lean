@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.ChainCategories
-import Quillen.Waldhausen.Fibration.TrivialCofibrations.Category
-import Quillen.Topology.ClassifyingSpace.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.ChainCategories
+public import Quillen.Waldhausen.Fibration.TrivialCofibrations.Category
+public import Quillen.Topology.ClassifyingSpace.Equivalence
 
 /-! # The original constant fine-chain inclusion
 
@@ -9,6 +17,8 @@ chain inclusion. The original fine arrows from zero to each vertex give an
 actual coarse natural transformation from the other composite to identity.
 Only the forward constant inclusion is asserted to be ordinal-natural.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 universe u v
@@ -61,10 +71,12 @@ def constantInitial (k : SimplexCategory) :
     exact (f.hom.hom.naturality (homOfLE (Fin.zero_le i))).symm
 
 /-- Its components are exactly the original fine chain arrows, viewed in the coarse class. -/
-@[simp] theorem constantInitial_app (k : SimplexCategory) (F : HorizontalChains N k) (i : Fin (k.len+1)) :
+@[simp] theorem constantInitial_app (k : SimplexCategory) (F : HorizontalChains N k) (i : Fin
+    (k.len + 1)) :
     ((constantInitial N k).app F).hom.hom.app i = F.obj.obj.map (homOfLE (Fin.zero_le i)) := rfl
 
-/-- Constant chains, unlike the chosen first-vertex inverse, commute strictly with every ordinal restriction. -/
+/-- Constant chains, unlike the chosen first-vertex inverse, commute strictly with every ordinal
+restriction. -/
 @[simp] theorem constantHorizontal_reindex {k l : SimplexCategory} (α : k ⟶ l) :
     constantHorizontal N l ⋙ horizontalReindex N α = constantHorizontal N k := by
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
@@ -95,7 +107,8 @@ def constantHorizontalClassifyingHomotopyEquiv :
     rw [classifyingSpaceMap_comp, TopCat.hom_comp, classifyingSpaceMap_id, TopCat.hom_id] at h
     rw [h]
   right_inv := ⟨by
-    simpa only [classifyingSpaceMap_comp, TopCat.hom_comp, classifyingSpaceMap_id, TopCat.hom_id] using
+    simpa only [classifyingSpaceMap_comp, TopCat.hom_comp, classifyingSpaceMap_id,
+      TopCat.hom_id] using
       classifyingSpaceNaturalTransformationHomotopy (constantInitial N k)⟩
 
 @[simp] theorem constantHorizontalClassifyingHomotopyEquiv_toFun :

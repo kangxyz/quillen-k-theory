@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.ExtensionCategory.Cofiber
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.Cofiber
 
 /-! # Weak cofibrations and actual acyclic cofibers
 
@@ -8,6 +16,8 @@ or K-theoretic conclusion. Together with gluing, it characterizes a weak
 cofibration by acyclicity of its actual cofiber. No cylinder or saturation
 hypothesis is needed for this characterization.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

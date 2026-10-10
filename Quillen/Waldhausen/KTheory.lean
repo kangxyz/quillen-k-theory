@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.Basic
-import Quillen.Waldhausen.SConstruction
-import Mathlib.AlgebraicTopology.SimplicialSet.TopAdj
-import Mathlib.Topology.Homotopy.HomotopyGroup
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Basic
+public import Quillen.Waldhausen.SConstruction
+public import Mathlib.AlgebraicTopology.SimplicialSet.TopAdj
+public import Mathlib.Topology.Homotopy.HomotopyGroup
 
 /-!
 # Waldhausen K-groups from the S-construction
@@ -12,6 +20,8 @@ simplices themselves. This is a definition of connective K-groups, not a
 proof of additivity, comparison with Quillen Q, or localization. In
 particular it does not construct the nonconnective spectrum of TT §7.
 -/
+@[expose] public section
+
 
 noncomputable section
 

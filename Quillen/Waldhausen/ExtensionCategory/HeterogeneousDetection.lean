@@ -3,7 +3,19 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.ExtensionCategory.PostcomposeDetection
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.PostcomposeDetection
+
+/-!
+# Heterogeneous detection of extension cofibrations
+
+Lifts joint detection of cofibrations by exact functors to the Reedy cofibration
+class on extension categories. The family and pair forms retain the original
+detection hypotheses, with the pair form allowing two different target categories.
+-/
+
+@[expose] public section
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v' u'' v'' w

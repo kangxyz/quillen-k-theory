@@ -1,4 +1,22 @@
-import Quillen.Scheme.AffineClosedGTheory
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.AlgebraicGeometry.Scheme.AffineClosedGTheory
+
+/-!
+# Affine closed localization examples
+
+Uses the public G-theory closed/open sequence for an arbitrary ideal in a
+noetherian ring. The examples identify the pushforward range with the open
+restriction kernel and record surjectivity of the degree-zero restriction.
+-/
+
+@[expose] public section
 noncomputable section
 open AlgebraicGeometry
 namespace Consumer

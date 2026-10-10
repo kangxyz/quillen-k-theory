@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.RelativeFlags
-import Quillen.Waldhausen.Approximation.WeakComma
+module
+
+public import Quillen.Waldhausen.Approximation.RelativeFlags
+public import Quillen.Waldhausen.Approximation.WeakComma
 
 /-! # Consumers of actual cross-category approximation lifting
 
@@ -13,6 +15,8 @@ consumer derives App2 from strict categorical fullness and essential surjectivit
 weak reflection, and an actual source factorization, then factors an arbitrary
 map of finite flags while retaining the source zero.
 -/
+@[expose] public section
+
 
 noncomputable section
 

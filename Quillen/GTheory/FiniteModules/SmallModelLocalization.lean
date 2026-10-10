@@ -1,7 +1,15 @@
-import Quillen.GTheory.FiniteModules.Localization.Quotient
-import Quillen.GTheory.FiniteModules.Basic
-import Quillen.CategoryTheory.SmallModel.Abelian
-import Mathlib.CategoryTheory.Localization.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.GTheory.FiniteModules.Localization.Quotient
+public import Quillen.GTheory.FiniteModules.Basic
+public import Quillen.CategoryTheory.SmallModel.Abelian
+public import Mathlib.CategoryTheory.Localization.Equivalence
 
 /-!
 # Actual finite-module localization on small models
@@ -10,6 +18,8 @@ This file retains the canonical exact localization functor while transporting
 its genuine Serre quotient theorem to the chosen small module categories.
 The comparison with principal-open sheaf restriction is a separate theorem.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

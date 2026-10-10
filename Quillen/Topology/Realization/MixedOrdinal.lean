@@ -1,5 +1,13 @@
-import Quillen.Topology.Realization.OrdinalSubdivision
-import Mathlib.Data.Finset.Sort
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.OrdinalSubdivision
+public import Mathlib.Data.Finset.Sort
 
 /-! # Mixed ordinals for the ordinary-subdivision cylinder
 
@@ -7,6 +15,8 @@ A cut selects a terminal segment of an ordinal. The mixed ordinal consists of
 one whole copy followed by a second copy of precisely that terminal segment.
 It is represented by the corresponding ordered subset of the ordinary join.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory Opposite
@@ -18,8 +28,12 @@ namespace Quillen.MixedOrdinalCylinder
 open Quillen.OrdinalSubdivision (δ)
 open Quillen.Edgewise (left right join_cases)
 
+/-- A monotone map from the simplex ordinal `n` to the two-element ordinal, specifying a
+terminal segment. -/
 abbrev Cut (n : SimplexCategory) := n ⟶ ⦋1⦌
 
+/-- A vertex of the ordinary join is selected if it is in the whole first copy or in the
+terminal segment of the second copy chosen by `φ`. -/
 def Selected {n : SimplexCategory} (φ : Cut n)
     (i : Fin ((δ.obj n).len + 1)) : Prop :=
   (∃ j, (left n n).toOrderHom j = i) ∨
@@ -27,12 +41,17 @@ def Selected {n : SimplexCategory} (φ : Cut n)
 
 /-- The actual vertices of the mixed ordinal, in their inherited join order. -/
 def Vertices {n : SimplexCategory} (φ : Cut n) := {i // Selected φ i}
-instance {n : SimplexCategory} (φ : Cut n) : LinearOrder (Vertices φ) := inferInstanceAs (LinearOrder (Subtype _))
-instance {n : SimplexCategory} (φ : Cut n) : Fintype (Vertices φ) := by classical exact inferInstanceAs (Fintype (Subtype _))
+instance {n : SimplexCategory} (φ : Cut n) : LinearOrder (Vertices φ) := inferInstanceAs
+    (LinearOrder (Subtype _))
+instance {n : SimplexCategory} (φ : Cut n) : Fintype (Vertices φ) := by classical exact
+    inferInstanceAs (Fintype (Subtype _))
 
+/-- The vertex of the mixed ordinal corresponding to `i` in the whole first copy. -/
 def firstVertex {n : SimplexCategory} (φ : Cut n) (i : Fin (n.len + 1)) : Vertices φ :=
   ⟨(left n n).toOrderHom i, Or.inl ⟨i, rfl⟩⟩
 
+/-- The vertex of the mixed ordinal corresponding to `i` in the second copy, when the cut sends
+`i` to `1`. -/
 def repeatVertex {n : SimplexCategory} (φ : Cut n) (i : Fin (n.len + 1))
     (h : φ.toOrderHom i = 1) : Vertices φ :=
   ⟨(right n n).toOrderHom i, Or.inr ⟨i, h, rfl⟩⟩

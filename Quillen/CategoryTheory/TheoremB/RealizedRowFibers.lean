@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremB.RowFibers
-import Quillen.Topology.HomotopyFiber.SourceEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.RowFibers
+public import Quillen.Topology.HomotopyFiber.SourceEquivalence
 
 /-!
 # Homotopy fibers of the actual realized replacement rows
@@ -11,6 +19,8 @@ homeomorphisms. Consequently Theorem B's hypothesis proves homotopy
 cartesianness fiberwise in each actual realized row, without replacing
 realization or homotopy fibers by formal stand-ins.
 -/
+@[expose] public section
+
 
 noncomputable section
 

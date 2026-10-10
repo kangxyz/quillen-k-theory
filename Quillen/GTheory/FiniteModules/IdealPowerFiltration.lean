@@ -1,6 +1,14 @@
-import Quillen.GTheory.FiniteModules.IdealClosedSupport
-import Quillen.Devissage.FiltrationRefinement
-import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.GTheory.FiniteModules.IdealClosedSupport
+public import Quillen.Devissage.FiltrationRefinement
+public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
 
 /-!
 # Actual ideal-power filtrations of finite modules
@@ -9,6 +17,8 @@ The recursive filtration uses the actual submodule I M and its quotient.
 Every step lowers an annihilating ideal-power exponent. Hence the displayed
 finite filtration consists of actual submodules, with I-annihilated factors.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

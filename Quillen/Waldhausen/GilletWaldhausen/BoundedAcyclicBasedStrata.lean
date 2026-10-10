@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.BoundedSSetColimit
-import Quillen.Waldhausen.Functoriality.KMap
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedSSetColimit
+public import Quillen.Waldhausen.Functoriality.KMap
 
 /-! # Strict original-zero models for bounded acyclic term strata
 
@@ -9,6 +17,8 @@ inclusions and transitions are strictly based. Exact identity functors link
 these models to the original inherited isomorphism models; no comparison
 or universe-change equivalence is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -109,8 +119,8 @@ theorem boundedAcyclicOriginalBased_KMap_inv (N k : ℕ)
     (x : (ofExactCategory (boundedStratumExactStructure P N)).K k) :
     KMap (boundedAcyclicBasedToOriginalExact P N) k
       (KMap (boundedAcyclicOriginalToBasedExact P N) k x) = x := by
-  have h := DFunLike.congr_fun (KMap_comp (boundedAcyclicOriginalToBasedExact P N)
-    (boundedAcyclicBasedToOriginalExact P N) k) x
+  have h := DFunLike.congr_fun (KMap_comp_KMap (boundedAcyclicOriginalToBasedExact P N)
+    (boundedAcyclicBasedToOriginalExact P N) k).symm x
   simpa only [KMap_id, MonoidHom.id_apply, MonoidHom.comp_apply] using h.symm
 
 /-- Composing the exact identity with the original inclusion retains its canonical K-map. -/
@@ -119,8 +129,8 @@ theorem boundedAcyclicBasedInclusion_KMap (N k : ℕ)
     KMap (fixedAcyclicInclusionExactFunctor P (-(N : ℤ)) N).waldhausenExact k
       (KMap (boundedAcyclicBasedToOriginalExact P N) k x) =
         KMap (boundedAcyclicBasedInclusionExact P N) k x :=
-  (DFunLike.congr_fun (KMap_comp (boundedAcyclicBasedToOriginalExact P N)
-    (fixedAcyclicInclusionExactFunctor P (-(N : ℤ)) N).waldhausenExact k) x).symm
+  (DFunLike.congr_fun (KMap_comp_KMap (boundedAcyclicBasedToOriginalExact P N)
+    (fixedAcyclicInclusionExactFunctor P (-(N : ℤ)) N).waldhausenExact k).symm x).symm
 
 /-- Transporting an original class before inclusion does not change its image. -/
 theorem boundedAcyclicOriginalInclusion_KMap (N k : ℕ)
@@ -137,10 +147,10 @@ theorem boundedAcyclicBasedTransition_KMap {N M : ℕ} (h : N ≤ M) (k : ℕ)
       (KMap (boundedAcyclicBasedToOriginalExact P N) k x) =
         KMap (boundedAcyclicBasedToOriginalExact P M) k
           (KMap (boundedAcyclicBasedTransitionExact P h) k x) := by
-  have h₁ := DFunLike.congr_fun (KMap_comp (boundedAcyclicBasedToOriginalExact P N)
-    (boundedStratumTransitionExact P h).waldhausenExact k) x
-  have h₂ := DFunLike.congr_fun (KMap_comp (boundedAcyclicBasedTransitionExact P h)
-    (boundedAcyclicBasedToOriginalExact P M) k) x
+  have h₁ := DFunLike.congr_fun (KMap_comp_KMap (boundedAcyclicBasedToOriginalExact P N)
+    (boundedStratumTransitionExact P h).waldhausenExact k).symm x
+  have h₂ := DFunLike.congr_fun (KMap_comp_KMap (boundedAcyclicBasedTransitionExact P h)
+    (boundedAcyclicBasedToOriginalExact P M) k).symm x
   exact h₁.symm.trans h₂
 
 end Quillen.Waldhausen.GilletWaldhausen

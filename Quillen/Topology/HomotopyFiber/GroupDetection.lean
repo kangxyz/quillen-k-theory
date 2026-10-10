@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyFiber.LESNaturality
-import Quillen.Topology.HomotopyGroups.WeakEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.LESNaturality
+public import Quillen.Topology.HomotopyGroups.WeakEquivalence
 
 /-! # Actual fiber maps detect positive homotopy-group equivalences
 
@@ -8,6 +16,8 @@ and original-map homomorphisms. The lowest step uses the actual pointed-set
 connecting function, so no group structure on the zeroth homotopy set is
 introduced.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -76,7 +86,8 @@ theorem piMap_bijective_of_fiberMap
     exact hz
   · intro a
     have hδ : connectingMap f b x hx n (p₂ a) =
-        (Quotient.mk' GenLoop.const : HomotopyGroup.Pi n (HomotopyFiber f b) (basepoint f b x hx)) := by
+        (Quotient.mk' GenLoop.const : HomotopyGroup.Pi n (HomotopyFiber f b) (basepoint f b x
+          hx)) := by
       apply hprev
       change homotopyGroupMap (map u (ContinuousMap.id B) sq.symm b) _
         (connectingMap f b x hx n (p₂ a)) = _

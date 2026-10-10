@@ -1,5 +1,13 @@
-import Quillen.Topology.FiberwiseMappingPath.BaseChange
-import Quillen.Topology.FiberwiseMappingPath.Locality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.FiberwiseMappingPath.BaseChange
+public import Quillen.Topology.FiberwiseMappingPath.Locality
 
 /-! # Exact vertical endpoint lifting after arbitrary base change
 
@@ -7,6 +15,8 @@ The finite cube lift keeps the new base coordinate supplied by the target
 map. The original boundary source and every original boundary path value
 are retained by the actual base-change homeomorphism.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 universe u v w z
@@ -16,7 +26,7 @@ variable {E : Type u} {F : Type v} {B : Type w} {T : Type z}
 
 /-- Original vertical endpoint RLP is stable under every actual base map. -/
 theorem endpoint_boundaryLifting_baseChange
-    (q : C(F,B)) (f : C(E,F)) (g : C(T,B))
+    (q : C(F, B)) (f : C(E, F)) (g : C(T, B))
     (h : CubicalSubdivision.BoundaryLifting (endpoint q f)) :
     CubicalSubdivision.BoundaryLifting
       (endpoint (baseChangedProjection q g) (baseChangedMap q f g)) := by
@@ -51,7 +61,7 @@ theorem endpoint_boundaryLifting_baseChange
 
 /-- The resulting original base-changed map is weak in every finite dimension. -/
 theorem baseChangedMap_isWeakHomotopyEquivalence
-    (q : C(F,B)) (f : C(E,F)) (g : C(T,B))
+    (q : C(F, B)) (f : C(E, F)) (g : C(T, B))
     (h : CubicalSubdivision.BoundaryLifting (endpoint q f)) :
     IsWeakHomotopyEquivalence (baseChangedMap q f g) := by
   have he := (endpoint_boundaryLifting_baseChange q f g h).isWeakHomotopyEquivalence
@@ -60,7 +70,7 @@ theorem baseChangedMap_isWeakHomotopyEquivalence
 
 /-- Every smaller base chart retains exact endpoint lifting, including empty subsets. -/
 theorem endpoint_boundaryLifting_restriction
-    (q : C(F,B)) (f : C(E,F)) (U : Set B)
+    (q : C(F, B)) (f : C(E, F)) (U : Set B)
     (h : CubicalSubdivision.BoundaryLifting (endpoint q f)) :
     CubicalSubdivision.BoundaryLifting
       (endpoint (restrictedProjection q U) (restrictedMap q f U)) := by

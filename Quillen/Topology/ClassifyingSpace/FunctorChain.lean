@@ -1,6 +1,16 @@
-import Quillen.CategoryTheory.TheoremB.StructuredIsoHomotopy
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.StructuredIsoHomotopy
 
 /-! Naturality and fixed-vertex coherence for realized functor chains. -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory Opposite MonoidalCategory CartesianMonoidalCategory
@@ -48,7 +58,7 @@ theorem functorChainNerveCylinder_const (F : C ⥤ D) (n : ℕ) :
   refine CategoryTheory.Functor.hext ?_ ?_
   · intro i; rfl
   · intro i j f
-    simp [functorChainNerveCylinder, Functor.uncurry]
+    simp [Functor.uncurry]
 
 theorem functorChainRealization_const (F : C ⥤ D) (n : ℕ)
     (x : ClassifyingSpace C) (z : |(Δ[n] : SSet.{u})|) :

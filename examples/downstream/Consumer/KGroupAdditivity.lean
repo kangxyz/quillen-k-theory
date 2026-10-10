@@ -1,6 +1,20 @@
-import Quillen.Library
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.GroupFormula
+public import Quillen.Waldhausen.Product.KEquivalence
+public import Quillen.Waldhausen.QuillenComparison.KCommutativity
+public import Quillen.Waldhausen.QuillenComparison.ExactAdditivity
+public import Quillen.Waldhausen.ExtensionCategory.ProductKEquivalence
 
 /-! Downstream contracts for original product, group-law and exact-functor maps. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Quillen Quillen.Waldhausen
 universe u v
@@ -26,7 +40,8 @@ variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   [Preadditive C] [Preadditive D] [HasFiniteBiproducts C] [HasFiniteBiproducts D]
   (E : ExactStructure C) (E' : ExactStructure D)
 theorem original_Quillen_K_zero_commutes (a b : E.K 0) : a * b = b * a := E.K_mul_comm 0 a b
-theorem original_Quillen_group (n : ℕ) : (E.KCommGroup n).toGroup = inferInstanceAs (Group (E.K n)) := rfl
+theorem original_Quillen_group (n : ℕ) : (E.KCommGroup n).toGroup = inferInstanceAs (Group (E.K n))
+  := rfl
 theorem original_Quillen_additivity (F G H : ExactFunctor E E')
     (a : F.toFunctor ⟶ G.toFunctor) (b : G.toFunctor ⟶ H.toFunctor) (w : a ≫ b = 0)
     (hc : ∀ X, E'.conflation (ShortComplex.mk (a.app X) (b.app X) (NatTrans.congr_app w X)))

@@ -1,6 +1,21 @@
-import Quillen.Library
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.LocalFiber
+public import Quillen.Waldhausen.Fibration.RelativeRows.Completion
+public import Quillen.Waldhausen.Fibration.RelativeRows.RealizationLifting
+public import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationWeakEquivalence
+public import Quillen.Waldhausen.Fibration.Rows.JointFactorization
+public import Quillen.Topology.HELP.FiberwiseWeakEquivalence
 
 /-! Consumers of the original degreewise relative-row maps. -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

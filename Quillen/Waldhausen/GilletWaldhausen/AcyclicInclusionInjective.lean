@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleInclusion
-import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsKCoverage
-import Quillen.Waldhausen.GilletWaldhausen.BoundedAcyclicKCoverage
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleInclusion
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsKCoverage
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedAcyclicKCoverage
 
 /-! # Genuine global injectivity of the original acyclic inclusion K-map
 
@@ -9,6 +17,8 @@ the original global inclusion to its actual finite-stratum inclusion. Finite
 cycle incidence detects that class. No categorywide term bound, global
 graded equivalence, or fibration theorem is an input.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -29,12 +39,12 @@ theorem finiteAcyclicTermsInclusion_KMap_square (a b : ℤ) (k : ℕ)
       (KMap (finiteAcyclicTermsExactInclusion P a b).waldhausenExact k x) =
         KMap (boundedAcyclicTermsExactInclusion P).waldhausenExact k
           (KMap (fixedAcyclicInclusionExactFunctor P a b).waldhausenExact k x) := by
-  have h₁ := DFunLike.congr_fun (KMap_comp
+  have h₁ := DFunLike.congr_fun (KMap_comp_KMap
     (finiteAcyclicTermsExactInclusion P a b).waldhausenExact
-    (fixedTermsInclusionExactFunctor P a b).waldhausenExact k) x
-  have h₂ := DFunLike.congr_fun (KMap_comp
+    (fixedTermsInclusionExactFunctor P a b).waldhausenExact k).symm x
+  have h₂ := DFunLike.congr_fun (KMap_comp_KMap
     (fixedAcyclicInclusionExactFunctor P a b).waldhausenExact
-    (boundedAcyclicTermsExactInclusion P).waldhausenExact k) x
+    (boundedAcyclicTermsExactInclusion P).waldhausenExact k).symm x
   exact h₁.symm.trans h₂
 
 omit [(abelianExactStructure A).IsKernelClosed P] in
@@ -45,12 +55,12 @@ theorem finiteAcyclicTermsInclusion_KMap_transition {N M : ℕ} (h : N ≤ M) (k
       (KMap (boundedStratumTransitionExact P h).waldhausenExact k x) =
         KMap (boundedTermsStratumTransitionExact P h).waldhausenExact k
           (KMap (finiteAcyclicTermsExactInclusion P (-(N : ℤ)) N).waldhausenExact k x) := by
-  have h₁ := DFunLike.congr_fun (KMap_comp
+  have h₁ := DFunLike.congr_fun (KMap_comp_KMap
     (boundedStratumTransitionExact P h).waldhausenExact
-    (finiteAcyclicTermsExactInclusion P (-(M : ℤ)) M).waldhausenExact k) x
-  have h₂ := DFunLike.congr_fun (KMap_comp
+    (finiteAcyclicTermsExactInclusion P (-(M : ℤ)) M).waldhausenExact k).symm x
+  have h₂ := DFunLike.congr_fun (KMap_comp_KMap
     (finiteAcyclicTermsExactInclusion P (-(N : ℤ)) N).waldhausenExact
-    (boundedTermsStratumTransitionExact P h).waldhausenExact k) x
+    (boundedTermsStratumTransitionExact P h).waldhausenExact k).symm x
   exact h₁.symm.trans h₂
 
 /-- The original global inclusion detects one by actual finite-stage algebra. -/
@@ -65,8 +75,8 @@ theorem boundedAcyclicTermsInclusion_KMap_eq_one (k : ℕ)
   have he : KMap (boundedStratumTransitionExact P h).waldhausenExact k y = 1 :=
     (finiteAcyclicTermsInclusion_KMap_injective P (-(M : ℤ)) M k)
       (((finiteAcyclicTermsInclusion_KMap_transition P h k y).trans hh).trans (map_one _).symm)
-  have hi := DFunLike.congr_fun (KMap_comp (boundedStratumTransitionExact P h).waldhausenExact
-    (fixedAcyclicInclusionExactFunctor P (-(M : ℤ)) M).waldhausenExact k) y
+  have hi := DFunLike.congr_fun (KMap_comp_KMap (boundedStratumTransitionExact P h).waldhausenExact
+    (fixedAcyclicInclusionExactFunctor P (-(M : ℤ)) M).waldhausenExact k).symm y
   calc
     x = KMap (fixedAcyclicInclusionExactFunctor P (-(N : ℤ)) N).waldhausenExact k y := hy.symm
     _ = KMap (fixedAcyclicInclusionExactFunctor P (-(M : ℤ)) M).waldhausenExact k

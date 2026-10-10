@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.CommaCategory.DualStructure
-import Quillen.Waldhausen.CofibrationClosedSubcategory.Opposite
-import Quillen.Waldhausen.WeakArrow.Structure
+module
+
+public import Quillen.Waldhausen.CommaCategory.DualStructure
+public import Quillen.Waldhausen.CofibrationClosedSubcategory.Opposite
+public import Quillen.Waldhausen.WeakArrow.Structure
 
 /-! # The genuine dual weak-arrow Waldhausen structure
 
@@ -13,6 +15,8 @@ Original weak arrows F(A)→B are closed under actual componentwise fibration
 pullbacks. The opposite category retains those original objects and arrows,
 and its cofibrations and weak maps are exactly componentwise.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 universe u v u' v'

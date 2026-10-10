@@ -1,4 +1,12 @@
-import Quillen.Devissage.Grothendieck
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Devissage.Grothendieck
 
 /-!
 # Refining finite abelian filtrations
@@ -6,6 +14,8 @@ import Quillen.Devissage.Grothendieck
 Actual pullbacks splice two finite filtrations across a short exact sequence.
 Consequently a finite filtration can be refined by filtrations of its factors.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -65,7 +75,8 @@ theorem extension (S : ShortComplex C) (hS : S.ShortExact)
     (G : (abelianExactStructure C).Filtration P S.X₃) :
     Nonempty ((abelianExactStructure C).Filtration P S.X₂) := by
   let := hS.epi_g
-  let e : S.X₁ ≅ CategoryTheory.Limits.kernel S.g := hS.fIsKernel.conePointUniqueUpToIso (limit.isLimit _)
+  let e : S.X₁ ≅ CategoryTheory.Limits.kernel S.g := hS.fIsKernel.conePointUniqueUpToIso
+    (limit.isLimit _)
   exact G.liftEpi S.g (F.ofIso e)
 
 /-- Refinement is an actual filtration of the same object, obtained by

@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.QConstruction.Basic
-import Quillen.Topology.ClassifyingSpace.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.QConstruction.Basic
+public import Quillen.Topology.ClassifyingSpace.Basic
 
 /-!
 # The homotopy groups of the restricted-span classifying space
@@ -10,6 +18,8 @@ construction on a restricted-span calculus with a chosen object. The exact
 category specialization in `Quillen.KTheory` obtains the hypotheses from the
 proved exact-structure interface.
 -/
+@[expose] public section
+
 
 noncomputable section
 

@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.TheoremA.Grothendieck
-import Quillen.CategoryTheory.TheoremA.StructuredResolution
-import Quillen.Topology.HomotopyEquiv.Based
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.Grothendieck
+public import Quillen.CategoryTheory.TheoremA.StructuredResolution
+public import Quillen.Topology.HomotopyEquiv.Based
 
 /-!
 # Realized deformation retractions for the Theorem A resolutions
@@ -12,6 +20,8 @@ are compared to the map induced by `F` by genuine continuous homotopies.
 No contractible-fiber implication for the target projection is assumed or
 proved here. That implication requires the remaining homotopy-colimit theorem.
 -/
+@[expose] public section
+
 
 noncomputable section
 

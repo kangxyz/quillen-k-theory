@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.SplitComplexes.Subcategory
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SplitComplexes.Subcategory
 
 /-!
 # Split cofibrations and degreewise split exact sequences
@@ -8,6 +16,8 @@ actual degreewise split short exact sequences whose quotient lies in the
 subcategory. The degreewise retractions are extended to full short-complex
 splittings using exactness; no chain splitting is required.
 -/
+@[expose] public section
+
 
 noncomputable section
 

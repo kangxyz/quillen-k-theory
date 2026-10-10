@@ -1,4 +1,14 @@
-import Quillen.Waldhausen.Fibration.MixedChainReplacement
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedChainReplacement
+public import Quillen.Waldhausen.SplitComplexes.Approximation
+public import Quillen.Waldhausen.SplitComplexes.FunctorialFactorization
 
 /-! # The genuine isomorphism/quasi-isomorphism finite-chain replacement
 
@@ -8,6 +18,8 @@ from its already-proved split cofibration property. Fine preservation is
 proved from actual functoriality on squares with isomorphic endpoints; the
 projection is only asserted to be a genuine quasi-isomorphism.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CochainComplex
 universe u v
@@ -37,7 +49,8 @@ def complexSubcategoryNested : NestedWeakEquivalences
 variable (hcone : ∀ {K L : CochainComplex A ℤ}, P K → P L →
   ∀ f : K ⟶ L, P (mappingCone f))
 
-/-- The unchanged identity-cone factorization, with the actual inherited ambient cofibration class. -/
+/-- The unchanged identity-cone factorization, with the actual inherited ambient cofibration
+class. -/
 def complexSubcategoryFactorization : FunctorialFactorization (complexSubcategory P) where
   middle := subcategoryMiddleFunctor P hcone
   inclusion := (splitSubcategoryFunctorialFactorization P hcone).inclusion
@@ -72,18 +85,19 @@ theorem complexSubcategoryFactorization_fineSquares :
 /-- The original finite cylinder replacement preserves every pointwise chain isomorphism. -/
 theorem complexFiniteReplacement_map_fine (n : ℕ)
     {F G : ComposableArrows P.FullSubcategory n} (α : F ⟶ G)
-    (hα : ∀ i, IsIso (α.app i)) (i : Fin (n+1)) :
+    (hα : ∀ i, IsIso (α.app i)) (i : Fin (n + 1)) :
     IsIso (((FunctorialFactorization.finiteReplacement
       (complexSubcategoryFactorization P hcone) n).map α).app i) :=
   MixedChainReplacement.finiteReplacement_map_fine (complexSubcategoryNested P)
     (complexSubcategoryFactorization P hcone) (complexSubcategoryFactorization_fineSquares P hcone)
     n α hα i
 
-/-- Original quasi-isomorphism chains become actual inherited cofibration/quasi-isomorphism chains. -/
+/-- Original quasi-isomorphism chains become actual inherited cofibration/quasi-isomorphism
+chains. -/
 theorem complexFiniteReplacement_map_cof_quasi (n : ℕ)
     (F : ComposableArrows P.FullSubcategory n)
-    (hF : ∀ {i j : Fin (n+1)} (f : i ⟶ j), QuasiIso (F.map f).hom)
-    {i j : Fin (n+1)} (f : i ⟶ j) :
+    (hF : ∀ {i j : Fin (n + 1)} (f : i ⟶ j), QuasiIso (F.map f).hom)
+    {i j : Fin (n + 1)} (f : i ⟶ j) :
     subcategoryCofibrations P (((FunctorialFactorization.finiteReplacement
       (complexSubcategoryFactorization P hcone) n).obj F).map f) ∧
     QuasiIso ((((FunctorialFactorization.finiteReplacement
@@ -95,7 +109,7 @@ theorem complexFiniteReplacement_map_cof_quasi (n : ℕ)
 
 /-- The original finite projection remains an actual quasi-isomorphism at each vertex. -/
 theorem complexFiniteProjection_quasi (n : ℕ)
-    (F : ComposableArrows P.FullSubcategory n) (i : Fin (n+1)) :
+    (F : ComposableArrows P.FullSubcategory n) (i : Fin (n + 1)) :
     QuasiIso ((((FunctorialFactorization.finiteProjection
       (complexSubcategoryFactorization P hcone) n).app F).app i).hom) :=
   MixedChainReplacement.finiteProjection_coarse (complexSubcategoryNested P)

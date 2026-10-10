@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.Realization.CompactStages
-import Quillen.Topology.HELP.StrictFiniteCriterion
+module
+
+public import Quillen.Topology.Realization.CompactStages
+public import Quillen.Topology.HELP.StrictFiniteCriterion
 
 /-!
 # Complete weak invariance of sequential closed-embedding colimits
@@ -14,6 +16,8 @@ Stage injectivity retains the exact boundary square; finite strict HELP
 then produces the original colimit map's complete weak equivalence.
 Only stagewise weakness, T1 separation and closed embeddings are assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory Limits Topology

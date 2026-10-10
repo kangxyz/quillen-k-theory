@@ -1,6 +1,14 @@
-import Quillen.Topology.HomotopyFiber.WeakPullback
-import Quillen.Topology.HomotopyFiber.ProjectionFibration
-import Quillen.Topology.HomotopyFiber.GroupDetection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.WeakPullback
+public import Quillen.Topology.HomotopyFiber.ProjectionFibration
+public import Quillen.Topology.HomotopyFiber.GroupDetection
 
 /-! # Weak source equivalence for the original homotopy-fiber map
 
@@ -9,6 +17,8 @@ pullback of the weak source map along the genuine fiber projection fibration.
 Actual strict/homotopy pullback comparison and weakly contractible fibers
 prove its full weak equivalence, including π₀ and empty-space cases.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

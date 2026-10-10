@@ -1,4 +1,12 @@
-import Quillen.Devissage.Setup
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Devissage.Setup
 
 /-!
 # Full faithfulness of the Q-inclusion in dévissage
@@ -12,6 +20,8 @@ Consequently the dévissage Q-functor is fully faithful. This statement does
 not require the finite-filtration hypothesis and does not assert essential
 surjectivity of the Q-functor or the homotopical dévissage theorem.
 -/
+@[expose] public section
+
 
 noncomputable section
 

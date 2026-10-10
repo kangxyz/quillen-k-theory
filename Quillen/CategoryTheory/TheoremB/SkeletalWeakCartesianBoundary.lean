@@ -3,19 +3,23 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianCharts
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianProducts
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianDomains
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianBoundary
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianCharts
+public import Quillen.Topology.Realization.Cartesian.WeakProducts
+public import Quillen.Topology.Realization.Cartesian.WeakDomains
+public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianBoundary
 
 /-! # Finite-face assembly for arbitrary coefficient transformations -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 variable {D : Type u} [SmallCategory D] {H J : D ⥤ SSet.{u}} (η : H ⟶ J)
 
@@ -87,4 +91,4 @@ theorem replacementCellAttaching_weakCartesian (htrans : TransitionWeakCartesian
   restrictedSimplexChart_weakCartesian η htrans ((nerve D).skeleton n) hchart
     s.1 ∂Δ[n] (fun _ a ↦ replacementBaseCell_boundary s a) n
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

@@ -3,13 +3,17 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.GilletWaldhausen
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.GilletWaldhausen
 
 /-! # Arbitrary-scheme strict-perfect comparison consumers
 
 These retain the actual Q/S/single forward map, K₀ preimages, both inverse laws,
 and the existing triangle to locally-perfect K without asserting its equivalence.
 -/
+@[expose] public section
+
 noncomputable section
 open Quillen Quillen.PerfectComplexes AlgebraicGeometry
 universe u

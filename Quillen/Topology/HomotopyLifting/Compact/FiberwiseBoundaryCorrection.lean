@@ -1,6 +1,14 @@
-import Quillen.Topology.HomotopyLifting.Compact.Stationary
-import Quillen.Topology.HomotopyFiber.BoundaryCorrection
-import Quillen.Topology.HomotopyEquiv.Fiberwise
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyLifting.Compact.Stationary
+public import Quillen.Topology.HomotopyFiber.BoundaryCorrection
+public import Quillen.Topology.HomotopyEquiv.Fiberwise
 
 /-! # Compact-parameter boundary-track correction over a fixed base
 
@@ -9,6 +17,8 @@ The original interval-square extension is corrected by a stationary lift.
 Its duration vanishes on both path endpoints, the initial correction time,
 and the whole prescribed boundary. Thus all original data survive.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -23,15 +33,15 @@ variable {A D : TopCat.{u}} {E B : Type u} [TopologicalSpace E] [TopologicalSpac
 /-- Correct the prescribed boundary track, preserving the displayed base and
 both endpoint maps everywhere in the ambient parameter space. -/
 theorem compact_correct_boundary_over_fixed_base
-    (q : C(E,B)) (hq : CompactHomotopyLiftingProperty q)
+    (q : C(E, B)) (hq : CompactHomotopyLiftingProperty q)
     (i : A ⟶ D) (hi : TheoremA.homotopyExtensionProperty i)
-    (duration : C(D,unitInterval)) (hzero : ∀ x,duration x = 0 ↔ x ∈ Set.range i)
-    (base : C(D,B)) {f g : C(D,E)} (K : f.Homotopy g)
+    (duration : C(D, unitInterval)) (hzero : ∀ x, duration x = 0 ↔ x ∈ Set.range i)
+    (base : C(D, B)) {f g : C(D, E)} (K : f.Homotopy g)
     (hK : HomotopyOver base q K)
     (L : (f.comp i.hom).Homotopy (g.comp i.hom))
     (Q : (K.compContinuousMap i.hom).toContinuousMap.HomotopyRel L.toContinuousMap
       {z : unitInterval × A | z.1 = 0 ∨ z.1 = 1})
-    (hQ : ∀ s t a,q (Q (s,(t,a))) = base (i a)) :
+    (hQ : ∀ s t a, q (Q (s, (t, a))) = base (i a)) :
     ∃ K' : f.Homotopy g,HomotopyOver base q K' ∧ ∀ t a,K' (t,i a) = L (t,a) := by
   let F : C(D × unitInterval,E) := K.toContinuousMap.comp ContinuousMap.prodSwap
   let R : C((A × unitInterval) × unitInterval,E) :=
@@ -93,13 +103,13 @@ theorem compact_correct_boundary_over_fixed_base
 /-- Remove the actual constant prefix on the boundary without changing the
 base coordinate, either endpoint, or any prescribed boundary value. -/
 theorem compact_unpad_boundary_over_fixed_base
-    (q : C(E,B)) (hq : CompactHomotopyLiftingProperty q)
+    (q : C(E, B)) (hq : CompactHomotopyLiftingProperty q)
     (i : A ⟶ D) (hi : TheoremA.homotopyExtensionProperty i)
-    (duration : C(D,unitInterval)) (hzero : ∀ x,duration x = 0 ↔ x ∈ Set.range i)
-    (base : C(D,B)) {f g : C(D,E)} (K : f.Homotopy g) (hK : HomotopyOver base q K)
+    (duration : C(D, unitInterval)) (hzero : ∀ x, duration x = 0 ↔ x ∈ Set.range i)
+    (base : C(D, B)) {f g : C(D, E)} (K : f.Homotopy g) (hK : HomotopyOver base q K)
     (L : (f.comp i.hom).Homotopy (g.comp i.hom))
-    (hL : ∀ t a,q (L (t,a)) = base (i a))
-    (hKL : ∀ t a,K (t,i a) = Path.delayReflLeft 0 (L.evalAt a) t) :
+    (hL : ∀ t a, q (L (t, a)) = base (i a))
+    (hKL : ∀ t a, K (t, i a) = Path.delayReflLeft 0 (L.evalAt a) t) :
     ∃ K' : f.Homotopy g,HomotopyOver base q K' ∧ ∀ t a,K' (t,i a) = L (t,a) := by
   let Q : (K.compContinuousMap i.hom).toContinuousMap.HomotopyRel L.toContinuousMap
       {z : unitInterval × A | z.1 = 0 ∨ z.1 = 1} := {

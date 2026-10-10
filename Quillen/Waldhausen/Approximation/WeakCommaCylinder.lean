@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.WeakComma
-import Quillen.Waldhausen.Additivity.CoproductAlgebra
-import Quillen.KTheory.FundamentalGroup.Basic
+module
+
+public import Quillen.Waldhausen.Approximation.WeakComma
+public import Quillen.Waldhausen.Additivity.CoproductAlgebra
+public import Quillen.KTheory.FundamentalGroup.Basic
 
 /-!
 # Coherent cylinder fillings in the original approximation comma category
@@ -18,6 +20,8 @@ parallel arrows induce endpoint-fixed homotopic paths on the actual classifying
 space. No strict coequalizer, higher contractibility, or approximation comparison
 is assumed or asserted.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -140,8 +144,13 @@ def weakCommaCylinderProjection (A : WeakComma hF Y) :
 
 /-- A coherent cylinder filling, entirely in the original weak comma category. -/
 structure ParallelFilling {A B : WeakComma hF Y} (f g : A ⟶ B) where
+  /-- The weak-comma object in which the two cylinder attachment triangles are filled. -/
   target : WeakComma hF Y
+  /-- The map from the common target `B` to the filling object, with a cofibration as its
+  underlying source-category map. -/
   fromTarget : B ⟶ target
+  /-- The map from the chosen cylinder on `A` into the filling object; its endpoint composites
+  agree with `f` and `g` followed by `fromTarget`. -/
   fromCylinder : weakCommaCylinder hF T Y A ⟶ target
   fromTarget_cof : W.cof fromTarget.left.hom
   first : weakCommaEndpointZero h hF T Y A ≫ fromCylinder = f ≫ fromTarget
@@ -292,14 +301,14 @@ def parallelLoopNullhomotopy {A B : WeakComma hF Y} (f g : A ⟶ B) :
 omit [HasBinaryCoproducts C] in
 /-- Every time slice retains the original source vertex, including the actual
 App2 object obtained from the specified source zero when that object is used. -/
-@[simp] theorem parallelLoopNullhomotopy_source {A B : WeakComma hF Y} (f g : A ⟶ B)
+theorem parallelLoopNullhomotopy_source {A B : WeakComma hF Y} (f g : A ⟶ B)
     (t : unitInterval) :
     parallelLoopNullhomotopy h hF T Y f g (t, 0) = classifyingSpacePoint A :=
   Path.Homotopy.source _ _
 
 omit [HasBinaryCoproducts C] in
 /-- The nullhomotopy is based at the same original source vertex at both ends. -/
-@[simp] theorem parallelLoopNullhomotopy_target {A B : WeakComma hF Y} (f g : A ⟶ B)
+theorem parallelLoopNullhomotopy_target {A B : WeakComma hF Y} (f g : A ⟶ B)
     (t : unitInterval) :
     parallelLoopNullhomotopy h hF T Y f g (t, 1) = classifyingSpacePoint A :=
   Path.Homotopy.target _ _

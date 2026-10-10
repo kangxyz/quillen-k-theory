@@ -1,5 +1,13 @@
-import Quillen.Resolution.InheritedQ
-import Quillen.KTheory.Map.HomotopyEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Resolution.InheritedQ
+public import Quillen.KTheory.Map.HomotopyEquivalence
 
 /-!
 # Quillen's length-one resolution theorem
@@ -14,6 +22,8 @@ This is Weibel, *The K-book*, V.3.1.1. The unrestricted finite-resolution
 statement additionally needs resolution-length filtration and union passage;
 it is not silently claimed by the theorem in this module.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -100,8 +110,10 @@ def KEquivOfLengthOne (h : ∀ X, E.ResolutionLength P 1 X) (n : ℕ) :
     (ExactSubcategory.exactStructure E P).K n ≃* E.K n :=
   MulEquiv.ofBijective (inclusionKMap E P n) (inclusionKMap_bijective_of_length_one E P h n)
 
-@[simp] theorem KEquivOfLengthOne_toMonoidHom
-    (h : ∀ X, E.ResolutionLength P 1 X) (n : ℕ) :
-    (KEquivOfLengthOne E P h n).toMonoidHom = inclusionKMap E P n := rfl
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem KEquivOfLengthOne_coe (h : ∀ X, E.ResolutionLength P 1 X) (n : ℕ) :
+    (↑(KEquivOfLengthOne E P h n) : (ExactSubcategory.exactStructure E P).K n →* E.K n) =
+        inclusionKMap E P n := rfl
+
 
 end Quillen.Resolution

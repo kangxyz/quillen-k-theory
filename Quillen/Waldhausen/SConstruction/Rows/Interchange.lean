@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.SConstruction.Rows.ReedyArrows
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.ReedyArrows
 
 /-! # Interchanging the two genuine quotient-row directions
 
@@ -6,6 +14,8 @@ The transposition keeps every original component and map. Its horizontal
 cofibrations are genuine row cofibrations, obtained from the proved exact
 Reedy-arrow interchange, not merely componentwise cofibrations.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -85,7 +95,7 @@ def rowInterchange (m n : SimplexCategory) :
 
 /-- Every original horizontal arrow is the proved genuine row/arrow transpose. -/
 theorem transposeRows_horizontalArrow {m n : SimplexCategory}
-    (i j k : Fin (n.len+1)) (hij : i ≤ j) (hjk : j ≤ k) :
+    (i j k : Fin (n.len + 1)) (hij : i ≤ j) (hjk : j ≤ k) :
     transposeRows W m n ⋙ horizontalArrow (waldhausenStructure W m) i j k hij hjk =
       postcompose (waldhausenStructure W n) (ExtensionCategory.waldhausenStructure W)
         (horizontalArrow_exact W i j k hij hjk) m ⋙ rowsToReedy W m := by
@@ -114,14 +124,16 @@ theorem transposeRows_exact (m n : SimplexCategory) :
     let : (transposeRows W m n).IsEquivalence := (rowInterchange W m n).isEquivalence_functor
     exact h.map (transposeRows W m n)
 
-/-- Ordinal restriction in the old outer direction becomes restriction in the new inner direction. -/
+/-- Ordinal restriction in the old outer direction becomes restriction in the new inner
+direction. -/
 theorem transposeRows_reindex_outer {m m' n : SimplexCategory} (α : m' ⟶ m) :
     reindex (waldhausenStructure W n) α ⋙ transposeRows W m' n =
       transposeRows W m n ⋙ postcompose (waldhausenStructure W m)
         (waldhausenStructure W m') (reindex_exact W α) n := by
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 
-/-- Ordinal restriction in the old inner direction becomes restriction in the new outer direction. -/
+/-- Ordinal restriction in the old inner direction becomes restriction in the new outer
+direction. -/
 theorem transposeRows_reindex_inner {m n n' : SimplexCategory} (α : n' ⟶ n) :
     postcompose (waldhausenStructure W n) (waldhausenStructure W n') (reindex_exact W α) m ⋙
         transposeRows W m n' = transposeRows W m n ⋙ reindex (waldhausenStructure W m) α := by

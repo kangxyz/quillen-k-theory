@@ -1,5 +1,13 @@
-import Quillen.Topology.Realization.CylinderIso
-import Mathlib.CategoryTheory.MorphismProperty.Retract
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.CylinderIso
+public import Mathlib.CategoryTheory.MorphismProperty.Retract
 
 /-!
 # Realization and products with a standard simplex
@@ -9,6 +17,8 @@ proved cylinder comparison implies the full product comparison for every
 standard simplex. This supplies its inverse and naturality without choosing
 triangulations independently on different simplices.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -43,7 +53,8 @@ theorem productComparison_isIso_of_retract {C D : Type*} [Category C] [Category 
     [CartesianMonoidalCategory C] [CartesianMonoidalCategory D]
     (F : C ⥤ D) (X : C) {Y Z : C} (r : Retract Y Z)
     [IsIso (prodComparison F X Z)] : IsIso (prodComparison F X Y) := by
-  apply MorphismProperty.of_retract (P := MorphismProperty.isomorphisms D) (g := prodComparison F X Z)
+  apply MorphismProperty.of_retract (P := MorphismProperty.isomorphisms D) (g := prodComparison
+    F X Z)
   · refine { i := Arrow.homMk (F.map (X ◁ r.i)) (F.obj X ◁ F.map r.i)
                (prodComparison_natural_whiskerLeft F r.i)
              r := Arrow.homMk (F.map (X ◁ r.r)) (F.obj X ◁ F.map r.r)

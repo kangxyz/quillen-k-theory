@@ -1,6 +1,14 @@
-import Quillen.Algebra.RegularLocal.ProjectiveDimension
-import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
-import Mathlib.RingTheory.LocalProperties.ProjectiveDimension
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Algebra.RegularLocal.ProjectiveDimension
+public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
+public import Mathlib.RingTheory.LocalProperties.ProjectiveDimension
 
 /-!
 # Objectwise globalization of finite projective dimension
@@ -10,6 +18,8 @@ prime localization of a finite module has finite projective dimension, these
 opens cover the spectrum. Quasi-compactness supplies a bound for that module,
 without imposing a uniform dimension bound on the ring.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -23,14 +33,20 @@ variable (R : Type u) [CommRing R] [IsNoetherianRing R]
 
 /-- A selected actual finite-free presentation with its finite syzygy. -/
 structure FiniteFreeCover (M : FiniteModule.{u, u} R) where
+  /-- The finite syzygy, identified as the kernel of the cover by `shortExact`. -/
   K : FiniteModule.{u, u} R
+  /-- The finite free module surjecting onto `M`. -/
   P : FiniteModule.{u, u} R
+  /-- The inclusion of the finite syzygy into the finite free module. -/
   i : K ⟶ P
+  /-- The cover map from the finite free module onto `M`. -/
   p : P ⟶ M
   zero : i ≫ p = 0
   free : Module.Free R P.obj
   shortExact : (ShortComplex.mk i p zero).ShortExact
 
+/-- Choose a short exact presentation of the finite module `M` by a finite free module and its
+finite syzygy over the noetherian ring `R`. -/
 def finiteFreeCover (M : FiniteModule.{u, u} R) : FiniteFreeCover R M :=
   Classical.choice (by
     obtain ⟨K, P, i, p, w, hf, hs⟩ := exists_finiteFree_shortExact R M
@@ -78,6 +94,7 @@ theorem localized_projectiveDimension_iff_syzygy (n : ℕ) (M : FiniteModule.{u,
       exact L.projective_obj C.P.obj
     exact (hSL.hasProjectiveDimensionLT_X₃_iff n hP).trans (ih C.K)
 
+omit [IsNoetherianRing R] in
 /-- Membership of the actual open free locus agrees with projectivity of
 mathlib's chosen localized-module model at the prime. -/
 theorem mem_freeLocus_iff_projective_localized (M : FiniteModule.{u, u} R) (p : PrimeSpectrum R) :

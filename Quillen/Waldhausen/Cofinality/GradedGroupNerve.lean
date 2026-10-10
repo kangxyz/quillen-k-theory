@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.GradeRealizability
-import Mathlib.CategoryTheory.SingleObj
-import Mathlib.Tactic.Abel
+module
+
+public import Quillen.Waldhausen.Cofinality.GradeRealizability
+public import Mathlib.CategoryTheory.SingleObj
+public import Mathlib.Tactic.Abel
 
 /-! # Realized grade rows as the genuine group nerve
 
@@ -13,6 +15,8 @@ Finite cofibration replacement and actual cofiber completion realize every
 chain of group grades, provided the grades have actual object representatives.
 The isomorphism retains the original interval values as original nerve arrows.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial

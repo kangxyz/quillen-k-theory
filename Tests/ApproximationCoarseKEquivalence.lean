@@ -3,10 +3,14 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.CoarseKEquivalence
-import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
+module
+
+public import Quillen.Waldhausen.Approximation.CoarseKEquivalence
+public import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
 
 /-! Actual coarse-cylinder maps and a genuine complex-model specialization. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

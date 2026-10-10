@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.FineChains
-import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationWeakEquivalence
-import Quillen.Waldhausen.Fibration.RelativeRows.ChainReplacement
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.FineChains
+public import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationWeakEquivalence
+public import Quillen.Waldhausen.Fibration.RelativeRows.ChainReplacement
 
 /-! # Both original directions of the mixed chain nerves
 
@@ -8,6 +16,8 @@ The coarse-chain objects and their cofibration subcategory are the previously
 constructed original categories. The transposed direction uses actual
 fine-weak chains and pointwise coarse (or coarse-cofibration) maps.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 universe u v
@@ -22,6 +32,8 @@ def coarseChainFineWeak (n : SimplexCategory) : MorphismProperty (CoarseWeakChai
   pointwise V.weq (coarseWeakChains N n)
 instance coarseChainFineWeak_multiplicative (n : SimplexCategory) :
     (coarseChainFineWeak N n).IsMultiplicative := pointwise_multiplicative _ _
+/-- The category of coarse-weak chains in simplicial degree `n`, retaining only natural
+transformations that are pointwise fine weak equivalences. -/
 abbrev FineWeakCoarseChains (n : SimplexCategory) := WideSubcategory (coarseChainFineWeak N n)
 
 /-- Original coarse-weak transformations between actual fine-weak chains. -/
@@ -50,7 +62,8 @@ def horizontalInclusion (k : SimplexCategory) : HorizontalCofChains N k ⥤ Hori
   map_comp _ _ := rfl
 
 /-- Literal ordinal restriction of the existing coarse-weak chains. -/
-def coarseChainReindex {m n : SimplexCategory} (α : m ⟶ n) : CoarseWeakChain N n ⥤ CoarseWeakChain N m where
+def coarseChainReindex {m n : SimplexCategory} (α : m ⟶ n) : CoarseWeakChain N n ⥤
+    CoarseWeakChain N m where
   obj F := ⟨(SimplexCategory.toCat.map α).toFunctor ⋙ F.obj,
     fun f ↦ F.property ((SimplexCategory.toCat.map α).toFunctor.map f)⟩
   map f := (coarseWeakChains N m).homMk
@@ -58,7 +71,8 @@ def coarseChainReindex {m n : SimplexCategory} (α : m ⟶ n) : CoarseWeakChain 
   map_id _ := rfl
   map_comp _ _ := rfl
 /-- Literal ordinal restriction retains both original coarse-chain predicates. -/
-def cofChainReindex {m n : SimplexCategory} (α : m ⟶ n) : CofibrationWeakChain N n ⥤ CofibrationWeakChain N m where
+def cofChainReindex {m n : SimplexCategory} (α : m ⟶ n) : CofibrationWeakChain N n ⥤
+    CofibrationWeakChain N m where
   obj F := ⟨(SimplexCategory.toCat.map α).toFunctor ⋙ F.obj,
     ⟨fun f ↦ F.property.1 ((SimplexCategory.toCat.map α).toFunctor.map f),
       fun f ↦ F.property.2 ((SimplexCategory.toCat.map α).toFunctor.map f)⟩⟩
@@ -75,13 +89,15 @@ def fineWeakCoarseReindex {m n : SimplexCategory} (α : m ⟶ n) :
   map_id _ := rfl
   map_comp _ _ := rfl
 /-- The accepted fine-weak cofibration-chain category restricts by original components. -/
-def fineWeakCofReindex {m n : SimplexCategory} (α : m ⟶ n) : FineWeakChains N n ⥤ FineWeakChains N m where
+def fineWeakCofReindex {m n : SimplexCategory} (α : m ⟶ n) : FineWeakChains N n ⥤ FineWeakChains
+    N m where
   obj F := ⟨(cofChainReindex N α).obj F.obj⟩
   map f := ⟨(cofChainReindex N α).map f.hom, fun i ↦ f.property (α.toOrderHom i)⟩
   map_id _ := rfl
   map_comp _ _ := rfl
 /-- Fine-index restriction of the transposed coarse-arrow category. -/
-def horizontalReindex {k l : SimplexCategory} (α : k ⟶ l) : HorizontalChains N l ⥤ HorizontalChains N k where
+def horizontalReindex {k l : SimplexCategory} (α : k ⟶ l) : HorizontalChains N l ⥤
+    HorizontalChains N k where
   obj F := ⟨(fineReindex V α).obj F.obj⟩
   map f := ⟨(fineReindex V α).map f.hom,
     fineReindex_coarse (N := N) (V := V) α f.hom f.property⟩
@@ -122,10 +138,19 @@ def horizontalCofCategories : SimplexCategoryᵒᵖ ⥤ Cat.{v, max u v} where
   map_id _ := by apply Cat.Hom.ext; apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
   map_comp _ _ := by apply Cat.Hom.ext; apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 
+/-- The simplicial family of nerves of coarse-weak chain categories with pointwise fine-weak
+morphisms; the outer index records coarse-chain degree. -/
 def coarseChainNerve : SimplexCategoryᵒᵖ ⥤ SSet.{max u v} := coarseChainCategories N ⋙ nerveFunctor
+/-- The simplicial family of nerves of coarse-weak cofibration-chain categories with pointwise
+fine-weak morphisms. -/
 def cofChainNerve : SimplexCategoryᵒᵖ ⥤ SSet.{max u v} := cofChainCategories N ⋙ nerveFunctor
+/-- The simplicial family of nerves of fine-weak chain categories with pointwise coarse-weak
+morphisms; the outer index records fine-chain degree. -/
 def horizontalNerve : SimplexCategoryᵒᵖ ⥤ SSet.{max u v} := horizontalCategories N ⋙ nerveFunctor
-def horizontalCofNerve : SimplexCategoryᵒᵖ ⥤ SSet.{max u v} := horizontalCofCategories N ⋙ nerveFunctor
+/-- The simplicial family of nerves of fine-weak chain categories with pointwise morphisms that
+are both cofibrations and coarse weak equivalences. -/
+def horizontalCofNerve : SimplexCategoryᵒᵖ ⥤ SSet.{max u v} := horizontalCofCategories N ⋙
+    nerveFunctor
 
 /-- The original inclusion is natural in both original indices. -/
 def chainInclusion : cofChainNerve N ⟶ coarseChainNerve N where

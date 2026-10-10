@@ -1,8 +1,18 @@
-import Quillen.Topology.Realization.Edgewise
-import Quillen.Topology.Realization.HomotopyBridge
-import Mathlib.Topology.Homotopy.Contractible
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.Edgewise
+public import Quillen.Topology.Realization.HomotopyBridge
+public import Mathlib.Topology.Homotopy.Contractible
 
 /-! Explicit contraction of the edgewise subdivision of every representable. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite MonoidalCategory
 open scoped Simplicial Topology
@@ -63,7 +73,8 @@ def contractLeft {p r : SimplexCategory} (s : ε.obj p ⟶ r) (t : p ⟶ ⦋1⦌
 /-- Increase second-half endpoints toward the last vertex. -/
 def contractRight {p r : SimplexCategory} (s : ε.obj p ⟶ r) (t : p ⟶ ⦋1⦌) : p ⟶ r :=
   SimplexCategory.Hom.mk {
-    toFun i := if t.toOrderHom i = 0 then s.toOrderHom ((right p p).toOrderHom i) else Fin.last r.len
+    toFun i := if t.toOrderHom i = 0 then s.toOrderHom ((right p p).toOrderHom i) else Fin.last
+      r.len
     monotone' := by
       intro i j hij
       dsimp only
@@ -174,7 +185,8 @@ theorem contractibleSpace_simplex (n : ℕ) : ContractibleSpace |subdivision (Δ
   apply (contractible_iff_id_nullhomotopic _).2
   refine ⟨realizationPoint (simplexVertex n), ?_⟩
   have h := realizationSimplicialHomotopy (simplexContraction.{u} n)
-  have hc : (SSet.toTop.map (SSet.const (X := subdivision (Δ[n] : SSet.{u})) (simplexVertex.{u} n))).hom =
+  have hc : (SSet.toTop.map (SSet.const (X := subdivision (Δ[n] : SSet.{u})) (simplexVertex.{u}
+    n))).hom =
       ContinuousMap.const _ (realizationPoint (simplexVertex n)) := by
     ext x
     exact realization_const_apply _ x

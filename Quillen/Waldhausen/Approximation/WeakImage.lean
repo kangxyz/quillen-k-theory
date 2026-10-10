@@ -3,9 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.CofibrationClosedSubcategory
-import Quillen.Waldhausen.Approximation.FactorizationData
-import Mathlib.CategoryTheory.ObjectProperty.ClosedUnderIsomorphisms
+module
+
+public import Quillen.Waldhausen.CofibrationClosedSubcategory
+public import Quillen.Waldhausen.FunctorialFactorization.Basic
+public import Mathlib.CategoryTheory.ObjectProperty.ClosedUnderIsomorphisms
+public import Quillen.Waldhausen.Approximation.Basic
 
 /-! # The actual weak image and its genuine Waldhausen closure
 
@@ -16,6 +19,8 @@ closure by lifting both legs from one source representative and gluing.
 No all-target App2, image closure, derived essential-image identification,
 or density/cofinality conclusion is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'
@@ -133,7 +138,8 @@ theorem corestrict_exact : IsExact W.cof W.weq
   pushout hi hp := IsPushout.of_map_of_faithful (objects V F).ι (hF.pushout hi hp)
 
 /-- Restricted App2 becomes genuine App2 on this actually constructed target category. -/
-theorem corestrict_approximation : HasApproximationProperty W (waldhausenStructure h hF) (corestrict V F) where
+theorem corestrict_approximation : HasApproximationProperty W (waldhausenStructure h hF)
+    (corestrict V F) where
   reflects f hf := h.reflects f hf
   lift {X} {Y} f := by
     obtain ⟨X', i, p, hi, hp, he⟩ := h.lift f.hom Y.property

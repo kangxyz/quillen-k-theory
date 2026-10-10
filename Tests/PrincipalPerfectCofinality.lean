@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.Affine.PrincipalPerfectCofinality
-import Mathlib.Data.ZMod.Basic
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalPerfectCofinality
+public import Mathlib.Data.ZMod.Basic
 
 /-! # Original all-perfect principal endpoint consumers
 
@@ -12,6 +14,8 @@ These consumers check both original comparison squares, exact positive
 forward maps, unique lifts onto the honest K₀ image, the literal homotopy-
 fiber boundary criterion, zero localization, and the empty affine case.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

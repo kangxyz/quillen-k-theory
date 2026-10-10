@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.SequenceLift
-import Quillen.Waldhausen.Approximation.WeakFlags
-import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
+module
+
+public import Quillen.Waldhausen.Approximation.SequenceLift
+public import Quillen.Waldhausen.Approximation.WeakFlags
+public import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
 
 /-!
 # Actual weak-flag replacement objects for approximation functors
@@ -17,6 +19,8 @@ its comparison at zero is exactly the unique isomorphism between zero objects.
 Consequently the original weak-flag comma category is nonempty in every degree.
 This is not a contractibility statement or a K-theory comparison theorem.
 -/
+@[expose] public section
+
 
 noncomputable section
 

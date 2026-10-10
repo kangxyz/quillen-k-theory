@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.CommaCategory.Structure
-import Quillen.Waldhausen.Duality.Basic
+module
+
+public import Quillen.Waldhausen.CommaCategory.Structure
+public import Quillen.Waldhausen.Duality.Basic
 
 /-! # Actual opposite comma Waldhausen structures
 
@@ -12,6 +14,8 @@ The underlying category is exactly the opposite of the existing comma of
 original arrows F(A)→B. Genuine pointwise pullbacks give its pushouts, with
 both original projection functors retained literally.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 universe u v u' v'
@@ -25,8 +29,12 @@ variable {C : Type u} [Category.{v} C] {D : Type u'} [Category.{v'} D]
   (V : Structure C) (W : Structure D) (Vd : Structure Cᵒᵖ) (Wd : Structure Dᵒᵖ)
   (F : C ⥤ D) (hF : IsExact V.cof V.weq W.cof W.weq F)
 
+/-- Cofibrations in the opposite comma category, detected on both opposite projection functors
+by `Vd.cof` and `Wd.cof`. -/
 def dualCof : MorphismProperty (Obj F)ᵒᵖ :=
   Vd.cof.inverseImage (Comma.fst F (𝟭 D)).op ⊓ Wd.cof.inverseImage (Comma.snd F (𝟭 D)).op
+/-- Weak equivalences in the opposite comma category, detected on both opposite projection
+functors by `Vd.weq` and `Wd.weq`. -/
 def dualWeq : MorphismProperty (Obj F)ᵒᵖ :=
   Vd.weq.inverseImage (Comma.fst F (𝟭 D)).op ⊓ Wd.weq.inverseImage (Comma.snd F (𝟭 D)).op
 
@@ -47,13 +55,15 @@ theorem isPullback_of_pointwise {P B E A : Obj F}
       apply hr.hom_ext
       · calc
           (F.map l ≫ P.hom) ≫ i.right = F.map l ≫ F.map i.left ≫ B.hom := by
-            simpa only [Category.assoc, Functor.id_map] using congrArg (fun k => F.map l ≫ k) i.w.symm
+            simpa only [Category.assoc, Functor.id_map] using congrArg (fun k => F.map l ≫ k)
+              i.w.symm
           _ = F.map a.left ≫ B.hom := by rw [← Category.assoc, ← F.map_comp, hl.lift_fst]
           _ = T.hom ≫ a.right := a.w
           _ = (T.hom ≫ r) ≫ i.right := by simp [r]
       · calc
           (F.map l ≫ P.hom) ≫ j.right = F.map l ≫ F.map j.left ≫ E.hom := by
-            simpa only [Category.assoc, Functor.id_map] using congrArg (fun k => F.map l ≫ k) j.w.symm
+            simpa only [Category.assoc, Functor.id_map] using congrArg (fun k => F.map l ≫ k)
+              j.w.symm
           _ = F.map b.left ≫ E.hom := by rw [← Category.assoc, ← F.map_comp, hl.lift_snd]
           _ = T.hom ≫ b.right := b.w
           _ = (T.hom ≫ r) ≫ j.right := by simp [r]
@@ -144,10 +154,12 @@ def dualWaldhausenStructure : Structure (Obj F)ᵒᵖ where
     obtain ⟨hl', hr'⟩ := pointwise_of_dual_isPushout Vd Wd F hf' h'
     exact ⟨Vd.gluing a.unop.left.op b.unop.left.op d.unop.left.op p.unop.left.op hf.1 hf'.1 hl hl'
       (congrArg (fun k => k.unop.left.op) ef) (congrArg (fun k => k.unop.left.op) eg)
-      (congrArg (fun k => k.unop.left.op) ei) (congrArg (fun k => k.unop.left.op) ej) ha.1 hb.1 hd.1,
+      (congrArg (fun k => k.unop.left.op) ei) (congrArg (fun k => k.unop.left.op) ej) ha.1 hb.1
+        hd.1,
       Wd.gluing a.unop.right.op b.unop.right.op d.unop.right.op p.unop.right.op hf.2 hf'.2 hr hr'
       (congrArg (fun k => k.unop.right.op) ef) (congrArg (fun k => k.unop.right.op) eg)
-      (congrArg (fun k => k.unop.right.op) ei) (congrArg (fun k => k.unop.right.op) ej) ha.2 hb.2 hd.2⟩
+      (congrArg (fun k => k.unop.right.op) ei) (congrArg (fun k => k.unop.right.op) ej) ha.2
+        hb.2 hd.2⟩
 
 theorem dual_source_exact : IsExact (dualWaldhausenStructure V W Vd Wd F hF).cof
     (dualWaldhausenStructure V W Vd Wd F hF).weq Vd.cof Vd.weq (Comma.fst F (𝟭 D)).op where

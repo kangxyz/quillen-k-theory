@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.GilletWaldhausen.BoundedStrata
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedStrata
 
 /-! # Actual finite S-grids lift into bounded exact strata
 
@@ -7,6 +15,8 @@ finite S-grid in the bounded acyclic category lifts into one actual common
 term-bound stratum. The weak-equivalence class is retained by inverse image,
 so the construction applies to both original isomorphisms and quasi-isomorphisms.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -25,7 +35,8 @@ theorem fullSubcategory_postcomp_injective {C : Type u} [Category.{v} C]
     (Functor.congr_obj h X)) ?_
   intro X Y f
   apply Q.ι.map_injective
-  simpa only [Functor.map_comp, eqToHom_map, Functor.comp_map, Functor.comp_obj] using Functor.congr_hom h f
+  simpa only [Functor.map_comp, eqToHom_map, Functor.comp_map, Functor.comp_obj] using
+    Functor.congr_hom h f
 
 attribute [local instance] Abelian.hasFiniteBiproducts
 variable {A : Type u} [Category.{v} A] [Abelian A]

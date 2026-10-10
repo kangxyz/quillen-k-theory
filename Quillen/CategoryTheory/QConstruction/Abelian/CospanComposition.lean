@@ -1,6 +1,16 @@
-import Quillen.CategoryTheory.QConstruction.Abelian.Cospans
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.QConstruction.Abelian.Cospans
 
 /-! # Composition of ordinary abelian Q-cospans -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -56,7 +66,8 @@ theorem mapQ_surjectionArrow {D : Type u} [Category.{v} D] [Abelian D]
     F.mapQ.map (surjectionArrow p) =
       @surjectionArrow D _ _ (F.toFunctor.obj X) (F.toFunctor.obj Y) (F.toFunctor.map p)
         ((abelianExactStructure_deflation_iff D _).1
-          (F.toQCompatibleFunctor.map_deflation p ((abelianExactStructure_deflation_iff C p).2 inferInstance))) := by
+          (F.toQCompatibleFunctor.map_deflation p ((abelianExactStructure_deflation_iff C p).2
+            inferInstance))) := by
   unfold surjectionArrow
   change mkHom _ _ (F.toQCompatibleFunctor.mapSpan _) = mkHom _ _ _
   refine mkHom_eq_of_apexIso _ _ _ _ (Iso.refl (F.toFunctor.obj Y)) ?_ ?_
@@ -71,7 +82,8 @@ theorem mapQ_inflationArrow {D : Type u} [Category.{v} D] [Abelian D]
     F.mapQ.map (inflationArrow i) =
       @inflationArrow D _ _ (F.toFunctor.obj X) (F.toFunctor.obj Y) (F.toFunctor.map i)
         ((abelianExactStructure_inflation_iff D _).1
-          (F.toQCompatibleFunctor.map_inflation i ((abelianExactStructure_inflation_iff C i).2 inferInstance))) := by
+          (F.toQCompatibleFunctor.map_inflation i ((abelianExactStructure_inflation_iff C i).2
+            inferInstance))) := by
   unfold inflationArrow
   change mkHom _ _ (F.toQCompatibleFunctor.mapSpan _) = mkHom _ _ _
   refine mkHom_eq_of_apexIso _ _ _ _ (Iso.refl (F.toFunctor.obj X)) ?_ ?_

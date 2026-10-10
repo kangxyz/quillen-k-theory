@@ -1,8 +1,16 @@
-import Quillen.Topology.Realization.HomotopyBridge
-import Quillen.Topology.HomotopyGroups.Map
-import Mathlib.CategoryTheory.Adjunction.Basic
-import Mathlib.Topology.Homotopy.Equiv
-import Mathlib.Topology.Homotopy.Contractible
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.HomotopyBridge
+public import Quillen.Topology.HomotopyGroups.Map
+public import Mathlib.CategoryTheory.Adjunction.Basic
+public import Mathlib.Topology.Homotopy.Equiv
+public import Mathlib.Topology.Homotopy.Contractible
 
 /-!
 # Adjunctions and classifying-space homotopy equivalences
@@ -16,6 +24,7 @@ give explicit contractions of the classifying space.
 This is an adjunction special case of the behavior underlying Quillen's
 Theorem A, not a proof of the general comma-category criterion.
 -/
+@[expose] public section
 
 noncomputable section
 
@@ -110,7 +119,6 @@ def classifyingHomotopyEquivOfIsEquivalence (F : C ⥤ D) [F.IsEquivalence] :
 
 /-- A constant functor induces the actual constant continuous map at its
 object vertex. -/
-@[simp]
 theorem classifyingSpaceMap_const (d : D) :
     (classifyingSpaceMap ((Functor.const C).obj d)).hom =
       ContinuousMap.const (ClassifyingSpace C) (classifyingSpacePoint d) := by

@@ -1,6 +1,16 @@
-import Quillen.Topology.Realization.Opposite
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.Opposite
 
 /-! The genuine edgewise subdivision functor `[n] ↦ [n]ᵒᵖ ⋆ [n]`. -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory Opposite
@@ -89,7 +99,7 @@ theorem join_cases {p q : SimplexCategory} (i : Fin ((joinObj p q).len + 1)) :
 @[simp] theorem joinMap_id (p q : SimplexCategory) :
     joinMap (𝟙 p) (𝟙 q) = 𝟙 (joinObj p q) := by
   ext i : 3
-  rcases join_cases i with ⟨j, rfl⟩ | ⟨j, rfl⟩ <;> simp [SimplexCategory.comp_toOrderHom]
+  rcases join_cases i with ⟨j, rfl⟩ | ⟨j, rfl⟩ <;> simp
 
 @[simp] theorem joinMap_comp {p q p' q' p'' q'' : SimplexCategory}
     (f : p ⟶ p') (g : q ⟶ q') (f' : p' ⟶ p'') (g' : q' ⟶ q'') :

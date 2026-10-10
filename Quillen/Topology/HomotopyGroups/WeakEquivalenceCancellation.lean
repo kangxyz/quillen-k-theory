@@ -1,10 +1,20 @@
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
 
 /-! # Two-of-three for the original empty-aware weak equivalences
 
 The component clauses are proved with actual paths. Cancellation never
 replaces them by vacuous based conditions on an empty source.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 universe u v w
@@ -68,7 +78,8 @@ theorem IsWeakHomotopyEquivalence.of_comp_right {f : C(X, Y)} {g : C(Y, Z)}
         ((homotopyGroupMap (N := Fin n) g (x := f x) rfl) ∘
           (homotopyGroupMap (N := Fin n) f (x := x) rfl)) := by
       simpa only [Function.comp_def, ← homotopyGroupMap_comp] using hgf.homotopy_bijective x n
-    exact ⟨fun _ _ hab => hcomp.injective (congrArg (homotopyGroupMap (N := Fin n) g (x := f x) rfl) hab), fun y => by
+    exact ⟨fun _ _ hab => hcomp.injective (congrArg (homotopyGroupMap (N := Fin n) g (x := f x)
+      rfl) hab), fun y => by
       obtain ⟨a, ha⟩ := hcomp.surjective
         (homotopyGroupMap (N := Fin n) g (x := f x) rfl y)
       exact ⟨a, (hg.homotopy_bijective (f x) n).injective ha⟩⟩

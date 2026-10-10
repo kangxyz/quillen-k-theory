@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.ExactCategory.Functor
-import Quillen.KTheory.GrothendieckComparison.Basic
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Functor
+public import Quillen.KTheory.GrothendieckComparison.Basic
 
 /-! # Genuine zero-corner duality in exact categories
 
@@ -12,6 +14,8 @@ The original admissible cofiber squares are exactly the admissible fiber
 squares. All kernel and cokernel properties are derived from the original
 universal square, with no abelian ambient category required.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject

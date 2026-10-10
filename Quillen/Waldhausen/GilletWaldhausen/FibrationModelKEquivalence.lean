@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.FibrationModels
-import Quillen.Waldhausen.Functoriality.ExactEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.FibrationModels
+public import Quillen.Waldhausen.Functoriality.ExactEquivalence
 
 /-! # The original bounded-acyclic model identification on K-theory
 
@@ -7,6 +15,8 @@ This changes only two presentations of the same actual fine acyclic category.
 It does not identify that category with the homotopy fiber of a change of weak
 classes. The latter fibration theorem is a separate obligation.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -26,12 +36,18 @@ def boundedAcyclicFiberKEquiv (n : ℕ) :
     (boundedAcyclicToFiberObjects_exact P) (fiberObjectsToBoundedAcyclic_exact P) n
 
 /-- The forward map is exactly the original identity-on-complexes K-map. -/
-@[simp] theorem boundedAcyclicFiberKEquiv_toMonoidHom (n : ℕ) :
-    (boundedAcyclicFiberKEquiv P n).toMonoidHom = KMap (boundedAcyclicToFiberObjects_exact P) n := rfl
+@[simp] theorem boundedAcyclicFiberKEquiv_coe (n : ℕ) :
+    (↑(boundedAcyclicFiberKEquiv P n) : (ofExactCategory (boundedAcyclicExactStructure P)).K n
+        →* (Fibration.acyclicStructure (boundedTermsNested P)).K n) = KMap
+        (boundedAcyclicToFiberObjects_exact P) n := rfl
+
 
 /-- The inverse is exactly the original inverse-presentation K-map. -/
-@[simp] theorem boundedAcyclicFiberKEquiv_symm_toMonoidHom (n : ℕ) :
-    (boundedAcyclicFiberKEquiv P n).symm.toMonoidHom = KMap (fiberObjectsToBoundedAcyclic_exact P) n := rfl
+@[simp] theorem boundedAcyclicFiberKEquiv_symm_coe (n : ℕ) :
+    (↑(boundedAcyclicFiberKEquiv P n).symm : (Fibration.acyclicStructure (boundedTermsNested
+        P)).K n →* (ofExactCategory (boundedAcyclicExactStructure P)).K n) = KMap
+        (fiberObjectsToBoundedAcyclic_exact P) n := rfl
+
 
 /-- After the actual fiber-object inclusion, the original bounded-acyclic
 inclusion K-map is recovered exactly. -/
@@ -39,6 +55,7 @@ theorem boundedAcyclicFiberKEquiv_inclusion (n : ℕ) :
     (KMap (Fibration.acyclicInclusion_exact (boundedTermsNested P)) n).comp
       (boundedAcyclicFiberKEquiv P n).toMonoidHom =
         KMap (boundedAcyclicTermsExactInclusion P).waldhausenExact n := by
-  rw [boundedAcyclicFiberKEquiv_toMonoidHom, ← KMap_comp]
+  simp only [MulEquiv.toMonoidHom_eq_coe]
+  rw [boundedAcyclicFiberKEquiv_coe, KMap_comp_KMap]
 
 end Quillen.Waldhausen.GilletWaldhausen

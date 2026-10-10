@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.Realization.FiniteSubcomplex
-import Quillen.Topology.ClassifyingSpace.Basic
-import Mathlib.AlgebraicTopology.SimplicialSet.Nerve
+module
+
+public import Quillen.Topology.Realization.FiniteSubcomplex
+public import Quillen.Topology.ClassifyingSpace.Basic
+public import Mathlib.AlgebraicTopology.SimplicialSet.Nerve
 
 /-!
 # Exact finite full-subposet support in a poset nerve
@@ -16,6 +18,8 @@ finite. Exact compact support then factors every compact-source continuous map
 through the classifying space of a finite full subposet, retaining the original
 inclusion map. No subdivision or simplicial approximation is used.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

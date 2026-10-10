@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.Affine.WeakArrowFactorization
-import Mathlib.Data.ZMod.Basic
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.WeakArrowFactorization
+public import Mathlib.Data.ZMod.Basic
 
 /-!
 # Original affine roof and weak-arrow factorization consumers
@@ -13,6 +15,8 @@ These consumers check the actual derived maps and inverse formula, literal
 comma and factorization equations, actual categorical kernel sequences,
 and the non-domain and empty-spectrum cases.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

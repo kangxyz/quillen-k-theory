@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Waldhausen.Fibration.AllWeak.TotalFiberSquare
-import Quillen.Waldhausen.Fibration.AllWeak.RelativeContractible
-import Quillen.Waldhausen.Fibration.AllWeak.CanonicalFiberFactorization
-import Quillen.Topology.HomotopyFiber.CommonBaseSquareTransport
-import Quillen.Topology.HomotopyFiber.BasedSquareMap
-import Quillen.Waldhausen.Fibration.RelativeRows.WeakTotalFiber
+module
+
+public import Quillen.Waldhausen.Fibration.AllWeak.TotalFiberSquare
+public import Quillen.Waldhausen.Fibration.AllWeak.RelativeContractible
+public import Quillen.Waldhausen.Fibration.AllWeak.CanonicalFiberFactorization
+public import Quillen.Topology.HomotopyFiber.CommonBaseSquareTransport
+public import Quillen.Topology.HomotopyFiber.BasedSquareMap
+public import Quillen.Waldhausen.Fibration.RelativeRows.WeakTotalFiber
 
 /-! # The original global change-of-weak-equivalences fiber comparison
 
@@ -19,6 +21,8 @@ with a weak equivalence onto the homotopy fiber of `changeWeakMap`.
 The category is small; extension, two-out-of-three, joint cylinder data and
 its genuine second-endpoint section are explicit structural hypotheses.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial Topology
@@ -61,7 +65,8 @@ theorem commonBaseAllWeakComparison_weak
     (p := totalTailMap (nested (acyclicStructure N))) (q := commonBaseAllWeakTail N)
     (ContinuousMap.id _) (ordinaryTotalInclusionMap (acyclicStructure N)) rfl
     (isWeakHomotopyEquivalence_id _)
-    (isWeakHomotopyEquivalence_of_homotopyEquiv (ordinaryTotalHomeomorph (acyclicStructure N)).toHomotopyEquiv)
+    (isWeakHomotopyEquivalence_of_homotopyEquiv (ordinaryTotalHomeomorph (acyclicStructure
+      N)).toHomotopyEquiv)
     (ordinaryTotalBasepoint (acyclicStructure (nested (acyclicStructure N))))
     (ordinaryTotalBasepoint (acyclicStructure N))
     (ordinaryTotalInclusionMap_basepoint (acyclicStructure N))
@@ -152,7 +157,8 @@ variable [N.coarse.weq.HasTwoOutOfThreeProperty]
 theorem evaluationFiberMap_relativeSplitFiberMap (he : ExtensionAxiom N.coarse) :
     (evaluationFiberMap N he).comp (relativeSplitFiberMap N) =
       (acyclicFiberSquareMap N).comp
-        (evaluationFiberMap (nested (acyclicStructure N)) (extensionAxiom (acyclicStructure N))) := by
+        (evaluationFiberMap (nested (acyclicStructure N)) (extensionAxiom (acyclicStructure N)))
+          := by
   apply ContinuousMap.ext
   intro z
   apply Subtype.ext

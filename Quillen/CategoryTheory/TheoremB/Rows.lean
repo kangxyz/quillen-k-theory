@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremA.RealizationRows
-import Quillen.CategoryTheory.TheoremB.Comparison
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationRows
+public import Quillen.CategoryTheory.TheoremB.Comparison
 
 /-!
 # The transition maps in realized simplicial-replacement rows
@@ -9,6 +17,8 @@ operator with the genuine realized transition map at its first vertex.
 This is the local input for the remaining homotopy-cartesian realization
 theorem; no passage from rows to total fibers is asserted here.
 -/
+@[expose] public section
+
 
 noncomputable section
 

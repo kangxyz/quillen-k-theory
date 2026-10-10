@@ -1,5 +1,13 @@
-import Quillen.Topology.HELP.FiberwiseRealizationLifting
-import Quillen.Topology.HomotopyFiber.WeakSquareTransport
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.FiberwiseRealizationLifting
+public import Quillen.Topology.HomotopyFiber.WeakSquareTransport
 
 /-! # Realized-inclusion lifting for original normalized strict squares
 
@@ -8,6 +16,8 @@ Its strict-fiber map is the original square's full path-space fiber map under
 literal fiber homeomorphisms. Full compact fiber HELP therefore supplies
 realized-monomorphism lifting for its actual mapping-path endpoint.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -17,7 +27,7 @@ universe u
 namespace Quillen.MappingPath
 variable {E F B B' : Type u} [TopologicalSpace E] [TopologicalSpace F]
     [TopologicalSpace B] [TopologicalSpace B']
-    {p : C(E,B)} {q : C(F,B')} (f : C(E,F)) (v : C(B,B')) (w : q.comp f = v.comp p)
+    {p : C(E, B)} {q : C(F, B')} (f : C(E, F)) (v : C(B, B')) (w : q.comp f = v.comp p)
 
 /-- The actual normalized strict-fiber map inherits HELP from the original
 square's fiber map. All entire original paths are retained. -/

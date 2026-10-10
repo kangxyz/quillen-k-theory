@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.GilletWaldhausen.FiniteTermFiltration
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.FiniteTermFiltration
 
 /-! # Original term evaluation and single-term insertion in finite strata
 
@@ -7,6 +15,8 @@ single complex at a degree in the specified interval. Both are genuinely
 exact. Their actual composites are the identity at the same degree and zero
 at other degrees, and insertion after evaluation is the original layer.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

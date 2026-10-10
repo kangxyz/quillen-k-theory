@@ -3,10 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.ClassifyingSpace.Groupoid
-import Quillen.Topology.ClassifyingSpace.DiscretePoints
-import Quillen.CategoryTheory.TheoremB.Naturality
-import Quillen.KTheory.FundamentalGroup.Basic
+module
+
+public import Quillen.Topology.ClassifyingSpace.Groupoid
+public import Quillen.Topology.ClassifyingSpace.DiscretePoints
+public import Quillen.CategoryTheory.TheoremB.Naturality
+public import Quillen.KTheory.FundamentalGroup.Basic
 
 /-!
 # The original groupoid fundamental-group comparison
@@ -18,6 +20,8 @@ endomorphisms is therefore bijective and gives a multiplicative equivalence.
 Actual nerve lifts preserve the arrow paths and extend the result to independent
 category universes, including noncommutative groups in every universe.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
@@ -62,7 +66,7 @@ lemma pointSpace_subsingleton : Subsingleton (ClassifyingSpace (Discrete PUnit.{
   let : Subsingleton (TopCat.discrete.obj PUnit.{u+1}) := inferInstanceAs (Subsingleton PUnit.{u+1})
   exact (TopCat.homeoOfIso (discreteClassifyingIso PUnit.{u+1})).injective.subsingleton
 
-lemma pointMap_constant (z : ClassifyingSpace (Discrete PUnit.{u+1})) :
+lemma pointMap_constant (z : ClassifyingSpace (Discrete PUnit.{u + 1})) :
     classifyingSpaceMap (pointFunctor c) z = classifyingSpacePoint c := by
   rw [show pointFunctor c = (Functor.const _).obj c from rfl, classifyingSpaceMap_const_direct]
   rfl
@@ -103,7 +107,8 @@ lemma pointFiberLoopHomeomorph_vertex (g : c ⟶ c) :
       (classifyingSpacePoint (CostructuredArrow.mk (S := pointFunctor c)
         (Y := Discrete.mk PUnit.unit) g))) = classifyingSpacePath g := by
   ext t
-  exact TheoremB.fiberComparison_vertex_path (pointFunctor c) c _ t
+  simpa only [TheoremB.fiberComparison_path] using
+    TheoremB.commaNullhomotopy_vertex (pointFunctor c) c _ t
 
 end Quillen.GroupoidClassifying
 
@@ -145,6 +150,9 @@ end Quillen.GroupoidClassifying
 namespace Quillen
 variable {X : Type u} [TopologicalSpace X] (x : X)
 
+/-- Identify the fundamental group at `x` with the zeroth homotopy set of
+the loop space `Path x x` based at the constant loop, using the first
+homotopy-group comparison and the loop-shift equivalence. -/
 def fundamentalGroupLoopComponentEquiv :
     FundamentalGroup X x ≃ HomotopyGroup.Pi 0 (Path x x) (Path.refl x) :=
   (HomotopyGroup.pi1EquivFundamentalGroup (X := X) (x := x)).symm.trans (loopShiftEquiv 0)
@@ -219,7 +227,7 @@ lemma asSmallClassifyingHomeomorph_path {c d : C} (g : c ⟶ d) :
   ext t
   change SSet.toTop.map (asSmallNerveIso C).hom
     (realizationEdgePath (CategoryTheory.nerve.edgeMk g) t) = _
-  rw [realizationEdgePath_naturality]
+  rw [realizationEdgePath_naturality_apply]
   simp only [realizationEdgePath_apply, SSet.Edge.map_edge, CategoryTheory.nerve.edgeMk_edge]
   have he : (asSmallNerveIso C).hom.app (op ⦋1⦌) (ComposableArrows.mk₁ g) =
       ComposableArrows.mk₁ (AsSmall.up.map g) :=
@@ -250,7 +258,8 @@ theorem fundamentalGroupMap_bijective_general [IsGroupoid C] (c : C) :
   constructor
   · intro a b h
     have hu : AsSmall.up.map a = AsSmall.up.map b := ht.injective
-      ((asSmall_fundamental_map c a).symm.trans ((congrArg f h).trans (asSmall_fundamental_map c b)))
+      ((asSmall_fundamental_map c a).symm.trans ((congrArg f h).trans (asSmall_fundamental_map c
+        b)))
     exact congrArg AsSmall.down.map hu
   · intro z
     obtain ⟨g, hg⟩ := ht.surjective (f z)
@@ -268,7 +277,8 @@ def fundamentalGroupEquiv [IsGroupoid C] (c : C) :
 
 /-- The original one-object group nerve has its original group as fundamental group. -/
 def singleObjFundamentalGroupEquiv (G : Type u) [Group G] :
-    G ≃* FundamentalGroup (ClassifyingSpace (SingleObj G)) (classifyingSpacePoint (SingleObj.star G)) :=
+    G ≃* FundamentalGroup (ClassifyingSpace (SingleObj G)) (classifyingSpacePoint
+      (SingleObj.star G)) :=
   (SingleObj.toEnd G).trans (fundamentalGroupEquiv (SingleObj.star G))
 
 end Quillen.GroupoidClassifying

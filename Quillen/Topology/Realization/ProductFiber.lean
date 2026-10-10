@@ -1,8 +1,16 @@
-import Quillen.Topology.Realization.ProductComparison
-import Quillen.Topology.HomotopyFiber.CompactLifting
-import Quillen.Topology.HomotopyFiber.Product
-import Quillen.Topology.HomotopyGroups.WeakEquivalence
-import Quillen.Topology.ClassifyingSpace.Constant
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.ProductComparison
+public import Quillen.Topology.HomotopyFiber.CompactLifting
+public import Quillen.Topology.HomotopyFiber.Product
+public import Quillen.Topology.HomotopyGroups.WeakEquivalence
+public import Quillen.Topology.ClassifyingSpace.Constant
 
 /-! # Actual fibers of simplicial-product realization projections
 
@@ -11,6 +19,8 @@ lifts on the actual projection homotopy fiber. Composing with the explicit
 ordinary-product fiber contraction proves every finite homotopy-set bijection.
 No unrestricted realization-product homeomorphism is used.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -79,7 +89,8 @@ def fiberInclusion (y : Y _⦋0⦌) :
 
 /-- The original first projection retracts this exact constant-path inclusion. -/
 theorem fiberProjection_inclusion (y : Y _⦋0⦌) :
-    (fiberProjection X Y (realizationPoint y)).comp (fiberInclusion X Y y) = ContinuousMap.id |X| := by
+    (fiberProjection X Y (realizationPoint y)).comp (fiberInclusion X Y y) = ContinuousMap.id
+      |X| := by
   apply ContinuousMap.ext
   intro x
   change (SSet.toTop.map (vertexSection X Y y) ≫ SSet.toTop.map (fst X Y)) x = x

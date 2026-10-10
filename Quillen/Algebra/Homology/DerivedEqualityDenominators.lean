@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.Homology.KProjectiveRepresentatives
-import Mathlib.Algebra.Homology.DerivedCategory.Fractions
+module
+
+public import Quillen.Algebra.Homology.KProjectiveRepresentatives
+public import Mathlib.Algebra.Homology.DerivedCategory.Fractions
 
 /-!
 # Actual homotopies after derived equality denominators
@@ -14,6 +16,8 @@ original chain maps after localization is realized by an actual chain
 homotopy after a genuine post-quasi-isomorphism. Two equalities can be
 realized with one common denominator. No K-projectivity hypothesis is used.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

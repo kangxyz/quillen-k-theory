@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.Grading
-import Mathlib.GroupTheory.FreeAbelianGroup
-import Mathlib.GroupTheory.QuotientGroup.Defs
+module
+
+public import Quillen.Waldhausen.Cofinality.Grading
+public import Mathlib.GroupTheory.FreeAbelianGroup
+public import Mathlib.GroupTheory.QuotientGroup.Defs
 
 /-! # Universal algebraic grading of an actual Waldhausen category
 
@@ -15,6 +17,8 @@ an honest additive grading, rather than assuming a homotopical K-zero
 presentation. Its universal property is purely algebraic; the comparison
 with the actual S-construction K-zero group is separate.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v w
@@ -46,7 +50,8 @@ theorem relation_zero {r : FreeAbelianGroup C} (hr : Relation W r) :
   (QuotientAddGroup.eq_zero_iff r).mpr (AddSubgroup.subset_closure hr)
 
 /-- The chosen original zero has zero algebraic class. -/
-@[simp] theorem objectClass_zero : objectClass W W.zero = 0 := relation_zero W (Relation.zero (W := W))
+@[simp] theorem objectClass_zero : objectClass W W.zero = 0 := relation_zero W (Relation.zero (W
+    := W))
 
 /-- Original weak arrows determine equal algebraic classes. -/
 theorem objectClass_weak {A B : C} (f : A ⟶ B) (hf : W.weq f) :

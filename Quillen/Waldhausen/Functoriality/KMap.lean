@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.PointedFunctor
-import Quillen.Waldhausen.SConstruction.WeakNaturalTransformationBased
-import Quillen.Topology.ClassifyingSpace.Constant
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.PointedFunctor
+public import Quillen.Waldhausen.SConstruction.WeakNaturalTransformationBased
+public import Quillen.Topology.ClassifyingSpace.Constant
 
 /-! # Functoriality and weak-transformation invariance of the original K-maps
 
@@ -8,6 +16,8 @@ The original canonical zero rebasing is retained throughout. Every homotopy
 used below is the actual nerve-direction homotopy of a pointwise weak natural
 transformation, with its chosen-zero track proved constant.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -106,12 +116,14 @@ theorem KMap_eq_piMap_of_zeroEq
   rfl
 
 /-- The original S-map preserves composition exactly. -/
-@[simp] theorem sSetMap_comp {J : D ⥤ E}
+@[simp] theorem sSetMap_comp_sSetMap {J : D ⥤ E}
     (hF : IsExact V.cof V.weq W.cof W.weq F)
     (hJ : IsExact W.cof W.weq U.cof U.weq J) :
-    sSetMap (hF.comp hJ) = sSetMap hF ≫ sSetMap hJ := by
+    sSetMap hF ≫ sSetMap hJ =
+      sSetMap (hF.comp hJ) := by
   ext n A
   rfl
+
 
 /-- Identity is retained by the original realization map. -/
 @[simp] theorem deloopingMap_id (V : Structure C) :
@@ -120,12 +132,13 @@ theorem KMap_eq_piMap_of_zeroEq
   exact SSet.toTop.map_id _
 
 /-- Composition is retained by the original realization map. -/
-@[simp] theorem deloopingMap_comp {J : D ⥤ E}
+@[simp] theorem deloopingMap_comp_deloopingMap {J : D ⥤ E}
     (hF : IsExact V.cof V.weq W.cof W.weq F)
     (hJ : IsExact W.cof W.weq U.cof U.weq J) :
-    deloopingMap (hF.comp hJ) = deloopingMap hF ≫ deloopingMap hJ := by
-  rw [deloopingMap, sSetMap_comp, CategoryTheory.Functor.map_comp]
-  rfl
+    deloopingMap hF ≫ deloopingMap hJ =
+      deloopingMap (hF.comp hJ) := by
+  simp only [deloopingMap, ← Functor.map_comp, sSetMap_comp_sSetMap]
+
 
 private theorem piMap_congr {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]
     {x : X} {y : Y} (n : ℕ) {f g : C(X, Y)} (hf : f x = y) (hg : g x = y)
@@ -143,16 +156,20 @@ private theorem piMap_congr {X Y : Type*} [TopologicalSpace X] [TopologicalSpace
 
 /-- Composition of exact functors gives composition of the original canonical
 chosen-zero K-homomorphisms. -/
-@[simp] theorem KMap_comp {J : D ⥤ E}
+@[simp] theorem KMap_comp_KMap {J : D ⥤ E}
     (hF : IsExact V.cof V.weq W.cof W.weq F)
     (hJ : IsExact W.cof W.weq U.cof U.weq J) (n : ℕ) :
-    KMap (hF.comp hJ) n = (KMap hJ n).comp (KMap hF n) := by
+    (KMap hJ n).comp (KMap hF n) =
+      KMap (hF.comp hJ) n := by
+  symm
   let eF := Quillen.rebaseFunctorIso F V.zero W.zero ((hF.zero V.isZero).iso W.isZero)
   let eJ := Quillen.rebaseFunctorIso J W.zero U.zero ((hJ.zero W.isZero).iso U.isZero)
   have h0 : ((Quillen.rebaseFunctor F V.zero W.zero ((hF.zero V.isZero).iso W.isZero)) ⋙
-      (Quillen.rebaseFunctor J W.zero U.zero ((hJ.zero W.isZero).iso U.isZero))).obj V.zero = U.zero := by
+      (Quillen.rebaseFunctor J W.zero U.zero ((hJ.zero W.isZero).iso U.isZero))).obj V.zero =
+          U.zero := by
     change (Quillen.rebaseFunctor J W.zero U.zero ((hJ.zero W.isZero).iso U.isZero)).obj
-      ((Quillen.rebaseFunctor F V.zero W.zero ((hF.zero V.isZero).iso W.isZero)).obj V.zero) = U.zero
+      ((Quillen.rebaseFunctor F V.zero W.zero ((hF.zero V.isZero).iso W.isZero)).obj V.zero) =
+          U.zero
     rw [Quillen.rebaseFunctor_obj_base, Quillen.rebaseFunctor_obj_base]
   have he := KMap_eq_of_iso (hF.comp hJ) (hF.rebase.comp hJ.rebase)
     (Functor.isoWhiskerRight eF J ≪≫ Functor.isoWhiskerLeft _ eJ) n
@@ -161,10 +178,11 @@ chosen-zero K-homomorphisms. -/
     (f := (deloopingMap (hF.rebase.comp hJ.rebase)).hom)
     (g := (deloopingMap hJ.rebase).hom.comp (deloopingMap hF.rebase).hom) _
     ((congrArg (deloopingMap hJ.rebase).hom (KMap_basepoint hF)).trans (KMap_basepoint hJ))
-    (congrArg TopCat.Hom.hom (deloopingMap_comp hF.rebase hJ.rebase))).trans
+    (congrArg TopCat.Hom.hom ((deloopingMap_comp_deloopingMap hF.rebase hJ.rebase).symm))).trans
       (Quillen.homotopyGroupMapHom_comp (N := Fin (n + 1))
         (deloopingMap hF.rebase).hom (KMap_basepoint hF)
         (deloopingMap hJ.rebase).hom (KMap_basepoint hJ))
+
 
 /-- The actual constant functor at the specified target zero. -/
 def zeroFunctor (W : Structure D) : C ⥤ D :=

@@ -3,12 +3,16 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.Dual
-import Quillen.Waldhausen.Duality.ExactCategory
-import Quillen.Waldhausen.WeakArrow.DualStructure
-import Quillen.Waldhausen.WeakArrow.KEquivalence
+module
+
+public import Quillen.Waldhausen.Approximation.Dual
+public import Quillen.Waldhausen.Duality.ExactCategory
+public import Quillen.Waldhausen.WeakArrow.DualStructure
+public import Quillen.Waldhausen.WeakArrow.KEquivalence
 
 /-! Behavioral consumers of actual dual squares, original diagrams and original K-maps. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial
@@ -45,7 +49,8 @@ include hW hV hFd h Jd in
 /-- Component surjectivity is on the original realization, including degree zero. -/
 theorem original_component_preimage (y : V.Delooping) :
     ∃ x, Joined (deloopingMap hF x) y :=
-  (deloopingMap_isWeakHomotopyEquivalence_of_dualApproximation hW hV hF hFd h Jd).component_surjective y
+  (deloopingMap_isWeakHomotopyEquivalence_of_dualApproximation hW hV hF hFd h
+    Jd).component_surjective y
 
 /-- Grid reversal uses the original opposite arrow diagram at each actual coordinate. -/
 theorem original_reversed_coordinate (n : SimplexCategoryᵒᵖ)

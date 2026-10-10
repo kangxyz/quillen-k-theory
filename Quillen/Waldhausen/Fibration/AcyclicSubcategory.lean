@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.WeakEquivalenceCofiber
-import Mathlib.CategoryTheory.ObjectProperty.ClosedUnderIsomorphisms
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.WeakEquivalenceCofiber
+public import Mathlib.CategoryTheory.ObjectProperty.ClosedUnderIsomorphisms
 
 /-! # The actual acyclic subcategory for nested weak equivalences
 
@@ -9,6 +17,8 @@ weak equivalences remain the fine ones. Pushouts and quotient closure are
 proved by coarse gluing. Only the separate assertion that every map between
 acyclic objects is coarse-weak uses saturation.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -20,6 +30,8 @@ variable {C : Type u} [Category.{v} C]
 /-- Two genuine weak-equivalence structures with the same underlying
 cofibration category and an explicit inclusion of the fine weak class. -/
 structure NestedWeakEquivalences (V : Structure C) where
+  /-- The Waldhausen structure with the same cofibrations and chosen zero as `V` and a
+  weak-equivalence class containing `V.weq`. -/
   coarse : Structure C
   cof_eq : coarse.cof = V.cof
   zero_eq : coarse.zero = V.zero
@@ -66,9 +78,12 @@ variable {V : Structure C} (N : NestedWeakEquivalences V)
 
 /-- The actual coarse-acyclic object predicate. -/
 def acyclicObjects : ObjectProperty C := Acyclic N.coarse
+/-- The full subcategory of `C` consisting of objects acyclic for the coarse Waldhausen
+structure `N.coarse`. -/
 abbrev AcyclicCategory := (acyclicObjects N).FullSubcategory
 
-instance acyclicObjects_isClosedUnderIsomorphisms : (acyclicObjects N).IsClosedUnderIsomorphisms where
+instance acyclicObjects_isClosedUnderIsomorphisms : (acyclicObjects N).IsClosedUnderIsomorphisms
+    where
   of_iso e h := acyclic_of_iso N.coarse h e
 
 /-- The original underlying inclusion, unchanged on all morphisms. -/
@@ -175,9 +190,9 @@ theorem acyclicInclusion_coarse_exact : IsExact (acyclicStructure N).cof (acycli
 @[simp] theorem acyclicInclusion_zero :
     (acyclicInclusion N).obj (acyclicStructure N).zero = V.zero := rfl
 
-/-- The same zero also identifies with the shared coarse zero by the original data. -/
-@[simp] theorem acyclicInclusion_zero_coarse :
-    (acyclicInclusion N).obj (acyclicStructure N).zero = N.coarse.zero := N.zero_eq.symm
+/-- The coarse structure has the original chosen fine zero. -/
+@[simp] theorem NestedWeakEquivalences.coarse_zero : N.coarse.zero = V.zero := N.zero_eq
+
 
 /-- Actual quotient closure in the original fine structure, separately from
 construction of the inherited Waldhausen structure. -/

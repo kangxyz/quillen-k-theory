@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremA.Augmentations
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.Augmentations
 
 /-!
 # Canonical-map assembly for the Theorem A argument
@@ -8,6 +16,8 @@ application to the two constructed diagonal augmentations. No assertion
 that the diagonal augmentations are equivalences is introduced: the missing
 skeletal invariance theorem must provide those inputs independently.
 -/
+@[expose] public section
+
 
 noncomputable section
 

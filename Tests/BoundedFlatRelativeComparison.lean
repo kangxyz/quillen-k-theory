@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.BoundedFlat.SupportComparison
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportComparison
 
 /-! # Original relative-open and supported bounded-flat comparisons
 
@@ -11,6 +13,8 @@ The ambient scheme is quasi-compact; its open is arbitrary. Every statement
 retains the original relative target or support map rather than replacing it
 by all perfect K-theory of the open.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.PerfectComplexes
@@ -23,7 +27,8 @@ theorem supported_zero_representative {U X : Scheme.{u}} (j : U ⟶ X)
     ∃ y, boundedFlatPerfectSupportedToPerfectSupportedKMap j 0 y = x :=
   (boundedFlatPerfectSupportedToPerfectSupportedKMap_bijective j 0).surjective x
 
-/-- Every relative-open class has a model representative without extending an arbitrary open object. -/
+/-- Every relative-open class has a model representative without extending an arbitrary open object.
+  -/
 theorem relative_representative {U X : Scheme.{u}} (j : U ⟶ X)
     [IsOpenImmersion j] [CompactSpace X] (n : ℕ) (x : PerfectOpenK j n) :
     ∃ y, boundedFlatPerfectOpenToPerfectOpenKMap j n y = x :=

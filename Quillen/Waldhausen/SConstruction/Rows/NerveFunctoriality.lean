@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.SConstruction.Rows.NervePresentation
-import Quillen.Waldhausen.SConstruction.Rows.Functoriality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.NervePresentation
+public import Quillen.Waldhausen.SConstruction.Rows.Functoriality
 
 /-! # The original-grid nerve presentation preserves exact functors
 
@@ -7,6 +15,8 @@ The forward presentation is strictly natural for actual exact functors and
 original ordinal restrictions. Consequently the diagonal identification
 intertwines the existing S-map with the actual weak-row nerve map.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial
@@ -67,7 +77,7 @@ theorem sSetWeakRowDiagonalIso_naturality :
 
 /-- The diagonal nerve map is literal original postcomposition at every component. -/
 @[simp] theorem weakRowNerveMap_component (n k : SimplexCategory)
-    (G : ComposableArrows (WeakRows V n) k.len) (t : Fin (k.len+1)) (p : Interval n) :
+    (G : ComposableArrows (WeakRows V n) k.len) (t : Fin (k.len + 1)) (p : Interval n) :
     (((((weakRowNerveMap V W hF).app (op n)).app (op k) G).obj t).obj.obj.obj p) =
       F.obj ((G.obj t).obj.obj.obj p) := rfl
 

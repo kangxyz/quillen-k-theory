@@ -1,6 +1,16 @@
-import Quillen.Localization.Serre.AuxiliaryIsoComma
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.AuxiliaryIsoComma
 
 /-! # Actual auxiliary squares for structured Q-transitions -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

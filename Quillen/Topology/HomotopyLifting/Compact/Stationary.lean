@@ -1,4 +1,12 @@
-import Quillen.Topology.HomotopyLifting.Stationary
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyLifting.Stationary
 
 /-! # Compact-parameter homotopy lifting and stationary correction
 
@@ -6,6 +14,8 @@ Only actual compact, locally compact parameter spaces are quantified over.
 This property does not supply a lift on an arbitrary mapping-path space or
 a continuous inverse on an entire homotopy fiber.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 universe u
@@ -13,7 +23,7 @@ namespace Quillen
 variable {E B : Type u} [TopologicalSpace E] [TopologicalSpace B]
 
 /-- Covering homotopy lifting for compact locally compact parameter spaces. -/
-def CompactHomotopyLiftingProperty (p : C(E,B)) : Prop :=
+def CompactHomotopyLiftingProperty (p : C(E, B)) : Prop :=
   ∀ (X : Type u) [TopologicalSpace X] [CompactSpace X] [LocallyCompactSpace X]
     (a : C(X,E)) (H : C(unitInterval × X,B)),
     (∀ x,H (0,x) = p (a x)) →
@@ -21,7 +31,7 @@ def CompactHomotopyLiftingProperty (p : C(E,B)) : Prop :=
         (∀ x,L (0,x) = a x) ∧ ∀ t x,p (L (t,x)) = H (t,x)
 
 /-- Genuine covering homotopy lifting has the stated restricted scope. -/
-theorem HomotopyLiftingProperty.compact {p : C(E,B)} (hp : HomotopyLiftingProperty p) :
+theorem HomotopyLiftingProperty.compact {p : C(E, B)} (hp : HomotopyLiftingProperty p) :
     CompactHomotopyLiftingProperty p := fun X _ _ _ a H h₀ ↦ hp X a H h₀
 
 variable {X : Type u} [TopologicalSpace X] [CompactSpace X] [LocallyCompactSpace X]
@@ -29,10 +39,10 @@ variable {X : Type u} [TopologicalSpace X] [CompactSpace X] [LocallyCompactSpace
 /-- Compact-parameter lifting supplies a lift fixed on the zero set of the displayed
 continuous duration when the original base homotopy is stationary there. -/
 theorem CompactHomotopyLiftingProperty.lift_fixed_zero
-    {p : C(E,B)} (hp : CompactHomotopyLiftingProperty p)
-    (a : C(X,E)) (H : C(unitInterval × X,B))
-    (h₀ : ∀ x,H (0,x) = p (a x)) (duration : C(X,unitInterval))
-    (hfixed : ∀ x,duration x = 0 → ∀ t,H (t,x) = p (a x)) :
+    {p : C(E, B)} (hp : CompactHomotopyLiftingProperty p)
+    (a : C(X, E)) (H : C(unitInterval × X, B))
+    (h₀ : ∀ x, H (0, x) = p (a x)) (duration : C(X, unitInterval))
+    (hfixed : ∀ x, duration x = 0 → ∀ t, H (t, x) = p (a x)) :
     ∃ L : C(unitInterval × X,E),
       (∀ x,L (0,x) = a x) ∧
       (∀ t x,p (L (t,x)) = H (t,x)) ∧
@@ -58,10 +68,10 @@ theorem CompactHomotopyLiftingProperty.lift_fixed_zero
 and retains all prescribed zero-set values. The whole correction homotopy
 is included, not merely its endpoint. -/
 theorem CompactHomotopyLiftingProperty.correct_over_fixed_zero
-    {p : C(E,B)} (hp : CompactHomotopyLiftingProperty p)
-    (a : C(X,E)) (b : C(X,B)) (H : (p.comp a).Homotopy b)
-    (duration : C(X,unitInterval))
-    (hfixed : ∀ x,duration x = 0 → ∀ t,H (t,x) = p (a x)) :
+    {p : C(E, B)} (hp : CompactHomotopyLiftingProperty p)
+    (a : C(X, E)) (b : C(X, B)) (H : (p.comp a).Homotopy b)
+    (duration : C(X, unitInterval))
+    (hfixed : ∀ x, duration x = 0 → ∀ t, H (t, x) = p (a x)) :
     ∃ c : C(X,E),p.comp c = b ∧
       (∀ x,duration x = 0 → c x = a x) ∧
       ∃ K : a.Homotopy c,

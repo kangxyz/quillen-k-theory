@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Fibration.Rows.ReflexiveFactorization
-import Quillen.Waldhausen.ExtensionCategory.Functoriality
+module
+
+public import Quillen.Waldhausen.Fibration.Rows.ReflexiveFactorization
+public import Quillen.Waldhausen.ExtensionCategory.Functoriality
 
 /-! # The genuine original joint cylinder is exact for the coarse weak class
 
@@ -13,6 +15,8 @@ source maps. Naturality against the given coarse-weak projections gives
 coarse weakness of its middle maps by two-out-of-three. Cofibrations and
 actual pushouts retain the original shared cofibration data.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -25,8 +29,13 @@ variable {C : Type u} [Category.{v} C] {V : Structure C}
 /-- The actual endpoint sum is also the pushout over the coarse chosen zero. -/
 theorem jointSource_coarse_isPushout (f : Arrow C) :
     IsPushout (N.coarse.isZero.to_ f.left) (N.coarse.isZero.to_ f.right)
-      (D.inl.app f) (D.inr.app f) :=
-  IsPushout.of_is_coproduct (D.coproduct f) N.coarse.isZero.isInitial
+      (D.inl.app f) (D.inr.app f) := by
+  have hl : N.coarse.isZero.isInitial.to f.left = N.coarse.isZero.to_ f.left :=
+    N.coarse.isZero.eq_of_src _ _
+  have hr : N.coarse.isZero.isInitial.to f.right = N.coarse.isZero.to_ f.right :=
+    N.coarse.isZero.eq_of_src _ _
+  rw [← hl, ← hr]
+  exact IsPushout.of_is_coproduct' (D.coproduct f) N.coarse.isZero.isInitial
 
 /-- Actual coarse gluing, not fine exactness, controls the original source map. -/
 theorem jointSource_coarseWeak {f g : Arrow C} (α : f ⟶ g)
@@ -58,13 +67,15 @@ theorem coarseJoint_exact :
       (ArrowCategory.waldhausenStructure N.coarse).weq
       (ExtensionCategory.waldhausenStructure N.coarse).cof
       (ExtensionCategory.waldhausenStructure N.coarse).weq (coarseJoint N D) where
-  zero h := (ExtensionCategory.postcompose_exact V N.coarse (changeWeak_exact N)).zero (D.exact.zero h)
+  zero h := (ExtensionCategory.postcompose_exact V N.coarse (changeWeak_exact N)).zero
+    (D.exact.zero h)
   cofibration α hα := by
     have hf : (ArrowCategory.waldhausenStructure V).cof α := by
       change V.cof α.left ∧ V.cof α.right
       change N.coarse.cof α.left ∧ N.coarse.cof α.right at hα
       simpa only [N.cof_eq] using hα
-    exact ExtensionCategory.postcompose_cof V N.coarse (changeWeak_exact N) (D.exact.cofibration α hf)
+    exact ExtensionCategory.postcompose_cof V N.coarse (changeWeak_exact N) (D.exact.cofibration
+      α hf)
   weak α hα := ⟨jointSource_coarseWeak N D α hα.1 hα.2, jointMiddle_coarseWeak N D α hα.2⟩
   pushout {A B E P} {i f g j} hα h := by
     have hf : (ArrowCategory.waldhausenStructure V).cof i := by

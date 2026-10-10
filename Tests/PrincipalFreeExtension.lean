@@ -3,11 +3,15 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.Affine.PrincipalFreeExtension
-import Quillen.PerfectComplexes.Affine.DerivedModuleReplacement
-import Quillen.PerfectComplexes.LocalRestriction
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalFreeExtension
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedModuleReplacement
+public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalRestriction
 
 /-! Semantic consumers of genuine finite-free principal-open descent. -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,7 +32,8 @@ theorem actual_projective_descended_complex {R : Type u} [CommRing R] (r : R)
       (∀ i, i < a ∨ b < i → IsZero (P.X i)) ∧
       Nonempty ((localize r (.up ℤ)).obj P ≅ K) := by
   obtain ⟨P, hP, hf, he⟩ := exists_bounded_finiteFree_complex_descent r K a b hbound hfree hfinite
-  have : P.IsStrictlyLE b := (CochainComplex.isStrictlyLE_iff _ _).mpr (fun i hi => hP i (Or.inr hi))
+  have : P.IsStrictlyLE b := (CochainComplex.isStrictlyLE_iff _ _).mpr (fun i hi => hP i (Or.inr
+    hi))
   have (i : ℤ) : Projective (P.X i) := by
     let := (hf i).1
     infer_instance

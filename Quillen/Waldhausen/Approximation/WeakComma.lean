@@ -3,10 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.SquareLift
-import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
-import Mathlib.CategoryTheory.Widesubcategory
-import Mathlib.CategoryTheory.IsConnected
+module
+
+public import Quillen.Waldhausen.Approximation.SquareLift
+public import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
+public import Mathlib.CategoryTheory.Widesubcategory
+public import Mathlib.CategoryTheory.IsConnected
 
 /-!
 # Genuine weak comma categories for approximation functors
@@ -18,6 +20,8 @@ objects, by actual weak cofibrations in the source. Hence these comma categories
 are connected. Connectedness is strictly weaker than the contractibility needed
 by the available Quillen Theorem A, and no contractibility is asserted here.
 -/
+@[expose] public section
+
 
 noncomputable section
 

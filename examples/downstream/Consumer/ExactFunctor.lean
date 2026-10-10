@@ -1,4 +1,23 @@
-import Quillen.KTheory.API
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.API
+
+/-!
+# Exact functor K-theory examples
+
+Bundles supplied exact structures and uses the public K-theory maps for exact
+functors. The statements record identity and composition, agreement with the
+bundled K-functor, the forward map of an equivalence induced on Q-constructions,
+and equality for naturally isomorphic functors.
+-/
+
+@[expose] public section
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits Quillen
@@ -25,7 +44,7 @@ theorem bundled_functor_map (F : ExactFunctor E E') (n : ℕ) (x : E.K n) :
 -- The public equivalence keeps the original canonical forward homomorphism.
 theorem equivalence_forward_map (F : ExactFunctor E E') [F.mapQ.IsEquivalence] (n : ℕ) :
     (F.KEquivOfMapQIsEquivalence n).toMonoidHom = F.KMap n :=
-  F.KEquivOfMapQIsEquivalence_toMonoidHom n
+  F.KEquivOfMapQIsEquivalence_coe n
 
 theorem naturally_isomorphic_maps (F G : ExactFunctor E E')
     (e : F.toFunctor ≅ G.toFunctor) (n : ℕ) : F.KMap n = G.KMap n :=

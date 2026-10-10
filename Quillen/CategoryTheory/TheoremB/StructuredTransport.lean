@@ -1,7 +1,17 @@
-import Quillen.CategoryTheory.TheoremB.StructuredOpposite
-import Quillen.CategoryTheory.TheoremB.StructuredReversal
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.StructuredOpposite
+public import Quillen.CategoryTheory.TheoremB.StructuredReversal
 
 /-! Compatibility of the two canonical structured-comma comparisons. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Topology unitInterval
@@ -113,7 +123,8 @@ def structuredParameterizedComparison (d : D) (p : Path (1 : unitInterval) 0) :
   HomotopyFiber.lift _ _ (classifyingSpaceMap (StructuredArrow.proj d F)).hom
     (reversedNullhomotopy _ _ _ (structuredCommaPositiveHomotopy F d) p)
 
-@[simp] theorem structuredParameterizedComparison_projection (d : D) (p : Path (1 : unitInterval) 0) :
+@[simp] theorem structuredParameterizedComparison_projection (d : D) (p : Path (1 : unitInterval) 0)
+  :
     (HomotopyFiber.projection (classifyingSpaceMap F).hom (classifyingSpacePoint d)).comp
       (structuredParameterizedComparison F d p) =
         (classifyingSpaceMap (StructuredArrow.proj d F)).hom :=
@@ -122,13 +133,15 @@ def structuredParameterizedComparison (d : D) (p : Path (1 : unitInterval) 0) :
 @[simp] theorem structuredParameterizedComparison_path (d : D) (p : Path (1 : unitInterval) 0)
     (x : ClassifyingSpace (StructuredArrow d F)) (t : unitInterval) :
     (structuredParameterizedComparison F d p x).1.2 t =
-      classifyingSpaceNaturalTransformationHomotopy (structuredCommaTransformation F d) (p t, x) := rfl
+      classifyingSpaceNaturalTransformationHomotopy (structuredCommaTransformation F d) (p t, x) :=
+        rfl
 
 theorem structuredParameterizedComparison_opposite (d : D) :
     structuredParameterizedComparison F d oppositeIntervalPath.{u} =
       transportedStructuredFiberComparison F d := by
   apply fiberMaps_ext
-  · rw [structuredParameterizedComparison_projection, transportedStructuredFiberComparison_projection]
+  · rw [structuredParameterizedComparison_projection,
+    transportedStructuredFiberComparison_projection]
   · intro x t
     exact (structuredParameterizedComparison_path F d _ x t).trans
       (transportedStructuredFiberComparison_path F d x t).symm

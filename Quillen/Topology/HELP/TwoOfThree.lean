@@ -1,8 +1,16 @@
-import Quillen.Topology.HELP.CancelFirst
-import Quillen.Topology.HELP.CancelSecond
-import Quillen.Topology.HELP.HomotopyInvariance
-import Quillen.Topology.HELP.Composition
-import Quillen.Topology.HELP.HomotopyEquiv
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.CancelFirst
+public import Quillen.Topology.HELP.CancelSecond
+public import Quillen.Topology.HELP.HomotopyInvariance
+public import Quillen.Topology.HELP.Composition
+public import Quillen.Topology.HELP.HomotopyEquiv
 
 /-! # Compact HELP two-of-three and actual section comparisons
 
@@ -11,6 +19,8 @@ lifting properties retain the entire prescribed boundary homotopy. The
 section corollaries use genuine strict identities or supplied homotopies
 between actual composites, with no inverse family or fiber conclusion.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology
 universe u

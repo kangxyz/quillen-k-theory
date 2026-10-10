@@ -1,6 +1,14 @@
-import Quillen.Topology.Realization.HomotopyBridge
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.Topology.Homotopy.Equiv
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.HomotopyBridge
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.Topology.Homotopy.Equiv
 
 /-! # Nerves for categories with different hom universes
 
@@ -9,6 +17,8 @@ arbitrary apex object. Both nerves live in the common object universe. The
 usual nerve-map and equivalence argument works unchanged without identifying
 those two hom universes.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -33,7 +43,8 @@ def cylinder {F G : C ⥤ D} (α : F ⟶ G) : nerve C ⊗ Δ[1] ⟶ nerve D wher
   naturality _ _ _ := rfl
 
 @[simp]
-theorem cylinder_zero {F G : C ⥤ D} (α : F ⟶ G) : SSet.ι₀ ≫ cylinder.{u, v, w} α = map.{u, v, w} F := by
+theorem cylinder_zero {F G : C ⥤ D} (α : F ⟶ G) : SSet.ι₀ ≫ cylinder.{u, v, w} α = map.{u, v, w}
+    F := by
   ext n z
   change ((Functor.const (Fin (n.unop.len + 1))).obj (0 : Fin 2)).prod' z ⋙
     Functor.uncurry.obj (ComposableArrows.mk₁ α) = z ⋙ F
@@ -42,7 +53,8 @@ theorem cylinder_zero {F G : C ⥤ D} (α : F ⟶ G) : SSet.ι₀ ≫ cylinder.{
   simp [Functor.uncurry, ComposableArrows.mk₁, Functor.prod']
 
 @[simp]
-theorem cylinder_one {F G : C ⥤ D} (α : F ⟶ G) : SSet.ι₁ ≫ cylinder.{u, v, w} α = map.{u, v, w} G := by
+theorem cylinder_one {F G : C ⥤ D} (α : F ⟶ G) : SSet.ι₁ ≫ cylinder.{u, v, w} α = map.{u, v, w}
+    G := by
   ext n z
   change ((Functor.const (Fin (n.unop.len + 1))).obj (1 : Fin 2)).prod' z ⋙
     Functor.uncurry.obj (ComposableArrows.mk₁ α) = z ⋙ G
@@ -66,18 +78,21 @@ def realizationEquivalence (e : C ≌ D) :
   left_inv := by
     have h := realizationSimplicialHomotopy (homotopy.{max u w, v, v} e.unitIso.hom)
     have h₀ : map.{max u w, v, v} (𝟭 C) = 𝟙 (nerve C) := rfl
-    have h₁ : map.{max u w, v, v} (e.functor ⋙ e.inverse) = map.{u, v, w} e.functor ≫ map.{u, w, v} e.inverse := rfl
+    have h₁ : map.{max u w, v, v} (e.functor ⋙ e.inverse) = map.{u, v, w} e.functor ≫ map.{u, w,
+      v} e.inverse := rfl
     rw [h₀, h₁, SSet.toTop.map_id, SSet.toTop.map_comp] at h
     exact ⟨h.symm⟩
   right_inv := by
     have h := realizationSimplicialHomotopy (homotopy.{max u v, w, w} e.counitIso.hom)
     have h₀ : map.{max u v, w, w} (𝟭 D) = 𝟙 (nerve D) := rfl
-    have h₁ : map.{max u v, w, w} (e.inverse ⋙ e.functor) = map.{u, w, v} e.inverse ≫ map.{u, v, w} e.functor := rfl
+    have h₁ : map.{max u v, w, w} (e.inverse ⋙ e.functor) = map.{u, w, v} e.inverse ≫ map.{u, v,
+      w} e.functor := rfl
     rw [h₀, h₁, SSet.toTop.map_id, SSet.toTop.map_comp] at h
     exact ⟨h⟩
 
 @[simp]
 theorem realizationEquivalence_toFun (e : C ≌ D) :
-    (realizationEquivalence.{u, v, w} e).toFun = (SSet.toTop.map (map.{u, v, w} e.functor)).hom := rfl
+    (realizationEquivalence.{u, v, w} e).toFun = (SSet.toTop.map (map.{u, v, w} e.functor)).hom
+      := rfl
 
 end Quillen.Waldhausen.QuillenComparison.MixedNerve

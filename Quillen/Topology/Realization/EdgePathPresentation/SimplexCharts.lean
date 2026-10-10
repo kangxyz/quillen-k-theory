@@ -1,4 +1,12 @@
-import Quillen.Topology.Realization.EdgePathPresentation.Collar
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.EdgePathPresentation.Collar
 
 /-!
 # Connected boundary and annular simplex charts
@@ -8,6 +16,8 @@ least two. A uniformly shrunken copy of the boundary lies in the overlap of
 the open collar and open cell interior. These are the local charts used by
 skeletal edge-path approximation.
 -/
+@[expose] public section
+
 
 noncomputable section
 

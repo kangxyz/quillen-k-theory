@@ -3,10 +3,14 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.ModuleComplex.ConcentratedPerfectHomology
-import Quillen.PerfectComplexes.Affine.DerivedComparison
+module
+
+public import Quillen.Algebra.ModuleComplex.ConcentratedPerfectHomology
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedComparison
 
 /-! Semantic consumers of the actual finite-projective concentrated remainder. -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

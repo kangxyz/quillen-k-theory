@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.SmallModel.Functoriality
-import Quillen.KTheory.Map.CommonAmbient
-import Quillen.CategoryTheory.QConstruction.ZeroEndomorphisms
+module
+
+public import Quillen.CategoryTheory.SmallModel.Functoriality
+public import Quillen.KTheory.Map.CommonAmbient
+public import Quillen.CategoryTheory.QConstruction.ZeroEndomorphisms
 
 /-!
 # Naturality of the original small-model comparison in a common universe
@@ -16,6 +18,8 @@ gives a based homotopy: the zero Q-vertex has only its identity endomorphism.
 This proves naturality of the existing mixed-universe comparison map, without
 redefining it by transport.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

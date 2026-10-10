@@ -1,5 +1,13 @@
-import Quillen.Topology.HELP.CylinderBoundary
-import Mathlib.Topology.Homotopy.HomotopyGroup
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.CylinderBoundary
+public import Mathlib.Topology.Homotopy.HomotopyGroup
 
 /-! # Genuine compact HEP presentations of finite cube boundaries
 
@@ -7,6 +15,8 @@ The boundary is built from the empty boundary of the zero-cube by the actual
 pushout cylinder construction. Its image is exactly the original `Cube.boundary`.
 No injectivity or boundary homeomorphism is needed for the later lifting tests.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -29,6 +39,7 @@ instance cube_compactSpace (n : ℕ) : CompactSpace (cube.{u} n) := by
   change CompactSpace (ULift.{u} (Fin n → unitInterval))
   infer_instance
 
+/-- The vertex of the universe-lifted finite cube with every coordinate equal to zero. -/
 def zero (n : ℕ) : cube.{u} n := ⟨fun _ ↦ 0⟩
 
 /-- The original linear coordinate contraction, requiring no chosen path family. -/
@@ -63,11 +74,17 @@ def stepHomeomorph (n : ℕ) : (cube.{u} n × unitInterval) ≃ₜ cube.{u} (n+1
 
 /-- A compact HEP map presenting precisely the entire ordinary cube boundary. -/
 structure BoundaryPresentation (n : ℕ) where
+  /-- The compact parameter space presenting the finite cube boundary. -/
   space : TopCat.{u}
+  /-- The boundary presentation space is compact. -/
   compact : CompactSpace space
+  /-- The presentation map into the universe-lifted `n`-cube. -/
   map : space ⟶ cube.{u} n
+  /-- The presentation map has the homotopy extension property. -/
   hep : homotopyExtensionProperty map
+  /-- Every image point lies in the original finite cube boundary. -/
   lands : ∀ a, (map a).down ∈ Cube.boundary (Fin n)
+  /-- Every point of the original finite cube boundary has a presentation preimage. -/
   covers : ∀ z : cube.{u} n, z.down ∈ Cube.boundary (Fin n) → ∃ a, map a = z
 
 /-- The zero-dimensional boundary is genuinely empty. -/
@@ -92,10 +109,12 @@ def BoundaryPresentation.step {n : ℕ} (P : BoundaryPresentation.{u} n) :
     congrArg (stepHomeomorph n) (ConcreteCategory.congr_hom (cylinderBoundarySide_map P.map) (a,t))
   have h₀ (x : cube.{u} n) :
       j (cylinderBoundaryCaps P.map (Sum.inl x)) = ⟨Fin.cons 0 x.down⟩ :=
-    congrArg (stepHomeomorph n) (ConcreteCategory.congr_hom (cylinderBoundaryCaps_map P.map) (Sum.inl x))
+    congrArg (stepHomeomorph n) (ConcreteCategory.congr_hom (cylinderBoundaryCaps_map P.map)
+      (Sum.inl x))
   have h₁ (x : cube.{u} n) :
       j (cylinderBoundaryCaps P.map (Sum.inr x)) = ⟨Fin.cons 1 x.down⟩ :=
-    congrArg (stepHomeomorph n) (ConcreteCategory.congr_hom (cylinderBoundaryCaps_map P.map) (Sum.inr x))
+    congrArg (stepHomeomorph n) (ConcreteCategory.congr_hom (cylinderBoundaryCaps_map P.map)
+      (Sum.inr x))
   refine {
     space := CylinderBoundary P.map
     compact := inferInstance

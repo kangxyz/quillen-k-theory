@@ -1,5 +1,13 @@
-import Quillen.Topology.Realization.SimplexHomotopy
-import Mathlib.AlgebraicTopology.FundamentalGroupoid.InducedMaps
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.SimplexHomotopy
+public import Mathlib.AlgebraicTopology.FundamentalGroupoid.InducedMaps
 
 /-!
 # Realized categorical arrows in the genuine fundamental groupoid
@@ -8,6 +16,8 @@ The constructions below use actual continuous paths in the geometric realization
 The composition law is filled inside the realized two-simplex. No edge-path
 approximation or presentation theorem for all topological paths is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory Opposite Convexity
@@ -96,8 +106,10 @@ theorem realizationEdgePath_comp
       (SSet.toTop.map (SSet.yonedaEquiv.symm _) (realizationInterval t)) = _
     rw [simplexEdge_02_yoneda]
     exact realizationEdgePath_triangle_face e₀₂ s.simplex 1 s.d₁ t
-  have h₀ : realizationPoint x₀ = f (realizationPoint (SSet.stdSimplex.obj₀Equiv.symm 0)) := by simpa using (hp 0).symm
-  have h₂ : realizationPoint x₂ = f (realizationPoint (SSet.stdSimplex.obj₀Equiv.symm 2)) := by simpa using (hq 1).symm
+  have h₀ : realizationPoint x₀ = f (realizationPoint (SSet.stdSimplex.obj₀Equiv.symm 0)) := by
+    simpa using (hp 0).symm
+  have h₂ : realizationPoint x₂ = f (realizationPoint (SSet.stdSimplex.obj₀Equiv.symm 2)) := by
+    simpa using (hq 1).symm
   have H := ((realizationStdSimplex_paths_homotopic (p.trans q) r).map f).pathCast h₀ h₂
   convert H using 1
   · ext t

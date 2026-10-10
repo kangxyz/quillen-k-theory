@@ -4,14 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianDomains
+module
+
+public import Quillen.Topology.Realization.Cartesian.WeakDomains
 
 /-! Regression consumers for actual two-coefficient finite-domain descent.
 The target coefficient stays arbitrary, and conclusions concern original
 constant-path comparisons in all degrees and for empty domains. -/
+@[expose] public section
+
 
 noncomputable section
-open CategoryTheory Limits Opposite Quillen Quillen.TheoremB.SkeletalCartesian
+open CategoryTheory Limits Opposite Quillen Quillen.CartesianRealization.Skeletal
 open scoped Simplicial Topology unitInterval
 universe u
 

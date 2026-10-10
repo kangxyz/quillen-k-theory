@@ -1,7 +1,17 @@
-import Quillen.Topology.ClassifyingSpace.Opposite
-import Quillen.CategoryTheory.TheoremB.Naturality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.ClassifyingSpace.Opposite
+public import Quillen.CategoryTheory.TheoremB.Naturality
 
 /-! Opposite categories reverse the structure-arrow homotopy. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite MonoidalCategory CartesianMonoidalCategory
 open scoped Simplicial Topology unitInterval
@@ -63,25 +73,37 @@ private theorem oppositeInterval_vertex (i : Fin 2) :
 
 @[simp] theorem oppositeRealizationInterval_zero :
     oppositeRealizationInterval (0 : TopCat.I.{u}) = 1 := by
+  have hEndpoint : SSet.stdSimplex.toTopObjIsoI.hom
+      (realizationPoint (SSet.stdSimplex.obj₀Equiv.{u}.symm 0)) =
+        (0 : TopCat.I) := by
+    simpa only [SSet.stdSimplex.obj₀Equiv_symm_apply] using
+      realizationIntervalIso_zero_const
   change SSet.stdSimplex.toTopObjIsoI.hom
     ((realizationOppositeNatIso.app (Δ[1] : SSet.{u})).hom
       (SSet.toTop.map (SSet.stdSimplex.opIso ⦋1⦌).inv
         (SSet.stdSimplex.toTopObjIsoI.inv 0))) = 1
-  rw [← realizationIntervalIso_zero, Iso.hom_inv_id_apply,
+  rw [← hEndpoint, Iso.hom_inv_id_apply,
     realizationPoint_naturality, oppositeInterval_vertex,
     realizationOpposite_point]
-  exact realizationIntervalIso_one
+  simpa only [show (0 : Fin 2).rev = 1 from rfl,
+    SSet.stdSimplex.obj₀Equiv_symm_apply] using realizationIntervalIso_one_const
 
 @[simp] theorem oppositeRealizationInterval_one :
     oppositeRealizationInterval (1 : TopCat.I.{u}) = 0 := by
+  have hEndpoint : SSet.stdSimplex.toTopObjIsoI.hom
+      (realizationPoint (SSet.stdSimplex.obj₀Equiv.{u}.symm 1)) =
+        (1 : TopCat.I) := by
+    simpa only [SSet.stdSimplex.obj₀Equiv_symm_apply] using
+      realizationIntervalIso_one_const
   change SSet.stdSimplex.toTopObjIsoI.hom
     ((realizationOppositeNatIso.app (Δ[1] : SSet.{u})).hom
       (SSet.toTop.map (SSet.stdSimplex.opIso ⦋1⦌).inv
         (SSet.stdSimplex.toTopObjIsoI.inv 1))) = 0
-  rw [← realizationIntervalIso_one, Iso.hom_inv_id_apply,
+  rw [← hEndpoint, Iso.hom_inv_id_apply,
     realizationPoint_naturality, oppositeInterval_vertex,
     realizationOpposite_point]
-  exact realizationIntervalIso_zero
+  simpa only [show (1 : Fin 2).rev = 0 from rfl,
+    SSet.stdSimplex.obj₀Equiv_symm_apply] using realizationIntervalIso_zero_const
 
 /-- Opposite realization on the cylinder separates into its source and
 interval maps, by the two product projections. -/
@@ -209,10 +231,12 @@ private theorem reversePairMap_heq {n : ℕ} (p : Fin (n + 1) → Fin 2)
     (hi : i = i') (hj : j = j') (f : i ⟶ j) (g : i' ⟶ j')
     (a : (p j).rev ⟶ (p i).rev) (b : (p j').rev ⟶ (p i').rev) :
     (show (op ((p i).rev, (c.obj i).unop) : (Fin 2 × C)ᵒᵖ) ⟶
-      op ((p j).rev, (c.obj j).unop) from Quiver.Hom.op (show ((p j).rev, (c.obj j).unop) ⟶ ((p i).rev, (c.obj i).unop) from
+      op ((p j).rev, (c.obj j).unop) from Quiver.Hom.op (show ((p j).rev, (c.obj j).unop) ⟶ ((p
+        i).rev, (c.obj i).unop) from
         (a, (c.map f).unop))) ≍
     (show (op ((p i').rev, (c.obj i').unop) : (Fin 2 × C)ᵒᵖ) ⟶
-      op ((p j').rev, (c.obj j').unop) from Quiver.Hom.op (show ((p j').rev, (c.obj j').unop) ⟶ ((p i').rev, (c.obj i').unop) from
+      op ((p j').rev, (c.obj j').unop) from Quiver.Hom.op (show ((p j').rev, (c.obj j').unop) ⟶ ((p
+        i').rev, (c.obj i').unop) from
         (b, (c.map g).unop))) := by
   subst i'
   subst j'

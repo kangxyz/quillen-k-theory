@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.Fibration.AllWeak.NullhomotopyNaturality
-import Quillen.Topology.HomotopyFiber.ContractibleBase
-import Quillen.CategoryTheory.TheoremB.CartesianSourceTransport
-import Quillen.Topology.HomotopyGroups.WeakEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.AllWeak.NullhomotopyNaturality
+public import Quillen.Topology.HomotopyFiber.ContractibleBase
+public import Quillen.Topology.HomotopyPullback.CartesianTransport
+public import Quillen.Topology.HomotopyGroups.WeakEquivalence
 
 /-! # The original canonical comparison through the all-weak fiber
 
@@ -12,6 +20,8 @@ acyclic-inclusion square induces a map of these actual fibers, whose composite
 with that lift is exactly the canonical acyclic comparison, including its path.
 No homotopy-cartesian square or fibration theorem is assumed here.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Topology

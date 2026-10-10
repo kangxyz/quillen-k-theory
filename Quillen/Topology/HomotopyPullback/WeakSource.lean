@@ -1,6 +1,14 @@
-import Quillen.Topology.HomotopyFiber.WeakSourceEquivalence
-import Quillen.CategoryTheory.TheoremB.HomotopyPullbackSourceEquivalence
-import Quillen.CategoryTheory.TheoremB.HomotopyPullbackSymmetry
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.WeakSourceEquivalence
+public import Quillen.Topology.HomotopyPullback.SourceEquivalence
+public import Quillen.Topology.HomotopyPullback.Symmetry
 
 /-! # Uniform weak source change for actual homotopy pullbacks
 
@@ -8,6 +16,8 @@ The original parameter/path-retaining source map is the strict pullback of
 the original weak source map along a genuine projection fibration. This
 proves the complete weak property without selecting inverse maps in fibers.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -16,7 +26,7 @@ universe u
 namespace Quillen.HomotopyPullback
 variable {X Y A Z : Type u} [TopologicalSpace X] [TopologicalSpace Y]
   [TopologicalSpace A] [TopologicalSpace Z]
-  (q : C(A,Y)) (f : C(X,Y)) (k : C(Z,X))
+  (q : C(A, Y)) (f : C(X, Y)) (k : C(Z, X))
 
 /-- The actual source projection is a genuine fibration, by the exact path
 reversal homeomorphism and the known base-projection fibration. -/
@@ -52,7 +62,8 @@ theorem sourceMap_isWeakHomotopyEquivalence (hk : IsWeakHomotopyEquivalence k) :
     IsWeakHomotopyEquivalence (sourceMap q f k) :=
   (strictSourceProjection_isWeakHomotopyEquivalence (sourceProjection f q) k
     (sourceProjection_homotopyLiftingProperty q f) hk).comp
-      (isWeakHomotopyEquivalence_of_homotopyEquiv (sourceMapPullbackHomeomorph q f k).toHomotopyEquiv)
+      (isWeakHomotopyEquivalence_of_homotopyEquiv (sourceMapPullbackHomeomorph q f
+        k).toHomotopyEquiv)
 
 @[simp] theorem sourceMap_source (z : HomotopyPullback (f.comp k) q) :
     (sourceMap q f k z).1.2.1 = k z.1.2.1 := rfl

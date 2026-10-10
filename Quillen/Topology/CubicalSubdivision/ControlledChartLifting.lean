@@ -1,6 +1,14 @@
-import Quillen.Topology.CubicalSubdivision.ControlledLifting
-import Quillen.Topology.CubicalSubdivision.BoundaryLifting
-import Quillen.Topology.CubicalSubdivision.FaceCover
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.ControlledLifting
+public import Quillen.Topology.CubicalSubdivision.BoundaryLifting
+public import Quillen.Topology.CubicalSubdivision.FaceCover
 
 /-! # Finite chart lifting with complete source-side constraints
 
@@ -9,6 +17,8 @@ chart. For a given cube test an actual open parameter cover controls the
 prescribed boundary values. Finite intersections of incident charts then
 give a genuine global lift by the controlled face induction.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -20,12 +30,12 @@ variable {E : Type u} {B : Type v} {J : Type w}
 
 /-- Literal source and target restriction to a finite family of charts.
 Source membership retains every chart condition, in addition to its image. -/
-def controlledChartMap (p : C(E,B)) (R : J → Set E) (W : J → Set B) (S : Finset J) :
+def controlledChartMap (p : C(E, B)) (R : J → Set E) (W : J → Set B) (S : Finset J) :
     C({e : E // ∀ j ∈ S,e ∈ R j ∧ p e ∈ W j}, {b : B // ∀ j ∈ S,b ∈ W j}) where
   toFun e := ⟨p e.val,fun j hj ↦ (e.2 j hj).2⟩
   continuous_toFun := by fun_prop
 
-@[simp] theorem controlledChartMap_val (p : C(E,B)) (R : J → Set E) (W : J → Set B)
+@[simp] theorem controlledChartMap_val (p : C(E, B)) (R : J → Set E) (W : J → Set B)
     (S : Finset J) (e : {e : E // ∀ j ∈ S,e ∈ R j ∧ p e ∈ W j}) :
     (controlledChartMap p R W S e).val = p e.val := rfl
 
@@ -33,7 +43,7 @@ def controlledChartMap (p : C(E,B)) (R : J → Set E) (W : J → Set B) (S : Fin
 space controls the original target and boundary maps, and the original
 restricted maps have finite boundary lifting on all nonempty intersections.
 The source sets need not be open. -/
-theorem exists_lift_of_controlled_chart_cover (p : C(E,B))
+theorem exists_lift_of_controlled_chart_cover (p : C(E, B))
     (R : J → Set E) (W : J → Set B)
     (hloc : ∀ S : Finset J,S.Nonempty → BoundaryLifting (controlledChartMap p R W S))
     (n : ℕ) (a : C({x : Cube n // x ∈ _root_.Cube.boundary (Fin n)},E))

@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Approximation.WeakFlags
-import Quillen.Waldhausen.QuillenComparison.FlagPresentation
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Approximation.WeakFlags
+public import Quillen.Waldhausen.QuillenComparison.FlagPresentation
 
 /-!
 # Weak-equivalence categories of genuine quotient rows
@@ -9,6 +17,8 @@ pushouts. Morphisms are pointwise weak-equivalence natural transformations.
 Canonical cokernel completion is defined on the actual weak-map flag
 category, with weak-equivalence preservation proved using Waldhausen gluing.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -30,6 +40,8 @@ variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 @[ext]
 structure WeakRow (E : Quillen.ExactStructure C) (cof weq : MorphismProperty C)
     (n : SimplexCategory) where
+  /-- The exact quotient row, whose horizontal interval maps are additionally required to lie in
+  `cof`. -/
   row : Row E n
   cofibration (i j k : Fin (n.len + 1)) (hij : i ≤ j) (hjk : j ≤ k) :
     cof (row.diagram.map (homOfLE
@@ -84,10 +96,10 @@ theorem quotientNatTrans_weak {A B : Fin (n.len + 1) ⥤ C}
     V.weq ((quotientNatTrans E hA hB α).app p) := by
   let q := (quotientNatTrans E hA hB α).app p
   have hP := isPushoutOfZeroCokernel (flagQuotient_zero E hA p)
-    (flagQuotient_isCokernel E hA p) V.isZero
+    (flagQuotientIsCokernel E hA p) V.isZero
     (0 : A.obj p.1.1 ⟶ V.zero) (0 : V.zero ⟶ _)
   have hP' := isPushoutOfZeroCokernel (flagQuotient_zero E hB p)
-    (flagQuotient_isCokernel E hB p) V.isZero
+    (flagQuotientIsCokernel E hB p) V.isZero
     (0 : B.obj p.1.1 ⟶ V.zero) (0 : V.zero ⟶ _)
   exact V.gluing (α.app p.1.1) (α.app p.1.2) (𝟙 V.zero) q
     (hEV _ (hA _)) (hEV _ (hB _)) hP hP'

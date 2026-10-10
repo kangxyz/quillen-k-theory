@@ -1,7 +1,15 @@
-import Quillen.Topology.Realization.CylinderIso
-import Quillen.Topology.Realization.CylinderEndpoints
-import Quillen.CategoryTheory.TheoremB.DoubleCylinder
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.BinaryProducts
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.CylinderIso
+public import Quillen.Topology.Realization.CylinderEndpoints
+public import Quillen.Topology.DoubleMappingCylinder.Basic
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.BinaryProducts
 
 /-!
 # The actual simplicial double cylinder realizes to the topological double cylinder
@@ -9,6 +17,8 @@ import Mathlib.CategoryTheory.Limits.Preserves.Shapes.BinaryProducts
 The comparison is a categorical isomorphism, hence an actual homeomorphism.
 Its cylinder and endpoint formulas retain the original attaching maps.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
@@ -30,14 +40,16 @@ def realizationBinarySumIso (X Y : SSet.{u}) :
 theorem realizationBinarySumIso_inl (X Y : SSet.{u}) :
     SSet.toTop.map (coprod.inl : X ⟶ X ⨿ Y) ≫ (realizationBinarySumIso X Y).hom =
       (TopCat.binaryCofan |X| |Y|).inl :=
-  (isColimitOfHasBinaryCoproductOfPreservesColimit SSet.toTop X Y).comp_coconePointUniqueUpToIso_hom (TopCat.binaryCofanIsColimit |X| |Y|)
+  (isColimitOfHasBinaryCoproductOfPreservesColimit SSet.toTop X
+    Y).comp_coconePointUniqueUpToIso_hom (TopCat.binaryCofanIsColimit |X| |Y|)
       ⟨WalkingPair.left⟩
 
 @[reassoc (attr := simp)]
 theorem realizationBinarySumIso_inr (X Y : SSet.{u}) :
     SSet.toTop.map (coprod.inr : Y ⟶ X ⨿ Y) ≫ (realizationBinarySumIso X Y).hom =
       (TopCat.binaryCofan |X| |Y|).inr :=
-  (isColimitOfHasBinaryCoproductOfPreservesColimit SSet.toTop X Y).comp_coconePointUniqueUpToIso_hom (TopCat.binaryCofanIsColimit |X| |Y|)
+  (isColimitOfHasBinaryCoproductOfPreservesColimit SSet.toTop X
+    Y).comp_coconePointUniqueUpToIso_hom (TopCat.binaryCofanIsColimit |X| |Y|)
       ⟨WalkingPair.right⟩
 
 namespace DoubleCylinder

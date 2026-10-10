@@ -3,11 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.Properties
-import Quillen.Waldhausen.Fibration.Rows.ReflexiveFactorization
-import Quillen.Waldhausen.SmallModel.Acyclic
-import Quillen.Waldhausen.SmallModel.Joint
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceCancellation
+module
+
+public import Quillen.Waldhausen.Approximation.Basic
+public import Quillen.Waldhausen.Fibration.Rows.ReflexiveFactorization
+public import Quillen.Waldhausen.SmallModel.Acyclic
+public import Quillen.Waldhausen.SmallModel.Joint
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceCancellation
 
 /-! # Actual approximation transport through the existing small model
 
@@ -16,6 +18,8 @@ original factors. The existing joint-cylinder transport specializes to the
 reflexive weak pair. Original S-map naturality carries complete weakness
 back through the genuine realization homeomorphisms.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -53,7 +57,8 @@ theorem deloopingMap_isWeakHomotopyEquivalence_of_smallModel
     (hF : IsExact W.cof W.weq V.cof V.weq F)
     (h : IsWeakHomotopyEquivalence (deloopingMap hF.smallModel).hom) :
     IsWeakHomotopyEquivalence (deloopingMap hF).hom := by
-  have hc := h.comp (isWeakHomotopyEquivalence_of_homotopyEquiv W.smallModelDeloopingHomeomorph.toHomotopyEquiv)
+  have hc := h.comp (isWeakHomotopyEquivalence_of_homotopyEquiv
+    W.smallModelDeloopingHomeomorph.toHomotopyEquiv)
   rw [← smallModelDeloopingHomeomorph_naturality] at hc
   exact hc.of_comp_right
     (isWeakHomotopyEquivalence_of_homotopyEquiv V.smallModelDeloopingHomeomorph.toHomotopyEquiv)

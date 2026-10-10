@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.ExactCategory.FunctorPushout
-import Quillen.Waldhausen.ExactCategory
-import Quillen.Waldhausen.Functor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.FunctorPushout
+public import Quillen.Waldhausen.ExactCategory
+public import Quillen.Waldhausen.Functor
 
 /-! # Exact Quillen functors are exact Waldhausen functors
 
@@ -8,6 +16,8 @@ The pushout axiom is proved by preservation of the actual biproduct conflation,
 not supplied as an extra hypothesis. All other structural conditions follow
 from genuine additive exactness and functorial preservation of isomorphisms.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits

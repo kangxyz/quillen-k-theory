@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.ExactCategory.Quotient.Conflations
-import Quillen.CategoryTheory.ExactCategory.Functor
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Zero
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Quotient.Conflations
+public import Quillen.CategoryTheory.ExactCategory.Functor
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Zero
 
 /-!
 # Descent of exact functors annihilating the subcategory
@@ -10,6 +18,8 @@ isomorphisms. Hence it descends to the actual categorical quotient. Under
 either filtering hypothesis this descent is additive and preserves the
 specified quotient conflations. No exact structure on the quotient is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v u v' u'

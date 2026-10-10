@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.WeakComma
-import Quillen.Waldhausen.ExtensionCategory.Functoriality
+module
+
+public import Quillen.Waldhausen.Approximation.WeakComma
+public import Quillen.Waldhausen.ExtensionCategory.Functoriality
 
 /-!
 # Approximation on genuine Reedy cofibration arrows
@@ -20,6 +22,8 @@ This is a finite branching diagram-lifting stage. It does not assert arbitrary
 finite-poset replacement, comma contractibility, or a K-theory equivalence.
 All postcomposition functors and weak-comma objects are the existing originals.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

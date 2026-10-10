@@ -1,5 +1,13 @@
-import Mathlib.Algebra.Homology.Embedding.StupidTrunc
-import Quillen.Waldhausen.SplitComplexes.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.Algebra.Homology.Embedding.StupidTrunc
+public import Quillen.Waldhausen.SplitComplexes.Basic
 
 /-! # Original brutal truncations and their actual inclusions
 
@@ -8,6 +16,8 @@ stupid truncations. This supplies the missing canonical inclusion, retaining
 the existing degreewise identifications and original chain-map components.
 No boundedness, projectivity, or term-subcategory assumption is made.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

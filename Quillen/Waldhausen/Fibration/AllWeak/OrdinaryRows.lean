@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.AllWeak.AcyclicEquivalence
-import Quillen.Waldhausen.Fibration.RelativeRows.Simplicial
-import Quillen.Waldhausen.SConstruction.Rows.Functoriality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.AllWeak.AcyclicEquivalence
+public import Quillen.Waldhausen.Fibration.RelativeRows.Simplicial
+public import Quillen.Waldhausen.SConstruction.Rows.Functoriality
 
 /-! # The original all-acyclic double-S base identification
 
@@ -8,6 +16,8 @@ The actual inverse exact inclusion and lift give strictly inverse maps on
 ordinarySRows. Both the original row diagrams and every ordinal restriction
 are retained. The common object/hom universe is explicit for these S-maps.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial

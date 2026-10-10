@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyFiber.SourceEquivalence
-import Quillen.Topology.HomotopyGroups.Loop.DegreeShift
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.SourceEquivalence
+public import Quillen.Topology.HomotopyGroups.Loop.DegreeShift
 
 /-!
 # Homotopy groups of contractible spaces
@@ -9,6 +17,8 @@ identified with the homotopy fiber of the point inclusion, which is an unbased
 homotopy equivalence. Its contractibility and the genuine loop-degree shift
 then give triviality in every finite degree, including the zeroth homotopy set.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u

@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.Sites.CechExactness
+module
+
+public import Quillen.CategoryTheory.Sites.CechExactness
 
 /-!
 # Comparison isomorphisms for the original Cech complex
@@ -13,11 +15,12 @@ an additive product-preserving coefficient functor. `cechCosimplicialIntersectIs
 identifies a family's original Cech object with actual intersection restriction
 to any open containing every member. No covering or sheaf hypothesis is needed.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-set_option maxHeartbeats 800000
 universe w v v' v'' u u' u''
 open CategoryTheory CategoryTheory.Limits TopologicalSpace Opposite
 open scoped Simplicial
@@ -26,9 +29,11 @@ namespace Quillen.Cech
 variable {C : Type u} [Category.{v} C] [HasFiniteProducts C]
   {A : Type u'} [Category.{v'} A] [HasProducts.{w} A]
   {B : Type u''} [Category.{v''} B] [HasProducts.{w} B]
-  (F : A ⥤ B) [PreservesLimitsOfSize.{w,w} F]
+  (F : A ⥤ B) [PreservesLimitsOfSize.{w, w} F]
   {ι : Type w} (U : ι → C) (P : Cᵒᵖ ⥤ A)
 
+/-- The natural isomorphism commuting the Cech cosimplicial object of `U` with the
+product-preserving coefficient functor `F`. -/
 def cechCosimplicialCoefficientIso :
     (FormalCoproduct.cosimplicialObjectFunctor (FormalCoproduct.mk _ U).cech).obj P ⋙ F ≅
     (FormalCoproduct.cosimplicialObjectFunctor (FormalCoproduct.mk _ U).cech).obj (P ⋙ F) := by
@@ -43,6 +48,8 @@ def cechCosimplicialCoefficientIso :
 
 variable [Preadditive A] [Preadditive B] [F.Additive]
 
+/-- The isomorphism commuting the alternating coface complex of `Q` with the additive coefficient
+functor `F`. -/
 def alternatingCofaceCoefficientIso (Q : CosimplicialObject A) :
     (F.mapHomologicalComplex _).obj (AlgebraicTopology.AlternatingCofaceMapComplex.obj Q) ≅
       AlgebraicTopology.AlternatingCofaceMapComplex.obj (Q ⋙ F) := by
@@ -52,6 +59,8 @@ def alternatingCofaceCoefficientIso (Q : CosimplicialObject A) :
   simp [AlgebraicTopology.AlternatingCofaceMapComplex.obj,
     AlgebraicTopology.AlternatingCofaceMapComplex.objD, CosimplicialObject.δ]
 
+/-- The isomorphism from the image under `F` of the Cech complex of `P` to the Cech complex with
+coefficients `P ⋙ F`, for additive product-preserving `F`. -/
 def cechComplexCoefficientIso :
     (F.mapHomologicalComplex _).obj ((cechComplexFunctor U).obj P) ≅
       (cechComplexFunctor U).obj (P ⋙ F) :=
@@ -66,6 +75,8 @@ namespace Quillen.Cech
 
 variable {X : TopCat.{u}} {A : Type u'} [Category.{v} A] [HasProducts.{w} A]
 
+/-- The comparison between the Cech cosimplicial object of `P` and that of its intersection
+restriction to `W`, when every member of `U` lies in `W`. -/
 def cechCosimplicialIntersectIso {ι : Type w} (U : ι → Opens X)
     (P : (Opens X)ᵒᵖ ⥤ A) (W : Opens X) (hU : ∀ i, U i ≤ W) :
     (FormalCoproduct.cosimplicialObjectFunctor (FormalCoproduct.mk _ U).cech).obj P ≅

@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.ZeroAugmentation
-import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationWeakMaps
-import Quillen.Waldhausen.SConstruction.Rows.Completion
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.ZeroAugmentation
+public import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationWeakMaps
+public import Quillen.Waldhausen.SConstruction.Rows.Completion
 
 /-! # Genuine relative-row completion of coarse-weak cofibration chains
 
@@ -10,6 +18,8 @@ by genuine gluing; no extension or saturation axiom is needed in this
 completion direction. The original initial filtration is recovered through
 its actual quotient maps, which are isomorphisms because their source is zero.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -35,7 +45,7 @@ theorem cofiber_acyclic_of_coarseWeak (X : ExtensionCategory.Obj V) (hw : N.coar
   exact acyclic_of_weak_of_isPushout N.coarse (by rw [N.cof_eq]; exact X.property) hp hw
 
 variable {n : SimplexCategory} (F : ComposableArrows C n.len)
-  (hF : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), V.cof (F.map f))
+  (hF : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), V.cof (F.map f))
 
 /-- Complete the actual zero-augmented flag using the existing cofiber construction. -/
 def relativeCompletionUnderlying : QuotientRows.Obj V (addInitial.obj n) :=
@@ -43,29 +53,30 @@ def relativeCompletionUnderlying : QuotientRows.Obj V (addInitial.obj n) :=
 
 /-- Original coarse weakness, not an assumed quotient predicate, supplies tail acyclicity. -/
 theorem relativeCompletionUnderlying_mem
-    (hw : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), N.coarse.weq (F.map f)) :
+    (hw : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), N.coarse.weq (F.map f)) :
     objects N n (relativeCompletionUnderlying F hF) := by
   intro p
   exact cofiber_acyclic_of_coarseWeak N
     ((QuotientRows.cofibrationArrowDiagram V (zeroAugment V F) (zeroAugment_map_cof V F hF)).obj
       ((QuotientRows.indexMap (tail.app n)).obj p)) (hw (homOfLE p.property))
 
-variable (hw : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), N.coarse.weq (F.map f))
+variable (hw : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), N.coarse.weq (F.map f))
 
 /-- The actual relative row reconstructed from its original coarse-weak cofibration chain. -/
 def relativeCompletion : Obj N n :=
   ⟨relativeCompletionUnderlying F hF, relativeCompletionUnderlying_mem N F hF hw⟩
 
 /-- The original quotient-by-zero maps compare the original chain to its completed initial chain. -/
-def relativeCompletionUnit : F ⟶ (initialFiltrationFunctor N n).obj (relativeCompletion N F hF hw) where
+def relativeCompletionUnit : F ⟶ (initialFiltrationFunctor N n).obj (relativeCompletion N F hF
+    hw) where
   app i := QuotientRows.completionQuotient V (zeroAugment V F) (zeroAugment_map_cof V F hF)
     (interval 0 i.succ (Fin.zero_le _))
   naturality _i _j f :=
-    QuotientRows.completionQuotient_naturality V (zeroAugment V F) (zeroAugment_map_cof V F hF)
-      ((initialFiltrationIndex n).map f)
+    (QuotientRows.completionQuotient_comp_map V (zeroAugment V F)
+      (zeroAugment_map_cof V F hF) ((initialFiltrationIndex n).map f)).symm
 
 /-- Each original quotient-by-zero projection is an actual isomorphism. -/
-theorem relativeCompletionUnit_app_isIso (i : Fin (n.len+1)) :
+theorem relativeCompletionUnit_app_isIso (i : Fin (n.len + 1)) :
     IsIso ((relativeCompletionUnit N F hF hw).app i) := by
   let hzero : IsIso (V.isZero.from_
       ((zeroAugment V F).obj (interval 0 i.succ (Fin.zero_le _)).val.1)) := by
@@ -77,26 +88,27 @@ theorem relativeCompletionUnit_app_isIso (i : Fin (n.len+1)) :
 /-- The actual original initial filtration is recovered by its genuine quotient isomorphisms. -/
 def relativeCompletionInitialIso : F ≅
     (initialFiltrationFunctor N n).obj (relativeCompletion N F hF hw) := by
-  letI completionUnitIso (i : Fin (n.len+1)) : IsIso ((relativeCompletionUnit N F hF hw).app i) :=
+  letI completionUnitIso (i : Fin (n.len + 1)) : IsIso ((relativeCompletionUnit N F hF hw).app i) :=
     relativeCompletionUnit_app_isIso N F hF hw i
   exact NatIso.ofComponents (fun i ↦ asIso ((relativeCompletionUnit N F hF hw).app i))
     (fun f ↦ (relativeCompletionUnit N F hF hw).naturality f)
 
 /-- Its forward map remains the original categorical cofiber projection. -/
-@[simp] theorem relativeCompletionInitialIso_hom_app (i : Fin (n.len+1)) :
+@[simp] theorem relativeCompletionInitialIso_hom_app (i : Fin (n.len + 1)) :
     (relativeCompletionInitialIso N F hF hw).hom.app i =
       QuotientRows.completionQuotient V (zeroAugment V F) (zeroAugment_map_cof V F hF)
         (interval 0 i.succ (Fin.zero_le _)) := rfl
 
 include hF hw in
-/-- Every genuine coarse-weak cofibration chain lies in the essential image of the original functor. -/
+/-- Every genuine coarse-weak cofibration chain lies in the essential image of the original
+functor. -/
 theorem initialFiltration_exists_of_cof_weak :
     ∃ R : Obj N n, Nonempty (F ≅ (initialFiltrationFunctor N n).obj R) :=
   ⟨relativeCompletion N F hF hw, ⟨relativeCompletionInitialIso N F hF hw⟩⟩
 
 variable {F} {G : ComposableArrows C n.len}
-  (hG : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), V.cof (G.map f))
-  (hwG : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), N.coarse.weq (G.map f))
+  (hG : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), V.cof (G.map f))
+  (hwG : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), N.coarse.weq (G.map f))
 
 /-- Every original chain transformation has its actual zero-augmented cofiber completion map. -/
 def relativeCompletionMap (α : F ⟶ G) :

@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationLayer
-import Quillen.Waldhausen.GilletWaldhausen.BoundedTerms
-import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationLayer
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedTerms
+public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 
 /-! # Exact brutal truncation and its actual bounded-term cofibration sequence
 
@@ -9,6 +17,8 @@ complexes and inherited conflations. Their original adjacent maps form a
 cofibration sequence of exact functors for isomorphism weak equivalences.
 No kernel closure is needed, and no preservation of quasi-isomorphisms is asserted.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

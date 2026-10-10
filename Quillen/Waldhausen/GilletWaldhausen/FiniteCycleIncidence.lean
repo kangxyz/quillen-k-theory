@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleKEquivalence
-import Quillen.Waldhausen.GilletWaldhausen.FiniteTermEvaluation
-import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsAcyclic
-import Quillen.Waldhausen.GilletWaldhausen.CycleEvaluationSequence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleKEquivalence
+public import Quillen.Waldhausen.GilletWaldhausen.FiniteTermEvaluation
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsAcyclic
+public import Quillen.Waldhausen.GilletWaldhausen.CycleEvaluationSequence
 
 /-! # The original finite-stratum acyclic inclusion has adjacent-cycle incidence
 
@@ -11,6 +19,8 @@ product of the two adjacent original cycle evaluations. Endpoint factors
 vanish by genuine term bounds and acyclicity. This computes a nontrivial
 inclusion map in the isomorphism weak models; no fibration is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -50,7 +60,8 @@ variable [(abelianExactStructure A).IsKernelClosed P]
 
 /-- The original cycle inclusion, now on a specified actual stratum. -/
 def finiteCycleTermInclusion (a b n : ℤ) :
-    finiteCycleEvaluation P a b n ⟶ finiteAcyclicTermsInclusion P a b ⋙ finiteTermEvaluation P a b n where
+    finiteCycleEvaluation P a b n ⟶ finiteAcyclicTermsInclusion P a b ⋙ finiteTermEvaluation P a
+      b n where
   app K := P.homMk (K.obj.obj.iCycles n)
   naturality _ _ f := ObjectProperty.hom_ext _ (cyclesMap_i f.hom.hom n)
 
@@ -104,9 +115,9 @@ theorem finiteCycle_KMap_incidence (a b n : ℤ) (k : ℕ)
       (KMap (finiteAcyclicTermsExactInclusion P a b).waldhausenExact k x) =
         KMap (finiteCycleEvaluationExact P a b n).waldhausenExact k x *
           KMap (finiteCycleEvaluationExact P a b (n + 1)).waldhausenExact k x := by
-  exact (DFunLike.congr_fun (KMap_comp
+  exact (DFunLike.congr_fun (KMap_comp_KMap
     (finiteAcyclicTermsExactInclusion P a b).waldhausenExact
-    (finiteTermEvaluationExact P a b n).waldhausenExact k) x).symm.trans
+    (finiteTermEvaluationExact P a b n).waldhausenExact k).symm x).symm.trans
       (Additivity.KMap_additivity_mul _ _ (finiteCycleTermInclusion P a b n)
         (finiteCycleTermProjection P a b n) (finiteCycleTerm_isCofibrationSequence P a b n) k x)
 
@@ -134,7 +145,8 @@ theorem finiteCycle_KMap_incidence_upper (a b : ℤ) (k : ℕ)
     KMap (finiteTermEvaluationExact P a b b).waldhausenExact k
       (KMap (finiteAcyclicTermsExactInclusion P a b).waldhausenExact k x) =
         KMap (finiteCycleEvaluationExact P a b b).waldhausenExact k x := by
-  rw [finiteCycle_KMap_incidence, finiteCycle_KMap_evaluation_zero P a b (b + 1) (Or.inr (by omega)),
+  rw [finiteCycle_KMap_incidence, finiteCycle_KMap_evaluation_zero P a b (b + 1) (Or.inr (by
+    omega)),
     MonoidHom.one_apply, mul_one]
 
 /-- In the proved finite coordinates, an interior term receives its two adjacent cycles. -/

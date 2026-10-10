@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.RankedChain.Comma
-import Quillen.CategoryTheory.SemisimplexResolution.Contraction
+module
+
+public import Quillen.CategoryTheory.RankedChain.Comma
+public import Quillen.CategoryTheory.SemisimplexResolution.Contraction
 
 /-!
 # The actual poset resolution of a category
@@ -20,6 +22,8 @@ rank, this gives an actual poset ResolutionPoset C and resolutionFunctor C to
 any small category C. The composed homotopy equivalence's forward map is
 proved exactly the original displayed functor's classifying-space map.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -74,7 +78,8 @@ def lastVertexHomotopyEquiv :
 
 /-- Its forward map is literally the original last-vertex classifying map. -/
 @[simp] theorem lastVertexHomotopyEquiv_toFun :
-    (lastVertexHomotopyEquiv C rank hRank).toFun = (classifyingSpaceMap (lastVertex C rank)).hom := rfl
+    (lastVertexHomotopyEquiv C rank hRank).toFun = (classifyingSpaceMap (lastVertex C rank)).hom :=
+      rfl
 
 /-- The actual poset of strict chains in the original semisimplex category. -/
 abbrev ResolutionPoset := Obj (SemisimplexResolution.Obj C) SemisimplexResolution.Obj.dim

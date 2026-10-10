@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.AcyclicSubcategory
-import Mathlib.AlgebraicTopology.SimplicialSet.Nerve
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.AcyclicSubcategory
+public import Mathlib.AlgebraicTopology.SimplicialSet.Nerve
 
 /-! # Original fine-weak chains with arbitrary natural transformations
 
@@ -8,6 +16,8 @@ arrows are fine weak equivalences. Morphisms of the underlying full category
 are all original natural transformations. Cofibrations and coarse weak maps
 are then imposed pointwise, independently of the fine object predicate.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 universe u v
@@ -38,7 +48,7 @@ variable (V : Structure C)
 
 /-- The actual fine-weak arrow predicate on the unchanged original chain. -/
 def fineChains (k : SimplexCategory) : ObjectProperty (ComposableArrows C k.len) :=
-  fun F ↦ ∀ {i j : Fin (k.len+1)} (f : i ⟶ j), V.weq (F.map f)
+  fun F ↦ ∀ {i j : Fin (k.len + 1)} (f : i ⟶ j), V.weq (F.map f)
 
 /-- All natural transformations are retained, before imposing horizontal predicates. -/
 abbrev FineChain (k : SimplexCategory) := (fineChains V k).FullSubcategory
@@ -84,7 +94,7 @@ def fineReindex {k l : SimplexCategory} (α : k ⟶ l) : FineChain V l ⥤ FineC
     ((fineReindex V α).obj F).obj = (SimplexCategory.toCat.map α).toFunctor ⋙ F.obj := rfl
 
 @[simp] theorem fineReindex_map_app {k l : SimplexCategory} (α : k ⟶ l)
-    {F G : FineChain V l} (f : F ⟶ G) (i : Fin (k.len+1)) :
+    {F G : FineChain V l} (f : F ⟶ G) (i : Fin (k.len + 1)) :
     ((fineReindex V α).map f).hom.app i = f.hom.app (α.toOrderHom i) := rfl
 
 @[simp] theorem fineReindex_id (k : SimplexCategory) : fineReindex V (𝟙 k) = 𝟭 (FineChain V k) := by

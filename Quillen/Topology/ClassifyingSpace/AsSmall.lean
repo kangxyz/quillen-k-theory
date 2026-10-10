@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.Realization.Homotopy
-import Quillen.Topology.ClassifyingSpace.Basic
-import Mathlib.CategoryTheory.Category.ULift
+module
+
+public import Quillen.Topology.Realization.Homotopy
+public import Quillen.Topology.ClassifyingSpace.Basic
+public import Mathlib.CategoryTheory.Category.ULift
 
 /-!
 # An actual nerve isomorphism for common-universe models
@@ -14,6 +16,8 @@ Up/down postcomposition is strictly inverse on original nerves. Its realized
 homeomorphism preserves the original object vertices, without changing the
 maximum realization universe.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -34,6 +38,8 @@ def asSmallNerveIso : nerve C ≅ nerve (AsSmall.{0} C) where
   hom_inv_id := by ext n F; rfl
   inv_hom_id := by ext n F; rfl
 
+/-- The classifying-space homeomorphism obtained by realizing the nerve isomorphism to the
+common-universe model `AsSmall C`. -/
 def asSmallClassifyingHomeomorph : ClassifyingSpace C ≃ₜ ClassifyingSpace (AsSmall.{0} C) :=
   TopCat.homeoOfIso (SSet.toTop.mapIso (asSmallNerveIso C))
 

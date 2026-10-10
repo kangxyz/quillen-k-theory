@@ -3,12 +3,14 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.Sites.CechExactness
-import Mathlib.Algebra.Category.ModuleCat.Products
-import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
-import Mathlib.Algebra.Homology.HomologicalComplexAbelian
-import Mathlib.Algebra.Homology.HomologySequence
-import Mathlib.Tactic.FinCases
+module
+
+public import Quillen.CategoryTheory.Sites.CechExactness
+public import Mathlib.Algebra.Category.ModuleCat.Products
+public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
+public import Mathlib.Algebra.Homology.HomologicalComplexAbelian
+public import Mathlib.Algebra.Homology.HomologySequence
+public import Mathlib.Tactic.FinCases
 
 /-!
 # Original Cech differentials, cocycles, and exact sequences
@@ -23,11 +25,12 @@ intersections. It does not assume the presheaf is a sheaf.
 complexes from short exactness of sections over their finite intersections.
 Arbitrary products of module short exact sequences are handled explicitly.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-set_option maxHeartbeats 800000
 universe w v v' v'' u u' u''
 open CategoryTheory CategoryTheory.Limits TopologicalSpace Opposite
 open scoped Simplicial
@@ -57,6 +60,7 @@ namespace Quillen.Cech
 variable {X : TopCat.{u}} {R : Type u} [Ring R] {ι : Type u}
   (U : ι → Opens X) (P : (Opens X)ᵒᵖ ⥤ ModuleCat.{u} R)
 
+/-- The finite intersection of the `n + 1` opens selected by the tuple `a`. -/
 abbrev tupleOpen (n : ℕ) (a : Fin (n + 1) → ι) : Opens X := ∏ᶜ fun i => U (a i)
 
 lemma tupleOpen_le (n : ℕ) (a : Fin (n + 1) → ι) (i : Fin (n + 1)) :
@@ -69,6 +73,8 @@ lemma pair_le_tupleOpen (i j : ι) :
   · exact inf_le_left
   · exact inf_le_right
 
+/-- The `R`-linear restriction of presheaf sections from `W` to `V` along the inclusion `h : V ≤
+W`. -/
 abbrev sectionRes {V W : Opens X} (h : V ≤ W) : P.obj (op W) →ₗ[R] P.obj (op V) :=
   (P.map (homOfLE h).op).hom
 
@@ -79,6 +85,8 @@ lemma sectionRes_comp {V W T : Opens X} (h : V ≤ W) (k : W ≤ T) (s : P.obj (
   rw [← P.map_comp]
   rfl
 
+/-- The degree-`n` Cech cochain associated to the family of sections `s` over all `(n + 1)`-fold
+intersections. -/
 abbrev cochainVector (n : ℕ) (s : ∀ a : Fin (n + 1) → ι, P.obj (op (tupleOpen U n a))) :
     ((cechComplexFunctor U).obj P).X n :=
   (ModuleCat.piIsoPi _).inv s
@@ -86,7 +94,8 @@ abbrev cochainVector (n : ℕ) (s : ∀ a : Fin (n + 1) → ι, P.obj (op (tuple
 lemma cochainVector_component (n : ℕ)
     (s : ∀ a : Fin (n + 1) → ι, P.obj (op (tupleOpen U n a))) (a : Fin (n + 1) → ι) :
     Pi.π (fun b => P.obj (op (tupleOpen U n b))) a (cochainVector U P n s) = s a := by
-  exact ConcreteCategory.congr_hom (ModuleCat.piIsoPi_inv_kernel_ι (fun b : Fin (n + 1) → ι => P.obj (op (tupleOpen U n b))) a) s
+  exact ConcreteCategory.congr_hom (ModuleCat.piIsoPi_inv_kernel_ι (fun b : Fin (n + 1) → ι => P.obj
+    (op (tupleOpen U n b))) a) s
 
 lemma cech_d_apply_component (n : ℕ)
     (s : ((cechComplexFunctor U).obj P).X n) (a : Fin (n + 2) → ι) :
@@ -113,7 +122,8 @@ lemma cechOne_vector_closed
     ((cechComplexFunctor U).obj P).d 1 2
       (cochainVector U P 1 (fun a => sectionRes P
         (le_inf (tupleOpen_le U 1 a 0) (tupleOpen_le U 1 a 1)) (c (a 0) (a 1)))) = 0 := by
-  apply (ModuleCat.piIsoPi (fun b : Fin 3 → ι => P.obj (op (tupleOpen U 2 b)))).toLinearEquiv.injective
+  apply (ModuleCat.piIsoPi (fun b : Fin 3 → ι => P.obj (op (tupleOpen U 2
+    b)))).toLinearEquiv.injective
   ext a
   have he (z) : ((ModuleCat.piIsoPi
       (fun b => P.obj (op (tupleOpen U 2 b)))).hom z) a =
@@ -235,12 +245,15 @@ lemma module_pi_map_surjective {M N : ι → ModuleCat.{u} R} (f : ∀ i, M i �
   rw [module_pi_map_hom_apply, Iso.inv_hom_id_apply]
   exact hy i
 
+/-- The short complex of products of the module short complexes `S`, with both arrows induced
+componentwise. -/
 def moduleProductShortComplex (S : ι → ShortComplex (ModuleCat.{u} R)) :
     ShortComplex (ModuleCat.{u} R) :=
   ShortComplex.mk (Limits.Pi.map fun i => (S i).f) (Limits.Pi.map fun i => (S i).g) (by
     apply Pi.hom_ext
     intro i
-    simp only [Category.assoc, Limits.Pi.map_π, Limits.Pi.map_π_assoc, (S i).zero, comp_zero, zero_comp])
+    simp only [Category.assoc, Limits.Pi.map_π, Limits.Pi.map_π_assoc, (S i).zero, comp_zero,
+      zero_comp])
 
 lemma moduleProductShortComplex_shortExact (S : ι → ShortComplex (ModuleCat.{u} R))
     (hS : ∀ i, (S i).ShortExact) : (moduleProductShortComplex S).ShortExact := by
@@ -254,7 +267,8 @@ lemma moduleProductShortComplex_shortExact (S : ι → ShortComplex (ModuleCat.{
     change ↑(∏ᶜ fun i => (S i).X₂) at z
     have hz' (i : ι) : (S i).g (((ModuleCat.piIsoPi (fun i => (S i).X₂)).hom z) i) = 0 := by
       have h := congrArg (fun t => ((ModuleCat.piIsoPi (fun i => (S i).X₃)).hom t) i) hz
-      change ((ModuleCat.piIsoPi (fun i => (S i).X₃)).hom (Limits.Pi.map (fun i => (S i).g) z)) i = _ at h
+      change ((ModuleCat.piIsoPi (fun i => (S i).X₃)).hom (Limits.Pi.map (fun i => (S i).g) z)) i =
+        _ at h
       erw [module_pi_map_hom_apply] at h
       simp only [map_zero] at h
       change _ = 0 at h

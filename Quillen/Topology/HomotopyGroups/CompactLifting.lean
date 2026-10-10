@@ -1,4 +1,12 @@
-import Quillen.Topology.HomotopyGroups.Map
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyGroups.Map
 
 /-! # Actual homotopy-group bijections from injective compact-source lifting
 
@@ -8,6 +16,7 @@ lifted cube boundary and both endpoints of every lifted relative homotopy
 to retain the original chosen values. No fiber or weak-equivalence conclusion
 is included in the lifting hypothesis.
 -/
+@[expose] public section
 
 noncomputable section
 open scoped Topology unitInterval
@@ -64,9 +73,10 @@ def piEquivOfCompactLifts
     HomotopyGroup.Pi (n + 1) X x ≃* HomotopyGroup.Pi (n + 1) Y y :=
   MulEquiv.ofBijective (piMap n e hp) (piMap_bijective_of_compact_lifts e he hl hp n)
 
-@[simp] theorem piEquivOfCompactLifts_toMonoidHom
+/-- The forward homomorphism is the original based map. -/
+@[simp] theorem piEquivOfCompactLifts_coe
     (e : C(X, Y)) (he : Function.Injective e) (hl : HasCompactSourceLifts e)
     {x : X} {y : Y} (hp : e x = y) (n : ℕ) :
-    (piEquivOfCompactLifts e he hl hp n).toMonoidHom = piMap n e hp := rfl
+    (piEquivOfCompactLifts e he hl hp n : _ →* _) = piMap n e hp := rfl
 
 end Quillen

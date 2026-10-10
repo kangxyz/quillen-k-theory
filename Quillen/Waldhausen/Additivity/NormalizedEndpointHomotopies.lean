@@ -1,12 +1,22 @@
-import Quillen.Waldhausen.Additivity.NormalizedEndpointFamilies
-import Quillen.Waldhausen.Additivity.NormalizedZeroMaps
-import Quillen.Waldhausen.Additivity.SubdivisionBasepoint
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.NormalizedEndpointFamilies
+public import Quillen.Waldhausen.Additivity.NormalizedZeroMaps
+public import Quillen.Waldhausen.Additivity.SubdivisionBasepoint
 
 /-! # Actual fixed-zero homotopies of normalized additivity endpoints
 
 These homotopies use the actual weak natural-transformation families. Their
 zero tracks are proved constant from the concrete endpoint zero diagrams.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

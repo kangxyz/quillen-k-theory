@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.Tail
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.Tail
 
 /-! # The actual zero-first section of the acyclic tail
 
@@ -7,6 +15,8 @@ one-longer row is a genuine relative row, and every original tail object and
 map is retained. Exactness is derived from the actual inclusion and actual
 ordinal restriction.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial
@@ -42,7 +52,8 @@ def tailSectionUnderlying (n : SimplexCategory) :
   QuotientRows.postcompose (acyclicStructure N) V (acyclicInclusion_exact N) n ⋙
     QuotientRows.reindex V (dropInitial n)
 
-theorem tailSectionUnderlying_mem (n : SimplexCategory) (X : QuotientRows.Obj (acyclicStructure N) n) :
+theorem tailSectionUnderlying_mem (n : SimplexCategory) (X : QuotientRows.Obj (acyclicStructure
+    N) n) :
     objects N n ((tailSectionUnderlying N n).obj X) := by
   intro p
   exact (X.obj.obj p).property
@@ -76,7 +87,8 @@ theorem tailSection_exact (n : SimplexCategory) :
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 
 /-- The section's first object is the actual original diagonal zero object. -/
-theorem tailSection_first_isZero (n : SimplexCategory) (X : QuotientRows.Obj (acyclicStructure N) n) :
+theorem tailSection_first_isZero (n : SimplexCategory) (X : QuotientRows.Obj (acyclicStructure
+    N) n) :
     IsZero ((first N n).obj ((tailSection N n).obj X)) :=
   (acyclicInclusion_exact N).zero (X.property.zero 0)
 

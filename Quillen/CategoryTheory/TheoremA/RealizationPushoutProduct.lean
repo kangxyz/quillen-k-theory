@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremA.RealizationPushoutInvariance
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationPushoutInvariance
 
 /-!
 # Endpoint-relative homotopy extension
@@ -8,6 +16,8 @@ into compact-open mapping spaces to preserve all its prescribed boundary
 faces. This gives the endpoint pushout-product construction needed for
 compatible mapping-cylinder filtrations.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -74,12 +84,16 @@ lemma sum_simplexBoundaryFlowWeight {n : ℕ} (s : I)
   field_simp [ne_of_gt (flowScale_pos s z)]
   ring
 
+/-- The simplex component of the controlled boundary flow at time `s`, with barycentric coordinates
+given by `simplexBoundaryFlowWeight`. -/
 def simplexBoundaryFlowPoint {n : ℕ} (s : I)
     (z : StdSimplex ℝ (Fin (n + 1)) × I) : StdSimplex ℝ (Fin (n + 1)) where
   weights := Finsupp.equivFunOnFinite.symm (simplexBoundaryFlowWeight s z)
   nonneg i := simplexBoundaryFlowWeight_nonneg s z i
   total := by simpa [Finsupp.sum_fintype] using sum_simplexBoundaryFlowWeight s z
 
+/-- The real height coordinate of the controlled boundary flow, obtained by scaling the
+displacement from height `2` by `simplexBoundaryFlowScale`. -/
 def simplexBoundaryFlowHeight {n : ℕ} (s : I)
     (z : StdSimplex ℝ (Fin (n + 1)) × I) : ℝ :=
   2 + ((z.2 : ℝ) - 2) / simplexBoundaryFlowScale s z

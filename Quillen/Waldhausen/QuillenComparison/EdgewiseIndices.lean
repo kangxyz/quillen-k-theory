@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.QuillenComparison.IntervalSpans
-import Quillen.Topology.Realization.Edgewise
-import Mathlib.CategoryTheory.Functor.Currying
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.IntervalSpans
+public import Quillen.Topology.Realization.Edgewise
+public import Mathlib.CategoryTheory.Functor.Currying
 
 /-!
 # The nested central intervals of edgewise subdivision
@@ -8,6 +16,8 @@ import Mathlib.CategoryTheory.Functor.Currying
 The i-th interval is [n-i,n+1+i] in [2n+1]. Its nerve index is n+1+i.
 These choices are natural for the genuine reversed-first-half edgewise functor.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

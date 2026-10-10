@@ -1,6 +1,14 @@
-import Quillen.Topology.ClassifyingSpace.Equivalence
-import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
-import Mathlib.CategoryTheory.Grothendieck
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.ClassifyingSpace.Equivalence
+public import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
+public import Mathlib.CategoryTheory.Grothendieck
 
 /-!
 # The categorical resolution used in Quillen's Theorem A
@@ -16,6 +24,8 @@ not assert that fiberwise contractibility makes the second projection a
 homotopy equivalence: that is the additional homotopy-colimit theorem needed
 for the general Theorem A criterion.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -93,7 +103,7 @@ def comparisonNerveHomotopy :
 @[simps]
 def fiberInclusion (d : D) : CostructuredArrow F d ⥤ Resolution F where
   obj X := ⟨X.left, d, X.hom⟩
-  map f := ⟨f.left, 𝟙 d, by simpa using CostructuredArrow.w f⟩
+  map f := ⟨f.left, 𝟙 d, by simp⟩
 
 @[simp]
 theorem fiberInclusion_source (d : D) :

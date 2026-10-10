@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.PathSubdivision.GlobalComparison
+module
+
+public import Quillen.Topology.PathSubdivision.GlobalComparison
 
 /-!
 # Path subdivision regression tests
@@ -12,6 +14,8 @@ import Quillen.Topology.PathSubdivision.GlobalComparison
 Check genuine free path pools, tails at moving parameters, whole-slab covers,
 and complete original boundary fixing through finite subdivision.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -112,17 +116,20 @@ example (n : ℕ) (a : C(boundary.{u} n, {z : X × E // p z.2 = f z.1}))
 example (z : HomotopyPullback p f) :
     ∃ y : {y : X × E // p y.2 = f y.1},
       Joined (HomotopyPullback.strictPullbackInclusion p f y) z :=
-  (strictPullbackInclusion_isWeakHomotopyEquivalence_of_pools p f U V hU hV hc hp).component_surjective z
+  (strictPullbackInclusion_isWeakHomotopyEquivalence_of_pools p f U V hU hV hc
+    hp).component_surjective z
 
 example (z : {z : X × E // p z.2 = f z.1}) (n : ℕ) :
     Function.Bijective (homotopyGroupMap (N := Fin n)
       (HomotopyPullback.strictPullbackInclusion p f) (x := z) rfl) :=
-  (strictPullbackInclusion_isWeakHomotopyEquivalence_of_pools p f U V hU hV hc hp).homotopy_bijective z n
+  (strictPullbackInclusion_isWeakHomotopyEquivalence_of_pools p f U V hU hV hc
+    hp).homotopy_bijective z n
 
 example (z : {z : X × E // p z.2 = f z.1}) :
     Function.Bijective (homotopyGroupMap (N := Fin 0)
       (HomotopyPullback.strictPullbackInclusion p f) (x := z) rfl) :=
-  (strictPullbackInclusion_isWeakHomotopyEquivalence_of_pools p f U V hU hV hc hp).homotopy_bijective z 0
+  (strictPullbackInclusion_isWeakHomotopyEquivalence_of_pools p f U V hU hV hc
+    hp).homotopy_bijective z 0
 
 example [IsEmpty {z : X × E // p z.2 = f z.1}] : IsEmpty (HomotopyPullback p f) :=
   (strictPullbackInclusion_isWeakHomotopyEquivalence_of_pools p f U V hU hV hc hp).isEmpty_target

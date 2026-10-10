@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Scheme.Sheaf.DerivedMinusPullbackComposition
+module
+
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedMinusPullbackComposition
 
 /-! Semantic consumers of genuine ambient bounded-above derived pullback. -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -21,8 +25,9 @@ theorem ambient_bounded_morphism_lift (C : Type u) [Category.{v} C] [Abelian C]
     (a : (boundedAboveLocalizationToMinus C).obj K ⟶
       (boundedAboveLocalizationToMinus C).obj L) :
     ∃! b : K ⟶ L, (boundedAboveLocalizationToMinus C).map b = a := by
-  let F := boundedAboveLocalizationToMinus_fullyFaithful C
-  exact ⟨F.preimage a, F.map_preimage a, fun b hb => F.map_injective (hb.trans (F.map_preimage a).symm)⟩
+  let F := boundedAboveLocalizationToMinusFullyFaithful C
+  exact ⟨F.preimage a, F.map_preimage a, fun b hb => F.map_injective (hb.trans (F.map_preimage
+    a).symm)⟩
 
 /-- Comparisons of actual projective models commute with the original augmentations
 up to an actual chain homotopy, before any derived localization. -/
@@ -58,7 +63,8 @@ theorem derived_map_formula {X Y : Scheme.{u}} (f : X ⟶ Y)
       (boundedAboveQMinus X.Modules).map (pullbackFlatModelBoundedMap f s) := by
   exact (derivedPullbackMinusFactors f).hom.naturality s
 
-/-- The computed derived pullback of every bounded representative is its actual geometric flat model. -/
+/-- The computed derived pullback of every bounded representative is its actual geometric flat
+  model. -/
 def actual_derived_object {X Y : Scheme.{u}} (f : X ⟶ Y)
     [HasDerivedCategory.{w₁} Y.Modules] [HasDerivedCategory.{w₂} X.Modules]
     (K : BoundedAboveComplex Y.Modules) :

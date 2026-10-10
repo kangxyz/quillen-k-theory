@@ -1,8 +1,18 @@
-import Quillen.Waldhausen.Additivity.NormalizeFunctor
-import Quillen.Waldhausen.Additivity.DiagramIso
-import Quillen.Waldhausen.Additivity.SumDiagrams
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.NormalizeFunctor
+public import Quillen.Waldhausen.Additivity.DiagramIso
+public import Quillen.Waldhausen.Additivity.SumDiagrams
 
 /-! # The common separated endpoint with a strict chosen zero -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

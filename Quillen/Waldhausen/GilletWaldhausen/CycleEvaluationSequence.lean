@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.CyclesExact
-import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.CyclesExact
+public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 
 /-! # The actual cycle-to-term incidence cofibration sequence
 
@@ -9,6 +17,8 @@ exact functors `Z_n → E_n → Z_(n+1)` into P. Quotient exactness supplies the
 relative-pushout cofibration condition. The weak maps here are isomorphisms:
 cycles and terms do not generally send quasi-isomorphisms to isomorphisms.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

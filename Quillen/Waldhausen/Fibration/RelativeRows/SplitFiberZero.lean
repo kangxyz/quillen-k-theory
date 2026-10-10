@@ -1,6 +1,16 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.SplitFiber
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.SplitFiber
 
 /-! # Exact chosen-zero formulas for the original split inclusion -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial
@@ -18,7 +28,8 @@ variable {C : Type u} [Category.{v} C]
   · rcases p with ⟨⟨i,j⟩, hij⟩
     fin_cases i <;> fin_cases j <;> rfl
   · intro p q f
-    exact (QuotientRows.evaluation_isZero W ((QuotientRows.oneEmbedding_exact W).zero W.isZero) p).eq_of_src _ _
+    exact (QuotientRows.evaluation_isZero W ((QuotientRows.oneEmbedding_exact W).zero W.isZero)
+      p).eq_of_src _ _
 
 namespace Fibration.RelativeRows
 variable {V : Structure C} (N : NestedWeakEquivalences V)

@@ -1,6 +1,14 @@
-import Quillen.Topology.Realization.Homotopy
-import Quillen.CategoryTheory.QConstruction.Connected
-import Mathlib.CategoryTheory.Limits.ConcreteCategory.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.Homotopy
+public import Quillen.CategoryTheory.QConstruction.Connected
+public import Mathlib.CategoryTheory.Limits.ConcreteCategory.Basic
 
 /-!
 # Path-connected geometric realizations and Quillen spaces
@@ -15,6 +23,8 @@ classifying space. Applied to the already proved connectedness of an exact
 category's Q-construction, this supplies path-connectedness of its Quillen
 space and paths from the distinguished basepoint to every point.
 -/
+@[expose] public section
+
 
 noncomputable section
 

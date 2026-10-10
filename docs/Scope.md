@@ -1,88 +1,147 @@
 # Mathematical scope
 
-The library develops algebraic K-theory through several constructions, including
-Quillen's Q-construction and Waldhausen's S-construction. The present models are
-connective, and the formalization is incomplete. The Lean statements specify
-the objects, hypotheses, and comparisons of each result.
+The library develops algebraic K-theory through several constructions and
+comparisons. Its Q/S K-theory models are connective; separate Bass negative groups are
+defined by functorial cokernel recursion. Lean declarations specify the actual
+objects, maps, hypotheses, and parameter ranges. This guide records principal
+interfaces and remaining boundaries.
 
-## Available interfaces and results
+## Available families
 
-| Family | Scope |
+| Family | Current scope |
 | --- | --- |
-| Exact categories and Q-construction | Exact structures, restricted spans, composition, and compatible functors |
-| K-groups and canonical maps | Based homotopy groups, exact-functor laws, equivalences, and chosen small-model interfaces |
-| Dévissage | The stated abelian finite-filtration setting |
-| Serre localization | Connective localization for the specified Serre quotient, including the K₀ tail |
-| Scheme K/G-theory | Vector bundles, coherent sheaves, open restriction, and canonical K→G maps |
-| Closed-support G-theory | Noetherian open/closed localization and closed-subscheme dévissage |
-| Resolution | Admissible objectwise finite-resolution comparisons |
+| Exact categories and Q-construction | Exact structures, restricted spans, composition, compatible functors, and canonical K-maps |
+| Dévissage and resolution | Abelian finite-filtration dévissage and admissible finite-resolution comparisons |
+| Serre and G-localization | Specified Serre quotients, finite-module G-theory, and connective tails |
+| Scheme K/G-theory | Vector bundles, finite-type/coherent sheaves, restriction, K→G, and noetherian open/closed localization |
 | Regular K→G | Regular affines; quasi-compact regular schemes with the resolution property |
-| Q/S comparison | Canonical exact-category Quillen/Waldhausen comparison |
-| Perfect-complex models | Strict/local connective models, genuine derived local perfectness, restriction, support, and change-of-cofibration comparisons |
-| Gillet–Waldhausen | Bounded-complex comparison under the stated term-property hypotheses; vector-bundle/strict-perfect equivalence on every scheme |
-| Affine perfect comparisons | Strict/local and vector-bundle/local equivalences in every nonnegative degree |
-| Relative and supported affine comparisons | Strict/local comparisons for any open immersion into `Spec R`; no quasi-compactness of the open is required |
-| Principal perfect localization | Connective group exactness for `Spec R[r⁻¹] → Spec R` over every commutative ring |
-| Pullback | Vector-bundle and strict-perfect K for all scheme maps; locally-perfect K for maps between quasi-compact schemes; coherent G for flat maps between locally noetherian schemes |
-| Waldhausen fibration | Change of weak equivalences with coarse two-out-of-three, extension, joint-cylinder data, and the second-endpoint section |
-| Cofinality | Group-graded and dense-subcategory results with their explicit structural data; positive equivalences and degree-zero image statements |
-| Algebraic Grothendieck group | Universal group of zero, weak-equivalence, and cofibration-pushout relations, without identification with homotopical K₀ |
-| Homotopy foundations | Categorical fiber comparisons, additivity, finite HELP, weak-cartesian realization, and the stated compact lifting results |
+| Perfect complexes | Strict/local models, derived local perfectness, change of cofibrations, support, and bounded-flat representatives |
+| Model comparisons | Gillet–Waldhausen with explicit term hypotheses; vector-bundle/strict equivalence on every scheme; affine strict/local equivalence |
+| Global perfect localization | Quasi-compact open immersions into qcqs schemes; positive equivalence, exact K₀ image, boundary, and connective tail |
+| Supported localization and naturality | Quasi-compact auxiliary acyclicity opens on qcqs bases; arbitrary commuting support/localization squares |
+| Support excision | Open image and auxiliary open cover the base; original supported K-equivalence in all nonnegative degrees, without compactness/separation |
+| Mayer–Vietoris | Quasi-compact two-open covers of qcqs schemes, including matching K₀-class gluing; supported version with a quasi-compact auxiliary open |
+| Pullback | Vector-bundle/strict K for all scheme maps; perfect K and localized perfect spectra between quasi-compact schemes; flat coherent G pullback |
+| Waldhausen fibration/cofinality | Explicit closure/cylinder hypotheses, canonical spectrum fiber comparison, positive equivalences, and degree-zero tails |
+| Spectra and stable fibers | Iterated S Ω-spectrum, additive K-comparison, signed parameter-loop shift, and all-integer stable fiber sequence |
+| Stable localization | Coherent-homotopy quotient, categorical localization at all-integer stable equivalences, descended groups, and exact-functor laws |
+| Bass groups | Actual affine, scheme, and supported cokernel recursions seeded by homotopical perfect K₀; natural affine/scheme comparison |
+| Affine Bass step and projective line | Laurent-unit transition; two-chart projective line, qcqs structure, flat projection, and global sections |
 
-See [Library.md](Library.md) for import paths and qualified interfaces.
+[Library.md](Library.md) gives import paths and qualified interfaces.
+Generic finite-type sheaf categories exist over arbitrary rings/schemes; their
+abelian, Serre, exact-category, and G-theory results retain the stated noetherian
+or locally noetherian hypotheses.
 
-## Perfect localization and degree zero
+## Localization, excision, and degree zero
 
-For an open immersion `j : U ⟶ X`, `Quillen.PerfectComplexes.PerfectOpenK j n`
-uses the category of locally perfect complexes on `X`, with weak equivalences
-detected by quasi-isomorphism after restriction to `U`. It is a relative model;
-it is not the definition of `Quillen.PerfectComplexes.PerfectK U n`.
-The general relative sequence uses the actual support-forgetting map and
-homotopy-fiber boundary. Its surjective degree-zero map lands in
-`PerfectOpenK j 0`.
+For `j : U ⟶ X`, `PerfectOpenK j n` uses locally perfect objects on `X` with
+weak equivalences detected on `U`. The relative sequence has the actual
+support-forgetting map and homotopy-fiber boundary. Its surjective degree-zero
+map lands in this relative group.
 
-For a principal open over an affine base, the relative-to-open map is bijective
-in every positive degree and injective in degree zero. Its degree-zero target
-is identified with exactly `(perfectKRestrict j 0).range`. The resulting group
-sequence is exact through
-`K₁(U) → K₀(X on X ∖ U) → K₀(X) → K₀(U)`, using locally-perfect K-theory.
-Surjectivity onto the final `K₀(U)` is not asserted. The source theorems include
-arbitrary commutative rings, zero divisors, and localization at zero.
+For quasi-compact quasi-separated (qcqs) `X` and quasi-compact `U`, relative
+restriction is an equivalence in positive degrees. In degree zero it is
+injective with image exactly `(perfectKRestrict j 0).range`. The tail
 
-The affine relative and supported strict/local comparisons allow arbitrary
-opens of `Spec R`. They do not supply the absolute open endpoint for an arbitrary
-open. See [ThomasonTrobaugh.md](ThomasonTrobaugh.md) for these distinctions.
+```text
+K₁(X) → K₁(U) → K₀(X on X ∖ U) → K₀(X) → K₀(U)
+```
 
-## Open comparisons
+is exact at the three interior positions. Surjectivity onto final `K₀(U)` is
+not asserted. Principal affine opens are included over every commutative ring,
+including localization at zero.
 
-- Strict versus locally-perfect equivalence on general nonaffine schemes.
-- Absolute perfect K-theory endpoints for arbitrary quasi-compact opens,
-  geometric density and replacement on general schemes, and global localization
-  and descent beyond the affine principal-open case.
-- Pullback on locally-perfect K-theory for arbitrary non-quasi-compact schemes;
-  locally-perfect objects there need not have uniform cohomological bounds.
-- Identification of homotopical K₀ with its algebraic Grothendieck presentation.
-- General exact-category dévissage/localization beyond the implemented abelian
-  and resolving-subcategory results.
-- Full Serre-pair naturality with quotient and basepoint coherence.
-- Cross-universe realization and model transport beyond the supplied explicit
-  small-model equivalences and naturality statements.
-- Plus-construction comparison, spectra, and nonconnective theory.
+Ordinary localization is natural for commuting qcqs open-pair squares with
+quasi-compact opens. With auxiliary support, the relative boundary needs only
+quasi-compact ambient bases; relative restriction additionally needs
+quasi-compact localization opens. The actual boundary and positive inverse are
+natural for arbitrary commuting support/localization squares when the bases
+are qcqs and both localization and auxiliary opens are quasi-compact. Flatness
+and cartesianness are not required. Fixed-base support inclusions and forgetting
+support are included.
 
-Regularity alone does not supply the resolution property on an arbitrary
-scheme. Finite cube HELP does not imply arbitrary compact HELP, and endpoint
-collar deformation alone does not provide vertical lifting. These boundaries
-remain relevant when combining the existing results.
+The supported relative bounded-flat comparison includes K₀, requiring only
+quasi-compactness of `X`, with arbitrary opens and no quasi-separatedness.
+Support excision includes all nonnegative degrees when the localization image
+and auxiliary open cover `X`, with an actual extension-by-zero inverse and no
+compactness/separation hypothesis.
+
+A quasi-compact two-open cover of a qcqs scheme has the connective
+Mayer–Vietoris sequence and matching local K₀-class gluing. The overlap map is
+the first restriction multiplied by the inverse of the second. The supported
+version requires a quasi-compact auxiliary acyclicity open. Neither overlap K₀
+surjectivity nor a negative boundary is supplied by these connective results.
+See [ThomasonTrobaugh.md](ThomasonTrobaugh.md).
+
+## Spectra and Bass groups
+
+The iterated S-spectrum uses its original cylinder loop transitions.
+`originalKStableEquiv` preserves the group law in every nonnegative degree,
+including K₀. Its negative stable groups vanish. Arbitrary exact functors have
+named stable-map laws and original K-map naturality without a chosen-zero
+image equality. Their normalized prespectrum maps have identity/composition
+homotopies; after stable localization these become literal equalities.
+
+Parameter looping transposes loop/structure coordinates and has the signed
+all-integer stable shift. It is distinct from the older looping and square-cone
+constructions. Actual path-space fibers have an all-integer stable long exact
+sequence for arbitrary prespectra; fibers of Ω-spectra retain the Ω condition.
+Whole coherent based-square homotopies supply fiber maps and boundary
+naturality. Vanishing of all integer fiber groups detects stable equivalence.
+Connectivity of a fiber of connective inputs uses degree-zero surjectivity.
+The structural Waldhausen comparison supplies that premise in its stated
+fibration setting.
+
+Categorical stable localization has descended stable-group functors and a
+universal property. Perfect spectra form a contravariant functor there for
+arbitrary maps between quasi-compact schemes, using the inverse of the
+bounded-flat inclusion and retaining original K-maps and flat pullback.
+The bounded-flat localized functor accepts all schemes.
+
+Bass negative groups are actual cokernel recursions seeded by homotopical
+perfect or supported K₀ in additive form. Index `n` means degree `-n`.
+Scheme pullback accepts arbitrary maps between quasi-compact schemes;
+supported pairs require only a quasi-compact ambient base and allow arbitrary
+vanishing opens. The affine ring and scheme-product recursions agree naturally
+in all nonpositive degrees, with literal K₀ in degree zero.
+
+The affine Laurent unit, inverse, scalar action, whole spectrum homotopy, and
+one-step `affineBassTransition` are constructed. The two-chart projective line
+has its actual Laurent gluing, qcqs structure, flat projection, and global
+sections `R`. These results do not identify the cokernel groups with negative
+Bass spectral groups or algebraic Grothendieck K₀. The finite-coefficient
+retract criterion remains conditional on its projectivity/splitting and uniform
+finite-window assumptions, without a production pushforward application.
+
+## Remaining comparisons
+
+- Coherently functorial spectral Bass iteration and comparison with the cokernel groups.
+- The fundamental theorem, projective-bundle formula, and Laurent-boundary calculation.
+- Negative Thomason–Trobaugh localization, negative boundaries, and nonconnective descent.
+- Stable mapping-cone/cofiber exactness, quotient homotopy invariance, and telescope stable-group comparisons.
+- A standard stable model structure or triangulation for the constructed categorical localization.
+- Proj identification, twisting sheaves, higher projective-line cohomology, and perfect pushforward.
+- Strict/local equivalence on arbitrary nonaffine schemes and perfect pullback on arbitrary non-quasi-compact schemes.
+- The Waldhausen algebraic Grothendieck presentation versus homotopical K₀; general exact-category dévissage/localization and full Serre-pair coherence.
+- Cross-universe transport beyond the explicit small-model comparisons, plus-construction comparisons, and higher raw-spectrum associativity coherence.
+
+Regularity alone does not give the resolution property. Finite cube HELP does
+not imply arbitrary compact HELP, and endpoint collar deformation alone does
+not supply vertical lifting. Keep these hypotheses when composing interfaces.
 
 ## Verification
 
-`scripts/check.sh` builds every library module and the maintained `Tests`,
-checks an independently configured downstream package, and explicitly replays
-the transitive axiom audits. The allowed foundation axioms are `propext`,
-`Classical.choice`, and `Quot.sound`. The trust-discovery route is described in
-[Architecture.md](Architecture.md#trust-checks).
+The candidate's complete compile, lint, and audits are pending. A scoped,
+matched typechecking measurement is recorded in [Performance.md](Performance.md).
+The configured check is `bash scripts/check.sh --rehash`: generation,
+layout and placeholder checks, script tests, library/tests, Batteries environment
+lint, native mathlib text lint, downstream clients, and explicit audit replay.
+Allowed foundation axioms are `propext`, `Classical.choice`, and `Quot.sound`.
+See [Architecture.md](Architecture.md#trust-checks) for declaration coverage and
+[CONTRIBUTING.md](../CONTRIBUTING.md#typechecking-performance) for profiling.
 
-Successful checks verify encoded statements and the audited foundation
-dependencies in their covered environment.
-Mathematical interpretation and the applicability of hypotheses still require
-review. Passing the checks does not close an open comparison theorem.
+Successful checks concern encoded statements and audited foundation
+dependencies in the checked environment. Mathematical interpretation and
+applicability require their own assessment; passing checks does not supply an
+absent comparison theorem.

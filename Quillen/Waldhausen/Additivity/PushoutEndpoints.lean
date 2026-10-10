@@ -1,6 +1,16 @@
-import Quillen.Waldhausen.Additivity.PushoutFunctor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.PushoutFunctor
 
 /-! # The comparison and identity endpoint of the additivity pushout functor -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -69,7 +79,7 @@ def pushoutIdentityIso (X : C) :
 @[simp]
 theorem pushoutIdentityIso_hom (X : C) :
     (pushoutIdentityIso W a ha X).hom = comparison W a ha (Arrow.mk (𝟙 X)) := by
-  letI := sourceι_identity_isIso W a ha X
+  let := sourceι_identity_isIso W a ha X
   apply (cancel_epi (sourceι W a ha (Arrow.mk (𝟙 X)))).1
   rw [sourceι_comparison]
   change sourceι W a ha (Arrow.mk (𝟙 X)) ≫ inv (sourceι W a ha (Arrow.mk (𝟙 X))) = G.map (𝟙 X)

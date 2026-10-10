@@ -1,6 +1,16 @@
-import Quillen.Waldhausen.ExtensionCategory.Cofiber
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.Cofiber
 
 /-! # Canonical identity-arrow and zero-arrow embeddings -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -10,7 +20,8 @@ namespace Quillen.Waldhausen.ExtensionCategory
 variable {C : Type u} [Category.{v} C] (W : Structure C)
 
 /-- An extension with two zero components is genuinely a zero object. -/
-theorem isZero_of_components (X : Obj W) (hl : IsZero X.obj.left) (hr : IsZero X.obj.right) : IsZero X where
+theorem isZero_of_components (X : Obj W) (hl : IsZero X.obj.left) (hr : IsZero X.obj.right) :
+    IsZero X where
   unique_to Y := by
     refine ⟨{ default := (objects W).homMk (Arrow.homMk (hl.to_ Y.obj.left) (hr.to_ Y.obj.right)
       (hl.eq_of_src _ _)), uniq := ?_ }⟩
@@ -40,27 +51,34 @@ def zeroEmbedding : C ⥤ Obj W where
 
 /-- Identity-arrow embedding is genuinely exact for the Reedy structure. -/
 theorem identityEmbedding_exact :
-    IsExact W.cof W.weq (waldhausenStructure W).cof (waldhausenStructure W).weq (identityEmbedding W) where
+    IsExact W.cof W.weq (waldhausenStructure W).cof (waldhausenStructure W).weq
+      (identityEmbedding W) where
   zero h := isZero_of_components W _ h h
   cofibration f hf := cof_of_relative W ((identityEmbedding W).map f) hf
-    (IsPushout.of_id_fst (f := f)) (𝟙 _) (by simp [identityEmbedding]) (by simp [identityEmbedding]) (W.cof.id_mem _)
+    (IsPushout.of_id_fst (f := f)) (𝟙 _) (by simp [identityEmbedding])
+    (by simp [identityEmbedding]) (W.cof.id_mem _)
   weak _ hf := ⟨hf, hf⟩
   pushout hf h := IsPushout.of_map_of_faithful (forget W)
     (arrow_isPushout _ _ _ _ h h)
 
 /-- Zero-source embedding is genuinely exact for the Reedy structure. -/
 theorem zeroEmbedding_exact :
-    IsExact W.cof W.weq (waldhausenStructure W).cof (waldhausenStructure W).weq (zeroEmbedding W) where
+    IsExact W.cof W.weq (waldhausenStructure W).cof (waldhausenStructure W).weq (zeroEmbedding
+      W) where
   zero h := isZero_of_components W _ W.isZero h
   cofibration {X Y} f hf := cof_of_relative W ((zeroEmbedding W).map f) (W.cof.id_mem _)
-    (IsPushout.of_id_snd (f := W.isZero.to_ X)) f (by simp [zeroEmbedding]) (W.isZero.eq_of_src _ _) hf
+    (IsPushout.of_id_snd (f := W.isZero.to_ X)) f (by simp [zeroEmbedding]) (W.isZero.eq_of_src
+      _ _) hf
   weak _ hf := ⟨W.weq.id_mem _, hf⟩
   pushout hf h := IsPushout.of_map_of_faithful (forget W)
     (arrow_isPushout _ _ _ _ IsPushout.of_id_fst h)
 
 /-- The subextension `(A→A)` inside the original extension `(A→B)`. -/
 def identityToExtension : source W ⋙ identityEmbedding W ⟶ 𝟭 (Obj W) where
-  app X := (objects W).homMk (Arrow.homMk (𝟙 X.obj.left) X.obj.hom (by simp [identityEmbedding, source]; exact Category.id_comp _))
+  app X := (objects W).homMk (Arrow.homMk (𝟙 X.obj.left) X.obj.hom (by
+    simp only [identityEmbedding, source, Functor.comp_obj, Functor.id_obj,
+      Arrow.leftFunc_obj, Arrow.mk_left, Arrow.mk_right, Arrow.mk_hom, Category.id_comp];
+    exact Category.id_comp X.obj.hom))
   naturality X Y f := by
     apply ObjectProperty.hom_ext
     apply Arrow.hom_ext

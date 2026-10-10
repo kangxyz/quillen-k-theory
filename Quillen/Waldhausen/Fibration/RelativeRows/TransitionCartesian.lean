@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.LocalFiber
-import Quillen.Topology.Realization.SplitFiberCartesian
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.LocalFiber
+public import Quillen.Topology.Realization.SplitFiberCartesian
 
 /-! # The original relative-row ordinal transitions are weakly cartesian
 
@@ -9,6 +17,8 @@ point is the genuine chosen Waldhausen zero. All finite degrees, including
 zero, and actual component surjectivity are retained. The global diagonal
 fiber theorem still requires a separate gluing argument.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

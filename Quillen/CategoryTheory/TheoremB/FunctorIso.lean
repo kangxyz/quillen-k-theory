@@ -1,8 +1,18 @@
-import Quillen.CategoryTheory.TheoremB.Conditions
-import Quillen.CategoryTheory.TheoremA.Conclusion
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.Conditions
+public import Quillen.CategoryTheory.TheoremA.Conclusion
 
 /-! Theorem B's genuine transition condition is invariant under natural
 isomorphisms of the original functor, with canonical transition maps retained. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 universe u

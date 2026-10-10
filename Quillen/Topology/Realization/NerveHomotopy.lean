@@ -1,6 +1,14 @@
-import Quillen.Topology.Realization.Homotopy
-import Mathlib.CategoryTheory.Functor.Currying
-import Mathlib.AlgebraicTopology.SimplicialSet.Homotopy
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.Homotopy
+public import Mathlib.CategoryTheory.Functor.Currying
+public import Mathlib.AlgebraicTopology.SimplicialSet.Homotopy
 
 /-!
 # Natural transformations and the simplicial nerve cylinder
@@ -9,6 +17,8 @@ A natural transformation determines a functor `[1] × C ⥤ D`. Evaluating
 this functor on a chain in `C` and a monotone map to `[1]` constructs the
 simplicial cylinder map explicitly in all dimensions.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -69,8 +79,12 @@ theorem naturalTransformationCylinderFunctor_vertex (α : F ⟶ G) (c : C) :
   refine ComposableArrows.ext₁ ?_ ?_ ?_
   · rfl
   · rfl
-  · simp [naturalTransformationCylinderFunctor, Functor.uncurry, Functor.prod',
-      ComposableArrows.mk₁, ComposableArrows.hom]
+  · simp only [Functor.prod', Functor.id_obj, Functor.const_obj_obj, Functor.id_map,
+      Functor.const_obj_map, naturalTransformationCylinderFunctor, Functor.uncurry, prod_Hom,
+      ComposableArrows.mk₁, Nat.reduceAdd, ComposableArrows.Mk₁.map, ComposableArrows.Mk₁.obj,
+      Fin.zero_eta, Fin.isValue, Fin.mk_one, Functor.comp_obj, ComposableArrows.hom,
+      ComposableArrows.map', homOfLE_leOfHom, Functor.comp_map, CategoryTheory.Functor.map_id,
+      Category.comp_id, eqToHom_naturality, eqToHom_refl, Category.id_comp]
     change α.app c = 𝟙 _ ≫ α.app c
     simp
 

@@ -1,6 +1,14 @@
-import Quillen.Devissage.Setup
-import Mathlib.CategoryTheory.Subobject.Lattice
-import Mathlib.CategoryTheory.Abelian.CommSq
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Devissage.Setup
+public import Mathlib.CategoryTheory.Subobject.Lattice
+public import Mathlib.CategoryTheory.Abelian.CommSq
 
 /-!
 # The layer poset for classical dévissage
@@ -10,6 +18,8 @@ The ordering reverses the lower endpoint and preserves the upper endpoint,
 exactly as in Quillen's proof. The intersection enlargement lemma below uses
 subobject and binary-product closure, never extension closure.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v u
@@ -22,7 +32,9 @@ variable {C : Type u} [Category.{v} C] [Abelian C]
 /-- A subquotient of `M` belonging to the dévissage subcategory. -/
 @[ext]
 structure Layer (P : ObjectProperty C) (M : C) where
+  /-- The subobject divided out in the layer quotient. -/
   lower : Subobject M
+  /-- The subobject containing `lower`; its quotient by `lower` is required to belong to `P`. -/
   upper : Subobject M
   le : lower ≤ upper
   property : P (cokernel (Subobject.ofLE lower upper le))

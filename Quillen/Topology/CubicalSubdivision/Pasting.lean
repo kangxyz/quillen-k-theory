@@ -1,4 +1,12 @@
-import Quillen.Topology.CubicalSubdivision.Faces
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.Faces
 
 /-! # Continuous pasting on the actual finite affine cube grid
 
@@ -7,6 +15,8 @@ maps onto the Hausdorff cube, hence is an actual quotient map. Compatible
 continuous cell maps therefore descend continuously, without a separation
 hypothesis on the target.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 namespace Quillen.CubicalSubdivision
@@ -50,7 +60,7 @@ theorem exists_paste (n m : ℕ) {X : Type u} [TopologicalSpace X]
 
 /-- Compatible cell data determine a unique map on the original cube. -/
 theorem paste_unique (n m : ℕ) {X : Type u} [TopologicalSpace X]
-    (g h : C(Cube n,X)) (he : ∀ k t, g (cell n m k t) = h (cell n m k t)) : g = h := by
+    (g h : C(Cube n, X)) (he : ∀ k t, g (cell n m k t) = h (cell n m k t)) : g = h := by
   apply ContinuousMap.ext
   intro x
   obtain ⟨k,t,rfl⟩ := cell_covers n m x

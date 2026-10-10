@@ -1,4 +1,12 @@
-import Quillen.Topology.HomotopyFiber.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.Equivalence
 
 /-!
 # Invariance under homotopy equivalence of the source
@@ -7,6 +15,8 @@ The equivalence constructed here uses the canonical source map as its forward
 map. Its proof uses explicit source-sliding homotopies and a two-out-of-six
 argument, avoiding triangle-coherence assumptions on the source equivalence.
 -/
+@[expose] public section
+
 
 noncomputable section
 open scoped Topology unitInterval
@@ -18,7 +28,7 @@ namespace Quillen.HomotopyFiber
 variable {X : Type u} {Y : Type v} [TopologicalSpace X] [TopologicalSpace Y]
 
 @[fun_prop]
-private theorem continuous_mulIntervalSource : Continuous (fun z : I × I => z.1 * z.2) := by
+theorem continuous_mulIntervalSource : Continuous (fun z : I × I => z.1 * z.2) := by
   apply Continuous.subtype_mk
   exact (continuous_subtype_val.comp continuous_fst).mul
     (continuous_subtype_val.comp continuous_snd)

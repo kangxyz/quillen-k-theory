@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.CategoryTheory.Localization.LocalizerMorphism
+module
+
+public import Mathlib.CategoryTheory.Localization.LocalizerMorphism
 
 /-!
 # Fully faithful localization restriction by actual approximations
@@ -14,6 +16,8 @@ become invertible on each pair of source objects. We construct both localized
 counits and prove their compatibility before proving injectivity and surjectivity
 on hom sets. No localized full-faithfulness or equivalence hypothesis is used.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -24,8 +28,11 @@ namespace Quillen.LocalizationRestriction
 variable {C D : Type*} [Category* C] [Category* D]
     (F : C ⥤ D) [F.Full] [F.Faithful] (W : MorphismProperty D)
 
+/-- The morphisms of `C` whose images under `F` belong to `W`. -/
 abbrev sourceWeak : MorphismProperty C := W.inverseImage F
 
+/-- The functor from the localization of `C` at the inverse image of `W` to the localization of `D`
+at `W`, induced by `F`. -/
 def inclusion : (sourceWeak F W).Localization ⥤ W.Localization :=
   Localization.Construction.lift (F ⋙ W.Q) (fun _ _ f hf => W.Q_inverts (F.map f) hf)
 

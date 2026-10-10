@@ -3,11 +3,15 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.OppositeJointData
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.OppositeJointData
 
 /-!
 Semantic consumers of coherent original opposite-complex cylinders.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -88,16 +92,16 @@ theorem actual_perfect_endpoint_product (X : Scheme.{u}) (f : Arrow (Perfect X)�
 projection, rather than merely identifying unrelated middle objects. -/
 theorem actual_inclusion_all_endpoints (X : Scheme.{u}) (f : Arrow (StrictPerfect X)ᵒᵖ) :
     ((perfectOppositeJointData X).inl.app ((strictToPerfect X).op.mapArrow.obj f) ≫
-      ((strictToPerfect_op_jointIso X).inv.app f).hom.left =
+      ((strictToPerfectOpJointIso X).inv.app f).hom.left =
         (strictToPerfect X).op.map ((strictOppositeJointData X).inl.app f)) ∧
     ((perfectOppositeJointData X).inr.app ((strictToPerfect X).op.mapArrow.obj f) ≫
-      ((strictToPerfect_op_jointIso X).inv.app f).hom.left =
+      ((strictToPerfectOpJointIso X).inv.app f).hom.left =
         (strictToPerfect X).op.map ((strictOppositeJointData X).inr.app f)) ∧
-    (((strictToPerfect_op_jointIso X).inv.app f).hom.right ≫
+    (((strictToPerfectOpJointIso X).inv.app f).hom.right ≫
       (strictToPerfect X).op.map ((strictOppositeJointData X).projection.app f) =
         (perfectOppositeJointData X).projection.app ((strictToPerfect X).op.mapArrow.obj f)) :=
-  ⟨strictToPerfect_op_jointIso_inv_inl X f, strictToPerfect_op_jointIso_inv_inr X f,
-    strictToPerfect_op_jointIso_inv_projection X f⟩
+  ⟨strictToPerfectOpJointIso_inv_inl X f, strictToPerfectOpJointIso_inv_inr X f,
+    strictToPerfectOpJointIso_inv_projection X f⟩
 
 /-- Degree reversal retains the exact original shift, including negative
 indices, over arbitrary independent object and morphism universes. -/

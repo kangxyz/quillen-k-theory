@@ -1,12 +1,21 @@
-import Quillen.Waldhausen.Additivity.MixedDiagrams
-import Quillen.Topology.Realization.MixedOrdinalBisimplicial
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.MixedDiagrams
+public import Quillen.Topology.Realization.MixedOrdinalBisimplicial
 
 /-! # The actual bisimplicial map of the additivity deformation -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-set_option maxHeartbeats 1000000
 open CategoryTheory CategoryTheory.Limits Opposite
 open Quillen.MixedOrdinalCylinder
 universe u v
@@ -19,6 +28,8 @@ variable (hF : IsExact V.cof V.weq W.cof W.weq F)
 variable (hG : IsExact V.cof V.weq W.cof W.weq G)
 variable (hc : IsCofibrationTransformation W a V)
 
+set_option maxHeartbeats 800000 in
+-- Naturality normalizes dependent mixed-ordinal grid and pushout functors beyond the default budget.
 /-- The actual mixed-cylinder deformation is a bisimplicial map. Its values
 are the genuine pushouts, not chosen equivalences or unspecified fillers. -/
 def mixedDeformationMap : outerCylinder (bisimplicialSSet V) ⟶ bisimplicialSSet W where

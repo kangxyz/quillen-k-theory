@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremA.RealizationGluing
-import Mathlib.Topology.Homotopy.TopCat.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationGluing
+public import Mathlib.Topology.Homotopy.TopCat.Basic
 
 /-!
 # Strictifying a homotopy inverse along a cofibration
@@ -8,6 +16,8 @@ The homotopy extension property turns an actual homotopy inverse into a
 strict retraction. This is the first step toward relative deformation
 retractions and the general homotopy gluing theorem.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -99,7 +109,8 @@ theorem continuous_shrinkBacktrackTime :
   fun_prop
 
 @[simp]
-theorem shrinkBacktrackTime_zero (t : unitInterval) : shrinkBacktrackTime 0 t = backtrackTime t := by
+theorem shrinkBacktrackTime_zero (t : unitInterval) : shrinkBacktrackTime 0 t = backtrackTime t :=
+  by
   apply Subtype.ext
   simp [shrinkBacktrackTime]
 

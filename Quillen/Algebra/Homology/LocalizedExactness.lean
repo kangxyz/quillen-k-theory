@@ -3,10 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
-import Mathlib.RingTheory.LocalProperties.Exactness
-import Mathlib.RingTheory.TensorProduct.IsBaseChangePi
-import Mathlib.Algebra.Category.ModuleCat.Products
+module
+
+public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
+public import Mathlib.RingTheory.LocalProperties.Exactness
+public import Mathlib.RingTheory.TensorProduct.IsBaseChangePi
+public import Mathlib.Algebra.Category.ModuleCat.Products
 
 /-!
 # Localization and exactness of categorical module diagrams
@@ -15,6 +17,8 @@ Finite categorical products of localization maps are localization maps.
 Exactness of an actual module short complex is detected by compatible maps to
 short complexes localized at a set of elements generating the unit ideal.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u

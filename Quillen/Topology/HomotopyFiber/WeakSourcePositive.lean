@@ -1,4 +1,12 @@
-import Quillen.Topology.HomotopyFiber.GroupDetection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.GroupDetection
 
 /-! # Weak source changes on positive homotopy groups of the actual fibers
 
@@ -6,6 +14,8 @@ The original source-change fiber map retains the base path. A direct five-term
 LES argument uses the original total-space maps in the two adjacent degrees.
 The separate zeroth homotopy-set assertion is not assumed or claimed here.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

@@ -1,5 +1,13 @@
-import Quillen.Topology.CubicalSubdivision.FaceContainment
-import Mathlib.Data.Finset.Image
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.FaceContainment
+public import Mathlib.Data.Finset.Image
 
 /-! # Finite incident-chart constraints for genuine cubical faces
 
@@ -7,6 +15,8 @@ A face carries every chart assigned to a coface which contains it. Thus
 lower-dimensional fillings are constrained in all charts needed by later
 cells, and interior intersections transfer those constraints exactly.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 namespace Quillen.CubicalSubdivision

@@ -1,7 +1,17 @@
-import Quillen.Waldhausen.Additivity.DeformationMap
-import Quillen.Waldhausen.Additivity.SumDiagrams
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.DeformationMap
+public import Quillen.Waldhausen.Additivity.SumDiagrams
 
 /-! # Coherence of the actual endpoint natural isomorphisms -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -64,7 +74,8 @@ theorem cofiberEndpointIso_hom_heq {f g : Arrow C} (hfg : f = g)
     (hf : F.map f.hom = zeroMorphism W (F.obj f.left) (F.obj f.right))
     (hg : F.map g.hom = zeroMorphism W (F.obj g.left) (F.obj g.right)) :
     HEq (cofiberEndpointIso W a hs.cofibration.app_cof f (b.app f.left) (hs.cofiber f.left) hf).hom
-      (cofiberEndpointIso W a hs.cofibration.app_cof g (b.app g.left) (hs.cofiber g.left) hg).hom := by
+      (cofiberEndpointIso W a hs.cofibration.app_cof g (b.app g.left) (hs.cofiber g.left)
+        hg).hom := by
   subst g
   rfl
 
@@ -80,10 +91,12 @@ theorem separatedDeformationIso_reindex_app {n n' m m' : SimplexCategory}
           (hA.precomp V.cof V.weq (OrdinalSubdivision.δ.map α) β)).hom.app x) := by
   refine cofiberEndpointIso_hom_heq V W a b hs
     (congrArg (fun T ↦ T.obj x) (separatedIntervalArrows_reindex α β A)) ?_ ?_
-  · exact (congrArg F.map (intervalArrows_separated_hom V (Edgewise.left n n) (Edgewise.right n n) (left_le_right n)
+  · exact (congrArg F.map (intervalArrows_separated_hom V (Edgewise.left n n) (Edgewise.right n
+    n) (left_le_right n)
       (left_separated_right n) hA ((gridMap₂ α β).obj x))).trans
       (map_zeroMorphism V W hs.exactF _ _)
-  · exact (congrArg F.map (intervalArrows_separated_hom V (Edgewise.left n' n') (Edgewise.right n' n') (left_le_right n')
+  · exact (congrArg F.map (intervalArrows_separated_hom V (Edgewise.left n' n') (Edgewise.right
+    n' n') (left_le_right n')
       (left_separated_right n') (hA.precomp V.cof V.weq (OrdinalSubdivision.δ.map α) β) x)).trans
       (map_zeroMorphism V W hs.exactF _ _)
 

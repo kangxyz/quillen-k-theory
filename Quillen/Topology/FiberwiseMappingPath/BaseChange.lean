@@ -1,29 +1,46 @@
-import Quillen.Topology.FiberwiseMappingPath.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.FiberwiseMappingPath.Basic
 
 /-! # Original vertical paths commute with arbitrary base change
 
 The new base coordinate is retained literally, and every original path
 value is preserved. No lifting or nonemptiness assumption is needed.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 universe u v w z
 namespace Quillen.FiberwiseMappingPath
 variable {E : Type u} {F : Type v} {B : Type w} {T : Type z}
   [TopologicalSpace E] [TopologicalSpace F] [TopologicalSpace B] [TopologicalSpace T]
-  (q : C(F,B)) (f : C(E,F)) (g : C(T,B))
+  (q : C(F, B)) (f : C(E, F)) (g : C(T, B))
 
+/-- The strict pullback of the target projection `q : F → B` along `g : T → B`. -/
 abbrev BaseChangedTarget := {y : T × F // q y.2 = g y.1}
+/-- The strict pullback of the composite `q ∘ f : E → B` along `g : T → B`. -/
 abbrev BaseChangedSource := {x : T × E // q (f x.2) = g x.1}
 
+/-- Project the base-changed target to its retained coordinate in `T`. -/
 def baseChangedProjection : C(BaseChangedTarget q g,T) where
   toFun y := y.val.1
   continuous_toFun := by fun_prop
 
+/-- Apply `f` to the original source coordinate while retaining the coordinate in `T` and the
+matching equality with the base. -/
 def baseChangedMap : C(BaseChangedSource q f g,BaseChangedTarget q g) where
   toFun x := ⟨(x.val.1,f x.val.2),x.property⟩
   continuous_toFun := by fun_prop
 
+/-- The strict base change of the original fiberwise mapping-path space, matching its endpoint
+base value with `g` while retaining the full path. -/
 abbrev BaseChangedSpace := {x : T × Space q f // q (endpoint q f x.2) = g x.1}
 
 /-- Base change retains the entire original path and its new fixed base coordinate. -/
@@ -59,7 +76,8 @@ def baseChangeHomeomorph :
       apply Continuous.prodMk
       · fun_prop
       · apply ContinuousMap.continuous_of_continuous_uncurry
-        change Continuous (fun x : Space (baseChangedProjection q g) (baseChangedMap q f g) × unitInterval ↦
+        change Continuous (fun x : Space (baseChangedProjection q g) (baseChangedMap q f g) ×
+          unitInterval ↦
           (x.1.val.2 x.2).val.2)
         fun_prop
   continuous_invFun := by

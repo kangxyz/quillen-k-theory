@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Fibration.Rows.SecondEndpoint
+module
+
+public import Quillen.Waldhausen.Fibration.Rows.SecondEndpoint
 
 /-!
 # Genuine complex joint cylinders for a nested relative weak class
@@ -14,6 +16,8 @@ joint functor is quasi-exact. Its original projection is coarse-weak by the
 inclusion of the fine weak class. The original second endpoint is a section
 of that projection. No approximation or localization conclusion is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CochainComplex
 universe u v
@@ -47,7 +51,8 @@ def complexJointDataOfNested : RowFactorization.JointData N where
     exact inclusion_projection f.hom.hom
   weak f := N.le_weq _ ((complexSubcategoryFactorization P hcone).weak f)
 
-/-- The second actual endpoint retracts the original projection, for the quasi-isomorphism fine model. -/
+/-- The second actual endpoint retracts the original projection, for the quasi-isomorphism fine
+model. -/
 theorem complexJointDataOfNested_secondEndpointSection :
     RowFactorization.SecondEndpointSection N (complexJointDataOfNested P hcone hshift N) := by
   intro f
@@ -76,11 +81,14 @@ def complexRowFactorizationOfNested (n : SimplexCategory) :
       SplitFactorization.projection (f.hom.hom.app p).hom := rfl
 
 /-- The second endpoint component is literally the original target biproduct inclusion. -/
-@[simp] theorem complexJointDataOfNested_targetInclusion_component {n : SimplexCategory}
+@[simp] theorem complexJointDataOfNested_inr_comp_joint_component {n : SimplexCategory}
     (f : Arrow (QuotientRows.Obj (complexSubcategory P) n)) (p : Interval n) :
-    (((RowFactorization.targetInclusion N (complexJointDataOfNested P hcone hshift N) n).app f).hom.app p).hom =
+    ((complexJointDataOfNested P hcone hshift N).inr.app (Arrow.mk (f.hom.hom.app p))).hom ≫
+      ((complexJointDataOfNested P hcone hshift N).joint.obj (Arrow.mk (f.hom.hom.app
+          p))).obj.hom.hom =
       (biprod.inr : (f.right.obj.obj p).obj ⟶ SplitFactorization.middle (f.hom.hom.app p).hom) := by
   change biprod.inr ≫ jointInclusion (f.hom.hom.app p).hom = _
   exact biprod.inr_desc _ _
+
 
 end Quillen.Waldhausen.Fibration

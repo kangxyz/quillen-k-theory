@@ -1,7 +1,15 @@
-import Quillen.CategoryTheory.ExactCategory.Functor
-import Quillen.CategoryTheory.ExactCategory.Isomorphisms
-import Mathlib.CategoryTheory.Adjunction.Limits
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Functor
+public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
+public import Mathlib.CategoryTheory.Adjunction.Limits
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
 
 /-!
 # Transport of exact structures through equivalences
@@ -9,6 +17,8 @@ import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
 The transported conflations are tested by the actual functor of an additive
 categorical equivalence. All exact-category axioms are derived below.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

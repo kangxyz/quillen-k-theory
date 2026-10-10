@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.GradedGroupRealization
-import Quillen.Topology.ClassifyingSpace.FundamentalGroup
+module
+
+public import Quillen.Waldhausen.Cofinality.GradedGroupRealization
+public import Quillen.Topology.ClassifyingSpace.FundamentalGroup
 
 /-! # The actual original coarse K-zero group and the realized grade group
 
@@ -13,6 +15,8 @@ weak equivalence on realization and the original realized-arrow fundamental
 group calculation identify the literal coarse K-zero endpoint with the exact
 actual object-grade range.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -38,7 +42,8 @@ theorem groupGradeMap_basepoint :
     (SSet.toTop.map (d.groupGradeMap T)).hom d.coarseStructure.kBasepoint =
       classifyingSpacePoint (SingleObj.star (Multiplicative (d.valueRange T))) := by
   change (SSet.toTop.map (d.groupGradeMap T))
-    (realizationPoint (zeroSimplex d.coarseStructure.cof d.coarseStructure.weq W.zero W.isZero (op ⦋0⦌))) = _
+    (realizationPoint (zeroSimplex d.coarseStructure.cof d.coarseStructure.weq W.zero W.isZero
+      (op ⦋0⦌))) = _
   rw [realizationPoint_naturality, d.groupGradeMap_zero_vertex T]
   rfl
 
@@ -55,7 +60,8 @@ theorem coarseKZeroToGroupPi_bijective : Function.Bijective (d.coarseKZeroToGrou
       Function.Bijective (homotopyGroupMap (N := Fin 1)
         (SSet.toTop.map (d.groupGradeMap T)).hom hy) := by
     subst y
-    exact (d.groupGradeMap_isRealizationWeakEquivalence T).homotopy_bijective d.coarseStructure.kBasepoint 1
+    exact (d.groupGradeMap_isRealizationWeakEquivalence T).homotopy_bijective
+      d.coarseStructure.kBasepoint 1
   exact hh _ (d.groupGradeMap_basepoint T)
 
 /-- The literal original coarse K-zero group is the exact actual object-value group. -/

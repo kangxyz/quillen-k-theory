@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Functor
-import Mathlib.CategoryTheory.ObjectProperty.FullSubcategory
+module
+
+public import Quillen.Waldhausen.Functor
+public import Mathlib.CategoryTheory.ObjectProperty.FullSubcategory
 
 /-! # Genuine inherited Waldhausen structure from actual cofibration-pushout closure
 
@@ -13,6 +15,8 @@ morphisms and both inherited classes are unchanged under the actual full
 inclusion. Preservation of arbitrary chosen pushouts is proved by comparison
 with the constructed ambient pushout, rather than assumed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

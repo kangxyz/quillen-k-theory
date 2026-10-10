@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremB.WeakComparison
-import Quillen.CategoryTheory.TheoremB.StructuredWeakTransport
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.WeakComparison
+public import Quillen.CategoryTheory.TheoremB.StructuredWeakTransport
 
 /-!
 # Quillen's Theorem B in the structured-arrow convention
@@ -10,6 +18,7 @@ set at the identity-arrow basepoint. The opposite-category realization and
 its path-coordinate reversal preserve that specific comparison and basepoint.
 No global homotopy inverse of the fiber comparison is asserted.
 -/
+@[expose] public section
 
 noncomputable section
 universe u
@@ -41,10 +50,11 @@ def structuredFiberComparisonPiEquiv
     (piMap n (structuredFiberComparison F (F.obj c)) (structuredFiberComparison_identity F c))
     (structuredFiberComparison_bijective F h c (n + 1))
 
-@[simp]
-theorem structuredFiberComparisonPiEquiv_toMonoidHom
+/-- The monoid-hom coercion is the canonical forward map. -/
+@[simp] theorem structuredFiberComparisonPiEquiv_coe
     (h : StructuredTransitionHomotopyEquivalences F) (c : C) (n : ℕ) :
-    (structuredFiberComparisonPiEquiv F h c n).toMonoidHom =
-      piMap n (structuredFiberComparison F (F.obj c)) (structuredFiberComparison_identity F c) := rfl
+    ↑(structuredFiberComparisonPiEquiv F h c n) =
+      piMap n (structuredFiberComparison F (F.obj c)) (structuredFiberComparison_identity F c)
+        := rfl
 
 end Quillen.TheoremB

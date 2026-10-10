@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.QuillenComparison.RowSimplicial
-import Quillen.Topology.Realization.Classification
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.RowSimplicial
+public import Quillen.Topology.Realization.Classification
 
 /-! # The simplicial groupoid of Q-chains
 
@@ -7,6 +15,8 @@ This is the categorical row model of the classification diagram. It will be
 compared with the actual rectangular-grid model, with diagonal evaluation
 retaining the canonical comparison map.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -122,7 +132,8 @@ theorem classificationRows_grid
     (G : ComposableArrows (Core (ComposableArrows D n.len)) n.len) :
     classificationRows (classificationGrid G) (classificationGrid_isVerticalIso G) = G := by
   have hobj (t : Fin (n.len + 1)) :
-      (classificationRows (classificationGrid G) (classificationGrid_isVerticalIso G)).obj t = G.obj t := by
+      (classificationRows (classificationGrid G) (classificationGrid_isVerticalIso G)).obj t =
+        G.obj t := by
     change Core.mk _ = Core.mk (G.obj t).of
     apply congrArg Core.mk
     refine CategoryTheory.Functor.ext (fun _ ↦ rfl) ?_

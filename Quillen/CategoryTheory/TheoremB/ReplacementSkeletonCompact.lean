@@ -1,7 +1,15 @@
-import Mathlib.CategoryTheory.Limits.FunctorCategory.EpiMono
-import Quillen.CategoryTheory.TheoremA.ReplacementInvariance
-import Quillen.Topology.Realization.MonomorphismEmbedding
-import Quillen.CategoryTheory.TheoremB.SequentialCompact
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.CategoryTheory.Limits.FunctorCategory.EpiMono
+public import Quillen.CategoryTheory.TheoremA.ReplacementInvariance
+public import Quillen.Topology.Realization.MonomorphismEmbedding
+public import Quillen.Topology.SequentialColimit.CompactCartesian
 
 /-!
 # Compact cartesian assembly for actual replacement skeleta
@@ -12,6 +20,8 @@ its actual diagonal realization. The geometric finite-stage cartesian
 comparisons remain explicit inputs; a stagewise equivalence of total spaces
 is neither assumed nor substituted for them.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Topology
 open scoped Simplicial
@@ -48,7 +58,7 @@ theorem realizedReplacementSkeleton_closedEmbeddings (n : ℕ) :
 end Quillen.TheoremA
 
 namespace Quillen.TheoremB
-open TheoremA SequentialCartesian
+open TheoremA Quillen.CartesianRealization.Sequential
 
 variable {D : Type u} [SmallCategory D] {H K : D ⥤ SSet.{u}} (η : H ⟶ K)
 

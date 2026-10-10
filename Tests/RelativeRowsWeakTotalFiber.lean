@@ -4,11 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Waldhausen.Fibration.RelativeRows.WeakTotalFiber
-import Quillen.Waldhausen.Fibration.AllWeak.TotalFiberSquare
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.WeakTotalFiber
+public import Quillen.Waldhausen.Fibration.AllWeak.TotalFiberSquare
 
 /-! The unchanged relative-tail comparison, its whole constant path and chosen
 zero, finite components, and both exact nested inputs used by global assembly. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial Topology

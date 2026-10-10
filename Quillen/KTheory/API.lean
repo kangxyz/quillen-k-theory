@@ -1,8 +1,16 @@
-import Quillen.KTheory.Functor
-import Quillen.KTheory.Equivalence
-import Quillen.KTheory.Map.CommonAmbient
-import Quillen.CategoryTheory.SmallModel.Abelian
-import Quillen.CategoryTheory.SmallModel.Functoriality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.Functor
+public import Quillen.KTheory.Equivalence
+public import Quillen.KTheory.Map.CommonAmbient
+public import Quillen.CategoryTheory.SmallModel.Abelian
+public import Quillen.CategoryTheory.SmallModel.Functoriality
 
 /-!
 # Public exact-category K-theory interface
@@ -12,6 +20,8 @@ Use `E.K n` for an exact structure, `F.KMap n` for an exact functor, and
 `SmallExactCategory.ofExactStructure` packages an existing small exact category
 for the group-valued `SmallExactCategory.KFunctor` without new mathematical data.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u
@@ -38,9 +48,10 @@ abbrev K (C : SmallExactCategory.{u}) (n : ℕ) := C.exactStructure.K n
     (KFunctor n).obj C = GrpCat.of (C.K n) := rfl
 
 /-- The bundled functor uses precisely the canonical exact-functor K-map. -/
-@[simp] theorem KFunctor_map_apply {C D : SmallExactCategory.{u}} (F : C ⟶ D)
-    (n : ℕ) (x : C.K n) :
-    (KFunctor n).map F x = F.KMap n x := rfl
+@[simp] theorem KFunctor_map_hom {C D : SmallExactCategory.{u}} (F : C ⟶ D) (n : ℕ) :
+    GrpCat.Hom.hom (X := GrpCat.of (C.K n)) (Y := GrpCat.of (D.K n))
+      ((KFunctor n).map F) = F.KMap n := rfl
+
 
 end Quillen.SmallExactCategory
 
@@ -52,13 +63,13 @@ variable {C D T : Type u} [Category.{u} C] [Category.{u} D] [Category.{u} T]
   {EC : ExactStructure C} {ED : ExactStructure D} {ET : ExactStructure T}
 
 /-- Pointwise identity law for the canonical K-map. -/
-@[simp] theorem KMap_id_apply (E : ExactStructure C) (n : ℕ) (x : E.K n) :
+theorem KMap_id_apply (E : ExactStructure C) (n : ℕ) (x : E.K n) :
     (ExactFunctor.id E).KMap n x = x := by
   rw [KMap_id]
   rfl
 
 /-- Pointwise composition law, convenient in downstream calculations. -/
-@[simp] theorem KMap_comp_apply (F : ExactFunctor EC ED) (G : ExactFunctor ED ET)
+theorem KMap_comp_apply (F : ExactFunctor EC ED) (G : ExactFunctor ED ET)
     (n : ℕ) (x : EC.K n) :
     (F.comp G).KMap n x = G.KMap n (F.KMap n x) := by
   rw [KMap_comp]

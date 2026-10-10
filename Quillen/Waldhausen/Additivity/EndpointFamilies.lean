@@ -1,6 +1,16 @@
-import Quillen.Waldhausen.Additivity.EndpointNaturality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.EndpointNaturality
 
 /-! # Coherent weak-transformation families at the deformation endpoints -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -59,7 +69,8 @@ theorem separatedEndpointFamily_weak (n m : SimplexCategoryᵒᵖ)
     W.weq ((separatedEndpointFamily V W a b hs n m A).app x) :=
   W.weq_iso _ (by
     change IsIso ((separatedDeformationIso V W a (Edgewise.left n.unop n.unop)
-      (Edgewise.right n.unop n.unop) (left_le_right n.unop) (left_separated_right n.unop) b hs A.2).hom.app x)
+      (Edgewise.right n.unop n.unop) (left_le_right n.unop) (left_separated_right n.unop) b hs
+        A.2).hom.app x)
     infer_instance)
 
 /-- Coherence uses the actual equality of the reindexed arrow and the unique

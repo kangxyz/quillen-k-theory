@@ -4,12 +4,14 @@ import argparse
 from pathlib import Path
 import sys
 
-from generate_imports import stale_files
+from generate_imports import generator_owned, stale_files
 from library_sources import (downstream_sources, lean_imports, module_name,
-                             module_path, source_modules, test_modules)
+                             module_path, source_modules, test_modules, uses_module_system,
+                             is_import_surface)
 
 ROOT = Path(__file__).resolve().parents[1]
 FORBIDDEN = {'audit', 'audits', 'consumer', 'test', 'tests'}
+FORBIDDEN_ROOTS = {'tools', 'scripts'}
 
 
 def import_cycles(graph: dict[str, set[str]]) -> list[str]:
@@ -51,6 +53,20 @@ def check_layout(root: Path) -> tuple[list[str], int]:
     client_roots = {path.stem for path in client_root.glob('*.lean')} | {
         path.parts[2] for path in clients if len(path.parts) > 3}
     paths = modules | tests | clients
+    topic_facades = {path for path in modules if path != Path('Quillen.lean')
+                     and (root / path.with_suffix('')).is_dir()
+                     and (generator_owned((root / path).read_text())
+                          or is_import_surface((root / path).read_text()))}
+    for facade in sorted(modules - {Path('Quillen.lean')}):
+        path = root / facade
+        if path.exists() and generator_owned(path.read_text()) and not path.with_suffix('').is_dir():
+            errors.append(f'Generator-owned facade has no corresponding directory: {facade}')
+    # Legacy import level loads every transitive private declaration for the
+    # exhaustive inventories. A modern auditor may silently omit unused helpers.
+    for auditor in (Path('Tests/Axioms.lean'), Path('examples/downstream/Audit.lean')):
+        path = root / auditor
+        if path.exists() and uses_module_system(path.read_text()):
+            errors.append(f'Exhaustive axiom auditor must retain legacy private imports: {auditor}')
     for relative in sorted(paths):
         path = root / relative
         if not path.is_file():
@@ -60,7 +76,8 @@ def check_layout(root: Path) -> tuple[list[str], int]:
         library = relative in modules
         for imported in sorted(imports):
             parts = imported.split('.')
-            forbidden = any(part.strip('«»').casefold() in FORBIDDEN for part in parts)
+            forbidden = (parts[0].strip('«»').casefold() in FORBIDDEN_ROOTS
+                         or any(part.strip('«»').casefold() in FORBIDDEN for part in parts))
             if library and forbidden:
                 errors.append(f'Forbidden library import in {relative}: {imported}')
             # Production and trust-test modules resolve in the root package;
@@ -72,8 +89,9 @@ def check_layout(root: Path) -> tuple[list[str], int]:
                 target = client_root / module_path(imported)
             if target is not None and not target.is_file():
                 errors.append(f'Unresolved local import in {relative}: {imported}')
-            if library and len(relative.parts) > 2 and (
-                    imported == 'Quillen' or (parts[0] == 'Quillen' and len(parts) == 2)):
+            if library and len(relative.parts) > 2 and relative not in topic_facades and (
+                    imported == 'Quillen' or (parts[0] == 'Quillen' and len(parts) == 2)
+                    or module_path(imported) in topic_facades):
                 errors.append(f'Implementation imports broad facade in {relative}: {imported}')
         if relative in modules | tests:
             graph[module_name(relative)] = {name for name in imports

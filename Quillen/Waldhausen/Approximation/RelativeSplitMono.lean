@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Approximation.JointEndpoints
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Approximation.JointEndpoints
 
 /-!
 # The relative pushout map for split short exact sequences
@@ -8,6 +16,8 @@ mono, the map from the pushout of the two left terms into the target
 middle term is split mono. The retraction is explicit. Degreewise
 application supplies the relative cofibration calculation for cylinders.
 -/
+@[expose] public section
+
 
 noncomputable section
 

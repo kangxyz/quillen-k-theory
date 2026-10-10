@@ -1,8 +1,16 @@
-import Quillen.Waldhausen.Basic
-import Mathlib.Algebra.Homology.HomologicalComplexAbelian
-import Mathlib.Algebra.Homology.HomologySequenceLemmas
-import Mathlib.CategoryTheory.Abelian.CommSq
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Biproducts
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Basic
+public import Mathlib.Algebra.Homology.HomologicalComplexAbelian
+public import Mathlib.Algebra.Homology.HomologySequenceLemmas
+public import Mathlib.CategoryTheory.Abelian.CommSq
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Biproducts
 
 /-!
 # The Waldhausen category of complexes
@@ -12,6 +20,8 @@ weak equivalences are genuine quasi-isomorphisms. The gluing axiom follows
 from the exact sequence attached to a pushout and the homology five lemma.
 This ambient construction is not a perfect-complex K-theory model by itself.
 -/
+@[expose] public section
+
 
 noncomputable section
 

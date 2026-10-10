@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.KEquivalence
-import Quillen.Waldhausen.SmallModel.Approximation
+module
+
+public import Quillen.Waldhausen.Approximation.KEquivalence
+public import Quillen.Waldhausen.SmallModel.Approximation
 
 /-! # Original S/K approximation with independent object and hom universes
 
@@ -13,6 +15,8 @@ common-universe model. Its proved approximation conclusion then transfers
 back through the strictly natural original S-homeomorphism square. The
 original realization map and canonical K-homomorphism remain unchanged.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -46,8 +50,9 @@ def KEquivGeneral (n : ℕ) : W.K n ≃* V.K n :=
   MulEquiv.ofBijective (Waldhausen.KMap hF n) (KMap_bijective_general h hF J n)
 
 /-- The equivalence retains the literal original canonical K-homomorphism. -/
-@[simp] theorem KEquivGeneral_toMonoidHom (n : ℕ) :
-    (KEquivGeneral h hF J n).toMonoidHom = Waldhausen.KMap hF n := rfl
+@[simp] theorem KEquivGeneral_coe (n : ℕ) :
+    (↑(KEquivGeneral h hF J n) : W.K n →* V.K n) = Waldhausen.KMap hF n := rfl
+
 
 end HasApproximationProperty
 end Quillen.Waldhausen

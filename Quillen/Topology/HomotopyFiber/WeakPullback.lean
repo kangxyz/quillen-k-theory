@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyFiber.WeakCriterion
-import Quillen.CategoryTheory.TheoremB.HomotopyPullbackFibration
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.WeakCriterion
+public import Quillen.Topology.HomotopyPullback.Fibration
 
 /-! # The original homotopy-pullback projection of a weak equivalence
 
@@ -7,6 +15,8 @@ All actual fibers are compared by the already constructed homotopy
  equivalences. Their homotopy sets and nonemptiness give the weak property
 for the original projection, including components and empty spaces.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

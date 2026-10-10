@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Complexes
-import Quillen.Waldhausen.PointedFunctor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Complexes
+public import Quillen.Waldhausen.PointedFunctor
 
 /-!
 # Degreewise split cofibrations of actual complexes
@@ -11,6 +19,8 @@ actual quasi-isomorphism gluing theorem this gives a Waldhausen structure,
 and the identity gives an exact comparison to the ambient-monomorphism
 model. No comparison equivalence is asserted.
 -/
+@[expose] public section
+
 
 noncomputable section
 

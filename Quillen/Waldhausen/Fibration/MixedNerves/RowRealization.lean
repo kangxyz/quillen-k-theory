@@ -1,5 +1,14 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.RowCylinder
-import Quillen.Waldhausen.Fibration.MixedNerves.Realization
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.RowCylinder
+public import Quillen.Waldhausen.Fibration.MixedNerves.Realization
+public import Quillen.Waldhausen.SplitComplexes.Approximation
 
 /-! # The original mixed inclusion for genuine quotient-row cylinders
 
@@ -8,6 +17,8 @@ concrete complex specialization retains the original mixed nerve maps and
 requires the stated cone and shift closure, with no kernel closure. As with
 the generic realized theorem, object and hom universes agree here.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CochainComplex
 open scoped Simplicial Topology
@@ -32,7 +43,8 @@ def rowChainInclusionRealizationHomotopyEquiv (n : SimplexCategory) :
 
 @[simp] theorem rowChainInclusionRealizationHomotopyEquiv_toFun (n : SimplexCategory) :
     (rowChainInclusionRealizationHomotopyEquiv N D hs n).toFun =
-      (SSet.toTop.map (TheoremA.diagonalMap (chainInclusion (RowWeakEquivalences.nested N n)))).hom := rfl
+      (SSet.toTop.map (TheoremA.diagonalMap (chainInclusion (RowWeakEquivalences.nested N
+        n)))).hom := rfl
 
 attribute [local instance] Abelian.hasFiniteBiproducts
 variable {A : Type u} [SmallCategory A] [Abelian A]
@@ -46,8 +58,10 @@ variable {A : Type u} [SmallCategory A] [Abelian A]
 /-- The actual complex mapping cylinder discharges every generic row-cylinder input. -/
 def complexRowChainInclusionRealizationHomotopyEquiv (n : SimplexCategory) :
     ContinuousMap.HomotopyEquiv
-      |TheoremA.diagonalSSet (cofChainNerve (RowWeakEquivalences.nested (complexSubcategoryNested P) n))|
-      |TheoremA.diagonalSSet (coarseChainNerve (RowWeakEquivalences.nested (complexSubcategoryNested P) n))| := by
+      |TheoremA.diagonalSSet (cofChainNerve (RowWeakEquivalences.nested
+        (complexSubcategoryNested P) n))|
+      |TheoremA.diagonalSSet (coarseChainNerve (RowWeakEquivalences.nested
+        (complexSubcategoryNested P) n))| := by
   letI : (complexSubcategoryNested P).coarse.weq.HasTwoOutOfThreeProperty :=
     complexSubcategory_saturated P
   exact rowChainInclusionRealizationHomotopyEquiv (complexSubcategoryNested P)

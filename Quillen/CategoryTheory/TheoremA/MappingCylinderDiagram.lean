@@ -1,9 +1,19 @@
-import Quillen.CategoryTheory.TheoremA.RealizationPushoutInvariance
-import Quillen.CategoryTheory.TheoremA.RealizationColimitHomotopy
-import Mathlib.CategoryTheory.Limits.FunctorCategory.Basic
-import Mathlib.CategoryTheory.Limits.Preserves.FunctorCategory
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationPushoutInvariance
+public import Quillen.CategoryTheory.TheoremA.RealizationColimitHomotopy
+public import Mathlib.CategoryTheory.Limits.FunctorCategory.Basic
+public import Mathlib.CategoryTheory.Limits.Preserves.FunctorCategory
 
 /-! Pointwise mapping cylinders and their actual colimits. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval
@@ -15,7 +25,7 @@ variable {J : Type v} [Category.{w} J] [HasColimitsOfShape J TopCat.{u}]
 
 /-- The terminal cylinder endpoint, natural in a diagram. -/
 def diagramCylinderEndpoint (F : J ⥤ TopCat.{u}) : F ⟶ F ⋙ tensorRight TopCat.I where
-  app j := TopCat.ι₁
+  app _j := TopCat.ι₁
   naturality _ _ f := (TopCat.ι₁_comp (F.map f)).symm
 
 /-- The mapping cylinder of a natural transformation is an actual pushout
@@ -23,9 +33,13 @@ in the functor category, hence an actual pointwise topological mapping cylinder.
 def mappingCylinderDiagram {F G : J ⥤ TopCat.{u}} (η : F ⟶ G) : J ⥤ TopCat.{u} :=
   pushout (diagramCylinderEndpoint F) η
 
+/-- The natural map from the source cylinder diagram to the pointwise mapping-cylinder diagram of
+`η`, given by the first pushout inclusion. -/
 def mappingCylinderDiagramLine {F G : J ⥤ TopCat.{u}} (η : F ⟶ G) :
     F ⋙ tensorRight TopCat.I ⟶ mappingCylinderDiagram η := pushout.inl _ _
 
+/-- The natural inclusion of the target diagram `G` into the pointwise mapping-cylinder diagram of
+`η`. -/
 def mappingCylinderDiagramTarget {F G : J ⥤ TopCat.{u}} (η : F ⟶ G) :
     G ⟶ mappingCylinderDiagram η := pushout.inr _ _
 
@@ -39,12 +53,14 @@ def mappingCylinderDiagramStart {F G : J ⥤ TopCat.{u}} (η : F ⟶ G) :
     rw [(mappingCylinderDiagramLine η).naturality f]
     simp only [Category.assoc]
 
+omit [HasColimitsOfShape J TopCat.{u}] in
 /-- Evaluating the diagram pushout gives the actual mapping-cylinder square. -/
 theorem mappingCylinderDiagramSquare {F G : J ⥤ TopCat.{u}} (η : F ⟶ G) (j : J) :
     IsPushout (TopCat.ι₁ : F.obj j ⟶ F.obj j ⊗ TopCat.I) (η.app j)
       ((mappingCylinderDiagramLine η).app j) ((mappingCylinderDiagramTarget η).app j) :=
   (IsPushout.of_hasPushout (diagramCylinderEndpoint F) η).map ((evaluation J TopCat).obj j)
 
+omit [HasColimitsOfShape J TopCat.{u}] in
 /-- Every starting endpoint in the mapping-cylinder diagram has HEP. -/
 theorem mappingCylinderDiagramStart_hep {F G : J ⥤ TopCat.{u}} (η : F ⟶ G) (j : J) :
     homotopyExtensionProperty ((mappingCylinderDiagramStart η).app j) :=
@@ -56,6 +72,7 @@ def mappingCylinderDiagramStartHomotopyEquiv {F G : J ⥤ TopCat.{u}} (η : F �
     ContinuousMap.HomotopyEquiv (F.obj j) ((mappingCylinderDiagram η).obj j) :=
   mappingCylinderStartHomotopyEquiv (mappingCylinderDiagramSquare η j) e he
 
+omit [HasColimitsOfShape J TopCat.{u}] in
 @[simp] theorem mappingCylinderDiagramStartHomotopyEquiv_toFun
     {F G : J ⥤ TopCat.{u}} (η : F ⟶ G) (j : J)
     (e : ContinuousMap.HomotopyEquiv (F.obj j) (G.obj j)) (he : e.toFun = (η.app j).hom) :
@@ -98,7 +115,8 @@ def mappingCylinderDiagramColimitStrongDeformationRetract
 /-- The actual collapse of the colimit mapping cylinder is a homotopy equivalence. -/
 def mappingCylinderDiagramColimitCollapseHomotopyEquiv
     {F G : J ⥤ TopCat.{u}} (η : F ⟶ G) :
-    ContinuousMap.HomotopyEquiv (colimit (mappingCylinderDiagram η) : TopCat.{u}) (colimit G : TopCat.{u}) :=
+    ContinuousMap.HomotopyEquiv (colimit (mappingCylinderDiagram η) : TopCat.{u}) (colimit G :
+      TopCat.{u}) :=
   (mappingCylinderDiagramColimitStrongDeformationRetract η).toHomotopyEquiv.symm
 
 @[simp] theorem mappingCylinderDiagramColimitCollapseHomotopyEquiv_toFun
@@ -139,11 +157,13 @@ def mappingCylinderLatchingMap {F G : J ⥤ TopCat.{u}} (η : F ⟶ G) {j k : J}
   pushout.desc ((mappingCylinderDiagramStart η).app k) ((mappingCylinderDiagram η).map a)
     ((mappingCylinderDiagramStart η).naturality a)
 
+omit [HasColimitsOfShape J TopCat.{u}] in
 @[reassoc (attr := simp)] theorem mappingCylinderLatchingMap_inl
     {F G : J ⥤ TopCat.{u}} (η : F ⟶ G) {j k : J} (a : j ⟶ k) :
     pushout.inl (F.map a) ((mappingCylinderDiagramStart η).app j) ≫ mappingCylinderLatchingMap η a =
       (mappingCylinderDiagramStart η).app k := pushout.inl_desc _ _ _
 
+omit [HasColimitsOfShape J TopCat.{u}] in
 @[reassoc (attr := simp)] theorem mappingCylinderLatchingMap_inr
     {F G : J ⥤ TopCat.{u}} (η : F ⟶ G) {j k : J} (a : j ⟶ k) :
     pushout.inr (F.map a) ((mappingCylinderDiagramStart η).app j) ≫ mappingCylinderLatchingMap η a =
@@ -155,20 +175,23 @@ def mappingCylinderLatchingHomotopyEquiv {F G : J ⥤ TopCat.{u}} (η : F ⟶ G)
     {j k : J} (a : j ⟶ k) (ha : homotopyExtensionProperty (F.map a))
     (e : ∀ j, ContinuousMap.HomotopyEquiv (F.obj j) (G.obj j))
     (he : ∀ j, (e j).toFun = (η.app j).hom) :
-    ContinuousMap.HomotopyEquiv (mappingCylinderLatching η a) ((mappingCylinderDiagram η).obj k) := by
+    ContinuousMap.HomotopyEquiv (mappingCylinderLatching η a) ((mappingCylinderDiagram η).obj k) :=
+      by
   let ej := mappingCylinderDiagramStartHomotopyEquiv η j (e j) (he j)
   let ek := mappingCylinderDiagramStartHomotopyEquiv η k (e k) (he k)
   let eq := pushoutHomotopyEquivAlongCofibration
     (IsPushout.of_hasPushout (F.map a) ((mappingCylinderDiagramStart η).app j)) ha ej rfl
-  exact homotopyEquivCancelLeft eq rfl ek (by
+  exact homotopyEquivCancelLeft (b := mappingCylinderLatchingMap η a) eq rfl ek (by
     rw [mappingCylinderLatchingMap_inl]
     rfl)
 
+omit [HasColimitsOfShape J TopCat.{u}] in
 @[simp] theorem mappingCylinderLatchingHomotopyEquiv_toFun
     {F G : J ⥤ TopCat.{u}} (η : F ⟶ G) {j k : J} (a : j ⟶ k)
     (ha : homotopyExtensionProperty (F.map a))
     (e : ∀ j, ContinuousMap.HomotopyEquiv (F.obj j) (G.obj j))
     (he : ∀ j, (e j).toFun = (η.app j).hom) :
-    (mappingCylinderLatchingHomotopyEquiv η a ha e he).toFun = (mappingCylinderLatchingMap η a).hom := rfl
+    (mappingCylinderLatchingHomotopyEquiv η a ha e he).toFun = (mappingCylinderLatchingMap η a).hom
+      := rfl
 
 end Quillen.TheoremA

@@ -17,7 +17,10 @@ python3 scripts/generate_imports.py --check
 python3 scripts/check_library_layout.py
 python3 scripts/check_placeholders.py
 python3 -m unittest discover -s scripts -p 'test_*.py'
-lake "${lake_args[@]}" build Quillen Tests
+lake ${lake_args[@]+"${lake_args[@]}"} build Quillen Tests
+lake ${lake_args[@]+"${lake_args[@]}"} test
+lake ${lake_args[@]+"${lake_args[@]}"} lint
+lake ${lake_args[@]+"${lake_args[@]}"} exe lint-style
 # Replay explicitly: cached olean files do not re-execute run_cmd trust tests.
 lake env lean -j2 Tests/Axioms.lean
 consumer="$PWD/examples/downstream"
@@ -27,4 +30,4 @@ mkdir -p "$consumer/.lake"
 if [[ ! -e "$consumer/.lake/packages" ]]; then
   ln -s "$PWD/.lake/packages" "$consumer/.lake/packages"
 fi
-(cd "$consumer" && lake "${lake_args[@]}" build && lake env lean -j2 Audit.lean)
+(cd "$consumer" && lake ${lake_args[@]+"${lake_args[@]}"} build && lake env lean -j2 Audit.lean)

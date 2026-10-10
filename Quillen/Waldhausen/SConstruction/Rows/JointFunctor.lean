@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.SConstruction.Rows.ReedyArrows
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.ReedyArrows
 
 /-! # The genuine quotient-row lift of an exact joint-arrow functor
 
@@ -6,6 +14,8 @@ The lift uses the proved pointwise-arrow interchange, exact postcomposition,
 and genuine Reedy-arrow interchange. Its original component maps and every
 ordinal restriction are retained literally.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'
@@ -49,12 +59,14 @@ theorem jointOnRows_exact (n : SimplexCategory) :
     IsExact (ArrowCategory.waldhausenStructure (waldhausenStructure V n)).cof
       (ArrowCategory.waldhausenStructure (waldhausenStructure V n)).weq
       (ExtensionCategory.waldhausenStructure (waldhausenStructure W n)).cof
-      (ExtensionCategory.waldhausenStructure (waldhausenStructure W n)).weq (jointOnRows V W hJ n) :=
+      (ExtensionCategory.waldhausenStructure (waldhausenStructure W n)).weq (jointOnRows V W hJ
+        n) :=
   (arrowToRows_exact V n).comp
     ((postcompose_exact _ _ hJ n).comp (rowsToReedy_exact W n))
 
 /-- The lift retains the actual joint map at every original quotient component. -/
-@[simp] theorem jointOnRows_obj_hom_app {n : SimplexCategory} (X : Arrow (Obj V n)) (p : Interval n) :
+@[simp] theorem jointOnRows_obj_hom_app {n : SimplexCategory} (X : Arrow (Obj V n)) (p :
+    Interval n) :
     ((jointOnRows V W hJ n).obj X).obj.hom.hom.app p =
       (J.obj (Arrow.mk (X.hom.hom.app p))).obj.hom := rfl
 

@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.Algebra.Homology.DerivedCategory.TStructure
+module
+
+public import Mathlib.Algebra.Homology.DerivedCategory.TStructure
 
 /-!
 # Actual bounded-above complexes and their ambient derived objects
@@ -12,6 +14,8 @@ The full category retains original cochain complexes and chain maps. The canonic
 functor to the ambient bounded-above derived category inverts original quasi-isomorphisms
 and is essentially surjective through actual strictly bounded representatives.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -25,10 +29,14 @@ variable (C : Type u) [Category.{v} C] [Abelian C]
 /-- Actual bounded-above cochain complexes, with their original chain maps. -/
 def boundedAbove : ObjectProperty (CochainComplex C ℤ) := fun K => ∃ b, K.IsStrictlyLE b
 
+/-- The full subcategory of cochain complexes whose terms vanish above some integer, with the
+original chain maps as morphisms. -/
 abbrev BoundedAboveComplex := (boundedAbove C).FullSubcategory
 
 variable {C}
 
+/-- A selected integer above which the terms of `K` vanish; `chosenUpperBound_spec` records the
+resulting strict upper bound. -/
 def chosenUpperBound (K : BoundedAboveComplex C) : ℤ := K.property.choose
 
 instance chosenUpperBound_spec (K : BoundedAboveComplex C) :
@@ -36,7 +44,8 @@ instance chosenUpperBound_spec (K : BoundedAboveComplex C) :
 
 variable (C) [HasDerivedCategory.{w} C]
 
-/-- The canonical functor from actual bounded-above complexes to the ambient bounded-above derived category. -/
+/-- The canonical functor from actual bounded-above complexes to the ambient bounded-above derived
+  category. -/
 def boundedAboveQMinus : BoundedAboveComplex C ⥤ DerivedCategory.Minus C :=
   (DerivedCategory.TStructure.t.minus).lift ((boundedAbove C).ι ⋙ DerivedCategory.Q)
     (fun K => ⟨chosenUpperBound K, by

@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.FixedBounds
-import Quillen.Waldhausen.GilletWaldhausen.IdentityDisk
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.FixedBounds
+public import Quillen.Waldhausen.GilletWaldhausen.IdentityDisk
 
 /-! # Actual interior cycles of an acyclic finite-term stratum
 
@@ -8,6 +16,8 @@ to vanish, while term vanishing forces cycles in every degree > b to vanish.
 Thus the free cycle indices are precisely the interior degrees a+1,...,b.
 The identity disk in degrees n,n+1 has just its upper cycle as a free object.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -74,7 +84,8 @@ def identityDiskCyclesIso (n : ℤ) (X : A) : (identityDisk n X).cycles (n + 1) 
     ((identityDisk_isZero n X (n + 2) (by omega) (by omega)).eq_of_tgt _ _) ≪≫ identityDiskIso₁ n X
 
 @[simp] theorem identityDiskCyclesIso_hom (n : ℤ) (X : A) :
-    (identityDiskCyclesIso n X).hom = (identityDisk n X).iCycles (n + 1) ≫ (identityDiskIso₁ n X).hom := rfl
+    (identityDiskCyclesIso n X).hom = (identityDisk n X).iCycles (n + 1) ≫ (identityDiskIso₁ n
+      X).hom := rfl
 
 /-- The actual unique disk-cycle coordinate is natural for every original map. -/
 def identityDiskCyclesNatIso (n : ℤ) :

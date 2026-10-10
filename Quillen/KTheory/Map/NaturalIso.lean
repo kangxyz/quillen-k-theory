@@ -1,4 +1,12 @@
-import Quillen.KTheory.Map.Functoriality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.Map.Functoriality
 
 /-!
 # Natural-isomorphism invariance of canonical K-maps
@@ -8,6 +16,8 @@ explicit comparison of admissible spans. At the chosen zero objects its
 normalization has identity component. The resulting realization homotopy is
 therefore based, and proves equality of the original zero-based K-maps.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

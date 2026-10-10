@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.HomotopyPullback.UniversalComparison
-import Quillen.CategoryTheory.TheoremB.NormalizedFirstUniversalComparison
+module
+
+public import Quillen.Topology.HomotopyPullback.UniversalComparison
+public import Quillen.Topology.OpenGluing.FirstUniversalComparison
 
 /-!
 # Regression consumers for exact universal comparison transport
@@ -14,6 +16,8 @@ These tests check arbitrary parameter spaces, exact source-comparison squares,
 and the actual first normalized chart. Universal base-change weakness remains
 an explicit input.
 -/
+@[expose] public section
+
 noncomputable section
 open Quillen Quillen.HomotopyPullback Quillen.PathSubdivision
 open Quillen.FiberwiseMappingPath Quillen.CubicalSubdivision

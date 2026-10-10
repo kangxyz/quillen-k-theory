@@ -1,4 +1,12 @@
-import Quillen.Topology.FiberwiseMappingPath.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.FiberwiseMappingPath.Basic
 
 /-! # Exact restriction of vertical mapping paths
 
@@ -6,25 +14,32 @@ Restriction is by a subset of the displayed base. Every stored path stays
 in that subset automatically. The homeomorphism retains every original
 path value; it requires no openness or separation assumption.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 universe u v w
 namespace Quillen.FiberwiseMappingPath
 variable {E : Type u} {F : Type v} {B : Type w}
   [TopologicalSpace E] [TopologicalSpace F] [TopologicalSpace B]
-  (q : C(F,B)) (f : C(E,F)) (U : Set B)
+  (q : C(F, B)) (f : C(E, F)) (U : Set B)
 
+/-- The source points whose image under `q ∘ f` lies in the base subset `U`. -/
 abbrev RestrictedSource := {x : E // q (f x) ∈ U}
+/-- The target points whose image under `q` lies in the base subset `U`. -/
 abbrev RestrictedTarget := {y : F // q y ∈ U}
 
+/-- The restriction of the target projection `q` to a continuous map with codomain `U`. -/
 def restrictedProjection : C(RestrictedTarget q U,U) where
   toFun y := ⟨q y.val,y.property⟩
   continuous_toFun := by fun_prop
 
+/-- The restriction of `f` between the source and target subspaces over `U`. -/
 def restrictedMap : C(RestrictedSource q f U,RestrictedTarget q U) where
   toFun x := ⟨f x.val,x.property⟩
   continuous_toFun := by fun_prop
 
+/-- The vertical mapping-path points whose endpoint projects into the base subset `U`. -/
 abbrev RestrictedSpace := {z : Space q f // q (endpoint q f z) ∈ U}
 
 /-- The original endpoint restricted over the displayed base subset. -/
@@ -67,7 +82,8 @@ def restrictionHomeomorph : RestrictedSpace q f U ≃ₜ
     apply Continuous.prodMk
     · fun_prop
     · apply ContinuousMap.continuous_of_continuous_uncurry
-      change Continuous (fun z : Space (restrictedProjection q U) (restrictedMap q f U) × unitInterval ↦
+      change Continuous (fun z : Space (restrictedProjection q U) (restrictedMap q f U) ×
+        unitInterval ↦
         (z.1.val.2 z.2).val)
       fun_prop
 

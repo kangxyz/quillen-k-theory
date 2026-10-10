@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.ChainCategories
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.ChainCategories
 
 /-! # Literal postcomposition of the original mixed chain categories
 
@@ -6,6 +14,8 @@ Only preservation of the three original arrow predicates is used. Every
 object and component map is the original functor's image. No realization
 or comparison square is an input.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 universe u v
@@ -18,6 +28,8 @@ variable {C D E : Type u} [Category.{v} C] [Category.{v} D] [Category.{v} E]
 
 /-- An original functor preserving the fine, cofibration, and coarse arrow predicates. -/
 structure CompatibleFunctor (N : NestedWeakEquivalences V) (M : NestedWeakEquivalences W) where
+  /-- The underlying functor from `C` to `D`, required to preserve the fine weak equivalences,
+  cofibrations, and coarse weak equivalences separately. -/
   toFunctor : C ⥤ D
   fine {X Y : C} (f : X ⟶ Y) : V.weq f → W.weq (toFunctor.map f)
   cof {X Y : C} (f : X ⟶ Y) : V.cof f → W.cof (toFunctor.map f)
@@ -92,15 +104,15 @@ def horizontalCofPostcompose (k : SimplexCategory) :
 @[simp] theorem finePostcompose_obj (k : SimplexCategory) (X : FineChain V k) :
     ((finePostcompose F k).obj X).obj = X.obj ⋙ F.toFunctor := rfl
 @[simp] theorem finePostcompose_map_app (k : SimplexCategory) {X Y : FineChain V k}
-    (f : X ⟶ Y) (i : Fin (k.len+1)) :
+    (f : X ⟶ Y) (i : Fin (k.len + 1)) :
     ((finePostcompose F k).map f).hom.app i = F.toFunctor.map (f.hom.app i) := rfl
 @[simp] theorem fineWeakCoarsePostcompose_obj (n : SimplexCategory) (X : FineWeakCoarseChains N n) :
     ((fineWeakCoarsePostcompose F n).obj X).obj.obj = X.obj.obj ⋙ F.toFunctor := rfl
 @[simp] theorem fineWeakCoarsePostcompose_map_app (n : SimplexCategory)
-    {X Y : FineWeakCoarseChains N n} (f : X ⟶ Y) (i : Fin (n.len+1)) :
+    {X Y : FineWeakCoarseChains N n} (f : X ⟶ Y) (i : Fin (n.len + 1)) :
     ((fineWeakCoarsePostcompose F n).map f).hom.hom.app i = F.toFunctor.map (f.hom.hom.app i) := rfl
 @[simp] theorem horizontalPostcompose_map_app (k : SimplexCategory)
-    {X Y : HorizontalChains N k} (f : X ⟶ Y) (i : Fin (k.len+1)) :
+    {X Y : HorizontalChains N k} (f : X ⟶ Y) (i : Fin (k.len + 1)) :
     ((horizontalPostcompose F k).map f).hom.hom.app i = F.toFunctor.map (f.hom.hom.app i) := rfl
 
 /-- Actual coarse-index restriction commutes strictly with literal postcomposition. -/

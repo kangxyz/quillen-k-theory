@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremA.RealizationPushoutRelative
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationPushoutRelative
 
 /-!
 # The mapping-cylinder comparison for cofibrant attaching maps
@@ -6,6 +14,8 @@ import Quillen.CategoryTheory.TheoremA.RealizationPushoutRelative
 The ordinary pushout of a span with an HEP leg is homotopy equivalent to
 its mapping-cylinder replacement. The equivalence is the canonical collapse.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -86,7 +96,7 @@ theorem mappingCylinderProjection_target {A C M : TopCat.{u}} {f : A ⟶ C}
     (sq : IsPushout (TopCat.ι₁ : A ⟶ A ⊗ TopCat.I) f l c) :
     c ≫ mappingCylinderProjection sq = 𝟙 C := sq.inr_desc _ _ _
 
-@[reassoc (attr := simp)]
+@[reassoc]
 theorem mappingCylinderProjection_start {A C M : TopCat.{u}} {f : A ⟶ C}
     {l : A ⊗ TopCat.I ⟶ M} {c : C ⟶ M}
     (sq : IsPushout (TopCat.ι₁ : A ⟶ A ⊗ TopCat.I) f l c) :
@@ -186,7 +196,8 @@ def mappingCylinderPushoutCollapseHomotopyEquiv
       rw [intervalSlide_one]
       exact congrArg m (ConcreteCategory.congr_hom sqM.w a)
     · rw [← Category.assoc, ← TopCat.ι₁_comp, Category.assoc, hcV,
-        ← Category.assoc, TopCat.ι₁_fst, Category.id_comp, ← Category.assoc m q s, hmq, Category.assoc,
+        ← Category.assoc, TopCat.ι₁_fst, Category.id_comp, ← Category.assoc m q s, hmq,
+          Category.assoc,
         ← Category.assoc c p, mappingCylinderProjection_target, Category.id_comp, hjs]
   have hUV : (i ▷ TopCat.I) ≫ K = ((TopCat.ι₀ ≫ l) ▷ TopCat.I) ≫ V := by
     rw [hK, comp_whiskerRight, Category.assoc, hlV]

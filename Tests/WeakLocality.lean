@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.HomotopyGroups.WeakLocality
+module
+
+public import Quillen.Topology.HomotopyGroups.WeakLocality
 
 /-!
 # Weak locality regression tests
@@ -12,6 +14,8 @@ import Quillen.Topology.HomotopyGroups.WeakLocality
 Literal finite cube boundaries, complete stored paths, actual restrictions,
 finite chart intersections and empty cases must retain their stated meaning.
 -/
+@[expose] public section
+
 
 noncomputable section
 open Quillen Quillen.CubicalSubdivision

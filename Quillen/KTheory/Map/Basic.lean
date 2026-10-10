@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.ExactCategory.Functor
-import Quillen.Topology.ClassifyingSpace.PointedFunctor
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Zero
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Functor
+public import Quillen.Topology.ClassifyingSpace.PointedFunctor
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Zero
 
 /-!
 # Exact functors induce maps between zero-based Quillen K-groups
@@ -14,6 +22,8 @@ The rebased functor is naturally isomorphic to the original Q-functor.
 The identity law is proved below. The composition law, using the actual
 based realization homotopy, is proved in `Quillen.KMapFunctoriality`.
 -/
+@[expose] public section
+
 
 noncomputable section
 

@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.SquareLift
+module
+
+public import Quillen.Waldhausen.Approximation.SquareLift
 
 /-!
 # Relative lifting of whole source sequences
@@ -15,6 +17,8 @@ target component. An arbitrary specified initial factorization is retained.
 The proof iterates actual pushout square lifting, so both natural transformations
 and the factorization equation are strict.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -33,8 +37,12 @@ variable {C : Type u} [Category.{v} C] {D : Type u'} [Category.{v'} D]
 
 /-- A stage in a relative lift of the specified natural transformation. -/
 structure RelativeStage (n : ℕ) where
+  /-- The source-category replacement object at stage `n`. -/
   obj : C
+  /-- The cofibration from the original stage object `G.obj n` to its replacement. -/
   inclusion : G.obj n ⟶ obj
+  /-- The weak comparison from the image of the replacement to `H.obj n`, factoring the original
+  component `α.app n`. -/
   projection : F.obj obj ⟶ H.obj n
   cofibration : W.cof inclusion
   weak : V.weq projection

@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Additivity.NormalizedDeformationMap
-import Quillen.Waldhausen.Additivity.NormalizedSumMap
-import Quillen.Waldhausen.Additivity.EndpointFamilies
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.NormalizedDeformationMap
+public import Quillen.Waldhausen.Additivity.NormalizedSumMap
+public import Quillen.Waldhausen.Additivity.EndpointFamilies
 
 /-! # Genuine coherent endpoint families after chosen-zero normalization
 
@@ -8,6 +16,8 @@ The families are actual conjugates of the already proved endpoint natural
 isomorphisms. Their weakness and independent reindexing coherence are proved
 from those concrete isomorphisms; no homotopy or basedness conclusion is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

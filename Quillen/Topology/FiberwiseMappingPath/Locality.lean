@@ -1,7 +1,15 @@
-import Quillen.Topology.FiberwiseMappingPath.Restriction
-import Quillen.Topology.FiberwiseMappingPath.BoundaryLifting
-import Quillen.Topology.CubicalSubdivision.LocalLifting
-import Quillen.Topology.CubicalSubdivision.BoundaryWeakEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.FiberwiseMappingPath.Restriction
+public import Quillen.Topology.FiberwiseMappingPath.BoundaryLifting
+public import Quillen.Topology.CubicalSubdivision.LocalLifting
+public import Quillen.Topology.CubicalSubdivision.BoundaryWeakEquivalence
 
 /-! # Original-map weakness from local vertical endpoint lifting
 
@@ -9,6 +17,8 @@ The exact base-restriction homeomorphism transports every prescribed boundary
 path. A finite grid then glues the actual local endpoint lifts. Literal path
 scaling identifies the original map without choosing inverses to weak maps.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 universe u v w z
@@ -17,7 +27,7 @@ variable {E : Type u} {F : Type v} {B : Type w}
   [TopologicalSpace E] [TopologicalSpace F] [TopologicalSpace B]
 
 /-- Strict boundary lifting transfers through the original restriction homeomorphism. -/
-theorem restrictedEndpoint_boundaryLifting (q : C(F,B)) (f : C(E,F)) (U : Set B)
+theorem restrictedEndpoint_boundaryLifting (q : C(F, B)) (f : C(E, F)) (U : Set B)
     (h : CubicalSubdivision.BoundaryLifting
       (endpoint (restrictedProjection q U) (restrictedMap q f U))) :
     CubicalSubdivision.BoundaryLifting (restrictedEndpoint q f U) := by
@@ -33,8 +43,8 @@ theorem restrictedEndpoint_boundaryLifting (q : C(F,B)) (f : C(E,F)) (U : Set B)
     exact congrArg Subtype.val (ContinuousMap.congr_fun hb t)
 
 /-- Exact vertical endpoint lifting is local over an open cover of the actual base. -/
-theorem endpoint_boundaryLifting_of_open_cover (q : C(F,B)) (f : C(E,F))
-    {J : Type z} (U : J → Set B) (hU : ∀ j,IsOpen (U j))
+theorem endpoint_boundaryLifting_of_open_cover (q : C(F, B)) (f : C(E, F))
+    {J : Type z} (U : J → Set B) (hU : ∀ j, IsOpen (U j))
     (hcover : ∀ b : B,∃ j,b ∈ U j)
     (h : ∀ j,CubicalSubdivision.BoundaryLifting
       (endpoint (restrictedProjection q (U j)) (restrictedMap q f (U j)))) :
@@ -46,8 +56,8 @@ theorem endpoint_boundaryLifting_of_open_cover (q : C(F,B)) (f : C(E,F))
   exact restrictedEndpoint_boundaryLifting q f (U j) (h j)
 
 /-- The conclusion is the complete empty-aware weak property of the original map. -/
-theorem isWeakHomotopyEquivalence_of_open_cover (q : C(F,B)) (f : C(E,F))
-    {J : Type z} (U : J → Set B) (hU : ∀ j,IsOpen (U j))
+theorem isWeakHomotopyEquivalence_of_open_cover (q : C(F, B)) (f : C(E, F))
+    {J : Type z} (U : J → Set B) (hU : ∀ j, IsOpen (U j))
     (hcover : ∀ b : B,∃ j,b ∈ U j)
     (h : ∀ j,CubicalSubdivision.BoundaryLifting
       (endpoint (restrictedProjection q (U j)) (restrictedMap q f (U j)))) :

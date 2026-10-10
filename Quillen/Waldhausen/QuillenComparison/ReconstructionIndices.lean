@@ -1,8 +1,18 @@
-import Quillen.Waldhausen.QuillenComparison.SimplicialMap
-import Quillen.Waldhausen.QuillenComparison.RowSimplicial
-import Mathlib.CategoryTheory.ComposableArrows.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.SimplicialMap
+public import Quillen.Waldhausen.QuillenComparison.RowSimplicial
+public import Mathlib.CategoryTheory.ComposableArrows.Basic
 
 /-! # Recursive central intervals and terminal extension of chain isomorphisms -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -104,7 +114,8 @@ def chainIsoMkLast
     intro i
     induction i using Fin.lastCases with
     | last =>
-      simpa only [chainIsoLastComponents, Fin.succ_last, Fin.lastCases_last, Fin.lastCases_castSucc] using w
+      simpa only [chainIsoLastComponents, Fin.succ_last, Fin.lastCases_last,
+        Fin.lastCases_castSucc] using w
     | cast i =>
       simpa only [chainIsoLastComponents, ← Fin.castSucc_succ, Fin.lastCases_castSucc,
         Functor.comp_map, Fin.castSuccFunctor_map] using!

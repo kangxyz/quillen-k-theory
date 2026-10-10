@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.ExactCategory
-import Quillen.CategoryTheory.ExactCategory.SpecialFractions
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExactCategory
+public import Quillen.CategoryTheory.ExactCategory.SpecialFractions
 
 /-!
 # Exact rectangles in the genuine S-construction
@@ -9,6 +17,8 @@ epimorphism. The overlapping quotient rectangles are pullbacks, not just
 commuting squares. These are the universal properties used to compose the
 span representatives of the Quillen comparison.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -50,10 +60,12 @@ def rowMap (t : Fin (n.len + 1)) {i j k l : Fin (n.len + 1)}
   F.map (homOfLE (show grid t i j hij ≤ grid t k l hkl from
     ⟨le_rfl, hik, hjl⟩))
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 @[simp]
 theorem rowMap_id (t : Fin (n.len + 1)) {i j : Fin (n.len + 1)} (hij : i ≤ j) :
     rowMap (F := F) t hij hij le_rfl le_rfl = 𝟙 _ := F.map_id _
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 @[reassoc (attr := simp)]
 theorem rowMap_comp (t : Fin (n.len + 1)) {i j k l a b : Fin (n.len + 1)}
     (hij : i ≤ j) (hkl : k ≤ l) (hab : a ≤ b)

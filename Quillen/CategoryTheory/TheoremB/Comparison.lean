@@ -1,8 +1,16 @@
-import Quillen.Topology.ClassifyingSpace.Constant
-import Quillen.Topology.Realization.HomotopyBridge
-import Quillen.Topology.HomotopyFiber.Basic
-import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
-import Mathlib.Topology.Homotopy.Equiv
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.ClassifyingSpace.Constant
+public import Quillen.Topology.Realization.HomotopyBridge
+public import Quillen.Topology.HomotopyFiber.Basic
+public import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
+public import Mathlib.Topology.Homotopy.Equiv
 
 /-!
 # The canonical comparison in Quillen's Theorem B
@@ -15,6 +23,8 @@ Theorem B's hypothesis is stated for the actual postcomposition maps of
 classifying spaces. Merely defining this hypothesis and comparison is not
 an assertion that the comparison is a homotopy equivalence.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -32,7 +42,7 @@ variable {C D : Type u} [SmallCategory C] [SmallCategory D] (F : C ⥤ D)
 def commaTransformation (d : D) :
     CostructuredArrow.proj F d ⋙ F ⟶ (Functor.const (CostructuredArrow F d)).obj d where
   app X := X.hom
-  naturality X Y f := by simpa using CostructuredArrow.w f
+  naturality X Y f := by simp
 
 /-- The structure-arrow transformation realizes to an actual nullhomotopy. -/
 def commaNullhomotopy (d : D) :

@@ -3,12 +3,14 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.Algebra.Category.ModuleCat.Abelian
-import Mathlib.Algebra.Category.ModuleCat.Projective
-import Mathlib.RingTheory.Finiteness.Cardinality
-import Mathlib.Algebra.Homology.SingleHomology
-import Mathlib.Algebra.Homology.DerivedCategory.HomologySequence
-import Mathlib.Algebra.Homology.DerivedCategory.TStructure
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Abelian
+public import Mathlib.Algebra.Category.ModuleCat.Projective
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Mathlib.Algebra.Homology.SingleHomology
+public import Mathlib.Algebra.Homology.DerivedCategory.HomologySequence
+public import Mathlib.Algebra.Homology.DerivedCategory.TStructure
 
 /-!
 # Actual finite-free attachments to highest homology
@@ -18,11 +20,12 @@ map from a single complex, with its original homology map identified. Finite
 highest homology admits a finite-free attachment. The original distinguished
 mapping-cone triangle then lowers the upper cohomological bound by one.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-set_option maxHeartbeats 1600000
 universe u v
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated
 open HomologicalComplex
@@ -72,7 +75,8 @@ end Quillen.ModuleComplex
 namespace Quillen.DerivedHomComparison
 variable {C : Type u} [Category.{v} C] [Abelian C] [HasDerivedCategory C]
 
-/-- An epimorphism on highest homology lowers the upper bound of the third object in the original distinguished triangle. -/
+/-- An epimorphism on highest homology lowers the upper bound of the third object in the original
+  distinguished triangle. -/
 lemma isLE_third_of_epi_top_homology (T : Triangle (DerivedCategory C))
     (hT : T ∈ distTriang _) (n : ℤ) [T.obj₁.IsLE n] [T.obj₂.IsLE n]
     [Epi ((DerivedCategory.homologyFunctor C n).map T.mor₁)] : T.obj₃.IsLE (n-1) := by
@@ -89,14 +93,16 @@ end Quillen.DerivedHomComparison
 namespace Quillen.CochainComplex
 variable {C : Type u} [Category.{v} C] [Abelian C]
 
-/-- The literal mapping cone lowers the upper cohomological bound after an actual top-homology epimorphism. -/
+/-- The literal mapping cone lowers the upper cohomological bound after an actual top-homology
+  epimorphism. -/
 lemma mappingCone_isLE_of_epi_top_homology {P K : CochainComplex C ℤ} (f : P ⟶ K)
     (n : ℤ) [P.IsLE n] [K.IsLE n] [Epi (homologyMap f n)] :
     (CochainComplex.mappingCone f).IsLE (n-1) := by
   let : HasDerivedCategory C := HasDerivedCategory.standard _
   have hepi : Epi ((DerivedCategory.homologyFunctor C n).map (DerivedCategory.Q.map f)) := by
     let e := DerivedCategory.homologyFunctorFactors C n
-    have h : Epi (((DerivedCategory.Q ⋙ DerivedCategory.homologyFunctor C n).map f) ≫ e.hom.app K) := by
+    have h : Epi (((DerivedCategory.Q ⋙ DerivedCategory.homologyFunctor C n).map f) ≫ e.hom.app K)
+      := by
       rw [e.hom.naturality f]
       change Epi (e.hom.app P ≫ homologyMap f n)
       infer_instance
@@ -113,7 +119,8 @@ end Quillen.CochainComplex
 namespace Quillen.ModuleComplex
 variable {R : Type u} [CommRing R]
 
-/-- Attach a finite-free single complex to finite highest homology and lower the literal cone bound by one. -/
+/-- Attach a finite-free single complex to finite highest homology and lower the literal cone bound
+  by one. -/
 lemma exists_finiteFree_single_lowering_top
     (K : CochainComplex (ModuleCat.{u} R) ℤ) (n : ℤ) [K.IsLE n]
     [Module.Finite R (K.homology n)] :

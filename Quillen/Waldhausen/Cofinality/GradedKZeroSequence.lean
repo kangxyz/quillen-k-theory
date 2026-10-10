@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.GradedKZero
-import Quillen.Waldhausen.Cofinality.ZeroGrade
+module
+
+public import Quillen.Waldhausen.Cofinality.GradedKZero
+public import Quillen.Waldhausen.Cofinality.ZeroGrade
 
 /-! # The actual K-zero tail with its original grading-group endpoint
 
@@ -12,6 +14,8 @@ The original change-of-weak-equivalences homomorphism followed by the proved
 coarse K-zero identification gives the explicit grade-group homomorphism.
 Its kernel and surjectivity follow from the genuine original fibration.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 universe u
@@ -25,7 +29,8 @@ variable {C G : Type u} [SmallCategory C] [AddCommGroup G]
 def gradeKZeroMap : W.K 0 →* Multiplicative (d.valueRange D.sourceFactorization) :=
   (d.coarseKZeroEquiv D.sourceFactorization).toMonoidHom.comp (KMap (changeWeak_exact d.nested) 0)
 
-/-- The explicit grade endpoint changes neither the actual remaining kernel nor its original source. -/
+/-- The explicit grade endpoint changes neither the actual remaining kernel nor its original
+source. -/
 theorem gradeKZeroMap_ker : (d.gradeKZeroMap D).ker = (KMap (changeWeak_exact d.nested) 0).ker := by
   ext x
   change d.coarseKZeroEquiv D.sourceFactorization (KMap (changeWeak_exact d.nested) 0 x) = 1 ↔ _
@@ -39,7 +44,8 @@ theorem gradeKZeroMap_surjective : Function.Surjective (d.gradeKZeroMap D) :=
   (d.coarseKZeroEquiv D.sourceFactorization).surjective.comp (d.zeroGrade_KZero_exact D hs).2.2
 
 /-- The original zero-grade K-zero inclusion is precisely the kernel of the explicit grade map. -/
-theorem range_zeroGrade_KZero : (KMap (acyclicInclusion_exact d.nested) 0).range = (d.gradeKZeroMap D).ker := by
+theorem range_zeroGrade_KZero : (KMap (acyclicInclusion_exact d.nested) 0).range =
+    (d.gradeKZeroMap D).ker := by
   rw [d.gradeKZeroMap_ker D]
   exact (d.zeroGrade_KZero_exact D hs).2.1
 

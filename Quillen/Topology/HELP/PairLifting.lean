@@ -1,6 +1,16 @@
-import Quillen.Topology.HELP.Compact
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.Compact
 
 /-! # Actual mapping-path lifting from HELP on a single pair -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 open scoped Topology unitInterval
@@ -12,11 +22,11 @@ namespace Quillen.MappingPath
 /-- Full prescribed-boundary HELP on this fixed pair gives genuine right
 lifting of the original mapping-path endpoint on the same pair. -/
 theorem endpoint_hasLiftingProperty_of_pairHELP
-    {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y] (f : C(X,Y))
+    {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y] (f : C(X, Y))
     {A B : TopCat.{u}} (i : A ⟶ B)
-    (hf : ∀ (a : C(A,X)) (b : C(B,Y)) (H : (f.comp a).Homotopy (b.comp i.hom)),
-      ∃ c : C(B,X), c.comp i.hom = a ∧ ∃ K : (f.comp c).Homotopy b,
-        ∀ t x, K (t,i x) = H (t,x)) :
+    (hf : ∀ (a : C(A, X)) (b : C(B, Y)) (H : (f.comp a).Homotopy (b.comp i.hom)),
+      ∃ c : C(B, X), c.comp i.hom = a ∧ ∃ K : (f.comp c).Homotopy b,
+        ∀ t x, K (t, i x) = H (t, x)) :
     HasLiftingProperty i (TopCat.ofHom (endpoint f)) where
   sq_hasLift {a b} sq := by
     let H : (f.comp ((source f).comp a.hom)).Homotopy (b.hom.comp i.hom) := {

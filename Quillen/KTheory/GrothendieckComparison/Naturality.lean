@@ -1,6 +1,14 @@
-import Quillen.KTheory.GrothendieckComparison.Edges
-import Quillen.KTheory.Map.CoherenceData
-import Quillen.KTheory.GrothendieckGroup.Map
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.GrothendieckComparison.Edges
+public import Quillen.KTheory.Map.CoherenceData
+public import Quillen.KTheory.GrothendieckGroup.Map
 
 /-!
 # Naturality of the canonical K₀ comparison
@@ -9,6 +17,8 @@ This file compares the actual based-loop map with the Q-arrow object classes;
 all basepoint transports use the canonical zero-object isomorphism already
 used by `ExactFunctor.KMap`.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u v
@@ -89,7 +99,8 @@ on Q, with precisely the chosen equality of target basepoints. -/
 lemma fundamentalMap_qObjectClass {D : Type u} [Category.{max u v} D]
     (F : E.QCategory ⥤ D) (d : D) (h : F.obj E.qZero = d) (X : C) :
     FundamentalGroup.mapOfEq (X := ClassifyingSpace E.QCategory) (Y := ClassifyingSpace D)
-        (x := classifyingSpacePoint E.qZero) (y := classifyingSpacePoint d) (classifyingSpaceMap F).hom
+        (x := classifyingSpacePoint E.qZero) (y := classifyingSpacePoint d) (classifyingSpaceMap
+          F).hom
         ((classifyingSpaceMap_point F E.qZero).trans (congrArg classifyingSpacePoint h))
         (E.qObjectClass (classifyingFundamentalGroupoidFunctor E.QCategory) X) =
       ((classifyingFundamentalGroupoidFunctor D).mapIso (eqToIso h)).conj
@@ -100,10 +111,12 @@ lemma fundamentalMap_qObjectClass {D : Type u} [Category.{max u v} D]
   apply congrArg₂ (fun (e : FundamentalGroupoid.mk
       ((classifyingSpaceMap F).hom (classifyingSpacePoint E.qZero)) ≅
         FundamentalGroupoid.mk (classifyingSpacePoint (F.obj E.qZero)))
-      (a : End (FundamentalGroupoid.mk ((classifyingSpaceMap F).hom (classifyingSpacePoint E.qZero)))) => e.conj a)
+      (a : End (FundamentalGroupoid.mk ((classifyingSpaceMap F).hom (classifyingSpacePoint
+        E.qZero)))) => e.conj a)
   · apply Iso.ext
-    simp [classifyingFundamentalGroupoidNaturality, classifyingFundamentalGroupoidFunctor,
+    dsimp [classifyingFundamentalGroupoidNaturality, classifyingFundamentalGroupoidFunctor,
       eqToIso]
+    simp only [classifyingSpacePath_id, Path.Homotopic.Quotient.mk_refl]
     change eqToHom _ = eqToHom _ ≫ 𝟙 _
     simp
   · rfl

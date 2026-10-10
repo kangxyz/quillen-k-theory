@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.QuillenComparison.SimplicialMap
-import Quillen.KTheory.Basic
-import Quillen.Topology.HomotopyGroups.Map
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.SimplicialMap
+public import Quillen.KTheory.Basic
+public import Quillen.Topology.HomotopyGroups.Map
 
 /-! # The chosen zero point of the canonical Q/S comparison
 
@@ -8,6 +16,8 @@ Both arrows of the canonical comparison zigzag preserve the actual chosen
 zero vertex. This gives genuine homomorphisms on shifted homotopy groups,
 without asserting that the Q/S comparison is a weak equivalence.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -40,7 +50,8 @@ theorem comparisonMap_zeroVertex :
 theorem endpoint_zeroVertex :
     (Edgewise.endpoint (sSet E.inflation (MorphismProperty.isomorphisms C))).app (op ⦋0⦌)
       (subdivisionZeroVertex E) =
-      zeroSimplex E.inflation (MorphismProperty.isomorphisms C) (0 : C) (isZero_zero C) (op ⦋0⦌) := rfl
+      zeroSimplex E.inflation (MorphismProperty.isomorphisms C) (0 : C) (isZero_zero C) (op ⦋0⦌)
+        := rfl
 
 /-- The actual realization on the common source of the comparison zigzag. -/
 def SubdivisionSpace : TopCat.{max u v} :=

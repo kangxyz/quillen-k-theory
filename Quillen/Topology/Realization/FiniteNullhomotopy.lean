@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.Realization.FiniteSubcomplex
-import Quillen.Topology.HELP.Nullhomotopic
+module
+
+public import Quillen.Topology.Realization.FiniteSubcomplex
+public import Quillen.Topology.HELP.Nullhomotopic
 
 /-!
 # Weak contractibility from nullhomotopic finite subcomplex inclusions
@@ -15,6 +17,8 @@ imply weakness of the original realization-to-point map via whole-boundary HEP.
 There is no assumption of a single global contraction or a continuous choice of
 finite contractions; the empty-boundary test retains actual nonemptiness.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory

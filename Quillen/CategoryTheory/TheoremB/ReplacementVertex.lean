@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.TheoremB.ReplacementSkeletonCompact
-import Quillen.CategoryTheory.TheoremB.ResolutionWeakTransport
-import Quillen.CategoryTheory.TheoremA.ContractibleComma
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.ReplacementSkeletonCompact
+public import Quillen.CategoryTheory.TheoremB.ResolutionWeakTransport
+public import Quillen.CategoryTheory.TheoremA.ContractibleComma
 
 /-!
 # Vertex inclusions in the actual comma replacement
@@ -10,6 +18,8 @@ replacement by the constant base chain. Its comparison to the categorical
 resolution is exact. The diagonal-to-resolution map is a homotopy
 equivalence because both of its source projections are proved equivalences.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
@@ -136,7 +146,8 @@ def replacementStrictFiberComparison (d : D) :
     (replacementVertex_target F d x)
   continuous_toFun := by
     apply Continuous.subtype_mk
-    exact (SSet.toTop.map (replacementVertexInclusion (commaNerveDiagram F) d)).hom.continuous.prodMk
+    exact (SSet.toTop.map (replacementVertexInclusion (commaNerveDiagram F)
+      d)).hom.continuous.prodMk
       continuous_const
 
 /-- The actual replacement and resolution fibers are homotopy equivalent,

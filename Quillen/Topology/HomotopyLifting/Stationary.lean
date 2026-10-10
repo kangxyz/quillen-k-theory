@@ -1,4 +1,12 @@
-import Quillen.Topology.HomotopyLifting.VariableTime
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyLifting.VariableTime
 
 /-! # Actual homotopy lifting fixed on a prescribed zero set
 
@@ -6,6 +14,8 @@ A vanishing continuous duration forces the chosen lift to stay at its original
 point there. Acceleration and subsequent time scaling retain the original
 base homotopy exactly, even when the initial HLP choice is not regular.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 universe u
@@ -15,10 +25,10 @@ variable {E B X : Type u} [TopologicalSpace E] [TopologicalSpace B] [Topological
 /-- Genuine HLP supplies a lift fixed on the zero set of the displayed
 continuous duration when the original base homotopy is stationary there. -/
 theorem HomotopyLiftingProperty.lift_fixed_zero
-    {p : C(E,B)} (hp : HomotopyLiftingProperty p)
-    (a : C(X,E)) (H : C(unitInterval × X,B))
-    (h₀ : ∀ x,H (0,x) = p (a x)) (duration : C(X,unitInterval))
-    (hfixed : ∀ x,duration x = 0 → ∀ t,H (t,x) = p (a x)) :
+    {p : C(E, B)} (hp : HomotopyLiftingProperty p)
+    (a : C(X, E)) (H : C(unitInterval × X, B))
+    (h₀ : ∀ x, H (0, x) = p (a x)) (duration : C(X, unitInterval))
+    (hfixed : ∀ x, duration x = 0 → ∀ t, H (t, x) = p (a x)) :
     ∃ L : C(unitInterval × X,E),
       (∀ x,L (0,x) = a x) ∧
       (∀ t x,p (L (t,x)) = H (t,x)) ∧
@@ -44,10 +54,10 @@ theorem HomotopyLiftingProperty.lift_fixed_zero
 and retains all prescribed zero-set values. The whole correction homotopy
 is included, not merely its endpoint. -/
 theorem HomotopyLiftingProperty.correct_over_fixed_zero
-    {p : C(E,B)} (hp : HomotopyLiftingProperty p)
-    (a : C(X,E)) (b : C(X,B)) (H : (p.comp a).Homotopy b)
-    (duration : C(X,unitInterval))
-    (hfixed : ∀ x,duration x = 0 → ∀ t,H (t,x) = p (a x)) :
+    {p : C(E, B)} (hp : HomotopyLiftingProperty p)
+    (a : C(X, E)) (b : C(X, B)) (H : (p.comp a).Homotopy b)
+    (duration : C(X, unitInterval))
+    (hfixed : ∀ x, duration x = 0 → ∀ t, H (t, x) = p (a x)) :
     ∃ c : C(X,E),p.comp c = b ∧
       (∀ x,duration x = 0 → c x = a x) ∧
       ∃ K : a.Homotopy c,

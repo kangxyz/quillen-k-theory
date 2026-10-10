@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.WeakChains
-import Mathlib.CategoryTheory.ComposableArrows.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.WeakChains
+public import Mathlib.CategoryTheory.ComposableArrows.Basic
 
 /-! # Original initial filtrations and genuine fine-weak detection
 
@@ -9,6 +17,8 @@ transformation. Fine weakness of its original components detects fine
 weakness on the entire quotient row by actual Waldhausen gluing.
 No quotient-presentation equivalence is assumed or concluded.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial
@@ -30,26 +40,27 @@ def initialFiltrationFunctor (n : SimplexCategory) : Obj N n ⥤ ComposableArrow
     (initialFiltrationFunctor N n).obj F = initialFiltration F.obj := rfl
 
 @[simp] theorem initialFiltrationFunctor_map_app {n : SimplexCategory}
-    {F G : Obj N n} (f : F ⟶ G) (i : Fin (n.len+1)) :
+    {F G : Obj N n} (f : F ⟶ G) (i : Fin (n.len + 1)) :
     ((initialFiltrationFunctor N n).map f).app i =
       f.hom.hom.app (interval 0 i.succ (Fin.zero_le _)) := rfl
 
 /-- The initial vertex is the original first-object evaluation. -/
-@[simp] theorem initialFiltrationFunctor_obj_zero (n : SimplexCategory) (F : Obj N n) :
-    ((initialFiltrationFunctor N n).obj F).obj 0 = (first N n).obj F := rfl
+@[simp] theorem first_obj (n : SimplexCategory) (F : Obj N n) :
+    (first N n).obj F = F.obj.obj.obj (interval 0 1 (Fin.zero_le _)) := rfl
+
 
 /-- Fine-weak original row maps remain pointwise fine-weak on the original chain. -/
 theorem initialFiltrationFunctor_map_weak {n : SimplexCategory} {F G : Obj N n}
-    (f : F ⟶ G) (hf : (waldhausenStructure N n).weq f) (i : Fin (n.len+1)) :
+    (f : F ⟶ G) (hf : (waldhausenStructure N n).weq f) (i : Fin (n.len + 1)) :
     V.weq (((initialFiltrationFunctor N n).map f).app i) :=
   hf (interval 0 i.succ (Fin.zero_le _))
 
 /-- The omitted zero vertex has an actual isomorphism, so it needs no extra weak hypothesis. -/
 theorem initialComponent_weak {n : SimplexCategory} {F G : Obj N n} (f : F ⟶ G)
     (hf : ∀ i, V.weq (((initialFiltrationFunctor N n).map f).app i))
-    (i : Fin ((addInitial.obj n).len+1)) :
+    (i : Fin ((addInitial.obj n).len + 1)) :
     V.weq (f.hom.hom.app (interval 0 i (Fin.zero_le _))) := by
-  change Fin (n.len+1+1) at i
+  change Fin (n.len + 1 + 1) at i
   cases i using Fin.cases with
   | zero => exact V.weq_iso _ ((F.obj.property.zero 0).isIso (G.obj.property.zero 0) _)
   | succ i => exact hf i
@@ -79,7 +90,7 @@ theorem weq_iff_initialFiltrationFunctor {n : SimplexCategory} {F G : Obj N n} (
 theorem initialFiltrationFunctor_reindex {m n : SimplexCategory} (α : m ⟶ n) :
     reindex N α ⋙ initialFiltrationFunctor N m =
       initialFiltrationFunctor N n ⋙
-        (Functor.whiskeringLeft (Fin (m.len+1)) (Fin (n.len+1)) C).obj
+        (Functor.whiskeringLeft (Fin (m.len + 1)) (Fin (n.len + 1)) C).obj
           (SimplexCategory.toCat.map α).toFunctor := by
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 

@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.QuillenComparison.SimplicialMap
-import Quillen.Waldhausen.QuillenComparison.QuotientCalculus
-import Quillen.Waldhausen.Functor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.SimplicialMap
+public import Quillen.Waldhausen.QuillenComparison.QuotientCalculus
+public import Quillen.Waldhausen.Functor
 
 /-!
 # Exact-functor naturality of the canonical simplicial Q/S comparison
@@ -10,6 +18,8 @@ of exact S-diagrams by their cokernel universal properties. The comparison
 commutes with these actual postcomposition maps and the existing Q-functor.
 This is an equality of simplicial maps before any basepoint normalization.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

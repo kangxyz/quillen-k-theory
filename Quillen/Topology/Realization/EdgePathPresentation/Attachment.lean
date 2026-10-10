@@ -1,5 +1,13 @@
-import Quillen.Topology.Realization.EdgePathPresentation.Cover
-import Quillen.Topology.Realization.EdgePathPresentation.OpenCoverFull
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.EdgePathPresentation.Cover
+public import Quillen.Topology.Realization.EdgePathPresentation.OpenCoverFull
 
 /-!
 # Simplex attachments in dimension at least two add no path generators
@@ -9,6 +17,8 @@ boundaries, the inclusion of the previous space is full on fundamental
 groupoids in dimensions at least two. This is proved from genuine open collar
 and interior charts, compact path subdivision, and local path homotopies.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Convexity Topology Set

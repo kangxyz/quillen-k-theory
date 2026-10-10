@@ -3,11 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.ModuleComplex.PrincipalDenominators
-import Mathlib.RingTheory.LocalProperties.FinitePresentation
-import Mathlib.RingTheory.LocalProperties.Projective
-import Mathlib.RingTheory.Finiteness.Projective
-import Mathlib.Algebra.Category.ModuleCat.Projective
+module
+
+public import Quillen.Algebra.ModuleComplex.PrincipalDenominators
+public import Mathlib.RingTheory.LocalProperties.FinitePresentation
+public import Mathlib.RingTheory.LocalProperties.Projective
+public import Mathlib.RingTheory.Finiteness.Projective
+public import Mathlib.Algebra.Category.ModuleCat.Projective
 
 /-!
 # Actual finite-projective locality on principal covers
@@ -19,6 +21,8 @@ Together with actual finite-presentation descent this proves finite-projective
 locality for any generating family of principal localizations. The source of
 the patched epimorphism is unrestricted, and no noetherianity is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

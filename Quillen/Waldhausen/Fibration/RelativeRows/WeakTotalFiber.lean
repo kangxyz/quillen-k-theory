@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.Realization.TwoSidedBarZeroFiber
-import Quillen.Waldhausen.Fibration.RelativeRows.TotalFiber
-import Quillen.Waldhausen.Fibration.RelativeRows.TransitionCartesian
-import Quillen.CategoryTheory.TheoremB.VertexWeakAssembly
+module
+
+public import Quillen.Topology.Realization.TwoSidedBar.ZeroFiber
+public import Quillen.Waldhausen.Fibration.RelativeRows.TotalFiber
+public import Quillen.Waldhausen.Fibration.RelativeRows.TransitionCartesian
+public import Quillen.CategoryTheory.TheoremB.VertexWeakAssembly
 
 /-!
 # The original global relative-tail fiber comparison
@@ -18,6 +20,8 @@ Evaluation recovers the original total fiber inclusion, including its entire
 constant path. Hence the unchanged `totalTailFiberComparison` is weak in all
 finite degrees, including components, without an assumed global fiber theorem.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -26,7 +30,7 @@ open CategoryTheory Opposite
 open scoped Simplicial Topology
 universe u
 namespace Quillen.Waldhausen.Fibration.RelativeRows
-open TheoremA TwoSidedBar TheoremB.SkeletalCartesian
+open TheoremA TwoSidedBar Quillen.CartesianRealization.Skeletal
 variable {C : Type u} [SmallCategory C] {V : Structure C}
   (N : NestedWeakEquivalences V)
 
@@ -48,7 +52,8 @@ theorem zeroDiagonalInclusion_totalFiberInclusion :
       totalFiberInclusion N :=
   barZeroInclusion_evaluation_section (fiberSRows N)
 
-/-- The original global tail fiber comparison is weak, with its original source and constant path. -/
+/-- The original global tail fiber comparison is weak, with its original source and constant
+path. -/
 theorem totalTailFiberComparison_isWeakHomotopyEquivalence :
     IsWeakHomotopyEquivalence (totalTailFiberComparison N) := by
   let b := realizationPoint (tailZeroVertex N ⦋0⦌)

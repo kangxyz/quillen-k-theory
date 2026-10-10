@@ -1,6 +1,14 @@
-import Quillen.Topology.Realization.FiniteHausdorff
-import Quillen.Topology.Realization.FiniteSubcomplex
-import Quillen.Topology.Maps.CompactParameterQuotient
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.FiniteHausdorff
+public import Quillen.Topology.Realization.FiniteSubcomplex
+public import Quillen.Topology.Maps.CompactParameterQuotient
 
 /-! # Closed graphs of compact tests in actual simplicial realizations
 
@@ -9,6 +17,8 @@ is a closed embedding and whose realization is Hausdorff. This gives the
 closed matching locus needed for quotient descent without assuming the
 entire realization Hausdorff.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Topology Set
 open scoped Simplicial Topology
@@ -18,7 +28,7 @@ namespace Quillen
 /-- Every compact-source map into the unchanged actual realization has
 closed graph, by its finite closed Hausdorff support. -/
 theorem realization_compactMap_isClosed_graph (X : SSet.{u})
-    {D : Type v} [TopologicalSpace D] [CompactSpace D] (b : C(D,|X|)) :
+    {D : Type v} [TopologicalSpace D] [CompactSpace D] (b : C(D, |X|)) :
     IsClosed (Set.ofPred (fun z : D × |X| ↦ b z.1 = z.2)) := by
   obtain ⟨A,hA,g,hg⟩ := realization_continuousMap_factors_finiteSubcomplex b
   let : SSet.Finite (A : SSet.{u}) := hA
@@ -39,7 +49,7 @@ theorem realization_compactMap_isClosed_graph (X : SSet.{u})
 in a realization is a closed condition in the original product topology. -/
 theorem realization_compactMap_matching_isClosed (X : SSet.{u})
     {Y : Type w} {D : Type v} [TopologicalSpace Y] [TopologicalSpace D]
-    [CompactSpace D] (p : C(Y,|X|)) (b : C(D,|X|)) :
+    [CompactSpace D] (p : C(Y, |X|)) (b : C(D, |X|)) :
     IsClosed (Set.ofPred (fun z : Y × D ↦ p z.1 = b z.2)) := by
   have hc := (realization_compactMap_isClosed_graph X b).preimage
     (continuous_snd.prodMk (p.continuous.comp continuous_fst))
@@ -53,7 +63,7 @@ theorem realization_compactMap_pullback_quotient (X : SSet.{u})
     {E : Type z} {Y : Type w} {D : Type v}
     [TopologicalSpace E] [TopologicalSpace Y] [TopologicalSpace D]
     [CompactSpace D] [LocallyCompactSpace D] {q : E → Y} (hq : IsQuotientMap q)
-    (p : C(Y,|X|)) (b : C(D,|X|)) :
+    (p : C(Y, |X|)) (b : C(D, |X|)) :
     IsQuotientMap (fun z : {z : E × D // p (q z.1) = b z.2} ↦
       (⟨(q z.1.1,z.1.2),z.2⟩ : {z : Y × D // p z.1 = b z.2})) :=
   quotientMap_parameter_pullback_of_isClosed hq p b

@@ -1,6 +1,14 @@
-import Quillen.Localization.Serre.StructuredTransitionReduction
-import Quillen.Localization.Serre.AuxiliaryStructuredTransition
-import Quillen.Localization.Serre.AuxiliaryBaseChangeEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.StructuredTransitionReduction
+public import Quillen.Localization.Serre.AuxiliaryStructuredTransition
+public import Quillen.Localization.Serre.AuxiliaryBaseChangeEquivalence
 
 /-!
 # Assembling structured transitions from the filtered comparator equivalences
@@ -9,6 +17,8 @@ The genuine mono/epi squares and quotient-arrow lifting do all the algebra.
 This final assembly is kept separate from the filtered realization theorem
 which must supply the map-preserving comparator equivalences.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -46,12 +56,16 @@ lemma fullAuxiliaryStructuredEquiv_toFun (N : C) :
 
 /-- The monomorphic transition square gives the actual mono transition equivalence. -/
 theorem structuredInflationTransitionIsHE {M N : C} (i : M ⟶ N) [Mono i] :
-    TheoremB.StructuredTransitionIsHE (quotientMapQ P) ((quotientMapQ P).map (Q.inflationArrow i)) := by
+    TheoremB.StructuredTransitionIsHE (quotientMapQ P) ((quotientMapQ P).map (Q.inflationArrow i))
+      := by
   let s := fullAuxiliaryStructuredEquiv P E N
-  let t := (auxiliaryBaseChangeClassifyingHomotopyEquiv P i).trans (fullAuxiliaryStructuredEquiv P E M)
-  let f := TheoremB.structuredTransitionMap (quotientMapQ P) ((quotientMapQ P).map (Q.inflationArrow i))
+  let t := (auxiliaryBaseChangeClassifyingHomotopyEquiv P i).trans (fullAuxiliaryStructuredEquiv P E
+    M)
+  let f := TheoremB.structuredTransitionMap (quotientMapQ P) ((quotientMapQ P).map (Q.inflationArrow
+    i))
   have h : (f.comp s.toFun).Homotopic t.toFun := by
-    have H := (classifyingSpaceNaturalTransformationHomotopy (auxiliaryStructuredInflationSquare P i)).symm
+    have H := (classifyingSpaceNaturalTransformationHomotopy (auxiliaryStructuredInflationSquare P
+      i)).symm
     refine ⟨H.cast ?_ ?_⟩
     · simp only [f, s, fullAuxiliaryStructuredEquiv_toFun P E hE,
         TheoremB.structuredTransitionMap, TheoremB.structuredTransition,
@@ -65,12 +79,16 @@ theorem structuredInflationTransitionIsHE {M N : C} (i : M ⟶ N) [Mono i] :
 
 /-- The reversed-epimorphism square gives the actual epi transition equivalence. -/
 theorem structuredSurjectionTransitionIsHE {M N : C} (p : M ⟶ N) [Epi p] :
-    TheoremB.StructuredTransitionIsHE (quotientMapQ P) ((quotientMapQ P).map (Q.surjectionArrow p)) := by
-  let s := (auxiliaryBaseChangeClassifyingHomotopyEquiv P p).trans (fullAuxiliaryStructuredEquiv P E M)
+    TheoremB.StructuredTransitionIsHE (quotientMapQ P) ((quotientMapQ P).map (Q.surjectionArrow p))
+      := by
+  let s := (auxiliaryBaseChangeClassifyingHomotopyEquiv P p).trans (fullAuxiliaryStructuredEquiv P E
+    M)
   let t := fullAuxiliaryStructuredEquiv P E N
-  let f := TheoremB.structuredTransitionMap (quotientMapQ P) ((quotientMapQ P).map (Q.surjectionArrow p))
+  let f := TheoremB.structuredTransitionMap (quotientMapQ P) ((quotientMapQ P).map
+    (Q.surjectionArrow p))
   have h : (f.comp s.toFun).Homotopic t.toFun := by
-    have H := (classifyingSpaceNaturalTransformationHomotopy (auxiliaryStructuredSurjectionSquare P p)).symm
+    have H := (classifyingSpaceNaturalTransformationHomotopy (auxiliaryStructuredSurjectionSquare P
+      p)).symm
     refine ⟨H.cast ?_ ?_⟩
     · change _ = f.comp ((fullAuxiliaryStructuredEquiv P E M).toFun.comp
         (auxiliaryBaseChangeClassifyingHomotopyEquiv P p).toFun)

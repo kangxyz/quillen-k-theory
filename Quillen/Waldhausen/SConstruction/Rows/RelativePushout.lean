@@ -1,10 +1,20 @@
-import Quillen.Waldhausen.ExtensionCategory.ArrowPushouts
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.ArrowPushouts
 
 /-! # Cofibration-arrow closure under displayed component pushouts
 
 The new arrow is not assumed to be a cofibration. Its actual relative target
 map is a cobase change of the original relative map, and supplies that conclusion.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

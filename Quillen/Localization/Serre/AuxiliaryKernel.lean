@@ -1,7 +1,15 @@
-import Quillen.CategoryTheory.QConstruction.Abelian.Surjections
-import Mathlib.CategoryTheory.Comma.Over.Pullback
-import Mathlib.CategoryTheory.Limits.Constructions.Over.Connected
-import Mathlib.CategoryTheory.Adjunction.Limits
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.QConstruction.Abelian.Surjections
+public import Mathlib.CategoryTheory.Comma.Over.Pullback
+public import Mathlib.CategoryTheory.Limits.Constructions.Over.Connected
+public import Mathlib.CategoryTheory.Adjunction.Limits
 
 /-!
 # The auxiliary kernel categories for Serre localization
@@ -11,6 +19,8 @@ Q-category of the ordinary slice. Its epi and mono conditions are imposed
 on the underlying ambient maps. Kernel is realized by pullback along zero,
 so its functoriality is inherited from the slice pullback functor.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -126,7 +136,8 @@ theorem over_isIso_of_mono_of_kernel_isIso {N : C} {X Y : Over N} (f : X ⟶ Y)
       apply (cancel_epi ((overKernel N).map f)).1
       rw [← Category.assoc, (overKernel_map_isPullback f).w, Category.assoc,
         hg, comp_zero, comp_zero]
-    let b := pullback.lift (f := Y.hom) (g := (0 : (0 : C) ⟶ N)) (kernel.ι Y.hom) (0 : kernel Y.hom ⟶ (0 : C)) (by simp)
+    let b := pullback.lift (f := Y.hom) (g := (0 : (0 : C) ⟶ N)) (kernel.ι Y.hom) (0 : kernel Y.hom
+      ⟶ (0 : C)) (by simp)
     have hb : b ≫ pullback.fst Y.hom (0 : (0 : C) ⟶ N) = kernel.ι Y.hom :=
       pullback.lift_fst _ _ _
     have hg0 : kernel.ι Y.hom ≫ g = 0 := by rw [← hb, Category.assoc, hkg, comp_zero]
@@ -203,6 +214,8 @@ theorem auxiliaryKernelFunctor_inclusion (N : C) :
 def epiAuxiliaryKernelProperty (N : C) : ObjectProperty (OverQ N) :=
   fun X => P.isoModSerre X.obj.of.hom ∧ Epi X.obj.of.hom
 
+/-- The full subcategory of `OverQ N` consisting of epimorphisms over `N` that become
+isomorphisms modulo the Serre class `P`. -/
 abbrev EpiAuxiliaryKernel (N : C) := (epiAuxiliaryKernelProperty P N).FullSubcategory
 
 /-- The ordinary full-subcategory inclusion `E_N → H_N`. -/
@@ -309,6 +322,8 @@ abbrev EpiKernelComma (N : C) (T : (Devissage.subcategoryExactStructure P).QCate
 def surjectiveKernelCommaProperty (N : C) (T : (Devissage.subcategoryExactStructure P).QCategory) :
     ObjectProperty (EpiKernelComma P N T) := fun X => Q.IsSurjection X.hom
 
+/-- The full subcategory of the kernel comma category over `T` whose structure Q-arrow is
+represented by a reversed epimorphism. -/
 abbrev SurjectiveKernelComma (N : C) (T : (Devissage.subcategoryExactStructure P).QCategory) :=
   (surjectiveKernelCommaProperty P N T).FullSubcategory
 
@@ -321,7 +336,8 @@ def initialKernelArrow (N : C) (T : (Devissage.subcategoryExactStructure P).QCat
   exact Q.surjectionArrow (0 : T.obj.of ⟶
     ((epiAuxiliaryKernelFunctor P N).obj (epiAuxiliaryBase P N)).obj.of)
 
-lemma initialKernelArrow_surjection (N : C) (T : (Devissage.subcategoryExactStructure P).QCategory) :
+lemma initialKernelArrow_surjection (N : C) (T : (Devissage.subcategoryExactStructure P).QCategory)
+  :
     Q.IsSurjection (initialKernelArrow P N T) := by
   let : Epi (0 : T.obj.of ⟶
       ((epiAuxiliaryKernelFunctor P N).obj (epiAuxiliaryBase P N)).obj.of) :=
@@ -345,7 +361,7 @@ def surjectiveKernelCommaInitialTo {N : C} {T : (Devissage.subcategoryExactStruc
 
 /-- This is a genuine initial object: a competing comma arrow must induce a
 surjective kernel map, and is therefore the unique reversed structure epi. -/
-def surjectiveKernelCommaInitial_isInitial (N : C)
+def surjectiveKernelCommaInitialIsInitial (N : C)
     (T : (Devissage.subcategoryExactStructure P).QCategory) :
     IsInitial (surjectiveKernelCommaInitial P N T) :=
   IsInitial.ofUniqueHom (surjectiveKernelCommaInitialTo P) (by
@@ -362,6 +378,6 @@ def surjectiveKernelCommaInitial_isInitial (N : C)
 theorem surjectiveKernelComma_contractible (N : C)
     (T : (Devissage.subcategoryExactStructure P).QCategory) :
     ContractibleSpace (ClassifyingSpace (SurjectiveKernelComma P N T)) :=
-  classifyingSpace_contractible_of_isInitial (surjectiveKernelCommaInitial_isInitial P N T)
+  classifyingSpace_contractible_of_isInitial (surjectiveKernelCommaInitialIsInitial P N T)
 
 end Quillen.SerreLocalization

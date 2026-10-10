@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Scheme.Pullback
-import Quillen.Scheme.OpenImmersionFunctor
+module
+
+public import Quillen.AlgebraicGeometry.Scheme.Pullback
+public import Quillen.AlgebraicGeometry.Scheme.OpenImmersionFunctor
 
 /-!
 # Consumers for arbitrary vector-bundle pullback
@@ -13,6 +15,8 @@ These examples use arbitrary scheme and affine morphisms, exactness for an
 ambient sequence with finite locally free quotient, and agreement with the
 existing open-restriction functor.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

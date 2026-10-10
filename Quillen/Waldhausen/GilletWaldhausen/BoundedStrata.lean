@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.FixedBounds
-import Mathlib.Data.Finset.Lattice.Fold
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.FixedBounds
+public import Mathlib.Data.Finset.Lattice.Fold
 
 /-! # Canonical increasing bounds and genuine finite-family coverage
 
@@ -7,6 +15,8 @@ Every bounded acyclic complex, and every finite family of such complexes,
 lies in one actual symmetric term-bound stratum. The canonical transition
 functors are genuinely exact. No global bound on all complexes is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

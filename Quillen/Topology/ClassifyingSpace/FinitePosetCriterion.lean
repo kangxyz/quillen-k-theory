@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.RankedChain.Resolution
-import Quillen.Topology.Realization.FinitePosetSupport
-import Quillen.Topology.HELP.Nullhomotopic
+module
+
+public import Quillen.CategoryTheory.RankedChain.Resolution
+public import Quillen.Topology.Realization.FinitePosetSupport
+public import Quillen.Topology.HELP.Nullhomotopic
 
 /-!
 # Weak contractibility from actual finite-poset diagrams
@@ -17,6 +19,8 @@ all compact-source maps. Literal cube-boundary tests give complete weakness
 of the original map to a point, including nonemptiness and degree zero.
 There is no finite triangulation or weak-to-homotopy-equivalence assumption.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

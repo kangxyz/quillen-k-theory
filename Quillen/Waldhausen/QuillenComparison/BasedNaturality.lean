@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.QuillenComparison.ZeroNormalization
-import Quillen.Waldhausen.QuillenComparison.Functoriality
-import Quillen.Waldhausen.QuillenComparison.Equivalence
-import Quillen.Waldhausen.PointedFunctor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.ZeroNormalization
+public import Quillen.Waldhausen.QuillenComparison.Functoriality
+public import Quillen.Waldhausen.QuillenComparison.Equivalence
+public import Quillen.Waldhausen.PointedFunctor
 
 /-! # Normalized based naturality of the canonical Q/S equivalence
 
@@ -9,6 +17,8 @@ The strict-zero case follows from the actual simplicial squares and their
 chosen zero vertices. Normalizing the original exact functor then gives the
 unconditional based theorem, using genuine based invariance of Quillen K-maps.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.SConstruction.Rows.NerveFunctoriality
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceCancellation
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.NerveFunctoriality
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceCancellation
 
 /-! # Transport complete diagonal weakness to the original S-map
 
@@ -12,6 +14,8 @@ The genuine original-grid presentation is a natural simplicial isomorphism.
 Conjugation by its actual realization homeomorphisms preserves the complete
 weak property, including its component-surjectivity clause.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 open scoped Simplicial

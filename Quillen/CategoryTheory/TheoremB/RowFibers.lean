@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.TheoremB.Rows
-import Quillen.CategoryTheory.TheoremB.DiscreteFiber
-import Quillen.Topology.HomotopyFiber.Map
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.Rows
+public import Quillen.Topology.HomotopyFiber.DiscreteBase
+public import Quillen.Topology.HomotopyFiber.Map
 
 /-!
 # Actual homotopy fibers of the simplicial-replacement rows
@@ -10,6 +18,8 @@ homotopy fiber is its chosen comma summand. Under Theorem B's hypothesis,
 every simplex operator induces a genuine homotopy equivalence of these
 actual row fibers. The forward maps are the canonical maps of fibers.
 -/
+@[expose] public section
+
 
 noncomputable section
 

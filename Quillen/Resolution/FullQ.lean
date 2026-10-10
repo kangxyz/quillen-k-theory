@@ -1,6 +1,14 @@
-import Quillen.Resolution.Covers
-import Quillen.CategoryTheory.TheoremA.ContractibleStructured
-import Mathlib.CategoryTheory.Adjunction.Comma
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Resolution.Covers
+public import Quillen.CategoryTheory.TheoremA.ContractibleStructured
+public import Mathlib.CategoryTheory.Adjunction.Comma
 
 /-!
 # The full ambient Q-subcategory on resolving objects
@@ -10,6 +18,8 @@ subcategory: the former has additional arrows whose cokernels need not lie in
 the resolving subcategory. The ordinary full inclusion is treated by the dual
 of Theorem A and the genuine cover category.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -130,17 +140,17 @@ theorem spanUniversal_hom_ext (M : C) (A : FullQComma E P M)
     (congrArg (fun k => k.right.hom) (CostructuredArrow.w g)).symm
 
 /-- The constructed universal arrow is genuinely terminal. -/
-def spanUniversal_isTerminal (M : C) (A : FullQComma E P M)
+def spanUniversalIsTerminal (M : C) (A : FullQComma E P M)
     (s : Span E.deflation E.inflation M A.right.obj.obj.of)
     (hs : Q.mkHom _ _ s = A.hom) : IsTerminal (spanUniversal E P M A s hs) :=
   IsTerminal.ofUniqueHom
     (fun V => Classical.choice (spanUniversal_nonempty_hom E P M A s hs V))
-    (fun V f => spanUniversal_hom_ext E P M A s hs f _)
+    (fun _V f => spanUniversal_hom_ext E P M A s hs f _)
 
 instance coversToComma_hasTerminals (M : C) (A : FullQComma E P M) :
     HasTerminal (CostructuredArrow (coversToComma E P M) A) := by
   obtain ⟨s, hs⟩ := Quotient.exists_rep A.hom
-  exact (spanUniversal_isTerminal E P M A s hs).hasTerminal
+  exact (spanUniversalIsTerminal E P M A s hs).hasTerminal
 
 /-- A genuine categorical right adjoint, constructed from span apices. -/
 def coverAdjunction (M : C) : coversToComma E P M ⊣
@@ -153,8 +163,8 @@ variable [E.IsExtensionClosed P]
 exists. Both the cover contraction and the comparison adjunction are proved. -/
 theorem fullQComma_contractible (M : C) (B : Cover E P M) :
     ContractibleSpace (ClassifyingSpace (FullQComma E P M)) := by
-  letI := Cover.contractible B
-  letI : ContractibleSpace (ClassifyingSpace (Cover E P M)ᵒᵖ) :=
+  let := Cover.contractible B
+  let : ContractibleSpace (ClassifyingSpace (Cover E P M)ᵒᵖ) :=
     (TopCat.homeoOfIso (classifyingOppositeIso (Cover E P M))).toHomotopyEquiv.contractibleSpace
   exact (adjunctionClassifyingHomotopyEquiv (coverAdjunction E P M)).symm.contractibleSpace
 
@@ -170,6 +180,7 @@ def fullQClassifyingHomotopyEquiv (h : ∀ M, Nonempty (Cover E P M)) :
     (fullQClassifyingHomotopyEquiv E P h).toFun =
       (classifyingSpaceMap (fullQInclusion E P)).hom := rfl
 
+omit [E.IsAdmissibleSubobjectClosed P] [E.IsExtensionClosed P] in
 /-- Actual finite-resolution data always supplies the epimorphic covers.
 Admissible-subobject closure remains a separate, genuinely stronger condition. -/
 theorem covers_of_finiteResolutions (h : E.ResolutionHypothesis P) (M : C) :

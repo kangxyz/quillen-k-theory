@@ -3,13 +3,17 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.Realization.BisimplicialWeakEquivalence
+module
+
+public import Quillen.Topology.Realization.BisimplicialWeakEquivalence
 
 /-! # Semantic consumers of original weak diagonal realization
 
 These retain actual diagonal maps, all degrees and target components,
 weak-only finite attachments and the prescribed colimit comparison.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite MonoidalCategory
 open scoped Simplicial Topology

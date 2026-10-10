@@ -1,13 +1,23 @@
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianAssembly
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianAssembly
 
 /-! # Outgoing stage face in its actual skeleton coordinates -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
 
@@ -15,7 +25,7 @@ variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
 the actual base skeleton inclusion, after removing its point coefficients. -/
 theorem restrictionCartesian_of_stageCartesian (n : ℕ)
     (hstage : Cartesian (stageProjection (replacementPointAugmentation H) n).hom
-      (stageProjection (replacementPointAugmentation H) (n+1)).hom
+      (stageProjection (replacementPointAugmentation H) (n + 1)).hom
       (stageStep H n).hom (stageStep pointDiagram n).hom
       (congrArg TopCat.Hom.hom (stageStepSquare (replacementPointAugmentation H) n))) :
     RestrictionCartesian H ((nerve D).skeleton.monotone (Nat.le_succ n)) := by
@@ -70,4 +80,4 @@ theorem replacementSuccessor_restriction
     RestrictionCartesian H ((nerve D).skeleton.monotone (Nat.le_succ n)) :=
   restrictionCartesian_of_stageCartesian H n (replacementSuccessor_cartesian H htrans n hchart).1
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

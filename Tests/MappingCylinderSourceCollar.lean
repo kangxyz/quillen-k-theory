@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.CategoryTheory.TheoremB.MappingCylinderSourceCollar
-import Quillen.CategoryTheory.TheoremB.FiberwiseDeformationBaseChange
+module
+
+public import Quillen.Topology.MappingCylinder.SourceCollar
+public import Quillen.Topology.DeformationRetract.FiberwiseBaseChange
 
 /-!
 # Source-collar geometry regression consumers
@@ -15,11 +17,13 @@ and the whole deformation stays over every original induced base projection.
 The last test changes base through an arbitrary space without assuming that a
 pullback preserves the cylinder's pushout.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
-open Quillen Quillen.TheoremB.MappingCylinderSourceCollar
+open Quillen Quillen.MappingCylinder.SourceCollar
 open scoped Topology unitInterval
 universe u
 variable {A B M T : TopCat.{u}} {f : A ⟶ B}

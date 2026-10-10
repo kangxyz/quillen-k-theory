@@ -1,4 +1,12 @@
-import Quillen.Resolution.Finite
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Resolution.Finite
 
 /-!
 # Algebraic closure conditions for the resolution theorem
@@ -7,6 +15,8 @@ Length-one resolutions upgrade kernel closure to closure under every ambient
 admissible subobject. The proof compares two genuine short exact sequences by
 their pullback. This is the algebraic reduction used in Weibel V.3.1.1.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -42,9 +52,9 @@ lemma prop_kernel_of_quotient_resolution_one {S T : ShortComplex C}
   let T' : ShortComplex C := ShortComplex.mk T.f (T.g ≫ e.hom) (by simp)
   have hT' : E.conflation T' := E.iso_closed (S := T) (T := T')
     (ShortComplex.isoMk (Iso.refl _) (Iso.refl _) e (by simp [T']) (by simp [T'])) hT
-  letI : HasPullback T'.g S.g := E.deflation.hasPullback S.g
+  let : HasPullback T'.g S.g := E.deflation.hasPullback S.g
     (E.deflation_of_conflation hT')
-  letI : HasPullback S.g T'.g := hasPullback_symmetry _ _
+  let : HasPullback S.g T'.g := hasPullback_symmetry _ _
   have hPB : P (pullback T'.g S.g) := E.prop_pullback P hT' hT₁ hB S.g
   have hPB' : P (pullback S.g T'.g) := P.prop_of_iso (pullbackSymmetry _ _) hPB
   exact IsKernelClosed.prop_kernel (E := E) (P := P)

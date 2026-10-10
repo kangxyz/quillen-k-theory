@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.Reindex
-import Quillen.Waldhausen.SConstruction.Rows.PostcomposeDetection
-import Quillen.Waldhausen.ExtensionCategory.Product
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.Reindex
+public import Quillen.Waldhausen.SConstruction.Rows.PostcomposeDetection
+public import Quillen.Waldhausen.ExtensionCategory.Product
 
 /-! # The actual acyclic tail functor and original relative projection
 
@@ -8,6 +16,8 @@ The tail quotients are lifted into the actual coarse-acyclic full category.
 Their fine row cofibrations are proved by reflection through the original
 exact inclusion and actual mapped relative pushouts.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -85,8 +95,10 @@ def firstTail (n : SimplexCategory) : Obj N n ⥤ C × QuotientRows.Obj (acyclic
 /-- The original first-object/tail functor is genuinely exact. -/
 theorem firstTail_exact (n : SimplexCategory) :
     IsExact (waldhausenStructure N n).cof (waldhausenStructure N n).weq
-      (ExtensionCategory.productStructure V (QuotientRows.waldhausenStructure (acyclicStructure N) n)).cof
-      (ExtensionCategory.productStructure V (QuotientRows.waldhausenStructure (acyclicStructure N) n)).weq
+      (ExtensionCategory.productStructure V (QuotientRows.waldhausenStructure (acyclicStructure
+        N) n)).cof
+      (ExtensionCategory.productStructure V (QuotientRows.waldhausenStructure (acyclicStructure
+        N) n)).weq
       (firstTail N n) :=
   ExtensionCategory.pair_exact _ _ _ (first_exact N n) (tailFunctor_exact N n)
 

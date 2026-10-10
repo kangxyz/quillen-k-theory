@@ -1,8 +1,16 @@
-import Quillen.CategoryTheory.ExactCategory.Abelian
-import Quillen.Devissage.Filtration
-import Quillen.KTheory.Map.Basic
-import Mathlib.CategoryTheory.Abelian.Subcategory
-import Mathlib.CategoryTheory.Preadditive.LeftExact
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Abelian
+public import Quillen.Devissage.Filtration
+public import Quillen.KTheory.Map.Basic
+public import Mathlib.CategoryTheory.Abelian.Subcategory
+public import Mathlib.CategoryTheory.Preadditive.LeftExact
 
 /-!
 # The exact inclusion in classical Quillen dévissage
@@ -19,10 +27,13 @@ surjectivity of the inclusion on the algebraic Grothendieck groups.
 
 There is deliberately no extension-closure hypothesis on `P`. Classical
 Quillen dévissage allows the ambient category to contain nontrivial extensions
-of objects of the smaller category. A homotopy equivalence and a comparison with homotopical `K₀` remain separate
+of objects of the smaller category. A homotopy equivalence and a comparison with homotopical `K₀`
+  remain separate
 theorems. Algebraic Grothendieck-group injectivity is proved in the subsequent
 `Quillen.DevissageGrothendieck` module.
 -/
+@[expose] public section
+
 
 noncomputable section
 

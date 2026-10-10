@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.ExactCategory.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Basic
 
 /-!
 # Admissible epimorphisms with an extra matrix entry
@@ -7,6 +15,8 @@ In a Quillen exact category, adding an arbitrary summand to the source of an
 admissible epimorphism again gives an admissible epimorphism. The argument uses
 only the base-change and composition axioms.
 -/
+@[expose] public section
+
 
 universe v u
 

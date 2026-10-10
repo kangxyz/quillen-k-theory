@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.HomotopyFiber.CartesianTransport
+module
+
+public import Quillen.Topology.HomotopyFiber.CartesianTransport
 
 /-! Regression tests for the original homotopy-fiber map of a weakly
 cartesian square, including arbitrary base maps, full paths, and degree zero. -/
+@[expose] public section
+
 
 noncomputable section
 open Quillen

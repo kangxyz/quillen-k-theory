@@ -1,6 +1,14 @@
-import Quillen.Topology.Realization.MonomorphismEmbedding
-import Mathlib.CategoryTheory.SmallObject.TransfiniteCompositionLifting
-import Mathlib.CategoryTheory.LiftingProperties.Limits
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.MonomorphismEmbedding
+public import Mathlib.CategoryTheory.SmallObject.TransfiniteCompositionLifting
+public import Mathlib.CategoryTheory.LiftingProperties.Limits
 
 /-!
 # Lifting from realized simplex boundaries to all realized monomorphisms
@@ -9,6 +17,8 @@ The actual relative simplicial skeleton is a sequence of coproduct pushouts
 of boundary inclusions. Right lifting against these compact generators
 therefore extends over every realized simplicial monomorphism.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Topology
 open scoped Simplicial
@@ -26,7 +36,7 @@ theorem hasLiftingProperty_of_coproductCofans
     {E Y : TopCat.{u}} (p : E ⟶ Y) (hp : ∀ i, HasLiftingProperty (f i) p) :
     HasLiftingProperty m p where
   sq_hasLift {t r} sq := by
-    letI (i : ι) : HasLiftingProperty (f i) p := hp i
+    let (i : ι) : HasLiftingProperty (f i) p := hp i
     have s (i : ι) : CommSq (a.inj i ≫ t) (f i) p (b.inj i ≫ r) := by
       constructor
       rw [Category.assoc, sq.w, ← Category.assoc, hm, Category.assoc]
@@ -64,11 +74,11 @@ theorem hasLiftingProperty_realization_mono
       change SSet.toTop.map (C.cofan₁.inj k) ≫ SSet.toTop.map C.m = _
       rw [← Functor.map_comp, C.hm, Functor.map_comp]
       rfl
-    letI : HasLiftingProperty (SSet.toTop.map C.m) p :=
+    let : HasLiftingProperty (SSet.toTop.map C.m) p :=
       hasLiftingProperty_of_coproductCofans (fun _ : C.ι ↦ SSet.toTop.map ∂Δ[n].ι)
         a ha b hb (SSet.toTop.map C.m) hm p (fun _ ↦ hp n)
     exact (C.isPushout.map SSet.toTop).hasLiftingProperty p
-  letI : HasLiftingProperty ((realizedRelativeSkeletonCocone i).ι.app 0) p :=
+  let : HasLiftingProperty ((realizedRelativeSkeletonCocone i).ι.app 0) p :=
     HasLiftingProperty.transfiniteComposition.hasLiftingProperty_ι_app_bot
       (hc := realizedRelativeSkeletonIsColimit i) (fun n _ ↦ hstep n)
   let e := SSet.toTop.mapIso R.isoBot

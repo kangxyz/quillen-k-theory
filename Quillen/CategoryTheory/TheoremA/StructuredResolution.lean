@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremA.Resolution
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.Resolution
 
 /-!
 # The structured-arrow orientation of the Theorem A resolution
@@ -8,6 +16,8 @@ The identity-arrow section is now a right adjoint, and change of `d` in the
 comma category is contravariant. These variance choices are explicit rather
 than silently identifying structured with costructured arrows.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -84,7 +94,7 @@ def comparisonNerveHomotopy :
 @[simps]
 def fiberInclusion (d : D) : StructuredArrow d F ⥤ Resolution F where
   obj X := ⟨d, X.right, X.hom⟩
-  map f := ⟨𝟙 d, f.right, by simpa using (StructuredArrow.w f).symm⟩
+  map f := ⟨𝟙 d, f.right, by simp⟩
 
 @[simp]
 theorem fiberInclusion_source (d : D) :

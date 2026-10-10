@@ -1,6 +1,16 @@
-import Quillen.Topology.Realization.Homotopy
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.Homotopy
 
 /-! # Constant maps and geometric realization -/
+@[expose] public section
+
 
 noncomputable section
 universe u v
@@ -16,7 +26,8 @@ theorem realization_const {X Y : SSet.{u}} (y : Y _⦋0⦌) (p : |X|) :
       (SSet.stdSimplex.objEquiv.symm (𝟙 ⦋0⦌) : (Δ[0] : SSet.{u}) _⦋0⦌) = y := by
     exact SSet.yonedaEquiv.apply_symm_apply y
   have hc : (SSet.const y : X ⟶ Y) =
-      SSet.const (SSet.stdSimplex.objEquiv.symm (𝟙 ⦋0⦌) : (Δ[0] : SSet.{u}) _⦋0⦌) ≫ SSet.yonedaEquiv.symm y := by
+      SSet.const (SSet.stdSimplex.objEquiv.symm (𝟙 ⦋0⦌) : (Δ[0] : SSet.{u}) _⦋0⦌) ≫
+        SSet.yonedaEquiv.symm y := by
     rw [SSet.const_comp, hv]
   rw [hc, Functor.map_comp]
   change SSet.toTop.map (SSet.yonedaEquiv.symm y) _ = _

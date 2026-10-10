@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Fibration.Rows.OppositeComplexJoint
-import Quillen.Waldhausen.SubcategoryInclusion
+module
+
+public import Quillen.Waldhausen.Fibration.Rows.OppositeComplexJoint
+public import Quillen.Waldhausen.SubcategoryInclusion
 
 /-!
 # Coherence of the common opposite-complex cylinder under inclusion
@@ -16,6 +18,8 @@ components. The original first endpoint, second endpoint, and projection are
 proved compatible in both directions; these equations are additional to the
 joint-arrow natural isomorphism.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -49,7 +53,7 @@ variable (hP : ∀ K, P K → P (K⟦(-1 : ℤ)⟧))
 
 /-- Inclusion uses the same actual opposite-complex cylinder, with unchanged
 underlying joint arrow; only the proved object membership is forgotten. -/
-def oppositeComplexJointData_inclusionIso :
+def oppositeComplexJointDataInclusionIso :
     (oppositeComplexJointData P hP).joint ⋙
       ExtensionCategory.postcompose (oppositeComplexSubcategory P) (oppositeComplexSubcategory Q)
         (oppositeSubcategoryInclusion_exact P Q h) ≅
@@ -61,26 +65,26 @@ def oppositeComplexJointData_inclusionIso :
     rfl)
 
 /-- The common cylinder comparison retains the original first endpoint. -/
-lemma oppositeComplexJointData_inclusionIso_inl (f : Arrow P.FullSubcategoryᵒᵖ) :
+lemma oppositeComplexJointDataInclusionIso_inl (f : Arrow P.FullSubcategoryᵒᵖ) :
     (ObjectProperty.ιOfLE h).op.map ((oppositeComplexJointData P hP).inl.app f) ≫
-      ((oppositeComplexJointData_inclusionIso P Q h hP hQ).app f).hom.hom.left =
+      ((oppositeComplexJointDataInclusionIso P Q h hP hQ).app f).hom.hom.left =
     (oppositeComplexJointData Q hQ).inl.app ((ObjectProperty.ιOfLE h).op.mapArrow.obj f) := by
   change _ ≫ 𝟙 _ = _
   rw [Category.comp_id]
   rfl
 
 /-- The common cylinder comparison retains the original second endpoint. -/
-lemma oppositeComplexJointData_inclusionIso_inr (f : Arrow P.FullSubcategoryᵒᵖ) :
+lemma oppositeComplexJointDataInclusionIso_inr (f : Arrow P.FullSubcategoryᵒᵖ) :
     (ObjectProperty.ιOfLE h).op.map ((oppositeComplexJointData P hP).inr.app f) ≫
-      ((oppositeComplexJointData_inclusionIso P Q h hP hQ).app f).hom.hom.left =
+      ((oppositeComplexJointDataInclusionIso P Q h hP hQ).app f).hom.hom.left =
     (oppositeComplexJointData Q hQ).inr.app ((ObjectProperty.ιOfLE h).op.mapArrow.obj f) := by
   change _ ≫ 𝟙 _ = _
   rw [Category.comp_id]
   rfl
 
 /-- The common cylinder comparison retains the original weak projection. -/
-lemma oppositeComplexJointData_inclusionIso_projection (f : Arrow P.FullSubcategoryᵒᵖ) :
-    ((oppositeComplexJointData_inclusionIso P Q h hP hQ).app f).hom.hom.right ≫
+lemma oppositeComplexJointDataInclusionIso_projection (f : Arrow P.FullSubcategoryᵒᵖ) :
+    ((oppositeComplexJointDataInclusionIso P Q h hP hQ).app f).hom.hom.right ≫
       (oppositeComplexJointData Q hQ).projection.app ((ObjectProperty.ιOfLE h).op.mapArrow.obj f) =
     (ObjectProperty.ιOfLE h).op.map ((oppositeComplexJointData P hP).projection.app f) := by
   change 𝟙 _ ≫ _ = _
@@ -88,26 +92,27 @@ lemma oppositeComplexJointData_inclusionIso_projection (f : Arrow P.FullSubcateg
   rfl
 
 /-- Inverse orientation for the actual weak-arrow endpoint construction. -/
-lemma oppositeComplexJointData_inclusionIso_inv_inl (f : Arrow P.FullSubcategoryᵒᵖ) :
+lemma oppositeComplexJointDataInclusionIso_inv_inl (f : Arrow P.FullSubcategoryᵒᵖ) :
     (oppositeComplexJointData Q hQ).inl.app ((ObjectProperty.ιOfLE h).op.mapArrow.obj f) ≫
-      ((oppositeComplexJointData_inclusionIso P Q h hP hQ).inv.app f).hom.left =
+      ((oppositeComplexJointDataInclusionIso P Q h hP hQ).inv.app f).hom.left =
     (ObjectProperty.ιOfLE h).op.map ((oppositeComplexJointData P hP).inl.app f) := by
   change _ ≫ 𝟙 _ = _
   rw [Category.comp_id]
   rfl
 
-lemma oppositeComplexJointData_inclusionIso_inv_inr (f : Arrow P.FullSubcategoryᵒᵖ) :
+lemma oppositeComplexJointDataInclusionIso_inv_inr (f : Arrow P.FullSubcategoryᵒᵖ) :
     (oppositeComplexJointData Q hQ).inr.app ((ObjectProperty.ιOfLE h).op.mapArrow.obj f) ≫
-      ((oppositeComplexJointData_inclusionIso P Q h hP hQ).inv.app f).hom.left =
+      ((oppositeComplexJointDataInclusionIso P Q h hP hQ).inv.app f).hom.left =
     (ObjectProperty.ιOfLE h).op.map ((oppositeComplexJointData P hP).inr.app f) := by
   change _ ≫ 𝟙 _ = _
   rw [Category.comp_id]
   rfl
 
-lemma oppositeComplexJointData_inclusionIso_inv_projection (f : Arrow P.FullSubcategoryᵒᵖ) :
-    ((oppositeComplexJointData_inclusionIso P Q h hP hQ).inv.app f).hom.right ≫
+lemma oppositeComplexJointDataInclusionIso_inv_projection (f : Arrow P.FullSubcategoryᵒᵖ) :
+    ((oppositeComplexJointDataInclusionIso P Q h hP hQ).inv.app f).hom.right ≫
       (ObjectProperty.ιOfLE h).op.map ((oppositeComplexJointData P hP).projection.app f) =
-    (oppositeComplexJointData Q hQ).projection.app ((ObjectProperty.ιOfLE h).op.mapArrow.obj f) := by
+    (oppositeComplexJointData Q hQ).projection.app ((ObjectProperty.ιOfLE h).op.mapArrow.obj f)
+      := by
   change 𝟙 _ ≫ _ = _
   rw [Category.id_comp]
   rfl

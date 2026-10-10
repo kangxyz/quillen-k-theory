@@ -1,8 +1,16 @@
-import Quillen.Waldhausen.GilletWaldhausen.BoundedSSet
-import Quillen.Topology.FilteredRealization.Homotopy
-import Mathlib.CategoryTheory.Category.ULift
-import Mathlib.CategoryTheory.Filtered.Basic
-import Mathlib.CategoryTheory.Limits.Types.Filtered
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedSSet
+public import Quillen.Topology.FilteredRealization.Homotopy
+public import Mathlib.CategoryTheory.Category.ULift
+public import Mathlib.CategoryTheory.Filtered.Basic
+public import Mathlib.CategoryTheory.Limits.Types.Filtered
 
 /-! # The genuine filtered simplicial union of bounded acyclic strata
 
@@ -11,6 +19,8 @@ strata. Every compact-source map into its realization factors continuously and
 exactly through one actual bounded stage. Neither a global bound nor any
 stage equivalence is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -57,7 +67,7 @@ def boundedSSetCocone : Cocone (boundedSSetDiagram P w) where
 
 /-- The original S-set is genuinely the filtered colimit of its actual
 bounded strata, proved degreewise from finite-grid coverage and injectivity. -/
-def boundedSSetCocone_isColimit : IsColimit (boundedSSetCocone P w) := by
+def boundedSSetCoconeIsColimit : IsColimit (boundedSSetCocone P w) := by
   apply evaluationJointlyReflectsColimits
   intro n
   apply Types.FilteredColimit.isColimitOf'
@@ -75,7 +85,7 @@ theorem boundedSSet_compact_factors {T : Type w} [TopologicalSpace T] [CompactSp
     ∃ N : ℕ, ∃ g : C(T, |boundedStratumSSet P w N|),
       (SSet.toTop.map (boundedStratumSSetInclusion P w N)).hom.comp g = f := by
   obtain ⟨j, g, hg⟩ := FilteredRealization.compact_factors
-    (boundedSSetDiagram P w) (boundedSSetCocone P w) (boundedSSetCocone_isColimit P w) f
+    (boundedSSetDiagram P w) (boundedSSetCocone P w) (boundedSSetCoconeIsColimit P w) f
   exact ⟨boundedStageRank j, g, hg⟩
 
 /-- Equal compact-source maps from one bounded stage become literally equal
@@ -88,7 +98,7 @@ theorem boundedSSet_compact_eq_eventually {T : Type w} [TopologicalSpace T] [Com
       (SSet.toTop.map (boundedStratumSSetTransition P w h)).hom.comp f =
         (SSet.toTop.map (boundedStratumSSetTransition P w h)).hom.comp g := by
   obtain ⟨j, h, hh⟩ := FilteredRealization.compact_eq_eventually
-    (boundedSSetDiagram P w) (boundedSSetCocone P w) (boundedSSetCocone_isColimit P w)
+    (boundedSSetDiagram P w) (boundedSSetCocone P w) (boundedSSetCoconeIsColimit P w)
     (boundedStageIndex N) f g he
   exact ⟨boundedStageRank j, leOfHom (AsSmall.down.map h), hh⟩
 
@@ -98,7 +108,7 @@ theorem boundedSSet_compact_factors_above {T : Type w} [TopologicalSpace T] [Com
     ∃ M : ℕ, N ≤ M ∧ ∃ g : C(T, |boundedStratumSSet P w M|),
       (SSet.toTop.map (boundedStratumSSetInclusion P w M)).hom.comp g = f := by
   obtain ⟨j, h, g, hg⟩ := FilteredRealization.compact_factors_above
-    (boundedSSetDiagram P w) (boundedSSetCocone P w) (boundedSSetCocone_isColimit P w)
+    (boundedSSetDiagram P w) (boundedSSetCocone P w) (boundedSSetCoconeIsColimit P w)
     (boundedStageIndex N) f
   exact ⟨boundedStageRank j, leOfHom (AsSmall.down.map h), g, hg⟩
 
@@ -112,7 +122,7 @@ theorem boundedSSet_homotopyRel_factors {T : Type w} [TopologicalSpace T] [Compa
       Nonempty (((SSet.toTop.map (boundedStratumSSetTransition P w h)).hom.comp a).HomotopyRel
         ((SSet.toTop.map (boundedStratumSSetTransition P w h)).hom.comp b) S) := by
   obtain ⟨j, h, hH⟩ := FilteredRealization.homotopyRel_factors
-    (boundedSSetDiagram P w) (boundedSSetCocone P w) (boundedSSetCocone_isColimit P w)
+    (boundedSSetDiagram P w) (boundedSSetCocone P w) (boundedSSetCoconeIsColimit P w)
     (boundedStageIndex N) S hS H
   exact ⟨boundedStageRank j, leOfHom (AsSmall.down.map h), hH⟩
 

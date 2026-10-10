@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.ReedyLifting
-import Quillen.CategoryTheory.ArrowDiagrams
+module
+
+public import Quillen.Waldhausen.Approximation.ReedyLifting
+public import Quillen.CategoryTheory.ArrowDiagrams
 
 /-!
 # Functorial factorization on genuine Reedy cofibration arrows
@@ -15,6 +17,8 @@ has a genuine joint latching cofibration and a componentwise weak projection.
 Every construction is functorial in the original square, including its cube
 maps. No coherent-diagram factorization is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

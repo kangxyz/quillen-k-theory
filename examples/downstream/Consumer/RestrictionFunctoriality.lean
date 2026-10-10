@@ -1,4 +1,22 @@
-import Quillen.Scheme.OpenImmersionFunctor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.AlgebraicGeometry.Scheme.OpenImmersionFunctor
+
+/-!
+# Scheme K-theory and G-theory restriction examples
+
+Records identity, composition, and triple restriction in contravariant order
+using the public group and restriction names. The bundled-functor statements
+identify the same maps and express naturality of the K-to-G comparison.
+-/
+
+@[expose] public section
 noncomputable section
 universe u
 open CategoryTheory AlgebraicGeometry

@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.TheoremB.StructuredWeakComparison
-import Quillen.Localization.Serre.StructuredTransitions
-import Quillen.Localization.Serre.LocalizationEndpoint
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.StructuredWeakComparison
+public import Quillen.Localization.Serre.StructuredTransitions
+public import Quillen.Localization.Serre.LocalizationEndpoint
 
 /-!
 # The canonical connective Serre localization sequence
@@ -17,6 +25,8 @@ All three recurring positions are exact in every nonnegative degree, and
 the sequence terminates in the canonical surjection onto homotopical K₀.
 The comparison theorem here is weak: no global homotopy inverse is claimed.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u
@@ -50,8 +60,12 @@ def localizationFiberEquiv (n : ℕ) :
       HomotopyGroup.Pi (n + 1) (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P) :=
   localizationFiberEquivOfBijective P n (localizationFiberComparisonHom_bijective P n)
 
-@[simp] theorem localizationFiberEquiv_toMonoidHom (n : ℕ) :
-    (localizationFiberEquiv P n).toMonoidHom = localizationFiberComparisonHom P n := rfl
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem localizationFiberEquiv_coe (n : ℕ) :
+    (↑(localizationFiberEquiv P n) : (Devissage.subcategoryExactStructure P).K n →*
+        HomotopyGroup.Pi (n + 1) (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P)) =
+        localizationFiberComparisonHom P n := rfl
+
 
 /-- The localization boundary Kₙ₊₁(C/P) → Kₙ(P), obtained from the actual
 path-space connecting homomorphism and the canonical comparison inverse. -/

@@ -1,7 +1,15 @@
-import Quillen.Devissage.SpanLayers
-import Quillen.Devissage.FullyFaithful
-import Quillen.CategoryTheory.QConstruction.Abelian.Cancellation
-import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Devissage.SpanLayers
+public import Quillen.Devissage.FullyFaithful
+public import Quillen.CategoryTheory.QConstruction.Abelian.Cancellation
+public import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
 
 /-!
 # Q-comma categories and the poset of layers
@@ -13,6 +21,8 @@ exactly reverse inclusion of the lower endpoint and forward inclusion of the
 upper endpoint. Every comma object is represented by its span image and kernel,
 yielding the explicit categorical equivalence `layerCommaEquivalence`.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v u
@@ -193,7 +203,8 @@ lemma le_of_comma_hom {L K : Layer P M} (f : L.comma ⟶ K.comma) : L ≤ K := b
     (Q.mkHom_eq_iff_apexIso _ _ (Span.comp t K.span) L.span).1 w
   have ei : e.inv ≫ pullback.snd t.r K.span.l ≫ K.upper.arrow = L.upper.arrow := by
     exact (e.inv_comp_eq.mpr er.symm)
-  refine ⟨?_, Subobject.le_of_comm (e.inv ≫ pullback.snd t.r K.span.l) ((Category.assoc _ _ _).trans ei)⟩
+  refine ⟨?_, Subobject.le_of_comm (e.inv ≫ pullback.snd t.r K.span.l) ((Category.assoc _ _ _).trans
+    ei)⟩
   let a : (K.lower : C) ⟶ pullback t.r K.span.l :=
     pullback.lift 0 (Subobject.ofLE K.lower K.upper K.le) (by simpa only [span, zero_comp] using
       (cokernel.condition (Subobject.ofLE K.lower K.upper K.le)).symm)

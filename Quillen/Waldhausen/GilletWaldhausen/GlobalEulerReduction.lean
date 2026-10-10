@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.FiniteEulerReduction
-import Quillen.Waldhausen.GilletWaldhausen.AcyclicInclusionInjective
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.FiniteEulerReduction
+public import Quillen.Waldhausen.GilletWaldhausen.AcyclicInclusionInjective
 
 /-! # Actual global reduction to an acyclic class and an original degree-zero term
 
@@ -8,6 +16,8 @@ maps. Actual finite-stage representation, finite Euler reduction at the true
 degree-zero coordinate, and eventual equality detection yield the genuine
 global group-level reduction. No globally uniform bound or fibration is used.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -43,7 +53,8 @@ def boundedTermsSingleExactFunctor (n : ℤ) :
 omit [(abelianExactStructure A).IsExtensionClosed P] in
 /-- Any allowed stage insertion is the original global single functor after inclusion. -/
 theorem finiteTermSingle_comp_inclusion (a b n : ℤ) (ha : a ≤ n) (hb : n ≤ b) :
-    finiteTermSingle P a b n ha hb ⋙ (fixedTermsBounds P a b).ι = boundedTermsSingleFunctor P n := by
+    finiteTermSingle P a b n ha hb ⋙ (fixedTermsBounds P a b).ι = boundedTermsSingleFunctor P n
+      := by
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 
 /-- The corresponding original normalized KMaps commute exactly. -/
@@ -56,8 +67,9 @@ theorem finiteTermSingle_KMap_inclusion (a b n : ℤ) (ha : a ≤ n) (hb : n ≤
     (fixedTermsInclusionExactFunctor P a b).waldhausenExact)
     (boundedTermsSingleExactFunctor P n).waldhausenExact
     (eqToIso (finiteTermSingle_comp_inclusion P a b n ha hb)) k
-  exact (DFunLike.congr_fun (KMap_comp (finiteTermSingleExact P a b n ha hb).waldhausenExact
-    (fixedTermsInclusionExactFunctor P a b).waldhausenExact k) x).symm.trans (DFunLike.congr_fun he x)
+  exact (DFunLike.congr_fun (KMap_comp_KMap (finiteTermSingleExact P a b n ha hb).waldhausenExact
+    (fixedTermsInclusionExactFunctor P a b).waldhausenExact k).symm x).symm.trans (DFunLike.congr_fun
+      he x)
 
 /-- Actual original single insertion commutes with every increasing bound transition. -/
 theorem finiteTermSingle_KMap_transition {N M : ℕ} (h : N ≤ M) (n : ℤ)
@@ -65,16 +77,18 @@ theorem finiteTermSingle_KMap_transition {N M : ℕ} (h : N ≤ M) (n : ℤ)
     (x : (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) :
     KMap (boundedTermsStratumTransitionExact P h).waldhausenExact k
       (KMap (finiteTermSingleExact P (-(N : ℤ)) N n ha hb).waldhausenExact k x) =
-        KMap (finiteTermSingleExact P (-(M : ℤ)) M n (by omega) (by omega)).waldhausenExact k x := by
+        KMap (finiteTermSingleExact P (-(M : ℤ)) M n (by omega) (by omega)).waldhausenExact k x
+          := by
   have he : finiteTermSingle P (-(N : ℤ)) N n ha hb ⋙ boundedTermsStratumTransition P h =
       finiteTermSingle P (-(M : ℤ)) M n (by omega) (by omega) := by
     apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
   have hh := KMap_eq_of_iso ((finiteTermSingleExact P (-(N : ℤ)) N n ha hb).waldhausenExact.comp
     (boundedTermsStratumTransitionExact P h).waldhausenExact)
     (finiteTermSingleExact P (-(M : ℤ)) M n (by omega) (by omega)).waldhausenExact (eqToIso he) k
-  exact (DFunLike.congr_fun (KMap_comp
+  exact (DFunLike.congr_fun (KMap_comp_KMap
     (finiteTermSingleExact P (-(N : ℤ)) N n ha hb).waldhausenExact
-    (boundedTermsStratumTransitionExact P h).waldhausenExact k) x).symm.trans (DFunLike.congr_fun hh x)
+    (boundedTermsStratumTransitionExact P h).waldhausenExact k).symm x).symm.trans
+      (DFunLike.congr_fun hh x)
 
 variable [(abelianExactStructure A).IsKernelClosed P]
 
@@ -97,7 +111,8 @@ theorem symmetricTerms_existsUnique_acyclic_single_zero (N k : ℕ)
     ∃! p : (ofExactCategory (boundedStratumExactStructure P N)).K k ×
         (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k,
       KMap (finiteAcyclicTermsExactInclusion P (-(N : ℤ)) N).waldhausenExact k p.1 *
-        KMap (finiteTermSingleExact P (-(N : ℤ)) N 0 (by omega) (by omega)).waldhausenExact k p.2 = x :=
+        KMap (finiteTermSingleExact P (-(N : ℤ)) N 0 (by omega) (by omega)).waldhausenExact k
+          p.2 = x :=
   finiteTerm_existsUnique_acyclic_single_of_bounds P (-(N : ℤ)) N 0 (2 * N) k
     ⟨N, by omega⟩ (by omega) (by simp) (by omega) (by omega) x
 
@@ -126,7 +141,8 @@ theorem boundedTerms_acyclic_single_zero_eq_one (k : ℕ)
   obtain ⟨N, y, hy⟩ := boundedAcyclic_KMap_jointlySurjective P k d
   have hz : KMap (fixedTermsInclusionExactFunctor P (-(N : ℤ)) N).waldhausenExact k
       (KMap (finiteAcyclicTermsExactInclusion P (-(N : ℤ)) N).waldhausenExact k y *
-        KMap (finiteTermSingleExact P (-(N : ℤ)) N 0 (by omega) (by omega)).waldhausenExact k c) = 1 := by
+        KMap (finiteTermSingleExact P (-(N : ℤ)) N 0 (by omega) (by omega)).waldhausenExact k c)
+          = 1 := by
     rw [map_mul, finiteAcyclicTermsInclusion_KMap_square, finiteTermSingle_KMap_inclusion, hy]
     exact h
   obtain ⟨M, hNM, hh⟩ := boundedTerms_KMap_eq_one_eventually P N k _ hz
@@ -135,25 +151,29 @@ theorem boundedTerms_acyclic_single_zero_eq_one (k : ℕ)
   have hb := finiteTermSingle_KMap_transition P hNM 0 (by omega) (by omega) k c
   have hstage :
       KMap (finiteAcyclicTermsExactInclusion P (-(M : ℤ)) M).waldhausenExact k z *
-        KMap (finiteTermSingleExact P (-(M : ℤ)) M 0 (by omega) (by omega)).waldhausenExact k c = 1 :=
+        KMap (finiteTermSingleExact P (-(M : ℤ)) M 0 (by omega) (by omega)).waldhausenExact k c
+          = 1 :=
     (congrArg₂ (· * ·) ha hb.symm).trans
-      ((map_mul (KMap (boundedTermsStratumTransitionExact P hNM).waldhausenExact k) _ _).symm.trans hh)
+      ((map_mul (KMap (boundedTermsStratumTransitionExact P hNM).waldhausenExact k) _
+        _).symm.trans hh)
   have hu : (z, c) =
       ((1 : (ofExactCategory (boundedStratumExactStructure P M)).K k),
-        (1 : (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k)) :=
+        (1 : (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K
+          k)) :=
     (symmetricTerms_existsUnique_acyclic_single_zero P M k 1).unique hstage
       (by simp only [map_one, one_mul])
   have hd : z = 1 := congrArg Prod.fst hu
   have hc : c = 1 := congrArg Prod.snd hu
   refine ⟨?_, hc⟩
-  have hi := DFunLike.congr_fun (KMap_comp (boundedStratumTransitionExact P hNM).waldhausenExact
-    (fixedAcyclicInclusionExactFunctor P (-(M : ℤ)) M).waldhausenExact k) y
+  have hi := DFunLike.congr_fun (KMap_comp_KMap (boundedStratumTransitionExact P hNM).waldhausenExact
+    (fixedAcyclicInclusionExactFunctor P (-(M : ℤ)) M).waldhausenExact k).symm y
   calc
     d = KMap (fixedAcyclicInclusionExactFunctor P (-(N : ℤ)) N).waldhausenExact k y := hy.symm
     _ = KMap (fixedAcyclicInclusionExactFunctor P (-(M : ℤ)) M).waldhausenExact k
         (KMap (boundedStratumTransitionExact P hNM).waldhausenExact k y) := hi
     _ = 1 := (congrArg
-      (KMap (fixedAcyclicInclusionExactFunctor P (-(M : ℤ)) M).waldhausenExact k) hd).trans (map_one _)
+      (KMap (fixedAcyclicInclusionExactFunctor P (-(M : ℤ)) M).waldhausenExact k) hd).trans
+        (map_one _)
 
 /-- The actual global representative is unique, retaining both original public KMaps. -/
 theorem boundedTerms_existsUnique_acyclic_single_zero (k : ℕ)

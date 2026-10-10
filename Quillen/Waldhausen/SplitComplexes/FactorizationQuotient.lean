@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.SplitComplexes.Factorization
-import Quillen.Waldhausen.SplitComplexes.ExactSequences
-import Mathlib.Algebra.Homology.HomotopyCategory.Pretriangulated
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SplitComplexes.Factorization
+public import Quillen.Waldhausen.SplitComplexes.ExactSequences
+public import Mathlib.Algebra.Homology.HomotopyCategory.Pretriangulated
 
 /-!
 # The actual quotient of the split-cofibration factorization
@@ -11,6 +19,8 @@ splitting of its short exact sequence in every degree. This supplies the
 quotient-closure input when restricting the factorization to perfect
 complexes.
 -/
+@[expose] public section
+
 
 noncomputable section
 

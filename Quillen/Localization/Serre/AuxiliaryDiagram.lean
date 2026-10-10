@@ -1,9 +1,19 @@
-import Quillen.Localization.Serre.AuxiliaryBaseChange
-import Quillen.Localization.Serre.AuxiliaryLift
-import Quillen.Localization.Serre.AuxiliaryIsoComma
-import Quillen.Localization.Serre.AuxiliaryPostcompose
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.AuxiliaryBaseChange
+public import Quillen.Localization.Serre.AuxiliaryLift
+public import Quillen.Localization.Serre.AuxiliaryIsoComma
+public import Quillen.Localization.Serre.AuxiliaryPostcompose
 
 /-! # The strict diagram of auxiliary categories over ordinary quotient lifts -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -25,7 +35,8 @@ theorem QCompatibleFunctor.ext_toFunctor
 theorem fullSubcategoryFunctor_ext
     {C D : Type u} [Category.{u} C] [Category.{u} D] {P : ObjectProperty D}
     {F G : C ⥤ P.FullSubcategory} (h : F ⋙ P.ι = G ⋙ P.ι) : F = G := by
-  refine CategoryTheory.Functor.ext (fun X => ObjectProperty.FullSubcategory.ext (Functor.congr_obj h X)) ?_
+  refine CategoryTheory.Functor.ext (fun X => ObjectProperty.FullSubcategory.ext (Functor.congr_obj
+    h X)) ?_
   intro X Y f
   apply ObjectProperty.hom_ext
   simpa only [Functor.comp_map, ObjectProperty.ι_map, ObjectProperty.FullSubcategory.comp_hom,

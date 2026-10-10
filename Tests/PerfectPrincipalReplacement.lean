@@ -3,12 +3,16 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.Affine.DerivedModuleReplacement
-import Quillen.PerfectComplexes.Affine.PrincipalReplacement
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedModuleReplacement
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalReplacement
 
 /-! Semantic consumers: actual derived roofs, original homotopies, and
 replacement for geometric chain maps from affine strict-perfect sheaf complexes to
 arbitrary termwise quasicoherent sheaf complexes. -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -33,7 +37,8 @@ theorem derived_roof_preserves_original (R : CommRingCat.{u}) (r : R)
   obtain ⟨n, g, hd, hg⟩ := exists_principal_derived_module_fraction R r hK α
   let := hd
   have hQ : IsIso (DerivedCategory.Q.map ((localize r (ComplexShape.up ℤ)).map (r ^ n • 𝟙 K))) :=
-    (DerivedCategory.Q.mapIso (asIso ((localize r (ComplexShape.up ℤ)).map (r ^ n • 𝟙 K)))).isIso_hom
+    (DerivedCategory.Q.mapIso (asIso ((localize r (ComplexShape.up ℤ)).map (r ^ n • 𝟙
+      K)))).isIso_hom
   refine ⟨n, g, hQ, ?_⟩
   rw [← hg, IsIso.inv_hom_id_assoc]
 

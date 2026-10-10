@@ -1,5 +1,13 @@
-import Quillen.Topology.HELP.StrictCompact
-import Quillen.Topology.HELP.CylinderBoundary
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.StrictCompact
+public import Quillen.Topology.HELP.CylinderBoundary
 
 /-! # Cancellation of the second compact HELP map
 
@@ -7,6 +15,8 @@ The second HELP map is applied to the genuine compact pushout boundary of a
 cylinder. The resulting map has exactly the required endpoints and the full
 original side homotopy; its further comparison homotopy is not needed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

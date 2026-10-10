@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.BoundedFlat.Functor
-import Quillen.PerfectComplexes.BoundedFlat.Cylinder
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Functor
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Cylinder
 
 /-! # Consumers of the actual bounded-flat Waldhausen enhancement
 
@@ -12,6 +14,8 @@ These use genuine ambient cofibrations, original complex maps, arbitrary
 scheme pullback, all connective degrees and the actual structural cylinder.
 No equivalence with the original Perf model is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open Quillen.PerfectComplexes Quillen.SchemeSheaf

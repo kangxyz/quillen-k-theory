@@ -1,4 +1,22 @@
-import Quillen.Localization.Serre.LocalizationTheorem
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.LocalizationTheorem
+
+/-!
+# Serre localization sequence examples
+
+Uses the canonical inclusion, quotient, and boundary maps for a Serre class in
+an abelian category. The four statements record all three exactness positions
+of the connective sequence and surjectivity of the degree-zero quotient map.
+-/
+
+@[expose] public section
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits Quillen

@@ -1,7 +1,15 @@
-import Quillen.CategoryTheory.TheoremA.RealizationRows
-import Quillen.CategoryTheory.TheoremA.IteratedRealization
-import Mathlib.AlgebraicTopology.SimplicialSet.Skeleton
-import Mathlib.CategoryTheory.Limits.Types.Filtered
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationRows
+public import Quillen.CategoryTheory.TheoremA.IteratedRealization
+public import Mathlib.AlgebraicTopology.SimplicialSet.Skeleton
+public import Mathlib.CategoryTheory.Limits.Types.Filtered
 
 /-!
 # The base-skeleton filtration of a simplicial replacement
@@ -10,6 +18,8 @@ Restricting the base chains to subcomplexes of the nerve gives a genuine
 filtration of the bisimplicial replacement. The filtration is exhaustive and
 is intended for the enriched simplex-attachment presentation.
 -/
+@[expose] public section
+
 
 noncomputable section
 

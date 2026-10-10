@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Fibration.AcyclicSubcategory
-import Mathlib.Algebra.Group.Basic
+module
+
+public import Quillen.Waldhausen.Fibration.AcyclicSubcategory
+public import Mathlib.Algebra.Group.Basic
 
 /-! # The genuine coarse Waldhausen structure of an additive object grading
 
@@ -15,6 +17,8 @@ This is structural input for cofinality, without a K-zero presentation or a
 K-equivalence premise. In particular a grading of objects is not silently
 identified with an actual homotopy-theoretic K-zero homomorphism.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v w
@@ -24,6 +28,8 @@ variable {C : Type u} [Category.{v} C] (W : Structure C)
 
 /-- Original categorical data of an additive grading, not a cofinality endpoint. -/
 structure Grading where
+  /-- The grade of each original object in the abelian group `G`, normalized at zero, invariant
+  under weak equivalences, and additive on cofibration pushouts. -/
   value : C → G
   zero : value W.zero = 0
   weak {X Y : C} (f : X ⟶ Y) : W.weq f → value X = value Y

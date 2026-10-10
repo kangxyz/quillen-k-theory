@@ -3,11 +3,15 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Scheme.Sheaf.BoundedFlatReplacement
-import Quillen.Scheme.Sheaf.ReducedFlatCover
-import Quillen.Scheme.Sheaf.BoundedFlatPullback
+module
+
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.BoundedFlatReplacement
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ReducedFlatCover
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.BoundedFlatPullback
 
 /-! Semantic consumers of genuine bounded-above flat replacements. -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -16,7 +20,8 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open Quillen.SchemeSheaf
 namespace Quillen.Tests.BoundedFlatReplacements
 
-/-- A bounded-above complex of arbitrary sheaves has a replacement with exactly its original bound. -/
+/-- A bounded-above complex of arbitrary sheaves has a replacement with exactly its original bound.
+  -/
 theorem actual_complex_replacement (X : Scheme.{u}) (K : CochainComplex X.Modules ℤ)
     (b : ℤ) (hb : ∀ n, b < n → IsZero (K.X n)) :
     ∃ (P : CochainComplex X.Modules ℤ) (p : P ⟶ K), QuasiIso p ∧

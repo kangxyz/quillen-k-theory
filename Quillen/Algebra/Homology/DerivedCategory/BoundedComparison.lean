@@ -3,11 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.Triangulated.HomComparison
-import Mathlib.Algebra.Homology.DerivedCategory.ExactFunctor
-import Mathlib.Algebra.Homology.DerivedCategory.TStructure
-import Mathlib.Algebra.Homology.DerivedCategory.FullyFaithful
-import Mathlib.CategoryTheory.Triangulated.TStructure.TruncLEGT
+module
+
+public import Quillen.CategoryTheory.Triangulated.HomComparison
+public import Mathlib.Algebra.Homology.DerivedCategory.ExactFunctor
+public import Mathlib.Algebra.Homology.DerivedCategory.TStructure
+public import Mathlib.Algebra.Homology.DerivedCategory.FullyFaithful
+public import Mathlib.CategoryTheory.Triangulated.TStructure.TruncLEGT
 
 /-!
 # Bounded derived comparison by finite canonical truncations
@@ -21,11 +23,12 @@ Exact functors preserve these bounds; faithful exact functors reflect them.
 All degree bounds are explicit. No boundedness of chosen complex terms is
 assumed in the generation or Hom-comparison criteria.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-set_option maxHeartbeats 800000
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated
 open scoped ZeroObject
 namespace Quillen.DerivedHomComparison
@@ -46,6 +49,9 @@ instance mapDerivedCategory_isLE (K : DerivedCategory C) (n : ℤ) [K.IsLE n] :
     F.mapDerivedCategory.mapIso e ≪≫ F.mapDerivedCategoryFactors.app L, inferInstance⟩
 
 
+/-- For an additive functor preserving finite limits and colimits, identify the degree-`i`
+homology of its derived image of `K` with the image under `F` of the degree-`i` homology of
+`K`. -/
 def mapDerivedCategoryHomologyIso (K : DerivedCategory C) (i : ℤ) :
     (DerivedCategory.homologyFunctor D i).obj (F.mapDerivedCategory.obj K) ≅
       F.obj ((DerivedCategory.homologyFunctor C i).obj K) := by
@@ -104,7 +110,8 @@ lemma property_of_bounded_single_generation
       let B := (t.truncGT (a + n)).obj K
       have hA : P A := ih a A inferInstance inferInstance
       have hB : P B := by
-        obtain ⟨X, ⟨e⟩⟩ := DerivedCategory.exists_iso_singleFunctor_obj_of_isGE_of_isLE B (a + n + 1)
+        obtain ⟨X, ⟨e⟩⟩ := DerivedCategory.exists_iso_singleFunctor_obj_of_isGE_of_isLE B (a + n +
+          1)
         exact P.prop_of_iso e.symm (hsingle X (a + n + 1))
       exact P.ext_of_isTriangulatedClosed₂ _ (t.triangleLEGT_distinguished (a + n) K) hA hB
   have hle : K.IsLE (a + (b - a).toNat) :=

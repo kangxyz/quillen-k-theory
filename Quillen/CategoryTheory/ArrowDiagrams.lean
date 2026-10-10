@@ -1,10 +1,20 @@
-import Mathlib.CategoryTheory.Comma.Arrow
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.CategoryTheory.Comma.Arrow
 
 /-! # The actual equivalence between arrows of diagrams and diagrams of arrows
 
 Both directions retain the original component maps. No choice of replacement
 objects or quotient diagrams occurs in this categorical interchange.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 universe u v u' v'

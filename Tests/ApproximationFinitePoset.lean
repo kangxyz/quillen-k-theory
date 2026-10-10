@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.FinitePosetCone
+module
+
+public import Quillen.Waldhausen.Approximation.FinitePoset.WeakCommaCone
 
 /-! # Semantic consumers of genuine finite-poset approximation
 
@@ -11,6 +13,8 @@ These exercise full lower-ideal preservation, the relative old comparison,
 strict latching equations, punctured-cube domains, the actual original comma
 and its original classifying map, including the empty-poset base case.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
 open Quillen.FinitePosetLatching Quillen.FinitePosetInsertion

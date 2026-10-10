@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.ComplementGroup
-import Quillen.Waldhausen.Additivity.CoproductCofiber
-import Mathlib.Tactic.Abel
+module
+
+public import Quillen.Waldhausen.Cofinality.ComplementGroup
+public import Quillen.Waldhausen.Additivity.CoproductCofiber
+public import Mathlib.Tactic.Abel
 
 /-! # The genuine additive grading constructed from categorical density
 
@@ -14,6 +16,8 @@ have a common original complement. The resulting full pushout valuation is
 therefore proved. Its zero equation is exactly original subcategory membership,
 rather than a grading or algebraic class criterion assumed as input.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

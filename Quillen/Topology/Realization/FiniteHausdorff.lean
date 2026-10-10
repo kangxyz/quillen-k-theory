@@ -1,5 +1,13 @@
-import Quillen.Topology.Realization.FiniteSkeleton
-import Quillen.Topology.Pushout.CompactHausdorff
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.FiniteSkeleton
+public import Quillen.Topology.Pushout.CompactHausdorff
 
 /-! # Genuine Hausdorffness and local compactness of finite realizations
 
@@ -8,6 +16,8 @@ attachment. Compactness then factors the identity of the finite realization
 through one such stage. The resulting continuous injection transfers the
 Hausdorff separation property to the unchanged actual realization.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -29,7 +39,8 @@ instance realizationFinite_skeletonStage_t2Space (X : SSet.{u}) [X.Finite] (n : 
     let : T2Space |(SSet.skeletonOfMono ((⊥ : X.Subcomplex).ι) n : SSet.{u})| := ih
     exact t2Space_pushout_of_compact_closedEmbedding
       (realizedSkeletal_isPushout ((⊥ : X.Subcomplex).ι) n)
-      (isClosedEmbedding_parameterizedSimplexBoundary (skeletalCellIndex ((⊥ : X.Subcomplex).ι) n) n)
+      (isClosedEmbedding_parameterizedSimplexBoundary (skeletalCellIndex ((⊥ : X.Subcomplex).ι)
+        n) n)
 
 /-- The actual realization of every finite simplicial set is Hausdorff. -/
 instance realizationFinite_t2Space (X : SSet.{u}) [X.Finite] : T2Space |X| := by

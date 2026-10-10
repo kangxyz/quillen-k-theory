@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.SequenceLift
+module
+
+public import Quillen.Waldhausen.Approximation.SequenceLift
 
 /-!
 # Relative square lifting across an approximation functor
@@ -18,6 +20,8 @@ source arrows when the target arrows are weak.
 This is the basic relative inductive step for finite-diagram approximation.
 No lifting, contractibility, or K-equivalence endpoint is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -38,9 +42,15 @@ commutativity, with cofibrations along both new sides. -/
 structure SquareLift {A B A' : C} {Y Z : D}
     (a : A ⟶ B) (i : A ⟶ A') (p : F.obj A' ⟶ Y)
     (b : Y ⟶ Z) (q : F.obj B ⟶ Z) where
+  /-- The source-category object completing the relative square replacement. -/
   obj : C
+  /-- The cofibration from `B` into the square replacement, lifting the target map `q`. -/
   fromSource : B ⟶ obj
+  /-- The cofibration from the previously lifted object `A'` into the replacement, compatible
+  with `a` and `i` by `square`. -/
   fromLift : A' ⟶ obj
+  /-- The weak comparison from the image of the square replacement to `Z`, compatible with both
+  specified target maps. -/
   projection : F.obj obj ⟶ Z
   fromSource_cof : W.cof fromSource
   fromLift_cof : W.cof fromLift

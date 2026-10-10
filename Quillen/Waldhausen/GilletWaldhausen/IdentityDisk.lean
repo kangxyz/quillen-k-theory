@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.CyclesExact
-import Mathlib.Algebra.Homology.Double
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.CyclesExact
+public import Mathlib.Algebra.Homology.Double
 
 /-! # The actual two-term identity disk functor
 
@@ -7,6 +15,8 @@ This uses mathlib's double complex, with the identity differential in two
 consecutive degrees. The resulting actual disk functor is additive, acyclic,
 termwise bounded, and exact on the inherited termwise subcategory.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -138,7 +148,8 @@ theorem identityDisk_mem (n : ℤ) (X : A) (hX : P X) : boundedAcyclic P (identi
 
 /-- The actual disk functor restricted to the inherited categories. -/
 def boundedAcyclicDiskFunctor (n : ℤ) : P.FullSubcategory ⥤ (boundedAcyclic P).FullSubcategory :=
-  (boundedAcyclic P).lift (P.ι ⋙ identityDiskFunctor n) (fun X ↦ identityDisk_mem P n X.obj X.property)
+  (boundedAcyclic P).lift (P.ι ⋙ identityDiskFunctor n) (fun X ↦ identityDisk_mem P n X.obj
+    X.property)
 
 instance boundedAcyclicDiskFunctor_additive (n : ℤ) : (boundedAcyclicDiskFunctor P n).Additive :=
   inferInstanceAs (Functor.Additive ((boundedAcyclic P).lift _ _))

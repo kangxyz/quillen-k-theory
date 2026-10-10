@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.TheoremA.RealizationSequential
-import Quillen.CategoryTheory.TheoremA.RealizationCofibrationEquiv
-import Quillen.CategoryTheory.TheoremA.RealizationColimitHomotopy
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationSequential
+public import Quillen.CategoryTheory.TheoremA.RealizationCofibrationEquiv
+public import Quillen.CategoryTheory.TheoremA.RealizationColimitHomotopy
 
 /-!
 # Sequential composites of strong deformation retractions
@@ -10,6 +18,8 @@ homotopy, in a shrinking initial time interval. On each fixed stage the
 result is stationary near time zero. The homotopies therefore agree exactly
 on successive stages and descend through the actual topological colimit.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -26,8 +36,11 @@ attribute [local instance] Classical.propDecidable
 
 /-- Deformation data with a prescribed initial stationary interval. -/
 structure TimedDeformationRetract {A B : TopCat.{u}} (i : A ⟶ B) (δ : ℝ) where
+  /-- The retraction from `B` to `A`, a left inverse to the inclusion `i`. -/
   r : B ⟶ A
   retract : i ≫ r = 𝟙 A
+  /-- The homotopy from the identity of `B` to `r ≫ i`, fixing the image of `A` and remaining
+  stationary through time `δ`. -/
   H : TopCat.Homotopy (𝟙 B) (r ≫ i)
   fixed : ∀ t a, H (t, i a) = i a
   stationary : ∀ (t : unitInterval) b, (t : ℝ) ≤ δ → H (t, b) = b

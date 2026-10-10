@@ -1,6 +1,14 @@
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
-import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
-import Mathlib.CategoryTheory.MorphismProperty.Composition
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
+public import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
+public import Mathlib.CategoryTheory.MorphismProperty.Composition
 
 /-!
 # Waldhausen categories
@@ -10,6 +18,8 @@ closure under identities and composition, inclusion of isomorphisms,
 cofibrancy of every object, pushouts along cofibrations, and the gluing axiom.
 No additivity, approximation, comparison, or localization theorem is a field.
 -/
+@[expose] public section
+
 
 noncomputable section
 

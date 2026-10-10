@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationExact
-import Quillen.Waldhausen.GilletWaldhausen.FixedBounds
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationExact
+public import Quillen.Waldhausen.GilletWaldhausen.FixedBounds
 
 /-! # Actual fixed-term-bound brutal truncation endpoints
 
@@ -8,6 +16,8 @@ specified actual zero terms. Original brutal truncation is zero strictly above
 the upper bound and is the original inclusion below the lower bound. No
 acyclicity, kernel closure, projectivity, or globally uniform bound is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

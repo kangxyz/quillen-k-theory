@@ -1,6 +1,16 @@
-import Quillen.Topology.HomotopyFiber.SourceEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.SourceEquivalence
 
 /-! Explicit homotopy equivalence data over a fixed parameter space. -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 open unitInterval
@@ -41,13 +51,21 @@ that preserve the parameter. This is constructed below for concrete maps;
 it is not an assumed localization or realization theorem. -/
 structure FiberwiseHomotopyEquiv {X Y A : Type u} [TopologicalSpace X] [TopologicalSpace Y]
     [TopologicalSpace A] (p : C(X, A)) (q : C(Y, A)) where
+  /-- The forward continuous map from `X` to `Y` over the common base `A`. -/
   toMap : C(X, Y)
+  /-- The inverse continuous map from `Y` to `X` over the common base `A`. -/
   invMap : C(Y, X)
+  /-- A specified homotopy from the inverse-after-forward composite to the identity on `X`. -/
   left : (invMap.comp toMap).Homotopy (ContinuousMap.id X)
+  /-- A specified homotopy from the forward-after-inverse composite to the identity on `Y`. -/
   right : (toMap.comp invMap).Homotopy (ContinuousMap.id Y)
+  /-- The forward map preserves the point in the base. -/
   to_over : ∀ x, q (toMap x) = p x
+  /-- The inverse map preserves the point in the base. -/
   inv_over : ∀ y, p (invMap y) = q y
+  /-- Every stage of the left inverse homotopy preserves the point in the base. -/
   left_over : HomotopyOver p p left
+  /-- Every stage of the right inverse homotopy preserves the point in the base. -/
   right_over : HomotopyOver q q right
 
 namespace FiberwiseHomotopyEquiv
@@ -55,9 +73,13 @@ variable {X Y Z W A : Type u} [TopologicalSpace X] [TopologicalSpace Y]
   [TopologicalSpace Z] [TopologicalSpace W] [TopologicalSpace A]
   {p : C(X, A)} {q : C(Y, A)} {r : C(Z, A)} {s : C(W, A)}
 
+/-- Forget the maps' compatibility with the base and retain the underlying ordinary homotopy
+equivalence between `X` and `Y`. -/
 def toHomotopyEquiv (e : FiberwiseHomotopyEquiv p q) : ContinuousMap.HomotopyEquiv X Y :=
   ⟨e.toMap, e.invMap, ⟨e.left⟩, ⟨e.right⟩⟩
 
+/-- Exchange the forward and inverse maps and their specified homotopies to obtain a fiberwise
+homotopy equivalence from `q` to `p`. -/
 def symm (e : FiberwiseHomotopyEquiv p q) : FiberwiseHomotopyEquiv q p :=
   ⟨e.invMap, e.toMap, e.right, e.left, e.inv_over, e.to_over, e.right_over, e.left_over⟩
 
@@ -113,8 +135,10 @@ def ofAdjacentComposites
     (ha : ∀ x, q (a x) = p x) (hb : ∀ z, p (b z) = r z) (hc : ∀ w, r (c w) = s w)
     (e₁ : FiberwiseHomotopyEquiv r q) (e₂ : FiberwiseHomotopyEquiv s p)
     (h₁ : e₁.toMap = a.comp b) (h₂ : e₂.toMap = b.comp c) : FiberwiseHomotopyEquiv p q := by
-  let H₁ : (e₁.invMap.comp (a.comp b)).Homotopy (ContinuousMap.id Z) := e₁.left.cast (by rw [h₁]) rfl
-  let H₂ : ((b.comp c).comp e₂.invMap).Homotopy (ContinuousMap.id X) := e₂.right.cast (by rw [h₂]) rfl
+  let H₁ : (e₁.invMap.comp (a.comp b)).Homotopy (ContinuousMap.id Z) := e₁.left.cast (by rw
+    [h₁]) rfl
+  let H₂ : ((b.comp c).comp e₂.invMap).Homotopy (ContinuousMap.id X) := e₂.right.cast (by rw
+    [h₂]) rfl
   have hH₁ : HomotopyOver r r H₁ := e₁.left_over
   have hH₂ : HomotopyOver p p H₂ := e₂.right_over
   let R := ContinuousMap.Homotopy.refl ((b.comp e₁.invMap).comp a)

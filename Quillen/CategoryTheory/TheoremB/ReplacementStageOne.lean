@@ -1,8 +1,18 @@
-import Quillen.CategoryTheory.TheoremB.ReplacementVertex
-import Quillen.CategoryTheory.TheoremB.TotalProjection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.ReplacementVertex
+public import Quillen.CategoryTheory.TheoremB.TotalProjection
 
 /-! The actual first base-skeleton of a simplicial replacement is the
 coproduct of its diagram values, with the true realization topology. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology

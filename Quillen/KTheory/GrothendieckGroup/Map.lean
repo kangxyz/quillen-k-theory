@@ -1,11 +1,21 @@
-import Quillen.KTheory.GrothendieckGroup.Basic
-import Quillen.CategoryTheory.ExactCategory.Functor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.GrothendieckGroup.Basic
+public import Quillen.CategoryTheory.ExactCategory.Functor
 
 /-! # Exact-functor maps on algebraic Grothendieck groups
 
 These are algebraic Grothendieck groups. Their comparison with the homotopical
 K₀ remains a separate theorem.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v₁ v₂ v₃ u₁ u₂ u₃

@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianInduction
-import Quillen.CategoryTheory.TheoremB.ReplacementStageOne
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianCoproductAssembly
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianInduction
+public import Quillen.CategoryTheory.TheoremB.ReplacementStageOne
+public import Quillen.Topology.Realization.Cartesian.CoproductAssembly
 
 /-!
 # Weak comparison at an actual replacement vertex
@@ -15,13 +17,15 @@ component square is homotopy cartesian for arbitrary coefficient maps. Pasting
 with the weak stage-to-total theorem gives the original vertex comparison,
 retaining the realized inclusion, coefficient map, and entire constant path.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 variable {D : Type u} [SmallCategory D] {H J : D ⥤ SSet.{u}} (η : H ⟶ J)
 
@@ -104,4 +108,4 @@ theorem replacementVertexComparison_isWeakHomotopyEquivalence
     intro x
     exact realizedReplacementStageOneHomeomorph_colimit J d x
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

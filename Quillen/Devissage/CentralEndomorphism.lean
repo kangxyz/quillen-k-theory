@@ -1,5 +1,13 @@
-import Quillen.Devissage.Homotopical
-import Quillen.GTheory.FiniteModules.LocalizationSequence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Devissage.Homotopical
+public import Quillen.GTheory.FiniteModules.LocalizationSequence
 
 /-!
 # Dévissage for a locally nilpotent central endomorphism
@@ -9,6 +17,8 @@ objects on which it vanishes. Its powers give actual finite image filtrations.
 This construction will be applied to multiplication by an element on the
 category of finite modules supported on its principal closed subset.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -63,10 +73,13 @@ def power (X : C) : ℕ → (X ⟶ X)
   | 0 => 𝟙 X
   | n + 1 => t.app X ≫ power X n
 
+omit [Abelian C] in
+omit [Abelian C] in
 @[simp] lemma power_zero (X : C) : power t X 0 = 𝟙 X := rfl
 @[simp] lemma power_succ (X : C) (n : ℕ) :
     power t X (n + 1) = t.app X ≫ power t X n := rfl
 
+omit [Abelian C] in
 lemma power_naturality {X Y : C} (a : X ⟶ Y) (n : ℕ) :
     power t X n ≫ a = a ≫ power t Y n := by
   induction n with
@@ -136,6 +149,7 @@ def scalar (f : R) : 𝟭 C ⟶ 𝟭 C where
     ext m
     exact ((F.map a).hom.hom.map_smul f m).symm
 
+omit [Abelian C] in
 @[simp] lemma map_scalar (f : R) (X : C) :
     F.map ((scalar F f).app X) =
       FGModuleCat.ofHom (LinearMap.lsmul R (F.obj X) f) := F.map_preimage _
@@ -213,8 +227,11 @@ def principalDevissageKEquiv (n : ℕ) :
       SupportedG (Submonoid.powers f) n :=
   Devissage.KEquiv (principalKilled f) (principalFiltrationHypothesis f) n
 
-@[simp] theorem principalDevissageKEquiv_toMonoidHom (n : ℕ) :
-    (principalDevissageKEquiv f n).toMonoidHom = Devissage.KMap (principalKilled f) n := rfl
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem principalDevissageKEquiv_coe (n : ℕ) :
+    (↑(principalDevissageKEquiv f n) : (Devissage.subcategoryExactStructure (principalKilled
+        f)).K n →* SupportedG (Submonoid.powers f) n) = Devissage.KMap (principalKilled f) n := rfl
+
 
 /-- Bijectivity includes the genuine homotopical degree zero. -/
 theorem principalDevissageKMap_bijective (n : ℕ) :

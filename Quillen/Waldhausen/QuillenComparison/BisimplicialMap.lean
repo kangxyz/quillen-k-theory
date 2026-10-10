@@ -1,9 +1,19 @@
-import Quillen.Waldhausen.QuillenComparison.RowFull
-import Quillen.Waldhausen.QuillenComparison.ChainClassification
-import Quillen.Waldhausen.QuillenComparison.SimplicialMap
-import Quillen.Waldhausen.QuillenComparison.MixedNerve
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.RowFull
+public import Quillen.Waldhausen.QuillenComparison.ChainClassification
+public import Quillen.Waldhausen.QuillenComparison.SimplicialMap
+public import Quillen.Waldhausen.QuillenComparison.MixedNerve
 
 /-! # The actual bisimplicial row comparison -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -50,15 +60,18 @@ theorem rowChainComparison_reindex {n m : SimplexCategory} (α : n ⟶ m) :
         ((rowChainComparison E m ⋙ chainCoreReindex (Q E.deflation E.inflation) α).obj F) := by
     change Core.mk _ = Core.mk _
     apply congrArg Core.mk
-    change centralIntervalFunctor n ⋙ rowIntervalFunctor E ((rowReindex E (Edgewise.ε.map α)).obj F) =
+    change centralIntervalFunctor n ⋙ rowIntervalFunctor E ((rowReindex E (Edgewise.ε.map
+      α)).obj F) =
       (SimplexCategory.toCat.map α).toFunctor ⋙ centralIntervalFunctor m ⋙ rowIntervalFunctor E F
-    rw [rowIntervalFunctor_reindex, ← Functor.assoc, centralIntervalFunctor_naturality, Functor.assoc]
+    rw [rowIntervalFunctor_reindex, ← Functor.assoc, centralIntervalFunctor_naturality,
+      Functor.assoc]
   refine CategoryTheory.Functor.ext hobj ?_
   intro F G e
   apply Core.hom_ext
   ext i
   change _ = (eqToHom (hobj F) : _ ⟶ _).iso.hom.app i ≫
-    ((rowChainComparison E m ⋙ chainCoreReindex (Q E.deflation E.inflation) α).map e).iso.hom.app i ≫
+    ((rowChainComparison E m ⋙ chainCoreReindex (Q E.deflation E.inflation) α).map
+      e).iso.hom.app i ≫
       (eqToHom (hobj G).symm : _ ⟶ _).iso.hom.app i
   simp only [chainCore_eqToHom_app]
   exact qIso_app_congr E e _ _

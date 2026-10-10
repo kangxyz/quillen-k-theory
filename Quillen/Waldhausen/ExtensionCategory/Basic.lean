@@ -1,11 +1,21 @@
-import Quillen.Waldhausen.Additivity.PushoutCofibrations
-import Mathlib.CategoryTheory.ObjectProperty.FullSubcategory
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.PushoutCofibrations
+public import Mathlib.CategoryTheory.ObjectProperty.FullSubcategory
 
 /-! # The category of actual cofibration arrows
 
 Objects are genuine cofibrations. Weak equivalences are componentwise, and
 cofibrations use the source-plus-relative-target (Reedy) condition.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -14,14 +24,20 @@ set_option backward.defeqAttrib.useBackward true
 namespace Quillen.Waldhausen.ExtensionCategory
 variable {C : Type u} [Category.{v} C] (W : Structure C)
 
+/-- The predicate selecting arrows whose underlying map is a cofibration in `W`. -/
 def objects : ObjectProperty (Arrow C) := fun f ↦ W.cof f.hom
+/-- The full subcategory of `Arrow C` consisting of cofibration arrows. -/
 abbrev Obj := (objects W).FullSubcategory
 
+/-- The full-subcategory inclusion that forgets the cofibration condition on an arrow. -/
 def forget : Obj W ⥤ Arrow C := (objects W).ι
 instance forget_full : (forget W).Full := by unfold forget; infer_instance
 instance forget_faithful : (forget W).Faithful := by unfold forget; infer_instance
 
+/-- The functor evaluating a cofibration arrow at its source object. -/
 def source : Obj W ⥤ C := forget W ⋙ Arrow.leftFunc
+/-- The functor evaluating a cofibration arrow at its target object, the middle term of the
+associated extension. -/
 def middle : Obj W ⥤ C := forget W ⋙ Arrow.rightFunc
 
 /-- The original cofibration is the structural source-to-middle transformation. -/
@@ -33,6 +49,8 @@ theorem inclusion_cof (X : Obj W) : W.cof ((inclusion W).app X) := X.property
 abbrev relativeFunctor : Arrow (Obj W) ⥤ C :=
   Additivity.pushoutFunctor W (inclusion W) (inclusion_cof W)
 
+/-- The canonical map from the pushout of the source-target square of `f` to the target object
+of `Y`; this is the relative target map in the Reedy cofibration condition. -/
 abbrev relativeMap {X Y : Obj W} (f : X ⟶ Y) :
     (relativeFunctor W).obj (Arrow.mk f) ⟶ (middle W).obj Y :=
   Additivity.comparison W (inclusion W) (inclusion_cof W) (Arrow.mk f)
@@ -89,7 +107,8 @@ theorem cof_iso : MorphismProperty.isomorphisms (Obj W) ≤ cof W := by
   let s := Additivity.sourceι W (inclusion W) (inclusion_cof W) (Arrow.mk f)
   let : IsIso ((source W).map (Arrow.mk f).hom) := inferInstanceAs (IsIso ((source W).map f))
   let : IsIso s :=
-    (Additivity.pushoutFunctor_isPushout W (inclusion W) (inclusion_cof W) (Arrow.mk f)).isIso_inl_of_isIso
+    (Additivity.pushoutFunctor_isPushout W (inclusion W) (inclusion_cof W) (Arrow.mk
+      f)).isIso_inl_of_isIso
   have h : relativeMap W f = inv s ≫ (middle W).map f := by
     apply (cancel_epi s).1
     simp only [← Category.assoc, IsIso.hom_inv_id, Category.id_comp]
@@ -106,10 +125,14 @@ theorem weq_iso : MorphismProperty.isomorphisms (Obj W) ≤ weq W := by
 /-- The literal identity of the chosen zero object is an actual cofibration arrow. -/
 def zero : Obj W := ⟨Arrow.mk (𝟙 W.zero), W.cof.id_mem _⟩
 
+/-- The morphism from a cofibration arrow to the chosen zero arrow, given by the unique maps to
+the zero object on both components. -/
 def toZero (X : Obj W) : X ⟶ zero W :=
   (objects W).homMk (Arrow.homMk (W.isZero.from_ X.obj.left) (W.isZero.from_ X.obj.right)
     (W.isZero.eq_of_tgt _ _))
 
+/-- The morphism from the chosen zero arrow to a cofibration arrow, given by the unique maps
+from the zero object on both components. -/
 def fromZero (X : Obj W) : zero W ⟶ X :=
   (objects W).homMk (Arrow.homMk (W.isZero.to_ X.obj.left) (W.isZero.to_ X.obj.right)
     (W.isZero.eq_of_src _ _))

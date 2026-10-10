@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.SplitComplexes.Basic
-import Quillen.Waldhausen.SubcategoryInclusion
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SplitComplexes.Basic
+public import Quillen.Waldhausen.SubcategoryInclusion
 
 /-!
 # Degreewise split Waldhausen subcategories of complexes
@@ -11,6 +19,8 @@ are derived from the ambient pushout and quasi-isomorphism gluing theorems.
 The identity comparison to the ambient-monomorphism convention and
 inclusions between such subcategories are actual exact functors.
 -/
+@[expose] public section
+
 
 noncomputable section
 

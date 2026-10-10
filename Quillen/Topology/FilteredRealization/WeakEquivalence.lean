@@ -1,4 +1,12 @@
-import Quillen.Topology.FilteredRealization.Homotopy
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.FilteredRealization.Homotopy
 
 /-!
 # Canonical weak invariance of filtered simplicial colimits
@@ -8,6 +16,8 @@ canonical stage-to-colimit map is bijective on every finite homotopy set,
 including π₀. The proof retains the actual induced maps and relies on proved
 finite-subcomplex support and eventual equality, not on a Whitehead theorem.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Topology
 open scoped Simplicial unitInterval
@@ -58,7 +68,7 @@ theorem genLoop_factors (j : J) (x : |F.obj j|) (n : ℕ)
 canonical finite-dimensional homotopy sets, at every stage point. This is
 the weak theorem; no actual inverse of the colimit map is claimed here. -/
 theorem stage_homotopyGroupMap_bijective
-    (e : ∀ {j k : J} (u : j ⟶ k), ContinuousMap.HomotopyEquiv |F.obj j| |F.obj k|)
+    (e : ∀ {j k : J} (_u : j ⟶ k), ContinuousMap.HomotopyEquiv |F.obj j| |F.obj k|)
     (he : ∀ {j k : J} (u : j ⟶ k), (e u).toFun = (SSet.toTop.map (F.map u)).hom)
     (j : J) (x : |F.obj j|) (n : ℕ) :
     Function.Bijective (homotopyGroupMap (N := Fin n)
@@ -97,12 +107,13 @@ theorem stage_homotopyGroupMap_bijective
         (x := x) hp rfl
       refine ⟨a, ?_⟩
       exact (congrFun hcongr a).symm.trans
-        (hcomp.trans ((congrArg (homotopyGroupMap (SSet.toTop.map (c.ι.app k)).hom hp) ha).trans hmap))
+        (hcomp.trans ((congrArg (homotopyGroupMap (SSet.toTop.map (c.ι.app k)).hom hp) ha).trans
+          hmap))
 
 /-- The canonical positive-dimensional group isomorphism has the actual
 cocone leg as its forward homomorphism. -/
 def stagePiEquiv
-    (e : ∀ {j k : J} (u : j ⟶ k), ContinuousMap.HomotopyEquiv |F.obj j| |F.obj k|)
+    (e : ∀ {j k : J} (_u : j ⟶ k), ContinuousMap.HomotopyEquiv |F.obj j| |F.obj k|)
     (he : ∀ {j k : J} (u : j ⟶ k), (e u).toFun = (SSet.toTop.map (F.map u)).hom)
     (j : J) (x : |F.obj j|) (n : ℕ) :
     HomotopyGroup.Pi (n + 1) |F.obj j| x ≃*
@@ -110,12 +121,13 @@ def stagePiEquiv
   MulEquiv.ofBijective (piMap n (SSet.toTop.map (c.ι.app j)).hom rfl)
     (stage_homotopyGroupMap_bijective F c hc e he j x (n + 1))
 
-@[simp]
-theorem stagePiEquiv_toMonoidHom
-    (e : ∀ {j k : J} (u : j ⟶ k), ContinuousMap.HomotopyEquiv |F.obj j| |F.obj k|)
+/-- The forward homomorphism is induced by the prescribed cocone leg. -/
+@[simp] theorem stagePiEquiv_coe
+    (e : ∀ {j k : J} (_u : j ⟶ k), ContinuousMap.HomotopyEquiv |F.obj j| |F.obj k|)
     (he : ∀ {j k : J} (u : j ⟶ k), (e u).toFun = (SSet.toTop.map (F.map u)).hom)
     (j : J) (x : |F.obj j|) (n : ℕ) :
-    (stagePiEquiv F c hc e he j x n).toMonoidHom =
+    (stagePiEquiv F c hc e he j x n : HomotopyGroup.Pi (n + 1) |F.obj j| x →*
+      HomotopyGroup.Pi (n + 1) |c.pt| (SSet.toTop.map (c.ι.app j) x)) =
       piMap n (SSet.toTop.map (c.ι.app j)).hom rfl := rfl
 
 end Quillen.FilteredRealization

@@ -1,4 +1,12 @@
-import Quillen.Topology.HomotopyGroups.Map
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyGroups.Map
 
 /-! # Actual based homotopy groups of a topological product
 
@@ -6,6 +14,7 @@ The forward homomorphism is the pair of the original projection maps.
 Bijectivity is proved on actual generalized loops and relative homotopies,
 without a commutativity hypothesis or a chosen homotopy equivalence.
 -/
+@[expose] public section
 
 noncomputable section
 open scoped Topology unitInterval
@@ -59,8 +68,10 @@ def piProdEquiv (n : ℕ) (x : X) (y : Y) :
       HomotopyGroup.Pi (n + 1) X x × HomotopyGroup.Pi (n + 1) Y y :=
   MulEquiv.ofBijective (piProdMap n x y) (piProdMap_bijective n x y)
 
-@[simp] theorem piProdEquiv_toMonoidHom (n : ℕ) (x : X) (y : Y) :
-    (piProdEquiv n x y).toMonoidHom =
+/-- The forward homomorphism consists of the two projection maps. -/
+@[simp] theorem piProdEquiv_coe (n : ℕ) (x : X) (y : Y) :
+    (piProdEquiv n x y : HomotopyGroup.Pi (n + 1) (X × Y) (x, y) →*
+      HomotopyGroup.Pi (n + 1) X x × HomotopyGroup.Pi (n + 1) Y y) =
       (piMap n ContinuousMap.fst rfl).prod (piMap n ContinuousMap.snd rfl) := rfl
 
 end Quillen

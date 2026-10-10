@@ -1,7 +1,17 @@
-import Quillen.Waldhausen.QuillenComparison.RowFull
-import Quillen.Waldhausen.QuillenComparison.BisimplicialMap
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.RowFull
+public import Quillen.Waldhausen.QuillenComparison.BisimplicialMap
 
 /-! # Exact transport formulas for terminal interval spans -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

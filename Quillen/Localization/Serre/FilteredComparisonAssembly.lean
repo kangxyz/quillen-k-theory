@@ -1,5 +1,13 @@
-import Quillen.Localization.Serre.AuxiliaryColimit
-import Quillen.Localization.Serre.StructuredTransitionAssembly
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.AuxiliaryColimit
+public import Quillen.Localization.Serre.StructuredTransitionAssembly
 
 /-!
 # Exact-map assembly from filtered stage equivalences to localization transitions
@@ -8,6 +16,8 @@ This adapter records only the final substitution step. Actual homotopy
 invariance of the filtered realization must supply the displayed stage
 homotopy equivalences; finite-homotopy bijectivity is not substituted for them.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -35,7 +45,7 @@ def auxiliaryComparatorEquivOfFilteredStages (N : C) :
   let e := E (P.isoModSerre.Q.obj N) A
   have he : e.toFun = (classifyingSpaceMap (auxiliaryToIsoStructured P N)).hom := by
     dsimp only [e, A]
-    rw [hE, quotientAuxiliaryNerveCocone_map_lift, ← auxiliaryToIsoStructured_eq_withBaseRefl]
+    rw [hE, quotientAuxiliaryNerveCocone_map, asIso_auxiliaryLiftMk, ← auxiliaryToIsoStructured_eq_withBaseRefl]
   apply TheoremA.homotopyEquivWithMap e (classifyingSpaceMap (auxiliaryToIsoStructured P N)).hom
   rw [he]
 

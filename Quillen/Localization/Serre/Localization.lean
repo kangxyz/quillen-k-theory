@@ -1,7 +1,15 @@
-import Quillen.CategoryTheory.ExactCategory.Abelian
-import Quillen.KTheory.GrothendieckGroup.Map
-import Quillen.KTheory.Map.Basic
-import Mathlib.CategoryTheory.Abelian.SerreClass.Localization
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Abelian
+public import Quillen.KTheory.GrothendieckGroup.Map
+public import Quillen.KTheory.Map.Basic
+public import Mathlib.CategoryTheory.Abelian.SerreClass.Localization
 
 /-!
 # Serre quotient functors and their induced maps
@@ -16,6 +24,8 @@ This is the exact-functor layer of localization. No homotopy fiber sequence,
 long exact K-theory sequence, or identification of algebraic Grothendieck
 groups with homotopical K₀ is asserted here.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -83,7 +93,7 @@ lemma grothendieckMap_class_eq_zero {X : C} (hX : P X) :
 open ZeroObject in
 /-- At the level of Q-objects, a Serre-class object becomes isomorphic to the
 chosen basepoint of the quotient Q-category. -/
-def mapQ_obj_iso_zero {X : C} (hX : P X) :
+def mapQObjIsoZero {X : C} (hX : P X) :
     (mapQ P L).obj
       (Q.of (abelianExactStructure C).deflation (abelianExactStructure C).inflation X) ≅
     Q.of (abelianExactStructure D).deflation (abelianExactStructure D).inflation

@@ -1,8 +1,18 @@
-import Quillen.CategoryTheory.TheoremA.SkeletalNaturality
-import Quillen.CategoryTheory.TheoremA.SkeletalCofibrations
-import Quillen.CategoryTheory.TheoremA.RealizationPushoutInvariance
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.SkeletalNaturality
+public import Quillen.CategoryTheory.TheoremA.SkeletalCofibrations
+public import Quillen.CategoryTheory.TheoremA.RealizationPushoutInvariance
 
 /-! # Objectwise equivalences on finite realized replacement skeleta -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -204,7 +214,8 @@ def realizedReplacementSkeletonHomotopyEquivData (n : ℕ) :
           R.map (replacementCellBoundariesMap η n) ≫ R.map (replacementCellsAttaching K n)
         simpa only [Functor.map_comp] using congrArg R.map (replacementCellsMap_attaching η n))
       (by
-        change R.map (replacementCellsCharacteristic H n) ≫ R.map ((replacementSkeletonMap η).app (n + 1)) =
+        change R.map (replacementCellsCharacteristic H n) ≫ R.map ((replacementSkeletonMap η).app (n
+          + 1)) =
           R.map (replacementCellsMap η n) ≫ R.map (replacementCellsCharacteristic K n)
         simpa only [Functor.map_comp] using congrArg R.map (replacementCellsMap_characteristic η n))
       ((realizedReplacementSkeletonMap η).naturality (homOfLE (Nat.le_succ n)))

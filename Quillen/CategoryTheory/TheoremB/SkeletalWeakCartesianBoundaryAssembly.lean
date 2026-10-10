@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianAssembly
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianCalculus
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianAssembly
+public import Quillen.Topology.Realization.Cartesian.WeakCalculus
 
 /-!
 # Original incoming boundary squares for arbitrary coefficient maps
@@ -16,25 +18,28 @@ cocones then give the original incoming boundary face for any natural
 transformation of coefficient diagrams. No weakness of that transformation is
 assumed; the boundary-to-cell square is already genuinely Cartesian.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory Limits Opposite MonoidalCategory CartesianMonoidalCategory
 open scoped Simplicial Topology unitInterval
 universe u
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 
 /-- Independent coefficient and geometric maps give an actual Cartesian
 product square, with the prescribed constant-path comparison. -/
 theorem coefficientProduct_cartesian {X Y K L : Type u}
     [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace K] [TopologicalSpace L]
-    (r : C(X,Y)) (k : C(K,L)) :
+    (r : C(X, Y)) (k : C(K, L)) :
     Cartesian (r.prodMap (ContinuousMap.id K)) (r.prodMap (ContinuousMap.id L))
       ((ContinuousMap.id X).prodMap k) ((ContinuousMap.id Y).prodMap k) rfl := by
   let h := cartesianIdentity r
   refine ⟨(h.equiv.prodCongr (HomotopyPullback.identityHomotopyEquiv k)).trans
-    (HomotopyPullback.prodHomeomorph r (ContinuousMap.id L) (ContinuousMap.id Y) k).toHomotopyEquiv, ?_⟩
+    (HomotopyPullback.prodHomeomorph r (ContinuousMap.id L) (ContinuousMap.id Y) k).toHomotopyEquiv,
+      ?_⟩
   apply ContinuousMap.ext
   intro z
   change HomotopyPullback.prodHomeomorph r (ContinuousMap.id L) (ContinuousMap.id Y) k
@@ -136,4 +141,4 @@ theorem replacementBoundary_weakCartesian (n : ℕ) :
       (congrArg TopCat.Hom.hom (cellBoundarySquare η n)) :=
   (coefficientReplacementBoundary_cartesian η n).weak
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

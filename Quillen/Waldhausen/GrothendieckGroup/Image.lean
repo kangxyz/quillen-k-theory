@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.GrothendieckGroup.Functor
-import Quillen.Waldhausen.Approximation.WeakImage
+module
+
+public import Quillen.Waldhausen.GrothendieckGroup.Functor
+public import Quillen.Waldhausen.Approximation.WeakImage
 
 /-! # The actual algebraic image quotient grading
 
@@ -13,6 +15,8 @@ algebraic groups. Its zero equation is precisely class membership in that
 image. An actual one-arrow weak-image witness proves this equation. The
 converse requires further density/classification input and is not inferred.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'
@@ -53,7 +57,8 @@ theorem imageQuotientGrading_zero_of_weakImage {A : D}
   apply (imageQuotientGrading_zero_iff W F hF A).mpr
   exact ⟨objectClass W X, (map_objectClass W F hF X).trans (objectClass_weak V p hp)⟩
 
-/-- Every quotient-grade element has an original target representative under genuine factorization. -/
+/-- Every quotient-grade element has an original target representative under genuine
+factorization. -/
 theorem imageQuotientGrading_surjective (T : FunctorialFactorization V) :
     Function.Surjective (imageQuotientGrading W F hF).value := by
   intro g

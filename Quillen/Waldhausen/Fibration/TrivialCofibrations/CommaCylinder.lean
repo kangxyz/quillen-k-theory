@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Fibration.TrivialCofibrations.Category
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.TrivialCofibrations.Category
 
 /-! # The genuine cylinder zigzag in the original weak-cofibration comma category
 
@@ -7,6 +15,8 @@ The two original cylinder endpoints define id → T ← const(Y), with every
 map a genuine weak cofibration in the comma category. The construction is
 functorial for its original weak-cofibration morphisms.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 universe u v
@@ -25,7 +35,10 @@ def overArrow (Y : WeakCategory weq) : Over cof weq Y ⥤ Arrow C where
     change α.left.hom ≫ G.hom.hom = F.hom.hom ≫ 𝟙 Y.obj
     simpa only [Category.comp_id] using h)
   map_id _ := by apply Arrow.hom_ext <;> rfl
-  map_comp _ _ := by apply Arrow.hom_ext; rfl; exact (Category.id_comp _).symm
+  map_comp _ _ := by
+    apply Arrow.hom_ext
+    · rfl
+    · exact (Category.id_comp _).symm
 
 @[simp] theorem overArrow_map_left {Y : WeakCategory weq} {F G : Over cof weq Y} (α : F ⟶ G) :
     ((overArrow cof weq Y).map α).left = α.left.hom := rfl
@@ -37,7 +50,8 @@ variable (D : CylinderData cof weq) [weq.HasTwoOutOfThreeProperty] (Y : WeakCate
 
 /-- The original weak projection is an actual object of the same comma category. -/
 def overCylinderObj (F : Over cof weq Y) : Over cof weq Y :=
-  CostructuredArrow.mk (Y := (⟨D.middle.obj ((overArrow cof weq Y).obj F)⟩ : CofibrationCategory cof weq))
+  CostructuredArrow.mk (Y := (⟨D.middle.obj ((overArrow cof weq Y).obj F)⟩ : CofibrationCategory
+    cof weq))
     ⟨D.projection.app ((overArrow cof weq Y).obj F), D.projection_weak _⟩
 
 /-- The actual middle map is a weak-cofibration comma morphism. -/
@@ -49,7 +63,8 @@ def overCylinderMap {F G : Over cof weq Y} (α : F ⟶ G) :
         D.middle_weak _ (weq.id_mem _)⟩⟩ (by
       apply WideSubcategory.hom_ext
       change D.middle.map ((overArrow cof weq Y).map α) ≫
-        D.projection.app ((overArrow cof weq Y).obj G) = D.projection.app ((overArrow cof weq Y).obj F)
+        D.projection.app ((overArrow cof weq Y).obj G) = D.projection.app ((overArrow cof weq
+          Y).obj F)
       have h := D.projection.naturality ((overArrow cof weq Y).map α)
       change D.middle.map ((overArrow cof weq Y).map α) ≫
         D.projection.app ((overArrow cof weq Y).obj G) =

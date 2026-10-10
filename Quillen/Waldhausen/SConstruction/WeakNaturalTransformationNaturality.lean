@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.SConstruction.WeakNaturalTransformation
-import Quillen.Waldhausen.SConstruction.NerveCylinderNaturality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.WeakNaturalTransformation
+public import Quillen.Waldhausen.SConstruction.NerveCylinderNaturality
 
 /-! # Strict naturality of the original weak-transformation cylinder
 
@@ -7,6 +15,8 @@ The categorical nerve cylinder commutes with actual postcomposition.
 Consequently the original S-cylinder maps commute with exact functor
 precomposition and postcomposition, retaining their original endpoints.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor Opposite MonoidalCategory
 open scoped Simplicial Topology

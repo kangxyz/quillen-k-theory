@@ -1,11 +1,21 @@
-import Quillen.Waldhausen.QuillenComparison.VerticalSpans
-import Mathlib.CategoryTheory.Functor.Currying
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.VerticalSpans
+public import Mathlib.CategoryTheory.Functor.Currying
 
 /-! # Reindexing the subquotient comparison
 
 The actual Q-valued bifunctor of an exact S-simplex commutes strictly with
 simultaneous reindexing of the nerve and interval directions.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

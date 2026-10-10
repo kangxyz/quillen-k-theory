@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.TheoremA.WeakComma
+module
+
+public import Quillen.CategoryTheory.TheoremA.WeakComma
 
 /-!
 # Consumers of weak Quillen Theorem A
@@ -12,6 +14,8 @@ These consumers retain the original functor map, all degrees including zero,
 actual vertex-fiber comparison, independent discrete-base universes, and the
 empty-source obstruction. No global contraction is part of the hypotheses.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 open scoped Topology Simplicial unitInterval
@@ -63,7 +67,7 @@ theorem empty_source_obstruction {C D : Type u} [SmallCategory C] [SmallCategory
 
 /-- The complete weak vertex comparison uses the literal existing map. -/
 theorem actual_vertex_fiber {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
-    (h : TheoremB.SkeletalCartesian.TransitionWeakCartesian
+    (h : Quillen.CartesianRealization.Skeletal.TransitionWeakCartesian
       (TheoremA.replacementPointAugmentation H)) (d : D) (x : |H.obj d|) (n : ℕ) :
     Function.Bijective (homotopyGroupMap (N := Fin n)
       (TheoremB.vertexFiberComparison H d) (x := x) rfl) :=

@@ -1,5 +1,13 @@
-import Quillen.Topology.FilteredRealization.CompactHELP
-import Quillen.Topology.HELP.CompactHomotopyEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.FilteredRealization.CompactHELP
+public import Quillen.Topology.HELP.CompactHomotopyEquivalence
 
 /-!
 # Actual homotopy invariance of filtered simplicial colimits
@@ -10,6 +18,8 @@ and exact homotopy-square lifting give compact HELP; lifting over realized
 simplicial inclusions then constructs both global inverse homotopies.
 No countability assumption or Whitehead theorem is used.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits
 open scoped Simplicial

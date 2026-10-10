@@ -3,10 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.WeakArrow.DualStructure
-import Quillen.Waldhausen.Fibration.Rows.ReflexiveFactorization
-import Quillen.Waldhausen.ExtensionCategory.Functoriality
-import Quillen.Waldhausen.Fibration.Rows.JointFactorization
+module
+
+public import Quillen.Waldhausen.WeakArrow.DualStructure
+public import Quillen.Waldhausen.Fibration.Rows.ReflexiveFactorization
+public import Quillen.Waldhausen.ExtensionCategory.Functoriality
+public import Quillen.Waldhausen.Fibration.Rows.JointFactorization
 
 /-!
 # Actual coherent joint functors on opposite weak-arrow categories
@@ -19,11 +21,12 @@ are retained by exact projection equalities. This owner constructs the
 functor and cofibration; its exactness and coherent endpoints are proved
 in separate owners.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-set_option maxHeartbeats 1600000
 open CategoryTheory CategoryTheory.Limits Opposite
 universe u v u' v' u'' v''
 namespace Quillen.Waldhausen.WeakArrow
@@ -55,12 +58,14 @@ def opFunctorOfWeakComparison {T : Type u''} [Category.{v''} T]
 @[simp] lemma opFunctorOfWeakComparison_source {T : Type u''} [Category.{v''} T]
     (L : T ⥤ Cᵒᵖ) (R : T ⥤ Dᵒᵖ) (τ : R ⟶ L ⋙ F.op)
     (hτ : ∀ t, Wd.weq (τ.app t)) :
-    opFunctorOfWeakComparison W Wd F hW L R τ hτ ⋙ (source W F).op = L := by apply CategoryTheory.Functor.ext (fun _ => rfl)
+    opFunctorOfWeakComparison W Wd F hW L R τ hτ ⋙ (source W F).op = L := by
+  apply CategoryTheory.Functor.ext (fun _ => rfl)
 
 @[simp] lemma opFunctorOfWeakComparison_target {T : Type u''} [Category.{v''} T]
     (L : T ⥤ Cᵒᵖ) (R : T ⥤ Dᵒᵖ) (τ : R ⟶ L ⋙ F.op)
     (hτ : ∀ t, Wd.weq (τ.app t)) :
-    opFunctorOfWeakComparison W Wd F hW L R τ hτ ⋙ (target W F).op = R := by apply CategoryTheory.Functor.ext (fun _ => rfl)
+    opFunctorOfWeakComparison W Wd F hW L R τ hτ ⋙ (target W F).op = R := by
+  apply CategoryTheory.Functor.ext (fun _ => rfl)
 
 variable (V : Structure C) (Vd : Structure Cᵒᵖ)
   (hF : IsExact V.cof V.weq W.cof W.weq F)
@@ -95,7 +100,8 @@ def jointSource : Arrow (Obj W F)ᵒᵖ ⥤ (Obj W F)ᵒᵖ :=
   opFunctorOfWeakComparison W Wd F hW
     ((source W F).op.mapArrow ⋙ Tc.joint ⋙ ExtensionCategory.source Vd)
     ((target W F).op.mapArrow ⋙ Td.joint ⋙ ExtensionCategory.source Wd)
-    (Functor.whiskerRight (jointComparison W Wd F Vd hFd Tc Td compat) (ExtensionCategory.source Wd))
+    (Functor.whiskerRight (jointComparison W Wd F Vd hFd Tc Td compat) (ExtensionCategory.source
+      Wd))
     (fun f => (jointComparison_weak W Wd F hW Vd hFd Tc Td compat f).1)
 
 /-- Actual opposite middle objects in the original weak-arrow category. -/
@@ -103,7 +109,8 @@ def jointMiddle : Arrow (Obj W F)ᵒᵖ ⥤ (Obj W F)ᵒᵖ :=
   opFunctorOfWeakComparison W Wd F hW
     ((source W F).op.mapArrow ⋙ Tc.joint ⋙ ExtensionCategory.middle Vd)
     ((target W F).op.mapArrow ⋙ Td.joint ⋙ ExtensionCategory.middle Wd)
-    (Functor.whiskerRight (jointComparison W Wd F Vd hFd Tc Td compat) (ExtensionCategory.middle Wd))
+    (Functor.whiskerRight (jointComparison W Wd F Vd hFd Tc Td compat) (ExtensionCategory.middle
+      Wd))
     (fun f => (jointComparison_weak W Wd F hW Vd hFd Tc Td compat f).2)
 
 /-- The actual component joint arrows form a natural arrow of original

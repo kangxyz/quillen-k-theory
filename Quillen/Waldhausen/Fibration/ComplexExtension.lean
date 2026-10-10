@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.WeakEquivalenceCofiber
-import Quillen.Waldhausen.ComplexSubcategory
-import Quillen.Algebra.Homology.QuasiIsoExtension
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.WeakEquivalenceCofiber
+public import Quillen.Waldhausen.ComplexSubcategory
+public import Quillen.Algebra.Homology.QuasiIsoExtension
 
 /-! # The structural extension axiom for genuine complex weak equivalences
 
@@ -8,6 +16,8 @@ Displayed cofiber squares give actual short exact sequences. Their homology
 four-lemma proof supplies the middle quasi-isomorphism, including in inherited
 full subcategories. The extension axiom is derived, not assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianStageExtraction
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianStageExtraction
 
 /-!
 # General coefficient characteristic extraction regressions
@@ -13,11 +15,13 @@ Both diagrams and their arbitrary transformation remain visible. These
 consumers check genuine component cartesianness, weakness of the original
 characteristic map, dimension zero, and every value of the stored path.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory Limits Opposite
-open Quillen Quillen.TheoremA Quillen.TheoremB.SkeletalCartesian
+open Quillen Quillen.TheoremA Quillen.CartesianRealization.Skeletal
 open scoped Simplicial Topology unitInterval
 universe u
 variable {D : Type u} [SmallCategory D] {H J : D ⥤ SSet.{u}} (η : H ⟶ J)

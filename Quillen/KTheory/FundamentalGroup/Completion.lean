@@ -1,5 +1,13 @@
-import Quillen.KTheory.FundamentalGroup.Basic
-import Mathlib.CategoryTheory.Localization.Predicate
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.FundamentalGroup.Basic
+public import Mathlib.CategoryTheory.Localization.Predicate
 
 /-!
 # The comparison from categorical groupoid completion to continuous paths
@@ -8,6 +16,8 @@ The actual realized-arrow functor inverts every arrow, so the categorical
 localization universal property extends it to the groupoid completion.
 This constructs the canonical comparison without assuming it is full or faithful.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u v

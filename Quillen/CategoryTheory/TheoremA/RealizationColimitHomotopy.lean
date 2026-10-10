@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremA.RealizationGluing
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationGluing
 
 /-!
 # Gluing coherent diagram homotopies
@@ -10,6 +18,8 @@ and inverse homotopies are coherent gives an actual equivalence of colimits.
 This theorem records the coherence needed by an inductive skeletal argument;
 it does not infer that coherence from objectwise homotopy equivalences.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -24,6 +34,8 @@ variable {J : Type w} [Category.{v} J]
 
 /-- An actual cylinder homotopy natural in the indexing category. -/
 structure DiagramCylinderHomotopy {F G : J ⥤ TopCat.{u}} (η θ : F ⟶ G) where
+  /-- The natural family of cylinder maps from `F` to `G` whose two endpoint restrictions are `η`
+  and `θ`. -/
   h : F ⋙ tensorRight TopCat.I ⟶ G
   h₀ : ∀ j, TopCat.ι₀ ≫ h.app j = η.app j
   h₁ : ∀ j, TopCat.ι₁ ≫ h.app j = θ.app j

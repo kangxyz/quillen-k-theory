@@ -1,11 +1,21 @@
-import Quillen.Topology.Pushout.CompactHausdorff
-import Quillen.Topology.Realization.CompactGraph
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Pushout.CompactHausdorff
+public import Quillen.Topology.Realization.CompactGraph
 
 /-! # Actual pushout quotients over compact realization-valued tests
 
 These statements concern the original topological pushout and the literal
 matching subspace, rather than a replaced quotient or a k-ification.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -46,7 +56,7 @@ theorem pushout_parameter_pullback_quotient_of_isClosed
 compact test's finite closed Hausdorff support. -/
 theorem pushout_realization_parameter_pullback_quotient
     (X : SSet.{u}) {D : Type v} [TopologicalSpace D]
-    [CompactSpace D] [LocallyCompactSpace D] (p : C(M,|X|)) (b : C(D,|X|)) :
+    [CompactSpace D] [LocallyCompactSpace D] (p : C(M, |X|)) (b : C(D, |X|)) :
     IsQuotientMap (fun z : {z : (B ⊕ C) × D // p (Sum.elim g j z.1) = b z.2} ↦
       (⟨(Sum.elim g j z.1.1,z.1.2),z.2⟩ : {z : M × D // p z.1 = b z.2})) :=
   realization_compactMap_pullback_quotient X (pushout_sum_isQuotientMap sq) p b

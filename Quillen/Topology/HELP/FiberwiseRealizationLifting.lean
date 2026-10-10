@@ -1,7 +1,15 @@
-import Quillen.Topology.HELP.ContractibleTestFull
-import Quillen.Topology.HELP.PairLifting
-import Quillen.Topology.HELP.CompactRealizationLifting
-import Quillen.Topology.ClassifyingSpace.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.ContractibleTestFull
+public import Quillen.Topology.HELP.PairLifting
+public import Quillen.Topology.HELP.CompactRealizationLifting
+public import Quillen.Topology.ClassifyingSpace.Equivalence
 
 /-! # Actual realized-inclusion lifting from compact HELP on genuine fibers
 
@@ -10,6 +18,8 @@ test, preserving the full boundary homotopy. Actual relative skeleta then
 supply endpoint lifting against all realized simplicial monomorphisms. No
 inverse family on an arbitrary path-space pullback is chosen or assumed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits
 open scoped Simplicial Topology unitInterval
@@ -23,7 +33,7 @@ variable {E F B : Type u} [TopologicalSpace E] [TopologicalSpace F] [Topological
 mono, from genuine fibration structure and compact HELP on its original
 strict-fiber maps. The test realization need not be compact. -/
 theorem endpoint_realization_mono_of_fiberHELP
-    (p : C(E,B)) (q : C(F,B)) (f : C(E,F)) (sq : q.comp f = p)
+    (p : C(E, B)) (q : C(F, B)) (f : C(E, F)) (sq : q.comp f = p)
     (hp : HomotopyLiftingProperty p) (hq : HomotopyLiftingProperty q)
     (hf : ∀ b : B, CompactHomotopyExtensionLiftingProperty
       (HomotopyFiber.strictMapOver p q f sq b))

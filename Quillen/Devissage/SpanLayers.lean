@@ -1,5 +1,13 @@
-import Quillen.Devissage.Layers
-import Quillen.CategoryTheory.QConstruction.Abelian.Cancellation
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Devissage.Layers
+public import Quillen.CategoryTheory.QConstruction.Abelian.Cancellation
 
 /-!
 # Recovering layers from abelian Q-spans
@@ -8,6 +16,8 @@ An admissible span presents its source as the quotient of its apex subobject
 by the image of the kernel of its epimorphic leg. The canonical quotient
 isomorphism is proved with its projection equation.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v u
@@ -43,13 +53,15 @@ def spanQuotientIsoKernel (s : Q.AbelianSpan X M) :
 /-- An epimorphism is the quotient by its kernel. -/
 def spanKernelQuotientIso (s : Q.AbelianSpan X M) : cokernel (kernel.ι s.l) ≅ X :=
   (cokernelIsCokernel (kernel.ι s.l)).coconePointUniqueUpToIso
-    (Abelian.epiIsCokernelOfKernel (KernelFork.ofι (kernel.ι s.l) (kernel.condition s.l)) (kernelIsKernel s.l))
+    (Abelian.epiIsCokernelOfKernel (KernelFork.ofι (kernel.ι s.l) (kernel.condition s.l))
+      (kernelIsKernel s.l))
 
 @[reassoc (attr := simp)]
 lemma cokernel_π_spanKernelQuotientIso_hom (s : Q.AbelianSpan X M) :
     cokernel.π (kernel.ι s.l) ≫ (spanKernelQuotientIso s).hom = s.l := by
   exact (cokernelIsCokernel (kernel.ι s.l)).comp_coconePointUniqueUpToIso_hom
-    (Abelian.epiIsCokernelOfKernel (KernelFork.ofι (kernel.ι s.l) (kernel.condition s.l)) (kernelIsKernel s.l)) WalkingParallelPair.one
+    (Abelian.epiIsCokernelOfKernel (KernelFork.ofι (kernel.ι s.l) (kernel.condition s.l))
+      (kernelIsKernel s.l)) WalkingParallelPair.one
 
 /-- The quotient of the layer recovered from a Q-span is its source. -/
 def spanQuotientIso (s : Q.AbelianSpan X M) :

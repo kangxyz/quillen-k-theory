@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.Affine.BoundedDerivedComparison
-import Mathlib.Data.ZMod.Basic
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedDerivedComparison
+public import Mathlib.Data.ZMod.Basic
 
 /-!
 # Consumers of the bounded affine derived equivalence
@@ -13,11 +15,12 @@ The tests retain the original morphism map, exact requested chain bounds,
 original localization and principal restriction, with zero-ring and
 zero-divisor consumers. Original sheaf-complex terms need not be QC.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-set_option maxHeartbeats 800000
 universe u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
 open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
@@ -75,7 +78,8 @@ lemma empty_affine_exact_bounds
     (K : Derived (Spec (CommRingCat.of (ZMod 1)))) (a b : ℤ)
     [DerivedCategory.IsGE (C := (Spec (CommRingCat.of (ZMod 1))).Modules) K a]
     [DerivedCategory.IsLE (C := (Spec (CommRingCat.of (ZMod 1))).Modules) K b]
-    (hK : ∀ i, ((DerivedCategory.homologyFunctor (Spec (CommRingCat.of (ZMod 1))).Modules i).obj K).IsQuasicoherent) :
+    (hK : ∀ i, ((DerivedCategory.homologyFunctor (Spec (CommRingCat.of (ZMod 1))).Modules i).obj
+      K).IsQuasicoherent) :
     ∃ (L : ModuleComplex (CommRingCat.of (ZMod 1))), L.IsStrictlyGE a ∧ L.IsStrictlyLE b ∧
       Nonempty ((toDerived _).obj ((associatedComplex _).obj L) ≅ K) :=
   exact_requested_term_bounds _ K a b hK
@@ -84,7 +88,8 @@ lemma zero_divisor_ring_essential_image
     (K : Derived (Spec (CommRingCat.of (ZMod 6)))) (a b : ℤ)
     [DerivedCategory.IsGE (C := (Spec (CommRingCat.of (ZMod 6))).Modules) K a]
     [DerivedCategory.IsLE (C := (Spec (CommRingCat.of (ZMod 6))).Modules) K b]
-    (hK : ∀ i, ((DerivedCategory.homologyFunctor (Spec (CommRingCat.of (ZMod 6))).Modules i).obj K).IsQuasicoherent) :
+    (hK : ∀ i, ((DerivedCategory.homologyFunctor (Spec (CommRingCat.of (ZMod 6))).Modules i).obj
+      K).IsQuasicoherent) :
     (associatedBoundedDerived (CommRingCat.of (ZMod 6))).essImage K :=
   associatedBoundedDerived_essImage_of_quasicoherent_homology _ K a b hK
 

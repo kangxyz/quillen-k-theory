@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.GradedKZeroSequence
-import Quillen.Waldhausen.Cofinality.DenseKEquivalence
+module
+
+public import Quillen.Waldhausen.Cofinality.GradedKZeroSequence
+public import Quillen.Waldhausen.Cofinality.DenseKEquivalence
 
 /-! # The original dense-subcategory K-zero tail and actual complement classes
 
@@ -13,6 +15,8 @@ The exact grading range therefore identifies with the full complement-class
 group. The original inclusion has precisely the kernel of the resulting
 original K-zero homomorphism, which is genuinely surjective onto these classes.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u
@@ -34,7 +38,8 @@ def classKZeroMap : W.K 0 →* Multiplicative h.Classes :=
     (h.grading.gradeKZeroMap D)
 
 /-- Passing from realized range to actual complement classes does not change the original kernel. -/
-theorem classKZeroMap_ker : (h.classKZeroMap D).ker = (KMap (changeWeak_exact h.grading.nested) 0).ker := by
+theorem classKZeroMap_ker : (h.classKZeroMap D).ker = (KMap (changeWeak_exact h.grading.nested)
+    0).ker := by
   rw [← h.grading.gradeKZeroMap_ker D]
   ext x
   change (h.classRangeEquiv D.sourceFactorization).toMultiplicative
@@ -50,7 +55,8 @@ theorem classKZeroMap_surjective : Function.Surjective (h.classKZeroMap D) :=
     (h.grading.gradeKZeroMap_surjective D hs)
 
 /-- The literal original full-inclusion image is exactly the actual complement-class kernel. -/
-theorem range_inclusion_KZero_eq_classKernel : (KMap h.inclusion_exact 0).range = (h.classKZeroMap D).ker := by
+theorem range_inclusion_KZero_eq_classKernel : (KMap h.inclusion_exact 0).range =
+    (h.classKZeroMap D).ker := by
   rw [h.classKZeroMap_ker D]
   exact h.range_inclusion_KMap D hs 0
 

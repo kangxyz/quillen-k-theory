@@ -1,5 +1,13 @@
-import Quillen.Topology.Realization.Homotopy
-import Mathlib.CategoryTheory.Limits.Preserves.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.Homotopy
+public import Mathlib.CategoryTheory.Limits.Preserves.Basic
 
 /-!
 # Topological cylinders preserve colimits
@@ -11,6 +19,8 @@ proved topological part of the realization-of-homotopies construction; the
 standard-simplex prism comparison is proved separately in
 `Quillen.RealizationPrismGluing`.
 -/
+@[expose] public section
+
 
 noncomputable section
 

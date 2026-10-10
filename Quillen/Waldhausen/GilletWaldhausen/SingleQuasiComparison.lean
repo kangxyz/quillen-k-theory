@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.GlobalEulerReduction
-import Quillen.Waldhausen.GilletWaldhausen.FibrationModels
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.GlobalEulerReduction
+public import Quillen.Waldhausen.GilletWaldhausen.FibrationModels
 
 /-! # The original single-complex map and change of weak equivalences
 
@@ -8,6 +16,8 @@ model. Its original normalized KMap is exactly the composite of the fine
 single KMap with the actual change-of-weak-equivalences KMap. This is a map
 identification, not a Gillet–Waldhausen equivalence or fibration assertion.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -43,8 +53,8 @@ theorem boundedTermsSingle_coarse_KMap (n : ℤ) (k : ℕ) :
     ((boundedTermsSingleExactFunctor P n).waldhausenExact.comp
       (Fibration.changeWeak_exact (boundedTermsNested P)))
     (boundedTermsSingle_coarseExact P n) (Functor.rightUnitor (boundedTermsSingleFunctor P n)) k
-  exact he.symm.trans (KMap_comp (boundedTermsSingleExactFunctor P n).waldhausenExact
-    (Fibration.changeWeak_exact (boundedTermsNested P)) k)
+  exact he.symm.trans (KMap_comp_KMap (boundedTermsSingleExactFunctor P n).waldhausenExact
+    (Fibration.changeWeak_exact (boundedTermsNested P)) k).symm
 
 /-- Pointwise the triangle consists of precisely the original public KMaps. -/
 theorem boundedTermsSingle_coarse_KMap_apply (n : ℤ) (k : ℕ)

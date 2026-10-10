@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.QConstruction.Connected
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.QConstruction.Connected
 
 /-! # Endomorphisms of the distinguished zero vertex
 
@@ -7,6 +15,8 @@ weaker than being initial, terminal, or a zero object in Q, none of which is
 asserted here. The proof uses that a span apex admitting a monomorphism to the
 original zero object must itself be zero.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v u

@@ -1,7 +1,17 @@
-import Quillen.Localization.Serre.OverQArrows
-import Quillen.Localization.Serre.KernelPushoutComparison
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.OverQArrows
+public import Quillen.Localization.Serre.KernelPushoutComparison
 
 /-! # Base change for the auxiliary kernel categories -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -140,6 +150,8 @@ def overPostcomposeCompatible {M N : C} (i : M ⟶ N) :
   exact QCompatibleFunctor.ofPreservesPullbacks _ _ _ _ (Over.map i)
     (fun _ h => h) (fun _ h => h)
 
+/-- The functor from `OverQ M` to `OverQ N` induced by postcomposing each slice structure map
+with `i : M ⟶ N`. -/
 def overPostcomposeQ {M N : C} (i : M ⟶ N) : OverQ M ⥤ OverQ N :=
   (overPostcomposeCompatible i).mapQ
 
@@ -210,8 +222,7 @@ lemma overBaseChangeCounit_kernel {M N : C} (i : M ⟶ N) [Mono i] (X : Over N) 
   apply (cancel_mono (overKernelι X)).1
   calc
     _ = overKernelι ((Over.map i).obj ((Over.pullback i).obj X)) ≫ pullback.fst X.hom i := by
-      simpa [Over.mapPullbackAdj_counit_app] using
-        overKernel_map_ι ((Over.mapPullbackAdj i).counit.app X)
+      simp [Over.mapPullbackAdj_counit_app]
     _ = _ := by
       simp only [Category.assoc, overBaseChangeKernelObjIso_hom_ι,
         overPostcomposeKernelObjIso_hom_ι_assoc]

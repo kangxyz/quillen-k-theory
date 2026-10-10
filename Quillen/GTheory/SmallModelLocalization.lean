@@ -1,5 +1,13 @@
-import Quillen.Localization.SmallModel
-import Quillen.Localization.Serre.LocalizationTarget
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.SmallModel
+public import Quillen.Localization.Serre.LocalizationTarget
 
 /-!
 # Canonical connective localization on actual small exact models
@@ -9,6 +17,8 @@ a Serre localization yields the connective localization sequence for its origina
 `smallKMap`. All categorical quotient and exact-structure comparisons are proved;
 the only localization hypothesis here concerns the actual input functor.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

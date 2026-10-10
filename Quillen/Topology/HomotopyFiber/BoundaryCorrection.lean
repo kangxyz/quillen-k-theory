@@ -1,8 +1,18 @@
-import Quillen.CategoryTheory.TheoremA.RealizationPushoutProduct
-import Quillen.Topology.HomotopyFiber.SourceEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationPushoutProduct
+public import Quillen.Topology.HomotopyFiber.SourceEquivalence
 
 /-! Correcting the restriction of a homotopy while preserving both global
 endpoints, using the proved interval-square extension theorem. -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory
@@ -14,7 +24,7 @@ variable {A B Z : TopCat.{u}} {i : A ⟶ B}
 /-- A relative deformation of the boundary homotopy extends to the entire
 homotopy, with both original endpoint maps unchanged. -/
 theorem homotopyExtensionProperty_correct_boundary
-    (hi : homotopyExtensionProperty i) {f g : C(B,Z)}
+    (hi : homotopyExtensionProperty i) {f g : C(B, Z)}
     (K : f.Homotopy g) (L : (f.comp i.hom).Homotopy (g.comp i.hom))
     (Q : (K.compContinuousMap i.hom).toContinuousMap.HomotopyRel L.toContinuousMap
       {z : unitInterval × A | z.1 = 0 ∨ z.1 = 1}) :
@@ -40,7 +50,7 @@ theorem homotopyExtensionProperty_correct_boundary
 /-- In particular, a constant prefix on the boundary may be removed exactly
 without changing the two endpoint maps anywhere in the ambient space. -/
 theorem homotopyExtensionProperty_unpad_boundary
-    (hi : homotopyExtensionProperty i) {f g : C(B,Z)}
+    (hi : homotopyExtensionProperty i) {f g : C(B, Z)}
     (K : f.Homotopy g) (L : (f.comp i.hom).Homotopy (g.comp i.hom))
     (hK : ∀ t a, K (t, i a) = Path.delayReflLeft 0 (L.evalAt a) t) :
     ∃ K' : f.Homotopy g, ∀ t a, K' (t, i a) = L (t,a) := by

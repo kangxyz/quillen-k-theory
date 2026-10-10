@@ -1,5 +1,13 @@
-import Quillen.Localization.Serre.FiberComparison
-import Quillen.KTheory.Map.Functoriality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.FiberComparison
+public import Quillen.KTheory.Map.Functoriality
 
 /-! # A basepoint-compatible Serre-localization fiber comparison
 
@@ -7,6 +15,8 @@ This uses exactly the normalized Q-functors underlying the defined K-group
 maps. The comparison fixes the original chosen zero basepoints. The assertion
 that this comparison is a homotopy equivalence remains the localization theorem.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u
@@ -18,7 +28,11 @@ attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
+/-- The Q-functor induced by the exact inclusion of the Serre subcategory into `C`, normalized
+to send the chosen Q-zero object exactly to the ambient Q-zero object. -/
 abbrev inclusionNormalizedQ := (Devissage.exactInclusion P).normalizedQ
+/-- The Q-functor induced by the exact Serre quotient functor, normalized to send the ambient
+chosen Q-zero object exactly to the quotient Q-zero object. -/
 abbrev quotientNormalizedQ := (quotientExactFunctor P).normalizedQ
 
 /-- The normalized quotient/inclusion composite is naturally isomorphic to zero. -/

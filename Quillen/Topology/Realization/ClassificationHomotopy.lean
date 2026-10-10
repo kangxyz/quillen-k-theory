@@ -1,8 +1,18 @@
-import Quillen.Topology.Realization.Classification
-import Quillen.Topology.Realization.HomotopyBridge
-import Mathlib.Topology.Homotopy.Equiv
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.Classification
+public import Quillen.Topology.Realization.HomotopyBridge
+public import Mathlib.Topology.Homotopy.Equiv
 
 /-! # Explicit contraction of classification grids onto the ordinary nerve -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -30,12 +40,13 @@ theorem transport_conjugation (F : Grid n ⥤ D) (hF : IsVerticalIso F)
       (transport F hF q.1 t q.2).hom =
       F.map (homOfLE (show ((s, p.2) : Grid n) ≤ (t, q.2) from
         ⟨hst, (leOfHom f).2⟩)) := by
-  haveI : IsIso (verticalMap F 0 p.1 p.2 (Fin.zero_le _)) := hF _ _ _ (Fin.zero_le _)
-  haveI : IsIso (verticalMap F 0 q.1 q.2 (Fin.zero_le _)) := hF _ _ _ (Fin.zero_le _)
-  haveI : IsIso (verticalMap F 0 s p.2 (Fin.zero_le _)) := hF _ _ _ (Fin.zero_le _)
-  haveI : IsIso (verticalMap F 0 t q.2 (Fin.zero_le _)) := hF _ _ _ (Fin.zero_le _)
+  have : IsIso (verticalMap F 0 p.1 p.2 (Fin.zero_le _)) := hF _ _ _ (Fin.zero_le _)
+  have : IsIso (verticalMap F 0 q.1 q.2 (Fin.zero_le _)) := hF _ _ _ (Fin.zero_le _)
+  have : IsIso (verticalMap F 0 s p.2 (Fin.zero_le _)) := hF _ _ _ (Fin.zero_le _)
+  have : IsIso (verticalMap F 0 t q.2 (Fin.zero_le _)) := hF _ _ _ (Fin.zero_le _)
   change (inv (verticalMap F 0 s p.2 (Fin.zero_le _)) ≫ verticalMap F 0 p.1 p.2 (Fin.zero_le _)) ≫
-    F.map f ≫ (inv (verticalMap F 0 q.1 q.2 (Fin.zero_le _)) ≫ verticalMap F 0 t q.2 (Fin.zero_le _)) = _
+    F.map f ≫ (inv (verticalMap F 0 q.1 q.2 (Fin.zero_le _)) ≫ verticalMap F 0 t q.2
+      (Fin.zero_le _)) = _
   apply (cancel_epi (verticalMap F 0 s p.2 (Fin.zero_le _))).mp
   simp only [Category.assoc, IsIso.hom_inv_id_assoc]
   rw [← Category.assoc, zeroRow_naturality F f]
@@ -61,7 +72,7 @@ def moveRows (F : Grid n ⥤ D) (hF : IsVerticalIso F)
 theorem moveRows_isVerticalIso (F : Grid n ⥤ D) (hF : IsVerticalIso F)
     (r : Grid n → Fin (n.len + 1)) : IsVerticalIso (moveRows F hF r) := by
   intro s t i hst
-  haveI := hF s t i hst
+  have := hF s t i hst
   dsimp [moveRows]
   infer_instance
 
@@ -90,6 +101,9 @@ theorem moveRows_second (F : Grid n ⥤ D) (hF : IsVerticalIso F) :
 def cutRows (ψ : Fin (n.len + 1) → Fin 2) (p : Grid n) : Fin (n.len + 1) :=
   if ψ p.1 = 0 then p.1 else p.2
 
+/-- The classification grid obtained from `F` by vertical isomorphism transport: at `(i, j)` the
+selected row is `i` when `ψ i = 0` and `j` otherwise. This supplies the grid used in the
+contraction toward the ordinary nerve. -/
 def cylinderSimplex (F : Grid n ⥤ D) (hF : IsVerticalIso F)
     (ψ : Fin (n.len + 1) → Fin 2) : Grid n ⥤ D :=
   moveRows F hF (cutRows ψ)
@@ -157,7 +171,7 @@ theorem cylinder_zero (D : Type u) [Category.{v} D] :
   change cylinderSimplex F.1 F.2 (fun _ ↦ 0) = F.1
   have hc : cutRows (n := n.unop) (fun _ ↦ (0 : Fin 2)) = fun p ↦ p.1 := by
     funext p
-    exact if_pos rfl
+    exact ite_eq_left rfl
   rw [cylinderSimplex, hc]
   exact moveRows_first F.1 F.2
 
@@ -169,7 +183,7 @@ theorem cylinder_one (D : Type u) [Category.{v} D] :
   change cylinderSimplex F.1 F.2 (fun _ ↦ 1) = second n.unop ⋙ diagonal n.unop ⋙ F.1
   have hc : cutRows (n := n.unop) (fun _ ↦ (1 : Fin 2)) = fun p ↦ p.2 := by
     funext p
-    exact if_neg (by change (1 : Fin 2) ≠ 0; decide)
+    exact ite_eq_right (by change (1 : Fin 2) ≠ 0; decide)
   rw [cylinderSimplex, hc]
   exact moveRows_second F.1 F.2
 

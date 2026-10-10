@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.Algebra.Category.ModuleCat.Localization
-import Mathlib.Algebra.Module.FinitePresentation
-import Mathlib.Algebra.Homology.Homotopy
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Localization
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.Algebra.Homology.Homotopy
 
 /-!
 # Principal-open denominators for bounded module complexes
@@ -15,6 +17,8 @@ out of finite-support complexes of finitely presented modules over any
 commutative ring. No noetherian hypothesis
 or asserted geometric replacement property is used.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -42,7 +46,8 @@ theorem exists_module_denominator (r : R) (M N : ModuleCat.{u} R)
     [Module.FinitePresentation R M]
     (f : M.localizedModule (Submonoid.powers r) ⟶ N.localizedModule (Submonoid.powers r)) :
     ∃ (n : ℕ) (g : M ⟶ N),
-      (ModuleCat.localizedModuleFunctor (Submonoid.powers r)).map g = algebraMap R (Localization.Away r) (r ^ n) • f := by
+      (ModuleCat.localizedModuleFunctor (Submonoid.powers r)).map g = algebraMap R
+        (Localization.Away r) (r ^ n) • f := by
   obtain ⟨⟨g, s⟩, hs⟩ := IsLocalizedModule.surj (Submonoid.powers r)
     (IsLocalizedModule.mapExtendScalars (Submonoid.powers r)
       (M.localizedModuleMkLinearMap _) (N.localizedModuleMkLinearMap _) (Localization.Away r)) f.hom

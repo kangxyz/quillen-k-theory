@@ -29,6 +29,12 @@ printf '\\n' >> "$RUN_LOG"
 if [[ "${FAIL_LAYOUT:-0}" == 1 && "${1:-}" == scripts/check_library_layout.py ]]; then
   exit 9
 fi
+if [[ "${FAIL_LINT:-0}" == 1 && "${1:-}" == lint ]]; then
+  exit 10
+fi
+if [[ "${FAIL_STYLE:-0}" == 1 && "${1:-}" == exe && "${2:-}" == lint-style ]]; then
+  exit 11
+fi
 ''')
             stub.chmod(0o755)
         self.env = dict(os.environ, PATH=str(self.root / 'bin') + ':' + os.environ['PATH'],
@@ -52,13 +58,16 @@ fi
             'python3 scripts/check_placeholders.py',
             'python3 -m unittest discover -s scripts -p test_*.py',
             'lake --rehash build Quillen Tests',
+            'lake --rehash test',
+            'lake --rehash lint',
+            'lake --rehash exe lint-style',
             'lake env lean -j2 Tests/Axioms.lean',
             'lake --rehash build',
             'lake env lean -j2 Audit.lean',
         ]
         self.assertEqual([line.split('|', 1)[1] for line in commands], expected)
         self.assertEqual([line.split('|', 1)[0] for line in commands],
-                         [str(self.root)] * 6 + [str(self.root / 'examples/downstream')] * 2)
+                         [str(self.root)] * 9 + [str(self.root / 'examples/downstream')] * 2)
         self.assertTrue((self.root / 'examples/downstream/.lake/packages').is_symlink())
 
     def test_failed_static_guard_stops_before_build(self):
@@ -70,6 +79,41 @@ fi
     def test_invalid_arguments_rejected_before_work(self):
         result = self.run_check('--unknown')
         self.assertEqual(result.returncode, 2)
+        self.assertFalse(self.log.exists())
+
+    def test_failed_lint_is_not_reported_as_a_pass(self):
+        self.env['FAIL_LINT'] = '1'
+        result = self.run_check()
+        self.assertEqual(result.returncode, 10)
+        self.assertNotIn('Tests/Axioms.lean', self.log.read_text())
+
+    def test_failed_native_style_check_stops_before_trust_replay(self):
+        self.env['FAIL_STYLE'] = '1'
+        result = self.run_check()
+        self.assertEqual(result.returncode, 11)
+        self.assertNotIn('Tests/Axioms.lean', self.log.read_text())
+
+    def test_cache_enrolls_native_tool_imports_with_modern_modifiers(self):
+        shutil.copyfile(ROOT / 'scripts/cache.sh', self.root / 'scripts/cache.sh')
+        shutil.copyfile(ROOT / 'scripts/library_sources.py', self.root / 'scripts/library_sources.py')
+        (self.root / 'bin/python3').unlink()  # Execute the real source enumerator.
+        (self.root / 'Quillen.lean').write_text('import Mathlib.Data.Nat.Basic\n')
+        (self.root / 'Tools').mkdir()
+        (self.root / 'Tools/LintStyle.lean').write_text(
+            'public meta import all Mathlib.Tactic.Linter.TextBased\n')
+        result = subprocess.run(['bash', 'scripts/cache.sh'], cwd=self.root,
+                                env=self.env, text=True, capture_output=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.log.read_text().split('|', 1)[1].strip(),
+                         'lake exe cache get Mathlib.Data.Nat.Basic Mathlib.Tactic.Linter.TextBased')
+
+    def test_cache_propagates_enumerator_failure_without_download(self):
+        shutil.copyfile(ROOT / 'scripts/cache.sh', self.root / 'scripts/cache.sh')
+        (self.root / 'scripts/library_sources.py').write_text('raise SystemExit(17)\n')
+        (self.root / 'bin/python3').unlink()
+        result = subprocess.run(['bash', 'scripts/cache.sh'], cwd=self.root,
+                                env=self.env, text=True, capture_output=True)
+        self.assertEqual(result.returncode, 17, result.stderr)
         self.assertFalse(self.log.exists())
 
 

@@ -3,10 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.HomotopyGroups.Discrete
-import Quillen.Topology.HomotopyGroups.WeakEquivalence
-import Quillen.CategoryTheory.TheoremB.TotalProjection
-import Quillen.Topology.Realization.TwoSidedBarContraction
+module
+
+public import Quillen.Topology.HomotopyGroups.Discrete
+public import Quillen.Topology.HomotopyGroups.WeakEquivalence
+public import Quillen.CategoryTheory.TheoremB.TotalProjection
+public import Quillen.Topology.Realization.TwoSidedBar.AugmentationEquivalence
 
 /-!
 # The original classifying space of a discrete category
@@ -14,6 +16,8 @@ import Quillen.Topology.Realization.TwoSidedBarContraction
 An actual simplicial isomorphism and the constant-realization homeomorphism
 identify the original realization with the discrete object space.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

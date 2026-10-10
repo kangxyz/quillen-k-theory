@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.Index
-import Quillen.Waldhausen.Fibration.AcyclicSubcategory
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.Index
+public import Quillen.Waldhausen.Fibration.AcyclicSubcategory
 
 /-! # The actual relative quotient-row Waldhausen categories
 
@@ -7,6 +15,8 @@ An object is an original one-longer quotient row whose original tail
 quotients are coarse-acyclic. The fine weak class is retained. Pushout
 closure is proved from the actual component pushouts and coarse gluing.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -17,15 +27,25 @@ variable {C : Type u} [Category.{v} C] {V : Structure C} (N : NestedWeakEquivale
 
 /-- The original one-longer row has genuinely coarse-acyclic tail quotient objects. -/
 def objects (n : SimplexCategory) : ObjectProperty (QuotientRows.Obj V (addInitial.obj n)) :=
-  fun F ↦ ∀ p : Interval n, Acyclic N.coarse (F.obj.obj ((QuotientRows.indexMap (tail.app n)).obj p))
+  fun F ↦ ∀ p : Interval n, Acyclic N.coarse (F.obj.obj ((QuotientRows.indexMap (tail.app
+    n)).obj p))
+/-- The full category of one-longer quotient rows whose tail quotient objects are
+coarse-acyclic. -/
 abbrev Obj (n : SimplexCategory) := (objects N n).FullSubcategory
 
-def forget (n : SimplexCategory) : Obj N n ⥤ QuotientRows.Obj V (addInitial.obj n) := (objects N n).ι
+/-- The inclusion of relative rows into the category of one-longer quotient rows, forgetting
+only coarse acyclicity of the tail quotients. -/
+def forget (n : SimplexCategory) : Obj N n ⥤ QuotientRows.Obj V (addInitial.obj n) := (objects N
+    n).ι
 instance forget_full (n) : (forget N n).Full := by unfold forget; infer_instance
 instance forget_faithful (n) : (forget N n).Faithful := by unfold forget; infer_instance
 
+/-- The cofibration class on relative rows inherited from the one-longer quotient-row Waldhausen
+structure. -/
 def cof (n : SimplexCategory) : MorphismProperty (Obj N n) :=
   (QuotientRows.waldhausenStructure V (addInitial.obj n)).cof.inverseImage (forget N n)
+/-- The fine weak-equivalence class on relative rows inherited from the one-longer quotient-row
+Waldhausen structure. -/
 def weq (n : SimplexCategory) : MorphismProperty (Obj N n) :=
   (QuotientRows.waldhausenStructure V (addInitial.obj n)).weq.inverseImage (forget N n)
 instance cof_multiplicative (n) : (cof N n).IsMultiplicative := by unfold cof; infer_instance
@@ -36,13 +56,16 @@ def zero (n : SimplexCategory) : Obj N n :=
   ⟨QuotientRows.zero V (addInitial.obj n), fun _ ↦ acyclic_of_isZero N.coarse V.isZero⟩
 
 theorem isZero (n : SimplexCategory) : IsZero (zero N n) :=
-  IsZero.of_full_of_faithful_of_isZero (forget N n) (zero N n) (QuotientRows.isZero V (addInitial.obj n))
+  IsZero.of_full_of_faithful_of_isZero (forget N n) (zero N n) (QuotientRows.isZero V
+    (addInitial.obj n))
 
 /-- Construct an actual inherited pushout, retaining its original ambient-row square. -/
 theorem exists_pushout {n : SimplexCategory} {A B D : Obj N n}
     (f : A ⟶ B) (g : A ⟶ D) (hf : cof N n f) :
-    ∃ (P : Obj N n) (i : B ⟶ P) (j : D ⟶ P), IsPushout f g i j ∧ IsPushout f.hom g.hom i.hom j.hom := by
-  obtain ⟨P, i, j, h⟩ := (QuotientRows.waldhausenStructure V (addInitial.obj n)).pushout_exists f.hom g.hom hf
+    ∃ (P : Obj N n) (i : B ⟶ P) (j : D ⟶ P), IsPushout f g i j ∧ IsPushout f.hom g.hom i.hom
+      j.hom := by
+  obtain ⟨P, i, j, h⟩ := (QuotientRows.waldhausenStructure V (addInitial.obj n)).pushout_exists
+    f.hom g.hom hf
   have hP : objects N n P := by
     intro p
     exact acyclic_of_isPushout N.coarse
@@ -54,7 +77,8 @@ theorem exists_pushout {n : SimplexCategory} {A B D : Obj N n}
   let j' : D ⟶ P' := (objects N n).homMk j
   exact ⟨P', i', j', IsPushout.of_map_of_faithful (forget N n) h, h⟩
 
-/-- Every displayed inherited pushout along a genuine cofibration is an actual ambient-row pushout. -/
+/-- Every displayed inherited pushout along a genuine cofibration is an actual ambient-row
+pushout. -/
 theorem forget_map_pushout {n : SimplexCategory} {A B D P : Obj N n}
     {f : A ⟶ B} {g : A ⟶ D} {i : B ⟶ P} {j : D ⟶ P}
     (hf : cof N n f) (h : IsPushout f g i j) : IsPushout f.hom g.hom i.hom j.hom := by
@@ -109,12 +133,14 @@ theorem forget_exact (n : SimplexCategory) :
     IsExact (waldhausenStructure N n).cof (waldhausenStructure N n).weq
       (QuotientRows.waldhausenStructure V (addInitial.obj n)).cof
       (QuotientRows.waldhausenStructure V (addInitial.obj n)).weq (forget N n) where
-  zero h := (QuotientRows.isZero V (addInitial.obj n)).of_iso ((forget N n).mapIso (h.iso (isZero N n)))
+  zero h := (QuotientRows.isZero V (addInitial.obj n)).of_iso ((forget N n).mapIso (h.iso
+    (isZero N n)))
   cofibration _ h := h
   weak _ h := h
   pushout hf h := forget_map_pushout N hf h
 
-/-- The first relative object. This evaluation is degreewise; it is not asserted to be outer-simplicial. -/
+/-- The first relative object. This evaluation is degreewise; it is not asserted to be
+outer-simplicial. -/
 def first (n : SimplexCategory) : Obj N n ⥤ C :=
   forget N n ⋙ QuotientRows.evaluation V (firstInterval n)
 

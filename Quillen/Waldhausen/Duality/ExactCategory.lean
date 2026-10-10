@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.ExactCategory.ZeroSquare
-import Quillen.Waldhausen.Duality.Basic
-import Quillen.CategoryTheory.ExactCategory.Isomorphisms
+module
+
+public import Quillen.CategoryTheory.ExactCategory.ZeroSquare
+public import Quillen.Waldhausen.Duality.Basic
+public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
 
 /-! # Opposite Waldhausen structures from genuine exact-category fibrations
 
@@ -13,6 +15,8 @@ Admissible epimorphisms become opposite cofibrations. Their pullback and zero
 axioms follow from the exact structure; a genuine pullback gluing theorem for
 the selected original weak maps gives the remaining Waldhausen axiom.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped ZeroObject

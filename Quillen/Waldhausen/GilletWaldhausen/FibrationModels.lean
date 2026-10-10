@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.AcyclicSubcategory
-import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsAcyclic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.AcyclicSubcategory
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsAcyclic
 
 /-! # The actual nested weak models for bounded complexes
 
@@ -9,6 +17,8 @@ The actual coarse-acyclic full subcategory is identified with the original
 bounded-acyclic complex category by unchanged objects and chain maps.
 No fibration theorem or K-equivalence is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -23,7 +33,8 @@ variable {A : Type u} [Category.{v} A] [Abelian A]
 
 /-- Actual isomorphism and quasi-isomorphism weak classes share the original
 inherited cofibration class and chosen zero literally. -/
-def boundedTermsNested : Fibration.NestedWeakEquivalences (ofExactCategory (boundedTermsExactStructure P)) where
+def boundedTermsNested : Fibration.NestedWeakEquivalences (ofExactCategory
+    (boundedTermsExactStructure P)) where
   coarse := complexSubcategory (boundedTerms P)
   cof_eq := rfl
   zero_eq := rfl
@@ -66,7 +77,8 @@ def boundedAcyclicFiberEquivalence : (boundedAcyclic P).FullSubcategory ≌
     (eqToIso (boundedAcyclicToFiberObjects_comp_inverse P).symm)
     (eqToIso (fiberObjectsToBoundedAcyclic_comp_inverse P))
 
-/-- Composing with the actual fiber-object inclusion gives the original bounded-acyclic inclusion. -/
+/-- Composing with the actual fiber-object inclusion gives the original bounded-acyclic
+inclusion. -/
 @[simp] theorem boundedAcyclicToFiberObjects_comp_inclusion :
     boundedAcyclicToFiberObjects P ⋙ Fibration.acyclicInclusion (boundedTermsNested P) =
       boundedAcyclicTermsInclusion P := rfl

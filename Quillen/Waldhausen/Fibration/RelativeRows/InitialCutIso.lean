@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.InitialCut
-import Quillen.Waldhausen.Fibration.RelativeRows.SplitFiberZero
-import Quillen.Waldhausen.SConstruction.Rows.OneRowIso
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.InitialCut
+public import Quillen.Waldhausen.Fibration.RelativeRows.SplitFiberZero
+public import Quillen.Waldhausen.SConstruction.Rows.OneRowIso
 
 /-! # Canonical identification of the cutoff with the original first-object inclusion
 
@@ -8,6 +16,8 @@ Restrict to the actual first two vertices, use the genuine one-step row
 isomorphism, and pull back along the original zero-tail collapse. Full
 faithfulness only reflects this actual categorical isomorphism.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial
@@ -20,7 +30,8 @@ variable {C : Type u} [Category.{v} C] {V : Structure C} (N : NestedWeakEquivale
 /-- The original first two vertices of the one-longer row. -/
 def firstPair (n : SimplexCategory) : ⦋1⦌ ⟶ addInitial.obj n :=
   SimplexCategory.Hom.mk {
-    toFun i := ⟨i.val, by have hi := i.isLt; change i.val < 2 at hi; change i.val < n.len+1+1; omega⟩
+    toFun i := ⟨i.val, by
+      have hi := i.isLt; change i.val < 2 at hi; change i.val < n.len+1+1; omega⟩
     monotone' := fun _ _ h ↦ h }
 
 @[simp] theorem fiberOrdinal_firstPair (n : SimplexCategory) :

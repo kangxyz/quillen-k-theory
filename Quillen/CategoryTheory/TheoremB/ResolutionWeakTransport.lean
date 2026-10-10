@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremB.ResolutionFiber
-import Quillen.Topology.HomotopyGroups.WeakEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.ResolutionFiber
+public import Quillen.Topology.HomotopyGroups.WeakEquivalence
 
 /-!
 # Canonical weak comparison through the categorical resolution
@@ -9,6 +17,8 @@ fixes the actual constant-path basepoint. Thus all-degree bijectivity of
 the strict resolved comparison transfers to the prescribed original
 comparison, including π₀. No based inverse homotopy is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 open scoped Topology unitInterval
@@ -68,12 +78,12 @@ def fiberComparisonPiEquivOfResolutionStrict (c : C) (n : ℕ)
   MulEquiv.ofBijective (piMap n (fiberComparison F (F.obj c)) (fiberComparison_identity F c))
     (fiberComparison_bijective_of_resolutionStrict F c (n + 1) h)
 
-@[simp]
-theorem fiberComparisonPiEquivOfResolutionStrict_toMonoidHom (c : C) (n : ℕ)
+/-- The monoid-hom coercion is the canonical forward map. -/
+@[simp] theorem fiberComparisonPiEquivOfResolutionStrict_coe (c : C) (n : ℕ)
     (h : Function.Bijective (homotopyGroupMap (N := Fin (n + 1))
       (resolutionStrictFiberComparison F (F.obj c))
       (x := classifyingSpacePoint (CostructuredArrow.mk (𝟙 (F.obj c)))) rfl)) :
-    (fiberComparisonPiEquivOfResolutionStrict F c n h).toMonoidHom =
+    ↑(fiberComparisonPiEquivOfResolutionStrict F c n h) =
       piMap n (fiberComparison F (F.obj c)) (fiberComparison_identity F c) := rfl
 
 end Quillen.TheoremB

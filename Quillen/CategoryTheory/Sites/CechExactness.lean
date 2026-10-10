@@ -3,14 +3,16 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.CategoryTheory.Limits.FormalCoproducts.ExtraDegeneracy
-import Mathlib.CategoryTheory.Sites.SheafCohomology.Cech
-import Mathlib.Algebra.Homology.Opposite
-import Mathlib.Algebra.Homology.SingleHomology
-import Mathlib.CategoryTheory.Abelian.Opposite
-import Mathlib.CategoryTheory.Category.GaloisConnection
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Products
-import Mathlib.Topology.Category.TopCat.Opens
+module
+
+public import Mathlib.CategoryTheory.Limits.FormalCoproducts.ExtraDegeneracy
+public import Mathlib.CategoryTheory.Sites.SheafCohomology.Cech
+public import Mathlib.Algebra.Homology.Opposite
+public import Mathlib.Algebra.Homology.SingleHomology
+public import Mathlib.CategoryTheory.Abelian.Opposite
+public import Mathlib.CategoryTheory.Category.GaloisConnection
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Products
+public import Mathlib.Topology.Category.TopCat.Opens
 
 /-!
 # Exactness of the actual Cech complex on split and restricted covers
@@ -28,6 +30,8 @@ No sheaf condition is needed for this formal contraction.
 
 Reference: Stacks Project, [Tag 01X9](https://stacks.math.columbia.edu/tag/01X9).
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -43,11 +47,15 @@ variable {C : Type u} [Category.{v} C] [HasFiniteProducts C]
   (U : FormalCoproduct.{w} C) {T : C} (hT : IsTerminal T)
   (P : Cᵒᵖ ⥤ A)
 
+/-- The augmented simplicial object in `Aᵒᵖ` obtained by evaluating `P` on the Cech object of `U`
+augmented to the terminal object `T`. -/
 abbrev evaluatedCechAugmentation : SimplicialObject.Augmented Aᵒᵖ :=
   ((SimplicialObject.Augmented.whiskering _ _).obj
     ((FormalCoproduct.evalOp C A).obj P).rightOp).obj
     (U.cech.augmentOfIsTerminal (FormalCoproduct.isTerminalIncl _ hT))
 
+/-- The extra degeneracy on the evaluated Cech augmentation induced by a map from the terminal
+object `T` into the selected member `U.obj i₀`. -/
 def evaluatedCechExtraDegeneracy {i₀ : U.I} (d : T ⟶ U.obj i₀) :
     (evaluatedCechAugmentation U hT P).ExtraDegeneracy :=
   (U.extraDegeneracyCech hT d).map ((FormalCoproduct.evalOp C A).obj P).rightOp
@@ -59,6 +67,8 @@ lemma splitCechChain_exactAt_succ {i₀ : U.I} (d : T ⟶ U.obj i₀) (n : ℕ) 
   exact (ChainComplex.exactAt_succ_single_obj _ n).isZero_homology.of_iso
     ((evaluatedCechExtraDegeneracy U hT P d).homotopyEquiv.toHomologyIso (n + 1))
 
+/-- The isomorphism identifying the unop of the evaluated alternating face complex with the Cech
+cochain complex of `P`. -/
 def evaluatedCechUnopIso :
     (AlgebraicTopology.AlternatingFaceMapComplex.obj
       (evaluatedCechAugmentation U hT P).left).unop ≅
@@ -120,6 +130,8 @@ variable {C : Type u} [Category.{v} C] [HasFiniteProducts C]
   (F : C ⥤ D) [PreservesFiniteProducts F] {ι : Type w} (V : ι → C)
   (P : Dᵒᵖ ⥤ A)
 
+/-- The comparison between Cech coefficients pulled back along `F` and the Cech object of the image
+family, for finite-product-preserving `F` with thin target. -/
 def cechCosimplicialChangeIso :
     (FormalCoproduct.cosimplicialObjectFunctor (FormalCoproduct.mk _ V).cech).obj
       (F.op ⋙ P) ≅
@@ -130,9 +142,11 @@ def cechCosimplicialChangeIso :
   intro n m g
   apply Limits.Pi.hom_ext
   intro a
-  simp [FormalCoproduct.cosimplicialObjectFunctor,
-    FormalCoproduct.evalOp, FormalCoproduct.cech, FormalCoproduct.mapPower,
-    ← Functor.map_comp]
+  dsimp [FormalCoproduct.cosimplicialObjectFunctor,
+    FormalCoproduct.evalOp, FormalCoproduct.cech, FormalCoproduct.mapPower]
+  simp only [Category.assoc, Pi.mapIso_hom_π, Iso.symm_hom, Functor.mapIso_inv, Iso.op_inv,
+    limit.lift_π_assoc, Fan.mk_pt, Discrete.functor_obj_eq_as, Fan.mk_π_app, ← Functor.map_comp,
+    limit.lift_π, Pi.mapIso_hom_π_assoc, Function.comp_apply]
   congr 2
   apply Subsingleton.elim
 
@@ -144,12 +158,15 @@ namespace Quillen.Cech
 variable {X : TopCat.{u}} (W : Opens X)
 
 theorem intersectionGaloisConnection : GaloisConnection
-    (fun U : Set.Iic W => U.val) (fun U : Opens X => (⟨U ⊓ W, by exact (inf_le_right : U ⊓ W ≤ W)⟩ : Set.Iic W)) :=
+    (fun U : Set.Iic W => U.val) (fun U : Opens X => (⟨U ⊓ W, by exact (inf_le_right : U ⊓ W ≤ W)⟩ :
+      Set.Iic W)) :=
   fun U V => ⟨fun h => le_inf h U.property, fun h => (show U.val ≤ V ⊓ W from h).trans inf_le_left⟩
 
+/-- The functor sending an open `U` to `U ⊓ W`, viewed as an open below `W`. -/
 abbrev intersectToIic : Opens X ⥤ Set.Iic W :=
   (intersectionGaloisConnection W).monotone_u.functor
 
+/-- The inclusion of opens below `W` into all opens of `X`. -/
 abbrev iicInclusion : Set.Iic W ⥤ Opens X :=
   (intersectionGaloisConnection W).monotone_l.functor
 

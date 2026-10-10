@@ -1,7 +1,17 @@
-import Quillen.Waldhausen.Additivity.PushoutEndpoints
-import Mathlib.CategoryTheory.Limits.Shapes.BinaryProducts.BinaryProducts
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.PushoutEndpoints
+public import Mathlib.CategoryTheory.Limits.Shapes.BinaryProducts.BinaryProducts
 
 /-! # The zero-arrow endpoint of the actual additivity deformation -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -49,8 +59,12 @@ theorem cofiberEndpoint_isPushout :
     IsPushout (a.app f.left) (F.map f.hom)
       (q ≫ (coprod.inl : H ⟶ H ⨿ F.obj f.right)) coprod.inr := by
   have hs : IsPushout (W.isZero.to_ H) (W.isZero.to_ (F.obj f.right))
-      (coprod.inl : H ⟶ H ⨿ F.obj f.right) coprod.inr :=
-    IsPushout.of_is_coproduct (coprodIsCoprod H (F.obj f.right)) W.isZero.isInitial
+      (coprod.inl : H ⟶ H ⨿ F.obj f.right) coprod.inr := by
+    have hH : W.isZero.isInitial.to H = W.isZero.to_ H := W.isZero.eq_of_src _ _
+    have hF : W.isZero.isInitial.to (F.obj f.right) = W.isZero.to_ (F.obj f.right) :=
+      W.isZero.eq_of_src _ _
+    simpa only [hH, hF] using
+      IsPushout.of_is_coproduct' (coprodIsCoprod H (F.obj f.right)) W.isZero.isInitial
   rw [hz]
   exact hq.paste_vert hs
 

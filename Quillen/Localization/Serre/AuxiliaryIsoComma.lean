@@ -1,4 +1,12 @@
-import Quillen.Localization.Serre.AuxiliaryBaseChange
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.AuxiliaryBaseChange
 
 /-!
 # The actual comparison from an auxiliary category to an isomorphism comma
@@ -6,6 +14,8 @@ import Quillen.Localization.Serre.AuxiliaryBaseChange
 The structure map of each auxiliary object is inverted in the Serre
 quotient. The comparison retains the actual ambient Q-arrow on morphisms.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -53,7 +63,8 @@ theorem auxiliaryQuotientObjIso_naturality {N : C} {X Y : AuxiliaryKernel P N} (
   have : IsIso (L.map s.r.left) := IsIso.of_isIso_comp_right _ (L.map Y.obj.obj.of.hom)
   change (quotientMapQ P).map ((overForgetQ N).map f.hom) ≫ _ = _
   rw [← hs]
-  let t := (quotientExactFunctor P).toQCompatibleFunctor.mapSpan ((overForgetCompatible N).mapSpan s)
+  let t := (quotientExactFunctor P).toQCompatibleFunctor.mapSpan ((overForgetCompatible N).mapSpan
+    s)
   change Q.mkHom _ _ t ≫ Q.inflationArrow (L.map Y.obj.obj.of.hom) =
     Q.inflationArrow (L.map X.obj.obj.of.hom)
   have : IsIso t.l := inferInstanceAs (IsIso (L.map s.l.left))
@@ -92,7 +103,8 @@ def auxiliaryToIsoStructured (N : C) :
 /-- The comparison keeps precisely the original ambient Q-object and Q-arrow. -/
 @[simp]
 theorem auxiliaryToIsoStructured_forget (N : C) :
-    auxiliaryToIsoStructured P N ⋙ isoStructuredInclusion P _ ⋙ StructuredArrow.proj _ (quotientMapQ P) =
+    auxiliaryToIsoStructured P N ⋙ isoStructuredInclusion P _ ⋙ StructuredArrow.proj _ (quotientMapQ
+      P) =
       auxiliaryForgetQ P N := rfl
 
 /-- A specified quotient identification gives the actual source identification
@@ -145,7 +157,7 @@ theorem auxiliaryToIsoStructuredWithBase_forget {N : C} {V : Quotient P}
 
 /-- Compatibility with a morphism between chosen ordinary quotient lifts is
 an actual natural isomorphism with identity ambient components. -/
-def auxiliaryToIsoStructuredWithBase_postcomposeIso {M N : C} {V : Quotient P}
+def auxiliaryToIsoStructuredWithBasePostcomposeIso {M N : C} {V : Quotient P}
     (i : M ⟶ N) (hi : P.isoModSerre i)
     (φ : P.isoModSerre.Q.obj M ≅ V) (ψ : P.isoModSerre.Q.obj N ≅ V)
     (h : P.isoModSerre.Q.map i ≫ ψ.hom = φ.hom) :
@@ -157,7 +169,8 @@ def auxiliaryToIsoStructuredWithBase_postcomposeIso {M N : C} {V : Quotient P}
         (quotientMapQ P).map (𝟙 ((auxiliaryForgetQ P M).obj X)) =
           (auxiliaryQuotientObjIsoWithBase P φ X).inv
       erw [(quotientMapQ P).map_id, Category.comp_id]
-      have he : asIso (P.isoModSerre.Q.map (((auxiliaryPostcompose P i hi).obj X).obj.obj.of.hom)) ≪≫ ψ =
+      have he : asIso (P.isoModSerre.Q.map (((auxiliaryPostcompose P i hi).obj X).obj.obj.of.hom))
+        ≪≫ ψ =
           asIso (P.isoModSerre.Q.map X.obj.obj.of.hom) ≪≫ φ := by
         apply Iso.ext
         change P.isoModSerre.Q.map (X.obj.obj.of.hom ≫ i) ≫ ψ.hom =
@@ -182,7 +195,7 @@ theorem auxiliaryToIsoStructuredWithBase_postcompose {M N : C} {V : Quotient P}
     (h : P.isoModSerre.Q.map i ≫ ψ.hom = φ.hom) :
     auxiliaryPostcompose P i hi ⋙ auxiliaryToIsoStructuredWithBase P ψ =
       auxiliaryToIsoStructuredWithBase P φ := by
-  let e := auxiliaryToIsoStructuredWithBase_postcomposeIso P i hi φ ψ h
+  let e := auxiliaryToIsoStructuredWithBasePostcomposeIso P i hi φ ψ h
   have he : ∀ X, (auxiliaryPostcompose P i hi ⋙ auxiliaryToIsoStructuredWithBase P ψ).obj X =
       (auxiliaryToIsoStructuredWithBase P φ).obj X := by
     intro X

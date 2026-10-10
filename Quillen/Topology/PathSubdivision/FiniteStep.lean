@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.PathSubdivision.TailMaps
-import Quillen.Topology.PathSubdivision.PoolComparison
+module
+
+public import Quillen.Topology.PathSubdivision.TailMaps
+public import Quillen.Topology.PathSubdivision.PoolComparison
 
 /-!
 # One actual finite-subdivision step with moved parameters
@@ -16,6 +18,8 @@ remaining original tail at that current parameter turns the entire pool
 homotopy into a homotopy in the original pullback, fixed on the original
 outer boundary. No lifting on an open parameter locus is selected.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,9 +32,9 @@ variable {D E X B : Type u} [TopologicalSpace D] [TopologicalSpace E]
 
 /-- Forgetting the entrance's chart witness retains exactly the original
 affine segment, including its complete path. -/
-theorem twoPoolForget_entrance_slab (p : C(E,B)) (H : C(unitInterval × D,B))
-    (m : ℕ) (i : Fin (m+1)) (U V : Set B)
-    (hcover : ∀ d,slabMap H m i d ∈ pathSet U ∨ slabMap H m i d ∈ pathSet V) :
+theorem twoPoolForget_entrance_slab (p : C(E, B)) (H : C(unitInterval × D, B))
+    (m : ℕ) (i : Fin (m + 1)) (U V : Set B)
+    (hcover : ∀ d, slabMap H m i d ∈ pathSet U ∨ slabMap H m i d ∈ pathSet V) :
     (twoPoolForget p (slabMap H m i) U V).comp
       (twoPoolEntrance p (slabMap H m i) U V hcover) =
         stageSegment p H (intervalCell m i 0) (intervalCell m i 1) := by
@@ -43,10 +47,10 @@ theorem twoPoolForget_entrance_slab (p : C(E,B)) (H : C(unitInterval × D,B))
   intro r
   exact congrArg (fun t ↦ H (t,z.val.1)) (timePath_intervalCell m i r).symm
 
-variable (p : C(E,B)) (H : C(unitInterval × D,B)) (n : ℕ)
-  (a : C(boundary.{u} n,D)) (e : C(boundary.{u} n,E))
-  (he : ∀ z,p (e z) = H (1,a z))
-  (hfixed : ∀ t z,H (t,a z) = H (1,a z))
+variable (p : C(E, B)) (H : C(unitInterval × D, B)) (n : ℕ)
+  (a : C(boundary.{u} n, D)) (e : C(boundary.{u} n, E))
+  (he : ∀ z, p (e z) = H (1, a z))
+  (hfixed : ∀ t z, H (t, a z) = H (1, a z))
 
 /-- The same original boundary parameter and source at every subdivision time. -/
 def boundaryStage (s : unitInterval) : C(boundary.{u} n,Stage p H s) where
@@ -59,15 +63,15 @@ def boundaryStage (s : unitInterval) : C(boundary.{u} n,Stage p H s) where
 @[simp] theorem boundaryStage_source (s : unitInterval) (z : boundary.{u} n) :
     (boundaryStage p H n a e he hfixed s z).val.2 = e z := rfl
 
-variable (f : C(X,B)) (k : C(D,X)) (hEnd : ∀ d,H (1,d) = f (k d))
+variable (f : C(X, B)) (k : C(D, X)) (hEnd : ∀ d, H (1, d) = f (k d))
 
 /-- A genuine weak comparison for one original two-chart slab advances a
 finite cube lift, preserving its exact original boundary and a relative
 homotopy in the final original homotopy pullback. -/
-theorem exists_finite_slab_step (m : ℕ) (i : Fin (m+1)) (U V : Set B)
-    (hcover : ∀ d,slabMap H m i d ∈ pathSet U ∨ slabMap H m i d ∈ pathSet V)
+theorem exists_finite_slab_step (m : ℕ) (i : Fin (m + 1)) (U V : Set B)
+    (hcover : ∀ d, slabMap H m i d ∈ pathSet U ∨ slabMap H m i d ∈ pathSet V)
     (hweak : IsWeakHomotopyEquivalence (twoPoolComparison p (slabMap H m i) U V hcover))
-    (c : C(cube.{u} n,Stage p H (intervalCell m i 0)))
+    (c : C(cube.{u} n, Stage p H (intervalCell m i 0)))
     (hc : c.comp (boundaryInclusion n).hom =
       boundaryStage p H n a e he hfixed (intervalCell m i 0)) :
     ∃ c' : C(cube.{u} n,Stage p H (intervalCell m i 1)),
@@ -98,7 +102,8 @@ theorem exists_finite_slab_step (m : ℕ) (i : Fin (m+1)) (U V : Set B)
   let append := appendToPullback p f H k hEnd t
   let forget := twoPoolForget p γ U V
   let L := K.compContinuousMap (append.comp forget)
-  have hL : Nonempty (((append.comp (HomotopyPullback.strictPullbackInclusion p (slice H t))).comp c').HomotopyRel
+  have hL : Nonempty (((append.comp (HomotopyPullback.strictPullbackInclusion p (slice H
+    t))).comp c').HomotopyRel
       ((append.comp (stageSegment p H s t)).comp c) (Set.range (boundaryInclusion n))) := by
     refine ⟨L.cast rfl ?_⟩
     change (append.comp forget).comp (enter.comp c) = _

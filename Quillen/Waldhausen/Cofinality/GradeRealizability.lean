@@ -3,10 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.GradingRange
-import Quillen.Waldhausen.Cofinality.GradedRows
-import Quillen.Waldhausen.Approximation.FiniteReplacement
-import Quillen.Waldhausen.SConstruction.Rows.Completion
+module
+
+public import Quillen.Waldhausen.Cofinality.GradingRange
+public import Quillen.Waldhausen.Cofinality.GradedRows
+public import Quillen.Waldhausen.Approximation.FiniteReplacement
+public import Quillen.Waldhausen.SConstruction.Rows.Completion
 
 /-! # Genuine realization of finite grade differences
 
@@ -16,6 +18,8 @@ cofibration construction, and take its actual cofiber completion. Original
 weak comparisons preserve every grade, so all specified differences are
 realized. Surjectivity onto the actual value subgroup is already constructed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u

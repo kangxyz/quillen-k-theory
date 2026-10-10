@@ -1,5 +1,13 @@
-import Quillen.GTheory.FiniteModules.SmallModelLocalization
-import Quillen.Localization.Serre.LocalizationTarget
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.GTheory.FiniteModules.SmallModelLocalization
+public import Quillen.Localization.Serre.LocalizationTarget
 
 /-!
 # Connective G-localization for a commutative noetherian ring
@@ -10,6 +18,8 @@ of the small model whose represented finite modules become zero after scalar
 localization. For powers of one element, these are precisely modules uniformly
 annihilated by a power of that element.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -108,7 +118,8 @@ theorem connecting_range_eq_supported_ker (n : ℕ) :
   · intro a; rfl
   · intro a
     exact (smallAbelianKEquiv R n).apply_symm_apply _
-  · exact SerreLocalization.actual_connecting_range_eq_inclusion_ker (smallTorsion S) (smallFunctor S) n
+  · exact SerreLocalization.actual_connecting_range_eq_inclusion_ker (smallTorsion S) (smallFunctor
+    S) n
 
 /-- The connective sequence ends in the genuine homotopical G₀ surjection. -/
 theorem localizationKZero_surjective : Function.Surjective (localizationKMap S 0) := by

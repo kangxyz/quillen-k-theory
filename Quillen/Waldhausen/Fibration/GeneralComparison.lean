@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Waldhausen.SmallModel.Fiber
-import Quillen.Waldhausen.SmallModel.Joint
-import Quillen.Waldhausen.Fibration.GlobalComparison
+module
+
+public import Quillen.Waldhausen.SmallModel.Fiber
+public import Quillen.Waldhausen.SmallModel.Joint
+public import Quillen.Waldhausen.Fibration.GlobalComparison
 
 /-! # The original global fibration with distinct category universes
 
@@ -14,6 +16,8 @@ The exact common-universe model transports both structural cylinder data and
 the actual canonical fiber comparison, including its full nullhomotopy path.
 The result concerns the unchanged original map in its original universes.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

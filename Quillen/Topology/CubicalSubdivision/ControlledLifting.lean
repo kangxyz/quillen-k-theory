@@ -1,6 +1,14 @@
-import Quillen.Topology.CubicalSubdivision.IncidentCharts
-import Quillen.Topology.CubicalSubdivision.StagePasting
-import Quillen.Topology.CubicalSubdivision.OuterBoundary
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.IncidentCharts
+public import Quillen.Topology.CubicalSubdivision.StagePasting
+public import Quillen.Topology.CubicalSubdivision.OuterBoundary
 
 /-! # Finite grid lifting with every incident face constraint
 
@@ -9,6 +17,8 @@ quotient skeleton. The invariant retains membership in every containing
 face's source constraint, rather than a single arbitrarily selected chart.
 The boundary and the displayed map to the target are retained exactly.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -21,17 +31,18 @@ incident face constraint and the whole originally prescribed boundary.
 The local input is only filling each actual face with its full boundary. -/
 theorem exists_controlled_grid_lift (n m : ℕ)
     {E : Type u} {B : Type v} [TopologicalSpace E] [TopologicalSpace B]
-    (p : C(E,B)) (a : C({x : Cube n // x ∈ _root_.Cube.boundary (Fin n)},E))
-    (b : C(Cube n,B)) (hab : ∀ x,p (a x) = b x.val)
+    (p : C(E, B)) (a : C({x : Cube n // x ∈ _root_.Cube.boundary (Fin n)}, E))
+    (b : C(Cube n, B)) (hab : ∀ x, p (a x) = b x.val)
     (K : FaceIndex n m → Set E)
-    (hK : ∀ F G,faceSet F ⊆ faceSet G → K F ⊆ K G)
+    (hK : ∀ F G, faceSet F ⊆ faceSet G → K F ⊆ K G)
     (haK : ∀ F (x : {x : Cube n // x ∈ _root_.Cube.boundary (Fin n)}),
       x.val ∈ faceSet F → a x ∈ K F)
     (hfill : ∀ F : FaceIndex n m,
       ∀ c : C({t : Active F → unitInterval // t ∈ _root_.Cube.boundary (Active F)},E),
         (∀ t,c t ∈ K F) → (∀ t,p (c t) = b (face F t.val)) →
         ∃ d : C((Active F → unitInterval),E),
-          (∀ t : {t : Active F → unitInterval // t ∈ _root_.Cube.boundary (Active F)},d t.val = c t) ∧
+          (∀ t : {t : Active F → unitInterval // t ∈ _root_.Cube.boundary (Active F)},d t.val =
+            c t) ∧
           (∀ t,p (d t) = b (face F t)) ∧ (∀ t,d t ∈ K F)) :
     ∃ l : C(Cube n,E),
       (∀ x : {x : Cube n // x ∈ _root_.Cube.boundary (Fin n)},l x.val = a x) ∧

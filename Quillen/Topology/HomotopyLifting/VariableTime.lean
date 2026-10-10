@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremB.FibrationFiber
-import Mathlib.Topology.Compactness.Compact
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyLifting.Basic
+public import Mathlib.Topology.Compactness.Compact
 
 /-! # Continuous variable-time traversal at stationary parameters
 
@@ -8,6 +16,8 @@ is constant. The tube lemma proves continuity there, with no separation
 assumption on the target. This justifies accelerating a stationary homotopy
 through a continuously shrinking time interval.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 namespace Quillen
@@ -19,8 +29,8 @@ theorem continuousAt_compact_eval_of_constant
     {K : Type u} {X : Type v} {Y : Type w} {Z : Type z}
     [TopologicalSpace K] [CompactSpace K] [TopologicalSpace X]
     [TopologicalSpace Y] [TopologicalSpace Z]
-    (H : C(K × X,Y)) (a : Z → K) (b : C(Z,X)) (z₀ : Z) (k₀ : K)
-    (hH : ∀ k,H (k,b z₀) = H (k₀,b z₀)) :
+    (H : C(K × X, Y)) (a : Z → K) (b : C(Z, X)) (z₀ : Z) (k₀ : K)
+    (hH : ∀ k, H (k, b z₀) = H (k₀, b z₀)) :
     ContinuousAt (fun z ↦ H (a z,b z)) z₀ := by
   rw [continuousAt_def]
   intro S hS
@@ -44,7 +54,8 @@ def acceleratedTime (t duration : unitInterval) : unitInterval :=
   ⟨min ((t : ℝ)/(duration : ℝ)) 1,
     le_min (div_nonneg t.2.1 duration.2.1) zero_le_one, min_le_right _ _⟩
 
-@[simp] theorem acceleratedTime_zero (duration : unitInterval) : acceleratedTime 0 duration = 0 := by
+@[simp] theorem acceleratedTime_zero (duration : unitInterval) : acceleratedTime 0 duration = 0
+    := by
   apply Subtype.ext
   simp [acceleratedTime]
 
@@ -68,8 +79,8 @@ theorem continuousAt_acceleratedTime {t d : unitInterval} (hd : d ≠ 0) :
 /-- The actual accelerated homotopy is continuous, including at vanishing
 duration. Constancy there is a geometric input, not an inverse-family choice. -/
 def acceleratedHomotopy {X : Type u} {Y : Type v} [TopologicalSpace X] [TopologicalSpace Y]
-    (H : C(unitInterval × X,Y)) (duration : C(X,unitInterval))
-    (hH : ∀ x,duration x = 0 → ∀ t,H (t,x) = H (0,x)) :
+    (H : C(unitInterval × X, Y)) (duration : C(X, unitInterval))
+    (hH : ∀ x, duration x = 0 → ∀ t, H (t, x) = H (0, x)) :
     C(unitInterval × X,Y) where
   toFun z := H (acceleratedTime z.1 (duration z.2),z.2)
   continuous_toFun := by
@@ -85,8 +96,8 @@ def acceleratedHomotopy {X : Type u} {Y : Type v} [TopologicalSpace X] [Topologi
 
 @[simp] theorem acceleratedHomotopy_zero {X : Type u} {Y : Type v}
     [TopologicalSpace X] [TopologicalSpace Y]
-    (H : C(unitInterval × X,Y)) (duration : C(X,unitInterval))
-    (hH : ∀ x,duration x = 0 → ∀ t,H (t,x) = H (0,x)) (x : X) :
+    (H : C(unitInterval × X, Y)) (duration : C(X, unitInterval))
+    (hH : ∀ x, duration x = 0 → ∀ t, H (t, x) = H (0, x)) (x : X) :
     acceleratedHomotopy H duration hH (0,x) = H (0,x) := by
   change H (acceleratedTime 0 (duration x),x) = _
   rw [acceleratedTime_zero]
@@ -94,8 +105,8 @@ def acceleratedHomotopy {X : Type u} {Y : Type v} [TopologicalSpace X] [Topologi
 /-- Evaluating at the actual scaled time recovers the original homotopy. -/
 @[simp] theorem acceleratedHomotopy_mul {X : Type u} {Y : Type v}
     [TopologicalSpace X] [TopologicalSpace Y]
-    (H : C(unitInterval × X,Y)) (duration : C(X,unitInterval))
-    (hH : ∀ x,duration x = 0 → ∀ t,H (t,x) = H (0,x)) (t : unitInterval) (x : X) :
+    (H : C(unitInterval × X, Y)) (duration : C(X, unitInterval))
+    (hH : ∀ x, duration x = 0 → ∀ t, H (t, x) = H (0, x)) (t : unitInterval) (x : X) :
     acceleratedHomotopy H duration hH (t * duration x,x) = H (t,x) := by
   change H (acceleratedTime (t * duration x) (duration x),x) = _
   by_cases hx : duration x = 0

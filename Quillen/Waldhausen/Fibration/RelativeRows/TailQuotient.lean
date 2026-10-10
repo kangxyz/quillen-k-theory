@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.InitialCutExact
-import Quillen.Waldhausen.Additivity.CofibrationSequence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.InitialCutExact
+public import Quillen.Waldhausen.Additivity.CofibrationSequence
 
 /-! # The actual tail quotient of the cutoff subrow
 
@@ -7,6 +15,8 @@ The quotient is the original acyclic tail with its first vertex duplicated.
 The cofiber square is proved on each original interval using the original
 row quotient square, or a square with actual zero-object isomorphisms.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial
@@ -28,7 +38,8 @@ theorem le_raiseIndex (n : SimplexCategory) (i : Fin ((addInitial.obj n).len + 1
   | succ _ => exact le_rfl
 
 /-- The original map of each interval to its tail quotient interval. -/
-def idToRaiseIndex (n : SimplexCategory) : 𝟭 (Interval (addInitial.obj n)) ⟶ QuotientRows.indexMap (raiseIndex n) where
+def idToRaiseIndex (n : SimplexCategory) : 𝟭 (Interval (addInitial.obj n)) ⟶
+    QuotientRows.indexMap (raiseIndex n) where
   app p := homOfLE ⟨le_raiseIndex n p.val.1, le_raiseIndex n p.val.2⟩
   naturality _ _ _ := Subsingleton.elim _ _
 
@@ -46,7 +57,8 @@ def tailProjection (n : SimplexCategory) : 𝟭 (Obj N n) ⟶ tailQuotientFuncto
     ext p
     exact (f.hom.hom.naturality ((idToRaiseIndex n).app p)).symm
 
-/-- The actual cofiber square on every original interval, for the unique maps through the chosen zero. -/
+/-- The actual cofiber square on every original interval, for the unique maps through the chosen
+zero. -/
 theorem cut_tail_cofiber_component (n : SimplexCategory) (X : Obj N n)
     (p : Interval (addInitial.obj n))
     (g : ((cutFunctor N n).obj X).obj.obj.obj p ⟶ V.zero)
@@ -63,7 +75,8 @@ theorem cut_tail_cofiber_component (n : SimplexCategory) (X : Obj N n)
         change IsIso (X.obj.obj.map (𝟙 (interval 0 0 le_rfl)))
         infer_instance
       have hj : IsIso j := V.isZero.isIso (X.obj.property.zero (0 : Fin (n.len+1)).succ) j
-      exact @IsPushout.of_horiz_isIso _ _ _ _ _ _ _ _ _ _ hf hj ⟨(X.obj.property.zero 0).eq_of_src _ _⟩
+      exact @IsPushout.of_horiz_isIso _ _ _ _ _ _ _ _ _ _ hf hj ⟨(X.obj.property.zero
+        0).eq_of_src _ _⟩
     | succ k =>
       let e := (X.obj.property.zero (0 : Fin (n.len+1)).succ).iso V.isZero
       apply (X.obj.property.quotient 0 (0 : Fin (n.len+1)).succ k.succ
@@ -80,10 +93,12 @@ theorem cut_tail_cofiber_component (n : SimplexCategory) (X : Obj N n)
     | zero => have h : i.val + 1 ≤ 0 := hik; omega
     | succ k =>
       have hg : IsIso g := (X.obj.property.zero (0 : Fin (n.len+1)).succ).isIso V.isZero g
-      have hh : IsIso ((((tailProjection N n).app X).hom.hom.app (interval i.succ k.succ hik))) := by
+      have hh : IsIso ((((tailProjection N n).app X).hom.hom.app (interval i.succ k.succ hik)))
+        := by
         change IsIso (X.obj.obj.map (𝟙 (interval i.succ k.succ hik)))
         infer_instance
-      exact @IsPushout.of_vert_isIso _ _ _ _ _ _ _ _ _ _ hg hh ⟨(X.obj.property.zero (0 : Fin (n.len+1)).succ).eq_of_src _ _⟩
+      exact @IsPushout.of_vert_isIso _ _ _ _ _ _ _ _ _ _ hg hh ⟨(X.obj.property.zero (0 : Fin
+        (n.len+1)).succ).eq_of_src _ _⟩
 
 /-- The original relative-row cofiber square is a genuine pushout. -/
 theorem cut_tail_cofiber (n : SimplexCategory) (X : Obj N n) :

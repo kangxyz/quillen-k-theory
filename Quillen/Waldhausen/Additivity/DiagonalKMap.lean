@@ -1,8 +1,18 @@
-import Quillen.Waldhausen.Additivity.NormalizedZeroMaps
-import Quillen.Waldhausen.Additivity.RealizedAdditivity
-import Quillen.Topology.HomotopyGroups.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.NormalizedZeroMaps
+public import Quillen.Waldhausen.Additivity.RealizedAdditivity
+public import Quillen.Topology.HomotopyGroups.Equivalence
 
 /-! # Exact identification of normalized diagonal maps with public K-maps -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -4,12 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.HomotopyFiber.CartesianTransport
-import Quillen.Topology.HomotopyFiber.WeakSquareTransport
+module
+
+public import Quillen.Topology.HomotopyFiber.CartesianTransport
+public import Quillen.Topology.HomotopyFiber.WeakSquareTransport
 
 /-! Exact maps of homotopy fibers with a specified target-basepoint equality.
 The original source coordinate and full postcomposed path are retained.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology
 universe u
@@ -18,7 +22,7 @@ variable {X Y A B : Type u} [TopologicalSpace X] [TopologicalSpace Y]
   [TopologicalSpace A] [TopologicalSpace B] {p : C(X, A)} {q : C(Y, B)}
 
 /-- The exact fiber map with a displayed equality of target basepoints. -/
-def mapAt (u : C(X,Y)) (v : C(A,B)) (sq : v.comp p = q.comp u)
+def mapAt (u : C(X, Y)) (v : C(A, B)) (sq : v.comp p = q.comp u)
     (a : A) (b : B) (hb : v a = b) : C(HomotopyFiber p a, HomotopyFiber q b) where
   toFun z := ⟨(u z.1.1, v.comp z.1.2),
     (congrArg v z.2.1).trans (ContinuousMap.congr_fun sq z.1.1),
@@ -29,14 +33,14 @@ def mapAt (u : C(X,Y)) (v : C(A,B)) (sq : v.comp p = q.comp u)
     · fun_prop
     · exact (ContinuousMap.continuous_postcomp v).comp (by fun_prop)
 
-theorem mapAt_weak (u : C(X,Y)) (v : C(A,B)) (sq : v.comp p = q.comp u)
+theorem mapAt_weak (u : C(X, Y)) (v : C(A, B)) (sq : v.comp p = q.comp u)
     (hu : IsWeakHomotopyEquivalence u) (hv : IsWeakHomotopyEquivalence v)
     (a : A) (b : B) (hb : v a = b) : IsWeakHomotopyEquivalence (mapAt u v sq a b hb) := by
   subst b
   exact map_isWeakHomotopyEquivalence u v sq hu hv a
 
 /-- Weak cartesianness gives the identical map with prescribed target point. -/
-theorem mapAt_weak_of_comparison (u : C(X,Y)) (v : C(A,B)) (sq : v.comp p = q.comp u)
+theorem mapAt_weak_of_comparison (u : C(X, Y)) (v : C(A, B)) (sq : v.comp p = q.comp u)
     (h : IsWeakHomotopyEquivalence (HomotopyPullback.comparison q v p u sq.symm))
     (a : A) (b : B) (hb : v a = b) : IsWeakHomotopyEquivalence (mapAt u v sq a b hb) := by
   subst b

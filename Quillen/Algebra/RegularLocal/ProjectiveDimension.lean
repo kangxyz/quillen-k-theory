@@ -1,5 +1,13 @@
-import Quillen.Algebra.RegularLocal.Parameters
-import Quillen.Algebra.RegularLocal.QuotientLifting
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Algebra.RegularLocal.Parameters
+public import Quillen.Algebra.RegularLocal.QuotientLifting
 
 /-!
 # Finite projective dimension over regular local rings
@@ -9,6 +17,8 @@ of regularity. A genuine regular parameter reduces dimension; quotient
 exactness and Nakayama lift finite-free syzygies. No finite-projective-
 dimension or resolution hypothesis on the original regular ring is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory IsLocalRing
@@ -25,7 +35,7 @@ theorem hasProjectiveDimensionLE_of_regularLocal_dimension
   induction d generalizing R with
   | zero =>
     have hf := isField_of_regularLocal_dimension_zero R (by simpa using hd)
-    letI := hf.toField
+    let := hf.toField
     infer_instance
   | succ d ih =>
     obtain ⟨x, hx, hxR, hq, hdim⟩ := exists_regular_parameter R d hd

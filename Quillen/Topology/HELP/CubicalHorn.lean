@@ -1,4 +1,12 @@
-import Quillen.Topology.HELP.CubeBoundaryHomeomorph
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.CubeBoundaryHomeomorph
 
 /-!
 # The literal cubical horn and top-face attachment
@@ -8,6 +16,8 @@ the last coordinate and then contracting the bottom cube. The top face and
 horn give a genuine compact Hausdorff quotient presentation of the whole
 boundary, hence an actual pushout and a genuine horn inclusion HEP.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -60,7 +70,7 @@ theorem hornTop_square (n : ℕ) :
 /-- The bottom origin, also present for the zero-dimensional cube. -/
 def hornZero (n : ℕ) : Horn.{u} n := ⟨(zero n,0),Or.inr rfl⟩
 
-private def hornBottom (n : ℕ) : C(Horn.{u} n,Horn.{u} n) :=
+def hornBottom (n : ℕ) : C(Horn.{u} n,Horn.{u} n) :=
   ⟨fun z ↦ ⟨(z.val.1,0),Or.inr rfl⟩,by fun_prop⟩
 
 /-- Lower only the interval coordinate, staying inside the original horn. -/
@@ -73,7 +83,7 @@ def hornLower (n : ℕ) : (ContinuousMap.id (Horn.{u} n)).Homotopy (hornBottom n
   map_zero_left z := by apply Subtype.ext; exact Prod.ext rfl (by simp)
   map_one_left z := by apply Subtype.ext; exact Prod.ext rfl (by simp [hornBottom])
 
-private def hornBottomContraction (n : ℕ) : (hornBottom n).Homotopy
+def hornBottomContraction (n : ℕ) : (hornBottom n).Homotopy
     (ContinuousMap.const _ (hornZero n)) where
   toFun z := ⟨(contraction n (z.1,z.2.val.1),0),Or.inr rfl⟩
   continuous_toFun := by fun_prop
@@ -109,7 +119,7 @@ variable {n : ℕ} {Z : TopCat.{u}} (b : cube.{u} n ⟶ Z)
   (h : TopCat.of (Horn.{u} n) ⟶ Z)
   (w : boundaryInclusion n ≫ b = topRim n ≫ h)
 
-private def hornTopDescFun (z : ProductBoundary.{u} n) : Z := by
+def hornTopDescFun (z : ProductBoundary.{u} n) : Z := by
   classical
   exact if hz : z.val.1.down ∈ Cube.boundary (Fin n) ∨ z.val.2 = 0
     then h ⟨z.val,hz⟩ else b z.val.1
@@ -155,7 +165,8 @@ end Desc
 along the original cube boundary. -/
 theorem hornTop_isPushout (n : ℕ) :
     IsPushout (boundaryInclusion.{u} n) (topRim n) (topFace n) (hornInclusion n) := by
-  apply IsPushout.of_isColimit (c := PushoutCocone.mk (topFace n) (hornInclusion n) (hornTop_square n))
+  apply IsPushout.of_isColimit (c := PushoutCocone.mk (topFace n) (hornInclusion n)
+    (hornTop_square n))
   refine PushoutCocone.IsColimit.mk _
     (fun s ↦ hornTopDesc s.inl s.inr s.condition)
     (fun s ↦ topFace_desc s.inl s.inr s.condition)

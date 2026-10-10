@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.ReedyCubes
+module
+
+public import Quillen.Waldhausen.Approximation.ReedyCubes
 
 /-! # Semantic consumers of actual finite Reedy replacement
 
@@ -11,6 +13,8 @@ These test the joint latching cofibration, strict original square factorization,
 coherence under maps of arbitrary original squares, all actual vertices in every
 finite dimension, original map equality, and retained chosen-zero vertices.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen

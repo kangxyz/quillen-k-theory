@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Cylinder.RelativeComplex
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Cylinder.RelativeComplex
 
 /-! # The actual zero-source cylinder endpoint
 
@@ -6,6 +14,8 @@ The cylinder projection on an arrow with a genuinely zero source is an actual
 isomorphism, whose inverse is the original target section. Its naturality
 is the existing cylinder naturality, not an assumed normalization.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

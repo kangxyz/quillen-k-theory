@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.KTheory
-import Quillen.Topology.HomotopyGroups.Map
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.KTheory
+public import Quillen.Topology.HomotopyGroups.Map
 
 /-!
 # Exact functors and S-construction maps
@@ -9,6 +17,8 @@ and pushouts along cofibrations. These structural conditions give the
 simplicial map by postcomposition. The induced group map is constructed
 from the realized continuous map, with an explicit basepoint equality.
 -/
+@[expose] public section
+
 
 noncomputable section
 

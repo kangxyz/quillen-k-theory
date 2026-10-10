@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.ExactCategory.Basic
-import Quillen.KTheory.QHomotopy
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Basic
+public import Quillen.KTheory.QHomotopy
 
 /-!
 # Quillen K-groups of an exact category
@@ -13,6 +21,8 @@ additive category. We make no assertion that it is a zero object in Q.
 This file gives the definition, not the K₀ comparison theorem or the deeper
 structural theorems of algebraic K-theory.
 -/
+@[expose] public section
+
 
 noncomputable section
 

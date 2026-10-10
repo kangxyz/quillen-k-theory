@@ -1,5 +1,13 @@
-import Quillen.Localization.Serre.LocalizationComma
-import Mathlib.CategoryTheory.Abelian.CommSq
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.LocalizationComma
+public import Mathlib.CategoryTheory.Abelian.CommSq
 
 /-!
 # Surjective Q-arrows and cospan representatives
@@ -9,6 +17,8 @@ its upper layer endpoint is the whole target. Every Q-arrow factors as an
 ordinary monomorphism followed by such a surjective Q-arrow, using a genuine
 abelian pushout square which is also a pullback.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

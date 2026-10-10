@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleEvaluation
-import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleKFormula
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleEvaluation
+public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleKFormula
 
 /-! # Genuine finite cycle K-decomposition
 
@@ -12,6 +20,8 @@ vanishing and both inverse identities are proved, including m=0 and K₀.
 The mixed evaluation/insertion K-map API requires the explicitly displayed
 compatible object universe `A : Type (max u v)` and hom universe v.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -37,9 +47,9 @@ theorem finiteCycle_KMap_disk_self (a b n : ℤ) (ha : a ≤ n) (hb : n + 1 ≤ 
     (IsExact.id (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).cof
       (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).weq)
     (finiteCycleDiskEvaluationIso P a b n ha hb) k
-  exact (DFunLike.congr_fun (KMap_comp
+  exact (DFunLike.congr_fun (KMap_comp_KMap
     (finiteCycleDiskExact P a b n ha hb).waldhausenExact
-    (finiteCycleEvaluationExact P a b (n + 1)).waldhausenExact k) x).symm.trans (by
+    (finiteCycleEvaluationExact P a b (n + 1)).waldhausenExact k).symm x).symm.trans (by
       simpa only [KMap_id, MonoidHom.id_apply] using DFunLike.congr_fun h x)
 
 /-- Different-degree evaluation of the actual insertion induces the trivial map. -/
@@ -53,9 +63,9 @@ theorem finiteCycle_KMap_disk_ne (a b n : ℤ) (ha : a ≤ n) (hb : n + 1 ≤ b)
     ((finiteCycleDiskExact P a b n ha hb).waldhausenExact.comp
       (finiteCycleEvaluationExact P a b j).waldhausenExact)
     (zeroFunctor_isExact W W) (finiteCycleDiskEvaluationZeroIso P a b n ha hb j hj) k
-  exact (DFunLike.congr_fun (KMap_comp
+  exact (DFunLike.congr_fun (KMap_comp_KMap
     (finiteCycleDiskExact P a b n ha hb).waldhausenExact
-    (finiteCycleEvaluationExact P a b j).waldhausenExact k) x).symm.trans (by
+    (finiteCycleEvaluationExact P a b j).waldhausenExact k).symm x).symm.trans (by
       simpa only [KMap_zeroFunctor, MonoidHom.one_apply] using DFunLike.congr_fun h x)
 
 /-- The actual disk-layer K-map factors through the original term category. -/
@@ -69,15 +79,16 @@ theorem finiteCycle_KMap_layer_factor (a b n : ℤ) (ha : a ≤ n) (hb : n + 1 �
       (finiteCycleDiskExact P a b n ha hb).waldhausenExact)
     (finiteCycleLayerExact P a b n).waldhausenExact
     (eqToIso (finiteCycleEvaluation_disk P a b n ha hb)) k
-  exact (DFunLike.congr_fun (KMap_comp
+  exact (DFunLike.congr_fun (KMap_comp_KMap
     (finiteCycleEvaluationExact P a b (n + 1)).waldhausenExact
-    (finiteCycleDiskExact P a b n ha hb).waldhausenExact k) x).symm.trans
+    (finiteCycleDiskExact P a b n ha hb).waldhausenExact k).symm x).symm.trans
       (DFunLike.congr_fun h x)
 
 /-- The tuple consists precisely of the original cycle evaluation K-maps. -/
 def finiteCycleEvaluationKMap (a : ℤ) (m k : ℕ) :
     (ofExactCategory (fixedAcyclicExactStructure P a (a + (m : ℤ)))).K k →*
-      (Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) :=
+      (Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K
+        k) :=
   MonoidHom.pi (fun i ↦ KMap (finiteCycleEvaluationExact P a (a + (m : ℤ))
     (a + (i : ℤ) + 1)).waldhausenExact k)
 
@@ -90,7 +101,8 @@ def finiteCycleInsertionKMap (a : ℤ) (m k : ℕ) (i : Fin m) :
 
 /-- Reassembly multiplies the actual original disk-insertion K-maps. -/
 def finiteCycleReassemble (a : ℤ) (m k : ℕ)
-    (x : Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) :
+    (x : Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A)
+      P)).K k) :
     (ofExactCategory (fixedAcyclicExactStructure P a (a + (m : ℤ)))).K k :=
   let := Additivity.KCommGroup (ofExactCategory (fixedAcyclicExactStructure P a (a + (m : ℤ)))) k
   ∏ i, finiteCycleInsertionKMap P a m k i (x i)
@@ -110,7 +122,8 @@ theorem finiteCycleReassemble_evaluate (a : ℤ) (m k : ℕ)
 set_option maxHeartbeats 800000 in
 /-- The actual evaluation/insertion delta identities prove the reverse composite. -/
 theorem finiteCycleEvaluate_reassemble (a : ℤ) (m k : ℕ)
-    (x : Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) :
+    (x : Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A)
+      P)).K k) :
     finiteCycleEvaluationKMap P a m k (finiteCycleReassemble P a m k x) = x := by
   let := Additivity.KCommGroup (ofExactCategory (fixedAcyclicExactStructure P a (a + (m : ℤ)))) k
   let := Additivity.KCommGroup
@@ -133,7 +146,8 @@ theorem finiteCycleEvaluate_reassemble (a : ℤ) (m k : ℕ)
 /-- Actual finite interior-cycle K-decomposition, including m=0 and K₀. -/
 def finiteCycleKEquiv (a : ℤ) (m k : ℕ) :
     (ofExactCategory (fixedAcyclicExactStructure P a (a + (m : ℤ)))).K k ≃*
-      (Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) where
+      (Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K
+        k) where
   toFun := finiteCycleEvaluationKMap P a m k
   invFun := finiteCycleReassemble P a m k
   left_inv := finiteCycleReassemble_evaluate P a m k
@@ -148,7 +162,8 @@ def finiteCycleKEquiv (a : ℤ) (m k : ℕ) :
 
 /-- Its inverse is exactly the displayed original-insertion reassembly. -/
 @[simp] theorem finiteCycleKEquiv_symm_apply (a : ℤ) (m k : ℕ)
-    (x : Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) :
+    (x : Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A)
+      P)).K k) :
     (finiteCycleKEquiv P a m k).symm x = finiteCycleReassemble P a m k x := rfl
 
 end Quillen.Waldhausen.GilletWaldhausen

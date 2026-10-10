@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.KTheory
-import Quillen.CategoryTheory.ExactCategory.Isomorphisms
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.KTheory
+public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
 
 /-!
 # Exact categories as Waldhausen categories
@@ -8,6 +16,8 @@ The cofibrations are the admissible monomorphisms, and the weak equivalences
 are isomorphisms. Every Waldhausen axiom is proved from the exact-category
 axioms. This adapter does not assert the Q/S comparison theorem.
 -/
+@[expose] public section
+
 
 noncomputable section
 

@@ -3,10 +3,14 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.SemisimplexResolution.Contraction
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
+module
+
+public import Quillen.CategoryTheory.SemisimplexResolution.Contraction
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
 
 /-! Consumers of the actual all-semisimplex resolution, including degenerate chains. -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

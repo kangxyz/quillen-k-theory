@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.QuillenComparison.BisimplicialMap
-import Quillen.Waldhausen.QuillenComparison.RowDiagonal
-import Quillen.Topology.Realization.EdgewiseBisimplicial
-import Quillen.Topology.Realization.ClassificationHomotopy
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.BisimplicialMap
+public import Quillen.Waldhausen.QuillenComparison.RowDiagonal
+public import Quillen.Topology.Realization.EdgewiseBisimplicial
+public import Quillen.Topology.Realization.ClassificationHomotopy
 
 /-! # Exact-map factorization of the canonical Q/S comparison
 
@@ -11,6 +19,8 @@ model identification, and natural diagonal evaluation. All model changes
 apart from the still-separate rowwise equivalence are already genuine
 realization homotopy equivalences.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -29,7 +39,8 @@ def subdivisionToRows : Edgewise.subdivision (sSet E.inflation (MorphismProperty
     TheoremA.diagonalSSet (Edgewise.ε.op ⋙ rowNerve E) :=
   Edgewise.subdivisionFunctor.map (rowDiagonalIso E).hom ≫
     (Edgewise.doubleDiagonalIso (rowNerve E)).inv ≫
-      TheoremA.diagonalMap (Functor.whiskerLeft (Edgewise.ε.op ⋙ rowNerve E) Edgewise.endpointNatTrans)
+      TheoremA.diagonalMap (Functor.whiskerLeft (Edgewise.ε.op ⋙ rowNerve E)
+        Edgewise.endpointNatTrans)
 
 /-- The actual Q comparison in row-groupoid coordinates. -/
 def rowsToQ : TheoremA.diagonalSSet (Edgewise.ε.op ⋙ rowNerve E) ⟶
@@ -51,8 +62,10 @@ def subdivisionToRowsHomotopyEquiv :
     ContinuousMap.HomotopyEquiv
       |Edgewise.subdivision (sSet E.inflation (MorphismProperty.isomorphisms C))|
       |TheoremA.diagonalSSet (Edgewise.ε.op ⋙ rowNerve E)| :=
-  (TopCat.homeoOfIso (SSet.toTop.mapIso (Edgewise.subdivisionFunctor.mapIso (rowDiagonalIso E)))).toHomotopyEquiv.trans
-    ((TopCat.homeoOfIso (SSet.toTop.mapIso (Edgewise.doubleDiagonalIso (rowNerve E)).symm)).toHomotopyEquiv.trans
+  (TopCat.homeoOfIso (SSet.toTop.mapIso (Edgewise.subdivisionFunctor.mapIso (rowDiagonalIso
+    E)))).toHomotopyEquiv.trans
+    ((TopCat.homeoOfIso (SSet.toTop.mapIso (Edgewise.doubleDiagonalIso (rowNerve
+      E)).symm)).toHomotopyEquiv.trans
       (Edgewise.upperIndexRealizationHomotopyEquiv (rowNerve E)))
 
 @[simp]

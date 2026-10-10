@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.PullbackFunctor
-import Quillen.PerfectComplexes.OpenFunctor
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.PullbackFunctor
+public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFunctor
 
 /-!
 # Consumers of actual strict-perfect arbitrary pullback
@@ -14,6 +16,8 @@ and use arbitrary affine morphisms without flatness hypotheses. In particular,
 the comparison inverse is natural because of the proved original comparison
 square, rather than being used to define the pullback map.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -81,7 +85,8 @@ theorem existing_open_functor_map {X Y : Scheme.OpenImmersionSchemes.{u}ᵒᵖ} 
 
 /-- On opens, arbitrary strict pullback followed by the original inclusion
 agrees with the original locally-perfect restriction square. -/
-theorem strict_to_local_open_square {X Y : AlgebraicGeometry.Scheme.{u}} (j : X ⟶ Y) [IsOpenImmersion j]
+theorem strict_to_local_open_square {X Y : AlgebraicGeometry.Scheme.{u}} (j : X ⟶ Y)
+  [IsOpenImmersion j]
     (n : ℕ) :
     (perfectKRestrict j n).comp (strictToPerfectKMap Y n) =
       (strictToPerfectKMap X n).comp (strictKPullback j n) := by

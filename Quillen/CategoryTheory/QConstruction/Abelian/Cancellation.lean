@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.ExactCategory.Abelian
-import Quillen.CategoryTheory.QConstruction.Basic
-import Mathlib.CategoryTheory.Abelian.CommSq
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Abelian
+public import Quillen.CategoryTheory.QConstruction.Basic
+public import Mathlib.CategoryTheory.Abelian.CommSq
 
 /-!
 # Cancellation in the abelian Q-construction
@@ -10,6 +18,8 @@ The proof descends an isomorphism between pullback representatives along the
 epimorphic pullback projections. This will make inclusion comma categories
 thin, a necessary part of their identification with the poset of layers.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v u
@@ -19,6 +29,8 @@ namespace Q
 attribute [local instance] Abelian.hasFiniteBiproducts
 variable {C : Type u} [Category.{v} C] [Abelian C]
 
+/-- A representative Q-arrow from `X` to `Y`: a span with an admissible epimorphism to `X` and an
+admissible monomorphism to `Y` in the abelian exact structure. -/
 abbrev AbelianSpan (X Y : C) :=
   Span (abelianExactStructure C).deflation (abelianExactStructure C).inflation X Y
 

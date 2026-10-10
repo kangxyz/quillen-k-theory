@@ -1,8 +1,16 @@
-import Quillen.Topology.HomotopyFiber.ContractibleBaseWeak
-import Quillen.Topology.HELP.WeakFinite
-import Quillen.Topology.HomotopyLifting.OverBaseCorrection
-import Quillen.Topology.HomotopyLifting.FiberwiseExtension
-import Quillen.Topology.HomotopyLifting.FiberwiseBoundaryCorrection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.ContractibleBaseWeak
+public import Quillen.Topology.HELP.WeakFinite
+public import Quillen.Topology.HomotopyLifting.OverBaseCorrection
+public import Quillen.Topology.HomotopyLifting.FiberwiseExtension
+public import Quillen.Topology.HomotopyLifting.FiberwiseBoundaryCorrection
 
 /-! # Finite vertical cube HELP from weak original strict fibers
 
@@ -11,6 +19,8 @@ cube and genuine contraction equivalences give an ordinary weak map;
 WeakFinite supplies its full finite lift. Stationary correction and genuine
 boundary unpadding retain the original base and entire prescribed track.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -20,14 +30,14 @@ universe u
 namespace Quillen
 open CubicalTests HomotopyPullback
 variable {E F B : Type u} [TopologicalSpace E] [TopologicalSpace F] [TopologicalSpace B]
-    (p : C(E,B)) (q : C(F,B)) (f : C(E,F)) (sq : q.comp f = p)
+    (p : C(E, B)) (q : C(F, B)) (f : C(E, F)) (sq : q.comp f = p)
     (hp : HomotopyLiftingProperty p) (hq : HomotopyLiftingProperty q)
 include hp hq
 
 /-- Ordinary strict cube HELP follows from the original fiber weak property
 at just the supplied target cube's distinguished base point. -/
 theorem weak_strictHELP_on_cube (n : ℕ)
-    (a : C(boundary.{u} n,E)) (b : C(cube.{u} n,F))
+    (a : C(boundary.{u} n, E)) (b : C(cube.{u} n, F))
     (w : f.comp a = b.comp (boundaryInclusion n).hom)
     (hf : IsWeakHomotopyEquivalence
       (HomotopyFiber.strictMapOver p q f sq (q (b (zero n))))) :

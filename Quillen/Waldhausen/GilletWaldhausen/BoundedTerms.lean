@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.GilletWaldhausen.BoundedAcyclic
-import Mathlib.Algebra.Homology.HomotopyCategory.MappingCone
-import Mathlib.Algebra.Homology.HomotopyCategory.Shift
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedAcyclic
+public import Mathlib.Algebra.Homology.HomotopyCategory.MappingCone
+public import Mathlib.Algebra.Homology.HomotopyCategory.Shift
 
 /-! # Actual bounded complexes with terms in an inherited exact subcategory
 
@@ -8,6 +16,8 @@ This is the ambient bounded termwise-P category, without an acyclicity
 condition. Its inherited exact structure, shifts, and actual mapping cones
 are supplied by proved closure properties. Kernel closure is not required.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

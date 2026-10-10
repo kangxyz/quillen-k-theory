@@ -1,6 +1,14 @@
-import Quillen.Topology.Realization.ProductFiberHELP
-import Quillen.Topology.HomotopyFiber.CartesianDetection
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceCancellation
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.ProductFiberHELP
+public import Quillen.Topology.HomotopyFiber.CartesianDetection
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceCancellation
 
 /-! # Original cartesian transition squares from genuine split row comparisons
 
@@ -10,6 +18,8 @@ on actual homotopy fibers. Connectedness then detects the original canonical
 constant-path comparison of the row square. No global realization gluing or
 fiber-equivalence conclusion is supplied as a hypothesis.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -109,7 +119,8 @@ theorem comparison_isWeakHomotopyEquivalence
     (SSet.toTop.map a).hom (SSet.toTop.map b).hom (transitionSquare χ χ' a b sq)
     (realizationPoint y) (SSet.toTop.map s x) (projection_section χ s y hs x)
   intro n
-  exact (transition_isWeakHomotopyEquivalence χ χ' s s' y y' hs hs' a b sq ha e he e' he' x).homotopy_bijective
+  exact (transition_isWeakHomotopyEquivalence χ χ' s s' y y' hs hs' a b sq ha e he e' he'
+    x).homotopy_bijective
     (i x) n
 
 end Quillen.SplitRealizationFiber

@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Waldhausen.Fibration.GlobalComparison
-import Quillen.Waldhausen.GilletWaldhausen.FibrationQuotient
-import Quillen.Waldhausen.Fibration.ComplexExtension
+module
+
+public import Quillen.Waldhausen.Fibration.GlobalComparison
+public import Quillen.Waldhausen.GilletWaldhausen.FibrationQuotient
+public import Quillen.Waldhausen.Fibration.ComplexExtension
+public import Quillen.Waldhausen.SplitComplexes.Approximation
 
 /-! # Gillet-Waldhausen for bounded complexes in a small abelian category
 
@@ -16,6 +19,8 @@ including zero. The property contains zero and is closed under isomorphisms,
 extensions and kernels. Smallness is explicit; this module does not infer
 cross-universe or scheme comparison from a chosen small presentation.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -68,7 +73,8 @@ variable (P : ObjectProperty A) [P.ContainsZero] [P.IsClosedUnderIsomorphisms]
 theorem boundedTerms_canonicalFiberMap_isWeakHomotopyEquivalence :
     IsWeakHomotopyEquivalence (Fibration.canonicalFiberMap (boundedTermsNested P)) :=
   boundedTerms_canonicalFiberMap_weak_of_totalComparisons P
-    (Fibration.RelativeRows.totalTailFiberComparison_isWeakHomotopyEquivalence (boundedTermsNested P))
+    (Fibration.RelativeRows.totalTailFiberComparison_isWeakHomotopyEquivalence
+        (boundedTermsNested P))
     (Fibration.RelativeRows.totalTailFiberComparison_isWeakHomotopyEquivalence
       (Fibration.AllWeak.nested (Fibration.acyclicStructure (boundedTermsNested P))))
 
@@ -84,13 +90,17 @@ theorem boundedTermsSingle_coarse_KMap_bijective (n : ℕ) :
     (boundedTerms_canonicalFiberMap_isWeakHomotopyEquivalence P) n
 
 /-- The equivalence has the original degree-zero single KMap as forward map. -/
-def boundedTermsSingle_coarse_KEquiv (n : ℕ) :
+def boundedTermsSingleCoarseKEquiv (n : ℕ) :
     (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K n ≃*
       (boundedTermsNested P).coarse.K n :=
-  boundedTermsSingle_coarse_KEquiv_of_canonicalFiber_weak P
+  boundedTermsSingleCoarseKEquivOfCanonicalFiberWeakEquivalence P
     (boundedTerms_canonicalFiberMap_isWeakHomotopyEquivalence P) n
 
-@[simp] theorem boundedTermsSingle_coarse_KEquiv_toMonoidHom (n : ℕ) :
-    (boundedTermsSingle_coarse_KEquiv P n).toMonoidHom =
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem boundedTermsSingleCoarseKEquiv_coe (n : ℕ) :
+    (↑(boundedTermsSingleCoarseKEquiv P n) : (ofExactCategory (ExactSubcategory.exactStructure
+        (abelianExactStructure A) P)).K n →* (boundedTermsNested P).coarse.K n) =
       KMap (boundedTermsSingle_coarseExact P 0) n := rfl
+
+
 end Quillen.Waldhausen.GilletWaldhausen

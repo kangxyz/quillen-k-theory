@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.FiberwiseMappingPath.BaseChange
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
+module
+
+public import Quillen.Topology.FiberwiseMappingPath.BaseChange
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
 
 /-! # Literal base-change transport through an over-base target homeomorphism -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology
 universe u
@@ -19,8 +23,8 @@ variable {E F F' B D : Type u}
 /-- The original source point and the new parameter remain unchanged while
 only the displayed homeomorphic target coordinates are transported. -/
 theorem baseChangedMap_isWeak_of_targetHomeomorph
-    (q : C(F,B)) (f : C(E,F)) (g : C(D,B))
-    (q' : C(F',B)) (f' : C(E,F')) (e : F' ≃ₜ F)
+    (q : C(F, B)) (f : C(E, F)) (g : C(D, B))
+    (q' : C(F', B)) (f' : C(E, F')) (e : F' ≃ₜ F)
     (hf : ∀ x : E,e (f' x) = f x) (hq : ∀ y : F',q (e y) = q' y)
     (hweak : IsWeakHomotopyEquivalence (baseChangedMap q' f' g)) :
     IsWeakHomotopyEquivalence (baseChangedMap q f g) := by

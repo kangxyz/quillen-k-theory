@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Functor
-import Quillen.CategoryTheory.TheoremA.Diagonal
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Functor
+public import Quillen.CategoryTheory.TheoremA.Diagonal
 
 /-! # The two independent degrees of the genuine Waldhausen S-construction
 
@@ -8,6 +16,8 @@ weak-equivalence/nerve direction. Their diagonal is the existing actual
 Waldhausen simplicial set, with the identical underlying grid functors.
 No exact-category or preadditive hypotheses are used.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

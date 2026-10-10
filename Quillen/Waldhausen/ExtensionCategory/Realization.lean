@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.ExtensionCategory.SplitQuotient
-import Quillen.Waldhausen.Additivity.RealizedAdditivity
-import Quillen.Waldhausen.SConstruction.WeakNaturalTransformation
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.SplitQuotient
+public import Quillen.Waldhausen.Additivity.RealizedAdditivity
+public import Quillen.Waldhausen.SConstruction.WeakNaturalTransformation
 
 /-! # Genuine extension-category additivity on realization
 
@@ -13,6 +21,8 @@ objects and morphisms of the original category lie in universe `u`. It does
 not identify realization of a product with a product of realizations and
 makes no based-homotopy assertion.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Topology
@@ -103,7 +113,8 @@ theorem split_sourceCofiber_homotopic :
 end ChosenCoproducts
 
 /-- The actual split map, using coproducts supplied by the Waldhausen axioms. -/
-def splitRealizationMap : C((productStructure W W).Delooping, (waldhausenStructure W).Delooping) := by
+def splitRealizationMap : C((productStructure W W).Delooping, (waldhausenStructure W).Delooping)
+    := by
   letI := Additivity.hasBinaryCoproducts W
   letI := Additivity.hasBinaryCoproducts (waldhausenStructure W)
   exact (deloopingMap (split_exact W)).hom

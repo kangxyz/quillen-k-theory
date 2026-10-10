@@ -3,10 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.Homology.KProjectiveComparison
-import Mathlib.Algebra.Homology.Embedding.CochainComplex
-import Mathlib.Algebra.Category.ModuleCat.Projective
-import Mathlib.RingTheory.Finiteness.Basic
+module
+
+public import Quillen.Algebra.Homology.KProjectiveComparison
+public import Mathlib.Algebra.Homology.Embedding.CochainComplex
+public import Mathlib.Algebra.Category.ModuleCat.Projective
+public import Mathlib.RingTheory.Finiteness.Basic
 
 /-!
 # Genuine projective lower-tail truncation
@@ -19,6 +21,8 @@ therefore bounded finite-projective, and the original truncation projection is
 a quasi-isomorphism. Exact upper/lower term bounds, including empty intervals,
 are retained. No global replacement is assumed or fabricated.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -38,7 +42,7 @@ def opcyclesRetractOfHomotopyAt (P : CochainComplex C ℤ) (n : ℤ)
   retract := by
     apply (cancel_epi (P.pOpcycles n)).mp
     have hc := congrArg (fun t => t ≫ P.pOpcycles n) (H.comm n)
-    rw [dNext_eq _ (show (ComplexShape.up ℤ).Rel n (n+1) by rfl),
+    rw [dNext_eq _ (show (ComplexShape.up ℤ).Rel n (n + 1) by rfl),
       prevD_eq _ (show (ComplexShape.up ℤ).Rel (n-1) n by dsimp; omega)] at hc
     simpa only [id_f, hφ, Preadditive.add_comp, zero_comp, Category.id_comp,
       Category.comp_id, Category.assoc, d_pOpcycles, comp_zero, add_zero,
@@ -56,7 +60,7 @@ def opcyclesRetractOfHomotopyModel {P Q : CochainComplex C ℤ}
 /-- The original tail cokernel is projective because its constructed retract
 lands in the actual next projective term. -/
 theorem projective_opcycles_of_homotopy_model {P Q : CochainComplex C ℤ}
-    (e : HomotopyEquiv P Q) (n : ℤ) (hQ : IsZero (Q.X n)) [Projective (P.X (n+1))] :
+    (e : HomotopyEquiv P Q) (n : ℤ) (hQ : IsZero (Q.X n)) [Projective (P.X (n + 1))] :
     Projective (P.opcycles n) :=
   (opcyclesRetractOfHomotopyModel e n hQ).projective
 

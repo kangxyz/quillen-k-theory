@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.SConstruction.WeakNaturalTransformation
-import Quillen.Waldhausen.Functoriality.KMap
-import Quillen.Topology.Realization.Connectivity
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.WeakNaturalTransformation
+public import Quillen.Waldhausen.Functoriality.KMap
+public import Quillen.Topology.Realization.Connectivity
 
 /-! # Genuine path-connectedness of every Waldhausen S-realization
 
@@ -9,6 +17,8 @@ Its unique zero-object isomorphism to the chosen zero supplies a real
 nerve-direction homotopy. Joining arbitrary realization points to vertices
 then proves path-connectedness of the unchanged actual delooping.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

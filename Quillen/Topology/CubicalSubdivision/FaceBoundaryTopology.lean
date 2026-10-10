@@ -1,5 +1,13 @@
-import Quillen.Topology.CubicalSubdivision.FaceComplex
-import Quillen.Topology.HELP.CubeBoundaryHomeomorph
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.FaceComplex
+public import Quillen.Topology.HELP.CubeBoundaryHomeomorph
 
 /-! # Actual face-boundary tests in an arbitrary common universe
 
@@ -7,16 +15,22 @@ Only the finite coordinate set is reindexed and the universe is lifted. The
 original parameter and boundary coordinates are retained by explicit
 homeomorphisms, so HLP/HELP targets need not be universe zero.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 open scoped Topology unitInterval
 namespace Quillen.CubicalSubdivision
 universe u
 
+/-- The unit cube on the active coordinates of the face `F`, lifted to the chosen universe. -/
 abbrev FaceCube {n m : ℕ} (F : FaceIndex n m) := ULift.{u} (Active F → unitInterval)
+/-- The boundary subspace of `FaceCube F`, where an active interval coordinate is zero or one,
+with the same universe lift. -/
 abbrev FaceCubeBoundary {n m : ℕ} (F : FaceIndex n m) :=
   {z : FaceCube.{u} F // z.down ∈ _root_.Cube.boundary (Active F)}
 
+/-- Reindex the finite set of active face coordinates by `Fin (faceDimension F)`. -/
 def activeEquivFin {n m : ℕ} (F : FaceIndex n m) : Active F ≃ Fin (faceDimension F) :=
   Fintype.equivFin (Active F)
 

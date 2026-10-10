@@ -1,5 +1,13 @@
-import Quillen.Topology.Realization.BisimplicialSkeleton
-import Quillen.Topology.Realization.BisimplicialLatching
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.BisimplicialSkeleton
+public import Quillen.Topology.Realization.BisimplicialLatching
 
 /-!
 # Full-row outer skeletal attachments
@@ -8,6 +16,8 @@ Every successor outer skeleton is obtained by attaching the full coefficient
 row times the standard simplex, along the union of its latching cylinder and
 its boundary cylinder. This is a genuine pushout of simplicial sets.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory Limits Opposite MonoidalCategory

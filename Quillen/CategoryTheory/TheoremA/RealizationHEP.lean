@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremA.RealizationCofibrations
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationCofibrations
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
 
 /-!
 # Homotopy extension and pushouts
@@ -9,6 +17,8 @@ cylinder. It is stable under composition and topological pushouts, because
 product with the compact interval preserves colimits. These are genuine
 extension constructions, not a homotopy-invariance axiom.
 -/
+@[expose] public section
+
 
 noncomputable section
 

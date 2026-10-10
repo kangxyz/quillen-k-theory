@@ -3,10 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.ComparisonNaturality
-import Quillen.PerfectComplexes.GilletWaldhausen
-import Quillen.Scheme.RestrictionFunctoriality
-import Quillen.Scheme.Comparison.KToG
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ComparisonNaturality
+public import Quillen.AlgebraicGeometry.PerfectComplexes.GilletWaldhausen
+public import Quillen.AlgebraicGeometry.Scheme.RestrictionFunctoriality
+public import Quillen.AlgebraicGeometry.Scheme.Comparison.KToG
 
 /-!
 # Consumers of actual scheme/perfect restriction and comparison naturality
@@ -15,6 +17,8 @@ These check the original restriction maps, degree-zero comparisons, composed
 open restrictions, and the inverse of the actual strict-perfect equivalence.
 Coherent G-theory retains its locally noetherian hypotheses.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
 universe u
@@ -55,7 +59,7 @@ example {V U X : Scheme.{u}} (i : V ⟶ U) (j : U ⟶ X)
       vectorBundleToPerfectKMap V 0
         (Quillen.Scheme.restrictK i 0 (Quillen.Scheme.restrictK j 0 x)) := by
   have h := DFunLike.congr_fun (vectorBundleToPerfectKMap_restrict (i ≫ j) 0) x
-  simpa only [MonoidHom.comp_apply, Quillen.Scheme.restrictK_comp_apply] using h
+  simpa only [Quillen.Scheme.restrictK_comp, MonoidHom.comp_apply] using h
 
 example {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
     (x : Quillen.Scheme.K X 0) :
@@ -76,7 +80,7 @@ example {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
   change strictKRestrict j n ((vectorBundleToStrictKEquiv X n)
     ((vectorBundleToStrictKEquiv X n).symm y)) = _ at h
   simpa only [MulEquiv.apply_symm_apply, MonoidHom.comp_apply,
-    ← vectorBundleToStrictKEquiv_toMonoidHom, MulEquiv.coe_toMonoidHom] using h
+    ← vectorBundleToStrictKEquiv_coe, MulEquiv.coe_toMonoidHom] using h
 
 example {V U X : Scheme.{u}} [IsLocallyNoetherian V]
     [IsLocallyNoetherian U] [IsLocallyNoetherian X]
@@ -85,5 +89,6 @@ example {V U X : Scheme.{u}} [IsLocallyNoetherian V]
     Quillen.Scheme.restrictG i 0
       (Quillen.Scheme.restrictG j 0 (Quillen.Scheme.KToG X 0 x)) =
       Quillen.Scheme.KToG V 0 (Quillen.Scheme.restrictK (i ≫ j) 0 x) := by
-  rw [← Quillen.Scheme.restrictG_comp_apply]
+  rw [← DFunLike.congr_fun (Quillen.Scheme.restrictG_comp i j 0)
+    (Quillen.Scheme.KToG X 0 x)]
   exact Quillen.Scheme.KToG_restrict_apply (i ≫ j) 0 x

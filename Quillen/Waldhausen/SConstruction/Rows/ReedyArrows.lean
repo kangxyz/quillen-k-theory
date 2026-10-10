@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.SConstruction.Rows.PointwiseArrows
-import Quillen.Waldhausen.ExtensionCategory.TransposeExact
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.PointwiseArrows
+public import Quillen.Waldhausen.ExtensionCategory.TransposeExact
 
 /-! # Actual interchange of quotient rows and genuine Reedy cofibration arrows
 
@@ -7,6 +15,8 @@ The original component diagrams determine inverse categorical functors.
 Preservation of cofibration cubes uses the proved exact Reedy transposition
 and actual mapped relative pushouts, rather than categorical equivalence alone.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -17,8 +27,11 @@ variable {C : Type u} [Category.{v} C] (W : Structure C)
 
 /-- All actual horizontal-arrow tests, including the degenerate intervals. -/
 structure HorizontalTriple (n : SimplexCategory) where
+  /-- The common left endpoint of the intervals in a horizontal-arrow test. -/
   i : Fin (n.len + 1)
+  /-- The right endpoint of the source interval in the test, with `i ≤ j`. -/
   j : Fin (n.len + 1)
+  /-- The right endpoint of the target interval in the test, with `j ≤ k`. -/
   k : Fin (n.len + 1)
   hij : i ≤ j
   hjk : j ≤ k
@@ -52,7 +65,8 @@ theorem reedyDiagram_isRow {n : SimplexCategory}
 
 /-- A genuine cofibration between rows is sent to its original component-cofibration row. -/
 def reedyToRows (n : SimplexCategory) :
-    ExtensionCategory.Obj (waldhausenStructure W n) ⥤ Obj (ExtensionCategory.waldhausenStructure W) n where
+    ExtensionCategory.Obj (waldhausenStructure W n) ⥤ Obj (ExtensionCategory.waldhausenStructure
+      W) n where
   obj X := ⟨reedyDiagram W X, reedyDiagram_isRow W X⟩
   map f := (objects _ n).homMk {
     app p := (ExtensionCategory.objects W).homMk (((arrowDiagram W n).map f.hom).app p)
@@ -69,7 +83,8 @@ def reedyToRows (n : SimplexCategory) :
 /-- The literal structural arrows give a transformation of the two endpoint-row functors. -/
 def rowsReedyTransformation (n : SimplexCategory) :
     postcompose (ExtensionCategory.waldhausenStructure W) W (ExtensionCategory.source_exact W) n ⟶
-      postcompose (ExtensionCategory.waldhausenStructure W) W (ExtensionCategory.middle_exact W) n where
+      postcompose (ExtensionCategory.waldhausenStructure W) W (ExtensionCategory.middle_exact W)
+        n where
   app X := (objects W n).homMk (Functor.whiskerLeft X.obj (ExtensionCategory.inclusion W))
   naturality X Y f := by
     apply ObjectProperty.hom_ext
@@ -88,7 +103,8 @@ theorem rowsReedyTransformation_cof (n : SimplexCategory)
 
 /-- Collect the original component cofibrations into their genuine row-cofibration arrow. -/
 def rowsToReedy (n : SimplexCategory) :
-    Obj (ExtensionCategory.waldhausenStructure W) n ⥤ ExtensionCategory.Obj (waldhausenStructure W n) where
+    Obj (ExtensionCategory.waldhausenStructure W) n ⥤ ExtensionCategory.Obj (waldhausenStructure
+      W n) where
   obj X := ⟨Arrow.mk ((rowsReedyTransformation W n).app X), rowsReedyTransformation_cof W n X⟩
   map f := (ExtensionCategory.objects _).homMk
     ((ArrowDiagrams.toDiagramObj (Arrow.mk (rowsReedyTransformation W n))).map f)
@@ -115,7 +131,8 @@ def rowsToReedy (n : SimplexCategory) :
 
 /-- The genuine Reedy-arrow interchange retains the literal original component diagrams. -/
 def reedyArrowEquivalence (n : SimplexCategory) :
-    ExtensionCategory.Obj (waldhausenStructure W n) ≌ Obj (ExtensionCategory.waldhausenStructure W) n :=
+    ExtensionCategory.Obj (waldhausenStructure W n) ≌ Obj (ExtensionCategory.waldhausenStructure
+      W) n :=
   CategoryTheory.Equivalence.mk (reedyToRows W n) (rowsToReedy W n)
     (eqToIso (reedyToRows_rowsToReedy W n).symm) (eqToIso (rowsToReedy_reedyToRows W n))
 

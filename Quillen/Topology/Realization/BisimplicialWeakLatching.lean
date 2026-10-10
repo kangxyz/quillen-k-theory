@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.Realization.BisimplicialLatchingEquivalences
-import Quillen.Topology.Realization.MapWeakEquivalence
+module
+
+public import Quillen.Topology.Realization.BisimplicialLatchingEquivalences
+public import Quillen.Topology.Realization.MapWeakEquivalence
 /-!
 # Complete weak equivalences on actual bisimplicial latching objects
 
@@ -12,6 +14,8 @@ The original finite degeneracy-union pushouts and monomorphism HEP transfer
 rowwise complete weakness to every partial and full outer latching object.
 No coherent or pointwise continuous row inverse is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory Limits Opposite
@@ -35,7 +39,7 @@ theorem partialLatchingMap_isRealizationWeakEquivalence
     | zero =>
       intro _
       exact IsRealizationWeakEquivalence.of_isInitial _
-        (partialLatching_isInitial X n) (partialLatching_isInitial Y n)
+        (partialLatchingZeroIsInitial X n) (partialLatchingZeroIsInitial Y n)
     | succ k ihk =>
       intro hk
       have hk' : k < n + 1 := by omega

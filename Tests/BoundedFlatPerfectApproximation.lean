@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.BoundedFlat.KComparison
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.KComparison
 
 /-! Consumers of actual relative replacements and the original all-degree K-comparison. -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -67,7 +71,8 @@ theorem original_Kmap_injective (X : Scheme.{u}) [CompactSpace X] (n : ℕ)
 theorem original_strict_comparison (X : Scheme.{u}) [CompactSpace X] (n : ℕ) :
     (boundedFlatPerfectKEquiv X n).toMonoidHom.comp (strictToBoundedFlatPerfectKMap X n) =
       strictToPerfectKMap X n := by
-  rw [boundedFlatPerfectKEquiv_toMonoidHom]
+  simp only [MulEquiv.toMonoidHom_eq_coe]
+  rw [boundedFlatPerfectKEquiv_coe]
   exact boundedFlatPerfectToPerfect_comp_strict X n
 
 end Quillen.Tests.BoundedFlatPerfectApproximation

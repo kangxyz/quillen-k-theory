@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.TheoremB.VertexWeakAssembly
-import Quillen.CategoryTheory.TheoremB.CartesianProducts
-import Quillen.CategoryTheory.TheoremB.HomotopyPullbackSymmetry
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.VertexWeakAssembly
+public import Quillen.CategoryTheory.TheoremB.CartesianProducts
+public import Quillen.Topology.HomotopyPullback.Symmetry
 
 /-! # Coordinates for the first cartesian boundary attachment
 
@@ -10,6 +18,8 @@ skeleton is exactly the pair of diagram transitions. These are geometric
 inputs for the first cartesian attachment, without assuming any finite-stage
 cartesian conclusion.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
@@ -17,7 +27,7 @@ universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 
 /-- Universe-compatible endpoint index. -/
@@ -53,7 +63,8 @@ def boundaryOneVertex (p : SimplexCategoryᵒᵖ) (i : Fin 2) :
 
 /-- Exact simplicial coproduct coordinates for an enriched one-cell boundary. -/
 def boundaryOneCoproductMap (X : SSet.{u}) :
-    simplicialSigma (fun _ : Endpoint.{u} ↦ X) ⟶ diagonalSSet (outerProduct (∂Δ[1] : SSet.{u}) X) where
+    simplicialSigma (fun _ : Endpoint.{u} ↦ X) ⟶ diagonalSSet (outerProduct (∂Δ[1] : SSet.{u}) X)
+      where
   app p := ↾fun z ↦ ⟨boundaryOneVertex p z.1.down, z.2⟩
   naturality _ _ _ := rfl
 
@@ -86,7 +97,8 @@ def boundaryOneHomeomorph (X : SSet.{u}) :
 
 @[simp] theorem boundaryOneHomeomorph_apply (X : SSet.{u}) (i : Endpoint.{u}) (x : |X|) :
     boundaryOneHomeomorph X ⟨i, x⟩ =
-      SSet.toTop.map (simplicialSigmaι (fun _ : Endpoint.{u} ↦ X) i ≫ boundaryOneCoproductMap X) x := by
+      SSet.toTop.map (simplicialSigmaι (fun _ : Endpoint.{u} ↦ X) i ≫ boundaryOneCoproductMap X) x
+        := by
   change SSet.toTop.map (boundaryOneCoproductMap X)
     ((realizationSigmaIso (fun _ : Endpoint.{u} ↦ X)).inv ⟨i, x⟩) = _
   rw [realizationSigmaIso_inv_apply, Functor.map_comp]
@@ -128,4 +140,4 @@ theorem boundaryOneHomeomorph_attaching (s : (nerve D).nonDegenerate 1)
   change (SSet.toTop.map _ ≫ SSet.toTop.map _) x = (SSet.toTop.map _ ≫ SSet.toTop.map _) x
   rw [← Functor.map_comp, ← Functor.map_comp, Category.assoc, boundaryOneCoproductMap_attaching]
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

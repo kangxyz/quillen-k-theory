@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.GradedGroupRealization
+module
+
+public import Quillen.Waldhausen.Cofinality.GradedGroupRealization
 
 /-! # Actual range, finite realization, and original group-grading map consumers -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial
@@ -58,7 +62,8 @@ theorem original_group_grade_restriction {m n : SimplexCategory} (α : m ⟶ n)
         ((d.groupGradeMap T).app (op n) X)).map (homOfLE p.property))) : G) =
       d.value (X.val.obj (0, (QuotientRows.indexMap α).obj p)) := rfl
 
-/-- Complete weakness includes every original based homotopy comparison, including dimension zero. -/
+/-- Complete weakness includes every original based homotopy comparison, including dimension zero.
+  -/
 theorem original_group_grade_homotopy (x : d.coarseStructure.Delooping) (n : ℕ) :
     Function.Bijective (homotopyGroupMap (N := Fin n)
       (SSet.toTop.map (d.groupGradeMap T)).hom (x := x) rfl) :=

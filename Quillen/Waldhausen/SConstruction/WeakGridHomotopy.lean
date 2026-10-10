@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.SConstruction.NerveCylinderNaturality
-import Quillen.Topology.Realization.HomotopyBridge
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.NerveCylinderNaturality
+public import Quillen.Topology.Realization.HomotopyBridge
 
 /-! # Actual diagonal homotopies from weak natural-transformation families
 
@@ -7,6 +15,8 @@ The family compatibility condition concerns its actual transformation
 components after grid reindexing. It does not assume naturality of the
 resulting cylinder or a desired homotopy.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.GilletWaldhausen.TruncationCoherence
-import Quillen.Waldhausen.GilletWaldhausen.TruncationLayer
-import Quillen.Waldhausen.GilletWaldhausen.TruncationCofibrationSequence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.TruncationCoherence
+public import Quillen.Waldhausen.GilletWaldhausen.TruncationLayer
+public import Quillen.Waldhausen.GilletWaldhausen.TruncationCofibrationSequence
 
 /-! # The actual adjacent-truncation cofibration sequence
 
@@ -10,6 +18,8 @@ truncLE n → truncLE (n+1) → identityDisk n (cycles (n+1)).
 All three functors are genuinely exact, and the relative-cofibration
 condition is proved by the generic exact-functor sequence theorem.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -29,13 +39,15 @@ both original inclusions into the untruncated complex. -/
 def adjacentTruncationInclusion (n : ℤ) :
     boundedAcyclicTruncLEFunctor P n ⟶ boundedAcyclicTruncLEFunctor P (n + 1) :=
   (boundedAcyclicTruncLECompIso P n (n + 1) (by omega)).inv ≫
-    Functor.whiskerLeft (boundedAcyclicTruncLEFunctor P (n + 1)) (boundedAcyclicTruncationInclusion P n)
+    Functor.whiskerLeft (boundedAcyclicTruncLEFunctor P (n + 1))
+      (boundedAcyclicTruncationInclusion P n)
 
 /-- The actual quotient projection, followed by the proved natural disk identification. -/
 def adjacentTruncationProjection (n : ℤ) :
     boundedAcyclicTruncLEFunctor P (n + 1) ⟶
       boundedAcyclicCyclesFunctor P (n + 1) ⋙ boundedAcyclicDiskFunctor P n :=
-  Functor.whiskerLeft (boundedAcyclicTruncLEFunctor P (n + 1)) (boundedAcyclicTruncationProjection P n) ≫
+  Functor.whiskerLeft (boundedAcyclicTruncLEFunctor P (n + 1))
+    (boundedAcyclicTruncationProjection P n) ≫
     (oneStepLayerDiskIso P n).hom
 
 /-- The adjacent inclusion has exactly the original ambient inclusion as composite. -/
@@ -98,11 +110,13 @@ theorem adjacentTruncation_isCofibrationSequence_quasiIso (n : ℤ) :
       (complexSubcategory (boundedAcyclic P))
       (adjacentTruncationInclusion P n) (adjacentTruncationProjection P n) where
   exactF := boundedAcyclicExactFunctor_waldhausenExact P (boundedAcyclicTruncLEExactFunctor P n)
-  exactG := boundedAcyclicExactFunctor_waldhausenExact P (boundedAcyclicTruncLEExactFunctor P (n + 1))
+  exactG := boundedAcyclicExactFunctor_waldhausenExact P (boundedAcyclicTruncLEExactFunctor P (n
+    + 1))
   exactH := boundedAcyclicExactFunctor_waldhausenExact P (oneStepCycleDiskExactFunctor P n)
   cofibration := {
     app_cof := (adjacentTruncation_isCofibrationSequence P n).cofibration.app_cof
-    relative_cof f hf := (adjacentTruncation_isCofibrationSequence P n).cofibration.relative_cof f hf }
+    relative_cof f hf := (adjacentTruncation_isCofibrationSequence P n).cofibration.relative_cof
+      f hf }
   cofiber := (adjacentTruncation_isCofibrationSequence P n).cofiber
 
 end Quillen.Waldhausen.GilletWaldhausen

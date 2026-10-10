@@ -1,8 +1,18 @@
-import Quillen.Waldhausen.ExtensionCategory.Structure
-import Quillen.Waldhausen.Additivity.CofibrationSequence
-import Quillen.Waldhausen.Additivity.PushoutPreservation
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.Structure
+public import Quillen.Waldhausen.Additivity.CofibrationSequence
+public import Quillen.Waldhausen.Additivity.PushoutPreservation
 
 /-! # The exact cofiber functor and its genuine structural sequence -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -56,7 +66,8 @@ theorem cofiber_exact :
     (source_exact W) (inclusion_isCofibrationTransformation W) ((terminalArrow W).map f)
     hf ((cof W).id_mem _)
   weak f hf := Additivity.pushoutFunctor_map_weak_of_exact W (inclusion W) (waldhausenStructure W)
-    (source_exact W) (middle_exact W) (inclusion_isCofibrationTransformation W) ((terminalArrow W).map f)
+    (source_exact W) (middle_exact W) (inclusion_isCofibrationTransformation W) ((terminalArrow
+      W).map f)
     hf ((weq W).id_mem _)
   pushout {A B D P} {f g i j} hf h := by
     apply Additivity.pushoutFunctor_map_isPushout_of_exact W (inclusion W) (inclusion_cof W)

@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Additivity.PushoutEndpoints
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.PushoutEndpoints
 
 /-! # Cofibrations under the additivity pushout functor
 
@@ -6,6 +14,8 @@ The proof factors a commutative square into change of target and change of
 source. Each resulting pushout-functor map is a genuine cobase change: first
 of the target cofibration, then of the structural relative-cofibration map.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -105,7 +115,8 @@ theorem pushoutFunctor_map_cof {f g : Arrow C} (φ : f ⟶ g)
   let e : Arrow.mk (f.hom ≫ φ.right) ≅ Arrow.mk (φ.left ≫ g.hom) :=
     eqToIso (congrArg (fun k ↦ Arrow.mk k) φ.w.symm)
   have he : postcomposeArrow f.hom φ.right ≫ e.hom ≫ precomposeArrow φ.left g.hom = φ := by
-    apply Arrow.hom_ext <;> simp [e, postcomposeArrow, precomposeArrow, Arrow.eqToHom_left, Arrow.eqToHom_right]
+    apply Arrow.hom_ext <;> simp [e, postcomposeArrow, precomposeArrow, Arrow.eqToHom_left,
+      Arrow.eqToHom_right]
   rw [← he, Functor.map_comp, Functor.map_comp]
   apply W.cof.comp_mem
   · exact postcompose_cof W a V hF h f.hom φ.right hright

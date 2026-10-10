@@ -3,10 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.ModuleComplex.PrincipalDescent
-import Mathlib.RingTheory.Localization.Module
-import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
-import Mathlib.Data.Int.Interval
+module
+
+public import Quillen.Algebra.ModuleComplex.PrincipalDescent
+public import Mathlib.RingTheory.Localization.Module
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+public import Mathlib.Data.Int.Interval
 
 /-!
 # Bounded finite-free complex descent across a principal localization
@@ -18,6 +20,8 @@ bounds, and an actual chain isomorphism after scalar localization. The ring
 is arbitrary, including zero-ring localizations. Projective stabilization is
 not asserted.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

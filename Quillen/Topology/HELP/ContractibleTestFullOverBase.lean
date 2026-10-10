@@ -1,6 +1,14 @@
-import Quillen.Topology.HELP.ContractibleTestOverBase
-import Quillen.Topology.HomotopyLifting.FiberwiseExtension
-import Quillen.Topology.HomotopyLifting.FiberwiseBoundaryCorrection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.ContractibleTestOverBase
+public import Quillen.Topology.HomotopyLifting.FiberwiseExtension
+public import Quillen.Topology.HomotopyLifting.FiberwiseBoundaryCorrection
 
 /-! # Full compact contracted HELP over the displayed base
 
@@ -9,6 +17,8 @@ its intermediate points. Fiberwise HEP and actual vertical unpadding derive
 this from strict over-base HELP, rather than assuming that ordinary HELP was
 already fiberwise.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 open scoped Topology unitInterval
@@ -17,7 +27,7 @@ namespace Quillen
 variable {E F B : Type u} [TopologicalSpace E] [TopologicalSpace F] [TopologicalSpace B]
 
 theorem fullHELP_over_contracted_test
-    (p : C(E,B)) (q : C(F,B)) (f : C(E,F)) (sq : q.comp f = p)
+    (p : C(E, B)) (q : C(F, B)) (f : C(E, F)) (sq : q.comp f = p)
     (hp : HomotopyLiftingProperty p) (hq : HomotopyLiftingProperty q)
     (hf : ∀ b : B,CompactHomotopyExtensionLiftingProperty
       (HomotopyFiber.strictMapOver p q f sq b))

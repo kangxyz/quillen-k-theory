@@ -1,6 +1,16 @@
-import Quillen.Waldhausen.SConstruction.Rows.Pushouts
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.Pushouts
 
 /-! # The genuine Waldhausen structure on actual quotient grids -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -68,7 +78,8 @@ def waldhausenStructure (n : SimplexCategory) : Structure (Obj W n) where
 
 /-- Evaluation at every original quotient object is genuinely exact. -/
 theorem evaluation_exact (p : Interval n) :
-    IsExact (waldhausenStructure W n).cof (waldhausenStructure W n).weq W.cof W.weq (evaluation W p) where
+    IsExact (waldhausenStructure W n).cof (waldhausenStructure W n).weq W.cof W.weq (evaluation
+      W p) where
   zero h := evaluation_isZero W h p
   cofibration _ h := cof_app W h p
   weak _ h := h p

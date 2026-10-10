@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.ExtensionCategory.PushoutCube
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.PushoutCube
 
 /-! # Actual interchange of the two relative directions of a pushout cube
 
@@ -6,6 +14,8 @@ The two iterated relative pushouts have the same universal property. All
 pushouts in this statement are displayed; no global colimit assumption or
 cofibration conclusion is included among the inputs.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

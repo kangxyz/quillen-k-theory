@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.AcyclicSubcategory
-import Quillen.Waldhausen.SConstruction.Rows.Reindex
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.AcyclicSubcategory
+public import Quillen.Waldhausen.SConstruction.Rows.Reindex
 
 /-! # Nested weak classes on the exact same quotient-row category
 
@@ -9,6 +17,8 @@ and the literal chosen zero row. Only weak equivalences change to the
 pointwise coarse class. Gluing is derived from the actual component pushouts.
 No row-cylinder, factorization, or realization property is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -65,7 +75,8 @@ def coarseStructure (n : SimplexCategory) : Structure (QuotientRows.Obj V n) whe
     (f : F ⟶ G) : (coarseStructure N n).weq f ↔ ∀ p, N.coarse.weq (f.hom.app p) := Iff.rfl
 
 /-- Genuine nested weak classes on the unchanged fine quotient-row category. -/
-def nested (n : SimplexCategory) : NestedWeakEquivalences (QuotientRows.waldhausenStructure V n) where
+def nested (n : SimplexCategory) : NestedWeakEquivalences (QuotientRows.waldhausenStructure V n)
+    where
   coarse := coarseStructure N n
   cof_eq := rfl
   zero_eq := rfl
@@ -73,7 +84,8 @@ def nested (n : SimplexCategory) : NestedWeakEquivalences (QuotientRows.waldhaus
     intro F G f hf p
     exact N.le_weq _ (hf p)
 
-/-- Evaluation is genuinely exact from the new coarse row structure to the original coarse structure. -/
+/-- Evaluation is genuinely exact from the new coarse row structure to the original coarse
+structure. -/
 theorem evaluation_coarse_exact {n : SimplexCategory} (p : Interval n) :
     IsExact (coarseStructure N n).cof (coarseStructure N n).weq N.coarse.cof N.coarse.weq
       (QuotientRows.evaluation V p) where

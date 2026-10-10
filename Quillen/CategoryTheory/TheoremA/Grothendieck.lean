@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremA.Resolution
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.Resolution
 
 /-!
 # Grothendieck presentation of the Theorem A resolution
@@ -6,6 +14,8 @@ import Quillen.CategoryTheory.TheoremA.Resolution
 The covariant diagram `d ↦ (F ↓ d)` and its Grothendieck construction provide
 the categorical input to the homotopy-colimit approach to Quillen's Theorem A.
 -/
+@[expose] public section
+
 
 noncomputable section
 

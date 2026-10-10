@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianCalculus
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianCoordinates
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianStageCube
+module
+
+public import Quillen.Topology.Realization.Cartesian.WeakCalculus
+public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianCoordinates
+public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianStageCube
 
 /-!
 # Original characteristic squares for arbitrary coefficient transformations
@@ -13,13 +15,15 @@ import Quillen.CategoryTheory.TheoremB.SkeletalCartesianStageCube
 Both coefficient diagrams are retained. The maps are the original realized
 characteristic charts and restriction inclusions, with their naturality squares.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 variable {D : Type u} [SmallCategory D] {H J : D ⥤ SSet.{u}} (η : H ⟶ J)
 
@@ -105,7 +109,7 @@ theorem RestrictionWeakCartesian.refl (A : (nerve D).Subcomplex) :
 theorem stageWeakCartesian_of_restrictionWeakCartesian (k n : ℕ) (h : k ≤ n)
     (hc : RestrictionWeakCartesian η ((nerve D).skeleton.monotone h)) :
     IsWeakHomotopyEquivalence
-      (SequentialCartesian.stageComparison (realizedReplacementSkeletonMap η) k n h) := hc
+      (Quillen.CartesianRealization.Sequential.stageComparison (realizedReplacementSkeletonMap η) k n h) := hc
 
 /-- Restricted characteristic charts also preserve the original coefficients. -/
 theorem restrictedSimplexChart_coefficient (A : (nerve D).Subcomplex) {n : ℕ}
@@ -140,4 +144,4 @@ def TransitionWeakCartesian : Prop :=
         SSet.toTop.map (η.app d) ≫ SSet.toTop.map (J.map f) from by
         rw [← SSet.toTop.map_comp, ← SSet.toTop.map_comp, η.naturality f]))
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.FlatPullbackFunctor
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.FlatPullbackFunctor
 
 /-!
 # Consumers of actual flat pullback on locally-perfect K-theory
@@ -11,6 +13,8 @@ import Quillen.PerfectComplexes.FlatPullbackFunctor
 These exercise arbitrary ambient complexes and genuinely local perfectness,
 then identity/composition/open squares and the original public comparisons.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -38,7 +42,8 @@ theorem localPerfectness {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
 
 /-- The K-map is directly induced by the geometric Waldhausen-exact functor. -/
 theorem actualKMap {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] (n : ℕ) :
-    perfectKFlatPullback f n = Quillen.Waldhausen.KMap (perfectFlatPullback_waldhausenExact f) n := rfl
+    perfectKFlatPullback f n = Quillen.Waldhausen.KMap (perfectFlatPullback_waldhausenExact f) n :=
+      rfl
 
 /-- Composition retains the original underlying perfect K-groups. -/
 theorem composite {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) [Flat f] [Flat g]
@@ -73,6 +78,7 @@ theorem bundledMap {X Y : Quillen.Scheme.FlatSchemes.{u}ᵒᵖ} (f : X ⟶ Y) (n
 
 /-- The natural transformation's components are the original public comparison. -/
 theorem bundledComparison (X : Quillen.Scheme.FlatSchemes.{u}ᵒᵖ) (n : ℕ) :
-    ((vectorBundleToPerfectFlatNatTrans n).app X).hom = vectorBundleToPerfectKMap X.unop.obj n := rfl
+    ((vectorBundleToPerfectFlatNatTrans n).app X).hom = vectorBundleToPerfectKMap X.unop.obj n :=
+      rfl
 
 end Tests.PerfectFlatPullback

@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationWeakMaps
-import Quillen.Waldhausen.Additivity.ZeroFactorization
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationWeakMaps
+public import Quillen.Waldhausen.Additivity.ZeroFactorization
 
 /-! # Full faithfulness of the original relative initial filtration
 
@@ -8,6 +16,8 @@ by the unique map of actual zero vertices and descended through every actual
 quotient pushout. Its naturality and uniqueness follow from those displayed
 universal properties. No quotient completion or equivalence is an input.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial
@@ -20,7 +30,7 @@ variable {C : Type u} [Category.{v} C] {V : Structure C}
 
 /-- Include also the actual zero vertex in the unchanged initial intervals. -/
 def augmentedInitialIndex (n : SimplexCategory) :
-    Fin ((addInitial.obj n).len+1) ⥤ Interval (addInitial.obj n) :=
+    Fin ((addInitial.obj n).len + 1) ⥤ Interval (addInitial.obj n) :=
   (show Monotone (fun i ↦ interval 0 i (Fin.zero_le i)) from fun _ _ h ↦ ⟨le_rfl,h⟩).functor
 
 /-- The original quotient map from the initial interval to its displayed quotient. -/
@@ -42,12 +52,12 @@ def augmentFiltrationMap {n : SimplexCategory} {F G : Obj N n}
     (a : (initialFiltrationFunctor N n).obj F ⟶ (initialFiltrationFunctor N n).obj G) :
     augmentedInitialIndex n ⋙ F.obj.obj ⟶ augmentedInitialIndex n ⋙ G.obj.obj where
   app i := by
-    change Fin (n.len+1+1) at i
+    change Fin (n.len + 1 + 1) at i
     cases i using Fin.cases with
     | zero => exact (F.obj.property.zero 0).to_ _
     | succ i => exact a.app i
   naturality i j f := by
-    change Fin (n.len+1+1) at i j
+    change Fin (n.len + 1 + 1) at i j
     cases i using Fin.cases with
     | zero => exact (F.obj.property.zero 0).eq_of_src _ _
     | succ i =>
@@ -57,7 +67,7 @@ def augmentFiltrationMap {n : SimplexCategory} {F G : Obj N n}
 
 @[simp] theorem augmentFiltrationMap_app_succ {n : SimplexCategory} {F G : Obj N n}
     (a : (initialFiltrationFunctor N n).obj F ⟶ (initialFiltrationFunctor N n).obj G)
-    (i : Fin (n.len+1)) : (augmentFiltrationMap N a).app i.succ = a.app i := rfl
+    (i : Fin (n.len + 1)) : (augmentFiltrationMap N a).app i.succ = a.app i := rfl
 
 /-- The actual augmented map satisfies the original quotient descent relation. -/
 theorem filtrationDescent_condition {n : SimplexCategory} {F G : Obj N n}
@@ -119,11 +129,12 @@ def extendFiltrationMap {n : SimplexCategory} {F G : Obj N n}
 /-- On every original initial object the descended map is exactly the given component. -/
 @[simp] theorem extendFiltrationAt_initial {n : SimplexCategory} {F G : Obj N n}
     (a : (initialFiltrationFunctor N n).obj F ⟶ (initialFiltrationFunctor N n).obj G)
-    (i : Fin (n.len+1)) :
+    (i : Fin (n.len + 1)) :
     extendFiltrationAt N a (interval 0 i.succ (Fin.zero_le _)) = a.app i := by
   have h := originalQuotient_extendFiltrationAt N a (interval 0 i.succ (Fin.zero_le _))
   change F.obj.obj.map (𝟙 _) ≫ _ = a.app i ≫ G.obj.obj.map (𝟙 _) at h
-  erw [CategoryTheory.Functor.map_id, CategoryTheory.Functor.map_id, Category.id_comp, Category.comp_id] at h
+  erw [CategoryTheory.Functor.map_id, CategoryTheory.Functor.map_id, Category.id_comp,
+    Category.comp_id] at h
   exact h
 
 @[simp] theorem initialFiltrationFunctor_map_extend {n : SimplexCategory} {F G : Obj N n}
@@ -135,15 +146,17 @@ def extendFiltrationMap {n : SimplexCategory} {F G : Obj N n}
 /-- Equality on the original initial filtration also retains the unique actual zero component. -/
 theorem initialComponent_eq_of_map_eq {n : SimplexCategory} {F G : Obj N n}
     {f g : F ⟶ G} (h : (initialFiltrationFunctor N n).map f = (initialFiltrationFunctor N n).map g)
-    (i : Fin ((addInitial.obj n).len+1)) :
-    f.hom.hom.app (interval 0 i (Fin.zero_le _)) = g.hom.hom.app (interval 0 i (Fin.zero_le _)) := by
-  change Fin (n.len+1+1) at i
+    (i : Fin ((addInitial.obj n).len + 1)) :
+    f.hom.hom.app (interval 0 i (Fin.zero_le _)) = g.hom.hom.app (interval 0 i (Fin.zero_le _))
+      := by
+  change Fin (n.len + 1 + 1) at i
   cases i using Fin.cases with
   | zero => exact (F.obj.property.zero 0).eq_of_src _ _
   | succ i => exact congrArg (fun a ↦ a.app i) h
 
 /-- The original filtration functor is faithful by each actual quotient universal property. -/
-instance initialFiltrationFunctor_faithful (n : SimplexCategory) : (initialFiltrationFunctor N n).Faithful where
+instance initialFiltrationFunctor_faithful (n : SimplexCategory) : (initialFiltrationFunctor N
+    n).Faithful where
   map_injective {F G} f g h := by
     apply ObjectProperty.hom_ext
     apply ObjectProperty.hom_ext
@@ -153,12 +166,15 @@ instance initialFiltrationFunctor_faithful (n : SimplexCategory) : (initialFiltr
         initialComponent_eq_of_map_eq N h p.val.2]
     · exact (F.obj.property.zero p.val.1).eq_of_src _ _
 
-/-- Fullness uses the actual descended original transformation, with no choice of quotient replacement. -/
-instance initialFiltrationFunctor_full (n : SimplexCategory) : (initialFiltrationFunctor N n).Full where
+/-- Fullness uses the actual descended original transformation, with no choice of quotient
+replacement. -/
+instance initialFiltrationFunctor_full (n : SimplexCategory) : (initialFiltrationFunctor N
+    n).Full where
   map_surjective a := ⟨extendFiltrationMap N a, initialFiltrationFunctor_map_extend N a⟩
 
 /-- The genuine full-faithfulness datum for the unchanged original functor. -/
-def initialFiltrationFullyFaithful (n : SimplexCategory) : (initialFiltrationFunctor N n).FullyFaithful where
+def initialFiltrationFullyFaithful (n : SimplexCategory) : (initialFiltrationFunctor N
+    n).FullyFaithful where
   preimage := extendFiltrationMap N
   map_preimage := initialFiltrationFunctor_map_extend N
   preimage_map f := (initialFiltrationFunctor N n).map_injective

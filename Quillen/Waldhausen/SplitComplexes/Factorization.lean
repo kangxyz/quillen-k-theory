@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.SplitComplexes.Basic
-import Mathlib.Algebra.Homology.HomotopyCategory.MappingCone
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SplitComplexes.Basic
+public import Mathlib.Algebra.Homology.HomotopyCategory.MappingCone
 
 /-!
 # A split-cofibration factorization of every chain map
@@ -10,6 +18,8 @@ The second arrow is an actual chain homotopy equivalence, proved using the
 contracting homotopy of the identity cone. This is an ambient factorization;
 closure of a chosen full subcategory and its quotient is a separate issue.
 -/
+@[expose] public section
+
 
 noncomputable section
 

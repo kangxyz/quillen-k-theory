@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianInduction
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianInduction
 
 /-!
 # Original weak-cartesian skeletal comparisons
@@ -12,9 +14,11 @@ These consumers retain two arbitrary coefficient diagrams, actual transition
 squares, empty skeletons, degenerate characteristic charts, and the full original
 constant-path comparison at finite stages and in the sequential colimit.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite Quillen Quillen.TheoremA Quillen.TheoremB
-open Quillen.TheoremB.SkeletalCartesian
+open Quillen.CartesianRealization.Skeletal
 open scoped Simplicial Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false
@@ -26,14 +30,15 @@ example (htrans : TransitionWeakCartesian η) (n : ℕ) : StageWeakCharts η n :
   stageWeakCharts η htrans n
 example (htrans : TransitionWeakCartesian η) (k n : ℕ) (h : k ≤ n) :
     IsWeakHomotopyEquivalence
-      (SequentialCartesian.stageComparison (realizedReplacementSkeletonMap η) k n h) :=
+      (Quillen.CartesianRealization.Sequential.stageComparison (realizedReplacementSkeletonMap η) k n h) :=
   stageComparison_isWeakHomotopyEquivalence η htrans k n h
 example (htrans : TransitionWeakCartesian η) (k : ℕ) :
     IsWeakHomotopyEquivalence (replacementSkeletonComparison η k) :=
-  SkeletalCartesian.replacementSkeletonComparison_isWeakHomotopyEquivalence η htrans k
+  Quillen.CartesianRealization.Skeletal.replacementSkeletonComparison_isWeakHomotopyEquivalence η htrans k
 example (htrans : TransitionWeakCartesian η) :
     FiniteCubeStrictHELP (replacementSkeletonComparison η 0) :=
-  (SkeletalCartesian.replacementSkeletonComparison_isWeakHomotopyEquivalence η htrans 0).cube_strictHELP
+  (Quillen.CartesianRealization.Skeletal.replacementSkeletonComparison_isWeakHomotopyEquivalence η htrans
+    0).cube_strictHELP
 example (n : ℕ) : WeakCartesian (cellBoundaryProjection η n).hom (cellProjection η n).hom
     (boundaryLeg H n).hom (boundaryLeg J n).hom
     (congrArg TopCat.Hom.hom (cellBoundarySquare η n)) :=
@@ -49,11 +54,13 @@ example (A : (nerve D).Subcomplex) {n k : ℕ}
     ChartWeakCartesian η A ((nerve D).map α.op s) (A.map α.op hs) :=
   ChartWeakCartesian.of_epi η A s hs α h
 example (k n : ℕ) (h : k ≤ n) (x : (realizedReplacementSkeleton H).obj k) (t : unitInterval) :
-    (SequentialCartesian.stageComparison (realizedReplacementSkeletonMap η) k n h x).val.2.2 t =
-      (realizedReplacementSkeleton J).map (homOfLE h) ((realizedReplacementSkeletonMap η).app k x) := rfl
+    (Quillen.CartesianRealization.Sequential.stageComparison (realizedReplacementSkeletonMap η) k n h x).val.2.2 t =
+      (realizedReplacementSkeleton J).map (homOfLE h) ((realizedReplacementSkeletonMap η).app k x)
+        := rfl
 example (k : ℕ) (x : (realizedReplacementSkeleton H).obj k) (t : unitInterval) :
     (replacementSkeletonComparison η k x).val.2.2 t =
-      (realizedReplacementSkeletonCocone J).ι.app k ((realizedReplacementSkeletonMap η).app k x) := rfl
+      (realizedReplacementSkeletonCocone J).ι.app k ((realizedReplacementSkeletonMap η).app k x) :=
+        rfl
 example (k : ℕ) (x : (realizedReplacementSkeleton H).obj k) :
     (replacementSkeletonComparison η k x).val.2.1 =
       (realizedReplacementSkeletonCocone H).ι.app k x := rfl

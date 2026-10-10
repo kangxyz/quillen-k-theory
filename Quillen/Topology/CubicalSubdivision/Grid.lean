@@ -1,12 +1,20 @@
-import Mathlib.Topology.Homotopy.HomotopyGroup
-import Mathlib.Topology.MetricSpace.Bounded
-import Mathlib.Algebra.Order.Floor.Ring
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.FunProp
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.Topology.Homotopy.HomotopyGroup
+public import Mathlib.Topology.MetricSpace.Bounded
+public import Mathlib.Algebra.Order.Floor.Ring
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.FunProp
 
 /-! # Explicit finite affine grids of the actual unit cube
 
@@ -14,15 +22,19 @@ Every cell retains its literal coordinate formula. The finite closed cover,
 mesh estimate and shared-face equations are proved in the original product
 topology, including the zero-dimensional cube.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 namespace Quillen.CubicalSubdivision
 
+/-- The `n`-dimensional unit cube, with coordinates indexed by `Fin n`. -/
 abbrev Cube (n : ℕ) := Fin n → unitInterval
+/-- A choice of one of the `m + 1` grid intervals in each of the `n` cube coordinates. -/
 abbrev CellIndex (n m : ℕ) := Fin n → Fin (m+1)
 
 /-- The original affine parametrization of one interval of the grid. -/
-def intervalCell (m : ℕ) (k : Fin (m+1)) : C(unitInterval, unitInterval) where
+def intervalCell (m : ℕ) (k : Fin (m + 1)) : C(unitInterval, unitInterval) where
   toFun t := ⟨((k : ℝ) + t) / (m+1), by
     have hd : (0 : ℝ) < m+1 := by positivity
     constructor
@@ -32,7 +44,7 @@ def intervalCell (m : ℕ) (k : Fin (m+1)) : C(unitInterval, unitInterval) where
       linarith [t.2.2]⟩
   continuous_toFun := by fun_prop
 
-@[simp] theorem intervalCell_val (m : ℕ) (k : Fin (m+1)) (t : unitInterval) :
+@[simp] theorem intervalCell_val (m : ℕ) (k : Fin (m + 1)) (t : unitInterval) :
     (intervalCell m k t : ℝ) = ((k : ℝ) + t) / (m+1) := rfl
 
 /-- The actual affine cell of a finite product grid. -/
@@ -78,6 +90,7 @@ theorem cell_covers (n m : ℕ) (x : Cube n) :
   choose k t ht using h
   exact ⟨k,t,funext ht⟩
 
+/-- The closed grid cell represented by `k`, defined as the range of its affine parametrization. -/
 def cellSet (n m : ℕ) (k : CellIndex n m) : Set (Cube n) := Set.range (cell n m k)
 
 theorem cellSet_nonempty (n m : ℕ) (k : CellIndex n m) : (cellSet n m k).Nonempty :=
@@ -95,7 +108,7 @@ theorem cellSet_iUnion (n m : ℕ) : ⋃ k : CellIndex n m, cellSet n m k = Set.
   exact cell_covers n m x
 
 /-- Each coordinate has width at most the reciprocal grid size. -/
-theorem intervalCell_dist_le (m : ℕ) (k : Fin (m+1)) (s t : unitInterval) :
+theorem intervalCell_dist_le (m : ℕ) (k : Fin (m + 1)) (s t : unitInterval) :
     dist (intervalCell m k s) (intervalCell m k t) ≤ 1 / (m+1 : ℝ) := by
   have hd : (0 : ℝ) < m+1 := by positivity
   change |((k : ℝ) + s) / (m+1) - ((k : ℝ) + t) / (m+1)| ≤ _
@@ -118,7 +131,7 @@ theorem cellSet_diam_le (n m : ℕ) (k : CellIndex n m) :
   exact cell_dist_le n m k s t
 
 /-- Adjacent interval cells agree on their actual common face. -/
-theorem intervalCell_shared_face (m : ℕ) (k l : Fin (m+1))
+theorem intervalCell_shared_face (m : ℕ) (k l : Fin (m + 1))
     (h : (k : ℕ) + 1 = l) : intervalCell m k 1 = intervalCell m l 0 := by
   apply Subtype.ext
   change ((k : ℝ) + 1) / (m+1) = ((l : ℝ) + 0) / (m+1)

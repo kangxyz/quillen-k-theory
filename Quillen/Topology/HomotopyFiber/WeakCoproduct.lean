@@ -1,6 +1,14 @@
-import Quillen.Topology.HomotopyFiber.WeakCriterion
-import Quillen.Topology.HomotopyFiber.ProjectionFibration
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianCoproductPaths
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.WeakCriterion
+public import Quillen.Topology.HomotopyFiber.ProjectionFibration
+public import Quillen.Topology.Realization.Cartesian.CoproductPaths
 
 /-! # Empty-aware weak equivalences assemble over actual coproducts
 
@@ -9,13 +17,15 @@ original summand fiber. The complete all-fiber criterion then proves the
 weak property for the original index-preserving sigma map. Empty indices
 and empty summands require no extra nonemptiness assumption.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open scoped Topology
 universe u
 namespace Quillen.WeakCoproduct
-open TheoremB.SkeletalCartesian
+open Quillen.CartesianRealization.Skeletal
 variable {ι : Type u} {X Y : ι → Type u}
   [∀ i, TopologicalSpace (X i)] [∀ i, TopologicalSpace (Y i)]
   (f : ∀ i, C(X i, Y i))

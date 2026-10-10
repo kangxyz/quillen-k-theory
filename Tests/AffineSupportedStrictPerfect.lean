@@ -3,11 +3,15 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.Affine.SupportedStrictPerfectKEquivalence
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedStrictPerfectKEquivalence
 
 /-!
 Semantic consumers of the original supported affine strict-perfect comparison.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

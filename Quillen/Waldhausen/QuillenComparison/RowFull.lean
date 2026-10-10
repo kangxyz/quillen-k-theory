@@ -1,6 +1,16 @@
-import Quillen.Waldhausen.QuillenComparison.SparseRows
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.SparseRows
 
 /-! # Fullness of the exact-row Q comparison -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -19,15 +29,15 @@ theorem centralEndpointsCover (n : SimplexCategory) (k : Fin ((Edgewise.ε.obj n
   · exact Or.inl ⟨i.rev, by simp [centralInterval, NestedInterval.left, lowerIndex]⟩
   · exact Or.inr ⟨i, rfl⟩
 
-@[simp]
-theorem centralInterval_last_as_interval (n : SimplexCategory) :
-    nestedToInterval (centralInterval n (Fin.last n.len)) =
-      interval 0 (Fin.last (Edgewise.ε.obj n).len) (Fin.zero_le _) :=
-  Subtype.ext (Prod.ext (lowerIndex_last n) (upperIndex_last n))
-
 /-- The whole ordinal, viewed as its maximal containment interval. -/
 def topNested (n : SimplexCategory) : NestedInterval n :=
   ⟨(OrderDual.toDual 0, Fin.last n.len), Fin.zero_le _⟩
+
+/-- The canonical simplification rule for the underlying construction. -/
+@[simp] theorem nestedToInterval_topNested_edgewise (n : SimplexCategory) :
+    nestedToInterval (topNested (Edgewise.ε.obj n)) =
+      interval 0 (Fin.last (Edgewise.ε.obj n).len) (Fin.zero_le _) := rfl
+
 
 @[simp]
 theorem centralInterval_last (n : SimplexCategory) :
@@ -83,7 +93,7 @@ theorem existsUnique_rowIso_of_central_spans {n : SimplexCategory}
   apply Iso.ext
   apply rowNatTrans_ext_top E
   have hh := (hf (Fin.last n.len)).trans (he (Fin.last n.len)).symm
-  rw [centralInterval_last_as_interval] at hh
+  rw [centralInterval_last, nestedToInterval_topNested_edgewise] at hh
   exact hh
 
 /-- Every natural isomorphism of the compared Q-chains lifts to an actual

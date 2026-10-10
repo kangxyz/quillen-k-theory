@@ -1,5 +1,13 @@
-import Quillen.Topology.Realization.EdgePathPresentation.Interiors
-import Mathlib.Topology.Separation.Hausdorff
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.EdgePathPresentation.Interiors
+public import Mathlib.Topology.Separation.Hausdorff
 
 /-! # Compact Hausdorff topological pushouts along closed embeddings
 
@@ -9,6 +17,8 @@ closed attaching locus over the compact image of its boundary part. The sum of
 the two legs is therefore a closed surjection from a compact Hausdorff space.
 Separating its compact fibers proves the actual pushout Hausdorff.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

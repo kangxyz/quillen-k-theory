@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.SConstruction.WeakGridBasedHomotopy
-import Quillen.Waldhausen.Additivity.RealizationHomotopy
-import Quillen.Topology.HomotopyGroups.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.WeakGridBasedHomotopy
+public import Quillen.Waldhausen.Additivity.RealizationHomotopy
+public import Quillen.Topology.HomotopyGroups.Equivalence
 
 /-! # The actual based forward isomorphism of ordinary outer subdivision
 
@@ -8,6 +16,8 @@ Only the forward endpoint is required to preserve the displayed zero vertex.
 The homotopy-group isomorphism is derived from the genuine unbased realization
 equivalence, without assuming that its inverse or inverse homotopies are based.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -55,11 +65,15 @@ def subdivisionPiEquiv (n : ℕ) :
     (horizontalEndpoint_basepoint V) n
 
 /-- The forward homomorphism is exactly postcomposition by the original endpoint. -/
-@[simp]
-theorem subdivisionPiEquiv_toMonoidHom (n : ℕ) :
-    (subdivisionPiEquiv V n).toMonoidHom =
+@[simp] theorem subdivisionPiEquiv_coe (n : ℕ) :
+    (↑(subdivisionPiEquiv V n) : HomotopyGroup.Pi (n + 1)
+        |TheoremA.diagonalSSet (OrdinalSubdivision.δ.op ⋙ bisimplicialSSet V)|
+        (subdivisionBasepoint V) →* HomotopyGroup.Pi (n + 1) |TheoremA.diagonalSSet
+            (bisimplicialSSet V)|
+        (realizationPoint (diagonalZeroVertex V))) =
       piMap n (realizedDiagonalMap (OrdinalSubdivision.horizontalEndpoint (bisimplicialSSet V)))
         (horizontalEndpoint_basepoint V) := rfl
+
 
 /-- Surjectivity of this original forward map is enough to cancel based precomposition. -/
 theorem subdivisionPiMap_surjective (n : ℕ) :

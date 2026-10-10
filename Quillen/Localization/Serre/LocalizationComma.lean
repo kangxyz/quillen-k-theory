@@ -1,10 +1,18 @@
-import Quillen.Localization.Serre.FiberComparison
-import Quillen.Localization.Serre.AuxiliaryLift
-import Quillen.Devissage.CommaLayers
-import Quillen.Devissage.FullyFaithful
-import Quillen.Topology.ClassifyingSpace.Equivalence
-import Quillen.CategoryTheory.TheoremB.Naturality
-import Quillen.CategoryTheory.TheoremA.ContractibleComma
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.FiberComparison
+public import Quillen.Localization.Serre.AuxiliaryLift
+public import Quillen.Devissage.CommaLayers
+public import Quillen.Devissage.FullyFaithful
+public import Quillen.Topology.ClassifyingSpace.Equivalence
+public import Quillen.CategoryTheory.TheoremB.Naturality
+public import Quillen.CategoryTheory.TheoremA.ContractibleComma
 
 /-!
 # The zero comma category of a Serre quotient
@@ -27,6 +35,8 @@ all span representative choices in this comparison.
 These supply zero-comma identifications in localization. They do not assert
 Theorem B's transition hypothesis or the localization theorem.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u v
@@ -601,7 +611,7 @@ def zeroLayerLiftSup {M : C} {S : Subobject (P.isoModSerre.Q.obj M)}
   · simp only [subobjectMap_inf, A.property.1, B.property.1, inf_idem]
   · simp only [subobjectMap_sup, A.property.2, B.property.2, sup_idem]
 
-instance zeroLayerLift_semilatticeSup (M : C) (S : Subobject (P.isoModSerre.Q.obj M)) :
+instance instSemilatticeSupZeroLayerLift (M : C) (S : Subobject (P.isoModSerre.Q.obj M)) :
     SemilatticeSup (ZeroLayerLift P M S) where
   sup := zeroLayerLiftSup P
   le_sup_left _ _ := ⟨inf_le_left, le_sup_left⟩
@@ -721,7 +731,8 @@ def zeroStructuredFiberEquivalence (X : ZeroStructuredComma P) :
 theorem zeroStructuredFiber_contractible (X : ZeroStructuredComma P) :
     ContractibleSpace (ClassifyingSpace (ZeroStructuredFiber P X)) := by
   let := zeroLayerLift_contractible P X.right.obj.of (Q.zeroArrowSubobject X.hom)
-  exact (equivalenceClassifyingHomotopyEquiv (zeroStructuredFiberEquivalence P X)).symm.contractibleSpace
+  exact (equivalenceClassifyingHomotopyEquiv (zeroStructuredFiberEquivalence P
+    X)).symm.contractibleSpace
 
 /-- Quillen's source-zero comma comparison is a genuine homotopy equivalence,
 with the canonical inclusion lift as its forward map. -/
@@ -740,6 +751,8 @@ theorem zeroStructuredCommaClassifyingHomotopyEquiv_toFun :
 def isoStructureProperty (V : (quotientExactStructure P).QCategory) :
     ObjectProperty (StructuredArrow V (quotientMapQ P)) := fun X => IsIso X.hom
 
+/-- The full subcategory of arrows from `V` to `quotientMapQ P` whose structure Q-arrow is an
+isomorphism. -/
 abbrev IsoStructuredComma (V : (quotientExactStructure P).QCategory) :=
   (isoStructureProperty P V).FullSubcategory
 
@@ -752,6 +765,9 @@ def isoStructuredInclusion (V : (quotientExactStructure P).QCategory) :
     IsoStructuredComma P V ⥤ StructuredArrow V (quotientMapQ P) :=
   (isoStructureProperty P V).ι
 
+/-- The costructured-arrow category of maps from isomorphism objects to a fixed quotient
+structured-comma object `X`; this is the comma fiber of `isoStructuredInclusion P V` over
+`X`. -/
 abbrev IsoStructuredFiber {V : (quotientExactStructure P).QCategory}
     (X : StructuredArrow V (quotientMapQ P)) := CostructuredArrow (isoStructuredInclusion P V) X
 
@@ -917,7 +933,8 @@ instance intervalToIsoStructuredFiber_essSurj {V : (quotientExactStructure P).QC
     exact ⟨A, ⟨isoStructuredFiberIsoMk P e he⟩⟩
 
 instance intervalToIsoStructuredFiber_isEquivalence {V : (quotientExactStructure P).QCategory}
-    (X : StructuredArrow V (quotientMapQ P)) : (intervalToIsoStructuredFiber P X).IsEquivalence where
+    (X : StructuredArrow V (quotientMapQ P)) : (intervalToIsoStructuredFiber P X).IsEquivalence
+      where
 
 /-- The actual fiber of the inclusion of isomorphism objects is equivalent
 to the concrete join-semilattice of ambient interval lifts. -/
@@ -933,7 +950,8 @@ theorem isoStructuredFiber_contractible {V : (quotientExactStructure P).QCategor
     ContractibleSpace (ClassifyingSpace (IsoStructuredFiber P X)) := by
   let := subobjectIntervalLift_contractible P X.right.obj.of
     (Q.arrowLower X.hom) (Q.arrowUpper X.hom) (Q.arrowLower_le_upper X.hom)
-  exact (equivalenceClassifyingHomotopyEquiv (isoStructuredFiberEquivalence P X)).symm.contractibleSpace
+  exact (equivalenceClassifyingHomotopyEquiv (isoStructuredFiberEquivalence P
+    X)).symm.contractibleSpace
 
 /-- The inclusion of isomorphism objects into any quotient structured comma
 category is a genuine homotopy equivalence. This is the first auxiliary lemma

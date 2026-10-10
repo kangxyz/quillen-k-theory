@@ -1,5 +1,13 @@
-import Quillen.KTheory.GrothendieckComparison.Edges
-import Mathlib.CategoryTheory.SingleObj
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.GrothendieckComparison.Edges
+public import Mathlib.CategoryTheory.SingleObj
 
 /-!
 # The Grothendieck cocycle on the Q-category
@@ -8,6 +16,8 @@ An admissible span `X ← M → Y` is assigned `[M] - [X]`. Isomorphism invarian
 and the exact pullback relation prove that this is a genuine group-valued
 functor, rather than an assumed presentation map.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v u
@@ -100,7 +110,8 @@ lemma qSpanGrothendieckWeight_comp {X Y Z : C}
 
 /-- The Grothendieck weight descends through the actual apex-isomorphism quotient. -/
 def qGrothendieckWeight {X Y : E.QCategory} (f : X ⟶ Y) : E.GrothendieckGroup :=
-  Quotient.lift (fun s : Span E.deflation E.inflation X.obj.of Y.obj.of => E.qSpanGrothendieckWeight s)
+  Quotient.lift (fun s : Span E.deflation E.inflation X.obj.of Y.obj.of => E.qSpanGrothendieckWeight
+    s)
     (fun s t (h : Nonempty (s ≅ t)) => E.qSpanGrothendieckWeight_iso h.some) f
 
 @[simp] lemma qGrothendieckWeight_mkHom {X Y : C}

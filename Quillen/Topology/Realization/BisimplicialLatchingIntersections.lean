@@ -1,7 +1,17 @@
-import Quillen.Topology.Realization.BisimplicialLatching
-import Mathlib.CategoryTheory.Limits.Types.Pushouts
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.BisimplicialLatching
+public import Mathlib.CategoryTheory.Limits.Types.Pushouts
 
 /-! # Successive degeneracy unions are genuine simplicial pushouts -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial

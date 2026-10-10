@@ -1,7 +1,15 @@
-import Quillen.Resolution.Finite
-import Quillen.CategoryTheory.ExactCategory.Abelian
-import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
-import Mathlib.Data.Int.Init
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Resolution.Finite
+public import Quillen.CategoryTheory.ExactCategory.Abelian
+public import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
+public import Mathlib.Data.Int.Init
 
 /-!
 # Actual cycle sequences and kernel-closed subcategories
@@ -15,6 +23,8 @@ This is the algebraic cycle-closure input used by the acyclic truncation
 induction in Thomason–Trobaugh 1.11.7–1.11.8. No K-theory comparison,
 additivity, or localization conclusion is assumed or asserted.
 -/
+@[expose] public section
+
 
 noncomputable section
 

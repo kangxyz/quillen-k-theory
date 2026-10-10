@@ -1,8 +1,18 @@
-import Quillen.Topology.FilteredRealization.HELP
-import Quillen.Topology.HELP.HomotopyEquiv
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.FilteredRealization.HELP
+public import Quillen.Topology.HELP.HomotopyEquiv
 
 /-! Actual filtered colimit legs satisfy compact HELP, including the exact
 prescribed boundary homotopy, by factorization through a later actual HE. -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory Limits
@@ -17,7 +27,7 @@ include hc
 stronger than a statement about homotopy groups: it retains the whole given
 boundary map and the complete boundary homotopy, exactly. -/
 theorem stage_compactHELP
-    (e : ∀ {j k : J} (u : j ⟶ k), ContinuousMap.HomotopyEquiv |F.obj j| |F.obj k|)
+    (e : ∀ {j k : J} (_ : j ⟶ k), ContinuousMap.HomotopyEquiv |F.obj j| |F.obj k|)
     (he : ∀ {j k : J} (u : j ⟶ k), (e u).toFun = (SSet.toTop.map (F.map u)).hom)
     (j : J) : CompactHomotopyExtensionLiftingProperty (SSet.toTop.map (c.ι.app j)).hom := by
   intro A B _ _ i hi a b H

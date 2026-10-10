@@ -1,7 +1,15 @@
-import Quillen.Topology.FiberwiseMappingPath.Basic
-import Quillen.Topology.HELP.ContractibleTestFullOverBase
-import Quillen.Topology.HomotopyLifting.CubeDuration
-import Quillen.Topology.CubicalSubdivision.BoundaryLifting
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.FiberwiseMappingPath.Basic
+public import Quillen.Topology.HELP.ContractibleTestFullOverBase
+public import Quillen.Topology.HomotopyLifting.CubeDuration
+public import Quillen.Topology.CubicalSubdivision.BoundaryLifting
 
 /-! # Literal boundary lifting for the vertical endpoint
 
@@ -9,6 +17,8 @@ Full over-base HELP retains the entire originally stored boundary path.
 Packing the resulting vertical homotopy therefore gives a strict lift,
 including equality of the complete boundary path coordinate.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 open scoped Topology unitInterval
@@ -18,11 +28,11 @@ variable {E F B : Type u} [TopologicalSpace E] [TopologicalSpace F] [Topological
 
 /-- Full prescribed vertical HELP on one actual pair gives strict endpoint RLP. -/
 theorem endpoint_hasLiftingProperty_of_pairHELP
-    (q : C(F,B)) (f : C(E,F)) {A D : TopCat.{u}} (i : A ⟶ D)
-    (hf : ∀ (a : C(A,E)) (b : C(D,F)) (H : (f.comp a).Homotopy (b.comp i.hom)),
-      (∀ t x,q (H (t,x)) = q (b (i x))) →
-      ∃ c : C(D,E),c.comp i.hom = a ∧ ∃ K : (f.comp c).Homotopy b,
-        HomotopyOver (q.comp b) q K ∧ ∀ t x,K (t,i x) = H (t,x)) :
+    (q : C(F, B)) (f : C(E, F)) {A D : TopCat.{u}} (i : A ⟶ D)
+    (hf : ∀ (a : C(A, E)) (b : C(D, F)) (H : (f.comp a).Homotopy (b.comp i.hom)),
+      (∀ t x, q (H (t, x)) = q (b (i x))) →
+      ∃ c : C(D, E), c.comp i.hom = a ∧ ∃ K : (f.comp c).Homotopy b,
+        HomotopyOver (q.comp b) q K ∧ ∀ t x, K (t, i x) = H (t, x)) :
     HasLiftingProperty i (TopCat.ofHom (endpoint q f)) where
   sq_hasLift {a b} sq := by
     let H : (f.comp ((source q f).comp a.hom)).Homotopy (b.hom.comp i.hom) := {
@@ -56,7 +66,7 @@ theorem endpoint_hasLiftingProperty_of_pairHELP
 /-- Actual HLP projections and full HELP of every original strict-fiber map
 supply exact finite cube-boundary lifting of the vertical endpoint. -/
 theorem endpoint_boundaryLifting_of_fiberHELP
-    (p : C(E,B)) (q : C(F,B)) (f : C(E,F)) (sq : q.comp f = p)
+    (p : C(E, B)) (q : C(F, B)) (f : C(E, F)) (sq : q.comp f = p)
     (hp : HomotopyLiftingProperty p) (hq : HomotopyLiftingProperty q)
     (hf : ∀ b : B,CompactHomotopyExtensionLiftingProperty
       (HomotopyFiber.strictMapOver p q f sq b)) :
@@ -76,7 +86,8 @@ theorem endpoint_boundaryLifting_of_fiberHELP
     exact ⟨fun hx ↦ ⟨⟨x,hx⟩,rfl⟩,fun ⟨y,hy⟩ ↦ hy ▸ y.property⟩
   obtain ⟨c,hc,_,K,hK,hA⟩ := fullHELP_over_contracted_test p q f sq hp hq hf _ _
     (CubicalTests.boundaryInclusion n) (CubicalTests.boundaryInclusion_hep n)
-    (CubicalTests.zero n) (CubicalTests.contraction n) (CubicalTests.boundaryDuration n) hzero a b H hH
+    (CubicalTests.zero n) (CubicalTests.contraction n) (CubicalTests.boundaryDuration n) hzero a
+      b H hH
   exact ⟨c,hc,K,hK,hA⟩
 
 end Quillen.FiberwiseMappingPath

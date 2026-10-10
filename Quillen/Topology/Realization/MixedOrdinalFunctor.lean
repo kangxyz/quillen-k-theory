@@ -1,6 +1,16 @@
-import Quillen.Topology.Realization.MixedOrdinalCylinder
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.MixedOrdinalCylinder
 
 /-! # Functoriality of the actual mixed cylinder -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial
@@ -64,14 +74,19 @@ def cylinderFunctor : SSet.{u} ⥤ SSet.{u} where
   congr 1
   exact (ConcreteCategory.congr_hom (f.naturality (inclusion (oneCut n.unop)).op) x).symm
 
+/-- The natural projection from the mixed-cylinder functor to the identity functor. -/
 def projectionNatTrans : cylinderFunctor.{u} ⟶ 𝟭 _ where
   app := projection
   naturality _ _ f := projection_naturality f
 
+/-- The natural section of the mixed-cylinder functor at endpoint `0`, with source the identity
+functor. -/
 def zeroSectionNatTrans : 𝟭 _ ⟶ cylinderFunctor.{u} where
   app := zeroSection
   naturality _ _ f := zeroSection_naturality f
 
+/-- The natural section of the mixed-cylinder functor at endpoint `1`, with source the
+ordinary-subdivision functor. -/
 def oneSectionNatTrans : OrdinalSubdivision.subdivisionFunctor.{u} ⟶ cylinderFunctor.{u} where
   app := oneSection
   naturality _ _ f := oneSection_naturality f

@@ -1,8 +1,18 @@
-import Quillen.Waldhausen.Additivity.PushoutPreservation
-import Quillen.Waldhausen.Additivity.ZeroFactorization
-import Quillen.Waldhausen.SConstruction.Bisimplicial
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.PushoutPreservation
+public import Quillen.Waldhausen.Additivity.ZeroFactorization
+public import Quillen.Waldhausen.SConstruction.Bisimplicial
 
 /-! # The genuine arrow-valued diagrams of the additivity deformation -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -43,7 +53,8 @@ def intervalArrows (A : Grid₂ p m ⥤ C) : Grid₂ n m ⥤ Arrow C where
       (gridMap₂ β (𝟙 m)).obj x from ⟨le_rfl, h x.2.1.1, h x.2.1.2⟩)))
   map {x y} f := Arrow.homMk (A.map ((gridMap₂ α (𝟙 m)).map f))
     (A.map ((gridMap₂ β (𝟙 m)).map f))
-      ((A.map_comp _ _).symm.trans ((congrArg A.map (Subsingleton.elim _ _)).trans (A.map_comp _ _)))
+      ((A.map_comp _ _).symm.trans ((congrArg A.map (Subsingleton.elim _ _)).trans (A.map_comp _
+        _)))
   map_id _ := by apply Arrow.hom_ext <;> simp
   map_comp _ _ := by apply Arrow.hom_ext <;> simp
 

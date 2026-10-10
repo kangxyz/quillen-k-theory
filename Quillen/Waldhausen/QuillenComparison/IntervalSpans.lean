@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.QuillenComparison.ExactRectangles
-import Quillen.CategoryTheory.QConstruction.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.ExactRectangles
+public import Quillen.CategoryTheory.QConstruction.Basic
 
 /-!
 # The canonical subquotient-span functor
@@ -8,6 +16,8 @@ A row of an exact S-simplex canonically assigns a Quillen Q-morphism to an
 inclusion of intervals. The apex is the intervening subquotient. Composition
 is proved by the genuine pullback squares of `ExactRectangles`.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -33,8 +43,11 @@ namespace NestedInterval
 
 variable {n : SimplexCategory}
 
+/-- The left endpoint of a nested interval, converted from the order-dual coordinate used for
+containment. -/
 def left (p : NestedInterval n) : Fin (n.len + 1) := OrderDual.ofDual p.1.1
 
+/-- The right endpoint of a nested interval in the original finite ordinal. -/
 def right (p : NestedInterval n) : Fin (n.len + 1) := p.1.2
 
 theorem endpoints (p : NestedInterval n) : p.left ≤ p.right := p.2
@@ -58,8 +71,10 @@ def rowObject (t : Fin (n.len + 1)) (p : NestedInterval n) : C :=
 def intervalSpan (t : Fin (n.len + 1)) {p q : NestedInterval n} (h : p ≤ q) :
     Span E.deflation E.inflation (rowObject (F := F) t p) (rowObject (F := F) t q) where
   apex := F.obj (grid t q.left p.right ((NestedInterval.left_anti h).trans p.endpoints))
-  l := rowMap t ((NestedInterval.left_anti h).trans p.endpoints) p.endpoints (NestedInterval.left_anti h) le_rfl
-  r := rowMap t ((NestedInterval.left_anti h).trans p.endpoints) q.endpoints le_rfl (NestedInterval.right_mono h)
+  l := rowMap t ((NestedInterval.left_anti h).trans p.endpoints) p.endpoints
+    (NestedInterval.left_anti h) le_rfl
+  r := rowMap t ((NestedInterval.left_anti h).trans p.endpoints) q.endpoints le_rfl
+    (NestedInterval.right_mono h)
   wl := row_deflation E hF t q.left p.left p.right (NestedInterval.left_anti h) p.endpoints
   wr := hF.cofibration t q.left p.right q.right
     ((NestedInterval.left_anti h).trans p.endpoints) (NestedInterval.right_mono h)
@@ -84,8 +99,9 @@ theorem intervalSpan_comp (t : Fin (n.len + 1)) {p q r : NestedInterval n}
       Q.mkHom E.deflation E.inflation (intervalSpan E hF t hqr) =
         Q.mkHom E.deflation E.inflation (intervalSpan E hF t (hpq.trans hqr)) := by
   let sq := (row_isPullback E hF t r.left q.left p.right q.right
-    (NestedInterval.left_anti hqr) ((NestedInterval.left_anti hpq).trans p.endpoints) (NestedInterval.right_mono hpq)).flip
-  letI := sq.hasPullback
+    (NestedInterval.left_anti hqr) ((NestedInterval.left_anti hpq).trans p.endpoints)
+      (NestedInterval.right_mono hpq)).flip
+  let := sq.hasPullback
   symm
   apply Q.mkHom_eq_of_apexIso _ _ _ _ sq.isoPullback
   · change sq.isoPullback.hom ≫ pullback.fst _ _ ≫ _ = _

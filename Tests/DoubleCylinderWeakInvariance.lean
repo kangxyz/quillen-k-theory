@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.CategoryTheory.TheoremB.DoubleCylinderWeakInvariance
+module
+
+public import Quillen.Topology.DoubleMappingCylinder.WeakInvariance
 
 /-!
 # Original weak double-cylinder map consumers
@@ -13,6 +15,8 @@ The actual map preserves the entire cylinder parameter, the literal overlap
 restriction needs only the attaching weak map, and the whole cylinder needs
 only objectwise weak maps. No cofibration or lifting hypotheses are present.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsBasedStrata
-import Quillen.Topology.FilteredRealization.BasedGroups
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsBasedStrata
+public import Quillen.Topology.FilteredRealization.BasedGroups
 
 /-! # Actual finite-stage coverage and equality detection for bounded-term K-groups
 
@@ -9,6 +17,8 @@ then transport their conclusions to the original canonical KMaps of the
 original inherited isomorphism models. No categorywide uniform bound,
 transition equivalence, or injectivity of realization maps is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -42,12 +52,13 @@ theorem boundedTerms_KMap_jointlySurjective (k : ℕ)
   obtain ⟨j, y, hy⟩ := FilteredRealization.piMap_jointlySurjective
     (boundedTermsSSetDiagram P (MorphismProperty.isomorphisms _))
     (boundedTermsSSetCocone P (MorphismProperty.isomorphisms _))
-    (boundedTermsSSetCocone_isColimit P (MorphismProperty.isomorphisms _))
+    (boundedTermsSSetCoconeIsColimit P (MorphismProperty.isomorphisms _))
     (fun j ↦ (boundedTermsBasedStructure P (boundedStageRank j)).kBasepoint)
     (ofExactCategory (boundedTermsExactStructure P)).kBasepoint
     (fun {_ _} f ↦ boundedTermsBasedTransition_basepoint P (leOfHom (AsSmall.down.map f)))
     (fun j ↦ boundedTermsBasedInclusion_basepoint P (boundedStageRank j)) k x
-  refine ⟨boundedStageRank j, KMap (boundedTermsBasedToOriginalExact P (boundedStageRank j)) k y, ?_⟩
+  refine ⟨boundedStageRank j, KMap (boundedTermsBasedToOriginalExact P (boundedStageRank j)) k
+    y, ?_⟩
   rw [boundedTermsBasedInclusion_KMap, KMap_eq_piMap_of_zeroEq
     (boundedTermsBasedInclusionExact P (boundedStageRank j)) rfl k]
   exact hy
@@ -76,7 +87,7 @@ theorem boundedTerms_KMap_eq_eventually (N k : ℕ)
   obtain ⟨j, f, hf⟩ := FilteredRealization.piMap_eq_eventually
     (boundedTermsSSetDiagram P (MorphismProperty.isomorphisms _))
     (boundedTermsSSetCocone P (MorphismProperty.isomorphisms _))
-    (boundedTermsSSetCocone_isColimit P (MorphismProperty.isomorphisms _))
+    (boundedTermsSSetCoconeIsColimit P (MorphismProperty.isomorphisms _))
     (fun j ↦ (boundedTermsBasedStructure P (boundedStageRank j)).kBasepoint)
     (ofExactCategory (boundedTermsExactStructure P)).kBasepoint
     (fun {_ _} f ↦ boundedTermsBasedTransition_basepoint P (leOfHom (AsSmall.down.map f)))
@@ -102,7 +113,8 @@ theorem boundedTerms_KMap_eq_eventually (N k : ℕ)
 theorem boundedTerms_KMap_eq_one_eventually (N k : ℕ)
     (x : (ofExactCategory (boundedTermsStratumExactStructure P N)).K k)
     (he : KMap (fixedTermsInclusionExactFunctor P (-(N : ℤ)) N).waldhausenExact k x = 1) :
-    ∃ M : ℕ, ∃ h : N ≤ M, KMap (boundedTermsStratumTransitionExact P h).waldhausenExact k x = 1 := by
+    ∃ M : ℕ, ∃ h : N ≤ M, KMap (boundedTermsStratumTransitionExact P h).waldhausenExact k x = 1
+      := by
   obtain ⟨M, h, hh⟩ := boundedTerms_KMap_eq_eventually P N k x 1 (he.trans (map_one _).symm)
   exact ⟨M, h, hh.trans (map_one _)⟩
 

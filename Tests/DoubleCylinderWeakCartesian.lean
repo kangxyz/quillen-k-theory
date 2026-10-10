@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.CategoryTheory.TheoremB.DoubleCylinderWeakCartesian
+module
+
+public import Quillen.Topology.DoubleMappingCylinder.WeakCartesian
 
 /-! The original endpoint comparisons of weakly cartesian double cylinders
 retain their actual source points and constant paths, including degree zero. -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory Quillen
@@ -36,20 +40,23 @@ example (x : B) : Function.Bijective (homotopyGroupMap (N := Fin 0)
     (HomotopyPullback.comparison (DoubleCylinder.map sq sq' a b c wf wg).hom
       (Subdivision.leftEnd (e := e')).hom b.hom (Subdivision.leftEnd (e := e)).hom
       (FiniteNormalization.left_square sq sq' a b c wf wg)) (x := x) rfl) :=
-  (Cartesian.leftComparison_isWeakHomotopyEquivalence sq sq' a b c wf wg hgraph hL hR).homotopy_bijective x 0
+  (Cartesian.leftComparison_isWeakHomotopyEquivalence sq sq' a b c wf wg hgraph hL
+    hR).homotopy_bijective x 0
 
 include hgraph hL hR in
 example (x : C) (n : ℕ) : Function.Bijective (homotopyGroupMap (N := Fin n)
     (HomotopyPullback.comparison (DoubleCylinder.map sq sq' a b c wf wg).hom
       (Subdivision.rightEnd (e := e')).hom c.hom (Subdivision.rightEnd (e := e)).hom
       (FiniteNormalization.right_square sq sq' a b c wf wg)) (x := x) rfl) :=
-  (Cartesian.rightComparison_isWeakHomotopyEquivalence sq sq' a b c wf wg hgraph hL hR).homotopy_bijective x n
+  (Cartesian.rightComparison_isWeakHomotopyEquivalence sq sq' a b c wf wg hgraph hL
+    hR).homotopy_bijective x n
 
 include hgraph hL hR in
 example [IsEmpty B] :
     IsEmpty (HomotopyPullback (DoubleCylinder.map sq sq' a b c wf wg).hom
       (Subdivision.leftEnd (e := e')).hom) :=
-  (Cartesian.leftComparison_isWeakHomotopyEquivalence sq sq' a b c wf wg hgraph hL hR).isEmpty_target
+  (Cartesian.leftComparison_isWeakHomotopyEquivalence sq sq' a b c wf wg hgraph hL
+    hR).isEmpty_target
 
 example (x : B) :
     let z := HomotopyPullback.comparison (DoubleCylinder.map sq sq' a b c wf wg).hom

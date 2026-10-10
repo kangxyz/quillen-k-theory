@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Cylinder.RelativeComplex
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Cylinder.RelativeComplex
 
 /-!
 # The actual quotient of a relative endpoint map
@@ -8,6 +16,8 @@ is also the cokernel of the relative middle map. The proof uses the actual
 cokernel universal properties and does not assume closure of an object
 subcategory under arbitrary quotients.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -28,7 +38,7 @@ variable {C : Type u} [Category.{v} C] [HasZeroMorphisms C]
 
 /-- The displayed composite gives the actual relative cokernel universal property.
 No pushout hypothesis is needed once the displayed relative maps commute. -/
-def isCokernel_relative_middle : IsColimit (CokernelCofork.ofπ (T.g ≫ p) hk) := by
+def relativeMiddleCokernelIsColimit : IsColimit (CokernelCofork.ofπ (T.g ≫ p) hk) := by
   let first {W : C} (a : T.X₂ ⟶ W) (ha : k ≫ a = 0) : T.X₃ ⟶ W :=
     hT.desc (CokernelCofork.ofπ a (by rw [← hj, Category.assoc, ha, comp_zero]))
   have first_fac {W : C} (a : T.X₂ ⟶ W) (ha : k ≫ a = 0) :

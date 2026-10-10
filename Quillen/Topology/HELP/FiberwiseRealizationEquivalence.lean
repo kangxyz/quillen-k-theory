@@ -1,5 +1,13 @@
-import Quillen.Topology.HELP.FiberwiseRealizationLifting
-import Quillen.Topology.HELP.CompactHomotopyEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.FiberwiseRealizationLifting
+public import Quillen.Topology.HELP.CompactHomotopyEquivalence
 
 /-! # Actual equivalence of realization totals from genuine fiber HELP
 
@@ -7,6 +15,8 @@ When both total spaces are actual simplicial realizations, the proved
 realized-inclusion lifting constructs a global inverse and both homotopies.
 This does not presume a realization model for an arbitrary homotopy pullback.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Simplicial Topology unitInterval
@@ -20,7 +30,7 @@ open TheoremA
 homotopy equivalence if its actual strict-fiber maps have compact HELP. -/
 def homotopyEquivOfRealizationFiberHELP {X Y : SSet.{u}}
     {B : Type u} [TopologicalSpace B]
-    (pBase : C(|X|,B)) (qBase : C(|Y|,B)) (f : C(|X|,|Y|)) (wBase : qBase.comp f = pBase)
+    (pBase : C(|X|, B)) (qBase : C(|Y|, B)) (f : C(|X|, |Y|)) (wBase : qBase.comp f = pBase)
     (hpBase : HomotopyLiftingProperty pBase) (hqBase : HomotopyLiftingProperty qBase)
     (hf : ∀ b : B, CompactHomotopyExtensionLiftingProperty
       (HomotopyFiber.strictMapOver pBase qBase f wBase b)) :
@@ -45,7 +55,8 @@ def homotopyEquivOfRealizationFiberHELP {X Y : SSet.{u}}
   have h₀ : a₀ ≫ p = TopCat.ofHom f := by rw [Category.assoc, hs, Category.comp_id]
   have h₁ : a₁ ≫ p = TopCat.ofHom f := rfl
   let H := homotopyOfRealizedEndpointLifting p X
-    (MappingPath.endpoint_realization_mono_of_fiberHELP pBase qBase f wBase hpBase hqBase hf (simplicialCylinderEndpoints X))
+    (MappingPath.endpoint_realization_mono_of_fiberHELP pBase qBase f wBase hpBase hqBase hf
+      (simplicialCylinderEndpoints X))
     a₀ a₁ (TopCat.ofHom f) h₀ h₁
   exact {
     toFun := f
@@ -55,7 +66,7 @@ def homotopyEquivOfRealizationFiberHELP {X Y : SSet.{u}}
 
 @[simp] theorem homotopyEquivOfRealizationFiberHELP_toFun {X Y : SSet.{u}}
     {B : Type u} [TopologicalSpace B]
-    (pBase : C(|X|,B)) (qBase : C(|Y|,B)) (f : C(|X|,|Y|)) (wBase : qBase.comp f = pBase)
+    (pBase : C(|X|, B)) (qBase : C(|Y|, B)) (f : C(|X|, |Y|)) (wBase : qBase.comp f = pBase)
     (hpBase : HomotopyLiftingProperty pBase) (hqBase : HomotopyLiftingProperty qBase)
     (hf : ∀ b : B, CompactHomotopyExtensionLiftingProperty
       (HomotopyFiber.strictMapOver pBase qBase f wBase b)) :

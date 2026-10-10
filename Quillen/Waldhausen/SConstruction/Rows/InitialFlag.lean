@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.SConstruction.Rows.Completion
-import Quillen.Waldhausen.SConstruction.Rows.Functoriality
-import Quillen.Waldhausen.Additivity.ZeroFactorization
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.Completion
+public import Quillen.Waldhausen.SConstruction.Rows.Functoriality
+public import Quillen.Waldhausen.Additivity.ZeroFactorization
 
 /-! # The unchanged initial flag of a genuine quotient row
 
@@ -13,6 +15,8 @@ Restriction to intervals starting at zero is fully faithful on all original
 row maps. The inverse descends through the actual displayed quotient squares.
 Pointwise weakness on this flag detects weakness on the entire row by gluing.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -22,11 +26,11 @@ namespace Quillen.Waldhausen.QuotientRows
 variable {C : Type u} [Category.{v} C] (W : Structure C)
 
 /-- Include each vertex as its original initial interval, including the zero vertex. -/
-def initialFlagIndex (n : SimplexCategory) : Fin (n.len+1) ⥤ Interval n :=
+def initialFlagIndex (n : SimplexCategory) : Fin (n.len + 1) ⥤ Interval n :=
   (show Monotone (fun i ↦ interval 0 i (Fin.zero_le i)) from fun _ _ h ↦ ⟨le_rfl,h⟩).functor
 
 /-- Restrict every original row and natural transformation to its entire initial flag. -/
-def initialFlagFunctor (n : SimplexCategory) : Obj W n ⥤ (Fin (n.len+1) ⥤ C) where
+def initialFlagFunctor (n : SimplexCategory) : Obj W n ⥤ (Fin (n.len + 1) ⥤ C) where
   obj A := initialFlagIndex n ⋙ A.obj
   map f := Functor.whiskerLeft (initialFlagIndex n) f.hom
   map_id _ := by ext i; rfl
@@ -34,7 +38,7 @@ def initialFlagFunctor (n : SimplexCategory) : Obj W n ⥤ (Fin (n.len+1) ⥤ C)
 
 /-- Every original initial-flag arrow is a genuine cofibration. -/
 theorem initialFlag_map_cof {n : SimplexCategory} (A : Obj W n)
-    {i j : Fin (n.len+1)} (f : i ⟶ j) :
+    {i j : Fin (n.len + 1)} (f : i ⟶ j) :
     W.cof (((initialFlagFunctor W n).obj A).map f) :=
   A.property.cofibration 0 i j (Fin.zero_le _) (leOfHom f)
 
@@ -108,10 +112,11 @@ def extendInitialFlagMap {n : SimplexCategory} {A B : Obj W n}
 /-- Every specified initial component is retained exactly. -/
 @[simp] theorem extendInitialFlagAt_initial {n : SimplexCategory} {A B : Obj W n}
     (a : (initialFlagFunctor W n).obj A ⟶ (initialFlagFunctor W n).obj B)
-    (i : Fin (n.len+1)) : extendInitialFlagAt W a (interval 0 i (Fin.zero_le _)) = a.app i := by
+    (i : Fin (n.len + 1)) : extendInitialFlagAt W a (interval 0 i (Fin.zero_le _)) = a.app i := by
   have h := initialQuotient_extendInitialFlagAt W a (interval 0 i (Fin.zero_le _))
   change A.obj.map (𝟙 _) ≫ _ = a.app i ≫ B.obj.map (𝟙 _) at h
-  erw [CategoryTheory.Functor.map_id, CategoryTheory.Functor.map_id, Category.id_comp, Category.comp_id] at h
+  erw [CategoryTheory.Functor.map_id, CategoryTheory.Functor.map_id, Category.id_comp,
+    Category.comp_id] at h
   exact h
 
 /-- Restriction of the actual descendant is exactly the given initial-flag map. -/

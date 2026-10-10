@@ -1,8 +1,18 @@
-import Quillen.Resolution.Closure
-import Quillen.KTheory.GrothendieckComparison.Edges
-import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Resolution.Closure
+public import Quillen.KTheory.GrothendieckComparison.Edges
+public import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
 
 /-! # Exact-category Q-arrow calculations used by resolution -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -67,7 +77,7 @@ instance qInflation_mono {X Y : C} (i : X ⟶ Y) (hi : E.inflation i) :
       Q.mkHom _ _ t ≫ E.qInflation i hi at h
     rw [E.qSpan_comp_inflation, E.qSpan_comp_inflation] at h
     obtain ⟨e, hl, hr⟩ := (Q.mkHom_eq_iff_apexIso _ _ _ _).1 h
-    letI : Mono i := E.mono_of_inflation hi
+    let : Mono i := E.mono_of_inflation hi
     exact Q.mkHom_eq_of_apexIso _ _ s t e hl
       ((cancel_mono i).1 (by simpa only [Category.assoc] using hr))
 
@@ -90,7 +100,7 @@ variable {C : Type u} {D : Type u} [Category.{v} C] [Category.{v} D]
     {X Y : C} (i : X ⟶ Y) (hi : EC.inflation i) :
     F.mapQ.map (EC.qInflation i hi) =
       ED.qInflation (F.toFunctor.map i) (F.map_inflation i hi) := by
-  simp only [ExactStructure.qInflation, ExactStructure.qDeflation, ExactFunctor.mapQ,
+  simp only [ExactStructure.qInflation, ExactFunctor.mapQ,
     QCompatibleFunctor.mapQ_mkHom, QCompatibleFunctor.mapSpan, ExactFunctor.toQCompatibleFunctor]
   apply Q.mkHom_eq_of_apexIso _ _ _ _ (Iso.refl (F.toFunctor.obj X)) <;> simp
 
@@ -98,7 +108,7 @@ variable {C : Type u} {D : Type u} [Category.{v} C] [Category.{v} D]
     {X Y : C} (p : X ⟶ Y) (hp : EC.deflation p) :
     F.mapQ.map (EC.qDeflation p hp) =
       ED.qDeflation (F.toFunctor.map p) (F.map_deflation p hp) := by
-  simp only [ExactStructure.qInflation, ExactStructure.qDeflation, ExactFunctor.mapQ,
+  simp only [ExactStructure.qDeflation, ExactFunctor.mapQ,
     QCompatibleFunctor.mapQ_mkHom, QCompatibleFunctor.mapSpan, ExactFunctor.toQCompatibleFunctor]
   apply Q.mkHom_eq_of_apexIso _ _ _ _ (Iso.refl (F.toFunctor.obj X)) <;> simp
 

@@ -1,9 +1,17 @@
-import Quillen.Topology.HELP.WeakCubeFilling
-import Quillen.Topology.HomotopyLifting.CubeDuration
-import Quillen.Topology.HELP.PairLifting
-import Quillen.Topology.HomotopyFiber.WeakPullback
-import Quillen.Topology.HomotopyGroups.Contractible
-import Quillen.Topology.CubicalSubdivision.BoundaryLifting
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.WeakCubeFilling
+public import Quillen.Topology.HomotopyLifting.CubeDuration
+public import Quillen.Topology.HELP.PairLifting
+public import Quillen.Topology.HomotopyFiber.WeakPullback
+public import Quillen.Topology.HomotopyGroups.Contractible
+public import Quillen.Topology.CubicalSubdivision.BoundaryLifting
 
 /-!
 # Full finite cube-boundary HELP from an original weak equivalence
@@ -14,6 +22,8 @@ of straight interpolation in the parameter cube retains every boundary point
 of the homotopy pullback, including its complete original stored path. Only
 finite cube-boundary tests are concluded.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -22,7 +32,8 @@ open scoped Topology unitInterval
 universe u
 namespace Quillen.CubicalTests
 
-private def intervalMix (t a b : unitInterval) : unitInterval :=
+/-- Linear interpolation `(1 - t) * a + t * b` inside the unit interval. -/
+def intervalMix (t a b : unitInterval) : unitInterval :=
   ⟨(1-(t : ℝ))*(a : ℝ)+(t : ℝ)*(b : ℝ),by
     constructor
     · exact add_nonneg (mul_nonneg (sub_nonneg.mpr t.property.2) a.property.1)
@@ -31,7 +42,7 @@ private def intervalMix (t a b : unitInterval) : unitInterval :=
       have h₁ := mul_le_mul_of_nonneg_left b.property.2 t.property.1
       nlinarith⟩
 
-@[fun_prop] private theorem continuous_intervalMix :
+@[fun_prop] theorem continuous_intervalMix :
     Continuous (fun z : unitInterval × (unitInterval × unitInterval) ↦
       intervalMix z.1 z.2.1 z.2.2) := by
   apply Continuous.subtype_mk
@@ -52,7 +63,7 @@ private theorem intervalMix_self (t a : unitInterval) : intervalMix t a a = a :=
 
 /-- Literal coordinatewise straight interpolation in the actual finite cube. -/
 def straightHomotopy {D : Type u} [TopologicalSpace D] (n : ℕ)
-    (a b : C(D,cube.{u} n)) : a.Homotopy b where
+    (a b : C(D, cube.{u} n)) : a.Homotopy b where
   toFun z := ⟨fun i ↦ intervalMix z.1 ((a z.2).down i) ((b z.2).down i)⟩
   continuous_toFun := by
     apply continuous_uliftUp.comp
@@ -70,7 +81,7 @@ def straightHomotopy {D : Type u} [TopologicalSpace D] (n : ℕ)
 
 /-- Equal original endpoint values stay fixed for the entire interpolation. -/
 theorem straightHomotopy_fixed {D : Type u} [TopologicalSpace D] (n : ℕ)
-    (a b : C(D,cube.{u} n)) (z : D) (hz : a z = b z) (t : unitInterval) :
+    (a b : C(D, cube.{u} n)) (z : D) (hz : a z = b z) (t : unitInterval) :
     straightHomotopy n a b (t,z) = b z := by
   apply ULift.ext
   funext i
@@ -81,13 +92,13 @@ end Quillen.CubicalTests
 namespace Quillen.IsWeakHomotopyEquivalence
 open CubicalTests HomotopyPullback
 variable {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y]
-  {f : C(X,Y)} (hf : IsWeakHomotopyEquivalence f)
+  {f : C(X, Y)} (hf : IsWeakHomotopyEquivalence f)
 include hf
 
 /-- Full prescribed-boundary HELP on every actual finite cube-boundary
 pair, including dimension zero and nonconstant original boundary maps.
 Stationary lifting retains every original stored boundary path exactly. -/
-theorem cube_fullHELP (n : ℕ) (a : C(boundary.{u} n,X)) (b : C(cube.{u} n,Y))
+theorem cube_fullHELP (n : ℕ) (a : C(boundary.{u} n, X)) (b : C(cube.{u} n, Y))
     (H : (f.comp a).Homotopy (b.comp (boundaryInclusion n).hom)) :
     ∃ c : C(cube.{u} n,X), c.comp (boundaryInclusion n).hom = a ∧
       ∃ K : (f.comp c).Homotopy b,
@@ -141,7 +152,7 @@ theorem cube_fullHELP (n : ℕ) (a : C(boundary.{u} n,X)) (b : C(cube.{u} n,Y))
 
 /-- The strict-square specialization retains its entire arbitrary original
 boundary map and a homotopy relative to that whole boundary. -/
-theorem cube_strictHELP (n : ℕ) (a : C(boundary.{u} n,X)) (b : C(cube.{u} n,Y))
+theorem cube_strictHELP (n : ℕ) (a : C(boundary.{u} n, X)) (b : C(cube.{u} n, Y))
     (w : f.comp a = b.comp (boundaryInclusion n).hom) :
     ∃ c : C(cube.{u} n,X), c.comp (boundaryInclusion n).hom = a ∧
       Nonempty ((f.comp c).HomotopyRel b (Set.range (boundaryInclusion n))) := by

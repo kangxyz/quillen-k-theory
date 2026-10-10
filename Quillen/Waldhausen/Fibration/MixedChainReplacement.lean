@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.AcyclicSubcategory
-import Quillen.Waldhausen.Approximation.FiniteReplacement
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.AcyclicSubcategory
+public import Quillen.Waldhausen.Approximation.FiniteReplacement
 
 /-! # The original cylinder replacement on mixed weak chains
 
@@ -10,6 +18,8 @@ inductively from the structural fine-square preservation of the middle functor.
 The projection is asserted coarse-weak only; no fine comparison or equivalence
 is inferred from it.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -41,23 +51,23 @@ theorem sequenceReplacement_map_fine (hD : PreservesFineSquares N D)
 /-- The unchanged finite replacement preserves the original pointwise fine weak maps. -/
 theorem finiteReplacement_map_fine (hD : PreservesFineSquares N D) (n : ℕ)
     {F G : ComposableArrows C n} (α : F ⟶ G) (hα : ∀ i, V.weq (α.app i))
-    (i : Fin (n+1)) : V.weq (((finiteReplacement D n).map α).app i) :=
+    (i : Fin (n + 1)) : V.weq (((finiteReplacement D n).map α).app i) :=
   sequenceReplacement_map_fine N D hD ((extendFinite n).map α)
     (fun k ↦ hα ((clampIndex n).obj k)) i.val
 
 /-- All original replacement arrows are fine cofibrations because the cofibration classes agree. -/
 theorem finiteReplacement_map_fine_cof (n : ℕ) (F : ComposableArrows C n)
-    {i j : Fin (n+1)} (f : i ⟶ j) : V.cof (((finiteReplacement D n).obj F).map f) := by
+    {i j : Fin (n + 1)} (f : i ⟶ j) : V.cof (((finiteReplacement D n).obj F).map f) := by
   rw [← N.cof_eq]
   exact finiteReplacement_map_cof D n F f
 
 /-- The actual finite projection is coarse-weak at every original vertex. -/
-theorem finiteProjection_coarse (n : ℕ) (F : ComposableArrows C n) (i : Fin (n+1)) :
+theorem finiteProjection_coarse (n : ℕ) (F : ComposableArrows C n) (i : Fin (n + 1)) :
     N.coarse.weq (((finiteProjection D n).app F).app i) := finiteProjection_weak D n F i
 
 /-- An original coarse-weak chain arrow remains coarse-weak after cylinder replacement. -/
 theorem finiteReplacement_map_coarse [N.coarse.weq.HasTwoOutOfThreeProperty]
-    (n : ℕ) (F : ComposableArrows C n) {i j : Fin (n+1)} (f : i ⟶ j)
+    (n : ℕ) (F : ComposableArrows C n) {i j : Fin (n + 1)} (f : i ⟶ j)
     (hf : N.coarse.weq (F.map f)) :
     N.coarse.weq (((finiteReplacement D n).obj F).map f) := by
   apply N.coarse.weq.of_postcomp _ (((finiteProjection D n).app F).app j)
@@ -68,8 +78,8 @@ theorem finiteReplacement_map_coarse [N.coarse.weq.HasTwoOutOfThreeProperty]
 /-- A genuine coarse-weak finite chain is resolved by genuine coarse-weak fine cofibrations. -/
 theorem finiteReplacement_map_cof_coarse [N.coarse.weq.HasTwoOutOfThreeProperty]
     (n : ℕ) (F : ComposableArrows C n)
-    (hF : ∀ {i j : Fin (n+1)} (f : i ⟶ j), N.coarse.weq (F.map f))
-    {i j : Fin (n+1)} (f : i ⟶ j) :
+    (hF : ∀ {i j : Fin (n + 1)} (f : i ⟶ j), N.coarse.weq (F.map f))
+    {i j : Fin (n + 1)} (f : i ⟶ j) :
     V.cof (((finiteReplacement D n).obj F).map f) ∧
       N.coarse.weq (((finiteReplacement D n).obj F).map f) :=
   ⟨finiteReplacement_map_fine_cof N D n F f, finiteReplacement_map_coarse N D n F f (hF f)⟩

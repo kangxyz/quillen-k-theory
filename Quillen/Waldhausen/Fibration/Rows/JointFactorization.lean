@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.Fibration.Rows.NestedWeakEquivalences
-import Quillen.Waldhausen.Fibration.MixedChainReplacement
-import Quillen.Waldhausen.SConstruction.Rows.JointFunctor
-import Quillen.Waldhausen.Additivity.CoproductAlgebra
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.Rows.NestedWeakEquivalences
+public import Quillen.Waldhausen.Fibration.MixedChainReplacement
+public import Quillen.Waldhausen.SConstruction.Rows.JointFunctor
+public import Quillen.Waldhausen.Additivity.CoproductAlgebra
 
 /-! # Genuine joint-cylinder factorizations on the original quotient rows
 
@@ -11,6 +19,8 @@ The first endpoint is a genuine row cofibration by a displayed pointwise
 coproduct pushout, and the joint arrow is a genuine Reedy row cofibration
 by the accepted interchange theorem. No row factorization is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -22,14 +32,24 @@ variable {C : Type u} [Category.{v} C] {V : Structure C}
 /-- Structural base-cylinder data, with actual endpoint coproduct maps and
 an actual coarse-weak projection. Exactness refers only to the base category. -/
 structure JointData (N : NestedWeakEquivalences V) where
+  /-- The functor assigning a cofibration arrow to each original arrow, exact for the pointwise
+  arrow and Reedy extension Waldhausen structures. -/
   joint : Arrow C ⥤ ExtensionCategory.Obj V
   exact : IsExact (ArrowCategory.waldhausenStructure V).cof
     (ArrowCategory.waldhausenStructure V).weq
     (ExtensionCategory.waldhausenStructure V).cof
     (ExtensionCategory.waldhausenStructure V).weq joint
+  /-- The natural map from the original arrow source into the source of its joint cofibration
+  arrow. -/
   inl : Arrow.leftFunc ⟶ joint ⋙ ExtensionCategory.source V
+  /-- The natural map from the original arrow target into the source of its joint cofibration
+  arrow. -/
   inr : Arrow.rightFunc ⟶ joint ⋙ ExtensionCategory.source V
+  /-- The colimit witness identifying each joint source as the coproduct of the original source
+  and target with the specified endpoint maps. -/
   coproduct (f : Arrow C) : IsColimit (BinaryCofan.mk (inl.app f) (inr.app f))
+  /-- The natural map from the joint middle object to the original arrow target, required to be
+  a coarse weak equivalence. -/
   projection : joint ⋙ ExtensionCategory.middle V ⟶ Arrow.rightFunc
   factorization (f : Arrow C) :
     inl.app f ≫ (joint.obj f).obj.hom ≫ projection.app f = f.hom
@@ -72,7 +92,8 @@ theorem endpoint_isPushout {n : SimplexCategory} (f : Arrow (QuotientRows.Obj V 
       ((QuotientRows.isZero V n).to_ f.right) ((first N D n).app f) ((second N D n).app f) := by
   apply QuotientRows.isPushout_of_pointwise V
   intro p
-  convert! IsPushout.of_is_coproduct (D.coproduct (Arrow.mk (f.hom.hom.app p))) V.isZero.isInitial using 1 <;>
+  convert! IsPushout.of_is_coproduct (D.coproduct (Arrow.mk (f.hom.hom.app p)))
+    V.isZero.isInitial using 1 <;>
     exact V.isZero.eq_of_src _ _
 
 /-- The actual joint-source row is canonically the endpoint coproduct. -/
@@ -121,7 +142,8 @@ theorem middle_exact (n : SimplexCategory) :
     (ExtensionCategory.middle_exact (QuotientRows.waldhausenStructure V n))
 
 /-- The actual original row factorization, with the unchanged Reedy cofibration class. -/
-def factorization (n : SimplexCategory) : FunctorialFactorization (RowWeakEquivalences.coarseStructure N n) where
+def factorization (n : SimplexCategory) : FunctorialFactorization
+    (RowWeakEquivalences.coarseStructure N n) where
   middle := middle N D n
   inclusion := inclusion N D n
   projection := projection N D n
@@ -155,7 +177,8 @@ theorem middle_coarse_exact (n : SimplexCategory) [N.coarse.weq.HasTwoOutOfThree
 
 /-- Fine-square preservation follows from genuine middle exactness, without fine saturation. -/
 theorem factorization_fineSquares (n : SimplexCategory) :
-    MixedChainReplacement.PreservesFineSquares (RowWeakEquivalences.nested N n) (factorization N D n) := by
+    MixedChainReplacement.PreservesFineSquares (RowWeakEquivalences.nested N n) (factorization N
+      D n) := by
   intro f g α hl hr
   exact (middle_exact N D n).weak α ⟨hl, hr⟩
 

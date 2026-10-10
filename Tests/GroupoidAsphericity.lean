@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.ClassifyingSpace.Groupoid
+module
+
+public import Quillen.Topology.ClassifyingSpace.Groupoid
 
 /-! # Consumers of original groupoid asphericity and its actual comparison maps -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 open CategoryTheory
@@ -33,7 +37,8 @@ theorem original_vertex {C : Type u} [Category.{v} C] (c : C) :
       classifyingSpacePoint (AsSmall.up.obj c) :=
   GroupoidClassifying.asSmallClassifyingHomeomorph_point C c
 
-/-- Arbitrary groupoids, independent universes, arbitrary basepoints, and degree two are included. -/
+/-- Arbitrary groupoids, independent universes, arbitrary basepoints, and degree two are included.
+  -/
 theorem original_groupoid {C : Type u} [Category.{v} C] [IsGroupoid C]
     (x : ClassifyingSpace C) (n : ℕ)
     (a : HomotopyGroup.Pi (n + 2) (ClassifyingSpace C) x) : a = 1 := by

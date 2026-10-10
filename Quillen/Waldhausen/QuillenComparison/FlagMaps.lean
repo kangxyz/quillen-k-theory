@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.QuillenComparison.AdmissibleFlags
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.AdmissibleFlags
 
 /-! # Arbitrary maps between completed admissible flags
 
@@ -6,6 +14,8 @@ Completion is functorial for actual natural transformations of flags, not
 only for isomorphisms. This is also the input needed to transport weak
 equivalences between finite filtrations in a complex category.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -43,9 +53,9 @@ def quotientNatTrans (η : A ⟶ B) : quotientDiagram E A hA ⟶ quotientDiagram
 theorem flagQuotient_quotientNatTrans (η : A ⟶ B) (p : Interval n) :
     flagQuotient E A hA p ≫ (quotientNatTrans E hA hB η).app p =
       η.app p.1.2 ≫ flagQuotient E B hB p := by
-  letI {i j : Fin (n.len + 1)} (f : i ⟶ j) : HasCokernel (A.map f) :=
+  let {i j : Fin (n.len + 1)} (f : i ⟶ j) : HasCokernel (A.map f) :=
     hasCokernel_of_inflation E (A.map f) (hA f)
-  letI {i j : Fin (n.len + 1)} (f : i ⟶ j) : HasCokernel (B.map f) :=
+  let {i j : Fin (n.len + 1)} (f : i ⟶ j) : HasCokernel (B.map f) :=
     hasCokernel_of_inflation E (B.map f) (hB f)
   exact cokernel.π_desc _ _ _
 
@@ -53,12 +63,12 @@ theorem flagQuotient_quotientNatTrans (η : A ⟶ B) (p : Interval n) :
 @[reassoc (attr := simp)]
 theorem flagQuotient_zero (p : Interval n) :
     A.map (homOfLE p.2) ≫ flagQuotient E A hA p = 0 := by
-  letI {i j : Fin (n.len + 1)} (f : i ⟶ j) : HasCokernel (A.map f) :=
+  let {i j : Fin (n.len + 1)} (f : i ⟶ j) : HasCokernel (A.map f) :=
     hasCokernel_of_inflation E (A.map f) (hA f)
   exact cokernel.condition _
 
 /-- The completed row retains its original defining cokernel universal property. -/
-def flagQuotient_isCokernel (p : Interval n) :
+def flagQuotientIsCokernel (p : Interval n) :
     IsColimit (CokernelCofork.ofπ (flagQuotient E A hA p) (flagQuotient_zero E hA p)) := by
   letI {i j : Fin (n.len + 1)} (f : i ⟶ j) : HasCokernel (A.map f) :=
     hasCokernel_of_inflation E (A.map f) (hA f)
@@ -68,7 +78,7 @@ def flagQuotient_isCokernel (p : Interval n) :
 theorem flagQuotient_conflation (p : Interval n) :
     E.conflation (ShortComplex.mk (A.map (homOfLE p.2)) (flagQuotient E A hA p)
       (flagQuotient_zero E hA p)) :=
-  E.conflation_of_inflation_of_isCokernel (hA _) (flagQuotient_isCokernel E hA p)
+  E.conflation_of_inflation_of_isCokernel (hA _) (flagQuotientIsCokernel E hA p)
 
 @[simp]
 theorem quotientNatTrans_id : quotientNatTrans E hA hA (𝟙 A) = 𝟙 _ := by

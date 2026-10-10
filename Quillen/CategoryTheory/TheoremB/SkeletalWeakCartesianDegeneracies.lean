@@ -3,17 +3,21 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianCharts
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianProducts
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianCharts
+public import Quillen.Topology.Realization.Cartesian.WeakProducts
 
 /-! # Degenerate characteristic charts for arbitrary coefficient transformations -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 variable {D : Type u} [SmallCategory D] {H J : D ⥤ SSet.{u}} (η : H ⟶ J)
 
@@ -81,4 +85,4 @@ theorem chartWeakCartesian_of_nondegenerate (A : (nerve D).Subcomplex)
   obtain ⟨k, α, hα, t, ht, rfl⟩ := exists_nondegenerate_in_restriction A s hs
   exact ChartWeakCartesian.of_epi η A t.1 ht α (h k t ht)
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

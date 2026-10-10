@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.SConstruction.Bisimplicial
-import Mathlib.CategoryTheory.Functor.Currying
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Bisimplicial
+public import Mathlib.CategoryTheory.Functor.Currying
 
 /-! # The genuine nerve-direction cylinder of weak natural transformations
 
@@ -8,6 +16,8 @@ S-grids can be evaluated along an ordinal map to [1]. Every individual
 S-row remains an original row of one endpoint, while crossing weak arrows
 use the actual component of the transformation.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.ExactCategory.ObscureAxiom
-import Quillen.CategoryTheory.ExactCategory.SFiltering
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.ObscureAxiom
+public import Quillen.CategoryTheory.ExactCategory.SFiltering
 
 /-!
 # Special deflations and inflation denominators
@@ -8,6 +16,8 @@ The constructions here retain actual conflations. The matrix proof of the
 obscure axiom supplies the exact-category short five lemma and the resulting
 bicartesian diagram needed to straighten an elementary weak deflation.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -53,8 +63,10 @@ lemma isIso_of_conflations_fixed_ends {A X X' Y : C}
   let : HasPullback p p' := E.deflation.hasPullback p' (E.deflation_of_conflation hS)
   have hz : (pullback.fst p p' ≫ a - pullback.snd p p') ≫ p' = 0 := by
     simp only [Preadditive.sub_comp, Category.assoc, hap, pullback.condition, sub_self]
-  let b : pullback p p' ⟶ A := hk'.lift (KernelFork.ofι (pullback.fst p p' ≫ a - pullback.snd p p') hz)
-  have hbi : b ≫ i' = pullback.fst p p' ≫ a - pullback.snd p p' := hk'.fac _ WalkingParallelPair.zero
+  let b : pullback p p' ⟶ A := hk'.lift (KernelFork.ofι (pullback.fst p p' ≫ a - pullback.snd p p')
+    hz)
+  have hbi : b ≫ i' = pullback.fst p p' ≫ a - pullback.snd p p' := hk'.fac _
+    WalkingParallelPair.zero
   let c : pullback p p' ⟶ X := pullback.fst p p' - b ≫ i
   have hca : c ≫ a = pullback.snd p p' := by
     dsimp only [c]
@@ -86,7 +98,7 @@ lemma isPullback_of_conflations_same_kernel {A X Y B D : C}
 
 /-- In a pullback square, composing the kernel of the upper projection with
 the other projection produces an actual kernel of the lower map. -/
-def kernel_of_isPullback {K X B Y D : C} {k : K ⟶ X} {q : X ⟶ B}
+def kernelForkIsLimitOfIsPullback {K X B Y D : C} {k : K ⟶ X} {q : X ⟶ B}
     {p : X ⟶ Y} {r : B ⟶ D} {f : Y ⟶ D}
     (sq : IsPullback q p r f) (hkq : k ≫ q = 0)
     (hk : IsLimit (KernelFork.ofι k hkq)) :
@@ -136,7 +148,7 @@ lemma special_deflation_conflation {A X Y B D K : C}
   have hf : E.deflation (p ≫ f) := by
     rw [hpf]
     exact E.deflation_comp q r (E.deflation_of_conflation hK) (E.deflation_of_conflation hT)
-  have hker := kernel_of_isPullback sq hkq (E.kernel _ hK)
+  have hker := kernelForkIsLimitOfIsPullback sq hkq (E.kernel _ hK)
   have hdf := E.deflation_of_comp_of_isKernel p f hz hker hf
   exact ⟨f, hz, hpf, E.conflation_of_isKernel hz hker hdf⟩
 

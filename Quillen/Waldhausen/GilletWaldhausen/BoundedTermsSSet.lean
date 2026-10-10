@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsStrata
-import Quillen.Waldhausen.GilletWaldhausen.BoundedSSet
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsStrata
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedSSet
 
 /-! # Actual bounded-term S-grids lift into their exact strata
 
@@ -7,6 +15,8 @@ The original S-maps of the increasing inclusions are strictly compatible.
 Every finite grid lifts to a genuine common term-bound stratum, retaining its
 actual zero objects, inflations, pushout squares, and inverse-image weak maps.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -22,7 +32,8 @@ variable (P : ObjectProperty A) [P.ContainsZero] [P.IsClosedUnderIsomorphisms]
 variable (w : MorphismProperty (boundedTerms P).FullSubcategory)
 
 /-- The original weak-equivalence class restricted to the actual bounded stratum. -/
-abbrev boundedTermsStratumWeak (N : ℕ) : MorphismProperty (boundedTermsStratum P N).FullSubcategory :=
+abbrev boundedTermsStratumWeak (N : ℕ) : MorphismProperty (boundedTermsStratum P
+    N).FullSubcategory :=
   w.inverseImage (boundedTermsStratum P N).ι
 
 /-- Exactness of the canonical stage inclusion, retaining the original weak maps. -/
@@ -53,7 +64,8 @@ abbrev boundedTermsSSet : SSet.{max u v} :=
   sSet (boundedTermsExactStructure P).inflation w
 
 /-- The canonical S-map of a bounded-stage inclusion. -/
-def boundedTermsStratumSSetInclusion (N : ℕ) : boundedTermsStratumSSet P w N ⟶ boundedTermsSSet P w :=
+def boundedTermsStratumSSetInclusion (N : ℕ) : boundedTermsStratumSSet P w N ⟶ boundedTermsSSet
+    P w :=
   sSetMap (boundedTermsStratumInclusion_isExact P w N)
 
 /-- The canonical S-map of an increasing transition. -/
@@ -114,7 +126,8 @@ theorem boundedTermsStratumSSetInclusion_surjective (n : SimplexCategoryᵒᵖ)
     ∃ N : ℕ, ∃ G : (boundedTermsStratumSSet P w N).obj n,
       (boundedTermsStratumSSetInclusion P w N).app n G = F := by
   obtain ⟨N, hN⟩ := boundedTerms_grid_has_common_bound P F.val
-  exact ⟨N, ⟨(boundedTermsStratum P N).lift F.val hN, boundedTermsGrid_isSimplex P w F.property N hN⟩, rfl⟩
+  exact ⟨N, ⟨(boundedTermsStratum P N).lift F.val hN, boundedTermsGrid_isSimplex P w F.property
+    N hN⟩, rfl⟩
 
 /-- Stage inclusions are literally injective on actual grid simplices. -/
 theorem boundedTermsStratumSSetInclusion_injective (N : ℕ) (n : SimplexCategoryᵒᵖ) :

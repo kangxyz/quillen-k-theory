@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.PathSubdivision.TimePaths
-import Quillen.CategoryTheory.TheoremB.HomotopyPullbackFibration
+module
+
+public import Quillen.Topology.PathSubdivision.TimePaths
+public import Quillen.Topology.HomotopyPullback.Fibration
 
 /-!
 # Remaining-tail maps at the current parameter
@@ -17,6 +19,8 @@ that pool point's current parameter, even when a preceding homotopy moves it.
 Explicit time-path interpolation removes both a segment subdivision and a
 constant prefix, retaining every constant original boundary track.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,28 +32,28 @@ variable {D E X B : Type u} [TopologicalSpace D] [TopologicalSpace E]
   [TopologicalSpace X] [TopologicalSpace B]
 
 /-- The actual time slice of the original path family. -/
-def slice (H : C(unitInterval × D,B)) (s : unitInterval) : C(D,B) :=
+def slice (H : C(unitInterval × D, B)) (s : unitInterval) : C(D, B) :=
   ⟨fun d ↦ H (s,d),by fun_prop⟩
 
 /-- Original parameters paired with source points over the displayed time. -/
-abbrev Stage (p : C(E,B)) (H : C(unitInterval × D,B)) (s : unitInterval) :=
+abbrev Stage (p : C(E, B)) (H : C(unitInterval × D, B)) (s : unitInterval) :=
   {z : D × E // p z.2 = H (s,z.1)}
 
 /-- An actual segment of the original family at its supplied parameter. -/
-def familyPath (H : C(unitInterval × D,B)) (s t : unitInterval) (d : D) :
+def familyPath (H : C(unitInterval × D, B)) (s t : unitInterval) (d : D) :
     Path (H (s,d)) (H (t,d)) :=
   (timePath s t).map (show Continuous (fun r ↦ H (r,d)) from by fun_prop)
 
-@[simp] theorem familyPath_apply (H : C(unitInterval × D,B)) (s t r : unitInterval) (d : D) :
+@[simp] theorem familyPath_apply (H : C(unitInterval × D, B)) (s t r : unitInterval) (d : D) :
     familyPath H s t d r = H (affineTime s t r,d) := rfl
 
-@[simp] theorem familyPath_self (H : C(unitInterval × D,B)) (s : unitInterval) (d : D) :
+@[simp] theorem familyPath_self (H : C(unitInterval × D, B)) (s : unitInterval) (d : D) :
     familyPath H s s d = Path.refl (H (s,d)) := by
   ext r
   exact congrArg (fun q ↦ H (q,d)) (affineTime_self s r)
 
 /-- Enter the next slice's genuine homotopy pullback by the actual original segment. -/
-def stageSegment (p : C(E,B)) (H : C(unitInterval × D,B)) (s t : unitInterval) :
+def stageSegment (p : C(E, B)) (H : C(unitInterval × D, B)) (s t : unitInterval) :
     C(Stage p H s,HomotopyPullback p (slice H t)) where
   toFun z := ⟨(z.val.1,z.val.2,(familyPath H s t z.val.1).toContinuousMap),
     (Path.source _).trans z.property.symm,Path.target _⟩
@@ -63,7 +67,7 @@ def stageSegment (p : C(E,B)) (H : C(unitInterval × D,B)) (s t : unitInterval) 
     fun_prop
 
 /-- A zero-length segment is literally the original constant-path inclusion. -/
-theorem stageSegment_self (p : C(E,B)) (H : C(unitInterval × D,B)) (s : unitInterval) :
+theorem stageSegment_self (p : C(E, B)) (H : C(unitInterval × D, B)) (s : unitInterval) :
     stageSegment p H s s = HomotopyPullback.strictPullbackInclusion p (slice H s) := by
   apply ContinuousMap.ext
   intro z
@@ -72,8 +76,8 @@ theorem stageSegment_self (p : C(E,B)) (H : C(unitInterval × D,B)) (s : unitInt
   refine Prod.ext rfl ?_
   exact congrArg Path.toContinuousMap (familyPath_self H s z.val.1)
 
-variable (p : C(E,B)) (f : C(X,B)) (H : C(unitInterval × D,B)) (k : C(D,X))
-  (hEnd : ∀ d,H (1,d) = f (k d))
+variable (p : C(E, B)) (f : C(X, B)) (H : C(unitInterval × D, B)) (k : C(D, X))
+  (hEnd : ∀ d, H (1, d) = f (k d))
 
 /-- Follow the complete remaining original tail at the current stage parameter. -/
 def stageToPullback (s : unitInterval) : C(Stage p H s,HomotopyPullback p f) where
@@ -90,7 +94,8 @@ def stageToPullback (s : unitInterval) : C(Stage p H s,HomotopyPullback p f) whe
 
 /-- Append a remaining tail after an arbitrary source-to-slice path.
 The original tail is evaluated at this point's parameter, which may have moved. -/
-def appendToPullback (s : unitInterval) : C(HomotopyPullback p (slice H s),HomotopyPullback p f) where
+def appendToPullback (s : unitInterval) : C(HomotopyPullback p (slice H s),HomotopyPullback p f)
+    where
   toFun z := ⟨(k z.val.1,z.val.2.1,
     ((⟨z.val.2.2,z.property.1,z.property.2⟩ : Path (p z.val.2.1) (H (s,z.val.1))).trans
       (familyPath H s 1 z.val.1)).toContinuousMap),
@@ -166,7 +171,7 @@ def stageJoinHomotopy (s t : unitInterval) :
 
 /-- The entire reparametrization is fixed on every original constant track. -/
 theorem stageJoinHomotopy_fixed (s t : unitInterval) (z : Stage p H s)
-    (h : ∀ r,H (r,z.val.1) = H (1,z.val.1)) (r : unitInterval) :
+    (h : ∀ r, H (r, z.val.1) = H (1, z.val.1)) (r : unitInterval) :
     stageJoinHomotopy p f H k hEnd s t (r,z) = stageToPullback p f H k hEnd s z := by
   apply Subtype.ext
   refine Prod.ext rfl ?_
@@ -185,7 +190,7 @@ def stageUnpadHomotopy (s : unitInterval) :
     (by rw [stageSegment_self]) rfl
 
 theorem stageUnpadHomotopy_fixed (s : unitInterval) (z : Stage p H s)
-    (h : ∀ r,H (r,z.val.1) = H (1,z.val.1)) (r : unitInterval) :
+    (h : ∀ r, H (r, z.val.1) = H (1, z.val.1)) (r : unitInterval) :
     stageUnpadHomotopy p f H k hEnd s (r,z) = stageToPullback p f H k hEnd s z :=
   stageJoinHomotopy_fixed p f H k hEnd s s z h r
 

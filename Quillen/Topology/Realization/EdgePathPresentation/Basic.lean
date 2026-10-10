@@ -1,8 +1,16 @@
-import Quillen.KTheory.FundamentalGroup.Basic
-import Quillen.Topology.Realization.Connectivity
-import Mathlib.CategoryTheory.Groupoid.Subgroupoid
-import Mathlib.Topology.Subpath
-import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.FundamentalGroup.Basic
+public import Quillen.Topology.Realization.Connectivity
+public import Mathlib.CategoryTheory.Groupoid.Subgroupoid
+public import Mathlib.Topology.Subpath
+public import Mathlib.AlgebraicTopology.FundamentalGroupoid.SimplyConnected
 
 /-!
 # Local-to-global tools for a realized edge-path presentation
@@ -16,6 +24,8 @@ This is a topology-side ingredient for an edge-path presentation, not the
 presentation theorem itself: applying it to simplicial edge paths still requires
 suitable open neighborhoods in the realization and the local edge-path lemma.
 -/
+@[expose] public section
+
 
 noncomputable section
 

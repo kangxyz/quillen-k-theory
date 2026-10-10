@@ -3,11 +3,15 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.Affine.PrincipalProjectiveExtension
-import Quillen.PerfectComplexes.Closure
-import Quillen.PerfectComplexes.Affine.DerivedModuleReplacement
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalProjectiveExtension
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Closure
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedModuleReplacement
 
 /-! Semantic consumers of actual projective stabilization and principal extension. -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

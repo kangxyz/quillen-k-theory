@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Functor
-import Mathlib.CategoryTheory.Comma.Basic
+module
+
+public import Quillen.Waldhausen.Functor
+public import Mathlib.CategoryTheory.Comma.Basic
 
 /-!
 # Genuine componentwise Waldhausen comma categories
@@ -15,6 +17,8 @@ with preservation of the source square supplied by the original exact functor.
 Every chosen pushout is proved pointwise. Both projections are genuinely exact;
 no ambient cocompleteness, approximation or K-equivalence is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
@@ -26,15 +30,22 @@ variable {C : Type u} [Category.{v} C] {D : Type u'} [Category.{v'} D]
   (V : Structure C) (W : Structure D) (F : C ⥤ D)
   (hF : IsExact V.cof V.weq W.cof W.weq F)
 
+/-- The comma category of arrows `F.obj A ⟶ B`, with morphisms given by commutative squares. -/
 abbrev Obj := Comma F (𝟭 D)
 
+/-- Comma morphisms whose source-category component lies in `V.cof` and whose target-category
+component lies in `W.cof`. -/
 def cof : MorphismProperty (Obj F) :=
   V.cof.inverseImage (Comma.fst F (𝟭 D)) ⊓ W.cof.inverseImage (Comma.snd F (𝟭 D))
+/-- Comma morphisms whose source-category component lies in `V.weq` and whose target-category
+component lies in `W.weq`. -/
 def weq : MorphismProperty (Obj F) :=
   V.weq.inverseImage (Comma.fst F (𝟭 D)) ⊓ W.weq.inverseImage (Comma.snd F (𝟭 D))
 instance cof_multiplicative : (cof V W F).IsMultiplicative := by unfold cof; infer_instance
 instance weq_multiplicative : (weq V W F).IsMultiplicative := by unfold weq; infer_instance
 
+/-- The identity of `F.obj V.zero`, viewed as a comma object with source `V.zero`; exactness of
+`F` makes this a zero object. -/
 def zero : Obj F := ⟨V.zero, F.obj V.zero, 𝟙 _⟩
 
 include hF in

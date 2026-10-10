@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyFiber.StrictWeakTransport
-import Quillen.CategoryTheory.TheoremB.MappingPathFunctor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.StrictWeakTransport
+public import Quillen.Topology.MappingPath.Map
 
 /-! # Weak invariance of the original homotopy fiber under a strict square
 
@@ -7,6 +15,8 @@ Both total and base maps may change by weak equivalences. Functorial
 mapping-path replacement, right properness, and actual strict-fiber
 comparison prove the conclusion for the unchanged original fiber map.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

@@ -1,4 +1,12 @@
-import Quillen.Topology.HomotopyGroups.WeakEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyGroups.WeakEquivalence
 
 /-!
 # Basepoint transport on the actual finite homotopy sets
@@ -9,6 +17,7 @@ path, its endpoint evaluations therefore give transport in every finite
 degree, including degree zero.  Naturality uses actual postcomposition of
 free paths and the strict evaluation squares.
 -/
+@[expose] public section
 
 noncomputable section
 open scoped Topology unitInterval
@@ -83,12 +92,12 @@ theorem pathEndEquiv_apply (γ : Path x₀ x₁) (n : ℕ)
     (a : HomotopyGroup.Pi n C(unitInterval, X) γ.toContinuousMap) :
     pathEndEquiv γ n a = homotopyGroupMap (freePathEvaluation X 1) γ.target a := rfl
 
-/-- Transport identifies the two actual endpoint-evaluation maps. -/
-@[simp]
-theorem pathTransport_start (γ : Path x₀ x₁) (n : ℕ)
+/-- Transport identifies the two actual endpoint evaluation maps. -/
+@[simp] theorem pathTransport_homotopyGroupMap_start (γ : Path x₀ x₁) (n : ℕ)
     (a : HomotopyGroup.Pi n C(unitInterval, X) γ.toContinuousMap) :
-    pathTransport γ n (pathStartEquiv γ n a) = pathEndEquiv γ n a :=
-  (pathStartEquiv γ n).symm_apply_apply a |> congrArg (pathEndEquiv γ n)
+    pathTransport γ n (homotopyGroupMap (freePathEvaluation X 0) γ.source a) =
+      homotopyGroupMap (freePathEvaluation X 1) γ.target a := (pathStartEquiv γ n).symm_apply_apply
+        a |> congrArg (pathEndEquiv γ n)
 
 /-- The initial endpoint square for actual path postcomposition. -/
 theorem pathStartEquiv_postcomp (f : C(X, Y)) (γ : Path x₀ x₁) (n : ℕ)
@@ -112,8 +121,9 @@ theorem pathTransport_naturality (f : C(X, Y)) (γ : Path x₀ x₁) (n : ℕ)
     pathTransport (γ.map f.continuous) n (homotopyGroupMap f rfl a) =
       homotopyGroupMap f rfl (pathTransport γ n a) := by
   obtain ⟨b, rfl⟩ := (pathStartEquiv γ n).surjective a
-  rw [← pathStartEquiv_postcomp, pathTransport_start, pathTransport_start,
-    pathEndEquiv_postcomp]
+  rw [← pathStartEquiv_postcomp]
+  simpa only [pathStartEquiv_apply, pathEndEquiv_apply,
+    pathTransport_homotopyGroupMap_start] using pathEndEquiv_postcomp f γ n b
 
 /-- The map at the terminal point is the conjugate of the original map at the
 initial point by the actual path transports. -/
@@ -177,8 +187,12 @@ theorem pathTransport_const (γ : Path x₀ x₁) (n : ℕ) :
       Quotient.mk' GenLoop.const :=
     congrArg Quotient.mk' (genLoopPostcomp_const (N := Fin n)
       (freePathEvaluation X 1) γ.target)
+  change homotopyGroupMap (freePathEvaluation X 0) γ.source
+    (Quotient.mk' GenLoop.const) = Quotient.mk' GenLoop.const at hs
+  change homotopyGroupMap (freePathEvaluation X 1) γ.target
+    (Quotient.mk' GenLoop.const) = Quotient.mk' GenLoop.const at ht
   exact (congrArg (pathTransport γ n) hs.symm).trans
-    ((pathTransport_start γ n _).trans ht)
+    ((pathTransport_homotopyGroupMap_start γ n _).trans ht)
 
 /-- The constant path gives the identity on the original homotopy set. -/
 @[simp]
@@ -193,7 +207,11 @@ theorem pathTransport_refl (x : X) (n : ℕ) :
       (homotopyGroupMap ContinuousMap.const' rfl a) = a := by
     induction a using Quotient.inductionOn with | h a => rfl
   change pathTransport (Path.refl x) n a = a
+  change homotopyGroupMap (freePathEvaluation X 0) (Path.refl x).source
+    (homotopyGroupMap ContinuousMap.const' rfl a) = a at hs
+  change homotopyGroupMap (freePathEvaluation X 1) (Path.refl x).target
+    (homotopyGroupMap ContinuousMap.const' rfl a) = a at ht
   exact (congrArg (pathTransport (Path.refl x) n) hs.symm).trans
-    ((pathTransport_start _ _ _).trans ht)
+    ((pathTransport_homotopyGroupMap_start _ _ _).trans ht)
 
 end Quillen

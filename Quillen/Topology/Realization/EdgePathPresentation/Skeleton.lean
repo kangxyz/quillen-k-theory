@@ -1,7 +1,15 @@
-import Quillen.Topology.Realization.CompactFundamentalGroupoid
-import Quillen.Topology.Realization.EdgePathPresentation.Attachment
-import Quillen.CategoryTheory.TheoremA.EnrichedBoundaryHEP
-import Mathlib.AlgebraicTopology.SimplicialSet.Skeleton
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.CompactFundamentalGroupoid
+public import Quillen.Topology.Realization.EdgePathPresentation.Attachment
+public import Quillen.CategoryTheory.TheoremA.EnrichedBoundaryHEP
+public import Mathlib.AlgebraicTopology.SimplicialSet.Skeleton
 
 /-!
 # Actual skeletal attachments and compact path reduction
@@ -11,6 +19,8 @@ families of actual geometric simplex-boundary inclusions. This supplies closed
 embeddings of stages and, in dimensions at least two, fullness on fundamental
 groupoids. The compact-stage theorem applies to the actual realization colimit.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -180,7 +190,8 @@ instance realizedRelativeSkeleton_t1Space {A X : SSet.{u}} (i : A ⟶ X)
     [Mono i] [T1Space |A|] (n : ℕ) : T1Space ((realizedRelativeSkeletonTower i).obj n) := by
   induction n with
   | zero =>
-    exact (TopCat.homeoOfIso (SSet.toTop.mapIso (SSet.relativeCellComplexOfMono i).isoBot)).symm.t1Space
+    exact (TopCat.homeoOfIso (SSet.toTop.mapIso (SSet.relativeCellComplexOfMono
+      i).isoBot)).symm.t1Space
   | succ n ih =>
     let : T1Space |(SSet.skeletonOfMono i n : SSet.{u})| := ih
     exact t1Space_pushout_of_closedEmbedding (realizedSkeletal_isPushout i n)

@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Functoriality.KMap
-import Quillen.Topology.HomotopyFiber.WeakInvariance
+module
+
+public import Quillen.Waldhausen.Functoriality.KMap
+public import Quillen.Topology.HomotopyFiber.WeakInvariance
 
 /-! # Canonical K-equivalences from complete weakness of the actual realization
 
@@ -13,6 +15,8 @@ by its genuine natural-isomorphism homotopy. Complete weak equivalence
 therefore passes to the normalized realization, and the original based
 K-homomorphism is bijective in every nonnegative degree.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -59,8 +63,9 @@ def KEquivOfWeakRealization
   MulEquiv.ofBijective (KMap hF n) (KMap_bijective_of_isWeakHomotopyEquivalence hF h n)
 
 /-- The equivalence retains the unchanged original canonical K-homomorphism. -/
-@[simp] theorem KEquivOfWeakRealization_toMonoidHom
-    (h : IsWeakHomotopyEquivalence (deloopingMap hF).hom) (n : ℕ) :
-    (KEquivOfWeakRealization hF h n).toMonoidHom = KMap hF n := rfl
+@[simp] theorem KEquivOfWeakRealization_coe (h : IsWeakHomotopyEquivalence (deloopingMap
+    hF).hom) (n : ℕ) :
+    (↑(KEquivOfWeakRealization hF h n) : W.K n →* V.K n) = KMap hF n := rfl
+
 
 end Quillen.Waldhausen

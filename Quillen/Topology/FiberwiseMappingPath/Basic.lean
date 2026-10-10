@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremB.MappingPath
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.MappingPath.Basic
 
 /-! # Vertical mapping paths
 
@@ -6,6 +14,8 @@ The stored path lies in one actual fiber of the displayed target projection.
 The topology is the induced compact-open topology. Literal path scaling
 contracts this space onto the original source, without a lifting hypothesis.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 open unitInterval
@@ -15,23 +25,27 @@ variable {E : Type u} {F : Type v} {B : Type w}
   [TopologicalSpace E] [TopologicalSpace F] [TopologicalSpace B]
 
 /-- The original source coordinate and an entire vertical path starting at its image. -/
-def Space (q : C(F,B)) (f : C(E,F)) :=
+def Space (q : C(F, B)) (f : C(E, F)) :=
   {z : E × C(I,F) // z.2 0 = f z.1 ∧ ∀ t,q (z.2 t) = q (f z.1)}
 
-instance (q : C(F,B)) (f : C(E,F)) : TopologicalSpace (Space q f) :=
+instance (q : C(F, B)) (f : C(E, F)) : TopologicalSpace (Space q f) :=
   inferInstanceAs (TopologicalSpace {z : E × C(I,F) //
     z.2 0 = f z.1 ∧ ∀ t,q (z.2 t) = q (f z.1)})
 
-variable (q : C(F,B)) (f : C(E,F))
+variable (q : C(F, B)) (f : C(E, F))
 
+/-- The continuous projection from a vertical mapping-path point to its original source
+coordinate in `E`. -/
 def source : C(Space q f,E) where
   toFun z := z.1.1
   continuous_toFun := by fun_prop
 
+/-- Evaluate the stored vertical path at time `1` to obtain a point of `F`. -/
 def endpoint : C(Space q f,F) where
   toFun z := z.1.2 1
   continuous_toFun := by fun_prop
 
+/-- Embed `E` into the vertical mapping-path space by constant paths at `f x`. -/
 def inclusion : C(E,Space q f) where
   toFun x := ⟨(x,ContinuousMap.const I (f x)),rfl,fun _ ↦ rfl⟩
   continuous_toFun := by fun_prop

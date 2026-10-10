@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.SplitFiberZero
-import Quillen.Waldhausen.Functoriality.KMap
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.SplitFiberZero
+public import Quillen.Waldhausen.Functoriality.KMap
 
 /-! # The original inner S-constructions of relative quotient rows
 
@@ -8,6 +16,8 @@ its actual tail projection and constant split-fiber inclusion. The common
 object/hom universe is explicit, as required by the existing raw S-map API.
 No realization equivalence or homotopy-fiber conclusion is assumed here.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial
@@ -35,7 +45,7 @@ def ordinarySRows (W : Structure C) : SimplexCategoryᵒᵖ ⥤ SSet.{u} where
   map_comp α β := (sSetMap_eq_of_functor_eq
     (QuotientRows.reindex_exact W (β.unop ≫ α.unop))
     ((QuotientRows.reindex_exact W α.unop).comp (QuotientRows.reindex_exact W β.unop))
-    (QuotientRows.reindex_comp W β.unop α.unop)).trans (sSetMap_comp _ _)
+    (QuotientRows.reindex_comp W β.unop α.unop)).trans (sSetMap_comp_sSetMap _ _).symm
 
 variable {V : Structure C} (N : NestedWeakEquivalences V)
 
@@ -48,15 +58,16 @@ def relativeSRows : SimplexCategoryᵒᵖ ⥤ SSet.{u} where
   map_comp α β := (sSetMap_eq_of_functor_eq
     (reindex_exact N (β.unop ≫ α.unop))
     ((reindex_exact N α.unop).comp (reindex_exact N β.unop))
-    (reindex_comp N β.unop α.unop)).trans (sSetMap_comp _ _)
+    (reindex_comp N β.unop α.unop)).trans (sSetMap_comp_sSetMap _ _).symm
 
 /-- The original strictly outer-natural acyclic-tail projection. -/
 def tailSRows : relativeSRows N ⟶ ordinarySRows (acyclicStructure N) where
   app n := sSetMap (tailFunctor_exact N n.unop)
   naturality n m α := by
     change sSetMap (reindex_exact N α.unop) ≫ sSetMap (tailFunctor_exact N m.unop) =
-      sSetMap (tailFunctor_exact N n.unop) ≫ sSetMap (QuotientRows.reindex_exact (acyclicStructure N) α.unop)
-    rw [← sSetMap_comp, ← sSetMap_comp]
+      sSetMap (tailFunctor_exact N n.unop) ≫ sSetMap (QuotientRows.reindex_exact
+          (acyclicStructure N) α.unop)
+    rw [sSetMap_comp_sSetMap, sSetMap_comp_sSetMap]
 
 /-- The original strictly outer-natural split-fiber inclusion. -/
 def fiberSRows : (Functor.const SimplexCategoryᵒᵖ).obj (sSet V.cof V.weq) ⟶ relativeSRows N where
@@ -64,11 +75,12 @@ def fiberSRows : (Functor.const SimplexCategoryᵒᵖ).obj (sSet V.cof V.weq) �
   naturality n m α := by
     change 𝟙 _ ≫ sSetMap (fiber_exact N m.unop) =
       sSetMap (fiber_exact N n.unop) ≫ sSetMap (reindex_exact N α.unop)
-    rw [Category.id_comp, ← sSetMap_comp]
+    rw [Category.id_comp, sSetMap_comp_sSetMap]
     exact sSetMap_eq_of_functor_eq _ _ (fiber_reindex N α.unop).symm
 
 /-- Original row restriction preserves the actual constant zero functor strictly. -/
-theorem zeroFunctor_reindex {D : Type u} [Category.{u} D] (W : Structure D) {m n : SimplexCategory} (α : m ⟶ n) :
+theorem zeroFunctor_reindex {D : Type u} [Category.{u} D] (W : Structure D) {m n :
+    SimplexCategory} (α : m ⟶ n) :
     zeroFunctor (C := C) (QuotientRows.waldhausenStructure W n) ⋙ QuotientRows.reindex W α =
       zeroFunctor (C := C) (QuotientRows.waldhausenStructure W m) := by
   refine CategoryTheory.Functor.ext (fun _ ↦ QuotientRows.reindex_zero W α) ?_
@@ -83,14 +95,16 @@ def zeroSRows {D : Type u} [Category.{u} D] (W : Structure D) :
     change 𝟙 _ ≫ sSetMap (zeroFunctor_isExact V (QuotientRows.waldhausenStructure W m.unop)) =
       sSetMap (zeroFunctor_isExact V (QuotientRows.waldhausenStructure W n.unop)) ≫
         sSetMap (QuotientRows.reindex_exact W α.unop)
-    rw [Category.id_comp, ← sSetMap_comp]
+    rw [Category.id_comp, sSetMap_comp_sSetMap]
 
-/-- The original split inclusion followed by the original tail is exactly the constant-zero section. -/
-@[simp] theorem fiberSRows_tailSRows : fiberSRows N ≫ tailSRows N = zeroSRows (V := V) (acyclicStructure N) := by
+/-- The original split inclusion followed by the original tail is exactly the constant-zero section.
+-/
+@[simp] theorem fiberSRows_tailSRows : fiberSRows N ≫ tailSRows N = zeroSRows (V := V)
+    (acyclicStructure N) := by
   apply NatTrans.ext
   funext n
   change sSetMap (fiber_exact N n.unop) ≫ sSetMap (tailFunctor_exact N n.unop) = _
-  rw [← sSetMap_comp]
+  rw [sSetMap_comp_sSetMap]
   exact sSetMap_eq_of_functor_eq ((fiber_exact N n.unop).comp (tailFunctor_exact N n.unop))
     (zeroFunctor_isExact V (QuotientRows.waldhausenStructure (acyclicStructure N) n.unop))
     (fiber_tail N n.unop)
@@ -106,7 +120,11 @@ def zeroSRows {D : Type u} [Category.{u} D] (W : Structure D) :
     (((tailSRows N).app n).app k X).val = X.val ⋙ tailFunctor N n.unop := rfl
 
 /-- The original split S-map retains the literal zero-tail inclusion. -/
-@[simp] theorem fiberSRows_app_val (n k : SimplexCategoryᵒᵖ) (X : (sSet V.cof V.weq).obj k) :
-    (((fiberSRows N).app n).app k X).val = X.val ⋙ fiber N n.unop := rfl
+@[simp] theorem fiberSRows_app_hom_val (n k : SimplexCategoryᵒᵖ) (X : (sSet V.cof V.weq).obj k) :
+    (TypeCat.Hom.hom (X := (sSet V.cof V.weq).obj k)
+      (Y := (sSet (waldhausenStructure N n.unop).cof
+        (waldhausenStructure N n.unop).weq).obj k) (((fiberSRows N).app n).app k) X).val =
+      X.val ⋙ fiber N n.unop := rfl
+
 
 end Quillen.Waldhausen.Fibration.RelativeRows

@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.TheoremB.ReplacementStageOne
-import Quillen.CategoryTheory.TheoremB.DiscreteWeakFiber
-import Quillen.CategoryTheory.TheoremB.HomotopyPullbackFibration
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.ReplacementStageOne
+public import Quillen.Topology.HomotopyFiber.DiscreteWeakComparison
+public import Quillen.Topology.HomotopyPullback.Fibration
 
 /-!
 # From finite cartesian skeleta to the actual vertex homotopy fiber
@@ -10,6 +18,8 @@ restricts to each vertex fiber, including in degree zero. All total spaces,
 base changes, coproduct coordinates and forward comparison maps are actual
 realizations and compact-open path spaces.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
@@ -31,7 +41,7 @@ def congrHomeomorph {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y]
 end Quillen.HomotopyFiber
 
 namespace Quillen.TheoremB
-open TheoremA SequentialCartesian
+open TheoremA Quillen.CartesianRealization.Sequential
 variable {D : Type u} [SmallCategory D]
 
 /-- The point-valued diagram whose replacement is the actual base nerve. -/
@@ -40,7 +50,8 @@ abbrev pointDiagram : D ⥤ SSet.{u} := (Functor.const D).obj (Δ[0] : SSet.{u})
 /-- The point-diagram first stage is exactly the discrete space of objects. -/
 def pointStageOneHomeomorph :
     (realizedReplacementSkeleton (pointDiagram (D := D))).obj 1 ≃ₜ TopCat.discrete.obj D :=
-  (realizedReplacementStageOneHomeomorph (pointDiagram (D := D))).symm.trans (sigmaPointHomeomorph D)
+  (realizedReplacementStageOneHomeomorph (pointDiagram (D := D))).symm.trans (sigmaPointHomeomorph
+    D)
 
 instance pointStageOne_discreteTopology :
     DiscreteTopology ((realizedReplacementSkeleton (pointDiagram (D := D))).obj 1) :=
@@ -51,7 +62,8 @@ def pointStageOneVertex (d : D) : (realizedReplacementSkeleton (pointDiagram (D 
   pointStageOneHomeomorph.symm d
 
 /-- The exhaustive base cocone has the actual nerve realization as its vertex. -/
-def replacementBaseSkeletonCocone : Cocone (realizedReplacementSkeleton (pointDiagram (D := D))) where
+def replacementBaseSkeletonCocone : Cocone (realizedReplacementSkeleton (pointDiagram (D := D)))
+  where
   pt := ClassifyingSpace D
   ι := {
     app n := (realizedReplacementSkeletonCocone pointDiagram).ι.app n ≫
@@ -85,7 +97,8 @@ theorem replacementBaseSkeletonCocone_vertex (d : D) :
 variable (H : D ⥤ SSet.{u})
 
 /-- The map of base-skeleton towers induced by the point augmentation. -/
-abbrev replacementProjectionTowerMap := realizedReplacementSkeletonMap (replacementPointAugmentation H)
+abbrev replacementProjectionTowerMap := realizedReplacementSkeletonMap (replacementPointAugmentation
+  H)
 
 /-- The stage-one projection to the actual discrete point stage. -/
 abbrev replacementStageOneProjection := (replacementProjectionTowerMap H).app 1 |>.hom
@@ -128,8 +141,10 @@ theorem replacementStageOneProjection_coordinates (z : (realizedReplacementSkele
 
 /-- Strict fiber coordinates before selecting the chosen coproduct summand. -/
 def stageOneStrictFiberCoordinates (d : D) :
-    {z : (realizedReplacementSkeleton H).obj 1 // replacementStageOneProjection H z = pointStageOneVertex d} ≃ₜ
-      {z : (Σ d : TopCat.discrete.obj D, |H.obj d|) // sigmaProjection (fun d : TopCat.discrete.obj D ↦ |H.obj d|) z = d} where
+    {z : (realizedReplacementSkeleton H).obj 1 // replacementStageOneProjection H z =
+      pointStageOneVertex d} ≃ₜ
+      {z : (Σ d : TopCat.discrete.obj D, |H.obj d|) // sigmaProjection (fun d : TopCat.discrete.obj
+        D ↦ |H.obj d|) z = d} where
   toFun z := ⟨(realizedReplacementStageOneHomeomorph H).symm z.1,
     (replacementStageOneProjection_coordinates H z.1).symm.trans
       ((congrArg pointStageOneHomeomorph z.2).trans (pointStageOneHomeomorph.apply_symm_apply d))⟩
@@ -144,7 +159,8 @@ def stageOneStrictFiberCoordinates (d : D) :
 
 /-- Each actual stage-one strict fiber is homeomorphic to its diagram value. -/
 def stageOneFiberHomeomorph (d : D) : |H.obj d| ≃ₜ
-    {z : (realizedReplacementSkeleton H).obj 1 // replacementStageOneProjection H z = pointStageOneVertex d} :=
+    {z : (realizedReplacementSkeleton H).obj 1 // replacementStageOneProjection H z =
+      pointStageOneVertex d} :=
   (sigmaStrictFiberHomeomorph (fun d : TopCat.discrete.obj D ↦ |H.obj d|) d).symm.trans
     (stageOneStrictFiberCoordinates H d).symm
 
@@ -222,7 +238,8 @@ theorem vertexFiberComparison_bijective
       (StagePullback (replacementProjectionTowerMap H) 1 m h))
     (he : ∀ m h, (e m h).toFun = stageComparison (replacementProjectionTowerMap H) 1 m h)
     (d : D) (x : |H.obj d|) (n : ℕ) :
-    Function.Bijective (homotopyGroupMap (N := Fin n) (vertexFiberComparison H d) (x := x) rfl) := by
+    Function.Bijective (homotopyGroupMap (N := Fin n) (vertexFiberComparison H d) (x := x) rfl) :=
+      by
   let s := stageOneFiberHomeomorph H d
   let t := vertexPullbackFiberHomeomorph H d
   let f := vertexRestrictedComparison H d

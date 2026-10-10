@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremA.RealizationPushoutCylinder
-import Quillen.CategoryTheory.TheoremA.IntervalEndpoints
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationPushoutCylinder
+public import Quillen.CategoryTheory.TheoremA.IntervalEndpoints
 
 /-!
 # Homotopy invariance of cofibrant pushouts
@@ -8,6 +16,8 @@ The initial endpoint of every mapping cylinder has HEP. Factoring an actual
 homotopy equivalence through this endpoint and using the cylinder-collapse
 comparison proves homotopy invariance of cobase change along an HEP map.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -98,7 +108,7 @@ def homotopyEquivCancelLeft {A B C : TopCat.{u}} {a : A ⟶ B} {b : B ⟶ C}
     (e' : ContinuousMap.HomotopyEquiv A C) (he' : e'.toFun = (a ≫ b).hom) :
     ContinuousMap.HomotopyEquiv B C := by
   let H := (ContinuousMap.Homotopy.refl b.hom).comp e.right_inv.some.symm
-  apply homotopyEquivOfHomotopy (e.symm.trans e')
+  apply homotopyEquivOfHomotopy (f := b) (e.symm.trans e')
   exact H.cast (by ext; rfl) (by
     change b.hom.comp (e.toFun.comp e.invFun) = e'.toFun.comp e.invFun
     rw [he, he']
@@ -137,8 +147,8 @@ def pushoutHomotopyEquiv
   have hbx : be ≫ x = b := sqE.inl_desc _ _ _
   have hax : ae ≫ x = i' := sqE.inr_desc _ _ _
   let ebe := pushoutHomotopyEquivAlongCofibration sqE hi ea rfl
-  let ex := homotopyEquivCancelLeft ebe rfl eb (by
-    change eb.toFun = (be ≫ x).hom
+  let ex := homotopyEquivCancelLeft (a := be) (b := x) ebe
+    (pushoutHomotopyEquivAlongCofibration_toFun sqE hi ea rfl) eb (by
     rw [hbx]
     rfl)
   let P := pushout i (f ≫ c)
@@ -199,7 +209,9 @@ theorem pushoutHomotopyEquiv_inl
     (wi : i ≫ TopCat.ofHom eb.toFun = TopCat.ofHom ea.toFun ≫ i')
     (wf : f ≫ TopCat.ofHom ec.toFun = TopCat.ofHom ea.toFun ≫ f') :
     g ≫ TopCat.ofHom (pushoutHomotopyEquiv sq sq' hi hi' ea eb ec wi wf).toFun =
-      TopCat.ofHom eb.toFun ≫ g' := sq.inl_desc _ _ _
+      TopCat.ofHom eb.toFun ≫ g' := by
+  simp only [pushoutHomotopyEquiv, TopCat.ofHom_hom]
+  exact sq.inl_desc _ _ _
 
 @[reassoc (attr := simp)]
 theorem pushoutHomotopyEquiv_inr
@@ -214,7 +226,9 @@ theorem pushoutHomotopyEquiv_inr
     (wi : i ≫ TopCat.ofHom eb.toFun = TopCat.ofHom ea.toFun ≫ i')
     (wf : f ≫ TopCat.ofHom ec.toFun = TopCat.ofHom ea.toFun ≫ f') :
     j ≫ TopCat.ofHom (pushoutHomotopyEquiv sq sq' hi hi' ea eb ec wi wf).toFun =
-      TopCat.ofHom ec.toFun ≫ j' := sq.inr_desc _ _ _
+      TopCat.ofHom ec.toFun ≫ j' := by
+  simp only [pushoutHomotopyEquiv, TopCat.ofHom_hom]
+  exact sq.inr_desc _ _ _
 
 /-- A formulation of homotopy gluing for four specified vertical maps.
 The equivalences are required to represent the actual three component

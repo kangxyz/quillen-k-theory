@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.Algebra.Homology.HomotopyCategory.Acyclic
+module
+
+public import Mathlib.Algebra.Homology.HomotopyCategory.Acyclic
 
 /-!
 # Quasi-isomorphisms from acyclic mapping cones
@@ -12,6 +14,8 @@ The actual acyclicity of a cochain mapping cone implies that its defining map
 is a quasi-isomorphism. This is a theorem in an arbitrary abelian category;
 no derived-equivalence or geometric exactness assumption is used.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Pretriangulated CochainComplex

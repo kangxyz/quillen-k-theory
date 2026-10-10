@@ -1,4 +1,12 @@
-import Quillen.Topology.HomotopyFiber.WeakCoproduct
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.WeakCoproduct
 
 /-! # Original weak-cartesian comparisons assemble over coproduct parameters
 
@@ -7,13 +15,15 @@ sigma map of the summand comparisons and the actual pullback/coproduct
 homeomorphism. Weak coproduct closure and that homeomorphism prove the result.
 No finite pushout or global realization fiber theorem is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open scoped Topology
 universe u
 namespace Quillen.HomotopyPullback
-open TheoremB.SkeletalCartesian
+open Quillen.CartesianRealization.Skeletal
 variable {ι : Type u} {X A : ι → Type u} [∀ i, TopologicalSpace (X i)]
   [∀ i, TopologicalSpace (A i)]
   {E T : Type u} [TopologicalSpace E] [TopologicalSpace T]

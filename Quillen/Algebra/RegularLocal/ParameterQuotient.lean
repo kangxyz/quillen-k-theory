@@ -1,6 +1,14 @@
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.Data.Fintype.Card
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.Data.Fintype.Card
 
 /-!
 # Quotienting a regular local ring by a first minimal generator
@@ -11,6 +19,8 @@ parameter. Removing its image in the quotient decreases the generator
 bound by one. Krull's height inequality then proves quotient regularity and
 the exact dimension drop, without first assuming that the ring is a domain.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -35,7 +45,7 @@ theorem exists_generators_containing_parameter (x : R) (hx : x ∈ maximalIdeal 
   let I := hs.extend (Set.subset_univ {v})
   let b : Basis I (ResidueField R) (CotangentSpace R) := Basis.extend hs
   have : Finite I := Module.Finite.finite_basis b
-  letI : Fintype I := Fintype.ofFinite I
+  let : Fintype I := Fintype.ofFinite I
   let i₀ : I := ⟨v, (Basis.subset_extend hs) (Set.mem_singleton v)⟩
   choose g hg using fun i : I => m.toCotangent_surjective (b i)
   let g' : I → m := Function.update g i₀ ⟨x, hx⟩

@@ -1,7 +1,15 @@
-import Quillen.Topology.CubicalSubdivision.BoundaryLifting
-import Quillen.Topology.CubicalSubdivision.StagePasting
-import Quillen.Topology.CubicalSubdivision.OuterBoundary
-import Quillen.Topology.CubicalSubdivision.FaceCover
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.BoundaryLifting
+public import Quillen.Topology.CubicalSubdivision.StagePasting
+public import Quillen.Topology.CubicalSubdivision.OuterBoundary
+public import Quillen.Topology.CubicalSubdivision.FaceCover
 
 /-! # Genuine locality of finite cube-boundary right lifting
 
@@ -10,6 +18,8 @@ in dimension order, using the original boundary data on outer faces. Actual
 quotient pasting retains all prescribed lower faces. No arbitrary inverse-image
 subset is asserted to have HEP, and no continuous inverse family is chosen.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -19,7 +29,7 @@ universe u v w
 
 /-- The original map restricted over an actual target subset. -/
 def restriction {E : Type u} {B : Type v} [TopologicalSpace E] [TopologicalSpace B]
-    (p : C(E,B)) (U : Set B) : C({e : E // p e ∈ U},U) where
+    (p : C(E, B)) (U : Set B) : C({e : E // p e ∈ U}, U) where
   toFun e := ⟨p e.val,e.2⟩
   continuous_toFun := by fun_prop
 
@@ -27,8 +37,8 @@ def restriction {E : Type u} {B : Type v} [TopologicalSpace E] [TopologicalSpace
 All maps and prescribed boundary values in the conclusion are the originals. -/
 theorem BoundaryLifting.of_open_cover
     {E : Type u} {B : Type v} [TopologicalSpace E] [TopologicalSpace B]
-    (p : C(E,B)) {J : Type w} (U : J → Set B)
-    (hU : ∀ j,IsOpen (U j)) (hcover : ∀ y : B,∃ j,y ∈ U j)
+    (p : C(E, B)) {J : Type w} (U : J → Set B)
+    (hU : ∀ j, IsOpen (U j)) (hcover : ∀ y : B, ∃ j, y ∈ U j)
     (hloc : ∀ j,BoundaryLifting (restriction p (U j))) : BoundaryLifting p := by
   intro n a b hab
   obtain ⟨m,hm⟩ := exists_grid_faces_subordinate n b U hU (fun x ↦ hcover (b x))
@@ -51,7 +61,8 @@ theorem BoundaryLifting.of_open_cover
           (∀ t : {t : Active F.1 → unitInterval // t ∈ _root_.Cube.boundary (Active F.1)},
             c t = l (stageBoundary F t)) ∧
           (∀ t,p (c t) = b (CubicalSubdivision.face F.1 t)) ∧
-          ∀ (t : Active F.1 → unitInterval) (ht : CubicalSubdivision.face F.1 t ∈ _root_.Cube.boundary (Fin n)),
+          ∀ (t : Active F.1 → unitInterval) (ht : CubicalSubdivision.face F.1 t ∈
+            _root_.Cube.boundary (Fin n)),
             c t = a ⟨CubicalSubdivision.face F.1 t,ht⟩ := by
         intro F
         by_cases hF : OnOuterBoundary F.1
@@ -74,7 +85,8 @@ theorem BoundaryLifting.of_open_cover
             continuous_toFun := by fun_prop }
           let b' : C((Active F.1 → unitInterval),U j) := {
             toFun t := ⟨b (CubicalSubdivision.face F.1 t),hchart F.1 t⟩
-            continuous_toFun := (b.continuous.comp (CubicalSubdivision.face F.1).continuous).subtype_mk _ }
+            continuous_toFun := (b.continuous.comp (CubicalSubdivision.face
+              F.1).continuous).subtype_mk _ }
           have hab' : ∀ t,restriction p (U j) (a' t) = b' t := by
             intro t
             exact Subtype.ext (hlp (stageBoundary F t))

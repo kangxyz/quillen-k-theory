@@ -3,13 +3,17 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Fibration.Rows.CoarseJoint
+module
+
+public import Quillen.Waldhausen.Fibration.Rows.CoarseJoint
 
 /-! # Genuine retargeting of original fine joint data
 
 The original endpoints and weak projection are unchanged. Coarse exactness is
 derived through the actual coarse gluing and two-out-of-three argument.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'

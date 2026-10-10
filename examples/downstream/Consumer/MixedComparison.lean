@@ -1,6 +1,18 @@
-import Quillen.Library
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.CoarseEvaluation
+public import Quillen.Waldhausen.Fibration.Rows.SecondEndpoint
+public import Quillen.Waldhausen.GilletWaldhausen.FibrationModels
 
 /-! Actual original-model comparisons consumed through the public library. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite CochainComplex
 open Quillen Quillen.Waldhausen Quillen.Waldhausen.Fibration
@@ -19,7 +31,8 @@ def originalRelativeFiltrationEquiv :
   relativeFiltrationTotalHomotopyEquiv N he
 
 theorem originalRelativeFiltration_forward : (originalRelativeFiltrationEquiv N he).toFun =
-    (SSet.toTop.map (relativeFiltrationTotalMap N he)).hom := relativeFiltrationTotalHomotopyEquiv_toFun N he
+    (SSet.toTop.map (relativeFiltrationTotalMap N he)).hom :=
+      relativeFiltrationTotalHomotopyEquiv_toFun N he
 
 def originalCoarseEvaluationEquiv :
     ContinuousMap.HomotopyEquiv |TheoremA.diagonalSSet (MixedNerves.coarseRowDiagonals N)|

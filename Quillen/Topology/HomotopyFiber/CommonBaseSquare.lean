@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyFiber.ProjectionFibration
-import Quillen.Topology.HomotopyFiber.GroupDetection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.ProjectionFibration
+public import Quillen.Topology.HomotopyFiber.GroupDetection
 
 /-! # The original common-base homotopy-fiber square
 
@@ -9,6 +17,8 @@ homotopy lifting property, so the original constant-outer-path comparison
 is a genuine homotopy equivalence. No lifting property of either original
 map, nor any global realization theorem, is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 universe u
@@ -16,7 +26,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace Quillen.HomotopyFiber
 variable {X Y B : Type u} [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace B]
-  (p : C(X,B)) (q : C(Y,B)) (j : C(X,Y)) (sq : q.comp j = p) (b : B)
+  (p : C(X, B)) (q : C(Y, B)) (j : C(X, Y)) (sq : q.comp j = p) (b : B)
 
 /-- Retain the displayed source point and the whole original target path;
 the new fiber source coordinate is the original map j applied to that point. -/
@@ -45,9 +55,9 @@ def commonBaseStrictPullbackHomeomorph : HomotopyFiber p b ≃ₜ
 @[simp] theorem commonBaseStrictPullbackHomeomorph_fiber (z : HomotopyFiber p b) :
     (commonBaseStrictPullbackHomeomorph p q j sq b z).1.2 = mapOver p q j sq b z := rfl
 
-@[simp] theorem commonBaseStrictPullbackHomeomorph_path
-    (z : HomotopyFiber p b) (t : unitInterval) :
-    (commonBaseStrictPullbackHomeomorph p q j sq b z).1.2.1.2 t = z.1.2 t := rfl
+/-- A map over the common base preserves every point of the stored path. -/
+@[simp] theorem mapOver_path_apply (z : HomotopyFiber p b) (t : unitInterval) :
+    (mapOver p q j sq b z).1.2 t = z.1.2 t := rfl
 
 /-- The literal original fiber square, with its constant outer comparison path. -/
 def commonBaseComparison : C(HomotopyFiber p b, HomotopyPullback (projection q b) j) :=
@@ -72,10 +82,6 @@ def commonBaseComparisonEquiv :
 /-- The fiber coordinate is precisely the original map over the common base. -/
 @[simp] theorem commonBaseComparison_fiber (z : HomotopyFiber p b) :
     (commonBaseComparison p q j sq b z).1.2.1 = mapOver p q j sq b z := rfl
-
-/-- Every point of the stored original q-path is unchanged. -/
-@[simp] theorem commonBaseComparison_innerPath (z : HomotopyFiber p b) (t : unitInterval) :
-    (commonBaseComparison p q j sq b z).1.2.1.1.2 t = z.1.2 t := rfl
 
 /-- The outer path is literally constant, with no extra concatenated segment. -/
 @[simp] theorem commonBaseComparison_outerPath (z : HomotopyFiber p b) :

@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.CategoryTheory.ComposableArrows.Basic
+module
+
+public import Mathlib.CategoryTheory.ComposableArrows.Basic
 
 /-!
 # Appending an arrow to an actual finite chain
@@ -12,6 +14,8 @@ The construction needs only a category. It preserves every old object and map,
 and the map to the new last object is exactly the old top map followed by the
 given arrow. The original-index restriction is supplied as an explicit isomorphism.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Fibration.AllWeak.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.AllWeak.Basic
 
 /-! # The original all-acyclic full category is exactly the original category
 
@@ -6,6 +14,8 @@ The actual inclusion and the actual lift `X ↦ ⟨X, trivial⟩` form an exact
 equivalence for the inherited fine weak class, preserving both chosen zeros.
 No realization or double-S transport is built into this categorical result.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

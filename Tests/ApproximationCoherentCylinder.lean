@@ -3,7 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.WeakCommaCylinder
+module
+
+public import Quillen.Waldhausen.Approximation.WeakCommaCylinder
+public import Quillen.Waldhausen.SplitComplexes.Approximation
+public import Quillen.Waldhausen.SplitComplexes.FunctorialFactorization
 
 /-! # Semantic consumers of the genuine approximation cylinder filling
 
@@ -12,6 +16,8 @@ functor, exercise both strict filling faces, and check the actual based
 nullhomotopy at the original App2 point coming from the specified source zero.
 The final consumer instantiates the cylinder from actual cone-closed complexes.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen

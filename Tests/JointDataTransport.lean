@@ -3,10 +3,14 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Fibration.Rows.EquivalenceJoint
-import Quillen.Waldhausen.ExtensionCategory.HeterogeneousDetection
+module
+
+public import Quillen.Waldhausen.Fibration.Rows.EquivalenceJoint
+public import Quillen.Waldhausen.ExtensionCategory.HeterogeneousDetection
 
 /-! # Actual endpoint and universal-property consumers of joint-data transport -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v' u'' v''

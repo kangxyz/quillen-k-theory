@@ -3,10 +3,14 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Duality.Basic
-import Quillen.Waldhausen.Fibration.InverseImageWeak
+module
+
+public import Quillen.Waldhausen.Duality.Basic
+public import Quillen.Waldhausen.Fibration.InverseImageWeak
 
 /-! # Original duality after inverse-image weak enlargement -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'

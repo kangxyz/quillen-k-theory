@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Fibration.Rows.ComplexFactorization
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.Rows.ComplexFactorization
 
 /-! # The actual second cylinder endpoint on genuine quotient rows
 
@@ -8,6 +16,8 @@ datum, absent from JointData; the actual identity-cone cylinder proves it
 literally. Coarse two-out-of-three then makes both endpoints coarse-weak
 whenever the original arrow is coarse-weak.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CochainComplex
 universe u v
@@ -57,7 +67,8 @@ def SecondEndpointSection : Prop :=
       D.projection.app (Arrow.mk (f.hom.hom.app p)) = 𝟙 _
   simpa only [Category.assoc] using! hs (Arrow.mk (f.hom.hom.app p))
 
-/-- The actual second endpoint is coarse-weak because its composite with the weak projection is identity. -/
+/-- The actual second endpoint is coarse-weak because its composite with the weak projection is
+identity. -/
 theorem targetInclusion_weak (hs : SecondEndpointSection N D)
     [N.coarse.weq.HasTwoOutOfThreeProperty] {n : SimplexCategory}
     (f : Arrow (QuotientRows.Obj V n)) :
@@ -91,7 +102,8 @@ variable {A : Type u} [Category.{v} A] [Abelian A]
 
 /-- The actual identity-cone joint cylinder proves the second-endpoint section identity. -/
 theorem complexJointData_secondEndpointSection :
-    RowFactorization.SecondEndpointSection (complexSubcategoryNested P) (complexJointData P hcone hshift) := by
+    RowFactorization.SecondEndpointSection (complexSubcategoryNested P) (complexJointData P
+      hcone hshift) := by
   intro f
   apply ObjectProperty.hom_ext
   change biprod.inr ≫ SplitFactorization.jointInclusion f.hom.hom ≫
@@ -107,7 +119,8 @@ def complexRowTargetInclusion (n : SimplexCategory) :
 /-- Its unchanged component is literally the original target biproduct inclusion. -/
 @[simp] theorem complexRowTargetInclusion_component {n : SimplexCategory}
     (f : Arrow (QuotientRows.Obj
-      (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex A ℤ)) P)) n))
+      (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex A
+        ℤ)) P)) n))
     (p : Interval n) :
     (((complexRowTargetInclusion P hcone hshift n).app f).hom.app p).hom =
       (biprod.inr : (f.right.obj.obj p).obj ⟶ SplitFactorization.middle (f.hom.hom.app p).hom) := by
@@ -117,10 +130,12 @@ def complexRowTargetInclusion (n : SimplexCategory) :
 /-- The original complex row projection retracts this actual target inclusion exactly. -/
 @[reassoc] theorem complexRowTargetInclusion_projection {n : SimplexCategory}
     (f : Arrow (QuotientRows.Obj
-      (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex A ℤ)) P)) n)) :
+      (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex A
+        ℤ)) P)) n)) :
     (complexRowTargetInclusion P hcone hshift n).app f ≫
       (complexRowFactorization P hcone hshift n).projection.app f = 𝟙 f.right :=
-  RowFactorization.targetInclusion_projection (complexSubcategoryNested P) (complexJointData P hcone hshift)
+  RowFactorization.targetInclusion_projection (complexSubcategoryNested P) (complexJointData P
+    hcone hshift)
     (complexJointData_secondEndpointSection P hcone hshift) f
 
 end Quillen.Waldhausen.Fibration

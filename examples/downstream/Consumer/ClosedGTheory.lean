@@ -1,4 +1,23 @@
-import Quillen.Scheme.ClosedGTheory
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.AlgebraicGeometry.Scheme.ClosedGTheory
+
+/-!
+# Closed-immersion G-theory examples
+
+Uses the public closed pushforward and open restriction for a closed immersion
+into a noetherian scheme. The examples obtain noetherianity of the source,
+record exactness, and identify the supported dévissage equivalence's forward
+composite with the original pushforward.
+-/
+
+@[expose] public section
 
 noncomputable section
 universe u

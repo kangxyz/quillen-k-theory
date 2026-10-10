@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.FiberTransport
-import Quillen.Topology.HELP.SquareRealizationLifting
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.FiberTransport
+public import Quillen.Topology.HELP.SquareRealizationLifting
 
 /-! # Actual lifting for normalized relative-row transition comparisons
 
@@ -8,6 +16,8 @@ individual path transport. The original normalized comparison's mapping-path
 endpoint therefore lifts over every realized simplicial monomorphism.
 This supplies a relative-cell lifting input, without asserting global gluing.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

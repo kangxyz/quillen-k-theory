@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.IsoQuotient
-import Mathlib.CategoryTheory.Bicategory.Span.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.IsoQuotient
+public import Mathlib.CategoryTheory.Bicategory.Span.Basic
 
 /-!
 # The Q-style restricted-span category
@@ -14,6 +22,8 @@ inflation (admissible monomorphism). Composition uses the actual categorical
 pullback supplied by mathlib's restricted-span bicategory. Only the mixed
 pullbacks are required, rather than all pullbacks in the category.
 -/
+@[expose] public section
+
 
 noncomputable section
 

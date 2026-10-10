@@ -1,6 +1,14 @@
-import Quillen.Topology.Realization.BisimplicialLatchingEquivalences
-import Quillen.Topology.Realization.BisimplicialSkeletonAttachment
-import Quillen.CategoryTheory.TheoremA.SequentialHomotopyInvariance
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.BisimplicialLatchingEquivalences
+public import Quillen.Topology.Realization.BisimplicialSkeletonAttachment
+public import Quillen.CategoryTheory.TheoremA.SequentialHomotopyInvariance
 
 /-!
 # Rowwise equivalences induce genuine diagonal realization equivalences
@@ -11,6 +19,8 @@ retains the prescribed diagonal map. It uses finite latching pushouts, full-row
 outer skeletal attachments, actual monomorphism HEP, and sequential gluing.
 Neither compatible rowwise inverse choices nor groupoid hypotheses are needed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite MonoidalCategory
 open scoped Simplicial Topology
@@ -50,7 +60,8 @@ theorem attachmentMap_isRealizationEquivalence
     (hl.whiskerRight _) ((h n).whiskerRight _) (hl.whiskerRight _)
 
 /-- The empty outer stage is an initial simplicial set. -/
-def stage_isInitial (X : SimplicialObject SSet.{u}) : IsInitial (stage X 0) :=
+-- Preserve the public empty-stage initiality witness name for existing downstream references.
+def stageZeroIsInitial (X : SimplicialObject SSet.{u}) : IsInitial (stage X 0) :=
   SSet.Subcomplex.isInitialBot.ofIso (SSet.Subcomplex.eqToIso (outerSkeleton_zero X)).symm
 
 /-- Rowwise realization equivalences give equivalences on every finite outer skeleton. -/
@@ -58,7 +69,8 @@ theorem stageMap_isRealizationEquivalence
     (h : ∀ n, IsRealizationEquivalence (η.app (op ⦋n⦌))) (n : ℕ) :
     IsRealizationEquivalence (stageMap η n) := by
   induction n with
-  | zero => exact IsRealizationEquivalence.of_isInitial _ (stage_isInitial X) (stage_isInitial Y)
+  | zero =>
+      exact IsRealizationEquivalence.of_isInitial _ (stageZeroIsInitial X) (stageZeroIsInitial Y)
   | succ n ih =>
     let : CompactSpace |(Δ[n] : SSet.{u})| := (SimplexCategory.toTopHomeo ⦋n⦌).symm.compactSpace
     let : T2Space |(Δ[n] : SSet.{u})| := (SimplexCategory.toTopHomeo ⦋n⦌).symm.t2Space

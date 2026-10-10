@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.Homology.BoundedProjectiveReplacement
+module
+
+public import Quillen.Algebra.Homology.BoundedProjectiveReplacement
 
 /-!
 # Genuine relative projective factorization
@@ -14,6 +16,8 @@ quasi-isomorphism. The first has degreewise projective cokernel and is
 split in every degree. No projectivity of the original source is assumed.
 The explicit resulting upper bound is one more than the common input bound.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

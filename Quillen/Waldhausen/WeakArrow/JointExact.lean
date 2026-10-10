@@ -3,16 +3,20 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.WeakArrow.JointFunctor
-import Quillen.Waldhausen.WeakArrow.DualDetection
-import Quillen.Waldhausen.ArrowCategory.Exact
-import Quillen.Waldhausen.ExtensionCategory.HeterogeneousDetection
+module
+
+public import Quillen.Waldhausen.WeakArrow.JointFunctor
+public import Quillen.Waldhausen.WeakArrow.DualDetection
+public import Quillen.Waldhausen.ArrowCategory.Exact
+public import Quillen.Waldhausen.ExtensionCategory.HeterogeneousDetection
 /-! # Genuine exactness of coherent opposite weak-arrow joint cylinders
 
 Both original projections detect the actual zero objects and pushouts. For
 cofibrations, the proof uses the genuine relative pushout map rather than
 pointwise cofibration alone.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 universe u v u' v'
@@ -76,8 +80,10 @@ lemma jointFunctor_exact :
   pushout {A B E P} {i f g j} hi h := by
     have hc := jointFunctor_source_exact V W Vd Wd F hF hFd hW Tc Td compat
     have hd := jointFunctor_target_exact V W Vd Wd F hF hFd hW Tc Td compat
-    obtain ⟨hcL,hcR⟩ := ExtensionCategory.pointwise_of_isPushout Vd (hc.cofibration i hi) (hc.pushout hi h)
-    obtain ⟨hdL,hdR⟩ := ExtensionCategory.pointwise_of_isPushout Wd (hd.cofibration i hi) (hd.pushout hi h)
+    obtain ⟨hcL,hcR⟩ := ExtensionCategory.pointwise_of_isPushout Vd (hc.cofibration i hi)
+      (hc.pushout hi h)
+    obtain ⟨hdL,hdR⟩ := ExtensionCategory.pointwise_of_isPushout Wd (hd.cofibration i hi)
+      (hd.pushout hi h)
     apply IsPushout.of_map_of_faithful (ExtensionCategory.forget _)
     apply ExtensionCategory.arrow_isPushout
     · exact dual_isPushout_of_components W F _ _ _ _ hcL hdL

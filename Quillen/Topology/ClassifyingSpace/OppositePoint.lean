@@ -1,8 +1,18 @@
-import Quillen.Topology.ClassifyingSpace.Opposite
-import Quillen.Topology.ClassifyingSpace.Constant
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.ClassifyingSpace.Opposite
+public import Quillen.Topology.ClassifyingSpace.Constant
 
 /-! The natural opposite-realization homeomorphism preserves each object
 vertex, as follows immediately by naturality for the constant endofunctor. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 universe u

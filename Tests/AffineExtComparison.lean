@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.Affine.DerivedSingleComparison
-import Tests.AffineCechHigher
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedSingleComparison
+public import Tests.AffineCechHigher
 
 /-!
 # Consumers of original affine resolution and Ext comparison
@@ -14,11 +16,12 @@ augmentation, actual Ext maps with independent universes, and the original
 `associatedDerived` morphism map. The zero ring and the zero-divisor ring
 `ZMod 6` exercise negative and positive derived shifts respectively.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-set_option maxHeartbeats 800000
 universe w w' u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Abelian AlgebraicGeometry
 open Quillen.SchemeSheaf.AffineDerived Quillen.PerfectComplexes.Affine
@@ -73,7 +76,8 @@ lemma zero_ring_original_negative_derived_map
     (X Y : ModuleCat AffineCechHigher.zeroRing) :
     Function.Bijective ((associatedDerived AffineCechHigher.zeroRing).map :
       ((DerivedCategory.singleFunctor (ModuleCat AffineCechHigher.zeroRing) 0).obj X ⟶
-        ((DerivedCategory.singleFunctor (ModuleCat AffineCechHigher.zeroRing) 0).obj Y)⟦(-3 : ℤ)⟧) → _) :=
+        ((DerivedCategory.singleFunctor (ModuleCat AffineCechHigher.zeroRing) 0).obj Y)⟦(-3 : ℤ)⟧) →
+          _) :=
   associatedDerived_single_int_shift_map_bijective _ X Y (-3)
 
 lemma torsion_ring_original_derived_morphism_lifts (X Y : ModuleCat torsionRing)

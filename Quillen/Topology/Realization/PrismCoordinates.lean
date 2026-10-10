@@ -1,11 +1,21 @@
-import Mathlib.Geometry.Convex.ConvexSpace.Topology
-import Mathlib.Topology.UnitInterval
-import Mathlib.Data.Fin.SuccPred
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.FunProp
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.Geometry.Convex.ConvexSpace.Topology
+public import Mathlib.Topology.UnitInterval
+public import Mathlib.Data.Fin.SuccPred
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.FunProp
 
 /-! # Barycentric coordinates for the finite prism triangulation -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -48,7 +58,7 @@ def prismLift {n : ℕ} (i : Fin (n + 1)) (z : prismCell i) :
       by_cases h : j = i
       · subst j
         simpa using sub_nonneg.mpr (prismSplitAmount_le_weight i z)
-      · simpa [Finsupp.single_apply, h, Ne.symm h] using z.1.1.weights_nonneg j
+      · simp [h]
     · exact Finsupp.single_nonneg.mpr (prismSplitAmount_nonneg i z)
   total := by
     simp [Finsupp.sum_add_index, Finsupp.sum_mapDomain_index, Finsupp.sum_sub_index]

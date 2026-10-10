@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.Affine.PrincipalStrictCofinality
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalStrictCofinality
 
 /-! # Actual principal strict cofinality and honest original K-zero image consumers -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
@@ -13,7 +17,8 @@ namespace Quillen.Tests.PrincipalStrictCofinality
 open PerfectComplexes StrictOpenWeakImage Waldhausen
 variable (R : CommRingCat.{u}) (r : R)
 
-/-- Every strict target has an actual coproduct complement with an original weak restriction witness. -/
+/-- Every strict target has an actual coproduct complement with an original weak restriction
+  witness. -/
 theorem actual_coproduct_complement
     [HasBinaryCoproducts (StrictPerfect (Spec (.of (Localization.Away r))))]
     (A : StrictPerfect (Spec (.of (Localization.Away r)))) :
@@ -22,7 +27,8 @@ theorem actual_coproduct_complement
       (strictWaldhausen _).weq p := principal_image_complement R r A
 
 /-- Actual geometric cofinality gives unique preimages of every positive original strict K-class. -/
-theorem unique_positive_original_preimage (n : ℕ) (b : StrictK (Spec (.of (Localization.Away r))) (n + 1)) :
+theorem unique_positive_original_preimage (n : ℕ) (b : StrictK (Spec (.of (Localization.Away r))) (n
+  + 1)) :
     ∃! a, relativeKRestrict (CoherentScheme.principalOpen R r) (n + 1) a = b :=
   (principal_relativeKRestrict_succ_bijective R r n).existsUnique b
 
@@ -42,7 +48,8 @@ theorem unique_extendible_KZero_preimage (b : KZeroImage (CoherentScheme.princip
 theorem original_fine_KZero_restriction (a : StrictK (Spec R) 0) :
     (principalRelativeKZeroImageEquiv R r
       (KMap (Fibration.changeWeak_exact (nested (CoherentScheme.principalOpen R r))) 0 a) :
-      StrictK (Spec (.of (Localization.Away r))) 0) = strictKRestrict (CoherentScheme.principalOpen R r) 0 a :=
+      StrictK (Spec (.of (Localization.Away r))) 0) = strictKRestrict (CoherentScheme.principalOpen
+        R r) 0 a :=
   DFunLike.congr_fun (relativeKRestrict_comp_changeWeak (CoherentScheme.principalOpen R r) 0) a
 
 /-- A genuinely nonextendible original K-zero class cannot be introduced by the relative model. -/

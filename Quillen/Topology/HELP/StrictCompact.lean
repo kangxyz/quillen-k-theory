@@ -1,5 +1,13 @@
-import Quillen.Topology.HELP.Compact
-import Quillen.Topology.HomotopyFiber.BoundaryCorrection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.Compact
+public import Quillen.Topology.HomotopyFiber.BoundaryCorrection
 
 /-! # Strict-square characterization of compact HELP
 
@@ -8,6 +16,8 @@ cofibration. Conversely, reversing and extending the prescribed boundary
 homotopy reduces full HELP to a strict square. The temporary constant prefix
 is removed by the actual relative interval-square extension theorem.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

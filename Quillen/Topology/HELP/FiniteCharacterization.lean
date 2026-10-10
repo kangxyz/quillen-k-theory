@@ -1,5 +1,13 @@
-import Quillen.Topology.HELP.WeakFinite
-import Quillen.Topology.CubicalSubdivision.BoundaryWeakEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.WeakFinite
+public import Quillen.Topology.CubicalSubdivision.BoundaryWeakEquivalence
 
 /-! # Weak equivalences characterized by literal finite cube HELP
 
@@ -8,6 +16,8 @@ HELP on every actual finite cube, including dimension zero. Equivalently, the
 original mapping-path endpoint has literal finite cube-boundary lifting.
 No CW-type hypothesis, full compact HELP or ordinary homotopy inverse is used.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 open scoped Topology
@@ -17,7 +27,7 @@ variable {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y]
 
 /-- Full HELP on all literal finite cube-boundary pairs, retaining the whole
 original prescribed boundary homotopy. Dimension zero is included. -/
-def FiniteCubeHELP (f : C(X,Y)) : Prop :=
+def FiniteCubeHELP (f : C(X, Y)) : Prop :=
   ∀ (n : ℕ) (a : C(CubicalTests.boundary.{u} n,X)) (b : C(CubicalTests.cube.{u} n,Y))
     (H : (f.comp a).Homotopy (b.comp (CubicalTests.boundaryInclusion n).hom)),
     ∃ c : C(CubicalTests.cube.{u} n,X), c.comp (CubicalTests.boundaryInclusion n).hom = a ∧
@@ -26,7 +36,7 @@ def FiniteCubeHELP (f : C(X,Y)) : Prop :=
 
 /-- The exact original mapping-path endpoint lifts every finite cube boundary
 if and only if the original map is a complete weak homotopy equivalence. -/
-theorem isWeakHomotopyEquivalence_iff_mappingPath_boundaryLifting (f : C(X,Y)) :
+theorem isWeakHomotopyEquivalence_iff_mappingPath_boundaryLifting (f : C(X, Y)) :
     IsWeakHomotopyEquivalence f ↔ CubicalSubdivision.BoundaryLifting (MappingPath.endpoint f) := by
   constructor
   · exact IsWeakHomotopyEquivalence.mappingPath_endpoint_boundaryLifting
@@ -39,7 +49,7 @@ theorem isWeakHomotopyEquivalence_iff_mappingPath_boundaryLifting (f : C(X,Y)) :
 
 /-- Literal finite full HELP gives strict boundary lifting of the actual
 mapping-path endpoint, without changing any stored boundary path. -/
-theorem FiniteCubeHELP.mappingPath_boundaryLifting {f : C(X,Y)} (hf : FiniteCubeHELP f) :
+theorem FiniteCubeHELP.mappingPath_boundaryLifting {f : C(X, Y)} (hf : FiniteCubeHELP f) :
     CubicalSubdivision.BoundaryLifting (MappingPath.endpoint f) := by
   apply CubicalSubdivision.boundaryLifting_of_hasLiftingProperty
   intro n
@@ -48,7 +58,7 @@ theorem FiniteCubeHELP.mappingPath_boundaryLifting {f : C(X,Y)} (hf : FiniteCube
 
 /-- The finite cube condition is an exact characterization, including empty
 spaces and degree zero, rather than an arbitrary compact-pair lifting claim. -/
-theorem isWeakHomotopyEquivalence_iff_finiteCubeHELP (f : C(X,Y)) :
+theorem isWeakHomotopyEquivalence_iff_finiteCubeHELP (f : C(X, Y)) :
     IsWeakHomotopyEquivalence f ↔ FiniteCubeHELP f := by
   constructor
   · intro hf

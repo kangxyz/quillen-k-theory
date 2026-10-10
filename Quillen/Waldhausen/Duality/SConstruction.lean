@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Duality.Basic
-import Quillen.Topology.Realization.Opposite
-import Quillen.Topology.Realization.MapWeakEquivalence
+module
+
+public import Quillen.Waldhausen.Duality.Basic
+public import Quillen.Topology.Realization.Opposite
+public import Quillen.Topology.Realization.MapWeakEquivalence
 
 /-! # Actual S-construction reversal for compatible dual Waldhausen structures
 
@@ -13,6 +15,8 @@ Compatibility is stated on original zero-corner squares: an actual cofibration
 cofiber square is exactly a dual cofibration fiber square. No comparison of
 K-theory is assumed. Reversal changes all three original grid coordinates.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial Topology

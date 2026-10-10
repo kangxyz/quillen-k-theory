@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyFiber.StrictWeakTransport
-import Quillen.Topology.HELP.TwoOfThree
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.StrictWeakTransport
+public import Quillen.Topology.HELP.TwoOfThree
 
 /-! # Compact HELP for the actual strict-fiber map after base change
 
@@ -7,6 +15,8 @@ The strict-pullback map retains its parameter and applies the original
 source map. The actual strict-fiber homeomorphisms commute with it exactly.
 Compact HELP transfers through these genuine homeomorphisms by two-of-three.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

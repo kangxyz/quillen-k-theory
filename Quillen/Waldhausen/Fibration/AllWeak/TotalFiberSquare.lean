@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.AllWeak.RelativeInclusion
-import Quillen.Waldhausen.Fibration.RelativeRows.TotalFiber
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.AllWeak.RelativeInclusion
+public import Quillen.Waldhausen.Fibration.RelativeRows.TotalFiber
 
 /-! # The original all-weak square of total-tail fiber comparisons
 
@@ -9,6 +17,8 @@ the complete postcomposed path. Its square with the original constant-path
 total comparisons commutes strictly, without assuming either global weak
 fiber comparison.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial Topology

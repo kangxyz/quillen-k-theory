@@ -1,4 +1,12 @@
-import Quillen.Localization.Serre.StructuredComparisonWeak
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.StructuredComparisonWeak
 
 /-!
 # Exact-sequence packaging for the canonical Serre comparison
@@ -9,6 +17,8 @@ from the abelian and Serre assumptions. The maps in the resulting sequence are
 the existing exact inclusion and quotient K-maps, and the boundary is the
 actual path-space boundary transported through the canonical comparison.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u
@@ -22,6 +32,8 @@ variable {C : Type u} [Category.{u} C] [Abelian C]
 inclusion and quotient homomorphisms fixed to the canonical K-maps. The last
 field is the terminal surjection onto homotopical K₀. -/
 structure KLocalizationSequence where
+  /-- The boundary homomorphism from degree `n + 1` K-theory of the Serre quotient to degree `n`
+  K-theory of the Serre subcategory, compatible with the specified fiber comparison. -/
   connecting : ∀ n : ℕ,
     (quotientExactStructure P).K (n + 1) →* (Devissage.subcategoryExactStructure P).K n
   comparison_connecting : ∀ n,
@@ -42,11 +54,13 @@ def localizationFiberEquivOfBijective (n : ℕ)
       HomotopyGroup.Pi (n + 1) (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P) :=
   MulEquiv.ofBijective (localizationFiberComparisonHom P n) h
 
-@[simp]
-theorem localizationFiberEquivOfBijective_toMonoidHom (n : ℕ)
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem localizationFiberEquivOfBijective_coe (n : ℕ)
     (h : Function.Bijective (localizationFiberComparisonHom P n)) :
-    (localizationFiberEquivOfBijective P n h).toMonoidHom =
+    (↑(localizationFiberEquivOfBijective P n h) : (Devissage.subcategoryExactStructure P).K n →*
+        HomotopyGroup.Pi (n + 1) (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P)) =
       localizationFiberComparisonHom P n := rfl
+
 
 /-- Transporting the actual connecting map through the canonical comparison
 retains its defining equation, rather than choosing an unrelated exact map. -/

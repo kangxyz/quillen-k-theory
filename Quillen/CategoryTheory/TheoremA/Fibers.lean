@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremA.Resolution
-import Mathlib.CategoryTheory.FiberedCategory.Fiber
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.Resolution
+public import Mathlib.CategoryTheory.FiberedCategory.Fiber
 
 /-!
 # Strict fibers of the Theorem A resolution
@@ -10,6 +18,8 @@ as its categorical fiber. This file constructs the equivalence with mathlib's
 This is a categorical fiber statement, not yet a topological homotopy-fiber
 statement.
 -/
+@[expose] public section
+
 
 noncomputable section
 

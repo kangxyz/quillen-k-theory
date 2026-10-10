@@ -3,8 +3,21 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.Affine.Strictification
-import Mathlib.Data.ZMod.Basic
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.Strictification
+public import Mathlib.Data.ZMod.Basic
+
+/-!
+# Affine strictification regression statements
+
+Records homology and principal-open comparisons for strict-perfect representatives,
+including the zero principal open over `ZMod 6`. Further statements express
+finite-free attachment as surjectivity on module elements and obtain a chain
+quasi-isomorphism from a strict-perfect module complex.
+-/
+
+@[expose] public section
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -34,7 +47,8 @@ including restrictions to empty principal opens. -/
 theorem actual_restricted_strict_model (R : CommRingCat.{u})
     (K : Complex (Spec R)) (hK : locallyPerfect (Spec R) K) (r : R) :
     ∃ P : StrictPerfect (Spec R),
-      Nonempty ((toDerived _).obj ((restrict (Quillen.CoherentScheme.principalOpen R r)).obj P.obj) ≅
+      Nonempty ((toDerived _).obj ((restrict (Quillen.CoherentScheme.principalOpen R r)).obj P.obj)
+        ≅
         (toDerived _).obj ((restrict (Quillen.CoherentScheme.principalOpen R r)).obj K)) := by
   obtain ⟨P, ⟨e⟩⟩ := locallyPerfect_exists_strictPerfect_representative R hK
   exact ⟨P, ⟨restrictDerivedIso _ e⟩⟩

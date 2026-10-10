@@ -1,9 +1,19 @@
-import Quillen.CategoryTheory.TheoremA.ReplacementInvariance
-import Quillen.CategoryTheory.TheoremA.ColumnOpposite
-import Quillen.CategoryTheory.TheoremA.OuterOppositeRealization
-import Quillen.CategoryTheory.TheoremA.Conclusion
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.ReplacementInvariance
+public import Quillen.CategoryTheory.TheoremA.ColumnOpposite
+public import Quillen.CategoryTheory.TheoremA.OuterOppositeRealization
+public import Quillen.CategoryTheory.TheoremA.Conclusion
 
 /-! # Quillen's Theorem A from contractible comma classifying spaces -/
+@[expose] public section
+
 
 noncomputable section
 

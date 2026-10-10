@@ -1,5 +1,13 @@
-import Quillen.KTheory.Map.Functoriality
-import Mathlib.Algebra.Category.Grp.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.Map.Functoriality
+public import Mathlib.Algebra.Category.Grp.Basic
 
 /-!
 # Bundled small exact categories and the Quillen K-group functor
@@ -9,6 +17,8 @@ additive/zero data. Morphisms are genuine additive conflation-preserving exact
 functors. The checked identity/composition laws package K_n as a group-valued
 functor, without claiming K₀ commutativity.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u
@@ -18,10 +28,12 @@ namespace Quillen
 
 /-- A small additive category equipped with a genuine Quillen exact structure. -/
 structure SmallExactCategory : Type (u + 1) where
+  /-- The type of objects of the bundled category, small in the selected universe. -/
   Obj : Type u
   [category : Category.{u} Obj]
   [preadditive : Preadditive Obj]
   [finiteBiproducts : HasFiniteBiproducts Obj]
+  /-- The Quillen exact structure on the bundled additive category. -/
   exactStructure : ExactStructure Obj
 
 attribute [instance] SmallExactCategory.category SmallExactCategory.preadditive

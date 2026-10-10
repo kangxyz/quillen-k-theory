@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.Reindex
-import Quillen.Waldhausen.Fibration.WeakEquivalenceCofiber
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.Reindex
+public import Quillen.Waldhausen.Fibration.WeakEquivalenceCofiber
 
 /-! # Actual relative quotient rows as coarse-weak cofibration chains
 
@@ -8,6 +16,8 @@ filtration arrow. The only additional hypothesis is the structural extension
 axiom on actual cofiber squares. No quotient choices are forgotten through an
 assumed categorical or homotopical equivalence.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial
@@ -20,7 +30,7 @@ variable {C : Type u} [Category.{v} C] {V : Structure C}
 
 /-- Replace only the actual zero corner of the original quotient square. -/
 theorem horizontal_cofiber_isPushout {n : SimplexCategory} (F : QuotientRows.Obj V n)
-    (i j k : Fin (n.len+1)) (hij : i ≤ j) (hjk : j ≤ k) :
+    (i j k : Fin (n.len + 1)) (hij : i ≤ j) (hjk : j ≤ k) :
     IsPushout
       (F.obj.map (homOfLE (show interval i j hij ≤ interval i k (hij.trans hjk) from ⟨le_rfl,hjk⟩)))
       (N.coarse.isZero.from_ (F.obj.obj (interval i j hij)))
@@ -36,37 +46,38 @@ theorem horizontal_cofiber_isPushout {n : SimplexCategory} (F : QuotientRows.Obj
 /-- The original displayed interval quotient detects the actual horizontal weak map. -/
 theorem horizontal_weak_iff_acyclic (he : ExtensionAxiom N.coarse)
     {n : SimplexCategory} (F : QuotientRows.Obj V n)
-    (i j k : Fin (n.len+1)) (hij : i ≤ j) (hjk : j ≤ k) :
+    (i j k : Fin (n.len + 1)) (hij : i ≤ j) (hjk : j ≤ k) :
     N.coarse.weq
-      (F.obj.map (homOfLE (show interval i j hij ≤ interval i k (hij.trans hjk) from ⟨le_rfl,hjk⟩))) ↔
+      (F.obj.map (homOfLE (show interval i j hij ≤ interval i k (hij.trans hjk) from
+        ⟨le_rfl,hjk⟩))) ↔
       Acyclic N.coarse (F.obj.obj (interval j k hjk)) :=
   weak_iff_acyclic_of_isPushout N.coarse he
     (by rw [N.cof_eq]; exact F.property.cofibration i j k hij hjk)
     (horizontal_cofiber_isPushout N F i j k hij hjk)
 
 /-- The original nonzero initial intervals, with no choice of quotient replacement. -/
-def initialFiltrationIndex (n : SimplexCategory) : Fin (n.len+1) ⥤ Interval (addInitial.obj n) :=
-  (show Monotone (fun i : Fin (n.len+1) ↦ interval 0 i.succ (Fin.zero_le _)) from
+def initialFiltrationIndex (n : SimplexCategory) : Fin (n.len + 1) ⥤ Interval (addInitial.obj n) :=
+  (show Monotone (fun i : Fin (n.len + 1) ↦ interval 0 i.succ (Fin.zero_le _)) from
     fun _ _ h ↦ ⟨le_rfl, Nat.succ_le_succ h⟩).functor
 
 /-- The actual initial filtration of a one-longer quotient row. -/
 def initialFiltration {n : SimplexCategory} (F : QuotientRows.Obj V (addInitial.obj n)) :
-    Fin (n.len+1) ⥤ C := initialFiltrationIndex n ⋙ F.obj
+    Fin (n.len + 1) ⥤ C := initialFiltrationIndex n ⋙ F.obj
 
 @[simp] theorem initialFiltration_obj {n : SimplexCategory}
-    (F : QuotientRows.Obj V (addInitial.obj n)) (i : Fin (n.len+1)) :
+    (F : QuotientRows.Obj V (addInitial.obj n)) (i : Fin (n.len + 1)) :
     (initialFiltration F).obj i = F.obj.obj (interval 0 i.succ (Fin.zero_le _)) := rfl
 
 /-- Every original filtration arrow is an actual fine cofibration. -/
 theorem initialFiltration_map_cof {n : SimplexCategory}
-    (F : QuotientRows.Obj V (addInitial.obj n)) {i j : Fin (n.len+1)} (f : i ⟶ j) :
+    (F : QuotientRows.Obj V (addInitial.obj n)) {i j : Fin (n.len + 1)} (f : i ⟶ j) :
     V.cof ((initialFiltration F).map f) :=
   F.property.cofibration 0 i.succ j.succ (Fin.zero_le _) (Nat.succ_le_succ (leOfHom f))
 
 /-- Tail acyclicity is exactly coarse weakness of the original initial filtration. -/
 theorem objects_iff_initialFiltration_weak (he : ExtensionAxiom N.coarse)
     {n : SimplexCategory} (F : QuotientRows.Obj V (addInitial.obj n)) :
-    objects N n F ↔ ∀ (i j : Fin (n.len+1)) (f : i ⟶ j),
+    objects N n F ↔ ∀ (i j : Fin (n.len + 1)) (f : i ⟶ j),
       N.coarse.weq ((initialFiltration F).map f) := by
   constructor
   · intro h i j f
@@ -79,7 +90,7 @@ theorem objects_iff_initialFiltration_weak (he : ExtensionAxiom N.coarse)
 
 /-- In every genuine relative row all original filtration maps are coarse-weak. -/
 theorem initialFiltration_map_weak (he : ExtensionAxiom N.coarse)
-    {n : SimplexCategory} (F : Obj N n) {i j : Fin (n.len+1)} (f : i ⟶ j) :
+    {n : SimplexCategory} (F : Obj N n) {i j : Fin (n.len + 1)} (f : i ⟶ j) :
     N.coarse.weq ((initialFiltration F.obj).map f) :=
   (objects_iff_initialFiltration_weak N he F.obj).1 F.property i j f
 

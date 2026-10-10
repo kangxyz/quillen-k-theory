@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.PathSubdivision.FiniteStep
-import Quillen.Topology.CubicalSubdivision.FaceComplex
+module
+
+public import Quillen.Topology.PathSubdivision.FiniteStep
+public import Quillen.Topology.CubicalSubdivision.FaceComplex
 
 /-!
 # Finite iteration through the literal uniform time mesh
@@ -15,6 +17,8 @@ slab. The induction preserves the original boundary parameter and source,
 and composes relative homotopies in the unchanged final homotopy pullback.
 No continuous inverse or lifting property of a whole path space is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -36,29 +40,29 @@ theorem gridVertex_last (m : ℕ) : gridVertex m ⟨m+1,by omega⟩ = 1 := by
   exact div_self (by positivity)
 
 /-- Every actual slab starts at its original mesh vertex. -/
-theorem intervalCell_zero_vertex (m : ℕ) (i : Fin (m+1)) :
+theorem intervalCell_zero_vertex (m : ℕ) (i : Fin (m + 1)) :
     intervalCell m i 0 = gridVertex m i.castSucc := by
   apply Subtype.ext
   simp [intervalCell,gridVertex]
 
 /-- Every actual slab ends at the next original mesh vertex. -/
-theorem intervalCell_one_vertex (m : ℕ) (i : Fin (m+1)) :
+theorem intervalCell_one_vertex (m : ℕ) (i : Fin (m + 1)) :
     intervalCell m i 1 = gridVertex m i.succ := by
   apply Subtype.ext
   simp [intervalCell,gridVertex]
 
 variable {D E X B : Type u} [TopologicalSpace D] [TopologicalSpace E]
   [TopologicalSpace X] [TopologicalSpace B]
-  (p : C(E,B)) (H : C(unitInterval × D,B)) (n : ℕ)
-  (a : C(boundary.{u} n,D)) (e : C(boundary.{u} n,E))
-  (he : ∀ z,p (e z) = H (1,a z))
-  (hfixed : ∀ t z,H (t,a z) = H (1,a z))
-  (f : C(X,B)) (k : C(D,X)) (hEnd : ∀ d,H (1,d) = f (k d))
+  (p : C(E, B)) (H : C(unitInterval × D, B)) (n : ℕ)
+  (a : C(boundary.{u} n, D)) (e : C(boundary.{u} n, E))
+  (he : ∀ z, p (e z) = H (1, a z))
+  (hfixed : ∀ t z, H (t, a z) = H (1, a z))
+  (f : C(X, B)) (k : C(D, X)) (hEnd : ∀ d, H (1, d) = f (k d))
 
 /-- Advance the complete original cube across all finitely many actual slabs.
 The supplied weak inputs concern the genuine local path pools only. -/
 theorem exists_finite_time_lift (m : ℕ) (U V : Set B)
-    (hcover : ∀ (i : Fin (m+1)) d,
+    (hcover : ∀ (i : Fin (m + 1)) d,
       slabMap H m i d ∈ pathSet U ∨ slabMap H m i d ∈ pathSet V)
     (hweak : ∀ i : Fin (m+1),IsWeakHomotopyEquivalence
       (twoPoolComparison p (slabMap H m i) U V (hcover i)))

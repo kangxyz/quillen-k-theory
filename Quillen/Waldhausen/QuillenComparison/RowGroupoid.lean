@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.QuillenComparison.Reindexing
-import Mathlib.CategoryTheory.Core
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.Reindexing
+public import Mathlib.CategoryTheory.Core
 
 /-! # The groupoid of exact quotient rows
 
@@ -7,6 +15,8 @@ Objects are actual exact S-rows, and morphisms are natural isomorphisms of
 their quotient diagrams. The subquotient-span construction is functorial on
 this groupoid, retaining every quotient and every component isomorphism.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -29,6 +39,8 @@ variable (E : Quillen.ExactStructure C)
 The constant nerve direction only records identity isomorphisms. -/
 @[ext]
 structure Row (n : SimplexCategory) where
+  /-- The diagram of actual subquotient objects indexed by `Interval n`; pulling it back along
+  `gridProjection n` gives the exact S-simplex. -/
   diagram : Interval n ⥤ C
   simplex : IsSimplex E.inflation (MorphismProperty.isomorphisms C)
     (gridProjection n ⋙ diagram)

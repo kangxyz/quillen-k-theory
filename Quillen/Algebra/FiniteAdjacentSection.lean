@@ -1,7 +1,15 @@
-import Quillen.Algebra.FiniteAdjacentComplex
-import Mathlib.Algebra.Group.Pi.Lemmas
-import Mathlib.Algebra.Group.Units.Equiv
-import Mathlib.Algebra.Group.Nat.Even
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Algebra.FiniteAdjacentComplex
+public import Mathlib.Algebra.Group.Pi.Lemmas
+public import Mathlib.Algebra.Group.Units.Equiv
+public import Mathlib.Algebra.Group.Nat.Even
 
 /-!
 # A canonical representative at any finite term coordinate
@@ -11,6 +19,8 @@ according to the coordinate parity. Its actual inverse gives a section at
 any specified coordinate. Every term tuple has a unique decomposition into
 an original adjacent-incidence image times that single-coordinate term.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u
@@ -24,15 +34,19 @@ def singleCoordinate {n : ℕ} (i : Fin n) : G →* (Fin n → G) :=
 @[simp] theorem singleCoordinate_apply {n : ℕ} (i : Fin n) (x : G) :
     singleCoordinate G i x = Pi.mulSingle i x := rfl
 
-@[simp] theorem singleCoordinate_zero (n : ℕ) (x : G) :
-    singleCoordinate G (0 : Fin (n + 1)) x = Fin.cons x 1 := by
+/-- The canonical simplification rule for the underlying construction. -/
+@[simp] theorem mulSingle_zero (n : ℕ) (x : G) :
+    Pi.mulSingle (M := fun _ => G) (0 : Fin (n + 1)) x = Fin.cons x 1 := by
   ext j
-  cases j using Fin.cases <;> simp [singleCoordinate]
+  cases j using Fin.cases <;> simp
 
-@[simp] theorem singleCoordinate_succ {n : ℕ} (i : Fin n) (x : G) :
-    singleCoordinate G i.succ x = Fin.cons 1 (singleCoordinate G i x) := by
+
+/-- The canonical simplification rule for the underlying construction. -/
+@[simp] theorem mulSingle_succ {n : ℕ} (i : Fin n) (x : G) :
+    Pi.mulSingle (M := fun _ => G) i.succ x = Fin.cons 1 (Pi.mulSingle (M := fun _ => G) i x) := by
   ext j
-  cases j using Fin.cases <;> simp [singleCoordinate, Pi.mulSingle_apply]
+  cases j using Fin.cases <;> simp [Pi.mulSingle_apply]
+
 
 /-- The sign at a coordinate, as an actual automorphism of the original group. -/
 def coordinateSign (k : ℕ) : G ≃* G :=
@@ -46,9 +60,11 @@ def coordinateSign (k : ℕ) : G ≃* G :=
     (coordinateSign G k).symm = coordinateSign G k := by
   by_cases h : Even k <;> simp [coordinateSign, h]
 
-@[simp] theorem coordinateSign_succ_apply (k : ℕ) (x : G) :
-    coordinateSign G (k + 1) x = (coordinateSign G k x)⁻¹ := by
+/-- The canonical simplification rule for the underlying construction. -/
+@[simp] theorem ite_even_succ (k : ℕ) (x : G) :
+    (if Even (k + 1) then x else x⁻¹) = (coordinateSign G k x)⁻¹ := by
   by_cases h : Even k <;> simp [coordinateSign_apply, Nat.even_add_one, h]
+
 
 /-- Euler restricted to the actual single coordinate is the alternating sign
 automorphism. No surjectivity or K-theory statement is assumed. -/
@@ -59,10 +75,15 @@ theorem euler_singleCoordinate {n : ℕ} (i : Fin n) (x : G) :
   | succ n ih =>
     cases i using Fin.cases with
     | zero =>
-      rw [singleCoordinate_zero, euler_cons, map_one, div_one]
+      have hzero : singleCoordinate G (0 : Fin (n + 1)) x = Fin.cons x 1 := by
+        simpa only [singleCoordinate_apply] using mulSingle_zero G n x
+      rw [hzero, euler_cons, map_one, div_one]
       simp [coordinateSign_apply]
-    | succ i => simp only [singleCoordinate_succ, euler_cons, one_div, ih,
-        Fin.val_succ, coordinateSign_succ_apply]
+    | succ i =>
+      have hsucc : singleCoordinate G i.succ x = Fin.cons 1 (singleCoordinate G i x) := by
+        simpa only [singleCoordinate_apply] using mulSingle_succ G i x
+      simp only [hsucc, euler_cons, one_div, ih, Fin.val_succ]
+      simpa only [coordinateSign_apply] using (ite_even_succ G i.val x).symm
 
 /-- In every position, Euler on the original single-coordinate inclusion is
 bijective, including the unique coordinate of a length-one tuple. -/
@@ -89,10 +110,12 @@ def coordinateValue (n : ℕ) (i : Fin (n + 1)) : (Fin (n + 1) → G) →* G :=
 def coordinateSection (n : ℕ) (i : Fin (n + 1)) : G →* (Fin (n + 1) → G) :=
   (singleCoordinate G i).comp (coordinateSign G i.val).symm.toMonoidHom
 
-@[simp] theorem euler_coordinateSection (n : ℕ) (i : Fin (n + 1)) (x : G) :
-    euler G (n + 1) (coordinateSection G n i x) = x := by
+/-- The canonical simplification rule for the underlying construction. -/
+@[simp] theorem coordinateSection_head_div_euler_tail (n : ℕ) (i : Fin (n + 1)) (x : G) :
+    coordinateSection G n i x 0 / euler G n (Fin.tail (coordinateSection G n i x)) = x := by
   change euler G (n + 1) (singleCoordinate G i ((coordinateSign G i.val).symm x)) = x
   rw [euler_singleCoordinate, MulEquiv.apply_symm_apply]
+
 
 /-- The canonical representative of the original incidence coset. -/
 def coordinateRepresentative (n : ℕ) (i : Fin (n + 1)) :
@@ -104,10 +127,13 @@ def coordinateRepresentative (n : ℕ) (i : Fin (n + 1)) :
     coordinateRepresentative G n i y = Pi.mulSingle i (coordinateValue G n i y) := rfl
 
 /-- The representative has the same original Euler product. -/
-@[simp] theorem euler_coordinateRepresentative (n : ℕ) (i : Fin (n + 1))
-    (y : Fin (n + 1) → G) :
-    euler G (n + 1) (coordinateRepresentative G n i y) = euler G (n + 1) y :=
-  euler_coordinateSection G n i _
+@[simp] theorem mulSingle_head_div_euler_tail (n : ℕ) (i : Fin (n + 1)) (x : G) :
+    Pi.mulSingle (M := fun _ => G) i x 0 / euler G n (Fin.tail (Pi.mulSingle (M := fun _ => G) i
+        x)) =
+      if Even i.val then x else x⁻¹ := by
+  simpa only [singleCoordinate_apply, euler_succ, coordinateSign_apply]
+    using euler_singleCoordinate G i x
+
 
 /-- There is a unique original adjacent-disk tuple taking the canonical
 single-coordinate representative to the given term tuple. -/
@@ -115,7 +141,11 @@ theorem existsUnique_incidence_representative (n : ℕ) (i : Fin (n + 1))
     (y : Fin (n + 1) → G) :
     ∃! d : Fin n → G, incidence G n d * coordinateRepresentative G n i y = y := by
   have h : euler G (n + 1) (y / coordinateRepresentative G n i y) = 1 := by
-    rw [map_div, euler_coordinateRepresentative, div_self']
+    rw [map_div]
+    change euler G (n + 1) y /
+      (coordinateSection G n i (euler G (n + 1) y) 0 /
+        euler G n (Fin.tail (coordinateSection G n i (euler G (n + 1) y)))) = 1
+    rw [coordinateSection_head_div_euler_tail, div_self']
   obtain ⟨d, hd⟩ := (euler_eq_one_iff G n _).mp h
   refine ⟨d, ?_, ?_⟩
   · change incidence G n d * coordinateRepresentative G n i y = y

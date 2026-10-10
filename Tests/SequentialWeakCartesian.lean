@@ -3,11 +3,15 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.TheoremB.SequentialWeakCartesian
+module
+
+public import Quillen.CategoryTheory.TheoremB.SequentialWeakCartesian
 
 /-! # Weak finite-stage input, full-boundary HELP and actual sequential comparisons -/
+@[expose] public section
+
 noncomputable section
-open CategoryTheory Limits Topology Quillen Quillen.TheoremB.SequentialCartesian
+open CategoryTheory Limits Topology Quillen Quillen.CartesianRealization.Sequential
 open scoped Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false

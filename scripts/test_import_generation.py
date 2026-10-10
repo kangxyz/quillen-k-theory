@@ -6,8 +6,12 @@ import subprocess
 import sys
 import unittest
 
-from generate_imports import GENERATED_MARKER, generated_files, stale_files
-from library_sources import lean_imports, module_path, project_imports
+from generate_imports import (
+    COPYRIGHT_HEADER, GENERATED_MARKER, generated_files, render_imports, stale_files,
+)
+from library_sources import (
+    is_import_surface, lean_imports, module_path, project_imports, style_sources,
+)
 
 
 class ImportParserTests(unittest.TestCase):
@@ -44,8 +48,35 @@ namespace Stop
         self.assertEqual(lean_imports('import Quillen.A\n#check "x"\nQuillen.NotAnImport\n'),
                          ['Quillen.A'])
 
+    def test_modern_import_all_does_not_become_a_fake_module(self):
+        source = '''module
+public meta import /- comment -/ all Quillen.A
+import all
+  Quillen.B
+public import Mathlib.Data.Nat.Basic
+'''
+        self.assertEqual(lean_imports(source),
+                         ['Quillen.A', 'Quillen.B', 'Mathlib.Data.Nat.Basic'])
+
 
 class ImportGenerationTests(unittest.TestCase):
+    def test_large_facade_keeps_complete_imports_and_computed_size_bound(self):
+        modules = [f'Quillen.Future.M{i:04d}' for i in range(1600)]
+        source = render_imports(modules, '# Future import surface', modern=True)
+        self.assertEqual(lean_imports(source), modules)
+        self.assertIn('set_option linter.style.longFile 1800', source)
+        self.assertTrue(is_import_surface(source))
+        self.assertFalse(is_import_surface(source + '\ndef datum : Nat := 0\n'))
+        self.assertNotIn('longFile', render_imports(modules[:1], '# Small', modern=True))
+
+    def test_long_import_wraps_without_disabling_line_lint(self):
+        name = 'Quillen.' + '.'.join(['LongSubject'] * 7)
+        source = render_imports([name], '# Long import', modern=True)
+        self.assertEqual(lean_imports(source), [name])
+        self.assertTrue(is_import_surface(source))
+        self.assertTrue(all(len(line) <= 100 for line in source.splitlines()))
+        self.assertNotIn('set_option linter.style.longLine', source)
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix='quillen-generation-')
         self.root = Path(self.tmp.name)
@@ -133,6 +164,68 @@ class ImportGenerationTests(unittest.TestCase):
         self.assertIn(Path('Quillen/Future.lean'), stale_files(self.root))
         self.generate()
         self.assertEqual(project_imports(facade.read_text()), ['Quillen.Future.Leaf'])
+
+    def test_owned_marker_after_copyright_and_manual_mention_are_distinct(self):
+        facade = self.root / 'Quillen/Algebra.lean'
+        facade.write_text(COPYRIGHT_HEADER + GENERATED_MARKER + 'import Quillen.Removed\n')
+        self.assertIn(Path('Quillen/Algebra.lean'), generated_files(self.root))
+        self.generate()
+        self.assertTrue(facade.read_text().startswith(COPYRIGHT_HEADER + GENERATED_MARKER))
+        manual = COPYRIGHT_HEADER + '/-! Manual module.\n' + GENERATED_MARKER + '-/\n'
+        facade.write_text(manual)
+        self.generate()
+        self.assertEqual(facade.read_text(), manual)
+
+    def test_nested_generation_requires_existing_opt_in_and_preserves_manual_api(self):
+        nested = self.root / 'Quillen/Algebra/Nested'
+        nested.mkdir()
+        (nested / 'Leaf.lean').write_text('')
+        owned = nested.with_suffix('.lean')
+        owned.write_text(COPYRIGHT_HEADER + GENERATED_MARKER + 'import Quillen.Removed\n')
+        manual_dir = self.root / 'Quillen/Algebra/Selected'
+        manual_dir.mkdir()
+        (manual_dir / 'Leaf.lean').write_text('')
+        manual = manual_dir.with_suffix('.lean')
+        original = COPYRIGHT_HEADER + 'import Quillen.Algebra.Selected.Leaf\n'
+        manual.write_text(original)
+        hidden = self.root / 'Quillen/Algebra/NoFacade'
+        hidden.mkdir()
+        (hidden / 'Leaf.lean').write_text('')
+        self.generate()
+        self.assertEqual(project_imports(owned.read_text()), ['Quillen.Algebra.Nested.Leaf'])
+        self.assertEqual(manual.read_text(), original)
+        self.assertFalse(hidden.with_suffix('.lean').exists())
+        self.assertEqual(stale_files(self.root), [])
+        (nested / 'New.lean').write_text('')
+        self.assertIn(Path('Quillen/Algebra/Nested.lean'), stale_files(self.root))
+
+    def test_modern_generation_preserves_mode_and_keeps_test_auditor_legacy(self):
+        for path in (self.root / 'Quillen').rglob('*.lean'):
+            path.write_text('module\n')
+        tests = self.root / 'Tests'
+        tests.mkdir()
+        (tests / 'Axioms.lean').write_text('import Quillen\n')
+        for path, content in generated_files(self.root, modern_library=True).items():
+            (self.root / path).write_text(content)
+        self.assertEqual(stale_files(self.root), [])
+        source = (self.root / 'Quillen.lean').read_text()
+        self.assertIn('module\n\npublic import Quillen.Algebra', source)
+        self.assertNotIn('\nmodule\n', (self.root / 'Tests.lean').read_text())
+        self.assertEqual(lean_imports((self.root / 'Tests.lean').read_text()), ['Tests.Axioms'])
+        (self.root / 'Quillen/Algebra/A.lean').write_text('def old : Nat := 1\n')
+        with self.assertRaisesRegex(ValueError, 'cannot import legacy sources'):
+            generated_files(self.root)
+
+    def test_style_inventory_uses_downstream_package_identity_and_enrolls_tools(self):
+        client = self.root / 'examples/downstream/Consumer/Client.lean'
+        client.parent.mkdir(parents=True)
+        client.write_text('import Quillen.Library\n')
+        tool = self.root / 'Tools/LintStyle.lean'
+        tool.parent.mkdir()
+        tool.write_text('')
+        self.assertIn(('Consumer.Client', Path('examples/downstream/Consumer/Client.lean')),
+                      style_sources(self.root))
+        self.assertIn(('Tools.LintStyle', Path('Tools/LintStyle.lean')), style_sources(self.root))
 
 
     def test_trust_root_enrolls_all_tests_without_core_imports(self):

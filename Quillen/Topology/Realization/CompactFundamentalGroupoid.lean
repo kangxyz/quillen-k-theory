@@ -1,5 +1,13 @@
-import Quillen.Topology.Realization.CompactStages
-import Mathlib.AlgebraicTopology.FundamentalGroupoid.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.CompactStages
+public import Mathlib.AlgebraicTopology.FundamentalGroupoid.Basic
 
 /-!
 # Fullness through a sequential colimit
@@ -8,6 +16,8 @@ Compact path factorization proves that a tail of closed-embedding attachments
 which add no fundamental-groupoid generators also adds no generators at its
 actual colimit.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -27,7 +37,10 @@ theorem transition_fundamentalGroupoid_full (k : ℕ)
     {n : ℕ} (h : k ≤ n) :
     (FundamentalGroupoid.map (F.map (homOfLE h)).hom).Full := by
   induction n, h using Nat.le_induction with
-  | base => simp; infer_instance
+  | base =>
+      simp only [homOfLE_refl, CategoryTheory.Functor.map_id, TopCat.hom_id,
+        FundamentalGroupoid.map_id]
+      infer_instance
   | succ n h ih =>
     let := ih
     let := hfull n h

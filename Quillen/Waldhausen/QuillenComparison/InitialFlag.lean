@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.QuillenComparison.RowGroupoid
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.RowGroupoid
 
 /-! # Recovering quotient-row isomorphisms from initial flags
 
@@ -6,6 +14,8 @@ Every interval quotient is the actual cokernel of the corresponding map in
 the initial flag. Thus a natural isomorphism of initial flags extends to the
 whole quotient row, uniquely by cokernel descent.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -36,7 +46,8 @@ def initialQuotient (F : Row E n) (p : Interval n) :
 /-- Every interval of the row is a specified cokernel of an initial-flag arrow. -/
 def initialCofork (F : Row E n) (p : Interval n) :
     CokernelCofork ((initialFlag E F).map (homOfLE p.2)) :=
-  CokernelCofork.ofπ (initialQuotient E F p) (rowMap_zero E F.simplex 0 0 p.1.1 p.1.2 (Fin.zero_le _) p.2)
+  CokernelCofork.ofπ (initialQuotient E F p) (rowMap_zero E F.simplex 0 0 p.1.1 p.1.2
+    (Fin.zero_le _) p.2)
 
 /-- Its universal property is a proved consequence of the original S-pushout. -/
 def initialCokernel (F : Row E n) (p : Interval n) : IsColimit (initialCofork E F p) :=
@@ -73,7 +84,8 @@ theorem flagIsoAt_naturality {F G : Row E n}
     congr 1
   calc
     _ = (initialFlag E F).map (homOfLE (leOfHom f).2) ≫
-        initialQuotient E F q ≫ (flagIsoAt E e q).hom := by rw [← Category.assoc, hF, Category.assoc]
+        initialQuotient E F q ≫ (flagIsoAt E e q).hom := by
+          rw [← Category.assoc, hF, Category.assoc]
     _ = (initialFlag E F).map (homOfLE (leOfHom f).2) ≫
         e.hom.app q.1.2 ≫ initialQuotient E G q := by rw [initialQuotient_flagIsoAt]
     _ = e.hom.app p.1.2 ≫ (initialFlag E G).map (homOfLE (leOfHom f).2) ≫

@@ -3,10 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.JointData
-import Quillen.Waldhausen.Cofinality.GradedGroupRealization
-import Quillen.Topology.ClassifyingSpace.Groupoid
-import Quillen.Waldhausen.Fibration.LongExactSequence
+module
+
+public import Quillen.Waldhausen.Cofinality.JointData
+public import Quillen.Waldhausen.Cofinality.GradedGroupRealization
+public import Quillen.Topology.ClassifyingSpace.Groupoid
+public import Quillen.Waldhausen.Fibration.LongExactSequence
 
 /-! # Actual zero-grade cofinality from the original fibration
 
@@ -16,6 +18,8 @@ joint cylinder and its actual second endpoint section, then proves that the
 unchanged zero-grade inclusion is bijective in positive degrees and injective
 in degree zero. The remaining degree-zero endpoint is retained literally.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -45,7 +49,8 @@ include D hs
 /-- The unchanged actual zero-grade inclusion is injective in every connective degree. -/
 theorem zeroGrade_KMap_injective (n : ℕ) :
     Function.Injective (KMap (acyclicInclusion_exact d.nested) n) := by
-  let : Subsingleton (d.nested.coarse.K (n + 1)) := d.coarse_K_succ_subsingleton D.sourceFactorization n
+  let : Subsingleton (d.nested.coarse.K (n + 1)) := d.coarse_K_succ_subsingleton
+    D.sourceFactorization n
   apply (KMap (acyclicInclusion_exact d.nested) n).ker_eq_bot_iff.mp
   rw [← range_changeWeakConnectingHom_eq_ker_acyclicInclusion d.nested
     (d.canonicalFiberMap_isWeakHomotopyEquivalence D hs) n]
@@ -58,7 +63,8 @@ theorem zeroGrade_KMap_injective (n : ℕ) :
 /-- In positive degree the original zero-grade inclusion is surjective as well. -/
 theorem zeroGrade_KMap_succ_surjective (n : ℕ) :
     Function.Surjective (KMap (acyclicInclusion_exact d.nested) (n + 1)) := by
-  let : Subsingleton (d.nested.coarse.K (n + 1)) := d.coarse_K_succ_subsingleton D.sourceFactorization n
+  let : Subsingleton (d.nested.coarse.K (n + 1)) := d.coarse_K_succ_subsingleton
+    D.sourceFactorization n
   intro a
   have ha : a ∈ (KMap (changeWeak_exact d.nested) (n + 1)).ker := Subsingleton.elim _ _
   rw [← range_acyclicInclusion_eq_ker_changeWeak_of_weak d.nested

@@ -1,5 +1,13 @@
-import Quillen.Devissage.Layers
-import Quillen.Topology.ClassifyingSpace.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Devissage.Layers
+public import Quillen.Topology.ClassifyingSpace.Equivalence
 
 /-!
 # Contraction of the dévissage layer category
@@ -7,6 +15,8 @@ import Quillen.Topology.ClassifyingSpace.Equivalence
 Intersection gives the one-step homotopy equivalence in Quillen's proof.
 Induction over an actual finite filtration then contracts the layer category.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v u

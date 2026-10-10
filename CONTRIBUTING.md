@@ -1,84 +1,120 @@
 # Contributing
 
 Contributions should provide reusable mathematical definitions, proofs, or
-interfaces. Keep theorem hypotheses explicit and use the conventions of
+interfaces. Keep hypotheses explicit and follow the conventions of
 [mathlib](https://leanprover-community.github.io/contribute/style.html).
+The [architecture](docs/Architecture.md) describes the current mathematical
+owners; [scope](docs/Scope.md) records the remaining comparisons.
 
 ## Adding mathematics
 
-Place source in `Quillen/<Subject>/<Topic>.lean`, extending the nearest existing
-mathematical owner. New subjects can introduce new directories. Add a module
-docstring describing the objects, main declarations, assumptions, and references.
-Use English for maintained text and identifiers; identify authors and Apache-2.0
-licensing in new file headers.
+Place source in the nearest mathematical owner under `Quillen/`. Add a subject
+or subdirectory when it has actual source and a useful consumer. Split modules
+by mathematical objects or reusable interfaces; comparisons should depend on
+the foundations they compare. Avoid empty future directories and inventories
+that duplicate the source graph.
 
-Implementation modules should import their precise dependencies. Whole-library
-and whole-family entrypoints are intended for clients; importing them from an
-implementation can introduce unnecessary dependencies or a cycle. Library code
-must not import `Tests` or downstream clients.
+Follow nearby library files for Lean's module system: `module`, explicit public
+imports where required by exported declarations, and an exposed public section.
+Include an English module docstring describing the objects, main declarations,
+assumptions, and references. New files carry author and Apache-2.0 headers.
+Use English for maintained identifiers, comments, and documentation.
 
-After adding or moving modules, regenerate the import surfaces:
+Implementation modules import their precise dependencies. Whole-topic and
+whole-library facades serve clients. Importing a broad facade from an
+implementation can create a cycle or an unnecessary dependency closure.
+Library source must not import `Tests`, tools, or downstream clients.
+
+After adding or moving modules, regenerate imports:
 
 ```sh
 python3 scripts/generate_imports.py
 ```
 
-The generator discovers the current source tree. It does not require a fixed
-list of subjects or a source inventory. It preserves manually maintained
-facades and updates generated files. `Quillen.Library`, `Quillen.Scheme`, and
-`Quillen.Resolution` remain selected public entrypoints.
+The generator discovers existing source modules and top-level subjects. It
+preserves hand-maintained facades and enrolls existing nested facades only when
+they carry the generator ownership marker. It does not require a fixed subject
+list or create an empty hierarchy of possible future topics.
 
-Keep incomplete proofs and development probes outside the library and its test
-entrypoints. A theorem with an explicit hypothesis is a conditional result;
-neither a placeholder nor an axiom is a substitute for the missing proof.
+Keep incomplete proofs and temporary probes outside the library and maintained
+tests. State a genuinely conditional theorem with its actual hypothesis;
+placeholders and new axioms do not discharge a missing proof.
 
 ## Tests and checks
 
-Use `Tests/` for maintained library tests and
-`examples/downstream/Consumer/` for examples that exercise the public API from
-another Lake package. Test an important property, interface, or regression;
-temporary inspection programs and lists of declaration names do not belong in
-the maintained test suite.
+Use `Tests/` for interface, mathematical-property, and regression tests.
+Use `examples/downstream/Consumer/` for client proofs compiled in a separate Lake
+package. Choose a meaningful property or public use rather than a list of
+names or a test that merely repeats its implementation.
 
-Run:
-
-```sh
-bash scripts/check.sh --rehash
-```
-
-This checks import generation and module boundaries, builds the library and
-tests, compiles the downstream package, and replays the axiom audits. The allowed
-foundation axioms are `propext`, `Classical.choice`, and `Quot.sound`.
-
-For faster iteration, build the module being changed:
+For iteration, build the changed module and its relevant clients:
 
 ```sh
 lake build Quillen.KTheory.API
 ```
 
+Run the complete pipeline before handing back a release candidate:
+
+```sh
+bash scripts/check.sh --rehash
+```
+
+The pipeline checks generated imports, module boundaries, placeholders, and
+script tests; builds the library and maintained tests; runs `lake test`,
+Batteries environment lint, and native mathlib text lint; then builds the
+downstream package and explicitly replays both axiom audits. Library compilation
+uses `autoImplicit = false`, the mathlib standard linter set, and warnings as
+errors. The allowed foundation axioms are `propext`, `Classical.choice`, and
+`Quot.sound`; see [the audit boundary](docs/Architecture.md#trust-checks).
+
+## Typechecking performance
+
+Measure a fixed module before changing proofs or import structure. Use the
+pinned Lean compiler and retain the selected source's actual build-command
+`LEAN_PATH`, matching `--setup` JSON, and options. Redirect its `-o`, `-i`, and
+`-c` outputs to fresh scratch paths. Add these supported profiling options:
+
+```text
+-j1 --profile -Dprofiler.threshold=10
+-Dtrace.profiler=true -Dtrace.profiler.threshold=10
+-Dtrace.profiler.output=/absolute/scratch/module.profile.json
+-Dtrace.profiler.output.pp=true
+```
+
+`--profile` reports definition/theorem elaboration and checking times; the trace
+export gives nested frames in Firefox profile format. Thresholds are in
+milliseconds. Keep the command, source and dependency identities, exit status,
+and logs with the measurement. A thresholded trace omits smaller frames;
+frontend remainder also includes imports and untraced work. Inclusive frame
+weights overlap and should not be summed or labelled whole-module CPU time.
+
+Use profiles to select a bounded change, then compare matched unprofiled runs
+with the same threads, options, outputs, and cache treatment. Alternate variants
+and record durations; profiling overhead is not a production speed comparison.
+Current measurements and their scope are recorded in
+[Performance.md](docs/Performance.md).
+
 ## API evolution
 
-Reuse a model's existing objects and canonical maps when extending it. Give
-distinct constructions their own interfaces and state the hypotheses of
-comparison theorems. Keep natural declaration namespaces even when source files
-move. Document public import, namespace, or hypothesis changes for users.
+Reuse existing objects and canonical maps when extending a model. Give distinct
+constructions distinct interfaces and state exact hypotheses for comparisons.
+Module paths and declaration namespaces should reflect mathematical ownership.
+Use one canonical interface for each construction, with minimal necessary
+hypotheses and mathlib naming conventions. Update the
+[library guide](docs/Library.md) when imports or interfaces change.
 
-The library currently uses `0.x` versions. Breaking changes require a minor
-version bump and migration notes; compatible corrections use patch releases.
-When practical, retain deprecated aliases or small compatibility modules for
-one minor release. Consumers should pin a release tag or commit.
-
-Update [Scope.md](docs/Scope.md) when the mathematical coverage changes, and the
-[library guide](docs/Library.md) when public interfaces change.
+The library uses `0.x` versions. Breaking import or API changes require a minor
+version bump and concise release notes; compatible corrections use patch
+releases. Consumers should pin a release tag or commit. Update
+[Scope.md](docs/Scope.md) when mathematical coverage changes and
+[ThomasonTrobaugh.md](docs/ThomasonTrobaugh.md) for geometric localization changes.
 
 ## Dependency updates
 
-Ordinary checks use the committed toolchain and manifests. Do not run
-`lake update` merely to check a source change.
-
-For an intentional upgrade, update the root and downstream toolchains and
-manifests together, obtain the matching cache, and run the complete checks.
-Explain any affected API or theorem hypotheses. Keep dependency upgrades separate
-from unrelated mathematical changes when possible.
+Ordinary checks use the committed toolchain and manifests. Run `lake update`
+when resolving a new consumer dependency or intentionally changing dependency
+pins. For an upgrade, update the root and downstream toolchains and manifests
+together, obtain the matching cache, and run the full pipeline. Explain affected
+interfaces and theorem hypotheses.
 
 Contributions are licensed under Apache-2.0.

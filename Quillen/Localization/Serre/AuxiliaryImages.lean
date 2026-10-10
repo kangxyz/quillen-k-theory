@@ -1,7 +1,17 @@
-import Quillen.Localization.Serre.KernelReflection
-import Quillen.CategoryTheory.TheoremA.ContractibleStructured
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.KernelReflection
+public import Quillen.CategoryTheory.TheoremA.ContractibleStructured
 
 /-! # Images of the auxiliary objects as a genuine ordered base -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -44,7 +54,7 @@ theorem imageSubobject_arrow_isoModSerre {X N : C} (f : X ⟶ N) (hf : P.isoModS
 /-- Subobjects of the fixed base whose cokernel belongs to the Serre class. -/
 abbrev AuxiliaryImagePoset (N : C) := { I : Subobject N // P.isoModSerre I.arrow }
 
-instance auxiliaryImagePoset_orderTop (N : C) : OrderTop (AuxiliaryImagePoset P N) where
+instance instOrderTopAuxiliaryImagePoset (N : C) : OrderTop (AuxiliaryImagePoset P N) where
   top := ⟨⊤, P.isoModSerre_of_isIso _⟩
   le_top I := show I.val ≤ (⊤ : Subobject N) from le_top
 

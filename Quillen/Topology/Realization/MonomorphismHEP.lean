@@ -1,7 +1,17 @@
-import Quillen.Topology.HELP.CompactRealizationLifting
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.CompactRealizationLifting
 
 /-! Every actual simplicial monomorphism realizes to a map with the homotopy
 extension property, by the proved relative cell lifting theorem. -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory MonoidalCategory
@@ -48,7 +58,7 @@ theorem homotopyExtensionProperty_realization_mono {A B : SSet.{u}}
       change Continuous (fun z : |A| × unitInterval ↦ H (z.1,ULift.up z.2))
       exact H.hom.continuous.comp
         (continuous_fst.prodMk (continuous_uliftUp.comp continuous_snd)) }
-  letI : HasLiftingProperty (SSet.toTop.map i) (pathEvaluationZero Z) :=
+  let : HasLiftingProperty (SSet.toTop.map i) (pathEvaluationZero Z) :=
     Quillen.hasLiftingProperty_realization_mono (pathEvaluationZero Z)
       (fun n ↦ pathEvaluationZero_hasLiftingProperty _
         (homotopyExtensionProperty_realizationBoundary n) Z) i

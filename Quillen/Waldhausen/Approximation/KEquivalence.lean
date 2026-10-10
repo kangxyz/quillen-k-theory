@@ -3,10 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.RowWeakEquivalence
-import Quillen.Waldhausen.SConstruction.Rows.WeakRealization
-import Quillen.Waldhausen.Functoriality.WeakKEquivalence
-import Quillen.Topology.Realization.BisimplicialWeakEquivalence
+module
+
+public import Quillen.Waldhausen.Approximation.RowWeakEquivalence
+public import Quillen.Waldhausen.SConstruction.Rows.WeakRealization
+public import Quillen.Waldhausen.Functoriality.WeakKEquivalence
+public import Quillen.Topology.Realization.BisimplicialWeakEquivalence
 
 /-! # Approximation for the original S-realization and connective K-map
 
@@ -20,6 +22,8 @@ finite-poset comma cones and the poset-resolution argument. The weak
 diagonal theorem retains the original map, and canonical zero rebasing is
 handled by its actual natural-isomorphism homotopy.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 universe u
@@ -54,7 +58,8 @@ def KEquiv (n : ℕ) : W.K n ≃* V.K n :=
   MulEquiv.ofBijective (Waldhausen.KMap hF n) (KMap_bijective h hF J n)
 
 /-- The resulting group equivalence retains the literal original K-map. -/
-@[simp] theorem KEquiv_toMonoidHom (n : ℕ) :
-    (KEquiv h hF J n).toMonoidHom = Waldhausen.KMap hF n := rfl
+@[simp] theorem KEquiv_coe (n : ℕ) :
+    (↑(KEquiv h hF J n) : W.K n →* V.K n) = Waldhausen.KMap hF n := rfl
+
 
 end Quillen.Waldhausen.HasApproximationProperty

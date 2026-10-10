@@ -3,11 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.TheoremB.ReplacementWeakVertex
-import Quillen.CategoryTheory.TheoremB.VertexWeakAssembly
-import Quillen.Topology.HomotopyFiber.WeakInvariance
-import Quillen.Topology.HomotopyFiber.BasepointTransport
-import Quillen.Topology.Realization.Connectivity
+module
+
+public import Quillen.CategoryTheory.TheoremB.ReplacementWeakVertex
+public import Quillen.CategoryTheory.TheoremB.VertexWeakAssembly
+public import Quillen.Topology.HomotopyFiber.WeakInvariance
+public import Quillen.Topology.HomotopyFiber.BasepointTransport
+public import Quillen.Topology.Realization.Connectivity
 
 /-!
 # Complete weak comparisons at replacement vertices
@@ -17,6 +19,8 @@ weakness of the original vertex-to-fiber comparison. Discrete-base restriction
 retains component surjectivity. Weak diagram transitions suffice for the actual
 point augmentation; no selected inverse homotopies are required.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -80,7 +84,7 @@ theorem weakCartesian_of_singleton_bases {W X A B : Type u}
     [Unique A] [Subsingleton B]
     (p : C(W, A)) (q : C(X, B)) (f : C(W, X)) (g : C(A, B))
     (sq : q.comp f = g.comp p) (hf : IsWeakHomotopyEquivalence f) :
-    TheoremB.SkeletalCartesian.WeakCartesian p q f g sq := by
+    Quillen.CartesianRealization.Skeletal.WeakCartesian p q f g sq := by
   have hc : IsWeakHomotopyEquivalence ((pointBasePullbackHomeomorph q g).toHomotopyEquiv.toFun.comp
       (HomotopyPullback.comparison q g p f sq)) := hf
   exact hc.of_comp_right
@@ -101,7 +105,7 @@ theorem isWeakHomotopyEquivalence_of_classifying_vertex_fibers
     (HomotopyFiber.basepointTransportEquiv f hd.somePath).symm)
 
 namespace TheoremB
-open TheoremA SkeletalCartesian SequentialCartesian
+open TheoremA Quillen.CartesianRealization.Skeletal Quillen.CartesianRealization.Sequential
 variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
 
 /-- Weak original diagram transitions give the actual point-augmentation
@@ -140,7 +144,8 @@ theorem vertexFiberComparison_isWeakHomotopyEquivalence
       (hf.comp (isWeakHomotopyEquivalence_of_homotopyEquiv
         (stageOneFiberHomeomorph H d).toHomotopyEquiv))
   change IsWeakHomotopyEquivalence ((vertexPullbackFiberHomeomorph H d).toHomotopyEquiv.toFun.comp
-    ((vertexRestrictedComparison H d).comp (stageOneFiberHomeomorph H d).toHomotopyEquiv.toFun)) at hc
+    ((vertexRestrictedComparison H d).comp (stageOneFiberHomeomorph H d).toHomotopyEquiv.toFun)) at
+      hc
   have he : (vertexPullbackFiberHomeomorph H d).toHomotopyEquiv.toFun.comp
       ((vertexRestrictedComparison H d).comp
         (stageOneFiberHomeomorph H d).toHomotopyEquiv.toFun) = vertexFiberComparison H d :=

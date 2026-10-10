@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.Grading
-import Quillen.Waldhausen.Approximation.FactorizationData
-import Mathlib.Algebra.Group.Subgroup.Basic
+module
+
+public import Quillen.Waldhausen.Cofinality.Grading
+public import Quillen.Waldhausen.FunctorialFactorization.Basic
+public import Mathlib.Algebra.Group.Subgroup.Basic
 
 /-! # Actual representability of grading values as a subgroup
 
@@ -15,6 +17,8 @@ cofiber pushout, realizes the negative grade. Thus the actual object-grade
 range is a subgroup, without a K-zero presentation or an arbitrary tuple
 realizability hypothesis.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v w

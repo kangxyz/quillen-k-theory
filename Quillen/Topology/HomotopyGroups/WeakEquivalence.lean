@@ -1,7 +1,17 @@
-import Quillen.Topology.HomotopyGroups.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyGroups.Equivalence
 
 /-! Canonical all-degree homotopy-set bijectivity, including π₀, with
 composition and actual fixed-basepoint homotopy transport. -/
+@[expose] public section
+
 noncomputable section
 universe u v w
 namespace Quillen
@@ -66,13 +76,13 @@ theorem homotopyGroupMap_bijective_of_based_homotopy {f g : C(X, Y)}
 
 /-- Equality of continuous maps identifies the induced maps even when their
 endpoint equalities have different proof terms. -/
-theorem homotopyGroupMap_congr {N : Type*} {f g : C(X,Y)} (hfg : f = g)
+theorem homotopyGroupMap_congr {N : Type*} {f g : C(X, Y)} (hfg : f = g)
     (hf : f x = y) (hg : g x = y) :
     homotopyGroupMap (N := N) f hf = homotopyGroupMap (N := N) g hg := by
   cases hfg
   rfl
 
-theorem homotopyGroupMap_bijective_congr {N : Type*} {f g : C(X,Y)} (hfg : f = g)
+theorem homotopyGroupMap_bijective_congr {N : Type*} {f g : C(X, Y)} (hfg : f = g)
     (hf : f x = y) (hg : g x = y)
     (hb : Function.Bijective (homotopyGroupMap (N := N) f hf)) :
     Function.Bijective (homotopyGroupMap (N := N) g hg) := by

@@ -1,10 +1,19 @@
-import Quillen.Topology.HomotopyFiber.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.Basic
 
 /-! # Maps of actual homotopy fibers
 
 A strictly commutative square induces a continuous map of the path-space
 homotopy fibers. Identity and composition are proved pointwise.
 -/
+@[expose] public section
 
 noncomputable section
 universe u₁ u₂ u₃ v₁ v₂ v₃
@@ -28,6 +37,16 @@ def map (u : C(X₁, X₂)) (v : C(Y₁, Y₂)) (sq : v.comp f₁ = f₂.comp u)
     · fun_prop
     · exact (ContinuousMap.continuous_postcomp v).comp (by fun_prop)
 
+/-- The source coordinate is the original square's total map. -/
+@[simp] lemma map_source (u : C(X₁, X₂)) (v : C(Y₁, Y₂))
+    (sq : v.comp f₁ = f₂.comp u) (y : Y₁) (z : HomotopyFiber f₁ y) :
+    (map u v sq y z).1.1 = u z.1.1 := rfl
+
+/-- The whole stored fiber path is postcomposed by the square's base map. -/
+@[simp] lemma map_path (u : C(X₁, X₂)) (v : C(Y₁, Y₂))
+    (sq : v.comp f₁ = f₂.comp u) (y : Y₁) (z : HomotopyFiber f₁ y) :
+    (map u v sq y z).1.2 = v.comp z.1.2 := rfl
+
 @[simp]
 lemma projection_map (u : C(X₁, X₂)) (v : C(Y₁, Y₂))
     (sq : v.comp f₁ = f₂.comp u) (y : Y₁) :
@@ -42,15 +61,15 @@ lemma map_id (f : C(X₁, Y₁)) (y : Y₁) :
   ext z
   rfl
 
-@[simp]
-lemma map_comp (u : C(X₁, X₂)) (v : C(Y₁, Y₂)) (sq : v.comp f₁ = f₂.comp u)
+/-- Composition of fiber maps is the fiber map of the composed square. -/
+@[simp] lemma map_comp_map (u : C(X₁, X₂)) (v : C(Y₁, Y₂)) (sq : v.comp f₁ = f₂.comp u)
     (u' : C(X₂, X₃)) (v' : C(Y₂, Y₃)) (sq' : v'.comp f₂ = f₃.comp u') (y : Y₁) :
-    map (u'.comp u) (v'.comp v)
-      (show (v'.comp v).comp f₁ = f₃.comp (u'.comp u) by
-        ext x
-        exact (congrArg v' (ContinuousMap.congr_fun sq x)).trans
-          (ContinuousMap.congr_fun sq' (u x))) y =
-      (map u' v' sq' (v y)).comp (map u v sq y) := by
+    (map u' v' sq' (v y)).comp (map u v sq y) =
+      map (u'.comp u) (v'.comp v)
+        (show (v'.comp v).comp f₁ = f₃.comp (u'.comp u) by
+          ext x
+          exact (congrArg v' (ContinuousMap.congr_fun sq x)).trans
+            (ContinuousMap.congr_fun sq' (u x))) y := by
   ext z
   rfl
 

@@ -1,6 +1,14 @@
-import Quillen.Topology.Realization.MonomorphismEmbedding
-import Mathlib.AlgebraicTopology.SimplicialSet.Finite
-import Mathlib.AlgebraicTopology.SimplicialSet.SubcomplexColimits
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.MonomorphismEmbedding
+public import Mathlib.AlgebraicTopology.SimplicialSet.Finite
+public import Mathlib.AlgebraicTopology.SimplicialSet.SubcomplexColimits
 
 /-!
 # Finite subcomplex support in geometric realization
@@ -9,6 +17,8 @@ The relevant finiteness is the number of nondegenerate simplices, not the
 skeletal dimension. Realized subcomplex intersections are computed from
 actual union pushouts and their injective inclusions.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Topology Opposite
 open scoped Simplicial
@@ -102,7 +112,8 @@ theorem realization_exists_finite_subcomplex (x : |X|) :
     ∃ A : X.Subcomplex, SSet.Finite A ∧ x ∈ realizationSubcomplexRange A := by
   obtain ⟨n, f, t, ht⟩ := realization_exists_simplex x
   refine ⟨SSet.Subcomplex.range f, inferInstance, SSet.toTop.map (SSet.Subcomplex.toRange f) t, ?_⟩
-  change (SSet.toTop.map (SSet.Subcomplex.toRange f) ≫ SSet.toTop.map (SSet.Subcomplex.range f).ι) t = x
+  change (SSet.toTop.map (SSet.Subcomplex.toRange f) ≫ SSet.toTop.map (SSet.Subcomplex.range
+    f).ι) t = x
   rw [← Functor.map_comp]
   exact ht
 

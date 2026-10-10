@@ -1,4 +1,12 @@
-import Quillen.Topology.CubicalSubdivision.Grid
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.Grid
 
 /-! # Uniform finite grids subordinate to actual open covers
 
@@ -6,6 +14,8 @@ The grid is chosen once for the whole compact cube. Its cells are the actual
 closed affine cells from `Grid`, so later gluing can use cubical faces rather
 than arbitrary closed inverse images of collars.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 namespace Quillen.CubicalSubdivision
@@ -23,7 +33,7 @@ theorem exists_grid_subordinate (n : ℕ) {J : Type u} (U : J → Set (Cube n))
 
 /-- Subordination for a genuine continuous cube map into an arbitrary space. -/
 theorem exists_grid_map_subordinate (n : ℕ) {X : Type v} [TopologicalSpace X]
-    (f : C(Cube n,X)) {J : Type u} (U : J → Set X)
+    (f : C(Cube n, X)) {J : Type u} (U : J → Set X)
     (hU : ∀ j, IsOpen (U j)) (hcover : ∀ x, ∃ j, f x ∈ U j) :
     ∃ m : ℕ, ∀ k : CellIndex n m, ∃ j : J, ∀ t : Cube n, f (cell n m k t) ∈ U j := by
   have hc : ⋃ j, f ⁻¹' U j = Set.univ := by
@@ -38,7 +48,7 @@ theorem exists_grid_map_subordinate (n : ℕ) {X : Type v} [TopologicalSpace X]
 
 /-- The literal two height collars admit one finite cubical subdivision.
 The output is uniform over every point of each closed cell. -/
-theorem exists_grid_height_collars (n : ℕ) (h : C(Cube n,unitInterval)) :
+theorem exists_grid_height_collars (n : ℕ) (h : C(Cube n, unitInterval)) :
     ∃ m : ℕ, ∀ k : CellIndex n m,
       (∀ t : Cube n, (h (cell n m k t) : ℝ) < 3 / 4) ∨
       (∀ t : Cube n, (1 / 4 : ℝ) < h (cell n m k t)) := by

@@ -3,13 +3,17 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.PairPullback
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.PairPullback
 
 /-! # Consumers of actual arbitrary open-pair K-pullback
 
 The square is neither assumed flat nor cartesian. Only the ambient schemes
 are qc for maps on the original models; opens may be non-qc.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.PerfectComplexes
@@ -33,7 +37,8 @@ theorem original_relative_weak {A B : Quillen.Scheme.OpenPairs.{u}} (f : A ⟶ B
 /-- Every original supported class is pulled back by actual representatives. -/
 theorem original_supported_representative {A B : Quillen.Scheme.QuasiCompactOpenPairs.{u}}
     (f : A ⟶ B) (n : ℕ) (x : BoundedFlatPerfectSupportedK B.obj.obj.hom n) :
-    perfectSupportedKPullback f n (boundedFlatPerfectSupportedToPerfectSupportedKMap B.obj.obj.hom n x) =
+    perfectSupportedKPullback f n (boundedFlatPerfectSupportedToPerfectSupportedKMap B.obj.obj.hom n
+      x) =
       boundedFlatPerfectSupportedToPerfectSupportedKMap A.obj.obj.hom n
         (boundedFlatPerfectSupportedKPullback f.hom n x) :=
   DFunLike.congr_fun (perfectSupportedKPullback_comp_boundedFlat f n) x

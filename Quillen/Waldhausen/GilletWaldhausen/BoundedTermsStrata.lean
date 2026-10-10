@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationFixedBounds
-import Quillen.Waldhausen.GilletWaldhausen.BoundedStrata
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationFixedBounds
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedStrata
 
 /-! # Actual increasing strata of bounded termwise complexes
 
@@ -8,6 +16,8 @@ symmetric term bound. Canonical increasing inclusions are exact and reflect
 inherited inflations by actual quotient bounds. No kernel closure or
 uniform bound on the whole category is required.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -24,7 +34,8 @@ abbrev boundedTermsStratum (N : ℕ) : ObjectProperty (boundedTerms P).FullSubca
   fixedTermsBounds P (-(N : ℤ)) N
 
 /-- The actual strata form an increasing system. -/
-theorem boundedTermsStratum_mono {N M : ℕ} (h : N ≤ M) : boundedTermsStratum P N ≤ boundedTermsStratum P M := by
+theorem boundedTermsStratum_mono {N M : ℕ} (h : N ≤ M) : boundedTermsStratum P N ≤
+    boundedTermsStratum P M := by
   intro K hK
   exact hK.mono (by omega) (by omega)
 
@@ -59,7 +70,8 @@ instance boundedTermsStratumTransition_additive {N M : ℕ} (h : N ≤ M) :
 
 /-- Every canonical increasing inclusion is genuinely exact. -/
 def boundedTermsStratumTransitionExact {N M : ℕ} (h : N ≤ M) :
-    ExactFunctor (boundedTermsStratumExactStructure P N) (boundedTermsStratumExactStructure P M) where
+    ExactFunctor (boundedTermsStratumExactStructure P N) (boundedTermsStratumExactStructure P M)
+      where
   toFunctor := boundedTermsStratumTransition P h
   map_conflation _ hS := hS
 
@@ -67,7 +79,8 @@ omit [P.ContainsZero] [P.IsClosedUnderIsomorphisms]
     [(abelianExactStructure A).IsExtensionClosed P] in
 /-- These are strict transition functors, not merely chosen categorical equivalences. -/
 @[simp]
-theorem boundedTermsStratumTransition_id (N : ℕ) : boundedTermsStratumTransition P (le_refl N) = 𝟭 _ := rfl
+theorem boundedTermsStratumTransition_id (N : ℕ) : boundedTermsStratumTransition P (le_refl N) =
+    𝟭 _ := rfl
 
 omit [P.ContainsZero] [P.IsClosedUnderIsomorphisms]
     [(abelianExactStructure A).IsExtensionClosed P] in
@@ -80,7 +93,8 @@ omit [P.ContainsZero] [P.IsClosedUnderIsomorphisms]
     [(abelianExactStructure A).IsExtensionClosed P] in
 @[simp]
 theorem boundedTermsStratumTransition_inclusion {N M : ℕ} (h : N ≤ M) :
-    boundedTermsStratumTransition P h ⋙ (boundedTermsStratum P M).ι = (boundedTermsStratum P N).ι := rfl
+    boundedTermsStratumTransition P h ⋙ (boundedTermsStratum P M).ι = (boundedTermsStratum P
+      N).ι := rfl
 
 /-- The actual bounded stratum reflects inherited inflations: an admissible
 quotient of a bounded target has the same strict term bounds. -/

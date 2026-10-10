@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.SConstruction.Rows.Structure
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.Structure
 
 /-! # Exact reindexing of actual quotient rows along every ordinal map
 
@@ -6,6 +14,8 @@ All zero, cofibration, quotient and Reedy conditions are retained literally
 by interval restriction. Pushout preservation is derived from the actual
 pointwise universal properties, not included as a row assumption.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -17,15 +27,18 @@ variable {C : Type u} [Category.{v} C] (W : Structure C)
 /-- The interval functor underlying the original S-direction ordinal restriction. -/
 def indexMap {m n : SimplexCategory} (α : m ⟶ n) : Interval m ⥤ Interval n :=
   (show Monotone (fun p : Interval m ↦
-      interval (α.toOrderHom p.val.1) (α.toOrderHom p.val.2) (α.toOrderHom.monotone p.property)) from
+      interval (α.toOrderHom p.val.1) (α.toOrderHom p.val.2) (α.toOrderHom.monotone p.property))
+        from
     fun _ _ h ↦ ⟨α.toOrderHom.monotone h.1, α.toOrderHom.monotone h.2⟩).functor
 
 /-- Ordinary S-row restriction retains all original quotient-grid axioms. -/
 theorem IsRow.precomp {m n : SimplexCategory} {F : Interval n ⥤ C}
     (hF : IsRow W F) (α : m ⟶ n) : IsRow W (indexMap α ⋙ F) where
   zero i := hF.zero (α.toOrderHom i)
-  cofibration _ _ _ hij hjk := hF.cofibration _ _ _ (α.toOrderHom.monotone hij) (α.toOrderHom.monotone hjk)
-  quotient _ _ _ hij hjk := hF.quotient _ _ _ (α.toOrderHom.monotone hij) (α.toOrderHom.monotone hjk)
+  cofibration _ _ _ hij hjk := hF.cofibration _ _ _ (α.toOrderHom.monotone hij)
+    (α.toOrderHom.monotone hjk)
+  quotient _ _ _ hij hjk := hF.quotient _ _ _ (α.toOrderHom.monotone hij) (α.toOrderHom.monotone
+    hjk)
 
 /-- The actual reindexing functor on full quotient-row categories. -/
 def reindex {m n : SimplexCategory} (α : m ⟶ n) : Obj W n ⥤ Obj W m where

@@ -3,11 +3,15 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Fibration.InverseImageWeak
-import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
+module
+
+public import Quillen.Waldhausen.Fibration.InverseImageWeak
+public import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
 
 /-! Semantic consumers for the unchanged source cofibration category and the
 quasi-isomorphism-fine relative complex cylinder. All universes are independent. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CochainComplex
 open Quillen Quillen.Waldhausen Quillen.Waldhausen.Fibration
@@ -73,7 +77,8 @@ example {n : SimplexCategory} (f : Arrow (QuotientRows.Obj (complexSubcategory P
 
 example {n : SimplexCategory} (f : Arrow (QuotientRows.Obj (complexSubcategory P) n))
     (p : Interval n) :
-    QuasiIso (((complexRowFactorizationOfNested P hcone hshift N n).projection.app f).hom.app p).hom :=
+    QuasiIso (((complexRowFactorizationOfNested P hcone hshift N n).projection.app f).hom.app p).hom
+      :=
   (complexSubcategoryFactorization P hcone).weak (Arrow.mk (f.hom.hom.app p))
 
 example {n : SimplexCategory} (f : Arrow (QuotientRows.Obj (complexSubcategory P) n)) :

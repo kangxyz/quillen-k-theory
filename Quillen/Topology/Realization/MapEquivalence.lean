@@ -1,7 +1,17 @@
-import Quillen.Topology.Realization.MonomorphismHEP
-import Quillen.CategoryTheory.TheoremA.SkeletalEquivalences
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.MonomorphismHEP
+public import Quillen.CategoryTheory.TheoremA.SkeletalEquivalences
 
 /-! # Homotopy equivalence of a prescribed simplicial realization map -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Simplicial Topology
@@ -64,7 +74,8 @@ lemma pushout
   obtain ⟨eb, heb⟩ := hb
   obtain ⟨ec, hec⟩ := hc
   refine ⟨TheoremA.pushoutHomotopyEquivOfMap (sq.map SSet.toTop) (sq'.map SSet.toTop)
-    (TheoremA.homotopyExtensionProperty_realization_mono i) (TheoremA.homotopyExtensionProperty_realization_mono i')
+    (TheoremA.homotopyExtensionProperty_realization_mono i)
+      (TheoremA.homotopyExtensionProperty_realization_mono i')
     (SSet.toTop.map a) (SSet.toTop.map b) (SSet.toTop.map c) (SSet.toTop.map d)
     ?_ ?_ ?_ ?_ ea hea eb heb ec hec, rfl⟩
   · simpa only [Functor.map_comp] using congrArg SSet.toTop.map wi

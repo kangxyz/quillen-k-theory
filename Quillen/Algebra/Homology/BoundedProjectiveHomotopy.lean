@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.Homology.BoundedAboveComplex
-import Quillen.Algebra.Homology.BoundedProjectiveReplacement
-import Quillen.Algebra.Homology.KProjectiveComparison
+module
+
+public import Quillen.Algebra.Homology.BoundedAboveComplex
+public import Quillen.Algebra.Homology.BoundedProjectiveReplacement
+public import Quillen.Algebra.Homology.KProjectiveComparison
 
 /-!
 # Functorial bounded-above projective replacements up to chain homotopy
@@ -16,6 +18,8 @@ uniqueness up to homotopy proves identity, composition, and addition. Thus the
 replacement is an actual additive functor into the homotopy category, with
 natural augmentation. No additive or zero-preserving original free cover is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -28,7 +32,10 @@ variable {C : Type u} [Category.{v} C] [Abelian C]
 
 variable [EnoughProjectives C]
 
-private theorem model_exists (K : BoundedAboveComplex C) :
+/-- In an abelian category with enough projectives, every bounded-above complex admits a
+quasi-isomorphism from a termwise projective complex with the same selected strict upper
+bound. -/
+theorem model_exists (K : BoundedAboveComplex C) :
     ∃ (P : CochainComplex C ℤ) (p : P ⟶ K.obj), QuasiIso p ∧
       (∀ n, Projective (P.X n)) ∧ P.IsStrictlyLE (chosenUpperBound K) :=
   exists_boundedAbove_projective_replacement K.obj (chosenUpperBound K)
@@ -37,6 +44,8 @@ private theorem model_exists (K : BoundedAboveComplex C) :
 def projectiveModel (K : BoundedAboveComplex C) : CochainComplex C ℤ :=
   (model_exists K).choose
 
+/-- The chosen quasi-isomorphism from the bounded-above termwise projective replacement
+`projectiveModel K` to the original complex `K.obj`. -/
 def projectiveModelπ (K : BoundedAboveComplex C) : projectiveModel K ⟶ K.obj :=
   (model_exists K).choose_spec.choose
 
@@ -67,7 +76,8 @@ def projectiveModelMapHomotopy {K L : BoundedAboveComplex C} (f : K ⟶ L) :
     (projectiveModelπ K ≫ f.hom)).choose_spec.some
 
 @[reassoc]
-theorem projectiveModelMap_Q_comp_π [HasDerivedCategory C] {K L : BoundedAboveComplex C} (f : K ⟶ L) :
+theorem projectiveModelMap_Q_comp_π [HasDerivedCategory C] {K L : BoundedAboveComplex C} (f : K ⟶ L)
+  :
     DerivedCategory.Q.map (projectiveModelMap f) ≫ DerivedCategory.Q.map (projectiveModelπ L) =
       DerivedCategory.Q.map (projectiveModelπ K) ≫ DerivedCategory.Q.map f.hom := by
   simpa only [Functor.map_comp] using
@@ -84,14 +94,14 @@ def projectiveModelHomotopyFunctor : BoundedAboveComplex C ⥤ HomotopyCategory 
   map_id K := by
     rw [← (HomotopyCategory.quotient C (.up ℤ)).map_id]
     apply HomotopyCategory.eq_of_homotopy
-    apply homotopyOfDerivedEq_of_isKProjective
+    apply homotopyOfDerivedEqOfIsKProjective
     apply (cancel_mono (DerivedCategory.Q.map (projectiveModelπ K))).mp
     rw [projectiveModelMap_Q_comp_π]
     simp
   map_comp {K L M} f g := by
     rw [← Functor.map_comp]
     apply HomotopyCategory.eq_of_homotopy
-    apply homotopyOfDerivedEq_of_isKProjective
+    apply homotopyOfDerivedEqOfIsKProjective
     apply (cancel_mono (DerivedCategory.Q.map (projectiveModelπ M))).mp
     rw [projectiveModelMap_Q_comp_π, Functor.map_comp, Category.assoc,
       projectiveModelMap_Q_comp_π, ← Category.assoc, projectiveModelMap_Q_comp_π]
@@ -105,7 +115,7 @@ instance projectiveModelHomotopyFunctor_additive : (projectiveModelHomotopyFunct
         (HomotopyCategory.quotient C (.up ℤ)).map (projectiveModelMap g)
     rw [← Functor.map_add]
     apply HomotopyCategory.eq_of_homotopy
-    apply homotopyOfDerivedEq_of_isKProjective
+    apply homotopyOfDerivedEqOfIsKProjective
     apply (cancel_mono (DerivedCategory.Q.map (projectiveModelπ L))).mp
     rw [projectiveModelMap_Q_comp_π, Functor.map_add, Preadditive.add_comp,
       projectiveModelMap_Q_comp_π, projectiveModelMap_Q_comp_π]

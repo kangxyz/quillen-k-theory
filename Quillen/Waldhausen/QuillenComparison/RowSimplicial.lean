@@ -1,8 +1,18 @@
-import Quillen.Waldhausen.QuillenComparison.RowGroupoid
-import Quillen.Waldhausen.QuillenComparison.EdgewiseIndices
-import Quillen.CategoryTheory.TheoremA.Diagonal
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.RowGroupoid
+public import Quillen.Waldhausen.QuillenComparison.EdgewiseIndices
+public import Quillen.CategoryTheory.TheoremA.Diagonal
 
 /-! # The simplicial groupoid of exact S-rows -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

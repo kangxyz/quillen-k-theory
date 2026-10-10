@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Waldhausen.Fibration.GeneralComparison
-import Quillen.Waldhausen.GilletWaldhausen.FibrationQuotient
-import Quillen.Waldhausen.Fibration.ComplexExtension
+module
+
+public import Quillen.Waldhausen.Fibration.GeneralComparison
+public import Quillen.Waldhausen.GilletWaldhausen.FibrationQuotient
+public import Quillen.Waldhausen.Fibration.ComplexExtension
+public import Quillen.Waldhausen.SplitComplexes.Approximation
 
 /-! # Gillet-Waldhausen with the original object and hom universes
 
@@ -16,6 +19,8 @@ every degree, including zero. The term property contains zero and is closed
 under isomorphisms, extensions and kernels. The precise abelian ambient
 category and all actual maps remain unchanged.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -49,13 +54,16 @@ theorem boundedTermsSingle_coarse_KMap_bijective_general (n : ℕ) :
     (boundedTerms_canonicalFiberMap_isWeakHomotopyEquivalence_general P) n
 
 /-- The general-universe equivalence retains the original coarse-single forward map. -/
-def boundedTermsSingle_coarse_KEquiv_general (n : ℕ) :
+def boundedTermsSingleCoarseKEquivGeneral (n : ℕ) :
     (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K n ≃*
       (boundedTermsNested P).coarse.K n :=
-  boundedTermsSingle_coarse_KEquiv_of_canonicalFiber_weak P
+  boundedTermsSingleCoarseKEquivOfCanonicalFiberWeakEquivalence P
     (boundedTerms_canonicalFiberMap_isWeakHomotopyEquivalence_general P) n
 
-@[simp] theorem boundedTermsSingle_coarse_KEquiv_general_toMonoidHom (n : ℕ) :
-    (boundedTermsSingle_coarse_KEquiv_general P n).toMonoidHom =
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem boundedTermsSingleCoarseKEquivGeneral_coe (n : ℕ) :
+    MonoidHomClass.toMonoidHom (boundedTermsSingleCoarseKEquivGeneral P n) =
       KMap (boundedTermsSingle_coarseExact P 0) n := rfl
+
+
 end Quillen.Waldhausen.GilletWaldhausen

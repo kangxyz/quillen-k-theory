@@ -1,4 +1,12 @@
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
 
 /-! # The actual relative pushout cube
 
@@ -6,6 +14,8 @@ In a pointwise pushout of arrows, the new relative target map is a cobase
 change of the old relative target map. The proof is three applications of
 actual pushout pasting/cancellation, with no cofibration assumption.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Functoriality.KMap
-import Quillen.Topology.HomotopyGroups.Equivalence
-import Quillen.Topology.HomotopyFiber.SourceEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Functoriality.KMap
+public import Quillen.Topology.HomotopyGroups.Equivalence
+public import Quillen.Topology.HomotopyFiber.SourceEquivalence
 
 /-! # Canonical K-equivalences from actual realization equivalences
 
@@ -9,6 +17,8 @@ functor with a genuine homotopy equivalence. Its canonical zero rebasing is
 homotopic to that actual map, so the existing original `KMap` is bijective.
 No pointed inverse or fixed inverse homotopy is required.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -51,7 +61,8 @@ def KEquivOfRealization (n : ℕ) : V.K n ≃* W.K n :=
   MulEquiv.ofBijective (KMap hF n) (KMap_bijective_of_realizationHomotopyEquiv hF e he n)
 
 /-- The forward homomorphism is definitionally the unchanged original K-map. -/
-@[simp] theorem KEquivOfRealization_toMonoidHom (n : ℕ) :
-    (KEquivOfRealization hF e he n).toMonoidHom = KMap hF n := rfl
+@[simp] theorem KEquivOfRealization_coe (n : ℕ) :
+    (↑(KEquivOfRealization hF e he n) : V.K n →* W.K n) = KMap hF n := rfl
+
 
 end Quillen.Waldhausen

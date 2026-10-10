@@ -1,4 +1,12 @@
-import Quillen.Resolution.FullQ
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Resolution.FullQ
 
 /-!
 # The inherited Q-construction and the full ambient Q-subcategory
@@ -6,6 +14,8 @@ import Quillen.Resolution.FullQ
 The two categories are not identified. Their comparison is proved using
 actual admissible subobjects and the factorization of Q-spans.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -42,14 +52,20 @@ instance inheritedToFullQ_faithful : (inheritedToFullQ E P).Faithful where
 /-- An ambient admissible subobject of `B` whose domain lies in the resolving
 subcategory. Its morphisms must be admissible in the inherited exact structure. -/
 structure AdmissibleSubobject (B : C) where
+  /-- The source object in the resolving full subcategory `P`. -/
   obj : P.FullSubcategory
+  /-- The underlying admissible monomorphism from the source object into `B`. -/
   hom : obj.obj ⟶ B
   admissible : E.inflation hom
 
 namespace AdmissibleSubobject
 variable {E P} {B : C}
 
+/-- A morphism between admissible subobjects of `B`, given by an inflation in the inherited
+exact structure whose underlying triangle over `B` commutes. -/
 @[ext] structure Hom (X Y : AdmissibleSubobject E P B) where
+  /-- The comparison morphism in `P.FullSubcategory`; its underlying map composes with `Y.hom`
+  to give `X.hom`. -/
   hom : X.obj ⟶ Y.obj
   admissible : (ExactSubcategory.exactStructure E P).inflation hom
   w : hom.hom ≫ Y.hom = X.hom
@@ -208,7 +224,7 @@ theorem subobjectUniversal_nonempty_hom (B : FullQ E P) (A : InheritedComma E P 
   · rfl
 
 /-- The target subobject category is thin, hence the factorization is unique. -/
-def subobjectUniversal_isInitial (B : FullQ E P) (A : InheritedComma E P B)
+def subobjectUniversalIsInitial (B : FullQ E P) (A : InheritedComma E P B)
     (s : Span E.deflation E.inflation A.left.obj.of.obj B.obj.obj.of)
     (hs : Q.mkHom _ _ s = A.hom.hom) :
     IsInitial (subobjectUniversal E P B A s hs) :=
@@ -219,7 +235,7 @@ def subobjectUniversal_isInitial (B : FullQ E P) (A : InheritedComma E P B)
 instance subobjectsToComma_hasInitials (B : FullQ E P) (A : InheritedComma E P B) :
     HasInitial (StructuredArrow A (subobjectsToComma E P B)) := by
   obtain ⟨s, hs⟩ := Quotient.exists_rep A.hom.hom
-  exact (subobjectUniversal_isInitial E P B A s hs).hasInitial
+  exact (subobjectUniversalIsInitial E P B A s hs).hasInitial
 
 /-- A genuine reflection onto ordinary admissible subobjects. -/
 def subobjectAdjunction (B : FullQ E P) :

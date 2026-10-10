@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.Homology.BoundedAboveComplex
-import Quillen.CategoryTheory.Localization.Approximation
+module
+
+public import Quillen.Algebra.Homology.BoundedAboveComplex
+public import Quillen.CategoryTheory.Localization.Approximation
 
 /-!
 # The actual bounded-above derived localization
@@ -16,6 +18,8 @@ bounded-complex localization into the ambient derived category. Actual bounded
 representatives give essential surjectivity, hence a genuine equivalence with
 `DerivedCategory.Minus`. No projective/injective existence assumption is required.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -62,22 +66,26 @@ theorem truncationToBounded_eventually (K L : BoundedAboveComplex C) :
   exact ⟨n, inferInstanceAs (QuasiIso (K.obj.ιTruncLE n)),
     inferInstanceAs (QuasiIso (L.obj.ιTruncLE n))⟩
 
+/-- Quasi-isomorphisms in the full category of bounded-above cochain complexes, detected by the
+inclusion into all cochain complexes. -/
 abbrev boundedAboveQuasiIso : MorphismProperty (BoundedAboveComplex C) :=
   (HomologicalComplex.quasiIso C (.up ℤ)).inverseImage (boundedAbove C).ι
 
 /-- The actual inclusion of bounded-complex localizations is fully faithful. -/
-def boundedAboveLocalization_fullFaithful :
+def boundedAboveLocalizationFullyFaithful :
     (LocalizationRestriction.inclusion (boundedAbove C).ι
       (HomologicalComplex.quasiIso C (.up ℤ))).FullyFaithful :=
   LocalizationRestriction.fullyFaithful _ _ (truncationToBounded C)
-    (truncationToBoundedCounit C) (truncationToBounded_quasiIso C) (truncationToBounded_eventually C)
+    (truncationToBoundedCounit C) (truncationToBounded_quasiIso C) (truncationToBounded_eventually
+      C)
 
 variable [HasDerivedCategory.{w} C]
 
 /-- The canonical inclusion into the actual ambient derived category. -/
 def boundedAboveLocalizationToDerived : (boundedAboveQuasiIso C).Localization ⥤ DerivedCategory C :=
   LocalizationRestriction.inclusion (boundedAbove C).ι (HomologicalComplex.quasiIso C (.up ℤ)) ⋙
-    (Localization.equivalenceFromModel DerivedCategory.Q (HomologicalComplex.quasiIso C (.up ℤ))).functor
+    (Localization.equivalenceFromModel DerivedCategory.Q (HomologicalComplex.quasiIso C (.up
+      ℤ))).functor
 
 /-- The inclusion agrees with the original derived localization on every original complex. -/
 def boundedAboveLocalizationToDerivedFactors :
@@ -93,9 +101,9 @@ def boundedAboveLocalizationToDerivedFactors :
         (HomologicalComplex.quasiIso C (.up ℤ))).hom.naturality f.hom)
 
 /-- Ambient full faithfulness transports along the actual chosen localization equivalence. -/
-def boundedAboveLocalizationToDerived_fullyFaithful :
+def boundedAboveLocalizationToDerivedFullyFaithful :
     (boundedAboveLocalizationToDerived C).FullyFaithful :=
-  (boundedAboveLocalization_fullFaithful C).comp
+  (boundedAboveLocalizationFullyFaithful C).comp
     (Localization.equivalenceFromModel DerivedCategory.Q
       (HomologicalComplex.quasiIso C (.up ℤ))).fullyFaithfulFunctor
 
@@ -107,12 +115,16 @@ def boundedAboveLocalizationToMinus :
     have : (DerivedCategory.Q.obj K.obj).IsLE (chosenUpperBound K) := inferInstance
     let e : (boundedAboveLocalizationToDerived C).obj ((boundedAboveQuasiIso C).Q.obj K) ≅
         DerivedCategory.Q.obj K.obj := (boundedAboveLocalizationToDerivedFactors C).app K
-    exact ⟨chosenUpperBound K, DerivedCategory.TStructure.t.isLE_of_iso e.symm (chosenUpperBound K)⟩)
+    exact ⟨chosenUpperBound K, DerivedCategory.TStructure.t.isLE_of_iso e.symm (chosenUpperBound
+      K)⟩)
 
-def boundedAboveLocalizationToMinus_fullyFaithful :
+/-- Full faithfulness of the functor from the quasi-isomorphism localization of bounded-above
+cochain complexes to `DerivedCategory.Minus C`, obtained by factoring the fully faithful
+ambient derived comparison through its full subcategory. -/
+def boundedAboveLocalizationToMinusFullyFaithful :
     (boundedAboveLocalizationToMinus C).FullyFaithful :=
   Functor.FullyFaithful.ofCompFaithful (F := boundedAboveLocalizationToMinus C)
-    (G := DerivedCategory.Minus.ι) (boundedAboveLocalizationToDerived_fullyFaithful C)
+    (G := DerivedCategory.Minus.ι) (boundedAboveLocalizationToDerivedFullyFaithful C)
 
 instance boundedAboveLocalizationToMinus_essSurj :
     (boundedAboveLocalizationToMinus C).EssSurj where
@@ -126,8 +138,8 @@ instance boundedAboveLocalizationToMinus_essSurj :
 mathlib's bounded-above full subcategory of the ambient derived category. -/
 def boundedAboveDerivedEquivalence :
     (boundedAboveQuasiIso C).Localization ≌ DerivedCategory.Minus C := by
-  let := (boundedAboveLocalizationToMinus_fullyFaithful C).full
-  let := (boundedAboveLocalizationToMinus_fullyFaithful C).faithful
+  let := (boundedAboveLocalizationToMinusFullyFaithful C).full
+  let := (boundedAboveLocalizationToMinusFullyFaithful C).faithful
   let : (boundedAboveLocalizationToMinus C).IsEquivalence := { }
   exact (boundedAboveLocalizationToMinus C).asEquivalence
 
@@ -136,9 +148,11 @@ def boundedAboveLocalizationToMinusFactors :
     (boundedAboveQuasiIso C).Q ⋙ boundedAboveLocalizationToMinus C ≅ boundedAboveQMinus C :=
   NatIso.ofComponents
     (fun K => ObjectProperty.isoMk _ ((boundedAboveLocalizationToDerivedFactors C).app K))
-    (fun f => ObjectProperty.hom_ext _ ((boundedAboveLocalizationToDerivedFactors C).hom.naturality f))
+    (fun f => ObjectProperty.hom_ext _ ((boundedAboveLocalizationToDerivedFactors C).hom.naturality
+      f))
 
-/-- The original bounded-complex functor really is a localization at the original quasi-isomorphisms. -/
+/-- The original bounded-complex functor really is a localization at the original
+  quasi-isomorphisms. -/
 instance boundedAboveQMinus_isLocalization :
     (boundedAboveQMinus C).IsLocalization (boundedAboveQuasiIso C) :=
   Functor.IsLocalization.of_equivalence_target (boundedAboveQuasiIso C).Q

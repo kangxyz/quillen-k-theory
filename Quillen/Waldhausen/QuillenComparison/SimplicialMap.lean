@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.QuillenComparison.EdgewiseIndices
-import Quillen.Waldhausen.QuillenComparison.Reindexing
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.EdgewiseIndices
+public import Quillen.Waldhausen.QuillenComparison.Reindexing
 
 /-! # The canonical simplicial Q/S comparison map
 
@@ -8,6 +16,8 @@ nerve of the existing Q-category. The i-th vertex is the quotient indexed by
 [n-i,n+1+i] in nerve row n+1+i. All simplicial identities follow from the
 strict reindexing theorem and the genuine reversed-first-half edgewise indices.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

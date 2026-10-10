@@ -1,7 +1,15 @@
-import Quillen.Topology.Realization.FiniteHausdorff
-import Quillen.Topology.Realization.ProductSupport
-import Quillen.Topology.HomotopyGroups.CompactLifting
-import Quillen.Topology.HomotopyGroups.Product
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.FiniteHausdorff
+public import Quillen.Topology.Realization.ProductSupport
+public import Quillen.Topology.HomotopyGroups.CompactLifting
+public import Quillen.Topology.HomotopyGroups.Product
 
 /-! # The actual realization-product map on based homotopy groups
 
@@ -10,6 +18,7 @@ continuous lifting of all compact-source maps. This proves its actual based
 homotopy-group bijectivity without asserting a homeomorphism for arbitrary
 ordinary topological products.
 -/
+@[expose] public section
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -82,8 +91,11 @@ def comparisonPiEquiv (X Y : SSet.{u}) (p : |X ⊗ Y|) (n : ℕ) :
   piEquivOfCompactLifts (comparison X Y) (comparison_injective X Y)
     (comparison_compact_lifts X Y) rfl n
 
-@[simp] theorem comparisonPiEquiv_toMonoidHom (X Y : SSet.{u}) (p : |X ⊗ Y|) (n : ℕ) :
-    (comparisonPiEquiv X Y p n).toMonoidHom = piMap n (comparison X Y) rfl := rfl
+/-- The forward homomorphism is induced by the original product comparison. -/
+@[simp] theorem comparisonPiEquiv_coe (X Y : SSet.{u}) (p : |X ⊗ Y|) (n : ℕ) :
+    (comparisonPiEquiv X Y p n : HomotopyGroup.Pi (n + 1) |X ⊗ Y| p →*
+      HomotopyGroup.Pi (n + 1) (|X| × |Y|) (comparison X Y p)) =
+        piMap n (comparison X Y) rfl := rfl
 
 /-- Product of actual realization homotopy groups, with original comparison
 followed by the two original topological projections. -/

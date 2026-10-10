@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.Algebra.Homology.HomotopyCategory.MappingCocone
-import Mathlib.CategoryTheory.Abelian.Basic
+module
+
+public import Mathlib.Algebra.Homology.HomotopyCategory.MappingCocone
+public import Mathlib.CategoryTheory.Abelian.Basic
 
 /-!
 # Literal homotopy pullbacks of cochain complexes
@@ -16,6 +18,8 @@ section in every degree; no chain-level section is asserted.
 
 The ambient abelian category may have independent object and morphism universes.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

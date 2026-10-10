@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.SConstruction.Rows.Basic
-import Quillen.Waldhausen.SConstruction.Rows.PointwisePushouts
-import Quillen.Waldhausen.SConstruction.Rows.RelativePushout
-import Quillen.Waldhausen.Additivity.PushoutInterchange
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.Basic
+public import Quillen.Waldhausen.SConstruction.Rows.PointwisePushouts
+public import Quillen.Waldhausen.SConstruction.Rows.RelativePushout
+public import Quillen.Waldhausen.Additivity.PushoutInterchange
 
 /-! # Genuine pushouts of quotient rows
 
@@ -9,6 +17,8 @@ Rows remain actual quotient grids under pointwise pushouts along the
 all-triples Reedy cofibrations. The quotient squares follow from actual
 pushout interchange, rather than a closure or exactness assumption.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

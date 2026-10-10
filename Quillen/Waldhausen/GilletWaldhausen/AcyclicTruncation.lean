@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.BoundedAcyclic
-import Quillen.Waldhausen.GilletWaldhausen.TruncationMaps
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.BoundedAcyclic
+public import Quillen.Waldhausen.GilletWaldhausen.TruncationMaps
 
 /-!
 # The actual acyclic truncation sequence stays in the bounded exact subcategory
@@ -11,6 +19,8 @@ Both outer complexes remain bounded, termwise in the chosen object
 predicate, and acyclic. The resulting sequence is a genuine conflation in
 the inherited full exact subcategory of bounded acyclic complexes.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

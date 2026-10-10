@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Functor
-import Mathlib.CategoryTheory.Comma.Arrow
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Functor
+public import Mathlib.CategoryTheory.Comma.Arrow
 
 /-! # The actual pushout functor used in the additivity deformation
 
@@ -9,6 +17,8 @@ functorial on all commutative squares. The Waldhausen gluing axiom proves
 preservation of pointwise weak equivalences. No additivity conclusion is an
 input to this construction.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -56,7 +66,7 @@ def targetι (f : Arrow C) : F.obj f.right ⟶ (pushoutFunctor W a ha).obj f := 
 theorem sourceι_naturality {f g : Arrow C} (φ : f ⟶ g) :
     sourceι W a ha f ≫ (pushoutFunctor W a ha).map φ =
       G.map φ.left ≫ sourceι W a ha g := by
-  letI {X Y : C} (f : X ⟶ Y) : HasPushout (a.app X) (F.map f) :=
+  let {X Y : C} (f : X ⟶ Y) : HasPushout (a.app X) (F.map f) :=
     hasPushout W a ha f
   exact pushout.inl_desc _ _ _
 
@@ -64,14 +74,14 @@ theorem sourceι_naturality {f g : Arrow C} (φ : f ⟶ g) :
 theorem targetι_naturality {f g : Arrow C} (φ : f ⟶ g) :
     targetι W a ha f ≫ (pushoutFunctor W a ha).map φ =
       F.map φ.right ≫ targetι W a ha g := by
-  letI {X Y : C} (f : X ⟶ Y) : HasPushout (a.app X) (F.map f) :=
+  let {X Y : C} (f : X ⟶ Y) : HasPushout (a.app X) (F.map f) :=
     hasPushout W a ha f
   exact pushout.inr_desc _ _ _
 
 /-- The displayed legs satisfy the pushout square, with its full universal property. -/
 theorem pushoutFunctor_isPushout (f : Arrow C) :
     IsPushout (a.app f.left) (F.map f.hom) (sourceι W a ha f) (targetι W a ha f) := by
-  letI := hasPushout W a ha f.hom
+  let := hasPushout W a ha f.hom
   exact IsPushout.of_hasPushout _ _
 
 /-- The target leg is a genuine cofibration. -/

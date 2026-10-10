@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianProducts
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianProducts
 
 /-!
 # Exact base coordinates and nondegenerate simplex-chart descent
@@ -7,6 +15,8 @@ Point-valued restricted replacements are identified with their actual base
 subcomplexes. Every simplex chart is obtained from its nondegenerate ancestor
 by a canonical enriched map with an invertible coefficient transition.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
@@ -14,10 +24,12 @@ universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 variable {D : Type u} [SmallCategory D]
 
+/-- The unique simplex in each degree of the zero-simplex, used in point-valued replacement
+coordinates. -/
 local instance pointSimplexUnique (p : SimplexCategoryᵒᵖ) :
     Unique ((Δ[0] : SSet.{u}).obj p) :=
   (SSet.stdSimplex.objEquiv (n := ⦋0⦌) (m := p)).unique
@@ -256,7 +268,7 @@ theorem RestrictionCartesian.trans {A B C : (nerve D).Subcomplex}
 
 /-- The identity square retains its canonical constant-path comparison. -/
 theorem cartesianIdentity {X A : Type u} [TopologicalSpace X] [TopologicalSpace A]
-    (p : C(X,A)) : Cartesian p p (ContinuousMap.id X) (ContinuousMap.id A) rfl := by
+    (p : C(X, A)) : Cartesian p p (ContinuousMap.id X) (ContinuousMap.id A) rfl := by
   refine ⟨(HomotopyPullback.identityHomotopyEquiv p).trans
     (HomotopyPullback.symmetryHomeomorph (ContinuousMap.id A) p).toHomotopyEquiv, ?_⟩
   rfl
@@ -275,8 +287,8 @@ retains the canonical finite-stage comparison required by weak assembly. -/
 theorem stageCartesian_of_restrictionCartesian (k n : ℕ) (h : k ≤ n)
     (hc : RestrictionCartesian H ((nerve D).skeleton.monotone h)) :
     ∃ e : ContinuousMap.HomotopyEquiv ((realizedReplacementSkeleton H).obj k)
-      (SequentialCartesian.StagePullback (replacementProjectionTowerMap H) k n h),
-      e.toFun = SequentialCartesian.stageComparison (replacementProjectionTowerMap H) k n h := by
+      (Quillen.CartesianRealization.Sequential.StagePullback (replacementProjectionTowerMap H) k n h),
+      e.toFun = Quillen.CartesianRealization.Sequential.stageComparison (replacementProjectionTowerMap H) k n h := by
   have hh : Cartesian ((replacementProjectionTowerMap H).app k).hom
       ((replacementProjectionTowerMap H).app n).hom
       ((realizedReplacementSkeleton H).map (homOfLE h)).hom
@@ -300,4 +312,4 @@ theorem stageCartesian_of_restrictionCartesian (k n : ℕ) (h : k ≤ n)
     · exact hc
   exact ⟨hh.equiv, hh.equiv_toFun⟩
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

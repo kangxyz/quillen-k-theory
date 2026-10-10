@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.WeakImageCofinality
+module
+
+public import Quillen.Waldhausen.Approximation.WeakImageCofinality
 
 /-! # Original cofinality maps with genuinely independent category universes -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -64,7 +68,8 @@ include h H J D' hs
 
 /-- Approximation onto the actual image and its genuine density give original-map preimages. -/
 theorem original_functor_positive_preimage (n : ℕ) (b : V.K (n + 1)) :
-    ∃! a, KMap hF (n + 1) a = b := (original_KMap_succ_bijective_of_dense h hF H J D' hs n).existsUnique b
+    ∃! a, KMap hF (n + 1) a = b := (original_KMap_succ_bijective_of_dense h hF H J D' hs
+      n).existsUnique b
 
 /-- The original functor has precisely the genuine remaining K-zero kernel as its image. -/
 theorem original_functor_KZero_lifts_iff (b : V.K 0) :

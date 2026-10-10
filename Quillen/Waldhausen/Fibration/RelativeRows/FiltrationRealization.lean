@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationNerves
-import Quillen.Waldhausen.Fibration.RelativeRows.Simplicial
-import Quillen.Topology.Realization.BisimplicialEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationNerves
+public import Quillen.Waldhausen.Fibration.RelativeRows.Simplicial
+public import Quillen.Topology.Realization.BisimplicialEquivalence
 
 /-! # The original relative S-realization and genuine mixed cofibration rows
 
@@ -9,6 +17,8 @@ original-grid presentation and the proved initial-filtration equivalences
 give the forward comparison. Its total map is natural before realization;
 no naturality of chosen cofiber inverses is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial Topology
@@ -59,7 +69,8 @@ section Realization
 variable {C : Type u} [SmallCategory C] {V : Structure C}
   (N : NestedWeakEquivalences V) (he : ExtensionAxiom N.coarse)
 
-/-- The actual original S-grid is first presented as weak rows, then read as its initial filtration. -/
+/-- The actual original S-grid is first presented as weak rows, then read as its initial
+filtration. -/
 def relativeFiltrationSSet (n : SimplexCategory) :
     (relativeSRows N).obj (op n) ⟶ (relativeFiltrationDiagonals N).obj (op n) :=
   (QuotientRows.sSetWeakRowDiagonalIso (waldhausenStructure N n)).hom ≫

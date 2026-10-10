@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Duality.SConstruction
-import Quillen.Waldhausen.Approximation.GeneralKEquivalence
+module
+
+public import Quillen.Waldhausen.Duality.SConstruction
+public import Quillen.Waldhausen.Approximation.GeneralKEquivalence
 
 /-! # Dual approximation for the original S-construction map
 
@@ -13,6 +15,8 @@ The original S-map is recovered by the proved natural coordinate reversal,
 and its original canonical K-map is bijective. All cylinder and dual exactness
 inputs remain structural and explicit; no K-equivalence is a hypothesis.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 universe u v u' v'
@@ -96,8 +100,10 @@ def KEquivOfDualApproximation (n : ℕ) : W.K n ≃* V.K n :=
   MulEquiv.ofBijective (KMap hF n)
     (KMap_bijective_of_dualApproximation hW hV hF hFd h Jd n)
 
-@[simp] theorem KEquivOfDualApproximation_toMonoidHom (n : ℕ) :
-    (KEquivOfDualApproximation hW hV hF hFd h Jd n).toMonoidHom = KMap hF n := rfl
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem KEquivOfDualApproximation_coe (n : ℕ) :
+    (↑(KEquivOfDualApproximation hW hV hF hFd h Jd n) : W.K n →* V.K n) = KMap hF n := rfl
+
 
 end SameUniverses
 end Quillen.Waldhausen

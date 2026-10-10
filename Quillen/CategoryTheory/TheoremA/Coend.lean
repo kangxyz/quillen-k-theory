@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremA.Diagonal
-import Mathlib.CategoryTheory.Limits.Shapes.End
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.Diagonal
+public import Mathlib.CategoryTheory.Limits.Shapes.End
 
 /-!
 # The diagonal as a coend
@@ -8,6 +16,8 @@ For a bisimplicial set `X`, its diagonal is the coend of
 `(p,q) ↦ Xₚ × Δ[q]`. This is a genuine universal property, proved simplexwise,
 and is the algebraic part of the diagonal/iterated-realization comparison.
 -/
+@[expose] public section
+
 
 noncomputable section
 

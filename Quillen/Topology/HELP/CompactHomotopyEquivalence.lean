@@ -1,5 +1,13 @@
-import Quillen.Topology.HELP.CompactRealizationLifting
-import Quillen.CategoryTheory.TheoremA.RealizationRows
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.CompactRealizationLifting
+public import Quillen.CategoryTheory.TheoremA.RealizationRows
 
 /-!
 # Compact HELP gives actual homotopy equivalences between realizations
@@ -9,6 +17,8 @@ homotopy inverse. Lifting over the realized simplicial cylinder endpoint
 monomorphism supplies its other inverse homotopy. No Whitehead theorem or
 based inverse data is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Simplicial Topology unitInterval
@@ -31,14 +41,17 @@ def simplicialCylinderEndpoints (X : SSet.{u}) :
 
 @[simp]
 theorem simplicialCylinderEndpoints_zero (X : SSet.{u}) :
-    simplicialSigmaι (fun _ : ULift.{u} Bool ↦ X) ⟨false⟩ ≫ simplicialCylinderEndpoints X = SSet.ι₀ := rfl
+    simplicialSigmaι (fun _ : ULift.{u} Bool ↦ X) ⟨false⟩ ≫ simplicialCylinderEndpoints X =
+      SSet.ι₀ := rfl
 
 @[simp]
 theorem simplicialCylinderEndpoints_one (X : SSet.{u}) :
-    simplicialSigmaι (fun _ : ULift.{u} Bool ↦ X) ⟨true⟩ ≫ simplicialCylinderEndpoints X = SSet.ι₁ := rfl
+    simplicialSigmaι (fun _ : ULift.{u} Bool ↦ X) ⟨true⟩ ≫ simplicialCylinderEndpoints X =
+      SSet.ι₁ := rfl
 
 /-- The two endpoint copies are disjoint and each is simplicially embedded. -/
-instance simplicialCylinderEndpoints_mono (X : SSet.{u}) : Mono (simplicialCylinderEndpoints X) := by
+instance simplicialCylinderEndpoints_mono (X : SSet.{u}) : Mono (simplicialCylinderEndpoints X)
+    := by
   apply (NatTrans.mono_iff_mono_app _).2
   intro p
   apply (mono_iff_injective _).2
@@ -61,7 +74,8 @@ def homotopyOfRealizedEndpointLifting {E B : TopCat.{u}} (p : E ⟶ B)
     TopCat.Homotopy a₀ a₁ := by
   let a := Cofan.IsColimit.desc (realizedSigmaIsColimit (fun _ : ULift.{u} Bool ↦ X))
     (fun t ↦ if t.down then a₁ else a₀)
-  have ha (t : ULift.{u} Bool) : SSet.toTop.map (simplicialSigmaι (fun _ : ULift.{u} Bool ↦ X) t) ≫ a =
+  have ha (t : ULift.{u} Bool) : SSet.toTop.map (simplicialSigmaι (fun _ : ULift.{u} Bool ↦ X)
+    t) ≫ a =
       if t.down then a₁ else a₀ := Cofan.IsColimit.fac
         (realizedSigmaIsColimit (fun _ : ULift.{u} Bool ↦ X))
         (fun t ↦ if t.down then a₁ else a₀) t

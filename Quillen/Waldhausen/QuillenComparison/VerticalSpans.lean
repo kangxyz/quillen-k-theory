@@ -1,7 +1,17 @@
-import Quillen.Waldhausen.QuillenComparison.IntervalSpans
-import Quillen.Waldhausen.QuillenComparison.SpanNaturality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.IntervalSpans
+public import Quillen.Waldhausen.QuillenComparison.SpanNaturality
 
 /-! # The vertical isomorphisms in the Q/S comparison -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -51,6 +61,7 @@ theorem verticalIso_comp (s t u : Fin (n.len + 1)) (hst : s ≤ t) (htu : t ≤ 
   apply Iso.ext
   exact (F.map_comp _ _).symm
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 /-- The nerve and quotient directions commute in the original grid functor. -/
 theorem rowMap_verticalMap (s t : Fin (n.len + 1)) (hst : s ≤ t)
     {i j k l : Fin (n.len + 1)} (hij : i ≤ j) (hkl : k ≤ l)

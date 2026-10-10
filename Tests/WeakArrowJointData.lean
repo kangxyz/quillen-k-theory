@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.WeakArrow.JointData
+module
+
+public import Quillen.Waldhausen.WeakArrow.JointData
 
 /-! Behavioral consumers of genuine opposite weak-arrow colimit reflection. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 universe u v u' v'
@@ -46,7 +50,7 @@ theorem original_unique_coproduct_descent {A B T : (WeakArrow.Obj W F)ᵒᵖ}
     (hD : IsColimit (BinaryCofan.mk ((WeakArrow.target W F).op.map s.inl)
       ((WeakArrow.target W F).op.map s.inr))) (a : A ⟶ T) (b : B ⟶ T) :
     ∃! m : s.pt ⟶ T, s.inl ≫ m = a ∧ s.inr ≫ m = b := by
-  let hs := WeakArrow.dual_isColimit_binaryCofan_of_components V W F hF s hC hD
+  let hs := WeakArrow.dualBinaryCofanIsColimitOfComponents V W F hF s hC hD
   refine ⟨BinaryCofan.IsColimit.desc hs a b,
     ⟨BinaryCofan.IsColimit.inl_desc hs _ _, BinaryCofan.IsColimit.inr_desc hs _ _⟩, ?_⟩
   intro m hm
@@ -72,16 +76,20 @@ variable (Vd : Structure Cᵒᵖ) (Wd : Structure Dᵒᵖ)
 /-- The constructed opposite cylinder factors the unchanged original arrow. -/
 theorem original_joint_factorization (f : Arrow (WeakArrow.Obj W F)ᵒᵖ) :
     (WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).inl.app f ≫
-      ((WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).joint.obj f).obj.hom ≫
-      (WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).projection.app f = f.hom :=
+      ((WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).joint.obj
+        f).obj.hom ≫
+      (WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).projection.app f
+        = f.hom :=
   (WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).factorization f
 
 /-- The projection is genuinely weak on both unchanged original components. -/
 theorem original_projection_components (f : Arrow (WeakArrow.Obj W F)ᵒᵖ) :
     Vd.weq ((WeakArrow.source W F).op.map
-      ((WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).projection.app f)) ∧
+      ((WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).projection.app
+        f)) ∧
     Wd.weq ((WeakArrow.target W F).op.map
-      ((WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).projection.app f)) :=
+      ((WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).projection.app
+        f)) :=
   (WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).weak f
 
 /-- Exactness proves the actual relative pushout comparison cofibrant. -/
@@ -90,17 +98,23 @@ theorem original_joint_relative_cof {X Y : Arrow (WeakArrow.Obj W F)ᵒᵖ} (f :
       (WeakArrow.dualWaldhausenStructure V W Vd Wd F hF hFd hW)).cof f) :
     (WeakArrow.dualWaldhausenStructure V W Vd Wd F hF hFd hW).cof
       (ExtensionCategory.relativeMap _
-        ((WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).joint.map f)) :=
-  ((WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).exact.cofibration f hf).2
+        ((WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).joint.map f))
+          :=
+  ((WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).exact.cofibration f
+    hf).2
 
 /-- The endpoint coproduct has unique descent along the actual constructed maps. -/
 theorem original_joint_coproduct_unique (f : Arrow (WeakArrow.Obj W F)ᵒᵖ)
     {T : (WeakArrow.Obj W F)ᵒᵖ}
-    (a b : ((WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).joint.obj f).obj.left ⟶ T)
-    (hl : (WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).inl.app f ≫ a =
+    (a b : ((WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).joint.obj
+      f).obj.left ⟶ T)
+    (hl : (WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).inl.app f ≫ a
+      =
       (WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).inl.app f ≫ b)
-    (hr : (WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).inr.app f ≫ a =
-      (WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).inr.app f ≫ b) : a = b :=
+    (hr : (WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).inr.app f ≫ a
+      =
+      (WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).inr.app f ≫ b) :
+        a = b :=
   BinaryCofan.IsColimit.hom_ext
     ((WeakArrow.dualJointData V W Vd Wd F hF hFd hW Tc Td compat hinl hinr hproj).coproduct f) hl hr
 end Quillen.Tests.WeakArrowJointData

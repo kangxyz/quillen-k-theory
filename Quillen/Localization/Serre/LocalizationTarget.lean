@@ -1,6 +1,14 @@
-import Quillen.Localization.Serre.LocalizationTheorem
-import Quillen.KTheory.Equivalence
-import Quillen.KTheory.Map.Functoriality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.LocalizationTheorem
+public import Quillen.KTheory.Equivalence
+public import Quillen.KTheory.Map.Functoriality
 
 /-!
 # Localization sequences with the actual target category
@@ -13,6 +21,8 @@ K-map with the original exact functor's K-map, without any assumed comparison
 on K-theory. Transporting the canonical path-space boundary then gives all
 three exactness positions and the surjective connective K₀ endpoint.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -86,8 +96,11 @@ def targetKEquiv (n : ℕ) :
     (quotientExactStructure P).K n ≃* (abelianExactStructure D).K n :=
   (targetLiftExactFunctor P L).KEquivOfMapQIsEquivalence n
 
-@[simp] theorem targetKEquiv_toMonoidHom (n : ℕ) :
-    (targetKEquiv P L n).toMonoidHom = (targetLiftExactFunctor P L).KMap n := rfl
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem targetKEquiv_coe (n : ℕ) :
+    (↑(targetKEquiv P L n) : (quotientExactStructure P).K n →* (abelianExactStructure D).K n) =
+        (targetLiftExactFunctor P L).KMap n := rfl
+
 
 /-- Strict factorization and proved K-functoriality identify the transported
 quotient map with the K-map of the original localization functor. -/
@@ -112,11 +125,16 @@ def actualConnectingHom (n : ℕ) :
 
 /-- The transported boundary is exactly the canonical boundary under the
 specified target equivalence. -/
-@[simp] theorem actualConnectingHom_comp_targetKEquiv (n : ℕ) :
-    (actualConnectingHom P L n).comp (targetKEquiv P L (n + 1)).toMonoidHom =
+@[simp] theorem actualConnectingHom_comp_targetLiftKMap (n : ℕ) :
+    (actualConnectingHom P L n).comp ((targetLiftExactFunctor P L).KMap (n + 1)) =
       connectingHom P n := by
   ext x
-  simp [actualConnectingHom]
+  change (connectingHom P n) ((targetKEquiv P L (n + 1)).symm
+    (((targetLiftExactFunctor P L).KMap (n + 1)) x)) = _
+  have hx := DFunLike.congr_fun (targetKEquiv_coe P L (n + 1)) x
+  change (targetKEquiv P L (n + 1)) x = _ at hx
+  rw [← hx, MulEquiv.symm_apply_apply]
+
 
 /-- Comparison with the original path-space connecting homomorphism. -/
 theorem comparison_comp_actualConnectingHom (n : ℕ) :

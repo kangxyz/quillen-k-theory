@@ -3,14 +3,16 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.ClassifyingSpace.Discrete
-import Quillen.Topology.ClassifyingSpace.AsSmall
-import Quillen.CategoryTheory.TheoremB.WeakComparison
-import Quillen.CategoryTheory.TheoremB.Conditions
-import Quillen.Topology.HomotopyGroups.Contractible
-import Quillen.Topology.HomotopyGroups.PathTransport
-import Quillen.Topology.Realization.Connectivity
-import Mathlib.CategoryTheory.SingleObj
+module
+
+public import Quillen.Topology.ClassifyingSpace.Discrete
+public import Quillen.Topology.ClassifyingSpace.AsSmall
+public import Quillen.CategoryTheory.TheoremB.WeakComparison
+public import Quillen.CategoryTheory.TheoremB.Conditions
+public import Quillen.Topology.HomotopyGroups.Contractible
+public import Quillen.Topology.HomotopyGroups.PathTransport
+public import Quillen.Topology.Realization.Connectivity
+public import Mathlib.CategoryTheory.SingleObj
 
 /-!
 # Asphericity of the original groupoid classifying space
@@ -21,6 +23,8 @@ therefore kill all homotopy groups of degree at least two. Actual nerve lifts
 and vertex paths retain independent category universes and arbitrary basepoints.
 No calculation of the fundamental group is assumed or claimed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -29,13 +33,18 @@ universe u v
 namespace Quillen.GroupoidClassifying
 variable {C : Type u} [SmallCategory C] (c d : C)
 
+/-- The functor from the one-object discrete category selecting the object `c`. -/
 abbrev pointFunctor : Discrete PUnit.{u+1} ⥤ C := Functor.fromPUnit c
 
+/-- The functor sending an object of the comma category of the point inclusion to its arrow `c ⟶
+d` in the discrete morphism set. -/
 def pointCommaProjection : CostructuredArrow (pointFunctor c) d ⥤ Discrete (c ⟶ d) where
   obj X := .mk X.hom
   map f := eqToHom (congrArg Discrete.mk (by
     simpa [pointFunctor] using (CostructuredArrow.w f).symm))
 
+/-- The functor sending an arrow `c ⟶ d` to the corresponding comma object of the point
+inclusion. -/
 def pointCommaSection : Discrete (c ⟶ d) ⥤ CostructuredArrow (pointFunctor c) d :=
   Discrete.functor (fun f ↦ CostructuredArrow.mk (Y := Discrete.mk PUnit.unit) f)
 
@@ -44,7 +53,8 @@ def pointCommaEquivalence : CostructuredArrow (pointFunctor c) d ≌ Discrete (c
   functor := pointCommaProjection c d
   inverse := pointCommaSection c d
   unitIso := NatIso.ofComponents (fun X ↦
-    CostructuredArrow.isoMk (eqToIso (Subsingleton.elim _ _)) (by change (𝟙 c) ≫ X.hom = X.hom; simp))
+    CostructuredArrow.isoMk (eqToIso (Subsingleton.elim _ _)) (by change (𝟙 c) ≫ X.hom = X.hom;
+      simp))
     (by intro X Y f; apply CostructuredArrow.ext; exact Subsingleton.elim _ _)
   counitIso := Discrete.natIso (fun _ ↦ Iso.refl _)
 

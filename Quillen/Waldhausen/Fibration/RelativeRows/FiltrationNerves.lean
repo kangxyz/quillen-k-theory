@@ -1,8 +1,16 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.WeakInterchange
-import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationWeakEquivalence
-import Quillen.Waldhausen.Fibration.Rows.ExtensionAxiom
-import Quillen.Waldhausen.Fibration.MixedNerves.RowPostcompose
-import Quillen.Waldhausen.SConstruction.Rows.NerveFunctoriality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.WeakInterchange
+public import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationWeakEquivalence
+public import Quillen.Waldhausen.Fibration.Rows.ExtensionAxiom
+public import Quillen.Waldhausen.Fibration.MixedNerves.RowPostcompose
+public import Quillen.Waldhausen.SConstruction.Rows.NerveFunctoriality
 
 /-! # Original relative inner rows as fine-weak cofibration-chain nerves
 
@@ -10,6 +18,8 @@ The forward map first transposes the original quotient rows and then reads
 the original initial filtration. Both categorical equivalences are proved
 separately. Their actual composite is natural in both original row indices.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial Topology
@@ -30,7 +40,7 @@ def innerSFiltration (m n : SimplexCategory) :
 /-- The original component is the initial interval in the original relative row. -/
 @[simp] theorem innerSFiltration_obj_component (m n : SimplexCategory)
     (F : QuotientRows.WeakRows (waldhausenStructure N n) m)
-    (i : Fin (n.len+1)) (p : Interval m) :
+    (i : Fin (n.len + 1)) (p : Interval m) :
     (((innerSFiltration N he m n).obj F).obj.obj.obj i).obj.obj p =
       (F.obj.obj.obj p).obj.obj.obj (interval 0 i.succ (Fin.zero_le _)) := rfl
 
@@ -47,7 +57,8 @@ def innerSFiltrationEquivalence (m n : SimplexCategory) :
 
 /-- The original forward classifying map has a genuine continuous homotopy inverse. -/
 def innerSFiltrationClassifyingHomotopyEquiv (m n : SimplexCategory) :
-    ContinuousMap.HomotopyEquiv (ClassifyingSpace (QuotientRows.WeakRows (waldhausenStructure N n) m))
+    ContinuousMap.HomotopyEquiv (ClassifyingSpace (QuotientRows.WeakRows (waldhausenStructure N
+      n) m))
       (ClassifyingSpace (FineWeakChains (RowWeakEquivalences.nested N m) n)) :=
   equivalenceClassifyingHomotopyEquiv (innerSFiltrationEquivalence N he m n)
 
@@ -60,27 +71,32 @@ theorem innerSFiltration_relative_reindex (m : SimplexCategory)
     {n n' : SimplexCategory} (α : n' ⟶ n) :
     QuotientRows.weakRowsPostcompose (waldhausenStructure N n) (waldhausenStructure N n')
         (reindex_exact N α) m ⋙ innerSFiltration N he m n' =
-      innerSFiltration N he m n ⋙ MixedNerves.fineWeakCofReindex (RowWeakEquivalences.nested N m) α := by
+      innerSFiltration N he m n ⋙ MixedNerves.fineWeakCofReindex (RowWeakEquivalences.nested N
+        m) α := by
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 
 /-- The inner S direction acts by literal original quotient-row restriction. -/
 theorem innerSFiltration_inner_reindex (n : SimplexCategory)
     {m m' : SimplexCategory} (α : m' ⟶ m) :
     QuotientRows.weakRowsReindex (waldhausenStructure N n) α ⋙ innerSFiltration N he m' n =
-      innerSFiltration N he m n ⋙ MixedNerves.fineWeakCofPostcompose (MixedNerves.rowReindexCompatible N α) n := by
+      innerSFiltration N he m n ⋙ MixedNerves.fineWeakCofPostcompose
+        (MixedNerves.rowReindexCompatible N α) n := by
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 
 /-- Fine-weak chain nerves in the original inner-S direction for a fixed relative degree. -/
 def innerFiltrationNerve (n : SimplexCategory) : SimplexCategoryᵒᵖ ⥤ SSet.{max u v} where
   obj m := nerve (FineWeakChains (RowWeakEquivalences.nested N m.unop) n)
-  map α := nerveMap (MixedNerves.fineWeakCofPostcompose (MixedNerves.rowReindexCompatible N α.unop) n)
+  map α := nerveMap (MixedNerves.fineWeakCofPostcompose (MixedNerves.rowReindexCompatible N
+    α.unop) n)
   map_id m := by
-    change nerveMap (MixedNerves.fineWeakCofPostcompose (MixedNerves.rowReindexCompatible N (𝟙 m.unop)) n) = _
+    change nerveMap (MixedNerves.fineWeakCofPostcompose (MixedNerves.rowReindexCompatible N (𝟙
+      m.unop)) n) = _
     rw [MixedNerves.rowReindexCompatible_id]
     ext k F
     rfl
   map_comp α β := by
-    change nerveMap (MixedNerves.fineWeakCofPostcompose (MixedNerves.rowReindexCompatible N (β.unop ≫ α.unop)) n) = _
+    change nerveMap (MixedNerves.fineWeakCofPostcompose (MixedNerves.rowReindexCompatible N
+      (β.unop ≫ α.unop)) n) = _
     rw [MixedNerves.rowReindexCompatible_comp]
     ext k F
     rfl

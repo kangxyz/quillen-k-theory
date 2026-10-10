@@ -1,4 +1,12 @@
-import Quillen.Topology.ClassifyingSpace.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.ClassifyingSpace.Basic
 
 /-!
 # Realizing vertices and edges as points and paths
@@ -9,6 +17,7 @@ particular, every categorical morphism supplies a path in the classifying
 space, and a natural transformation supplies paths between the images of
 all object vertices. No general realization-of-homotopy theorem is assumed.
 -/
+@[expose] public section
 
 noncomputable section
 
@@ -93,10 +102,12 @@ theorem realizationPoint_naturality {X Y : SSet.{u}} (f : X ⟶ Y) (x : X _⦋0�
   rw [← Functor.map_comp, SSet.yonedaEquiv_symm_comp]
   rfl
 
-@[simp]
-theorem realizationEdgePath_naturality {X Y : SSet.{u}} (f : X ⟶ Y)
+/-- The realized edge map is natural at every interval parameter. -/
+@[simp] theorem realizationEdgePath_naturality_apply {X Y : SSet.{u}} (f : X ⟶ Y)
     {x y : X _⦋0⦌} (e : X.Edge x y) (t : unitInterval) :
-    SSet.toTop.map f (realizationEdgePath e t) = realizationEdgePath (e.map f) t := by
+    SSet.toTop.map f
+      (SSet.toTop.map (SSet.yonedaEquiv.symm e.edge) (realizationInterval t)) =
+        SSet.toTop.map (SSet.yonedaEquiv.symm (e.map f).edge) (realizationInterval t) := by
   change (SSet.toTop.map (SSet.yonedaEquiv.symm e.edge) ≫ SSet.toTop.map f)
     (realizationInterval t) = _
   rw [← Functor.map_comp, SSet.yonedaEquiv_symm_comp]
@@ -131,8 +142,8 @@ theorem classifyingSpacePath_naturality {C D : Type u} [Category.{v} C] [Categor
     classifyingSpaceMap F (classifyingSpacePath f t) =
       classifyingSpacePath (F.map f) t := by
   unfold classifyingSpaceMap classifyingSpacePath
-  erw [realizationEdgePath_naturality]
-  simp only [realizationEdgePath_apply, SSet.Edge.map_edge,
+  erw [realizationEdgePath_naturality_apply]
+  simp only [SSet.Edge.map_edge,
     CategoryTheory.nerve.edgeMk_edge, CategoryTheory.nerveMap_app_mk₁]
   rfl
 

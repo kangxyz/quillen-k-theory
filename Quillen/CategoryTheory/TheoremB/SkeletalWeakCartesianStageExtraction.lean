@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianCharts
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianAssembly
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianCharts
+public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianAssembly
 
 /-!
 # Extracting original characteristic comparisons for coefficient transformations
@@ -16,13 +18,15 @@ whole-cell comparison gives the original individual characteristic chart.
 Both coefficient diagrams remain unchanged; no point-augmentation coordinate
 replacement or homotopy inverse of the weak whole-cell comparison is used.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 variable {D : Type u} [SmallCategory D] {H J : D ⥤ SSet.{u}} (η : H ⟶ J)
 
@@ -74,7 +78,7 @@ theorem coefficientComponentCharacteristic_square {n : ℕ} (s : (nerve D).nonDe
 whole-cell face is weakly cartesian. Genuine component cartesianness and weak
 pasting retain the exact coefficient maps and characteristic paths. -/
 theorem coefficientComponentCharacteristic_weakCartesian (n : ℕ)
-    (h : WeakCartesian (cellProjection η n).hom (stageProjection η (n+1)).hom
+    (h : WeakCartesian (cellProjection η n).hom (stageProjection η (n + 1)).hom
       (characteristicLeg H n).hom (characteristicLeg J n).hom
       (congrArg TopCat.Hom.hom (cellCharacteristicSquare η n)))
     (s : (nerve D).nonDegenerate n) :
@@ -92,4 +96,4 @@ theorem coefficientComponentCharacteristic_weakCartesian (n : ℕ)
     rfl
   exact hpaste.congr rfl rfl (congrArg TopCat.Hom.hom hf) (congrArg TopCat.Hom.hom hg)
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

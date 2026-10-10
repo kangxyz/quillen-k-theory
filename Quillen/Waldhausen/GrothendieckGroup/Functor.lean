@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.GrothendieckGroup.Basic
-import Quillen.Waldhausen.Cofinality.GradingRange
+module
+
+public import Quillen.Waldhausen.GrothendieckGroup.Basic
+public import Quillen.Waldhausen.Cofinality.GradingRange
 
 /-! # Actual representatives and original exact-functor naturality
 
@@ -14,6 +16,8 @@ map on original classes. The quotient by its actual image is an explicit
 additive grading, with precisely the algebraic image as its zero locus.
 This does not identify that locus with a witnessed weak-image category.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v' u'' v'' w
@@ -21,7 +25,8 @@ namespace Quillen.Waldhausen.AlgebraicGrothendieck
 variable {C : Type u} [Category.{v} C] (W : Structure C)
 
 /-- Every universal algebraic class is represented by an actual original object. -/
-theorem objectClass_surjective (T : FunctorialFactorization W) : Function.Surjective (objectClass W) := by
+theorem objectClass_surjective (T : FunctorialFactorization W) : Function.Surjective
+    (objectClass W) := by
   intro x
   obtain ⟨a, rfl⟩ := QuotientAddGroup.mk'_surjective (relations W) x
   change QuotientAddGroup.mk' (relations W) a ∈ (grading W).valueRange T

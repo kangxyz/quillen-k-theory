@@ -1,11 +1,21 @@
-import Quillen.Localization.Serre.NormalizedComma
-import Quillen.CategoryTheory.TheoremB.StructuredWeakTransport
-import Quillen.CategoryTheory.TheoremB.StructuredFunctorIso
-import Quillen.CategoryTheory.TheoremB.StructuredIsoHomotopy
-import Quillen.Topology.ClassifyingSpace.FunctorChain
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.NormalizedComma
+public import Quillen.CategoryTheory.TheoremB.StructuredWeakTransport
+public import Quillen.CategoryTheory.TheoremB.StructuredFunctorIso
+public import Quillen.CategoryTheory.TheoremB.StructuredIsoHomotopy
+public import Quillen.Topology.ClassifyingSpace.FunctorChain
 
 /-! The normalized structured zero-comma inclusion retains the exact
 functors used by the canonical K maps. -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits
@@ -17,15 +27,21 @@ attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
+/-- The structured-arrow category of Q-arrows from the quotient Q-zero object to the image of
+the normalized quotient functor. -/
 abbrev NormalizedZeroStructuredComma :=
   StructuredArrow (quotientExactStructure P).qZero (quotientNormalizedQ P)
 
+/-- The functor from the Serre subcategory Q-category to the normalized structured zero-comma
+category, using the inverse of the natural zero comparison as its structure arrow. -/
 def normalizedSerreToZeroStructuredComma :
     (Devissage.subcategoryExactStructure P).QCategory ⥤ NormalizedZeroStructuredComma P :=
   (inclusionNormalizedQ P).toStructuredArrow _ (quotientNormalizedQ P)
     (fun X ↦ (normalizedQuotientInclusionZeroIso P).inv.app X)
     (fun f ↦ by simpa using ((normalizedQuotientInclusionZeroIso P).inv.naturality f).symm)
 
+/-- The natural isomorphism comparing the raw structured zero-comma inclusion, transported along
+the quotient normalization, with `normalizedSerreToZeroStructuredComma P`. -/
 def normalizedSerreToZeroStructuredCommaIso :
     serreToZeroStructuredComma P ⋙ (StructuredArrow.mapNatIso
       (S := (quotientExactStructure P).qZero) (quotientNormalizedIso P)).functor ≅

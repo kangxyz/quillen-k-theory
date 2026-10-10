@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyGroups.Contractible
-import Quillen.Topology.HomotopyFiber.LESTail
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyGroups.Contractible
+public import Quillen.Topology.HomotopyFiber.LESTail
 
 /-!
 # Unbased homotopy equivalences induce canonical based isomorphisms
@@ -9,6 +17,7 @@ and its homotopies may move them. Contractibility of the concrete homotopy
 fiber and exactness, including the pointed-set tail at degree one, prove
 bijectivity of the canonical postcomposition map.
 -/
+@[expose] public section
 
 noncomputable section
 universe u v
@@ -54,9 +63,9 @@ theorem homotopyEquivPiEquiv_apply (e : ContinuousMap.HomotopyEquiv X Y)
     (h : e.toFun x = y) (n : ℕ) (a : HomotopyGroup.Pi (n + 1) X x) :
     homotopyEquivPiEquiv e h n a = piMap n e.toFun h a := rfl
 
-@[simp]
-theorem homotopyEquivPiEquiv_toMonoidHom (e : ContinuousMap.HomotopyEquiv X Y)
+/-- The forward homomorphism is postcomposition by the equivalence. -/
+@[simp] theorem homotopyEquivPiEquiv_coe (e : ContinuousMap.HomotopyEquiv X Y)
     (h : e.toFun x = y) (n : ℕ) :
-    (homotopyEquivPiEquiv e h n).toMonoidHom = piMap n e.toFun h := rfl
+    (homotopyEquivPiEquiv e h n : _ →* _) = piMap n e.toFun h := rfl
 
 end Quillen

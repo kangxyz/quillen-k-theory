@@ -1,8 +1,18 @@
-import Quillen.CategoryTheory.TheoremB.StructuredTransport
-import Quillen.Topology.HomotopyGroups.WeakEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.StructuredTransport
+public import Quillen.Topology.HomotopyGroups.WeakEquivalence
 
 /-! All-degree weak comparison transport at the actual identity-arrow
 basepoint. This is a transport theorem; realization remains a separate input. -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory Opposite
@@ -26,10 +36,12 @@ variable {C D : Type u} [SmallCategory C] [SmallCategory D] (F : C ⥤ D)
   rw [hi, classifyingSpaceMap_point]
   rfl
 
-@[simp] theorem oppositeFiberHomeomorph_basepoint (c : C) :
+/-- The opposite-fiber comparison preserves the basepoint in opposite-object normal form. -/
+@[simp]
+theorem oppositeFiberHomeomorph_basepoint_op (c : C) :
     oppositeFiberHomeomorph F (F.obj c)
       (HomotopyFiber.basepoint (classifyingSpaceMap F.op).hom
-        (classifyingSpacePoint (F.op.obj (op c))) (classifyingSpacePoint (op c))
+        (classifyingSpacePoint (op (F.obj c))) (classifyingSpacePoint (op c))
         (classifyingSpaceMap_point F.op (op c))) =
       HomotopyFiber.basepoint (classifyingSpaceMap F).hom
         (classifyingSpacePoint (F.obj c)) (classifyingSpacePoint c)
@@ -54,7 +66,7 @@ theorem structuredFiberComparison_bijective_of_opposite (c : C) (n : ℕ)
   have ha := homotopyGroupMap_bijective_of_homotopyEquiv a
     (structuredCommaOppositeEquiv_identity F c) n
   have hb := homotopyGroupMap_bijective_of_homotopyEquiv b
-    (oppositeFiberHomeomorph_basepoint F c) n
+    (oppositeFiberHomeomorph_basepoint_op F c) n
   have h₁ := homotopyGroupMap_bijective_comp a.toFun
     (fiberComparison F.op (F.op.obj (op c)))
     (structuredCommaOppositeEquiv_identity F c) (fiberComparison_identity F.op (op c)) n ha h
@@ -62,7 +74,7 @@ theorem structuredFiberComparison_bijective_of_opposite (c : C) (n : ℕ)
     ((fiberComparison F.op (F.op.obj (op c))).comp a.toFun) b.toFun
     ((congrArg (fiberComparison F.op (F.op.obj (op c)))
       (structuredCommaOppositeEquiv_identity F c)).trans (fiberComparison_identity F.op (op c)))
-    (oppositeFiberHomeomorph_basepoint F c) n h₁ hb
+    (oppositeFiberHomeomorph_basepoint_op F c) n h₁ hb
   have hp : transportedStructuredFiberComparison F (F.obj c)
       (classifyingSpacePoint (StructuredArrow.mk (𝟙 (F.obj c)))) =
       HomotopyFiber.basepoint (classifyingSpaceMap F).hom

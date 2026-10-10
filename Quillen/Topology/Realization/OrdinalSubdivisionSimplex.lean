@@ -1,5 +1,13 @@
-import Quillen.Topology.Realization.OrdinalSubdivision
-import Quillen.Topology.Realization.EdgewiseSimplex
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.OrdinalSubdivision
+public import Quillen.Topology.Realization.EdgewiseSimplex
 
 /-! # A two-stage contraction of ordinarily subdivided simplices
 
@@ -7,6 +15,8 @@ First lower the first half to zero while keeping the second half fixed.
 Then lower the second half to zero. Each stage is a genuine all-degree
 simplicial homotopy, natural under every ordinal map.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory Opposite MonoidalCategory
@@ -115,14 +125,16 @@ def zeroFirstMap (n : ℕ) : subdivision (Δ[n] : SSet.{u}) ⟶ subdivision (Δ[
     exact congrArg ULift.up (zeroFirst_naturality f.unop z.down)
 
 /-- The first genuine simplicial cylinder. -/
-def firstCylinder (n : ℕ) : subdivision (Δ[n] : SSet.{u}) ⊗ Δ[1] ⟶ subdivision (Δ[n] : SSet.{u}) where
+def firstCylinder (n : ℕ) : subdivision (Δ[n] : SSet.{u}) ⊗ Δ[1] ⟶ subdivision (Δ[n] : SSet.{u})
+    where
   app p := ↾fun z ↦ ULift.up (firstOperator z.1.down z.2.down)
   naturality p q f := by
     ext z : 3
     exact congrArg ULift.up (firstOperator_naturality f.unop z.1.down z.2.down)
 
 /-- The second genuine simplicial cylinder. -/
-def secondCylinder (n : ℕ) : subdivision (Δ[n] : SSet.{u}) ⊗ Δ[1] ⟶ subdivision (Δ[n] : SSet.{u}) where
+def secondCylinder (n : ℕ) : subdivision (Δ[n] : SSet.{u}) ⊗ Δ[1] ⟶ subdivision (Δ[n] :
+    SSet.{u}) where
   app p := ↾fun z ↦ ULift.up (secondOperator z.1.down z.2.down)
   naturality p q f := by
     ext z : 3
@@ -187,7 +199,8 @@ theorem contractibleSpace_simplex (n : ℕ) : ContractibleSpace |subdivision (Δ
   refine ⟨realizationPoint (simplexVertex n), ?_⟩
   have h₁ := realizationSimplicialHomotopy (firstHomotopy.{u} n)
   have h₂ := realizationSimplicialHomotopy (secondHomotopy.{u} n)
-  have hc : (SSet.toTop.map (SSet.const (X := subdivision (Δ[n] : SSet.{u})) (simplexVertex.{u} n))).hom =
+  have hc : (SSet.toTop.map (SSet.const (X := subdivision (Δ[n] : SSet.{u})) (simplexVertex.{u}
+    n))).hom =
       ContinuousMap.const _ (realizationPoint (simplexVertex n)) := by
     ext x
     exact realization_const_apply _ x

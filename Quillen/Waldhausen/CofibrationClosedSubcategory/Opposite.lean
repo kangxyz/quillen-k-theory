@@ -3,11 +3,15 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.CofibrationClosedSubcategory
-import Mathlib.CategoryTheory.ObjectProperty.Opposite
-import Quillen.Waldhausen.Duality.Basic
+module
+
+public import Quillen.Waldhausen.CofibrationClosedSubcategory
+public import Mathlib.CategoryTheory.ObjectProperty.Opposite
+public import Quillen.Waldhausen.Duality.Basic
 
 /-! # An inherited Waldhausen structure on the literal opposite full subcategory -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 universe u v
@@ -55,8 +59,10 @@ def oppositeStructure : Structure P.FullSubcategoryᵒᵖ where
   gluing := by
     intro A B D Q A' B' D' Q' i f g j i' f' g' j' a b d p hi hi' h h' ei ef eg ej ha hb hd
     exact Wd.gluing (P.ι.op.map a) (P.ι.op.map b) (P.ι.op.map d) (P.ι.op.map p) hi hi'
-      (inclusion_map_pushout Wd P.op H (i := P.opEquivalence.inverse.map i) hi (h.map P.opEquivalence.inverse))
-      (inclusion_map_pushout Wd P.op H (i := P.opEquivalence.inverse.map i') hi' (h'.map P.opEquivalence.inverse))
+      (inclusion_map_pushout Wd P.op H (i := P.opEquivalence.inverse.map i) hi (h.map
+        P.opEquivalence.inverse))
+      (inclusion_map_pushout Wd P.op H (i := P.opEquivalence.inverse.map i') hi' (h'.map
+        P.opEquivalence.inverse))
       (congrArg P.ι.op.map ei) (congrArg P.ι.op.map ef)
       (congrArg P.ι.op.map eg) (congrArg P.ι.op.map ej) ha hb hd
 
@@ -66,7 +72,8 @@ theorem opposite_inclusion_exact : IsExact (oppositeStructure Wd P H).cof
   zero h := Wd.isZero.of_iso (P.ι.op.mapIso (h.iso (oppositeStructure Wd P H).isZero))
   cofibration _ h := h
   weak _ h := h
-  pushout {_ _ _ _ i _ _ _} hi h := inclusion_map_pushout Wd P.op H (i := P.opEquivalence.inverse.map i) hi (h.map P.opEquivalence.inverse)
+  pushout {_ _ _ _ i _ _ _} hi h := inclusion_map_pushout Wd P.op H (i :=
+    P.opEquivalence.inverse.map i) hi (h.map P.opEquivalence.inverse)
 
 /-- Genuine inherited forward and opposite structures retain the original
 zero-square duality. Closure is used to preserve arbitrary chosen squares. -/

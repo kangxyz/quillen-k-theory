@@ -1,31 +1,55 @@
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianDomains
-import Quillen.CategoryTheory.TheoremA.SkeletalCofibrations
-import Quillen.CategoryTheory.TheoremA.SkeletalNaturality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.Cartesian.Domains
+public import Quillen.CategoryTheory.TheoremA.SkeletalCofibrations
+public import Quillen.CategoryTheory.TheoremA.SkeletalNaturality
 
 /-! Simultaneous homotopy-cartesian induction in the actual replacement
 skeleton tower. The finite cube is applied only after both incoming
 boundary comparisons have been proved. -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 variable {D : Type u} [SmallCategory D] {H J : D ⥤ SSet.{u}} (η : H ⟶ J)
 
+/-- The functor that takes the diagonal of a bisimplicial set and then its topological realization.
+-/
 abbrev realizationFunctor : (SimplexCategoryᵒᵖ ⥤ SSet.{u}) ⥤ TopCat.{u} :=
   diagonalFunctor ⋙ SSet.toTop
+/-- The realized map between the dimension-`n` replacement cells induced by the coefficient
+transformation `η : H ⟶ J`. -/
 abbrev cellProjection (n : ℕ) := realizationFunctor.map (replacementCellsMap η n)
+/-- The realized map between the boundaries of the dimension-`n` replacement cells induced by `η :
+H ⟶ J`. -/
 abbrev cellBoundaryProjection (n : ℕ) := realizationFunctor.map (replacementCellBoundariesMap η n)
+/-- The map from the realized `n`th replacement skeleton for `H` to that for `J`, induced by `η`. -/
 abbrev stageProjection (n : ℕ) := (realizedReplacementSkeletonMap η).app n
+/-- The realized boundary inclusion of the dimension-`n` replacement cells for `H`. -/
 abbrev boundaryLeg (H : D ⥤ SSet.{u}) (n : ℕ) :=
   realizationFunctor.map (replacementCellsBoundaryι H n)
+/-- The realized attaching map from the dimension-`n` cell boundaries to the `n`th replacement
+skeleton for `H`. -/
 abbrev attachingLeg (H : D ⥤ SSet.{u}) (n : ℕ) :=
   realizationFunctor.map (replacementCellsAttaching H n)
+/-- The realized characteristic map from the dimension-`n` cells to the next replacement skeleton
+for `H`. -/
 abbrev characteristicLeg (H : D ⥤ SSet.{u}) (n : ℕ) :=
   realizationFunctor.map (replacementCellsCharacteristic H n)
+/-- The inclusion from the realized `n`th replacement skeleton to the realized `(n + 1)`st skeleton
+for `H`. -/
 abbrev stageStep (H : D ⥤ SSet.{u}) (n : ℕ) :=
   (realizedReplacementSkeleton H).map (homOfLE (Nat.le_succ n))
 
@@ -42,10 +66,12 @@ theorem cellAttachingSquare (n : ℕ) :
   rw [← realizationFunctor.map_comp, ← realizationFunctor.map_comp, replacementCellsMap_attaching]
 
 theorem cellCharacteristicSquare (n : ℕ) :
-    characteristicLeg H n ≫ stageProjection η (n+1) = cellProjection η n ≫ characteristicLeg J n := by
+    characteristicLeg H n ≫ stageProjection η (n+1) = cellProjection η n ≫ characteristicLeg J n :=
+      by
   change realizationFunctor.map _ ≫ realizationFunctor.map _ =
     realizationFunctor.map _ ≫ realizationFunctor.map _
-  rw [← realizationFunctor.map_comp, ← realizationFunctor.map_comp, replacementCellsMap_characteristic]
+  rw [← realizationFunctor.map_comp, ← realizationFunctor.map_comp,
+    replacementCellsMap_characteristic]
 
 theorem stageStepSquare (n : ℕ) :
     stageStep H n ≫ stageProjection η (n+1) = stageProjection η n ≫ stageStep J n :=
@@ -55,9 +81,11 @@ theorem stageStepSquare (n : ℕ) :
 without hiding either of the two incoming comparison obligations. -/
 theorem successor_cartesian_of_incoming (n : ℕ)
     (hboundary : Cartesian (cellBoundaryProjection η n).hom (cellProjection η n).hom
-      (boundaryLeg H n).hom (boundaryLeg J n).hom (congrArg TopCat.Hom.hom (cellBoundarySquare η n)))
+      (boundaryLeg H n).hom (boundaryLeg J n).hom (congrArg TopCat.Hom.hom (cellBoundarySquare η
+        n)))
     (hattaching : Cartesian (cellBoundaryProjection η n).hom (stageProjection η n).hom
-      (attachingLeg H n).hom (attachingLeg J n).hom (congrArg TopCat.Hom.hom (cellAttachingSquare η n))) :
+      (attachingLeg H n).hom (attachingLeg J n).hom (congrArg TopCat.Hom.hom (cellAttachingSquare η
+        n))) :
     Cartesian (stageProjection η n).hom (stageProjection η (n+1)).hom
       (stageStep H n).hom (stageStep J n).hom (congrArg TopCat.Hom.hom (stageStepSquare η n)) ∧
     Cartesian (cellProjection η n).hom (stageProjection η (n+1)).hom
@@ -81,4 +109,4 @@ theorem successor_cartesian_of_incoming (n : ℕ)
       hboundary.equiv hboundary.equiv_toFun hattaching.equiv hattaching.equiv_toFun,
       CartesianPushout.leftHomotopyEquiv_toFun _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _⟩
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

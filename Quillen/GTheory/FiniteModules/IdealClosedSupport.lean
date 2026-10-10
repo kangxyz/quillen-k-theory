@@ -1,8 +1,16 @@
-import Quillen.GTheory.FiniteModules.SmallModelLocalization
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
-import Mathlib.RingTheory.Ideal.Quotient.Noetherian
-import Mathlib.CategoryTheory.Abelian.Transfer
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.GTheory.FiniteModules.SmallModelLocalization
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
+public import Mathlib.RingTheory.Ideal.Quotient.Noetherian
+public import Mathlib.CategoryTheory.Abelian.Transfer
 
 /-!
 # Finite modules on an arbitrary closed subscheme
@@ -12,6 +20,8 @@ Its essential image consists precisely of finite R-modules annihilated by I.
 Comparing this category with modules annihilated by a power of I requires
 dévissage, rather than a categorical equivalence.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -87,7 +97,8 @@ def fullyFaithfulClosedRestriction : (closedRestriction I).FullyFaithful where
         obtain ⟨r, rfl⟩ := Ideal.Quotient.mk_surjective a
         exact g.hom.hom.map_smul r m }
 
-instance closedRestriction_full : (closedRestriction I).Full := (fullyFaithfulClosedRestriction I).full
+instance closedRestriction_full : (closedRestriction I).Full := (fullyFaithfulClosedRestriction
+  I).full
 instance closedRestriction_faithful : (closedRestriction I).Faithful :=
   (fullyFaithfulClosedRestriction I).faithful
 
@@ -142,7 +153,8 @@ instance closedRestriction_preservesFiniteLimits : PreservesFiniteLimits (closed
   exact preservesFiniteLimits_of_reflects_of_preserves (closedRestriction I)
     (forget₂ (FGModuleCat R) (ModuleCat R))
 
-instance closedRestriction_preservesFiniteColimits : PreservesFiniteColimits (closedRestriction I) := by
+instance closedRestriction_preservesFiniteColimits : PreservesFiniteColimits (closedRestriction I)
+  := by
   have : PreservesFiniteColimits
       (closedRestriction I ⋙ forget₂ (FGModuleCat R) (ModuleCat R)) := by
     change PreservesFiniteColimits
@@ -164,7 +176,7 @@ instance killed_hasFiniteProducts : HasFiniteProducts (killedBy I).FullSubcatego
 
 /-- The annihilated subcategory is abelian, although it is not generally Serre
 inside all finite R-modules: extensions may only be annihilated by I². -/
-instance killed_abelian : Abelian (killedBy I).FullSubcategory :=
+instance instAbelianKilledBy : Abelian (killedBy I).FullSubcategory :=
   abelianOfEquivalence (closedEquivalence I).inverse
 
 /-- The actual quotient equivalence is an exact functor for standard abelian structures. -/

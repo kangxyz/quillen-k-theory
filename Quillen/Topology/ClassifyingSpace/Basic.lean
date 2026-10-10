@@ -1,6 +1,14 @@
-import Mathlib.AlgebraicTopology.SimplicialSet.Nerve
-import Mathlib.AlgebraicTopology.SimplicialSet.TopAdj
-import Mathlib.Topology.Homotopy.HomotopyGroup
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.AlgebraicTopology.SimplicialSet.Nerve
+public import Mathlib.AlgebraicTopology.SimplicialSet.TopAdj
+public import Mathlib.Topology.Homotopy.HomotopyGroup
 
 /-!
 # Based classifying spaces and shifted homotopy groups
@@ -18,6 +26,8 @@ The shifted group in degree zero is only a group in this generality. The
 positive-degree shifted groups are commutative, by the existing
 Eckmann–Hilton theorem for higher homotopy groups.
 -/
+@[expose] public section
+
 
 noncomputable section
 

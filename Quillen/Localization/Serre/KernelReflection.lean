@@ -1,7 +1,15 @@
-import Quillen.Localization.Serre.KernelPushoutExistence
-import Quillen.Localization.Serre.KernelPushoutUniqueness
-import Quillen.CategoryTheory.TheoremA.ContractibleComma
-import Mathlib.CategoryTheory.Adjunction.Comma
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.KernelPushoutExistence
+public import Quillen.Localization.Serre.KernelPushoutUniqueness
+public import Quillen.CategoryTheory.TheoremA.ContractibleComma
+public import Mathlib.CategoryTheory.Adjunction.Comma
 
 /-! # The actual reflection of the kernel comma category
 
@@ -9,6 +17,8 @@ The mono–epi cospan of a kernel Q-arrow enlarges the middle extension by
 pushout. Its universal property gives a genuine reflection onto the
 subcategory of surjective kernel arrows.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -46,13 +56,16 @@ def kernelCommaReflectionArrow :
   (Devissage.mapQ P).preimage
     (Q.surjectionArrow (p ≫ (kernelPushoutIso A.left.obj.obj.of i).hom))
 
+omit [Mono i] in
 @[simp]
 lemma kernelCommaReflectionArrow_map :
     (Devissage.mapQ P).map (kernelCommaReflectionArrow P A i p) =
       Q.surjectionArrow (p ≫ (kernelPushoutIso A.left.obj.obj.of i).hom) :=
   (Devissage.mapQ P).map_preimage _
 
-lemma kernelCommaReflectionArrow_surjection : Q.IsSurjection (kernelCommaReflectionArrow P A i p) := by
+omit [Mono i] in
+lemma kernelCommaReflectionArrow_surjection : Q.IsSurjection (kernelCommaReflectionArrow P A i p) :=
+  by
   apply (subcategoryQ_surjection_iff P _).1
   rw [kernelCommaReflectionArrow_map]
   exact Q.isSurjection_surjectionArrow _
@@ -80,7 +93,8 @@ def kernelCommaReflectionUnit : A ⟶ (kernelCommaReflectionObject P A i p).obj 
       (kernelCommaReflectionUnitLeft P A i p)) ≫
       (Devissage.mapQ P).map (kernelCommaReflectionArrow P A i p) = _
     rw [kernelCommaReflectionArrow_map, map_epiAuxiliaryKernelFunctor]
-    change (overKernelQ N).map (overInflationArrow (kernelPushoutOverHom A.left.obj.obj.of i)) ≫ _ = _
+    change (overKernelQ N).map (overInflationArrow (kernelPushoutOverHom A.left.obj.obj.of i)) ≫ _ =
+      _
     rw [overKernelQ_inflationArrow]
     exact (Q.cospan_eq_of_iso i p _ _ (kernelPushoutIso A.left.obj.obj.of i)
       (kernelPushoutOverHom_kernel A.left.obj.obj.of i).symm rfl).symm.trans hc)
@@ -89,7 +103,8 @@ def kernelCommaReflectionUnit : A ⟶ (kernelCommaReflectionObject P A i p).obj 
 @[implicit_reducible]
 def kernelCommaReflectionStructured :
     StructuredArrow A (surjectiveKernelCommaProperty P N T).ι :=
-  StructuredArrow.mk (Y := kernelCommaReflectionObject P A i p) (kernelCommaReflectionUnit P A i p hc)
+  StructuredArrow.mk (Y := kernelCommaReflectionObject P A i p) (kernelCommaReflectionUnit P A i p
+    hc)
 
 
 /-- Every competing arrow into a surjective kernel object factors through
@@ -148,11 +163,11 @@ theorem kernelCommaReflectionStructured_hom_ext
 
 /-- The constructed unit is a genuine initial object of its structured
 comma category, hence supplies the reflection rather than merely an objectwise replacement. -/
-def kernelCommaReflectionStructured_isInitial :
+def kernelCommaReflectionStructuredIsInitial :
     IsInitial (kernelCommaReflectionStructured P A i p hc) :=
   IsInitial.ofUniqueHom
     (fun V => Classical.choice (kernelCommaReflectionStructured_nonempty_hom P A i p hc V))
-    (fun V f => kernelCommaReflectionStructured_hom_ext P A i p hc f _)
+    (fun _V f => kernelCommaReflectionStructured_hom_ext P A i p hc f _)
 
 end ReflectionData
 
@@ -163,7 +178,7 @@ instance surjectiveKernelComma_inclusion_hasInitial (N : C)
     (T : (Devissage.subcategoryExactStructure P).QCategory) (A : EpiKernelComma P N T) :
     HasInitial (StructuredArrow A (surjectiveKernelCommaProperty P N T).ι) := by
   obtain ⟨U, i, p, hi, hp, hc⟩ := Q.exists_cospan ((Devissage.mapQ P).map A.hom)
-  exact (kernelCommaReflectionStructured_isInitial P A i p hc).hasInitial
+  exact (kernelCommaReflectionStructuredIsInitial P A i p hc).hasInitial
 
 /-- The actual left adjoint which reflects a kernel Q-arrow to its surjective
 cospan after enlarging the extension kernel. -/
@@ -182,8 +197,9 @@ uses the constructed reflection and the proved initial object in its image. -/
 theorem epiKernelComma_contractible (N : C)
     (T : (Devissage.subcategoryExactStructure P).QCategory) :
     ContractibleSpace (ClassifyingSpace (EpiKernelComma P N T)) := by
-  letI := surjectiveKernelComma_contractible P N T
-  exact (adjunctionClassifyingHomotopyEquiv (kernelCommaReflectionAdjunction P N T)).contractibleSpace
+  let := surjectiveKernelComma_contractible P N T
+  exact (adjunctionClassifyingHomotopyEquiv (kernelCommaReflectionAdjunction P N
+    T)).contractibleSpace
 
 /-- Quillen's epimorphic auxiliary kernel functor is a homotopy equivalence,
 derived from actual contractible commas rather than supplied as an assumption. -/

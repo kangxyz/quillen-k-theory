@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.OpenLongExactSequence
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenLongExactSequence
 
 /-!
 # Semantic consumers for the original supported relative-open sequence
@@ -14,6 +16,8 @@ fine exact functors, the original supported inclusion and its genuine relative
 kernel. They impose no global boundedness, affine, density or comparison
 hypothesis, and they make no replacement of the coarse model by `Perfect U`.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open Quillen Quillen.PerfectComplexes Quillen.Waldhausen Quillen.Waldhausen.Fibration

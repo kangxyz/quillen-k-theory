@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.HomotopyPullback.WeakSource
+module
+
+public import Quillen.Topology.HomotopyPullback.WeakSource
 
 /-!
 # Canonical weak cartesian comparisons under change of total source
@@ -14,6 +16,8 @@ map of homotopy pullbacks, retaining the full parameter and path. The exact
 comparison triangle transports weak cartesianness back to the original
 square. Neither an inverse map nor a fibration of total sources is needed.
 -/
+@[expose] public section
+
 
 noncomputable section
 open scoped Topology unitInterval
@@ -26,10 +30,10 @@ variable {X Y A B Z : Type u} [TopologicalSpace X] [TopologicalSpace Y]
 /-- Transport the weak canonical comparison through an actual weak source
 map over the base and its exact endpoint triangle. -/
 theorem comparison_isWeakHomotopyEquivalence_of_sourceMap
-    (p : C(X,B)) (q : C(Y,B)) (k : C(A,B))
-    (r : C(Z,A)) (f : C(Z,X)) (g : C(Z,Y))
+    (p : C(X, B)) (q : C(Y, B)) (k : C(A, B))
+    (r : C(Z, A)) (f : C(Z, X)) (g : C(Z, Y))
     (commP : p.comp f = k.comp r) (commQ : q.comp g = k.comp r)
-    (e : C(X,Y)) (he : IsWeakHomotopyEquivalence e)
+    (e : C(X, Y)) (he : IsWeakHomotopyEquivalence e)
     (hover : q.comp e = p) (htriangle : e.comp f = g)
     (h : IsWeakHomotopyEquivalence (comparison q k r g commQ)) :
     IsWeakHomotopyEquivalence (comparison p k r f commP) := by

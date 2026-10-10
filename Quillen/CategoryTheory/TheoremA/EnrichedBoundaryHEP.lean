@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremA.RealizationSkeleton
-import Quillen.CategoryTheory.TheoremA.RealizationBoundary
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationSkeleton
+public import Quillen.CategoryTheory.TheoremA.RealizationBoundary
 
 /-!
 # Homotopy extension for the actual enriched boundary inclusions
@@ -15,6 +23,8 @@ standard boundary. Together with the simplex product comparison and the
 explicit geometric boundary extension theorem, this proves HEP for the
 realized diagonal of every enriched simplex-boundary inclusion.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -297,7 +307,8 @@ lemma realizationProductComparison_isIso_swap (X Y : SSet.{u})
     [IsIso (CartesianMonoidalCategory.prodComparison SSet.toTop Y X)] :
     IsIso (CartesianMonoidalCategory.prodComparison SSet.toTop X Y) := by
   have h : CartesianMonoidalCategory.prodComparison SSet.toTop X Y =
-      SSet.toTop.map (β_ X Y).hom ≫ CartesianMonoidalCategory.prodComparison SSet.toTop Y X ≫ (β_ |X| |Y|).inv := by
+      SSet.toTop.map (β_ X Y).hom ≫ CartesianMonoidalCategory.prodComparison SSet.toTop Y X ≫ (β_
+        |X| |Y|).inv := by
     rw [← Category.assoc, realizationProductComparison_swap]
     simp
   rw [h]
@@ -317,7 +328,8 @@ theorem realizationProductComparison_isIso_of_locallyCompact
   let η := realizationProductComparisonRightNatTrans Y
   have : ∀ j, IsIso ((Functor.whiskerLeft K η).app j) := by
     intro j
-    change IsIso (CartesianMonoidalCategory.prodComparison SSet.toTop (SSet.stdSimplex.obj j.unop.obj.unop) Y)
+    change IsIso (CartesianMonoidalCategory.prodComparison SSet.toTop (SSet.stdSimplex.obj
+      j.unop.obj.unop) Y)
     exact realizationProductComparison_isIso_swap _ _
   have := NatIso.isIso_of_isIso_app (Functor.whiskerLeft K η)
   have : PreservesColimitsOfShape X.Elementsᵒᵖ (tensorRight Y) :=

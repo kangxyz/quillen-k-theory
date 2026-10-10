@@ -1,6 +1,17 @@
-import Quillen.Library
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.FiniteTermKEquivalence
+public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Basic
 
 /-! The original evaluation/insertion K-maps on actual finite term strata. -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -18,17 +29,21 @@ local instance finiteTermConsumerProducts : P.IsClosedUnderFiniteProducts :=
 
 def actual_finite_term_K_equivalence (a : ℤ) (m k : ℕ) :
     (ofExactCategory (fixedTermsExactStructure P a (a + (m : ℤ) - 1))).K k ≃*
-      (Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) :=
+      (Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k)
+        :=
   finiteTermKEquiv P a m k
 
 theorem actual_finite_term_K_forward (a : ℤ) (m k : ℕ)
     (x : (ofExactCategory (fixedTermsExactStructure P a (a + (m : ℤ) - 1))).K k) (i : Fin m) :
     actual_finite_term_K_equivalence P a m k x i =
-      KMap (finiteTermEvaluationExact P a (a + (m : ℤ) - 1) (a + (i : ℤ))).waldhausenExact k x := rfl
+      KMap (finiteTermEvaluationExact P a (a + (m : ℤ) - 1) (a + (i : ℤ))).waldhausenExact k x :=
+        rfl
 
 theorem actual_finite_term_K_inverse (a : ℤ) (m k : ℕ)
-    (x : Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) :
-    let := Additivity.KCommGroup (ofExactCategory (fixedTermsExactStructure P a (a + (m : ℤ) - 1))) k
+    (x : Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K
+      k) :
+    let := Additivity.KCommGroup (ofExactCategory (fixedTermsExactStructure P a (a + (m : ℤ) - 1)))
+      k
     (actual_finite_term_K_equivalence P a m k).symm x =
       ∏ i : Fin m, KMap (finiteTermSingleExact P a (a + (m : ℤ) - 1) (a + (i : ℤ))
         (by omega) (by have := i.isLt; omega)).waldhausenExact k (x i) := rfl

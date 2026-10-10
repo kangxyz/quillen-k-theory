@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.Tail
-import Quillen.Waldhausen.SConstruction.Rows.OneRow
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.Tail
+public import Quillen.Waldhausen.SConstruction.Rows.OneRow
 
 /-! # The actual constant zero-tail split-fiber inclusion
 
@@ -7,6 +15,8 @@ The added vertex maps to0 and every original tail vertex maps to1. Reindexing
 the literal one-step row gives the original object on every initial
 nondegenerate interval and the actual chosen zero on its entire tail.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial
@@ -61,13 +71,17 @@ theorem fiber_exact (n : SimplexCategory) :
     IsExact V.cof V.weq (waldhausenStructure N n).cof
       (waldhausenStructure N n).weq (fiber N n) where
   zero h := IsZero.of_full_of_faithful_of_isZero (forget N n) _
-    (((QuotientRows.oneEmbedding_exact V).comp (QuotientRows.reindex_exact V (fiberOrdinal n))).zero h)
+    (((QuotientRows.oneEmbedding_exact V).comp (QuotientRows.reindex_exact V (fiberOrdinal
+      n))).zero h)
   cofibration f hf :=
-    ((QuotientRows.oneEmbedding_exact V).comp (QuotientRows.reindex_exact V (fiberOrdinal n))).cofibration f hf
+    ((QuotientRows.oneEmbedding_exact V).comp (QuotientRows.reindex_exact V (fiberOrdinal
+      n))).cofibration f hf
   weak f hf :=
-    ((QuotientRows.oneEmbedding_exact V).comp (QuotientRows.reindex_exact V (fiberOrdinal n))).weak f hf
+    ((QuotientRows.oneEmbedding_exact V).comp (QuotientRows.reindex_exact V (fiberOrdinal
+      n))).weak f hf
   pushout hf h := IsPushout.of_map_of_faithful (forget N n)
-    (((QuotientRows.oneEmbedding_exact V).comp (QuotientRows.reindex_exact V (fiberOrdinal n))).pushout hf h)
+    (((QuotientRows.oneEmbedding_exact V).comp (QuotientRows.reindex_exact V (fiberOrdinal
+      n))).pushout hf h)
 
 /-- The original first quotient is literally the original object and morphism. -/
 @[simp] theorem fiber_first (n : SimplexCategory) : fiber N n ⋙ first N n = 𝟭 C := by

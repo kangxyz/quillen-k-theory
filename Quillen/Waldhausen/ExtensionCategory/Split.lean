@@ -1,12 +1,22 @@
-import Quillen.Waldhausen.ExtensionCategory.Product
-import Quillen.Waldhausen.Additivity.SplitSequence
-import Quillen.Waldhausen.ExtensionCategory.ExactTransport
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.Product
+public import Quillen.Waldhausen.Additivity.SplitSequence
+public import Quillen.Waldhausen.ExtensionCategory.ExactTransport
 
 /-! # The actual split extension functor
 
 Pairs `(A,C)` are sent to `A → C ⨿ A`. This is the actual coproduct in the
 extension category of `(0→C)` and `(A→A)`, proved by its universal property.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

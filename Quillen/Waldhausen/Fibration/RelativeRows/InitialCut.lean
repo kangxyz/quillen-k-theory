@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.TailSection
-import Quillen.Waldhausen.ExtensionCategory.IsomorphicSources
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.TailSection
+public import Quillen.Waldhausen.ExtensionCategory.IsomorphicSources
 
 /-! # The original initial cutoff subrow
 
@@ -8,6 +16,8 @@ to the original row through its actual interval maps. The genuine row
 cofibration condition is proved on every horizontal triple, including all
 degenerate and zero-source cases.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial
@@ -29,7 +39,8 @@ theorem cutIndex_le (n : SimplexCategory) (i : Fin ((addInitial.obj n).len + 1))
   | succ i => exact Nat.succ_le_succ (Fin.zero_le i)
 
 /-- The actual inclusion of each cutoff interval into the original interval. -/
-def cutIndexToId (n : SimplexCategory) : QuotientRows.indexMap (cutIndex n) ⟶ 𝟭 (Interval (addInitial.obj n)) where
+def cutIndexToId (n : SimplexCategory) : QuotientRows.indexMap (cutIndex n) ⟶ 𝟭 (Interval
+    (addInitial.obj n)) where
   app p := homOfLE ⟨cutIndex_le n p.val.1, cutIndex_le n p.val.2⟩
   naturality _ _ _ := Subsingleton.elim _ _
 

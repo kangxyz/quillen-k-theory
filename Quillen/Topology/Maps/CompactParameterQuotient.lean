@@ -1,6 +1,14 @@
-import Mathlib.Topology.CompactOpen
-import Mathlib.Topology.WithTopology
-import Mathlib.Topology.Separation.Hausdorff
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.Topology.CompactOpen
+public import Mathlib.Topology.WithTopology
+public import Mathlib.Topology.Separation.Hausdorff
 
 /-! # Quotient descent over an actual locally compact parameter
 
@@ -9,6 +17,8 @@ to a closed matching locus then gives the actual pullback quotient needed
 for finite parametrized mapping-cylinder formulas. No arbitrary-product
 or arbitrary-pullback preservation is used.
 -/
+@[expose] public section
+
 noncomputable section
 open Topology Set
 universe u v w z
@@ -64,7 +74,7 @@ theorem quotientMap_parameter_pullback_of_closedGraph
     {X : Type u} {Y : Type v} {D : Type w} {T : Type z}
     [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace D]
     [TopologicalSpace T] [LocallyCompactSpace D]
-    {f : X → Y} (hf : IsQuotientMap f) (p : C(Y,T)) (b : C(D,T))
+    {f : X → Y} (hf : IsQuotientMap f) (p : C(Y, T)) (b : C(D, T))
     (hb : IsClosed (Set.ofPred (fun z : D × T ↦ b z.1 = z.2))) :
     IsQuotientMap (fun z : {z : X × D // p (f z.1) = b z.2} ↦
       (⟨(f z.1.1,z.1.2),z.2⟩ : {z : Y × D // p z.1 = b z.2})) := by
@@ -80,7 +90,7 @@ theorem quotientMap_parameter_pullback
     {X : Type u} {Y : Type v} {D : Type w} {T : Type z}
     [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace D]
     [TopologicalSpace T] [T2Space T] [LocallyCompactSpace D]
-    {f : X → Y} (hf : IsQuotientMap f) (p : C(Y,T)) (b : C(D,T)) :
+    {f : X → Y} (hf : IsQuotientMap f) (p : C(Y, T)) (b : C(D, T)) :
     IsQuotientMap (fun z : {z : X × D // p (f z.1) = b z.2} ↦
       (⟨(f z.1.1,z.1.2),z.2⟩ : {z : Y × D // p z.1 = b z.2})) :=
   quotientMap_parameter_pullback_of_isClosed hf p b

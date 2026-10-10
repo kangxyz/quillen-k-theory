@@ -1,7 +1,15 @@
-import Mathlib.AlgebraicTopology.SimplicialSet.Nerve
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
-import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
-import Mathlib.CategoryTheory.MorphismProperty.Composition
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.AlgebraicTopology.SimplicialSet.Nerve
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
+public import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
+public import Mathlib.CategoryTheory.MorphismProperty.Composition
 
 /-!
 # The diagonal Waldhausen S-construction
@@ -15,6 +23,8 @@ weak equivalences by isomorphisms or by arbitrary chain maps.
 The construction itself only needs two morphism classes. The Waldhausen
 axioms, and theorems such as additivity and localization, are separate.
 -/
+@[expose] public section
+
 
 noncomputable section
 

@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.QConstruction.ZeroEndomorphisms
-import Quillen.Topology.ClassifyingSpace.PointedFunctor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.QConstruction.ZeroEndomorphisms
+public import Quillen.Topology.ClassifyingSpace.PointedFunctor
 
 /-! # Q-valued functors whose objects are zero
 
@@ -7,6 +15,8 @@ A functor landing in original zero objects is naturally isomorphic to the
 constant zero-vertex functor. This prepares the actual nullhomotopy needed
 for the Serre-localization homotopy-fiber comparison.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u v u' v'

@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.Additivity.NormalizedEndpointHomotopies
-import Quillen.Waldhausen.Additivity.NormalizedMixedHomotopy
-import Quillen.Waldhausen.Additivity.BasedHomotopyTools
-import Quillen.Waldhausen.Additivity.DiagonalKMap
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.NormalizedEndpointHomotopies
+public import Quillen.Waldhausen.Additivity.NormalizedMixedHomotopy
+public import Quillen.Waldhausen.Additivity.BasedHomotopyTools
+public import Quillen.Waldhausen.Additivity.DiagonalKMap
 
 /-! # Waldhausen additivity for the original chosen-zero K-maps
 
@@ -11,6 +19,8 @@ the same based group map. Cancellation uses only surjectivity of the proved
 actual forward subdivision map. The exact diagonal comparison then identifies
 this equality with the original public normalized `KMap` homomorphisms.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -29,13 +39,15 @@ variable (hs : IsCofibrationSequence V W a b)
 are homotopic relative to the displayed subdivided zero point. -/
 def subdividedBasedAdditivityHomotopy :
     ((realizedDiagonalMap (bisimplicialSSetMap V.cof V.weq hs.exactG.rebase)).comp
-      (realizedDiagonalMap (OrdinalSubdivision.horizontalEndpoint (bisimplicialSSet V)))).HomotopyRel
+      (realizedDiagonalMap (OrdinalSubdivision.horizontalEndpoint (bisimplicialSSet
+        V)))).HomotopyRel
       (realizedDiagonalMap (normalizedSumMap V W hs.exactH hs.exactF))
       {subdivisionBasepoint V} := by
   let h₀ := homotopyRelOfFixed
     (normalizedIdentityEndpointRealizationHomotopy V W a hs.exactF hs.exactG hs.cofibration)
     (realizationPoint (diagonalZeroVertex V)) (realizationPoint (diagonalZeroVertex W))
-    (normalizedIdentityEndpointRealizationHomotopy_fixed_zero V W a hs.exactF hs.exactG hs.cofibration)
+    (normalizedIdentityEndpointRealizationHomotopy_fixed_zero V W a hs.exactF hs.exactG
+      hs.cofibration)
   let hm := homotopyRelOfFixed
     (realizationSimplicialHomotopy
       (normalizedMixedEndpointHomotopy V W a hs.exactF hs.exactG hs.cofibration))
@@ -47,7 +59,8 @@ def subdividedBasedAdditivityHomotopy :
     (normalizedSeparatedEndpointRealizationHomotopy_fixed_zero V W a b hs)
   have hm' :
       ((realizedDiagonalMap (normalizedIdentityMap V W a hs.exactF hs.exactG hs.cofibration)).comp
-        (realizedDiagonalMap (OrdinalSubdivision.horizontalEndpoint (bisimplicialSSet V)))).HomotopyRel
+        (realizedDiagonalMap (OrdinalSubdivision.horizontalEndpoint (bisimplicialSSet
+          V)))).HomotopyRel
         (realizedDiagonalMap (normalizedSeparatedMap V W a hs.exactF hs.exactG hs.cofibration))
         {subdivisionBasepoint V} :=
     hm.cast (congrArg TopCat.Hom.hom (SSet.toTop.map_comp _ _)) rfl

@@ -1,11 +1,21 @@
-import Quillen.Waldhausen.ExtensionCategory.InternalSequence
-import Mathlib.CategoryTheory.Products.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.InternalSequence
+public import Mathlib.CategoryTheory.Products.Basic
 
 /-! # Actual product Waldhausen categories
 
 The product structure and its exact functors are categorical constructions.
 No statement about geometric realization preserving products is used.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'
@@ -41,7 +51,10 @@ theorem fst_isPushout {A B E P : C × D} {f : A ⟶ B} {g : A ⟶ E} {i : B ⟶ 
   have w := congrArg _root_.Prod.fst h.w
   have w₂ : f.2 ≫ i.2 = g.2 ≫ j.2 := congrArg _root_.Prod.snd h.w
   let d (s : PushoutCocone f.1 g.1) : P ⟶ (s.pt, P.2) :=
-    h.desc (s.inl, i.2) (s.inr, j.2) (by apply _root_.Prod.ext; exact s.condition; exact w₂)
+    h.desc (s.inl, i.2) (s.inr, j.2) (by
+      apply _root_.Prod.ext
+      · exact s.condition
+      · exact w₂)
   have hi (s : PushoutCocone f.1 g.1) : i ≫ d s = (s.inl, i.2) := h.inl_desc _ _ _
   have hj (s : PushoutCocone f.1 g.1) : j ≫ d s = (s.inr, j.2) := h.inr_desc _ _ _
   apply IsPushout.of_isColimit (c := PushoutCocone.mk i.1 j.1 w)
@@ -60,7 +73,10 @@ theorem snd_isPushout {A B E P : C × D} {f : A ⟶ B} {g : A ⟶ E} {i : B ⟶ 
   have w := congrArg _root_.Prod.snd h.w
   have w₁ : f.1 ≫ i.1 = g.1 ≫ j.1 := congrArg _root_.Prod.fst h.w
   let d (s : PushoutCocone f.2 g.2) : P ⟶ (P.1, s.pt) :=
-    h.desc (i.1, s.inl) (j.1, s.inr) (by apply _root_.Prod.ext; exact w₁; exact s.condition)
+    h.desc (i.1, s.inl) (j.1, s.inr) (by
+      apply _root_.Prod.ext
+      · exact w₁
+      · exact s.condition)
   have hi (s : PushoutCocone f.2 g.2) : i ≫ d s = (i.1, s.inl) := h.inl_desc _ _ _
   have hj (s : PushoutCocone f.2 g.2) : j ≫ d s = (j.1, s.inr) := h.inr_desc _ _ _
   apply IsPushout.of_isColimit (c := PushoutCocone.mk i.2 j.2 w)
@@ -126,15 +142,19 @@ def productStructure (V : Structure C) (W : Structure D) : Structure (C × D) wh
       (congrArg _root_.Prod.snd ei) (congrArg _root_.Prod.snd ej) ha.2 hb.2 hd.2⟩
 
 theorem fst_exact (V : Structure C) (W : Structure D) :
-    IsExact (productStructure V W).cof (productStructure V W).weq V.cof V.weq (CategoryTheory.Prod.fst C D) where
-  zero h := V.isZero.of_iso ((CategoryTheory.Prod.fst C D).mapIso (h.iso (product_isZero V.isZero W.isZero)))
+    IsExact (productStructure V W).cof (productStructure V W).weq V.cof V.weq
+      (CategoryTheory.Prod.fst C D) where
+  zero h := V.isZero.of_iso ((CategoryTheory.Prod.fst C D).mapIso (h.iso (product_isZero
+    V.isZero W.isZero)))
   cofibration _ h := h.1
   weak _ h := h.1
   pushout _ h := fst_isPushout h
 
 theorem snd_exact (V : Structure C) (W : Structure D) :
-    IsExact (productStructure V W).cof (productStructure V W).weq W.cof W.weq (CategoryTheory.Prod.snd C D) where
-  zero h := W.isZero.of_iso ((CategoryTheory.Prod.snd C D).mapIso (h.iso (product_isZero V.isZero W.isZero)))
+    IsExact (productStructure V W).cof (productStructure V W).weq W.cof W.weq
+      (CategoryTheory.Prod.snd C D) where
+  zero h := W.isZero.of_iso ((CategoryTheory.Prod.snd C D).mapIso (h.iso (product_isZero
+    V.isZero W.isZero)))
   cofibration _ h := h.2
   weak _ h := h.2
   pushout _ h := snd_isPushout h

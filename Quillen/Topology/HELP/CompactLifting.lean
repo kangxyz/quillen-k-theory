@@ -1,4 +1,12 @@
-import Quillen.Topology.HELP.Compact
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.Compact
 
 /-! # Compact HELP from exact compact lifting
 
@@ -6,6 +14,8 @@ An injective map with exact continuous lifts of compact-source maps satisfies
 compact HELP. The complete prescribed boundary homotopy is retained: lift it,
 then extend its reverse across the actual cofibration before reversing back.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

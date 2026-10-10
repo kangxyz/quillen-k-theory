@@ -1,6 +1,14 @@
-import Quillen.Topology.HomotopyLifting.OverBaseCorrection
-import Quillen.Topology.HomotopyLifting.CubeDuration
-import Quillen.Topology.HELP.ContractibleTestOverBase
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyLifting.OverBaseCorrection
+public import Quillen.Topology.HomotopyLifting.CubeDuration
+public import Quillen.Topology.HELP.ContractibleTestOverBase
 
 /-! # Genuine whole-boundary cubical HELP over the displayed base
 
@@ -9,6 +17,8 @@ base coordinate is then corrected by genuine stationary lifting, and the
 comparison homotopy is straightened vertically. Every original boundary
 value is retained throughout the two corrections.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 open scoped Topology unitInterval
@@ -19,7 +29,7 @@ variable {E F B : Type u} [TopologicalSpace E] [TopologicalSpace F] [Topological
 /-- Strict cubical HELP over the actual prescribed base map, derived from
 full compact HELP on the original strict fibers of genuine fibrations. -/
 theorem strictHELP_over_cube_of_fiberHELP
-    (p : C(E,B)) (q : C(F,B)) (f : C(E,F)) (sq : q.comp f = p)
+    (p : C(E, B)) (q : C(F, B)) (f : C(E, F)) (sq : q.comp f = p)
     (hp : HomotopyLiftingProperty p) (hq : HomotopyLiftingProperty q)
     (hf : ∀ b : B, CompactHomotopyExtensionLiftingProperty
       (HomotopyFiber.strictMapOver p q f sq b))

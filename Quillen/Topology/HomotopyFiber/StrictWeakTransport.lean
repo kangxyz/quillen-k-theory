@@ -1,7 +1,17 @@
-import Quillen.Topology.HomotopyFiber.WeakSourceEquivalence
-import Quillen.CategoryTheory.TheoremB.RetractionPullback
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.WeakSourceEquivalence
+public import Quillen.Topology.HomotopyPullback.RetractionBaseChange
 
 /-! # Strict fibers and strict pullbacks of genuine fibrations -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

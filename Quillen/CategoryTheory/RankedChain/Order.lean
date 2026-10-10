@@ -3,12 +3,14 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.CategoryTheory.ComposableArrows.Basic
-import Mathlib.Order.Fin.Basic
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.EquivFin
-import Mathlib.Order.Hom.Set
-import Quillen.CategoryTheory.SemisimplexResolution.Basic
+module
+
+public import Mathlib.CategoryTheory.ComposableArrows.Basic
+public import Mathlib.Order.Fin.Basic
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.EquivFin
+public import Mathlib.Order.Hom.Set
+public import Quillen.CategoryTheory.SemisimplexResolution.Basic
 
 /-!
 # The actual face poset of strictly ranked chains
@@ -20,6 +22,8 @@ coincide literally, yielding an actual partial order. The original last-vertex
 functor factors through the original semisimplex category; dimension is proved
 to be a direct rank there, including its equality-transport alternative.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -32,12 +36,15 @@ variable (C : Type u) [SmallCategory C] (rank : C → ℕ)
 
 /-- A nonempty finite chain with strictly increasing original object ranks. -/
 structure Obj : Type u where
+  /-- The number of arrows in the chain; there are `dim + 1` vertices. -/
   dim : ℕ
+  /-- The chain in `C` whose vertex ranks are required to increase strictly. -/
   chain : ComposableArrows C dim
   strict : StrictMono (fun i ↦ rank (chain.obj i))
 
 /-- A literal injective face of one strict chain in another. -/
 structure Face (A B : Obj C rank) : Type u where
+  /-- The order embedding selecting the vertices of `A` inside `B`. -/
   index : Fin (A.dim + 1) ↪o Fin (B.dim + 1)
   face : index.monotone.functor ⋙ B.chain = A.chain
 

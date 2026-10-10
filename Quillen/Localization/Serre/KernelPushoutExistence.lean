@@ -1,7 +1,17 @@
-import Quillen.Localization.Serre.KernelPushoutComparison
-import Quillen.Localization.Serre.OverQArrows
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.KernelPushoutComparison
+public import Quillen.Localization.Serre.OverQArrows
 
 /-! # Existence in the kernel-comma reflection -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -19,7 +29,7 @@ instance kernelPushoutOverHom_mono {N : C} (X : Over N) {U : C}
 kernel pushout. Both the slice Q-triangle and the prescribed kernel triangle
 are proved from the cospan comparison. -/
 theorem kernelPushout_factor_exists {N : C} {X Y : Over N}
-    [Epi X.hom] [Epi Y.hom] {U T : C}
+    [Epi X.hom] {U T : C}
     (i : (overKernel N).obj X ⟶ U) [Mono i] (p : T ⟶ U) [Epi p]
     (q : T ⟶ (overKernel N).obj Y) [Epi q]
     (f : Q.of (overDeflation N) (overInflation N) X ⟶ Q.of _ _ Y)
@@ -59,7 +69,7 @@ theorem kernelPushout_factor_exists {N : C} {X Y : Over N}
         apply Q.cospan_eq_of_iso _ _ _ _ ((Over.forget N).mapIso a)
         · exact kernelPushoutComparisonIso_inl j i e.symm hei
         · change (r.left ≫ a.inv.left) ≫ a.hom.left = r.left
-          simpa using congrArg Over.Hom.left (show t ≫ a.hom = r by simp [t])
+          simp
       _ = _ := overSpanPushout_forget_cospan s
   · rw [overKernelQ_surjectionArrow, Q.surjectionArrow_comp]
     congr 1

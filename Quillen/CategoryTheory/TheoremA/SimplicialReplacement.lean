@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremA.Grothendieck
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.Grothendieck
 
 /-!
 # The simplicial replacement of a simplicial-set-valued diagram
@@ -8,6 +16,8 @@ Theorem A. In bidegree `(p,q)`, its simplices consist of a chain
 `d₀ ⟶ ⋯ ⟶ dₚ` and a `q`-simplex of the diagram's value at `d₀`.
 The first face uses the covariant diagram map, so the variance is essential.
 -/
+@[expose] public section
+
 
 noncomputable section
 

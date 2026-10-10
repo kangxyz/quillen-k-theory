@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Complexes
-import Quillen.CategoryTheory.ExactCategory.Abelian
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Complexes
+public import Quillen.CategoryTheory.ExactCategory.Abelian
 
 /-!
 # Quasi-isomorphisms on actual filtration quotients
@@ -9,6 +17,8 @@ quasi-isomorphic vertical maps induces a quasi-isomorphism on their actual
 cokernels. This is the short-exact homology theorem, not an assumed quotient
 comparison. It applies to every interval of a replaced finite filtration.
 -/
+@[expose] public section
+
 
 noncomputable section
 

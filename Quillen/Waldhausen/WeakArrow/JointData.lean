@@ -3,14 +3,18 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.WeakArrow.JointExact
-import Quillen.Waldhausen.WeakArrow.JointEndpoints
+module
+
+public import Quillen.Waldhausen.WeakArrow.JointExact
+public import Quillen.Waldhausen.WeakArrow.JointEndpoints
 /-! # Coherent component joint data on original opposite weak arrows
 
 The specified component compatibility retains each endpoint and projection.
 Actual reflected coproducts, original factorization and the weak projection
 complete the genuine joint-data structure.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 universe u v u' v'
@@ -25,7 +29,6 @@ variable {C : Type u} [Category.{v} C] {D : Type u'} [Category.{v'} D]
   (Tc : Fibration.RowFactorization.JointData (Fibration.NestedWeakEquivalences.refl Vd))
   (Td : Fibration.RowFactorization.JointData (Fibration.NestedWeakEquivalences.refl Wd))
   (compat : Tc.joint ⋙ ExtensionCategory.postcompose Vd Wd hFd ≅ F.op.mapArrow ⋙ Td.joint)
-
   (hinl : ∀ f, Td.inl.app (F.op.mapArrow.obj f) ≫ (compat.inv.app f).hom.left =
     F.op.map (Tc.inl.app f))
   (hinr : ∀ f, Td.inr.app (F.op.mapArrow.obj f) ≫ (compat.inv.app f).hom.left =
@@ -43,11 +46,12 @@ def dualJointData : Fibration.RowFactorization.JointData
            naturality := fun {_ _} α => (jointInl W F Wd hW Vd hFd Tc Td compat hinl).naturality α }
   inr := { app := fun f => (jointInr W F Wd hW Vd hFd Tc Td compat hinr).app f
            naturality := fun {_ _} α => (jointInr W F Wd hW Vd hFd Tc Td compat hinr).naturality α }
-  coproduct f := dual_isColimit_binaryCofan_of_components V W F hF _
+  coproduct f := dualBinaryCofanIsColimitOfComponents V W F hF _
     (Tc.coproduct ((source W F).op.mapArrow.obj f))
     (Td.coproduct ((target W F).op.mapArrow.obj f))
   projection := { app := fun f => (jointProjection W F Wd hW Vd hFd Tc Td compat hproj).app f
-                  naturality := fun {_ _} α => (jointProjection W F Wd hW Vd hFd Tc Td compat hproj).naturality α }
+                  naturality := fun {_ _} α => (jointProjection W F Wd hW Vd hFd Tc Td compat
+                    hproj).naturality α }
   factorization := joint_factorization W F Wd hW Vd hFd Tc Td compat hinl hproj
   weak := jointProjection_weak W F Wd hW V Vd hF hFd Tc Td compat hproj
 end Quillen.Waldhausen.WeakArrow

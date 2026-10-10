@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyGroups.PathTransport
-import Quillen.Topology.HomotopyGroups.ZeroDetection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyGroups.PathTransport
+public import Quillen.Topology.HomotopyGroups.ZeroDetection
 
 /-! # Weak homotopy equivalences, including empty source spaces
 
@@ -8,6 +16,8 @@ source. The property below separately requires actual surjectivity on path
 components, so an empty source cannot be weakly equivalent to a nonempty target.
 No continuous family of inverse maps is part of this property.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 universe u v w

@@ -1,8 +1,18 @@
-import Quillen.Waldhausen.Additivity.NormalizeFunctor
-import Quillen.Waldhausen.Additivity.DiagramIso
-import Quillen.Waldhausen.Additivity.IntervalArrows
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.NormalizeFunctor
+public import Quillen.Waldhausen.Additivity.DiagramIso
+public import Quillen.Waldhausen.Additivity.IntervalArrows
 
 /-! # The actual pushout deformation normalized at the chosen zero arrow -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -30,7 +40,8 @@ def normalizedPushoutFunctor : Arrow C ⥤ D :=
     (pushoutZeroIso V W a hF hG hc)
 
 /-- The actual normalization is naturally isomorphic to the original pushout functor. -/
-def normalizedPushoutIso : pushoutFunctor W a hc.app_cof ≅ normalizedPushoutFunctor V W a hF hG hc :=
+def normalizedPushoutIso : pushoutFunctor W a hc.app_cof ≅ normalizedPushoutFunctor V W a hF hG
+    hc :=
   normalizationIso _ _ _ (pushoutZeroIso V W a hF hG hc)
 
 @[simp] theorem normalizedPushoutFunctor_obj_zero :

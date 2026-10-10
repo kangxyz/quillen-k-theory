@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.Affine.PrincipalStrictWeakImage
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalStrictWeakImage
 
 /-! # Unconditional original principal strict-image comparison consumers -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
@@ -29,7 +33,8 @@ theorem actual_principal_cofibration_factorization
 /-- Relative weakness is precisely actual original restriction weakness. -/
 theorem actual_relative_weak_iff {A B : StrictPerfect (Spec R)} (f : A ⟶ B) :
     (coarseWaldhausen (CoherentScheme.principalOpen R r)).weq f ↔
-      (strictWaldhausen _).weq ((strictRestrict (CoherentScheme.principalOpen R r)).map f) := Iff.rfl
+      (strictWaldhausen _).weq ((strictRestrict (CoherentScheme.principalOpen R r)).map f) :=
+        Iff.rfl
 
 /-- The genuine inherited target preserves every displayed original pushout along a cofibration. -/
 theorem actual_image_pushout {A B E Q : PrincipalObj R r}
@@ -48,7 +53,8 @@ theorem actual_principal_homotopy_map
 theorem unique_original_relative_preimage (n : ℕ) (y : (principalWaldhausen R r).K n) :
     ∃! x, KMap (principalCorestrict_exact R r) n x = y := by
   exact ⟨(principalKEquiv R r n).symm y, (principalKEquiv R r n).apply_symm_apply y,
-    fun x hx ↦ (principalKEquiv R r n).injective (hx.trans ((principalKEquiv R r n).apply_symm_apply y).symm)⟩
+    fun x hx ↦ (principalKEquiv R r n).injective (hx.trans ((principalKEquiv R r n).apply_symm_apply
+      y).symm)⟩
 
 /-- The comparison preserves the exact original map to strict-perfect K-theory on the open. -/
 theorem inverse_relative_restriction (n : ℕ) (y : (principalWaldhausen R r).K n) :
@@ -56,9 +62,11 @@ theorem inverse_relative_restriction (n : ℕ) (y : (principalWaldhausen R r).K 
       KMap (principalInclusion_exact R r) n y := by
   rw [← DFunLike.congr_fun (principalInclusion_comp_corestrict R r n)
     ((principalKEquiv R r n).symm y), MonoidHom.comp_apply]
-  exact congrArg (KMap (principalInclusion_exact R r) n) ((principalKEquiv R r n).apply_symm_apply y)
+  exact congrArg (KMap (principalInclusion_exact R r) n) ((principalKEquiv R r n).apply_symm_apply
+    y)
 
-/-- Even after changing weak classes and corestricting, the full composite is original strict restriction. -/
+/-- Even after changing weak classes and corestricting, the full composite is original strict
+  restriction. -/
 theorem original_fine_restriction_composite (n : ℕ) :
     (KMap (principalInclusion_exact R r) n).comp
       ((principalKEquiv R r n).toMonoidHom.comp
@@ -67,6 +75,7 @@ theorem original_fine_restriction_composite (n : ℕ) :
   ext x
   exact (DFunLike.congr_fun (principalInclusion_comp_corestrict R r n)
     (KMap (Fibration.changeWeak_exact (nested (CoherentScheme.principalOpen R r))) n x)).trans
-      (DFunLike.congr_fun (relativeKRestrict_comp_changeWeak (CoherentScheme.principalOpen R r) n) x)
+      (DFunLike.congr_fun (relativeKRestrict_comp_changeWeak (CoherentScheme.principalOpen R r) n)
+        x)
 
 end Quillen.Tests.StrictOpenWeakImage

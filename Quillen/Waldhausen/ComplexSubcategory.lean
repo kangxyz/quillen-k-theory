@@ -1,8 +1,16 @@
-import Quillen.Waldhausen.Complexes
-import Quillen.Waldhausen.ExactCategory
-import Quillen.Waldhausen.Functor
-import Quillen.CategoryTheory.ExactCategory.Abelian
-import Quillen.CategoryTheory.ExactCategory.Subcategory
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Complexes
+public import Quillen.Waldhausen.ExactCategory
+public import Quillen.Waldhausen.Functor
+public import Quillen.CategoryTheory.ExactCategory.Abelian
+public import Quillen.CategoryTheory.ExactCategory.Subcategory
 
 /-!
 # Extension-closed subcategories of complexes
@@ -14,6 +22,8 @@ equivalences are ambient quasi-isomorphisms. All Waldhausen axioms, including
 gluing, are derived. Applications must prove the object-property closure
 hypotheses, rather than supplying any K-theory comparison or localization.
 -/
+@[expose] public section
+
 
 noncomputable section
 

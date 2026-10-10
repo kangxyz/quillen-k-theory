@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Functor
-import Quillen.Topology.ClassifyingSpace.PointedFunctor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Functor
+public import Quillen.Topology.ClassifyingSpace.PointedFunctor
 
 /-!
 # Pointed Waldhausen K-maps
@@ -8,6 +16,8 @@ An exact functor preserves the zero object up to its unique isomorphism.
 Rebasing the functor along that isomorphism gives an actual pointed map of
 S-construction realizations and hence a homomorphism at the chosen basepoints.
 -/
+@[expose] public section
+
 
 noncomputable section
 

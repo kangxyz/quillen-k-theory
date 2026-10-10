@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Fibration.Rows.JointFactorization
+module
+
+public import Quillen.Waldhausen.Fibration.Rows.JointFactorization
 
 /-! # Source row factorizations from a genuine base joint cylinder
 
@@ -12,6 +14,8 @@ interchange to the original row structure. Its cofibration is the genuine
 all-triples Reedy condition. Its projection retains every original base
 component. Target row saturation is separately derived componentwise.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'

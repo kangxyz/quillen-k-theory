@@ -1,4 +1,12 @@
-import Quillen.Topology.Realization.EdgePathPresentation.SimplexCharts
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.EdgePathPresentation.SimplexCharts
 
 /-!
 # The path-connected overlap of simplex collar and interior
@@ -8,6 +16,8 @@ inside the collar. Every point of the overlap joins that copy by a straight
 radial segment which stays in the overlap. Hence the overlap is path-connected
 in dimensions at least two.
 -/
+@[expose] public section
+
 
 noncomputable section
 open Convexity Set

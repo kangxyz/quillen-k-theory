@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationFixedBounds
-import Quillen.Waldhausen.Functoriality.KMap
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationFixedBounds
+public import Quillen.Waldhausen.Functoriality.KMap
 
 /-! # Actual K-map endpoints of each bounded-term brutal filtration
 
@@ -9,6 +17,8 @@ upper bound. The maps use canonical zero rebasing, via the proved natural
 isomorphisms and the original public KMap API. Only isomorphism weak models
 are used, and no uniform bound on the whole bounded-complex category is chosen.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -25,7 +35,7 @@ theorem fixedTermsStupidTruncGE_KMap_comp (a b n : ℤ) (k : ℕ) :
     KMap (fixedTermsStupidTruncGEExactFunctor P a b n).waldhausenExact k =
       (KMap (boundedTermsStupidTruncGEExactFunctor P n).waldhausenExact k).comp
         (KMap (fixedTermsInclusionExactFunctor P a b).waldhausenExact k) :=
-  KMap_comp _ _ k
+  (KMap_comp_KMap _ _ k).symm
 
 /-- The genuine lower endpoint has exactly the original stratum-inclusion K-map. -/
 theorem fixedTermsStupidTruncGE_KMap_inclusion (a b n : ℤ) (hn : n ≤ a) (k : ℕ) :

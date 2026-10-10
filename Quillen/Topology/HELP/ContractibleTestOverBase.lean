@@ -1,5 +1,13 @@
-import Quillen.Topology.HELP.ContractibleTest
-import Quillen.Topology.HomotopyLifting.OverBaseCorrection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.ContractibleTest
+public import Quillen.Topology.HomotopyLifting.OverBaseCorrection
 
 /-! # Compact contracted strict HELP with a proved vertical comparison
 
@@ -7,6 +15,8 @@ The actual parameter pair has HEP and a continuous duration whose zero locus
 is exactly its image. The conclusion retains the original boundary map, the
 entire constant boundary comparison, and the displayed base coordinate.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 open scoped Topology unitInterval
@@ -15,7 +25,7 @@ namespace Quillen
 variable {E F B : Type u} [TopologicalSpace E] [TopologicalSpace F] [TopologicalSpace B]
 
 theorem strictHELP_over_contracted_test
-    (p : C(E,B)) (q : C(F,B)) (f : C(E,F)) (sq : q.comp f = p)
+    (p : C(E, B)) (q : C(F, B)) (f : C(E, F)) (sq : q.comp f = p)
     (hp : HomotopyLiftingProperty p) (hq : HomotopyLiftingProperty q)
     (hf : ∀ b : B, CompactHomotopyExtensionLiftingProperty
       (HomotopyFiber.strictMapOver p q f sq b))

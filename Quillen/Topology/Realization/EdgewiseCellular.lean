@@ -1,9 +1,19 @@
-import Quillen.Topology.Realization.MonomorphismHEP
-import Quillen.CategoryTheory.TheoremA.SkeletalEquivalences
-import Quillen.CategoryTheory.TheoremA.SequentialHomotopyInvariance
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Terminal
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.MonomorphismHEP
+public import Quillen.CategoryTheory.TheoremA.SkeletalEquivalences
+public import Quillen.CategoryTheory.TheoremA.SequentialHomotopyInvariance
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Terminal
 
 /-! A cellular criterion for natural realization equivalences. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology
@@ -37,7 +47,7 @@ lemma realizesEquiv_of_iso {X Y : SSet.{u}} (e : X ≅ Y)
 
 lemma realizesEquiv_initial [PreservesColimits F] {X : SSet.{u}}
     (hX : IsInitial X) : RealizesEquiv η X := by
-  letI : IsIso (η.app X) := isIso_of_isInitial (hX.isInitialObj F X) hX _
+  let : IsIso (η.app X) := isIso_of_isInitial (hX.isInitialObj F X) hX _
   exact ⟨(TopCat.homeoOfIso (SSet.toTop.mapIso (asIso (η.app X)))).toHomotopyEquiv, rfl⟩
 
 lemma realizesEquiv_coproduct [PreservesColimits F] {ι : Type u}
@@ -68,7 +78,8 @@ lemma realizesEquiv_coproduct [PreservesColimits F] {ι : Type u}
     rw [hbι, ← Category.assoc, haι]
     rfl
   exact ⟨homotopyEquivOfIsoSquare _ f ea eb w (sigmaHomotopyEquiv E)
-    (by apply ContinuousMap.ext; intro x; change (⟨x.1, (E x.1).toFun x.2⟩ : Σ i, |X i|) = _; rw [hE]; rfl), rfl⟩
+    (by apply ContinuousMap.ext; intro x; change (⟨x.1, (E x.1).toFun x.2⟩ : Σ i, |X i|) = _; rw
+      [hE]; rfl), rfl⟩
 
 lemma realizesEquiv_pushout [PreservesColimits F] [F.PreservesMonomorphisms]
     {A B C D : SSet.{u}} {i : A ⟶ B} {f : A ⟶ C} {g : B ⟶ D} {j : C ⟶ D}
@@ -124,7 +135,7 @@ lemma realizesEquiv_stage [PreservesColimits F] [F.PreservesMonomorphisms]
       have hB : RealizesEquiv η C.cofan₂.pt :=
         realizesEquiv_coproduct η (fun _ : C.ι ↦ (Δ[n] : SSet.{u})) C.cofan₂
           C.isColimit₂ (fun _ ↦ hΔ n)
-      letI : Mono C.m := by dsimp [C, R]; infer_instance
+      let : Mono C.m := by dsimp [C, R]; infer_instance
       exact realizesEquiv_pushout η C.isPushout.flip hA hB (ih n (by omega) X)
 
 /-- A cocontinuous, mono-preserving simplicial functor with a natural map to
@@ -147,10 +158,10 @@ theorem realizesEquiv_all [PreservesColimits F] [PreservesColimitsOfShape ℕ F]
       ((SSet.skeletonOfMono (⊥ : X.Subcomplex).ι).monotone (Nat.le_succ n)))
     infer_instance
   have hA (n : ℕ) : homotopyExtensionProperty (A.map (homOfLE (Nat.le_succ n))) := by
-    letI := hmono n
+    let := hmono n
     exact homotopyExtensionProperty_realization_mono (F.map (R.F.map (homOfLE (Nat.le_succ n))))
   have hB (n : ℕ) : homotopyExtensionProperty (B.map (homOfLE (Nat.le_succ n))) := by
-    letI := hmono n
+    let := hmono n
     exact homotopyExtensionProperty_realization_mono (R.F.map (homOfLE (Nat.le_succ n)))
   choose E hE using fun n ↦ realizesEquiv_stage η hΔ n X
   let e := sequentialCoconeHomotopyEquiv α hA hB E hE c hc d hd

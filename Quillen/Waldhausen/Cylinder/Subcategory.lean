@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Cylinder.ComplexQuotient
-import Quillen.Waldhausen.Approximation.FactorizationData
-import Quillen.CategoryTheory.ExactCategory.SubcategoryCokernel
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Cylinder.ComplexQuotient
+public import Quillen.Waldhausen.SplitComplexes.FunctorialFactorization
+public import Quillen.CategoryTheory.ExactCategory.SubcategoryCokernel
 
 /-! # Joint and relative cylinder cofibrations in actual complex subcategories
 
@@ -8,6 +16,8 @@ The displayed relative quotient is the shifted actual cokernel of the source
 map. Its membership follows from inherited admissibility and shift closure;
 closure under arbitrary quotients is neither required nor asserted.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

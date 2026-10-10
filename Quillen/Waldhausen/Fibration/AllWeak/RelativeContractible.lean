@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.AllWeak.CoproductCylinder
-import Quillen.Waldhausen.Fibration.RelativeRows.CoarseEvaluation
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.AllWeak.CoproductCylinder
+public import Quillen.Waldhausen.Fibration.RelativeRows.CoarseEvaluation
 
 /-! # Contractibility of the actual identity-relative total S-model
 
@@ -9,6 +17,8 @@ identifies this actual relative total with the contracted all-weak
 S-realization. This establishes contractibility only; no double-S loop or
 homotopy-fiber comparison is assumed or asserted.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 open scoped Simplicial Topology
@@ -34,10 +44,11 @@ instance relativeTotal_contractible :
   (relativeEvaluationHomotopyEquiv W).contractibleSpace
 
 /-- The prescribed forward equivalence preserves the original zero point. -/
-@[simp] theorem relativeEvaluationHomotopyEquiv_basepoint :
-    (relativeEvaluationHomotopyEquiv W).toFun (RelativeRows.totalBasepoint (nested W)) =
-      (waldhausenStructure W).kBasepoint := by
-  rw [relativeEvaluationHomotopyEquiv_toFun]
-  exact RelativeRows.coarseEvaluation_basepoint _ _
+@[simp] theorem relativeCoarseEvaluation_hom_basepoint :
+    TopCat.Hom.hom (Y := (waldhausenStructure W).Delooping)
+      (SSet.toTop.map (RelativeRows.coarseEvaluation (nested W) (extensionAxiom W)))
+      (RelativeRows.totalBasepoint (nested W)) = (waldhausenStructure W).kBasepoint := by
+  exact RelativeRows.coarseEvaluation_basepoint (nested W) (extensionAxiom W)
+
 
 end Quillen.Waldhausen.Fibration.AllWeak

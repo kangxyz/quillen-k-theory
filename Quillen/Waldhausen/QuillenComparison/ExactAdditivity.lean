@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.QuillenComparison.KCommutativity
-import Quillen.Waldhausen.QuillenComparison.ExactNaturality
-import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.KCommutativity
+public import Quillen.Waldhausen.QuillenComparison.ExactNaturality
+public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 
 /-! # Literal additivity of the original Quillen exact-functor K-maps
 
@@ -8,6 +16,8 @@ Pointwise genuine conflations give the structural Waldhausen cofibration
 sequence. Canonical based Q/S naturality transports its proved multiplication
 formula to the unchanged original Quillen KMap API.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

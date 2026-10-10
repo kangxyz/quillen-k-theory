@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.QuillenComparison.InitialFlagIso
-import Quillen.Waldhausen.QuillenComparison.SpanLifting
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.InitialFlagIso
+public import Quillen.Waldhausen.QuillenComparison.SpanLifting
 
 /-! # Recovering both initial subobjects from a Q-arrow to the whole row
 
@@ -7,6 +15,8 @@ The apex recovers the upper endpoint subobject. Its actual kernel recovers
 the lower endpoint subobject. Thus a Q-naturality square encodes both parts
 of the initial flag, rather than forgetting the kernel of its deflation.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

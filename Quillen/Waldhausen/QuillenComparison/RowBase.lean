@@ -1,8 +1,18 @@
-import Quillen.Waldhausen.QuillenComparison.FlagPresentation
-import Quillen.Waldhausen.QuillenComparison.FlagExtension
-import Quillen.Waldhausen.QuillenComparison.RowFull
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.FlagPresentation
+public import Quillen.Waldhausen.QuillenComparison.FlagExtension
+public import Quillen.Waldhausen.QuillenComparison.RowFull
 
 /-! # The zero-length Q-chain is realized by an actual exact row -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

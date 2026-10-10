@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.InitialCutArrows
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.InitialCutArrows
 
 /-! # Genuine exactness of the cutoff arrow-valued functor
 
@@ -6,6 +14,8 @@ Actual Reedy cube cofibrancy is transported back through the proved row/arrow
 interchange and reflected by the original relative-row inclusion. Zero,
 weak equivalences and pushouts retain the original component diagrams.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -21,7 +31,8 @@ theorem ambientCutArrow_map_cof {n : SimplexCategory} {X Y : Obj N n} (f : X ⟶
       ((ambientCutArrow N n).map f) := by
   have h := QuotientRows.rowsToReedy_cof V (cutArrowRows_map_cof N f hf)
   change ExtensionCategory.cof (QuotientRows.waldhausenStructure V (addInitial.obj n))
-    ((QuotientRows.reedyToRows V (addInitial.obj n) ⋙ QuotientRows.rowsToReedy V (addInitial.obj n)).map
+    ((QuotientRows.reedyToRows V (addInitial.obj n) ⋙ QuotientRows.rowsToReedy V (addInitial.obj
+      n)).map
       ((ambientCutArrow N n).map f)) at h
   rw [QuotientRows.reedyToRows_rowsToReedy] at h
   exact h

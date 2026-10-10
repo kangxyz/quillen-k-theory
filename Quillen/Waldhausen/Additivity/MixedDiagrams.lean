@@ -1,7 +1,17 @@
-import Quillen.Waldhausen.Additivity.IntervalEndpoints
-import Quillen.Topology.Realization.MixedOrdinalEndpoints
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.IntervalEndpoints
+public import Quillen.Topology.Realization.MixedOrdinalEndpoints
 
 /-! # Actual mixed-ordinal diagrams in the additivity deformation -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

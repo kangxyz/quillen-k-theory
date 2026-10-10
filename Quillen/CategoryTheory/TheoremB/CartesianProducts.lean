@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremB.CartesianRows
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.CartesianRows
 
 /-!
 # Homotopy-cartesian product cells
@@ -9,6 +17,8 @@ equivalence of fibers gives a canonical homotopy-cartesian product square,
 without imposing local compactness, contractibility, or discreteness on
 the base spaces. This is the geometric cell input for realization.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -50,7 +60,8 @@ def productContraction :
     · apply Continuous.prodMk
       · fun_prop
       · apply ContinuousMap.continuous_of_continuous_uncurry
-        change Continuous (fun z : (I × HomotopyPullback ((ContinuousMap.snd : C(X × B, B))) g) × I ↦
+        change Continuous (fun z : (I × HomotopyPullback ((ContinuousMap.snd : C(X × B, B))) g) × I
+          ↦
           z.1.2.1.2.2 (σ (σ z.1.1 * σ z.2)))
         fun_prop
   map_zero_left z := by

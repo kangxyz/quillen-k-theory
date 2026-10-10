@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.QuotientExact
-import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.QuotientExact
+public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 
 /-!
 # The genuine acyclic truncation cofibration sequence
@@ -9,6 +17,8 @@ projection satisfy all structural hypotheses of the additivity theorem.
 The relative-pushout cofibration condition is derived from exactness of
 the quotient, rather than supplied as a hypothesis.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

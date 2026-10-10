@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.WeakArrow.RelativeStructure
+module
+
+public import Quillen.Waldhausen.WeakArrow.RelativeStructure
 
 /-! # Original first-leg K-equivalence with relative weak classes -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -22,9 +26,10 @@ variable {C D E : Type (max u v)} [Category.{v} C] [Category.{v} D] [Category.{v
 /-- The original source-projection K-map is a left inverse to the actual diagonal K-map. -/
 theorem KMap_source_diagonal (n : ℕ) (x : (sourceStructure V W U F G hF hG).K n) :
     KMap (source_exact V W U F G hF hG) n (KMap (diagonal_exact V W U F G hF hG) n x) = x := by
-  have h := KMap_comp (diagonal_exact V W U F G hF hG) (source_exact V W U F G hF hG) n
+  have h := (KMap_comp_KMap (diagonal_exact V W U F G hF hG) (source_exact V W U F G hF hG) n).symm
   have he : KMap ((diagonal_exact V W U F G hF hG).comp (source_exact V W U F G hF hG)) n =
-      KMap (IsExact.id (sourceStructure V W U F G hF hG).cof (sourceStructure V W U F G hF hG).weq) n := rfl
+      KMap (IsExact.id (sourceStructure V W U F G hF hG).cof (sourceStructure V W U F G hF
+        hG).weq) n := rfl
   rw [he, KMap_id] at h
   exact (DFunLike.congr_fun h x).symm
 
@@ -35,12 +40,13 @@ theorem KMap_diagonal_source (n : ℕ) (x : (arrowStructure V W U F G hF hG).K n
     ((source_exact V W U F G hF hG).comp (diagonal_exact V W U F G hF hG))
     (IsExact.id (arrowStructure V W U F G hF hG).cof (arrowStructure V W U F G hF hG).weq)
     (counit W F) (counit_weak V W U F G hF hG) n
-  exact (DFunLike.congr_fun (KMap_comp (source_exact V W U F G hF hG)
-      (diagonal_exact V W U F G hF hG) n) x).symm.trans
+  exact (DFunLike.congr_fun (KMap_comp_KMap (source_exact V W U F G hF hG)
+      (diagonal_exact V W U F G hF hG) n).symm x).symm.trans
     (by simpa only [KMap_id, MonoidHom.id_apply] using DFunLike.congr_fun h x)
 
 /-- The genuine weak-arrow enlargement is equivalent on original K-groups in every degree. -/
-def diagonalKEquiv (n : ℕ) : (sourceStructure V W U F G hF hG).K n ≃* (arrowStructure V W U F G hF hG).K n where
+def diagonalKEquiv (n : ℕ) : (sourceStructure V W U F G hF hG).K n ≃* (arrowStructure V W U F G
+    hF hG).K n where
   toFun := KMap (diagonal_exact V W U F G hF hG) n
   invFun := KMap (source_exact V W U F G hF hG) n
   left_inv := KMap_source_diagonal V W U F G hF hG n
@@ -52,8 +58,9 @@ def diagonalKEquiv (n : ℕ) : (sourceStructure V W U F G hF hG).K n ≃* (arrow
 
 /-- The second leg and first-leg equivalence compose to the unchanged original functor K-map. -/
 theorem KMap_factor (n : ℕ) :
-    (KMap (target_exact V W U F G hF hG) n).comp (diagonalKEquiv V W U F G hF hG n).toMonoidHom = KMap (functor_exact V W U F G hF hG) n := by
-  exact (KMap_comp (diagonal_exact V W U F G hF hG) (target_exact V W U F G hF hG) n).symm
+    (KMap (target_exact V W U F G hF hG) n).comp (diagonalKEquiv V W U F G hF hG n).toMonoidHom
+      = KMap (functor_exact V W U F G hF hG) n := by
+  exact (KMap_comp_KMap (diagonal_exact V W U F G hF hG) (target_exact V W U F G hF hG) n).symm.symm
 
 
 /-- Bijectivity of the unchanged original relative functor is equivalent to

@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.IdentityDisk
-import Quillen.Waldhausen.GilletWaldhausen.QuotientExact
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.IdentityDisk
+public import Quillen.Waldhausen.GilletWaldhausen.QuotientExact
 
 /-! # The actual one-step acyclic truncation layer is a two-term disk
 
@@ -8,6 +16,8 @@ truncLE n. Its natural identification with the identity disk on the actual
 (n+1)-st cycles is constructed using the original quotient projection and
 boundary-cycle isomorphism. All maps are actual chain maps.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

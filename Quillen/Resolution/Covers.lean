@@ -1,5 +1,13 @@
-import Quillen.Resolution.QCalculus
-import Quillen.Topology.ClassifyingSpace.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Resolution.QCalculus
+public import Quillen.Topology.ClassifyingSpace.Equivalence
 
 /-!
 # Admissible resolving covers and their contraction
@@ -9,6 +17,8 @@ source in the resolving subcategory. Morphisms are admissible epimorphisms
 commuting with the augmentations. Pullback against one chosen cover gives
 the contraction needed in the length-one resolution theorem.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -22,8 +32,10 @@ variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 
 /-- An actual admissible epimorphism from a resolving object. -/
 structure Cover where
+  /-- The resolving source object of the cover, required to satisfy `P`. -/
   obj : C
   property : P obj
+  /-- The admissible epimorphism from the resolving source onto `M`. -/
   hom : obj ⟶ M
   admissible : E.deflation hom
 
@@ -32,6 +44,7 @@ variable {E P M}
 
 /-- Cover comparisons are themselves admissible epimorphisms. -/
 @[ext] structure Hom (X Y : Cover E P M) where
+  /-- The admissible epimorphism between cover sources that commutes with their maps to `M`. -/
   hom : X.obj ⟶ Y.obj
   admissible : E.deflation hom
   w : hom ≫ Y.hom = X.hom
@@ -80,6 +93,7 @@ def snd (X Y : Cover E P M) : pullback X Y ⟶ Y :=
   ⟨Limits.pullback.snd _ _, E.deflation.pullback_snd _ _ X.admissible,
     Limits.pullback.condition.symm⟩
 
+omit [E.IsExtensionClosed P] [E.IsAdmissibleSubobjectClosed P] in
 /-- The induced map of pullbacks is a base change of the original cover map. -/
 lemma map_isPullback {X Y : Cover E P M} (f : X ⟶ Y) (B : Cover E P M) :
     IsPullback

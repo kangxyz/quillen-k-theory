@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.QuillenComparison.ExactRectangles
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.ExactRectangles
 
 /-! # Quotient calculus used to complete admissible flags
 
@@ -6,6 +14,8 @@ All squares and quotient maps below are proved using actual cokernel
 universal properties. No ambient abelian category or global choice of
 quotients compatible with simplicial operators is required.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -48,14 +58,17 @@ def quotientInclusion : cokernel f ⟶ cokernel h :=
 def quotientProjection : cokernel h ⟶ cokernel g :=
   cokernel.map h g f (𝟙 D) (by simpa using w.symm)
 
+omit [HasCokernel g] in
 @[reassoc (attr := simp)]
 theorem π_quotientInclusion : cokernel.π f ≫ quotientInclusion f g h w = g ≫ cokernel.π h :=
   cokernel.π_desc _ _ _
 
+omit [HasCokernel f] in
 @[reassoc (attr := simp)]
 theorem π_quotientProjection : cokernel.π h ≫ quotientProjection f g h w = cokernel.π g := by
   exact (cokernel.π_desc _ _ _).trans (Category.id_comp _)
 
+omit [HasCokernel g] in
 /-- The quotient inclusion is an actual cobase change of the original map. -/
 theorem quotient_isPushout : IsPushout g (cokernel.π f) (cokernel.π h)
     (quotientInclusion f g h w) := by
@@ -64,7 +77,8 @@ theorem quotient_isPushout : IsPushout g (cokernel.π f) (cokernel.π h)
   apply IsPushout.of_isColimit (c := PushoutCocone.mk _ _ hsq)
   refine PushoutCocone.IsColimit.mk hsq
     (fun s ↦ cokernel.desc h s.inl (by
-      rw [← w, Category.assoc, s.condition, ← Category.assoc, cokernel.condition, zero_comp])) ?_ ?_ ?_
+      rw [← w, Category.assoc, s.condition, ← Category.assoc, cokernel.condition, zero_comp]))
+        ?_ ?_ ?_
   · intro s
     exact cokernel.π_desc _ _ _
   · intro s

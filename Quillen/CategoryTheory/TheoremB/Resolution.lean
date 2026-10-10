@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremB.Naturality
-import Quillen.CategoryTheory.TheoremA.Classifying
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.Naturality
+public import Quillen.CategoryTheory.TheoremA.Classifying
 
 /-!
 # Identifying the comma comparison through the categorical resolution
@@ -8,6 +16,8 @@ The comma category is included in the actual strict fiber of the resolved
 map. Its canonical homotopy-fiber comparison agrees, including path data,
 with the comparison obtained from the resolution's structure-arrow homotopy.
 -/
+@[expose] public section
+
 
 noncomputable section
 

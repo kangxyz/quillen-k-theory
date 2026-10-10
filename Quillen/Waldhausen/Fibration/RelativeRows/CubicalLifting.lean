@@ -1,7 +1,17 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.RealizationLifting
-import Quillen.Topology.CubicalSubdivision.FiberBoundaryLifting
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.RealizationLifting
+public import Quillen.Topology.CubicalSubdivision.FiberBoundaryLifting
 
 /-! # Original relative-row comparison: actual whole-boundary cubical lifting -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial Topology

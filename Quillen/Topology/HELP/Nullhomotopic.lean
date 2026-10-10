@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.HELP.StrictFiniteCriterion
+module
+
+public import Quillen.Topology.HELP.StrictFiniteCriterion
 
 /-!
 # Literal HEP extensions of nullhomotopic boundary maps
@@ -13,6 +15,8 @@ nullhomotopy and extending it from a constant map. Applied to all literal finite
 cube boundaries, including the empty zero-cube boundary, this proves complete
 weakness of the original map to a point. No global contraction is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory

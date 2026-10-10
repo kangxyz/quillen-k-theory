@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.Properties
-import Quillen.Waldhausen.Approximation.FiniteReplacement
-import Quillen.Waldhausen.Functor
+module
+
+public import Quillen.Waldhausen.Approximation.Basic
+public import Quillen.Waldhausen.Approximation.FiniteReplacement
+public import Quillen.Waldhausen.Functor
 
 /-!
 # Relative sequence lifting across approximation functors
@@ -19,6 +21,8 @@ The choices are not asserted to be functorial in the input diagram.
 These are diagram-lifting lemmas, not the approximation theorem. In particular,
 nonempty categories of replacements do not assert their contractibility.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -36,8 +40,12 @@ variable {C : Type u} [Category.{v} C] {D : Type u'} [Category.{v'} D]
 
 /-- A chosen App2 factorization retains the actual source and target maps. -/
 structure Step {X : C} {Y : D} (f : F.obj X ⟶ Y) where
+  /-- The source-category middle object in the App2 factorization of `f`. -/
   obj : C
+  /-- The cofibration from the original source `X` into the middle object. -/
   inclusion : X ⟶ obj
+  /-- The weak equivalence from the image of the middle object to `Y`, whose composite with the
+  image of `inclusion` is `f`. -/
   projection : F.obj obj ⟶ Y
   cofibration : W.cof inclusion
   weak : V.weq projection

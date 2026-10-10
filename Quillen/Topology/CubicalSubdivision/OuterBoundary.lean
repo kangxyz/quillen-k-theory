@@ -1,6 +1,16 @@
-import Quillen.Topology.CubicalSubdivision.FaceIntersections
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.FaceIntersections
 
 /-! # The original outer cube boundary is a genuine grid face subcomplex -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 namespace Quillen.CubicalSubdivision

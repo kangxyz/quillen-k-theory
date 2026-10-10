@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.TheoremA.Coend
-import Mathlib.AlgebraicTopology.SimplicialSet.Skeleton
-import Mathlib.AlgebraicTopology.SimplicialSet.SubcomplexColimits
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.Coend
+public import Mathlib.AlgebraicTopology.SimplicialSet.Skeleton
+public import Mathlib.AlgebraicTopology.SimplicialSet.SubcomplexColimits
 
 /-!
 # The outer skeletal filtration of a bisimplicial set
@@ -9,6 +17,8 @@ The filtration uses the full coefficient row in each outer degree. Its value
 in inner degree `q` is the ordinary skeleton of the outer simplicial set
 obtained by evaluating at `q`, evaluated at outer degree `q`.
 -/
+@[expose] public section
+
 
 noncomputable section
 

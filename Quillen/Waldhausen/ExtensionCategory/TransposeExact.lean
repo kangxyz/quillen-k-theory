@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.ExtensionCategory.Transpose
-import Quillen.Waldhausen.ExtensionCategory.TriplePushout
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.Transpose
+public import Quillen.Waldhausen.ExtensionCategory.TriplePushout
 
 /-! # Genuine exactness of the Reedy-square transposition
 
@@ -7,6 +15,8 @@ For a morphism cube, the two total relative pushouts are related by their
 actual universal properties. This proves preservation of the Reedy class;
 the categorical involution alone would not supply this assertion.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

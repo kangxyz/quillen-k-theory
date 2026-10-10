@@ -1,7 +1,17 @@
-import Quillen.Localization.Serre.AuxiliaryArrowLift
-import Quillen.Localization.Serre.AuxiliaryDiagram
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.AuxiliaryArrowLift
+public import Quillen.Localization.Serre.AuxiliaryDiagram
 
 /-! # Faithfulness and eventual equality of auxiliary object lifts -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -99,7 +109,8 @@ theorem quotientAuxiliaryLift_eventual_obj_eq {V : Quotient P}
   have : IsIso (P.isoModSerre.Q.map s) := Localization.inverts _ _ _ hs
   let e : P.isoModSerre.Q.obj M ≅ V := (asIso (P.isoModSerre.Q.map s)).symm ≪≫ asIso A.obj.hom
   let B : QuotientAuxiliaryLift P V := auxiliaryLiftMk P.isoModSerre.Q V e
-  let t : A ⟶ B := ObjectProperty.homMk (CostructuredArrow.homMk s (by simp [B, e, auxiliaryLiftMk]))
+  let t : A ⟶ B := ObjectProperty.homMk (CostructuredArrow.homMk s (by simp [B, e,
+    auxiliaryLiftMk]))
   exact ⟨B, t, heq⟩
 
 end Quillen.SerreLocalization

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.CubicalSubdivision.Cover
-import Mathlib.Topology.CompactOpen
+module
+
+public import Quillen.Topology.CubicalSubdivision.Cover
+public import Mathlib.Topology.CompactOpen
 
 /-!
 # Open whole-path pools and one uniform finite time subdivision
@@ -16,6 +18,8 @@ A single finite grid controls every slab for an actual compact cube family.
 The chart may depend on the slab and the parameter; the time mesh does not.
 No compactness or lifting property of the open parameter loci is asserted.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 universe u v w
@@ -38,7 +42,7 @@ theorem pathSet_inter (U V : Set B) : pathSet (U ∩ V) = pathSet U ∩ pathSet 
     fun h t ↦ ⟨h.1 t,h.2 t⟩⟩
 
 /-- The actual affine time slab of the original family, retaining its parameter. -/
-def slabMap (H : C(unitInterval × D,B)) (m : ℕ) (i : Fin (m+1)) :
+def slabMap (H : C(unitInterval × D, B)) (m : ℕ) (i : Fin (m + 1)) :
     C(D,C(unitInterval,B)) where
   toFun d := ⟨fun t ↦ H (intervalCell m i t,d),by fun_prop⟩
   continuous_toFun := by
@@ -46,31 +50,31 @@ def slabMap (H : C(unitInterval × D,B)) (m : ℕ) (i : Fin (m+1)) :
     change Continuous (fun z : D × unitInterval ↦ H (intervalCell m i z.2,z.1))
     fun_prop
 
-@[simp] theorem slabMap_apply (H : C(unitInterval × D,B)) (m : ℕ)
-    (i : Fin (m+1)) (d : D) (t : unitInterval) :
+@[simp] theorem slabMap_apply (H : C(unitInterval × D, B)) (m : ℕ)
+    (i : Fin (m + 1)) (d : D) (t : unitInterval) :
     slabMap H m i d t = H (intervalCell m i t,d) := rfl
 
 /-- Original parameters whose entire closed affine time slab lies in the chart. -/
-def slabSet (H : C(unitInterval × D,B)) (U : Set B) (m : ℕ) (i : Fin (m+1)) : Set D :=
+def slabSet (H : C(unitInterval × D, B)) (U : Set B) (m : ℕ) (i : Fin (m + 1)) : Set D :=
   slabMap H m i ⁻¹' pathSet U
 
-theorem mem_slabSet_iff (H : C(unitInterval × D,B)) (U : Set B)
-    (m : ℕ) (i : Fin (m+1)) (d : D) :
+theorem mem_slabSet_iff (H : C(unitInterval × D, B)) (U : Set B)
+    (m : ℕ) (i : Fin (m + 1)) (d : D) :
     d ∈ slabSet H U m i ↔ ∀ t,H (intervalCell m i t,d) ∈ U := Iff.rfl
 
 /-- Openness uses only the compact time interval; the parameter space may be arbitrary. -/
-theorem slabSet_isOpen (H : C(unitInterval × D,B)) {U : Set B}
-    (hU : IsOpen U) (m : ℕ) (i : Fin (m+1)) : IsOpen (slabSet H U m i) :=
+theorem slabSet_isOpen (H : C(unitInterval × D, B)) {U : Set B}
+    (hU : IsOpen U) (m : ℕ) (i : Fin (m + 1)) : IsOpen (slabSet H U m i) :=
   (pathSet_isOpen hU).preimage (slabMap H m i).continuous
 
-theorem slabSet_inter (H : C(unitInterval × D,B)) (U V : Set B)
-    (m : ℕ) (i : Fin (m+1)) :
+theorem slabSet_inter (H : C(unitInterval × D, B)) (U V : Set B)
+    (m : ℕ) (i : Fin (m + 1)) :
     slabSet H (U ∩ V) m i = slabSet H U m i ∩ slabSet H V m i := by
   simp only [slabSet,pathSet_inter,Set.preimage_inter]
 
 /-- Adjacent slabs meet at exactly the same original time and family value. -/
-theorem slabMap_shared_endpoint (H : C(unitInterval × D,B)) (m : ℕ)
-    (i j : Fin (m+1)) (hij : (i : ℕ) + 1 = j) (d : D) :
+theorem slabMap_shared_endpoint (H : C(unitInterval × D, B)) (m : ℕ)
+    (i j : Fin (m + 1)) (hij : (i : ℕ) + 1 = j) (d : D) :
     slabMap H m i d 1 = slabMap H m j d 0 :=
   congrArg (fun t ↦ H (t,d)) (intervalCell_shared_face m i j hij)
 
@@ -87,15 +91,15 @@ theorem intervalCell_last_one (m : ℕ) : intervalCell m ⟨m,Nat.lt_succ_self m
 
 /-- Every constant original track stays literally constant on every slab.
 In particular this applies pointwise to the full prescribed outer boundary. -/
-theorem slabMap_of_constant (H : C(unitInterval × D,B)) (d : D) (b : B)
-    (h : ∀ t,H (t,d) = b) (m : ℕ) (i : Fin (m+1)) :
+theorem slabMap_of_constant (H : C(unitInterval × D, B)) (d : D) (b : B)
+    (h : ∀ t, H (t, d) = b) (m : ℕ) (i : Fin (m + 1)) :
     slabMap H m i d = ContinuousMap.const unitInterval b := by
   ext t
   exact h (intervalCell m i t)
 
 /-- Full constant-track boundary values retain every chart containing that value. -/
-theorem mem_slabSet_of_constant (H : C(unitInterval × D,B)) (d : D) (b : B)
-    (h : ∀ t,H (t,d) = b) {U : Set B} (hb : b ∈ U) (m : ℕ) (i : Fin (m+1)) :
+theorem mem_slabSet_of_constant (H : C(unitInterval × D, B)) (d : D) (b : B)
+    (h : ∀ t, H (t, d) = b) {U : Set B} (hb : b ∈ U) (m : ℕ) (i : Fin (m + 1)) :
     d ∈ slabSet H U m i := by
   intro t
   change H (intervalCell m i t,d) ∈ U
@@ -105,9 +109,9 @@ theorem mem_slabSet_of_constant (H : C(unitInterval × D,B)) (d : D) (b : B)
 /-- One finite time mesh works simultaneously for every original cube parameter.
 Every closed slab at that parameter lies entirely in one original open chart.
 The proof uses the actual product-cube grid, including dimension-zero parameters. -/
-theorem exists_uniform_slab_cover (n : ℕ) (H : C(unitInterval × Cube n,B))
-    {J : Type w} (U : J → Set B) (hU : ∀ j,IsOpen (U j))
-    (hcover : ∀ t d,∃ j,H (t,d) ∈ U j) :
+theorem exists_uniform_slab_cover (n : ℕ) (H : C(unitInterval × Cube n, B))
+    {J : Type w} (U : J → Set B) (hU : ∀ j, IsOpen (U j))
+    (hcover : ∀ t d, ∃ j, H (t, d) ∈ U j) :
     ∃ m : ℕ,∀ (i : Fin (m+1)) (d : Cube n),∃ j,d ∈ slabSet H (U j) m i := by
   let F : C(Cube (n+1),B) := ⟨fun z ↦ H (z 0,fun k ↦ z k.succ),by fun_prop⟩
   obtain ⟨m,hm⟩ := exists_grid_map_subordinate (n+1) F U hU
@@ -123,9 +127,9 @@ theorem exists_uniform_slab_cover (n : ℕ) (H : C(unitInterval × Cube n,B))
 
 /-- The two whole-slab parameter opens cover the actual cube for every step
 of one fixed finite time subdivision. Neither open locus is assumed compact. -/
-theorem exists_uniform_two_slab_cover (n : ℕ) (H : C(unitInterval × Cube n,B))
+theorem exists_uniform_two_slab_cover (n : ℕ) (H : C(unitInterval × Cube n, B))
     (U V : Set B) (hU : IsOpen U) (hV : IsOpen V)
-    (hcover : ∀ t d,H (t,d) ∈ U ∪ V) :
+    (hcover : ∀ t d, H (t, d) ∈ U ∪ V) :
     ∃ m : ℕ,∀ i : Fin (m+1),slabSet H U m i ∪ slabSet H V m i = Set.univ := by
   let W : Bool → Set B := fun b ↦ if b then V else U
   have hW : ∀ b,IsOpen (W b) := by intro b; cases b <;> assumption

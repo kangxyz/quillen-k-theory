@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationTransition
-import Mathlib.Algebra.Homology.Single
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationTransition
+public import Mathlib.Algebra.Homology.Single
 
 /-! # The genuine one-term cofiber of adjacent brutal truncations
 
@@ -8,6 +16,8 @@ term identification to project onto the existing single-complex functor.
 It is short exact and split in each degree for every ambient complex.
 Neither boundedness nor any projectivity hypothesis is needed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -114,7 +124,8 @@ def stupidTruncGELayerSequenceSplitting (K : CochainComplex A ℤ) (n i : ℤ) :
 /-- The actual chosen cokernel is canonically the displayed original single complex. -/
 def stupidTruncGELayerCokernelIso (K : CochainComplex A ℤ) (n : ℤ) :
     cokernel (stupidTruncGELayerSequence K n).f ≅ (stupidTruncGELayerFunctor n).obj K :=
-  (cokernelIsCokernel _).coconePointUniqueUpToIso (stupidTruncGELayerSequence_shortExact K n).gIsCokernel
+  (cokernelIsCokernel _).coconePointUniqueUpToIso (stupidTruncGELayerSequence_shortExact K
+    n).gIsCokernel
 
 @[reassoc (attr := simp)]
 theorem stupidTruncGELayerCokernelIso_projection (K : CochainComplex A ℤ) (n : ℤ) :

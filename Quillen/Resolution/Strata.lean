@@ -1,5 +1,13 @@
-import Quillen.Resolution.Presentation
-import Quillen.Resolution.Transport
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Resolution.Presentation
+public import Quillen.Resolution.Transport
 
 /-!
 # Resolving closure of finite-resolution-length strata
@@ -8,6 +16,8 @@ All arguments use actual admissible pullbacks and the kernel sequences of
 composite admissible epimorphisms. No projectivity or lifting of comparison
 maps is assumed. Global finite resolutions supply the required covers.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -20,13 +30,14 @@ variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C) (P Q : ObjectProperty C)
   [Q.IsClosedUnderIsomorphisms] [E.IsExtensionClosed Q] [E.IsKernelClosed Q]
 
+omit [Q.IsClosedUnderIsomorphisms] [E.IsKernelClosed Q] in
 /-- Quotienting a once-presented object by a `Q`-subobject is again once
 presented: the new syzygy is an extension of two `Q`-objects. -/
-lemma resolutionStep_of_conflation (hPQ : P ≤ Q) {S : ShortComplex C}
+lemma resolutionStep_of_conflation {S : ShortComplex C}
     (hS : E.conflation S) (hA : Q S.X₁) (hB : E.ResolutionStep P Q S.X₂) :
     E.ResolutionStep P Q S.X₃ := by
   obtain ⟨T⟩ := hB
-  letI : HasPullback T.g S.f := E.deflation.hasPullback S.f T.deflation
+  let : HasPullback T.g S.f := E.deflation.hasPullback S.f T.deflation
   have hPB : Q (pullback T.g S.f) := E.prop_pullback Q T.conflation T.syzygy_mem hA S.f
   exact ⟨⟨pullback T.g S.f, T.middle, pullback.fst _ _, T.g ≫ S.g,
     by rw [← Category.assoc, pullback.condition, Category.assoc, S.zero, comp_zero],
@@ -38,11 +49,11 @@ theorem resolutionStep_kernelClosed (hPQ : P ≤ Q) (hQ : Q ≤ E.ResolutionStep
     E.IsKernelClosed (E.ResolutionStep P Q) where
   prop_kernel {S} hS hB hC := by
     obtain ⟨T⟩ := hB
-    letI : HasPullback T.g S.f := E.deflation.hasPullback S.f T.deflation
+    let : HasPullback T.g S.f := E.deflation.hasPullback S.f T.deflation
     have hcomp := E.composite_deflation_conflation T.conflation hS
     have hPB : Q (pullback T.g S.f) :=
       E.kernel_mem_of_resolutionStep P Q hPQ hcomp (hPQ _ T.middle_mem) hC
-    exact E.resolutionStep_of_conflation P Q hPQ
+    exact E.resolutionStep_of_conflation P Q
       (E.pullbackConflation_mem T.conflation S.f) T.syzygy_mem (hQ _ hPB)
 
 /-- The mixed extension case with a resolving quotient. Choosing an actual
@@ -54,7 +65,7 @@ lemma resolutionStep_extension_by_mem (hPQ : P ≤ Q)
   obtain ⟨R⟩ := h S.X₂
   obtain ⟨Y, p, hY, hp⟩ := R.presentation
   obtain ⟨K, i, hi, hT⟩ := hp
-  letI : HasPullback p S.f := E.deflation.hasPullback S.f (E.deflation_of_conflation hT)
+  let : HasPullback p S.f := E.deflation.hasPullback S.f (E.deflation_of_conflation hT)
   have hcomp := E.composite_deflation_conflation hT hS
   have hPB : Q (pullback p S.f) :=
     IsKernelClosed.prop_kernel (E := E) (P := Q) hcomp (hPQ _ hY) (hPQ _ hC)
@@ -70,7 +81,7 @@ lemma pullbackConflationLeft_mem {S : ShortComplex C} (hS : E.conflation S)
     E.conflation (ShortComplex.mk
       (pullback.lift (f := g) (g := S.g) 0 S.f (by simp))
       (pullback.fst g S.g) (by simp)) := by
-  letI : HasPullback S.g g := hasPullback_symmetry _ _
+  let : HasPullback S.g g := hasPullback_symmetry _ _
   let U := pullbackConflation (S := S) T g
   let V := ShortComplex.mk
     (pullback.lift (f := g) (g := S.g) 0 S.f (by simp))
@@ -89,11 +100,11 @@ theorem resolutionStep_extensionClosed (hPQ : P ≤ Q)
     (h : E.ResolutionHypothesis P) : E.IsExtensionClosed (E.ResolutionStep P Q) where
   prop_middle {S} hS hA hC := by
     obtain ⟨T⟩ := hC
-    letI : HasPullback S.g T.g := E.deflation.hasPullback T.g (E.deflation_of_conflation hS)
+    let : HasPullback S.g T.g := E.deflation.hasPullback T.g (E.deflation_of_conflation hS)
     have hPB : E.ResolutionStep P Q (pullback S.g T.g) :=
       E.resolutionStep_extension_by_mem P Q hPQ h
         (E.pullbackConflation_mem hS T.g) hA T.middle_mem
-    exact E.resolutionStep_of_conflation P Q hPQ
+    exact E.resolutionStep_of_conflation P Q
       (E.pullbackConflationLeft_mem T.conflation S.g) T.syzygy_mem hPB
 
 end Quillen.ExactStructure
@@ -115,8 +126,9 @@ instance resolutionLength_closedUnderIsomorphisms (n : ℕ) :
 instance resolutionLength_containsZero (n : ℕ) : (E.ResolutionLength P n).ContainsZero :=
   ⟨⟨0, isZero_zero C, .of_mem P.prop_zero, Nat.zero_le n⟩⟩
 
+omit [P.IsClosedUnderIsomorphisms] [P.ContainsZero] in
 lemma le_resolutionLength (n : ℕ) : P ≤ E.ResolutionLength P n :=
-  fun X hX => ⟨.of_mem hX, Nat.zero_le n⟩
+  fun _X hX => ⟨.of_mem hX, Nat.zero_le n⟩
 
 lemma resolutionLength_succ_eq (n : ℕ) :
     E.ResolutionLength P (n + 1) = E.ResolutionStep P (E.ResolutionLength P n) := by
@@ -137,8 +149,8 @@ theorem resolutionLength_resolving [E.IsExtensionClosed P] [E.IsKernelClosed P]
     rw [he]
     exact ⟨inferInstance, inferInstance⟩
   | succ n ih =>
-    letI := ih.1
-    letI := ih.2
+    let := ih.1
+    let := ih.2
     have hQ : E.ResolutionLength P n ≤ E.ResolutionStep P (E.ResolutionLength P n) := by
       intro X hX
       exact (E.resolutionLength_succ_iff P n X).1

@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.ModuleComplex.ProjectiveStabilization
-import Mathlib.Algebra.Homology.QuasiIso
+module
+
+public import Quillen.Algebra.ModuleComplex.ProjectiveStabilization
+public import Mathlib.Algebra.Homology.QuasiIso
 
 /-!
 # Strictifying homotopy triangles with the original identity cone
@@ -16,6 +18,8 @@ identity cone. The new target map remains a quasi-isomorphism and agrees with
 the original target witness on the literal summand. No exactness or homology
 preservation is required of the additive functor.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

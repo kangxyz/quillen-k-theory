@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.PathSubdivision.SlabCover
-import Mathlib.Topology.Homotopy.Path
+module
+
+public import Quillen.Topology.PathSubdivision.SlabCover
+public import Mathlib.Topology.Homotopy.Path
 
 /-!
 # Literal affine time paths and their concatenation homotopy
@@ -15,6 +17,8 @@ is an explicit homotopy through time paths with both endpoints fixed. Every
 subsequent application to a family evaluates the original family at the
 current parameter, rather than attempting a vertical correction.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 namespace Quillen.PathSubdivision
@@ -66,7 +70,7 @@ def timePath (a b : unitInterval) : Path a b where
   exact congrArg Subtype.val (affineTime_self a t)
 
 /-- Each mesh slab is exactly the affine path between its original endpoints. -/
-theorem timePath_intervalCell (m : ℕ) (i : Fin (m+1)) (t : unitInterval) :
+theorem timePath_intervalCell (m : ℕ) (i : Fin (m + 1)) (t : unitInterval) :
     timePath (intervalCell m i 0) (intervalCell m i 1) t = intervalCell m i t := by
   apply Subtype.ext
   change (1-(t : ℝ))*(((i : ℝ)+0)/(m+1))+
@@ -90,11 +94,11 @@ def timeJoinHomotopy (a b c : unitInterval) :
       simp
 
 /-- The entire concatenation homotopy starts at the original first time. -/
-@[simp] theorem timeJoinHomotopy_source (a b c r : unitInterval) :
+theorem timeJoinHomotopy_source (a b c r : unitInterval) :
     timeJoinHomotopy a b c (r,0) = a := by simp [timeJoinHomotopy]
 
 /-- The entire concatenation homotopy ends at the original final time. -/
-@[simp] theorem timeJoinHomotopy_target (a b c r : unitInterval) :
+theorem timeJoinHomotopy_target (a b c r : unitInterval) :
     timeJoinHomotopy a b c (r,1) = c := by simp [timeJoinHomotopy]
 
 end Quillen.PathSubdivision

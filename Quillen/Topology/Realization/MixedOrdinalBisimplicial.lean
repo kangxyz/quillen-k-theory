@@ -1,12 +1,22 @@
-import Quillen.Topology.Realization.MixedOrdinalContraction
-import Quillen.Topology.Realization.MixedOrdinalFunctor
-import Quillen.Topology.Realization.OrdinalSubdivisionBisimplicial
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.MixedOrdinalContraction
+public import Quillen.Topology.Realization.MixedOrdinalFunctor
+public import Quillen.Topology.Realization.OrdinalSubdivisionBisimplicial
 
 /-! # The outer mixed cylinder of a bisimplicial set
 
 Only the outer ordinal is enlarged. The inner (nerve) degree stays unchanged.
 The minimum-cut contraction is an explicit homotopy on the actual diagonal.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite MonoidalCategory
 open scoped Simplicial Topology
@@ -74,7 +84,8 @@ def outerContractionCylinder (X : SimplexCategoryᵒᵖ ⥤ SSet.{u}) :
 /-- The actual diagonal contraction from zero-section/projection to identity. -/
 def outerContraction (X : SimplexCategoryᵒᵖ ⥤ SSet.{u}) :
     SSet.Homotopy
-      (TheoremA.diagonalMap (outerProjection X) ≫ TheoremA.diagonalMap (outerZeroSection X)) (𝟙 _) where
+      (TheoremA.diagonalMap (outerProjection X) ≫ TheoremA.diagonalMap (outerZeroSection X)) (𝟙
+        _) where
   h := outerContractionCylinder X
   h₀ := by
     apply NatTrans.ext

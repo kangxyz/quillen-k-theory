@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Waldhausen.Fibration.LongExactSequence
-import Quillen.Waldhausen.GilletWaldhausen.FineProductDecomposition
-import Quillen.Waldhausen.GilletWaldhausen.FibrationModelKEquivalence
+module
+
+public import Quillen.Waldhausen.Fibration.LongExactSequence
+public import Quillen.Waldhausen.GilletWaldhausen.FineProductDecomposition
+public import Quillen.Waldhausen.GilletWaldhausen.FibrationModelKEquivalence
 
 /-! # The exact Gillet-Waldhausen quotient and original coarse single map
 
@@ -16,6 +18,8 @@ The actual canonical fiber comparison supplies exactness and surjectivity,
 including degree zero. This algebraic layer supports distinct object and hom
 universes and retains its explicit canonical-comparison hypothesis.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -95,15 +99,20 @@ theorem boundedTermsSingle_coarse_KMap_bijective_of_canonicalFiber_weak
       (fiberObjectsInclusion_KMap_injective P) n)
 
 /-- The conditional equivalence's forward homomorphism is the exact original map. -/
-def boundedTermsSingle_coarse_KEquiv_of_canonicalFiber_weak
+def boundedTermsSingleCoarseKEquivOfCanonicalFiberWeakEquivalence
     (h : IsWeakHomotopyEquivalence (Fibration.canonicalFiberMap (boundedTermsNested P))) (n : ℕ) :
     (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K n ≃*
       (boundedTermsNested P).coarse.K n :=
   MulEquiv.ofBijective (KMap (boundedTermsSingle_coarseExact P 0) n)
     (boundedTermsSingle_coarse_KMap_bijective_of_canonicalFiber_weak P h n)
 
-@[simp] theorem boundedTermsSingle_coarse_KEquiv_of_canonicalFiber_weak_toMonoidHom
-    (h : IsWeakHomotopyEquivalence (Fibration.canonicalFiberMap (boundedTermsNested P))) (n : ℕ) :
-    (boundedTermsSingle_coarse_KEquiv_of_canonicalFiber_weak P h n).toMonoidHom =
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem boundedTermsSingleCoarseKEquivOfCanonicalFiberWeakEquivalence_coe (h :
+    IsWeakHomotopyEquivalence (Fibration.canonicalFiberMap (boundedTermsNested P))) (n : ℕ) :
+    (↑(boundedTermsSingleCoarseKEquivOfCanonicalFiberWeakEquivalence P h n) : (ofExactCategory
+        (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K n →*
+        (boundedTermsNested P).coarse.K n) =
       KMap (boundedTermsSingle_coarseExact P 0) n := rfl
+
+
 end Quillen.Waldhausen.GilletWaldhausen

@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.Grading
-import Quillen.CategoryTheory.EqualGrade
-import Quillen.Waldhausen.SConstruction.Rows.NervePresentation
+module
+
+public import Quillen.Waldhausen.Cofinality.Grading
+public import Quillen.CategoryTheory.EqualGrade
+public import Quillen.Waldhausen.SConstruction.Rows.NervePresentation
 
 /-! # Actual graded quotient rows and their discrete realization models
 
@@ -16,6 +18,8 @@ natural transformations give an actual row homotopy equivalence. Reindexing
 keeps the original interval map. Identification of the realized grades with a
 group nerve is a further combinatorial step.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial
@@ -52,7 +56,8 @@ theorem rowWeak_iff {n : SimplexCategory} {X Y : Obj d.coarseStructure n} (f : X
 
 /-- Original weak rows project to their actually realized discrete grade. -/
 def rowProjection (n : SimplexCategory) : WeakRows d.coarseStructure n ⥤ Discrete (d.RowGrade n) :=
-  EqualGrade.projectionOfIff (d.rowGrade n) (waldhausenStructure d.coarseStructure n).weq d.rowWeak_iff
+  EqualGrade.projectionOfIff (d.rowGrade n) (waldhausenStructure d.coarseStructure n).weq
+    d.rowWeak_iff
 
 /-- The actual zero transformations give a genuine homotopy equivalence on every original row. -/
 def rowProjectionHomotopyEquiv (n : SimplexCategory) :
@@ -66,7 +71,8 @@ def rowProjectionHomotopyEquiv (n : SimplexCategory) :
 @[simp] theorem rowProjectionHomotopyEquiv_toFun (n : SimplexCategory) :
     (d.rowProjectionHomotopyEquiv n).toFun = (classifyingSpaceMap (d.rowProjection n)).hom :=
   by
-    let : HasZeroMorphisms (Obj d.coarseStructure n) := (isZero d.coarseStructure n).hasZeroMorphisms
+    let : HasZeroMorphisms (Obj d.coarseStructure n) := (isZero d.coarseStructure
+      n).hasZeroMorphisms
     exact EqualGrade.projectionOfIffHomotopyEquiv_toFun _ _ _ _
 
 /-- Restrict a realized grade using exactly the original interval-index functor. -/

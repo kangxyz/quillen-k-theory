@@ -1,4 +1,12 @@
-import Quillen.Topology.HELP.StrictCompact
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.StrictCompact
 
 /-! # Full prescribed-boundary HELP for one actual HEP pair
 
@@ -6,6 +14,8 @@ The strict-to-full construction keeps its test spaces and inclusion fixed.
 This version exposes that fact so it applies to genuinely contracted tests
 without claiming a lifting property on arbitrary compact target spaces.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -17,11 +27,11 @@ namespace Quillen
 /-- Strict-square lifting for this particular HEP pair recovers the full
 prescribed homotopy on exactly this pair. -/
 theorem fullHELP_at_pair_of_strict {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y]
-    (f : C(X,Y)) (A B : TopCat.{u}) (i : A ⟶ B)
+    (f : C(X, Y)) (A B : TopCat.{u}) (i : A ⟶ B)
     (hi : TheoremA.homotopyExtensionProperty i)
-    (hf : ∀ (a : C(A,X)) (b : C(B,Y)), f.comp a = b.comp i.hom →
-      ∃ c : C(B,X), c.comp i.hom = a ∧ Nonempty ((f.comp c).HomotopyRel b (Set.range i)))
-    (a : C(A,X)) (b : C(B,Y)) (H : (f.comp a).Homotopy (b.comp i.hom)) :
+    (hf : ∀ (a : C(A, X)) (b : C(B, Y)), f.comp a = b.comp i.hom →
+      ∃ c : C(B, X), c.comp i.hom = a ∧ Nonempty ((f.comp c).HomotopyRel b (Set.range i)))
+    (a : C(A, X)) (b : C(B, Y)) (H : (f.comp a).Homotopy (b.comp i.hom)) :
     ∃ c : C(B,X), c.comp i.hom = a ∧ ∃ K : (f.comp c).Homotopy b,
       ∀ t x, K (t, i x) = H (t,x) := by
   obtain ⟨Q, hQ₀, hQA⟩ := TheoremA.homotopyExtensionProperty_continuous hi

@@ -1,7 +1,17 @@
-import Quillen.Waldhausen.Additivity.IntervalArrows
-import Quillen.Waldhausen.Additivity.SplitSequence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.IntervalArrows
+public import Quillen.Waldhausen.Additivity.SplitSequence
 
 /-! # Actual endpoint isomorphisms of the interval pushout deformation -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

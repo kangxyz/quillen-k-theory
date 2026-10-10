@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.CommaCategory.Structure
-import Quillen.Waldhausen.CofibrationClosedSubcategory
+module
+
+public import Quillen.Waldhausen.CommaCategory.Structure
+public import Quillen.Waldhausen.CofibrationClosedSubcategory
 
 /-!
 # The actual weak-arrow enlargement of an exact functor
@@ -15,6 +17,8 @@ diagonal and both projections are exact. Their natural weak comparison uses
 the original stored arrow and preserves the original factorization of F.
 Target weak reflection is derived from original App1 and two-out-of-three.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
@@ -26,7 +30,11 @@ variable {C : Type u} [Category.{v} C] {D : Type u'} [Category.{v'} D]
   (V : Structure C) (W : Structure D) (F : C ⥤ D)
   (hF : IsExact V.cof V.weq W.cof W.weq F)
 
+/-- The predicate selecting comma objects whose stored arrow `F.obj A ⟶ B` is a weak equivalence
+in `W`. -/
 def objects : ObjectProperty (FunctorComma.Obj F) := fun X => W.weq X.hom
+/-- The full category of weak arrows from the image of `F`, with the original commutative comma
+squares as morphisms. -/
 abbrev Obj := (objects W F).FullSubcategory
 
 /-- Weak arrows are closed under the actual pointwise cofibration pushouts. -/
@@ -43,7 +51,11 @@ def waldhausenStructure : Structure (Obj W F) :=
   CofibrationClosedSubcategory.waldhausenStructure (FunctorComma.waldhausenStructure V W F hF)
     (objects W F) (closed V W F hF)
 
+/-- The functor taking a weak-arrow object `F.obj A ⟶ B` to `A` and a commutative square to its
+source component. -/
 def source : Obj W F ⥤ C := (objects W F).ι ⋙ Comma.fst F (𝟭 D)
+/-- The functor taking a weak-arrow object `F.obj A ⟶ B` to `B` and a commutative square to its
+target component. -/
 def target : Obj W F ⥤ D := (objects W F).ι ⋙ Comma.snd F (𝟭 D)
 
 theorem source_exact : IsExact (waldhausenStructure V W F hF).cof

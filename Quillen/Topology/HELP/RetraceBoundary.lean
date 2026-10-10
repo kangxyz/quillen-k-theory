@@ -1,15 +1,24 @@
-import Quillen.Topology.HomotopyFiber.BoundaryCorrection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.BoundaryCorrection
 
 /-! # Removing a backtracking boundary homotopy
 
 The two opposite traversals shrink together through actual prefixes of the
 reversed path. The deformation fixes both path endpoints throughout.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 set_option backward.isDefEq.respectTransparency.types false
-set_option maxHeartbeats 400000
 open CategoryTheory
 open scoped Topology unitInterval
 open unitInterval
@@ -17,7 +26,7 @@ universe u v
 
 namespace Quillen
 
-@[fun_prop] private theorem continuous_mulIntervalRetrace :
+@[fun_prop] theorem continuous_mulIntervalRetrace :
     Continuous (fun z : I × I ↦ z.1 * z.2) := by
   apply Continuous.subtype_mk
   exact (continuous_subtype_val.comp continuous_fst).mul

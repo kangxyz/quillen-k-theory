@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.ConstantChains
-import Quillen.Topology.Realization.BisimplicialEquivalence
-import Quillen.CategoryTheory.TheoremA.Augmentations
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.ConstantChains
+public import Quillen.Topology.Realization.BisimplicialEquivalence
+public import Quillen.CategoryTheory.TheoremA.Augmentations
 
 /-! # The prescribed constant-chain map on the actual mixed diagonal
 
@@ -8,6 +16,8 @@ The original forward nerve maps are ordinal-natural; their actual rowwise
 homotopy equivalences imply the diagonal comparison through the accepted
 rowwise-diagonal theorem. No ordinal-natural evaluation inverse is required.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial Topology
@@ -23,11 +33,13 @@ def constantHorizontalDiagonalMap : nerve (TrivialCofibrations.WeakCategory N.co
     TheoremA.diagonalSSet (horizontalNerve N) :=
   (TheoremA.diagonalConstantIso _).inv ≫ TheoremA.diagonalMap (constantHorizontalNerve N)
 
-/-- The actual rowwise constant-chain homotopy equivalences induce a genuine diagonal equivalence. -/
+/-- The actual rowwise constant-chain homotopy equivalences induce a genuine diagonal
+equivalence. -/
 def constantHorizontalDiagonalHomotopyEquiv :
     ContinuousMap.HomotopyEquiv (ClassifyingSpace (TrivialCofibrations.WeakCategory N.coarse.weq))
       |TheoremA.diagonalSSet (horizontalNerve N)| :=
-  (TopCat.homeoOfIso (SSet.toTop.mapIso (TheoremA.diagonalConstantIso _).symm)).toHomotopyEquiv.trans
+  (TopCat.homeoOfIso (SSet.toTop.mapIso (TheoremA.diagonalConstantIso
+    _).symm)).toHomotopyEquiv.trans
     (BisimplicialRealization.diagonalRealizationHomotopyEquiv (constantHorizontalNerve N)
       (fun n ↦ constantHorizontalClassifyingHomotopyEquiv N (SimplexCategory.mk n)) (fun _ ↦ rfl))
 
@@ -35,7 +47,8 @@ def constantHorizontalDiagonalHomotopyEquiv :
 @[simp] theorem constantHorizontalDiagonalHomotopyEquiv_toFun :
     (constantHorizontalDiagonalHomotopyEquiv N).toFun =
       (SSet.toTop.map (constantHorizontalDiagonalMap N)).hom := by
-  simp only [constantHorizontalDiagonalHomotopyEquiv, constantHorizontalDiagonalMap, Functor.map_comp]
+  simp only [constantHorizontalDiagonalHomotopyEquiv, constantHorizontalDiagonalMap,
+    Functor.map_comp]
   rfl
 
 end Quillen.Waldhausen.Fibration.MixedNerves

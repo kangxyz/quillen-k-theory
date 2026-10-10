@@ -3,10 +3,12 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.Homology.BoundedProjectiveReplacement
-import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
-import Mathlib.CategoryTheory.ObjectProperty.Equivalence
-import Mathlib.CategoryTheory.ObjectProperty.Opposite
+module
+
+public import Quillen.Algebra.Homology.BoundedProjectiveReplacement
+public import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
+public import Mathlib.CategoryTheory.ObjectProperty.Equivalence
+public import Mathlib.CategoryTheory.ObjectProperty.Opposite
 
 /-!
 # Actual opposite properties of cochain complexes
@@ -20,6 +22,8 @@ closure from the original negative-shift closure.
 Object and morphism universes remain independent. No new resolution or derived
 equivalence is a hypothesis.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -30,12 +34,16 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.CochainComplex
 variable {C : Type u} [Category.{v} C] [Abelian C]
 
-instance cochainOpEquivalence_functor_additive : (CochainComplex.opEquivalence C).functor.Additive := by
+instance cochainOpEquivalence_functor_additive : (CochainComplex.opEquivalence C).functor.Additive
+  := by
   dsimp [CochainComplex.opEquivalence, ChainComplex.cochainComplexEquivalence]
   infer_instance
-instance cochainOpEquivalence_inverse_additive : (CochainComplex.opEquivalence C).inverse.Additive :=
+instance cochainOpEquivalence_inverse_additive : (CochainComplex.opEquivalence C).inverse.Additive
+  :=
   Equivalence.inverse_additive _
 
+/-- Transport an object property of cochain complexes to complexes in the opposite category by
+the inverse opposite-cochain equivalence, after taking the opposite property. -/
 abbrev oppositeProperty (P : ObjectProperty (CochainComplex C ℤ)) :
     ObjectProperty (CochainComplex Cᵒᵖ ℤ) :=
   P.op.inverseImage (CochainComplex.opEquivalence C).inverse
@@ -51,7 +59,8 @@ instance oppositeProperty_extensionClosed :
     have := hS.epi_g
     have h : (S.map (CochainComplex.opEquivalence C).inverse).unop.ShortExact :=
       (hS.map (CochainComplex.opEquivalence C).inverse).unop
-    exact ExactStructure.IsExtensionClosed.prop_middle (E := abelianExactStructure (CochainComplex C ℤ)) (P := P) h h₃ h₁
+    exact ExactStructure.IsExtensionClosed.prop_middle (E := abelianExactStructure (CochainComplex C
+      ℤ)) (P := P) h h₃ h₁
 
 instance oppositeProperty_finiteProducts : (oppositeProperty P).IsClosedUnderFiniteProducts :=
   (abelianExactStructure _).extensionClosed_finiteProducts _

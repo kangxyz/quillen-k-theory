@@ -1,8 +1,18 @@
-import Quillen.GTheory.FiniteModules.Localization.Basic
-import Mathlib.Algebra.Module.LocalizedModule.Submodule
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.GTheory.FiniteModules.Localization.Basic
+public import Mathlib.Algebra.Module.LocalizedModule.Submodule
 
 /-! Every finite module over a localization descends to a finite module over the
 original ring, by taking the original-ring span of finitely many generators. -/
+@[expose] public section
+
 
 noncomputable section
 universe u
@@ -14,13 +24,13 @@ variable {R : Type u} [CommRing R] (S : Submonoid R)
 No noetherian assumption is needed for this essential-surjectivity statement. -/
 instance functor_essSurj : (functor S).EssSurj where
   mem_essImage N := by
-    letI : Module R N := Module.compHom N (algebraMap R (Localization S))
-    letI : IsScalarTower R (Localization S) N := IsScalarTower.of_algebraMap_smul fun _ _ ↦ rfl
-    letI : IsLocalizedModule S (LinearMap.id : N →ₗ[R] N) :=
+    let : Module R N := Module.compHom N (algebraMap R (Localization S))
+    let : IsScalarTower R (Localization S) N := IsScalarTower.of_algebraMap_smul fun _ _ ↦ rfl
+    let : IsLocalizedModule S (LinearMap.id : N →ₗ[R] N) :=
       isLocalizedModule_id S N (Localization S)
     obtain ⟨s, hs⟩ := (inferInstance : Module.Finite (Localization S) N).1
     let M : Submodule R N := Submodule.span R (s : Set N)
-    letI : Module.Finite R M := Module.Finite.of_fg (Submodule.fg_span s.finite_toSet)
+    let : Module.Finite R M := Module.Finite.of_fg (Submodule.fg_span s.finite_toSet)
     have hM : M.localized' (Localization S) S (LinearMap.id : N →ₗ[R] N) = ⊤ := by
       rw [Submodule.localized'_eq_span]
       simpa only [LinearMap.id_coe, Set.image_id, M, Submodule.span_span_of_tower] using hs

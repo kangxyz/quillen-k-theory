@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Additivity.EndpointHomotopies
-import Quillen.Waldhausen.Additivity.RealizationHomotopy
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.EndpointHomotopies
+public import Quillen.Waldhausen.Additivity.RealizationHomotopy
 
 /-! # Genuine realized additivity for cofibration sequences of exact functors
 
@@ -12,6 +20,8 @@ realization equivalence. No additivity or fibration assertion is a hypothesis.
 These are explicitly unbased homotopies. The chosen-zero track and the
 resulting canonical based K-map equality require an additional argument.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -33,10 +43,13 @@ theorem subdivided_middle_homotopic_sum :
     ((realizedDiagonalMap (bisimplicialSSetMap V.cof V.weq hs.exactG)).comp
       (realizedDiagonalMap (OrdinalSubdivision.horizontalEndpoint (bisimplicialSSet V)))).Homotopic
       (realizedDiagonalMap (separatedSumMap V W hs.exactH hs.exactF)) := by
-  have h₀ : (realizedDiagonalMap (identityDeformationMap V W a hs.exactF hs.exactG hs.cofibration)).Homotopic
+  have h₀ : (realizedDiagonalMap (identityDeformationMap V W a hs.exactF hs.exactG
+    hs.cofibration)).Homotopic
       (realizedDiagonalMap (bisimplicialSSetMap V.cof V.weq hs.exactG)) :=
-    ⟨realizationSimplicialHomotopy (identityEndpointHomotopy V W a hs.exactF hs.exactG hs.cofibration)⟩
-  have h₁ : (realizedDiagonalMap (separatedDeformationMap V W a hs.exactF hs.exactG hs.cofibration)).Homotopic
+    ⟨realizationSimplicialHomotopy (identityEndpointHomotopy V W a hs.exactF hs.exactG
+      hs.cofibration)⟩
+  have h₁ : (realizedDiagonalMap (separatedDeformationMap V W a hs.exactF hs.exactG
+    hs.cofibration)).Homotopic
       (realizedDiagonalMap (separatedSumMap V W hs.exactH hs.exactF)) :=
     ⟨realizationSimplicialHomotopy (separatedEndpointHomotopy V W a b hs)⟩
   have hm := mixed_deformation_endpoints (bisimplicialSSet V) (bisimplicialSSet W)

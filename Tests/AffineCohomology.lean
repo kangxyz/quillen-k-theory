@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Scheme.Sheaf.AffineCohomology
-import Tests.AffineCechHigher
+module
+
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineCohomology
+public import Tests.AffineCechHigher
 
 /-!
 # Consumers of actual higher affine quasicoherent cohomology
@@ -16,9 +18,10 @@ cover, and the zero ring. Further consumers retain the literal cocycle equation,
 actual open-free stalk naturality, and arbitrary injective coefficients on
 families of opens with no top-cover hypothesis.
 -/
+@[expose] public section
+
 
 noncomputable section
-set_option maxHeartbeats 800000
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u

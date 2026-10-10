@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremB.Comparison
-import Quillen.Topology.HomotopyFiber.Map
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.Comparison
+public import Quillen.Topology.HomotopyFiber.Map
 
 /-!
 # Naturality of the actual comma-to-fiber comparison
@@ -7,6 +15,7 @@ import Quillen.Topology.HomotopyFiber.Map
 These identities identify the continuous maps and their path coordinates,
 rather than only comparing abstract homotopy types.
 -/
+@[expose] public section
 
 noncomputable section
 
@@ -122,39 +131,10 @@ namespace TheoremB
 
 variable {C D : Type u} [SmallCategory C] [SmallCategory D] (F : C ⥤ D)
 
+/-- On a comma vertex the nullhomotopy is the realized structure arrow. -/
 @[simp]
-theorem transition_id (d : D) : transition F (𝟙 d) = 𝟭 (CostructuredArrow F d) := by
-  apply CategoryTheory.Functor.ext (fun X ↦ CostructuredArrow.map_id)
-
-@[simp]
-theorem transition_comp {d e k : D} (f : d ⟶ e) (g : e ⟶ k) :
-    transition F (f ≫ g) = transition F f ⋙ transition F g := by
-  apply CategoryTheory.Functor.ext (fun X ↦ CostructuredArrow.map_comp)
-
-@[simp]
-theorem transitionMap_id (d : D) :
-    transitionMap F (𝟙 d) = ContinuousMap.id (ClassifyingSpace (CostructuredArrow F d)) := by
-  simp [transitionMap]
-
-@[simp]
-theorem transitionMap_comp {d e k : D} (f : d ⟶ e) (g : e ⟶ k) :
-    transitionMap F (f ≫ g) = (transitionMap F g).comp (transitionMap F f) := by
-  simp [transitionMap, classifyingSpaceMap_comp]
-
-/-- All transition maps commute strictly with projection to the source classifying space. -/
-@[simp]
-theorem transitionMap_projection {d e : D} (f : d ⟶ e) :
-    (classifyingSpaceMap (CostructuredArrow.proj F e)).hom.comp (transitionMap F f) =
-      (classifyingSpaceMap (CostructuredArrow.proj F d)).hom := by
-  change (classifyingSpaceMap (transition F f) ≫
-    classifyingSpaceMap (CostructuredArrow.proj F e)).hom = _
-  rw [← classifyingSpaceMap_comp, transition_projection]
-
-/-- On an object, the path carried by the comma comparison is exactly the
-realized structure arrow. -/
-@[simp]
-theorem fiberComparison_vertex_path (d : D) (X : CostructuredArrow F d) (t : unitInterval) :
-    (fiberComparison F d (classifyingSpacePoint X)).1.2 t = classifyingSpacePath X.hom t :=
+theorem commaNullhomotopy_vertex (d : D) (X : CostructuredArrow F d) (t : unitInterval) :
+    commaNullhomotopy F d (t, classifyingSpacePoint X) = classifyingSpacePath X.hom t :=
   classifyingSpaceNaturalTransformationHomotopy_vertex (commaTransformation F d) X t
 
 section Postcomposition
@@ -203,7 +183,8 @@ theorem commaNullhomotopy_post (d : D) (t : unitInterval)
         Functor.uncurry, ComposableArrows.mk₁]
     · ext a
       simp [naturalTransformationCylinderFunctor, Functor.curry, Functor.curryObj,
-        Functor.uncurry, ComposableArrows.mk₁, ComposableArrows.hom, commaTransformation, CostructuredArrow.post]
+        Functor.uncurry, ComposableArrows.mk₁, ComposableArrows.hom, commaTransformation,
+          CostructuredArrow.post]
   have hn : naturalTransformationNerveCylinder
       (Functor.whiskerLeft (CostructuredArrow.post F K d)
         (commaTransformation (F ⋙ K) (K.obj d))) =

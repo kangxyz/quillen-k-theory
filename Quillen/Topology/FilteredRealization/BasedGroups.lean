@@ -1,4 +1,12 @@
-import Quillen.Topology.FilteredRealization.WeakEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.FilteredRealization.WeakEquivalence
 
 /-! # Actual based homotopy groups of filtered simplicial colimits
 
@@ -8,6 +16,8 @@ detected at a later stage. No transition equivalence or realization-map
 injectivity is assumed. Cube boundaries are retained by the proved compact
 factorization and relative-homotopy lifting theorems.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

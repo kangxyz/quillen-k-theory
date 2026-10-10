@@ -3,10 +3,14 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.SmallModel.Basic
-import Quillen.Waldhausen.Fibration.CanonicalFiberMap
+module
+
+public import Quillen.Waldhausen.SmallModel.Basic
+public import Quillen.Waldhausen.Fibration.CanonicalFiberMap
 
 /-! # Original acyclic categories and extension data under the common-universe lift -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology
@@ -29,14 +33,15 @@ instance smallModel_twoOutOfThree [W.weq.HasTwoOutOfThreeProperty] :
   ((W.weq.inverseImage (AsSmall.down : SmallModel C ⥤ C)).HasTwoOutOfThreeProperty)
 
 /-- The actual zero-to-object morphism lowers to the original zero-to-object morphism. -/
-@[simp] theorem smallModel_zero_to (X : SmallModel C) :
-    AsSmall.down.map (W.smallModel.isZero.to_ X) = W.isZero.to_ (AsSmall.down.obj X) :=
-  W.isZero.eq_of_src _ _
+@[simp] theorem smallModel_zero_to_down (X : SmallModel C) :
+    (W.smallModel.isZero.to_ X).down = W.isZero.to_ (AsSmall.down.obj X) := W.isZero.eq_of_src _ _
+
 
 /-- The actual object-to-zero morphism is likewise unchanged after lowering. -/
-@[simp] theorem smallModel_from_zero (X : SmallModel C) :
-    AsSmall.down.map (W.smallModel.isZero.from_ X) = W.isZero.from_ (AsSmall.down.obj X) :=
-  W.isZero.eq_of_tgt _ _
+@[simp] theorem smallModel_from_zero_down (X : SmallModel C) :
+    (W.smallModel.isZero.from_ X).down = W.isZero.from_ (AsSmall.down.obj X) :=
+        W.isZero.eq_of_tgt _ _
+
 
 /-- Extension is inherited on the original cofiber diagrams after lowering. -/
 theorem smallModel_extensionAxiom (he : Fibration.ExtensionAxiom W) :
@@ -44,7 +49,7 @@ theorem smallModel_extensionAxiom (he : Fibration.ExtensionAxiom W) :
   extension hi hi' h h' a b c wi wq ha hc := by
     have hp := h.map (AsSmall.down : SmallModel C ⥤ C)
     have hp' := h'.map (AsSmall.down : SmallModel C ⥤ C)
-    simp only [smallModel_zero_to, smallModel_from_zero] at hp hp'
+    simp only [AsSmall.down_map, smallModel_zero_to_down, smallModel_from_zero_down] at hp hp'
     exact he.extension hi hi' hp hp' (AsSmall.down.map a) (AsSmall.down.map b)
       (AsSmall.down.map c) (congrArg AsSmall.down.map wi) (congrArg AsSmall.down.map wq) ha hc
 
@@ -52,7 +57,7 @@ theorem smallModel_extensionAxiom (he : Fibration.ExtensionAxiom W) :
 @[simp] theorem smallModel_acyclic_iff (X : SmallModel C) :
     Fibration.Acyclic W.smallModel X ↔ Fibration.Acyclic W (AsSmall.down.obj X) := by
   change W.weq (AsSmall.down.map (W.smallModel.isZero.to_ X)) ↔ _
-  rw [smallModel_zero_to]
+  rw [AsSmall.down_map, smallModel_zero_to_down]
   rfl
 
 end Structure
@@ -77,11 +82,19 @@ def acyclicSmallDown : AcyclicCategory N.smallModel ⥤ AcyclicCategory N where
 def acyclicSmallEquivalence : AcyclicCategory N ≌ AcyclicCategory N.smallModel where
   functor := acyclicSmallUp N
   inverse := acyclicSmallDown N
-  unitIso := NatIso.ofComponents (fun _ ↦ Iso.refl _) (by intros; simp only [Iso.refl_hom, Category.id_comp, Category.comp_id]; rfl)
-  counitIso := NatIso.ofComponents (fun _ ↦ Iso.refl _) (by intros; simp only [Iso.refl_hom, Category.id_comp, Category.comp_id]; rfl)
+  unitIso := NatIso.ofComponents (fun _ ↦ Iso.refl _) (by
+    intros
+    simp only [Iso.refl_hom, Category.id_comp, Category.comp_id]
+    rfl)
+  counitIso := NatIso.ofComponents (fun _ ↦ Iso.refl _) (by
+    intros
+    simp only [Iso.refl_hom, Category.id_comp, Category.comp_id]
+    rfl)
 
-local instance : (acyclicSmallUp N).IsEquivalence := (acyclicSmallEquivalence N).isEquivalence_functor
-local instance : (acyclicSmallDown N).IsEquivalence := (acyclicSmallEquivalence N).isEquivalence_inverse
+local instance : (acyclicSmallUp N).IsEquivalence := (acyclicSmallEquivalence
+    N).isEquivalence_functor
+local instance : (acyclicSmallDown N).IsEquivalence := (acyclicSmallEquivalence
+    N).isEquivalence_inverse
 
 /-- The forward equivalence retains genuine fine cofibrations and weaknesses. -/
 theorem acyclicSmallUp_exact : IsExact (acyclicStructure N).cof (acyclicStructure N).weq

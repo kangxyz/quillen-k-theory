@@ -4,11 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Waldhausen.GilletWaldhausen.Comparison
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.Comparison
 
 /-! A semantic degree-zero consumer: the original coarse single map gives a
 unique original term-category class over each coarse bounded-complex class.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u
@@ -71,7 +75,7 @@ local instance forwardMap_termPropertyProducts : P.IsClosedUnderFiniteProducts :
 
 /-- The produced equivalence retains the exact original single-insertion map. -/
 example (n : ℕ) :
-    (boundedTermsSingle_coarse_KEquiv P n).toMonoidHom =
+    (boundedTermsSingleCoarseKEquiv P n).toMonoidHom =
       KMap (boundedTermsSingle_coarseExact P 0) n :=
-  boundedTermsSingle_coarse_KEquiv_toMonoidHom P n
+  boundedTermsSingleCoarseKEquiv_coe P n
 end Quillen.Waldhausen.GilletWaldhausen

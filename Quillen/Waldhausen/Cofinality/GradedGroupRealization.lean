@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.GradedGroupNerve
-import Quillen.Waldhausen.Cofinality.GradedRealization
+module
+
+public import Quillen.Waldhausen.Cofinality.GradedGroupNerve
+public import Quillen.Waldhausen.Cofinality.GradedRealization
 
 /-! # The original graded coarse S-map to its actual value-group nerve
 
@@ -13,6 +15,8 @@ subgroup. Actual finite replacement realizes every nerve chain in this range.
 The resulting complete weak comparison retains each original grid coordinate;
 neither tuple realizability nor K-zero identification is a premise.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial
@@ -65,7 +69,8 @@ def groupGradeMap : sSet d.coarseStructure.cof d.coarseStructure.weq ⟶
     ((d.rangeGrading T).gradeGroupNerveIso T (d.valueToRange_surjective T)).hom
 
 /-- Actual categorical constructions prove complete weakness of the original group-grading map. -/
-theorem groupGradeMap_isRealizationWeakEquivalence : IsRealizationWeakEquivalence (d.groupGradeMap T) := by
+theorem groupGradeMap_isRealizationWeakEquivalence : IsRealizationWeakEquivalence
+    (d.groupGradeMap T) := by
   simpa only [IsRealizationWeakEquivalence, groupGradeMap, Functor.map_comp, TopCat.hom_comp,
     ContinuousMap.comp_assoc] using
     (IsRealizationWeakEquivalence.of_isIso

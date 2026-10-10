@@ -1,8 +1,16 @@
-import Quillen.CategoryTheory.ExactCategory.Isomorphisms
-import Quillen.CategoryTheory.ExactCategory.BaseChange
-import Mathlib.CategoryTheory.Localization.CalculusOfFractions
-import Mathlib.CategoryTheory.ObjectProperty.ClosedUnderIsomorphisms
-import Mathlib.CategoryTheory.MorphismProperty.IsInvertedBy
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
+public import Quillen.CategoryTheory.ExactCategory.BaseChange
+public import Mathlib.CategoryTheory.Localization.CalculusOfFractions
+public import Mathlib.CategoryTheory.ObjectProperty.ClosedUnderIsomorphisms
+public import Mathlib.CategoryTheory.MorphismProperty.IsInvertedBy
 
 /-!
 # s-filtering subcategories and weak isomorphisms
@@ -15,6 +23,8 @@ Weak isomorphisms are exactly the multiplicative closure of inflations with
 cokernel in the subcategory and deflations with kernel in it (Definition 1.12).
 Neither a calculus of fractions nor exactness of the quotient is assumed here.
 -/
+@[expose] public section
+
 
 universe v u v' u'
 

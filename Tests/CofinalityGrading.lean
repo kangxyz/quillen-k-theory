@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.GradedRealization
+module
+
+public import Quillen.Waldhausen.Cofinality.GradedRealization
 
 /-! # Actual coarse grading and original S-map consumers -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial
@@ -56,7 +60,8 @@ theorem original_row_vertex (n : SimplexCategory) (X : QuotientRows.WeakRows d.c
 
 /-- The unchanged original coarse grading map is bijective on all actual based homotopy groups. -/
 theorem original_grading_homotopy_map (x : d.coarseStructure.Delooping) (n : ℕ) :
-    Function.Bijective (homotopyGroupMap (N := Fin n) (SSet.toTop.map d.gradeMap).hom (x := x) rfl) :=
+    Function.Bijective (homotopyGroupMap (N := Fin n) (SSet.toTop.map d.gradeMap).hom (x := x) rfl)
+      :=
   d.gradeMap_isRealizationWeakEquivalence.homotopy_bijective x n
 
 /-- Complete weakness retains component surjectivity onto the actual grade realization. -/

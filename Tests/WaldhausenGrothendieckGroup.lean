@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.GrothendieckGroup.Image
+module
+
+public import Quillen.Waldhausen.GrothendieckGroup.Image
 
 /-! # Original algebraic classes, exact functors and actual image-quotient consumers -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v' w
@@ -17,7 +21,8 @@ variable {C : Type u} [Category.{v} C] (W : Structure C)
 theorem original_weak_class {A B : C} (f : A ⟶ B) (hf : W.weq f) :
     objectClass W A = objectClass W B := objectClass_weak W f hf
 
-/-- The original displayed cofiber, rather than an isomorphic replacement, has the difference class. -/
+/-- The original displayed cofiber, rather than an isomorphic replacement, has the difference class.
+  -/
 theorem original_cofiber_class {A B Q : C} {i : A ⟶ B} {q : B ⟶ Q}
     (hi : W.cof i) (hQ : IsPushout i (W.isZero.from_ A) q (W.isZero.to_ Q)) :
     objectClass W Q = objectClass W B - objectClass W A :=
@@ -51,9 +56,11 @@ theorem witnessed_image_is_zero_grade {A : D} (hA : ApproximationImage.objects V
 theorem zero_grade_is_original_algebraic_image (A : D) :
     Fibration.acyclicObjects (imageQuotientGrading W F hF).nested A ↔
       objectClass V A ∈ (map W F hF).range :=
-  ((imageQuotientGrading W F hF).acyclicObjects_iff A).trans (imageQuotientGrading_zero_iff W F hF A)
+  ((imageQuotientGrading W F hF).acyclicObjects_iff A).trans (imageQuotientGrading_zero_iff W F hF
+    A)
 
-/-- The exact image quotient has an original target representative for each of its actual elements. -/
+/-- The exact image quotient has an original target representative for each of its actual elements.
+  -/
 theorem quotient_class_representative (T : FunctorialFactorization V) (x : ImageQuotient W F hF) :
     ∃ A : D, (imageQuotientGrading W F hF).value A = x := imageQuotientGrading_surjective W F hF T x
 end Quillen.Tests.WaldhausenGrothendieckGroup

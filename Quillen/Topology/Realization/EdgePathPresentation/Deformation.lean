@@ -1,5 +1,13 @@
-import Quillen.Topology.Realization.EdgePathPresentation.Pushout
-import Quillen.Topology.Realization.Cylinder
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.EdgePathPresentation.Pushout
+public import Quillen.Topology.Realization.Cylinder
 
 /-!
 # Deforming a simplex-attachment collar onto the previous space
@@ -8,6 +16,8 @@ The boundary-fixed radial deformation descends through the actual topological
 pushout. The resulting open neighborhood is a strong deformation retract
 onto the previous space, including for arbitrary parameter spaces.
 -/
+@[expose] public section
+
 
 noncomputable section
 

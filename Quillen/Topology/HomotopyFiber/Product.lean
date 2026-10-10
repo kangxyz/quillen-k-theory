@@ -1,6 +1,16 @@
-import Quillen.Topology.HomotopyFiber.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.Equivalence
 
 /-! # The actual homotopy fiber of a topological product projection -/
+@[expose] public section
+
 
 noncomputable section
 open scoped Topology

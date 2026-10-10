@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.ExactCategory.Composition
-import Quillen.CategoryTheory.ExactCategory.Isomorphisms
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Composition
+public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
 
 /-!
 # The obscure axiom, with its necessary kernel hypothesis
@@ -9,6 +17,8 @@ The argument is the matrix form of Keller's proof recorded in Bühler,
 *Exact Categories*, Proposition 2.15 (dual). The kernel hypothesis is retained:
 no weak idempotent completeness or unconditional cancellation is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v u
@@ -58,7 +68,7 @@ lemma isPushout_biprod_map_fst {K Y X : C} (k : K ⟶ Y) :
 
 /-- A kernel of `p`, together with the untouched summand, is the kernel of
 `[p,0]`. This statement only uses the supplied kernel universal property. -/
-def kernel_desc_zero {K Y Z X : C} {k : K ⟶ Y} {p : Y ⟶ Z}
+def kernelForkBiprodDescZeroIsLimit {K Y Z X : C} {k : K ⟶ Y} {p : Y ⟶ Z}
     (hkp : k ≫ p = 0) (hk : IsLimit (KernelFork.ofι k hkp)) :
     IsLimit (KernelFork.ofι (biprod.map k (𝟙 X))
       (show biprod.map k (𝟙 X) ≫ biprod.desc p (0 : X ⟶ Z) = 0 by
@@ -90,7 +100,7 @@ lemma deflation_of_comp_of_isKernel {X Y Z K : C} (r : X ⟶ Y) (p : Y ⟶ Z)
     {k : K ⟶ Y} (hkp : k ≫ p = 0) (hk : IsLimit (KernelFork.ofι k hkp))
     (hrp : E.deflation (r ≫ p)) : E.deflation p := by
   have hdesc := E.deflation_desc_zero_of_comp r p hrp
-  have hcon := E.conflation_of_isKernel _ (kernel_desc_zero hkp hk (X := X)) hdesc
+  have hcon := E.conflation_of_isKernel _ (kernelForkBiprodDescZeroIsLimit hkp hk (X := X)) hdesc
   have hmap := E.inflation_of_conflation hcon
   have hi : E.inflation k := E.inflation.of_isPushout (isPushout_biprod_map_fst k (X := X)) hmap
   let hc := E.cokernel _ hcon

@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremA.Coend
-import Quillen.Topology.Realization.ProductSimplex
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.Coend
+public import Quillen.Topology.Realization.ProductSimplex
 
 /-!
 # Diagonal and iterated realization agree
@@ -11,6 +19,8 @@ canonically homeomorphic to realizing its diagonal. The proof transports
 the checked simplicial co-Yoneda colimit along geometric realization and
 the proved product-with-simplex homeomorphisms.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -78,14 +88,18 @@ def realizationCoendDiagramIso :
       | id a => simp
       | fst f =>
         change SSet.toTop.map (X.map f.hom.op ▷ SSet.stdSimplex.obj f.left) ≫
-          CartesianMonoidalCategory.prodComparison SSet.toTop (X.obj (op f.left)) (SSet.stdSimplex.obj f.left) =
-          CartesianMonoidalCategory.prodComparison SSet.toTop (X.obj (op f.right)) (SSet.stdSimplex.obj f.left) ≫
+          CartesianMonoidalCategory.prodComparison SSet.toTop (X.obj (op f.left))
+            (SSet.stdSimplex.obj f.left) =
+          CartesianMonoidalCategory.prodComparison SSet.toTop (X.obj (op f.right))
+            (SSet.stdSimplex.obj f.left) ≫
             (SSet.toTop.map (X.map f.hom.op) ▷ |SSet.stdSimplex.obj f.left|)
         exact prodComparison_natural_whiskerRight SSet.toTop (X.map f.hom.op)
       | snd f =>
         change SSet.toTop.map (X.obj (op f.right) ◁ SSet.stdSimplex.map f.hom) ≫
-          CartesianMonoidalCategory.prodComparison SSet.toTop (X.obj (op f.right)) (SSet.stdSimplex.obj f.right) =
-          CartesianMonoidalCategory.prodComparison SSet.toTop (X.obj (op f.right)) (SSet.stdSimplex.obj f.left) ≫
+          CartesianMonoidalCategory.prodComparison SSet.toTop (X.obj (op f.right))
+            (SSet.stdSimplex.obj f.right) =
+          CartesianMonoidalCategory.prodComparison SSet.toTop (X.obj (op f.right))
+            (SSet.stdSimplex.obj f.left) ≫
             (|X.obj (op f.right)| ◁ SSet.toTop.map (SSet.stdSimplex.map f.hom))
         exact prodComparison_natural_whiskerLeft SSet.toTop (SSet.stdSimplex.map f.hom))
 

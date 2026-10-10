@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.GilletWaldhausen.TruncationExact
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.TruncationExact
 
 /-! # Genuine nested-truncation coherence
 
@@ -7,6 +15,8 @@ truncLE m K → K induces an actual isomorphism
 truncLE n (truncLE m K) → truncLE n K. This is natural on every chain map
 and compatible with the original inclusions. No acyclicity is needed.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

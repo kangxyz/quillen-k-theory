@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.RowPostcompose
-import Quillen.Waldhausen.Fibration.TrivialCofibrations.Category
-import Quillen.Waldhausen.SConstruction.Rows.NervePresentation
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.RowPostcompose
+public import Quillen.Waldhausen.Fibration.TrivialCofibrations.Category
+public import Quillen.Waldhausen.SConstruction.Rows.NervePresentation
 
 /-! # The actual coarse row presentation on unchanged quotient diagrams
 
@@ -10,6 +18,8 @@ change only those proofs and retain every original diagram and natural
 transformation. They restrict to the actual coarse weak maps and commute
 with every original row restriction.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial
@@ -60,10 +70,12 @@ def coarseWeakRowsReindex {m n : SimplexCategory} (α : m ⟶ n) :
   widePostcompose (rowReindexCompatible N α).toFunctor _ _ (rowReindexCompatible N α).coarse
 
 /-- The coarse weak maps are the same original components in the standard coarse row model. -/
-def coarseWeakRowsToStandard (n : SimplexCategory) : coarseWeakRows N n ⥤ QuotientRows.WeakRows N.coarse n :=
+def coarseWeakRowsToStandard (n : SimplexCategory) : coarseWeakRows N n ⥤ QuotientRows.WeakRows
+    N.coarse n :=
   widePostcompose (coarseRowView N n) _ _ (fun _ h ↦ h)
 /-- The inverse keeps every original coarse weak component unchanged. -/
-def standardToCoarseWeakRows (n : SimplexCategory) : QuotientRows.WeakRows N.coarse n ⥤ coarseWeakRows N n :=
+def standardToCoarseWeakRows (n : SimplexCategory) : QuotientRows.WeakRows N.coarse n ⥤
+    coarseWeakRows N n :=
   widePostcompose (fineRowView N n) _ _ (fun _ h ↦ h)
 
 @[simp] theorem coarseWeakRowsToStandard_inverse (n : SimplexCategory) :
@@ -105,7 +117,8 @@ def coarseWeakRowCategories : SimplexCategoryᵒᵖ ⥤ Cat.{v,max u v} where
   map_comp _ _ := by apply Cat.Hom.ext; apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 
 /-- Nerve of the actual coarse weak maps on unchanged original fine row objects. -/
-def coarseWeakRowNerve : SimplexCategoryᵒᵖ ⥤ SSet.{max u v} := coarseWeakRowCategories N ⋙ nerveFunctor
+def coarseWeakRowNerve : SimplexCategoryᵒᵖ ⥤ SSet.{max u v} := coarseWeakRowCategories N ⋙
+    nerveFunctor
 
 /-- Exact bisimplicial identification with the standard coarse weak row nerve. -/
 def coarseWeakRowNerveIso : coarseWeakRowNerve N ≅ QuotientRows.weakRowNerve N.coarse where
@@ -134,9 +147,10 @@ def coarseSSetIso : TheoremA.diagonalSSet (coarseWeakRowNerve N) ≅ sSet N.coar
     ((coarseSSetIso N).hom.app (op n) F).val =
       QuotientRows.weakChainToGrid N.coarse (F ⋙ coarseWeakRowsToStandard N n) := rfl
 
-/-- Every forward grid object is literally the original row object at the original indices. -/
-@[simp] theorem coarseSSetIso_hom_obj (n : SimplexCategory)
-    (F : ComposableArrows (coarseWeakRows N n) n.len) (t : Fin (n.len+1)) (p : Interval n) :
-    (((coarseSSetIso N).hom.app (op n) F).val.obj (t,p)) = (F.obj t).obj.obj.obj p := rfl
+/-- Passing to the standard coarse weak row retains every original object. -/
+@[simp] theorem coarseWeakRowsToStandard_obj_obj (n : SimplexCategory)
+    (F : coarseWeakRows N n) (p : Interval n) :
+    ((coarseWeakRowsToStandard N n).obj F).obj.obj.obj p = F.obj.obj.obj p := rfl
+
 
 end Quillen.Waldhausen.Fibration.MixedNerves

@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.TrivialCofibrations.CommaCylinder
-import Quillen.CategoryTheory.TheoremA.ContractibleComma
-import Quillen.Topology.ClassifyingSpace.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.TrivialCofibrations.CommaCylinder
+public import Quillen.CategoryTheory.TheoremA.ContractibleComma
+public import Quillen.Topology.ClassifyingSpace.Equivalence
 
 /-! # The original weak-cofibration inclusion is a genuine classifying equivalence
 
@@ -9,6 +17,8 @@ The proved Quillen-A theorem then supplies a homotopy equivalence with exactly
 the original inclusion's classifying map. Its topological endpoint retains
 the common-universe scope of the existing Quillen-A implementation.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 universe u v

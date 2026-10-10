@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Fibration.AllWeak.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.AllWeak.Basic
 
 /-! # The actual acyclic inclusion from the all-weak source
 
@@ -7,6 +15,8 @@ coarse weak. Thus the original inclusion is exact even when every source
 map is declared weak. The original S-map triangle and the original
 zero-transformation components are retained explicitly.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped Topology
@@ -43,7 +53,7 @@ theorem changeWeak_acyclicInclusion_realized :
     (changeWeak_acyclicInclusion_sSetMap N)
   rw [SSet.toTop.map_comp, TopCat.hom_comp] at h
   exact h.trans (congrArg TopCat.Hom.hom
-    (deloopingMap_comp (Fibration.acyclicInclusion_exact N) (changeWeak_exact N)))
+    (deloopingMap_comp_deloopingMap (Fibration.acyclicInclusion_exact N) (changeWeak_exact N)).symm)
 
 omit [N.coarse.weq.HasTwoOutOfThreeProperty] in
 /-- The original zero-to-identity component maps to the original acyclic

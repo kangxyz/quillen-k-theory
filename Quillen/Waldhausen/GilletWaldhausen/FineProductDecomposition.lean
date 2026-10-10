@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.SingleQuasiComparison
-import Quillen.Waldhausen.Fibration.CanonicalFiberMap
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.SingleQuasiComparison
+public import Quillen.Waldhausen.Fibration.CanonicalFiberMap
 
 /-! # Actual fine K-product decomposition and its coarse projection
 
@@ -10,6 +18,8 @@ null composite shows that changing to quasi-isomorphisms retains exactly the
 original coarse single map on the P-coordinate. No fibration exactness or
 coarse-map surjectivity is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -30,12 +40,13 @@ theorem boundedAcyclicTerms_changeWeak_KMap (k : ℕ)
     KMap (Fibration.changeWeak_exact (boundedTermsNested P)) k
       (KMap (boundedAcyclicTermsExactInclusion P).waldhausenExact k x) = 1 := by
   have he := KMap_eq_of_iso
-    ((boundedAcyclicToFiberObjects_exact P).comp (Fibration.acyclicInclusion_exact (boundedTermsNested P)))
+    ((boundedAcyclicToFiberObjects_exact P).comp (Fibration.acyclicInclusion_exact
+        (boundedTermsNested P)))
     (boundedAcyclicTermsExactInclusion P).waldhausenExact
     (eqToIso (boundedAcyclicToFiberObjects_comp_inclusion P)) k
   have hi := (DFunLike.congr_fun he x).symm.trans
-    (DFunLike.congr_fun (KMap_comp (boundedAcyclicToFiberObjects_exact P)
-      (Fibration.acyclicInclusion_exact (boundedTermsNested P)) k) x)
+    (DFunLike.congr_fun (KMap_comp_KMap (boundedAcyclicToFiberObjects_exact P)
+      (Fibration.acyclicInclusion_exact (boundedTermsNested P)) k).symm x)
   exact (congrArg (KMap (Fibration.changeWeak_exact (boundedTermsNested P)) k) hi).trans
     (DFunLike.congr_fun (Fibration.changeWeak_KMap_comp_acyclic (boundedTermsNested P) k)
       (KMap (boundedAcyclicToFiberObjects_exact P) k x))
@@ -67,12 +78,14 @@ theorem boundedTermsAcyclicSingleKMap_coarse (k : ℕ)
 
 variable [(abelianExactStructure A).IsKernelClosed P]
 
-/-- The proved actual global unique factorization makes the original product homomorphism bijective. -/
+/-- The proved actual global unique factorization makes the original product homomorphism bijective.
+-/
 theorem boundedTermsAcyclicSingleKMap_bijective (k : ℕ) :
     Function.Bijective (boundedTermsAcyclicSingleKMap P k) := by
   constructor
   · intro x y hxy
-    exact (boundedTerms_existsUnique_acyclic_single_zero P k (boundedTermsAcyclicSingleKMap P k x)).unique
+    exact (boundedTerms_existsUnique_acyclic_single_zero P k (boundedTermsAcyclicSingleKMap P k
+        x)).unique
       rfl hxy.symm
   · intro x
     obtain ⟨p, hp, _⟩ := boundedTerms_existsUnique_acyclic_single_zero P k x
@@ -84,10 +97,14 @@ def boundedTermsAcyclicSingleKEquiv (k : ℕ) :
     ((ofExactCategory (boundedAcyclicExactStructure P)).K k ×
       (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) ≃*
         (ofExactCategory (boundedTermsExactStructure P)).K k :=
-  MulEquiv.ofBijective (boundedTermsAcyclicSingleKMap P k) (boundedTermsAcyclicSingleKMap_bijective P k)
+  MulEquiv.ofBijective (boundedTermsAcyclicSingleKMap P k)
+      (boundedTermsAcyclicSingleKMap_bijective P k)
 
-@[simp] theorem boundedTermsAcyclicSingleKEquiv_toMonoidHom (k : ℕ) :
-    (boundedTermsAcyclicSingleKEquiv P k).toMonoidHom = boundedTermsAcyclicSingleKMap P k := rfl
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem boundedTermsAcyclicSingleKEquiv_coe (k : ℕ) :
+    MonoidHomClass.toMonoidHom (boundedTermsAcyclicSingleKEquiv P k) =
+        boundedTermsAcyclicSingleKMap P k := rfl
+
 
 /-- The forward map is literally the product of the two original public KMaps. -/
 @[simp] theorem boundedTermsAcyclicSingleKEquiv_apply (k : ℕ)

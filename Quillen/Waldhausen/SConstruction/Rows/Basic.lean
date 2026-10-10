@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.ExtensionCategory.Structure
-import Quillen.Waldhausen.SConstruction
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.Structure
+public import Quillen.Waldhausen.SConstruction
 
 /-! # Actual quotient-row categories and the all-triples Reedy condition
 
@@ -8,6 +16,8 @@ nerve coordinate. All natural transformations are retained as morphisms.
 The cofibration condition tests every horizontal interval-arrow square in
 the actual Reedy extension category, including degenerate intervals.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -20,7 +30,8 @@ variable {C : Type u} [Category.{v} C] (W : Structure C)
 structure IsRow {n : SimplexCategory} (F : Interval n ⥤ C) : Prop where
   zero (i) : IsZero (F.obj (interval i i le_rfl))
   cofibration (i j k) (hij : i ≤ j) (hjk : j ≤ k) :
-    W.cof (F.map (homOfLE (show interval i j hij ≤ interval i k (hij.trans hjk) from ⟨le_rfl, hjk⟩)))
+    W.cof (F.map (homOfLE (show interval i j hij ≤ interval i k (hij.trans hjk) from ⟨le_rfl,
+      hjk⟩)))
   quotient (i j k) (hij : i ≤ j) (hjk : j ≤ k) :
     IsPushout
       (F.map (homOfLE (show interval i j hij ≤ interval i k (hij.trans hjk) from ⟨le_rfl, hjk⟩)))
@@ -28,13 +39,20 @@ structure IsRow {n : SimplexCategory} (F : Interval n ⥤ C) : Prop where
       (F.map (homOfLE (show interval i k (hij.trans hjk) ≤ interval j k hjk from ⟨hij, le_rfl⟩)))
       (F.map (homOfLE (show interval j j le_rfl ≤ interval j k hjk from ⟨le_rfl, hjk⟩)))
 
+/-- The predicate selecting interval diagrams with zero diagonal objects, horizontal
+cofibrations, and the quotient pushout squares specified by `IsRow W`. -/
 def objects (n : SimplexCategory) : ObjectProperty (Interval n ⥤ C) := IsRow W
+/-- The full category of quotient-row diagrams satisfying the S-construction row conditions,
+retaining all natural transformations as morphisms. -/
 abbrev Obj (n : SimplexCategory) := (objects W n).FullSubcategory
 
+/-- The full-subcategory inclusion of quotient rows into all diagrams on `Interval n`. -/
 def forget (n : SimplexCategory) : Obj W n ⥤ (Interval n ⥤ C) := (objects W n).ι
 instance forget_full (n) : (forget W n).Full := by unfold forget; infer_instance
 instance forget_faithful (n) : (forget W n).Faithful := by unfold forget; infer_instance
 
+/-- The functor taking a quotient row to its component at the interval `p` and a natural
+transformation to its component map there. -/
 def evaluation {n : SimplexCategory} (p : Interval n) : Obj W n ⥤ C :=
   forget W n ⋙ (CategoryTheory.evaluation (Interval n) C).obj p
 

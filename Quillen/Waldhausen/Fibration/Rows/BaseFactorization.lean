@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Fibration.Rows.ReflexiveFactorization
+module
+
+public import Quillen.Waldhausen.Fibration.Rows.ReflexiveFactorization
 
 /-! # Genuine base factorization from the original fine joint cylinder
 
@@ -11,6 +13,8 @@ The actual endpoint coproduct and original joint cofibration provide the
 first factor; the original fine weak projection supplies the second factor.
 No additional chosen factorization is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,10 +32,15 @@ def sourceFactorization : FunctorialFactorization W where
   factorization f := by
     change (D.inl.app f ≫ (D.joint.obj f).obj.hom) ≫ D.projection.app f = f.hom
     simpa only [Category.assoc] using D.factorization f
-  cofibration f := W.cof.comp_mem _ _
-    (W.cof_pushout (W.cof_zero f.right)
-      (IsPushout.of_is_coproduct (D.coproduct f) W.isZero.isInitial).flip)
-    (D.joint.obj f).property
+  cofibration f := by
+    have hs : IsPushout (W.isZero.to_ f.left) (W.isZero.to_ f.right)
+        (D.inl.app f) (D.inr.app f) := by
+      have hl : W.isZero.isInitial.to f.left = W.isZero.to_ f.left := W.isZero.eq_of_src _ _
+      have hr : W.isZero.isInitial.to f.right = W.isZero.to_ f.right := W.isZero.eq_of_src _ _
+      rw [← hl, ← hr]
+      exact IsPushout.of_is_coproduct' (D.coproduct f) W.isZero.isInitial
+    exact W.cof.comp_mem _ _ (W.cof_pushout (W.cof_zero f.right) hs.flip)
+      (D.joint.obj f).property
   weak := D.weak
 
 /-- Factorization retains the actual original projection rather than a newly chosen weak map. -/

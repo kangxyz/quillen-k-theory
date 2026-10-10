@@ -1,4 +1,12 @@
-import Quillen.Topology.Realization.EdgePathPresentation.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.EdgePathPresentation.Basic
 
 /-!
 # Fundamental-groupoid fullness from simply connected open cell charts
@@ -8,6 +16,8 @@ cover a space. If every overlap `U ∩ V i` is path-connected, then every
 path-homotopy class with endpoints in `U` is represented by a path in `U`.
 The argument uses actual compact subdivision and local path homotopies.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -65,9 +75,13 @@ def pathInSubset {U : Set X} {x y : U} (p : Path x.1 y.1)
 /-- A path connecting a point to the base open set, simultaneously remaining
 in every cell chart containing that point. -/
 structure OpenCoverAnchor (U : Set X) (V : ι → Set X) (x : X) where
+  /-- An anchor point in the base open set `U`. -/
   point : U
+  /-- A path from the anchor point to `x`. -/
   path : Path point.1 x
+  /-- When `x` lies in `U`, the anchor path remains in `U`. -/
   in_base : x ∈ U → Set.range path ⊆ U
+  /-- For each chart containing `x`, the anchor path remains in that chart. -/
   in_chart : ∀ i, x ∈ V i → Set.range path ⊆ V i
 
 /-- Pairwise disjoint cell charts with connected overlaps supply compatible

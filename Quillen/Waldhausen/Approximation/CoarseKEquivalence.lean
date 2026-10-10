@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Fibration.Rows.CoarseJoint
-import Quillen.Waldhausen.Approximation.GeneralKEquivalence
-import Quillen.Waldhausen.Approximation.WeakCommaCylinder
+module
+
+public import Quillen.Waldhausen.Fibration.Rows.CoarseJoint
+public import Quillen.Waldhausen.Approximation.GeneralKEquivalence
+public import Quillen.Waldhausen.Approximation.WeakCommaCylinder
 
 /-! # Approximation from an actual fine joint cylinder with coarse-weak projection
 
@@ -14,6 +16,8 @@ class. The original fine joint cylinder then becomes genuinely coarse-exact
 by gluing and its projection squares. This supplies the structural input of
 approximation on the enlarged source weak model, with all original maps.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 universe u v
@@ -44,7 +48,8 @@ def coarseKEquiv (n : ℕ) : N.coarse.K n ≃* V.K n :=
   MulEquiv.ofBijective (KMap hF n) (coarse_KMap_bijective N J h hF n)
 
 /-- The coarse approximation equivalence retains the original canonical K-homomorphism. -/
-@[simp] theorem coarseKEquiv_toMonoidHom (n : ℕ) :
-    (coarseKEquiv N J h hF n).toMonoidHom = KMap hF n := rfl
+@[simp] theorem coarseKEquiv_coe (n : ℕ) :
+    (↑(coarseKEquiv N J h hF n) : N.coarse.K n →* V.K n) = KMap hF n := rfl
+
 
 end Quillen.Waldhausen.Fibration

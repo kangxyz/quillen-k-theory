@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleIncidence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleIncidence
 
 /-! # Injectivity of the original finite acyclic inclusion K-map
 
@@ -7,6 +15,8 @@ all cycle coordinates. The proved finite cycle decomposition then detects the
 original class. These are genuine original isomorphism-model KMaps, including
 K₀ and empty term intervals, without any fibration assumption.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -27,7 +37,8 @@ theorem finiteCycleInclusion_KMap_eq_one (a : ℤ) (m k : ℕ)
     (hx : KMap (finiteAcyclicTermsExactInclusion P a (a + (m : ℤ))).waldhausenExact k x = 1) :
     x = 1 := by
   have hz (i : ℕ) (hi : i ≤ m) :
-      KMap (finiteCycleEvaluationExact P a (a + (m : ℤ)) (a + (i : ℤ))).waldhausenExact k x = 1 := by
+      KMap (finiteCycleEvaluationExact P a (a + (m : ℤ)) (a + (i : ℤ))).waldhausenExact k x = 1
+        := by
     induction i with
     | zero =>
       rw [finiteCycle_KMap_evaluation_zero P a (a + (m : ℤ)) _ (Or.inl (by omega)),

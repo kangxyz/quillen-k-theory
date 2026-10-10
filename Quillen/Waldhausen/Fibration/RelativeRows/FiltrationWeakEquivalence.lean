@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationEquivalence
-import Quillen.Topology.ClassifyingSpace.Equivalence
-import Mathlib.CategoryTheory.Widesubcategory
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationEquivalence
+public import Quillen.Topology.ClassifyingSpace.Equivalence
+public import Mathlib.CategoryTheory.Widesubcategory
 
 /-! # The genuine presentation on the original fine-weak morphism categories
 
@@ -9,6 +17,8 @@ fine weak maps. The unit and counit are original categorical isomorphisms,
 so they remain maps in those weak categories. Their classifying-space
 homotopy equivalence retains the original forward and inverse functors.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -54,7 +64,7 @@ def weakCompletionFunctor (n : SimplexCategory) : FineWeakChains N n ⥤ FineWea
 
 /-- The forward weak-chain map retains every original initial-interval component. -/
 @[simp] theorem weakFiltrationPresentation_map_app (he : ExtensionAxiom N.coarse)
-    {n : SimplexCategory} {F G : FineWeakRows N n} (f : F ⟶ G) (i : Fin (n.len+1)) :
+    {n : SimplexCategory} {F G : FineWeakRows N n} (f : F ⟶ G) (i : Fin (n.len + 1)) :
     (((weakFiltrationPresentation N he n).map f).hom.hom).app i =
       f.hom.hom.hom.app (interval 0 i.succ (Fin.zero_le _)) := rfl
 
@@ -89,10 +99,12 @@ def weakFiltrationEquivalence (he : ExtensionAxiom N.coarse) (n : SimplexCategor
   CategoryTheory.Equivalence.mk (weakFiltrationPresentation N he n) (weakCompletionFunctor N n)
     (weakFiltrationCompletionIso N he n) (weakCompletionFiltrationIso N he n).symm
 
-@[simp] theorem weakFiltrationEquivalence_functor (he : ExtensionAxiom N.coarse) (n : SimplexCategory) :
+@[simp] theorem weakFiltrationEquivalence_functor (he : ExtensionAxiom N.coarse) (n :
+    SimplexCategory) :
     (weakFiltrationEquivalence N he n).functor = weakFiltrationPresentation N he n := rfl
 
-@[simp] theorem weakFiltrationEquivalence_inverse (he : ExtensionAxiom N.coarse) (n : SimplexCategory) :
+@[simp] theorem weakFiltrationEquivalence_inverse (he : ExtensionAxiom N.coarse) (n :
+    SimplexCategory) :
     (weakFiltrationEquivalence N he n).inverse = weakCompletionFunctor N n := rfl
 
 /-- The original weak-filtration map induces a genuine classifying-space homotopy equivalence. -/

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.CategoryTheory.TheoremB.WeakCartesianPushout
-import Quillen.Topology.Realization.DoubleCylinderCompactGraph
+module
+
+public import Quillen.Topology.HomotopyPullback.WeakPushout
+public import Quillen.Topology.Realization.DoubleCylinderCompactGraph
 
 /-! # Original weak-cartesian pushout comparison regressions
 
@@ -13,6 +15,8 @@ Only the two original incoming comparisons are weak hypotheses. The target
 cylinder's Hausdorff instance supplies its actual graph condition here, and
 both outgoing comparison maps retain the original points and constant paths.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open Quillen Quillen.CartesianPushout
@@ -55,11 +59,13 @@ example (x : C) :
       (c x,j x,ContinuousMap.const unitInterval (j' (c x))) := rfl
 
 example (x : B) (t : unitInterval) :
-    (HomotopyPullback.comparison p.hom i'.hom b.hom i.hom (congrArg TopCat.Hom.hom wi) x).val.2.2 t =
+    (HomotopyPullback.comparison p.hom i'.hom b.hom i.hom (congrArg TopCat.Hom.hom wi) x).val.2.2 t
+      =
       i' (b x) := rfl
 
 example (x : C) (t : unitInterval) :
-    (HomotopyPullback.comparison p.hom j'.hom c.hom j.hom (congrArg TopCat.Hom.hom wj) x).val.2.2 t =
+    (HomotopyPullback.comparison p.hom j'.hom c.hom j.hom (congrArg TopCat.Hom.hom wj) x).val.2.2 t
+      =
       j' (c x) := rfl
 
 section RealizedTarget

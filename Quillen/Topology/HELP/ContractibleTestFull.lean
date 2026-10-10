@@ -1,7 +1,17 @@
-import Quillen.Topology.HELP.ContractibleTest
-import Quillen.Topology.HELP.StrictPair
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.ContractibleTest
+public import Quillen.Topology.HELP.StrictPair
 
 /-! # Full boundary homotopies on genuinely compact contracted tests -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -16,7 +26,7 @@ full prescribed-boundary HELP holds on this actual compact contracted test.
 The target map can change during the HEP reduction, so all its possible fiber
 points are covered by the displayed structural premise. -/
 theorem fullHELP_on_contracted_test
-    (p : C(E,B)) (q : C(F,B)) (f : C(E,F)) (sq : q.comp f = p)
+    (p : C(E, B)) (q : C(F, B)) (f : C(E, F)) (sq : q.comp f = p)
     (hp : HomotopyLiftingProperty p) (hq : HomotopyLiftingProperty q)
     (hf : ∀ b : B, CompactHomotopyExtensionLiftingProperty
       (HomotopyFiber.strictMapOver p q f sq b))

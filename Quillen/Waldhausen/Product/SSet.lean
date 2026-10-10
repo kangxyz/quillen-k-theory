@@ -1,11 +1,21 @@
-import Quillen.Waldhausen.ExtensionCategory.Product
-import Quillen.Waldhausen.Functoriality.KMap
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.Product
+public import Quillen.Waldhausen.Functoriality.KMap
 
 /-! # The actual S-construction of a product Waldhausen category
 
 Pairing genuine quotient grids is inverse to the two original projection
 S-maps. The simplicial isomorphism retains the chosen zero vertex exactly.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -63,11 +73,13 @@ def sSetIso : sSet (productStructure V W).cof (productStructure V W).weq ≅
     comparison V W ≫ CartesianMonoidalCategory.snd _ _ = sSetMap (snd_exact V W) := by
   simp [comparison]
 
-@[simp] theorem comparison_zero (n : SimplexCategoryᵒᵖ) :
-    (comparison V W).app n (zeroSimplex (productStructure V W).cof
+/-- The product comparison preserves zero in the canonical product simplex type. -/
+@[simp] theorem comparison_app_hom_zero (n : SimplexCategoryᵒᵖ) :
+    TypeCat.Hom.hom (Y := (sSet V.cof V.weq).obj n × (sSet W.cof W.weq).obj n)
+      ((comparison V W).app n) (zeroSimplex (productStructure V W).cof
       (productStructure V W).weq (V.zero, W.zero) (productStructure V W).isZero n) =
       (zeroSimplex V.cof V.weq V.zero V.isZero n,
-        zeroSimplex W.cof W.weq W.zero W.isZero n) := by
-  apply _root_.Prod.ext <;> apply Subtype.ext <;> rfl
+        zeroSimplex W.cof W.weq W.zero W.isZero n) := rfl
+
 
 end Quillen.Waldhausen.Product

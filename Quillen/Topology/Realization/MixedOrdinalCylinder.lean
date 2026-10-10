@@ -1,7 +1,17 @@
-import Quillen.Topology.Realization.MixedOrdinalEndpoints
-import Quillen.Topology.Realization.OrdinalSubdivisionRealization
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.MixedOrdinalEndpoints
+public import Quillen.Topology.Realization.OrdinalSubdivisionRealization
 
 /-! # The variable-suffix mixed ordinal cylinder -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial
@@ -52,7 +62,8 @@ def cylinder (X : SSet.{u}) : SSet.{u} where
   obj n := Simplex X n.unop
   map α := ↾(reindex X α.unop)
   map_id n := by apply ConcreteCategory.hom_ext; intro s; exact reindex_id X n.unop s
-  map_comp α β := by apply ConcreteCategory.hom_ext; intro s; exact (reindex_comp X β.unop α.unop s).symm
+  map_comp α β := by apply ConcreteCategory.hom_ext; intro s; exact (reindex_comp X β.unop
+    α.unop s).symm
 
 /-- Restrict a mixed simplex to its always-present first copy. -/
 def projection (X : SSet.{u}) : cylinder X ⟶ X where

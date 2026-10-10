@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.WeakEquivalence
+module
+
+public import Quillen.Waldhausen.Approximation.WeakEquivalence
 
 /-! # Consumers of the original weak-category approximation map
 
@@ -11,6 +13,8 @@ The generic compact-source criterion keeps its independent source universe.
 The concrete consumers retain the original comma category, original functor,
 all homotopy degrees, component surjectivity and empty-source obstruction.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Quillen.Waldhausen
 open Quillen.Waldhausen.HasApproximationProperty

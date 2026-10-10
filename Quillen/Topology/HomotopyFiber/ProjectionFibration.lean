@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremB.HomotopyPullbackFibration
-import Quillen.CategoryTheory.TheoremB.HomotopyPullbackSymmetry
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyPullback.Fibration
+public import Quillen.Topology.HomotopyPullback.Symmetry
 
 /-! # The genuine homotopy-fiber projection is a fibration
 
@@ -7,6 +15,8 @@ The projection is a pullback of the endpoint fibration for paths starting
 at the fixed target point, with path reversal expressed by the existing
 actual homotopy-pullback symmetry homeomorphism.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

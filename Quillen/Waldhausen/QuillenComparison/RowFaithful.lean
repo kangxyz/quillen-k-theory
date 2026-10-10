@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.QuillenComparison.RowSimplicial
-import Quillen.CategoryTheory.QConstruction.Core
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.RowSimplicial
+public import Quillen.CategoryTheory.QConstruction.Core
 
 /-! # Faithfulness of the exact-row Q comparison
 
@@ -8,6 +16,8 @@ component on the whole interval. Monic inclusions determine the initial
 subobjects, and epic quotient maps determine all remaining components.
 The central-interval Q comparison therefore detects every row isomorphism.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

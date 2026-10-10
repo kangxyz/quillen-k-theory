@@ -1,7 +1,17 @@
-import Quillen.Topology.CubicalSubdivision.FaceComplex
-import Quillen.Topology.CubicalSubdivision.Cover
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.FaceComplex
+public import Quillen.Topology.CubicalSubdivision.Cover
 
 /-! # One uniform grid controls every face in every skeleton dimension -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 namespace Quillen.CubicalSubdivision
@@ -30,7 +40,7 @@ theorem faceSet_subset_cellSet {n m : ℕ} (F : FaceIndex n m) :
 /-- The same finite grid makes every whole face subordinate to the pulled-back
 open cover, simultaneously in all dimensions. -/
 theorem exists_grid_faces_subordinate (n : ℕ) {X : Type u} [TopologicalSpace X]
-    (f : C(Cube n,X)) {J : Type v} (U : J → Set X)
+    (f : C(Cube n, X)) {J : Type v} (U : J → Set X)
     (hU : ∀ j, IsOpen (U j)) (hcover : ∀ x, ∃ j, f x ∈ U j) :
     ∃ m : ℕ, ∀ F : FaceIndex n m, ∃ j : J,
       ∀ t : Active F → unitInterval, f (face F t) ∈ U j := by

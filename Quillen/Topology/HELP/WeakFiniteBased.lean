@@ -1,6 +1,14 @@
-import Quillen.Topology.HELP.StrictPair
-import Quillen.Topology.HELP.CubeBoundaryHomeomorph
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.StrictPair
+public import Quillen.Topology.HELP.CubeBoundaryHomeomorph
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
 
 /-!
 # Finite based-boundary HELP from the original weak equivalence
@@ -11,6 +19,8 @@ homotopy on that same constant boundary map. The zero-dimensional boundary
 is empty and gives an unrestricted test. Arbitrary nonconstant boundary maps
 in positive dimension require a separate sphere-filling argument.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 open scoped Topology unitInterval
@@ -21,8 +31,8 @@ namespace Quillen
 homotopy on that same map, using the actual HEP correction. -/
 theorem fullHELP_at_fixed_boundary_of_strict
     {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y]
-    (f : C(X,Y)) (A B : TopCat.{u}) (i : A ⟶ B)
-    (hi : TheoremA.homotopyExtensionProperty i) (a : C(A,X))
+    (f : C(X, Y)) (A B : TopCat.{u}) (i : A ⟶ B)
+    (hi : TheoremA.homotopyExtensionProperty i) (a : C(A, X))
     (hf : ∀ b : C(B,Y), f.comp a = b.comp i.hom →
       ∃ c : C(B,X), c.comp i.hom = a ∧
         Nonempty ((f.comp c).HomotopyRel b (Set.range i)))
@@ -59,12 +69,12 @@ theorem fullHELP_at_fixed_boundary_of_strict
 namespace IsWeakHomotopyEquivalence
 open CubicalTests
 variable {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y]
-  {f : C(X,Y)} (hf : IsWeakHomotopyEquivalence f)
+  {f : C(X, Y)} (hf : IsWeakHomotopyEquivalence f)
 include hf
 
 /-- The original weak equivalence lifts a based cube, retaining the entire
 constant boundary and a homotopy relative to the actual boundary subtype. -/
-theorem basedCube_strictHELP (n : ℕ) (x : X) (b : C(cube.{u} n,Y))
+theorem basedCube_strictHELP (n : ℕ) (x : X) (b : C(cube.{u} n, Y))
     (hb : ∀ z : boundary.{u} n,b z.val = f x) :
     ∃ c : C(cube.{u} n,X),
       c.comp (boundaryInclusion n).hom = ContinuousMap.const _ x ∧
@@ -93,7 +103,7 @@ theorem basedCube_strictHELP (n : ℕ) (x : X) (b : C(cube.{u} n,Y))
 /-- Full prescribed-boundary HELP in every finite dimension when the
 original source boundary map is constant. The boundary homotopy need not be
 constant at any intermediate time. -/
-theorem basedCube_fullHELP (n : ℕ) (x : X) (b : C(cube.{u} n,Y))
+theorem basedCube_fullHELP (n : ℕ) (x : X) (b : C(cube.{u} n, Y))
     (H : (f.comp (ContinuousMap.const (boundary.{u} n) x)).Homotopy
       (b.comp (boundaryInclusion n).hom)) :
     ∃ c : C(cube.{u} n,X),
@@ -107,7 +117,7 @@ theorem basedCube_fullHELP (n : ℕ) (x : X) (b : C(cube.{u} n,Y))
 
 /-- The genuine empty boundary gives unrestricted full HELP in dimension
 zero, even when no source basepoint was initially supplied. -/
-theorem zeroCube_fullHELP (a : C(boundary.{u} 0,X)) (b : C(cube.{u} 0,Y))
+theorem zeroCube_fullHELP (a : C(boundary.{u} 0, X)) (b : C(cube.{u} 0, Y))
     (H : (f.comp a).Homotopy (b.comp (boundaryInclusion 0).hom)) :
     ∃ c : C(cube.{u} 0,X), c.comp (boundaryInclusion 0).hom = a ∧
       ∃ K : (f.comp c).Homotopy b, ∀ (t : unitInterval) (z : boundary.{u} 0),

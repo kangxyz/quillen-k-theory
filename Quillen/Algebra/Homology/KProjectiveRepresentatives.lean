@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.Algebra.Homology.DerivedCategory.KProjective
+module
+
+public import Mathlib.Algebra.Homology.DerivedCategory.KProjective
 
 /-!
 # Actual representatives of derived morphisms from K-projective complexes
@@ -13,6 +15,8 @@ supplies an actual chain representative for each derived morphism and an
 actual chain homotopy for each derived equality. The canonical functors and
 their factorization isomorphism are retained throughout.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -44,7 +48,7 @@ theorem exists_chain_representative_of_isKProjective
 
 /-- Equality in the actual derived category from a K-projective source is
 witnessed by an actual chain homotopy. -/
-def homotopyOfDerivedEq_of_isKProjective (f g : K ⟶ L)
+def homotopyOfDerivedEqOfIsKProjective (f g : K ⟶ L)
     (h : DerivedCategory.Q.map f = DerivedCategory.Q.map g) : Homotopy f g := by
   let e := DerivedCategory.quotientCompQhIso C
   apply HomotopyCategory.homotopyOfEq f g

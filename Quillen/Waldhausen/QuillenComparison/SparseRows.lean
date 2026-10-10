@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.QuillenComparison.RecoverSubobjects
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.RecoverSubobjects
 
 /-! # Reconstructing row isomorphisms from a covering family of Q-spans
 
@@ -6,6 +14,8 @@ A family of intervals whose endpoints cover the original ordinal suffices.
 Q-naturality to the whole object recovers every initial subobject, and the
 cokernel universal properties recover all quotient components.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

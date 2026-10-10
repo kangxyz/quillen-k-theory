@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.ExactCategory.Equivalence
-import Quillen.KTheory.Map.HomotopyEquivalence
-import Quillen.Topology.ClassifyingSpace.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Equivalence
+public import Quillen.KTheory.Map.HomotopyEquivalence
+public import Quillen.Topology.ClassifyingSpace.Equivalence
 
 /-!
 # Exact equivalences induce canonical K-group equivalences
@@ -9,6 +17,8 @@ Full faithfulness and essential surjectivity of the Q-functor are proved by
 lifting actual admissible spans. Rebasing at zero preserves the categorical
 equivalence, so its canonical K-map is the forward map of the K equivalence.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -108,8 +118,10 @@ theorem KMap_bijective_of_mapQ_isEquivalence [F.mapQ.IsEquivalence] (n : ℕ) :
 def KEquivOfMapQIsEquivalence [F.mapQ.IsEquivalence] (n : ℕ) : EC.K n ≃* ED.K n :=
   MulEquiv.ofBijective (F.KMap n) (F.KMap_bijective_of_mapQ_isEquivalence n)
 
-@[simp]
-theorem KEquivOfMapQIsEquivalence_toMonoidHom [F.mapQ.IsEquivalence] (n : ℕ) :
-    (F.KEquivOfMapQIsEquivalence n).toMonoidHom = F.KMap n := rfl
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem KEquivOfMapQIsEquivalence_coe [F.mapQ.IsEquivalence] (n : ℕ) :
+    (↑(F.KEquivOfMapQIsEquivalence n) : EC.K n →* ED.K n) = F.KMap n := rfl
+
+
 end CommonUniverse
 end Quillen.ExactFunctor

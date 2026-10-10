@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.Simplicial
-import Quillen.Waldhausen.Product.SSet
-import Quillen.Waldhausen.SConstruction.Connected
-import Quillen.Topology.Realization.ProductFiber
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.Simplicial
+public import Quillen.Waldhausen.Product.SSet
+public import Quillen.Waldhausen.SConstruction.Connected
+public import Quillen.Topology.Realization.ProductFiber
 
 /-! # The original degreewise first/tail product map and strict split triangle
 
@@ -10,6 +18,8 @@ original tail map, and the split triangle is the actual constant-vertex
 section required by the local homotopy-fiber calculus. No realization
 homotopy equivalence of this map is assumed or concluded here.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite MonoidalCategory CartesianMonoidalCategory
 open scoped Simplicial Topology
@@ -58,6 +68,7 @@ instance relativeSRows_pathConnected (n : SimplexCategory) :
 /-- Every actual inner acyclic-tail-row S-realization is genuinely path-connected. -/
 instance tailSRows_pathConnected (n : SimplexCategory) :
     PathConnectedSpace |(ordinarySRows (acyclicStructure N)).obj (op n)| :=
-  inferInstanceAs (PathConnectedSpace (QuotientRows.waldhausenStructure (acyclicStructure N) n).Delooping)
+  inferInstanceAs (PathConnectedSpace (QuotientRows.waldhausenStructure (acyclicStructure N)
+    n).Delooping)
 
 end Quillen.Waldhausen.Fibration.RelativeRows

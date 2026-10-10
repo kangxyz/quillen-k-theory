@@ -1,8 +1,16 @@
-import Quillen.Topology.HomotopyGroups.Map
-import Quillen.CategoryTheory.QConstruction.Functor
-import Quillen.KTheory.Basic
-import Quillen.CategoryTheory.ExactCategory.Isomorphisms
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Iso
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyGroups.Map
+public import Quillen.CategoryTheory.QConstruction.Functor
+public import Quillen.KTheory.Basic
+public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Iso
 
 /-!
 # Functors rebased at a chosen object
@@ -16,6 +24,8 @@ homotopy groups at the specified base objects.
 This construction uses the supplied isomorphism. Independence from this choice,
 and compatibility with a separate path-transport construction, are not claimed.
 -/
+@[expose] public section
+
 
 noncomputable section
 

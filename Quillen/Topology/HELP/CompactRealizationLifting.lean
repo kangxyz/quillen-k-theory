@@ -1,5 +1,13 @@
-import Quillen.Topology.HELP.Compact
-import Quillen.Topology.Realization.MonomorphismLifting
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.Compact
+public import Quillen.Topology.Realization.MonomorphismLifting
 
 /-!
 # Compact HELP supplies lifting against all realized simplicial inclusions
@@ -8,6 +16,8 @@ Actual compact simplex-boundary cofibrations are the generators. The
 mapping-path endpoint then lifts over every realized simplicial mono by
 the proved relative skeletal construction.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Topology MonoidalCategory
 open scoped Simplicial

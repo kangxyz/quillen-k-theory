@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyFiber.Sequence
-import Quillen.Topology.HomotopyGroups.Loop.DegreeShift
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.Sequence
+public import Quillen.Topology.HomotopyGroups.Loop.DegreeShift
 
 /-!
 # Exactness at the loop space of the target
@@ -9,6 +17,8 @@ loops in the source. Its carried square of target paths proves that applying
 the original map recovers the original loop-space cube up to a relative
 homotopy. This supplies the remaining recurring exactness position.
 -/
+@[expose] public section
+
 
 noncomputable section
 open scoped Topology unitInterval
@@ -21,7 +31,7 @@ variable {N : Type w} {X : Type u} {Y : Type v}
 variable (f : C(X, Y)) (y : Y) (x : X) (h : f x = y)
 
 @[fun_prop]
-private theorem continuous_intervalMul' : Continuous (fun z : I × I => z.1 * z.2) := by
+theorem continuous_intervalMul' : Continuous (fun z : I × I => z.1 * z.2) := by
   apply Continuous.subtype_mk
   exact (continuous_subtype_val.comp continuous_fst).mul
     (continuous_subtype_val.comp continuous_snd)

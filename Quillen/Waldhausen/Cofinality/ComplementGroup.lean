@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.DenseSubcategory
+module
+
+public import Quillen.Waldhausen.Cofinality.DenseSubcategory
 
 /-! # The actual group of common-complement classes
 
@@ -11,6 +13,8 @@ Actual coproducts induce addition. Density supplies genuine complements,
 which become inverses. The zero-class criterion is proved from the original
 split cofiber, so it detects exact object membership in the full subcategory.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -60,7 +64,8 @@ theorem neg_add_cancel (a : h.Classes) : -a + a = 0 := by
   let B := (h.complement a.out).choose
   have hB : P (a.out ⨿ B) := (h.complement a.out).choose_spec
   calc
-    -a + a = h.classOf B + h.classOf a.out := congrArg (fun b ↦ h.classOf B + b) (Quotient.out_eq a).symm
+    -a + a = h.classOf B + h.classOf a.out := congrArg (fun b ↦ h.classOf B + b)
+      (Quotient.out_eq a).symm
     _ = h.classOf (B ⨿ a.out) := rfl
     _ = 0 := (h.classOf_eq_zero_iff _).mpr ((h.iso_iff (coprod.braiding _ _)).mp hB)
 

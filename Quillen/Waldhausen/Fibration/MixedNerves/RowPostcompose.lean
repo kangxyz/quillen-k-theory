@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.PostcomposeNerves
-import Quillen.Waldhausen.Fibration.Rows.NestedWeakEquivalences
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.PostcomposeNerves
+public import Quillen.Waldhausen.Fibration.Rows.NestedWeakEquivalences
 
 /-! # The original inner-row restriction acts on the mixed nerves
 
@@ -8,6 +16,8 @@ restriction. Consequently the mixed diagrams form actual functors in the
 inner row degree. The original inclusion is strictly natural before any
 realization or choice of inverse.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 universe u v
@@ -17,7 +27,8 @@ namespace Quillen.Waldhausen.Fibration.MixedNerves
 
 /-- Preservation proofs do not change equality of the original compatible functors. -/
 @[ext] theorem CompatibleFunctor.ext {C D : Type u} [Category.{v} C] [Category.{v} D]
-    {V : Structure C} {W : Structure D} {N : NestedWeakEquivalences V} {M : NestedWeakEquivalences W}
+    {V : Structure C} {W : Structure D} {N : NestedWeakEquivalences V} {M :
+      NestedWeakEquivalences W}
     {F G : CompatibleFunctor N M} (h : F.toFunctor = G.toFunctor) : F = G := by
   cases F
   cases G
@@ -41,7 +52,8 @@ def rowReindexCompatible {m n : SimplexCategory} (α : m ⟶ n) :
   apply CompatibleFunctor.ext
   exact QuotientRows.reindex_id V n
 @[simp] theorem rowReindexCompatible_comp {l m n : SimplexCategory} (α : l ⟶ m) (β : m ⟶ n) :
-    rowReindexCompatible N (α ≫ β) = (rowReindexCompatible N β).comp (rowReindexCompatible N α) := by
+    rowReindexCompatible N (α ≫ β) = (rowReindexCompatible N β).comp (rowReindexCompatible N α)
+      := by
   apply CompatibleFunctor.ext
   exact QuotientRows.reindex_comp V α β
 

@@ -1,10 +1,20 @@
-import Quillen.Waldhausen.SConstruction.WeakGridHomotopy
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.WeakGridHomotopy
 
 /-! # Weak natural transformations give actual S-construction homotopies
 
 The endpoints are the existing postcomposition maps of the original exact
 functors. The construction uses the genuine nerve-direction cylinder.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -29,10 +39,13 @@ def weakNaturalTransformationCylinder : sSet V.cof V.weq ⊗ Δ[1] ⟶ sSet W.co
       (fun _ _ A ↦ whiskerLeft A.1 η) (fun _ _ A p ↦ hη (A.1.obj p))
       (fun _ _ _ ↦ HEq.rfl) ≫ (bisimplicialDiagonalIso W).hom
 
-@[simp] theorem weakNaturalTransformationCylinder_app_val
-    (n : SimplexCategoryᵒᵖ) (z : (sSet V.cof V.weq ⊗ Δ[1]).obj n) :
-    ((weakNaturalTransformationCylinder V W hF hG η hη).app n z).1 =
+/-- The cylinder acts on the canonical product of the two simplex types. -/
+@[simp] theorem weakNaturalTransformationCylinder_app_hom_val (n : SimplexCategoryᵒᵖ) (z : (sSet
+    V.cof V.weq).obj n × (Δ[1]).obj n) :
+    (TypeCat.Hom.hom (X := (sSet V.cof V.weq).obj n × (Δ[1]).obj n)
+      ((weakNaturalTransformationCylinder V W hF hG η hη).app n) z).val =
       nerveCylinderDiagram (whiskerLeft z.1.1 η) z.2.down := rfl
+
 
 @[simp] theorem weakNaturalTransformationCylinder_zero :
     SSet.ι₀ ≫ weakNaturalTransformationCylinder V W hF hG η hη = sSetMap hF := by

@@ -1,6 +1,16 @@
-import Quillen.CategoryTheory.ExactCategory.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Basic
 
 /-! # Isomorphisms are admissible in an exact category -/
+@[expose] public section
+
 
 noncomputable section
 universe v u

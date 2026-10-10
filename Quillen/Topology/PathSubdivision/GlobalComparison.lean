@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.PathSubdivision.FiniteIteration
+module
+
+public import Quillen.Topology.PathSubdivision.FiniteIteration
 
 /-!
 # The original strict comparison from genuine local path-pool inputs
@@ -16,6 +18,8 @@ the current parameter. The full outer boundary remains literally fixed.
 The final map lands in the original strict pullback, so strict finite HELP
 proves the complete weak property of its original constant-path inclusion.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -27,14 +31,14 @@ variable {E X B : Type u} [TopologicalSpace E] [TopologicalSpace X] [Topological
 
 /-- Genuine weakness of the displayed two-chart path-pool comparison for
 every parameter family. The parameter loci need not be compact. -/
-def TwoChartPoolComparison (p : C(E,B)) (U V : Set B) : Prop :=
+def TwoChartPoolComparison (p : C(E, B)) (U V : Set B) : Prop :=
   ∀ (D : Type u) [TopologicalSpace D] (γ : C(D,C(unitInterval,B)))
     (hcover : ∀ d,γ d ∈ pathSet U ∨ γ d ∈ pathSet V),
       IsWeakHomotopyEquivalence (twoPoolComparison p γ U V hcover)
 
 /-- The first, second and overlap original chart comparisons provide the
 actual two-chart pool premise by ordinary weak locality. -/
-theorem twoChartPoolComparison_of_local (p : C(E,B))
+theorem twoChartPoolComparison_of_local (p : C(E, B))
     (U V : Set B) (hU : IsOpen U) (hV : IsOpen V)
     (hpU : UniversalStrictPullbackComparison (restriction p U))
     (hpV : UniversalStrictPullbackComparison (restriction p V))
@@ -45,7 +49,7 @@ theorem twoChartPoolComparison_of_local (p : C(E,B))
 /-- Finite HELP for the literal original strict pullback, obtained solely
 from the actual two-chart pool comparisons and a finite mesh of each cube. -/
 theorem strictPullbackInclusion_finiteCubeStrictHELP_of_pools
-    (p : C(E,B)) (f : C(X,B)) (U V : Set B)
+    (p : C(E, B)) (f : C(X, B)) (U V : Set B)
     (hU : IsOpen U) (hV : IsOpen V) (hcover : U ∪ V = Set.univ)
     (hp : TwoChartPoolComparison p U V) :
     FiniteCubeStrictHELP (strictPullbackInclusion p f) := by
@@ -115,16 +119,17 @@ theorem strictPullbackInclusion_finiteCubeStrictHELP_of_pools
 /-- Complete weakness of the original strict comparison, including the
 actual zero-dimensional and empty-source cases. -/
 theorem strictPullbackInclusion_isWeakHomotopyEquivalence_of_pools
-    (p : C(E,B)) (f : C(X,B)) (U V : Set B)
+    (p : C(E, B)) (f : C(X, B)) (U V : Set B)
     (hU : IsOpen U) (hV : IsOpen V) (hcover : U ∪ V = Set.univ)
     (hp : TwoChartPoolComparison p U V) :
     IsWeakHomotopyEquivalence (strictPullbackInclusion p f) :=
-  (strictPullbackInclusion_finiteCubeStrictHELP_of_pools p f U V hU hV hcover hp).isWeakHomotopyEquivalence
+  (strictPullbackInclusion_finiteCubeStrictHELP_of_pools p f U V hU hV hcover
+    hp).isWeakHomotopyEquivalence
 
 /-- Universal strict-pullback comparison is local on a two-open cover,
 using the first, second and genuine overlap original comparisons. -/
 theorem universalStrictPullbackComparison_of_two_open
-    (p : C(E,B)) (U V : Set B) (hU : IsOpen U) (hV : IsOpen V)
+    (p : C(E, B)) (U V : Set B) (hU : IsOpen U) (hV : IsOpen V)
     (hcover : U ∪ V = Set.univ)
     (hpU : UniversalStrictPullbackComparison (restriction p U))
     (hpV : UniversalStrictPullbackComparison (restriction p V))

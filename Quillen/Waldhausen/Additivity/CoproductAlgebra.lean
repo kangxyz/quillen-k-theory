@@ -1,6 +1,16 @@
-import Quillen.Waldhausen.Additivity.CofiberEndpoint
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.CofiberEndpoint
 
 /-! # Coproduct algebra in a genuine Waldhausen category -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -17,8 +27,11 @@ include W
 /-- A chosen binary coproduct is the actual pushout over the chosen zero. -/
 theorem coprod_isPushout (X Y : C) :
     IsPushout (W.isZero.to_ X) (W.isZero.to_ Y)
-      (coprod.inl : X ⟶ X ⨿ Y) coprod.inr :=
-  IsPushout.of_is_coproduct (coprodIsCoprod X Y) W.isZero.isInitial
+      (coprod.inl : X ⟶ X ⨿ Y) coprod.inr := by
+  have hX : W.isZero.isInitial.to X = W.isZero.to_ X := W.isZero.eq_of_src _ _
+  have hY : W.isZero.isInitial.to Y = W.isZero.to_ Y := W.isZero.eq_of_src _ _
+  simpa only [hX, hY] using
+    IsPushout.of_is_coproduct' (coprodIsCoprod X Y) W.isZero.isInitial
 
 /-- Coproduct inclusions are cofibrations. -/
 theorem coprod_inl_cof (X Y : C) : W.cof (coprod.inl : X ⟶ X ⨿ Y) :=

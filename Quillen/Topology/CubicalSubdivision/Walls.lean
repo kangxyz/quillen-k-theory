@@ -1,4 +1,12 @@
-import Quillen.Topology.CubicalSubdivision.Pasting
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.Pasting
 
 /-! # The actual grid walls and compatible top-dimensional extension
 
@@ -7,16 +15,21 @@ specified on those walls determines compatible boundary data on every cell;
 any actual cell fillers paste to a continuous extension of that same wall map.
 The lower-dimensional construction of the wall lift is a separate obligation.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 namespace Quillen.CubicalSubdivision
 universe u v
 
+/-- The boundary subspace of the unit `n`-cube. -/
 abbrev Boundary (n : ℕ) := {t : Cube n // t ∈ _root_.Cube.boundary (Fin n)}
 
+/-- The union of the images of all cell boundaries in the subdivided unit cube. -/
 def walls (n m : ℕ) : Set (Cube n) :=
   {x | ∃ k : CellIndex n m, ∃ t : Boundary n, cell n m k t = x}
 
+/-- Map the boundary of a chosen cell into the grid walls by its cell characteristic map. -/
 def boundaryToWalls (n m : ℕ) (k : CellIndex n m) : C(Boundary n, walls n m) where
   toFun t := ⟨cell n m k t,⟨k,t,rfl⟩⟩
   continuous_toFun := by fun_prop
@@ -55,7 +68,7 @@ theorem boundary_subset_walls (n m : ℕ) : _root_.Cube.boundary (Fin n) ⊆ wal
 /-- Exact cell fillers agreeing with the supplied wall map paste continuously
 and retain that entire map. No extension over the walls is assumed implicitly. -/
 theorem exists_paste_from_walls (n m : ℕ) {X : Type u} [TopologicalSpace X]
-    (a : C(walls n m,X)) (f : ∀ _k : CellIndex n m, C(Cube n,X))
+    (a : C(walls n m, X)) (f : ∀ _k : CellIndex n m, C(Cube n, X))
     (hf : ∀ k (t : Boundary n), f k t = a (boundaryToWalls n m k t)) :
     ∃ g : C(Cube n,X), (∀ k t, g (cell n m k t) = f k t) ∧
       ∀ x : walls n m, g x = a x := by
@@ -81,7 +94,7 @@ theorem exists_paste_from_walls (n m : ℕ) {X : Type u} [TopologicalSpace X]
 with the prescribed grid-wall map unchanged. -/
 theorem exists_lift_from_wall_cell_lifts (n m : ℕ)
     {E : Type u} {B : Type v} [TopologicalSpace E] [TopologicalSpace B]
-    (p : C(E,B)) (b : C(Cube n,B)) (a : C(walls n m,E))
+    (p : C(E, B)) (b : C(Cube n, B)) (a : C(walls n m, E))
     (f : ∀ _k : CellIndex n m, C(Cube n,E))
     (hf : ∀ k (t : Boundary n), f k t = a (boundaryToWalls n m k t))
     (hp : ∀ k, p.comp (f k) = b.comp (cell n m k)) :

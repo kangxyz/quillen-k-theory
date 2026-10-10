@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyLifting.Stationary
-import Quillen.Topology.HomotopyEquiv.Fiberwise
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyLifting.Stationary
+public import Quillen.Topology.HomotopyEquiv.Fiberwise
 
 /-! # Coherent vertical comparison of parallel lifts
 
@@ -7,6 +15,8 @@ Two lifts of the same actual base homotopy, with the same start, have vertically
 homotopic endpoints. The whole prescribed zero set remains fixed. An explicit
 backtrack contraction and stationary relative lifting construct the comparison.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 open unitInterval
@@ -29,10 +39,10 @@ def backtrackTime (t : unitInterval) : unitInterval :=
   norm_num [backtrackTime]
 
 variable {X E B : Type u} [TopologicalSpace X] [TopologicalSpace E] [TopologicalSpace B]
-    (q : C(E,B)) {a b c : C(X,E)} (H : a.Homotopy b) (K : a.Homotopy c)
+    (q : C(E, B)) {a b c : C(X, E)} (H : a.Homotopy b) (K : a.Homotopy c)
 
 /-- Projection of the literal concatenated lifts is the original backtrack. -/
-theorem parallelLifts_backtrack (hsame : ∀ t x,q (H (t,x)) = q (K (t,x)))
+theorem parallelLifts_backtrack (hsame : ∀ t x, q (H (t, x)) = q (K (t, x)))
     (t : unitInterval) (x : X) :
     q ((H.symm.trans K) (t,x)) = q (H (backtrackTime t,x)) := by
   simp only [ContinuousMap.Homotopy.trans_apply]
@@ -50,7 +60,7 @@ theorem parallelLifts_backtrack (hsame : ∀ t x,q (H (t,x)) = q (K (t,x)))
     rw [abs_of_nonneg (by linarith)]
 
 /-- Actual fixed-value formula for the whole concatenated path. -/
-theorem parallelLifts_fixed (x : X) (hH : ∀ t,H (t,x) = a x) (hK : ∀ t,K (t,x) = a x)
+theorem parallelLifts_fixed (x : X) (hH : ∀ t, H (t, x) = a x) (hK : ∀ t, K (t, x) = a x)
     (t : unitInterval) : (H.symm.trans K) (t,x) = a x := by
   simp only [ContinuousMap.Homotopy.trans_apply]
   split_ifs
@@ -61,10 +71,10 @@ theorem parallelLifts_fixed (x : X) (hH : ∀ t,H (t,x) = a x) (hK : ∀ t,K (t,
 No continuous inverse family is an input or a chosen output. -/
 theorem HomotopyLiftingProperty.parallel_lifts_with_coherence
     (hq : HomotopyLiftingProperty q)
-    (hsame : ∀ t x,q (H (t,x)) = q (K (t,x)))
-    (duration : C(X,unitInterval))
-    (hH : ∀ x,duration x = 0 → ∀ t,H (t,x) = a x)
-    (hK : ∀ x,duration x = 0 → ∀ t,K (t,x) = a x) :
+    (hsame : ∀ t x, q (H (t, x)) = q (K (t, x)))
+    (duration : C(X, unitInterval))
+    (hH : ∀ x, duration x = 0 → ∀ t, H (t, x) = a x)
+    (hK : ∀ x, duration x = 0 → ∀ t, K (t, x) = a x) :
     ∃ V : b.Homotopy c,
       HomotopyOver (q.comp b) q V ∧
       (∀ x,duration x = 0 → ∀ t,V (t,x) = a x) ∧
@@ -138,10 +148,10 @@ theorem HomotopyLiftingProperty.parallel_lifts_with_coherence
 fixed; the stronger theorem also records its full two-parameter coherence. -/
 theorem HomotopyLiftingProperty.parallel_lifts
     (hq : HomotopyLiftingProperty q)
-    (hsame : ∀ t x,q (H (t,x)) = q (K (t,x)))
-    (duration : C(X,unitInterval))
-    (hH : ∀ x,duration x = 0 → ∀ t,H (t,x) = a x)
-    (hK : ∀ x,duration x = 0 → ∀ t,K (t,x) = a x) :
+    (hsame : ∀ t x, q (H (t, x)) = q (K (t, x)))
+    (duration : C(X, unitInterval))
+    (hH : ∀ x, duration x = 0 → ∀ t, H (t, x) = a x)
+    (hK : ∀ x, duration x = 0 → ∀ t, K (t, x) = a x) :
     ∃ V : b.Homotopy c,HomotopyOver (q.comp b) q V ∧
       ∀ x,duration x = 0 → ∀ t,V (t,x) = a x := by
   obtain ⟨V,hV,hfix,_⟩ := HomotopyLiftingProperty.parallel_lifts_with_coherence

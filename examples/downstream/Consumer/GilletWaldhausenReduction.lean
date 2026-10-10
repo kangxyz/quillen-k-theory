@@ -1,6 +1,17 @@
-import Quillen.Library
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.GlobalEulerReduction
+public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Basic
 
 /-! Original-map finite and global fine-model K-class reductions. -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -54,8 +65,10 @@ theorem actual_scheme_global_reduction (X : AlgebraicGeometry.Scheme.{u}) (k : �
     ∃! p : (ofExactCategory (boundedAcyclicExactStructure (SchemeSheaf.finiteLocallyFree X))).K k ×
         (ofExactCategory (ExactSubcategory.exactStructure
           (abelianExactStructure X.Modules) (SchemeSheaf.finiteLocallyFree X))).K k,
-      KMap (boundedAcyclicTermsExactInclusion (SchemeSheaf.finiteLocallyFree X)).waldhausenExact k p.1 *
-        KMap (boundedTermsSingleExactFunctor.{u,u+1} (SchemeSheaf.finiteLocallyFree X) 0).waldhausenExact k p.2 = x :=
+      KMap (boundedAcyclicTermsExactInclusion (SchemeSheaf.finiteLocallyFree X)).waldhausenExact k
+        p.1 *
+        KMap (boundedTermsSingleExactFunctor.{u,u+1} (SchemeSheaf.finiteLocallyFree X)
+          0).waldhausenExact k p.2 = x :=
   boundedTerms_existsUnique_acyclic_single_zero.{u,u+1} (SchemeSheaf.finiteLocallyFree X) k x
 
 end Consumer

@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.ExtensionCategory.Embeddings
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.Embeddings
 
 /-! # The internal identity/subextension/quotient sequence
 
@@ -6,6 +14,8 @@ The sequence `(A→A) → (A→B) → (0→B/A)` consists of actual exact endofu
 of the genuine extension Waldhausen category. Its relative condition is
 proved by the original relative pushout map, not postulated.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -17,24 +27,32 @@ variable {C : Type u} [Category.{v} C] (W : Structure C)
 /-- Pointwise, the identity-source subextension is a genuine Reedy cofibration. -/
 theorem identityToExtension_cof (X : Obj W) : cof W ((identityToExtension W).app X) :=
   cof_of_relative W _ (W.cof.id_mem _) (IsPushout.of_id_fst (f := 𝟙 X.obj.left))
-    X.obj.hom (by simp [identityToExtension]; exact Category.id_comp _) (by simp) X.property
+    X.obj.hom (by
+      simp only [identityToExtension, Functor.comp_obj, Functor.id_obj]
+      exact Category.id_comp X.obj.hom) (by simp) X.property
 
 /-- The displayed pushout extension is `A' → B ⨿[A] A'`. -/
 def subextensionPushout {X Y : Obj W} (f : X ⟶ Y) : Obj W :=
   ⟨Arrow.mk (Additivity.targetι W (inclusion W) (inclusion_cof W) (Arrow.mk f)),
     Additivity.targetι_cof W (inclusion W) (inclusion_cof W) (Arrow.mk f)⟩
 
+/-- The map from `X` to the pushout attaching the identity extension on the source of `Y` along
+`f`, using `f` on sources and the pushout inclusion on targets. -/
 def subextensionInl {X Y : Obj W} (f : X ⟶ Y) : X ⟶ subextensionPushout W f :=
   (objects W).homMk (Arrow.homMk f.hom.left
     (Additivity.sourceι W (inclusion W) (inclusion_cof W) (Arrow.mk f))
     (Additivity.pushoutFunctor_isPushout W (inclusion W) (inclusion_cof W) (Arrow.mk f)).w.symm)
 
+/-- The map from the identity extension on the source of `Y` into `subextensionPushout W f`,
+using the identity on sources and the other pushout inclusion on targets. -/
 def subextensionInr {X Y : Obj W} (f : X ⟶ Y) :
     (source W ⋙ identityEmbedding W).obj Y ⟶ subextensionPushout W f :=
   (objects W).homMk (Arrow.homMk (𝟙 _)
     (Additivity.targetι W (inclusion W) (inclusion_cof W) (Arrow.mk f))
     (by simp [subextensionPushout, identityEmbedding, source]))
 
+/-- The comparison from the subextension pushout to `Y`, using the identity on sources and
+`relativeMap W f` on targets. -/
 def subextensionComparison {X Y : Obj W} (f : X ⟶ Y) : subextensionPushout W f ⟶ Y :=
   (objects W).homMk (Arrow.homMk (𝟙 _) (relativeMap W f) (by
     simpa only [Category.id_comp] using!
@@ -58,7 +76,8 @@ theorem subextension_isPushout {X Y : Obj W} (f : X ⟶ Y) :
     subextensionInr W f ≫ subextensionComparison W f = (identityToExtension W).app Y := by
   apply ObjectProperty.hom_ext
   apply Arrow.hom_ext
-  · simp [subextensionInr, subextensionComparison, identityToExtension, identityEmbedding, source, forget]
+  · simp [subextensionInr, subextensionComparison, identityToExtension, identityEmbedding,
+    source, forget]
   · exact Additivity.targetι_comparison W (inclusion W) (inclusion_cof W) (Arrow.mk f)
 
 /-- The new relative comparison is Reedy cofibrant precisely by the original
@@ -67,7 +86,8 @@ theorem subextensionComparison_cof {X Y : Obj W} (f : X ⟶ Y) (hf : cof W f) :
     cof W (subextensionComparison W f) :=
   cof_of_relative W _ (W.cof.id_mem _)
     (IsPushout.of_id_snd (f := (subextensionPushout W f).obj.hom)) (relativeMap W f)
-    (by simp [subextensionComparison]) (Additivity.targetι_comparison W (inclusion W) (inclusion_cof W) (Arrow.mk f)) hf.2
+    (by simp [subextensionComparison]) (Additivity.targetι_comparison W (inclusion W)
+      (inclusion_cof W) (Arrow.mk f)) hf.2
 
 private theorem comparison_cof_of_displayed
     {D : Type*} [Category* D] (V : Structure D) {F G : Obj W ⥤ D}

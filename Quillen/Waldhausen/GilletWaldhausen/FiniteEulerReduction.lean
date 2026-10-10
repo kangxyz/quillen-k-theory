@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleIncidence
-import Quillen.Waldhausen.GilletWaldhausen.FiniteTermKEquivalence
-import Quillen.Algebra.FiniteAdjacentSection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleIncidence
+public import Quillen.Waldhausen.GilletWaldhausen.FiniteTermKEquivalence
+public import Quillen.Algebra.FiniteAdjacentSection
 
 /-! # Actual finite Euler reduction at any original term coordinate
 
@@ -10,6 +18,8 @@ insertion is the literal single-coordinate map. The proved group calculation
 therefore gives a unique actual acyclic class times an actual single-term
 class representing each finite termwise class. No fibration is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -26,7 +36,8 @@ local instance finiteEulerReduction_termPropertyProducts : P.IsClosedUnderFinite
 /-- Transport only the stated integer upper bound, retaining the original evaluation maps. -/
 def finiteTermKEquivWithUpper (a b : ℤ) (m k : ℕ) (hb : b = a + (m : ℤ) - 1) :
     (ofExactCategory (fixedTermsExactStructure P a b)).K k ≃*
-      (Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) := by
+      (Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K
+        k) := by
   subst b
   exact finiteTermKEquiv P a m k
 
@@ -41,7 +52,8 @@ def finiteTermKEquivWithUpper (a b : ℤ) (m k : ℕ) (hb : b = a + (m : ℤ) - 
 /-- The original term equivalence for the closed interval with m+1 actual terms. -/
 def finiteTermKEquivClosed (a : ℤ) (m k : ℕ) :
     (ofExactCategory (fixedTermsExactStructure P a (a + (m : ℤ)))).K k ≃*
-      (Fin (m + 1) → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) :=
+      (Fin (m + 1) → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A)
+        P)).K k) :=
   finiteTermKEquivWithUpper P a (a + (m : ℤ)) (m + 1) k (by omega)
 
 @[simp] theorem finiteTermKEquivClosed_apply (a : ℤ) (m k : ℕ)
@@ -59,7 +71,8 @@ theorem finiteTermKEquivClosed_single (a : ℤ) (m k : ℕ) (i : Fin (m + 1))
       (KMap (finiteTermSingleExact P a (a + (m : ℤ)) (a + (i : ℤ))
         (by omega) (by have := i.isLt; omega)).waldhausenExact k x) =
       FiniteAdjacentComplex.singleCoordinate
-        ((ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) i x := by
+        ((ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) i
+          x := by
   let := Additivity.KCommGroup
     (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)) k
   funext j
@@ -91,7 +104,8 @@ theorem finiteTermKEquivClosed_incidence (a : ℤ) (m k : ℕ)
   have hp (j : Fin (m + 1)) :
       KMap (finiteCycleEvaluationExact P a (a + (m : ℤ)) (a + (j : ℤ))).waldhausenExact k x =
         (Fin.cons 1 (finiteCycleKEquiv P a m k x) : Fin (m + 1) →
-          (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) j := by
+          (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) j
+            := by
     cases j using Fin.cases with
     | zero =>
       exact DFunLike.congr_fun (finiteCycle_KMap_evaluation_zero P a (a + (m : ℤ))
@@ -101,11 +115,13 @@ theorem finiteTermKEquivClosed_incidence (a : ℤ) (m k : ℕ)
   have hn (j : Fin (m + 1)) :
       KMap (finiteCycleEvaluationExact P a (a + (m : ℤ)) (a + (j : ℤ) + 1)).waldhausenExact k x =
         (Fin.snoc (finiteCycleKEquiv P a m k x) 1 : Fin (m + 1) →
-          (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) j := by
+          (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) j
+            := by
     cases j using Fin.lastCases with
     | last =>
       simp only [Fin.val_last, Fin.snoc_last]
-      rw [finiteCycle_KMap_evaluation_zero P a (a + (m : ℤ)) _ (Or.inr (by omega)), MonoidHom.one_apply]
+      rw [finiteCycle_KMap_evaluation_zero P a (a + (m : ℤ)) _ (Or.inr (by omega)),
+        MonoidHom.one_apply]
     | cast j => simp only [Fin.val_castSucc, Fin.snoc_castSucc, finiteCycleKEquiv_apply]
   funext j
   rw [finiteTermKEquivClosed_apply, finiteCycle_KMap_incidence,
@@ -139,6 +155,7 @@ theorem finiteTerm_existsUnique_acyclic_single (a : ℤ) (m k : ℕ) (i : Fin (m
       exact (congrArg Prod.fst hu').trans ((finiteCycleKEquiv P a m k).apply_symm_apply d).symm
     · exact congrArg (fun q : (Fin m →
         (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k) ×
-        (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k ↦ q.2) hu'
+        (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A) P)).K k ↦
+          q.2) hu'
 
 end Quillen.Waldhausen.GilletWaldhausen

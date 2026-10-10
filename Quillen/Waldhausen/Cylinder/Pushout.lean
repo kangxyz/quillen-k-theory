@@ -1,7 +1,15 @@
-import Quillen.CategoryTheory.Limits.BiproductPushout
-import Quillen.Waldhausen.Approximation.FunctorialFactorization
-import Mathlib.Algebra.Homology.HomologicalComplexLimits
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Pullbacks
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.Limits.BiproductPushout
+public import Quillen.Waldhausen.SplitComplexes.FactorizationFunctor
+public import Mathlib.Algebra.Homology.HomologicalComplexLimits
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Pullbacks
 
 /-! # Actual pushout preservation of the complex cylinder functor
 
@@ -9,6 +17,8 @@ The identity cone is termwise the sum of the two neighboring evaluations.
 This gives preservation of every displayed pushout, and then the original
 middle functor preserves every componentwise pushout square of arrows.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

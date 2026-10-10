@@ -1,6 +1,14 @@
-import Quillen.Topology.Realization.EdgePathPresentation.Collar
-import Quillen.CategoryTheory.TheoremA.RealizationBoundary
-import Mathlib.CategoryTheory.Limits.Types.Pushouts
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.EdgePathPresentation.Collar
+public import Quillen.CategoryTheory.TheoremA.RealizationBoundary
+public import Mathlib.CategoryTheory.Limits.Types.Pushouts
 
 /-!
 # Open collar neighborhoods in actual simplex-attachment pushouts
@@ -10,6 +18,8 @@ attachment, the barycentric boundary defect extends across the old space by
 the constant value one. Its upper half defines a genuine open neighborhood
 of that old space in the actual pushout topology.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -47,17 +57,14 @@ theorem isClosedEmbedding_pushout_right
       exact ⟨f a, ha, (ConcreteCategory.congr_hom sq.w a).symm⟩
   rw [TopCat.isClosed_iff_of_isColimit sq.cocone sq.isColimit]
   rintro (_ | _ | _)
-  ·
-    change IsClosed ((i ≫ g) ⁻¹' (j '' W))
+  · change IsClosed ((i ≫ g) ⁻¹' (j '' W))
     change IsClosed (i ⁻¹' (g ⁻¹' (j '' W)))
     rw [hleft]
     exact (hi.isClosedMap _ (hW.preimage f.hom.continuous)).preimage i.hom.continuous
-  ·
-    change IsClosed (g ⁻¹' (j '' W))
+  · change IsClosed (g ⁻¹' (j '' W))
     rw [hleft]
     exact hi.isClosedMap _ (hW.preimage f.hom.continuous)
-  ·
-    change IsClosed (j ⁻¹' (j '' W))
+  · change IsClosed (j ⁻¹' (j '' W))
     rw [Set.preimage_image_eq _ hj]
     exact hW
 

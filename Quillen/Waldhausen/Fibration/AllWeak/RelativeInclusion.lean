@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.AllWeak.AcyclicInclusion
-import Quillen.Waldhausen.Fibration.AllWeak.OrdinaryRows
-import Quillen.Waldhausen.Fibration.RelativeRows.CoarseEvaluation
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.AllWeak.AcyclicInclusion
+public import Quillen.Waldhausen.Fibration.AllWeak.OrdinaryRows
+public import Quillen.Waldhausen.Fibration.RelativeRows.CoarseEvaluation
 
 /-! # The original acyclic-to-relative diagram
 
@@ -10,6 +18,8 @@ original tail/fiber squares require no saturation. Only the coarse
 realization square uses the genuinely proved all-weak-source coarse
 exactness and its two-out-of-three hypothesis.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial Topology
@@ -87,7 +97,8 @@ theorem relativeInclusion_exact (n : SimplexCategory) :
     relativeInclusion N n ⋙ RelativeRows.tailFunctor N n =
       RelativeRows.tailFunctor (nested (acyclicStructure N)) n ⋙
         QuotientRows.postcompose (acyclicStructure (nested (acyclicStructure N)))
-          (acyclicStructure N) (Fibration.acyclicInclusion_exact (nested (acyclicStructure N))) n := by
+          (acyclicStructure N) (Fibration.acyclicInclusion_exact (nested (acyclicStructure N)))
+            n := by
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 
 /-- The actual three-term zero/object/zero diagram commutes with the original inclusion. -/
@@ -156,7 +167,8 @@ def relativeInclusionSRows :
 /-- The actual tail square uses the actual double-S base identification. -/
 @[simp] theorem relativeInclusionSRows_tail :
     relativeInclusionSRows N ≫ RelativeRows.tailSRows N =
-      RelativeRows.tailSRows (nested (acyclicStructure N)) ≫ ordinaryRowsInclusion (acyclicStructure N) := by
+      RelativeRows.tailSRows (nested (acyclicStructure N)) ≫ ordinaryRowsInclusion
+        (acyclicStructure N) := by
   ext n k F : 5
   rfl
 
@@ -185,7 +197,8 @@ def relativeInclusionTotal :
 /-- Realization preserves the original chosen total basepoint exactly. -/
 @[simp] theorem relativeInclusionTotal_basepoint :
     SSet.toTop.map (relativeInclusionTotal N)
-      (RelativeRows.totalBasepoint (nested (acyclicStructure N))) = RelativeRows.totalBasepoint N := by
+      (RelativeRows.totalBasepoint (nested (acyclicStructure N))) = RelativeRows.totalBasepoint
+        N := by
   have h := SSet.yonedaEquiv_symm_comp
     (RelativeRows.totalZeroVertex (nested (acyclicStructure N))) (relativeInclusionTotal N)
   have h' := congrArg (fun f : (Δ[0] : SSet.{u}) ⟶
@@ -201,8 +214,9 @@ def relativeInclusionTotal :
   funext n
   have hs : sSetMap (RelativeRows.fiber_exact (nested (acyclicStructure N)) n.unop) ≫
       sSetMap (relativeInclusion_exact N n.unop) =
-        sSetMap (Fibration.acyclicInclusion_exact N) ≫ sSetMap (RelativeRows.fiber_exact N n.unop) := by
-    rw [← sSetMap_comp, ← sSetMap_comp]
+        sSetMap (Fibration.acyclicInclusion_exact N) ≫ sSetMap (RelativeRows.fiber_exact N
+          n.unop) := by
+    rw [sSetMap_comp_sSetMap, sSetMap_comp_sSetMap]
     exact RelativeRows.sSetMap_eq_of_functor_eq _ _ (fiber_relativeInclusion N n.unop)
   exact congrArg (fun f ↦ f.app n) hs
 
@@ -211,7 +225,8 @@ structural extension and two-out-of-three inputs. -/
 theorem relativeInclusionTotal_coarseEvaluation (he : ExtensionAxiom N.coarse)
     [N.coarse.weq.HasTwoOutOfThreeProperty] :
     relativeInclusionTotal N ≫ RelativeRows.coarseEvaluation N he =
-      RelativeRows.coarseEvaluation (nested (acyclicStructure N)) (extensionAxiom (acyclicStructure N)) ≫
+      RelativeRows.coarseEvaluation (nested (acyclicStructure N)) (extensionAxiom
+        (acyclicStructure N)) ≫
         sSetMap (AllWeak.acyclicInclusion_exact N) := by
   ext n F : 4
   rfl

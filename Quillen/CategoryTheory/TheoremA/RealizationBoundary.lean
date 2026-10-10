@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremA.RealizationHEP
-import Quillen.Topology.Realization.SimplexBoundaryHEP
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationHEP
+public import Quillen.Topology.Realization.SimplexBoundaryHEP
 
 /-!
 # Simplex-boundary cofibrations for realization skeleta
@@ -9,6 +17,8 @@ The explicit simplex-cylinder retraction supplies HEP for
 Consequently every topological pushout attaching such a parametrized simplex
 has a canonical cofibration inclusion.
 -/
+@[expose] public section
+
 
 noncomputable section
 

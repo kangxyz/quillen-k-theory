@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.ExactCategory.Functor
-import Quillen.KTheory.GrothendieckComparison.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Functor
+public import Quillen.KTheory.GrothendieckComparison.Basic
 
 /-!
 # Actual base changes of exact-category conflations
@@ -8,6 +16,8 @@ Pullback of a deflation retains its original kernel object, and pushout of an
 inflation retains its original cokernel object. Both assertions are proved
 from actual universal properties and the exact axioms, without abelianness.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -24,7 +34,8 @@ variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 /-- Base change of a conflation, retaining its kernel object. -/
 abbrev pullbackConflation {S : ShortComplex C} (f : C) (g : f ⟶ S.X₃)
     [HasPullback S.g g] : ShortComplex C :=
-  ShortComplex.mk (pullback.lift (f := S.g) (g := g) S.f 0 (by simp [S.zero])) (pullback.snd S.g g) (by simp)
+  ShortComplex.mk (pullback.lift (f := S.g) (g := g) S.f 0 (by simp [S.zero])) (pullback.snd S.g g)
+    (by simp)
 
 lemma pullbackConflation_mem {S : ShortComplex C} (hS : E.conflation S)
     {T : C} (g : T ⟶ S.X₃) [HasPullback S.g g] :
@@ -59,7 +70,8 @@ lemma pullbackConflation_mem {S : ShortComplex C} (hS : E.conflation S)
 /-- Cobase change of a conflation, retaining its cokernel object. -/
 abbrev pushoutConflation {S : ShortComplex C} (T : C) (g : S.X₁ ⟶ T)
     [HasPushout S.f g] : ShortComplex C :=
-  ShortComplex.mk (pushout.inr S.f g) (pushout.desc (f := S.f) (g := g) S.g 0 (by simp [S.zero])) (by simp)
+  ShortComplex.mk (pushout.inr S.f g) (pushout.desc (f := S.f) (g := g) S.g 0 (by simp [S.zero]))
+    (by simp)
 
 lemma pushoutConflation_mem {S : ShortComplex C} (hS : E.conflation S)
     {T : C} (g : S.X₁ ⟶ T) [HasPushout S.f g] :

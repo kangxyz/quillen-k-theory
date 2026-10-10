@@ -1,12 +1,22 @@
-import Quillen.CategoryTheory.TheoremB.StructuredTransitionCalculus
-import Quillen.CategoryTheory.QConstruction.Abelian.SpanFactorization
-import Quillen.Localization.Serre.AuxiliaryLift
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.StructuredTransitionCalculus
+public import Quillen.CategoryTheory.QConstruction.Abelian.SpanFactorization
+public import Quillen.Localization.Serre.AuxiliaryLift
 
 /-! # Reduction of all Serre quotient transitions to mapped monos and epis
 
 The proof uses actual quotient-arrow lifts and the genuine epi–mono span
 factorization. It does not assume ordinary fixed-source fraction lifting.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

@@ -1,5 +1,13 @@
-import Quillen.Localization.Serre.KernelPushout
-import Quillen.CategoryTheory.QConstruction.Abelian.Cospans
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.KernelPushout
+public import Quillen.CategoryTheory.QConstruction.Abelian.Cospans
 
 /-!
 # Ordinary cospans and comparisons of kernel pushouts
@@ -8,6 +16,8 @@ The pushout of an admissible span over a fixed base has a genuine
 mono-epi cospan. Its kernel square is bicartesian. A monomorphism of
 extensions with the same quotient is itself the pushout of its kernel map.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -117,6 +127,8 @@ variable {N : C} {X Y : Over N}
 def overSpanPushoutMap : pushout s.l.left s.r.left ⟶ N :=
   pushout.desc X.hom Y.hom ((Over.w s.l).trans (Over.w s.r).symm)
 
+/-- The pushout of the underlying admissible span, regarded as an object of the slice over `N`
+via `overSpanPushoutMap s`. -/
 abbrev overSpanPushout : Over N := Over.mk (overSpanPushoutMap s)
 
 /-- The monomorphic leg of the ordinary pushout cospan over the fixed base. -/

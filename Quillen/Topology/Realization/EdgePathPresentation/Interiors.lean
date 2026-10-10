@@ -1,4 +1,12 @@
-import Quillen.Topology.Realization.EdgePathPresentation.Pushout
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.EdgePathPresentation.Pushout
 
 /-!
 # Open interiors in a topological attachment
@@ -7,6 +15,8 @@ Away from the attaching locus, the cell map into a topological pushout is an
 open embedding. Together with the collar deformation, this supplies the two
 kinds of genuine open charts needed for path subdivision in an attachment.
 -/
+@[expose] public section
+
 
 noncomputable section
 

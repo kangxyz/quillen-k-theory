@@ -1,6 +1,14 @@
-import Quillen.Topology.HomotopyFiber.BasepointTransport
-import Quillen.Topology.HomotopyFiber.StrictWeakTransport
-import Quillen.Topology.HELP.TwoOfThree
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.BasepointTransport
+public import Quillen.Topology.HomotopyFiber.StrictWeakTransport
+public import Quillen.Topology.HELP.TwoOfThree
 
 /-! # Compact HELP on original fibers is preserved along individual paths
 
@@ -8,6 +16,8 @@ The genuine path transport equivalences and their strict original-map
 naturality supply HELP composition/cancellation. Connectedness only chooses
 one path for each individual conclusion, never a continuous path family.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -15,7 +25,7 @@ open scoped Topology unitInterval
 universe u
 namespace Quillen.HomotopyFiber
 variable {E F B : Type u} [TopologicalSpace E] [TopologicalSpace F] [TopologicalSpace B]
-  (p : C(E,B)) (q : C(F,B)) (f : C(E,F)) (sq : q.comp f = p)
+  (p : C(E, B)) (q : C(F, B)) (f : C(E, F)) (sq : q.comp f = p)
 
 /-- HELP for the actual source-change map propagates along a displayed base path. -/
 theorem compactHELP_mapOver_of_path {b c : B} (γ : Path b c)
@@ -29,7 +39,7 @@ theorem compactHELP_mapOver_of_path {b c : B} (γ : Path b c)
 
 /-- The same propagation retains both maps of an arbitrary original square. -/
 theorem compactHELP_map_of_path {B' : Type u} [TopologicalSpace B']
-    (q' : C(F,B')) (v : C(B,B')) (sq' : v.comp p = q'.comp f)
+    (q' : C(F, B')) (v : C(B, B')) (sq' : v.comp p = q'.comp f)
     {b c : B} (γ : Path b c)
     (h : CompactHomotopyExtensionLiftingProperty (map f v sq' b)) :
     CompactHomotopyExtensionLiftingProperty (map f v sq' c) := by
@@ -50,7 +60,7 @@ end Quillen.HomotopyFiber
 
 namespace Quillen.HomotopyFiber
 variable {E F B : Type u} [TopologicalSpace E] [TopologicalSpace F] [TopologicalSpace B]
-  (p : C(E,B)) (q : C(F,B)) (f : C(E,F)) (sq : q.comp f = p)
+  (p : C(E, B)) (q : C(F, B)) (f : C(E, F)) (sq : q.comp f = p)
   (hp : HomotopyLiftingProperty p) (hq : HomotopyLiftingProperty q)
 include hp hq
 

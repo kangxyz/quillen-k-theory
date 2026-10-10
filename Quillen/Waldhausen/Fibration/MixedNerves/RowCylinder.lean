@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.MixedNerves.Cylinder
-import Quillen.Waldhausen.Fibration.Rows.TrivialCofibrationCylinder
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.MixedNerves.Cylinder
+public import Quillen.Waldhausen.Fibration.Rows.TrivialCofibrationCylinder
 
 /-! # The original quotient-row cylinder on fine-weak chains
 
@@ -7,6 +15,8 @@ The genuine row middle functor preserves fine squares by its accepted
 exactness. Thus the pointwise chain cylinder applies to the same original
 quotient-row objects, with the original row cofibrations and coarse maps.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CochainComplex
 universe u v
@@ -33,7 +43,7 @@ def rowChainCylinder (n k : SimplexCategory) :
 
 @[simp] theorem rowChainCylinder_projection_app (n k : SimplexCategory)
     (f : Arrow (FineChain (QuotientRows.waldhausenStructure V n) k))
-    (i : Fin (k.len+1)) (p : Interval n) :
+    (i : Fin (k.len + 1)) (p : Interval n) :
     (((rowChainCylinder N D hs n k).projection.app f).hom.app i).hom.app p =
       D.projection.app (Arrow.mk ((f.hom.hom.app i).hom.app p)) := rfl
 

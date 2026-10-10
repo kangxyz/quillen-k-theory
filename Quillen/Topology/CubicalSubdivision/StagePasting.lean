@@ -1,4 +1,12 @@
-import Quillen.Topology.CubicalSubdivision.FaceIntersections
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.FaceIntersections
 
 /-! # Actual finite-stage pasting through the closed grid face skeleton
 
@@ -6,6 +14,8 @@ The lower skeleton together with the finitely many new compact faces is a
 quotient presentation of the next skeleton. The exact intersection and
 boundary identities give genuine continuous extension of compatible data.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 namespace Quillen.CubicalSubdivision
@@ -43,6 +53,8 @@ theorem skeletonBelow_subset (n m r : ℕ) : skeletonBelow n m r ⊆ skeleton n 
   obtain ⟨F,hx⟩ := Set.mem_iUnion.mp hx
   exact Set.mem_iUnion.mpr ⟨⟨F.1,F.2.le⟩,hx⟩
 
+/-- The grid faces of dimension exactly `r` in the `n`-dimensional grid with `m + 1` intervals
+per coordinate. -/
 abbrev StageFace (n m r : ℕ) := {F : FaceIndex n m // faceDimension F = r}
 
 theorem face_boundary_below {n m r : ℕ} (F : StageFace n m r)
@@ -65,15 +77,21 @@ theorem face_preimage_below {n m r : ℕ} (F : StageFace n m r) :
     exact face_intersection_boundary_of_dimension_le F.1 G.1 hn (by omega) t s hs.symm
   · exact face_boundary_below F t
 
+/-- The continuous face parametrization on its cube boundary, with codomain the skeleton of
+faces of dimension less than `r`. -/
 def stageBoundary {n m r : ℕ} (F : StageFace n m r) :
     C({t : Active F.1 → unitInterval // t ∈ _root_.Cube.boundary (Active F.1)},
       skeletonBelow n m r) where
   toFun t := ⟨face F.1 t,face_boundary_below F t t.2⟩
   continuous_toFun := by fun_prop
 
+/-- The disjoint union of the lower skeleton and the parameter cubes of all faces of dimension
+`r`. -/
 abbrev StageSource (n m r : ℕ) :=
   (skeletonBelow n m r) ⊕ Σ F : StageFace n m r,Active F.1 → unitInterval
 
+/-- The map from the lower skeleton and the new face parameter cubes onto the skeleton of
+dimension at most `r`. -/
 def stageProjection (n m r : ℕ) : C(StageSource n m r,skeleton n m r) where
   toFun := Sum.elim
     (fun a ↦ ⟨a.1,skeletonBelow_subset n m r a.2⟩)
@@ -96,20 +114,22 @@ theorem stageProjection_surjective (n m r : ℕ) : Function.Surjective (stagePro
 
 theorem stageProjection_isQuotientMap (n m r : ℕ) :
     Topology.IsQuotientMap (stageProjection n m r) := by
-  let : CompactSpace (skeletonBelow n m r) := isCompact_iff_compactSpace.mp (skeletonBelow_isCompact n m r)
+  let : CompactSpace (skeletonBelow n m r) := isCompact_iff_compactSpace.mp
+    (skeletonBelow_isCompact n m r)
   exact Topology.IsQuotientMap.of_surjective_continuous (stageProjection_surjective n m r)
     (stageProjection n m r).continuous
 
 /-- Actual finite-stage extension from the preceding closed skeleton and
 the original cell maps, with their whole-boundary agreement retained. -/
 theorem exists_stage_paste (n m r : ℕ) {X : Type u} [TopologicalSpace X]
-    (a : C(skeletonBelow n m r,X))
+    (a : C(skeletonBelow n m r, X))
     (f : ∀ F : StageFace n m r,C((Active F.1 → unitInterval),X))
     (hf : ∀ F (t : {t : Active F.1 → unitInterval // t ∈ _root_.Cube.boundary (Active F.1)}),
       f F t = a (stageBoundary F t)) :
     ∃ g : C(skeleton n m r,X),
       (∀ x : skeletonBelow n m r,g ⟨x.1,skeletonBelow_subset n m r x.2⟩ = a x) ∧
-      ∀ (F : StageFace n m r) (t : Active F.1 → unitInterval),g ⟨face F.1 t,Set.mem_iUnion.mpr ⟨⟨F.1,F.2.le⟩,⟨t,rfl⟩⟩⟩ = f F t := by
+      ∀ (F : StageFace n m r) (t : Active F.1 → unitInterval),g ⟨face F.1 t,Set.mem_iUnion.mpr
+        ⟨⟨F.1,F.2.le⟩,⟨t,rfl⟩⟩⟩ = f F t := by
   let b : C(StageSource n m r,X) := ⟨Sum.elim a (fun z ↦ f z.1 z.2),
     a.continuous.sumElim (continuous_sigma (fun F ↦ (f F).continuous))⟩
   have hleft (x : skeletonBelow n m r) (F : StageFace n m r) (t : Active F.1 → unitInterval)

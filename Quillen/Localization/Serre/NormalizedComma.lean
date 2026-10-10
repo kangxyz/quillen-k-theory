@@ -1,8 +1,18 @@
-import Quillen.Localization.Serre.LocalizationComma
-import Quillen.Localization.Serre.BasedFiberComparison
-import Quillen.CategoryTheory.TheoremB.FunctorIso
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.LocalizationComma
+public import Quillen.Localization.Serre.BasedFiberComparison
+public import Quillen.CategoryTheory.TheoremB.FunctorIso
 
 /-! The zero-comma equivalence for the exact normalized functors underlying KMap. -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits
@@ -26,6 +36,8 @@ def inclusionNormalizedIso : Devissage.mapQ P ≅ inclusionNormalizedQ P :=
     (abelianExactStructure C).qZero
     ((abelianExactStructure C).qIsoOfIso (Devissage.exactInclusion P).toFunctor.mapZeroObject)
 
+/-- The costructured-arrow category of Q-arrows from the image of the normalized quotient
+functor to the quotient Q-zero object. -/
 abbrev NormalizedZeroComma :=
   CostructuredArrow (quotientNormalizedQ P) (quotientExactStructure P).qZero
 

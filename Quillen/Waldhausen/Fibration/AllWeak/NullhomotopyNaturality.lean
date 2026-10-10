@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.AllWeak.AcyclicInclusion
-import Quillen.Waldhausen.SConstruction.WeakNaturalTransformationNaturality
-import Quillen.Topology.Realization.HomotopyNaturality
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.AllWeak.AcyclicInclusion
+public import Quillen.Waldhausen.SConstruction.WeakNaturalTransformationNaturality
+public import Quillen.Topology.Realization.HomotopyNaturality
 
 /-! # The entire original acyclic nullhomotopy
 
@@ -10,6 +18,8 @@ is exactly the original zero-to-acyclic-inclusion cylinder. Realization
 naturality retains the entire path, including its reversal convention.
 No fibration or fiber equivalence is an input.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor Opposite MonoidalCategory
 open scoped Simplicial Topology

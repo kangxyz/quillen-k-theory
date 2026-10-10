@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.SConstruction.Rows.NerveBridge
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.NerveBridge
 
 /-! # The actual weak-row nerve presents the original bisimplicial S-construction
 
@@ -6,6 +14,8 @@ The original-grid simplex equivalence commutes with both ordinal directions.
 Its diagonal therefore presents the existing Waldhausen simplicial set by
 actual fine-weak quotient-row categories, without replacing any map.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial
@@ -53,7 +63,7 @@ def gridNerveIso : bisimplicialSSet W ≅ weakRowNerve W :=
 /-- Forward simplices retain every original grid component. -/
 @[simp] theorem gridNerveIso_hom_component (n k : SimplexCategory)
     (F : Grid₂ n k ⥤ C) (hF : IsSimplex₂ W.cof W.weq F)
-    (t : Fin (k.len+1)) (p : Interval n) :
+    (t : Fin (k.len + 1)) (p : Interval n) :
     (((((gridNerveIso W).hom.app (op n)).app (op k) ⟨F,hF⟩).obj t).obj.obj.obj p) =
       F.obj (t,p) := rfl
 

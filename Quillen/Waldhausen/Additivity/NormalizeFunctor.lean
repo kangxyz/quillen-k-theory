@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.PointedFunctor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.PointedFunctor
 
 /-! # Chosen-object normalization with independent universe levels
 
@@ -7,6 +15,8 @@ category. This is the same actual object replacement/conjugation as the
 existing pointed functor, generalized to allow that internal use. At equal
 universe levels it agrees with the existing canonical `rebaseFunctor`.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

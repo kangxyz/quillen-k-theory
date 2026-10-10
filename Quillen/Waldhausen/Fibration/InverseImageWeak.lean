@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Fibration.AcyclicSubcategory
+module
+
+public import Quillen.Waldhausen.Fibration.AcyclicSubcategory
 
 /-!
 # Inverse-image weak equivalences along an actual exact functor
@@ -14,6 +16,8 @@ Two-out-of-three and the structural extension axiom descend from the target.
 The latter uses the genuine image zero, without any strict zero-preservation
 assumption. This categorical construction asserts no localization comparison.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'

@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremA.SequentialCylinderReduction
-import Quillen.CategoryTheory.TheoremA.RealizationPushoutLatching
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.SequentialCylinderReduction
+public import Quillen.CategoryTheory.TheoremA.RealizationPushoutLatching
 
 /-!
 # Homotopy invariance of sequential colimits of cofibrations
@@ -10,6 +18,8 @@ both sequences have the homotopy extension property at each successor.
 The inverse and its coherent homotopies are constructed using mapping
 cylinders, relative latching pushouts, and timed sequential deformations.
 -/
+@[expose] public section
+
 
 noncomputable section
 

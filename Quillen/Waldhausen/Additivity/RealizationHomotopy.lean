@@ -1,6 +1,16 @@
-import Quillen.Topology.Realization.MixedOrdinalRealization
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.MixedOrdinalRealization
 
 /-! # Realized homotopies supplied by the actual mixed cylinder -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory Opposite
@@ -36,16 +46,18 @@ theorem mixed_deformation_endpoints
     exact ⟨h⟩
   have H' := ((ContinuousMap.Homotopic.refl (realizedDiagonalMap θ)).comp H).comp
     (ContinuousMap.Homotopic.refl (realizedDiagonalMap (MixedOrdinalCylinder.outerOneSection X)))
-  change (((realizedDiagonalMap θ).comp (realizedDiagonalMap (MixedOrdinalCylinder.outerZeroSection X))).comp
+  change (((realizedDiagonalMap θ).comp (realizedDiagonalMap
+    (MixedOrdinalCylinder.outerZeroSection X))).comp
       ((realizedDiagonalMap (MixedOrdinalCylinder.outerProjection X)).comp
         (realizedDiagonalMap (MixedOrdinalCylinder.outerOneSection X)))).Homotopic
-      ((realizedDiagonalMap θ).comp (realizedDiagonalMap (MixedOrdinalCylinder.outerOneSection X))) at H'
+      ((realizedDiagonalMap θ).comp (realizedDiagonalMap (MixedOrdinalCylinder.outerOneSection
+        X))) at H'
   have hp : (realizedDiagonalMap (MixedOrdinalCylinder.outerProjection X)).comp
       (realizedDiagonalMap (MixedOrdinalCylinder.outerOneSection X)) =
       realizedDiagonalMap (OrdinalSubdivision.horizontalEndpoint X) := by
     rw [← realizedDiagonalMap_comp, MixedOrdinalCylinder.outerOneSection_projection]
     rfl
-  rw [hp] at H' 
+  rw [hp] at H'
   exact (congrArg₂ ContinuousMap.Homotopic
     (congrArg (fun f ↦ f.comp (realizedDiagonalMap (OrdinalSubdivision.horizontalEndpoint X)))
       (realizedDiagonalMap_comp (MixedOrdinalCylinder.outerZeroSection X) θ))

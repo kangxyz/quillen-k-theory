@@ -1,6 +1,14 @@
-import Quillen.Topology.HomotopyFiber.LES
-import Quillen.Topology.HomotopyFiber.Components
-import Quillen.Topology.HomotopyEquiv.Based
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.LES
+public import Quillen.Topology.HomotopyFiber.Components
+public import Quillen.Topology.HomotopyEquiv.Based
 
 /-!
 # The pointed-set tail of the homotopy-fiber long exact sequence
@@ -9,6 +17,8 @@ The cubical constructions also work in degree zero, where no group structure
 is assumed. The connecting function `π₁ Y → π₀ HF(f)` and the remaining tail
 are exact as pointed sets: image equals preimage of the distinguished class.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe w u v
@@ -108,7 +118,8 @@ theorem mem_range_piMap_iff_connectingMap_constant (n : ℕ)
     (a : HomotopyGroup.Pi (n + 1) Y y) :
     a ∈ Set.range (homotopyGroupMap (N := Fin (n + 1)) f h) ↔
       connectingMap f y x h n a =
-        (Quotient.mk' GenLoop.const : HomotopyGroup.Pi n (HomotopyFiber f y) (basepoint f y x h)) := by
+        (Quotient.mk' GenLoop.const : HomotopyGroup.Pi n (HomotopyFiber f y) (basepoint f y x
+          h)) := by
   change _ ↔ homotopyGroupMap (loopInclusion f y x h) (loopInclusion_refl f y x h)
     (loopShiftEquiv n a) = _
   rw [← mem_range_loopMap_iff_constant f y x h (loopShiftEquiv n a)]

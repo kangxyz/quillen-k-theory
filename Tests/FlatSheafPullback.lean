@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Scheme.Sheaf.FlatPullback
+module
+
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatPullback
 
 /-!
 # Consumers of ambient flat sheaf pullback
@@ -11,6 +13,8 @@ import Quillen.Scheme.Sheaf.FlatPullback
 These consumers use arbitrary module sheaves, with no quasicoherence or
 finiteness assumptions. The canonical geometric pullback functor is unchanged.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -1,11 +1,19 @@
-import Mathlib.Algebra.Category.FGModuleCat.Abelian
-import Mathlib.Algebra.Category.ModuleCat.Localization
-import Mathlib.Algebra.Module.FinitePresentation
-import Mathlib.Algebra.Module.LocalizedModule.Away
-import Mathlib.RingTheory.Localization.Finiteness
-import Mathlib.RingTheory.Localization.Submodule
-import Mathlib.CategoryTheory.Abelian.SerreClass.Bousfield
-import Mathlib.CategoryTheory.Abelian.SerreClass.Localization
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.Algebra.Category.FGModuleCat.Abelian
+public import Mathlib.Algebra.Category.ModuleCat.Localization
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.Algebra.Module.LocalizedModule.Away
+public import Mathlib.RingTheory.Localization.Finiteness
+public import Mathlib.RingTheory.Localization.Submodule
+public import Mathlib.CategoryTheory.Abelian.SerreClass.Bousfield
+public import Mathlib.CategoryTheory.Abelian.SerreClass.Localization
 
 /-!
 # Localization of actual finite modules
@@ -14,6 +22,8 @@ The functor constructed here is the restriction of mathlib's module localization
 functor to finitely generated modules. Over a noetherian ring it is exact, and
 its kernel is the Serre class of modules killed by localization.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u
@@ -72,6 +82,7 @@ instance torsion_isSerreClass : (torsion S).IsSerreClass := by
   dsimp [torsion]
   infer_instance
 
+omit [IsNoetherianRing R] in
 @[simp] theorem torsion_iff (M : FGModuleCat.{u} R) :
     torsion S M ↔ IsZero ((functor S).obj M) := Iff.rfl
 
@@ -82,6 +93,7 @@ theorem isoModSerre_iff {M N : FGModuleCat.{u} R} (f : M ⟶ N) :
   rw [Abelian.isoModSerre_kernel_eq_inverseImage_isomorphisms]
   rfl
 
+omit [IsNoetherianRing R] in
 /-- Vanishing after localization is the usual elementwise torsion condition. -/
 theorem torsion_iff_elementwise (M : FGModuleCat.{u} R) :
     torsion S M ↔ ∀ m : M, ∃ s ∈ S, s • m = 0 := by
@@ -94,12 +106,14 @@ theorem torsion_iff_elementwise (M : FGModuleCat.{u} R) :
   change Subsingleton (M.obj.localizedModule S) ↔ _
   exact IsLocalizedModule.subsingleton_iff S (M.obj.localizedModuleMkLinearMap S)
 
+omit [IsNoetherianRing R] in
 /-- For a principal open, the kernel consists exactly of elementwise power torsion. -/
 theorem torsion_powers_iff_elementwise (f : R) (M : FGModuleCat.{u} R) :
     torsion (Submonoid.powers f) M ↔ ∀ m : M, ∃ n : ℕ, f ^ n • m = 0 := by
   rw [torsion_iff_elementwise]
   simp only [Submonoid.mem_powers_iff, exists_exists_eq_and]
 
+omit [IsNoetherianRing R] in
 /-- Finite generation makes the torsion condition uniform: one denominator
 annihilates the whole module. -/
 theorem torsion_iff_uniform (M : FGModuleCat.{u} R) :
@@ -109,7 +123,7 @@ theorem torsion_iff_uniform (M : FGModuleCat.{u} R) :
     have hz : Subsingleton (M.obj.localizedModule S) := by
       apply (IsLocalizedModule.subsingleton_iff S (M.obj.localizedModuleMkLinearMap S)).2
       exact (torsion_iff_elementwise S M).1 h
-    letI := hz
+    let := hz
     obtain ⟨s, hs⟩ := Module.Finite.exists_smul_of_comp_eq_of_isLocalizedModule S
       (M.obj.localizedModuleMkLinearMap S) (LinearMap.id : M →ₗ[R] M) 0
       (Subsingleton.elim _ _)
@@ -119,6 +133,7 @@ theorem torsion_iff_uniform (M : FGModuleCat.{u} R) :
   · rintro ⟨s, hs⟩
     exact (torsion_iff_elementwise S M).2 fun m ↦ ⟨s, s.property, hs m⟩
 
+omit [IsNoetherianRing R] in
 /-- A finite module vanishes on the principal open exactly when one power
 of its defining element annihilates every section of the module. -/
 theorem torsion_powers_iff_uniform (f : R) (M : FGModuleCat.{u} R) :

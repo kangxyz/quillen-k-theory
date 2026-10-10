@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.TheoremB.Rows
-import Quillen.CategoryTheory.TheoremA.RealizationHEP
-import Mathlib.AlgebraicTopology.SimplicialSet.Degenerate
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.Rows
+public import Quillen.CategoryTheory.TheoremA.RealizationHEP
+public import Mathlib.AlgebraicTopology.SimplicialSet.Degenerate
 
 /-!
 # Cofibrant degeneracies in the simplicial replacement
@@ -9,6 +17,8 @@ Outer degeneracies of the actual realized replacement rows are open and
 closed embeddings. In coproduct coordinates they include entire summands,
 with a homeomorphism on each included summand.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -197,7 +207,6 @@ theorem replacementRowMap_degeneracy_realization_isClosedEmbedding
     ((topologicalRowMap_degeneracy_isClosedEmbedding H i).comp
       (TopCat.homeoOfIso (TheoremA.replacementRowRealizationIso H _)).isClosedEmbedding)
 
-set_option maxHeartbeats 800000 in
 /-- Every outer degeneracy satisfies homotopy extension in the genuine
 coproduct coordinates. -/
 theorem topologicalRowMap_degeneracy_homotopyExtensionProperty

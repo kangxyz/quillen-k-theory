@@ -3,16 +3,20 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.TheoremB.ReplacementWeakVertex
+module
+
+public import Quillen.CategoryTheory.TheoremB.ReplacementWeakVertex
 
 /-! # Original replacement vertex consumers
 
 The source and both coordinates are the original realized maps. The comparisons
 retain the full path and complete finite relative lifting, including components.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite Quillen Quillen.TheoremA Quillen.TheoremB
-open Quillen.TheoremB.SkeletalCartesian
+open Quillen.CartesianRealization.Skeletal
 open scoped Simplicial Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false

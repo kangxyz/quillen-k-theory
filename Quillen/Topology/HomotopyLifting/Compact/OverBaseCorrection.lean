@@ -1,4 +1,12 @@
-import Quillen.Topology.HomotopyLifting.Compact.ParallelLifts
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyLifting.Compact.ParallelLifts
 
 /-! # Compact original comparison homotopies corrected over the base
 
@@ -7,6 +15,8 @@ The first actual lift restores the displayed base map while fixing the zero
 set. Parallel-lift straightening then supplies a coherent vertical comparison,
 retaining that entire set. No ordinary homotopy is presumed to be fiberwise.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 universe u
@@ -17,11 +27,11 @@ variable {E F B X : Type u} [TopologicalSpace E] [TopologicalSpace F]
 /-- Correct an actual ordinary comparison to the displayed base map, with a
 vertical comparison homotopy and every prescribed zero-set value retained. -/
 theorem compact_correct_comparison_over_fixed_zero
-    (p : C(E,B)) (q : C(F,B)) (f : C(E,F)) (sq : q.comp f = p)
+    (p : C(E, B)) (q : C(F, B)) (f : C(E, F)) (sq : q.comp f = p)
     (hp : CompactHomotopyLiftingProperty p) (hq : CompactHomotopyLiftingProperty q)
-    (a : C(X,E)) (b : C(X,F)) (H : (f.comp a).Homotopy b)
-    (duration : C(X,unitInterval))
-    (hfixed : ∀ x,duration x = 0 → ∀ t,H (t,x) = f (a x)) :
+    (a : C(X, E)) (b : C(X, F)) (H : (f.comp a).Homotopy b)
+    (duration : C(X, unitInterval))
+    (hfixed : ∀ x, duration x = 0 → ∀ t, H (t, x) = f (a x)) :
     ∃ c : C(X,E),p.comp c = q.comp b ∧
       (∀ x,duration x = 0 → c x = a x) ∧
       ∃ V : (f.comp c).Homotopy b,
@@ -45,7 +55,8 @@ theorem compact_correct_comparison_over_fixed_zero
     intro x hx t
     change f (K (t,x)) = f (a x)
     rw [hKfixed x hx t]
-  obtain ⟨V,hV,hVfixed⟩ := CompactHomotopyLiftingProperty.parallel_lifts q J H hq hsame duration hJfixed hfixed
+  obtain ⟨V,hV,hVfixed⟩ := CompactHomotopyLiftingProperty.parallel_lifts q J H hq hsame duration
+    hJfixed hfixed
   refine ⟨c,hc,hca,V,?_,hVfixed⟩
   intro t x
   exact (hV t x).trans ((hsq (c x)).trans (ContinuousMap.congr_fun hc x))

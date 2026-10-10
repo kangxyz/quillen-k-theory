@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.GilletWaldhausen.AcyclicTruncation
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.AcyclicTruncation
 
 /-!
 # Exact cycle functors on actual acyclic complexes
@@ -8,6 +16,8 @@ only its right term makes the sequence of actual cycle objects short exact.
 This constructs an actual exact functor from bounded acyclic termwise-P
 complexes to the inherited exact full subcategory P.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

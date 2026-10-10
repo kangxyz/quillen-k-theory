@@ -1,10 +1,20 @@
-import Quillen.CategoryTheory.ExactCategory.MatrixDeflation
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.MatrixDeflation
 
 /-! # Admissible monomorphisms with an extra matrix entry
 
 The actual biproduct map with an admissible first coordinate is admissible.
 The proof uses only exact-category axioms and explicit universal properties.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

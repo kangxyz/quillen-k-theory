@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Approximation.FiniteReplacement
-import Quillen.Topology.ClassifyingSpace.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Approximation.FiniteReplacement
+public import Quillen.Topology.ClassifyingSpace.Equivalence
 
 /-!
 # Actual weak-equivalence categories of finite flags
@@ -11,6 +19,8 @@ Both natural comparison transformations and the homotopies of actual
 classifying spaces are constructed. Passing to quotient rows and the
 simplicial diagonal is separate.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -28,6 +38,8 @@ variable {C : Type u} [Category.{v} C]
 /-- A finite flag starts at a zero object and all its forward maps are cofibrations.
 The weak-equivalence parameter specifies its morphism category below. -/
 structure WeakFlag (cof weq : MorphismProperty C) (n : ℕ) where
+  /-- The underlying sequence of `n` composable arrows, starting at a zero object and with every
+  forward map in `cof`. -/
   diagram : ComposableArrows C n
   zero : IsZero (diagram.obj 0)
   cofibration {i j : Fin (n + 1)} (f : i ⟶ j) : cof (diagram.map f)
@@ -38,7 +50,7 @@ variable {cof weq : MorphismProperty C} {n : ℕ} [weq.IsMultiplicative]
 
 instance : Category (WeakFlag cof weq n) where
   Hom F G := { α : F.diagram ⟶ G.diagram // ∀ i, weq (α.app i) }
-  id F := ⟨𝟙 F.diagram, fun i ↦ weq.id_mem _⟩
+  id F := ⟨𝟙 F.diagram, fun _ ↦ weq.id_mem _⟩
   comp α β := ⟨α.val ≫ β.val, fun i ↦ weq.comp_mem _ _ (α.property i) (β.property i)⟩
   id_comp α := Subtype.ext (Category.id_comp α.val)
   comp_id α := Subtype.ext (Category.comp_id α.val)
@@ -81,13 +93,13 @@ back to that same flag in the smaller-cofibration category. -/
 def flagSourceComparison :
     WeakFlag.inclusion cof' hcof ⋙ flagReplacement D cof' n ⟶ 𝟭 (WeakFlag W.cof W.weq n) where
   app F := ⟨(finiteProjection D n).app F.diagram, finiteProjection_weak D n F.diagram⟩
-  naturality F G α := Subtype.ext ((finiteProjection D n).naturality α.val)
+  naturality _ _ α := Subtype.ext ((finiteProjection D n).naturality α.val)
 
 /-- The analogous natural weak comparison in the enlarged-cofibration category. -/
 def flagTargetComparison :
     flagReplacement D cof' n ⋙ WeakFlag.inclusion cof' hcof ⟶ 𝟭 (WeakFlag cof' W.weq n) where
   app F := ⟨(finiteProjection D n).app F.diagram, finiteProjection_weak D n F.diagram⟩
-  naturality F G α := Subtype.ext ((finiteProjection D n).naturality α.val)
+  naturality _ _ α := Subtype.ext ((finiteProjection D n).naturality α.val)
 
 /-- Enlarging cofibrations induces an actual homotopy equivalence on the
 classifying spaces of weak-equivalence finite flags. The forward map is

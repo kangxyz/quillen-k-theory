@@ -1,7 +1,17 @@
-import Mathlib.AlgebraicTopology.SimplicialSet.Degenerate
-import Mathlib.AlgebraicTopology.SimplicialSet.SubcomplexColimits
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.AlgebraicTopology.SimplicialSet.Degenerate
+public import Mathlib.AlgebraicTopology.SimplicialSet.SubcomplexColimits
 
 /-! # Outer latching subcomplexes of a bisimplicial set -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial
@@ -83,7 +93,8 @@ lemma map_mem_partialLatching (n k : ℕ) (q : SimplexCategoryᵒᵖ)
     (η.app (op ⦋n + 1⦌)).app q x ∈ (partialLatching Y n k).obj q := by
   obtain ⟨i, hi, y, rfl⟩ := (mem_partialLatching_iff X n k q x).1 hx
   refine (mem_partialLatching_iff Y n k q _).2 ⟨i, hi, (η.app (op ⦋n⦌)).app q y, ?_⟩
-  exact (ConcreteCategory.congr_hom (NatTrans.congr_app (SimplicialObject.σ_naturality η i) q) y).symm
+  exact (ConcreteCategory.congr_hom (NatTrans.congr_app (SimplicialObject.σ_naturality η i) q)
+    y).symm
 
 /-- The map on partial latching objects induced by any bisimplicial map. -/
 def partialLatchingMap (n k : ℕ) :

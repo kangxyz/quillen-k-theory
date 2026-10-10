@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.RowLift
-import Quillen.Waldhausen.Fibration.Rows.ReflexiveFactorization
+module
+
+public import Quillen.Waldhausen.Approximation.RowLift
+public import Quillen.Waldhausen.Fibration.Rows.ReflexiveFactorization
 
 /-! # Genuine approximation on every original quotient row
 
@@ -13,6 +15,8 @@ An honest source row factorization supplies its genuine joint cofibration.
 Structural base joint-cylinder data constructs such factorizations in all
 degrees. No row lifting or contractibility endpoint is assumed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'

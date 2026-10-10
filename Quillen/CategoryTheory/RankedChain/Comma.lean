@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.RankedChain.Append
-import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
+module
+
+public import Quillen.CategoryTheory.RankedChain.Append
+public import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
 
 /-!
 # Actual append-or-compress comma objects and their arrows
@@ -16,6 +18,8 @@ constructs original comma arrows into every closed target. The fixed target
 vertex also maps into every such closed object. No comma contraction or
 higher-filling assertion is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

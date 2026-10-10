@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremA.RealizationSequentialDeformation
-import Mathlib.CategoryTheory.Limits.FunctorCategory.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationSequentialDeformation
+public import Mathlib.CategoryTheory.Limits.FunctorCategory.Basic
 
 /-!
 # Sequential cobase change along a colimit cocone
@@ -8,6 +16,8 @@ Push each stage of a map of sequential diagrams out along the source
 colimit cocone. The resulting diagram has the same colimit as the target.
 Its successor maps are cobase changes of the relative latching maps.
 -/
+@[expose] public section
+
 
 noncomputable section
 
@@ -23,10 +33,13 @@ namespace Quillen.TheoremA
 def sequentialCobaseDiagram {F G : ℕ ⥤ TopCat.{u}}
     (c : Cocone F) (η : F ⟶ G) : ℕ ⥤ TopCat.{u} := pushout c.ι η
 
+/-- The natural map from the constant diagram at the cocone point to the stagewise pushout of the
+source cocone along `η`. -/
 def sequentialCobaseSource {F G : ℕ ⥤ TopCat.{u}}
     (c : Cocone F) (η : F ⟶ G) :
     (Functor.const ℕ).obj c.pt ⟶ sequentialCobaseDiagram c η := pushout.inl _ _
 
+/-- The natural map from `G` to the stagewise pushout of the source cocone along `η`. -/
 def sequentialCobaseTarget {F G : ℕ ⥤ TopCat.{u}}
     (c : Cocone F) (η : F ⟶ G) :
     G ⟶ sequentialCobaseDiagram c η := pushout.inr _ _

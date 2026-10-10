@@ -1,4 +1,23 @@
-import Quillen.Resolution
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Resolution
+
+/-!
+# Resolution theorem examples
+
+Uses length-one admissible resolutions and the finite-resolution hypothesis for
+an object property with the stated closure conditions. The examples record
+bijectivity in every connective degree and identify each equivalence's forward
+map with the original inclusion.
+-/
+
+@[expose] public section
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u

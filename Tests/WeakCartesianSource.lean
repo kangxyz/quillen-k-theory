@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Topology.HomotopyPullback.WeakCartesianSource
+module
+
+public import Quillen.Topology.HomotopyPullback.WeakCartesianSource
 
 /-! Canonical comparison regression tests under weak change of total source. -/
+@[expose] public section
+
 
 noncomputable section
 open Quillen Quillen.HomotopyPullback

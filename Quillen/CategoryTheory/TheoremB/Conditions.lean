@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.TheoremB.Comparison
-import Quillen.Topology.ClassifyingSpace.Equivalence
-import Mathlib.CategoryTheory.Groupoid
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.Comparison
+public import Quillen.Topology.ClassifyingSpace.Equivalence
+public import Mathlib.CategoryTheory.Groupoid
 
 /-!
 # Verified sufficient conditions for the transition hypothesis
@@ -8,6 +16,8 @@ import Mathlib.CategoryTheory.Groupoid
 This proves the actual Theorem B hypothesis in useful categorical cases.
 It does not identify the comma comparison with a homotopy equivalence.
 -/
+@[expose] public section
+
 
 noncomputable section
 

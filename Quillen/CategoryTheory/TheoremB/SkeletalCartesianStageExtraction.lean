@@ -1,15 +1,25 @@
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianStageRestriction
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianCoordinateTransport
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianStageRestriction
+public import Quillen.Topology.Realization.Cartesian.CoordinateTransport
 
 /-! Extract the old-stage and individual characteristic-chart comparisons
 from the two outgoing faces of the actual replacement attachment cube. -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
 
@@ -147,4 +157,4 @@ theorem successor_restriction_and_chart
     fun s ↦ chartCartesian_of_componentCharacteristic H n s
       (componentCharacteristic_cartesian H n hcell s)⟩
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

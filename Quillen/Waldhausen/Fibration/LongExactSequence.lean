@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.Waldhausen.Fibration.CanonicalFiberMap
-import Quillen.Waldhausen.SConstruction.Connected
-import Quillen.Topology.HomotopyFiber.LESTail
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
+module
+
+public import Quillen.Waldhausen.Fibration.CanonicalFiberMap
+public import Quillen.Waldhausen.SConstruction.Connected
+public import Quillen.Topology.HomotopyFiber.LESTail
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
 
 /-! # The original change-of-weak-equivalences long exact sequence
 
@@ -16,6 +18,8 @@ long exact sequence to the original KMaps. The degree-zero surjectivity uses
 the pointed-set tail and connectedness of the acyclic S-realization. Explicit
 comparison hypotheses let this algebraic layer apply in both category universes.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 universe u v

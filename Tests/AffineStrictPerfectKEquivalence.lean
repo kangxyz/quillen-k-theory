@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.Affine.StrictPerfectKEquivalence
-import Quillen.PerfectComplexes.DerivedPullback
-import Mathlib.Data.ZMod.Basic
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StrictPerfectKEquivalence
+public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPullback
+public import Mathlib.Data.ZMod.Basic
 
 /-! # Actual affine K-equivalence consumers
 
@@ -13,6 +15,8 @@ The consumers retain both original public maps, degree zero, inverse and
 triangle equations, arbitrary affine pullback, restriction at zero in a
 non-domain, and the genuine all-scheme weak-arrow joint factorization.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

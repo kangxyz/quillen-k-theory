@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.ExactCategory.Basic
-import Mathlib.Algebra.Homology.ShortComplex.ShortExact
-import Mathlib.CategoryTheory.Abelian.Monomorphisms
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Basic
+public import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+public import Mathlib.CategoryTheory.Abelian.Monomorphisms
 
 /-!
 # The standard exact structure on an abelian category
@@ -11,6 +19,8 @@ monomorphisms, and its admissible epimorphisms are precisely all epimorphisms.
 The Quillen axioms are proved from the abelian kernel/cokernel and base-change
 theorems in mathlib.
 -/
+@[expose] public section
+
 
 universe v u
 

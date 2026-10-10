@@ -1,7 +1,15 @@
-import Quillen.CategoryTheory.ExactCategory.MatrixInflation
-import Quillen.CategoryTheory.ExactCategory.Functor
-import Quillen.KTheory.GrothendieckComparison.Basic
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Biproducts
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.MatrixInflation
+public import Quillen.CategoryTheory.ExactCategory.Functor
+public import Quillen.KTheory.GrothendieckComparison.Basic
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Biproducts
 
 /-!
 # Genuine exact functors preserve pushouts along admissible monomorphisms
@@ -10,6 +18,8 @@ A pushout is expressed by its actual biproduct cokernel sequence. Its first
 map is admissible, so exactness preserves this conflation. The canonical
 biproduct comparison then recovers the original mapped pushout square.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

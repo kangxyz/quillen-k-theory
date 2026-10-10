@@ -1,17 +1,29 @@
-import Quillen.Topology.ClassifyingSpace.Basic
-import Mathlib.CategoryTheory.Limits.Types.Filtered
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.ClassifyingSpace.Basic
+public import Mathlib.CategoryTheory.Limits.Types.Filtered
 
 /-! # Recognizing filtered colimits of nerves by finite categorical lifting -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits Opposite
 namespace Quillen.FilteredNerveColimit
-variable {J : Type u} [SmallCategory J] [IsFiltered J]
-  (F : J ⥤ Cat.{u,u}) (c : Cocone F)
+variable {J : Type u} [SmallCategory J]
+  (F : J ⥤ Cat.{u, u}) (c : Cocone F)
 
+/-- The functor from a diagram stage to the vertex of the categorical cocone. -/
 abbrev leg (j : J) : F.obj j ⥤ c.pt := (c.ι.app j).toFunctor
+/-- The transition functor between two stages of the filtered categorical diagram. -/
 abbrev step {j k : J} (f : j ⟶ k) : F.obj j ⥤ F.obj k := (F.map f).toFunctor
 
 lemma leg_step {j k : J} (f : j ⟶ k) : step F f ⋙ leg F c k = leg F c j :=
@@ -41,6 +53,8 @@ def ArrowSurjective : Prop := ∀ {X Y : c.pt} (f : X ⟶ Y),
 def EventuallyEqualObjects : Prop := ∀ (j : J) (x y : F.obj j),
   (leg F c j).obj x = (leg F c j).obj y →
     ∃ (k : J) (f : j ⟶ k), (step F f).obj x = (step F f).obj y
+
+variable [IsFiltered J]
 
 /-- Joint lifting and eventual object equality let us lift an arrow into an
 already specified stage object while retaining that target after transition. -/
@@ -117,7 +131,7 @@ theorem chain_eventually_equal (he : EventuallyEqualObjects F c)
 
 /-- The mapped nerve cocone is a genuine simplicial colimit under finite
 categorical lifting and eventual object equality. -/
-def nerveCocone_isColimit
+def nerveCoconeIsColimit
     (ho : ∀ X : c.pt, ∃ (j : J) (x : F.obj j), (leg F c j).obj x = X)
     (ha : ArrowSurjective F c) (he : EventuallyEqualObjects F c)
     [∀ j, (leg F c j).Faithful] : IsColimit (nerveFunctor.mapCocone c) := by

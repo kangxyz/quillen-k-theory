@@ -1,6 +1,16 @@
-import Quillen.Topology.Realization.MixedOrdinalBisimplicial
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.MixedOrdinalBisimplicial
 
 /-! # Canonical realization equivalences of the mixed ordinal cylinder -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial Topology
@@ -9,7 +19,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace Quillen.MixedOrdinalCylinder
 
-private def realizationRetractionEquiv {A B : SSet.{u}} (p : A ⟶ B) (i : B ⟶ A)
+/-- Realize a simplicial retraction and its specified inverse homotopy as a homotopy equivalence. -/
+def realizationRetractionEquiv {A B : SSet.{u}} (p : A ⟶ B) (i : B ⟶ A)
     (hi : i ≫ p = 𝟙 B) (H : SSet.Homotopy (p ≫ i) (𝟙 A)) :
     ContinuousMap.HomotopyEquiv |A| |B| where
   toFun := (SSet.toTop.map p).hom
@@ -28,7 +39,8 @@ private def realizationRetractionEquiv {A B : SSet.{u}} (p : A ⟶ B) (i : B ⟶
 /-- First-copy projection is the forward map of a genuine realized equivalence. -/
 def projectionRealizationHomotopyEquiv (X : SSet.{u}) :
     ContinuousMap.HomotopyEquiv |cylinder X| |X| :=
-  realizationRetractionEquiv (projection X) (zeroSection X) (zeroSection_projection X) (contraction X)
+  realizationRetractionEquiv (projection X) (zeroSection X) (zeroSection_projection X)
+    (contraction X)
 
 @[simp] theorem projectionRealizationHomotopyEquiv_toFun (X : SSet.{u}) :
     (projectionRealizationHomotopyEquiv X).toFun = (SSet.toTop.map (projection X)).hom := rfl
@@ -36,7 +48,8 @@ def projectionRealizationHomotopyEquiv (X : SSet.{u}) :
 /-- The outer mixed cylinder has the actual diagonal first-copy projection as
 its realization-equivalence map, with the inner degree unchanged. -/
 def outerProjectionRealizationHomotopyEquiv (X : SimplexCategoryᵒᵖ ⥤ SSet.{u}) :
-    ContinuousMap.HomotopyEquiv |TheoremA.diagonalSSet (outerCylinder X)| |TheoremA.diagonalSSet X| :=
+    ContinuousMap.HomotopyEquiv |TheoremA.diagonalSSet (outerCylinder X)| |TheoremA.diagonalSSet
+      X| :=
   realizationRetractionEquiv (TheoremA.diagonalMap (outerProjection X))
     (TheoremA.diagonalMap (outerZeroSection X))
     (by
@@ -50,7 +63,7 @@ def outerProjectionRealizationHomotopyEquiv (X : SimplexCategoryᵒᵖ ⥤ SSet.
 
 /-- If a composite with a homotopy equivalence is known, its other factor is
 also an equivalence, retaining that actual factor as the forward map. -/
-private def cancelProjection {A B C : Type u}
+def cancelProjection {A B C : Type u}
     [TopologicalSpace A] [TopologicalSpace B] [TopologicalSpace C]
     (j : C(A, B)) (p : ContinuousMap.HomotopyEquiv B C)
     (e : ContinuousMap.HomotopyEquiv A C) (h : e.toFun = p.toFun.comp j) :
@@ -79,7 +92,8 @@ def outerOneSectionRealizationHomotopyEquiv (X : SimplexCategoryᵒᵖ ⥤ SSet.
     ContinuousMap.HomotopyEquiv |TheoremA.diagonalSSet (OrdinalSubdivision.δ.op ⋙ X)|
       |TheoremA.diagonalSSet (outerCylinder X)| :=
   cancelProjection (SSet.toTop.map (TheoremA.diagonalMap (outerOneSection X))).hom
-    (outerProjectionRealizationHomotopyEquiv X) (OrdinalSubdivision.horizontalRealizationHomotopyEquiv X) (by
+    (outerProjectionRealizationHomotopyEquiv X)
+      (OrdinalSubdivision.horizontalRealizationHomotopyEquiv X) (by
       change (SSet.toTop.map (TheoremA.diagonalMap (OrdinalSubdivision.horizontalEndpoint X))).hom =
         (SSet.toTop.map (TheoremA.diagonalMap (outerProjection X))).hom.comp
           (SSet.toTop.map (TheoremA.diagonalMap (outerOneSection X))).hom

@@ -1,10 +1,20 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.Structure
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.Structure
 
 /-! # Genuine exact reindexing of relative quotient rows
 
 Only the actual added-initial-vertex map is used. All original acyclic tail
 objects and inherited fine morphism classes are retained under restriction.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'

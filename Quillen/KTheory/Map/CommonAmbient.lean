@@ -1,5 +1,13 @@
-import Quillen.KTheory.Equivalence
-import Quillen.Topology.HomotopyGroups.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.Equivalence
+public import Quillen.Topology.HomotopyGroups.Equivalence
 
 /-!
 # Exact K-maps with a common realization universe
@@ -10,6 +18,8 @@ already have the same object and morphism universes: a Q-arrow contains
 an apex object. Thus the existing classifying-space and based-homotopy APIs
 apply directly, without identifying realizations in different universes.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
@@ -49,7 +59,9 @@ def commonAmbientKEquiv [F.mapQ.IsEquivalence] (n : ℕ) : EC.K n ≃* ED.K n :=
   homotopyEquivPiEquiv (classifyingHomotopyEquivOfIsEquivalence F.commonAmbientNormalizedQ)
     F.commonAmbientNormalizedQ_map_point n
 
-@[simp] theorem commonAmbientKEquiv_toMonoidHom [F.mapQ.IsEquivalence] (n : ℕ) :
-    (F.commonAmbientKEquiv n).toMonoidHom = F.commonAmbientKMap n := rfl
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem commonAmbientKEquiv_coe [F.mapQ.IsEquivalence] (n : ℕ) :
+    (↑(F.commonAmbientKEquiv n) : EC.K n →* ED.K n) = F.commonAmbientKMap n := rfl
+
 
 end Quillen.ExactFunctor

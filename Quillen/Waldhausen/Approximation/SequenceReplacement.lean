@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Approximation.FactorizationData
-import Mathlib.CategoryTheory.Functor.OfSequence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.FunctorialFactorization.Basic
+public import Mathlib.CategoryTheory.Functor.OfSequence
 
 /-!
 # Functorial cofibration replacement of sequences
@@ -9,6 +17,8 @@ sequence of cofibrations. The comparison to the original sequence is
 natural in the whole sequence, objectwise a weak equivalence, and the
 initial object is unchanged. No comparison equivalence is assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 

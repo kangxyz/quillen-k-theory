@@ -1,7 +1,17 @@
-import Quillen.Waldhausen.Additivity.MixedEndpointHomotopy
-import Quillen.Waldhausen.Additivity.NormalizedZeroMaps
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.MixedEndpointHomotopy
+public import Quillen.Waldhausen.Additivity.NormalizedZeroMaps
 
 /-! # The mixed additivity deformation has a genuinely fixed chosen zero -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -38,7 +48,8 @@ literally constant. All intermediate cuts retain the same chosen zero. -/
 theorem normalizedMixedEndpointHomotopy_fixed_zero :
     SSet.yonedaEquiv.symm
       (show (TheoremA.diagonalSSet (OrdinalSubdivision.δ.op ⋙ bisimplicialSSet V)) _⦋0⦌ from
-        zeroSimplex₂ V.cof V.weq V.zero V.isZero (op (OrdinalSubdivision.δ.obj ⦋0⦌)) (op ⦋0⦌)) ▷ Δ[1] ≫
+        zeroSimplex₂ V.cof V.weq V.zero V.isZero (op (OrdinalSubdivision.δ.obj ⦋0⦌)) (op ⦋0⦌)) ▷
+          Δ[1] ≫
       (normalizedMixedEndpointHomotopy V W a hF hG hc).h =
         CartesianMonoidalCategory.fst Δ[0] Δ[1] ≫
           SSet.yonedaEquiv.symm (diagonalZeroVertex W) := by

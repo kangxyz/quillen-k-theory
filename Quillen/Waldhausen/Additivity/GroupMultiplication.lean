@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Product.Functoriality
-import Quillen.Waldhausen.Additivity.SplitSequence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Product.Functoriality
+public import Quillen.Waldhausen.Additivity.SplitSequence
 
 /-! # Coproduct induces the actual K-group multiplication
 
@@ -8,6 +16,8 @@ supply a homomorphism from the product K-group with both unit restrictions
 equal to the identity. Group algebra identifies it with the existing
 multiplication and proves commutativity, including degree zero.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -81,7 +91,7 @@ theorem coproductKMap_one_right (n : ℕ) (a : W.K n) : coproductKMap W n (a, 1)
   rw [hi]
   have h := KMap_eq_of_iso ((firstEmbedding_isExact W).comp (coproductFunctor_isExact W))
     (IsExact.id W.cof W.weq) (firstEmbeddingCoproductIso W) n
-  rw [KMap_comp, KMap_id] at h
+  rw [← KMap_comp_KMap, KMap_id] at h
   exact DFunLike.congr_fun h a
 
 theorem coproductKMap_one_left (n : ℕ) (a : W.K n) : coproductKMap W n (1, a) = a := by
@@ -95,7 +105,7 @@ theorem coproductKMap_one_left (n : ℕ) (a : W.K n) : coproductKMap W n (1, a) 
   rw [hi]
   have h := KMap_eq_of_iso ((secondEmbedding_isExact W).comp (coproductFunctor_isExact W))
     (IsExact.id W.cof W.weq) (secondEmbeddingCoproductIso W) n
-  rw [KMap_comp, KMap_id] at h
+  rw [← KMap_comp_KMap, KMap_id] at h
   exact DFunLike.congr_fun h a
 
 /-- Coproduct is exactly the pre-existing group multiplication on K-theory. -/

@@ -1,6 +1,16 @@
-import Quillen.Topology.Realization.MixedOrdinal
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.MixedOrdinal
 
 /-! # Constant cuts and their exact mixed-ordinal endpoints -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial
@@ -10,7 +20,9 @@ namespace Quillen.MixedOrdinalCylinder
 open Quillen.OrdinalSubdivision (δ)
 open Quillen.Edgewise (left right join_cases)
 
+/-- The constant cut at zero, selecting the first-copy endpoint of the mixed ordinal. -/
 def zeroCut (n : SimplexCategory) : Cut n := n.const ⦋1⦌ 0
+/-- The constant cut at one, selecting the full join endpoint of the mixed ordinal. -/
 def oneCut (n : SimplexCategory) : Cut n := n.const ⦋1⦌ 1
 
 @[simp] theorem comp_zeroCut {n m : SimplexCategory} (α : n ⟶ m) :
@@ -61,6 +73,8 @@ def oneVertex (n : SimplexCategory) (i : Fin ((δ.obj n).len + 1)) : Vertices (o
     · exact Or.inl ⟨j, rfl⟩
     · exact Or.inr ⟨j, rfl, rfl⟩⟩
 
+/-- The ordinal map from the full join `δ.obj n` to the mixed ordinal at the one cut, assigning
+each join vertex its corresponding selected-vertex index. -/
 def oneInverse (n : SimplexCategory) : δ.obj n ⟶ mixedOrdinal (oneCut n) :=
   SimplexCategory.Hom.mk ⟨fun i ↦ (vertexEquiv (oneCut n)).symm (oneVertex n i), by
     intro i j h

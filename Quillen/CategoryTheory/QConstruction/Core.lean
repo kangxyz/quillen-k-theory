@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.ExactCategory.SpecialFractions
-import Quillen.KTheory.Map.CoherenceData
-import Mathlib.CategoryTheory.Core
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.SpecialFractions
+public import Quillen.KTheory.Map.CoherenceData
+public import Mathlib.CategoryTheory.Core
 
 /-!
 # The core of an exact Q-category
@@ -10,6 +18,8 @@ Consequently the ordinary isomorphisms of the original exact category map
 bijectively to Q-isomorphisms, giving an equivalence of cores. The proof uses
 admissibility and an actual splitting, not balancedness of the exact category.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

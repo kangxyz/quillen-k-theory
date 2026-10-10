@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.Affine.PerfectDerivedEquivalence
-import Mathlib.Data.ZMod.Basic
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PerfectDerivedEquivalence
+public import Mathlib.Data.ZMod.Basic
 
 /-!
 # Original-map consumers of affine perfect derived comparison
@@ -15,6 +17,8 @@ triangles, and the empty affine scheme. Detection of perfectness does not
 require a supplied bound; detection of weak chain maps uses original
 quasi-isomorphisms.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

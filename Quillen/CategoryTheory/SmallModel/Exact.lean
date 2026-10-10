@@ -1,7 +1,15 @@
-import Quillen.KTheory.Equivalence
-import Mathlib.CategoryTheory.EssentiallySmall
-import Mathlib.CategoryTheory.Preadditive.Transfer
-import Mathlib.CategoryTheory.Abelian.Transfer
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.Equivalence
+public import Mathlib.CategoryTheory.EssentiallySmall
+public import Mathlib.CategoryTheory.Preadditive.Transfer
+public import Mathlib.CategoryTheory.Abelian.Transfer
 
 /-!
 # Genuine small models of exact categories
@@ -15,6 +23,8 @@ do not identify this small-model realization with a larger raw realization.
 Instead, independence of a small presentation is proved through the genuine
 exact equivalence between any two presentations in the same small universe.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -180,8 +190,8 @@ K-groups whose forward map comes from the exact comparison functor. -/
 def presentationKEquiv (n : ℕ) : (E.ofEquivalence e).K n ≃* (E.ofEquivalence f).K n :=
   (E.presentationComparison e f).KEquivOfMapQIsEquivalence n
 
-@[simp]
-lemma presentationKEquiv_toMonoidHom (n : ℕ) :
-    (E.presentationKEquiv e f n).toMonoidHom = (E.presentationComparison e f).KMap n := rfl
+/-- The monoid-hom coercion is the canonical forward map. -/
+@[simp] lemma presentationKEquiv_coe (n : ℕ) :
+    ↑(E.presentationKEquiv e f n) = (E.presentationComparison e f).KMap n := rfl
 end Presentations
 end Quillen.ExactStructure

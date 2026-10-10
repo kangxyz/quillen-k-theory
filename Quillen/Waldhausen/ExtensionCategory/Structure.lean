@@ -1,6 +1,16 @@
-import Quillen.Waldhausen.ExtensionCategory.ArrowPushouts
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.ExtensionCategory.ArrowPushouts
 
 /-! # The genuine Waldhausen structure on cofibration arrows -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -86,14 +96,16 @@ theorem middle_isZero {X : Obj W} (hX : IsZero X) : IsZero ((middle W).obj X) :=
   W.isZero.of_iso ((middle W).mapIso (hX.iso (isZero W)))
 
 /-- The original subobject functor is genuinely Waldhausen-exact. -/
-theorem source_exact : IsExact (waldhausenStructure W).cof (waldhausenStructure W).weq W.cof W.weq (source W) where
+theorem source_exact : IsExact (waldhausenStructure W).cof (waldhausenStructure W).weq W.cof
+    W.weq (source W) where
   zero := source_isZero W
   cofibration _ h := h.1
   weak _ h := h.1
   pushout hf h := (pointwise_of_isPushout W hf h).1
 
 /-- The original middle-object functor is genuinely Waldhausen-exact. -/
-theorem middle_exact : IsExact (waldhausenStructure W).cof (waldhausenStructure W).weq W.cof W.weq (middle W) where
+theorem middle_exact : IsExact (waldhausenStructure W).cof (waldhausenStructure W).weq W.cof
+    W.weq (middle W) where
   zero := middle_isZero W
   cofibration _ h := cof_middle W h
   weak _ h := h.2

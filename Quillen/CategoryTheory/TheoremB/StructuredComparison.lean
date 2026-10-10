@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.TheoremB.Conditions
-import Quillen.CategoryTheory.TheoremA.Conclusion
-import Quillen.Topology.ClassifyingSpace.Opposite
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.Conditions
+public import Quillen.CategoryTheory.TheoremA.Conclusion
+public import Quillen.Topology.ClassifyingSpace.Opposite
 
 /-!
 # The structured-arrow convention for Quillen's Theorem B
@@ -9,6 +17,8 @@ The arrows in `(d ↓ F)` run from `d` to `F(x)`. Their realized homotopy is
 reversed, so the path coordinate of the comparison still runs from `F(x)`
 to `d`, as required by the actual path-space homotopy fiber.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory Opposite
@@ -24,7 +34,7 @@ variable {C D : Type u} [SmallCategory C] [SmallCategory D] (F : C ⥤ D)
 def structuredCommaTransformation (d : D) :
     (Functor.const (StructuredArrow d F)).obj d ⟶ StructuredArrow.proj d F ⋙ F where
   app X := X.hom
-  naturality X Y f := by simpa using (StructuredArrow.w f).symm
+  naturality X Y f := by simp
 
 /-- Reverse the structure-arrow homotopy to agree with the path-space fiber
 convention `F(x) → d`. -/

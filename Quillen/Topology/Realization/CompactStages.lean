@@ -1,8 +1,16 @@
-import Mathlib.Topology.Category.TopCat.Limits.Basic
-import Mathlib.CategoryTheory.Limits.Types.Filtered
-import Mathlib.Topology.Compactness.Compact
-import Mathlib.Topology.Separation.Basic
-import Mathlib.Topology.Path
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.Topology.Category.TopCat.Limits.Basic
+public import Mathlib.CategoryTheory.Limits.Types.Filtered
+public import Mathlib.Topology.Compactness.Compact
+public import Mathlib.Topology.Separation.Basic
+public import Mathlib.Topology.Path
 
 /-!
 # Compact subsets of sequential topological colimits
@@ -17,6 +25,8 @@ When the transition maps are closed embeddings, the colimit injections are
 also closed embeddings. Thus maps from compact spaces factor continuously
 through a stage.
 -/
+@[expose] public section
+
 
 noncomputable section
 

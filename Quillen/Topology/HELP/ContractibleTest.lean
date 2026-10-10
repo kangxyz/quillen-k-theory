@@ -1,5 +1,13 @@
-import Quillen.Topology.HELP.StrictPullback
-import Quillen.Topology.HomotopyFiber.ContractibleBaseHELP
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HELP.StrictPullback
+public import Quillen.Topology.HomotopyFiber.ContractibleBaseHELP
 
 /-! # Strict HELP on actual compact contracted test spaces
 
@@ -9,6 +17,8 @@ the actual fiber homeomorphisms, so the contracted-base theorem gives HELP
 of the literal pullback map. Project its strict lift and relative homotopy
 back to the original spaces. No over-base correction or gluing is asserted.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

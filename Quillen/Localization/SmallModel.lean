@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.SmallModel.Abelian
-import Mathlib.CategoryTheory.Abelian.SerreClass.Bousfield
-import Mathlib.CategoryTheory.Localization.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.SmallModel.Abelian
+public import Mathlib.CategoryTheory.Abelian.SerreClass.Bousfield
+public import Mathlib.CategoryTheory.Localization.Equivalence
 
 /-!
 # Exact localizations descend to genuine small models
@@ -10,6 +18,8 @@ preserves its Serre-localization theorem. The kernel is still the actual inverse
 image of zero under the conjugated functor. This construction is the underlying
 functor used by `ExactFunctor.smallModel`, so its canonical K-map is retained.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -62,6 +72,7 @@ instance functor_isLocalization [F.IsLocalization F.kernel.isoModSerre] :
   rw [Abelian.isoModSerre_kernel_eq_inverseImage_isomorphisms]
   exact hi f hf
 
+omit [Abelian C] [PreservesFiniteLimits F] [PreservesFiniteColimits F] in
 /-- The kernel on the small model is the original kernel evaluated on the
 actual represented object; no replacement support property is introduced. -/
 theorem kernel_iff (M : SmallModel.{w} C) :
@@ -92,11 +103,9 @@ instance standardExactFunctor_mapQ_isEquivalence :
     (standardExactFunctor.{w} C).mapQ.IsEquivalence := by
   apply ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro M N f hf
-    change ((abelianExactStructure C).smallModel).inflation f
     rw [abelianExactStructure_smallModel]
     exact hf
   · intro M N f hf
-    change ((abelianExactStructure C).smallModel).deflation f
     rw [abelianExactStructure_smallModel]
     exact hf
 

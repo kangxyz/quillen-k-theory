@@ -3,13 +3,17 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.WeakArrow.DualStructure
+module
+
+public import Quillen.Waldhausen.WeakArrow.DualStructure
 
 /-! # Joint reflection by the original opposite weak-arrow projections
 
 Actual zero objects and all actual pushout squares are detected on the two
 literal components. Reflection imposes no cofibration hypothesis.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 universe u v u' v'
@@ -57,7 +61,7 @@ theorem dual_isPushout_of_components {A B E Q : (Obj W F)ᵒᵖ}
 include hF in
 /-- The literal original projections jointly reflect a binary-coproduct
 universal property. Neither displayed inclusion needs to be a cofibration. -/
-def dual_isColimit_binaryCofan_of_components {A B : (Obj W F)ᵒᵖ} (s : BinaryCofan A B)
+def dualBinaryCofanIsColimitOfComponents {A B : (Obj W F)ᵒᵖ} (s : BinaryCofan A B)
     (hC : IsColimit (BinaryCofan.mk ((source W F).op.map s.inl) ((source W F).op.map s.inr)))
     (hD : IsColimit (BinaryCofan.mk ((target W F).op.map s.inl) ((target W F).op.map s.inr))) :
     IsColimit s := by
@@ -69,8 +73,10 @@ def dual_isColimit_binaryCofan_of_components {A B : (Obj W F)ᵒᵖ} (s : Binary
     ((target_exact V W F hF).zero (waldhausenStructure V W F hF).isZero).op
   have hp : IsPushout (hz.to_ A) (hz.to_ B) s.inl s.inr := by
     apply dual_isPushout_of_components W F
-    · convert IsPushout.of_is_coproduct hC hzC.isInitial using 1 <;> first | rfl | exact hzC.eq_of_src _ _
-    · convert IsPushout.of_is_coproduct hD hzD.isInitial using 1 <;> first | rfl | exact hzD.eq_of_src _ _
+    · convert IsPushout.of_is_coproduct hC hzC.isInitial using 1 <;>
+        first | rfl | exact hzC.eq_of_src _ _
+    · convert IsPushout.of_is_coproduct hD hzD.isInitial using 1 <;>
+        first | rfl | exact hzD.eq_of_src _ _
   exact BinaryCofan.IsColimit.mk s
     (fun a b => hp.desc a b (hz.eq_of_src _ _))
     (fun a b => hp.inl_desc a b _)

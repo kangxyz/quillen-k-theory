@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Scheme.FlatPullback
+module
+
+public import Quillen.AlgebraicGeometry.Scheme.FlatPullback
 
 /-!
 # Semantic consumers for actual flat coherent pullback
@@ -12,6 +14,8 @@ These consumers exercise arbitrary coherent-object pullback, exactness from
 real ring-map flatness, preservation of the original G-theory restriction,
 composition, and naturality of the original canonical K-to-G map.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -35,7 +39,7 @@ theorem arbitraryQuasicoherence {X Y : AlgebraicGeometry.Scheme.{u}} (f : X ⟶ 
 even for a morphism that is not assumed flat. -/
 theorem coherentUnderlyingSheaf {X Y : AlgebraicGeometry.Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian Y] (f : X ⟶ Y)
-    (M : CoherentScheme.Coherent Y) :
+    (M : CoherentScheme.FiniteTypeSheaves Y) :
     ((CoherentScheme.coherentPullback f).obj M).obj =
       (Scheme.Modules.pullback f).obj M.obj := rfl
 

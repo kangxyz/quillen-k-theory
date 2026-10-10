@@ -1,7 +1,15 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationRealization
-import Quillen.Waldhausen.Fibration.MixedNerves.TotalEvaluation
-import Quillen.Waldhausen.Fibration.RelativeRows.FiberFiltration
-import Quillen.Waldhausen.Fibration.CanonicalFiberMap
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationRealization
+public import Quillen.Waldhausen.Fibration.MixedNerves.TotalEvaluation
+public import Quillen.Waldhausen.Fibration.RelativeRows.FiberFiltration
+public import Quillen.Waldhausen.Fibration.CanonicalFiberMap
 
 /-! # The original relative total S-construction and the coarse S-construction
 
@@ -9,6 +17,8 @@ The actual initial-filtration map is followed by the actual mixed diagonal
 evaluation. Its equivalence is proved from the genuine cylinder comparison;
 no realization or homotopy-fiber conclusion is assumed as data.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial Topology
@@ -27,7 +37,7 @@ def coarseEvaluation : TheoremA.diagonalSSet (relativeSRows N) ⟶
 /-- Every object is the original initial interval at the same nerve index. -/
 @[simp] theorem coarseEvaluation_obj (n : SimplexCategory)
     (F : (TheoremA.diagonalSSet (relativeSRows N)).obj (op n))
-    (i : Fin (n.len+1)) (p : Interval n) :
+    (i : Fin (n.len + 1)) (p : Interval n) :
     (((coarseEvaluation N he).app (op n) F).val.obj (i,p)) =
       (F.val.obj (i,p)).obj.obj.obj (interval 0 i.succ (Fin.zero_le _)) := rfl
 
@@ -35,7 +45,8 @@ def coarseEvaluation : TheoremA.diagonalSSet (relativeSRows N) ⟶
 def totalFiberInclusion : sSet V.cof V.weq ⟶ TheoremA.diagonalSSet (relativeSRows N) :=
   (TheoremA.diagonalConstantIso _).inv ≫ TheoremA.diagonalMap (fiberSRows N)
 
-/-- The actual relative-to-coarse map is a homotopy equivalence under the proved cylinder hypotheses. -/
+/-- The actual relative-to-coarse map is a homotopy equivalence under the proved cylinder
+hypotheses. -/
 def coarseEvaluationHomotopyEquiv (D : RowFactorization.JointData N)
     (hs : RowFactorization.SecondEndpointSection N D)
     [N.coarse.weq.HasTwoOutOfThreeProperty] :

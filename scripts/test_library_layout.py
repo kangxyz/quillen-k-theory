@@ -58,6 +58,29 @@ class LayoutGuardTests(unittest.TestCase):
                            + imported + '\n')
                 self.rejected('Forbidden library import')
 
+    def test_modern_import_all_keeps_boundary_and_resolution_guards(self):
+        self.write('Quillen/Algebra/A.lean', 'module\npublic meta import all Tests.Bad\n')
+        self.rejected('Forbidden library import')
+        self.write('Quillen/Algebra/A.lean', 'module\nimport all Quillen.Missing\n')
+        self.rejected('Unresolved local import')
+
+    def test_library_cannot_depend_on_workspace_tooling(self):
+        for imported in ('Tools.LintStyle', '«Tools».Helper', 'scripts.Helper'):
+            with self.subTest(imported=imported):
+                self.write('Quillen/Algebra/A.lean', 'module\npublic meta import ' + imported + '\n')
+                self.rejected('Forbidden library import')
+        self.write('Quillen/Algebra/A.lean', 'import Mathlib.Tools.Helper\n')
+        self.assertEqual(check_layout(self.root)[0], [])
+
+    def test_exhaustive_auditors_cannot_silently_switch_import_level(self):
+        for path in ('Tests/Axioms.lean', 'examples/downstream/Audit.lean'):
+            with self.subTest(path=path):
+                self.write(path, '/- a comment before the header -/\nmodule\nimport Quillen\n')
+                self.generate()
+                self.rejected('must retain legacy private imports')
+                self.write(path, '/-! The word module is documentation. -/\nimport Quillen\n')
+                self.assertEqual(check_layout(self.root)[0], [])
+
     def test_fake_imports_in_comments_and_strings_do_not_create_failures(self):
         self.write('Quillen/Algebra/A.lean', '''/- import Consumer.Bad /- nested -/ -/
 def s := "import Tests.Bad"
@@ -81,6 +104,39 @@ def s := "import Tests.Bad"
 
     def test_implementation_broad_facade_import_rejected(self):
         self.write('Quillen/Algebra/A.lean', 'import Quillen.Library\n')
+        self.rejected('Implementation imports broad facade')
+
+    def test_nested_manual_and_generated_topic_facades_are_broad_surfaces(self):
+        self.write('Quillen/Algebra/API/Leaf.lean', '')
+        self.write('Quillen/Algebra/API.lean', 'import Quillen.Algebra.API.Leaf\n')
+        self.write('Quillen/Algebra/Generated/Leaf.lean', '')
+        from generate_imports import COPYRIGHT_HEADER, GENERATED_MARKER
+        self.write('Quillen/Algebra/Generated.lean', COPYRIGHT_HEADER + GENERATED_MARKER)
+        self.generate()
+        self.assertEqual(check_layout(self.root)[0], [])
+        for surface in ('Quillen.Algebra.API', 'Quillen.Algebra.Generated'):
+            with self.subTest(surface=surface):
+                self.write('Quillen/Algebra/A.lean', 'import ' + surface + '\n')
+                self.rejected('Implementation imports broad facade')
+        self.write('Quillen/Algebra/A.lean', '')
+        self.write('Quillen/Algebra/API.lean', 'import Quillen.Algebra.Generated\n')
+        self.assertEqual(check_layout(self.root)[0], [])
+
+    def test_orphan_generator_marker_requires_a_corresponding_directory(self):
+        from generate_imports import COPYRIGHT_HEADER, GENERATED_MARKER
+        self.write('Quillen/Algebra/Orphan.lean', COPYRIGHT_HEADER + GENERATED_MARKER)
+        self.generate()
+        self.rejected('no corresponding directory')
+
+    def test_foundation_with_extension_directory_is_not_a_broad_facade(self):
+        self.write('Quillen/Algebra/Foundation.lean', 'def foundation : Nat := 1\n')
+        self.write('Quillen/Algebra/Foundation/Extension.lean',
+                   'import Quillen.Algebra.Foundation\n')
+        self.generate()
+        self.assertEqual(check_layout(self.root)[0], [])
+        self.write('Quillen/Algebra/Foundation.lean',
+                   'module\npublic import Quillen.Algebra.B\n'
+                   '/-! Manual API. -/\n@[expose] public section\n')
         self.rejected('Implementation imports broad facade')
 
     def test_extra_family_and_facade_supported(self):

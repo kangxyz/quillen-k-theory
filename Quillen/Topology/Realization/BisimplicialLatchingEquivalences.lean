@@ -1,7 +1,17 @@
-import Quillen.Topology.Realization.BisimplicialLatchingIntersections
-import Quillen.Topology.Realization.MapEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.BisimplicialLatchingIntersections
+public import Quillen.Topology.Realization.MapEquivalence
 
 /-! # Row equivalences induce latching realization equivalences -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology
@@ -48,7 +58,10 @@ lemma partialLatching_inclusion_naturality (n k : ℕ) :
       partialLatchingMap η n k ≫
         SSet.Subcomplex.homOfLE (partialLatching_mono Y n (Nat.le_succ k)) := rfl
 
-def partialLatching_isInitial (X : SimplicialObject SSet.{u}) (n : ℕ) :
+/-- Initiality of the zero-stage partial latching simplicial set, transported from the bottom
+subcomplex. -/
+-- Preserve the public zero-stage initiality witness name for existing downstream references.
+def partialLatchingZeroIsInitial (X : SimplicialObject SSet.{u}) (n : ℕ) :
     IsInitial (partialLatching X n 0 : SSet.{u}) :=
   SSet.Subcomplex.isInitialBot.ofIso (SSet.Subcomplex.eqToIso (partialLatching_zero X n)).symm
 
@@ -65,7 +78,7 @@ theorem partialLatchingMap_isRealizationEquivalence
     | zero =>
       intro _
       exact IsRealizationEquivalence.of_isInitial _
-        (partialLatching_isInitial X n) (partialLatching_isInitial Y n)
+        (partialLatchingZeroIsInitial X n) (partialLatchingZeroIsInitial Y n)
     | succ k ihk =>
       intro hk
       have hk' : k < n + 1 := by omega

@@ -3,12 +3,14 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.SmallModel.Acyclic
-import Quillen.Waldhausen.SConstruction.WeakNaturalTransformationNaturality
-import Quillen.Topology.Realization.HomotopyNaturality
-import Quillen.Topology.HomotopyFiber.Homeomorph
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceCancellation
-import Quillen.CategoryTheory.TheoremB.VertexWeakAssembly
+module
+
+public import Quillen.Waldhausen.SmallModel.Acyclic
+public import Quillen.Waldhausen.SConstruction.WeakNaturalTransformationNaturality
+public import Quillen.Topology.Realization.HomotopyNaturality
+public import Quillen.Topology.HomotopyFiber.Homeomorph
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceCancellation
+public import Quillen.CategoryTheory.TheoremB.VertexWeakAssembly
 
 /-!
 # Exact transport of the original canonical fiber comparison
@@ -17,6 +19,8 @@ The common-universe model preserves the actual change-of-weak arrow, the
 actual acyclic subcategory, and every point of the reversed zero-to-inclusion
 nullhomotopy. Weakness therefore transports for the original canonical map.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite MonoidalCategory
 open scoped Simplicial Topology
@@ -39,7 +43,8 @@ theorem acyclicSmallCylinder_square :
   ext n z : 4
   apply Subtype.ext
   change nerveCylinderDiagram
-    (Functor.whiskerLeft (z.1.val ⋙ acyclicSmallUp N) (zeroToAcyclicInclusion N.smallModel)) z.2.down =
+    (Functor.whiskerLeft (z.1.val ⋙ acyclicSmallUp N) (zeroToAcyclicInclusion N.smallModel))
+      z.2.down =
       nerveCylinderDiagram (Functor.whiskerLeft z.1.val (zeroToAcyclicInclusion N)) z.2.down ⋙
         (AsSmall.up : C ⥤ SmallModel C)
   rw [nerveCylinderDiagram_postcomp]
@@ -104,7 +109,8 @@ def smallModelChangeWeakFiberHomeomorph :
 /-- The exact original canonical comparison square, including its full stored path. -/
 theorem smallModel_canonicalFiberMap_square :
     (smallModelChangeWeakFiberHomeomorph N).toHomotopyEquiv.toFun.comp (canonicalFiberMap N) =
-      (canonicalFiberMap N.smallModel).comp (acyclicSmallDeloopingHomeomorph N).toHomotopyEquiv.toFun := by
+      (canonicalFiberMap N.smallModel).comp (acyclicSmallDeloopingHomeomorph
+        N).toHomotopyEquiv.toFun := by
   apply ContinuousMap.ext
   intro x
   apply Subtype.ext

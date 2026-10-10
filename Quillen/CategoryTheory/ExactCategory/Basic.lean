@@ -1,7 +1,15 @@
-import Mathlib.Algebra.Homology.ShortComplex.Basic
-import Mathlib.CategoryTheory.Limits.Shapes.Kernels
-import Mathlib.CategoryTheory.Preadditive.Biproducts
-import Mathlib.CategoryTheory.MorphismProperty.Limits
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.Algebra.Homology.ShortComplex.Basic
+public import Mathlib.CategoryTheory.Limits.Shapes.Kernels
+public import Mathlib.CategoryTheory.Preadditive.Biproducts
+public import Mathlib.CategoryTheory.MorphismProperty.Limits
 
 /-!
 # Exact structures and their admissible maps
@@ -12,6 +20,8 @@ axioms. No ambient abelian category, balancedness, or arbitrary pullbacks are as
 The formulation uses the equivalent axioms [E0], [E0op], [E1], [E1op], [E2], [E2op]
 of Bühler, *Exact Categories*, Definition 2.1.
 -/
+@[expose] public section
+
 
 universe v u
 

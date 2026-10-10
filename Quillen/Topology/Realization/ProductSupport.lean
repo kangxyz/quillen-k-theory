@@ -1,4 +1,12 @@
-import Quillen.Topology.Realization.FiniteCompact
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.FiniteCompact
 
 /-! # Compact support in one finite factor of a simplicial product
 
@@ -6,6 +14,8 @@ A compact-source map into the realization of `X × Y` has an exact lift to
 `X × B` for one genuinely finite subcomplex `B` of `Y`. The finite range of
 the second projection of its finite support supplies this single common factor.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

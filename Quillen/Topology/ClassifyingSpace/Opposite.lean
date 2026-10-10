@@ -1,8 +1,18 @@
-import Quillen.CategoryTheory.TheoremA.ColumnOpposite
-import Quillen.Topology.Realization.Opposite
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.ColumnOpposite
+public import Quillen.Topology.Realization.Opposite
 
 /-! The classifying spaces of a category and its opposite agree naturally,
 by actual reversal of nerve chains and topological simplex coordinates. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial

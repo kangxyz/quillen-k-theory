@@ -3,10 +3,14 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Algebra.Homology.HomotopyPullbackQuasiIso
-import Quillen.PerfectComplexes.HomotopyPullback
+module
+
+public import Quillen.Algebra.Homology.HomotopyPullbackQuasiIso
+public import Quillen.AlgebraicGeometry.PerfectComplexes.HomotopyPullback
 
 /-! Semantic consumers of the actual mapping-cocone homotopy pullback. -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -1,6 +1,16 @@
-import Quillen.Waldhausen.Product.KEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Product.KEquivalence
 
 /-! # Original K-maps into an actual product category -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory
@@ -19,7 +29,9 @@ theorem KEquiv_pair_apply
     KEquiv V W n (KMap (pair_exact U V W hF hG) n a) =
       (KMap hF n a, KMap hG n a) := by
   apply _root_.Prod.ext
-  · exact (DFunLike.congr_fun (KMap_comp (pair_exact U V W hF hG) (fst_exact V W) n) a).symm
-  · exact (DFunLike.congr_fun (KMap_comp (pair_exact U V W hF hG) (snd_exact V W) n) a).symm
+  · exact (DFunLike.congr_fun
+      (KMap_comp_KMap (pair_exact U V W hF hG) (fst_exact V W) n).symm a).symm
+  · exact (DFunLike.congr_fun
+      (KMap_comp_KMap (pair_exact U V W hF hG) (snd_exact V W) n).symm a).symm
 
 end Quillen.Waldhausen.Product

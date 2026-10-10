@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.WeakImage
-import Quillen.Waldhausen.Approximation.GeneralKEquivalence
+module
+
+public import Quillen.Waldhausen.Approximation.WeakImage
+public import Quillen.Waldhausen.Approximation.GeneralKEquivalence
 
 /-! # Original approximation onto the actual witnessed weak image
 
@@ -14,6 +16,8 @@ identifies its K-groups with those of the source, while the target inclusion
 retains exactly the original functor's K-map and its actual image. No
 cofinality or injectivity claim is made for that inclusion.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 universe u v
@@ -43,14 +47,17 @@ theorem corestrict_KMap_bijective (n : ℕ) : Function.Bijective (KMap (corestri
 def corestrictKEquiv (n : ℕ) : W.K n ≃* (waldhausenStructure h hF).K n :=
   MulEquiv.ofBijective (KMap (corestrict_exact h hF) n) (corestrict_KMap_bijective h hF J n)
 
-@[simp] theorem corestrictKEquiv_toMonoidHom (n : ℕ) :
-    (corestrictKEquiv h hF J n).toMonoidHom = KMap (corestrict_exact h hF) n := rfl
+/-- The underlying monoid homomorphism of this K-equivalence. -/
+@[simp] theorem corestrictKEquiv_coe (n : ℕ) :
+    (↑(corestrictKEquiv h hF J n) : W.K n →* (waldhausenStructure h hF).K n) = KMap
+        (corestrict_exact h hF) n := rfl
+
 
 omit [V.weq.HasTwoOutOfThreeProperty] in
 /-- The actual original canonical K-map factors through the literal image inclusion. -/
 theorem inclusion_KMap_comp_corestrict (n : ℕ) :
     (KMap (inclusion_exact h hF) n).comp (KMap (corestrict_exact h hF) n) = KMap hF n := by
-  rw [← KMap_comp]
+  rw [KMap_comp_KMap]
 
 include J in
 /-- The image-inclusion map has exactly the image of the actual original K-map,

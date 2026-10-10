@@ -1,4 +1,12 @@
-import Quillen.KTheory.Map.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.Map.Basic
 
 /-!
 # Algebraic comparison data for composition of zero-based K-maps
@@ -7,6 +15,8 @@ These results concern isomorphisms of Q-objects and rebased functors.
 They do not assert equality of K-group maps without a realization theorem
 for homotopies that fix the basepoint.
 -/
+@[expose] public section
+
 
 noncomputable section
 

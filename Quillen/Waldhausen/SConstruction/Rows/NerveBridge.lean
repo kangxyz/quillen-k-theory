@@ -1,11 +1,21 @@
-import Quillen.Waldhausen.SConstruction.Rows.GridBridge
-import Mathlib.CategoryTheory.Widesubcategory
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.SConstruction.Rows.GridBridge
+public import Mathlib.CategoryTheory.Widesubcategory
 
 /-! # Original independent grids and the nerve of actual weak quotient rows
 
 Every map below keeps the original grid components. The two directions are
 an actual simplex equivalence, not just an equivalence of object predicates.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial
@@ -67,25 +77,20 @@ def weakChainToGrid {n k : SimplexCategory} (F : ComposableArrows (WeakRows W n)
       (F.map (homOfLE (leOfHom f).1)).hom.hom.app r.2 ≫
         (F.map (homOfLE (leOfHom g).1)).hom.hom.app r.2 at ht'
     simpa only [Category.assoc, homOfLE_comp] using congrArg
-      (fun z ↦ (F.obj p.1).obj.obj.map (homOfLE ((leOfHom f).2.trans (leOfHom g).2)) ≫ z) ht' 
+      (fun z ↦ (F.obj p.1).obj.obj.map (homOfLE ((leOfHom f).2.trans (leOfHom g).2)) ≫ z) ht'
 
-@[simp] theorem weakChainToGrid_map_row {n k : SimplexCategory}
-    (F : ComposableArrows (WeakRows W n) k.len) (t : Fin (k.len+1))
-    {p q : Interval n} (a : p ⟶ q) :
-    (weakChainToGrid W F).map (homOfLE (show ((t,p) : Grid₂ n k) ≤ (t,q) from
-      ⟨le_rfl,leOfHom a⟩)) = (F.obj t).obj.obj.map a := by
-  change _ ≫ (F.map (𝟙 t)).hom.hom.app q = _
-  rw [F.map_id]
-  exact Category.comp_id _
+/-- Every object of the reconstructed grid is its original row object. -/
+@[simp] theorem weakChainToGrid_obj {n k : SimplexCategory}
+    (F : ComposableArrows (WeakRows W n) k.len) (t : Fin (k.len + 1)) (p : Interval n) :
+    (weakChainToGrid W F).obj (t, p) = (F.obj t).obj.obj.obj p := rfl
 
-@[simp] theorem weakChainToGrid_map_nerve {n k : SimplexCategory}
-    (F : ComposableArrows (WeakRows W n) k.len) {s t : Fin (k.len+1)}
-    (a : s ⟶ t) (p : Interval n) :
-    (weakChainToGrid W F).map (homOfLE (show ((s,p) : Grid₂ n k) ≤ (t,p) from
-      ⟨leOfHom a,le_rfl⟩)) = (F.map a).hom.hom.app p := by
-  change (F.obj s).obj.obj.map (𝟙 p) ≫ _ = _
-  rw [(F.obj s).obj.obj.map_id p]
-  exact Category.id_comp _
+/-- Every grid morphism uses its original row map followed by its original nerve map. -/
+@[simp] theorem weakChainToGrid_map {n k : SimplexCategory}
+    (F : ComposableArrows (WeakRows W n) k.len) {p q : Grid₂ n k} (f : p ⟶ q) :
+    (weakChainToGrid W F).map f =
+      (F.obj p.1).obj.obj.map (homOfLE (leOfHom f).2) ≫
+        (F.map (homOfLE (leOfHom f).1)).hom.hom.app q.2 := rfl
+
 
 /-- The reconstructed grid has the unchanged zero, cofibration, quotient and weak predicates. -/
 theorem weakChainToGrid_isSimplex₂ {n k : SimplexCategory}
@@ -102,13 +107,19 @@ theorem weakChainToGrid_isSimplex₂ {n k : SimplexCategory}
 
 /-- Restriction of the reconstructed grid gives back the original entire row functor. -/
 theorem weakChainToGrid_row {n k : SimplexCategory}
-    (F : ComposableArrows (WeakRows W n) k.len) (t : Fin (k.len+1)) :
+    (F : ComposableArrows (WeakRows W n) k.len) (t : Fin (k.len + 1)) :
     gridRestriction t ⋙ weakChainToGrid W F = (F.obj t).obj.obj := by
   refine CategoryTheory.Functor.ext (F := gridRestriction t ⋙ weakChainToGrid W F)
     (G := (F.obj t).obj.obj) (fun _ ↦ rfl) ?_
   intro p q a
   simp only [eqToHom_refl, Category.id_comp, Category.comp_id]
-  exact weakChainToGrid_map_row W F t a
+  change (weakChainToGrid W F).map
+    (homOfLE (show ((t, p) : Grid₂ n k) ≤ (t, q) from ⟨le_rfl, leOfHom a⟩)) = _
+  rw [weakChainToGrid_map]
+  simp only [homOfLE_refl, homOfLE_leOfHom, CategoryTheory.Functor.map_id,
+    WideSubcategory.id_def, ObjectProperty.FullSubcategory.id_hom, NatTrans.id_app,
+    Category.comp_id]
+  exact (F.obj t).obj.obj.congr_map (Subsingleton.elim _ _)
 
 /-- Reconstructing an original grid recovers every original arrow, including mixed ones. -/
 theorem weakChainToGrid_gridToWeakChain {n k : SimplexCategory} (F : Grid₂ n k ⥤ C)

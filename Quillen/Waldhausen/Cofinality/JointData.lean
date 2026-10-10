@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.Grading
-import Quillen.Waldhausen.Fibration.GeneralComparison
-import Quillen.Waldhausen.Fibration.Rows.BaseFactorization
+module
+
+public import Quillen.Waldhausen.Cofinality.Grading
+public import Quillen.Waldhausen.Fibration.GeneralComparison
+public import Quillen.Waldhausen.Fibration.Rows.BaseFactorization
 
 /-! # The original graded fibration from genuine fine joint-cylinder data
 
@@ -13,6 +15,8 @@ Only projection weakness is retargeted to grade equality. The actual fine
 joint functor and both endpoint maps remain unchanged. The original second
 endpoint section then supplies the genuine canonical fiber comparison.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

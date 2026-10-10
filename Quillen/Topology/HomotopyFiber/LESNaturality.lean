@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyFiber.LESTail
-import Quillen.Topology.HomotopyFiber.Map
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.LESTail
+public import Quillen.Topology.HomotopyFiber.Map
 
 /-!
 # Naturality of the homotopy-fiber long exact sequence
@@ -9,6 +17,8 @@ actual path-space fibers. The projection, original-map, and connecting-map
 squares commute on all homotopy sets. In positive degrees the connecting-square
 identity is an equality of group homomorphisms.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe w u₁ u₂ v₁ v₂

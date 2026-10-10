@@ -1,8 +1,16 @@
-import Quillen.Localization.Serre.Localization
-import Quillen.Devissage.SpanLayers
-import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
-import Mathlib.CategoryTheory.Filtered.Basic
-import Mathlib.CategoryTheory.Subobject.Lattice
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.Localization
+public import Quillen.Devissage.SpanLayers
+public import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
+public import Mathlib.CategoryTheory.Filtered.Basic
+public import Mathlib.CategoryTheory.Subobject.Lattice
 
 /-!
 # Categories of ordinary lifts through a Serre quotient
@@ -21,6 +29,8 @@ lifted intervals with compatible quotient isomorphisms.
 These are the ordinary lift categories appearing in the localization proof.
 Their filteredness alone is not asserted to prove homotopical localization.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe v₁ v₂ u₁ u₂
@@ -483,7 +493,9 @@ No Serre condition is imposed on its quotient unless the two target endpoints
 coincide. -/
 @[ext]
 structure SubobjectIntervalLift (M : C) (S T : Subobject (L.obj M)) where
+  /-- The lower subobject of `M`, whose image under `subobjectMap L P M` is `S`. -/
   lower : Subobject M
+  /-- The upper subobject of `M`, containing `lower` and mapping to `T`. -/
   upper : Subobject M
   le : lower ≤ upper
   map_lower : subobjectMap L P M lower = S

@@ -3,10 +3,14 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.SmallModel.Fiber
-import Quillen.Waldhausen.SmallModel.Joint
+module
+
+public import Quillen.Waldhausen.SmallModel.Fiber
+public import Quillen.Waldhausen.SmallModel.Joint
 
 /-! # Two-universe original-model regression consumers -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Quillen Quillen.Waldhausen Quillen.Waldhausen.Fibration
 open scoped Simplicial Topology
@@ -33,7 +37,8 @@ example {F : C ⥤ D} (hF : IsExact W.cof W.weq W'.cof W'.weq F) (n : ℕ) :
       (KMap hF.smallModel n).comp (W.smallModelKEquiv n).toMonoidHom :=
   smallModelKEquiv_naturality hF n
 example (he : ExtensionAxiom W) : ExtensionAxiom W.smallModel := W.smallModel_extensionAxiom he
-example [W.weq.HasTwoOutOfThreeProperty] : W.smallModel.weq.HasTwoOutOfThreeProperty := inferInstance
+example [W.weq.HasTwoOutOfThreeProperty] : W.smallModel.weq.HasTwoOutOfThreeProperty :=
+  inferInstance
 
 variable {W} (N : NestedWeakEquivalences W)
 example : N.smallModel.coarse.cof = W.smallModel.cof := N.smallModel.cof_eq
@@ -51,7 +56,8 @@ example (z : HomotopyFiber (changeWeakMap N) N.coarse.kBasepoint) (t : unitInter
     (smallModelChangeWeakFiberHomeomorph N z).val.2 t =
       N.coarse.smallModelDeloopingHomeomorph (z.val.2 t) := rfl
 example : (smallModelChangeWeakFiberHomeomorph N).toHomotopyEquiv.toFun.comp (canonicalFiberMap N) =
-    (canonicalFiberMap N.smallModel).comp (acyclicSmallDeloopingHomeomorph N).toHomotopyEquiv.toFun :=
+    (canonicalFiberMap N.smallModel).comp (acyclicSmallDeloopingHomeomorph N).toHomotopyEquiv.toFun
+      :=
   smallModel_canonicalFiberMap_square N
 example (h : IsWeakHomotopyEquivalence (canonicalFiberMap N.smallModel)) :
     IsWeakHomotopyEquivalence (canonicalFiberMap N) :=

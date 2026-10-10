@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Approximation.SplitRowEquivalence
-import Quillen.Waldhausen.Approximation.WeakRowDiagonal
-import Quillen.Topology.Realization.BisimplicialEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Approximation.SplitRowEquivalence
+public import Quillen.Waldhausen.Approximation.WeakRowDiagonal
+public import Quillen.Topology.Realization.BisimplicialEquivalence
 
 /-!
 # The actual change-of-cofibrations equivalence on S-construction realizations
@@ -10,6 +18,8 @@ cokernel completion. The proved bisimplicial invariance theorem now yields
 an equivalence on the original S-grid realization with exactly the canonical
 identity comparison as forward map.
 -/
+@[expose] public section
+
 
 noncomputable section
 

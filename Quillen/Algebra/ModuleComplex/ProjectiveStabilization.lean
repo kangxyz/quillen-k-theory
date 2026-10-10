@@ -3,11 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Mathlib.RingTheory.Finiteness.Projective
-import Mathlib.RingTheory.Finiteness.Prod
-import Mathlib.LinearAlgebra.Basis.Prod
-import Mathlib.Algebra.Category.ModuleCat.Biproducts
-import Mathlib.Algebra.Homology.HomotopyCategory.Pretriangulated
+module
+
+public import Mathlib.RingTheory.Finiteness.Projective
+public import Mathlib.RingTheory.Finiteness.Prod
+public import Mathlib.LinearAlgebra.Basis.Prod
+public import Mathlib.Algebra.Category.ModuleCat.Biproducts
+public import Mathlib.Algebra.Homology.HomotopyCategory.Pretriangulated
 
 /-!
 # Finite-free stabilization of bounded projective complexes
@@ -19,6 +21,8 @@ finite-free complex and an explicit chain-homotopy equivalence. The resulting
 bounds are `[a - 1, b]`; the original complex alone is not claimed to be stably
 free or to extend across a localization.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

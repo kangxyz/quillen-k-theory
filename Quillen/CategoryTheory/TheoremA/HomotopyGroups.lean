@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremA.ContractibleComma
-import Quillen.Topology.HomotopyGroups.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.ContractibleComma
+public import Quillen.Topology.HomotopyGroups.Equivalence
 
 /-!
 # The canonical homotopy-group isomorphisms in Quillen's Theorem A
@@ -8,6 +16,7 @@ Contractible comma classifying spaces suffice for the actual map induced by
 the functor to be an isomorphism in every positive homotopy degree, at every
 object vertex. No based inverse or fixed-point homotopies are hypothesized.
 -/
+@[expose] public section
 
 noncomputable section
 universe u
@@ -33,11 +42,11 @@ def contractibleCommaShiftedHomotopyEquiv
   homotopyEquivPiEquiv (contractibleCommaClassifyingHomotopyEquiv F h)
     (classifyingSpaceMap_point F c) n
 
-@[simp]
-theorem contractibleCommaShiftedHomotopyEquiv_toMonoidHom
+/-- The monoid-hom coercion is the canonical forward map. -/
+@[simp] theorem contractibleCommaShiftedHomotopyEquiv_coe
     (h : ∀ d : D, ContractibleSpace (ClassifyingSpace (CostructuredArrow F d)))
     (c : C) (n : ℕ) :
-    (contractibleCommaShiftedHomotopyEquiv F h c n).toMonoidHom =
+    ↑(contractibleCommaShiftedHomotopyEquiv F h c n) =
       shiftedHomotopyGroupMap F c n := rfl
 
 end Quillen.TheoremA

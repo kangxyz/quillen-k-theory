@@ -1,10 +1,18 @@
-import Quillen.Topology.ClassifyingSpace.Constant
-import Quillen.Topology.Realization.HomotopyBridge
-import Quillen.Topology.HomotopyFiber.Basic
-import Quillen.Localization.Serre.FiniteProducts
-import Quillen.Localization.Serre.Localization
-import Quillen.Devissage.Setup
-import Quillen.CategoryTheory.QConstruction.ZeroFunctor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.ClassifyingSpace.Constant
+public import Quillen.Topology.Realization.HomotopyBridge
+public import Quillen.Topology.HomotopyFiber.Basic
+public import Quillen.Localization.Serre.FiniteProducts
+public import Quillen.Localization.Serre.Localization
+public import Quillen.Devissage.Setup
+public import Quillen.CategoryTheory.QConstruction.ZeroFunctor
 
 /-! # The categorical nullhomotopy data for Serre localization
 
@@ -12,6 +20,8 @@ The quotient after the exact inclusion of the Serre subcategory is naturally
 isomorphic, at the Q-category level, to the constant zero functor. This is
 actual comparison data; a homotopy-fiber equivalence is not asserted here.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u

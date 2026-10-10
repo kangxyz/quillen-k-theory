@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Approximation.SequenceReplacement
-import Mathlib.CategoryTheory.ComposableArrows.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Approximation.SequenceReplacement
+public import Mathlib.CategoryTheory.ComposableArrows.Basic
 
 /-!
 # Functorial replacement of finite flags
@@ -9,6 +17,8 @@ the genuine functorial sequence construction, and restricted back. The
 comparison is a natural transformation with objectwise weak equivalences.
 Every replacement arrow is a cofibration and the initial vertex is unchanged.
 -/
+@[expose] public section
+
 
 noncomputable section
 

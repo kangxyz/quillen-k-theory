@@ -1,8 +1,18 @@
-import Quillen.CategoryTheory.TheoremA.ContractibleComma
-import Quillen.CategoryTheory.TheoremB.StructuredComparison
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.ContractibleComma
+public import Quillen.CategoryTheory.TheoremB.StructuredComparison
 
 /-! The structured-comma form of the proved Quillen Theorem A, retaining the
 canonical forward map under opposite-category realization. -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory Opposite
@@ -14,7 +24,7 @@ def contractibleStructuredClassifyingHomotopyEquiv
     (h : ∀ d : D, ContractibleSpace (ClassifyingSpace (StructuredArrow d F))) :
     ContinuousMap.HomotopyEquiv (ClassifyingSpace C) (ClassifyingSpace D) := by
   have hop (d : Dᵒᵖ) : ContractibleSpace (ClassifyingSpace (CostructuredArrow F.op d)) := by
-    letI := h d.unop
+    let := h d.unop
     exact (TheoremB.structuredCommaOppositeEquiv F d.unop).symm.contractibleSpace
   let e := (TopCat.homeoOfIso (classifyingOppositeIso C)).symm.toHomotopyEquiv.trans
     ((contractibleCommaClassifyingHomotopyEquiv F.op hop).trans

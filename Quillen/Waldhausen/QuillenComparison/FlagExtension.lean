@@ -1,6 +1,16 @@
-import Quillen.Waldhausen.QuillenComparison.FlagPullback
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.FlagPullback
 
 /-! # Extending admissible flags by a zero and an ambient target -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -70,14 +80,17 @@ variable {Y : C} (q : A.obj (Fin.last n) ⟶ Y)
 /-- The object sequence obtained by adjoining a last target. -/
 def appendFlagObj : Fin (n + 1 + 1) → C := Fin.lastCases Y A.obj
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 @[simp]
 theorem appendFlagObj_castSucc (i : Fin (n + 1)) :
     appendFlagObj A (Y := Y) i.castSucc = A.obj i := Fin.lastCases_castSucc i
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 @[simp]
 theorem appendFlagObj_last : appendFlagObj A (Y := Y) (Fin.last (n + 1)) = Y :=
   Fin.lastCases_last
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 @[simp]
 theorem appendFlagObj_succ_castSucc (i : Fin n) :
     appendFlagObj A (Y := Y) i.castSucc.succ = A.obj i.succ := by
@@ -97,10 +110,12 @@ def appendFlagSucc (i : Fin (n + 1)) :
 def appendFlag : ComposableArrows C (n + 1) :=
   ComposableArrows.mkOfObjOfMapSucc (appendFlagObj A (Y := Y)) (appendFlagSucc A q)
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 @[simp]
 theorem appendFlag_obj_castSucc (i : Fin (n + 1)) :
     (appendFlag A q).obj i.castSucc = A.obj i := appendFlagObj_castSucc A i
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 @[simp]
 theorem appendFlag_obj_last : (appendFlag A q).obj (Fin.last (n + 1)) = Y :=
   appendFlagObj_last A
@@ -142,6 +157,7 @@ def appendFlagRestrictionIso :
     simp only [appendFlagSucc, Fin.lastCases_castSucc, Category.assoc,
       eqToHom_trans, eqToHom_refl, Category.comp_id, eqToIso.hom])
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 /-- The appended adjacent arrow is the prescribed target map, under the object identifications. -/
 theorem appendFlag_last_step :
     (appendFlag A q).map (homOfLE (Fin.le_last (Fin.last n).castSucc)) ≫
@@ -152,6 +168,7 @@ theorem appendFlag_last_step :
     ComposableArrows.mkOfObjOfMapSucc_map_succ _ _ n (by omega)]
   simp [appendFlagSucc]
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 /-- The maps to the appended target are the old top maps followed by the prescribed map. -/
 theorem appendFlag_to_last (i : Fin (n + 1)) :
     (appendFlag A q).map (homOfLE (Fin.le_last i.castSucc)) ≫
@@ -184,7 +201,7 @@ theorem extendedPullbackFlag_inflation
     (hA : ∀ {i j} (f : i ⟶ j), E.inflation (A.map f)) (hr : E.inflation r)
     {i j : Fin (n + 1 + 1 + 1)} (f : i ⟶ j) :
     E.inflation ((extendedPullbackFlag E A p hp r).map f) := by
-  letI (i : Fin (n + 1)) : HasPullback p (flagTopMap A i) :=
+  let (i : Fin (n + 1)) : HasPullback p (flagTopMap A i) :=
     flagPullback_exists E A p hp i
   exact zeroPrefixFlag_inflation E _
     (appendFlag_inflation E _ _ (pullbackFlag_inflation E A p hp hA)
@@ -197,7 +214,7 @@ theorem extendedPullbackFlag_obj_zero :
 @[simp]
 theorem extendedPullbackFlag_obj_last :
     (extendedPullbackFlag E A p hp r).obj (Fin.last (n + 1 + 1)) = Z := by
-  letI (i : Fin (n + 1)) : HasPullback p (flagTopMap A i) :=
+  let (i : Fin (n + 1)) : HasPullback p (flagTopMap A i) :=
     flagPullback_exists E A p hp i
   exact appendFlag_obj_last (pullbackFlag A p) ((pullbackFlagTopIso A p).hom ≫ r)
 
@@ -224,7 +241,7 @@ theorem extendedPullbackFlag_middle_to_last (i : Fin (n + 1)) :
   change (appendFlag (pullbackFlag A p) ((pullbackFlagTopIso A p).hom ≫ r)).map
     (homOfLE (Fin.le_last i.castSucc)) ≫ _ = _
   rw [appendFlag_to_last]
-  simp only [pullbackFlagTopIso_hom, Category.assoc]
+  simp only [pullbackFlagTopIso_hom]
   exact congrArg (fun t ↦ eqToHom (extendedPullbackFlag_obj_middle E A p hp r i) ≫ t)
     (pullbackFlag_map_fst_assoc A p (homOfLE (Fin.le_last i)) r)
 

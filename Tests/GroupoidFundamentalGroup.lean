@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.ClassifyingSpace.FundamentalGroup
+module
+
+public import Quillen.Topology.ClassifyingSpace.FundamentalGroup
 
 /-! # Original groupoid loops, inverse comparison and independent universes -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 open CategoryTheory

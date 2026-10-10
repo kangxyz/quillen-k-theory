@@ -1,10 +1,20 @@
-import Quillen.Topology.Realization.SimplexBoundary
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.SimplexBoundary
 
 /-! # Homotopy extension from the explicit simplex-boundary retraction
 
 Closed-set gluing on the side-bottom union, followed by the explicit radial
 retraction, gives homotopy extension with an arbitrary parameter space.
 -/
+@[expose] public section
+
 
 noncomputable section
 

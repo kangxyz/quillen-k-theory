@@ -1,6 +1,16 @@
-import Quillen.Localization.Serre.ImageKernelComma
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.ImageKernelComma
 
 /-! # Arbitrary-base pullback equivalences for Serre auxiliary categories -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -22,7 +32,8 @@ def auxiliaryBaseChangeClassifyingHomotopyEquiv {M N : C} (i : M ⟶ N) :
   have h : (eM.toFun.comp f).Homotopic eN.toFun := by
     simpa only [eM, eN, f, auxiliaryKernelClassifyingHomotopyEquiv_toFun,
       classifyingSpaceMap_comp, TopCat.hom_comp] using
-      (show (classifyingSpaceMap (auxiliaryBaseChange P i ⋙ auxiliaryKernelFunctor P M)).hom.Homotopic
+      (show (classifyingSpaceMap (auxiliaryBaseChange P i ⋙ auxiliaryKernelFunctor P
+        M)).hom.Homotopic
         (classifyingSpaceMap (auxiliaryKernelFunctor P N)).hom from
         ⟨classifyingSpaceNaturalTransformationHomotopy (auxiliaryBaseChangeKernelIso P i).hom⟩)
   apply TheoremA.homotopyEquivWithMap (eN.trans eM.symm) f

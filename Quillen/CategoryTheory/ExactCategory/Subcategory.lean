@@ -1,7 +1,15 @@
-import Quillen.KTheory.Map.Basic
-import Quillen.CategoryTheory.ExactCategory.Composition
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
-import Mathlib.CategoryTheory.ObjectProperty.FiniteProducts
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.KTheory.Map.Basic
+public import Quillen.CategoryTheory.ExactCategory.Composition
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
+public import Mathlib.CategoryTheory.ObjectProperty.FiniteProducts
 
 /-!
 # Extension-closed full exact subcategories
@@ -12,6 +20,8 @@ used to keep the required admissible pushouts, pullbacks, and composition
 kernels/cokernels inside the subcategory; arbitrary kernels and cokernels are
 not assumed to exist.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -204,7 +214,8 @@ lemma iso_comp_deflation {X Y Z : P.FullSubcategory} {p : Y ⟶ Z}
     Conflations.deflation _ (conflation E P) (e.hom ≫ p) := by
   obtain ⟨A, i, hi, hS⟩ := hp
   refine ⟨A, i ≫ e.inv, by simpa using hi, ?_⟩
-  exact iso_closed E P (S := ShortComplex.mk i p hi) (ShortComplex.isoMk (Iso.refl _) e.symm (Iso.refl _)
+  exact iso_closed E P (S := ShortComplex.mk i p hi) (ShortComplex.isoMk (Iso.refl _) e.symm
+    (Iso.refl _)
     (by simp) (by simp)) hS
 
 omit [P.ContainsZero] [P.IsClosedUnderIsomorphisms] in

@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyFiber.CommonBaseSquare
-import Quillen.Topology.HomotopyPullback.WeakSource
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.CommonBaseSquare
+public import Quillen.Topology.HomotopyPullback.WeakSource
 
 /-! # Transport of the original common-base comparison through actual fiber models
 
@@ -10,6 +18,8 @@ the established weak source-change theorem, retaining the original constant
 comparison path. No global relative-realization fiber comparison is supplied
 or inferred for any particular Waldhausen model here.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology
 universe u
@@ -19,8 +29,8 @@ namespace Quillen.HomotopyFiber
 section PullbackMap
 variable {F X Y B : Type u} [TopologicalSpace F] [TopologicalSpace X]
   [TopologicalSpace Y] [TopologicalSpace B]
-  (q : C(Y,B)) (j : C(X,Y)) (b : B) (f : C(F,Y))
-  (k : C(F,HomotopyFiber q b)) (hk : (projection q b).comp k = f)
+  (q : C(Y, B)) (j : C(X, Y)) (b : B) (f : C(F, Y))
+  (k : C(F, HomotopyFiber q b)) (hk : (projection q b).comp k = f)
 
 /-- The actual source-change map after a displayed projection equality.
 Its parameter and complete outer path are unchanged. -/
@@ -55,9 +65,9 @@ end PullbackMap
 section Comparison
 variable {A F X Y B : Type u} [TopologicalSpace A] [TopologicalSpace F]
   [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace B]
-  (p : C(X,B)) (q : C(Y,B)) (j : C(X,Y)) (sq : q.comp j = p) (b : B)
-  (a : C(A,X)) (f : C(F,Y)) (i : C(A,F)) (w : f.comp i = j.comp a)
-  (k₀ : C(A,HomotopyFiber p b)) (k₁ : C(F,HomotopyFiber q b))
+  (p : C(X, B)) (q : C(Y, B)) (j : C(X, Y)) (sq : q.comp j = p) (b : B)
+  (a : C(A, X)) (f : C(F, Y)) (i : C(A, F)) (w : f.comp i = j.comp a)
+  (k₀ : C(A, HomotopyFiber p b)) (k₁ : C(F, HomotopyFiber q b))
   (h₀ : (projection p b).comp k₀ = a) (h₁ : (projection q b).comp k₁ = f)
   (hc : (mapOver p q j sq b).comp k₀ = k₁.comp i)
 

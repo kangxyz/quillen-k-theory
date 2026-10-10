@@ -1,5 +1,14 @@
-import Quillen.Waldhausen.Cylinder.Subcategory
-import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Cylinder.Subcategory
+public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
+public import Quillen.Waldhausen.SplitComplexes.FunctorialFactorization
 
 /-! # Relative cylinder cofibrations for ambient admissible monomorphisms
 
@@ -7,6 +16,8 @@ The relative map is admissible without a degreewise splitting assumption.
 Its genuine quotient is the shifted actual source cokernel. This addresses
 the ambient-cofibration model separately from its split-cofibration variant.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

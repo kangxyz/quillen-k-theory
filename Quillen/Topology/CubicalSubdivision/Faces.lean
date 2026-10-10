@@ -1,4 +1,12 @@
-import Quillen.Topology.CubicalSubdivision.Grid
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.CubicalSubdivision.Grid
 
 /-! # Literal intersections and embeddings of finite cube cells
 
@@ -6,11 +14,13 @@ Distinct cells meet only on their actual coordinate faces. This supplies the
 geometric boundary information for finite cubical attachment, without assuming
 that an arbitrary inverse-image collar subset is a cofibration.
 -/
+@[expose] public section
+
 noncomputable section
 open scoped Topology unitInterval
 namespace Quillen.CubicalSubdivision
 
-theorem intervalCell_injective (m : ℕ) (k : Fin (m+1)) :
+theorem intervalCell_injective (m : ℕ) (k : Fin (m + 1)) :
     Function.Injective (intervalCell m k) := by
   intro s t h
   have hh := congrArg (fun z : unitInterval ↦ (z : ℝ)) h
@@ -32,7 +42,7 @@ theorem cell_isClosedEmbedding (n m : ℕ) (k : CellIndex n m) :
 
 /-- An intersection of ordered distinct interval cells is exactly their
 shared endpoints, and forces adjacency of the grid indices. -/
-theorem intervalCell_eq_endpoints_of_lt (m : ℕ) (k l : Fin (m+1))
+theorem intervalCell_eq_endpoints_of_lt (m : ℕ) (k l : Fin (m + 1))
     (hkl : k < l) (s t : unitInterval) (he : intervalCell m k s = intervalCell m l t) :
     (k : ℕ) + 1 = l ∧ s = 1 ∧ t = 0 := by
   have hh := congrArg (fun z : unitInterval ↦ (z : ℝ)) he

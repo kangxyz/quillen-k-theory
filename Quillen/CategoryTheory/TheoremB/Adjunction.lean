@@ -1,7 +1,15 @@
-import Quillen.CategoryTheory.TheoremB.Comparison
-import Quillen.Topology.ClassifyingSpace.Equivalence
-import Quillen.Topology.HomotopyFiber.SourceEquivalence
-import Mathlib.CategoryTheory.Adjunction.Comma
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.Comparison
+public import Quillen.Topology.ClassifyingSpace.Equivalence
+public import Quillen.Topology.HomotopyFiber.SourceEquivalence
+public import Mathlib.CategoryTheory.Adjunction.Comma
 
 /-!
 # Quillen's Theorem B for left adjoints
@@ -15,6 +23,8 @@ is a homotopy equivalence.
 This proves a genuine special case with the prescribed comparison as the
 forward map. It neither assumes the conclusion nor proves general Theorem B.
 -/
+@[expose] public section
+
 
 noncomputable section
 

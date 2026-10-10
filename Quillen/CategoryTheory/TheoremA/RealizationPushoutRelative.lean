@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremA.RealizationCofibrationEquiv
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationCofibrationEquiv
 
 /-!
 # Relative homotopy inverses and gluing over a fixed base
@@ -7,6 +15,8 @@ Homotopy equivalences between spaces under a fixed base admit relative
 homotopy inverses when both structure maps have HEP. The proof constructs
 the inverse and corrects its homotopies using compact-open path spaces.
 -/
+@[expose] public section
+
 
 noncomputable section
 

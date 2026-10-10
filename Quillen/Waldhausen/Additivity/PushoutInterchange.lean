@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Additivity.PushoutFunctor
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Additivity.PushoutFunctor
 
 /-! # Interchange of actual pushout squares
 
@@ -6,6 +14,8 @@ A pointwise pushout of three diagrams carries any square which is a pushout
 in each of those diagrams to a pushout. All universal properties are supplied
 only for the displayed squares; no global cocompleteness assumption is used.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.ClassifyingSpace.FinitePosetCriterion
-import Quillen.Waldhausen.Approximation.FinitePosetCone
-import Quillen.CategoryTheory.TheoremA.WeakComma
+module
+
+public import Quillen.Topology.ClassifyingSpace.FinitePosetCriterion
+public import Quillen.Waldhausen.Approximation.FinitePoset.WeakCommaCone
+public import Quillen.CategoryTheory.TheoremA.WeakComma
 
 /-!
 # Complete weak equivalence of an approximation functor on weak categories
@@ -18,6 +20,8 @@ ORIGINAL exact functor on weak-equivalence categories, in all degrees.
 This is the weak-category stage; an S-construction approximation theorem
 requires the corresponding row hypotheses and a realization argument.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory

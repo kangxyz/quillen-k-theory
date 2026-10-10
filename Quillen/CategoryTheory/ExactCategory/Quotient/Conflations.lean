@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.ExactCategory.Quotient.Kernels
-import Quillen.CategoryTheory.ExactCategory.Quotient.Cokernels
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.Quotient.Kernels
+public import Quillen.CategoryTheory.ExactCategory.Quotient.Cokernels
 
 /-!
 # The specified conflations of the exact quotient
@@ -10,6 +18,8 @@ cokernel universal properties are proved under the respective filtering
 hypotheses. The remaining exact axioms and the other universal property for
 one-sided s-filtering are not assumed.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -36,7 +46,7 @@ lemma conflation_iso_closed {S T : ShortComplex (ExactQuotient E A)} (e : S ≅ 
 
 /-- Right filtering proves the genuine kernel property for every specified
 quotient conflation, including those presented only up to isomorphism. -/
-def conflation_kernel (hA : E.RightFiltering A)
+def quotientConflationKernelIsLimit (hA : E.RightFiltering A)
     {T : ShortComplex (ExactQuotient E A)} (hT : conflation E A T) :
     IsLimit (KernelFork.ofι T.f T.zero) := by
   let S := hT.choose
@@ -48,13 +58,13 @@ def conflation_kernel (hA : E.RightFiltering A)
 
 /-- Left filtering proves the genuine cokernel property for every specified
 quotient conflation. -/
-def conflation_cokernel (hA : E.LeftFiltering A)
+def quotientConflationCokernelIsColimit (hA : E.LeftFiltering A)
     {T : ShortComplex (ExactQuotient E A)} (hT : conflation E A T) :
     IsColimit (CokernelCofork.ofπ T.g T.zero) := by
   let S := hT.choose
   have hS := hT.choose_spec.1
   let e := hT.choose_spec.2.some
-  exact IsCokernel.ofIso _ (cokernel_map E A hA hS) _
+  exact IsCokernel.ofIso _ (mappedConflationCokernelIsColimit E A hA hS) _
     (ShortComplex.π₁.mapIso e) (ShortComplex.π₂.mapIso e) (ShortComplex.π₃.mapIso e)
     e.hom.comm₁₂ e.hom.comm₂₃
 

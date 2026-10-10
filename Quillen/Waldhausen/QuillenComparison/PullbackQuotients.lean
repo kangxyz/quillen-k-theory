@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.QuillenComparison.FlagMaps
-import Quillen.Waldhausen.QuillenComparison.FlagPullback
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.FlagMaps
+public import Quillen.Waldhausen.QuillenComparison.FlagPullback
 
 /-! # Pullback of admissible flags preserves their interval quotients
 
@@ -7,6 +15,8 @@ The pullback of a kernel is the kernel of the composite. With an admissible
 epimorphism this composite is again a deflation, so its original cokernel
 object is the actual quotient of the pulled-back inclusion.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -28,7 +38,8 @@ def pullbackKernelComposite {P A B K Q : C} {a : K ⟶ P} {v : K ⟶ A}
     IsLimit (KernelFork.ofι a (show a ≫ (p ≫ q) = 0 from by
       rw [← Category.assoc, sq.w, Category.assoc, w, comp_zero])) := by
   refine KernelFork.IsLimit.ofι _ _
-    (fun {W} f hf ↦ sq.lift f (hi.lift (KernelFork.ofι (f ≫ p) (by simpa [Category.assoc] using hf)))
+    (fun {W} f hf ↦ sq.lift f (hi.lift (KernelFork.ofι (f ≫ p) (by simpa [Category.assoc] using
+      hf)))
       (by symm; exact hi.fac _ WalkingParallelPair.zero)) ?_ ?_
   · intro W f hf
     exact sq.lift_fst _ _ _
@@ -64,13 +75,15 @@ theorem pullbackFlag_quotient_isIso {n : SimplexCategory} (A : Fin (n.len + 1) �
   let hc := flagQuotient_conflation E hA ij
   let hs := pullback_conflation_same_quotient E sq (flagQuotient_zero E hA ij) hc
     (pullbackFlagToOriginal_deflation E A p hp ij.1.2)
-  let e := (flagQuotient_isCokernel E (pullbackFlag_inflation E A p hp hA) ij).coconePointUniqueUpToIso
+  let e := (flagQuotientIsCokernel E (pullbackFlag_inflation E A p hp hA)
+    ij).coconePointUniqueUpToIso
     (E.cokernel _ hs)
   have he : (quotientNatTrans E (pullbackFlag_inflation E A p hp hA) hA
       (pullbackFlagToOriginal A p)).app ij = e.hom := by
     apply (cancel_epi (flagQuotient E (pullbackFlag A p) (pullbackFlag_inflation E A p hp hA) ij)).1
     rw [flagQuotient_quotientNatTrans]
-    exact ((flagQuotient_isCokernel E (pullbackFlag_inflation E A p hp hA) ij).comp_coconePointUniqueUpToIso_hom
+    exact ((flagQuotientIsCokernel E (pullbackFlag_inflation E A p hp hA)
+      ij).comp_coconePointUniqueUpToIso_hom
       (E.cokernel _ hs) WalkingParallelPair.one).symm
   rw [he]
   infer_instance

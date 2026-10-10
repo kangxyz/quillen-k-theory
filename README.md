@@ -2,46 +2,47 @@
 
 [![CI](https://github.com/kangxyz/quillen-k-theory/actions/workflows/ci.yml/badge.svg)](https://github.com/kangxyz/quillen-k-theory/actions/workflows/ci.yml)
 
-A Lean library for Quillen K-theory and related mathematics, built on mathlib.
+A Lean library for algebraic K-theory and its algebraic, categorical, geometric,
+and homotopical foundations, built on mathlib.
 
-The library includes exact categories, Quillen's Q-construction, Waldhausen's
-S-construction, and geometric K/G-theory, together with their algebraic,
-categorical, and homotopical foundations. Its current models are connective;
-the project is open to further constructions and comparisons.
+The library develops exact categories, Quillen's Q-construction, Waldhausen's
+S-construction, scheme K/G-theory, and perfect complexes. It includes canonical
+maps, comparison theorems, connective localization and Mayer–Vietoris sequences,
+an iterated S-construction Ω-spectrum, and functorial Bass negative groups
+defined by cokernel recursion. Perfect spectra admit derived pullback in the
+constructed stable localization. The source is organized for reuse and extension
+to further constructions and comparisons.
 
-The project is under development. See [mathematical scope](docs/Scope.md) for
-the hypotheses of the available results and the remaining comparison theorems.
+The project is under development. [Mathematical scope](docs/Scope.md) records
+precise coverage and open boundaries; the [library guide](docs/Library.md)
+provides imports and public interfaces.
 
-## Installation
+## Quick start
 
-Use Lean **4.34.1** and add the following dependency to `lakefile.toml`:
+The **0.3.0 release candidate** uses Lean **4.34.1** and the mathlib revision
+pinned in [lakefile.toml](lakefile.toml). Install
+[elan](https://github.com/leanprover/elan) to use the committed
+[toolchain](lean-toolchain).
+
+For a local checkout beside your Lean project, add this to `lakefile.toml`:
 
 ```toml
 [[require]]
 name = "quillen-k-theory"
-git = "https://github.com/kangxyz/quillen-k-theory.git"
-rev = "v0.2.0"
+path = "../quillen-k-theory"
 ```
 
-Resolve the new dependency with `lake update quillen-k-theory`, then build your
-package with `lake build`.
+Run `lake update quillen-k-theory`, then `lake build` in your project.
+For a published dependency, replace `path` with
+`git = "https://github.com/kangxyz/quillen-k-theory.git"` and a `rev` pinned to
+the selected release tag or commit. The candidate version does not itself
+identify a published tag.
 
-Import individual modules for a small dependency footprint:
-
-```lean
-import Quillen.CategoryTheory.ExactCategory.Basic
-import Quillen.KTheory.API
-```
-
-`Quillen.Library` collects the public K/G interfaces; `Quillen.Scheme` and
-`Quillen.Resolution` provide the geometric and finite-resolution interfaces.
-`import Quillen` imports the entire library.
-
-## Example
-
-In the exact-category interface, exact functors induce maps on K-groups:
+Import the interface you need:
 
 ```lean
+module
+
 import Quillen.KTheory.API
 
 universe u
@@ -53,27 +54,38 @@ example {C : Type u} [Category.{u} C] [Preadditive C]
   simp
 ```
 
-The [downstream examples](examples/downstream/Consumer) exercise the public API
-from a separate Lake package.
+Exact functors induce the displayed maps on K-groups. More client proofs are in
+the [separate downstream package](examples/downstream/Consumer).
+
+For geometric interfaces, use `Quillen.AlgebraicGeometry.Scheme`; for a focused
+perfect-localization import, use
+`Quillen.AlgebraicGeometry.PerfectComplexes.GlobalLocalization`.
+`import Quillen` imports the complete library. See the
+[module-path conventions](docs/Library.md#module-paths-and-namespaces) when
+choosing focused imports.
 
 ## Documentation
 
-- [Library guide](docs/Library.md): imports, namespaces, maps, and universe conventions.
-- [Mathematical scope](docs/Scope.md): theorem families and open problems.
-- [Architecture](docs/Architecture.md): module organization and dependency boundaries.
+- [Library guide](docs/Library.md): imports, canonical maps, spectra, Bass groups, and universes.
+- [Mathematical scope](docs/Scope.md): result families, hypotheses, and open comparisons.
+- [Perfect-complex localization](docs/ThomasonTrobaugh.md): relative models, support excision, Mayer–Vietoris, and degree zero.
+- [Architecture](docs/Architecture.md): mathematical owners and dependency boundaries.
+- [Typechecking performance](docs/Performance.md): measured costs and a verified instance-inference optimization.
 - [Contributing](CONTRIBUTING.md): extending the library and checking changes.
 
-## Building
+## Building and checking
 
-Install [elan](https://github.com/leanprover/elan), then run:
+From the library checkout, run:
 
 ```sh
 bash scripts/cache.sh
 bash scripts/check.sh --rehash
 ```
 
-The toolchain and dependencies are pinned. The checks build the library and its
-downstream examples, and audit transitive axiom dependencies.
+The cache script selects required mathlib imports. The check script validates
+source structure, builds the library and tests, runs lint, builds the downstream
+package, and replays the transitive axiom audits. See
+[verification scope](docs/Scope.md#verification) for what these checks cover.
 
 ## License
 

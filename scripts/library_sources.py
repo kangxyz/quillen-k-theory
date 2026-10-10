@@ -6,7 +6,7 @@ import re
 IDENT = r'(?:[^\W\d][\w\u0080-\uffff\'!?]*|«[^»\n]+»)'
 MODULE = re.compile(IDENT + r'(?:\.' + IDENT + r')*')
 IMPORT_START = re.compile(r'^[ \t]*(?:(?:public|private|meta)[ \t]+)*import\b', re.M)
-KEYWORDS = {'import', 'public', 'private', 'meta', 'prelude', 'module', 'namespace',
+KEYWORDS = {'import', 'all', 'public', 'private', 'meta', 'prelude', 'module', 'namespace',
             'section', 'end', 'open', 'set_option', 'noncomputable', 'universe',
             'variable', 'def', 'theorem', 'lemma', 'example', 'instance', 'abbrev',
             'axiom', 'constant', 'class', 'structure', 'inductive', 'attribute',
@@ -64,6 +64,10 @@ def lean_imports(source: str) -> list[str]:
     imports = []
     for start in IMPORT_START.finditer(clean):
         position = start.end()
+        # `all` modifies the import; it is not a module named `all`.
+        modifier = re.match(r'\s+all\b', clean[position:])
+        if modifier:
+            position += modifier.end()
         while position < len(clean):
             while position < len(clean) and clean[position].isspace():
                 position += 1
@@ -76,6 +80,40 @@ def lean_imports(source: str) -> list[str]:
             imports.append(token)
             position = match.end()
     return imports
+
+
+def uses_module_system(source: str) -> bool:
+    """Recognize a real module header after comments, rather than quoted prose."""
+    return re.match(r'\s*module\b', strip_comments_and_strings(source)) is not None
+
+
+def is_import_surface(source: str) -> bool:
+    """Recognize import-only APIs without classifying a foundational module as a facade.
+
+    Empty public sections added by a module migration do not add declarations.
+    Other commands conservatively keep the source classified as implementation.
+    """
+    remaining = strip_comments_and_strings(source).lstrip()
+    remaining = re.sub(r'^module\b\s*', '', remaining)
+    remaining = re.sub(r'^prelude\b\s*', '', remaining)
+    while match := IMPORT_START.match(remaining):
+        position = match.end()
+        modifier = re.match(r'\s+all\b', remaining[position:])
+        if modifier:
+            position += modifier.end()
+        while position < len(remaining):
+            while position < len(remaining) and remaining[position].isspace():
+                position += 1
+            token = MODULE.match(remaining, position)
+            if not token or token.group() in KEYWORDS:
+                break
+            position = token.end()
+        remaining = remaining[position:].lstrip()
+    # Generated import surfaces can exceed the proof-file size bound. This
+    # metadata does not turn a facade into a mathematical implementation.
+    remaining = re.sub(r'^set_option\s+linter\.style\.longFile\s+\d+\s*', '', remaining)
+    return re.fullmatch(r'(?:@\[\s*expose\s*\]\s*)?(?:public\s+)?(?:meta\s+)?section\s*',
+                        remaining) is not None or not remaining
 
 
 def project_imports(source: str) -> list[str]:
@@ -111,6 +149,20 @@ def downstream_sources(root: Path) -> set[Path]:
             if '.lake' not in path.relative_to(root).parts}
 
 
+def tool_sources(root: Path) -> set[Path]:
+    return {path.relative_to(root) for path in (root / 'Tools').rglob('*.lean')}
+
+
+def style_sources(root: Path) -> list[tuple[str, Path]]:
+    """Enumerate source paths and module identities in their actual packages."""
+    sources = source_modules(root) | test_modules(root) | tool_sources(root)
+    result = [(module_name(path), path) for path in sources]
+    client = Path('examples/downstream')
+    result.extend((module_name(path.relative_to(client)), path)
+                  for path in downstream_sources(root))
+    return sorted(result, key=lambda item: item[1].as_posix())
+
+
 def import_closure(root: Path, entrypoints: list[str | Path]) -> set[Path]:
     seen: set[Path] = set()
     pending = [Path(path) for path in entrypoints]
@@ -124,3 +176,13 @@ def import_closure(root: Path, entrypoints: list[str | Path]) -> set[Path]:
         pending.extend(module_path(module)
                        for module in project_imports((root / path).read_text()))
     return seen
+
+
+if __name__ == '__main__':
+    import argparse
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--style-sources', action='store_true', required=True)
+    parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[1])
+    args = parser.parse_args()
+    for module, path in style_sources(args.root):
+        print(module + '\t' + path.as_posix())

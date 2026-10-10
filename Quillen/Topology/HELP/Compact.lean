@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.TheoremB.MappingPath
-import Mathlib.CategoryTheory.LiftingProperties.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.MappingPath.Basic
+public import Mathlib.CategoryTheory.LiftingProperties.Basic
 
 /-!
 # Compact homotopy extension and lifting
@@ -8,6 +16,8 @@ The prescribed boundary homotopy is part of the data and must be retained
 exactly. This property gives genuine right lifting of the mapping-path
 endpoint projection against compact cofibrations.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 open scoped Topology unitInterval

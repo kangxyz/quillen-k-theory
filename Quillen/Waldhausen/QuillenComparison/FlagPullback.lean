@@ -1,5 +1,13 @@
-import Quillen.CategoryTheory.ExactCategory.SpecialFractions
-import Mathlib.CategoryTheory.ComposableArrows.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.ExactCategory.SpecialFractions
+public import Mathlib.CategoryTheory.ComposableArrows.Basic
 
 /-!
 # Pulling an admissible flag back along a deflation
@@ -8,6 +16,8 @@ All flag terms are actual pullbacks, their maps are actual admissible
 monomorphisms, and the projection to the old flag is objectwise an
 admissible epimorphism. The top term is canonically the original apex.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -23,6 +33,7 @@ variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 def flagTopMap (i : Fin (n + 1)) : A.obj i ⟶ A.obj (Fin.last n) :=
   A.map (homOfLE (Fin.le_last i))
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 @[reassoc (attr := simp)]
 theorem flagTopMap_comp {i j : Fin (n + 1)} (f : i ⟶ j) :
     A.map f ≫ flagTopMap A j = flagTopMap A i := by
@@ -48,11 +59,13 @@ def pullbackFlag : Fin (n + 1) ⥤ C where
   map_comp f g := by
     apply pullback.hom_ext <;> simp [Category.assoc]
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 @[reassoc (attr := simp)]
 theorem pullbackFlag_map_fst {i j : Fin (n + 1)} (f : i ⟶ j) :
     (pullbackFlag A p).map f ≫ pullback.fst p (flagTopMap A j) =
       pullback.fst p (flagTopMap A i) := by simp [pullbackFlag]
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 @[reassoc (attr := simp)]
 theorem pullbackFlag_map_snd {i j : Fin (n + 1)} (f : i ⟶ j) :
     (pullbackFlag A p).map f ≫ pullback.snd p (flagTopMap A j) =
@@ -61,7 +74,7 @@ theorem pullbackFlag_map_snd {i j : Fin (n + 1)} (f : i ⟶ j) :
 /-- The pulled-back flag maps naturally to the original flag. -/
 def pullbackFlagToOriginal : pullbackFlag A p ⟶ A where
   app i := pullback.snd p (flagTopMap A i)
-  naturality {i j} f := pullbackFlag_map_snd A p f
+  naturality {_ _} f := pullbackFlag_map_snd A p f
 
 include hp in
 /-- Every component of the projection is an actual admissible epimorphism. -/
@@ -72,8 +85,9 @@ theorem pullbackFlagToOriginal_deflation (i : Fin (n + 1)) :
 /-- The maps to the new apex form an actual cocone. -/
 def pullbackFlagToApex : pullbackFlag A p ⟶ (Functor.const _).obj P where
   app i := pullback.fst p (flagTopMap A i)
-  naturality f := by simpa using pullbackFlag_map_fst A p f
+  naturality f := by simp
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 /-- Every map of pulled-back flag terms is a genuine pullback of the
 corresponding original map, against a deflation. -/
 theorem pullbackFlag_map_isPullback {i j : Fin (n + 1)} (f : i ⟶ j) :
@@ -114,6 +128,7 @@ def pullbackFlagTopIso : (pullbackFlag A p).obj (Fin.last n) ≅ P := by
     (IsPullback.of_hasPullback p (flagTopMap A (Fin.last n))).isIso_fst_of_isIso
   exact asIso (pullback.fst p (flagTopMap A (Fin.last n)))
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 @[simp]
 theorem pullbackFlagTopIso_hom :
     (pullbackFlagTopIso A p).hom = pullback.fst p (flagTopMap A (Fin.last n)) := rfl

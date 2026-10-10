@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyLifting.Compact.Stationary
-import Quillen.CategoryTheory.TheoremA.RealizationCofibrationEquiv
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyLifting.Compact.Stationary
+public import Quillen.CategoryTheory.TheoremA.RealizationCofibrationEquiv
 
 /-! # Compact-parameter homotopy extension over a fixed base
 
@@ -8,6 +16,8 @@ Ordinary HEP extends the prescribed homotopy first. Stationary HLP then
 corrects its projection by reversing its time coordinate. The correction
 fixes both time zero and the entire prescribed subspace.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 open scoped Topology unitInterval
@@ -17,12 +27,13 @@ namespace Quillen
 variable {E B : Type u} [TopologicalSpace E] [TopologicalSpace B]
 
 theorem CompactHomotopyLiftingProperty.extend_over_fixed_base
-    {q : C(E,B)} (hq : CompactHomotopyLiftingProperty q)
-    (A D : TopCat.{u}) [CompactSpace D] [LocallyCompactSpace D] (i : A ⟶ D) (hi : TheoremA.homotopyExtensionProperty i)
-    (duration : C(D,unitInterval)) (hzero : ∀ x,duration x = 0 ↔ x ∈ Set.range i)
-    (b : C(D,E)) (H : C(unitInterval × A,E))
-    (h₀ : ∀ a,H (0,a) = b (i a))
-    (hbase : ∀ t a,q (H (t,a)) = q (b (i a))) :
+    {q : C(E, B)} (hq : CompactHomotopyLiftingProperty q)
+    (A D : TopCat.{u}) [CompactSpace D] [LocallyCompactSpace D] (i : A ⟶ D) (hi :
+      TheoremA.homotopyExtensionProperty i)
+    (duration : C(D, unitInterval)) (hzero : ∀ x, duration x = 0 ↔ x ∈ Set.range i)
+    (b : C(D, E)) (H : C(unitInterval × A, E))
+    (h₀ : ∀ a, H (0, a) = b (i a))
+    (hbase : ∀ t a, q (H (t, a)) = q (b (i a))) :
     ∃ T : C(unitInterval × D,E),
       (∀ x,T (0,x) = b x) ∧ (∀ t a,T (t,i a) = H (t,a)) ∧
       ∀ t x,q (T (t,x)) = q (b x) := by

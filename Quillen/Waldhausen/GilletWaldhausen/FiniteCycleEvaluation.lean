@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleFiltration
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleFiltration
 
 /-! # Actual cycle evaluation and disk insertion in finite acyclic strata
 
@@ -7,6 +15,8 @@ original disk insertion are exact, their same-coordinate composite is
 naturally identity, and their other-coordinate composites are naturally zero.
 All endpoint cycle vanishing is derived from actual bounds and acyclicity.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -84,7 +94,8 @@ local instance finiteCycleEvaluation_termPropertyProducts : P.IsClosedUnderFinit
 
 /-- Upper-cycle evaluation followed by original disk insertion is the actual layer. -/
 theorem finiteCycleEvaluation_disk (a b n : ℤ) (ha : a ≤ n) (hb : n + 1 ≤ b) :
-    finiteCycleEvaluation P a b (n + 1) ⋙ finiteCycleDisk P a b n ha hb = finiteCycleLayer P a b n := by
+    finiteCycleEvaluation P a b (n + 1) ⋙ finiteCycleDisk P a b n ha hb = finiteCycleLayer P a b
+      n := by
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 
 /-- The original cycle functor preserves inherited conflations. -/

@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.QuillenComparison.RowBase
-import Quillen.Waldhausen.QuillenComparison.ReconstructedSpan
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.RowBase
+public import Quillen.Waldhausen.QuillenComparison.ReconstructedSpan
 
 /-! # Every finite Q-chain comes from an actual exact S-row
 
@@ -8,6 +16,8 @@ Q-arrow pulls back the preceding admissible flag, and adjoining zero and
 the new target gives the next exact row. The previously proved terminal
 span identity verifies the actual comparison, not just object counts.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

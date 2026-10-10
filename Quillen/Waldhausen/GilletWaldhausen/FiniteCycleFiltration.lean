@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleBounds
-import Quillen.Waldhausen.GilletWaldhausen.AdjacentTruncation
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleBounds
+public import Quillen.Waldhausen.GilletWaldhausen.AdjacentTruncation
 
 /-! # Actual finite-stratum acyclic truncation endofunctors
 
@@ -8,6 +16,8 @@ one specified actual term-bound stratum. Their original adjacent maps form
 genuine cofibration sequences in the isomorphism weak model. The lower
 endpoint is zero by actual acyclicity, and the upper endpoint is the identity.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -45,7 +55,8 @@ def finiteCycleIdentityIso (a b n : ℤ) (hn : b ≤ n) :
 
 /-- Acyclicity makes the lower-bound smart truncation actually zero in the same stratum. -/
 theorem finiteCycleTruncation_isZero (a b : ℤ)
-    (K : (fixedAcyclicBounds P a b).FullSubcategory) : IsZero ((finiteCycleTruncation P a b a).obj K) := by
+    (K : (fixedAcyclicBounds P a b).FullSubcategory) : IsZero ((finiteCycleTruncation P a b
+      a).obj K) := by
   apply IsZero.of_full_of_faithful_of_isZero (fixedAcyclicBounds P a b).ι
   apply IsZero.of_full_of_faithful_of_isZero (boundedAcyclic P).ι
   exact truncLE_isZero_at_lower_bound K.obj.obj a b K.property K.obj.property.2.2
@@ -78,7 +89,8 @@ theorem finiteCycleLayer_hasTermBounds (a b n : ℤ) (K : (boundedAcyclic P).Ful
 def finiteCycleLayer (a b n : ℤ) :
     (fixedAcyclicBounds P a b).FullSubcategory ⥤ (fixedAcyclicBounds P a b).FullSubcategory :=
   (fixedAcyclicBounds P a b).lift
-    ((fixedAcyclicBounds P a b).ι ⋙ boundedAcyclicCyclesFunctor P (n + 1) ⋙ boundedAcyclicDiskFunctor P n)
+    ((fixedAcyclicBounds P a b).ι ⋙ boundedAcyclicCyclesFunctor P (n + 1) ⋙
+      boundedAcyclicDiskFunctor P n)
     (fun K ↦ finiteCycleLayer_hasTermBounds P a b n K.obj K.property)
 
 instance finiteCycleLayer_additive (a b n : ℤ) : (finiteCycleLayer P a b n).Additive :=
@@ -119,7 +131,8 @@ def finiteCycleLayerExact (a b n : ℤ) :
 /-- The pointwise sequence is the original actual adjacent conflation. -/
 theorem finiteCycleLayer_conflation (a b n : ℤ) (K : (fixedAcyclicBounds P a b).FullSubcategory) :
     (fixedAcyclicExactStructure P a b).conflation
-      (ShortComplex.mk ((finiteCycleInclusion P a b n).app K) ((finiteCycleProjection P a b n).app K)
+      (ShortComplex.mk ((finiteCycleInclusion P a b n).app K) ((finiteCycleProjection P a b
+        n).app K)
         (NatTrans.congr_app (finiteCycle_comp_zero P a b n) K)) :=
   adjacentTruncation_conflation P n K.obj
 

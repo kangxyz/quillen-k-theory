@@ -1,8 +1,18 @@
-import Quillen.Waldhausen.QuillenComparison.ReconstructedRows
-import Quillen.Waldhausen.QuillenComparison.ExtendedSpan
-import Quillen.Waldhausen.QuillenComparison.IntervalTransport
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.QuillenComparison.ReconstructedRows
+public import Quillen.Waldhausen.QuillenComparison.ExtendedSpan
+public import Quillen.Waldhausen.QuillenComparison.IntervalTransport
 
 /-! # The terminal arrow of the recursively reconstructed Q-chain -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -51,6 +61,7 @@ theorem rowReindexEqIso_hom_app {a b : SimplexCategory} {α β : a ⟶ b} (h : �
   subst β
   rfl
 
+omit [Preadditive C] [HasFiniteBiproducts C] in
 private theorem iso_app_transport {I : Type*} [Category I] {A B : I ⥤ C}
     (e : A ≅ B) {i j : I} (h : i = j) :
     (e.app i).hom ≫ eqToHom (congrArg B.obj h) =
@@ -122,9 +133,12 @@ theorem reconstructedCentralIsoAt_last_top :
   let ij := nestedToInterval (centralInterval ⦋n⦌ (Fin.last n))
   let c := eqToIso (congrArg (fun q ↦ (reconstructedRow E F p hp r hr).diagram.obj
     (nestedToInterval q)) (reconstructionMiddleOrdinal_central n (Fin.last n)).symm)
+  have hij : ij = interval 0 (Fin.last (Edgewise.ε.obj ⦋n⦌).len) (Fin.zero_le _) := by
+    dsimp only [ij]
+    rw [centralInterval_last, nestedToInterval_topNested_edgewise]
   have h := congrArg (fun t ↦ c.hom ≫
     (rowReindexEqIso E (reconstructionMiddle_comp_cast n) R).hom.app ij ≫ t)
-      (iso_app_transport e (centralInterval_last_as_interval ⦋n⦌))
+      (iso_app_transport e hij)
   apply Iso.ext
   simpa only [c, e, R, ij, reconstructedCentralIsoAt, reconstructedPenultimateIso,
     centralTopIso, reconstructedMiddleIso, rowReindexCompIso, reconstructedRow, rowReindex,

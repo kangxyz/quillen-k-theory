@@ -1,8 +1,16 @@
-import Quillen.Resolution.Bounded
-import Quillen.Topology.FilteredRealization.NerveColimit
-import Quillen.Topology.FilteredRealization.HomotopyEquivalence
-import Mathlib.CategoryTheory.Category.ULift
-import Mathlib.CategoryTheory.Filtered.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Resolution.Bounded
+public import Quillen.Topology.FilteredRealization.NerveColimit
+public import Quillen.Topology.FilteredRealization.HomotopyEquivalence
+public import Mathlib.CategoryTheory.Category.ULift
+public import Mathlib.CategoryTheory.Filtered.Basic
 
 /-!
 # The actual filtered union of resolution-length Q-categories
@@ -12,6 +20,8 @@ one finite stratum by bounding the resolutions of its source, target, apex,
 left kernel, and right cokernel. Thus no uniform resolution bound is assumed.
 Filtered nerve realization invariance is the already-proved topological theorem.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -63,6 +73,7 @@ def stratumQCocone : Cocone (stratumQDiagram E P) where
             (exactInclusion E (E.ResolutionLength P (stratumRank j))).mapQ
         rw [← ExactFunctor.mapQ_comp, exactInclusionOfLE_comp] }
 
+omit [P.IsClosedUnderFiniteProducts] in
 /-- A whole ambient Q-arrow, including its kernel and cokernel witnesses,
 lifts to one genuine exact length stratum. -/
 theorem stratumQCocone_arrowSurjective :
@@ -85,7 +96,8 @@ theorem stratumQCocone_arrowSurjective :
   let x : (E.ResolutionLength P N).FullSubcategory := ⟨X, hX⟩
   let y : (E.ResolutionLength P N).FullSubcategory := ⟨Y, hY⟩
   let a : (E.ResolutionLength P N).FullSubcategory := ⟨s.apex, hA⟩
-  let t : Span (stratumExactStructure E P N).deflation (stratumExactStructure E P N).inflation x y :=
+  let t : Span (stratumExactStructure E P N).deflation (stratumExactStructure E P N).inflation x y
+    :=
     { apex := a
       l := ObjectProperty.homMk s.l
       r := ObjectProperty.homMk s.r
@@ -107,6 +119,7 @@ theorem stratumQCocone_objectSurjective :
   obtain ⟨j, x, _, _, hx, _, _⟩ := stratumQCocone_arrowSurjective E P (𝟙 X)
   exact ⟨j, x, hx⟩
 
+omit [P.IsClosedUnderFiniteProducts] in
 /-- The stage inclusions already reflect equality of objects; no further
 increase of the resolution bound is necessary. -/
 theorem stratumQCocone_eventuallyEqualObjects :
@@ -132,9 +145,9 @@ instance stratumQCocone_faithful (j : StratumIndex.{u}) :
 
 /-- The ambient Q-nerve really is the filtered simplicial colimit of the
 finite-resolution-length strata. -/
-def stratumNerveCocone_isColimit :
+def stratumNerveCoconeIsColimit :
     IsColimit (nerveFunctor.mapCocone (stratumQCocone E P)) :=
-  FilteredNerveColimit.nerveCocone_isColimit (stratumQDiagram E P) (stratumQCocone E P)
+  FilteredNerveColimit.nerveCoconeIsColimit (stratumQDiagram E P) (stratumQCocone E P)
     (stratumQCocone_objectSurjective E P) (stratumQCocone_arrowSurjective E P)
     (stratumQCocone_eventuallyEqualObjects E P)
 
@@ -144,10 +157,11 @@ def stratumToAmbientHomotopyEquiv (n : ℕ) :
     ContinuousMap.HomotopyEquiv (stratumExactStructure E P n).KSpace E.KSpace :=
   FilteredRealization.stageHomotopyEquiv
     (stratumQDiagram E P ⋙ nerveFunctor) (nerveFunctor.mapCocone (stratumQCocone E P))
-    (stratumNerveCocone_isColimit E P)
+    (stratumNerveCoconeIsColimit E P)
     (fun f => stratumTransitionHomotopyEquiv E P (leOfHom (AsSmall.down.map f)))
     (fun f => by
-      convert stratumTransitionHomotopyEquiv_toFun E P (leOfHom (AsSmall.down.map f)) using 1 <;> rfl)
+      convert stratumTransitionHomotopyEquiv_toFun E P (leOfHom (AsSmall.down.map f)) using 1 <;>
+        rfl)
     (stratumIndex n)
 
 @[simp] theorem stratumToAmbientHomotopyEquiv_toFun (n : ℕ) :

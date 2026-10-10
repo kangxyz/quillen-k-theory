@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyFiber.LESTail
-import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.LESTail
+public import Quillen.Topology.HomotopyGroups.WeakEquivalenceProperty
 
 /-! # Weakly contractible homotopy fibers from the actual long exact sequence
 
@@ -7,6 +15,8 @@ Both directions use the original projection and connecting maps. The first
 lemma includes the zeroth pointed homotopy set, without introducing a group
 structure on connected components.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

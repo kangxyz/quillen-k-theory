@@ -1,7 +1,15 @@
-import Quillen.Devissage.LayerContraction
-import Quillen.Devissage.CommaLayers
-import Quillen.CategoryTheory.TheoremA.ContractibleComma
-import Quillen.Topology.HomotopyGroups.Equivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Devissage.LayerContraction
+public import Quillen.Devissage.CommaLayers
+public import Quillen.CategoryTheory.TheoremA.ContractibleComma
+public import Quillen.Topology.HomotopyGroups.Equivalence
 
 /-!
 # Homotopical Quillen dévissage
@@ -13,9 +21,12 @@ comma category with the poset of layers, contracts it by intersection and
 finite-filtration induction, and applies the proved Quillen Theorem A.
 
 Both the ordinary inclusion and its canonically zero-rebased version are
-retained as exact forward maps. The all-degree K-group isomorphisms use the proved homotopy-group invariance
+retained as exact forward maps. The all-degree K-group isomorphisms use the proved homotopy-group
+invariance
 theorem, without assuming based inverse homotopies.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u
@@ -99,9 +110,10 @@ def KEquiv (h : FiltrationHypothesis P) (n : ℕ) :
 
 /-- The forward homomorphism of dévissage is exactly the already-defined
 inclusion-induced K-map, including its canonical zero-object rebasing. -/
-@[simp]
-theorem KEquiv_toMonoidHom (h : FiltrationHypothesis P) (n : ℕ) :
-    (KEquiv P h n).toMonoidHom = KMap P n := rfl
+@[simp] theorem KEquiv_coe (h : FiltrationHypothesis P) (n : ℕ) :
+    (↑(KEquiv P h n) : (subcategoryExactStructure P).K n →* (abelianExactStructure C).K n) =
+        KMap P n := rfl
+
 
 /-- In particular the canonical inclusion-induced map is bijective in every
 degree, including `K₀ = π₁ BQ`. -/

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.CategoryTheory.TheoremB.CartesianDomainWeakPushout
+module
+
+public import Quillen.Topology.HomotopyPullback.WeakPushoutDomain
 
 /-!
 # General weak fixed-target domain descent consumer
@@ -13,6 +15,8 @@ Both source and base pushout diagrams may vary. The corner hypotheses are
 weakness of their original canonical comparisons, and the conclusion retains
 the original point and entire constant path of the prescribed total map.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval

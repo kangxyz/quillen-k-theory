@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.TheoremB.WeakVertexComparison
-import Quillen.CategoryTheory.TheoremA.ContractibleComma
-import Quillen.Topology.Realization.FiniteNullhomotopy
+module
+
+public import Quillen.CategoryTheory.TheoremB.WeakVertexComparison
+public import Quillen.CategoryTheory.TheoremA.ContractibleComma
+public import Quillen.Topology.Realization.FiniteNullhomotopy
 
 /-!
 # Quillen Theorem A from weakly contractible comma nerves
@@ -15,6 +17,8 @@ augmentation weak. The genuine diagonal source equivalence and augmentation
 homotopy then prove complete weakness of the original classifying-space map.
 A finite-subcomplex nullhomotopy criterion requires no global contraction.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -25,7 +29,7 @@ universe u v w
 namespace Quillen
 
 namespace TheoremB
-open TheoremA SkeletalCartesian SequentialCartesian
+open TheoremA Quillen.CartesianRealization.Skeletal Quillen.CartesianRealization.Sequential
 variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
 
 /-- Weakly contractible realized coefficients make the original replacement

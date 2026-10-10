@@ -1,8 +1,18 @@
-import Quillen.CategoryTheory.TheoremB.StructuredComparison
-import Quillen.Topology.ClassifyingSpace.OppositePoint
-import Quillen.Topology.HomotopyFiber.Homeomorph
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.StructuredComparison
+public import Quillen.Topology.ClassifyingSpace.OppositePoint
+public import Quillen.Topology.HomotopyFiber.Homeomorph
 
 /-! Concrete transport of the structured comparison through opposite realization. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Topology unitInterval

@@ -1,4 +1,12 @@
-import Quillen.Topology.Realization.FiniteCompact
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.FiniteCompact
 
 /-! # Finite cell indices and genuine finite-stage retraction
 
@@ -7,6 +15,8 @@ actual skeletal stage. This provides a continuous injection into that stage,
 allowing its separation properties to be transferred without choosing a
 numeric dimension bound or changing the realization model.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.GilletWaldhausen.FiniteTermFiltration
-import Quillen.Waldhausen.Additivity.GroupFormula
-import Mathlib.Algebra.BigOperators.Fin
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.FiniteTermFiltration
+public import Quillen.Waldhausen.Additivity.GroupFormula
+public import Mathlib.Algebra.BigOperators.Fin
 
 /-! # Actual finite brutal-filtration formulas in the original K-groups
 
@@ -9,6 +17,8 @@ The resulting finite product uses the original single-term layer K-maps and
 literal existing group multiplication, including degree zero. No categorywide
 bound, arithmetic-additivity hypothesis, or quasi-isomorphism truncation is used.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -53,7 +63,8 @@ theorem finiteTerm_KMap_iterated (a b n : ℤ) (m k : ℕ)
     let := Additivity.KCommGroup (ofExactCategory (fixedTermsExactStructure P a b)) k
     KMap (finiteTermTruncationExact P a b n).waldhausenExact k x =
       KMap (finiteTermTruncationExact P a b (n + (m : ℤ))).waldhausenExact k x *
-        ∏ i ∈ Finset.range m, KMap (finiteTermLayerExact P a b (n + (i : ℤ))).waldhausenExact k x := by
+        ∏ i ∈ Finset.range m, KMap (finiteTermLayerExact P a b (n + (i : ℤ))).waldhausenExact k
+          x := by
   let := Additivity.KCommGroup (ofExactCategory (fixedTermsExactStructure P a b)) k
   induction m with
   | zero => simp

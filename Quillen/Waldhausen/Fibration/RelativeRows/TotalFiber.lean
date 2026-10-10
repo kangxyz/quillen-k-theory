@@ -1,5 +1,13 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.CoarseEvaluation
-import Quillen.Topology.HomotopyFiber.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.CoarseEvaluation
+public import Quillen.Topology.HomotopyFiber.Basic
 
 /-! # The literal original total-tail fiber comparison
 
@@ -8,6 +16,8 @@ oneChain/ordinal split-fiber formula. Its total map therefore lifts to the
 actual homotopy fiber with the entire path literally constant at the
 original double-S zero. No global fiber weak equivalence is claimed.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial Topology

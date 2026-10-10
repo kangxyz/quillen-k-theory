@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Cofinality.GeneralDense
-import Quillen.Waldhausen.Approximation.WeakImageKEquivalence
+module
+
+public import Quillen.Waldhausen.Cofinality.GeneralDense
+public import Quillen.Waldhausen.Approximation.WeakImageKEquivalence
 
 /-! # Original approximation and genuine categorical cofinality on the witnessed image
 
@@ -13,6 +15,8 @@ category. Genuine target density/cofiber data gives cofinality of its literal
 inclusion. Composing these original maps proves positive bijectivity and
 K-zero injectivity for the original exact functor, with the true exact image.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -57,7 +61,8 @@ theorem original_range_KMap_of_dense (n : ℕ) :
   rw [← range_inclusion_KMap h hF J n]
   exact H.range_inclusion_KMap_general D' hs n
 
-/-- The original source K-zero embeds with its exact image, retaining the actual remaining endpoint. -/
+/-- The original source K-zero embeds with its exact image, retaining the actual remaining
+endpoint. -/
 theorem original_KZero_exact_of_dense :
     Function.Injective (KMap hF 0) ∧
     (KMap hF 0).range = (KMap (changeWeak_exact H.grading.nested) 0).ker ∧

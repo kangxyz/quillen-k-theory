@@ -1,9 +1,19 @@
-import Quillen.Localization.Serre.NormalizedStructuredComma
-import Quillen.Localization.Serre.LocalizationLESAdapter
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.NormalizedStructuredComma
+public import Quillen.Localization.Serre.LocalizationLESAdapter
 
 /-! Transport from the genuine normalized structured identity comparison to
 the already defined based localization comparison. The missing geometric
 comparison remains an explicit input, not an axiom or a completed endpoint. -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits

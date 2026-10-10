@@ -3,7 +3,9 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.GilletWaldhausen.AcyclicCycles
+module
+
+public import Quillen.Waldhausen.GilletWaldhausen.AcyclicCycles
 
 /-!
 # Acyclicity from mapped cycle sequences
@@ -12,6 +14,8 @@ An additive functor between abelian categories carries a cochain complex to an
 acyclic complex whenever it carries every actual cycle sequence to a short
 exact sequence. The functor need not be exact on the ambient category.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

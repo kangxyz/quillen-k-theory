@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.KEquivalence
+module
+
+public import Quillen.Waldhausen.Approximation.KEquivalence
 
 /-! Behavioral consumers of approximation for the unchanged S/K maps. -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 universe u
@@ -48,7 +52,7 @@ theorem original_K_composite
     (J' : Fibration.RowFactorization.JointData (Fibration.NestedWeakEquivalences.refl V))
     (n : ℕ) :
     ((h.KEquiv hF J n).trans (h'.KEquiv hG J' n)).toMonoidHom = KMap (hF.comp hG) n := by
-  rw [KMap_comp]
+  rw [← KMap_comp_KMap]
   rfl
 
 end ApproximationKConsumers

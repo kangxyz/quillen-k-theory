@@ -1,6 +1,14 @@
-import Mathlib.CategoryTheory.Comma.Arrow
-import Mathlib.CategoryTheory.Widesubcategory
-import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Mathlib.CategoryTheory.Comma.Arrow
+public import Mathlib.CategoryTheory.Widesubcategory
+public import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
 
 /-! # Original weak arrows and weak cofibrations
 
@@ -9,6 +17,8 @@ arrows satisfying the displayed predicates. Structural cylinder data contains
 only actual functors, maps, identities and preservation properties; no comma
 contractibility or homotopical comparison is an input.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory
 universe u v
@@ -19,9 +29,16 @@ variable {C : Type u} [Category.{v} C]
 
 /-- The precise cylinder data used by the weak-cofibration comma construction. -/
 structure CylinderData (cof weq : MorphismProperty C) where
+  /-- The functor assigning a cylinder middle object to each arrow and maps to commutative
+  squares. -/
   middle : Arrow C ⥤ C
+  /-- The natural cofibration from the arrow source to its cylinder middle object. -/
   inclusion : Arrow.leftFunc ⟶ middle
+  /-- The natural weak equivalence from the cylinder middle object to the arrow target,
+  factoring the original arrow through `inclusion`. -/
   projection : middle ⟶ Arrow.rightFunc
+  /-- The natural cofibration from the arrow target into the cylinder middle object, which is a
+  section of `projection`. -/
   target : Arrow.rightFunc ⟶ middle
   factorization (f : Arrow C) : inclusion.app f ≫ projection.app f = f.hom
   target_projection (f : Arrow C) : target.app f ≫ projection.app f = 𝟙 f.right

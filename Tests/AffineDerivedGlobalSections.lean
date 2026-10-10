@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Scheme.Sheaf.AffineDerivedGlobalSections
-import Tests.AffineCechSections
+module
+
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineDerivedGlobalSections
+public import Tests.AffineCechSections
 
 /-!
 # Consumers of actual derived global sections and open free generators
@@ -16,6 +18,8 @@ schemes, the actual free-generator morphisms represent restriction, injectives
 lift restricted sections even from the empty open, and short exact sequences
 with flasque kernel lift sections without conditions on the other terms.
 -/
+@[expose] public section
+
 
 noncomputable section
 universe u

@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.HomotopyFiber.WeakCriterion
-import Quillen.Topology.HomotopyFiber.Equivalence
-import Quillen.Topology.HomotopyGroups.Contractible
+module
+
+public import Quillen.Topology.HomotopyFiber.WeakCriterion
+public import Quillen.Topology.HomotopyFiber.Equivalence
+public import Quillen.Topology.HomotopyGroups.Contractible
 
 /-!
 # Complete weak equivalences and the actual path-space fibers
@@ -14,6 +16,8 @@ Weakness of the actual fiber-to-point maps detects the original total map.
 Unbased homotopies preserve complete weak equivalence by explicit path-space
 fiber equivalences. Both statements retain nonemptiness and degree zero.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

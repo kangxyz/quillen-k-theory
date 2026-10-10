@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.ClassifyingSpace.Equivalence
-import Mathlib.CategoryTheory.Widesubcategory
-import Mathlib.CategoryTheory.Limits.Shapes.ZeroMorphisms
+module
+
+public import Quillen.Topology.ClassifyingSpace.Equivalence
+public import Mathlib.CategoryTheory.Widesubcategory
+public import Mathlib.CategoryTheory.Limits.Shapes.ZeroMorphisms
 
 /-! # Actual categorical contraction for equality-of-grade weak maps
 
@@ -16,6 +18,8 @@ no chosen contraction or higher filling hypothesis is present. This will
 apply to actual graded S-construction rows once their grade realizability
 and simplicial compatibility have been established.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u
@@ -83,8 +87,14 @@ def equivalenceOfIff : WideSubcategory P ≌ WideSubcategory (weak g) where
   inverse := {
     obj X := ⟨X.obj⟩
     map f := ⟨f.hom, (hP f.hom).mpr f.property⟩ }
-  unitIso := NatIso.ofComponents (fun _ ↦ Iso.refl _) (by intros; apply WideSubcategory.hom_ext; simp)
-  counitIso := NatIso.ofComponents (fun _ ↦ Iso.refl _) (by intros; apply WideSubcategory.hom_ext; simp)
+  unitIso := NatIso.ofComponents (fun _ ↦ Iso.refl _) (by
+    intros
+    apply WideSubcategory.hom_ext
+    simp)
+  counitIso := NatIso.ofComponents (fun _ ↦ Iso.refl _) (by
+    intros
+    apply WideSubcategory.hom_ext
+    simp)
 
 /-- The original grading on the actually given weak category. -/
 def projectionOfIff : WideSubcategory P ⥤ Discrete B :=

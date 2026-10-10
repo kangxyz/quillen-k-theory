@@ -3,9 +3,13 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.PerfectComplexes.CoherentHomology
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.CoherentHomology
 
 /-! # Actual coherent homology consumers for locally perfect complexes -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
@@ -15,14 +19,14 @@ open PerfectComplexes
 /-- No compactness or termwise coherence hypothesis appears in each degree. -/
 theorem actual_homology_coherent {X : AlgebraicGeometry.Scheme.{u}}
     [IsLocallyNoetherian X] (K : Perfect X) (i : ℤ) :
-    CoherentScheme.coherent X (K.obj.homology i) :=
+    CoherentScheme.affineLocallyFiniteType X (K.obj.homology i) :=
   locallyPerfect_coherent_homology K.property i
 
 /-- A quasi-compact noetherian base gives bounded coherent cohomology, not
 bounded original terms. -/
 theorem actual_homology_bounded {X : AlgebraicGeometry.Scheme.{u}}
     [IsLocallyNoetherian X] [CompactSpace X] (K : Perfect X) :
-    (∀ i, CoherentScheme.coherent X (K.obj.homology i)) ∧
+    (∀ i, CoherentScheme.affineLocallyFiniteType X (K.obj.homology i)) ∧
       ∃ a b : ℤ, ∀ i, i < a ∨ b < i → IsZero (K.obj.homology i) :=
   locallyPerfect_bounded_coherent_homology K.property
 
@@ -43,7 +47,7 @@ theorem original_open_naturality {U X : AlgebraicGeometry.Scheme.{u}}
     (perfectRestrict j ⋙ coherentHomology U i).map f ≫
       (coherentHomologyRestrictIso j i).hom.app L =
     (coherentHomologyRestrictIso j i).hom.app K ≫
-      (coherentHomology X i ⋙ CoherentScheme.coherentRestriction j).map f :=
+      (coherentHomology X i ⋙ CoherentScheme.finiteTypeSheavesRestriction j).map f :=
   (coherentHomologyRestrictIso j i).hom.naturality f
 
 end Quillen.Tests.PerfectCoherentHomology

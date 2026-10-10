@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyGroups.CompactLifting
-import Quillen.Topology.HomotopyFiber.SourceEquivalence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyGroups.CompactLifting
+public import Quillen.Topology.HomotopyFiber.SourceEquivalence
 
 /-! # Exact compact-source lifting is retained on actual homotopy fibers
 
@@ -9,6 +17,8 @@ its original path coordinate. The exact source-lifting equation verifies
 both path endpoints. This provides actual finite homotopy-set bijections,
 including degree zero, with no Whitehead or fiber-equivalence hypothesis.
 -/
+@[expose] public section
+
 
 noncomputable section
 open scoped Topology

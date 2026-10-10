@@ -1,5 +1,13 @@
-import Quillen.Topology.HomotopyFiber.ProjectionFibration
-import Quillen.Topology.HomotopyFiber.GroupDetection
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.HomotopyFiber.ProjectionFibration
+public import Quillen.Topology.HomotopyFiber.GroupDetection
 
 /-! # Genuine transport between the original fibers along a base path
 
@@ -8,6 +16,8 @@ map keeps the original source coordinate and changes only the target path.
 Naturality over a fixed base is strict. No continuously chosen family of
 paths or global fiberwise inverse is used.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -26,30 +36,30 @@ def pointMapHomotopy {b c : B} (γ : Path b c) :
 
 /-- Reversing into the actual constant-map pullback and back transports the
 original fiber along the displayed base path. -/
-def basepointTransportEquiv (p : C(E,B)) {b c : B} (γ : Path b c) :
+def basepointTransportEquiv (p : C(E, B)) {b c : B} (γ : Path b c) :
     ContinuousMap.HomotopyEquiv (HomotopyFiber p b) (HomotopyFiber p c) :=
   (projectionPullbackHomeomorph p b).toHomotopyEquiv.trans
     ((HomotopyPullback.homotopyEquiv p (pointMapHomotopy γ)).trans
       (projectionPullbackHomeomorph p c).symm.toHomotopyEquiv)
 
 /-- The original source point is unchanged by genuine transport. -/
-@[simp] theorem basepointTransportEquiv_source (p : C(E,B)) {b c : B} (γ : Path b c)
+@[simp] theorem basepointTransportEquiv_source (p : C(E, B)) {b c : B} (γ : Path b c)
     (z : HomotopyFiber p b) : (basepointTransportEquiv p γ z).val.1 = z.val.1 := rfl
 
 /-- The new path is exactly the original path followed by the displayed
 base path, with the standard concatenation parametrization. -/
-@[simp] theorem basepointTransportEquiv_path (p : C(E,B)) {b c : B} (γ : Path b c)
+@[simp] theorem basepointTransportEquiv_path (p : C(E, B)) {b c : B} (γ : Path b c)
     (z : HomotopyFiber p b) :
     (basepointTransportEquiv p γ z).val.2 = ((toPath p b z).trans γ).toContinuousMap := by
   change ((γ.symm.trans (toPath p b z).symm).symm).toContinuousMap = _
   rw [Path.trans_symm, Path.symm_symm, Path.symm_symm]
 
 /-- Exact source-coordinate identity of the original continuous maps. -/
-@[simp] theorem projection_basepointTransportEquiv (p : C(E,B)) {b c : B} (γ : Path b c) :
+@[simp] theorem projection_basepointTransportEquiv (p : C(E, B)) {b c : B} (γ : Path b c) :
     (projection p c).comp (basepointTransportEquiv p γ).toFun = projection p b := rfl
 
 /-- Transport commutes strictly with the original source-change fiber map. -/
-theorem basepointTransportEquiv_mapOver (p : C(E,B)) (q : C(F,B)) (f : C(E,F))
+theorem basepointTransportEquiv_mapOver (p : C(E, B)) (q : C(F, B)) (f : C(E, F))
     (sq : q.comp f = p) {b c : B} (γ : Path b c) :
     (basepointTransportEquiv q γ).toFun.comp (mapOver p q f sq b) =
       (mapOver p q f sq c).comp (basepointTransportEquiv p γ).toFun := by
@@ -59,7 +69,7 @@ theorem basepointTransportEquiv_mapOver (p : C(E,B)) (q : C(F,B)) (f : C(E,F))
 /-- Strict naturality for an arbitrary original commuting square. The whole
 original fiber path is postcomposed with the actual base map. -/
 theorem basepointTransportEquiv_map {B' : Type u} [TopologicalSpace B']
-    (p : C(E,B)) (q : C(F,B')) (f : C(E,F)) (v : C(B,B'))
+    (p : C(E, B)) (q : C(F, B')) (f : C(E, F)) (v : C(B, B'))
     (sq : v.comp p = q.comp f) {b c : B} (γ : Path b c) :
     (basepointTransportEquiv q (γ.map v.continuous)).toFun.comp (map f v sq b) =
       (map f v sq c).comp (basepointTransportEquiv p γ).toFun := by

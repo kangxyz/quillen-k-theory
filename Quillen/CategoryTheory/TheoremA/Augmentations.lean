@@ -1,6 +1,14 @@
-import Quillen.CategoryTheory.TheoremA.ColumnRealization
-import Quillen.CategoryTheory.TheoremA.Diagonal
-import Quillen.CategoryTheory.TheoremA.Classifying
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.ColumnRealization
+public import Quillen.CategoryTheory.TheoremA.Diagonal
+public import Quillen.CategoryTheory.TheoremA.Classifying
 
 /-!
 # The two augmentations in the bisimplicial proof of Theorem A
@@ -13,6 +21,8 @@ diagonal maps are compared with the canonical map `|N F|` by an actual homotopy.
 The step from rowwise equivalences to a diagonal equivalence is deliberately
 not asserted here: it is the remaining skeletal realization theorem.
 -/
+@[expose] public section
+
 
 noncomputable section
 

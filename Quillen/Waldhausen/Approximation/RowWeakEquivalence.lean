@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Waldhausen.Approximation.Rows
-import Quillen.Waldhausen.Approximation.WeakEquivalence
-import Quillen.Waldhausen.SConstruction.Rows.NerveFunctoriality
+module
+
+public import Quillen.Waldhausen.Approximation.Rows
+public import Quillen.Waldhausen.Approximation.WeakEquivalence
+public import Quillen.Waldhausen.SConstruction.Rows.NerveFunctoriality
 
 /-! # Complete weakness on the original S-construction row nerves
 
@@ -13,6 +15,8 @@ The actual row App1/App2 and genuine joint source factorization satisfy the
 proved weak-category approximation theorem in every degree. The functor
 is the existing weak-row postcomposition, so the bisimplicial map is unchanged.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial
@@ -38,7 +42,8 @@ include h J in
 theorem weakRowsPostcompose_isWeakHomotopyEquivalence (n : SimplexCategory) :
     IsWeakHomotopyEquivalence (classifyingSpaceMap (weakRowsPostcompose W V hF n)).hom := by
   rw [weakRowsPostcompose_eq_weakFunctor]
-  exact (h.row_approximation_of_joint hF J n).weakFunctor_classifyingSpaceMap_isWeakHomotopyEquivalence
+  exact (h.row_approximation_of_joint hF J
+    n).weakFunctor_classifyingSpaceMap_isWeakHomotopyEquivalence
     (postcompose_exact W V hF n) (factorizationOfJointData W J n)
 
 include h J in

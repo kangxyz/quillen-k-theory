@@ -3,9 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.Topology.Realization.MapEquivalence
-import Quillen.CategoryTheory.TheoremB.DoubleCylinderWeakInvariance
-import Quillen.CategoryTheory.TheoremB.CartesianPushout
+module
+
+public import Quillen.Topology.Realization.MapEquivalence
+public import Quillen.Topology.DoubleMappingCylinder.WeakInvariance
+public import Quillen.Topology.HomotopyPullback.Pushout
 
 /-!
 # Complete weak equivalences of original realization maps
@@ -16,6 +18,8 @@ pushouts preserve this property. Pushout gluing uses objectwise weak double
 cylinders and their genuine HEP collapse equivalences; no weak-map inverse
 or CW Whitehead upgrade is chosen.
 -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
@@ -25,6 +29,9 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace Quillen
 
+/-- A simplicial-set map whose actual topological realization is a weak
+homotopy equivalence: it is onto path components and bijective on every
+finite-dimensional based homotopy set at every source base point. -/
 def IsRealizationWeakEquivalence {X Y : SSet.{u}} (f : X ⟶ Y) : Prop :=
   IsWeakHomotopyEquivalence (SSet.toTop.map f).hom
 
@@ -57,15 +64,18 @@ lemma whiskerRight {X Y : SSet.{u}} {f : X ⟶ Y} (h : IsRealizationWeakEquivale
   have := realizationProductComparison_isIso_of_locallyCompact X B
   have := realizationProductComparison_isIso_of_locallyCompact Y B
   have hX := isWeakHomotopyEquivalence_of_homotopyEquiv
-    (TopCat.homeoOfIso (asIso (CartesianMonoidalCategory.prodComparison SSet.toTop X B))).toHomotopyEquiv
+    (TopCat.homeoOfIso (asIso (CartesianMonoidalCategory.prodComparison SSet.toTop X
+      B))).toHomotopyEquiv
   have hY := isWeakHomotopyEquivalence_of_homotopyEquiv
-    (TopCat.homeoOfIso (asIso (CartesianMonoidalCategory.prodComparison SSet.toTop Y B))).toHomotopyEquiv
+    (TopCat.homeoOfIso (asIso (CartesianMonoidalCategory.prodComparison SSet.toTop Y
+      B))).toHomotopyEquiv
   have hw := congrArg TopCat.Hom.hom (prodComparison_natural_whiskerRight SSet.toTop (B := B) f)
   have hp := (h.prodMap_id |B|).comp hX
   change IsWeakHomotopyEquivalence
     (((SSet.toTop.map f).hom.prodMap (ContinuousMap.id |B|)).comp
       (CartesianMonoidalCategory.prodComparison SSet.toTop X B).hom) at hp
-  have he : (CartesianMonoidalCategory.prodComparison SSet.toTop Y B).hom.comp (SSet.toTop.map (f ▷ B)).hom =
+  have he : (CartesianMonoidalCategory.prodComparison SSet.toTop Y B).hom.comp (SSet.toTop.map
+    (f ▷ B)).hom =
       ((SSet.toTop.map f).hom.prodMap (ContinuousMap.id |B|)).comp
         (CartesianMonoidalCategory.prodComparison SSet.toTop X B).hom := hw
   rw [← he] at hp

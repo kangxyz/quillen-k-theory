@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
 
-import Quillen.CategoryTheory.TheoremB.SkeletalWeakCartesianCoproducts
+module
+
+public import Quillen.Topology.Realization.Cartesian.WeakCoproducts
 
 /-!
 # Weak fixed-target coproduct regression consumers
@@ -13,9 +15,11 @@ Actual arbitrary coproduct cocones, arbitrary summand topologies and an
 empty index type are admitted. Coordinate checks retain the genuine cofan
 injections and the entire original constant comparison path.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits
-open Quillen Quillen.TheoremB.SkeletalCartesian
+open Quillen Quillen.CartesianRealization.Skeletal
 open scoped Topology unitInterval
 universe u
 
@@ -80,6 +84,7 @@ example (i : ι) (x : W i) : cofanHomeomorph W cW hW ⟨i,x⟩ = cW.inj i x :=
   cofanHomeomorph_apply W cW hW i x
 
 example (z : cW.pt) (τ : unitInterval) :
-    (HomotopyPullback.comparison q.hom s.hom p.hom t.hom (congrArg TopCat.Hom.hom wtotal) z).val.2.2 τ =
+    (HomotopyPullback.comparison q.hom s.hom p.hom t.hom (congrArg TopCat.Hom.hom wtotal) z).val.2.2
+      τ =
       s (p z) := rfl
 end Colimits

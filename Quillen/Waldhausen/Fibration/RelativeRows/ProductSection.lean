@@ -1,6 +1,14 @@
-import Quillen.Waldhausen.Fibration.RelativeRows.TailQuotient
-import Quillen.Waldhausen.Fibration.RelativeRows.SplitFiberZero
-import Quillen.Waldhausen.Additivity.SplitSequence
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Fibration.RelativeRows.TailQuotient
+public import Quillen.Waldhausen.Fibration.RelativeRows.SplitFiberZero
+public import Quillen.Waldhausen.Additivity.SplitSequence
 
 /-! # The actual coproduct section of the first-object/tail functor
 
@@ -9,6 +17,8 @@ its constant zero-tail fiber. Its first/tail composite is naturally isomorphic
 to the original pair through the images of the original coproduct inclusions.
 The isomorphisms are derived from genuine mapped pushouts and zero objects.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
@@ -100,9 +110,11 @@ def splitFirstTailIso : splitFunctor N n ⋙ firstTail N n ≅
 @[simp] theorem splitFirstTailIso_inv_app (X : C × QuotientRows.Obj (acyclicStructure N) n) :
     (splitFirstTailIso N n).inv.app X =
       ((first N n).map (coprod.inr : (fiber N n).obj X.1 ⟶ (splitFunctor N n).obj X),
-      (tailFunctor N n).map (coprod.inl : (tailSection N n).obj X.2 ⟶ (splitFunctor N n).obj X)) := rfl
+      (tailFunctor N n).map (coprod.inl : (tailSection N n).obj X.2 ⟶ (splitFunctor N n).obj X))
+        := rfl
 
-/-- In the other order, the actual section is exactly tail quotient plus the original first fiber. -/
+/-- In the other order, the actual section is exactly tail quotient plus the original first
+fiber. -/
 theorem firstTail_splitFunctor : firstTail N n ⋙ splitFunctor N n =
     Additivity.sumFunctor (tailQuotientFunctor N n) (first N n ⋙ fiber N n) := by
   apply CategoryTheory.Functor.ext (fun _ ↦ rfl)

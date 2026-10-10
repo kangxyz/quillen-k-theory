@@ -1,11 +1,21 @@
-import Quillen.Waldhausen.Functor
-import Mathlib.CategoryTheory.Limits.FunctorCategory.Basic
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Functor
+public import Mathlib.CategoryTheory.Limits.FunctorCategory.Basic
 
 /-! # Actual pointwise pushouts along pointwise cofibrations
 
 Only the pushouts supplied by the Waldhausen axioms are used; the ambient
 category is not assumed to have arbitrary pushouts or arbitrary colimits.
 -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'

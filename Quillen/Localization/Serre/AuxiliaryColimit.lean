@@ -1,9 +1,19 @@
-import Quillen.Localization.Serre.AuxiliaryDiagram
-import Quillen.Localization.Serre.AuxiliaryArrowLift
-import Quillen.Localization.Serre.AuxiliaryRefinement
-import Quillen.Topology.FilteredRealization.NerveColimit
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.AuxiliaryDiagram
+public import Quillen.Localization.Serre.AuxiliaryArrowLift
+public import Quillen.Localization.Serre.AuxiliaryRefinement
+public import Quillen.Topology.FilteredRealization.NerveColimit
 
 /-! # The isomorphism structured comma as a filtered nerve colimit -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -33,11 +43,13 @@ lemma quotientAuxiliaryCocone_lift (N : C) (φ : P.isoModSerre.Q.obj N ≅ V) :
 
 /-- A whole comma arrow, including both endpoint equalities, lifts at one stage. -/
 theorem quotientAuxiliaryCocone_arrowSurjective :
-    FilteredNerveColimit.ArrowSurjective (quotientAuxiliaryDiagram P V) (quotientAuxiliaryCocone P V) := by
+    FilteredNerveColimit.ArrowSurjective (quotientAuxiliaryDiagram P V) (quotientAuxiliaryCocone
+        P V) := by
   intro X Y f
   obtain ⟨N, φ, A, B, g, hA, hB, hg⟩ := exists_isoStructured_arrow_lift P f
   let j := auxiliaryLiftMk P.isoModSerre.Q V φ
-  have hleg : FilteredNerveColimit.leg (quotientAuxiliaryDiagram P V) (quotientAuxiliaryCocone P V) j =
+  have hleg : FilteredNerveColimit.leg (quotientAuxiliaryDiagram P V) (quotientAuxiliaryCocone P
+      V) j =
       auxiliaryToIsoStructuredWithBase P φ := quotientAuxiliaryCocone_lift P V N φ
   refine ⟨j, A, B, g, ?_, ?_, ?_⟩
   · rw [hleg]
@@ -68,14 +80,15 @@ theorem quotientAuxiliaryCocone_eventuallyEqualObjects :
   exact quotientAuxiliaryLift_eventual_obj_eq P A X Y h
 
 instance quotientAuxiliaryCocone_faithful (A : QuotientAuxiliaryLift P V) :
-    (FilteredNerveColimit.leg (quotientAuxiliaryDiagram P V) (quotientAuxiliaryCocone P V) A).Faithful :=
+    (FilteredNerveColimit.leg (quotientAuxiliaryDiagram P V) (quotientAuxiliaryCocone P V)
+        A).Faithful :=
   auxiliaryToIsoStructuredWithBase_faithful P (asIso A.obj.hom)
 
 /-- The nerve of the actual isomorphism comma is the filtered colimit of
 the auxiliary nerves. Every finite chain and every equality was lifted above;
 this is an actual universal property, not an assumed comparison. -/
-def quotientAuxiliaryNerveCocone_isColimit : IsColimit (quotientAuxiliaryNerveCocone P V) :=
-  FilteredNerveColimit.nerveCocone_isColimit (quotientAuxiliaryDiagram P V)
+def quotientAuxiliaryNerveCoconeIsColimit : IsColimit (quotientAuxiliaryNerveCocone P V) :=
+  FilteredNerveColimit.nerveCoconeIsColimit (quotientAuxiliaryDiagram P V)
     (quotientAuxiliaryCocone P V) (quotientAuxiliaryCocone_objectSurjective P V)
     (quotientAuxiliaryCocone_arrowSurjective P V)
     (quotientAuxiliaryCocone_eventuallyEqualObjects P V)
@@ -102,13 +115,11 @@ theorem quotientAuxiliaryNerveCocone_map (A : QuotientAuxiliaryLift P V) :
       classifyingSpaceMap (auxiliaryToIsoStructuredWithBase P (asIso A.obj.hom)) := rfl
 
 
-@[simp]
-theorem quotientAuxiliaryNerveCocone_map_lift (N : C) (φ : P.isoModSerre.Q.obj N ≅ V) :
-    SSet.toTop.map ((quotientAuxiliaryNerveCocone P V).ι.app
-      (auxiliaryLiftMk P.isoModSerre.Q V φ)) =
-      classifyingSpaceMap (auxiliaryToIsoStructuredWithBase P φ) := by
-  change classifyingSpaceMap (((quotientAuxiliaryCocone P V).ι.app
-    (auxiliaryLiftMk P.isoModSerre.Q V φ)).toFunctor) = _
-  rw [quotientAuxiliaryCocone_lift]
+/-- The structured lift retains the original isomorphism. -/
+@[simp] theorem asIso_auxiliaryLiftMk (N : C) (φ : P.isoModSerre.Q.obj N ≅ V) :
+    asIso (auxiliaryLiftMk P.isoModSerre.Q V φ).obj.hom = φ := by
+  apply Iso.ext
+  rfl
+
 
 end Quillen.SerreLocalization

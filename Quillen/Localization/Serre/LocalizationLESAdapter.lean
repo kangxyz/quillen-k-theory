@@ -1,6 +1,14 @@
-import Quillen.Localization.Serre.BasedFiberComparison
-import Quillen.Topology.HomotopyFiber.LESTail
-import Quillen.Topology.Realization.Connectivity
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.BasedFiberComparison
+public import Quillen.Topology.HomotopyFiber.LESTail
+public import Quillen.Topology.Realization.Connectivity
 
 /-!
 # Transport from the actual Serre fiber to the canonical K maps
@@ -9,6 +17,8 @@ This is only an adapter for the localization proof. Its explicitly supplied
 comparison isomorphism must still be constructed by the geometric theorem.
 It is not a localization theorem under the Serre hypotheses alone.
 -/
+@[expose] public section
+
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits
@@ -120,10 +130,11 @@ theorem quotientKZero_surjective_of_comparison_piZero_surjective
       (basedLocalizationFiberComparison P) (basedLocalizationFiberComparison_basepoint P))) :
     Function.Surjective (quotientKMap P 0) := by
   let E := Devissage.subcategoryExactStructure P
-  letI : PathConnectedSpace E.KSpace := E.kSpace_pathConnected
+  let : PathConnectedSpace E.KSpace := E.kSpace_pathConnected
   have hs : Subsingleton (HomotopyGroup.Pi 0 E.KSpace E.kBasepoint) :=
-    (HomotopyGroup.pi0EquivZerothHomotopy (X := E.KSpace) (x := E.kBasepoint)).injective.subsingleton
-  letI : Subsingleton (HomotopyGroup.Pi 0 (NormalizedLocalizationFiber P)
+    (HomotopyGroup.pi0EquivZerothHomotopy (X := E.KSpace) (x :=
+      E.kBasepoint)).injective.subsingleton
+  let : Subsingleton (HomotopyGroup.Pi 0 (NormalizedLocalizationFiber P)
       (normalizedFiberBasepoint P)) := ⟨fun a b => by
     obtain ⟨a, rfl⟩ := h a
     obtain ⟨b, rfl⟩ := h b

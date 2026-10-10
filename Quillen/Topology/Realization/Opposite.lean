@@ -1,9 +1,19 @@
-import Quillen.Topology.Realization.Homotopy
-import Mathlib.AlgebraicTopology.SimplicialSet.Op
-import Mathlib.CategoryTheory.Adjunction.Unique
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.Realization.Homotopy
+public import Mathlib.AlgebraicTopology.SimplicialSet.Op
+public import Mathlib.CategoryTheory.Adjunction.Unique
 
 /-! Reversal of simplex coordinates and geometric realization of opposite
 simplicial sets. -/
+@[expose] public section
+
 
 noncomputable section
 open CategoryTheory Opposite Convexity

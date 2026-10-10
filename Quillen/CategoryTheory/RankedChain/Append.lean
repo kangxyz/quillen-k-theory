@@ -3,8 +3,10 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Quillen K-theory contributors
 -/
-import Quillen.CategoryTheory.RankedChain.Order
-import Quillen.CategoryTheory.ComposableArrows.Append
+module
+
+public import Quillen.CategoryTheory.RankedChain.Order
+public import Quillen.CategoryTheory.ComposableArrows.Append
 
 /-!
 # Strict append and extension into an existing terminal vertex
@@ -15,6 +17,8 @@ which misses B's last vertex extends to an exact face from the append of A
 into B itself. This handles the essential mixed append/compression case, not
 merely the easier situation in which both source and target are appended.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

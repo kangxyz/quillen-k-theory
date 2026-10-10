@@ -1,4 +1,12 @@
-import Quillen.Waldhausen.Approximation.WeakRows
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Waldhausen.Approximation.WeakRows
 
 /-!
 # Initial flags and actual quotient rows have equivalent classifying spaces
@@ -8,6 +16,8 @@ actual pointwise weak-equivalence categories. The unit and counit are
 constructed from the actual quotient isomorphisms, naturally for arbitrary
 weak-equivalence transformations, not only for diagram isomorphisms.
 -/
+@[expose] public section
+
 
 noncomputable section
 

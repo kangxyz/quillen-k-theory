@@ -1,3 +1,9 @@
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
 import Consumer
 import Lean.Util.CollectAxioms
 /-! Audit exactly the downstream defining-origin declarations, including private
@@ -7,6 +13,8 @@ deduplication and the final actual-origin check preserve the original scope. -/
 open Lean in
 run_cmd do
   let env ← getEnv
+  if env.header.isModule then
+    throwError "Exhaustive axiom audit requires legacy (.private) transitive imports"
   let selected (name : Name) : Bool :=
     match env.getModuleIdxFor? name with
     | some index => (`Consumer).isPrefixOf env.header.moduleNames[index.toNat]!
@@ -21,6 +29,8 @@ run_cmd do
   let mut count : Nat := 0
   for name in names.toArray do
     if selected name then
+      unless (env.checked.get.find? name).isSome do
+        throwError "Selected audit declaration {name} is missing from the checked kernel environment"
       count := count + 1
       for dependency in ← collectAxioms name do
         unless #[`propext, `Classical.choice, `Quot.sound].contains dependency do

@@ -1,7 +1,17 @@
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianCharts
-import Quillen.CategoryTheory.TheoremB.SkeletalCartesianCalculus
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianCharts
+public import Quillen.Topology.Realization.Cartesian.Calculus
 
 /-! # Actual enriched product charts and their canonical cartesian squares -/
+@[expose] public section
+
 noncomputable section
 open CategoryTheory Limits Opposite MonoidalCategory CartesianMonoidalCategory
 open scoped Simplicial Topology unitInterval
@@ -9,7 +19,7 @@ universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.TheoremB.SkeletalCartesian
+namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
 
 /-- The actual indexing-simplex projection of an enriched domain. -/
@@ -101,4 +111,4 @@ theorem enrichedMap_cartesian {K L X Y : SSet.{u}}
   · rfl
   · exact cartesianProduct _ e
 
-end Quillen.TheoremB.SkeletalCartesian
+end Quillen.CartesianRealization.Skeletal

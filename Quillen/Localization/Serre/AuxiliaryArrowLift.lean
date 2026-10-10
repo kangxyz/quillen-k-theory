@@ -1,4 +1,12 @@
-import Quillen.Localization.Serre.AuxiliaryIsoComma
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Localization.Serre.AuxiliaryIsoComma
 
 /-!
 # Common-base lifting of quotient-isomorphism Q-arrows
@@ -7,6 +15,8 @@ An ambient Q-arrow that becomes invertible in the quotient has an actual
 representative over one ordinary Serre-isomorphic base. Both endpoints
 and the arrow lift together, using the ordinary pushout of a span.
 -/
+@[expose] public section
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -68,14 +78,17 @@ lemma auxiliarySpanLift_forget {X Y : C} (s : Q.AbelianSpan X Y)
 endpoints over one ordinary base. No ordinary lift between the fixed endpoints
 is assumed. -/
 theorem exists_auxiliary_arrow_lift {X Y : C}
-    (f : Q.of (abelianExactStructure C).deflation (abelianExactStructure C).inflation X ⟶ Q.of _ _ Y)
+    (f : Q.of (abelianExactStructure C).deflation (abelianExactStructure C).inflation X ⟶ Q.of _ _
+      Y)
     [IsIso ((quotientMapQ P).map f)] :
     ∃ (N : C) (i : X ⟶ N) (p : Y ⟶ N) (hi : P.isoModSerre i) (hp : P.isoModSerre p)
       (_ : Mono i) (_ : Epi p)
       (g : auxiliaryOverMk P i hi ⟶ auxiliaryOverMk P p hp),
       (auxiliaryForgetQ P N).map g = f := by
   obtain ⟨s, hs⟩ := Quotient.exists_rep f
-  have : IsIso ((quotientMapQ P).map (Q.mkHom _ _ s)) := by rw [show Q.mkHom _ _ s = f from hs]; infer_instance
+  have : IsIso ((quotientMapQ P).map (Q.mkHom _ _ s)) := by
+    rw [show Q.mkHom _ _ s = f from hs]
+    infer_instance
   obtain ⟨hl, hr⟩ := span_isoModSerre_of_quotient_isIso P s
   exact ⟨pushout s.l s.r, pushout.inl s.l s.r, pushout.inr s.l s.r,
     MorphismProperty.pushout_inl _ _ hr, MorphismProperty.pushout_inr _ _ hl,

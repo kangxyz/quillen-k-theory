@@ -1,5 +1,24 @@
-import Quillen.PerfectComplexes.Basic
-import Quillen.Scheme.Comparison.SmallVectorBundleK
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Basic
+public import Quillen.AlgebraicGeometry.Scheme.Comparison.SmallVectorBundleK
+
+/-!
+# Perfect-complex K-theory interface examples
+
+Uses restriction, support inclusion, and comparison maps for strict, locally
+perfect, and split-cofibration models. The examples retain mapping-cone closure,
+split factorizations, canonical forward maps of the model equivalences, and the
+factorization of the scheme-to-perfect map through strict-perfect K-theory.
+-/
+
+@[expose] public section
 
 noncomputable section
 universe u

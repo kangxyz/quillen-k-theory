@@ -1,4 +1,12 @@
-import Quillen.CategoryTheory.TheoremA.RealizationHEP
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.CategoryTheory.TheoremA.RealizationHEP
 
 /-!
 # Sequential composites of homotopy-extension maps
@@ -7,6 +15,8 @@ Compatible extensions are chosen recursively and glued using the universal
 property of the actual topological colimit. Product with the interval preserves
 this colimit. Hence a sequential composite of maps with HEP has HEP.
 -/
+@[expose] public section
+
 
 noncomputable section
 

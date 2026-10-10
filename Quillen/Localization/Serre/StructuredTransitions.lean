@@ -1,5 +1,13 @@
-import Quillen.Topology.FilteredRealization.HomotopyEquivalence
-import Quillen.Localization.Serre.FilteredComparisonAssembly
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+
+module
+
+public import Quillen.Topology.FilteredRealization.HomotopyEquivalence
+public import Quillen.Localization.Serre.FilteredComparisonAssembly
 
 /-!
 # The actual Serre quotient structured-transition homotopy equivalences
@@ -10,6 +18,8 @@ invariance therefore supplies the comparison equivalences. The checked
 mono/epi base-change squares and quotient-span lifting then discharge all
 raw structured transitions without any added quotient hypotheses.
 -/
+@[expose] public section
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,7 +38,7 @@ def quotientAuxiliaryNerveStageHomotopyEquiv
       (SSet.toTop.obj ((quotientAuxiliaryNerveDiagram P V).obj A))
       (SSet.toTop.obj (quotientAuxiliaryNerveCocone P V).pt) :=
   FilteredRealization.stageHomotopyEquiv (quotientAuxiliaryNerveDiagram P V)
-    (quotientAuxiliaryNerveCocone P V) (quotientAuxiliaryNerveCocone_isColimit P V)
+    (quotientAuxiliaryNerveCocone P V) (quotientAuxiliaryNerveCoconeIsColimit P V)
     (quotientAuxiliaryNerveTransitionEquiv P V)
     (quotientAuxiliaryNerveTransitionEquiv_toFun P V) A
 
@@ -47,10 +57,11 @@ def auxiliaryToIsoStructuredWithBaseClassifyingHomotopyEquiv
         (Q.of (quotientExactStructure P).deflation (quotientExactStructure P).inflation V))) := by
   let A := auxiliaryLiftMk P.isoModSerre.Q V φ
   let e := quotientAuxiliaryNerveStageHomotopyEquiv P V A
-  apply TheoremA.homotopyEquivWithMap e (classifyingSpaceMap (auxiliaryToIsoStructuredWithBase P φ)).hom
+  apply TheoremA.homotopyEquivWithMap e (classifyingSpaceMap (auxiliaryToIsoStructuredWithBase P
+    φ)).hom
   have he : e.toFun = (classifyingSpaceMap (auxiliaryToIsoStructuredWithBase P φ)).hom := by
     dsimp only [e, A]
-    rw [quotientAuxiliaryNerveStageHomotopyEquiv_toFun, quotientAuxiliaryNerveCocone_map_lift]
+    rw [quotientAuxiliaryNerveStageHomotopyEquiv_toFun, quotientAuxiliaryNerveCocone_map, asIso_auxiliaryLiftMk]
   rw [he]
 
 @[simp]
