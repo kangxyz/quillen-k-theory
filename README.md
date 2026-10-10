@@ -20,7 +20,7 @@ Use Lean **4.34.1** and add the following dependency to `lakefile.toml`:
 [[require]]
 name = "quillen-k-theory"
 git = "https://github.com/kangxyz/quillen-k-theory.git"
-rev = "v0.1.1"
+rev = "v0.2.0"
 ```
 
 Resolve the new dependency with `lake update quillen-k-theory`, then build your

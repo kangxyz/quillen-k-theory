@@ -1,3 +1,5 @@
+import Quillen.PerfectComplexes.DerivedPullbackFunctor
+import Quillen.PerfectComplexes.PairRestriction
 import Quillen.Scheme.VectorBundle.KernelClosure
 import Quillen.Scheme.ClosedGTheory
 import Quillen.Scheme.Regular

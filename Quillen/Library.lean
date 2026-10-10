@@ -1,3 +1,4 @@
+import Quillen.Waldhausen.Approximation.CoarseKEquivalence
 import Quillen.CategoryTheory.TheoremB.MappingCylinderTargetCollar
 import Quillen.CategoryTheory.TheoremB.FiberwiseBridgeTargetCollar
 import Quillen.CategoryTheory.TheoremB.NormalizedFirstCollar

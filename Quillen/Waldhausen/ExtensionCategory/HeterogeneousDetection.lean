@@ -1,0 +1,34 @@
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+import Quillen.Waldhausen.ExtensionCategory.PostcomposeDetection
+noncomputable section
+open CategoryTheory CategoryTheory.Limits
+universe u v u' v' u'' v'' w
+namespace Quillen.Waldhausen.ExtensionCategory
+variable {C : Type u} [Category.{v} C] (V : Structure C)
+/-- Actual cofibration detection by different target categories lifts to the genuine Reedy class. -/
+theorem cof_of_postcompose_heterogeneous {ι : Sort w} (D : ι → Type u')
+    [∀ i, Category.{v'} (D i)] (W : ∀ i, Structure (D i)) (F : ∀ i, C ⥤ D i)
+    (hF : ∀ i, IsExact V.cof V.weq (W i).cof (W i).weq (F i))
+    (detect : ∀ ⦃A B : C⦄ (f : A ⟶ B), (∀ i, (W i).cof ((F i).map f)) → V.cof f)
+    {X Y : Obj V} {f : X ⟶ Y}
+    (hf : ∀ i, cof (W i) ((postcompose V (W i) (hF i)).map f)) : cof V f :=
+  ⟨detect _ (fun i => (hf i).1),
+    detect _ (fun i => mapped_relative_cof V (W i) (hF i) (hf i))⟩
+/-- Two exact projections into genuinely different categories jointly detect
+relative cofibrations whenever they detect the original cofibration class. -/
+theorem cof_of_postcompose_pair {D : Type u'} [Category.{v'} D]
+    {E : Type u''} [Category.{v''} E] (W : Structure D) (U : Structure E)
+    {F : C ⥤ D} {G : C ⥤ E}
+    (hF : IsExact V.cof V.weq W.cof W.weq F)
+    (hG : IsExact V.cof V.weq U.cof U.weq G)
+    (detect : ∀ ⦃A B : C⦄ (f : A ⟶ B), W.cof (F.map f) → U.cof (G.map f) → V.cof f)
+    {X Y : Obj V} {f : X ⟶ Y}
+    (hf : cof W ((postcompose V W hF).map f))
+    (hg : cof U ((postcompose V U hG).map f)) : cof V f :=
+  ⟨detect _ hf.1 hg.1,
+    detect _ (mapped_relative_cof V W hF hf) (mapped_relative_cof V U hG hg)⟩
+end Quillen.Waldhausen.ExtensionCategory

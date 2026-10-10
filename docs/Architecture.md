@@ -41,3 +41,25 @@ authored facades and discovers new subject directories.
 The generator discovers modules and subjects as the library grows. CI validates
 each change against the current source graph. See
 [CONTRIBUTING.md](../CONTRIBUTING.md) for extension and compatibility rules.
+
+## Trust checks
+
+`scripts/check.sh` builds the library and `Tests`, then explicitly runs
+`Tests/Axioms.lean` and the downstream package's `Audit.lean`. Explicit replay
+is needed because reusing a cached compiled module does not rerun its audit
+commands.
+
+The library audit discovers declaration names from imported module inventories
+and from declarations local to the current environment. It selects declarations
+whose defining module belongs to `Quillen`, including private helpers, together
+with declarations in the `Quillen` namespace. It deduplicates names and rechecks
+the defining-origin predicate before examining dependencies. Declaration
+selection depends on source origin and namespace rather than a fixed list of
+public theorem names.
+
+For each selected declaration, `collectAxioms` follows transitive dependencies
+and rejects any axiom outside `propext`, `Classical.choice`, and `Quot.sound`.
+The inventory discovery avoids eagerly inspecting unrelated constant bodies.
+Audit success concerns the selected kernel declarations; it does not establish
+the mathematical interpretation of a definition, a comparison with an external
+source, or a theorem absent from the library.
