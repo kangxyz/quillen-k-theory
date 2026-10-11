@@ -41,6 +41,15 @@ jobs:
           key: third-party-${{ runner.os }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
       - name: Fetch matching third-party proof cache
         run: bash scripts/cache.sh
+      - name: Restore incremental project builds
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            .lake/build
+            examples/downstream/.lake/build
+          key: project-build-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.*', 'examples/downstream/lean-toolchain', 'examples/downstream/lake-manifest.json', 'examples/downstream/lakefile.*') }}-${{ hashFiles('*.lean', 'Quillen/**/*.lean', 'Tests/**/*.lean', 'Tools/**/*.lean', 'examples/downstream/**/*.lean', '!examples/downstream/.lake/**') }}
+          restore-keys: |
+            project-build-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.*', 'examples/downstream/lean-toolchain', 'examples/downstream/lake-manifest.json', 'examples/downstream/lakefile.*') }}-
       - name: Build the complete library and audit the independent client
         run: |
           lean --version

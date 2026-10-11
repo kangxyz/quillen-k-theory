@@ -66,6 +66,16 @@ checks, and builds the separate downstream package. It explicitly replays
 `Tests/Axioms.lean` and the downstream `Audit.lean`, because cached compiled
 modules do not re-execute audit commands.
 
+CI caches the complete root and downstream `.lake/build` directories across
+runs. Versioned keys separate operating systems, architectures, and both
+packages' toolchains, manifests, and Lake configurations; a hash of the project
+Lean sources permits exact hits for documentation-only changes. A compatible
+configuration prefix restores older successful builds after source changes.
+`bash scripts/check.sh --rehash` always runs: Lake validates restored traces
+against current content and incrementally rebuilds missing or stale modules,
+including dependents of changed imports. Both lints and both explicit audits
+run even on exact cache hits. Only successful jobs publish new build caches.
+
 The exhaustive library audit uses legacy imports to expose transitive private
 module declarations. It discovers imported module inventories and local
 environment declarations, selects every declaration defined in a `Quillen`
