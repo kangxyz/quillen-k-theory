@@ -68,9 +68,22 @@ modules do not re-execute audit commands.
 
 CI caches the complete root and downstream `.lake/build` directories across
 runs. Versioned keys separate operating systems, architectures, and both
-packages' toolchains, manifests, and Lake configurations; a hash of the project
-Lean sources permits exact hits for documentation-only changes. A compatible
-configuration prefix restores older successful builds after source changes.
+packages' toolchains, manifests, and Lake configurations. The v2 configuration
+hash (`scripts/cache_key.py`, Python 3.11+) parses both `lakefile.toml` files,
+removes only their top-level package `version`, and canonicalizes the remaining
+typed configuration. Pure package version changes reuse the same configuration
+hash; compiler options, targets, metadata, and nested dependency versions remain
+part of it. Toolchain and manifest files are hashed raw with their paths;
+optional `lakefile.lean` files are conservatively hashed raw, including version
+text and file presence. Missing required inputs, malformed TOML, and unsupported
+TOML scalars (dates/times or nonfinite floats) fail the hash step visibly.
+
+A hash of the project Lean sources permits exact hits for documentation-only
+changes. A source-independent v2 prefix restores successful builds with the
+same normalized configuration after source changes. During migration, the
+second restore prefix is the legacy v1 key with the exact current raw
+configuration hash, including package versions; it never crosses configuration
+boundaries to restore an older incompatible build.
 `bash scripts/check.sh --rehash` always runs: Lake validates restored traces
 against current content and incrementally rebuilds missing or stale modules,
 including dependents of changed imports. Both lints and both explicit audits
