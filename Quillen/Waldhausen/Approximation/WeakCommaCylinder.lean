@@ -7,7 +7,7 @@ module
 
 public import Quillen.Waldhausen.Approximation.WeakComma
 public import Quillen.Waldhausen.Additivity.CoproductAlgebra
-public import Quillen.KTheory.FundamentalGroup.Basic
+public import Quillen.Topology.ClassifyingSpace.ArrowPaths
 
 /-!
 # Coherent cylinder fillings in the original approximation comma category

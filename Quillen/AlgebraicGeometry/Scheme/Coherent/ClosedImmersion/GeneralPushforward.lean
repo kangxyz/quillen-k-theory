@@ -7,8 +7,9 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.IdealPushforward
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.AffineSectionsBaseChange
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenBaseChange
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.AffineDetection
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.PushforwardIso
 
 /-!
 # Actual coherent pushforward along arbitrary closed immersions
@@ -30,23 +31,12 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.CoherentScheme.ClosedImmersion.General
 open Scheme.Modules
 
-/-- Direct image along a scheme isomorphism is actual restriction along its
-inverse. This comparison includes the structure-sheaf module actions. -/
-def pushforwardIsoRestrict {Z X : Scheme.{u}} (e : Z ≅ X) :
-    pushforward e.hom ≅ restrictFunctor e.inv :=
-  (Functor.rightUnitor _).symm ≪≫
-    Functor.isoWhiskerLeft (pushforward e.hom) (restrictFunctorAdjCounitIso e.inv).symm ≪≫
-    (Functor.associator _ _ _).symm ≪≫
-    Functor.isoWhiskerRight
-      (pushforwardComp e.hom e.inv ≪≫ pushforwardCongr e.hom_inv_id ≪≫ pushforwardId Z) _ ≪≫
-    Functor.leftUnitor _
-
 /-- Actual pushforward along a scheme isomorphism preserves the all-chart
 coherence property. -/
 theorem affineLocallyFiniteType_pushforward_iso {Z X : Scheme.{u}} (e : Z ≅ X)
     {M : Z.Modules} (hM : affineLocallyFiniteType Z M) :
     affineLocallyFiniteType X ((pushforward e.hom).obj M) :=
-  (affineLocallyFiniteType X).prop_of_iso ((pushforwardIsoRestrict e).app M).symm
+  (affineLocallyFiniteType X).prop_of_iso ((SchemeSheaf.pushforwardIsoRestrict e).app M).symm
     (affineLocallyFiniteType_restrict e.inv hM)
 
 /-- A genuine closed immersion into an affine scheme preserves coherent
@@ -141,7 +131,7 @@ def affinePresentationComparison {Z : Scheme.{u}}
   Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules (Spec R))
     (Functor.isoWhiskerLeft (finiteTypeSheavesToModules Z)
       (pushforwardCongr hi ≪≫ (pushforwardComp e.hom (Ideal.closedMap R I)).symm ≪≫
-        Functor.isoWhiskerRight (pushforwardIsoRestrict e) _))
+        Functor.isoWhiskerRight (SchemeSheaf.pushforwardIsoRestrict e) _))
 
 instance coherentPushforward_affine_preservesFiniteColimits {Z : Scheme.{u}}
     [IsLocallyNoetherian Z] (R : CommRingCat.{u}) [IsNoetherianRing R]
@@ -149,24 +139,6 @@ instance coherentPushforward_affine_preservesFiniteColimits {Z : Scheme.{u}}
     PreservesFiniteColimits (coherentPushforward i) := by
   obtain ⟨I, e, hi⟩ := (IsClosedImmersion.Spec_iff (f := i)).mp inferInstance
   exact preservesFiniteColimits_of_natIso (affinePresentationComparison R i I e hi).symm
-
-/-- Zero coherent sheaves can be recognized on all actual affine charts. -/
-theorem coherent_isZero_of_affineRestrictions {X : Scheme.{u}} [IsLocallyNoetherian X]
-    (M : FiniteTypeSheaves X)
-    (h : ∀ (R : CommRingCat.{u}) [IsNoetherianRing R] (a : Spec R ⟶ X)
-      [IsOpenImmersion a], IsZero ((finiteTypeSheavesRestriction a).obj M)) : IsZero M := by
-  apply IsZero.of_full_of_faithful_of_isZero (finiteTypeSheavesToModules X) M
-  apply (SchemeSheaf.isZero_iff_stalks M.obj).mpr
-  intro x
-  obtain ⟨R, a, ha, y, hy⟩ := Scheme.exists_Spec_apply_eq x
-  have : IsOpenImmersion a := ha
-  have : IsNoetherianRing R := noetherian_affineChart R a
-  have h' : IsZero ((restrictFunctor a).obj M.obj) :=
-    (finiteTypeSheavesToModules (Spec R)).map_isZero (h R a)
-  have hz := (SchemeSheaf.stalkFunctor (Spec R) y).map_isZero h'
-  have hz' : IsZero ((SchemeSheaf.stalkFunctor X (a y)).obj M.obj) :=
-    hz.of_iso ((restrictStalkNatIso a y).app M.obj).symm
-  simpa only [hy] using hz'
 
 /-- Actual closed coherent pushforward preserves epimorphisms. The cokernel
 vanishes on every affine chart by the proved affine exactness. -/

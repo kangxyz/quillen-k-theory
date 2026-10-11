@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.GluingSubobjects
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GluingSubobjects
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.GluingLocality
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 

@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.KTheory.FundamentalGroup.Basic
+public import Quillen.Topology.ClassifyingSpace.ArrowPaths
 public import Quillen.Topology.Realization.Connectivity
 public import Mathlib.CategoryTheory.Groupoid.Subgroupoid
 public import Mathlib.Topology.Subpath

@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.Algebra.Homology.DegreewiseSplitMono
 public import Quillen.Waldhausen.Complexes
 public import Quillen.Waldhausen.PointedFunctor
 
@@ -34,56 +35,7 @@ universe v u
 
 namespace Quillen.Waldhausen
 
-/-- Cobase change of a split monomorphism is split, with no additivity
-hypothesis on the category. -/
-theorem isSplitMono_of_isPushout {C : Type*} [Category* C]
-    {A B D P : C} {i : A ⟶ B} {f : A ⟶ D} {g : B ⟶ P} {j : D ⟶ P}
-    [IsSplitMono i] (h : IsPushout i f g j) : IsSplitMono j := by
-  exact IsSplitMono.mk' {
-    retraction := h.desc (retraction i ≫ f) (𝟙 D) (by simp)
-    id := h.inr_desc _ _ _ }
-
 variable {A : Type u} [Category.{v} A] [Abelian A]
-
-/-- Termwise split monomorphisms, without requiring a chain retraction. -/
-def degreewiseSplitMono : MorphismProperty (CochainComplex A ℤ) :=
-  fun _ _ f ↦ ∀ n : ℤ, IsSplitMono (f.f n)
-
-instance degreewiseSplitMono_multiplicative :
-    (degreewiseSplitMono (A := A)).IsMultiplicative where
-  id_mem _ _ := by dsimp; infer_instance
-  comp_mem f g hf hg n := by
-    let : IsSplitMono (f.f n) := hf n
-    let : IsSplitMono (g.f n) := hg n
-    change IsSplitMono (f.f n ≫ g.f n)
-    infer_instance
-
-/-- A degreewise split monomorphism is an ambient monomorphism. -/
-theorem degreewiseSplitMono_mono {K L : CochainComplex A ℤ} {f : K ⟶ L}
-    (hf : degreewiseSplitMono f) : Mono f :=
-  mono_of_mono_f f (fun n ↦ by let := hf n; infer_instance)
-
-/-- Chain isomorphisms are split in every degree. -/
-theorem degreewiseSplitMono_of_isIso {K L : CochainComplex A ℤ} (f : K ⟶ L)
-    [IsIso f] : degreewiseSplitMono f := by
-  intro n
-  infer_instance
-
-/-- Every arrow from a zero complex is degreewise split. -/
-theorem degreewiseSplitMono_of_isZero {K L : CochainComplex A ℤ} (hK : IsZero K)
-    (f : K ⟶ L) : degreewiseSplitMono f := by
-  intro n
-  have hn := (eval A (ComplexShape.up ℤ) n).map_isZero hK
-  exact IsSplitMono.mk' ⟨hn.from_ _, hn.eq_of_src _ _⟩
-
-/-- Degreewise split monomorphisms are stable under arbitrary pushout. -/
-theorem degreewiseSplitMono_pushout
-    {B D E P : CochainComplex A ℤ}
-    {i : B ⟶ D} {f : B ⟶ E} {g : D ⟶ P} {j : E ⟶ P}
-    (hi : degreewiseSplitMono i) (h : IsPushout i f g j) : degreewiseSplitMono j := by
-  intro n
-  let : IsSplitMono ((eval A (ComplexShape.up ℤ) n).map i) := hi n
-  exact isSplitMono_of_isPushout (h.map (eval A (ComplexShape.up ℤ) n))
 
 /-- The degreewise split, quasi-isomorphism Waldhausen structure on actual
 cochain complexes in an abelian category. -/

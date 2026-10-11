@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ComplexPushforward
 public import Mathlib.CategoryTheory.Abelian.GrothendieckCategory.EnoughInjectives
 public import Mathlib.Algebra.Homology.Factorizations.CM5a
 /-!
@@ -34,10 +35,6 @@ namespace Quillen.PerfectComplexes
 local instance openPushforwardStandardDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules
   :=
   HasDerivedCategory.standard _
-
-/-- Actual termwise direct image, without asserting it is exact. -/
-def pushforwardComplex {U X : Scheme.{u}} (j : U ⟶ X) : Complex U ⥤ Complex X :=
-  (Scheme.Modules.pushforward j).mapHomologicalComplex (.up ℤ)
 
 /-- Restricting the original termwise direct image gives the original counit. -/
 def pushforwardComplexRestrictIso {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] :

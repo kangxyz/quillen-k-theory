@@ -7,7 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.KTheory.GrothendieckComparison.Groupoid
-public import Quillen.KTheory.FundamentalGroup.Completion
+public import Quillen.Topology.ClassifyingSpace.GroupoidCompletion
 
 /-!
 # The canonical comparison factors through actual groupoid completion

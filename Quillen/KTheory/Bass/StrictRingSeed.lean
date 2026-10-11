@@ -1,0 +1,38 @@
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+module
+
+public import Quillen.KTheory.Bass.StrictRingDiagram
+
+/-! Assemble pointwise maps into the existing strict Bass endofunctor without changing their values.
+-/
+@[expose] public section
+noncomputable section
+open CategoryTheory Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+universe u w
+namespace Quillen.KTheory.Bass
+
+/-- The exact cone-loop coefficient squares assemble the same supplied pointwise maps. -/
+def strictRingDiagramSeed (F : CommRingCat.{u} ⥤ LoopPrespectrum.{w})
+    (η : ∀ R, F.obj R ⟶ parameterLooping (mappingCone
+      (StrictSquare.comparison (F.mapArrow.mapArrow.obj (laurentSquare R)))))
+    (hη : ∀ {R S} (f : R ⟶ S), η R ≫ parameterLoopingMap
+      (mappingConeMap (strictSquareComparisonFunctor.map
+        (F.mapArrow.mapArrow.map (laurentSquareMap f)))) = F.map f ≫ η S) :
+    F ⟶ strictRingDiagramFunctor.obj F where
+  app := η
+  naturality _ _ f := (hη f).symm
+
+/-- Evaluation of the assembled natural transformation keeps its original pointwise map. -/
+theorem strictRingDiagramSeed_app (F : CommRingCat.{u} ⥤ LoopPrespectrum.{w})
+    (η : ∀ R, F.obj R ⟶ parameterLooping (mappingCone
+      (StrictSquare.comparison (F.mapArrow.mapArrow.obj (laurentSquare R)))))
+    (hη : ∀ {R S} (f : R ⟶ S), η R ≫ parameterLoopingMap
+      (mappingConeMap (strictSquareComparisonFunctor.map
+        (F.mapArrow.mapArrow.map (laurentSquareMap f)))) = F.map f ≫ η S) (R : CommRingCat.{u}) :
+    (strictRingDiagramSeed F η hη).app R = η R := rfl
+
+end Quillen.KTheory.Bass

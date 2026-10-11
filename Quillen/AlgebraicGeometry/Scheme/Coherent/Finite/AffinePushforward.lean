@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.GTheory.FiniteModules.RestrictionScalars
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.AffinePushforward
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffinePushforward
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.ComparisonGTheory
 public import Quillen.CategoryTheory.SmallModel.Functoriality
 
@@ -33,11 +33,11 @@ theorem affineLocallyFiniteType_pushforward {M : (Spec S).Modules} (hM : affineL
   obtain ⟨hQC, hFG⟩ := (affineLocallyFiniteType_spec_iff S M).mp hM
   let : M.IsQuasicoherent := hQC
   apply (affineLocallyFiniteType_spec_iff R _).mpr
-  refine ⟨ClosedImmersion.isQuasicoherent_pushforward φ M, ?_⟩
+  refine ⟨SchemeSheaf.isQuasicoherent_pushforward φ M, ?_⟩
   let N : FGModuleCat S := ⟨moduleSpecΓFunctor.obj M, hFG⟩
   have : Module.Finite R ((moduleSpecΓFunctor ⋙ ModuleCat.restrictScalars φ.hom).obj M) :=
     ((moduleRestriction φ hφ).obj N).property
-  exact Module.Finite.equiv ((ClosedImmersion.pushforwardGlobalSectionsIso φ).app
+  exact Module.Finite.equiv ((SchemeSheaf.pushforwardGlobalSectionsIso φ).app
     M).symm.toLinearEquiv
 
 variable [IsNoetherianRing R] [IsNoetherianRing S]
@@ -59,7 +59,7 @@ def coherentPushforwardSquare :
       (finiteTypeSheavesSpecModuleEquivalence S).functor ⋙ moduleRestriction φ hφ :=
   ((finiteModule R).fullyFaithfulι.whiskeringRight _).preimageIso
     (Functor.isoWhiskerLeft (finiteTypeSheavesToModules (Spec S))
-      (ClosedImmersion.pushforwardGlobalSectionsIso φ))
+      (SchemeSheaf.pushforwardGlobalSectionsIso φ))
 
 instance coherentPushforward_preservesFiniteLimits : PreservesFiniteLimits (coherentPushforward φ
   hφ) := by

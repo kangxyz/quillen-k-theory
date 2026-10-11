@@ -7,6 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Basic
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TildeExact
 public import Quillen.CategoryTheory.ExactCategory.Functor
 public import Mathlib.CategoryTheory.Abelian.Exact
 public import Mathlib.Algebra.Homology.ShortComplex.PreservesHomology
@@ -30,33 +31,6 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.CoherentScheme
 variable (R : CommRingCat.{u})
-
-lemma tilde_map_app_injective {M N : ModuleCat.{u} R} (f : M ⟶ N)
-    (hf : Function.Injective f) (U : (Spec R).Opens) :
-    Function.Injective ((tilde.map f).app U) := by
-  intro s t h
-  apply Subtype.ext
-  funext x
-  apply IsLocalizedModule.map_injective x.1.asIdeal.primeCompl
-    (LocalizedModule.mkLinearMap x.1.asIdeal.primeCompl M)
-    (LocalizedModule.mkLinearMap x.1.asIdeal.primeCompl N) f.hom hf
-  exact congrArg (fun a => a.val x) h
-
-instance tilde_preservesMonomorphisms : (tilde.functor R).PreservesMonomorphisms where
-  preserves {M N} f hf := by
-    constructor
-    intro P g h hgh
-    apply Scheme.Modules.hom_ext
-    intro U
-    ext s
-    apply tilde_map_app_injective R f ((ModuleCat.mono_iff_injective f).mp hf) U
-    exact congrArg (fun a => a.app U s) hgh
-
-instance tilde_preservesHomology : (tilde.functor R).PreservesHomology :=
-  (tilde.functor R).preservesHomology_of_preservesMonos_and_cokernels
-
-instance tilde_preservesFiniteLimits : PreservesFiniteLimits (tilde.functor R) :=
-  (tilde.functor R).preservesFiniteLimits_of_preservesHomology
 
 /-- The comparison identifies the composite tilde after global sections with
  the actual inclusion of quasicoherent sheaves. -/

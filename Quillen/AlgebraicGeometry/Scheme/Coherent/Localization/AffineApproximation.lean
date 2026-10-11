@@ -7,7 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.FiniteApproximation
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.LocalIsomorphisms
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.LocalIsomorphisms
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Comparison
 

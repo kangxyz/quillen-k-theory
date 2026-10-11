@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.AffinePushforward
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffinePushforward
 public import Quillen.GTheory.FiniteModules.IdealClosedSupport
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.ComparisonGTheory
 public import Quillen.CategoryTheory.SmallModel.Functoriality
@@ -51,13 +51,13 @@ theorem affineFiniteSheaf_pushforward {M : (Spec (closedRing R I)).Modules}
     (hM : affineFiniteSheaf (closedRing R I) M) :
     affineFiniteSheaf R ((Scheme.Modules.pushforward (closedMap R I)).obj M) := by
   have : M.IsQuasicoherent := hM.1
-  refine ⟨isQuasicoherent_pushforward _ M, ?_⟩
+  refine ⟨SchemeSheaf.isQuasicoherent_pushforward _ M, ?_⟩
   let N : FGModuleCat (ClosedRing I) := ⟨moduleSpecΓFunctor.obj M, hM.2⟩
   have : Module.Finite R ((moduleSpecΓFunctor ⋙
       ModuleCat.restrictScalars (CommRingCat.ofHom (Ideal.Quotient.mk (I))).hom).obj M) :=
     ((closedRestriction I).obj N).property
   exact Module.Finite.equiv
-    ((pushforwardGlobalSectionsIso
+    ((SchemeSheaf.pushforwardGlobalSectionsIso
       (CommRingCat.ofHom (Ideal.Quotient.mk (I)))).app M).symm.toLinearEquiv
 
 /-- Actual closed pushforward preserves all-affine-chart coherence. -/
@@ -90,7 +90,7 @@ def coherentPushforwardSquare :
       (finiteTypeSheavesSpecModuleEquivalence (closedRing R I)).functor ⋙ closedRestriction I :=
   ((finiteModule R).fullyFaithfulι.whiskeringRight _).preimageIso
     (Functor.isoWhiskerLeft (finiteTypeSheavesToModules (Spec (closedRing R I)))
-      (pushforwardGlobalSectionsIso
+      (SchemeSheaf.pushforwardGlobalSectionsIso
         (CommRingCat.ofHom (Ideal.Quotient.mk (I)))))
 
 instance coherentPushforward_full : (coherentPushforward R I).Full :=

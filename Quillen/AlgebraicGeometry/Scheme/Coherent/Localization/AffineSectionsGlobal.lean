@@ -7,7 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.AffineSectionsQuasicoherent
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.AffineSectionsBaseChange
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.QuasicoherentClosure
 public import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
 public import Mathlib.AlgebraicGeometry.Noetherian

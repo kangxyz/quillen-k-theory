@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Pullback
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.AffinePullback
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffinePullback
 public import Mathlib.Algebra.Category.ModuleCat.Descent
 public import Mathlib.AlgebraicGeometry.Morphisms.Flat
 
@@ -67,7 +67,7 @@ def affineQuasicoherentPullbackIso {R S : CommRingCat.{u}} (φ : R ⟶ S) :
       (tildeEquiv (R := R)).inverse ⋙ ModuleCat.extendScalars φ.hom ⋙ tilde.functor S :=
   Functor.isoWhiskerRight (affineQuasicoherentToSheavesIso R).symm _ ≪≫
     Functor.associator _ _ _ ≪≫
-    Functor.isoWhiskerLeft _ (ClosedImmersion.tildePullbackIso φ)
+    Functor.isoWhiskerLeft _ (SchemeSheaf.tildePullbackIso φ)
 
 /-- Flatness of the actual affine ring map proves left exactness of sheaf
 pullback on the actual quasicoherent category. -/

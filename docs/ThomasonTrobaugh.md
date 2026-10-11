@@ -211,36 +211,420 @@ boundary is asserted.
 See [SupportedOpen/MayerVietoris.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/SupportedOpen/MayerVietoris.lean)
 and [SupportedOpen/MayerVietorisForget.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/SupportedOpen/MayerVietorisForget.lean).
 
-## Bass groups, spectra, and remaining scope
 
-`Bass.negativeKFunctor n` recursively takes the two polynomial-to-Laurent
-cokernels, seeded by original homotopical perfect K₀ in additive notation.
-`n : ℕ` denotes degree `-n`. It accepts arbitrary maps between quasi-compact
-schemes. `Bass.supportedNegativeKFunctor` has the analogous supported K₀ seed
-on pairs with quasi-compact ambient scheme and arbitrary vanishing open.
-See [BassNegativeGroups.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/BassNegativeGroups.lean)
+## Derived sheaf operations and projective-line geometry
+
+The derived comparisons below use the actual bounded-below module-sheaf
+derived categories and installed right-derived units. Their generic sheaf owners
+have prefix `Quillen.AlgebraicGeometry.Scheme.Sheaf`; projective-line owners
+have prefix `Quillen.AlgebraicGeometry.Scheme.ProjectiveLine`.
+
+### Direct image, tensor, and canonical base-change mates
+
+`AffinePushforwardAcyclicity` proves positive-degree acyclicity of quasicoherent
+sheaves for every affine morphism, without finite, flat, or noetherian assumptions.
+`AffineDerivedPushforward` and `AffineBoundedDerivedPushforward` retain the
+given injective augmentation and installed unit on singles and bounded
+termwise-quasicoherent complexes. `FlatInjectivePushforward` supplies flat
+injective direct image and the bounded-below injective derived-Hom adjunction.
+Independently, `FlasquePushforwardAcyclicity` proves flasque acyclicity for every
+scheme map. `FlasqueComplex` and `FlasqueComplexDerivedPushforward` extend the
+installed unit comparison to bounded-below flasque complexes without an upper
+bound. Direct images of injectives are claimed flasque in this general argument,
+rather than injective.
+
+`DerivedPushforwardComposition` constructs the canonical
+`R(g ∘ f)_* ≅ Rg_* Rf_*`, with the original ordinary composition and both
+installed units. `Scheme.VectorBundle.ProjectionFormula` and
+`DerivedProjectionFormula` give the ordinary and bounded-below projection
+formulas for every scheme map with finite locally free coefficient. The forward
+ordinary arrow is the original geometric adjunction-unit composite; both-variable
+naturality and the derived-unit equations are retained. These vector-bundle
+paths have prefix `Quillen.AlgebraicGeometry`. Composition alone does not assert
+triple-composition coherence.
+
+The sheafified tensor bifunctor and actual finite-free retract exactness live in
+`Quillen.Algebra.Category.ModuleCat.Sheaf.{Tensor,TensorExact}`.
+`Scheme.Sheaf.TensorRestriction` and `Scheme.VectorBundle.TensorLocalExactness`
+give genuine open restriction and exactness for finite locally free coefficients.
+They use the actual presheaf tensor, sheafification, affine basis, and finite-free
+retractions; full monoidal coherence remains separate.
+
+`CartesianBaseChange`, `AffineScalarAdjunction`, `AffineScalarSquare`, and
+`AffineBaseChange` identify the geometric pullback/direct-image mate with the
+scalar extension/restriction mate on a genuine affine cartesian square. The
+ordinary mate is invertible on every quasicoherent sheaf without flatness or
+finite-generation assumptions and retains the original tensor and unit formulas.
+`CartesianBaseChangePasting`, `CartesianBaseChangeHorizontal`, and
+`CartesianBaseChangeLocalization` retain vertical/horizontal composition
+factors and open-cover detection; their local invertibility hypotheses are
+explicit.
+
+`DerivedFlatBaseChange` constructs the canonical bounded-below derived mate
+from that same ordinary mate. Its defining equation keeps both installed
+composite units. The base leg is flat and the square cartesian; flatness of the
+pulled-back leg is derived from the square. Exact flat pullback preserves homology
+without assuming preservation of injectives. Shift, horizontal/vertical pasting,
+and target-open equations are in `DerivedFlatBaseChangeShift`,
+`DerivedFlatBaseChangeHorizontal`, `DerivedFlatBaseChangeVertical`, and
+`DerivedFlatBaseChangeLocalization`; cover conservativity is in
+`DerivedOpenCoverConservativity` and `DerivedFlatBaseChangeOpenCover`.
+
+`DerivedOpenBaseChange` gives the installed D+ open-restriction comparison for
+arbitrary scheme maps. `CartesianOpenBaseChangeMate` and
+`DerivedFlatBaseChangeOpen` identify it with the canonical mate and prove that
+mate invertible on every bounded-below complex for an open base leg.
+`AffineDerivedBaseChange`, `AffineDerivedBaseChangeCoordinates`, and
+`AffineDerivedBaseChangeLocal` prove invertibility on quasicoherent singles
+and their integer shifts for an affine morphism and flat base change, including
+arbitrary affine coordinates and nonaffine ambient schemes. They do not assert
+general bounded-below flat-base-change invertibility.
+
+For finite flat maps of locally noetherian schemes,
+`PerfectComplexes.DerivedPushforwardComparison` identifies actual strict direct
+image with installed D+ direct image. `PerfectComplexes.Affine.DerivedFiniteFlatPushforward`
+preserves intrinsic perfectness for affine source and locally noetherian target.
+These paths have prefix `Quillen.AlgebraicGeometry`. General-source perfect
+preservation and unrestricted unbounded derived pushforward remain separate.
+
+### The actual two-chart line
+
+For every commutative ring `R`, `Quillen.Scheme.ProjectiveLine.twoChartLine R`
+is the actual gluing of the two polynomial charts along the Laurent overlap.
+It is qcqs, its projection `p` is flat and separated, and `globalSectionsIso R`
+gives its global sections `R`. `Charts`, `AffineCechCover`, and `ChartAffineness`
+retain the original open maps and genuine affine intersections.
+`BaseChangeGluing` proves cartesian base change for every ring coefficient map
+with its original chart equations, without flatness or noetherianity.
+
+`Tautological` constructs a line subbundle `L` of the structure-module square,
+with chart columns `(1,t)` and `(s,1)` and Laurent transition `T`, inverse `T⁻¹`.
+`TautologicalQuotient` gives the actual line cokernel `Q`, its short exact
+sequence, chart rows `(-t,1)` and `(-1,s)`, and inverse Laurent transition.
+`TwistMinusFunctor` is an additive exact kernel negative-twist endofunctor on
+all module sheaves, preserving finite local freeness. `TwistMinusUnit` identifies
+its structure-module value with `L`, retaining the original inclusion;
+`VectorBundleTwistMinus` gives its original exact vector-bundle pullback and K-map.
+Tensor identification of this kernel twist is a separate comparison.
+
+`Scheme.Sheaf.TwoOpenSheafSequence` gives the signed Čech short exact sheaf
+sequence for every sheaf on a two-open cover, with original restriction-adjunction
+units, local splittings, and arrow naturality. No quasicoherence, flasqueness,
+affineness, or noetherian hypothesis is imposed on that sheaf sequence.
+`TwoOpenCohomology` gives the corresponding short exact section-complex sequence
+for flasque-term complexes and actual injective resolutions.
+`AffineOpenCohomology` retains the actual restricted resolution;
+`SectionsHomologyZero` uses its genuine augmentation.
+For a two-affine cover, `TwoOpenFirstCohomology` identifies actual first derived
+sections of a quasicoherent sheaf with the cokernel of the literal signed
+restriction map, retaining the quotient square and requiring no affine overlap.
+The public equivalence is `twoAffineRightDerivedOneIsoCokernel`.
+`TwoAffineCohomology` gives higher vanishing when the overlap is affine.
+These sheaf routes have prefix `Quillen.AlgebraicGeometry.Scheme.Sheaf`.
+
+Consequently `Cohomology` proves quasicoherent vanishing above degree one on
+the two-chart line through
+`Quillen.Scheme.ProjectiveLine.isZero_rightDerived_globalSections_add_two`.
+`StructureSheafCohomology` retains
+`structureSheaf_difference_coordinates` and proves vanishing in every positive
+degree. `TautologicalSections` and `TautologicalCohomology` prove all-degree
+vanishing for `L`, including global sections. `TautologicalQuotientCohomology`
+identifies sections of `Q` with `R × R` through the original quotient projection
+and proves positive-degree vanishing. All statements include nonreduced and
+zero base rings; positive vanishing is not asserted for every quasicoherent sheaf.
+
+`StructureSheafDirectImage`, `TautologicalDirectImage`, and `DerivedDirectImage`
+compute the actual relative projection: the structure module has canonical
+direct image the base structure module and no positive derived images, while
+`L` has zero derived image in every degree. The installed D+ unit comparisons
+retain the original geometric projection unit, given injective resolution, and
+principal-open section complexes. `VectorBundleDirectImage` gives the invertible
+unit on pullbacks of affine-base vector bundles and zero image of their negative
+twists. `VectorBundleComplexDirectImage` extends those statements to bounded
+complexes, retaining the original degreewise geometric unit and strictToPlus
+objects. Sections are not assumed to commute with sheaf homology.
+
+`DerivedCechTriangle` computes relative `Rp(M)` for every quasicoherent sheaf
+as the first vertex of a distinguished triangle whose other vertices are ordinary
+direct images of the chart pair and overlap. The differential is the pushforward
+of the signed sheaf restriction difference; the connecting arrow is the original
+short-exact connecting map through the installed overlap-unit inverse.
+Actual affine chart/overlap units discharge the acyclicity premises.
+`Scheme.Sheaf.AffineCompositeDerivedBaseChange` and `TwoOpenDerivedBaseChange`
+transport the canonical mate through this same signed triangle.
+`ProjectiveLine.DerivedFlatBaseChange` proves it invertible on every quasicoherent
+single for flat cartesian base change of `p`. The self-base-change isomorphism
+uses the actual relative square and its two projections; its hom is the original
+mate followed by the installed flat-pullback single comparison. These paths have
+prefix `Quillen.AlgebraicGeometry`. Coefficient perfection and general
+bounded-below base change are not inferred.
+
+### The twisted diagonal triangle
+
+On the relative square of the two-chart line, `DiagonalIncidence` constructs
+the actual complex `p₁*L → p₂*Q → Δ_*Q`. Its four original affine-rectangle
+scalars are `t-u`, `tv-1`, `1-su`, and `v-s`.
+`DiagonalMonomorphism`, `DiagonalClosedImmersion`, and `DiagonalCokernel`
+prove the incidence monic, the relative diagonal closed, and the original
+quotient the actual cokernel. The resulting twisted sequence is short exact
+over every commutative ring. Its proof uses the genuine rectangle cover,
+principal kernels, and actual cartesian adjunction mates, retaining both maps.
+
+`DiagonalTensorTriangle` first treats affine-base bundle coefficients;
+`DiagonalBundleTensorTriangle` treats every projective-line vector bundle `E`
+using genuine tensor restriction/local exactness. The distinguished triangle
+retains incidence, quotient, connecting arrows, and coefficient naturality.
+`DiagonalTensorPushforward` identifies its ordinary diagonal-supported term
+by the original projection arrow. `DiagonalDerivedTensorTriangle` identifies
+the third vertex with the installed `RΔ_*(E ⊗ Q)`.
+`DiagonalProjectedTensorTriangle` applies derived second projection; canonical
+derived composition and identity identify the third vertex with the single of
+`E ⊗ Q`. The first two vertices remain actual derived-image objects. This is
+the twisted sequence and its triangles; projective generation and the
+projective-bundle formula are still open.
+
+## Bass groups and spectral comparisons
+
+### Cokernel recursions and original geometric seeds
+
+`Bass.negativeKFunctor i` takes the original two-polynomial-to-Laurent cokernel
+recursively, seeded by additive homotopical perfect K₀. Index `i : ℕ` means
+degree `-i`. It accepts arbitrary maps between quasi-compact schemes.
+`Bass.supportedNegativeKFunctor` has the supported K₀ seed on pairs with
+quasi-compact ambient scheme and arbitrary vanishing open. Their routes are
+[BassNegativeGroups.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/BassNegativeGroups.lean)
 and [Bass/SupportedGroups.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/Bass/SupportedGroups.lean).
+`Quillen.Bass.affineSchemeNegativeKIso` compares ring and scheme recursions
+naturally in every nonpositive degree, with literal original K₀ at zero.
+The classical perfect-complex K₀ specialization preserves this homotopical seed;
+it does not identify the seed with the triangulated-derived presentation.
+`Quillen.KTheory.Bass.RightExactness` and `IterationExactness` preserve pointwise
+right exactness and cokernels at every ring-indexed stage, without constructing
+negative localization boundaries.
 
-`Quillen.Bass.affineSchemeNegativeKIso` compares the affine ring and geometric
-scheme-product recursions naturally in all nonpositive degrees, with literal
-original K₀ in degree zero. `affineBassTransition` constructs one spectral Bass
-step from the actual Laurent unit and inverse, scalar action, and whole
-structure-compatible homotopy. See [Affine/BassStep.lean](../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/BassStep.lean).
-Coherent functorial spectral iteration, identification with the cokernel groups,
-the fundamental theorem, and negative localization/descent remain open. These
-groups are not identified with algebraic Grothendieck K₀ or negative stable
-groups of a Bass spectrum.
+`affineBassTransition` uses the genuine Laurent `T` and `T⁻¹`, scalar action,
+whole spectrum homotopy, and original source-leg cone null cylinder. It retains
+parameter-correct looping. Raw bounded-flat coefficient squares use actual
+geometric pullbacks, original normalization/composition tracks, and independent
+comparison, loop, and structure parameters.
+`Affine.BassSpanComparisonTrack` and `BoundedFlatBassTransitionNaturality`
+give their full coefficient and seed homotopies.
+`BassInclusionComparison`, `BassGeometricComparison`, and `BassTransitionInclusion`
+retain the original bounded-flat/perfect comparison and seeds: the one-step
+cone and looped-step maps are completely weak at positive levels and stable in
+every integer degree, and the single seed square is a proved whole homotopy.
+No caller-supplied geometric filler or seed compatibility premise remains.
+These affine routes are under `Quillen.AlgebraicGeometry.PerfectComplexes.Affine`.
 
-The connective perfect spectra have arbitrary derived pullback on
-quasi-compact schemes in the constructed categorical stable localization,
-retaining original K-maps and flat pullback. Their negative stable groups still
-vanish. The localized inverse of the bounded-flat inclusion does not assert a
-strict continuous inverse. See [Library.md](Library.md#stable-fibers-and-localization).
+### Strict sections and one-step evaluation
 
-Strict/local comparison on arbitrary nonaffine schemes, perfect pullback on
-arbitrary non-quasi-compact schemes, stable cofiber exactness and telescope
-comparisons, projective-bundle and Laurent-boundary calculations, and the
-nonconnective localization theorem require further work. The actual two-chart
-projective line and global sections are available, but higher cohomology and
-perfect pushforward remain separate.
-See [Scope.md](Scope.md) for the precise boundary.
+`BoundedFlat.Sections` forms cocartesian sections of the actual geometric
+Grothendieck construction. Identity evaluation is an exact categorical
+equivalence; canonical sections have the original coefficient-pullback values.
+The original global chosen-zero family is retained under evaluation and strict
+coefficient reindexing. Section morphisms have universe `u+1`, versus original
+bounded-flat morphisms in `u`; common-universe comparisons retain the actual
+forward maps. `SectionWaldhausen`, `SectionReindexExact`,
+`SectionSpectrumEquivalence`, and `SectionPrespectrum` give the pointwise
+Waldhausen structure, all-level homotopy equivalence, and genuine strict
+iterated-S coefficient diagram. These routes have prefix
+`Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat`.
+
+Actual coefficient evaluation, its chosen-zero normalization, and Model
+composition/relative composition tracks are kept by `SectionEvaluation`,
+`SectionEvaluationNormalization`, `SectionSpectrumNaturality`,
+`SectionModelComposition`, `SectionModelRelativeComposition`,
+`SectionModelTrackNaturality`, `SectionModelTargetTrack`, and
+`SectionCoefficientComposition`. They retain original cocartesian transition
+isomorphisms, Spec composition transports, associators, and whole whiskered
+geometric tracks; a categorical comparison is not silently treated as strict
+geometric evaluation naturality.
+
+`Affine.SectionLaurentUnit`, `SectionLaurentPullback`, and `SectionBassSeed`
+construct the original literally coefficient-natural scalar action and strict
+seed `F → B(F)`, including zero-level loops and the source-null cylinder.
+`Quillen.KTheory.Bass.StrictDiagram` is the actual endofunctor using the literal
+Laurent square, double mapping cylinder, cone, and parameter looping.
+`SectionBassDiagram` iterates it; every `SectionBassTransition` is `B^i` of
+the same proved seed. No supplied seed premise or new transition unit is used.
+
+`SectionBassEvaluation` constructs the original strict-to-raw span, cone, and
+looped-step maps using the proved full comparison filler.
+`SectionBassEvaluationEquivalence` proves those same maps completely weak at
+every level, including zero, and stable in all integer degrees. The target is
+the original raw bounded-flat step; its coefficient maps are not strictified.
+`SectionBassEvaluationNull`, `SectionLaurentEvaluationHomotopy`,
+`SectionBassSeedEvaluation`, and `SectionBassPerfectSeedEvaluation` retain the
+actual null/unit moving squares and compare the single strict, raw, and perfect
+seeds without a compatibility assumption. Full all-iterate comparison with the
+original geometric tower remains a separate obligation.
+
+### Finite-stage excision and bottom groups
+
+For `f : E ⟶ F`, the canonical cone-fiber comparison is
+`E ⟶ homotopyFiber (mappingConeInclusion f)`. It uses the original cone
+cylinder as its full fiber path; the source is the original `E`.
+
+The original S-level growth, chosen-point HEP, and finite double-cylinder gap
+discharge cone-fiber stable excision for original S-model maps in
+`Quillen.Waldhausen.SConstruction.Iterated.ConeFiberExcision`.
+`Affine.SectionBassConnectivity` propagates all-point growth through every
+finite Bass stage `i`: at original level `n+i+2`, degrees `k < n+2` vanish
+at every point. `SectionBassConeExcision` proves the original comparison stable
+for every map between actual stages `i,j`, with connectivity `2*n+2` at level
+`n+max(i,j)+2`. All growth and point-HEP premises are discharged; the seed itself
+is not asserted stable.
+
+`Quillen.Topology.Prespectrum.ConeStableExactness` and `ConeStableNaturality`
+transport the genuine fiber sequence through that same cone comparison. The
+boundary is the signed fiber boundary followed by its inverse; exactness keeps
+the original arrow and cone inclusion. `SectionBassStableSequence` specializes
+the recurring signed positions. `SectionBassWholeTrackCone` and the finite-stage
+pushout owners retain supplied whole tracks and discharge their row-excision
+conditions. `SectionBassPushoutStableEquivalence`,
+`SectionBassPushoutHomotopyStableEquivalence`, `SectionBassFunctorStableEquivalence`,
+and `SectionBassIterateStableEquivalence` preserve stability of the original
+maps from explicit stable corner maps. The generic
+`Quillen.KTheory.Bass.StrictDiagramStableEquivalence` keeps its topology/growth
+premises, while `ModelDiagramStableEquivalence` discharges them for actual
+strict iterated-S Model diagrams and exact-equivalence transformations.
+
+`BoundedFlatBassSpanStableGroups` proves the raw polynomial span generated at
+degree zero by its two original inclusions, with negative vanishing and genuine
+raw comparison excision. `BoundedFlatStableKZero`, `BassFirstCokernel`, and
+`BassFirstStableGroup` identify existing PerfectK-based `negativeKFunctor 1`
+with raw first-step degree minus one. The Laurent representative is the original
+K₀ comparison, cone inclusion, and signed loop shift; its kernel is positive-chart
+image minus inverse-chart image. `Quillen.KTheory.Bass.TwoChartSigns` negates
+only the second polynomial summand. `BassFirstStableNaturality` uses the
+unchanged raw coefficient stable maps and proves their group-functor laws;
+`SectionBassFirstStableGroup` transports through the actual one-step evaluation.
+A separate finite-projective-module presentation is not an input.
+
+At stage `i`, `SectionBassStableConnectivity` proves vanishing below `-i` and
+span generation in degree `-i`. `SectionBassSuccessor`,
+`SectionBassSuccessorStable`, `SectionBassBottomGroups`, `SectionBassBottomCokernel`,
+and `SectionBassBottomComparison` give, for every natural `i`, a natural
+isomorphism from existing `negativeKFunctor i` to degree `-i` of actual finite
+stage `i`. They retain the original recursive Laurent quotient, both chart signs,
+coefficient maps, and stage-zero evaluation. These are diagonal bottom groups;
+no fixed-degree later-stage stabilization follows. Comparison with the earlier
+evaluation-based first-stage isomorphism is also separate.
+
+### Telescope, localization map, and supported self-comparison
+
+`Affine.SectionBassTelescope` is the actual reduced telescope with original
+stage inclusions, heights, and `B^i(seed)` gluings. `SectionBassStableColimit`
+gives the natural canonical colimit isomorphism in every integer stable degree.
+All original stages and levels have proved T1 and chosen-point HEP, including
+level zero. `SectionBassTelescopeCone` and `SectionBassTelescopeExcision`
+identify the actual coefficient cone with the colimit of the original finite
+cones and prove genuine stable cone-fiber equivalence and recurring signed
+exactness. The boundary retains its finite-stage formula and original fiber
+boundary; no whole-telescope connectivity premise remains.
+`SectionBassTelescopeNaturality` preserves this boundary on commuting coefficient
+squares. Generic strict cone/pushout interchange keeps independent cone time
+and telescope height, with no extra separation or HEP assumption; parameter-loop
+interchange is stable for T1 stages.
+
+`SectionBassNegativeMap` composes the finite-bottom isomorphism with the original
+stage inclusion. Its coefficient, Laurent quotient, and next-stage seed/cylinder
+formulas are proved. Injectivity, surjectivity, and fixed-degree stabilization
+are not asserted. `SectionLocalizedComparison` identifies the actual evaluation
+inverse in stable localization, retaining original perfect K-maps.
+`SectionBassLocalizedSpectrum` gives a natural initial map from the original
+localized perfect spectrum to the actual telescope; it does not assert
+nonnegative-group isomorphisms. The connective spectrum's own negative stable
+groups still vanish.
+
+`SectionBassTelescopeLooping`, `SectionBassTelescopeCommutation`, and
+`SectionBassTelescopeSelfMap` assemble actual interchange and tail maps into a
+coefficient-natural stable map from this telescope to its Bass image in every
+integer degree. Its initial face is exactly the original Laurent seed followed
+by Bass of the original initial inclusion. The construction retains all original
+transitions and independent cylinder/loop parameters, without assuming any
+finite transition stable. This self-comparison alone does not identify classical
+negative groups of the telescope.
+
+For `j : U ⟶ Spec R` with `[IsOpenImmersion j]`,
+`Quillen.AlgebraicGeometry.Scheme.Affine.OpenPairBaseChange` chooses one actual
+pullback of `j` for each object of `Under R`. The projection equations and strict
+coefficient laws use those same endpoints; the identity-algebra projection is
+an isomorphism to `j`, rather than equality of chosen opens.
+`BoundedFlat.SupportedSectionDiagram` uses the actual supported sections and
+exact coefficient reindexing. `SupportedSectionComparison` normalizes evaluation
+by a canonical zero-object isomorphism, and `SupportedSectionSpectrumEquivalence`
+gives whole inverse homotopies, complete weakness at every level, and all-integer
+stability. `SupportedSectionModelNaturality` gives an actual whole coefficient
+track, rather than strict evaluation naturality.
+
+`Affine.SupportedSectionLaurentUnit`, `SupportedSectionDiagramLaurent`, and
+`SupportedSectionBassSeed` give the genuinely natural fixed-open Laurent seed
+with original scalar parameters, zeros, and null cylinders. No seed/coherence
+hypothesis is supplied. The separately expanded evaluated-term scalar transfer
+is not a premise. `SupportedSectionForgetLaurent` and `SupportedSectionForgetSeed`
+prove the actual support-inclusion scalar and strict seed squares;
+`Quillen.KTheory.Bass.StrictUnderDiagram` retains restriction along `Under.forget`.
+`SupportedSectionBassTower` and `SupportedSectionBassForgetTower` give the
+supported finite stages, actual telescope, and maps to all ambient stages and
+the ambient telescope.
+
+`SupportedSectionBassTelescopeSelfMap` is a stable map to the supported
+telescope's Bass image at every coefficient and integer degree. The original
+supported Model and Bass topology discharge its T1 premises.
+`SupportedSectionBassTelescopeSelfMapForget` proves the whole square with the
+existing support-forgetting telescope arrow and unchanged ambient self-map;
+no compatibility assumption remains. The identity algebra retains the actual
+pulled-back open. These are maps and self-comparisons, without a stabilization
+or full-open localization conclusion.
+
+## Relative-open sections and scalar cofibers
+
+`BoundedFlat.OpenConeComparison` proves the actual geometric acyclic-support
+cone stably equivalent to the original coarse relative-open S-prespectrum in
+every signed degree, with the original target face, null cylinder, and signed
+connecting map. Its geometric fibration and S-model excision premises are
+discharged. This is the coarse endpoint, retaining the genuine K₀ image
+obstruction to replacement by full open perfect K-theory.
+
+`BoundedFlat.SectionOpenEquivalence` and `SectionOpenComparison` give exact
+evaluation for the section coarse relative-open weak class and whole two-sided
+prespectrum homotopies. The comparison is completely weak at every level and
+stable in every integer degree; the fine/coarse square retains the unchanged
+maps. `SupportedSectionOpenNull` reverses the actual weak zero-to-supported-section
+transformation, producing the specified coherent null cylinder of forgetting
+support followed by relative-open restriction. Stability of this supported-section
+cone requires its separate source comparison.
+
+`OpenConeFiberLoop` gives the genuine supported mapping cone and canonical
+fiber loop of an open-weak perfect arrow. `Affine.PolynomialScalarCone`
+specializes to the global polynomial `X`, restricting to Laurent unit `T`:
+its actual termwise scalar map is weak on that open. `ScalarCofiber` identifies
+the original categorical cofiber with this supported cone and transports the
+relative-acyclic K₀ class equality through the unchanged canonical fiber map.
+`Quillen.CategoryTheory.Limits.CokernelPushout` retains the displayed zero;
+`Quillen.Waldhausen.SplitComplexes.FactorizationCofiber` retains the genuine
+factorization extension object, quotient, and target inclusion.
+`Quillen.Algebra.Homology.MappingConeSign` identifies `Cone(-f)` with `Cone(f)`
+by negating only the shifted source and fixing the target, and
+`SplitComplexes.FactorizationSign` uses that exact sign isomorphism.
+
+The object/class comparison is not the Laurent-unit localization boundary
+identity. The actual relative-loop comparison, basepoint translation, and
+zero-section pushforward-class calculation remain open. No blanket perfect
+zero-section dévissage or omission of possible Nil contributions is asserted.
+
+## Remaining obligations
+
+- Identify the supported-section cone with the geometric localization cone, retain its original null track and boundary, and handle the honest degree-zero image endpoint before asserting full-open or nonconnective localization.
+- Prove the original Laurent-unit boundary/relative-loop calculation, basepoint translation, and zero-section class formula with their actual maps and possible Nil contributions.
+- Establish fixed-degree stabilization of the finite seed transitions and bijectivity of the natural negative-class maps into the telescope. The finite-bottom isomorphisms and stable Bass self-comparisons do not discharge these obligations.
+- Compare all iterates with the complete original geometric Bass tower, identify classical telescope negative groups, and prove the fundamental theorem, negative localization boundaries, and nonconnective descent.
+- Prove coefficient perfection and projective generation for the derived diagonal route, the projective-bundle formula, Proj identification, and the full twisting-sheaf family. The finite-coefficient retract criterion retains its projectivity/splitting and uniform finite-window conditions.
+- Extend perfect preservation to the claimed general-source/unbounded direct-image scope, and establish general bounded-below flat-base-change invertibility beyond the available QC-single and open specializations.
+- Extend strict/local equivalence to arbitrary nonaffine schemes and perfect pullback to arbitrary non-quasi-compact schemes; compare the Waldhausen and triangulated-derived Grothendieck presentations.
+- Supply any needed general stable cofiber excision, replacement cofiber preservation, and higher raw-spectrum/telescope coherence. The categorical stable localization has no asserted standard stable model structure or triangulation.
+
+The broader interface and verification boundaries are in [Scope.md](Scope.md).
+Successful compilation and foundation audits concern the encoded statements;
+they do not supply any of these missing comparisons.

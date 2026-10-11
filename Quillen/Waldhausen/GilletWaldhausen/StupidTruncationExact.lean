@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationLayer
+public import Quillen.Algebra.Homology.StupidTruncation.Layer
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedTerms
 public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 

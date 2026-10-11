@@ -6,6 +6,10 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Consumer.GrothendieckComparison
+public import Consumer.StrictFiniteFlatPushforward
+public import Consumer.FiniteFlatPushforward
+public import Consumer.FinitePushforward
 public import Consumer.FiniteHELP
 public import Consumer.MixedComparison
 public import Consumer.RelativeRows
@@ -18,6 +22,9 @@ public import Consumer.Topology
 public import Consumer.ClosedGTheory
 public import Consumer.PerfectFoundations
 public import Consumer.RestrictionFunctoriality
+public import Consumer.WaldhausenGrothendieckComparison
+public import Consumer.AffineDerivedPushforward
+public import Consumer.DerivedPushforwardComparison
 public import Consumer.ExactFunctor
 public import Consumer.Devissage
 public import Consumer.Localization

@@ -19,7 +19,7 @@ provides imports and public interfaces.
 
 ## Quick start
 
-The **0.3.0 release candidate** uses Lean **4.34.1** and the mathlib revision
+The **0.4.1 development version** uses Lean **4.34.1** and the mathlib revision
 pinned in [lakefile.toml](lakefile.toml). Install
 [elan](https://github.com/leanprover/elan) to use the committed
 [toolchain](lean-toolchain).

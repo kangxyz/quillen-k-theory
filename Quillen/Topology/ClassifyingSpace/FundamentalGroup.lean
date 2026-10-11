@@ -8,7 +8,7 @@ module
 public import Quillen.Topology.ClassifyingSpace.Groupoid
 public import Quillen.Topology.ClassifyingSpace.DiscretePoints
 public import Quillen.CategoryTheory.TheoremB.Naturality
-public import Quillen.KTheory.FundamentalGroup.Basic
+public import Quillen.Topology.ClassifyingSpace.ArrowPaths
 
 /-!
 # The original groupoid fundamental-group comparison

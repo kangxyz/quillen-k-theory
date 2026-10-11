@@ -63,7 +63,7 @@ theorem vectorBundle_single_of_principal_concentration
     obtain ⟨hhi, hlo, hfin, hproj⟩ := hlocal r
     let F := tilde.functor (.of (Localization.Away r.val))
     let : F.Additive := AlgebraicGeometry.instAdditiveModuleCatCarrierModulesSpecFunctor
-    let : F.PreservesHomology := CoherentScheme.tilde_preservesHomology _
+    let : F.PreservesHomology := SchemeSheaf.tilde_preservesHomology _
     let E := (associatedComplex (.of (Localization.Away r.val))).obj L
     have hEhi : E.IsLE a := by
       rw [CochainComplex.isLE_iff]

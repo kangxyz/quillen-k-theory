@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.KTheory.FundamentalGroup.Basic
+public import Quillen.Topology.ClassifyingSpace.ArrowPaths
 public import Quillen.CategoryTheory.QConstruction.Connected
 public import Quillen.KTheory.GrothendieckGroup.Basic
 public import Quillen.Topology.ClassifyingSpace.PointedFunctor
