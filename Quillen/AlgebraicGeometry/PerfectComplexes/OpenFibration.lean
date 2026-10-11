@@ -144,6 +144,6 @@ def perfectOpenKRestrict (n : ℕ) : PerfectOpenK j n →* PerfectK U n :=
 theorem perfectOpenKRestrict_comp_perfectOpenKMap (n : ℕ) :
     (perfectOpenKRestrict j n).comp (perfectOpenKMap j n) = perfectKRestrict j n := by
   unfold perfectOpenKRestrict perfectOpenKMap perfectKRestrict
-  rw [← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap]
 
 end Quillen.PerfectComplexes

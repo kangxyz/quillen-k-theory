@@ -163,7 +163,6 @@ def closedSupportedKMap (n : ℕ) : G (ClosedRing f) n →* SupportedG (Submonoi
 
 /-- The actual closed-to-supported K-map is bijective in every connective degree. -/
 theorem closedSupportedKMap_bijective (n : ℕ) : Function.Bijective (closedSupportedKMap f n) := by
-  simp only [MulEquiv.toMonoidHom_eq_coe]
   rw [← closedSupportGEquiv_coe]
   exact (closedSupportGEquiv f n).bijective
 

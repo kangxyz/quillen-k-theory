@@ -36,7 +36,7 @@ variable {A B C P A' B' C' P' : TopCat.{u}}
   (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C') (p : P ⟶ P')
   (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g')
   (wi : i ≫ p = b ≫ i') (wj : j ≫ p = c ≫ j')
-  (hf : TheoremA.homotopyExtensionProperty f) (hf' : TheoremA.homotopyExtensionProperty f')
+  (hf : Quillen.homotopyExtensionProperty f) (hf' : Quillen.homotopyExtensionProperty f')
 
 include sq sq' wf wg wi wj hf hf' in
 /-- The actual left cylinder comparison pastes with the original collapse

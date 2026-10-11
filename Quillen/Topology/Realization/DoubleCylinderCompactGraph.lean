@@ -24,7 +24,7 @@ universe u v w z
 namespace Quillen.DoubleCylinder
 variable {X Y Z : SSet.{u}} (f : X ⟶ Y) (g : X ⟶ Z)
   {T : TopCat.{u}} {l : |X| ⊗ TopCat.I ⟶ T} {e : TopCat.of (|Y| ⊕ |Z|) ⟶ T}
-  (sq : IsPushout (TheoremA.intervalEndpoints |X|)
+  (sq : IsPushout (Quillen.intervalEndpoints |X|)
     (endMap (SSet.toTop.map f) (SSet.toTop.map g)) l e)
 
 include f g sq

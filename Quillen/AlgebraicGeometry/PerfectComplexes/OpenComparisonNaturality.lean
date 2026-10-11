@@ -33,7 +33,7 @@ lemma perfectOpenKRestrict_comp_strictToPerfectOpenKMap (n : ℕ) :
       (strictToPerfectKMap U n).comp (StrictOpenWeakImage.relativeKRestrict j n) := by
   unfold perfectOpenKRestrict strictToPerfectOpenKMap StrictOpenWeakImage.relativeKRestrict
     strictToPerfectKMap Waldhausen.subcategoryKMap
-  rw [← Waldhausen.KMap_comp, ← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
 
 /-- The actual absolute and relative comparison maps also commute with the
 original change of weak equivalences. -/
@@ -42,6 +42,6 @@ lemma strictToPerfectOpenKMap_comp_changeWeak (n : ℕ) :
       (Waldhausen.KMap (Waldhausen.Fibration.changeWeak_exact (StrictOpenWeakImage.nested j)) n) =
       (perfectOpenKMap j n).comp (strictToPerfectKMap X n) := by
   unfold strictToPerfectOpenKMap perfectOpenKMap strictToPerfectKMap Waldhausen.subcategoryKMap
-  rw [← Waldhausen.KMap_comp, ← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
 
 end Quillen.PerfectComplexes

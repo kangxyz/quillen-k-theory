@@ -30,6 +30,7 @@ namespace Quillen.Scheme.Bass
 /-- The actual integral terminal scheme, with the universe lift made explicit. -/
 abbrev integerBase : AlgebraicGeometry.Scheme.{u} := Spec (.of (ULift.{u} ℤ))
 
+/-- The unique structural morphism to the terminal integral scheme. -/
 def toIntegerBase (X : AlgebraicGeometry.Scheme.{u}) : X ⟶ integerBase :=
   specULiftZIsTerminal.from X
 

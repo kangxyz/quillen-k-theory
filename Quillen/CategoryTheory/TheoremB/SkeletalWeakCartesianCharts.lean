@@ -109,7 +109,8 @@ theorem RestrictionWeakCartesian.refl (A : (nerve D).Subcomplex) :
 theorem stageWeakCartesian_of_restrictionWeakCartesian (k n : ℕ) (h : k ≤ n)
     (hc : RestrictionWeakCartesian η ((nerve D).skeleton.monotone h)) :
     IsWeakHomotopyEquivalence
-      (Quillen.CartesianRealization.Sequential.stageComparison (realizedReplacementSkeletonMap η) k n h) := hc
+      (Quillen.CartesianRealization.Sequential.stageComparison
+        (realizedReplacementSkeletonMap η) k n h) := hc
 
 /-- Restricted characteristic charts also preserve the original coefficients. -/
 theorem restrictedSimplexChart_coefficient (A : (nerve D).Subcomplex) {n : ℕ}

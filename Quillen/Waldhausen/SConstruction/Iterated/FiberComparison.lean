@@ -38,6 +38,7 @@ lemma stageFirstTailRealizationEquiv_toFun (r : ℕ) (W : Model.{u}) (n : Simple
     (stageFirstTailRealizationEquiv r W n).toFun = (SSet.toTop.map (stageFirstTail r W n)).hom :=
   (stageFirstTail_equivalence r W n).choose_spec
 
+/-- The realized projection from an augmented stage row to its tail. -/
 def stageRowProjection (r : ℕ) (W : Model.{u}) (n : SimplexCategory) :=
   SplitRealizationFiber.projection (stageFirstTail r W n)
 
@@ -46,6 +47,7 @@ lemma stageRowProjection_eq (r : ℕ) (W : Model.{u}) (n : SimplexCategory) :
   change (SSet.toTop.map (stageFirstTail r W n) ≫ SSet.toTop.map (snd _ _)).hom = _
   rw [← CategoryTheory.Functor.map_comp, stageFirstTail_snd]
 
+/-- The stage-fiber insertion into the homotopy fiber of the row projection. -/
 def stageRowFiberComparison (r : ℕ) (W : Model.{u}) (n : SimplexCategory) :=
   SplitRealizationFiber.inclusion (stageFirstTail r W n) ((stagePathFiber r W).app (op n))
     (stageVertex r ((rows n).obj W)) (stagePathFiber_firstTail r W n)
@@ -100,6 +102,7 @@ def stageTotalFiberInclusion (r : ℕ) (W : Model.{u}) :
     (stages r).obj W ⟶ diagonalSSet (pathDiagram W ⋙ stages r) :=
   (diagonalConstantIso _).inv ≫ diagonalMap (stagePathFiber r W)
 
+/-- The realized diagonal tail map from the path diagram to the next stage. -/
 def stageTotalTailMap (r : ℕ) (W : Model.{u}) :
     C(|diagonalSSet (pathDiagram W ⋙ stages r)|, stageSpace (r+1) W) :=
   (SSet.toTop.map (diagonalMap (stagePathProjection r W))).hom
@@ -126,6 +129,7 @@ lemma stageTotalTailMap_fiberInclusion (r : ℕ) (W : Model.{u}) (x : stageSpace
   rw [← CategoryTheory.Functor.map_comp, stageTotalFiberInclusion_tail]
   exact realization_const_apply _ x
 
+/-- The total stage-fiber inclusion with its specified constant homotopy-fiber path. -/
 def stageTotalFiberComparison (r : ℕ) (W : Model.{u}) :
     C(stageSpace r W, HomotopyFiber (stageTotalTailMap r W) (stagePoint (r+1) W)) where
   toFun x := HomotopyFiber.basepoint _ _ (SSet.toTop.map (stageTotalFiberInclusion r W) x)

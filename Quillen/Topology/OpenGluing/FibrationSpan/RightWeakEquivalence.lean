@@ -37,7 +37,7 @@ def rightBridgeTargetHeight : C(d.Bridge,unitInterval) :=
 /-- The strong deformation retraction of the right bridge target collar onto its endpoint, for
 `cut < 1` and the right-cylinder height. -/
 def normalizedRightBridgeEndCollarSDR (cut : unitInterval) (hc : cut < 1) :
-    TheoremA.CylinderStrongDeformationRetract
+    Quillen.CylinderStrongDeformationRetract
       (d.normalized.swapped.bridgeEndCollarEnd d.rightBridgeTargetHeight
         d.rightBridgeTargetHeight_target cut hc) :=
   Quillen.FiberwiseBridge.TargetCollar.strongDeformationRetract d.cylinder1
@@ -45,16 +45,16 @@ def normalizedRightBridgeEndCollarSDR (cut : unitInterval) (hc : cut < 1) :
 
 /-- Reversing the displayed bridge pushout retains exactly its original base map. -/
 theorem bridgeProjection_flipped :
-    FiberwiseBridge.projection d.cylinder1 d.cylinder0 d.bridge_isPushout.flip
+    Quillen.FiberwiseBridge.projection d.cylinder1 d.cylinder0 d.bridge_isPushout.flip
       d.q1 d.q0 d.square.symm = d.bridgeProjection := by
   apply d.bridge_isPushout.hom_ext
-  · exact (FiberwiseBridge.projection_right d.cylinder1 d.cylinder0 d.bridge_isPushout.flip
+  · exact (Quillen.FiberwiseBridge.projection_right d.cylinder1 d.cylinder0 d.bridge_isPushout.flip
       d.q1 d.q0 d.square.symm).trans
-      (FiberwiseBridge.projection_left d.cylinder0 d.cylinder1 d.bridge_isPushout
+      (Quillen.FiberwiseBridge.projection_left d.cylinder0 d.cylinder1 d.bridge_isPushout
         d.q0 d.q1 d.square).symm
-  · exact (FiberwiseBridge.projection_left d.cylinder1 d.cylinder0 d.bridge_isPushout.flip
+  · exact (Quillen.FiberwiseBridge.projection_left d.cylinder1 d.cylinder0 d.bridge_isPushout.flip
       d.q1 d.q0 d.square.symm).trans
-      (FiberwiseBridge.projection_right d.cylinder0 d.cylinder1 d.bridge_isPushout
+      (Quillen.FiberwiseBridge.projection_right d.cylinder0 d.cylinder1 d.bridge_isPushout
         d.q0 d.q1 d.square).symm
 
 theorem normalizedRightBridgeEndCollarSDR_over (cut : unitInterval) (hc : cut < 1) :

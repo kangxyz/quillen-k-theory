@@ -35,6 +35,7 @@ variable {V X : Scheme.{u}} [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpa
     T).toScheme]
   (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ T)
 
+/-- The commutative structure on original perfect K-groups supplied by additivity. -/
 local instance (Y : Scheme.{u}) (n : ℕ) : CommGroup (PerfectK Y n) :=
   Waldhausen.Additivity.KCommGroup (perfectWaldhausen Y) n
 
@@ -240,6 +241,7 @@ namespace Quillen.PerfectComplexes.PerfectMayerVietoris
 variable {V X : Scheme.{u}} [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace V]
   (j : V ⟶ X) [IsOpenImmersion j] (T : X.Opens) (hT : IsCompact (T : Set X))
   (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ T)
+/-- The commutative structure on original perfect K-groups supplied by additivity. -/
 local instance (Y : Scheme.{u}) (n : ℕ) : CommGroup (PerfectK Y n) :=
   Waldhausen.Additivity.KCommGroup (perfectWaldhausen Y) n
 

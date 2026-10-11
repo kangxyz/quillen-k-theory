@@ -45,6 +45,7 @@ lemma mappingCone_map_zero {K₁ L₁ K₂ L₂ : CochainComplex C ℤ}
   ext n
   simp [mappingCone.ext_from_iff _ (n + 1) n rfl, mappingCone.map]
 
+/-- The mapping cone of a biproduct map is the biproduct of the two mapping cones. -/
 def mappingConeBiprodIso {K₁ L₁ K₂ L₂ : CochainComplex C ℤ}
     (f : K₁ ⟶ L₁) (g : K₂ ⟶ L₂) :
     mappingCone (biprod.map f g) ≅ mappingCone f ⊞ mappingCone g where

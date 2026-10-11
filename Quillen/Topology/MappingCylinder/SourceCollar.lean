@@ -149,7 +149,7 @@ def source (hcut : 0 < cut) : A ⟶ Collar sq cut := TopCat.ofHom
 /-- Contract the actual half-open time coordinate to zero, keeping the
 original attaching-space point fixed at every time. -/
 def strongDeformationRetract (hcut : 0 < cut) :
-    TheoremA.CylinderStrongDeformationRetract (source sq cut hcut) where
+    Quillen.CylinderStrongDeformationRetract (source sq cut hcut) where
   r := TopCat.ofHom ⟨fun x ↦ ((collarHomeomorph sq cut).symm x).1, by fun_prop⟩
   retract := by
     apply ConcreteCategory.hom_ext
@@ -209,29 +209,31 @@ def strongDeformationRetract (hcut : 0 < cut) :
 
 /-- The collar's original collapsed base depends only on its attaching point. -/
 theorem projection_apply (base : B ⟶ T) (x : Collar sq cut) :
-    (TheoremA.mappingCylinderProjection sq ≫ base) x.val =
+    (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) x.val =
       (f ≫ base) ((collarHomeomorph sq cut).symm x).1 := by
   have hx := congrArg Subtype.val ((collarHomeomorph sq cut).apply_symm_apply x)
   rw [collarHomeomorph_val] at hx
   rw [← hx]
-  exact ConcreteCategory.congr_hom (TheoremA.mappingCylinderProjection_cylinder_assoc sq base) _
+  exact ConcreteCategory.congr_hom (Quillen.MappingCylinder.mappingCylinderProjection_cylinder_assoc
+    sq base) _
 
 /-- The whole genuine source-collar deformation is over the original base. -/
 theorem deformation_over (hcut : 0 < cut) (base : B ⟶ T) :
     (strongDeformationRetract sq cut hcut).H ≫ inclusion sq cut ≫
-        TheoremA.mappingCylinderProjection sq ≫ base =
+        Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base =
       fst (Collar sq cut) TopCat.I ≫ inclusion sq cut ≫
-        TheoremA.mappingCylinderProjection sq ≫ base := by
+        Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base := by
   apply ConcreteCategory.hom_ext
   rintro ⟨x, t⟩
-  change (TheoremA.mappingCylinderProjection sq ≫ base)
+  change (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base)
     (collarHomeomorph sq cut
       (((collarHomeomorph sq cut).symm x).1,
         ⟨t.down * ((collarHomeomorph sq cut).symm x).2.1, _⟩)).val =
-    (TheoremA.mappingCylinderProjection sq ≫ base) x.val
+    (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) x.val
   rw [collarHomeomorph_val]
   exact (ConcreteCategory.congr_hom
-    (TheoremA.mappingCylinderProjection_cylinder_assoc sq base) _).trans (projection_apply sq cut
+    (Quillen.MappingCylinder.mappingCylinderProjection_cylinder_assoc sq base) _).trans
+      (projection_apply sq cut
       base x).symm
 
 end Quillen.MappingCylinder.SourceCollar

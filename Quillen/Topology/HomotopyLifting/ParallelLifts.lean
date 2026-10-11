@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.Topology.DeformationRetract.Cofibration
 public import Quillen.Topology.HomotopyLifting.Stationary
 public import Quillen.Topology.HomotopyEquiv.Fiberwise
 
@@ -23,31 +24,16 @@ open unitInterval
 namespace Quillen
 universe u
 
-/-- The actual time coordinate of reverse traversal followed by traversal. -/
-def backtrackTime (t : unitInterval) : unitInterval :=
-  ⟨|2 * (t : ℝ) - 1|,abs_nonneg _,abs_le.mpr ⟨by linarith [t.2.1],by linarith [t.2.2]⟩⟩
-
-@[fun_prop] theorem continuous_backtrackTime : Continuous backtrackTime := by
-  unfold backtrackTime
-  fun_prop
-
-@[simp] theorem backtrackTime_zero : backtrackTime 0 = 1 := by
-  apply Subtype.ext
-  norm_num [backtrackTime]
-@[simp] theorem backtrackTime_one : backtrackTime 1 = 1 := by
-  apply Subtype.ext
-  norm_num [backtrackTime]
-
 variable {X E B : Type u} [TopologicalSpace X] [TopologicalSpace E] [TopologicalSpace B]
     (q : C(E, B)) {a b c : C(X, E)} (H : a.Homotopy b) (K : a.Homotopy c)
 
 /-- Projection of the literal concatenated lifts is the original backtrack. -/
 theorem parallelLifts_backtrack (hsame : ∀ t x, q (H (t, x)) = q (K (t, x)))
     (t : unitInterval) (x : X) :
-    q ((H.symm.trans K) (t,x)) = q (H (backtrackTime t,x)) := by
+    q ((H.symm.trans K) (t,x)) = q (H (Quillen.backtrackTime t,x)) := by
   simp only [ContinuousMap.Homotopy.trans_apply]
   split_ifs with ht
-  · change q (H (σ _,x)) = q (H (backtrackTime t,x))
+  · change q (H (σ _,x)) = q (H (Quillen.backtrackTime t,x))
     apply congrArg (fun s : unitInterval ↦ q (H (s,x)))
     apply Subtype.ext
     change 1 - 2 * (t : ℝ) = |2 * (t : ℝ) - 1|
@@ -79,17 +65,17 @@ theorem HomotopyLiftingProperty.parallel_lifts_with_coherence
       HomotopyOver (q.comp b) q V ∧
       (∀ x,duration x = 0 → ∀ t,V (t,x) = a x) ∧
       ∃ S : (H.symm.trans K).toContinuousMap.Homotopy V.toContinuousMap,
-        (∀ r t x,q (S (r,(t,x))) = q (H (σ (σ r * σ (backtrackTime t)),x))) ∧
+        (∀ r t x,q (S (r,(t,x))) = q (H (σ (σ r * σ (Quillen.backtrackTime t)),x))) ∧
         (∀ r x,S (r,(0,x)) = b x) ∧ (∀ r x,S (r,(1,x)) = c x) ∧
         ∀ x,duration x = 0 → ∀ r t,S (r,(t,x)) = a x := by
   let J := H.symm.trans K
   let D : C(unitInterval × X,unitInterval) :=
     ⟨fun z ↦ (z.1 * σ z.1) * duration z.2,by fun_prop⟩
   let Q : C(unitInterval × (unitInterval × X),B) := {
-    toFun z := q (H (σ (σ z.1 * σ (backtrackTime z.2.1)),z.2.2))
+    toFun z := q (H (σ (σ z.1 * σ (Quillen.backtrackTime z.2.1)),z.2.2))
     continuous_toFun := by fun_prop }
   have h₀ (z : unitInterval × X) : Q (0,z) = q (J z) := by
-    change q (H (σ (σ 0 * σ (backtrackTime z.1)),z.2)) = _
+    change q (H (σ (σ 0 * σ (Quillen.backtrackTime z.1)),z.2)) = _
     simpa only [symm_zero,one_mul,symm_symm] using
       (parallelLifts_backtrack q H K hsame z.1 z.2).symm
   have hfixed (z : unitInterval × X) (hz : D z = 0) (s : unitInterval) :
@@ -99,12 +85,12 @@ theorem HomotopyLiftingProperty.parallel_lifts_with_coherence
       change (t * σ t) * duration x = 0 at hz
       simpa only [mul_eq_zero,symm_eq_zero,or_assoc] using hz
     rcases hz' with hz | hz | hz
-    · change q (H (σ (σ s * σ (backtrackTime t)),x)) = _
-      rw [hz,backtrackTime_zero,symm_one,mul_zero,symm_zero]
+    · change q (H (σ (σ s * σ (Quillen.backtrackTime t)),x)) = _
+      rw [hz,Quillen.backtrackTime_zero,symm_one,mul_zero,symm_zero]
       exact (congrArg q (H.map_one_left x)).trans
         (congrArg q (J.map_zero_left x)).symm
-    · change q (H (σ (σ s * σ (backtrackTime t)),x)) = _
-      rw [hz,backtrackTime_one,symm_one,mul_zero,symm_zero]
+    · change q (H (σ (σ s * σ (Quillen.backtrackTime t)),x)) = _
+      rw [hz,Quillen.backtrackTime_one,symm_one,mul_zero,symm_zero]
       exact (hsame 1 x).trans
         ((congrArg q (K.map_one_left x)).trans (congrArg q (J.map_one_left x)).symm)
     · change q (H (_,x)) = q (J (t,x))
@@ -124,7 +110,7 @@ theorem HomotopyLiftingProperty.parallel_lifts_with_coherence
   · intro t x
     change q (L (1,(t,x))) = q (b x)
     rw [hL]
-    change q (H (σ (σ 1 * σ (backtrackTime t)),x)) = _
+    change q (H (σ (σ 1 * σ (Quillen.backtrackTime t)),x)) = _
     rw [symm_one,zero_mul,symm_zero]
     exact congrArg q (H.map_one_left x)
   · intro x hx t

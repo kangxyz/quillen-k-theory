@@ -124,7 +124,7 @@ instance coherentPushforward_preservesFiniteLimits :
 
 /-- The geometric open-base-change comparison restricts to the actual
 coherent full subcategories. -/
-def coherentOpenBaseChange {V : Scheme.{u}} [IsLocallyNoetherian V]
+def coherentOpenBaseChange {V : Scheme.{u}}
     (a : V ⟶ X) [IsOpenImmersion a] :
     coherentPushforward i ⋙ finiteTypeSheavesRestriction a ≅
       finiteTypeSheavesRestriction (pullback.fst i a) ⋙ coherentPushforward (pullback.snd i a) :=
@@ -133,8 +133,8 @@ def coherentOpenBaseChange {V : Scheme.{u}} [IsLocallyNoetherian V]
 
 /-- The actual coherent pushforward into an affine scheme agrees with its
 quotient presentation, including the source scheme isomorphism. -/
-def affinePresentationComparison {Z : Scheme.{u}} [IsLocallyNoetherian Z]
-    (R : CommRingCat.{u}) [IsNoetherianRing R] (i : Z ⟶ Spec R) [IsClosedImmersion i]
+def affinePresentationComparison {Z : Scheme.{u}}
+    (R : CommRingCat.{u}) (i : Z ⟶ Spec R) [IsClosedImmersion i]
     (I : Ideal R) (e : Z ≅ Spec (Ideal.closedRing R I))
     (hi : i = e.hom ≫ Ideal.closedMap R I) :
     coherentPushforward i ≅ finiteTypeSheavesRestriction e.inv ⋙ Ideal.coherentPushforward R I :=
@@ -203,7 +203,7 @@ def coherentPushforwardGMap (n : ℕ) : G Z n →* G X n :=
 
 /-- The global construction specializes definitionally to the actual
 quotient pushforward already constructed in the affine case. -/
-@[simp] theorem coherentPushforward_quotient (R : CommRingCat.{u}) [IsNoetherianRing R]
+@[simp] theorem coherentPushforward_quotient (R : CommRingCat.{u})
     (I : Ideal R) :
     coherentPushforward (Ideal.closedMap R I) = Ideal.coherentPushforward R I := rfl
 

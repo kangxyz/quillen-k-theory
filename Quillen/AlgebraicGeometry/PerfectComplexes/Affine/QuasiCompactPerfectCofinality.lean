@@ -53,7 +53,9 @@ def quasiCompactPerfectOpenKEquiv (n : ℕ) : PerfectOpenK W.ι (n+1) ≃* Perfe
     (quasiCompact_perfectOpenKRestrict_succ_bijective R W hW n)
 
 @[simp] theorem quasiCompactPerfectOpenKEquiv_toMonoidHom (n : ℕ) :
-    (quasiCompactPerfectOpenKEquiv R W hW n).toMonoidHom = perfectOpenKRestrict W.ι (n+1) := rfl
+    (quasiCompactPerfectOpenKEquiv R W hW n :
+      PerfectOpenK W.ι (n+1) →* PerfectK W.toScheme (n+1)) =
+        perfectOpenKRestrict W.ι (n+1) := rfl
 
 /-- The honest original K-zero endpoint is injective. -/
 theorem quasiCompact_perfectOpenKRestrict_zero_injective :

@@ -71,8 +71,9 @@ def imageKernelCommaRetraction : ImageKernelComma P N T I ⥤ EpiKernelComma P (
         exact congrArg ((imageKernelPullbackIso P N T I).hom.app X ≫ ·) (CostructuredArrow.w
           f.right))
   map_id X := by apply CostructuredArrow.hom_ext; exact (imageKernelPullback P N T I).map_id _
-  map_comp f g := by apply CostructuredArrow.hom_ext; exact (imageKernelPullback P N T I).map_comp _
-    _
+  map_comp f g := by
+    apply CostructuredArrow.hom_ext
+    exact (imageKernelPullback P N T I).map_comp f g
 
 
 /-- Postcomposing an epimorphism onto the selected subobject gives exactly
@@ -112,8 +113,9 @@ def imageKernelCommaPostcompose : EpiKernelComma P (I.val : C) T ⥤ AuxiliaryKe
         exact congrArg (· ≫ Y.hom) ((imageKernelPostcomposeIso P N I).hom.naturality f.left)
       _ = _ := by rw [Category.assoc, CostructuredArrow.w f])
   map_id X := by apply CostructuredArrow.hom_ext; exact (imageKernelPostcompose P N I).map_id _
-  map_comp f g := by apply CostructuredArrow.hom_ext; exact (imageKernelPostcompose P N I).map_comp
-    _ _
+  map_comp f g := by
+    apply CostructuredArrow.hom_ext
+    exact (imageKernelPostcompose P N I).map_comp f.left g.left
 
 /-- The section retains the image-index arrow as well as the kernel Q-arrow. -/
 @[implicit_reducible]
@@ -123,8 +125,9 @@ def imageKernelCommaSection : EpiKernelComma P (I.val : C) T ⥤ ImageKernelComm
   map f := StructuredArrow.homMk ((imageKernelCommaPostcompose P N T I).map f) (Subsingleton.elim _
     _)
   map_id X := by apply StructuredArrow.hom_ext; exact (imageKernelCommaPostcompose P N T I).map_id _
-  map_comp f g := by apply StructuredArrow.hom_ext; exact (imageKernelCommaPostcompose P N T
-    I).map_comp _ _
+  map_comp f g := by
+    apply StructuredArrow.hom_ext
+    exact (imageKernelCommaPostcompose P N T I).map_comp f g
 
 /-- The canonical pullback inclusion supplies a natural transformation from
 the section of the retraction to the identity on the full structured image comma. -/

@@ -280,7 +280,8 @@ theorem universalStrictPullbackComparison_of_weak_fibers_realizationModel
       (HomotopyFiber.strictMapOver (d.k1 ≫ d.q1).hom d.q1.hom d.k1.hom rfl t)) :
     UniversalStrictPullbackComparison d.normalized.projection.hom :=
   d.universalStrictPullbackComparison_of_weak_fibers hU hV hcover hp0 hp1 hR
-    (NormalizedOpenGluing.Data.overlap_closedGraphs_of_realizationModel X e) hf0 hf1
+    (fun D _ _ _ b ↦
+      NormalizedOpenGluing.Data.overlap_closedGraphs_of_realizationModel X e D b) hf0 hf1
 
 end NormalizedFibrationSpan.Data
 end Quillen

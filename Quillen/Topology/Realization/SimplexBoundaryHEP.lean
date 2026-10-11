@@ -7,6 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.Topology.Realization.SimplexBoundary
+public import Quillen.Topology.HELP.Basic
 
 /-! # Homotopy extension from the explicit simplex-boundary retraction
 
@@ -159,5 +160,49 @@ theorem simplexBoundary_homotopy_extension (n : ℕ)
   exact exists_homotopy_extension_of_cylinder_retraction (simplexBoundary n)
     (isClosed_simplexBoundary n) (simplexBoundaryCylinderRetraction n)
     (simplexBoundaryCylinderRetraction_coe n) f H h
+
+
+section ParameterizedBoundary
+
+open CategoryTheory Limits MonoidalCategory Convexity
+open scoped Topology unitInterval
+
+/-- The actual inclusion of a parametrized simplex boundary. -/
+def parameterizedSimplexBoundaryInclusion (X : TopCat.{u}) (n : ℕ) :
+    TopCat.of (X × simplexBoundary n) ⟶
+      TopCat.of (X × StdSimplex ℝ (Fin (n + 1))) :=
+  TopCat.ofHom ⟨fun p ↦ (p.1, p.2.1), continuous_fst.prodMk
+    (continuous_subtype_val.comp continuous_snd)⟩
+
+/-- A parametrized simplex-boundary inclusion has the actual homotopy
+extension property, including the zero-dimensional empty-boundary case. -/
+theorem homotopyExtensionProperty_simplexBoundary (X : TopCat.{u}) (n : ℕ) :
+    Quillen.homotopyExtensionProperty (Quillen.parameterizedSimplexBoundaryInclusion X n) := by
+  apply Quillen.homotopyExtensionProperty_of_continuous
+  intro Z f H hzero
+  let H' : C((X × simplexBoundary n) × unitInterval, Z) :=
+    H.comp ContinuousMap.prodSwap
+  have hzero' : ∀ x b, H' ((x, b), 0) = f (x, b.1) := fun x b ↦ hzero (x, b)
+  obtain ⟨K, hK₀, hK⟩ := simplexBoundary_homotopy_extension n f H' hzero'
+  refine ⟨K.comp ContinuousMap.prodSwap, ?_, ?_⟩
+  · rintro ⟨x, b⟩
+    exact hK₀ x b
+  · rintro t ⟨x, b⟩
+    exact hK x b t
+
+/-- Attaching a parametrized topological simplex along its actual boundary
+produces a map with HEP. -/
+theorem homotopyExtensionProperty_simplexAttachment
+    (X : TopCat.{u}) (n : ℕ) {C D : TopCat.{u}}
+    {f : TopCat.of (X × simplexBoundary n) ⟶ C}
+    {g : TopCat.of (X × StdSimplex ℝ (Fin (n + 1))) ⟶ D}
+    {j : C ⟶ D}
+    (sq : IsPushout (Quillen.parameterizedSimplexBoundaryInclusion X n) f g j) :
+    Quillen.homotopyExtensionProperty j :=
+  Quillen.homotopyExtensionProperty_pushout sq (Quillen.homotopyExtensionProperty_simplexBoundary X
+    n)
+
+
+end ParameterizedBoundary
 
 end Quillen

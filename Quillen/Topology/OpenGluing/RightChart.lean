@@ -86,7 +86,7 @@ theorem rightFirstHomeomorph_base (hV : IsOpen V) (x : d.swapped.First) :
 variable (h : C(d.M, unitInterval)) (hi : ∀ a, h (d.i1 a) = 1)
   (cut : unitInterval) (hc : cut < 1)
   (hU : IsOpen U) (hV : IsOpen V)
-  (R : TheoremA.CylinderStrongDeformationRetract (d.swapped.bridgeEndCollarEnd h hi cut hc))
+  (R : Quillen.CylinderStrongDeformationRetract (d.swapped.bridgeEndCollarEnd h hi cut hc))
 
 include h hi cut hc hU hV R in
 /-- The original right endpoint into its actual open chart is weak. -/

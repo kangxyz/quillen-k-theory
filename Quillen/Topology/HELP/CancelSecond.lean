@@ -41,38 +41,43 @@ theorem CompactHomotopyExtensionLiftingProperty.cancel_second
     TopCat.ofHom ⟨fun z ↦ H (z.2, z.1), by fun_prop⟩
   let E : TopCat.of (B ⊕ B) ⟶ TopCat.of Y :=
     TopCat.ofHom ⟨Sum.elim (f.comp c) b, (f.comp c).continuous.sumElim b.continuous⟩
-  have w : cylinderBoundaryEnds A ≫ S = cylinderBoundarySumMap i ≫ E := by
+  have w : Quillen.CylinderBoundary.cylinderBoundaryEnds A ≫ S =
+    Quillen.CylinderBoundary.cylinderBoundarySumMap i ≫ E := by
     ext x
     rcases x with a | a
     · exact (H.map_zero_left a).trans (congrArg f (ContinuousMap.congr_fun hc a)).symm
     · exact H.map_one_left a
-  let d : CylinderBoundary i ⟶ TopCat.of Y := pushout.desc S E w
-  have hS : cylinderBoundarySide i ≫ d = S := pushout.inl_desc _ _ _
-  have hE : cylinderBoundaryCaps i ≫ d = E := pushout.inr_desc _ _ _
+  let d : Quillen.CylinderBoundary i ⟶ TopCat.of Y := pushout.desc S E w
+  have hS : Quillen.CylinderBoundary.cylinderBoundarySide i ≫ d = S := pushout.inl_desc _ _ _
+  have hE : Quillen.CylinderBoundary.cylinderBoundaryCaps i ≫ d = E := pushout.inr_desc _ _ _
   let k : TopCat.of (B × unitInterval) ⟶ TopCat.of Z :=
     TopCat.ofHom ⟨fun z ↦ K (z.2, z.1), by fun_prop⟩
-  have hw : d ≫ TopCat.ofHom g = cylinderBoundaryMap i ≫ k := by
-    apply (cylinderBoundary_isPushout i).hom_ext
-    · rw [← Category.assoc, hS, ← Category.assoc, cylinderBoundarySide_map]
+  have hw : d ≫ TopCat.ofHom g = Quillen.CylinderBoundary.cylinderBoundaryMap i ≫ k := by
+    apply (Quillen.CylinderBoundary.cylinderBoundary_isPushout i).hom_ext
+    · rw [← Category.assoc, hS, ← Category.assoc, Quillen.CylinderBoundary.cylinderBoundarySide_map]
       ext ⟨a, t⟩
       exact (hK t a).symm
-    · rw [← Category.assoc, hE, ← Category.assoc, cylinderBoundaryCaps_map]
+    · rw [← Category.assoc, hE, ← Category.assoc, Quillen.CylinderBoundary.cylinderBoundaryCaps_map]
       ext x
       rcases x with b | b
       · exact (K.map_zero_left b).symm
       · exact (K.map_one_left b).symm
-  have hw' : g.comp d.hom = k.hom.comp (cylinderBoundaryMap i).hom :=
+  have hw' : g.comp d.hom = k.hom.comp (Quillen.CylinderBoundary.cylinderBoundaryMap i).hom :=
     congrArg TopCat.Hom.hom hw
-  obtain ⟨l, hl, _⟩ := hg.strict (CylinderBoundary i) (TopCat.of (B × unitInterval))
-    (cylinderBoundaryMap i) (homotopyExtensionProperty_cylinderBoundaryMap i hi) d.hom k.hom hw'
+  obtain ⟨l, hl, _⟩ := hg.strict (Quillen.CylinderBoundary i) (TopCat.of (B × unitInterval))
+    (Quillen.CylinderBoundary.cylinderBoundaryMap i)
+      (Quillen.CylinderBoundary.homotopyExtensionProperty_cylinderBoundaryMap i hi) d.hom k.hom hw'
   have hside (a : A) (t : unitInterval) : l (i a, t) = H (t, a) := by
-    have h := ContinuousMap.congr_fun hl (cylinderBoundarySide i (a, t))
-    have hs := ConcreteCategory.congr_hom (cylinderBoundarySide_map i) (a, t)
+    have h := ContinuousMap.congr_fun hl (Quillen.CylinderBoundary.cylinderBoundarySide i (a, t))
+    have hs := ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundarySide_map i) (a,
+      t)
     have hd := ConcreteCategory.congr_hom hS (a, t)
     exact (congrArg l hs).symm.trans (h.trans hd)
   have hzero (b : B) : l (b, 0) = f (c b) := by
-    have h := ContinuousMap.congr_fun hl (cylinderBoundaryCaps i (Sum.inl b))
-    have hs := ConcreteCategory.congr_hom (cylinderBoundaryCaps_map i) (Sum.inl b)
+    have h := ContinuousMap.congr_fun hl (Quillen.CylinderBoundary.cylinderBoundaryCaps i (Sum.inl
+      b))
+    have hs := ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundaryCaps_map i)
+      (Sum.inl b)
     have hd := ConcreteCategory.congr_hom hE (Sum.inl b)
     exact (congrArg l hs).symm.trans (h.trans hd)
   refine ⟨c, hc, {
@@ -81,8 +86,9 @@ theorem CompactHomotopyExtensionLiftingProperty.cancel_second
     map_zero_left := hzero
     map_one_left := ?_ }, fun t x ↦ hside x t⟩
   intro x
-  have h := ContinuousMap.congr_fun hl (cylinderBoundaryCaps i (Sum.inr x))
-  have hs := ConcreteCategory.congr_hom (cylinderBoundaryCaps_map i) (Sum.inr x)
+  have h := ContinuousMap.congr_fun hl (Quillen.CylinderBoundary.cylinderBoundaryCaps i (Sum.inr x))
+  have hs := ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundaryCaps_map i)
+    (Sum.inr x)
   have hd := ConcreteCategory.congr_hom hE (Sum.inr x)
   exact (congrArg l hs).symm.trans (h.trans hd)
 

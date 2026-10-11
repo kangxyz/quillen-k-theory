@@ -87,8 +87,8 @@ pushout after enriching its source with any fixed coefficient. -/
 theorem coefficientDomainPushout_weakCartesian
     {A B C : SSet.{u}} {f : A ⟶ B} {g : A ⟶ C} {i : B ⟶ K} {j : C ⟶ K}
     (sq : IsPushout f g i j)
-    (hg : homotopyExtensionProperty ((realizedOuterProductFunctor X).map g))
-    (hg' : homotopyExtensionProperty ((realizedOuterProductFunctor Y).map g))
+    (hg : Quillen.homotopyExtensionProperty ((realizedOuterProductFunctor X).map g))
+    (hg' : Quillen.homotopyExtensionProperty ((realizedOuterProductFunctor Y).map g))
     (hA : WeakCartesian (coefficientDomainMap r A).hom q.hom
       ((realizedOuterProductFunctor X).map (g ≫ j) ≫ t).hom
       ((realizedOuterProductFunctor Y).map (g ≫ j) ≫ s).hom

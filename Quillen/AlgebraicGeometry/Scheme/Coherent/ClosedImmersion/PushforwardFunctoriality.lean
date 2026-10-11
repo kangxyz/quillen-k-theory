@@ -30,7 +30,7 @@ variable {X Y Z : Scheme.{u}}
   [IsLocallyNoetherian X] [IsLocallyNoetherian Y] [IsLocallyNoetherian Z]
 
 /-- Identity pushforward on actual coherent sheaves, from the original sheaf comparison. -/
-def coherentPushforwardIdIso (X : Scheme.{u}) [IsLocallyNoetherian X] :
+def coherentPushforwardIdIso (X : Scheme.{u}) :
     coherentPushforward (𝟙 X) ≅ 𝟭 (FiniteTypeSheaves X) :=
   Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules X)
     (Functor.isoWhiskerLeft (finiteTypeSheavesToModules X) (Scheme.Modules.pushforwardId X) ≪≫
@@ -77,6 +77,6 @@ def coherentPushforwardGEquiv (e : X ≅ Y) (n : ℕ) : G X n ≃* G Y n where
   map_mul' x y := map_mul _ x y
 
 @[simp] theorem coherentPushforwardGEquiv_toMonoidHom (e : X ≅ Y) (n : ℕ) :
-    (coherentPushforwardGEquiv e n).toMonoidHom = coherentPushforwardGMap e.hom n := rfl
+    (coherentPushforwardGEquiv e n : G X n →* G Y n) = coherentPushforwardGMap e.hom n := rfl
 
 end Quillen.CoherentScheme.ClosedImmersion.General

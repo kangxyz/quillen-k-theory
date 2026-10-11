@@ -163,7 +163,7 @@ theorem perfectSupportedUnionToAcyclic_exact :
   pushout _ h := h.map (perfectSupportedUnionToAcyclic j T)
 
 /-- The actual supported inclusion is preserved at the functor level. -/
-def perfectSupportedOpenAcyclicToSupported_inclusionIso :
+def perfectSupportedOpenAcyclicToSupportedInclusionIso :
     perfectSupportedOpenAcyclicToSupported j T ⋙ ObjectProperty.ιOfLE
       (show perfectSupported (T ⊔ j.opensRange).ι ≤ perfectSupported T.ι from fun K h ↦
         ((perfectSupported_sup_opensRange_iff j T K).mp h).1) ≅

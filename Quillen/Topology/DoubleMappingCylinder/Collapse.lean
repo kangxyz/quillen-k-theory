@@ -38,7 +38,7 @@ def sumElim {B C X : TopCat.{u}} (b : B ⟶ X) (c : C ⟶ X) :
 
 variable {A B C D M P : TopCat.{u}} {f : A ⟶ B} {g : A ⟶ C}
   {l : A ⊗ TopCat.I ⟶ D} {e : TopCat.of (B ⊕ C) ⟶ D}
-  (sqD : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
+  (sqD : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
 
 /-- The left endpoint inclusion into the actual double cylinder. -/
 def leftEnd (e : TopCat.of (B ⊕ C) ⟶ D) : B ⟶ D :=
@@ -139,7 +139,7 @@ include sqP
 omit sqD in
 /-- The cylinder is collapsed to the common image of its source. -/
 theorem collapse_square :
-    TheoremA.intervalEndpoints A ≫ (fst A TopCat.I ≫ f ≫ bP) =
+    Quillen.intervalEndpoints A ≫ (fst A TopCat.I ≫ f ≫ bP) =
       endMap f g ≫ sumElim bP cP := by
   ext x
   cases x with
@@ -174,18 +174,19 @@ def collapse : D ⟶ P :=
 /-- The collapse restricted to the right mapping cylinder is its ordinary projection. -/
 @[reassoc (attr := simp)] theorem mappingCylinderMap_collapse :
     mappingCylinderMap sqD sqM ≫ collapse sqD sqP =
-      TheoremA.mappingCylinderProjection sqM ≫ cP := by
+      Quillen.MappingCylinder.mappingCylinderProjection sqM ≫ cP := by
   apply sqM.hom_ext
   · rw [← Category.assoc, mappingCylinderMap_cylinder, collapse_cylinder,
-      TheoremA.mappingCylinderProjection_cylinder_assoc, sqP.w]
+      Quillen.MappingCylinder.mappingCylinderProjection_cylinder_assoc, sqP.w]
   · rw [← Category.assoc, mappingCylinderMap_target, collapse_rightEnd,
-      ← Category.assoc, TheoremA.mappingCylinderProjection_target, Category.id_comp]
+      ← Category.assoc, Quillen.MappingCylinder.mappingCylinderProjection_target, Category.id_comp]
 
 /-- The iterated-pushout comparison is precisely the double-cylinder collapse. -/
 theorem mappingCylinderPushoutCollapse_eq :
     (mappingCylinderPushout sqD sqM).desc bP
-      (TheoremA.mappingCylinderProjection sqM ≫ cP)
-      (by rw [Category.assoc, TheoremA.mappingCylinderProjection_start_assoc, sqP.w]) =
+      (Quillen.MappingCylinder.mappingCylinderProjection sqM ≫ cP)
+      (by rw [Category.assoc, Quillen.MappingCylinder.mappingCylinderProjection_start_assoc, sqP.w])
+        =
         collapse sqD sqP := by
   apply (mappingCylinderPushout sqD sqM).hom_ext
   · rw [IsPushout.inl_desc, collapse_leftEnd]
@@ -193,9 +194,9 @@ theorem mappingCylinderPushoutCollapse_eq :
 
 /-- With a cofibrant left leg, the collapse is a homotopy equivalence,
 using any actual mapping cylinder of the right leg. -/
-def collapseHomotopyEquivOfMappingCylinder (hf : TheoremA.homotopyExtensionProperty f) :
+def collapseHomotopyEquivOfMappingCylinder (hf : Quillen.homotopyExtensionProperty f) :
     ContinuousMap.HomotopyEquiv D P := by
-  let E := TheoremA.mappingCylinderPushoutCollapseHomotopyEquiv sqM
+  let E := Quillen.MappingCylinder.mappingCylinderPushoutCollapseHomotopyEquiv sqM
     (mappingCylinderPushout sqD sqM) sqP hf
   have hE : E.toFun = (collapse sqD sqP).hom :=
     congrArg TopCat.Hom.hom (mappingCylinderPushoutCollapse_eq sqD sqM sqP)
@@ -205,25 +206,25 @@ def collapseHomotopyEquivOfMappingCylinder (hf : TheoremA.homotopyExtensionPrope
     right_inv := by simpa only [hE] using E.right_inv }
 
 @[simp] theorem collapseHomotopyEquivOfMappingCylinder_toFun
-    (hf : TheoremA.homotopyExtensionProperty f) :
+    (hf : Quillen.homotopyExtensionProperty f) :
     (collapseHomotopyEquivOfMappingCylinder sqD sqM sqP hf).toFun =
       (collapse sqD sqP).hom := rfl
 
 /-- The canonical collapse from any actual double cylinder to the ordinary
 pushout is an actual homotopy equivalence when the left leg has HEP.
 Neither leg is assumed to be a homotopy equivalence. -/
-def collapseHomotopyEquiv (hf : TheoremA.homotopyExtensionProperty f) :
+def collapseHomotopyEquiv (hf : Quillen.homotopyExtensionProperty f) :
     ContinuousMap.HomotopyEquiv D P :=
   collapseHomotopyEquivOfMappingCylinder sqD
     (IsPushout.of_hasPushout (TopCat.ι₁ : A ⟶ A ⊗ TopCat.I) g) sqP hf
 
-@[simp] theorem collapseHomotopyEquiv_toFun (hf : TheoremA.homotopyExtensionProperty f) :
+@[simp] theorem collapseHomotopyEquiv_toFun (hf : Quillen.homotopyExtensionProperty f) :
     (collapseHomotopyEquiv sqD sqP hf).toFun = (collapse sqD sqP).hom := rfl
 
 
 variable {A' B' C' D' P' : TopCat.{u}} {f' : A' ⟶ B'} {g' : A' ⟶ C'}
   {l' : A' ⊗ TopCat.I ⟶ D'} {e' : TopCat.of (B' ⊕ C') ⟶ D'}
-  (sqD' : IsPushout (TheoremA.intervalEndpoints A') (endMap f' g') l' e')
+  (sqD' : IsPushout (Quillen.intervalEndpoints A') (endMap f' g') l' e')
   {bP' : B' ⟶ P'} {cP' : C' ⟶ P'} (sqP' : IsPushout f' g' bP' cP')
 
 /-- Strict naturality of the collapse for specified compatible maps of
@@ -261,8 +262,8 @@ theorem collapse_naturality
 /-- The actual homotopy equivalences supplied by cofibrant collapse form
 a strictly commuting square over every compatible pushout map. -/
 theorem collapseHomotopyEquiv_naturality
-    (hf : TheoremA.homotopyExtensionProperty f)
-    (hf' : TheoremA.homotopyExtensionProperty f')
+    (hf : Quillen.homotopyExtensionProperty f)
+    (hf' : Quillen.homotopyExtensionProperty f')
     (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C') (p : P ⟶ P')
     (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g')
     (wb : bP ≫ p = b ≫ bP') (wc : cP ≫ p = c ≫ cP') :

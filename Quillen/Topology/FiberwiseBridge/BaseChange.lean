@@ -112,16 +112,17 @@ base projection. The sole weak input is the actual other-cylinder source map. -/
 theorem left_baseChange_isWeakHomotopyEquivalence
     (b : B ⟶ T) (c : C ⟶ T) (w : f ≫ b = g ≫ c)
     (hstart : IsWeakHomotopyEquivalence
-      (baseChangedMap (TheoremA.mappingCylinderProjection sqN ≫ c).hom (TopCat.ι₀ ≫ lN).hom a)) :
+      (baseChangedMap (Quillen.MappingCylinder.mappingCylinderProjection sqN ≫ c).hom (TopCat.ι₀ ≫
+        lN).hom a)) :
     IsWeakHomotopyEquivalence
-      (baseChangedMap (FiberwiseBridge.projection sqM sqN sq b c w).hom m.hom a) := by
+      (baseChangedMap (Quillen.FiberwiseBridge.projection sqM sqN sq b c w).hom m.hom a) := by
   refine left_baseChange_isWeak_of_source_collars sqM sqN sq 1 (by exact zero_lt_one)
-    (FiberwiseBridge.projection sqM sqN sq b c w) ?_ ?_ a ?_
-  · simpa only [FiberwiseBridge.projection_left] using
+    (Quillen.FiberwiseBridge.projection sqM sqN sq b c w) ?_ ?_ a ?_
+  · simpa only [Quillen.FiberwiseBridge.projection_left] using
       Quillen.MappingCylinder.SourceCollar.deformation_over sqM 1 (by exact zero_lt_one) b
-  · simpa only [FiberwiseBridge.projection_right] using
+  · simpa only [Quillen.FiberwiseBridge.projection_right] using
       Quillen.MappingCylinder.SourceCollar.deformation_over sqN 1 (by exact zero_lt_one) c
-  · rw [FiberwiseBridge.projection_right sqM sqN sq b c w]
+  · rw [Quillen.FiberwiseBridge.projection_right sqM sqN sq b c w]
     exact hstart
 
 end Quillen.FiberwiseBridge.SourceCharts

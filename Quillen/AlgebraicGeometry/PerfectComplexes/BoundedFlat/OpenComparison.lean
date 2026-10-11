@@ -110,6 +110,6 @@ theorem boundedFlatPerfectOpenToPerfectOpen_comp (n : ℕ) :
       (perfectOpenKMap j n).comp (boundedFlatPerfectToPerfectKMap X n) := by
   unfold boundedFlatPerfectOpenToPerfectOpenKMap boundedFlatPerfectOpenKMap
     perfectOpenKMap boundedFlatPerfectToPerfectKMap
-  rw [← Waldhausen.KMap_comp, ← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
 
 end Quillen.PerfectComplexes

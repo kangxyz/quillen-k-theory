@@ -25,7 +25,7 @@ namespace Quillen.DoubleCylinder
 section Single
 variable {A B C D : TopCat.{u}} (f : A ⟶ B) (g : A ⟶ C)
   {l : A ⊗ TopCat.I ⟶ D} {e : TopCat.of (B ⊕ C) ⟶ D}
-  (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
+  (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
 
 include sq in
 theorem leftEnd_isEmbedding : IsEmbedding (fun x : B ↦ e (Sum.inl x)) :=
@@ -73,8 +73,8 @@ variable {A B C D A' B' C' D' : TopCat.{u}}
   {f : A ⟶ B} {g : A ⟶ C} {f' : A' ⟶ B'} {g' : A' ⟶ C'}
   {l : A ⊗ TopCat.I ⟶ D} {e : TopCat.of (B ⊕ C) ⟶ D}
   {l' : A' ⊗ TopCat.I ⟶ D'} {e' : TopCat.of (B' ⊕ C') ⟶ D'}
-  (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
-  (sq' : IsPushout (TheoremA.intervalEndpoints A') (endMap f' g') l' e')
+  (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
+  (sq' : IsPushout (Quillen.intervalEndpoints A') (endMap f' g') l' e')
   (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C')
   (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g')
 

@@ -60,13 +60,13 @@ variable {D : Type u} [SmallCategory D]
 /-- The actual coordinate-dropping map is an equivalence on each row. -/
 def dropRowHomotopyEquiv (p : SimplexCategoryᵒᵖ) :
     ContinuousMap.HomotopyEquiv |row L H p| |replacementRow H p| :=
-  realizationSigmaHomotopyEquiv fun s : (nerve D).obj p ↦
+  Quillen.Realization.realizationSigmaHomotopyEquiv fun s : (nerve D).obj p ↦
     simplexProjectionHomotopyEquiv (H.obj (s.obj 0))
       (L.obj (s.obj (Fin.last p.unop.len))).unop
 
 @[simp] theorem dropRowHomotopyEquiv_toFun (p : SimplexCategoryᵒᵖ) :
     (dropRowHomotopyEquiv L H p).toFun = (SSet.toTop.map (dropRow L H p)).hom :=
-  realizationSigmaHomotopyEquiv_toFun
+  Quillen.Realization.realizationSigmaHomotopyEquiv_toFun
     (fun s : (nerve D).obj p ↦ fst (H.obj (s.obj 0))
       (SSet.stdSimplex.obj (L.obj (s.obj (Fin.last p.unop.len))).unop))
     (fun s ↦ simplexProjectionHomotopyEquiv (H.obj (s.obj 0))

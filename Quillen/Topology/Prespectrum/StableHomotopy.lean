@@ -25,6 +25,7 @@ open scoped Topology
 universe u
 namespace Quillen.LoopPrespectrum
 
+/-- The abelian homotopy group at the stage used to compute the specified stable degree. -/
 def stableStage (E : LoopPrespectrum.{u}) (d : ℤ) (n : ℕ) : CommGrpCat.{u} :=
   CommGrpCat.of (HomotopyGroup.Pi (d.toNat+n+2)
     (E.space ((-d).toNat+n+2)) (E.point ((-d).toNat+n+2)))

@@ -37,12 +37,12 @@ def exactStableKMap (d : ℤ) :
 
 lemma exactStableKMap_id (d : ℤ) :
     exactStableKMap W W (IsExact.id _ _) d = 𝟙 _ := by
-  exact ((exactOriginalPrespectrumMap_id_homotopy W).stableHomotopyMap_eq d).trans
+  exact ((exactOriginalPrespectrumMapIdHomotopy W).stableHomotopyMap_eq d).trans
     ((stableHomotopyFunctor d).map_id _)
 
 lemma exactStableKMap_comp {J : D ⥤ E} (hJ : IsExact V.cof V.weq U.cof U.weq J) (d : ℤ) :
     exactStableKMap W U (hF.comp hJ) d = exactStableKMap W V hF d ≫ exactStableKMap V U hJ d := by
-  exact ((exactOriginalPrespectrumMap_comp_homotopy W V U hF hJ).stableHomotopyMap_eq d).trans
+  exact ((exactOriginalPrespectrumMapCompHomotopy W V U hF hJ).stableHomotopyMap_eq d).trans
     ((stableHomotopyFunctor d).map_comp _ _)
 
 lemma exactStableKMap_weakNatTrans (η : F ⟶ G) (hη : ∀ A, V.weq (η.app A)) (d : ℤ) :

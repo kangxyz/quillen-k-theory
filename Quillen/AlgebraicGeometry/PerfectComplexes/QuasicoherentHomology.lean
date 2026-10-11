@@ -25,6 +25,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 namespace Quillen.PerfectComplexes
+/-- The standard derived model used for original quasicoherent homology comparisons. -/
 local instance qcHomologyDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _
 

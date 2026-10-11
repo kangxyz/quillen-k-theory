@@ -165,7 +165,7 @@ lemma exists_open_module_equality_from_injective_model (R : CommRingCat.{u})
     apply quasiIso_localize_of_restrict_associated R W η r
     rw [← hs]
     exact Quillen.SheafCohomology.basicOpen_le_principalUnion R hr
-  have H := homotopy_comp_openModuleChainAdjoint_of_derived_eq R W.ι I a hbound hinj q f g hfg
+  have H := openModuleChainAdjointCompHomotopyOfDerivedEq R W.ι I a hbound hinj q f g hfg
   obtain ⟨P', hP', t, ht, hlocal⟩ := exists_finite_principal_chain_equality R s hP η hηs f g
     (DerivedCategory.Q_map_eq_of_homotopy _ H)
   exact ⟨P', hP', t, quasiIso_restrict_associated_of_principalUnion R W s hs t hlocal, ht⟩

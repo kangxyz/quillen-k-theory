@@ -50,6 +50,7 @@ def shiftedStableTransition (E : LoopPrespectrum.{u}) (d : ℤ) (n : ℕ) :
     shiftedStableStage E d n ⟶ shiftedStableStage E d (n+1) :=
   CommGrpCat.ofHom (structurePiMap E ((-d).toNat+n+2) (d.toNat+n+2))
 
+/-- The sequential system comparing parameter looping with the stable degree shift. -/
 def shiftedStableSystem (E : LoopPrespectrum.{u}) (d : ℤ) : ℕ ⥤ AddCommGrpCat.{u} :=
   Functor.ofSequence (shiftedStableTransition E d) ⋙ CommGrpCat.toAddCommGrp
 

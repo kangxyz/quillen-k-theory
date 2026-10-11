@@ -42,7 +42,8 @@ theorem affineLocallyFiniteType_subobject_extension_affine
   obtain ⟨K, s, hK, hs, e, he⟩ := quasicoherent_subobject_preimage j M A a
   have : K.IsQuasicoherent := hK
   have : Mono s := hs
-  have hKj : affineLocallyFiniteType U (K.restrict j) := (affineLocallyFiniteType U).prop_of_iso e.symm A.property
+  have hKj : affineLocallyFiniteType U (K.restrict j) :=
+    (affineLocallyFiniteType U).prop_of_iso e.symm A.property
   let er : Scheme.Modules.restrictFunctor j ⋙
       Scheme.Modules.restrictFunctor j.isoOpensRange.inv ≅
       Scheme.Modules.restrictFunctor j.opensRange.ι :=
@@ -57,7 +58,7 @@ theorem affineLocallyFiniteType_subobject_extension_affine
   have : IsIso ((Scheme.Modules.restrictFunctor j.opensRange.ι).map t) := htr
   have hj : j.isoOpensRange.hom ≫ j.opensRange.ι = j := by
     apply (cancel_epi j.isoOpensRange.inv).mp
-    simp [← Category.assoc, j.isoOpensRange_inv_comp]
+    simp [j.isoOpensRange_inv_comp]
   let er' : Scheme.Modules.restrictFunctor j.opensRange.ι ⋙
       Scheme.Modules.restrictFunctor j.isoOpensRange.hom ≅
       Scheme.Modules.restrictFunctor j :=

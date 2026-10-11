@@ -96,8 +96,31 @@ def sectionsLocalizationLift (R : CommRingCat.{u}) (r : R) (V : (Spec R).Opens)
 @[simp]
 lemma sectionsLocalizationLift_mk (R : CommRingCat.{u}) (r : R) (V : (Spec R).Opens)
     (M : (Spec R).Modules) (x : (affineSectionsAt R V).obj M) :
-    sectionsLocalizationLift R r V M
-      (scalarLocalizeMk R r ((affineSectionsAt R V).obj M) x) =
+    ConcreteCategory.hom
+      (X := (ModuleCat.restrictScalars (algebraMap R (Localization.Away r))).obj
+        ((ModuleCat.localizedModuleFunctor (Submonoid.powers r)).obj
+          (((TopCat.Sheaf.forget (ModuleCat.{u} R) (Spec R)).obj
+            (modulesSpecToSheaf.obj M)).obj (op V))))
+      (Y := ((TopCat.Sheaf.forget (ModuleCat.{u} R) (Spec R)).obj
+        (modulesSpecToSheaf.obj M)).obj (op (V ⊓ PrimeSpectrum.basicOpen r)))
+      (sectionsLocalizationLift R r V M)
+      (@DFunLike.coe
+        ((((TopCat.Sheaf.forget (ModuleCat.{u} R) (Spec R)).obj
+              (modulesSpecToSheaf.obj M)).obj (op V)) →ₗ[R]
+          ((ModuleCat.restrictScalars (algebraMap R (Localization.Away r))).obj
+              ((ModuleCat.localizedModuleFunctor (Submonoid.powers r)).obj
+                (((TopCat.Sheaf.forget (ModuleCat.{u} R) (Spec R)).obj
+                  (modulesSpecToSheaf.obj M)).obj (op V)))))
+        (((TopCat.Sheaf.forget (ModuleCat.{u} R) (Spec R)).obj
+              (modulesSpecToSheaf.obj M)).obj (op V))
+        (fun _ => ((ModuleCat.restrictScalars (algebraMap R (Localization.Away r))).obj
+              ((ModuleCat.localizedModuleFunctor (Submonoid.powers r)).obj
+                (((TopCat.Sheaf.forget (ModuleCat.{u} R) (Spec R)).obj
+                  (modulesSpecToSheaf.obj M)).obj (op V)))))
+        inferInstance
+        (scalarLocalizeMk R r
+          (((TopCat.Sheaf.forget (ModuleCat.{u} R) (Spec R)).obj
+            (modulesSpecToSheaf.obj M)).obj (op V))) x) =
     ((affineSectionsRestriction R (inf_le_left : V ⊓ PrimeSpectrum.basicOpen r ≤ V)).app M) x :=
   IsLocalizedModule.lift_apply (Submonoid.powers r)
     (scalarLocalizeMk R r ((affineSectionsAt R V).obj M))
@@ -128,7 +151,9 @@ lemma sectionsLocalizationLift_naturality (R : CommRingCat.{u}) (r : R) (V : (Sp
     ((affineSectionsAt R (V ⊓ PrimeSpectrum.basicOpen r)).map f)
       (sectionsLocalizationLift R r V M
         (scalarLocalizeMk R r ((affineSectionsAt R V).obj M) x))
-  rw [scalarLocalize_map_mk, sectionsLocalizationLift_mk, sectionsLocalizationLift_mk]
+  rw [scalarLocalize_map_mk]
+  simp only [Functor.comp_obj, evaluation_obj_obj]
+  erw [sectionsLocalizationLift_mk, sectionsLocalizationLift_mk]
   exact ConcreteCategory.congr_hom
     ((affineSectionsRestriction R (inf_le_left : V ⊓ PrimeSpectrum.basicOpen r ≤ V)).naturality f) x
 
@@ -158,7 +183,9 @@ lemma sectionsLocalizationLift_restrict (R : CommRingCat.{u}) (r : R)
     ((affineSectionsRestriction R (inf_le_inf h le_rfl)).app M)
       (sectionsLocalizationLift R r V M
         (scalarLocalizeMk R r ((affineSectionsAt R V).obj M) x))
-  rw [scalarLocalize_map_mk, sectionsLocalizationLift_mk, sectionsLocalizationLift_mk]
+  rw [scalarLocalize_map_mk]
+  simp only [Functor.comp_obj, evaluation_obj_obj]
+  erw [sectionsLocalizationLift_mk, sectionsLocalizationLift_mk]
   change ((modulesSpecToSheaf.obj M).obj.map _)
       (((modulesSpecToSheaf.obj M).obj.map _) x) =
     ((modulesSpecToSheaf.obj M).obj.map _)

@@ -51,6 +51,6 @@ theorem endpoint_realization_mono_of_fiberHELP
   apply endpoint_hasLiftingProperty_of_pairHELP f
   intro a b H
   exact fullHELP_on_contracted_test p q f sq hp hq hf _ _ _
-    (TheoremA.homotopyExtensionProperty_realizationBoundary n) d HD a b H
+    (Quillen.Realization.homotopyExtensionProperty_realizationBoundary n) d HD a b H
 
 end Quillen.MappingPath

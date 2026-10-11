@@ -7,7 +7,8 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.Topology.DoubleMappingCylinder.Basic
-public import Quillen.CategoryTheory.TheoremA.RealizationPushoutInvariance
+public import Quillen.Topology.Pushout.HomotopyEquivalence
+public import Quillen.Topology.MappingCylinder.HomotopyExtension
 
 /-!
 # Homotopy invariance of actual double mapping cylinders
@@ -77,8 +78,8 @@ def sumHomotopyEquiv {A B A' B' : TopCat.{u}}
 
 /-- Naturality of the inclusion of both endpoints. -/
 theorem intervalEndpoints_naturality {A A' : TopCat.{u}} (a : A ⟶ A') :
-    TheoremA.intervalEndpoints A ≫ (a ▷ TopCat.I) =
-      sumMap a a ≫ TheoremA.intervalEndpoints A' := by
+    Quillen.intervalEndpoints A ≫ (a ▷ TopCat.I) =
+      sumMap a a ≫ Quillen.intervalEndpoints A' := by
   apply ConcreteCategory.hom_ext
   intro x
   cases x <;> rfl
@@ -102,8 +103,8 @@ variable {A B C D A' B' C' D' : TopCat.{u}}
 /-- Homotopy invariance for a specified map of actual double cylinders.
 Its forward map is exactly the specified map `d`. -/
 def homotopyEquivOfMap
-    (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
-    (sq' : IsPushout (TheoremA.intervalEndpoints A') (endMap f' g') l' e')
+    (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
+    (sq' : IsPushout (Quillen.intervalEndpoints A') (endMap f' g') l' e')
     (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C') (d : D ⟶ D')
     (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g')
     (wl : (a ▷ TopCat.I) ≫ l' = l ≫ d)
@@ -112,9 +113,9 @@ def homotopyEquivOfMap
     (eb : ContinuousMap.HomotopyEquiv B B') (hb : eb.toFun = b.hom)
     (ec : ContinuousMap.HomotopyEquiv C C') (hc : ec.toFun = c.hom) :
     ContinuousMap.HomotopyEquiv D D' :=
-  TheoremA.pushoutHomotopyEquivOfMap sq sq'
-    (TheoremA.homotopyExtensionProperty_intervalEndpoints A)
-    (TheoremA.homotopyExtensionProperty_intervalEndpoints A')
+  Quillen.Pushout.pushoutHomotopyEquivOfMap sq sq'
+    (Quillen.homotopyExtensionProperty_intervalEndpoints A)
+    (Quillen.homotopyExtensionProperty_intervalEndpoints A')
     (sumMap a a) (a ▷ TopCat.I) (sumMap b c) d
     (intervalEndpoints_naturality a) (endMap_naturality a b c wf wg) wl.symm we.symm
     (sumHomotopyEquiv ea ea) (by simp only [sumHomotopyEquiv_toFun, ha]; rfl)
@@ -125,8 +126,8 @@ def homotopyEquivOfMap
     (sumHomotopyEquiv eb ec) (by simp only [sumHomotopyEquiv_toFun, hb, hc]; rfl)
 
 @[simp] theorem homotopyEquivOfMap_toFun
-    (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
-    (sq' : IsPushout (TheoremA.intervalEndpoints A') (endMap f' g') l' e')
+    (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
+    (sq' : IsPushout (Quillen.intervalEndpoints A') (endMap f' g') l' e')
     (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C') (d : D ⟶ D')
     (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g')
     (wl : (a ▷ TopCat.I) ≫ l' = l ≫ d)
@@ -140,8 +141,8 @@ def homotopyEquivOfMap
 /-- The canonical map of actual double cylinders induced by a strict map
 of their underlying spans. -/
 def map
-    (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
-    (sq' : IsPushout (TheoremA.intervalEndpoints A') (endMap f' g') l' e')
+    (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
+    (sq' : IsPushout (Quillen.intervalEndpoints A') (endMap f' g') l' e')
     (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C')
     (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g') : D ⟶ D' :=
   sq.desc ((a ▷ TopCat.I) ≫ l') (sumMap b c ≫ e') (by
@@ -149,38 +150,38 @@ def map
       ← Category.assoc, ← endMap_naturality a b c wf wg, Category.assoc])
 
 @[reassoc (attr := simp)] theorem map_cylinder
-    (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
-    (sq' : IsPushout (TheoremA.intervalEndpoints A') (endMap f' g') l' e')
+    (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
+    (sq' : IsPushout (Quillen.intervalEndpoints A') (endMap f' g') l' e')
     (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C')
     (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g') :
     l ≫ map sq sq' a b c wf wg = (a ▷ TopCat.I) ≫ l' := sq.inl_desc _ _ _
 
 @[reassoc (attr := simp)] theorem map_ends
-    (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
-    (sq' : IsPushout (TheoremA.intervalEndpoints A') (endMap f' g') l' e')
+    (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
+    (sq' : IsPushout (Quillen.intervalEndpoints A') (endMap f' g') l' e')
     (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C')
     (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g') :
     e ≫ map sq sq' a b c wf wg = sumMap b c ≫ e' := sq.inr_desc _ _ _
 
 @[simp] theorem map_cylinder_apply
-    (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
-    (sq' : IsPushout (TheoremA.intervalEndpoints A') (endMap f' g') l' e')
+    (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
+    (sq' : IsPushout (Quillen.intervalEndpoints A') (endMap f' g') l' e')
     (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C')
     (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g') (x : A) (t : TopCat.I) :
     map sq sq' a b c wf wg (l (x, t)) = l' (a x, t) :=
   ConcreteCategory.congr_hom (map_cylinder sq sq' a b c wf wg) (x, t)
 
 @[simp] theorem map_left
-    (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
-    (sq' : IsPushout (TheoremA.intervalEndpoints A') (endMap f' g') l' e')
+    (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
+    (sq' : IsPushout (Quillen.intervalEndpoints A') (endMap f' g') l' e')
     (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C')
     (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g') (x : B) :
     map sq sq' a b c wf wg (e (Sum.inl x)) = e' (Sum.inl (b x)) :=
   ConcreteCategory.congr_hom (map_ends sq sq' a b c wf wg) (Sum.inl x)
 
 @[simp] theorem map_right
-    (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
-    (sq' : IsPushout (TheoremA.intervalEndpoints A') (endMap f' g') l' e')
+    (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
+    (sq' : IsPushout (Quillen.intervalEndpoints A') (endMap f' g') l' e')
     (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C')
     (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g') (x : C) :
     map sq sq' a b c wf wg (e (Sum.inr x)) = e' (Sum.inr (c x)) :=
@@ -189,8 +190,8 @@ def map
 /-- A componentwise homotopy equivalence of strict spans induces an ordinary
 homotopy equivalence via the canonical map of their actual double cylinders. -/
 def mapHomotopyEquiv
-    (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
-    (sq' : IsPushout (TheoremA.intervalEndpoints A') (endMap f' g') l' e')
+    (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
+    (sq' : IsPushout (Quillen.intervalEndpoints A') (endMap f' g') l' e')
     (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C')
     (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g')
     (ea : ContinuousMap.HomotopyEquiv A A') (ha : ea.toFun = a.hom)
@@ -202,8 +203,8 @@ def mapHomotopyEquiv
     ea ha eb hb ec hc
 
 @[simp] theorem mapHomotopyEquiv_toFun
-    (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
-    (sq' : IsPushout (TheoremA.intervalEndpoints A') (endMap f' g') l' e')
+    (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
+    (sq' : IsPushout (Quillen.intervalEndpoints A') (endMap f' g') l' e')
     (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C')
     (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g')
     (ea : ContinuousMap.HomotopyEquiv A A') (ha : ea.toFun = a.hom)

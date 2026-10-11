@@ -88,8 +88,8 @@ pushout after enriching its source with any fixed coefficient. -/
 theorem domainPushout_cartesian
     {A B C : SSet.{u}} {f : A ⟶ B} {g : A ⟶ C} {i : B ⟶ K} {j : C ⟶ K}
     (sq : IsPushout f g i j)
-    (hg : homotopyExtensionProperty ((realizedOuterProductFunctor X).map g))
-    (hg' : homotopyExtensionProperty (SSet.toTop.map g))
+    (hg : Quillen.homotopyExtensionProperty ((realizedOuterProductFunctor X).map g))
+    (hg' : Quillen.homotopyExtensionProperty (SSet.toTop.map g))
     (hA : Cartesian (domainProjection X A).hom q.hom
       ((realizedOuterProductFunctor X).map (g ≫ j) ≫ t).hom
       (SSet.toTop.map (g ≫ j) ≫ s).hom

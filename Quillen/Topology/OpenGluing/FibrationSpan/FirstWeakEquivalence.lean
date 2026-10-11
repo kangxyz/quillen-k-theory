@@ -27,7 +27,7 @@ variable {T : TopCat.{u}} {U V : Set T} (d : NormalizedFibrationSpan.Data T U V)
 /-- The generic local SDR input is supplied by the original left mapping
 cylinder's target collar, with exactly the original normalized attaching map. -/
 def normalizedBridgeEndCollarSDR (cut : unitInterval) (hc : cut < 1) :
-    TheoremA.CylinderStrongDeformationRetract
+    Quillen.CylinderStrongDeformationRetract
       (d.normalized.bridgeEndCollarEnd d.bridgeTargetHeight
         d.bridgeTargetHeight_target cut hc) :=
   d.bridgeTargetCollarSDR cut hc

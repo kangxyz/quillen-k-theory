@@ -34,7 +34,7 @@ variable {T : TopCat.{u}} {U V : Set T} (d : NormalizedOpenGluing.Data T U V)
 /-- The first-end collar restriction stays weak after every actual base map,
 by pulling back its complete fiberwise strong deformation. -/
 theorem firstEnd_baseChange_restriction_collar_weak
-    (R : TheoremA.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc))
+    (R : Quillen.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc))
     (hR : R.H ≫ d.bridgeEndCollarBase h cut =
       fst (d.BridgeEndCollar h cut) TopCat.I ≫ d.bridgeEndCollarBase h cut) :
     IsWeakHomotopyEquivalence (restriction (baseChangedMap d.firstBase.hom d.firstEnd.hom g)
@@ -65,7 +65,7 @@ theorem firstEnd_baseChange_restriction_overlap_weak (hV : IsOpen V)
 
 /-- The pulled-back intersection is weak from the genuine fiberwise local SDR. -/
 theorem firstEnd_baseChange_restriction_intersection_weak (hV : IsOpen V)
-    (R : TheoremA.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc))
+    (R : Quillen.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc))
     (hR : R.H ≫ d.bridgeEndCollarBase h cut =
       fst (d.BridgeEndCollar h cut) TopCat.I ≫ d.bridgeEndCollarBase h cut) :
     IsWeakHomotopyEquivalence (restriction (baseChangedMap d.firstBase.hom d.firstEnd.hom g)
@@ -88,7 +88,7 @@ theorem firstEnd_baseChange_restriction_intersection_weak (hV : IsOpen V)
 the original bridge-end map is weak after that same base change. Every local
 restriction and the intersection are identified, and the new parameter is fixed. -/
 theorem firstEnd_baseChange_isWeakHomotopyEquivalence (hV : IsOpen V)
-    (R : TheoremA.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc))
+    (R : Quillen.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc))
     (hR : R.H ≫ d.bridgeEndCollarBase h cut =
       fst (d.BridgeEndCollar h cut) TopCat.I ≫ d.bridgeEndCollarBase h cut)
     (hweak : IsWeakHomotopyEquivalence (baseChangedMap d.bridgeBase.hom d.i0.hom g)) :

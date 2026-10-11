@@ -31,7 +31,7 @@ theorem fullHELP_on_contracted_test
     (hf : ∀ b : B, CompactHomotopyExtensionLiftingProperty
       (HomotopyFiber.strictMapOver p q f sq b))
     (A D : TopCat.{u}) [CompactSpace A] [CompactSpace D]
-    (i : A ⟶ D) (hi : TheoremA.homotopyExtensionProperty i)
+    (i : A ⟶ D) (hi : Quillen.homotopyExtensionProperty i)
     (d : D) (HD : (ContinuousMap.id D).Homotopy (ContinuousMap.const D d))
     (a : C(A,E)) (b : C(D,F)) (H : (f.comp a).Homotopy (b.comp i.hom)) :
     ∃ c : C(D,E), c.comp i.hom = a ∧ ∃ K : (f.comp c).Homotopy b,

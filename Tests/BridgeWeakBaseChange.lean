@@ -49,7 +49,8 @@ example : IsPushout (Quillen.MappingCylinder.SourceCollar.source sqM cut hcut)
 
 example : sideSet sqM sq cut ∪ sideSet sqN sq.flip cut = Set.univ := side_cover sqM sq cut hcut sqN
 
-example : m ⁻¹' intersectionSet sqM sq cut sqN = Quillen.MappingCylinder.SourceCollar.collarSet sqM cut :=
+example : m ⁻¹' intersectionSet sqM sq cut sqN =
+    Quillen.MappingCylinder.SourceCollar.collarSet sqM cut :=
   intersection_preimage_left sqM sq cut hcut sqN
 
 example (x : Quillen.MappingCylinder.SourceCollar.Collar sqM cut) (t : TopCat.I) :
@@ -60,8 +61,10 @@ example (x : Quillen.MappingCylinder.SourceCollar.Collar sqM cut) (t : TopCat.I)
 example {T : TopCat.{u}} (b : B ⟶ T) (c : C ⟶ T) (w : f ≫ b = g ≫ c)
     {D : Type u} [TopologicalSpace D] (a : C(D,T))
     (hs : IsWeakHomotopyEquivalence
-      (baseChangedMap (TheoremA.mappingCylinderProjection sqN ≫ c).hom (TopCat.ι₀ ≫ lN).hom a)) :
-    IsWeakHomotopyEquivalence (baseChangedMap (FiberwiseBridge.projection sqM sqN sq b c w).hom
+      (baseChangedMap (Quillen.MappingCylinder.mappingCylinderProjection sqN ≫ c).hom (TopCat.ι₀ ≫
+        lN).hom a)) :
+    IsWeakHomotopyEquivalence
+      (baseChangedMap (Quillen.FiberwiseBridge.projection sqM sqN sq b c w).hom
       m.hom a) :=
   left_baseChange_isWeakHomotopyEquivalence sqM sqN sq a b c w hs
 end Charts

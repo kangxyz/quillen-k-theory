@@ -7,7 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.Topology.DoubleMappingCylinder.Basic
-public import Quillen.CategoryTheory.TheoremA.RealizationPushoutCylinder
+public import Quillen.Topology.MappingCylinder.PushoutCollapse
 
 /-!
 # Subdividing an actual double mapping cylinder
@@ -42,7 +42,7 @@ theorem half_zero : leftHalf 0 = rightHalf 0 := by apply Subtype.ext; norm_num [
 
 variable {A B C D M N Z : TopCat.{u}} {f : A ⟶ B} {g : A ⟶ C}
   {l : A ⊗ TopCat.I ⟶ D} {e : TopCat.of (B ⊕ C) ⟶ D}
-  (sqD : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
+  (sqD : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
   {lM : A ⊗ TopCat.I ⟶ M} {cM : B ⟶ M}
   {lN : A ⊗ TopCat.I ⟶ N} {cN : C ⟶ N}
   (sqM : IsPushout (TopCat.ι₁ : A ⟶ A ⊗ TopCat.I) f lM cM)
@@ -82,7 +82,7 @@ def endsMap : TopCat.of (B ⊕ C) ⟶ Z := TopCat.ofHom
   ⟨Sum.elim (fun b ↦ m (cM b)) (fun c ↦ n (cN c)),
     continuous_sum_dom.mpr ⟨by fun_prop, by fun_prop⟩⟩
 
-theorem forward_square : TheoremA.intervalEndpoints A ≫ cylinderMap sqM sqN sq =
+theorem forward_square : Quillen.intervalEndpoints A ≫ cylinderMap sqM sqN sq =
     endMap f g ≫ endsMap (cM := cM) (cN := cN) (m := m) (n := n) := by
   ext a
   cases a with

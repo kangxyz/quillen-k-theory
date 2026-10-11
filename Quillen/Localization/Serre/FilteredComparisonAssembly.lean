@@ -37,7 +37,9 @@ variable
 
 /-- The identity ordinary lift gives the fixed-base comparator, retaining
 that exact functor's realization as the forward map. -/
-def auxiliaryComparatorEquivOfFilteredStages (N : C) :
+def auxiliaryComparatorEquivOfFilteredStages
+    (hE : ∀ V A, (E V A).toFun =
+      (SSet.toTop.map ((quotientAuxiliaryNerveCocone P V).ι.app A)).hom) (N : C) :
     ContinuousMap.HomotopyEquiv (ClassifyingSpace (AuxiliaryKernel P N))
       (ClassifyingSpace (IsoStructuredComma P ((quotientMapQ P).obj
         (Q.of (abelianExactStructure C).deflation (abelianExactStructure C).inflation N)))) := by
@@ -45,7 +47,15 @@ def auxiliaryComparatorEquivOfFilteredStages (N : C) :
   let e := E (P.isoModSerre.Q.obj N) A
   have he : e.toFun = (classifyingSpaceMap (auxiliaryToIsoStructured P N)).hom := by
     dsimp only [e, A]
-    rw [hE, quotientAuxiliaryNerveCocone_map, asIso_auxiliaryLiftMk, ← auxiliaryToIsoStructured_eq_withBaseRefl]
+    rw [hE, quotientAuxiliaryNerveCocone_map]
+    calc
+      _ = (classifyingSpaceMap (auxiliaryToIsoStructuredWithBase P
+          (Iso.refl (P.isoModSerre.Q.obj N)))).hom :=
+        congrArg (fun φ : P.isoModSerre.Q.obj N ≅ P.isoModSerre.Q.obj N =>
+          (classifyingSpaceMap (auxiliaryToIsoStructuredWithBase P φ)).hom)
+          (asIso_auxiliaryLiftMk P _ N (Iso.refl _))
+      _ = _ := congrArg (fun F => (classifyingSpaceMap F).hom)
+        (auxiliaryToIsoStructured_eq_withBaseRefl P N).symm
   apply TheoremA.homotopyEquivWithMap e (classifyingSpaceMap (auxiliaryToIsoStructured P N)).hom
   rw [he]
 

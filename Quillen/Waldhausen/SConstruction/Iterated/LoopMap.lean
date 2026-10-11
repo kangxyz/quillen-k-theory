@@ -32,6 +32,7 @@ universe u v
 namespace Quillen.Waldhausen.IteratedS
 variable {C : Type u} [Category.{v} C] (W : Structure C)
 
+/-- The zero-object vertex of the double S-construction. -/
 def doubleVertex : (doubleDiagonal W).obj (op ⦋0⦌) :=
   zeroSimplex (QuotientRows.waldhausenStructure W ⦋0⦌).cof
     (QuotientRows.waldhausenStructure W ⦋0⦌).weq
@@ -68,6 +69,7 @@ def suspensionHomotopy : SSet.Homotopy (doubleZero W) (doubleZero W) where
 /-- The genuine realization of the second S-stage. -/
 def doubleDelooping : TopCat.{max u v} := SSet.toTop.obj (doubleDiagonal W)
 
+/-- The realization of the zero-object vertex in the double S-construction. -/
 def doubleBasepoint : doubleDelooping W := realizationPoint (doubleVertex W)
 
 lemma doubleZero_realization (x : W.Delooping) :

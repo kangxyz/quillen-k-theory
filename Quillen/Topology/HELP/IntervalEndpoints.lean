@@ -6,10 +6,13 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.CategoryTheory.TheoremA.RealizationBoundary
+public import Quillen.Topology.Realization.SimplexBoundaryHEP
 public import Mathlib.Topology.Piecewise
+public import Mathlib.Geometry.Convex.ConvexSpace.PathConnectedSpaceStdSimplex
 
-/-! # Both interval endpoints have the homotopy extension property -/
+/-!
+# Homotopy extension for both interval endpoints
+-/
 @[expose] public section
 
 
@@ -20,7 +23,7 @@ open scoped Topology unitInterval
 
 universe u
 
-namespace Quillen.TheoremA
+namespace Quillen
 
 attribute [local instance] Classical.propDecidable
 
@@ -52,40 +55,42 @@ def boundaryZero : simplexBoundary 1 :=
 def boundaryOne : simplexBoundary 1 :=
   ⟨StdSimplex.single 1, ⟨0, by simp⟩⟩
 
-lemma boundaryZero_ne_one : boundaryZero ≠ boundaryOne := by
+lemma boundaryZero_ne_one : Quillen.boundaryZero ≠ Quillen.boundaryOne := by
   intro h
   have h' := congrArg (fun b : simplexBoundary 1 ↦ StdSimplex.homeomorphI b.1) h
-  simp [boundaryZero, boundaryOne] at h'
+  simp [Quillen.boundaryZero, Quillen.boundaryOne] at h'
 
-lemma boundary_eq_zero_or_one (b : simplexBoundary 1) : b = boundaryZero ∨ b = boundaryOne := by
-  rcases simplexBoundary_one_cases b with h | h
+lemma boundary_eq_zero_or_one (b : simplexBoundary 1) : b = Quillen.boundaryZero ∨ b =
+  Quillen.boundaryOne := by
+  rcases Quillen.simplexBoundary_one_cases b with h | h
   · exact Or.inl (Subtype.ext h)
   · exact Or.inr (Subtype.ext h)
 
 local instance : Finite (simplexBoundary 1) := by
-  apply Finite.of_surjective (fun b : Bool ↦ if b then boundaryOne else boundaryZero)
+  apply Finite.of_surjective (fun b : Bool ↦ if b then Quillen.boundaryOne else
+    Quillen.boundaryZero)
   intro b
-  rcases boundary_eq_zero_or_one b with rfl | rfl
+  rcases Quillen.boundary_eq_zero_or_one b with rfl | rfl
   · exact ⟨false, rfl⟩
   · exact ⟨true, rfl⟩
 
 /-- The disjoint union of two copies of a space is its product with the simplex boundary. -/
 def intervalEndpointDomainHomeomorph (A : Type u) [TopologicalSpace A] :
     (A ⊕ A) ≃ₜ A × simplexBoundary 1 where
-  toFun := Sum.elim (fun a ↦ (a, boundaryZero)) (fun a ↦ (a, boundaryOne))
-  invFun z := if z.2 = boundaryZero then Sum.inl z.1 else Sum.inr z.1
+  toFun := Sum.elim (fun a ↦ (a, Quillen.boundaryZero)) (fun a ↦ (a, Quillen.boundaryOne))
+  invFun z := if z.2 = Quillen.boundaryZero then Sum.inl z.1 else Sum.inr z.1
   left_inv a := by
-    cases a <;> simp [boundaryZero_ne_one.symm]
+    cases a <;> simp [Quillen.boundaryZero_ne_one.symm]
   right_inv z := by
     rcases z with ⟨a, b⟩
-    rcases boundary_eq_zero_or_one b with rfl | rfl <;>
-      simp [boundaryZero_ne_one.symm]
+    rcases Quillen.boundary_eq_zero_or_one b with rfl | rfl <;>
+      simp [Quillen.boundaryZero_ne_one.symm]
   continuous_toFun := continuous_sum_dom.mpr ⟨by fun_prop, by fun_prop⟩
   continuous_invFun := by
     apply continuous_if
     · intro z hz
-      have hc : IsClopen {z : A × simplexBoundary 1 | z.2 = boundaryZero} :=
-        (isClopen_discrete {boundaryZero}).preimage continuous_snd
+      have hc : IsClopen {z : A × simplexBoundary 1 | z.2 = Quillen.boundaryZero} :=
+        (isClopen_discrete {Quillen.boundaryZero}).preimage continuous_snd
       rw [hc.frontier_eq] at hz
       exact False.elim hz
     · exact (continuous_inl.comp continuous_fst).continuousOn
@@ -98,19 +103,19 @@ def intervalEndpoints (A : TopCat.{u}) : TopCat.of (A ⊕ A) ⟶ A ⊗ TopCat.I 
 
 /-- The endpoint pair inclusion has HEP after product with any space. -/
 theorem homotopyExtensionProperty_intervalEndpoints (A : TopCat.{u}) :
-    homotopyExtensionProperty (intervalEndpoints A) := by
+    Quillen.homotopyExtensionProperty (Quillen.intervalEndpoints A) := by
   let e₁ : TopCat.of (A ⊕ A) ≅ TopCat.of (A × simplexBoundary 1) :=
-    TopCat.isoOfHomeo (intervalEndpointDomainHomeomorph A)
+    TopCat.isoOfHomeo (Quillen.intervalEndpointDomainHomeomorph A)
   let e₂ : TopCat.of (A × StdSimplex ℝ (Fin 2)) ≅ A ⊗ TopCat.I :=
     TopCat.isoOfHomeo ((Homeomorph.refl A).prodCongr
       (StdSimplex.homeomorphI.trans TopCat.I.homeomorph.symm))
-  have h := homotopyExtensionProperty_comp
-    (homotopyExtensionProperty_comp
-      (homotopyExtensionProperty_of_isIso e₁.hom)
-      (homotopyExtensionProperty_simplexBoundary A 1))
-    (homotopyExtensionProperty_of_isIso e₂.hom)
-  have heq : (e₁.hom ≫ parameterizedSimplexBoundaryInclusion A 1) ≫ e₂.hom =
-      intervalEndpoints A := by
+  have h := Quillen.homotopyExtensionProperty_comp
+    (Quillen.homotopyExtensionProperty_comp
+      (Quillen.homotopyExtensionProperty_of_isIso e₁.hom)
+      (Quillen.homotopyExtensionProperty_simplexBoundary A 1))
+    (Quillen.homotopyExtensionProperty_of_isIso e₂.hom)
+  have heq : (e₁.hom ≫ Quillen.parameterizedSimplexBoundaryInclusion A 1) ≫ e₂.hom =
+      Quillen.intervalEndpoints A := by
     apply TopCat.hom_ext
     apply ContinuousMap.ext
     intro a
@@ -123,4 +128,5 @@ theorem homotopyExtensionProperty_intervalEndpoints (A : TopCat.{u}) :
       rw [StdSimplex.homeomorphI_single_one]
   exact heq ▸ h
 
-end Quillen.TheoremA
+
+end Quillen

@@ -144,8 +144,8 @@ theorem vertexFiberComparison_isWeakHomotopyEquivalence
       (hf.comp (isWeakHomotopyEquivalence_of_homotopyEquiv
         (stageOneFiberHomeomorph H d).toHomotopyEquiv))
   change IsWeakHomotopyEquivalence ((vertexPullbackFiberHomeomorph H d).toHomotopyEquiv.toFun.comp
-    ((vertexRestrictedComparison H d).comp (stageOneFiberHomeomorph H d).toHomotopyEquiv.toFun)) at
-      hc
+    ((vertexRestrictedComparison H d).comp
+      (stageOneFiberHomeomorph H d).toHomotopyEquiv.toFun)) at hc
   have he : (vertexPullbackFiberHomeomorph H d).toHomotopyEquiv.toFun.comp
       ((vertexRestrictedComparison H d).comp
         (stageOneFiberHomeomorph H d).toHomotopyEquiv.toFun) = vertexFiberComparison H d :=

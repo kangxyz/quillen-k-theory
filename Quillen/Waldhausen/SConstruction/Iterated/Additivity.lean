@@ -31,10 +31,12 @@ universe u
 namespace Quillen.Waldhausen.IteratedS
 open Fibration Fibration.RelativeRows
 
+/-- Evaluate an augmented quotient row on its first interval. -/
 def rowFirst (W : Model.{u}) (n : SimplexCategory) : (rows (addInitial.obj n)).obj W ⟶ W :=
   ⟨QuotientRows.evaluation W.waldhausen (firstInterval n),
     QuotientRows.evaluation_exact W.waldhausen (firstInterval n), rfl⟩
 
+/-- Forget the initial interval of an augmented quotient row. -/
 def rowTail (W : Model.{u}) (n : SimplexCategory) :
     (rows (addInitial.obj n)).obj W ⟶ (rows n).obj W :=
   (rowsReindex (tail.app n)).app W
@@ -75,6 +77,7 @@ lemma allWeakRelativeLift_exact (W : Model.{u}) (n : SimplexCategory) :
   weak _ h := h
   pushout _ h := IsPushout.of_map_of_faithful (RelativeRows.forget _ n) h
 
+/-- Identify the zero-stage augmented quotient rows with the all-weak relative rows. -/
 def allWeakRelativeSSetIso (W : Model.{u}) (n : SimplexCategory) :
     (stages 0).obj ((rows (addInitial.obj n)).obj W) ≅
       (relativeSRows (AllWeak.nested W.waldhausen)).obj (op n) where
@@ -145,6 +148,7 @@ theorem stageFirstTail_equivalence (r : ℕ) (W : Model.{u}) (n : SimplexCategor
 
 open Fibration Fibration.RelativeRows
 
+/-- Insert a row with the given first object and zero tail. -/
 def rowFiber (W : Model.{u}) (n : SimplexCategory) : W ⟶ (rows (addInitial.obj n)).obj W :=
   (insertion (fiberOrdinal n)).app W
 
@@ -174,6 +178,7 @@ lemma rowFiber_reindex (W : Model.{u}) {m n : SimplexCategory} (α : m ⟶ n) :
   ext i : 3
   cases i using Fin.cases <;> rfl
 
+/-- The tail projection from the augmented path diagram to the row diagram. -/
 def pathProjection (W : Model.{u}) : pathDiagram W ⟶ rowDiagram W where
   app n := rowTail W n.unop
   naturality n m α := by
@@ -184,6 +189,7 @@ def pathProjection (W : Model.{u}) : pathDiagram W ⟶ rowDiagram W where
     rw [← QuotientRows.reindex_comp, ← QuotientRows.reindex_comp]
     congr 1
 
+/-- The natural insertion from the constant model into the augmented path diagram. -/
 def pathFiber (W : Model.{u}) : (Functor.const _).obj W ⟶ pathDiagram W where
   app n := rowFiber W n.unop
   naturality n m α := by
@@ -192,10 +198,12 @@ def pathFiber (W : Model.{u}) : (Functor.const _).obj W ⟶ pathDiagram W where
     rw [Category.id_comp]
     exact (rowFiber_reindex W α.unop).symm
 
+/-- Apply the iterated-stage functor to the tail projection. -/
 def stagePathProjection (r : ℕ) (W : Model.{u}) : pathDiagram W ⋙ stages r ⟶ rowDiagram W ⋙
     stages r :=
   Functor.whiskerRight (pathProjection W) (stages r)
 
+/-- Apply the iterated-stage functor to the constant-model insertion. -/
 def stagePathFiber (r : ℕ) (W : Model.{u}) :
     (Functor.const _).obj ((stages r).obj W) ⟶ pathDiagram W ⋙ stages r :=
   (Functor.constComp SimplexCategoryᵒᵖ W (stages r)).inv ≫

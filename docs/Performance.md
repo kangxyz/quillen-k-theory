@@ -51,3 +51,11 @@ passes strict compilation with its local 800,000-heartbeat allowance.
 The allowance applies to this declaration; its construction and proofs are
 unchanged. This records a compilation resource requirement. A speed improvement
 for this declaration remains open.
+
+The chosen-zero variant
+[`normalizedMixedMap`](../Quillen/Waldhausen/Additivity/NormalizedDeformationMap.lean)
+also retains its original construction and proofs. Its outer naturality
+requires a declaration-local 550,000-heartbeat allowance: strict compilation
+fails at 540,000 and passes at 550,000. This is the smallest tested passing
+allowance. Factoring the naturality proof did not produce an accepted
+default-budget optimization; no speed improvement is claimed for this change.

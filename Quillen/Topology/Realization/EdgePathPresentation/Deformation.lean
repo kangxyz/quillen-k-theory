@@ -36,7 +36,7 @@ variable (X : TopCat.{u}) (n : ℕ) {C D : TopCat.{u}}
     {f : TopCat.of (X × simplexBoundary n) ⟶ C}
     {g : TopCat.of (X × StdSimplex ℝ (Fin (n + 1))) ⟶ D}
     {j : C ⟶ D}
-    (sq : IsPushout (TheoremA.parameterizedSimplexBoundaryInclusion X n) f g j)
+    (sq : IsPushout (Quillen.parameterizedSimplexBoundaryInclusion X n) f g j)
 
 /-- The radial deformation on the attached cells, glued to the constant
 homotopy on the previous space using preservation of pushouts by cylinders. -/
@@ -45,7 +45,7 @@ def simplexAttachmentRadialCylinder : D ⊗ TopCat.I ⟶ D := by
     TopCat.ofHom ⟨fun z ↦ g (z.1.1, simplexBoundaryRetractPoint (z.1.2, z.2.down)), by fun_prop⟩
   let c : C ⊗ TopCat.I ⟶ D :=
     TopCat.ofHom ⟨fun z ↦ j z.1, by fun_prop⟩
-  have h : (TheoremA.parameterizedSimplexBoundaryInclusion X n ▷ TopCat.I) ≫ b =
+  have h : (Quillen.parameterizedSimplexBoundaryInclusion X n ▷ TopCat.I) ≫ b =
       (f ▷ TopCat.I) ≫ c := by
     apply ConcreteCategory.hom_ext
     intro z

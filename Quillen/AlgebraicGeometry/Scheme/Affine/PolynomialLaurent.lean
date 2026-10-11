@@ -48,6 +48,7 @@ def laurentGlobalUnit (R : CommRingCat.{u}) : (Γ(Spec (.of (LaurentPolynomial R
   Units.map (Scheme.ΓSpecIso (.of (LaurentPolynomial R))).inv.hom.toMonoidHom (laurentCoordinateUnit
     R)
 
+/-- The affine polynomial projection induced by the coefficient inclusion. -/
 def polynomialProjection (R : CommRingCat.{u}) : Spec (.of (Polynomial R)) ⟶ Spec R :=
   Spec.map (CommRingCat.ofHom Polynomial.C)
 

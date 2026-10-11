@@ -31,9 +31,12 @@ open scoped Simplicial Topology unitInterval
 universe u
 namespace Quillen.Waldhausen.IteratedS
 
+/-- The realization of the specified iterated S-construction stage. -/
 def stageSpace (r : ℕ) (W : Model.{u}) : TopCat.{u} := SSet.toTop.obj ((stages r).obj W)
+/-- The realized zero-object vertex of the iterated stage. -/
 def stagePoint (r : ℕ) (W : Model.{u}) : stageSpace r W := realizationPoint (stageVertex r W)
 
+/-- The based simplicial self-homotopy of the next-stage constant zero map. -/
 def stageHomotopy (r : ℕ) (W : Model.{u}) :
     SSet.Homotopy (SSet.const (X := (stages r).obj W) (stageVertex (r+1) W))
       (SSet.const (X := (stages r).obj W) (stageVertex (r+1) W)) where

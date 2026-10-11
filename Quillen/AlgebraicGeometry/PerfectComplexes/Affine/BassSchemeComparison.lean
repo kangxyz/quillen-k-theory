@@ -34,7 +34,8 @@ def affineSchemeKZeroIso : affineKZeroFunctor.{u} ≅
   NatIso.ofComponents (fun _ ↦ Iso.refl _) (by intro R S f; rfl)
 
 /-- The genuine geometric chart comparison transports the actual next Bass cokernel. -/
-def affineSchemeContractionIso (F : Quillen.Scheme.QuasiCompactSchemes.{u}ᵒᵖ ⥤ AddCommGrpCat.{u + 1})
+def affineSchemeContractionIso
+    (F : Quillen.Scheme.QuasiCompactSchemes.{u}ᵒᵖ ⥤ AddCommGrpCat.{u + 1})
   :
     contraction (Scheme.Bass.affineSchemeFunctor ⋙ F) ≅
       Scheme.Bass.affineSchemeFunctor ⋙

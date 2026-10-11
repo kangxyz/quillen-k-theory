@@ -30,6 +30,7 @@ universe u
 namespace Quillen.PerfectComplexes.Bass
 open Quillen.Scheme
 
+/-- The commutative group structure on original perfect K0 supplied by additivity. -/
 local instance perfectKZeroCommGroup (X : QuasiCompactSchemes.{u}) : CommGroup (PerfectK X.obj 0) :=
   Quillen.Waldhausen.Additivity.KCommGroup (perfectWaldhausen X.obj) 0
 
@@ -51,6 +52,7 @@ def negativeKFunctor : ℕ → QuasiCompactSchemes.{u}ᵒᵖ ⥤ AddCommGrpCat.{
     Scheme.Bass.minus)
       (negativeKFunctor n)
 
+/-- The Bass group K_{-n} of an actual quasi-compact scheme. -/
 abbrev negativeK (X : QuasiCompactSchemes.{u}) (n : ℕ) : AddCommGrpCat.{u+1} :=
   (negativeKFunctor n).obj (op X)
 

@@ -7,7 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.Topology.Pushout.Open.Restriction
-public import Quillen.CategoryTheory.TheoremA.IntervalEndpoints
+public import Quillen.Topology.HELP.IntervalEndpoints
 public import Quillen.Topology.Realization.EdgePathPresentation.Interiors
 
 /-!
@@ -29,7 +29,7 @@ namespace Quillen
 
 /-- Both endpoint inclusions together form a closed embedding. -/
 theorem isClosedEmbedding_intervalEndpoints (A : TopCat.{u}) :
-    IsClosedEmbedding (TheoremA.intervalEndpoints A) := by
+    IsClosedEmbedding (Quillen.intervalEndpoints A) := by
   change IsClosedEmbedding (Sum.elim (fun a : A ↦ (a, ULift.up (0 : I)))
     (fun a : A ↦ (a, ULift.up (1 : I))))
   have h (t : ULift.{u} I) : IsClosedEmbedding (fun a : A ↦ (a, t)) := by
@@ -62,7 +62,7 @@ def endMap : TopCat.of (A ⊕ A) ⟶ TopCat.of (B ⊕ C) :=
     continuous_sum_dom.mpr ⟨by fun_prop, by fun_prop⟩⟩
 
 variable {l : A ⊗ TopCat.I ⟶ D} {e : TopCat.of (B ⊕ C) ⟶ D}
-  (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
+  (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
 
 /-- The interval projection on the central cylinder of the double mapping cylinder. -/
 def heightCylinderMap : A ⊗ TopCat.I ⟶ TopCat.I := snd A TopCat.I
@@ -71,7 +71,7 @@ def heightCylinderMap : A ⊗ TopCat.I ⟶ TopCat.I := snd A TopCat.I
 def heightEndMap : TopCat.of (B ⊕ C) ⟶ TopCat.I := TopCat.ofHom
   ⟨Sum.elim (fun _ ↦ 0) (fun _ ↦ 1), continuous_sum_dom.mpr ⟨continuous_const, continuous_const⟩⟩
 
-theorem height_square : TheoremA.intervalEndpoints A ≫ heightCylinderMap =
+theorem height_square : Quillen.intervalEndpoints A ≫ heightCylinderMap =
     endMap f g ≫ heightEndMap := by
   ext a
   cases a <;> rfl
@@ -96,7 +96,7 @@ abbrev OpenInterval := {t : I // 0 < t ∧ t < 1}
 /-- The complement of the cylinder endpoint pair is literally the open
 interval product, with its ordinary subspace topology. -/
 def cylinderInteriorHomeomorph (A : TopCat.{u}) : A × OpenInterval ≃ₜ
-    {z : A × ULift.{u} I // z ∉ Set.range (TheoremA.intervalEndpoints A)} where
+    {z : A × ULift.{u} I // z ∉ Set.range (Quillen.intervalEndpoints A)} where
   toFun z := ⟨(z.1, ULift.up z.2.1), by
     rintro ⟨a | a, ha⟩
     · have ht : (0 : I) = z.2.1 := congrArg (fun w : A × TopCat.I ↦ w.2.down) ha

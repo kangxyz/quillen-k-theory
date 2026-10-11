@@ -54,6 +54,7 @@ theorem locallyPerfect_of_mem {E : Complex U} (hE : complexObjects j E) : locall
 
 /-- The full subcategory retains all original perfect-complex morphisms. -/
 def objects : ObjectProperty (Perfect U) := fun E => complexObjects j E.obj
+/-- The full category of original perfect complexes in the saturated derived restriction image. -/
 abbrev Obj := (objects j).FullSubcategory
 
 /-- Original restriction has its literal reflexive derived-image witness. -/

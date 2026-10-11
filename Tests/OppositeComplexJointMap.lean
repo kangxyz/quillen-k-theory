@@ -80,18 +80,18 @@ variable {C : Type u} [Category.{v} C] [Abelian C]
   projection. -/
 theorem original_inverse_endpoint_triple (f : Arrow P.FullSubcategoryᵒᵖ) :
     (oppositeComplexJointData Q hQ).inl.app ((complexSubcategoryMap F P Q hF).op.mapArrow.obj f) ≫
-        ((oppositeComplexJointData_mapIso F P Q hF hP hQ hExact).inv.app f).hom.left =
+        ((oppositeComplexJointDataMapIso F P Q hF hP hQ hExact).inv.app f).hom.left =
       (complexSubcategoryMap F P Q hF).op.map ((oppositeComplexJointData P hP).inl.app f) ∧
     (oppositeComplexJointData Q hQ).inr.app ((complexSubcategoryMap F P Q hF).op.mapArrow.obj f) ≫
-        ((oppositeComplexJointData_mapIso F P Q hF hP hQ hExact).inv.app f).hom.left =
+        ((oppositeComplexJointDataMapIso F P Q hF hP hQ hExact).inv.app f).hom.left =
       (complexSubcategoryMap F P Q hF).op.map ((oppositeComplexJointData P hP).inr.app f) ∧
-    ((oppositeComplexJointData_mapIso F P Q hF hP hQ hExact).inv.app f).hom.right ≫
+    ((oppositeComplexJointDataMapIso F P Q hF hP hQ hExact).inv.app f).hom.right ≫
         (complexSubcategoryMap F P Q hF).op.map ((oppositeComplexJointData P hP).projection.app f) =
       (oppositeComplexJointData Q hQ).projection.app ((complexSubcategoryMap F P Q
         hF).op.mapArrow.obj f) :=
-  ⟨oppositeComplexJointData_mapIso_inv_inl F P Q hF hP hQ hExact f,
-    oppositeComplexJointData_mapIso_inv_inr F P Q hF hP hQ hExact f,
-    oppositeComplexJointData_mapIso_inv_projection F P Q hF hP hQ hExact f⟩
+  ⟨oppositeComplexJointDataMapIso_inv_inl F P Q hF hP hQ hExact f,
+    oppositeComplexJointDataMapIso_inv_inr F P Q hF hP hQ hExact f,
+    oppositeComplexJointDataMapIso_inv_projection F P Q hF hP hQ hExact f⟩
 end CrossCategory
 
 section Geometry
@@ -102,10 +102,10 @@ variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] [Fact (HasDerivedR
 theorem original_restriction_joint_naturality {f g : Arrow (Perfect X)ᵒᵖ} (α : f ⟶ g) :
     ((perfectOppositeJointData X).joint ⋙
       ExtensionCategory.postcompose (perfectOppositeWaldhausen X) (complexOppositeWaldhausen j)
-        (complexCorestrict_op_exact j)).map α ≫ (complexCorestrict_op_jointIso j).hom.app g =
-      (complexCorestrict_op_jointIso j).hom.app f ≫
+        (complexCorestrict_op_exact j)).map α ≫ (complexCorestrictOpJointIso j).hom.app g =
+      (complexCorestrictOpJointIso j).hom.app f ≫
         ((complexCorestrict j).op.mapArrow ⋙ (complexOppositeJointData j).joint).map α :=
-  (complexCorestrict_op_jointIso j).hom.naturality α
+  (complexCorestrictOpJointIso j).hom.naturality α
 
 /-- The target cocylinder retains a genuine derived-image kernel in the original ambient sheaf
   category. -/

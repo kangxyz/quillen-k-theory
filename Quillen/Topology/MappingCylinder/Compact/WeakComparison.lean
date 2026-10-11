@@ -53,10 +53,10 @@ theorem source_cube_fullHELP_of_weak_fibers
     intro x
     rw [boundaryDuration_eq_zero_iff]
     exact ⟨fun hx ↦ ⟨⟨x,hx⟩,rfl⟩,fun ⟨y,hy⟩ ↦ hy ▸ y.property⟩
-  let r : C(M,C) := (TheoremA.mappingCylinderProjection sq).hom
+  let r : C(M,C) := (Quillen.MappingCylinder.mappingCylinderProjection sq).hom
   let j : C(A,M) := (TopCat.ι₀ ≫ l).hom
   have hrj : r.comp j = f.hom := congrArg TopCat.Hom.hom
-    (TheoremA.mappingCylinderProjection_start sq)
+    (Quillen.MappingCylinder.mappingCylinderProjection_start sq)
   let Hf : (f.hom.comp a).Homotopy ((r.comp b).comp i.hom) :=
     ((ContinuousMap.Homotopy.refl r).comp H).cast (by rw [← hrj]; rfl) rfl
   obtain ⟨a',ha',hbase,J,hJ,hJa⟩ := weak_fullHELP_on_cube_over_base
@@ -66,7 +66,7 @@ theorem source_cube_fullHELP_of_weak_fibers
   let J' : (r.comp (j.comp a')).Homotopy (r.comp b) :=
     J.cast (by rw [← ContinuousMap.comp_assoc,hrj]) rfl
   have hr : CompactHomotopyExtensionLiftingProperty r := compactHELP_of_homotopyEquiv
-    (TheoremA.mappingCylinderTargetStrongDeformationRetract sq).toHomotopyEquiv.symm
+    (Quillen.MappingCylinder.mappingCylinderTargetStrongDeformationRetract sq).toHomotopyEquiv.symm
   obtain ⟨V,hV,hVa⟩ := compact_vertical_homotopy_lift
     (projection sq base).hom base.hom r rfl hM hq.compact hr _ _ i (boundaryInclusion_hep n)
     (boundaryDuration n) hzero (j.comp a') b H' J' hJ hJa

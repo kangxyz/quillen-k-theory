@@ -30,34 +30,34 @@ variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens) [Fac
   (OpenDerivedImage.HasSupportedDerivedRoofs j T)]
 
 /-- The literal original corestriction preserves the actual common opposite cocylinder. -/
-def complexCorestrict_op_jointIso :
+def complexCorestrictOpJointIso :
     (perfectSupportedOppositeJointData T.ι).joint ⋙
       ExtensionCategory.postcompose (perfectSupportedOppositeWaldhausen T.ι)
         (complexOppositeWaldhausen j T)
         (complexCorestrict_op_exact j T) ≅
       (complexCorestrict j T).op.mapArrow ⋙ (complexOppositeJointData j T).joint :=
-  oppositeComplexJointData_mapIso (Scheme.Modules.restrictFunctor j)
+  oppositeComplexJointDataMapIso (Scheme.Modules.restrictFunctor j)
     (perfectSupported T.ι) (complexObjects j T) (fun K hK => ⟨K, hK, ⟨Iso.refl _⟩⟩)
     (fun _ h => perfectSupported_shift T.ι h (-1)) (fun _ h => complexObjects_shift j T h (-1))
     (complexCorestrict_op_exact j T)
 
-lemma complexCorestrict_op_jointIso_inv_inl (f : Arrow (perfectSupported T.ι).FullSubcategoryᵒᵖ) :
+lemma complexCorestrictOpJointIso_inv_inl (f : Arrow (perfectSupported T.ι).FullSubcategoryᵒᵖ) :
     (complexOppositeJointData j T).inl.app ((complexCorestrict j T).op.mapArrow.obj f) ≫
-        ((complexCorestrict_op_jointIso j T).inv.app f).hom.left =
+        ((complexCorestrictOpJointIso j T).inv.app f).hom.left =
       (complexCorestrict j T).op.map ((perfectSupportedOppositeJointData T.ι).inl.app f) :=
-  oppositeComplexJointData_mapIso_inv_inl _ _ _ _ _ _ _ f
+  oppositeComplexJointDataMapIso_inv_inl _ _ _ _ _ _ _ f
 
-lemma complexCorestrict_op_jointIso_inv_inr (f : Arrow (perfectSupported T.ι).FullSubcategoryᵒᵖ) :
+lemma complexCorestrictOpJointIso_inv_inr (f : Arrow (perfectSupported T.ι).FullSubcategoryᵒᵖ) :
     (complexOppositeJointData j T).inr.app ((complexCorestrict j T).op.mapArrow.obj f) ≫
-        ((complexCorestrict_op_jointIso j T).inv.app f).hom.left =
+        ((complexCorestrictOpJointIso j T).inv.app f).hom.left =
       (complexCorestrict j T).op.map ((perfectSupportedOppositeJointData T.ι).inr.app f) :=
-  oppositeComplexJointData_mapIso_inv_inr _ _ _ _ _ _ _ f
+  oppositeComplexJointDataMapIso_inv_inr _ _ _ _ _ _ _ f
 
-lemma complexCorestrict_op_jointIso_inv_projection (f : Arrow (perfectSupported
+lemma complexCorestrictOpJointIso_inv_projection (f : Arrow (perfectSupported
   T.ι).FullSubcategoryᵒᵖ) :
-    ((complexCorestrict_op_jointIso j T).inv.app f).hom.right ≫
+    ((complexCorestrictOpJointIso j T).inv.app f).hom.right ≫
         (complexCorestrict j T).op.map ((perfectSupportedOppositeJointData T.ι).projection.app f) =
       (complexOppositeJointData j T).projection.app ((complexCorestrict j T).op.mapArrow.obj f) :=
-  oppositeComplexJointData_mapIso_inv_projection _ _ _ _ _ _ _ f
+  oppositeComplexJointDataMapIso_inv_projection _ _ _ _ _ _ _ f
 
 end Quillen.PerfectComplexes.SupportedOpenDerivedImage

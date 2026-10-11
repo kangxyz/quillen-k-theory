@@ -53,7 +53,8 @@ def pointCommaEquivalence : CostructuredArrow (pointFunctor c) d ≌ Discrete (c
   functor := pointCommaProjection c d
   inverse := pointCommaSection c d
   unitIso := NatIso.ofComponents (fun X ↦
-    CostructuredArrow.isoMk (eqToIso (Subsingleton.elim _ _)) (by change (𝟙 c) ≫ X.hom = X.hom;
+    CostructuredArrow.isoMk (eqToIso (Subsingleton.elim _ _)) (by
+      change (𝟙 c) ≫ X.hom = X.hom
       simp))
     (by intro X Y f; apply CostructuredArrow.ext; exact Subsingleton.elim _ _)
   counitIso := Discrete.natIso (fun _ ↦ Iso.refl _)

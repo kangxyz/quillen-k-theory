@@ -66,11 +66,11 @@ lemma stages_zero (W : Model.{u}) :
     (stages 0).obj W = sSet W.waldhausen.cof W.waldhausen.weq := rfl
 
 /-- The second stage is the previously constructed genuine double-S model. -/
-def stages_one_iso (W : Model.{u}) : (stages 1).obj W ≅ doubleDiagonal W.waldhausen :=
+def stagesOneIso (W : Model.{u}) : (stages 1).obj W ≅ doubleDiagonal W.waldhausen :=
   Iso.refl _
 
 lemma stageCylinder_zero (W : Model.{u}) :
-    stageCylinder 0 W ≫ (stages_one_iso W).hom = suspensionCylinder W.waldhausen := by
+    stageCylinder 0 W ≫ (stagesOneIso W).hom = suspensionCylinder W.waldhausen := by
   ext n z : 4
   rfl
 

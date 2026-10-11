@@ -21,20 +21,26 @@ universe u
 namespace Quillen.LoopPrespectrum.HomotopyPushout
 variable {A B C : LoopPrespectrum.{u}} (f : A ⟶ B) (g : A ⟶ C)
 
+/-- Identify the cylinder ends with the two targets and collapse its basepoint line. -/
 inductive Relation (k : ℕ) :
     ((B.space k ⊕ C.space k) ⊕ (I × A.space k)) → ((B.space k ⊕ C.space k) ⊕ (I × A.space k)) → Prop
   | left (x : A.space k) : Relation k (.inr (0,x)) (.inl (.inl (f.map k x)))
   | right (x : A.space k) : Relation k (.inr (1,x)) (.inl (.inr (g.map k x)))
   | base (s : I) : Relation k (.inr (s,A.point k)) (.inl (.inl (B.point k)))
 
+/-- The quotient space of the reduced homotopy pushout at each prespectrum level. -/
 abbrev Space (k : ℕ) := Quot (Relation f g k)
 
+/-- The left target map into the levelwise homotopy pushout. -/
 def left (k : ℕ) : C(B.space k, Space f g k) :=
   ⟨fun y ↦ Quot.mk _ (.inl (.inl y)), continuous_quot_mk.comp (continuous_inl.comp continuous_inl)⟩
+/-- The right target map into the levelwise homotopy pushout. -/
 def right (k : ℕ) : C(C.space k, Space f g k) :=
   ⟨fun z ↦ Quot.mk _ (.inl (.inr z)), continuous_quot_mk.comp (continuous_inl.comp continuous_inr)⟩
+/-- The original cylinder map into the levelwise homotopy pushout. -/
 def cylinder (k : ℕ) : C(I × A.space k, Space f g k) :=
   ⟨fun z ↦ Quot.mk _ (.inr z), continuous_quot_mk.comp continuous_inr⟩
+/-- The common target basepoint of the levelwise homotopy pushout. -/
 def point (k : ℕ) : Space f g k := left f g k (B.point k)
 
 @[simp] theorem cylinder_zero (k : ℕ) (x : A.space k) :
@@ -91,6 +97,7 @@ theorem respects (k : ℕ) (a b : ((B.space k ⊕ C.space k) ⊕ (I × A.space k
     rw [A.map_point, B.map_point]
     exact cylinder_point f g (k+1) s
 
+/-- The loop structure map descended from the two targets and the cylinder. -/
 def structureMap (k : ℕ) : C(Space f g k, Path (point f g (k+1)) (point f g (k+1))) where
   toFun := Quot.lift (Sum.elim (Sum.elim (leftLoop f g k) (rightLoop f g k)) (cylinderLoop f g
     k)) (respects f g k)
@@ -112,11 +119,13 @@ def prespectrum : LoopPrespectrum.{u} where
   structureMap := structureMap f g
   map_point := structureMap_point f g
 
+/-- The left inclusion into the homotopy-pushout prespectrum. -/
 def inl : B ⟶ prespectrum f g where
   map := left f g
   map_point _k := rfl
   comm _k _x := by ext t; rfl
 
+/-- The right inclusion into the homotopy-pushout prespectrum. -/
 def inr : C ⟶ prespectrum f g where
   map := right f g
   map_point := right_point f g
@@ -242,10 +251,10 @@ variable {A' B' C' A'' B'' C'' : LoopPrespectrum.{u}}
   (hf' : f' ≫ b' = a' ≫ f'') (hg' : g' ≫ c' = a' ≫ g'')
 
 @[simp] theorem map_comp :
-    map f g f'' g'' (a ≫ a') (b ≫ b') (c ≫ c')
+    map f g f' g' a b c hf hg ≫ map f' g' f'' g'' a' b' c' hf' hg' =
+      map f g f'' g'' (a ≫ a') (b ≫ b') (c ≫ c')
       (by rw [← Category.assoc, hf, Category.assoc, hf', Category.assoc])
-      (by rw [← Category.assoc, hg, Category.assoc, hg', Category.assoc]) =
-      map f g f' g' a b c hf hg ≫ map f' g' f'' g'' a' b' c' hf' hg' := by
+      (by rw [← Category.assoc, hg, Category.assoc, hg', Category.assoc]) := by
   apply hom_ext
   · apply Hom.ext; funext k; ext x; rfl
   · apply Hom.ext; funext k; ext x; rfl

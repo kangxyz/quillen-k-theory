@@ -50,13 +50,13 @@ values, with the genuine geometric-realization topology. -/
 def constantRealizationIso (A : Type u) :
     SSet.toTop.obj ((Functor.const SimplexCategoryᵒᵖ).obj A) ≅ TopCat.discrete.obj A :=
   (SSet.toTop.mapIso (TheoremA.pointSigmaIso A)).symm ≪≫
-    TheoremA.realizationSigmaIso (fun _ : A ↦ (Δ[0] : SSet.{u})) ≪≫
+    Quillen.Realization.realizationSigmaIso (fun _ : A ↦ (Δ[0] : SSet.{u})) ≪≫
       TopCat.isoOfHomeo (sigmaPointHomeomorph A)
 
 /-- The realized summand comparison, with the mapped composition expanded. -/
 @[reassoc (attr := simp)]
 theorem constantRealizationIso_ι_comp (A : Type u) (a : A) :
-    SSet.toTop.map (TheoremA.simplicialSigmaι (fun _ : A ↦ (Δ[0] : SSet.{u})) a) ≫
+    SSet.toTop.map (Quillen.Realization.simplicialSigmaι (fun _ : A ↦ (Δ[0] : SSet.{u})) a) ≫
       SSet.toTop.map (TheoremA.pointSigmaIso A).hom ≫ (constantRealizationIso A).hom =
       TopCat.ofHom (ContinuousMap.const |(Δ[0] : SSet.{u})|
         (show TopCat.discrete.obj A from a)) := by
@@ -64,7 +64,7 @@ theorem constantRealizationIso_ι_comp (A : Type u) (a : A) :
   rw [← Category.assoc (SSet.toTop.map (TheoremA.pointSigmaIso A).hom),
     ← Functor.map_comp]
   simp only [Iso.hom_inv_id]
-  rw [SSet.toTop.map_id, Category.id_comp, TheoremA.realizationSigmaIso_ι_assoc]
+  rw [SSet.toTop.map_id, Category.id_comp, Quillen.Realization.realizationSigmaIso_ι_assoc]
   rfl
 
 /-- The discrete realization homeomorphisms respect arbitrary index maps. -/
@@ -72,15 +72,15 @@ theorem constantRealizationIso_naturality {A B : Type u} (f : A ⟶ B) :
     SSet.toTop.map ((Functor.const SimplexCategoryᵒᵖ).map f) ≫ (constantRealizationIso B).hom =
       (constantRealizationIso A).hom ≫ TopCat.discrete.map f := by
   apply (cancel_epi (SSet.toTop.map (TheoremA.pointSigmaIso A).hom)).mp
-  apply (TheoremA.realizedSigmaIsColimit (fun _ : A ↦ (Δ[0] : SSet.{u}))).hom_ext
+  apply (Quillen.Realization.realizedSigmaIsColimit (fun _ : A ↦ (Δ[0] : SSet.{u}))).hom_ext
   intro ⟨a⟩
   dsimp
-  have heq : TheoremA.simplicialSigmaι (fun _ : A ↦ (Δ[0] : SSet.{u})) a ≫
+  have heq : Quillen.Realization.simplicialSigmaι (fun _ : A ↦ (Δ[0] : SSet.{u})) a ≫
       (TheoremA.pointSigmaIso A).hom ≫ (Functor.const SimplexCategoryᵒᵖ).map f =
-    TheoremA.simplicialSigmaι (fun _ : B ↦ (Δ[0] : SSet.{u})) (f a) ≫
+    Quillen.Realization.simplicialSigmaι (fun _ : B ↦ (Δ[0] : SSet.{u})) (f a) ≫
       (TheoremA.pointSigmaIso B).hom := rfl
   simp only [← Category.assoc, ← Functor.map_comp]
-  rw [Category.assoc (TheoremA.simplicialSigmaι _ a), heq]
+  rw [Category.assoc (Quillen.Realization.simplicialSigmaι _ a), heq]
   simp only [Functor.map_comp, Category.assoc, constantRealizationIso_ι_comp]
   rfl
 
@@ -139,23 +139,23 @@ theorem targetAugmentation_row_projection (p : SimplexCategoryᵒᵖ) :
         (constantRealizationIso ((nerve D).obj p)).hom =
       (TheoremA.replacementRowRealizationIso H p).hom ≫
         (topologicalReplacementProjection H).app p := by
-  apply (TheoremA.realizedSigmaIsColimit
+  apply (Quillen.Realization.realizedSigmaIsColimit
     (fun s : (nerve D).obj p ↦ H.obj (s.obj 0))).hom_ext
   intro ⟨s⟩
   dsimp
-  have heq : TheoremA.simplicialSigmaι
+  have heq : Quillen.Realization.simplicialSigmaι
       (fun s : (nerve D).obj p ↦ H.obj (s.obj 0)) s ≫
         (TheoremA.targetAugmentation H).app p =
       SSet.stdSimplex.isTerminalObj₀.from (H.obj (s.obj 0)) ≫
-        (TheoremA.simplicialSigmaι (fun _ : (nerve D).obj p ↦ (Δ[0] : SSet.{u})) s ≫
+        (Quillen.Realization.simplicialSigmaι (fun _ : (nerve D).obj p ↦ (Δ[0] : SSet.{u})) s ≫
           (TheoremA.pointSigmaIso ((nerve D).obj p)).hom) := rfl
   rw [← Functor.map_comp_assoc]
   erw [heq]
   rw [Functor.map_comp_assoc]
   erw [Functor.map_comp, Category.assoc, constantRealizationIso_ι_comp]
-  change _ = SSet.toTop.map (TheoremA.simplicialSigmaι _ s) ≫
-    (TheoremA.realizationSigmaIso _).hom ≫ (topologicalReplacementProjection H).app p
-  rw [TheoremA.realizationSigmaIso_ι_assoc]
+  change _ = SSet.toTop.map (Quillen.Realization.simplicialSigmaι _ s) ≫
+    (Quillen.Realization.realizationSigmaIso _).hom ≫ (topologicalReplacementProjection H).app p
+  rw [Quillen.Realization.realizationSigmaIso_ι_assoc]
   rfl
 
 /-- The row projection identification is an equality of simplicial maps. -/

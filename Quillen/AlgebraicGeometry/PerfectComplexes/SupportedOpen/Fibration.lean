@@ -114,6 +114,6 @@ theorem perfectSupportedOpenKRestrict_comp_perfectSupportedOpenKMap (n : ℕ) :
     (perfectSupportedOpenKRestrict j T n).comp (perfectSupportedOpenKMap j T n) =
       perfectSupportedKRestrict j T n := by
   unfold perfectSupportedOpenKRestrict perfectSupportedOpenKMap perfectSupportedKRestrict
-  rw [← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap]
 
 end Quillen.PerfectComplexes

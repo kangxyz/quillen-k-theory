@@ -24,7 +24,6 @@ open CategoryTheory Limits
 open scoped Topology unitInterval
 universe u
 namespace Quillen.CubicalTests
-open TheoremA
 
 @[fun_prop] theorem continuous_intervalMul :
     Continuous (fun z : unitInterval × unitInterval ↦ z.1 * z.2) := by
@@ -81,7 +80,7 @@ structure BoundaryPresentation (n : ℕ) where
   /-- The presentation map into the universe-lifted `n`-cube. -/
   map : space ⟶ cube.{u} n
   /-- The presentation map has the homotopy extension property. -/
-  hep : homotopyExtensionProperty map
+  hep : Quillen.homotopyExtensionProperty map
   /-- Every image point lies in the original finite cube boundary. -/
   lands : ∀ a, (map a).down ∈ Cube.boundary (Fin n)
   /-- Every point of the original finite cube boundary has a presentation preimage. -/
@@ -93,7 +92,7 @@ def emptyBoundary : BoundaryPresentation.{u} 0 where
   compact := inferInstance
   map := TopCat.ofHom ⟨isEmptyElim, continuous_of_discreteTopology⟩
   hep := by
-    apply homotopyExtensionProperty_of_continuous
+    apply Quillen.homotopyExtensionProperty_of_continuous
     intro Z f H _
     exact ⟨f.comp ContinuousMap.snd, fun _ ↦ rfl, fun _ a ↦ isEmptyElim a⟩
   lands := fun a ↦ isEmptyElim a
@@ -103,52 +102,60 @@ def emptyBoundary : BoundaryPresentation.{u} 0 where
 def BoundaryPresentation.step {n : ℕ} (P : BoundaryPresentation.{u} n) :
     BoundaryPresentation.{u} (n+1) := by
   let : CompactSpace P.space := P.compact
-  let j := cylinderBoundaryMap P.map ≫ (TopCat.isoOfHomeo (stepHomeomorph n)).hom
+  let j := Quillen.CylinderBoundary.cylinderBoundaryMap P.map ≫ (TopCat.isoOfHomeo (stepHomeomorph
+    n)).hom
   have hs (a : P.space) (t : unitInterval) :
-      j (cylinderBoundarySide P.map (a,t)) = ⟨Fin.cons t (P.map a).down⟩ :=
-    congrArg (stepHomeomorph n) (ConcreteCategory.congr_hom (cylinderBoundarySide_map P.map) (a,t))
+      j (Quillen.CylinderBoundary.cylinderBoundarySide P.map (a,t)) = ⟨Fin.cons t (P.map a).down⟩ :=
+    congrArg (stepHomeomorph n) (ConcreteCategory.congr_hom
+      (Quillen.CylinderBoundary.cylinderBoundarySide_map P.map) (a,t))
   have h₀ (x : cube.{u} n) :
-      j (cylinderBoundaryCaps P.map (Sum.inl x)) = ⟨Fin.cons 0 x.down⟩ :=
-    congrArg (stepHomeomorph n) (ConcreteCategory.congr_hom (cylinderBoundaryCaps_map P.map)
+      j (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inl x)) = ⟨Fin.cons 0 x.down⟩ :=
+    congrArg (stepHomeomorph n) (ConcreteCategory.congr_hom
+      (Quillen.CylinderBoundary.cylinderBoundaryCaps_map P.map)
       (Sum.inl x))
   have h₁ (x : cube.{u} n) :
-      j (cylinderBoundaryCaps P.map (Sum.inr x)) = ⟨Fin.cons 1 x.down⟩ :=
-    congrArg (stepHomeomorph n) (ConcreteCategory.congr_hom (cylinderBoundaryCaps_map P.map)
+      j (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inr x)) = ⟨Fin.cons 1 x.down⟩ :=
+    congrArg (stepHomeomorph n) (ConcreteCategory.congr_hom
+      (Quillen.CylinderBoundary.cylinderBoundaryCaps_map P.map)
       (Sum.inr x))
   refine {
-    space := CylinderBoundary P.map
+    space := Quillen.CylinderBoundary P.map
     compact := inferInstance
     map := j
-    hep := homotopyExtensionProperty_comp
-      (homotopyExtensionProperty_cylinderBoundaryMap P.map P.hep)
-      (homotopyExtensionProperty_of_isIso _)
+    hep := Quillen.homotopyExtensionProperty_comp
+      (Quillen.CylinderBoundary.homotopyExtensionProperty_cylinderBoundaryMap P.map P.hep)
+      (Quillen.homotopyExtensionProperty_of_isIso _)
     lands := ?_
     covers := ?_ }
   · intro z
-    obtain ⟨z, rfl⟩ := pushout_sum_surjective (cylinderBoundary_isPushout P.map) z
+    obtain ⟨z, rfl⟩ := pushout_sum_surjective (Quillen.CylinderBoundary.cylinderBoundary_isPushout
+      P.map) z
     rcases z with ⟨a,t⟩ | (x | x)
-    · change (j (cylinderBoundarySide P.map (a,t))).down ∈ Cube.boundary (Fin (n+1))
+    · change (j (Quillen.CylinderBoundary.cylinderBoundarySide P.map (a,t))).down ∈ Cube.boundary
+        (Fin (n+1))
       rw [hs]
       obtain ⟨k, hk⟩ := P.lands a
       exact ⟨k.succ, hk⟩
-    · change (j (cylinderBoundaryCaps P.map (Sum.inl x))).down ∈ Cube.boundary (Fin (n+1))
+    · change (j (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inl x))).down ∈
+        Cube.boundary (Fin (n+1))
       rw [h₀]
       exact ⟨0, Or.inl rfl⟩
-    · change (j (cylinderBoundaryCaps P.map (Sum.inr x))).down ∈ Cube.boundary (Fin (n+1))
+    · change (j (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inr x))).down ∈
+        Cube.boundary (Fin (n+1))
       rw [h₁]
       exact ⟨0, Or.inr rfl⟩
   · rintro z ⟨k, hk⟩
     cases k using Fin.cases with
     | zero =>
       rcases hk with hk | hk
-      · refine ⟨cylinderBoundaryCaps P.map (Sum.inl ⟨Fin.tail z.down⟩), ?_⟩
+      · refine ⟨Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inl ⟨Fin.tail z.down⟩), ?_⟩
         rw [h₀]
         apply ULift.ext
         funext k
         cases k using Fin.cases
         · exact hk.symm
         · rfl
-      · refine ⟨cylinderBoundaryCaps P.map (Sum.inr ⟨Fin.tail z.down⟩), ?_⟩
+      · refine ⟨Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inr ⟨Fin.tail z.down⟩), ?_⟩
         rw [h₁]
         apply ULift.ext
         funext k
@@ -157,7 +164,7 @@ def BoundaryPresentation.step {n : ℕ} (P : BoundaryPresentation.{u} n) :
         · rfl
     | succ k =>
       obtain ⟨a, ha⟩ := P.covers ⟨Fin.tail z.down⟩ ⟨k, hk⟩
-      refine ⟨cylinderBoundarySide P.map (a,z.down 0), ?_⟩
+      refine ⟨Quillen.CylinderBoundary.cylinderBoundarySide P.map (a,z.down 0), ?_⟩
       rw [hs, ha]
       apply ULift.ext
       funext k

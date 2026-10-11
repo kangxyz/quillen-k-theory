@@ -215,11 +215,12 @@ lemma perfectSupportedChangeOpenKMap_comp_boundedFlat (n : ℕ) :
         (boundedFlatPerfectSupportedKPullback (supportChangeOpenPair h) n) := by
   unfold perfectSupportedChangeOpenKMap Waldhausen.subcategoryKMap
     boundedFlatPerfectSupportedToPerfectSupportedKMap boundedFlatPerfectSupportedKPullback
-  rw [← Waldhausen.KMap_comp, ← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
   exact Waldhausen.KMap_eq_of_iso _ _ (boundedFlatPerfectSupportedChangeOpenIso h) n
 
 variable [CompactSpace X]
 
+/-- The actual auxiliary-support change as a morphism of quasi-compact open pairs. -/
 def qcSupportChangeOpenPair :
     (⟨supportOpenPair S, (by change CompactSpace X; infer_instance)⟩ :
       Quillen.Scheme.QuasiCompactOpenPairs.{u}) ⟶

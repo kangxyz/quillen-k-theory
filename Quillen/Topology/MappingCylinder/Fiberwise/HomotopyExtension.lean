@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.Topology.MappingCylinder.Basic
 public import Quillen.Topology.MappingCylinder.Fiberwise.Basic
 
 /-!
@@ -39,11 +40,11 @@ theorem mappingCylinderStart_extension_over
     (sq : IsPushout (TopCat.ι₁ : A ⟶ A ⊗ TopCat.I) f l c)
     (base : C ⟶ T) (q : Z ⟶ T) (k : M ⟶ Z) (H : A ⊗ TopCat.I ⟶ Z)
     (hH₀ : TopCat.ι₀ ≫ H = (TopCat.ι₀ ≫ l) ≫ k)
-    (hk : k ≫ q = TheoremA.mappingCylinderProjection sq ≫ base)
+    (hk : k ≫ q = Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base)
     (hH : H ≫ q = fst A TopCat.I ≫ f ≫ base) :
     ∃ K : M ⊗ TopCat.I ⟶ Z,
       TopCat.ι₀ ≫ K = k ∧ ((TopCat.ι₀ ≫ l) ▷ TopCat.I) ≫ K = H ∧
-        K ≫ q = fst M TopCat.I ≫ TheoremA.mappingCylinderProjection sq ≫ base := by
+        K ≫ q = fst M TopCat.I ≫ Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base := by
   let F : C(A × I, Z) := ⟨fun z ↦ k (l (z.1, ULift.up z.2)), by fun_prop⟩
   let J : C((A ⊕ A) × I, Z) := {
     toFun z := Sum.elim (fun a ↦ H (a, ULift.up z.2)) (fun a ↦ k (c (f a))) z.1
@@ -58,15 +59,16 @@ theorem mappingCylinderStart_extension_over
   have hJ₁ : ∀ a, J (Sum.inr a, 0) = F (a, 1) :=
     fun a ↦ congrArg k (ConcreteCategory.congr_hom sq.w a).symm
   let L := intervalEndpointExtension F J hJ₀ hJ₁
-  have hpl : ∀ a s, (TheoremA.mappingCylinderProjection sq ≫ base) (l (a, ULift.up s)) = base (f
+  have hpl : ∀ a s, (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) (l (a, ULift.up
+    s)) = base (f
     a) := by
     intro a s
     exact ConcreteCategory.congr_hom
-      (TheoremA.mappingCylinderProjection_cylinder_assoc sq base) (a, ULift.up s)
-  have hpc : ∀ x, (TheoremA.mappingCylinderProjection sq ≫ base) (c x) = base x := by
+      (Quillen.MappingCylinder.mappingCylinderProjection_cylinder_assoc sq base) (a, ULift.up s)
+  have hpc : ∀ x, (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) (c x) = base x := by
     intro x
     exact ConcreteCategory.congr_hom
-      (TheoremA.mappingCylinderProjection_target_assoc sq base) x
+      (Quillen.MappingCylinder.mappingCylinderProjection_target_assoc sq base) x
   have hFbase : ∀ a s, q (F (a, s)) = base (f a) := by
     intro a s
     exact (ConcreteCategory.congr_hom hk (l (a, ULift.up s))).trans (hpl a s)

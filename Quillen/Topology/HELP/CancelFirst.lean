@@ -35,8 +35,8 @@ theorem CompactHomotopyExtensionLiftingProperty.lift_compact
     ∃ c : C(A, X), Nonempty ((f.comp c).Homotopy a) := by
   let E := TopCat.of PEmpty.{u+1}
   let i : E ⟶ A := TopCat.ofHom ⟨isEmptyElim, continuous_of_discreteTopology⟩
-  have hi : TheoremA.homotopyExtensionProperty i := by
-    apply TheoremA.homotopyExtensionProperty_of_continuous
+  have hi : Quillen.homotopyExtensionProperty i := by
+    apply Quillen.homotopyExtensionProperty_of_continuous
     intro Z b H _
     exact ⟨b.comp ContinuousMap.snd, fun _ ↦ rfl, fun _ x ↦ isEmptyElim x⟩
   let a₀ : C(E, X) := ⟨isEmptyElim, continuous_of_discreteTopology⟩
@@ -61,7 +61,7 @@ theorem CompactHomotopyExtensionLiftingProperty.cancel_first
   obtain ⟨a₀, ⟨L⟩⟩ := hf.lift_compact A a
   let T := (ContinuousMap.Homotopy.refl g).comp L
   obtain ⟨c₀, hc₀, K, hK⟩ := hgf A B i hi a₀ b (T.cast rfl w)
-  obtain ⟨Q, hQ₀, hQA⟩ := TheoremA.homotopyExtensionProperty_continuous hi
+  obtain ⟨Q, hQ₀, hQA⟩ := Quillen.homotopyExtensionProperty_continuous hi
     (TopCat.of Y) (f.comp c₀) L.toContinuousMap (fun x ↦
       (L.map_zero_left x).trans (congrArg f (ContinuousMap.congr_fun hc₀ x)).symm)
   let c : C(B, Y) := ⟨fun x ↦ Q (1, x), by fun_prop⟩
@@ -90,7 +90,7 @@ theorem CompactHomotopyExtensionLiftingProperty.cancel_first
   have hrel : (J.compContinuousMap i.hom).toContinuousMap.HomotopyRel
       J₀.toContinuousMap {z : unitInterval × A | z.1 = 0 ∨ z.1 = 1} :=
     (retraceHomotopy T).cast hJ.symm rfl
-  obtain ⟨J', hJ'⟩ := TheoremA.homotopyExtensionProperty_correct_boundary hi
+  obtain ⟨J', hJ'⟩ := Quillen.homotopyExtensionProperty_correct_boundary hi
     (Z := TopCat.of Z) J J₀ hrel
   refine ⟨c, hc, ⟨{ J' with prop' := ?_ }⟩⟩
   rintro t _ ⟨x, rfl⟩

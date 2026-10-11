@@ -63,7 +63,7 @@ lemma realizesEquiv_coproduct [PreservesColimits F] {ι : Type u}
   let ea := ha.coconePointUniqueUpToIso (TopCat.sigmaCofanIsColimit fun i ↦ |F.obj (X i)|)
   let eb := hb.coconePointUniqueUpToIso (TopCat.sigmaCofanIsColimit fun i ↦ |X i|)
   let f : TopCat.of (Σ i, |F.obj (X i)|) ⟶ TopCat.of (Σ i, |X i|) :=
-    TopCat.ofHom (sigmaContinuousMap fun i ↦ (SSet.toTop.map (η.app (X i))).hom)
+    TopCat.ofHom (Quillen.sigmaContinuousMap fun i ↦ (SSet.toTop.map (η.app (X i))).hom)
   have w : SSet.toTop.map (η.app c.pt) ≫ eb.hom = ea.hom ≫ f := by
     apply ha.hom_ext
     intro ⟨i⟩
@@ -77,7 +77,7 @@ lemma realizesEquiv_coproduct [PreservesColimits F] {ι : Type u}
       hb.comp_coconePointUniqueUpToIso_hom _ ⟨i⟩
     rw [hbι, ← Category.assoc, haι]
     rfl
-  exact ⟨homotopyEquivOfIsoSquare _ f ea eb w (sigmaHomotopyEquiv E)
+  exact ⟨homotopyEquivOfIsoSquare _ f ea eb w (Quillen.sigmaHomotopyEquiv E)
     (by apply ContinuousMap.ext; intro x; change (⟨x.1, (E x.1).toFun x.2⟩ : Σ i, |X i|) = _; rw
       [hE]; rfl), rfl⟩
 
@@ -89,9 +89,9 @@ lemma realizesEquiv_pushout [PreservesColimits F] [F.PreservesMonomorphisms]
   obtain ⟨eA, heA⟩ := hA
   obtain ⟨eB, heB⟩ := hB
   obtain ⟨eC, heC⟩ := hC
-  refine ⟨pushoutHomotopyEquivOfMap (sq.map (F ⋙ SSet.toTop)) (sq.map SSet.toTop)
-    (homotopyExtensionProperty_realization_mono (F.map i))
-    (homotopyExtensionProperty_realization_mono i)
+  refine ⟨Quillen.Pushout.pushoutHomotopyEquivOfMap (sq.map (F ⋙ SSet.toTop)) (sq.map SSet.toTop)
+    (Quillen.Realization.homotopyExtensionProperty_realization_mono (F.map i))
+    (Quillen.Realization.homotopyExtensionProperty_realization_mono i)
     (SSet.toTop.map (η.app A)) (SSet.toTop.map (η.app B))
     (SSet.toTop.map (η.app C)) (SSet.toTop.map (η.app D))
     (realization_naturality η i) (realization_naturality η f)
@@ -157,12 +157,14 @@ theorem realizesEquiv_all [PreservesColimits F] [PreservesColimitsOfShape ℕ F]
     change Mono (SSet.Subcomplex.homOfLE
       ((SSet.skeletonOfMono (⊥ : X.Subcomplex).ι).monotone (Nat.le_succ n)))
     infer_instance
-  have hA (n : ℕ) : homotopyExtensionProperty (A.map (homOfLE (Nat.le_succ n))) := by
+  have hA (n : ℕ) : Quillen.homotopyExtensionProperty (A.map (homOfLE (Nat.le_succ n))) := by
     let := hmono n
-    exact homotopyExtensionProperty_realization_mono (F.map (R.F.map (homOfLE (Nat.le_succ n))))
-  have hB (n : ℕ) : homotopyExtensionProperty (B.map (homOfLE (Nat.le_succ n))) := by
+    exact Quillen.Realization.homotopyExtensionProperty_realization_mono (F.map (R.F.map (homOfLE
+      (Nat.le_succ n))))
+  have hB (n : ℕ) : Quillen.homotopyExtensionProperty (B.map (homOfLE (Nat.le_succ n))) := by
     let := hmono n
-    exact homotopyExtensionProperty_realization_mono (R.F.map (homOfLE (Nat.le_succ n)))
+    exact Quillen.Realization.homotopyExtensionProperty_realization_mono (R.F.map (homOfLE
+      (Nat.le_succ n)))
   choose E hE using fun n ↦ realizesEquiv_stage η hΔ n X
   let e := sequentialCoconeHomotopyEquiv α hA hB E hE c hc d hd
   have he : e.toFun = (SSet.toTop.map (η.app X)).hom := by

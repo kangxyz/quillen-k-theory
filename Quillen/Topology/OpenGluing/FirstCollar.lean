@@ -155,13 +155,13 @@ def firstEndCollarProjection : d.FirstEndCollar h hi cut ⟶ TopCat.of U :=
 /-- A genuine local bridge deformation yields a genuine local deformation
 of the original end in the unchanged first attachment. -/
 def firstEndCollarStrongDeformationRetract
-    (R : TheoremA.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc)) :
-    TheoremA.CylinderStrongDeformationRetract (d.firstEndCollarEnd h hi cut hc) :=
+    (R : Quillen.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc)) :
+    Quillen.CylinderStrongDeformationRetract (d.firstEndCollarEnd h hi cut hc) :=
   R.pushout (d.firstEndCollar_isPushout h hi cut hc)
 
 /-- The entire pushed-out deformation retains the original base point. -/
 theorem firstEndCollarStrongDeformationRetract_over
-    (R : TheoremA.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc))
+    (R : Quillen.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc))
     (hR : R.H ≫ d.bridgeEndCollarBase h cut =
       fst (d.BridgeEndCollar h cut) TopCat.I ≫ d.bridgeEndCollarBase h cut) :
     (d.firstEndCollarStrongDeformationRetract h hi cut hc R).H ≫

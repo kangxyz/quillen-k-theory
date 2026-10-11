@@ -38,7 +38,8 @@ variable {A C M T : TopCat.{u}} {f : A ⟶ C}
 def thickMappingCylinderProjection :
     C(ThickTransition (TopCat.ι₀ ≫ l).hom c.hom
       ThickTransition.leftConstraint ThickTransition.rightConstraint, T × I) :=
-  ThickTransition.projection _ _ _ _ (TheoremA.mappingCylinderProjection sq ≫ base).hom
+  ThickTransition.projection _ _ _ _ (Quillen.MappingCylinder.mappingCylinderProjection sq ≫
+    base).hom
 
 /-- Explicit fiberwise inverse data on the attaching map imply actual
 weak lifting for its thick mapping-cylinder projection. -/
@@ -53,14 +54,16 @@ theorem thickMappingCylinder_weakLifting_of_fiberwise_inverse
     WeakHomotopyLiftingProperty (thickMappingCylinderProjection sq base) := by
   obtain ⟨R₀, hr₀, hR₀⟩ := mappingCylinder_sourceStrongDeformationRetract_over
     sq base g H K hg hH hK
-  let R₁ := TheoremA.mappingCylinderTargetStrongDeformationRetract sq
-  let D₀ := (TheoremA.homotopyOfCylinder R₀.H R₀.H₀ R₀.H₁).symm
+  let R₁ := Quillen.MappingCylinder.mappingCylinderTargetStrongDeformationRetract sq
+  let D₀ := (Quillen.homotopyOfCylinder R₀.H R₀.H₀ R₀.H₁).symm
   let D₁ := (mappingCylinderTargetHomotopy sq).symm
   refine ThickTransition.weakLifting (TopCat.ι₀ ≫ l).hom c.hom
-    (TheoremA.mappingCylinderProjection sq ≫ base).hom
+    (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base).hom
     (f ≫ base).hom base.hom hA hC ?_ ?_ R₀.r.hom R₁.r.hom ?_ ?_ D₀ D₁ ?_ ?_ ?_ ?_
-  · exact congrArg TopCat.Hom.hom (TheoremA.mappingCylinderProjection_start_assoc sq base)
-  · exact congrArg TopCat.Hom.hom (TheoremA.mappingCylinderProjection_target_assoc sq base)
+  · exact congrArg TopCat.Hom.hom (Quillen.MappingCylinder.mappingCylinderProjection_start_assoc sq
+    base)
+  · exact congrArg TopCat.Hom.hom (Quillen.MappingCylinder.mappingCylinderProjection_target_assoc sq
+    base)
   · exact congrArg TopCat.Hom.hom hr₀
   · rfl
   · intro t m

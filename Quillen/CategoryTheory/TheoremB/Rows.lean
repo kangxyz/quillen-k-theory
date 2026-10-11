@@ -35,7 +35,7 @@ namespace Quillen.TheoremB
 /-- A map of disjoint simplicial unions may change the summand index. -/
 def sigmaReindexMap {ι κ : Type u} {X : ι → SSet.{u}} {Y : κ → SSet.{u}}
     (a : ι → κ) (f : ∀ i, X i ⟶ Y (a i)) :
-    TheoremA.simplicialSigma X ⟶ TheoremA.simplicialSigma Y where
+    Quillen.Realization.simplicialSigma X ⟶ Quillen.Realization.simplicialSigma Y where
   app n := ↾fun x ↦ ⟨a x.1, (f x.1).app n x.2⟩
   naturality n m α := by
     ext ⟨i, x⟩ : 3
@@ -44,8 +44,8 @@ def sigmaReindexMap {ι κ : Type u} {X : ι → SSet.{u}} {Y : κ → SSet.{u}}
 @[reassoc (attr := simp)]
 theorem sigmaReindexMap_inclusion {ι κ : Type u} {X : ι → SSet.{u}} {Y : κ → SSet.{u}}
     (a : ι → κ) (f : ∀ i, X i ⟶ Y (a i)) (i : ι) :
-    TheoremA.simplicialSigmaι X i ≫ sigmaReindexMap a f =
-      f i ≫ TheoremA.simplicialSigmaι Y (a i) := rfl
+    Quillen.Realization.simplicialSigmaι X i ≫ sigmaReindexMap a f =
+      f i ≫ Quillen.Realization.simplicialSigmaι Y (a i) := rfl
 
 /-- The corresponding continuous map of topological disjoint unions. -/
 def sigmaReindexContinuousMap {ι κ : Type u} {X : ι → Type u} {Y : κ → Type u}
@@ -58,15 +58,15 @@ realizations, including its prescribed action on every summand. -/
 theorem realizationSigmaIso_reindex {ι κ : Type u}
     {X : ι → SSet.{u}} {Y : κ → SSet.{u}}
     (a : ι → κ) (f : ∀ i, X i ⟶ Y (a i)) :
-    SSet.toTop.map (sigmaReindexMap a f) ≫ (TheoremA.realizationSigmaIso Y).hom =
-      (TheoremA.realizationSigmaIso X).hom ≫
+    SSet.toTop.map (sigmaReindexMap a f) ≫ (Quillen.Realization.realizationSigmaIso Y).hom =
+      (Quillen.Realization.realizationSigmaIso X).hom ≫
         TopCat.ofHom (sigmaReindexContinuousMap a fun i ↦ (SSet.toTop.map (f i)).hom) := by
-  apply (TheoremA.realizedSigmaIsColimit X).hom_ext
+  apply (Quillen.Realization.realizedSigmaIsColimit X).hom_ext
   intro ⟨i⟩
   dsimp
   rw [← Category.assoc, ← Functor.map_comp, sigmaReindexMap_inclusion, Functor.map_comp,
-    Category.assoc, TheoremA.realizationSigmaIso_ι, ← Category.assoc,
-    TheoremA.realizationSigmaIso_ι]
+    Category.assoc, Quillen.Realization.realizationSigmaIso_ι, ← Category.assoc,
+    Quillen.Realization.realizationSigmaIso_ι]
   rfl
 
 variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})

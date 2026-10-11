@@ -107,8 +107,11 @@ lemma pointFiberLoopHomeomorph_vertex (g : c ⟶ c) :
       (classifyingSpacePoint (CostructuredArrow.mk (S := pointFunctor c)
         (Y := Discrete.mk PUnit.unit) g))) = classifyingSpacePath g := by
   ext t
-  simpa only [TheoremB.fiberComparison_path] using
-    TheoremB.commaNullhomotopy_vertex (pointFunctor c) c _ t
+  change (TheoremB.fiberComparison (pointFunctor c) c
+    (classifyingSpacePoint (CostructuredArrow.mk (S := pointFunctor c)
+      (Y := Discrete.mk PUnit.unit) g))).1.2 t = _
+  exact (TheoremB.fiberComparison_path (pointFunctor c) c _ t).trans
+    (TheoremB.commaNullhomotopy_vertex (pointFunctor c) c _ t)
 
 end Quillen.GroupoidClassifying
 
@@ -227,13 +230,13 @@ lemma asSmallClassifyingHomeomorph_path {c d : C} (g : c ⟶ d) :
   ext t
   change SSet.toTop.map (asSmallNerveIso C).hom
     (realizationEdgePath (CategoryTheory.nerve.edgeMk g) t) = _
-  rw [realizationEdgePath_naturality_apply]
-  simp only [realizationEdgePath_apply, SSet.Edge.map_edge, CategoryTheory.nerve.edgeMk_edge]
   have he : (asSmallNerveIso C).hom.app (op ⦋1⦌) (ComposableArrows.mk₁ g) =
       ComposableArrows.mk₁ (AsSmall.up.map g) :=
     ComposableArrows.ext₁ rfl rfl (by simp [asSmallNerveIso])
-  rw [he]
-  rfl
+  exact (realizationEdgePath_naturality_apply (asSmallNerveIso C).hom
+    (CategoryTheory.nerve.edgeMk g) t).trans
+      (congrArg (fun e : (nerve (AsSmall.{0} C)) _⦋1⦌ =>
+        SSet.toTop.map (SSet.yonedaEquiv.symm e) (realizationInterval t)) he)
 
 lemma asSmall_fundamental_map (c : C) (g : c ⟶ c) :
     FundamentalGroup.mapOfEq (asSmallClassifyingHomeomorph C).toHomotopyEquiv.toFun

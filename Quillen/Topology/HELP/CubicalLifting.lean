@@ -32,7 +32,7 @@ open TheoremA CubicalTests
 def ContractedStrictHELP {E F : Type u} [TopologicalSpace E] [TopologicalSpace F]
     (f : C(E, F)) : Prop :=
   ∀ (A D : TopCat.{u}) [CompactSpace A] [CompactSpace D] (i : A ⟶ D),
-    homotopyExtensionProperty i → ∀ (d : D)
+    Quillen.homotopyExtensionProperty i → ∀ (d : D)
     (_HD : (ContinuousMap.id D).Homotopy (ContinuousMap.const D d))
     (a : C(A,E)) (b : C(D,F)), f.comp a = b.comp i.hom →
       ∃ c : C(D,E), c.comp i.hom = a ∧ Nonempty ((f.comp c).HomotopyRel b (Set.range i))
@@ -52,8 +52,8 @@ theorem ContractedStrictHELP.component_surjective (hf : ContractedStrictHELP f) 
     ∃ x : E, Joined (f x) y := by
   let A := TopCat.of PEmpty.{u+1}
   let i : A ⟶ cube.{u} 0 := TopCat.ofHom ⟨isEmptyElim, continuous_of_discreteTopology⟩
-  have hi : homotopyExtensionProperty i := by
-    apply homotopyExtensionProperty_of_continuous
+  have hi : Quillen.homotopyExtensionProperty i := by
+    apply Quillen.homotopyExtensionProperty_of_continuous
     intro Z b H _
     exact ⟨b.comp ContinuousMap.snd, fun _ ↦ rfl, fun _ a ↦ isEmptyElim a⟩
   let a : C(A,E) := ⟨isEmptyElim, continuous_of_discreteTopology⟩
@@ -113,24 +113,29 @@ theorem ContractedStrictHELP.homotopy_injective (hf : ContractedStrictHELP f)
         TopCat.ofHom ⟨Sum.elim (fun z ↦ p z.down) (fun z ↦ q z.down),
           (p.val.continuous.comp continuous_uliftDown).sumElim
             (q.val.continuous.comp continuous_uliftDown)⟩
-      have w : cylinderBoundaryEnds P.space ≫ S = cylinderBoundarySumMap P.map ≫ caps := by
+      have w : Quillen.CylinderBoundary.cylinderBoundaryEnds P.space ≫ S =
+        Quillen.CylinderBoundary.cylinderBoundarySumMap P.map ≫ caps := by
         ext z
         rcases z with a | a
         · exact (GenLoop.boundary p (P.map a).down (P.lands a)).symm
         · exact (GenLoop.boundary q (P.map a).down (P.lands a)).symm
-      let d : CylinderBoundary P.map ⟶ TopCat.of E := pushout.desc S caps w
-      have hS : cylinderBoundarySide P.map ≫ d = S := pushout.inl_desc _ _ _
-      have hcaps : cylinderBoundaryCaps P.map ≫ d = caps := pushout.inr_desc _ _ _
+      let d : Quillen.CylinderBoundary P.map ⟶ TopCat.of E := pushout.desc S caps w
+      have hS : Quillen.CylinderBoundary.cylinderBoundarySide P.map ≫ d = S := pushout.inl_desc _ _
+        _
+      have hcaps : Quillen.CylinderBoundary.cylinderBoundaryCaps P.map ≫ d = caps :=
+        pushout.inr_desc _ _ _
       let k : TopCat.of (cube.{u} n × unitInterval) ⟶ TopCat.of F :=
         TopCat.ofHom ⟨fun z ↦ H (z.2, z.1.down),
           H.continuous.comp (continuous_snd.prodMk (continuous_uliftDown.comp continuous_fst))⟩
-      have hw : d ≫ TopCat.ofHom f = cylinderBoundaryMap P.map ≫ k := by
-        apply (cylinderBoundary_isPushout P.map).hom_ext
-        · rw [← Category.assoc, hS, ← Category.assoc, cylinderBoundarySide_map]
+      have hw : d ≫ TopCat.ofHom f = Quillen.CylinderBoundary.cylinderBoundaryMap P.map ≫ k := by
+        apply (Quillen.CylinderBoundary.cylinderBoundary_isPushout P.map).hom_ext
+        · rw [← Category.assoc, hS, ← Category.assoc,
+            Quillen.CylinderBoundary.cylinderBoundarySide_map]
           ext ⟨a,t⟩
           exact ((H.eq_fst t (P.lands a)).trans
             (congrArg f (GenLoop.boundary p (P.map a).down (P.lands a)))).symm
-        · rw [← Category.assoc, hcaps, ← Category.assoc, cylinderBoundaryCaps_map]
+        · rw [← Category.assoc, hcaps, ← Category.assoc,
+            Quillen.CylinderBoundary.cylinderBoundaryCaps_map]
           ext z
           rcases z with z | z
           · exact (H.apply_zero z.down).symm
@@ -141,22 +146,29 @@ theorem ContractedStrictHELP.homotopy_injective (hf : ContractedStrictHELP f)
         continuous_toFun := by fun_prop
         map_zero_left z := Prod.ext ((contraction n).map_zero_left z.1) (by simp)
         map_one_left z := Prod.ext ((contraction n).map_one_left z.1) (by simp) }
-      obtain ⟨c, hc, _⟩ := hf (CylinderBoundary P.map) (TopCat.of (cube n × unitInterval))
-        (cylinderBoundaryMap P.map) (homotopyExtensionProperty_cylinderBoundaryMap P.map P.hep)
+      obtain ⟨c, hc, _⟩ := hf (Quillen.CylinderBoundary P.map) (TopCat.of (cube n × unitInterval))
+        (Quillen.CylinderBoundary.cylinderBoundaryMap P.map)
+          (Quillen.CylinderBoundary.homotopyExtensionProperty_cylinderBoundaryMap P.map P.hep)
         (zero n, 0) HD d.hom k.hom (congrArg TopCat.Hom.hom hw)
       have hside (a : P.space) (t : unitInterval) : c (P.map a, t) = x := by
-        have he := ContinuousMap.congr_fun hc (cylinderBoundarySide P.map (a,t))
-        have hs := ConcreteCategory.congr_hom (cylinderBoundarySide_map P.map) (a,t)
+        have he := ContinuousMap.congr_fun hc (Quillen.CylinderBoundary.cylinderBoundarySide P.map
+          (a,t))
+        have hs := ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundarySide_map
+          P.map) (a,t)
         have hd := ConcreteCategory.congr_hom hS (a,t)
         exact (congrArg c hs).symm.trans (he.trans hd)
       have hzero (z : cube.{u} n) : c (z,0) = p z.down := by
-        have he := ContinuousMap.congr_fun hc (cylinderBoundaryCaps P.map (Sum.inl z))
-        have hs := ConcreteCategory.congr_hom (cylinderBoundaryCaps_map P.map) (Sum.inl z)
+        have he := ContinuousMap.congr_fun hc (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map
+          (Sum.inl z))
+        have hs := ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundaryCaps_map
+          P.map) (Sum.inl z)
         have hd := ConcreteCategory.congr_hom hcaps (Sum.inl z)
         exact (congrArg c hs).symm.trans (he.trans hd)
       have hone (z : cube.{u} n) : c (z,1) = q z.down := by
-        have he := ContinuousMap.congr_fun hc (cylinderBoundaryCaps P.map (Sum.inr z))
-        have hs := ConcreteCategory.congr_hom (cylinderBoundaryCaps_map P.map) (Sum.inr z)
+        have he := ContinuousMap.congr_fun hc (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map
+          (Sum.inr z))
+        have hs := ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundaryCaps_map
+          P.map) (Sum.inr z)
         have hd := ConcreteCategory.congr_hom hcaps (Sum.inr z)
         exact (congrArg c hs).symm.trans (he.trans hd)
       apply Quotient.sound

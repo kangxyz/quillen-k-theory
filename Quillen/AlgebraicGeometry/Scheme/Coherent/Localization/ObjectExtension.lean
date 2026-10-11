@@ -55,7 +55,8 @@ theorem affineLocallyFiniteType_subobject_extension_noetherian
   obtain ⟨K, s, hK, hs, e, he⟩ := quasicoherent_subobject_preimage j M A i
   have : K.IsQuasicoherent := hK
   have : Mono s := hs
-  have hKj : affineLocallyFiniteType U (K.restrict j) := (affineLocallyFiniteType U).prop_of_iso e.symm A.property
+  have hKj : affineLocallyFiniteType U (K.restrict j) :=
+    (affineLocallyFiniteType U).prop_of_iso e.symm A.property
   obtain ⟨B, t, ht, htW⟩ := exists_coherent_subsheaf_restrict_isIso_noetherian
     K j.opensRange (affineLocallyFiniteType_restrict_opensRange j K hKj)
   have : Mono t := ht

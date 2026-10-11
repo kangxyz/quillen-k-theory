@@ -37,7 +37,7 @@ def localizedSpectrumMap : localizedSpectrum W ⟶ localizedSpectrum V :=
 
 @[simp] theorem localizedSpectrumMap_id :
     localizedSpectrumMap W W (IsExact.id _ _) = 𝟙 _ :=
-  (toStableLocalization_map_eq_of_homotopy (exactOriginalPrespectrumMap_id_homotopy W)).trans
+  (toStableLocalization_map_eq_of_homotopy (exactOriginalPrespectrumMapIdHomotopy W)).trans
     (toStableLocalization.map_id _)
 
 theorem localizedSpectrumMap_comp {J : D ⥤ E}
@@ -45,7 +45,7 @@ theorem localizedSpectrumMap_comp {J : D ⥤ E}
     localizedSpectrumMap W U (hF.comp hJ) =
       localizedSpectrumMap W V hF ≫ localizedSpectrumMap V U hJ :=
   (toStableLocalization_map_eq_of_homotopy
-    (exactOriginalPrespectrumMap_comp_homotopy W V U hF hJ)).trans
+    (exactOriginalPrespectrumMapCompHomotopy W V U hF hJ)).trans
       (toStableLocalization.map_comp _ _)
 
 theorem localizedSpectrumMap_weakNatTrans (η : F ⟶ G) (hη : ∀ A, V.weq (η.app A)) :

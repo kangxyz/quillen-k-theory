@@ -36,6 +36,7 @@ instance closedImmersionSchemes_isClosedImmersion {X Y : ClosedImmersionSchemes.
 abbrev locallyNoetherianClosedSchemeProperty : ObjectProperty ClosedImmersionSchemes.{u} :=
   fun X => IsLocallyNoetherian X.obj
 
+/-- Locally noetherian schemes with actual closed immersions as morphisms. -/
 abbrev LocallyNoetherianClosedSchemes := locallyNoetherianClosedSchemeProperty.{u}.FullSubcategory
 
 instance locallyNoetherianClosedSchemes_isLocallyNoetherian

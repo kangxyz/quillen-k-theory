@@ -56,7 +56,7 @@ theorem KEquiv_symm_toMonoidHom (n : ℕ) :
   have h := KMap_eq_of_iso ((split_exact W).comp (sourceCofiber_exact W))
     (IsExact.id (productStructure W W).cof (productStructure W W).weq)
     (splitSourceCofiberIso W) n
-  rw [← KMap_comp_KMap, KMap_id] at h
+  rw [← KMap_comp_KMap (split_exact W) (sourceCofiber_exact W) n, KMap_id] at h
   ext q
   apply (KEquiv W n).injective
   change (KEquiv W n) ((KEquiv W n).symm q) =

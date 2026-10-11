@@ -23,79 +23,102 @@ open CategoryTheory Limits
 open scoped Topology unitInterval
 universe u
 
-namespace Quillen.TheoremA
+namespace Quillen
 
 /-- The actual relative-cylinder boundary map is injective when the original
 map is injective. Only the displayed pushout relations are used. -/
-theorem cylinderBoundaryMap_injective {A B : TopCat.{u}} (i : A ⟶ B)
-    (hi : Function.Injective i) : Function.Injective (cylinderBoundaryMap i) := by
+theorem CylinderBoundary.cylinderBoundaryMap_injective {A B : TopCat.{u}} (i : A ⟶ B)
+    (hi : Function.Injective i) : Function.Injective (Quillen.CylinderBoundary.cylinderBoundaryMap
+      i) := by
   have hs (a : A) (t : unitInterval) :
-      cylinderBoundaryMap i (cylinderBoundarySide i (a,t)) = (i a,t) :=
-    ConcreteCategory.congr_hom (cylinderBoundarySide_map i) (a,t)
-  have h₀ (b : B) : cylinderBoundaryMap i (cylinderBoundaryCaps i (Sum.inl b)) = (b,0) :=
-    ConcreteCategory.congr_hom (cylinderBoundaryCaps_map i) (Sum.inl b)
-  have h₁ (b : B) : cylinderBoundaryMap i (cylinderBoundaryCaps i (Sum.inr b)) = (b,1) :=
-    ConcreteCategory.congr_hom (cylinderBoundaryCaps_map i) (Sum.inr b)
-  have hc₀ (a : A) : cylinderBoundarySide i (a,0) =
-      cylinderBoundaryCaps i (Sum.inl (i a)) :=
-    ConcreteCategory.congr_hom (cylinderBoundary_isPushout i).w (Sum.inl a)
-  have hc₁ (a : A) : cylinderBoundarySide i (a,1) =
-      cylinderBoundaryCaps i (Sum.inr (i a)) :=
-    ConcreteCategory.congr_hom (cylinderBoundary_isPushout i).w (Sum.inr a)
+      Quillen.CylinderBoundary.cylinderBoundaryMap i (Quillen.CylinderBoundary.cylinderBoundarySide
+        i (a,t)) = (i a,t) :=
+    ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundarySide_map i) (a,t)
+  have h₀ (b : B) : Quillen.CylinderBoundary.cylinderBoundaryMap i
+    (Quillen.CylinderBoundary.cylinderBoundaryCaps i (Sum.inl b)) = (b,0) :=
+    ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundaryCaps_map i) (Sum.inl b)
+  have h₁ (b : B) : Quillen.CylinderBoundary.cylinderBoundaryMap i
+    (Quillen.CylinderBoundary.cylinderBoundaryCaps i (Sum.inr b)) = (b,1) :=
+    ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundaryCaps_map i) (Sum.inr b)
+  have hc₀ (a : A) : Quillen.CylinderBoundary.cylinderBoundarySide i (a,0) =
+      Quillen.CylinderBoundary.cylinderBoundaryCaps i (Sum.inl (i a)) :=
+    ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundary_isPushout i).w (Sum.inl a)
+  have hc₁ (a : A) : Quillen.CylinderBoundary.cylinderBoundarySide i (a,1) =
+      Quillen.CylinderBoundary.cylinderBoundaryCaps i (Sum.inr (i a)) :=
+    ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundary_isPushout i).w (Sum.inr a)
   intro x y h
-  obtain ⟨x,rfl⟩ := pushout_sum_surjective (cylinderBoundary_isPushout i) x
-  obtain ⟨y,rfl⟩ := pushout_sum_surjective (cylinderBoundary_isPushout i) y
+  obtain ⟨x,rfl⟩ := pushout_sum_surjective (Quillen.CylinderBoundary.cylinderBoundary_isPushout i) x
+  obtain ⟨y,rfl⟩ := pushout_sum_surjective (Quillen.CylinderBoundary.cylinderBoundary_isPushout i) y
   rcases x with ⟨a,t⟩ | (b | b) <;> rcases y with ⟨a',t'⟩ | (b' | b')
-  · change cylinderBoundaryMap i (cylinderBoundarySide i (a,t)) =
-      cylinderBoundaryMap i (cylinderBoundarySide i (a',t')) at h
+  · change Quillen.CylinderBoundary.cylinderBoundaryMap i
+      (Quillen.CylinderBoundary.cylinderBoundarySide i (a,t)) =
+      Quillen.CylinderBoundary.cylinderBoundaryMap i (Quillen.CylinderBoundary.cylinderBoundarySide
+        i (a',t')) at h
     rw [hs,hs] at h
-    exact congrArg (cylinderBoundarySide i)
+    exact congrArg (Quillen.CylinderBoundary.cylinderBoundarySide i)
       (Prod.ext (hi (congrArg Prod.fst h))
         (congrArg (fun z : B × unitInterval ↦ z.2) h))
-  · change cylinderBoundaryMap i (cylinderBoundarySide i (a,t)) =
-      cylinderBoundaryMap i (cylinderBoundaryCaps i (Sum.inl b')) at h
+  · change Quillen.CylinderBoundary.cylinderBoundaryMap i
+      (Quillen.CylinderBoundary.cylinderBoundarySide i (a,t)) =
+      Quillen.CylinderBoundary.cylinderBoundaryMap i (Quillen.CylinderBoundary.cylinderBoundaryCaps
+        i (Sum.inl b')) at h
     rw [hs,h₀] at h
     obtain ⟨hb,ht⟩ := Prod.mk.inj h
     subst b'; subst t
     exact hc₀ a
-  · change cylinderBoundaryMap i (cylinderBoundarySide i (a,t)) =
-      cylinderBoundaryMap i (cylinderBoundaryCaps i (Sum.inr b')) at h
+  · change Quillen.CylinderBoundary.cylinderBoundaryMap i
+      (Quillen.CylinderBoundary.cylinderBoundarySide i (a,t)) =
+      Quillen.CylinderBoundary.cylinderBoundaryMap i (Quillen.CylinderBoundary.cylinderBoundaryCaps
+        i (Sum.inr b')) at h
     rw [hs,h₁] at h
     obtain ⟨hb,ht⟩ := Prod.mk.inj h
     subst b'; subst t
     exact hc₁ a
-  · change cylinderBoundaryMap i (cylinderBoundaryCaps i (Sum.inl b)) =
-      cylinderBoundaryMap i (cylinderBoundarySide i (a',t')) at h
+  · change Quillen.CylinderBoundary.cylinderBoundaryMap i
+      (Quillen.CylinderBoundary.cylinderBoundaryCaps i (Sum.inl b)) =
+      Quillen.CylinderBoundary.cylinderBoundaryMap i (Quillen.CylinderBoundary.cylinderBoundarySide
+        i (a',t')) at h
     rw [h₀,hs] at h
     obtain ⟨hb,ht⟩ := Prod.mk.inj h
     subst b; subst t'
     exact (hc₀ a').symm
-  · change cylinderBoundaryMap i (cylinderBoundaryCaps i (Sum.inl b)) =
-      cylinderBoundaryMap i (cylinderBoundaryCaps i (Sum.inl b')) at h
+  · change Quillen.CylinderBoundary.cylinderBoundaryMap i
+      (Quillen.CylinderBoundary.cylinderBoundaryCaps i (Sum.inl b)) =
+      Quillen.CylinderBoundary.cylinderBoundaryMap i (Quillen.CylinderBoundary.cylinderBoundaryCaps
+        i (Sum.inl b')) at h
     rw [h₀,h₀] at h
-    exact congrArg (fun z ↦ cylinderBoundaryCaps i (Sum.inl z)) (congrArg Prod.fst h)
-  · change cylinderBoundaryMap i (cylinderBoundaryCaps i (Sum.inl b)) =
-      cylinderBoundaryMap i (cylinderBoundaryCaps i (Sum.inr b')) at h
+    exact congrArg (fun z ↦ Quillen.CylinderBoundary.cylinderBoundaryCaps i (Sum.inl z)) (congrArg
+      Prod.fst h)
+  · change Quillen.CylinderBoundary.cylinderBoundaryMap i
+      (Quillen.CylinderBoundary.cylinderBoundaryCaps i (Sum.inl b)) =
+      Quillen.CylinderBoundary.cylinderBoundaryMap i (Quillen.CylinderBoundary.cylinderBoundaryCaps
+        i (Sum.inr b')) at h
     rw [h₀,h₁] at h
     exact False.elim (zero_ne_one (congrArg Prod.snd h))
-  · change cylinderBoundaryMap i (cylinderBoundaryCaps i (Sum.inr b)) =
-      cylinderBoundaryMap i (cylinderBoundarySide i (a',t')) at h
+  · change Quillen.CylinderBoundary.cylinderBoundaryMap i
+      (Quillen.CylinderBoundary.cylinderBoundaryCaps i (Sum.inr b)) =
+      Quillen.CylinderBoundary.cylinderBoundaryMap i (Quillen.CylinderBoundary.cylinderBoundarySide
+        i (a',t')) at h
     rw [h₁,hs] at h
     obtain ⟨hb,ht⟩ := Prod.mk.inj h
     subst b; subst t'
     exact (hc₁ a').symm
-  · change cylinderBoundaryMap i (cylinderBoundaryCaps i (Sum.inr b)) =
-      cylinderBoundaryMap i (cylinderBoundaryCaps i (Sum.inl b')) at h
+  · change Quillen.CylinderBoundary.cylinderBoundaryMap i
+      (Quillen.CylinderBoundary.cylinderBoundaryCaps i (Sum.inr b)) =
+      Quillen.CylinderBoundary.cylinderBoundaryMap i (Quillen.CylinderBoundary.cylinderBoundaryCaps
+        i (Sum.inl b')) at h
     rw [h₁,h₀] at h
     exact False.elim (zero_ne_one (congrArg Prod.snd h).symm)
-  · change cylinderBoundaryMap i (cylinderBoundaryCaps i (Sum.inr b)) =
-      cylinderBoundaryMap i (cylinderBoundaryCaps i (Sum.inr b')) at h
+  · change Quillen.CylinderBoundary.cylinderBoundaryMap i
+      (Quillen.CylinderBoundary.cylinderBoundaryCaps i (Sum.inr b)) =
+      Quillen.CylinderBoundary.cylinderBoundaryMap i (Quillen.CylinderBoundary.cylinderBoundaryCaps
+        i (Sum.inr b')) at h
     rw [h₁,h₁] at h
-    exact congrArg (fun z ↦ cylinderBoundaryCaps i (Sum.inr z)) (congrArg Prod.fst h)
+    exact congrArg (fun z ↦ Quillen.CylinderBoundary.cylinderBoundaryCaps i (Sum.inr z)) (congrArg
+      Prod.fst h)
 
-end Quillen.TheoremA
+end Quillen
 namespace Quillen.CubicalTests
-open TheoremA
 
 /-- The existing canonical presentation map has no identifications beyond
 those of the actual cube boundary. -/
@@ -105,7 +128,7 @@ theorem boundaryPresentation_injective (n : ℕ) :
   | zero => intro x; exact PEmpty.elim x
   | succ n ih =>
     exact (stepHomeomorph n).injective.comp
-      (cylinderBoundaryMap_injective (boundaryPresentation n).map ih)
+      (Quillen.CylinderBoundary.cylinderBoundaryMap_injective (boundaryPresentation n).map ih)
 
 /-- The literal boundary subtype of the actual universe-lifted cube. -/
 abbrev boundary (n : ℕ) := {z : cube.{u} n // z.down ∈ Cube.boundary (Fin n)}
@@ -150,9 +173,9 @@ theorem boundaryPresentationHomeomorph_inv_comp (n : ℕ) :
 /-- The actual boundary inclusion has HEP, obtained from the canonical
 pushout presentation rather than assumed for an arbitrary closed subset. -/
 theorem boundaryInclusion_hep (n : ℕ) :
-    homotopyExtensionProperty (boundaryInclusion.{u} n) := by
+    Quillen.homotopyExtensionProperty (boundaryInclusion.{u} n) := by
   rw [← boundaryPresentationHomeomorph_inv_comp]
-  exact homotopyExtensionProperty_comp (homotopyExtensionProperty_of_isIso _)
+  exact Quillen.homotopyExtensionProperty_comp (Quillen.homotopyExtensionProperty_of_isIso _)
     (boundaryPresentation n).hep
 
 /-- The original presentation map is itself a closed embedding. -/
@@ -188,7 +211,7 @@ def unliftedBoundaryInclusion (n : ℕ) :
       TopCat.of (Fin n → unitInterval) := TopCat.ofHom ⟨Subtype.val,continuous_subtype_val⟩
 
 theorem unliftedBoundaryInclusion_hep (n : ℕ) :
-    homotopyExtensionProperty (unliftedBoundaryInclusion n) := by
+    Quillen.homotopyExtensionProperty (unliftedBoundaryInclusion n) := by
   let e : TopCat.of (boundary.{0} n) ≅
       TopCat.of {z : Fin n → unitInterval // z ∈ Cube.boundary (Fin n)} :=
     TopCat.isoOfHomeo (boundaryULiftHomeomorph.{0} n)
@@ -198,8 +221,8 @@ theorem unliftedBoundaryInclusion_hep (n : ℕ) :
     ext z : 1
     rfl
   rw [← he]
-  exact homotopyExtensionProperty_comp (homotopyExtensionProperty_of_isIso _)
-    (homotopyExtensionProperty_comp (boundaryInclusion_hep n)
-      (homotopyExtensionProperty_of_isIso _))
+  exact Quillen.homotopyExtensionProperty_comp (Quillen.homotopyExtensionProperty_of_isIso _)
+    (Quillen.homotopyExtensionProperty_comp (boundaryInclusion_hep n)
+      (Quillen.homotopyExtensionProperty_of_isIso _))
 
 end Quillen.CubicalTests

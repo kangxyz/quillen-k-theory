@@ -20,15 +20,18 @@ open scoped Simplicial Topology unitInterval
 universe u
 namespace Quillen
 
+/-- Swap the two simplicial interval coordinates of the double cylinder. -/
 def simplicialCylinderSwap (X : SSet.{u}) : (X ⊗ Δ[1]) ⊗ Δ[1] ⟶ (X ⊗ Δ[1]) ⊗ Δ[1] :=
   lift (lift (fst (X ⊗ Δ[1]) Δ[1] ≫ fst X Δ[1]) (snd (X ⊗ Δ[1]) Δ[1]))
     (fst (X ⊗ Δ[1]) Δ[1] ≫ snd X Δ[1])
 
+/-- Realize the double simplicial cylinder as the double topological cylinder. -/
 def realizationDoubleCylinderIso (X : SSet.{u}) :
     |(X ⊗ Δ[1]) ⊗ Δ[1]| ≅ (|X| ⊗ TopCat.I) ⊗ TopCat.I :=
   realizationCylinderIso (X ⊗ Δ[1]) ≪≫
     (MonoidalCategory.tensorRight TopCat.I).mapIso (realizationCylinderIso X)
 
+/-- Swap the two topological interval coordinates of the double cylinder. -/
 def topologicalCylinderSwap (X : TopCat.{u}) : (X ⊗ TopCat.I) ⊗ TopCat.I ⟶
     (X ⊗ TopCat.I) ⊗ TopCat.I :=
   lift (lift (fst (X ⊗ TopCat.I) TopCat.I ≫ fst X TopCat.I)

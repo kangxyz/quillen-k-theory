@@ -68,7 +68,7 @@ def boundedFlatPerfectPullbackCompIso {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y 
       (boundedFlatPerfectKPullback f n).comp (boundedFlatPerfectKPullback g n) :=
   (Waldhausen.KMap_eq_of_iso (boundedFlatPerfectPullback_exact (f ≫ g))
     ((boundedFlatPerfectPullback_exact g).comp (boundedFlatPerfectPullback_exact f))
-    (boundedFlatPerfectPullbackCompIso f g) n).trans (Waldhausen.KMap_comp _ _ n)
+    (boundedFlatPerfectPullbackCompIso f g) n).trans ((Waldhausen.KMap_comp_KMap _ _ n).symm)
 
 /-- The contravariant group-valued functor on schemes given by degree-`n` K-theory of bounded-flat
 perfect complexes and geometric pullback. -/
@@ -100,20 +100,20 @@ theorem boundedFlatPerfectToPerfect_comp_strict (X : Scheme.{u}) (n : ℕ) :
       strictToPerfectKMap X n := by
   unfold boundedFlatPerfectToPerfectKMap strictToBoundedFlatPerfectKMap strictToPerfectKMap
     Waldhausen.subcategoryKMap
-  rw [← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap]
 
 theorem strictToBoundedFlatPerfectKMap_pullback {X Y : Scheme.{u}} (f : X ⟶ Y) (n : ℕ) :
     (boundedFlatPerfectKPullback f n).comp (strictToBoundedFlatPerfectKMap Y n) =
       (strictToBoundedFlatPerfectKMap X n).comp (strictKPullback f n) := by
   unfold boundedFlatPerfectKPullback strictToBoundedFlatPerfectKMap strictKPullback
     Waldhausen.subcategoryKMap
-  rw [← Waldhausen.KMap_comp, ← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
 
 theorem boundedFlatPerfectToPerfectKMap_flatPullback {X Y : Scheme.{u}}
     (f : X ⟶ Y) [Flat f] (n : ℕ) :
     (perfectKFlatPullback f n).comp (boundedFlatPerfectToPerfectKMap Y n) =
       (boundedFlatPerfectToPerfectKMap X n).comp (boundedFlatPerfectKPullback f n) := by
   unfold perfectKFlatPullback boundedFlatPerfectToPerfectKMap boundedFlatPerfectKPullback
-  rw [← Waldhausen.KMap_comp, ← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
 
 end Quillen.PerfectComplexes

@@ -57,7 +57,7 @@ def rightLeg (P : TwoOpenPartition X) : TopCat.of P.Overlap ⟶ TopCat.of P.Righ
 
 /-- A chosen ordinary double cylinder of the actual open-cover span. -/
 abbrev CoverCylinder (P : TwoOpenPartition X) : TopCat.{u} :=
-  pushout (TheoremA.intervalEndpoints (TopCat.of P.Overlap)) P.endMap
+  pushout (Quillen.intervalEndpoints (TopCat.of P.Overlap)) P.endMap
 
 /-- The canonical map of the cover overlap times `I` into the double mapping cylinder of a
 two-open partition. -/
@@ -69,7 +69,7 @@ abbrev coverEnds (P : TwoOpenPartition X) : TopCat.of (P.Left ⊕ P.Right) ⟶ P
 
 /-- The chosen cover cylinder has the genuine pushout universal property. -/
 theorem coverCylinderSquare (P : TwoOpenPartition X) :
-    IsPushout (TheoremA.intervalEndpoints (TopCat.of P.Overlap))
+    IsPushout (Quillen.intervalEndpoints (TopCat.of P.Overlap))
       (DoubleCylinder.endMap P.leftLeg P.rightLeg) P.coverLine P.coverEnds :=
   IsPushout.of_hasPushout _ _
 

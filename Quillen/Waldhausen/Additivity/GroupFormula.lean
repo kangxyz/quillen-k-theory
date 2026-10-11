@@ -59,7 +59,8 @@ theorem KMap_sum_apply
   calc
     KMap (sumFunctor_isExact V W hH hF) n a =
         KMap (coproductFunctor_isExact W) n (KMap (pair_exact V W W hH hF) n a) :=
-      DFunLike.congr_fun (KMap_comp_KMap (pair_exact V W W hH hF) (coproductFunctor_isExact W) n).symm a
+      DFunLike.congr_fun
+        (KMap_comp_KMap (pair_exact V W W hH hF) (coproductFunctor_isExact W) n).symm a
     _ = coproductKMap W n (KMap hH n a, KMap hF n a) := by
       change _ = KMap (coproductFunctor_isExact W) n
         ((Product.KEquiv W W n).symm (KMap hH n a, KMap hF n a))

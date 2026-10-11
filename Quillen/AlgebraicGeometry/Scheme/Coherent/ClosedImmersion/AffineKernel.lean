@@ -33,6 +33,7 @@ variable {Z : Scheme.{u}} [IsLocallyNoetherian Z]
   (I : Ideal R) (e : Z ≅ Spec (Ideal.closedRing R I))
   (hi : i = e.hom ≫ Ideal.closedMap R I)
 
+omit [IsNoetherianRing R] in
 /-- Maps into the actual closed essential image factor through the genuine
 closed pullback unit, by its adjunction. -/
 theorem factor_through_unit (M : FiniteTypeSheaves (Spec R)) {Q : FiniteTypeSheaves (Spec R)}

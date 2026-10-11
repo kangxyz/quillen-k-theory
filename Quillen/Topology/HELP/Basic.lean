@@ -6,16 +6,12 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.CategoryTheory.TheoremA.RealizationCofibrations
+public import Quillen.Topology.Realization.Cylinder
 public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
+public import Mathlib.Topology.Homotopy.TopCat.Basic
 
 /-!
-# Homotopy extension and pushouts
-
-The homotopy extension property is expressed using the actual topological
-cylinder. It is stable under composition and topological pushouts, because
-product with the compact interval preserves colimits. These are genuine
-extension constructions, not a homotopy-invariance axiom.
+# Homotopy extension and continuous cylinder coordinates
 -/
 @[expose] public section
 
@@ -27,7 +23,7 @@ open scoped Topology unitInterval
 
 universe u
 
-namespace Quillen.TheoremA
+namespace Quillen
 
 /-- The homotopy extension property for a map of topological spaces. -/
 def homotopyExtensionProperty {A B : TopCat.{u}} (i : A ⟶ B) : Prop :=
@@ -38,7 +34,7 @@ def homotopyExtensionProperty {A B : TopCat.{u}} (i : A ⟶ B) : Prop :=
 
 /-- Isomorphisms have the homotopy extension property. -/
 theorem homotopyExtensionProperty_of_isIso {A B : TopCat.{u}}
-    (i : A ⟶ B) [IsIso i] : homotopyExtensionProperty i := by
+    (i : A ⟶ B) [IsIso i] : Quillen.homotopyExtensionProperty i := by
   intro Z f H h
   refine ⟨(inv i ▷ TopCat.I) ≫ H, ?_, ?_⟩
   · rw [← Category.assoc, TopCat.ι₀_comp, Category.assoc, h]
@@ -49,8 +45,8 @@ theorem homotopyExtensionProperty_of_isIso {A B : TopCat.{u}}
 /-- A composite of maps with the homotopy extension property has that property. -/
 theorem homotopyExtensionProperty_comp {A B C : TopCat.{u}}
     {i : A ⟶ B} {j : B ⟶ C}
-    (hi : homotopyExtensionProperty i) (hj : homotopyExtensionProperty j) :
-    homotopyExtensionProperty (i ≫ j) := by
+    (hi : Quillen.homotopyExtensionProperty i) (hj : Quillen.homotopyExtensionProperty j) :
+    Quillen.homotopyExtensionProperty (i ≫ j) := by
   intro Z f H h
   obtain ⟨K, hK₀, hK⟩ := hi Z (j ≫ f) H (by simpa only [Category.assoc] using h)
   obtain ⟨L, hL₀, hL⟩ := hj Z f K hK₀
@@ -62,8 +58,8 @@ extension property. This uses the universal property of the actual topological
 pushout, not any extra compatibility hypothesis about an extension. -/
 theorem homotopyExtensionProperty_pushout {A B C D : TopCat.{u}}
     {i : A ⟶ B} {f : A ⟶ C} {g : B ⟶ D} {j : C ⟶ D}
-    (sq : IsPushout i f g j) (hi : homotopyExtensionProperty i) :
-    homotopyExtensionProperty j := by
+    (sq : IsPushout i f g j) (hi : Quillen.homotopyExtensionProperty i) :
+    Quillen.homotopyExtensionProperty j := by
   intro Z k H h
   have hstart : TopCat.ι₀ ≫ (f ▷ TopCat.I) ≫ H = i ≫ g ≫ k := by
     rw [← Category.assoc, TopCat.ι₀_comp, Category.assoc, h, ← Category.assoc,
@@ -85,7 +81,7 @@ theorem homotopyExtensionProperty_of_continuous {A B : TopCat.{u}} (i : A ⟶ B)
     (hext : ∀ (Z : TopCat.{u}) (f : C(B, Z)) (H : C(unitInterval × A, Z)),
       (∀ a, H (0, a) = f (i a)) →
       ∃ K : C(unitInterval × B, Z), (∀ b, K (0, b) = f b) ∧
-        ∀ t a, K (t, i a) = H (t, a)) : homotopyExtensionProperty i := by
+        ∀ t a, K (t, i a) = H (t, a)) : Quillen.homotopyExtensionProperty i := by
   intro Z f H hzero
   let H' : C(unitInterval × A, Z) :=
     ⟨fun p ↦ H (p.2, ULift.up p.1), H.hom.continuous.comp
@@ -102,12 +98,36 @@ theorem homotopyExtensionProperty_of_continuous {A B : TopCat.{u}} (i : A ⟶ B)
   · ext ⟨a, t⟩
     exact hK t.down a
 
-/-- Inclusions of arbitrary subfamilies of realized simplicial summands have
-the categorical homotopy extension property. -/
-theorem homotopyExtensionProperty_realizationSubfamily {ι : Type u}
-    (Z : ι → SSet.{u}) (S : Set ι) :
-    homotopyExtensionProperty (SSet.toTop.map (simplicialSubfamilyInclusion Z S)) :=
-  homotopyExtensionProperty_of_continuous _ fun _ f H hzero ↦
-    realizationSubfamily_homotopyExtension Z S f H hzero
+/-- HEP in categorical cylinder coordinates also gives extensions in ordinary
+continuous-map coordinates, including an arbitrary compact-open target. -/
+theorem homotopyExtensionProperty_continuous {A B : TopCat.{u}} {i : A ⟶ B}
+    (hi : Quillen.homotopyExtensionProperty i) (Z : TopCat.{u})
+    (f : C(B, Z)) (H : C(unitInterval × A, Z))
+    (hzero : ∀ a, H (0, a) = f (i a)) :
+    ∃ K : C(unitInterval × B, Z), (∀ b, K (0, b) = f b) ∧
+      ∀ t a, K (t, i a) = H (t, a) := by
+  let H' : A ⊗ TopCat.I ⟶ Z := TopCat.ofHom
+    ⟨fun p ↦ H (p.2.down, p.1), H.continuous.comp
+      ((continuous_uliftDown.comp continuous_snd).prodMk continuous_fst)⟩
+  obtain ⟨K, hK₀, hK⟩ := hi Z (TopCat.ofHom f) H' (by ext a; exact hzero a)
+  refine ⟨⟨fun p ↦ K (p.2, ULift.up p.1), K.hom.continuous.comp
+    (continuous_snd.prodMk (continuous_uliftUp.comp continuous_fst))⟩, ?_, ?_⟩
+  · intro b
+    exact ConcreteCategory.congr_hom hK₀ b
+  · intro t a
+    exact ConcreteCategory.congr_hom hK (a, ULift.up t)
 
-end Quillen.TheoremA
+
+/-- Homotopy extension is invariant under an isomorphism of arrows. -/
+theorem homotopyExtensionProperty_of_iso_square
+    {A B C D : TopCat.{u}} (i : A ⟶ B) (j : C ⟶ D)
+    (eA : A ≅ C) (eB : B ≅ D) (h : i ≫ eB.hom = eA.hom ≫ j)
+    (hj : Quillen.homotopyExtensionProperty j) : Quillen.homotopyExtensionProperty i := by
+  have hi : i = eA.hom ≫ j ≫ eB.inv := by
+    rw [← Category.assoc, ← h]
+    simp
+  rw [hi]
+  exact Quillen.homotopyExtensionProperty_comp (Quillen.homotopyExtensionProperty_of_isIso eA.hom)
+    (Quillen.homotopyExtensionProperty_comp hj (Quillen.homotopyExtensionProperty_of_isIso eB.inv))
+
+end Quillen

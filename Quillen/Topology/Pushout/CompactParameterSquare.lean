@@ -248,7 +248,7 @@ theorem isPushout_realization (X : SSet.{u}) [CompactSpace D] [LocallyCompactSpa
 same genuine finite-parameter pushout square. -/
 theorem isPushout_doubleCylinder {X Y Z : SSet.{u}} (f₀ : X ⟶ Y) (g₀ : X ⟶ Z)
     {l₀ : |X| ⊗ TopCat.I ⟶ T} {e₀ : TopCat.of (|Y| ⊕ |Z|) ⟶ T}
-    (sqT : IsPushout (TheoremA.intervalEndpoints |X|)
+    (sqT : IsPushout (Quillen.intervalEndpoints |X|)
       (DoubleCylinder.endMap (SSet.toTop.map f₀) (SSet.toTop.map g₀)) l₀ e₀)
     [CompactSpace D] [LocallyCompactSpace D] :
     IsPushout (leftLeg base b) (rightLeg sq base b) (leftInclusion base b) (rightInclusion base

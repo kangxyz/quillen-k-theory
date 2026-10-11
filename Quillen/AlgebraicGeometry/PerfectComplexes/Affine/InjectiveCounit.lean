@@ -32,7 +32,7 @@ or upper bounds for an open direct image.
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-universe v u
+universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 namespace Quillen.PerfectComplexes.Affine
 
@@ -138,7 +138,6 @@ lemma exists_injective_associatedSectionsCounit {R : CommRingCat.{u}}
 /-- Genuine lower-bounded affine module reconstruction in the original ambient derived category.
 The module complex retains the requested lower term bound. -/
 lemma exists_lowerBounded_module_representative {R : CommRingCat.{u}}
-    [HasDerivedCategory.{v} (Spec R).Modules]
     (K : Complex (Spec R)) (a : ℤ) [K.IsGE a]
     (hqc : ∀ n, (K.homology n).IsQuasicoherent) :
     ∃ P : ModuleComplex R, P.IsStrictlyGE a ∧

@@ -98,12 +98,12 @@ theorem diagonalMap_isRealizationEquivalence
       Mono ((stageDiagram Z).map (homOfLE (Nat.le_succ n))) := by
     change Mono (SSet.Subcomplex.homOfLE ((outerSkeleton Z).monotone (Nat.le_succ n)))
     infer_instance
-  have hA (n : ℕ) : homotopyExtensionProperty (A.map (homOfLE (Nat.le_succ n))) := by
+  have hA (n : ℕ) : Quillen.homotopyExtensionProperty (A.map (homOfLE (Nat.le_succ n))) := by
     have := hmono X n
-    exact homotopyExtensionProperty_realization_mono _
-  have hB (n : ℕ) : homotopyExtensionProperty (B.map (homOfLE (Nat.le_succ n))) := by
+    exact Quillen.Realization.homotopyExtensionProperty_realization_mono _
+  have hB (n : ℕ) : Quillen.homotopyExtensionProperty (B.map (homOfLE (Nat.le_succ n))) := by
     have := hmono Y n
-    exact homotopyExtensionProperty_realization_mono _
+    exact Quillen.Realization.homotopyExtensionProperty_realization_mono _
   choose E hE using stageMap_isRealizationEquivalence η h
   let e := sequentialCoconeHomotopyEquiv α hA hB E hE c hc d hd
   have he : e.toFun = (SSet.toTop.map (diagonalMap η)).hom := by

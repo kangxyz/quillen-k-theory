@@ -28,15 +28,15 @@ namespace Quillen.TheoremA
 /-- An explicit coproduct of bisimplicial sets. -/
 def bisimplicialSigma {ι : Type u} (X : ι → SimplexCategoryᵒᵖ ⥤ SSet.{u}) :
     SimplexCategoryᵒᵖ ⥤ SSet.{u} where
-  obj p := simplicialSigma fun i ↦ (X i).obj p
-  map α := simplicialSigmaMap fun i ↦ (X i).map α
-  map_id p := by ext q x : 4; dsimp [simplicialSigmaMap]; simp
-  map_comp α β := by ext q x : 4; dsimp [simplicialSigmaMap]; simp
+  obj p := Quillen.Realization.simplicialSigma fun i ↦ (X i).obj p
+  map α := Quillen.Realization.simplicialSigmaMap fun i ↦ (X i).map α
+  map_id p := by ext q x : 4; dsimp [Quillen.Realization.simplicialSigmaMap]; simp
+  map_comp α β := by ext q x : 4; dsimp [Quillen.Realization.simplicialSigmaMap]; simp
 
 /-- An individual summand of the explicit bisimplicial coproduct. -/
 def bisimplicialSigmaι {ι : Type u} (X : ι → SimplexCategoryᵒᵖ ⥤ SSet.{u}) (i : ι) :
     X i ⟶ bisimplicialSigma X where
-  app p := simplicialSigmaι (fun i ↦ (X i).obj p) i
+  app p := Quillen.Realization.simplicialSigmaι (fun i ↦ (X i).obj p) i
   naturality _ _ _ := rfl
 
 /-- The actual coproduct map determined by maps from its summands. -/

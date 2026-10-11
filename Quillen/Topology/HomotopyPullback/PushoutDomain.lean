@@ -36,7 +36,7 @@ variable {A B C P A' B' C' P' E T : TopCat.{u}}
   (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g')
   (wi : i ≫ p = b ≫ i') (wj : j ≫ p = c ≫ j')
   (q : E ⟶ T) (s : P' ⟶ T) (t : P ⟶ E) (w : t ≫ q = p ≫ s)
-  (hf : TheoremA.homotopyExtensionProperty f) (hf' : TheoremA.homotopyExtensionProperty f')
+  (hf : Quillen.homotopyExtensionProperty f) (hf' : Quillen.homotopyExtensionProperty f')
 
 /-- Actual HP-domain descent on the base homotopy pushout, followed by
 the genuine homotopy equivalent base collapse. -/
@@ -63,7 +63,7 @@ target assemble into the canonical comparison on the actual pushout.
 All diagram maps, both HEP conditions, and all three input equivalences
 are explicit; no global realization or descent conclusion is assumed. -/
 def homotopyEquiv : ContinuousMap.HomotopyEquiv P (HomotopyPullback q.hom s.hom) :=
-  TheoremA.homotopyEquivCancelLeft
+  Quillen.homotopyEquivCancelLeft
     (A := CartesianPushout.Cylinder f g) (B := P) (C := TopCat.of (HomotopyPullback q.hom s.hom))
     (a := CartesianPushout.collapse sq) (b := totalComparison p q s t w)
     (DoubleCylinder.collapseHomotopyEquiv (CartesianPushout.cylinderSquare f g) sq hf) rfl

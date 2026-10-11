@@ -42,8 +42,8 @@ end Quillen.FiniteModuleLocalization.IdealClosedSupport
 namespace Quillen.CoherentScheme.ClosedImmersion.General
 
 /-- Scheme isomorphisms give actual coherent restriction equivalences. -/
-def coherentIsoEquivalence {Z X : Scheme.{u}} [IsLocallyNoetherian Z]
-    [IsLocallyNoetherian X] (e : Z ≅ X) : FiniteTypeSheaves Z ≌ FiniteTypeSheaves X :=
+def coherentIsoEquivalence {Z X : Scheme.{u}} (e : Z ≅ X) :
+    FiniteTypeSheaves Z ≌ FiniteTypeSheaves X :=
   CategoryTheory.Equivalence.mk (finiteTypeSheavesRestriction e.inv) (finiteTypeSheavesRestriction
     e.hom)
     (Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules Z)
@@ -68,6 +68,7 @@ instance coherentPushforward_affine_full : (coherentPushforward i).Full := by
     e).isEquivalence_functor
   exact Functor.Full.of_iso (affinePresentationComparison R i I e hi).symm
 
+omit [IsLocallyNoetherian Z] [IsNoetherianRing R] in
 /-- The actual essential image is exactly annihilation by the ideal in an
 actual quotient presentation of the closed immersion. -/
 theorem coherentPushforward_essImage_iff (I : Ideal R)

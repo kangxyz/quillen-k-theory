@@ -74,6 +74,7 @@ The parameter-correct desuspended actual square cone for this affine polynomial/
 def affineBassStep (R : CommRingCat.{u}) : LoopPrespectrum :=
   parameterLooping (mappingCone (bassSquareComparison R))
 
+/-- The source leg into the polynomial-chart homotopy pushout, using original flat pullback. -/
 def bassSourceLeg (R : CommRingCat.{u}) :
     originalPrespectrum (perfectWaldhausen (Spec R)) ⟶
       HomotopyPushout.prespectrum (perfectFlatPrespectrumMap (polynomialProjection R))

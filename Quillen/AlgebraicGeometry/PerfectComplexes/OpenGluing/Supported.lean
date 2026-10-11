@@ -35,7 +35,10 @@ theorem perfectSupported_of_two_openImmersions {U V X : Scheme.{u}}
   refine ⟨locallyPerfect_of_two_openImmersions j k hcover hj.1 hk.1, ?_⟩
   apply (isZero_toDerived_iff_acyclic _).mp
   let Y : Bool → Scheme := fun t ↦ if t then U else V
-  let q : ∀ t, Y t ⟶ X := fun t ↦ by cases t; exact k; exact j
+  let q : ∀ t, Y t ⟶ X := fun t ↦ by
+    cases t with
+    | false => exact k
+    | true => exact j
   have : ∀ t, IsOpenImmersion (q t) := by intro t; cases t <;> dsimp [q] <;> infer_instance
   apply isZero_restrict_of_openImmersionCover P Z Y q
   · intro x

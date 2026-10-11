@@ -29,7 +29,9 @@ namespace Quillen.Waldhausen.IteratedS
 
 /-- A genuine small category with its actual Waldhausen structure. -/
 structure Model where
+  /-- The underlying small category of the Waldhausen model. -/
   category : Cat.{u,u}
+  /-- The Waldhausen structure on the underlying category. -/
   waldhausen : Structure category
 
 instance : CoeSort Model (Type u) := ⟨fun W ↦ W.category⟩
@@ -37,6 +39,7 @@ instance (W : Model.{u}) : SmallCategory W := inferInstanceAs (SmallCategory W.c
 
 /-- Actual exact functors preserving the displayed zero object. -/
 @[ext] structure Model.Hom (V W : Model.{u}) where
+  /-- The underlying functor of the zero-preserving exact model morphism. -/
   functor : V ⥤ W
   exact : IsExact V.waldhausen.cof V.waldhausen.weq W.waldhausen.cof W.waldhausen.weq functor
   zero : functor.obj V.waldhausen.zero = W.waldhausen.zero

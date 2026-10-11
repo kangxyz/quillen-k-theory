@@ -6,15 +6,13 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.CategoryTheory.TheoremA.RealizationPushoutInvariance
+public import Quillen.Topology.HELP.Basic
+public import Quillen.Topology.HELP.IntervalEndpoints
+public import Quillen.Topology.Realization.SimplexBoundaryHEP
+public import Mathlib.Geometry.Convex.ConvexSpace.CompactSpaceStdSimplex
 
 /-!
-# Endpoint-relative homotopy extension
-
-A controlled radial deformation of a simplex cylinder allows HEP extensions
-into compact-open mapping spaces to preserve all its prescribed boundary
-faces. This gives the endpoint pushout-product construction needed for
-compatible mapping-cylinder filtrations.
+# Controlled homotopy extension on relative cylinders
 -/
 @[expose] public section
 
@@ -26,7 +24,7 @@ open scoped Topology unitInterval BigOperators
 
 universe u
 
-namespace Quillen.TheoremA
+namespace Quillen
 
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -39,82 +37,83 @@ def simplexBoundaryFlowScale {n : ℕ} (s : I)
 
 lemma boundaryScale_le_flowScale {n : ℕ} (s : I)
     (z : StdSimplex ℝ (Fin (n + 1)) × I) :
-    simplexBoundaryScale z ≤ simplexBoundaryFlowScale s z := by
+    simplexBoundaryScale z ≤ Quillen.simplexBoundaryFlowScale s z := by
   exact le_min (simplexBoundaryScale_le_one z) (le_add_of_nonneg_right s.2.1)
 
 lemma flowScale_pos {n : ℕ} (s : I)
-    (z : StdSimplex ℝ (Fin (n + 1)) × I) : 0 < simplexBoundaryFlowScale s z :=
-  lt_of_lt_of_le (simplexBoundaryScale_pos z) (boundaryScale_le_flowScale s z)
+    (z : StdSimplex ℝ (Fin (n + 1)) × I) : 0 < Quillen.simplexBoundaryFlowScale s z :=
+  lt_of_lt_of_le (simplexBoundaryScale_pos z) (Quillen.boundaryScale_le_flowScale s z)
 
 lemma flowScale_le_one {n : ℕ} (s : I)
-    (z : StdSimplex ℝ (Fin (n + 1)) × I) : simplexBoundaryFlowScale s z ≤ 1 :=
+    (z : StdSimplex ℝ (Fin (n + 1)) × I) : Quillen.simplexBoundaryFlowScale s z ≤ 1 :=
   min_le_left _ _
 
 @[fun_prop] theorem continuous_simplexBoundaryFlowScale {n : ℕ} :
     Continuous (fun p : I × (StdSimplex ℝ (Fin (n + 1)) × I) ↦
-      simplexBoundaryFlowScale p.1 p.2) := by
-  unfold simplexBoundaryFlowScale
+      Quillen.simplexBoundaryFlowScale p.1 p.2) := by
+  unfold Quillen.simplexBoundaryFlowScale
   fun_prop
 
 /-- The barycentric coordinates during controlled radial motion. -/
 def simplexBoundaryFlowWeight {n : ℕ} (s : I)
     (z : StdSimplex ℝ (Fin (n + 1)) × I) (i : Fin (n + 1)) : ℝ :=
-  ((n + 1 : ℝ) * z.1.weights i + simplexBoundaryFlowScale s z - 1) /
-    ((n + 1 : ℝ) * simplexBoundaryFlowScale s z)
+  ((n + 1 : ℝ) * z.1.weights i + Quillen.simplexBoundaryFlowScale s z - 1) /
+    ((n + 1 : ℝ) * Quillen.simplexBoundaryFlowScale s z)
 
 lemma simplexBoundaryFlowWeight_nonneg {n : ℕ} (s : I)
     (z : StdSimplex ℝ (Fin (n + 1)) × I) (i : Fin (n + 1)) :
-    0 ≤ simplexBoundaryFlowWeight s z i := by
+    0 ≤ Quillen.simplexBoundaryFlowWeight s z i := by
   apply div_nonneg
   · have := ((le_simplexBoundaryDefect z.1 i).trans
-      (defect_le_simplexBoundaryScale z)).trans (boundaryScale_le_flowScale s z)
+      (defect_le_simplexBoundaryScale z)).trans (Quillen.boundaryScale_le_flowScale s z)
     linarith
-  · exact le_of_lt (mul_pos (by positivity) (flowScale_pos s z))
+  · exact le_of_lt (mul_pos (by positivity) (Quillen.flowScale_pos s z))
 
 lemma sum_simplexBoundaryFlowWeight {n : ℕ} (s : I)
     (z : StdSimplex ℝ (Fin (n + 1)) × I) :
-    ∑ i, simplexBoundaryFlowWeight s z i = 1 := by
-  unfold simplexBoundaryFlowWeight
+    ∑ i, Quillen.simplexBoundaryFlowWeight s z i = 1 := by
+  unfold Quillen.simplexBoundaryFlowWeight
   simp only [div_eq_mul_inv]
   rw [← Finset.sum_mul]
   simp only [Finset.sum_sub_distrib, Finset.sum_add_distrib, ← Finset.mul_sum,
     StdSimplex.total_of_fintype, mul_one, Finset.sum_const, Finset.card_univ,
     Fintype.card_fin, nsmul_eq_mul, Nat.cast_add, Nat.cast_one]
   have hn : (n + 1 : ℝ) ≠ 0 := by positivity
-  field_simp [ne_of_gt (flowScale_pos s z)]
+  field_simp [ne_of_gt (Quillen.flowScale_pos s z)]
   ring
 
 /-- The simplex component of the controlled boundary flow at time `s`, with barycentric coordinates
-given by `simplexBoundaryFlowWeight`. -/
+given by `Quillen.simplexBoundaryFlowWeight`. -/
 def simplexBoundaryFlowPoint {n : ℕ} (s : I)
     (z : StdSimplex ℝ (Fin (n + 1)) × I) : StdSimplex ℝ (Fin (n + 1)) where
-  weights := Finsupp.equivFunOnFinite.symm (simplexBoundaryFlowWeight s z)
-  nonneg i := simplexBoundaryFlowWeight_nonneg s z i
-  total := by simpa [Finsupp.sum_fintype] using sum_simplexBoundaryFlowWeight s z
+  weights := Finsupp.equivFunOnFinite.symm (Quillen.simplexBoundaryFlowWeight s z)
+  nonneg i := Quillen.simplexBoundaryFlowWeight_nonneg s z i
+  total := by simpa [Finsupp.sum_fintype] using Quillen.sum_simplexBoundaryFlowWeight s z
 
 /-- The real height coordinate of the controlled boundary flow, obtained by scaling the
-displacement from height `2` by `simplexBoundaryFlowScale`. -/
+displacement from height `2` by `Quillen.simplexBoundaryFlowScale`. -/
 def simplexBoundaryFlowHeight {n : ℕ} (s : I)
     (z : StdSimplex ℝ (Fin (n + 1)) × I) : ℝ :=
-  2 + ((z.2 : ℝ) - 2) / simplexBoundaryFlowScale s z
+  2 + ((z.2 : ℝ) - 2) / Quillen.simplexBoundaryFlowScale s z
 
 lemma simplexBoundaryFlowHeight_nonneg {n : ℕ} (s : I)
-    (z : StdSimplex ℝ (Fin (n + 1)) × I) : 0 ≤ simplexBoundaryFlowHeight s z := by
-  have hd := flowScale_pos s z
-  have ht := (one_sub_height_le_simplexBoundaryScale z).trans (boundaryScale_le_flowScale s z)
-  unfold simplexBoundaryFlowHeight
-  have h : -(2 : ℝ) ≤ ((z.2 : ℝ) - 2) / simplexBoundaryFlowScale s z := by
+    (z : StdSimplex ℝ (Fin (n + 1)) × I) : 0 ≤ Quillen.simplexBoundaryFlowHeight s z := by
+  have hd := Quillen.flowScale_pos s z
+  have ht := (one_sub_height_le_simplexBoundaryScale z).trans (Quillen.boundaryScale_le_flowScale s
+    z)
+  unfold Quillen.simplexBoundaryFlowHeight
+  have h : -(2 : ℝ) ≤ ((z.2 : ℝ) - 2) / Quillen.simplexBoundaryFlowScale s z := by
     apply (le_div_iff₀ hd).mpr
     linarith
   linarith
 
 lemma simplexBoundaryFlowHeight_le_one {n : ℕ} (s : I)
-    (z : StdSimplex ℝ (Fin (n + 1)) × I) : simplexBoundaryFlowHeight s z ≤ 1 := by
-  have hd := flowScale_pos s z
-  have hu := flowScale_le_one s z
+    (z : StdSimplex ℝ (Fin (n + 1)) × I) : Quillen.simplexBoundaryFlowHeight s z ≤ 1 := by
+  have hd := Quillen.flowScale_pos s z
+  have hu := Quillen.flowScale_le_one s z
   have ht := z.2.2.2
-  unfold simplexBoundaryFlowHeight
-  have h : ((z.2 : ℝ) - 2) / simplexBoundaryFlowScale s z ≤ -(1 : ℝ) := by
+  unfold Quillen.simplexBoundaryFlowHeight
+  have h : ((z.2 : ℝ) - 2) / Quillen.simplexBoundaryFlowScale s z ≤ -(1 : ℝ) := by
     apply (div_le_iff₀ hd).mpr
     linarith
   linarith
@@ -122,53 +121,53 @@ lemma simplexBoundaryFlowHeight_le_one {n : ℕ} (s : I)
 /-- Controlled motion from the side-bottom retraction back to the identity. -/
 def simplexBoundaryFlow {n : ℕ} (s : I)
     (z : StdSimplex ℝ (Fin (n + 1)) × I) : StdSimplex ℝ (Fin (n + 1)) × I :=
-  (simplexBoundaryFlowPoint s z, ⟨simplexBoundaryFlowHeight s z,
-    simplexBoundaryFlowHeight_nonneg s z, simplexBoundaryFlowHeight_le_one s z⟩)
+  (Quillen.simplexBoundaryFlowPoint s z, ⟨Quillen.simplexBoundaryFlowHeight s z,
+    Quillen.simplexBoundaryFlowHeight_nonneg s z, Quillen.simplexBoundaryFlowHeight_le_one s z⟩)
 
 @[fun_prop] theorem continuous_simplexBoundaryFlowWeight {n : ℕ} (i : Fin (n + 1)) :
     Continuous (fun p : I × (StdSimplex ℝ (Fin (n + 1)) × I) ↦
-      simplexBoundaryFlowWeight p.1 p.2 i) := by
-  unfold simplexBoundaryFlowWeight
+      Quillen.simplexBoundaryFlowWeight p.1 p.2 i) := by
+  unfold Quillen.simplexBoundaryFlowWeight
   apply Continuous.div
   · fun_prop
   · fun_prop
   · intro p
-    exact mul_ne_zero (by positivity) (ne_of_gt (flowScale_pos p.1 p.2))
+    exact mul_ne_zero (by positivity) (ne_of_gt (Quillen.flowScale_pos p.1 p.2))
 
 @[fun_prop] theorem continuous_simplexBoundaryFlowPoint {n : ℕ} :
     Continuous (fun p : I × (StdSimplex ℝ (Fin (n + 1)) × I) ↦
-      simplexBoundaryFlowPoint p.1 p.2) := by
+      Quillen.simplexBoundaryFlowPoint p.1 p.2) := by
   rw [(StdSimplex.isEmbedding_toFun_comp_weights ℝ (Fin (n + 1))).continuous_iff]
   apply continuous_pi
-  exact continuous_simplexBoundaryFlowWeight
+  exact Quillen.continuous_simplexBoundaryFlowWeight
 
 @[fun_prop] theorem continuous_simplexBoundaryFlow {n : ℕ} :
     Continuous (fun p : I × (StdSimplex ℝ (Fin (n + 1)) × I) ↦
-      simplexBoundaryFlow p.1 p.2) := by
-  unfold simplexBoundaryFlow
-  apply continuous_simplexBoundaryFlowPoint.prodMk
+      Quillen.simplexBoundaryFlow p.1 p.2) := by
+  unfold Quillen.simplexBoundaryFlow
+  apply Quillen.continuous_simplexBoundaryFlowPoint.prodMk
   apply Continuous.subtype_mk
-  unfold simplexBoundaryFlowHeight
+  unfold Quillen.simplexBoundaryFlowHeight
   apply Continuous.add continuous_const
   apply Continuous.div
   · fun_prop
-  · exact continuous_simplexBoundaryFlowScale
+  · exact Quillen.continuous_simplexBoundaryFlowScale
   · intro p
-    exact ne_of_gt (flowScale_pos p.1 p.2)
+    exact ne_of_gt (Quillen.flowScale_pos p.1 p.2)
 
 @[simp] theorem simplexBoundaryFlow_zero {n : ℕ}
     (z : StdSimplex ℝ (Fin (n + 1)) × I) :
-    simplexBoundaryFlow 0 z = simplexBoundaryRetract z := by
-  have hs : simplexBoundaryFlowScale 0 z = simplexBoundaryScale z := by
-    simp [simplexBoundaryFlowScale, min_eq_right (simplexBoundaryScale_le_one z)]
+    Quillen.simplexBoundaryFlow 0 z = simplexBoundaryRetract z := by
+  have hs : Quillen.simplexBoundaryFlowScale 0 z = simplexBoundaryScale z := by
+    simp [Quillen.simplexBoundaryFlowScale, min_eq_right (simplexBoundaryScale_le_one z)]
   apply Prod.ext
   · apply StdSimplex.ext
     ext i
-    change simplexBoundaryFlowWeight 0 z i = simplexBoundaryRetractWeight z i
-    simp only [simplexBoundaryFlowWeight, simplexBoundaryRetractWeight, hs]
+    change Quillen.simplexBoundaryFlowWeight 0 z i = simplexBoundaryRetractWeight z i
+    simp only [Quillen.simplexBoundaryFlowWeight, simplexBoundaryRetractWeight, hs]
   · apply Subtype.ext
-    change simplexBoundaryFlowHeight 0 z = simplexBoundaryRetractHeight z
-    simp only [simplexBoundaryFlowHeight, simplexBoundaryRetractHeight, hs]
+    change Quillen.simplexBoundaryFlowHeight 0 z = simplexBoundaryRetractHeight z
+    simp only [Quillen.simplexBoundaryFlowHeight, simplexBoundaryRetractHeight, hs]
 
 /-- The continuous stopping time vanishes on all prescribed faces. -/
 def simplexBoundaryClock {n : ℕ} (z : StdSimplex ℝ (Fin (n + 1)) × I) : I :=
@@ -176,35 +175,35 @@ def simplexBoundaryClock {n : ℕ} (z : StdSimplex ℝ (Fin (n + 1)) × I) : I :
     linarith [simplexBoundaryScale_pos z]⟩
 
 @[fun_prop] theorem continuous_simplexBoundaryClock {n : ℕ} :
-    Continuous (simplexBoundaryClock (n := n)) := by
-  unfold simplexBoundaryClock
+    Continuous (Quillen.simplexBoundaryClock (n := n)) := by
+  unfold Quillen.simplexBoundaryClock
   fun_prop
 
 @[simp] theorem simplexBoundaryClock_boundary {n : ℕ}
     (z : StdSimplex ℝ (Fin (n + 1)) × I) (hz : z ∈ simplexBoundaryCylinder n) :
-    simplexBoundaryClock z = 0 := by
+    Quillen.simplexBoundaryClock z = 0 := by
   apply Subtype.ext
-  simp [simplexBoundaryClock, simplexBoundaryScale_eq_one z hz]
+  simp [Quillen.simplexBoundaryClock, simplexBoundaryScale_eq_one z hz]
 
 @[simp] theorem simplexBoundaryFlow_clock {n : ℕ}
     (z : StdSimplex ℝ (Fin (n + 1)) × I) :
-    simplexBoundaryFlow (simplexBoundaryClock z) z = z := by
-  have hs : simplexBoundaryFlowScale (simplexBoundaryClock z) z = 1 := by
-    simp [simplexBoundaryFlowScale, simplexBoundaryClock]
+    Quillen.simplexBoundaryFlow (Quillen.simplexBoundaryClock z) z = z := by
+  have hs : Quillen.simplexBoundaryFlowScale (Quillen.simplexBoundaryClock z) z = 1 := by
+    simp [Quillen.simplexBoundaryFlowScale, Quillen.simplexBoundaryClock]
   apply Prod.ext
   · apply StdSimplex.ext
     ext i
-    change simplexBoundaryFlowWeight (simplexBoundaryClock z) z i = z.1.weights i
-    simp only [simplexBoundaryFlowWeight, hs, add_sub_cancel_right, mul_one]
+    change Quillen.simplexBoundaryFlowWeight (Quillen.simplexBoundaryClock z) z i = z.1.weights i
+    simp only [Quillen.simplexBoundaryFlowWeight, hs, add_sub_cancel_right, mul_one]
     exact mul_div_cancel_left₀ _ (by positivity)
   · apply Subtype.ext
-    change simplexBoundaryFlowHeight (simplexBoundaryClock z) z = (z.2 : ℝ)
-    simp [simplexBoundaryFlowHeight, hs]
+    change Quillen.simplexBoundaryFlowHeight (Quillen.simplexBoundaryClock z) z = (z.2 : ℝ)
+    simp [Quillen.simplexBoundaryFlowHeight, hs]
 
 /-- HEP plus a controlled boundary deformation extends maps relative to
 that boundary. The target mapping space is compact-open. -/
 theorem homotopyExtensionProperty_controlled_extension
-    {A B Z : TopCat.{u}} {i : A ⟶ B} (hi : homotopyExtensionProperty i)
+    {A B Z : TopCat.{u}} {i : A ⟶ B} (hi : Quillen.homotopyExtensionProperty i)
     {X : Type} [TopologicalSpace X] [LocallyCompactSpace X]
     (S : Set X) (r : C(X, S)) (v : C(X, I)) (D : C(I × X, X))
     (hD₀ : ∀ x, D (0, x) = (r x).1)
@@ -224,7 +223,7 @@ theorem homotopyExtensionProperty_controlled_extension
     change H (a, D (0, x)) = F (i a, r x)
     rw [hD₀]
     exact h a (r x)
-  obtain ⟨Q, hQ₀, hQ⟩ := homotopyExtensionProperty_continuous hi
+  obtain ⟨Q, hQ₀, hQ⟩ := Quillen.homotopyExtensionProperty_continuous hi
     (TopCat.of C(X, Z)) F₀.curry H₀.curry hstart
   let K : C(B × X, Z) := ⟨fun p ↦ Q (v p.2, p.1) p.2, by fun_prop⟩
   refine ⟨K, ?_, ?_⟩
@@ -245,42 +244,43 @@ theorem homotopyExtensionProperty_controlled_extension
 /-- HEP extends maps across a product with a simplex cylinder while
 preserving its entire side-bottom boundary. -/
 theorem homotopyExtensionProperty_simplexCylinder_extension
-    {A B Z : TopCat.{u}} {i : A ⟶ B} (hi : homotopyExtensionProperty i) (n : ℕ)
+    {A B Z : TopCat.{u}} {i : A ⟶ B} (hi : Quillen.homotopyExtensionProperty i) (n : ℕ)
     (F : C(B × simplexBoundaryCylinder n, Z))
     (H : C(A × (StdSimplex ℝ (Fin (n + 1)) × I), Z))
     (h : ∀ a (z : simplexBoundaryCylinder n), H (a, z.1) = F (i a, z)) :
     ∃ K : C(B × (StdSimplex ℝ (Fin (n + 1)) × I), Z),
       (∀ a z, K (i a, z) = H (a, z)) ∧
       ∀ b (z : simplexBoundaryCylinder n), K (b, z.1) = F (b, z) :=
-  homotopyExtensionProperty_controlled_extension hi (simplexBoundaryCylinder n)
+  Quillen.homotopyExtensionProperty_controlled_extension hi (simplexBoundaryCylinder n)
     (simplexBoundaryCylinderRetraction n)
-    ⟨simplexBoundaryClock, continuous_simplexBoundaryClock⟩
-    ⟨fun p ↦ simplexBoundaryFlow p.1 p.2, continuous_simplexBoundaryFlow⟩
-    simplexBoundaryFlow_zero simplexBoundaryFlow_clock
-    (fun z ↦ simplexBoundaryClock_boundary z.1 z.2) F H h
+    ⟨Quillen.simplexBoundaryClock, Quillen.continuous_simplexBoundaryClock⟩
+    ⟨fun p ↦ Quillen.simplexBoundaryFlow p.1 p.2, Quillen.continuous_simplexBoundaryFlow⟩
+    Quillen.simplexBoundaryFlow_zero Quillen.simplexBoundaryFlow_clock
+    (fun z ↦ Quillen.simplexBoundaryClock_boundary z.1 z.2) F H h
 
 /-- Two independent endpoint homotopies as boundary-simplex data. -/
 def intervalEndpointHomotopies {B Z : TopCat.{u}}
     (H₀ H₁ : C(B × I, Z)) : C((B × simplexBoundary 1) × I, Z) := by
-  let e := ((intervalEndpointDomainHomeomorph B).symm.prodCongr
+  let e := ((Quillen.intervalEndpointDomainHomeomorph B).symm.prodCongr
     (Homeomorph.refl I)).trans Homeomorph.sumProdDistrib
   exact ⟨fun p ↦ Sum.elim H₀ H₁ (e p),
     (H₀.continuous.sumElim H₁.continuous).comp e.continuous⟩
 
 @[simp] theorem intervalEndpointHomotopies_zero {B Z : TopCat.{u}}
     (H₀ H₁ : C(B × I, Z)) (b : B) (t : I) :
-    intervalEndpointHomotopies H₀ H₁ ((b, boundaryZero), t) = H₀ (b, t) := by
-  simp [intervalEndpointHomotopies, intervalEndpointDomainHomeomorph]
+    Quillen.intervalEndpointHomotopies H₀ H₁ ((b, Quillen.boundaryZero), t) = H₀ (b, t) := by
+  simp [Quillen.intervalEndpointHomotopies, Quillen.intervalEndpointDomainHomeomorph]
 
 @[simp] theorem intervalEndpointHomotopies_one {B Z : TopCat.{u}}
     (H₀ H₁ : C(B × I, Z)) (b : B) (t : I) :
-    intervalEndpointHomotopies H₀ H₁ ((b, boundaryOne), t) = H₁ (b, t) := by
-  simp [intervalEndpointHomotopies, intervalEndpointDomainHomeomorph, boundaryZero_ne_one.symm]
+    Quillen.intervalEndpointHomotopies H₀ H₁ ((b, Quillen.boundaryOne), t) = H₁ (b, t) := by
+  simp [Quillen.intervalEndpointHomotopies, Quillen.intervalEndpointDomainHomeomorph,
+    Quillen.boundaryZero_ne_one.symm]
 
 /-- HEP on the first factor extends a square of homotopies with both
 interval endpoints and the initial-time face prescribed. -/
 theorem homotopyExtensionProperty_interval_square_extension
-    {A B Z : TopCat.{u}} {i : A ⟶ B} (hi : homotopyExtensionProperty i)
+    {A B Z : TopCat.{u}} {i : A ⟶ B} (hi : Quillen.homotopyExtensionProperty i)
     (f : C(B × I, Z)) (H : C((A × I) × I, Z)) (H₀ H₁ : C(B × I, Z))
     (hf : ∀ a t, H ((a, t), 0) = f (i a, t))
     (h₀ : ∀ b, H₀ (b, 0) = f (b, 0))
@@ -294,16 +294,16 @@ theorem homotopyExtensionProperty_interval_square_extension
       (∀ b t, K ((b, 1), t) = H₁ (b, t)) := by
   let f' : C(B × StdSimplex ℝ (Fin 2), Z) :=
     ⟨fun p ↦ f (p.1, StdSimplex.homeomorphI p.2), by fun_prop⟩
-  let L := intervalEndpointHomotopies H₀ H₁
+  let L := Quillen.intervalEndpointHomotopies H₀ H₁
   have hL : ∀ b (x : simplexBoundary 1), L ((b, x), 0) = f' (b, x.1) := by
     intro b x
-    rcases boundary_eq_zero_or_one x with rfl | rfl
-    · rw [show L ((b, boundaryZero), 0) = H₀ (b, 0) from
-        intervalEndpointHomotopies_zero H₀ H₁ b 0]
-      simpa [f', boundaryZero] using h₀ b
-    · rw [show L ((b, boundaryOne), 0) = H₁ (b, 0) from
-        intervalEndpointHomotopies_one H₀ H₁ b 0]
-      simpa [f', boundaryOne] using h₁ b
+    rcases Quillen.boundary_eq_zero_or_one x with rfl | rfl
+    · rw [show L ((b, Quillen.boundaryZero), 0) = H₀ (b, 0) from
+        Quillen.intervalEndpointHomotopies_zero H₀ H₁ b 0]
+      simpa [f', Quillen.boundaryZero] using h₀ b
+    · rw [show L ((b, Quillen.boundaryOne), 0) = H₁ (b, 0) from
+        Quillen.intervalEndpointHomotopies_one H₀ H₁ b 0]
+      simpa [f', Quillen.boundaryOne] using h₁ b
   let F := closedCylinderGlue (simplexBoundary 1) (isClosed_simplexBoundary 1) f' L hL
   let H' : C(A × (StdSimplex ℝ (Fin 2) × I), Z) :=
     ⟨fun p ↦ H ((p.1, StdSimplex.homeomorphI p.2.1), p.2.2), by fun_prop⟩
@@ -313,21 +313,22 @@ theorem homotopyExtensionProperty_interval_square_extension
     · have he : F (i a, ⟨(x, t), Or.inl hx⟩) = L ((i a, ⟨x, hx⟩), t) :=
         closedCylinderGlueFun_side _ f' L (i a) ⟨x, hx⟩ t
       rw [he]
-      rcases boundary_eq_zero_or_one ⟨x, hx⟩ with he | he
+      rcases Quillen.boundary_eq_zero_or_one ⟨x, hx⟩ with he | he
       · have hx' : x = StdSimplex.single 0 := congrArg Subtype.val he
         change H ((a, StdSimplex.homeomorphI x), t) = _
         rw [he, hx', StdSimplex.homeomorphI_single_zero]
-        simpa only [L, intervalEndpointHomotopies_zero] using hH₀ a t
+        simpa only [L, Quillen.intervalEndpointHomotopies_zero] using hH₀ a t
       · have hx' : x = StdSimplex.single 1 := congrArg Subtype.val he
         change H ((a, StdSimplex.homeomorphI x), t) = _
         rw [he, hx', StdSimplex.homeomorphI_single_one]
-        simpa only [L, intervalEndpointHomotopies_one] using hH₁ a t
+        simpa only [L, Quillen.intervalEndpointHomotopies_one] using hH₁ a t
     · change t = 0 at ht
       subst t
       rw [show F (i a, ⟨(x, 0), Or.inr rfl⟩) = f' (i a, x) from
         closedCylinderGlueFun_bottom _ f' L hL (i a) x]
       exact hf a (StdSimplex.homeomorphI x)
-  obtain ⟨K', hK'A, hK'F⟩ := homotopyExtensionProperty_simplexCylinder_extension hi 1 F H' hFH
+  obtain ⟨K', hK'A, hK'F⟩ := Quillen.homotopyExtensionProperty_simplexCylinder_extension hi 1 F H'
+    hFH
   let K : C((B × I) × I, Z) :=
     ⟨fun p ↦ K' (p.1.1, (StdSimplex.homeomorphI.symm p.1.2, p.2)), by fun_prop⟩
   refine ⟨K, ?_, ?_, ?_, ?_⟩
@@ -347,16 +348,17 @@ theorem homotopyExtensionProperty_interval_square_extension
       StdSimplex.homeomorphI.injective (by simp)
     change K' (b, (StdSimplex.homeomorphI.symm 0, t)) = H₀ (b, t)
     rw [hs]
-    exact (hK'F b ⟨(boundaryZero.1, t), Or.inl boundaryZero.2⟩).trans
-      ((closedCylinderGlueFun_side _ f' L b boundaryZero t).trans
-        (intervalEndpointHomotopies_zero H₀ H₁ b t))
+    exact (hK'F b ⟨(Quillen.boundaryZero.1, t), Or.inl Quillen.boundaryZero.2⟩).trans
+      ((closedCylinderGlueFun_side _ f' L b Quillen.boundaryZero t).trans
+        (Quillen.intervalEndpointHomotopies_zero H₀ H₁ b t))
   · intro b t
     have hs : StdSimplex.homeomorphI.symm 1 = StdSimplex.single 1 :=
       StdSimplex.homeomorphI.injective (by simp)
     change K' (b, (StdSimplex.homeomorphI.symm 1, t)) = H₁ (b, t)
     rw [hs]
-    exact (hK'F b ⟨(boundaryOne.1, t), Or.inl boundaryOne.2⟩).trans
-      ((closedCylinderGlueFun_side _ f' L b boundaryOne t).trans
-        (intervalEndpointHomotopies_one H₀ H₁ b t))
+    exact (hK'F b ⟨(Quillen.boundaryOne.1, t), Or.inl Quillen.boundaryOne.2⟩).trans
+      ((closedCylinderGlueFun_side _ f' L b Quillen.boundaryOne t).trans
+        (Quillen.intervalEndpointHomotopies_one H₀ H₁ b t))
 
-end Quillen.TheoremA
+
+end Quillen

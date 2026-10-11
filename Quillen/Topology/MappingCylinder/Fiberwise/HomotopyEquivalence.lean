@@ -37,7 +37,7 @@ the cylinder side. -/
 @[reassoc]
 theorem pushoutDeformation_inl {A B C D : TopCat.{u}}
     {i : A ⟶ B} {f : A ⟶ C} {g : B ⟶ D} {j : C ⟶ D}
-    (sq : IsPushout i f g j) (h : TheoremA.CylinderStrongDeformationRetract i) :
+    (sq : IsPushout i f g j) (h : Quillen.CylinderStrongDeformationRetract i) :
     (g ▷ TopCat.I) ≫ (h.pushout sq).H = h.H ≫ g :=
   (sq.map (tensorRight TopCat.I)).inl_desc _ _ _
 
@@ -45,7 +45,7 @@ theorem pushoutDeformation_inl {A B C D : TopCat.{u}}
 @[reassoc]
 theorem pushoutDeformation_inr {A B C D : TopCat.{u}}
     {i : A ⟶ B} {f : A ⟶ C} {g : B ⟶ D} {j : C ⟶ D}
-    (sq : IsPushout i f g j) (h : TheoremA.CylinderStrongDeformationRetract i) :
+    (sq : IsPushout i f g j) (h : Quillen.CylinderStrongDeformationRetract i) :
     (j ▷ TopCat.I) ≫ (h.pushout sq).H = fst C TopCat.I ≫ j :=
   (sq.map (tensorRight TopCat.I)).inr_desc _ _ _
 
@@ -56,51 +56,54 @@ variable {A C M T : TopCat.{u}} {f : A ⟶ C}
 
 /-- The canonical target deformation does not change the projected base point. -/
 theorem mappingCylinderTargetDeformation_over :
-    (TheoremA.mappingCylinderTargetStrongDeformationRetract sq).H ≫
-        TheoremA.mappingCylinderProjection sq ≫ base =
-      fst M TopCat.I ≫ TheoremA.mappingCylinderProjection sq ≫ base := by
+    (Quillen.MappingCylinder.mappingCylinderTargetStrongDeformationRetract sq).H ≫
+        Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base =
+      fst M TopCat.I ≫ Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base := by
   apply (sq.map (tensorRight TopCat.I)).hom_ext
   · change (l ▷ TopCat.I) ≫ _ = _
     rw [← Category.assoc, ← Category.assoc]
-    simp only [TheoremA.mappingCylinderTargetStrongDeformationRetract]
+    simp only [Quillen.MappingCylinder.mappingCylinderTargetStrongDeformationRetract]
     rw [pushoutDeformation_inl]
     ext ⟨⟨a, s⟩, t⟩
-    have hpl := TheoremA.mappingCylinderProjection_cylinder_assoc sq base
+    have hpl := Quillen.MappingCylinder.mappingCylinderProjection_cylinder_assoc sq base
     exact (ConcreteCategory.congr_hom hpl
-      (a, ULift.up (TheoremA.intervalSlide (σ t.down) s.down))).trans
+      (a, ULift.up (Quillen.MappingCylinder.intervalSlide (σ t.down) s.down))).trans
         (ConcreteCategory.congr_hom hpl (a, s)).symm
   · change (c ▷ TopCat.I) ≫ _ = _
     rw [← Category.assoc, ← Category.assoc]
-    simp only [TheoremA.mappingCylinderTargetStrongDeformationRetract]
+    simp only [Quillen.MappingCylinder.mappingCylinderTargetStrongDeformationRetract]
     rw [pushoutDeformation_inr]
     rfl
 
 /-- The target deformation as an actual continuous homotopy. -/
 def mappingCylinderTargetHomotopy :
-    TopCat.Homotopy (TheoremA.mappingCylinderProjection sq ≫ c) (𝟙 M) :=
-  TheoremA.homotopyOfCylinder
-    (TheoremA.mappingCylinderTargetStrongDeformationRetract sq).H
-    (TheoremA.mappingCylinderTargetStrongDeformationRetract sq).H₀
-    (TheoremA.mappingCylinderTargetStrongDeformationRetract sq).H₁
+    TopCat.Homotopy (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ c) (𝟙 M) :=
+  Quillen.homotopyOfCylinder
+    (Quillen.MappingCylinder.mappingCylinderTargetStrongDeformationRetract sq).H
+    (Quillen.MappingCylinder.mappingCylinderTargetStrongDeformationRetract sq).H₀
+    (Quillen.MappingCylinder.mappingCylinderTargetStrongDeformationRetract sq).H₁
 
 theorem mappingCylinderTargetHomotopy_over (t : I) (m : M) :
-    (TheoremA.mappingCylinderProjection sq ≫ base) (mappingCylinderTargetHomotopy sq (t, m)) =
-      (TheoremA.mappingCylinderProjection sq ≫ base) m :=
+    (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) (mappingCylinderTargetHomotopy sq
+      (t, m)) =
+      (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) m :=
   ConcreteCategory.congr_hom (mappingCylinderTargetDeformation_over sq base) (m, ULift.up t)
 
 /-- The cylinder path from the source inclusion to the target composite. -/
 def mappingCylinderSourcePath : TopCat.Homotopy (TopCat.ι₀ ≫ l) (f ≫ c) :=
-  TheoremA.homotopyOfCylinder l rfl sq.w
+  Quillen.homotopyOfCylinder l rfl sq.w
 
 theorem mappingCylinderSourcePath_over (t : I) (a : A) :
-    (TheoremA.mappingCylinderProjection sq ≫ base) (mappingCylinderSourcePath sq (t, a)) = base
+    (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) (mappingCylinderSourcePath sq (t,
+      a)) = base
       (f a) :=
-  ConcreteCategory.congr_hom (TheoremA.mappingCylinderProjection_cylinder_assoc sq base) (a,
+  ConcreteCategory.congr_hom (Quillen.MappingCylinder.mappingCylinderProjection_cylinder_assoc sq
+    base) (a,
     ULift.up t)
 
 /-- A chosen inverse to the attaching map followed by cylinder collapse. -/
 def mappingCylinderSourceInverse (g : C ⟶ A) : M ⟶ A :=
-  TheoremA.mappingCylinderProjection sq ≫ g
+  Quillen.MappingCylinder.mappingCylinderProjection sq ≫ g
 
 /-- The attaching map's left inverse homotopy gives the source inclusion's
 left inverse homotopy. -/
@@ -109,7 +112,8 @@ def mappingCylinderSourceLeftHomotopy (g : C ⟶ A)
     TopCat.Homotopy ((TopCat.ι₀ ≫ l) ≫ mappingCylinderSourceInverse sq g) (𝟙 A) :=
   H.cast (congrArg TopCat.Hom.hom (by
     dsimp [mappingCylinderSourceInverse]
-    simp only [Category.assoc, TheoremA.mappingCylinderProjection_start_assoc])).symm rfl
+    simp only [Category.assoc, Quillen.MappingCylinder.mappingCylinderProjection_start_assoc])).symm
+      rfl
 
 /-- The actual cylinder path, target inverse homotopy, and target
 contraction give the source inclusion's right inverse homotopy. -/
@@ -117,7 +121,8 @@ def mappingCylinderSourceRightHomotopy (g : C ⟶ A)
     (K : TopCat.Homotopy (g ≫ f) (𝟙 C)) :
     TopCat.Homotopy (mappingCylinderSourceInverse sq g ≫ (TopCat.ι₀ ≫ l)) (𝟙 M) :=
   (((mappingCylinderSourcePath sq).compContinuousMap (mappingCylinderSourceInverse sq g).hom).trans
-    (((TopCat.Homotopy.refl c).comp K).compContinuousMap (TheoremA.mappingCylinderProjection
+    (((TopCat.Homotopy.refl c).comp K).compContinuousMap
+      (Quillen.MappingCylinder.mappingCylinderProjection
       sq).hom)).trans
       (mappingCylinderTargetHomotopy sq)
 
@@ -134,7 +139,8 @@ def mappingCylinderSourceHomotopyEquiv (g : C ⟶ A)
 /-- The chosen cylinder inverse is over the fixed base when the original
 inverse is over that base. -/
 theorem mappingCylinderSourceInverse_over (g : C ⟶ A) (hg : g ≫ f ≫ base = base) :
-    mappingCylinderSourceInverse sq g ≫ f ≫ base = TheoremA.mappingCylinderProjection sq ≫ base
+    mappingCylinderSourceInverse sq g ≫ f ≫ base = Quillen.MappingCylinder.mappingCylinderProjection
+      sq ≫ base
       := by
   dsimp [mappingCylinderSourceInverse]
   rw [Category.assoc, hg]
@@ -143,19 +149,19 @@ theorem mappingCylinderSourceInverse_over (g : C ⟶ A) (hg : g ≫ f ≫ base =
 theorem mappingCylinderSourceRightHomotopy_over (g : C ⟶ A)
     (K : TopCat.Homotopy (g ≫ f) (𝟙 C)) (hg : g ≫ f ≫ base = base)
     (hK : ∀ t x, base (K (t, x)) = base x) (t : I) (m : M) :
-    (TheoremA.mappingCylinderProjection sq ≫ base)
+    (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base)
       (mappingCylinderSourceRightHomotopy sq g K (t, m)) =
-        (TheoremA.mappingCylinderProjection sq ≫ base) m := by
+        (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) m := by
   simp only [mappingCylinderSourceRightHomotopy, ContinuousMap.Homotopy.trans_apply]
   split_ifs
-  · change (TheoremA.mappingCylinderProjection sq ≫ base)
+  · change (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base)
       (mappingCylinderSourcePath sq (_, mappingCylinderSourceInverse sq g m)) = _
     rw [mappingCylinderSourcePath_over]
     exact ConcreteCategory.congr_hom (mappingCylinderSourceInverse_over sq base g hg) m
-  · change (TheoremA.mappingCylinderProjection sq ≫ base)
-      (c (K (_, TheoremA.mappingCylinderProjection sq m))) = _
+  · change (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base)
+      (c (K (_, Quillen.MappingCylinder.mappingCylinderProjection sq m))) = _
     exact (ConcreteCategory.congr_hom
-      (TheoremA.mappingCylinderProjection_target_assoc sq base) _).trans (hK _ _)
+      (Quillen.MappingCylinder.mappingCylinderProjection_target_assoc sq base) _).trans (hK _ _)
   · exact mappingCylinderTargetHomotopy_over sq base _ m
 
 end Quillen.TheoremB

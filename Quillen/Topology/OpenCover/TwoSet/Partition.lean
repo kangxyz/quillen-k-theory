@@ -8,8 +8,8 @@ module
 
 public import Quillen.Topology.HomotopyLifting.Collar.Cutoff
 public import Quillen.Topology.HomotopyLifting.Collar.Schedule
-public import Quillen.CategoryTheory.TheoremA.IntervalEndpoints
-public import Quillen.CategoryTheory.TheoremA.RealizationGluing
+public import Quillen.Topology.HELP.IntervalEndpoints
+public import Quillen.Topology.DeformationRetract.Basic
 
 /-!
 # The double cylinder of a partitioned two-open cover
@@ -78,7 +78,7 @@ def endMap : TopCat.of (P.Overlap ⊕ P.Overlap) ⟶ TopCat.of (P.Left ⊕ P.Rig
 variable {D : TopCat.{u}}
   {l : TopCat.of P.Overlap ⊗ TopCat.I ⟶ D}
   {e : TopCat.of (P.Left ⊕ P.Right) ⟶ D}
-  (sq : IsPushout (TheoremA.intervalEndpoints (TopCat.of P.Overlap)) P.endMap l e)
+  (sq : IsPushout (Quillen.intervalEndpoints (TopCat.of P.Overlap)) P.endMap l e)
 
 /-- Collapse every interval to its common point of the cover. -/
 def collapse : D ⟶ TopCat.of X := sq.desc
@@ -296,7 +296,7 @@ def endHomotopy : TopCat.of (P.Left ⊕ P.Right) ⊗ TopCat.I ⟶ D := by
   exact F.comp (E : C(_, _))
 
 theorem homotopy_square :
-    (TheoremA.intervalEndpoints (TopCat.of P.Overlap) ▷ TopCat.I) ≫ cylinderHomotopy P (l := l) =
+    (Quillen.intervalEndpoints (TopCat.of P.Overlap) ▷ TopCat.I) ≫ cylinderHomotopy P (l := l) =
       (P.endMap ▷ TopCat.I) ≫ endHomotopy P sq := by
   apply ConcreteCategory.hom_ext
   rintro ⟨a | a, t⟩
@@ -400,7 +400,7 @@ cover is an actual homotopy equivalence. -/
 def collapseHomotopyEquiv : ContinuousMap.HomotopyEquiv D X where
   toFun := (collapse P sq).hom
   invFun := sectionMap P sq
-  left_inv := ⟨TheoremA.homotopyOfCylinder (sectionHomotopyCylinder P sq)
+  left_inv := ⟨Quillen.homotopyOfCylinder (sectionHomotopyCylinder P sq)
     (sectionHomotopyCylinder_zero P sq) (sectionHomotopyCylinder_one P sq)⟩
   right_inv := ⟨(ContinuousMap.Homotopy.refl (ContinuousMap.id X)).cast
     (by ext x; exact (collapse_sectionMap P sq x).symm) rfl⟩

@@ -7,6 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.Topology.Realization.Prism
+public import Quillen.Topology.Realization.PrismCoordinates
 
 /-! # Topological compatibility of the finite prism charts -/
 @[expose] public section
@@ -169,10 +170,6 @@ theorem realizationPrismCoordinates_injective (n : ℕ) :
         ⟨prismProject j w, prismProject_mem_cell j w⟩ := Subtype.ext hxy
     rw [hz, prismLift_prismProject]
   rwa [hw] at hp
-
-/-- Finite barycentric simplices are Hausdorff, as subspaces of finite real products. -/
-instance finiteStdSimplex_t2Space {M : Type*} [Finite M] : T2Space (StdSimplex ℝ M) :=
-  (StdSimplex.isEmbedding_toFun_comp_weights ℝ M).t2Space
 
 /-- The geometric realization of the standard simplicial prism is homeomorphic
 to the ordinary topological prism. This is the finite-prism triangulation theorem. -/

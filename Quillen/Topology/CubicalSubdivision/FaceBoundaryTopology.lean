@@ -98,11 +98,11 @@ theorem faceBoundaryInclusion_factorization {n m : ℕ} (F : FaceIndex n m) :
 
 /-- Genuine HEP of the original face boundary, in arbitrary TopCat universe. -/
 theorem faceBoundaryInclusion_hep {n m : ℕ} (F : FaceIndex n m) :
-    TheoremA.homotopyExtensionProperty (faceBoundaryInclusion.{u} F) := by
+    Quillen.homotopyExtensionProperty (faceBoundaryInclusion.{u} F) := by
   rw [← faceBoundaryInclusion_factorization]
-  exact TheoremA.homotopyExtensionProperty_comp (TheoremA.homotopyExtensionProperty_of_isIso _)
-    (TheoremA.homotopyExtensionProperty_comp (CubicalTests.boundaryInclusion_hep _)
-      (TheoremA.homotopyExtensionProperty_of_isIso _))
+  exact Quillen.homotopyExtensionProperty_comp (Quillen.homotopyExtensionProperty_of_isIso _)
+    (Quillen.homotopyExtensionProperty_comp (CubicalTests.boundaryInclusion_hep _)
+      (Quillen.homotopyExtensionProperty_of_isIso _))
 
 /-- Remove only ULift on the boundary; the actual coordinates stay unchanged. -/
 def faceBoundaryUnliftedHomeomorph {n m : ℕ} (F : FaceIndex n m) :

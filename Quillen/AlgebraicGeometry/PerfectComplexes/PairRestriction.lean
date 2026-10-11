@@ -62,7 +62,7 @@ theorem boundedFlatPerfectOpenKRestrict_comparison (n : ℕ) :
       (boundedFlatPerfectToPerfectKMap U n).comp (boundedFlatPerfectOpenKRestrict j n) := by
   unfold perfectOpenKRestrict boundedFlatPerfectOpenToPerfectOpenKMap
     boundedFlatPerfectToPerfectKMap boundedFlatPerfectOpenKRestrict
-  rw [← Waldhausen.KMap_comp, ← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
   exact Waldhausen.KMap_eq_of_iso _ _ (boundedFlatPerfectOriginalRestrictionIso j) n
 
 variable {A B : Quillen.Scheme.OpenPairs.{u}}
@@ -80,7 +80,7 @@ theorem boundedFlatPerfectOpenKRestrict_pullback (f : A ⟶ B) (n : ℕ) :
     (boundedFlatPerfectKPullback f.hom.left n).comp (boundedFlatPerfectOpenKRestrict B.obj.hom n) =
       (boundedFlatPerfectOpenKRestrict A.obj.hom n).comp (boundedFlatPerfectOpenKPullback f n) := by
   unfold boundedFlatPerfectKPullback boundedFlatPerfectOpenKRestrict boundedFlatPerfectOpenKPullback
-  rw [← Waldhausen.KMap_comp, ← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
   exact Waldhausen.KMap_eq_of_iso _ _ (boundedFlatPerfectOpenPairIso f).symm n
 
 /-- The original relative-open restriction is natural for arbitrary open-pair

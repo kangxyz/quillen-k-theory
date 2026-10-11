@@ -61,7 +61,8 @@ def auxiliaryToIsoStructuredWithBaseClassifyingHomotopyEquiv
     φ)).hom
   have he : e.toFun = (classifyingSpaceMap (auxiliaryToIsoStructuredWithBase P φ)).hom := by
     dsimp only [e, A]
-    rw [quotientAuxiliaryNerveStageHomotopyEquiv_toFun, quotientAuxiliaryNerveCocone_map, asIso_auxiliaryLiftMk]
+    rw [quotientAuxiliaryNerveStageHomotopyEquiv_toFun, quotientAuxiliaryNerveCocone_map,
+      asIso_auxiliaryLiftMk]
   rw [he]
 
 @[simp]

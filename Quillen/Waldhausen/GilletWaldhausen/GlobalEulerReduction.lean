@@ -68,8 +68,8 @@ theorem finiteTermSingle_KMap_inclusion (a b n : ℤ) (ha : a ≤ n) (hb : n ≤
     (boundedTermsSingleExactFunctor P n).waldhausenExact
     (eqToIso (finiteTermSingle_comp_inclusion P a b n ha hb)) k
   exact (DFunLike.congr_fun (KMap_comp_KMap (finiteTermSingleExact P a b n ha hb).waldhausenExact
-    (fixedTermsInclusionExactFunctor P a b).waldhausenExact k).symm x).symm.trans (DFunLike.congr_fun
-      he x)
+    (fixedTermsInclusionExactFunctor P a b).waldhausenExact k).symm x).symm.trans
+      (DFunLike.congr_fun he x)
 
 /-- Actual original single insertion commutes with every increasing bound transition. -/
 theorem finiteTermSingle_KMap_transition {N M : ℕ} (h : N ≤ M) (n : ℤ)
@@ -132,6 +132,8 @@ theorem boundedTerms_exists_acyclic_single_zero (k : ℕ)
   exact he.trans hy
 
 set_option maxHeartbeats 800000 in
+-- Extra elaboration budget for transporting finite-stratum K-map identities
+-- through transitions and comparing the resulting inclusion composites.
 /-- The actual degree-zero representative and actual acyclic class have a trivial joint kernel. -/
 theorem boundedTerms_acyclic_single_zero_eq_one (k : ℕ)
     (d : (ofExactCategory (boundedAcyclicExactStructure P)).K k)
@@ -165,8 +167,9 @@ theorem boundedTerms_acyclic_single_zero_eq_one (k : ℕ)
   have hd : z = 1 := congrArg Prod.fst hu
   have hc : c = 1 := congrArg Prod.snd hu
   refine ⟨?_, hc⟩
-  have hi := DFunLike.congr_fun (KMap_comp_KMap (boundedStratumTransitionExact P hNM).waldhausenExact
-    (fixedAcyclicInclusionExactFunctor P (-(M : ℤ)) M).waldhausenExact k).symm y
+  have hi := DFunLike.congr_fun
+    (KMap_comp_KMap (boundedStratumTransitionExact P hNM).waldhausenExact
+      (fixedAcyclicInclusionExactFunctor P (-(M : ℤ)) M).waldhausenExact k).symm y
   calc
     d = KMap (fixedAcyclicInclusionExactFunctor P (-(N : ℤ)) N).waldhausenExact k y := hy.symm
     _ = KMap (fixedAcyclicInclusionExactFunctor P (-(M : ℤ)) M).waldhausenExact k

@@ -119,6 +119,8 @@ theorem finiteTermReassemble_evaluate (a : ℤ) (m k : ℕ)
     (by omega) (by have := i.isLt; omega) k x
 
 set_option maxHeartbeats 800000 in
+-- Extra elaboration budget for the product rewrites through exact K-maps and the
+-- degree bounds in the single evaluation/insertion identities.
 /-- The actual evaluation/insertion delta identities prove the reverse composite. -/
 theorem finiteTermEvaluate_reassemble (a : ℤ) (m k : ℕ)
     (x : Fin m → (ofExactCategory (ExactSubcategory.exactStructure (abelianExactStructure A)

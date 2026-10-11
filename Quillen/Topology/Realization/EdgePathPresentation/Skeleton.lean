@@ -113,7 +113,7 @@ theorem realizedSkeletalBoundary_square :
     SSet.toTop.map (SSet.relativeCellComplexOfMono.l i n) ≫
         (realizedSkeletalCellsIso i n).hom =
       (realizedSkeletalBoundariesIso i n).hom ≫
-        TheoremA.parameterizedSimplexBoundaryInclusion (skeletalCellIndex i n) n := by
+        Quillen.parameterizedSimplexBoundaryInclusion (skeletalCellIndex i n) n := by
   apply (isColimitCofanMkObjOfIsColimit SSet.toTop
     (fun _ : SSet.relativeCellComplexOfMono.Cell i n ↦ (∂Δ[n] : SSet.{u}))
     (Sigma.ι _) (coproductIsCoproduct _)).hom_ext
@@ -139,7 +139,7 @@ def realizedSkeletalCharacteristic :
 
 /-- The actual geometric cell-attachment pushout for a simplicial skeleton. -/
 theorem realizedSkeletal_isPushout :
-    IsPushout (TheoremA.parameterizedSimplexBoundaryInclusion (skeletalCellIndex i n) n)
+    IsPushout (Quillen.parameterizedSimplexBoundaryInclusion (skeletalCellIndex i n) n)
       (realizedSkeletalAttaching i n) (realizedSkeletalCharacteristic i n)
       (SSet.toTop.map (SSet.relativeCellComplexOfMono.r i n)) := by
   apply ((SSet.relativeCellComplexOfMono.isPushout i n).flip.map SSet.toTop).of_iso

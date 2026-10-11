@@ -21,19 +21,24 @@ namespace Quillen.ReducedMappingCone
 variable {X : Type u} {Y : Type v} [TopologicalSpace X] [TopologicalSpace Y]
   (x₀ : X) (y₀ : Y) (f : C(X, Y))
 
+/-- Glue the cylinder bottom along the map and collapse its top and basepoint line. -/
 inductive Relation : Y ⊕ (I × X) → Y ⊕ (I × X) → Prop
   | bottom (x : X) : Relation (.inr (0,x)) (.inl (f x))
   | top (x : X) : Relation (.inr (1,x)) (.inl y₀)
   | base (t : I) : Relation (.inr (t,x₀)) (.inl y₀)
 
+/-- The quotient topological space of the reduced mapping cone. -/
 abbrev Space := Quot (Relation x₀ y₀ f)
 
+/-- The inclusion of the target into the reduced mapping cone. -/
 def inr : C(Y, Space x₀ y₀ f) :=
   ⟨fun y ↦ Quot.mk _ (.inl y), continuous_quot_mk.comp continuous_inl⟩
 
+/-- The original cylinder map into the reduced mapping cone. -/
 def cylinder : C(I × X, Space x₀ y₀ f) :=
   ⟨fun z ↦ Quot.mk _ (.inr z), continuous_quot_mk.comp continuous_inr⟩
 
+/-- The image of the target basepoint in the reduced mapping cone. -/
 def point : Space x₀ y₀ f := inr x₀ y₀ f y₀
 
 @[simp] theorem cylinder_zero (x : X) : cylinder x₀ y₀ f (0,x) = inr x₀ y₀ f (f x) :=

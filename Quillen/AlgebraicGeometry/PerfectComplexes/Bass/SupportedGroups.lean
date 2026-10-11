@@ -29,6 +29,7 @@ universe u
 namespace Quillen.PerfectComplexes.Bass
 open Quillen.Scheme
 
+/-- The commutative group structure on original supported K0 supplied by additivity. -/
 local instance supportedKZeroCommGroup (A : QuasiCompactOpenPairs.{u}) :
     CommGroup (PerfectSupportedK A.obj.obj.hom 0) :=
   Quillen.Waldhausen.Additivity.KCommGroup (perfectSupportedWaldhausen A.obj.obj.hom) 0
@@ -40,6 +41,7 @@ def supportedKZeroMultiplicativeFunctor : QuasiCompactOpenPairs.{u}ᵒᵖ ⥤ Co
   map_id A := by apply CommGrpCat.hom_ext; exact perfectSupportedKPullback_id A.unop 0
   map_comp f g := by apply CommGrpCat.hom_ext; exact perfectSupportedKPullback_comp g.unop f.unop 0
 
+/-- The additive form of the original supported K0 functor. -/
 def supportedKZeroFunctor : QuasiCompactOpenPairs.{u}ᵒᵖ ⥤ AddCommGrpCat.{u+1} :=
   supportedKZeroMultiplicativeFunctor ⋙ CommGrpCat.toAddCommGrp
 
@@ -49,6 +51,7 @@ def supportedNegativeKFunctor : ℕ → QuasiCompactOpenPairs.{u}ᵒᵖ ⥤ AddC
   | n+1 => Quillen.Bass.TwoChart.contraction (NatTrans.op Scheme.Bass.pairPlus)
       (NatTrans.op Scheme.Bass.pairMinus) (supportedNegativeKFunctor n)
 
+/-- The supported Bass group K_{-n} of an actual quasi-compact open pair. -/
 abbrev supportedNegativeK (A : QuasiCompactOpenPairs.{u}) (n : ℕ) : AddCommGrpCat.{u+1} :=
   (supportedNegativeKFunctor n).obj (op A)
 

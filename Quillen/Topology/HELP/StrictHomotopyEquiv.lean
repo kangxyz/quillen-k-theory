@@ -6,7 +6,8 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.CategoryTheory.TheoremA.RealizationPushoutInvariance
+public import Quillen.Topology.DeformationRetract.Cofibration
+public import Quillen.Topology.MappingCylinder.HomotopyExtension
 
 /-!
 # Strict-square homotopy extension and lifting for an actual equivalence
@@ -23,13 +24,13 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval
-namespace Quillen.TheoremA
+namespace Quillen
 
 /-- Strict-square HELP: an actual homotopy equivalence permits homotopy
 lifting across any map with HEP, preserving the given lift on the whole
 boundary and keeping the projected homotopy genuinely relative there. -/
 theorem homotopyEquiv_strictHELP {A B X Y : TopCat.{u}} {i : A ⟶ B}
-    (hi : homotopyExtensionProperty i) (e : ContinuousMap.HomotopyEquiv X Y)
+    (hi : Quillen.homotopyExtensionProperty i) (e : ContinuousMap.HomotopyEquiv X Y)
     (a : C(A, X)) (b : C(B, Y)) (w : e.toFun.comp a = b.comp i.hom) :
     ∃ c : C(B, X), c.comp i.hom = a ∧
       Nonempty ((e.toFun.comp c).HomotopyRel b (Set.range i)) := by
@@ -39,16 +40,17 @@ theorem homotopyEquiv_strictHELP {A B X Y : TopCat.{u}} {i : A ⟶ B}
   let t : Y ⟶ M := pushout.inr TopCat.ι₁ f
   let j : X ⟶ M := TopCat.ι₀ ≫ l
   let sq : IsPushout (TopCat.ι₁ : X ⟶ X ⊗ TopCat.I) f l t := IsPushout.of_hasPushout _ _
-  let p : M ⟶ Y := mappingCylinderProjection sq
-  have hpj : j ≫ p = f := mappingCylinderProjection_start sq
-  have hpt : t ≫ p = 𝟙 Y := mappingCylinderProjection_target sq
-  have hpl : l ≫ p = fst X TopCat.I ≫ f := mappingCylinderProjection_cylinder sq
-  let S : CylinderStrongDeformationRetract j :=
-    (homotopyExtensionProperty_strongDeformationRetract
-      (homotopyExtensionProperty_mappingCylinderStart sq)
-      (mappingCylinderStartHomotopyEquiv sq e rfl) rfl).some
+  let p : M ⟶ Y := Quillen.MappingCylinder.mappingCylinderProjection sq
+  have hpj : j ≫ p = f := Quillen.MappingCylinder.mappingCylinderProjection_start sq
+  have hpt : t ≫ p = 𝟙 Y := Quillen.MappingCylinder.mappingCylinderProjection_target sq
+  have hpl : l ≫ p = fst X TopCat.I ≫ f :=
+    Quillen.MappingCylinder.mappingCylinderProjection_cylinder sq
+  let S : Quillen.CylinderStrongDeformationRetract j :=
+    (Quillen.homotopyExtensionProperty_strongDeformationRetract
+      (Quillen.homotopyExtensionProperty_mappingCylinderStart sq)
+      (Quillen.MappingCylinder.mappingCylinderStartHomotopyEquiv sq e rfl) rfl).some
   let R : (j.hom.comp S.r.hom).Homotopy (ContinuousMap.id M) :=
-    homotopyOfCylinder S.H S.H₀ S.H₁
+    Quillen.homotopyOfCylinder S.H S.H₀ S.H₁
   have hR (s : unitInterval) (x : X) : R (s, j x) = j x :=
     ConcreteCategory.congr_hom S.fixed (x, ULift.up s)
   have hrj (x : X) : S.r (j x) = x := ConcreteCategory.congr_hom S.retract x
@@ -60,7 +62,7 @@ theorem homotopyEquiv_strictHELP {A B X Y : TopCat.{u}} {i : A ⟶ B}
     have hl := ConcreteCategory.congr_hom sq.w (a x)
     change l (a x, ULift.up 1) = t (e.toFun (a x)) at hl
     exact hl.trans (congrArg t (ContinuousMap.congr_fun w x))
-  obtain ⟨Q, hQ₀, hQ⟩ := homotopyExtensionProperty_continuous hi M (t.hom.comp b) H hH₀
+  obtain ⟨Q, hQ₀, hQ⟩ := Quillen.homotopyExtensionProperty_continuous hi M (t.hom.comp b) H hH₀
   let v : C(B, M) := ⟨fun z => Q (1, z), by fun_prop⟩
   have hvi (x : A) : v (i x) = j (a x) := by
     change Q (1, i x) = _
@@ -104,4 +106,4 @@ theorem homotopyEquiv_strictHELP {A B X Y : TopCat.{u}} {i : A ⟶ B}
       prop' := by rintro s _ ⟨x, rfl⟩; exact hK₂ s x }
   exact ⟨c, hcmap, ⟨R₁.trans R₂⟩⟩
 
-end Quillen.TheoremA
+end Quillen

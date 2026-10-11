@@ -63,7 +63,8 @@ def boundaryOneVertex (p : SimplexCategoryᵒᵖ) (i : Fin 2) :
 
 /-- Exact simplicial coproduct coordinates for an enriched one-cell boundary. -/
 def boundaryOneCoproductMap (X : SSet.{u}) :
-    simplicialSigma (fun _ : Endpoint.{u} ↦ X) ⟶ diagonalSSet (outerProduct (∂Δ[1] : SSet.{u}) X)
+    Quillen.Realization.simplicialSigma (fun _ : Endpoint.{u} ↦ X) ⟶ diagonalSSet (outerProduct
+      (∂Δ[1] : SSet.{u}) X)
       where
   app p := ↾fun z ↦ ⟨boundaryOneVertex p z.1.down, z.2⟩
   naturality _ _ _ := rfl
@@ -92,16 +93,18 @@ instance boundaryOneCoproductMap_isIso (X : SSet.{u}) :
 /-- The enriched boundary has the actual topological coproduct topology. -/
 def boundaryOneHomeomorph (X : SSet.{u}) :
     (Σ _ : Endpoint.{u}, |X|) ≃ₜ |diagonalSSet (outerProduct (∂Δ[1] : SSet.{u}) X)| :=
-  (TopCat.homeoOfIso (realizationSigmaIso (fun _ : Endpoint.{u} ↦ X))).symm.trans
+  (TopCat.homeoOfIso (Quillen.Realization.realizationSigmaIso (fun _ : Endpoint.{u} ↦
+    X))).symm.trans
     (TopCat.homeoOfIso (SSet.toTop.mapIso (asIso (boundaryOneCoproductMap X))))
 
 @[simp] theorem boundaryOneHomeomorph_apply (X : SSet.{u}) (i : Endpoint.{u}) (x : |X|) :
     boundaryOneHomeomorph X ⟨i, x⟩ =
-      SSet.toTop.map (simplicialSigmaι (fun _ : Endpoint.{u} ↦ X) i ≫ boundaryOneCoproductMap X) x
+      SSet.toTop.map (Quillen.Realization.simplicialSigmaι (fun _ : Endpoint.{u} ↦ X) i ≫
+        boundaryOneCoproductMap X) x
         := by
   change SSet.toTop.map (boundaryOneCoproductMap X)
-    ((realizationSigmaIso (fun _ : Endpoint.{u} ↦ X)).inv ⟨i, x⟩) = _
-  rw [realizationSigmaIso_inv_apply, Functor.map_comp]
+    ((Quillen.Realization.realizationSigmaIso (fun _ : Endpoint.{u} ↦ X)).inv ⟨i, x⟩) = _
+  rw [Quillen.Realization.realizationSigmaIso_inv_apply, Functor.map_comp]
   rfl
 
 variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
@@ -112,10 +115,11 @@ abbrev edgeEndpointMap (s : (nerve D).nonDegenerate 1) (i : Endpoint.{u}) :=
 
 /-- In exact simplicial coordinates, each endpoint attaches by its diagram transition. -/
 theorem boundaryOneCoproductMap_attaching (s : (nerve D).nonDegenerate 1) (i : Endpoint.{u}) :
-    simplicialSigmaι (fun _ : Endpoint.{u} ↦ H.obj (s.1.obj 0)) i ≫
+    Quillen.Realization.simplicialSigmaι (fun _ : Endpoint.{u} ↦ H.obj (s.1.obj 0)) i ≫
       boundaryOneCoproductMap (H.obj (s.1.obj 0)) ≫
       diagonalMap (replacementCellAttaching H s) =
-    edgeEndpointMap H s i ≫ simplicialSigmaι (fun d : D ↦ H.obj d) (s.1.obj i.down) ≫
+    edgeEndpointMap H s i ≫ Quillen.Realization.simplicialSigmaι (fun d : D ↦ H.obj d) (s.1.obj
+      i.down) ≫
       vertexCoproductToStageOne H := by
   ext p : 3
   funext x

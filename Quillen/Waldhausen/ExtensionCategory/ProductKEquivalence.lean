@@ -36,8 +36,10 @@ theorem productKEquiv_toMonoidHom (n : ℕ) :
   intro q
   apply _root_.Prod.ext
   · change KMap (fst_exact W W) n (KMap (sourceCofiber_exact W) n q) = KMap (source_exact W) n q
-    exact (DFunLike.congr_fun (KMap_comp_KMap (sourceCofiber_exact W) (fst_exact W W) n).symm q).symm
+    exact (DFunLike.congr_fun
+      (KMap_comp_KMap (sourceCofiber_exact W) (fst_exact W W) n).symm q).symm
   · change KMap (snd_exact W W) n (KMap (sourceCofiber_exact W) n q) = KMap (cofiber_exact W) n q
-    exact (DFunLike.congr_fun (KMap_comp_KMap (sourceCofiber_exact W) (snd_exact W W) n).symm q).symm
+    exact (DFunLike.congr_fun
+      (KMap_comp_KMap (sourceCofiber_exact W) (snd_exact W W) n).symm q).symm
 
 end Quillen.Waldhausen.ExtensionCategory

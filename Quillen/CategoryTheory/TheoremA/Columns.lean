@@ -39,7 +39,7 @@ def commaColumn (q : SimplexCategoryᵒᵖ) : SSet.{u} :=
 
 /-- The under-category decomposition of a fixed column. -/
 def commaColumnSummands (q : SimplexCategoryᵒᵖ) : SSet.{u} :=
-  simplicialSigma fun c : ComposableArrows C q.unop.len ↦
+  Quillen.Realization.simplicialSigma fun c : ComposableArrows C q.unop.len ↦
     nerve (StructuredArrow (F.obj (c.obj (Fin.last q.unop.len))) (𝟭 D))
 
 /-- The two descriptions of an individual bisimplex. -/

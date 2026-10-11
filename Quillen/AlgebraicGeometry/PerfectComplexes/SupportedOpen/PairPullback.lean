@@ -182,7 +182,7 @@ lemma supportedOpenSquare_comp :
   change j'' ≫ (f₀.hom.right ≫ f.hom.right) = (g₀ ≫ g) ≫ j
   rw [← Category.assoc, w₀, Category.assoc, w, Category.assoc]
 
-@[simp] lemma boundedFlatPerfectSupportedOpenKPullback_comp (n : ℕ) :
+lemma boundedFlatPerfectSupportedOpenKPullback_comp (n : ℕ) :
     boundedFlatPerfectSupportedOpenKPullback j'' j (f₀ ≫ f) (g₀ ≫ g)
       (supportedOpenSquare_comp j' j f g w j'' f₀ g₀ w₀) n =
     (boundedFlatPerfectSupportedOpenKPullback j'' j' f₀ g₀ w₀ n).comp
@@ -195,7 +195,7 @@ lemma supportedOpenSquare_comp :
     (boundedFlatPerfectSupportedPullbackCompIso f₀ f) n).trans
       (Quillen.Waldhausen.KMap_comp_KMap _ _ n).symm
 
-@[simp] lemma perfectSupportedOpenKPullback_comp
+lemma perfectSupportedOpenKPullback_comp
     [CompactSpace X''] [CompactSpace X'] [CompactSpace X] (n : ℕ) :
     perfectSupportedOpenKPullback j'' j (f₀ ≫ f) (g₀ ≫ g)
       (supportedOpenSquare_comp j' j f g w j'' f₀ g₀ w₀) n =

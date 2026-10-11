@@ -46,16 +46,19 @@ instance : IsOpenImmersion (openMap i) := by unfold openMap; infer_instance
 
 variable [IsLocallyNoetherian X]
 
+omit [IsLocallyNoetherian X] in
 /-- Support on the actual closed image is precisely vanishing on its open complement. -/
 theorem supported_iff (M : FiniteTypeSheaves X) :
     finiteTypeSheavesSupportedAway (openMap i) M ↔ SchemeSheaf.support M.obj ⊆ Set.range i := by
   rw [finiteTypeSheavesSupportedAway_iff_support_subset, openMap_range, compl_compl]
 
+omit [IsLocallyNoetherian X] in
 /-- Actual closed support pulls back to the actual closed image on every open chart. -/
-theorem supported_restrict {V : Scheme.{u}} [IsLocallyNoetherian V]
+theorem supported_restrict {V : Scheme.{u}}
     (a : V ⟶ X) [IsOpenImmersion a] (M : FiniteTypeSheaves X)
     (hM : finiteTypeSheavesSupportedAway (openMap i) M) :
-    finiteTypeSheavesSupportedAway (openMap (pullback.snd i a)) ((finiteTypeSheavesRestriction a).obj M) := by
+    finiteTypeSheavesSupportedAway (openMap (pullback.snd i a))
+      ((finiteTypeSheavesRestriction a).obj M) := by
   rw [supported_iff, Scheme.Pullback.range_snd]
   change SchemeSheaf.support (M.obj.restrict a) ⊆ a ⁻¹' Set.range i
   rw [SchemeSheaf.support_restrict]
@@ -63,6 +66,7 @@ theorem supported_restrict {V : Scheme.{u}} [IsLocallyNoetherian V]
 
 variable [IsLocallyNoetherian Z]
 
+omit [IsLocallyNoetherian X] [IsLocallyNoetherian Z] in
 /-- The actual closed pushforward is supported on the genuine closed image. -/
 theorem coherentPushforward_supported (M : FiniteTypeSheaves Z) :
     finiteTypeSheavesSupportedAway (openMap i) ((coherentPushforward i).obj M) := by
@@ -75,9 +79,12 @@ theorem coherentPushforward_supported (M : FiniteTypeSheaves Z) :
   have hz' := (Scheme.Modules.pushforward (pullback.snd i (openMap i))).map_isZero hz
   exact hz'.of_iso ((openBaseChange i (openMap i)).app M.obj)
 
+omit [IsLocallyNoetherian Z] in
 /-- Every actual closed-image coherent object has genuine closed support. -/
-theorem coherentKilled_le_supported : coherentKilled i ≤ finiteTypeSheavesSupportedAway (openMap i) := by
+theorem coherentKilled_le_supported :
+    coherentKilled i ≤ finiteTypeSheavesSupportedAway (openMap i) := by
   rintro M ⟨N, ⟨e⟩⟩
-  exact (finiteTypeSheavesSupportedAway (openMap i)).prop_of_iso e (coherentPushforward_supported i N)
+  exact (finiteTypeSheavesSupportedAway (openMap i)).prop_of_iso e
+    (coherentPushforward_supported i N)
 
 end Quillen.CoherentScheme.ClosedImmersion.General

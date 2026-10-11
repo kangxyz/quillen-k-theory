@@ -32,7 +32,7 @@ variable {A D : TopCat.{u}} {E B : Type u} [TopologicalSpace E] [TopologicalSpac
 both endpoint maps everywhere in the ambient parameter space. -/
 theorem correct_boundary_over_fixed_base
     (q : C(E, B)) (hq : HomotopyLiftingProperty q)
-    (i : A ⟶ D) (hi : TheoremA.homotopyExtensionProperty i)
+    (i : A ⟶ D) (hi : Quillen.homotopyExtensionProperty i)
     (duration : C(D, unitInterval)) (hzero : ∀ x, duration x = 0 ↔ x ∈ Set.range i)
     (base : C(D, B)) {f g : C(D, E)} (K : f.Homotopy g)
     (hK : HomotopyOver base q K)
@@ -46,7 +46,7 @@ theorem correct_boundary_over_fixed_base
     ⟨fun z ↦ Q (z.2,(z.1.2,z.1.1)),by fun_prop⟩
   let R₀ : C(D × unitInterval,E) := f.comp ContinuousMap.fst
   let R₁ : C(D × unitInterval,E) := g.comp ContinuousMap.fst
-  obtain ⟨S,hS,hSA,hS₀,hS₁⟩ := TheoremA.homotopyExtensionProperty_interval_square_extension
+  obtain ⟨S,hS,hSA,hS₀,hS₁⟩ := Quillen.homotopyExtensionProperty_interval_square_extension
     (Z := TopCat.of E) hi F R R₀ R₁ (fun a t ↦ Q.map_zero_left (t,a))
     (fun x ↦ (K.map_zero_left x).symm) (fun x ↦ (K.map_one_left x).symm)
     (fun a t ↦ (Q.prop t (0,a) (Or.inl rfl)).trans (K.map_zero_left (i a)))
@@ -102,7 +102,7 @@ theorem correct_boundary_over_fixed_base
 base coordinate, either endpoint, or any prescribed boundary value. -/
 theorem unpad_boundary_over_fixed_base
     (q : C(E, B)) (hq : HomotopyLiftingProperty q)
-    (i : A ⟶ D) (hi : TheoremA.homotopyExtensionProperty i)
+    (i : A ⟶ D) (hi : Quillen.homotopyExtensionProperty i)
     (duration : C(D, unitInterval)) (hzero : ∀ x, duration x = 0 ↔ x ∈ Set.range i)
     (base : C(D, B)) {f g : C(D, E)} (K : f.Homotopy g) (hK : HomotopyOver base q K)
     (L : (f.comp i.hom).Homotopy (g.comp i.hom))

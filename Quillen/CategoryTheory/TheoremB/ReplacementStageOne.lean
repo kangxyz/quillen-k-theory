@@ -46,14 +46,14 @@ theorem nerve_constant_mem_skeleton_one (d : D) (p : SimplexCategoryᵒᵖ) :
 variable (H : D ⥤ SSet.{u})
 
 /-- The vertex coproduct includes canonically into the first diagonal base-skeleton. -/
-def vertexCoproductToStageOne : simplicialSigma (fun d : D ↦ H.obj d) ⟶
+def vertexCoproductToStageOne : Quillen.Realization.simplicialSigma (fun d : D ↦ H.obj d) ⟶
     diagonalSSet ((replacementSkeleton H).obj 1) where
   app p := ↾fun x ↦ ⟨⟨(Functor.const (Fin (p.unop.len + 1))).obj x.1,
     nerve_constant_mem_skeleton_one x.1 p⟩, x.2⟩
   naturality p q α := by
     ext x : 3
     dsimp [diagonalSSet, replacementSkeleton, replacementRestriction,
-      replacementRestrictionRowMap, firstVertexEdge, simplicialSigma]
+      replacementRestrictionRowMap, firstVertexEdge, Quillen.Realization.simplicialSigma]
     simp only [H.map_id]
     rfl
 
@@ -74,31 +74,32 @@ instance vertexCoproductToStageOne_isIso : IsIso (vertexCoproductToStageOne H) :
 
 /-- Exact simplicial coproduct coordinates for the first base-skeleton. -/
 def replacementStageOneIso :
-    simplicialSigma (fun d : D ↦ H.obj d) ≅ diagonalSSet ((replacementSkeleton H).obj 1) :=
+    Quillen.Realization.simplicialSigma (fun d : D ↦ H.obj d) ≅ diagonalSSet ((replacementSkeleton
+      H).obj 1) :=
   asIso (vertexCoproductToStageOne H)
 
 /-- The first stage after realization is the genuine topological coproduct
 of the diagram's realized values. -/
 def realizedReplacementStageOneHomeomorph :
     (Σ d : D, |H.obj d|) ≃ₜ (realizedReplacementSkeleton H).obj 1 :=
-  (TopCat.homeoOfIso (realizationSigmaIso (fun d : D ↦ H.obj d))).symm.trans
+  (TopCat.homeoOfIso (Quillen.Realization.realizationSigmaIso (fun d : D ↦ H.obj d))).symm.trans
     (TopCat.homeoOfIso (SSet.toTop.mapIso (replacementStageOneIso H)))
 
 /-- The first-stage coproduct inclusion followed by the exhaustive cocone
 is precisely the previously constructed vertex inclusion. -/
 theorem vertexCoproductToStageOne_ι (d : D) :
-    simplicialSigmaι (fun d : D ↦ H.obj d) d ≫ vertexCoproductToStageOne H ≫
+    Quillen.Realization.simplicialSigmaι (fun d : D ↦ H.obj d) d ≫ vertexCoproductToStageOne H ≫
       diagonalMap (replacementRestrictionι H ((nerve D).skeleton 1)) =
         replacementVertexInclusion H d := rfl
 
 /-- The homeomorphism includes each value by its actual realized simplicial map. -/
 theorem realizedReplacementStageOneHomeomorph_apply (d : D) (x : |H.obj d|) :
     realizedReplacementStageOneHomeomorph H ⟨d, x⟩ =
-      SSet.toTop.map (simplicialSigmaι (fun d : D ↦ H.obj d) d ≫
+      SSet.toTop.map (Quillen.Realization.simplicialSigmaι (fun d : D ↦ H.obj d) d ≫
         vertexCoproductToStageOne H) x := by
   change SSet.toTop.map (vertexCoproductToStageOne H)
-    ((realizationSigmaIso (fun d : D ↦ H.obj d)).inv ⟨d, x⟩) = _
-  rw [realizationSigmaIso_inv_apply]
+    ((Quillen.Realization.realizationSigmaIso (fun d : D ↦ H.obj d)).inv ⟨d, x⟩) = _
+  rw [Quillen.Realization.realizationSigmaIso_inv_apply]
   rw [Functor.map_comp]
   rfl
 
@@ -109,11 +110,11 @@ theorem realizedReplacementStageOneHomeomorph_naturality
       (realizedReplacementStageOneHomeomorph H ⟨d, x⟩) =
       realizedReplacementStageOneHomeomorph K ⟨d, SSet.toTop.map (η.app d) x⟩ := by
   rw [realizedReplacementStageOneHomeomorph_apply, realizedReplacementStageOneHomeomorph_apply]
-  change (SSet.toTop.map (simplicialSigmaι (fun d : D ↦ H.obj d) d ≫
+  change (SSet.toTop.map (Quillen.Realization.simplicialSigmaι (fun d : D ↦ H.obj d) d ≫
       vertexCoproductToStageOne H) ≫
     SSet.toTop.map (diagonalMap ((replacementSkeletonMap η).app 1))) x =
     (SSet.toTop.map (η.app d) ≫
-      SSet.toTop.map (simplicialSigmaι (fun d : D ↦ K.obj d) d ≫
+      SSet.toTop.map (Quillen.Realization.simplicialSigmaι (fun d : D ↦ K.obj d) d ≫
         vertexCoproductToStageOne K)) x
   rw [← Functor.map_comp, ← Functor.map_comp]
   rfl
@@ -125,7 +126,7 @@ theorem realizedReplacementStageOneHomeomorph_colimit (d : D) (x : |H.obj d|) :
       (realizedReplacementStageOneHomeomorph H ⟨d, x⟩) =
         SSet.toTop.map (replacementVertexInclusion H d) x := by
   rw [realizedReplacementStageOneHomeomorph_apply]
-  change (SSet.toTop.map (simplicialSigmaι (fun d : D ↦ H.obj d) d ≫
+  change (SSet.toTop.map (Quillen.Realization.simplicialSigmaι (fun d : D ↦ H.obj d) d ≫
     vertexCoproductToStageOne H) ≫
       SSet.toTop.map (diagonalMap (replacementRestrictionι H ((nerve D).skeleton 1)))) x = _
   rw [← Functor.map_comp, Category.assoc, vertexCoproductToStageOne_ι]

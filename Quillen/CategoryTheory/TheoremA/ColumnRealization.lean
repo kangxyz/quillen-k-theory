@@ -37,7 +37,7 @@ local instance pointSimplexUnique (p : SimplexCategoryᵒᵖ) :
 /-- A disjoint union of point simplicial sets is the constant simplicial set
 on its indexing type. -/
 def pointSigmaIso (A : Type u) :
-    simplicialSigma (fun _ : A ↦ (Δ[0] : SSet.{u})) ≅
+    Quillen.Realization.simplicialSigma (fun _ : A ↦ (Δ[0] : SSet.{u})) ≅
       (Functor.const SimplexCategoryᵒᵖ).obj A :=
   NatIso.ofComponents (fun p ↦ Equiv.toIso
     { toFun := fun x ↦ x.1
@@ -68,7 +68,7 @@ def commaColumnSummandHomotopyEquiv (q : SimplexCategoryᵒᵖ)
 def commaColumnSourceMap (q : SimplexCategoryᵒᵖ) :
     commaColumn F q ⟶ (Functor.const SimplexCategoryᵒᵖ).obj (ComposableArrows C q.unop.len) :=
   (commaColumnIso F q).hom ≫
-    simplicialSigmaMap (fun c : ComposableArrows C q.unop.len ↦
+    Quillen.Realization.simplicialSigmaMap (fun c : ComposableArrows C q.unop.len ↦
       SSet.stdSimplex.isTerminalObj₀.from
         (nerve (StructuredArrow (F.obj (c.obj (Fin.last q.unop.len))) (𝟭 D)))) ≫
     (pointSigmaIso (ComposableArrows C q.unop.len)).hom
@@ -86,7 +86,7 @@ def commaColumnRealizationHomotopyEquiv (q : SimplexCategoryᵒᵖ) :
     ContinuousMap.HomotopyEquiv |commaColumn F q|
       |(Functor.const SimplexCategoryᵒᵖ).obj (ComposableArrows C q.unop.len)| :=
   (TopCat.homeoOfIso (SSet.toTop.mapIso (commaColumnIso F q))).toHomotopyEquiv.trans
-    ((realizationSigmaHomotopyEquiv (commaColumnSummandHomotopyEquiv F q)).trans
+    ((Quillen.Realization.realizationSigmaHomotopyEquiv (commaColumnSummandHomotopyEquiv F q)).trans
       (TopCat.homeoOfIso (SSet.toTop.mapIso
         (pointSigmaIso (ComposableArrows C q.unop.len)))).toHomotopyEquiv)
 
@@ -94,13 +94,14 @@ def commaColumnRealizationHomotopyEquiv (q : SimplexCategoryᵒᵖ) :
 theorem commaColumnRealizationHomotopyEquiv_toFun (q : SimplexCategoryᵒᵖ) :
     (commaColumnRealizationHomotopyEquiv F q).toFun =
       (SSet.toTop.map (commaColumnSourceMap F q)).hom := by
-  have h := realizationSigmaHomotopyEquiv_toFun
+  have h := Quillen.Realization.realizationSigmaHomotopyEquiv_toFun
     (fun c : ComposableArrows C q.unop.len ↦ SSet.stdSimplex.isTerminalObj₀.from
       (nerve (StructuredArrow (F.obj (c.obj (Fin.last q.unop.len))) (𝟭 D))))
     (commaColumnSummandHomotopyEquiv F q)
     (fun c ↦ by ext x; exact Subsingleton.elim _ _)
   change (((SSet.toTop.map (pointSigmaIso (ComposableArrows C q.unop.len)).hom).hom.comp
-    (realizationSigmaHomotopyEquiv (commaColumnSummandHomotopyEquiv F q)).toFun).comp
+    (Quillen.Realization.realizationSigmaHomotopyEquiv (commaColumnSummandHomotopyEquiv F
+      q)).toFun).comp
       (SSet.toTop.map (commaColumnIso F q).hom).hom) = _
   rw [h]
   simp only [commaColumnSourceMap, Functor.map_comp, TopCat.hom_comp]

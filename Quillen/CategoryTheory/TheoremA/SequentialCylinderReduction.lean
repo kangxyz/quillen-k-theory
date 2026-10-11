@@ -166,16 +166,16 @@ theorem sequentialCobaseStep_hep_and_equiv {F G : ℕ ⥤ TopCat.{u}}
     (sq : IsPushout (F.map (homOfLE (Nat.le_succ n))) (η.app n) x y)
     (hx : x ≫ l = η.app (n + 1))
     (hy : y ≫ l = G.map (homOfLE (Nat.le_succ n)))
-    (hl : homotopyExtensionProperty l)
+    (hl : Quillen.homotopyExtensionProperty l)
     (e : ContinuousMap.HomotopyEquiv L (G.obj (n + 1))) (he : e.toFun = l.hom) :
-    homotopyExtensionProperty
+    Quillen.homotopyExtensionProperty
       ((sequentialCobaseDiagram c η).map (homOfLE (Nat.le_succ n))) ∧
     ∃ E : ContinuousMap.HomotopyEquiv
       ((sequentialCobaseDiagram c η).obj n) ((sequentialCobaseDiagram c η).obj (n + 1)),
       E.toFun = ((sequentialCobaseDiagram c η).map (homOfLE (Nat.le_succ n))).hom := by
   obtain ⟨k, hk⟩ := sequentialCobaseStepSquare c η n sq hx hy
-  exact ⟨homotopyExtensionProperty_pushout hk hl,
-    pushoutHomotopyEquivOfCofibration hk hl e he, rfl⟩
+  exact ⟨Quillen.homotopyExtensionProperty_pushout hk hl,
+    Quillen.pushoutHomotopyEquivOfCofibration hk hl e he, rfl⟩
 
 /-- The relative latching object of a map of sequential diagrams. -/
 def sequentialLatchingObject {F G : ℕ ⥤ TopCat.{u}} (η : F ⟶ G) (n : ℕ) : TopCat.{u} :=
@@ -193,10 +193,10 @@ The inverse and all required homotopies are constructed, rather than
 assumed compatible at the colimit. -/
 def sequentialColimitHomotopyEquivOfLatching {F G : ℕ ⥤ TopCat.{u}}
     (η : F ⟶ G) (c : Cocone F) (hc : IsColimit c) (d : Cocone G) (hd : IsColimit d)
-    (h₀ : homotopyExtensionProperty (η.app 0))
+    (h₀ : Quillen.homotopyExtensionProperty (η.app 0))
     (e₀ : ContinuousMap.HomotopyEquiv (F.obj 0) (G.obj 0))
     (he₀ : e₀.toFun = (η.app 0).hom)
-    (hL : ∀ n, homotopyExtensionProperty (sequentialLatchingMap η n))
+    (hL : ∀ n, Quillen.homotopyExtensionProperty (sequentialLatchingMap η n))
     (eL : ∀ n, ContinuousMap.HomotopyEquiv (sequentialLatchingObject η n) (G.obj (n + 1)))
     (heL : ∀ n, (eL n).toFun = (sequentialLatchingMap η n).hom) :
     ContinuousMap.HomotopyEquiv c.pt d.pt := by
@@ -208,7 +208,7 @@ def sequentialColimitHomotopyEquivOfLatching {F G : ℕ ⥤ TopCat.{u}}
     (pushout.inr_desc (η.app (n + 1)) (G.map (homOfLE (Nat.le_succ n)))
       (η.naturality (homOfLE (Nat.le_succ n))))
     (hL n) (eL n) (heL n)
-  let E₀ := pushoutHomotopyEquivOfCofibration (sequentialCobaseSquare c η 0).flip h₀ e₀ he₀
+  let E₀ := Quillen.pushoutHomotopyEquivOfCofibration (sequentialCobaseSquare c η 0).flip h₀ e₀ he₀
   let E₁ := sequentialHomotopyEquivOfCofibrations P
     (sequentialCobaseCocone c hc η d) (sequentialCobaseIsColimit c hc η d hd)
     (fun n ↦ (hstep n).1) (fun n ↦ (hstep n).2.choose) (fun n ↦ (hstep n).2.choose_spec)
@@ -225,10 +225,10 @@ def sequentialColimitHomotopyEquivOfLatching {F G : ℕ ⥤ TopCat.{u}}
 @[simp]
 theorem sequentialColimitHomotopyEquivOfLatching_toFun {F G : ℕ ⥤ TopCat.{u}}
     (η : F ⟶ G) (c : Cocone F) (hc : IsColimit c) (d : Cocone G) (hd : IsColimit d)
-    (h₀ : homotopyExtensionProperty (η.app 0))
+    (h₀ : Quillen.homotopyExtensionProperty (η.app 0))
     (e₀ : ContinuousMap.HomotopyEquiv (F.obj 0) (G.obj 0))
     (he₀ : e₀.toFun = (η.app 0).hom)
-    (hL : ∀ n, homotopyExtensionProperty (sequentialLatchingMap η n))
+    (hL : ∀ n, Quillen.homotopyExtensionProperty (sequentialLatchingMap η n))
     (eL : ∀ n, ContinuousMap.HomotopyEquiv (sequentialLatchingObject η n) (G.obj (n + 1)))
     (heL : ∀ n, (eL n).toFun = (sequentialLatchingMap η n).hom) :
     (sequentialColimitHomotopyEquivOfLatching η c hc d hd h₀ e₀ he₀ hL eL heL).toFun =

@@ -20,7 +20,7 @@ open scoped Simplicial Topology unitInterval
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace Quillen.CartesianRealization.Skeletal
-open TheoremA
+open TheoremA TheoremB
 
 /-- The unique simplex in each degree of the zero-simplex, used to identify point-valued
 replacement stages with their base stages. -/

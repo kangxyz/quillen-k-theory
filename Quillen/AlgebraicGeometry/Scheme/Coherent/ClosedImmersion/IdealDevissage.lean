@@ -75,7 +75,8 @@ instance smallPushforward_full : (smallPushforward R I).Full := by
 
 instance smallPushforward_faithful : (smallPushforward R I).Faithful := by
   change (((equivSmallModel.{u+1} (FiniteTypeSheaves (Spec (closedRing R I)))).inverse ⋙
-    coherentPushforward R I) ⋙ (equivSmallModel.{u+1} (FiniteTypeSheaves (Spec R))).functor).Faithful
+    coherentPushforward R I) ⋙
+      (equivSmallModel.{u+1} (FiniteTypeSheaves (Spec R))).functor).Faithful
   infer_instance
 
 instance smallPushforwardToKilled_full : (smallPushforwardToKilled R I).Full where
@@ -123,8 +124,8 @@ def smallPushforwardToKilledExact :
       (Devissage.subcategoryExactStructure (supportKilled R I)) where
   toFunctor := smallPushforwardToKilled R I
   map_conflation S h := by
-    change (ExactStructure.smallModel.{u+1} (abelianExactStructure (FiniteTypeSheaves (Spec (closedRing R
-      I))))).conflation S at h
+    change (ExactStructure.smallModel.{u+1}
+      (abelianExactStructure (FiniteTypeSheaves (Spec (closedRing R I))))).conflation S at h
     rw [abelianExactStructure_smallModel] at h
     exact h.map_of_exact _
 
@@ -136,15 +137,15 @@ instance smallPushforwardToKilledExact_mapQ_isEquivalence :
     (smallPushforwardToKilledExact R I).mapQ.IsEquivalence := by
   apply ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro M N a ha
-    change (ExactStructure.smallModel.{u+1} (abelianExactStructure (FiniteTypeSheaves (Spec (closedRing R
-      I))))).inflation a
+    change (ExactStructure.smallModel.{u+1}
+      (abelianExactStructure (FiniteTypeSheaves (Spec (closedRing R I))))).inflation a
     rw [abelianExactStructure_smallModel, abelianExactStructure_inflation_iff]
     have : Mono ((smallPushforwardToKilled R I).map a) :=
       (abelianExactStructure_inflation_iff _ _).mp ha
     exact Functor.mono_of_mono_map (smallPushforwardToKilled R I) this
   · intro M N a ha
-    change (ExactStructure.smallModel.{u+1} (abelianExactStructure (FiniteTypeSheaves (Spec (closedRing R
-      I))))).deflation a
+    change (ExactStructure.smallModel.{u+1}
+      (abelianExactStructure (FiniteTypeSheaves (Spec (closedRing R I))))).deflation a
     rw [abelianExactStructure_smallModel, abelianExactStructure_deflation_iff]
     have : Epi ((smallPushforwardToKilled R I).map a) :=
       (abelianExactStructure_deflation_iff _ _).mp ha

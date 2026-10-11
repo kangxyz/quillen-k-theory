@@ -118,9 +118,11 @@ lemma pathClamp_one (n : SimplexCategory) : pathClamp (n.const ⦋1⦌ 1) = 𝟙
 
 open Fibration.RelativeRows
 
+/-- The row diagram augmented by an initial simplicial vertex. -/
 def pathDiagram (W : Model.{u}) : SimplexCategoryᵒᵖ ⥤ Model.{u} :=
   addInitial.op ⋙ rowDiagram W
 
+/-- The natural projection from the path diagram to the constant zero-ordinal row. -/
 def pathAugmentation (W : Model.{u}) : pathDiagram W ⟶
     (Functor.const _).obj ((rows ⦋0⦌).obj W) where
   app n := (rowsReindex (⦋0⦌.const (addInitial.obj n.unop) 0)).app W
@@ -132,6 +134,7 @@ def pathAugmentation (W : Model.{u}) : pathDiagram W ⟶
     rw [CategoryTheory.Functor.comp_id, ← QuotientRows.reindex_comp]
     congr 1
 
+/-- The natural constant-row section of the path augmentation. -/
 def pathSection (W : Model.{u}) : (Functor.const _).obj ((rows ⦋0⦌).obj W) ⟶ pathDiagram W where
   app n := (rowsReindex ((addInitial.obj n.unop).const ⦋0⦌ 0)).app W
   naturality n m α := by
@@ -187,9 +190,11 @@ def pathCylinder (H : Model.{u} ⥤ SSet.{u}) (W : Model.{u}) :
     simp only [CategoryTheory.Functor.map_comp, NatTrans.comp_app] at hm
     exact ConcreteCategory.congr_hom hm z.1
 
+/-- The diagonal simplicial map induced by the path augmentation. -/
 def pathAugmentationMap (H : Model.{u} ⥤ SSet.{u}) (W : Model.{u}) :=
   TheoremA.diagonalMap (Functor.whiskerRight (pathAugmentation W) H)
 
+/-- The diagonal simplicial map induced by the constant-row section. -/
 def pathSectionMap (H : Model.{u} ⥤ SSet.{u}) (W : Model.{u}) :=
   TheoremA.diagonalMap (Functor.whiskerRight (pathSection W) H)
 

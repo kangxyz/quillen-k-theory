@@ -89,7 +89,10 @@ theorem isWeakHomotopyEquivalence_of_two_open (p : C(E, B))
     IsWeakHomotopyEquivalence p := by
   let W : Bool → Set B := fun j ↦ if j then U else V
   apply isWeakHomotopyEquivalence_of_open_cover p W
-    (fun j ↦ by cases j; exact hV; exact hU)
+    (fun j ↦ by
+      cases j with
+      | false => exact hV
+      | true => exact hU)
   · intro b
     have hb : b ∈ U ∪ V := by rw [hcover]; trivial
     rcases hb with hb | hb

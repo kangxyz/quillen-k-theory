@@ -72,13 +72,13 @@ theorem original_supported_cocylinder_endpoints {U X : Scheme.{u}}
     (f : Arrow (perfectSupported T.ι).FullSubcategoryᵒᵖ) :
     (perfectSupportedOppositeJointData (j ⁻¹ᵁ T).ι).inl.app ((perfectSupportedRestrict j
       T).op.mapArrow.obj f) ≫
-        ((perfectSupportedRestrict_op_jointIso j T).inv.app f).hom.left =
+        ((perfectSupportedRestrictOpJointIso j T).inv.app f).hom.left =
       (perfectSupportedRestrict j T).op.map ((perfectSupportedOppositeJointData T.ι).inl.app f) ∧
     (perfectSupportedOppositeJointData (j ⁻¹ᵁ T).ι).inr.app ((perfectSupportedRestrict j
       T).op.mapArrow.obj f) ≫
-        ((perfectSupportedRestrict_op_jointIso j T).inv.app f).hom.left =
+        ((perfectSupportedRestrictOpJointIso j T).inv.app f).hom.left =
       (perfectSupportedRestrict j T).op.map ((perfectSupportedOppositeJointData T.ι).inr.app f) :=
-  ⟨perfectSupportedRestrict_op_jointIso_inv_inl j T f, perfectSupportedRestrict_op_jointIso_inv_inr
+  ⟨perfectSupportedRestrictOpJointIso_inv_inl j T f, perfectSupportedRestrictOpJointIso_inv_inr
     j T f⟩
 
 /-- The saturated-image comparison also retains the exact original projection. -/
@@ -86,12 +86,12 @@ theorem original_image_cocylinder_projection {U X : Scheme.{u}}
     (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens)
     [Fact (OpenDerivedImage.HasSupportedDerivedRoofs j T)]
     (f : Arrow (perfectSupported T.ι).FullSubcategoryᵒᵖ) :
-    ((SupportedOpenDerivedImage.complexCorestrict_op_jointIso j T).inv.app f).hom.right ≫
+    ((SupportedOpenDerivedImage.complexCorestrictOpJointIso j T).inv.app f).hom.right ≫
       (SupportedOpenDerivedImage.complexCorestrict j T).op.map
         ((perfectSupportedOppositeJointData T.ι).projection.app f) =
       (SupportedOpenDerivedImage.complexOppositeJointData j T).projection.app
         ((SupportedOpenDerivedImage.complexCorestrict j T).op.mapArrow.obj f) :=
-  SupportedOpenDerivedImage.complexCorestrict_op_jointIso_inv_projection j T f
+  SupportedOpenDerivedImage.complexCorestrictOpJointIso_inv_projection j T f
 
 /-- The genuine supported K1-to-K0 boundary maps to the already public
 perfect boundary under the original support-forgetting maps. -/

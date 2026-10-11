@@ -85,7 +85,7 @@ def rightComparison : C(d.E1, HomotopyPullback d.projection.hom d.rightBaseInclu
 /-- The left endpoint deformation, actual open chart, and strict pullback
 comparison give the canonical homotopy-cartesian left chart square. -/
 def leftComparisonHomotopyEquiv (hU : IsOpen U)
-    (s0 : TheoremA.CylinderStrongDeformationRetract d.i0)
+    (s0 : Quillen.CylinderStrongDeformationRetract d.i0)
     (hp : WeakHomotopyLiftingProperty d.projection.hom) :
     ContinuousMap.HomotopyEquiv d.E0
       (HomotopyPullback d.projection.hom d.leftBaseInclusion) :=
@@ -96,7 +96,7 @@ def leftComparisonHomotopyEquiv (hU : IsOpen U)
           d.projection.hom d.leftBaseInclusion hp))
 
 @[simp] theorem leftComparisonHomotopyEquiv_toFun (hU : IsOpen U)
-    (s0 : TheoremA.CylinderStrongDeformationRetract d.i0)
+    (s0 : Quillen.CylinderStrongDeformationRetract d.i0)
     (hp : WeakHomotopyLiftingProperty d.projection.hom) :
     (d.leftComparisonHomotopyEquiv hU s0 hp).toFun = d.leftComparison := by
   ext x
@@ -113,7 +113,7 @@ def leftComparisonHomotopyEquiv (hU : IsOpen U)
 /-- The right endpoint deformation is pushed out directly into the actual
 right restriction, then compared with the path-space pullback. -/
 def rightComparisonHomotopyEquiv (hV : IsOpen V)
-    (s1 : TheoremA.CylinderStrongDeformationRetract d.i1)
+    (s1 : Quillen.CylinderStrongDeformationRetract d.i1)
     (hp : WeakHomotopyLiftingProperty d.projection.hom) :
     ContinuousMap.HomotopyEquiv d.E1
       (HomotopyPullback d.projection.hom d.rightBaseInclusion) :=
@@ -123,7 +123,7 @@ def rightComparisonHomotopyEquiv (hV : IsOpen V)
         d.projection.hom d.rightBaseInclusion hp))
 
 @[simp] theorem rightComparisonHomotopyEquiv_toFun (hV : IsOpen V)
-    (s1 : TheoremA.CylinderStrongDeformationRetract d.i1)
+    (s1 : Quillen.CylinderStrongDeformationRetract d.i1)
     (hp : WeakHomotopyLiftingProperty d.projection.hom) :
     (d.rightComparisonHomotopyEquiv hV s1 hp).toFun = d.rightComparison := by
   ext x
@@ -141,8 +141,8 @@ section Global
 variable (height : C(T, I))
   (hU : U = upperBaseCollar height)
   (hV : V = upperBaseCollar (reflectedHeight height))
-  (s0 : TheoremA.CylinderStrongDeformationRetract d.i0)
-  (s1 : TheoremA.CylinderStrongDeformationRetract d.i1)
+  (s0 : Quillen.CylinderStrongDeformationRetract d.i0)
+  (s1 : Quillen.CylinderStrongDeformationRetract d.i1)
   (h0 : s0.H ≫ d.bridgeBase = fst d.M TopCat.I ≫ d.bridgeBase)
   (h1 : s1.H ≫ d.bridgeBase = fst d.M TopCat.I ≫ d.bridgeBase)
   (hp0 : HomotopyLiftingProperty d.p0.hom)

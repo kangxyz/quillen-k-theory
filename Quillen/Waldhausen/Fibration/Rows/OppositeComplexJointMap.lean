@@ -241,7 +241,7 @@ variable (hExact : IsExact (oppositeComplexSubcategory P).cof (oppositeComplexSu
 
 /-- The actual common cocylinder is compatible with this exact cross-category additive complex
 functor. -/
-def oppositeComplexJointData_mapIso :
+def oppositeComplexJointDataMapIso :
     (oppositeComplexJointData P hP).joint ⋙
       ExtensionCategory.postcompose (oppositeComplexSubcategory P) (oppositeComplexSubcategory
         Q) hExact ≅
@@ -257,26 +257,26 @@ def oppositeComplexJointData_mapIso :
         · exact oppositeJointMiddleMapIso_naturality F P Q hF hP hQ α)
 
 /-- The actual inverse comparison retains the first original endpoint. -/
-lemma oppositeComplexJointData_mapIso_inv_inl (f : Arrow P.FullSubcategoryᵒᵖ) :
+lemma oppositeComplexJointDataMapIso_inv_inl (f : Arrow P.FullSubcategoryᵒᵖ) :
     (oppositeComplexJointData Q hQ).inl.app ((complexSubcategoryMap F P Q hF).op.mapArrow.obj f) ≫
-        ((oppositeComplexJointData_mapIso F P Q hF hP hQ hExact).inv.app f).hom.left =
+        ((oppositeComplexJointDataMapIso F P Q hF hP hQ hExact).inv.app f).hom.left =
       (complexSubcategoryMap F P Q hF).op.map ((oppositeComplexJointData P hP).inl.app f) := by
   change _ ≫ (oppositeJointSourceMapIso F P Q hF hP hQ f).inv = _
   rw [← oppositeJointSourceMapIso_inl F P Q hF hP hQ f, Category.assoc,
     Iso.hom_inv_id, Category.comp_id]
 
 /-- The actual inverse comparison retains the second original endpoint. -/
-lemma oppositeComplexJointData_mapIso_inv_inr (f : Arrow P.FullSubcategoryᵒᵖ) :
+lemma oppositeComplexJointDataMapIso_inv_inr (f : Arrow P.FullSubcategoryᵒᵖ) :
     (oppositeComplexJointData Q hQ).inr.app ((complexSubcategoryMap F P Q hF).op.mapArrow.obj f) ≫
-        ((oppositeComplexJointData_mapIso F P Q hF hP hQ hExact).inv.app f).hom.left =
+        ((oppositeComplexJointDataMapIso F P Q hF hP hQ hExact).inv.app f).hom.left =
       (complexSubcategoryMap F P Q hF).op.map ((oppositeComplexJointData P hP).inr.app f) := by
   change _ ≫ (oppositeJointSourceMapIso F P Q hF hP hQ f).inv = _
   rw [← oppositeJointSourceMapIso_inr F P Q hF hP hQ f, Category.assoc,
     Iso.hom_inv_id, Category.comp_id]
 
 /-- The actual inverse comparison retains the original weak projection. -/
-lemma oppositeComplexJointData_mapIso_inv_projection (f : Arrow P.FullSubcategoryᵒᵖ) :
-    ((oppositeComplexJointData_mapIso F P Q hF hP hQ hExact).inv.app f).hom.right ≫
+lemma oppositeComplexJointDataMapIso_inv_projection (f : Arrow P.FullSubcategoryᵒᵖ) :
+    ((oppositeComplexJointDataMapIso F P Q hF hP hQ hExact).inv.app f).hom.right ≫
         (complexSubcategoryMap F P Q hF).op.map ((oppositeComplexJointData P hP).projection.app f) =
       (oppositeComplexJointData Q hQ).projection.app ((complexSubcategoryMap F P Q
         hF).op.mapArrow.obj f) := by

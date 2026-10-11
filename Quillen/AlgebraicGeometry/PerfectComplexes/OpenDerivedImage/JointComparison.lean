@@ -29,32 +29,32 @@ open Waldhausen Fibration
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] [Fact (HasDerivedRoofs j)]
 
 /-- The literal original corestriction preserves the actual common opposite cocylinder. -/
-def complexCorestrict_op_jointIso :
+def complexCorestrictOpJointIso :
     (perfectOppositeJointData X).joint ⋙
       ExtensionCategory.postcompose (perfectOppositeWaldhausen X) (complexOppositeWaldhausen j)
         (complexCorestrict_op_exact j) ≅
       (complexCorestrict j).op.mapArrow ⋙ (complexOppositeJointData j).joint :=
-  oppositeComplexJointData_mapIso (Scheme.Modules.restrictFunctor j)
+  oppositeComplexJointDataMapIso (Scheme.Modules.restrictFunctor j)
     (locallyPerfect X) (complexObjects j) (fun K hK => ⟨K, hK, ⟨Iso.refl _⟩⟩)
     (fun _ h => locallyPerfect_shift h (-1)) (fun _ h => complexObjects_shift j h (-1))
     (complexCorestrict_op_exact j)
 
-lemma complexCorestrict_op_jointIso_inv_inl (f : Arrow (Perfect X)ᵒᵖ) :
+lemma complexCorestrictOpJointIso_inv_inl (f : Arrow (Perfect X)ᵒᵖ) :
     (complexOppositeJointData j).inl.app ((complexCorestrict j).op.mapArrow.obj f) ≫
-        ((complexCorestrict_op_jointIso j).inv.app f).hom.left =
+        ((complexCorestrictOpJointIso j).inv.app f).hom.left =
       (complexCorestrict j).op.map ((perfectOppositeJointData X).inl.app f) :=
-  oppositeComplexJointData_mapIso_inv_inl _ _ _ _ _ _ _ f
+  oppositeComplexJointDataMapIso_inv_inl _ _ _ _ _ _ _ f
 
-lemma complexCorestrict_op_jointIso_inv_inr (f : Arrow (Perfect X)ᵒᵖ) :
+lemma complexCorestrictOpJointIso_inv_inr (f : Arrow (Perfect X)ᵒᵖ) :
     (complexOppositeJointData j).inr.app ((complexCorestrict j).op.mapArrow.obj f) ≫
-        ((complexCorestrict_op_jointIso j).inv.app f).hom.left =
+        ((complexCorestrictOpJointIso j).inv.app f).hom.left =
       (complexCorestrict j).op.map ((perfectOppositeJointData X).inr.app f) :=
-  oppositeComplexJointData_mapIso_inv_inr _ _ _ _ _ _ _ f
+  oppositeComplexJointDataMapIso_inv_inr _ _ _ _ _ _ _ f
 
-lemma complexCorestrict_op_jointIso_inv_projection (f : Arrow (Perfect X)ᵒᵖ) :
-    ((complexCorestrict_op_jointIso j).inv.app f).hom.right ≫
+lemma complexCorestrictOpJointIso_inv_projection (f : Arrow (Perfect X)ᵒᵖ) :
+    ((complexCorestrictOpJointIso j).inv.app f).hom.right ≫
         (complexCorestrict j).op.map ((perfectOppositeJointData X).projection.app f) =
       (complexOppositeJointData j).projection.app ((complexCorestrict j).op.mapArrow.obj f) :=
-  oppositeComplexJointData_mapIso_inv_projection _ _ _ _ _ _ _ f
+  oppositeComplexJointDataMapIso_inv_projection _ _ _ _ _ _ _ f
 
 end Quillen.PerfectComplexes.OpenDerivedImage

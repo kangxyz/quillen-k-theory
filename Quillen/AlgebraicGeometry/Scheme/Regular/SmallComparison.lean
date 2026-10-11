@@ -24,7 +24,8 @@ namespace Quillen.SchemeSheaf
 variable (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X]
 
 /-- The actual vector-bundle property on the chosen small coherent category. -/
-def coherentSmallVectorBundle : ObjectProperty (SmallModel.{u+1} (CoherentScheme.FiniteTypeSheaves X)) :=
+def coherentSmallVectorBundle :
+    ObjectProperty (SmallModel.{u+1} (CoherentScheme.FiniteTypeSheaves X)) :=
   fun M => coherentVectorBundle X ((equivSmallModel.{u+1} (CoherentScheme.FiniteTypeSheaves
     X)).inverse.obj M)
 
@@ -35,7 +36,8 @@ instance coherentSmallVectorBundle_isoClosed :
 
 instance coherentSmallVectorBundle_containsZero : (coherentSmallVectorBundle X).ContainsZero where
   exists_zero := ⟨0, isZero_zero _, (coherentVectorBundle X).prop_of_isZero
-    ((equivSmallModel.{u+1} (CoherentScheme.FiniteTypeSheaves X)).inverse.map_isZero (isZero_zero _))⟩
+    ((equivSmallModel.{u+1} (CoherentScheme.FiniteTypeSheaves X)).inverse.map_isZero
+      (isZero_zero _))⟩
 
 instance coherentSmallVectorBundle_extensionClosed :
     (CoherentScheme.coherentExactStructure X).smallModel.IsExtensionClosed

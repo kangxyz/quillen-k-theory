@@ -40,10 +40,10 @@ abbrev negativeK (R : CommRingCat.{u}) (n : ℕ) : AddCommGrpCat.{u+1} :=
 abbrev negativeKMap {R S : CommRingCat.{u}} (f : R ⟶ S) (n : ℕ) :
     negativeK R n ⟶ negativeK S n := (negativeKFunctor n).map f
 
-@[simp] lemma negativeKMap_id (R : CommRingCat.{u}) (n : ℕ) :
+lemma negativeKMap_id (R : CommRingCat.{u}) (n : ℕ) :
     negativeKMap (𝟙 R) n = 𝟙 (negativeK R n) := (negativeKFunctor n).map_id R
 
-@[simp] lemma negativeKMap_comp {R S T : CommRingCat.{u}} (f : R ⟶ S) (g : S ⟶ T) (n : ℕ) :
+lemma negativeKMap_comp {R S T : CommRingCat.{u}} (f : R ⟶ S) (g : S ⟶ T) (n : ℕ) :
     negativeKMap (f ≫ g) n = negativeKMap f n ≫ negativeKMap g n :=
   (negativeKFunctor n).map_comp f g
 

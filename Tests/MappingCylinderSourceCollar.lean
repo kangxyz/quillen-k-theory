@@ -56,23 +56,24 @@ example :
 
 example (base : B ⟶ T) :
     (strongDeformationRetract sq cut hcut).H ≫ inclusion sq cut ≫
-        TheoremA.mappingCylinderProjection sq ≫ base =
+        Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base =
       fst (Collar sq cut) TopCat.I ≫ inclusion sq cut ≫
-        TheoremA.mappingCylinderProjection sq ≫ base := deformation_over sq cut hcut base
+        Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base := deformation_over sq cut hcut
+          base
 
 example (base : B ⟶ T) (x : Collar sq cut) (t : TopCat.I) :
-    (TheoremA.mappingCylinderProjection sq ≫ base)
+    (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base)
         ((strongDeformationRetract sq cut hcut).H (x,t)).val =
-      (TheoremA.mappingCylinderProjection sq ≫ base) x.val :=
+      (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) x.val :=
   ConcreteCategory.congr_hom (deformation_over sq cut hcut base) (x,t)
 
 example (base : B ⟶ T) {D : Type u} [TopologicalSpace D] (g : C(D,T)) :
     Nonempty (ContinuousMap.HomotopyEquiv
       (FiberwiseMappingPath.BaseChangedSource
-        (inclusion sq cut ≫ TheoremA.mappingCylinderProjection sq ≫ base).hom
+        (inclusion sq cut ≫ Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base).hom
         (source sq cut hcut).hom g)
       (FiberwiseMappingPath.BaseChangedTarget
-        (inclusion sq cut ≫ TheoremA.mappingCylinderProjection sq ≫ base).hom g)) :=
+        (inclusion sq cut ≫ Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base).hom g)) :=
   ⟨(strongDeformationRetract sq cut hcut).baseChangeHomotopyEquiv
-    (inclusion sq cut ≫ TheoremA.mappingCylinderProjection sq ≫ base)
+    (inclusion sq cut ≫ Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base)
     (deformation_over sq cut hcut base) g⟩

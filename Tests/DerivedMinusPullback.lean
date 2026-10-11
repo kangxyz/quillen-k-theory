@@ -61,7 +61,8 @@ theorem derived_map_formula {X Y : Scheme.{u}} (f : X ⟶ Y)
       (derivedPullbackMinusFactors f).hom.app L =
     (derivedPullbackMinusFactors f).hom.app K ≫
       (boundedAboveQMinus X.Modules).map (pullbackFlatModelBoundedMap f s) := by
-  exact (derivedPullbackMinusFactors f).hom.naturality s
+  simpa only [Functor.comp_map, resolvedPullbackFunctorMinus_map] using
+    (derivedPullbackMinusFactors f).hom.naturality s
 
 /-- The computed derived pullback of every bounded representative is its actual geometric flat
   model. -/

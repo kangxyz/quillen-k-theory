@@ -8,6 +8,8 @@ module
 
 public import Quillen.Waldhausen.Fibration.CanonicalFiberMap
 public import Quillen.Waldhausen.Cylinder.Subcategory
+public import Quillen.Waldhausen.Cylinder.JointExact
+public import Quillen.Waldhausen.SConstruction.Connected
 public import Quillen.Waldhausen.SConstruction.Rows.JointFunctor
 
 /-! Actual canonical fiber and common-cylinder maps, without a fibration conclusion. -/
@@ -22,7 +24,7 @@ theorem actual_delooping_connected {C : Type u} [Category.{v} C] (W : Structure 
     PathConnectedSpace W.Delooping := inferInstance
 
 def actual_delooping_zero_path {C : Type u} [Category.{v} C] (W : Structure C)
-    (x : W.Delooping) : Path W.kBasepoint x := kBasepointPath W x
+    (x : W.Delooping) : Path W.kBasepoint x := Waldhausen.kBasepointPath W x
 
 section Fiber
 open Fibration

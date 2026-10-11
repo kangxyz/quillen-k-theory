@@ -34,6 +34,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace Quillen.PerfectComplexes
+/-- The standard derived model used in the original pushforward Hom adjunction. -/
 local instance pushforwardHomStandardDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules
   :=
   HasDerivedCategory.standard _

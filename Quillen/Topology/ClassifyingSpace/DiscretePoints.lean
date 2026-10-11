@@ -29,7 +29,7 @@ namespace Quillen
 lemma constantRealizationIso_point (A : Type u) (a : A) :
     (TheoremB.constantRealizationIso A).hom
       (realizationPoint (X := (Functor.const SimplexCategoryᵒᵖ).obj A) a) = a := by
-  have e : TheoremA.simplicialSigmaι (fun _ : A ↦ (Δ[0] : SSet.{u})) a ≫
+  have e : Quillen.Realization.simplicialSigmaι (fun _ : A ↦ (Δ[0] : SSet.{u})) a ≫
       (TheoremA.pointSigmaIso A).hom =
       (SSet.yonedaEquiv (X := (Functor.const SimplexCategoryᵒᵖ).obj A) (n := ⦋0⦌)).symm a := by
     apply SSet.yonedaEquiv.injective

@@ -80,7 +80,7 @@ def perfectFlatPrespectrumCompHomotopy {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y
   (exactOriginalPrespectrumIsoHomotopy _ _ (perfectFlatPullback_waldhausenExact (f ≫ g))
     ((perfectFlatPullback_waldhausenExact g).comp (perfectFlatPullback_waldhausenExact f))
     (perfectFlatPullbackCompIso f g)).trans
-      (exactOriginalPrespectrumMap_comp_homotopy _ _ _
+      (exactOriginalPrespectrumMapCompHomotopy _ _ _
         (perfectFlatPullback_waldhausenExact g) (perfectFlatPullback_waldhausenExact f))
 
 

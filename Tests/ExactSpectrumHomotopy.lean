@@ -66,12 +66,12 @@ theorem original_iso_endpoint (e : F ≅ G) :
 
 /-- Identity reaches the literal identity spectrum map. -/
 theorem identity_endpoint :
-    (exactOriginalPrespectrumMap_id_homotopy W).at 1 = 𝟙 (originalPrespectrum W) :=
+    (exactOriginalPrespectrumMapIdHomotopy W).at 1 = 𝟙 (originalPrespectrum W) :=
   LoopPrespectrum.Homotopy.at_one_eq _
 
 /-- Binary composition reaches the actual composite, without a zero-image hypothesis. -/
 theorem composition_endpoint {J : D ⥤ E} (hJ : IsExact V.cof V.weq U.cof U.weq J) :
-    (exactOriginalPrespectrumMap_comp_homotopy W V U hF hJ).at 1 =
+    (exactOriginalPrespectrumMapCompHomotopy W V U hF hJ).at 1 =
       exactOriginalPrespectrumMap W V hF ≫ exactOriginalPrespectrumMap V U hJ :=
   LoopPrespectrum.Homotopy.at_one_eq _
 

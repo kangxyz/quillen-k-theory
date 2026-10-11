@@ -7,6 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.Topology.HELP.Compact
+public import Quillen.Topology.HELP.Basic
 public import Quillen.Topology.Realization.MonomorphismLifting
 
 /-!
@@ -25,27 +26,27 @@ universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.TheoremA
+namespace Quillen
 
 /-- The actual realized simplex boundary inclusion has HEP, including the
 empty boundary in dimension zero. -/
-theorem homotopyExtensionProperty_realizationBoundary (n : ℕ) :
-    homotopyExtensionProperty (SSet.toTop.map (∂Δ[n].ι : _ ⟶ (Δ[n] : SSet.{u}))) := by
+theorem Realization.homotopyExtensionProperty_realizationBoundary (n : ℕ) :
+    Quillen.homotopyExtensionProperty (SSet.toTop.map (∂Δ[n].ι : _ ⟶ (Δ[n] : SSet.{u}))) := by
   let P := |(Δ[0] : SSet.{u})|
   let a := (realizationBoundaryHomeomorph n).trans
     (Homeomorph.uniqueProd P (simplexBoundary n)).symm
   let b := (SimplexCategory.toTopHomeo ⦋n⦌).trans
     (Homeomorph.uniqueProd P (Convexity.StdSimplex ℝ (Fin (n + 1)))).symm
-  apply homotopyExtensionProperty_of_iso_square _
-    (parameterizedSimplexBoundaryInclusion P n) (TopCat.isoOfHomeo a) (TopCat.isoOfHomeo b)
-    _ (homotopyExtensionProperty_simplexBoundary P n)
+  apply Quillen.homotopyExtensionProperty_of_iso_square _
+    (Quillen.parameterizedSimplexBoundaryInclusion P n) (TopCat.isoOfHomeo a) (TopCat.isoOfHomeo b)
+    _ (Quillen.homotopyExtensionProperty_simplexBoundary P n)
   apply ConcreteCategory.hom_ext
   intro x
   apply Prod.ext
   · exact Subsingleton.elim _ _
   · rfl
 
-end Quillen.TheoremA
+end Quillen
 
 namespace Quillen.MappingPath
 variable {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y]
@@ -61,6 +62,6 @@ theorem endpoint_hasLiftingProperty_realization_mono
   intro n
   have : CompactSpace |(Δ[n] : SSet.{u})| := (SimplexCategory.toTopHomeo ⦋n⦌).symm.compactSpace
   exact endpoint_hasLiftingProperty_of_compactHELP f hf _
-    (TheoremA.homotopyExtensionProperty_realizationBoundary n)
+    (Quillen.Realization.homotopyExtensionProperty_realizationBoundary n)
 
 end Quillen.MappingPath

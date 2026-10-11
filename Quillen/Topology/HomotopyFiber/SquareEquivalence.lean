@@ -37,7 +37,7 @@ def comparisonHomotopyEquivOfEquivalences
     (e : ContinuousMap.HomotopyEquiv X Y) (eb : ContinuousMap.HomotopyEquiv A B)
     (sq : eb.toFun.comp p = q.comp e.toFun) :
     ContinuousMap.HomotopyEquiv X (HomotopyPullback q eb.toFun) :=
-  TheoremA.homotopyEquivCancelRight
+  Quillen.homotopyEquivCancelRight
     (a := comparison q eb.toFun p e.toFun sq.symm)
     (sourceProjectionEquivOfParameterEquiv q eb.toFun eb rfl) rfl e rfl
 
@@ -83,7 +83,7 @@ def mapHomotopyEquivOfEquivalences
   let h : (eg.toFun.comp (map e.toFun eb.toFun sq a)).Homotopic ef.toFun :=
     ⟨(HomotopyPullback.comparisonFiberHomotopy p q e.toFun eb.toFun sq.symm a).symm⟩
   let ec := replaceForward ef (eg.toFun.comp (map e.toFun eb.toFun sq a)) h
-  exact TheoremA.homotopyEquivCancelRight eg rfl ec rfl
+  exact Quillen.homotopyEquivCancelRight eg rfl ec rfl
 
 /-- The prescribed original forward map is retained definitionally. -/
 @[simp] theorem mapHomotopyEquivOfEquivalences_toFun

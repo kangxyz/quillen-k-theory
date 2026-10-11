@@ -111,7 +111,10 @@ theorem derivedHom_comp_eq_zero_of_openSquare
     Homotopy.ofEq (by simp [α, β, K])
   let d := desc a b j k h α β (𝟙 _) (𝟙 _) H
   let Y : Bool → Scheme := fun t => if t then U else V
-  let q : ∀ t, Y t ⟶ X := fun t => by cases t; exact k; exact j
+  let q : ∀ t, Y t ⟶ X := fun t => by
+    cases t with
+    | false => exact k
+    | true => exact j
   have : ∀ t, IsOpenImmersion (q t) := by intro t; cases t <;> dsimp [q] <;> infer_instance
   have hd : QuasiIso d := by
     apply quasiIso_of_openImmersionCover d Y q

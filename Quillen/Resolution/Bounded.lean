@@ -67,6 +67,7 @@ theorem adjacentStratum_resolutionLength_one (n : ℕ)
   exact ⟨.step S hS (E.le_resolutionLength P n _ T.middle_mem) (.of_mem T.syzygy_mem),
     Nat.le_refl 1⟩
 
+omit [P.IsClosedUnderFiniteProducts] in
 /-- Every adjacent length-stratum inclusion induces the actual all-degree
 K-isomorphism furnished by the proved length-one resolution theorem. -/
 theorem stratumKMap_bijective (n k : ℕ) :
@@ -86,6 +87,7 @@ def stratumClassifyingHomotopyEquiv (n : ℕ) :
     (E.resolutionLength_mono P (Nat.le_succ n))
     (adjacentStratum_resolutionLength_one E P n)
 
+omit [P.IsClosedUnderFiniteProducts] in
 @[simp] theorem stratumClassifyingHomotopyEquiv_toFun (n : ℕ) :
     (stratumClassifyingHomotopyEquiv E P n).toFun =
       (classifyingSpaceMap (stratumExactInclusion E P n).mapQ).hom :=
@@ -104,6 +106,7 @@ def stratumAddHomotopyEquiv (m : ℕ) : (k : ℕ) →
   | 0 => .refl _
   | k + 1 => (stratumAddHomotopyEquiv m k).trans (stratumClassifyingHomotopyEquiv E P (m + k))
 
+omit [P.IsClosedUnderFiniteProducts] in
 @[simp] theorem stratumAddHomotopyEquiv_toFun (m k : ℕ) :
     (stratumAddHomotopyEquiv E P m k).toFun =
       (classifyingSpaceMap (stratumTransition E P (Nat.le_add_right m k)).mapQ).hom := by
@@ -120,6 +123,7 @@ def stratumAddHomotopyEquiv (m : ℕ) : (k : ℕ) →
       ← classifyingSpaceMap_comp, ← ExactFunctor.mapQ_comp]
     rfl
 
+omit [P.IsClosedUnderFiniteProducts] in
 /-- Existence of an actual equivalence for every ordered transition, proved
 by finite induction on the order proof. -/
 theorem exists_stratumTransitionHomotopyEquiv {m n : ℕ} (h : m ≤ n) :
@@ -148,6 +152,7 @@ def stratumTransitionHomotopyEquiv {m n : ℕ} (h : m ≤ n) :
       (stratumExactStructure E P n).KSpace :=
   Classical.choose (exists_stratumTransitionHomotopyEquiv E P h)
 
+omit [P.IsClosedUnderFiniteProducts] in
 @[simp] theorem stratumTransitionHomotopyEquiv_toFun {m n : ℕ} (h : m ≤ n) :
     (stratumTransitionHomotopyEquiv E P h).toFun =
       (classifyingSpaceMap (stratumTransition E P h).mapQ).hom :=
@@ -178,7 +183,7 @@ bijectivity of the original canonical inclusion K-map in every degree. -/
 theorem inclusionKMap_bijective_of_bounded (N : ℕ)
     (h : ∀ X, E.ResolutionLength P N X) (k : ℕ) :
     Function.Bijective (inclusionKMap E P k) := by
-  letI : Fact (E.ResolutionHypothesis P) :=
+  let : Fact (E.ResolutionHypothesis P) :=
     ⟨fun X => by obtain ⟨R, _⟩ := h X; exact ⟨R⟩⟩
   have h₁ := intoStratumKMap_bijective E P N k
   have h₂ := inclusionKMap_bijective_of_all E (E.ResolutionLength P N) h k

@@ -6,22 +6,17 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.CategoryTheory.TheoremA.RealizationHEP
+public import Quillen.Topology.Realization.Cylinder
+public import Mathlib.Topology.Homotopy.TopCat.Basic
+public import Mathlib.Topology.Homotopy.Equiv
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
 
 /-!
-# Gluing actual strong deformation retractions
+# Cylinder strong deformation retractions
 
-An arbitrary topological pushout of a strong deformation retraction is again
-a strong deformation retraction. The proof explicitly glues the retraction
-and its relative homotopy using preservation of pushouts by the cylinder.
-The resulting homotopy equivalence has the canonical pushout map as its
-forward map.
-
-This is a genuine gluing result, but is weaker than the general gluing theorem
-for a map of two pushout diagrams with three homotopy-equivalence components.
+Explicit deformation retract data and its preservation under topological pushouts.
 -/
 @[expose] public section
-
 
 noncomputable section
 
@@ -30,7 +25,7 @@ open scoped Topology unitInterval
 
 universe u
 
-namespace Quillen.TheoremA
+namespace Quillen
 
 /-- Cylinder coordinates give an ordinary continuous homotopy. -/
 def homotopyOfCylinder {A B : TopCat.{u}} {f g : A ⟶ B}
@@ -48,7 +43,7 @@ structure CylinderStrongDeformationRetract {A B : TopCat.{u}} (i : A ⟶ B) wher
   r : B ⟶ A
   /-- The retraction is exact on the subspace. -/
   retract : i ≫ r = 𝟙 A
-  /-- The deformation from inclusion followed by retraction to the identity. -/
+  /-- The deformation from retraction followed by inclusion to the identity. -/
   H : B ⊗ TopCat.I ⟶ B
   H₀ : TopCat.ι₀ ≫ H = r ≫ i
   H₁ : TopCat.ι₁ ≫ H = 𝟙 B
@@ -121,4 +116,4 @@ theorem pushoutStrongDeformationRetractHomotopyEquiv_toFun {A B C D : TopCat.{u}
     (sq : IsPushout i f g j) (h : CylinderStrongDeformationRetract i) :
     (pushoutStrongDeformationRetractHomotopyEquiv sq h).toFun = j.hom := rfl
 
-end Quillen.TheoremA
+end Quillen

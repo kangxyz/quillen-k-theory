@@ -55,8 +55,9 @@ theorem isClosed_support_of_coherent {X : Scheme.{u}} {M : X.Modules} (hM : affi
   · rintro z ⟨w, hw, rfl⟩
     exact hw
 
-/-- Global coherent sheaf objects have ordinary closed support. -/
-theorem coherent_support_isClosed {X : Scheme.{u}} [IsLocallyNoetherian X] (M : FiniteTypeSheaves X)
+/-- The actual affine-local finite-type sheaf objects have closed support on every scheme;
+no noetherian hypothesis is needed for this support statement. -/
+theorem coherent_support_isClosed {X : Scheme.{u}} (M : FiniteTypeSheaves X)
   :
     IsClosed (SchemeSheaf.support M.obj) := isClosed_support_of_coherent M.property
 

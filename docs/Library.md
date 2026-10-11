@@ -19,6 +19,11 @@ library. The [scope guide](Scope.md) records hypotheses and open boundaries.
 | `Quillen.Resolution` | Admissible finite-resolution comparisons |
 | `Quillen.Localization.Serre.LocalizationTheorem` | Connective Serre localization |
 | `Quillen.GTheory.FiniteModules.LocalizationSequence` | Finite-module G-localization |
+| `Quillen.Topology.DeformationRetract.Basic` | Cylinder deformation retracts and pushout transport |
+| `Quillen.Topology.MappingCylinder.Basic` | Interval maps, cylinder projections, and retracts |
+| `Quillen.Topology.HELP.Basic` | Homotopy extension and continuous cylinder coordinates |
+| `Quillen.Topology.Pushout.HomotopyEquivalence` | Homotopy gluing and specified component maps |
+| `Quillen.Topology.Realization.SubfamilyHEP` | Homotopy extension for realized simplicial subfamilies |
 | `Quillen.AlgebraicGeometry.Scheme` | Selected geometric K/G interfaces |
 | `Quillen.AlgebraicGeometry.PerfectComplexes.GlobalLocalization` | Perfect localization for quasi-compact opens of qcqs schemes |
 | `Quillen.AlgebraicGeometry.PerfectComplexes.MayerVietoris` | Connective two-open sequence and matching K₀-class gluing |
@@ -51,11 +56,21 @@ The generic constructions use these declaration namespaces:
 
 | Construction | Namespace |
 | --- | --- |
+| Cylinder deformation retracts | `Quillen.CylinderStrongDeformationRetract` |
+| Primitive mapping cylinder maps | `Quillen.MappingCylinder` |
+| Homotopy extension and general cancellation | `Quillen` |
+| Pushout homotopies and gluing | `Quillen.Pushout` |
+| Realization coproducts and subfamilies | `Quillen.Realization` |
+| Cylinder boundary data | `Quillen.CylinderBoundary` |
 | Compact mapping-cylinder lifting | `Quillen.MappingCylinder.Compact` |
 | Source and target mapping-cylinder collars | `Quillen.MappingCylinder.SourceCollar`, `Quillen.MappingCylinder.TargetCollar` |
-| Fiberwise bridge charts and collars | `Quillen.FiberwiseBridge.SourceCharts`, `Quillen.FiberwiseBridge.TargetCollar` |
+| Fiberwise bridge projection, charts, and collars | `Quillen.FiberwiseBridge`, `Quillen.FiberwiseBridge.SourceCharts`, `Quillen.FiberwiseBridge.TargetCollar` |
 | Sequential Cartesian realization | `Quillen.CartesianRealization.Sequential` |
 | Skeletal Cartesian realization | `Quillen.CartesianRealization.Skeletal` |
+
+The cylinder, retraction, and homotopy extension owners have a generic topology
+dependency closure. Categorical Theorem A and B modules consume these
+constructions through the canonical public interfaces.
 
 Composition and coercion lemmas follow their canonical simplification direction.
 Equivalence coercions use `_coe`; their underlying monoid homomorphisms can be

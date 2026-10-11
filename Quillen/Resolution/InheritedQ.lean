@@ -85,7 +85,7 @@ instance homSubsingleton (X Y : AdmissibleSubobject E P B) : Subsingleton (X ⟶
   refine ⟨fun f g => ?_⟩
   apply Hom.ext
   apply P.hom_ext
-  letI : Mono Y.hom := E.mono_of_inflation Y.admissible
+  let : Mono Y.hom := E.mono_of_inflation Y.admissible
   exact (cancel_mono Y.hom).1 (f.w.trans g.w.symm)
 
 /-- The zero subobject. -/
@@ -121,7 +121,7 @@ def subobjectsToComma (B : FullQ E P) :
         ((ExactSubcategory.exactStructure E P).qInflation f.hom f.admissible) ≫
           E.qInflation Y.hom Y.admissible = E.qInflation X.hom X.admissible
       rw [ExactFunctor.mapQ_qInflation, E.qInflation_comp]
-      simpa only [ExactSubcategory.exactInclusion, ObjectProperty.ι_map, f.w])
+      simp only [ExactSubcategory.exactInclusion, ObjectProperty.ι_map, f.w])
   map_id X := by
     apply CostructuredArrow.hom_ext
     exact (ExactSubcategory.exactStructure E P).qInflation_id X.obj
@@ -230,7 +230,7 @@ def subobjectUniversalIsInitial (B : FullQ E P) (A : InheritedComma E P B)
     IsInitial (subobjectUniversal E P B A s hs) :=
   IsInitial.ofUniqueHom
     (fun V => Classical.choice (subobjectUniversal_nonempty_hom E P B A s hs V))
-    (fun V f => StructuredArrow.hom_ext _ _ (Subsingleton.elim _ _))
+    (fun _ _ => StructuredArrow.hom_ext _ _ (Subsingleton.elim _ _))
 
 instance subobjectsToComma_hasInitials (B : FullQ E P) (A : InheritedComma E P B) :
     HasInitial (StructuredArrow A (subobjectsToComma E P B)) := by
@@ -245,7 +245,7 @@ def subobjectAdjunction (B : FullQ E P) :
 /-- Its initial zero subobject contracts the inherited-Q comma category. -/
 theorem inheritedComma_contractible (B : FullQ E P) :
     ContractibleSpace (ClassifyingSpace (InheritedComma E P B)) := by
-  letI := classifyingSpace_contractible_of_isInitial
+  let := classifyingSpace_contractible_of_isInitial
     (AdmissibleSubobject.zeroIsInitial (E := E) (P := P) B.obj.obj.of)
   exact (adjunctionClassifyingHomotopyEquiv (subobjectAdjunction E P B)).contractibleSpace
 

@@ -145,7 +145,7 @@ theorem qcqsPerfectSupported_zeroTail :
 /-- Compatibility with the unchanged relative boundary determines this endpoint uniquely. -/
 theorem qcqsPerfectSupportedConnectingHom_unique (n : ℕ)
     (δ : PerfectSupportedK (j ⁻¹ᵁ T).ι (n + 1) →* PerfectSupportedK (T ⊔ j.opensRange).ι n)
-    (hδ : δ.comp (perfectSupportedOpenKRestrict j T (n+1)) = perfectSupportedOpenConnectingHom j T
+    (hδ : δ.comp (perfectSupportedOpenKRestrict j T (n + 1)) = perfectSupportedOpenConnectingHom j T
       n) :
     δ = qcqsPerfectSupportedConnectingHom j T hT n := by
   ext x
@@ -171,7 +171,7 @@ theorem qcqsPerfectSupportedConnectingHom_forget (n : ℕ) :
     (perfectSupportedUnionForgetKMap j T n).comp
         (qcqsPerfectSupportedConnectingHom j T hT n) =
       (qcqsPerfectConnectingHom j n).comp
-        (perfectSupportedKMap (j ⁻¹ᵁ T).ι (n+1)) := by
+        (perfectSupportedKMap (j ⁻¹ᵁ T).ι (n + 1)) := by
   ext x
   obtain ⟨a, rfl⟩ := (qcqs_perfectSupportedOpenKRestrict_succ_bijective j T hT n).surjective x
   have h₁ := DFunLike.congr_fun
@@ -179,25 +179,25 @@ theorem qcqsPerfectSupportedConnectingHom_forget (n : ℕ) :
   have h₂ := DFunLike.congr_fun
     (perfectSupportedOpenConnectingHom_forget j T n) a
   have h₃ := DFunLike.congr_fun
-    (perfectSupportedOpenKForget_comp_restrict j T (n+1)) a
+    (perfectSupportedOpenKForget_comp_restrict j T (n + 1)) a
   have h₄ := DFunLike.congr_fun
-    (qcqsPerfectConnectingHom_comp_relative j n) (perfectSupportedOpenKForget j T (n+1) a)
+    (qcqsPerfectConnectingHom_comp_relative j n) (perfectSupportedOpenKForget j T (n + 1) a)
   simp only [MonoidHom.comp_apply] at h₁ h₂ h₃ h₄ ⊢
   rw [h₁, h₂, ← h₃, h₄]
 
 /-- The positive inverse endpoint also respects the actual support-forgetting map. -/
 theorem qcqsPerfectSupportedOpenKEquiv_symm_forget (n : ℕ)
-    (x : PerfectSupportedK (j ⁻¹ᵁ T).ι (n+1)) :
-    perfectSupportedOpenKForget j T (n+1) ((qcqsPerfectSupportedOpenKEquiv j T hT n).symm x) =
-      (qcqsPerfectOpenKEquiv j n).symm (perfectSupportedKMap (j ⁻¹ᵁ T).ι (n+1) x) := by
+    (x : PerfectSupportedK (j ⁻¹ᵁ T).ι (n + 1)) :
+    perfectSupportedOpenKForget j T (n + 1) ((qcqsPerfectSupportedOpenKEquiv j T hT n).symm x) =
+      (qcqsPerfectOpenKEquiv j n).symm (perfectSupportedKMap (j ⁻¹ᵁ T).ι (n + 1) x) := by
   apply (qcqsPerfectOpenKEquiv j n).injective
-  change perfectOpenKRestrict j (n+1)
-    (perfectSupportedOpenKForget j T (n+1) ((qcqsPerfectSupportedOpenKEquiv j T hT n).symm x)) = _
-  have hs := DFunLike.congr_fun (perfectSupportedOpenKForget_comp_restrict j T (n+1))
+  change perfectOpenKRestrict j (n + 1)
+    (perfectSupportedOpenKForget j T (n + 1) ((qcqsPerfectSupportedOpenKEquiv j T hT n).symm x)) = _
+  have hs := DFunLike.congr_fun (perfectSupportedOpenKForget_comp_restrict j T (n + 1))
     ((qcqsPerfectSupportedOpenKEquiv j T hT n).symm x)
   simp only [MonoidHom.comp_apply] at hs
   rw [hs]
-  change perfectSupportedKMap (j ⁻¹ᵁ T).ι (n+1)
+  change perfectSupportedKMap (j ⁻¹ᵁ T).ι (n + 1)
     (qcqsPerfectSupportedOpenKEquiv j T hT n ((qcqsPerfectSupportedOpenKEquiv j T hT n).symm x)) = _
   rw [MulEquiv.apply_symm_apply, MulEquiv.apply_symm_apply]
 

@@ -35,6 +35,7 @@ def zeroHom (E F : LoopPrespectrum.{u}) : E ⟶ F where
 
 /-- A based continuous homotopy whose every time slice is an original prespectrum map. -/
 @[ext] structure Homotopy {E F : LoopPrespectrum.{u}} (f g : E ⟶ F) where
+  /-- The based continuous homotopy at each prespectrum level. -/
   level (n : ℕ) : C(unitInterval × E.space n, F.space n)
   at_zero (n : ℕ) (x : E.space n) : level n (0,x) = f.map n x
   at_one (n : ℕ) (x : E.space n) : level n (1,x) = g.map n x

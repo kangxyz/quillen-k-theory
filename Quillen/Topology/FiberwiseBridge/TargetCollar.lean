@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.Topology.FiberwiseBridge.Basic
 public import Quillen.Topology.MappingCylinder.TargetCollar
 public import Quillen.Topology.OpenGluing.FibrationSpan.Basic
 
@@ -126,7 +127,7 @@ def target (hcut : cut < 1) : B ⟶ Collar sqM sq cut :=
 
 /-- Genuine SDR of the collar onto the original left target. -/
 def strongDeformationRetract (hcut : cut < 1) :
-    TheoremA.CylinderStrongDeformationRetract (target sqM sq cut hcut) where
+    Quillen.CylinderStrongDeformationRetract (target sqM sq cut hcut) where
   r := (TopCat.isoOfHomeo (collarHomeomorph sqM sq cut)).inv ≫
     (Quillen.MappingCylinder.TargetCollar.strongDeformationRetract sqM cut hcut).r
   retract := by
@@ -175,24 +176,26 @@ variable (sqN : IsPushout (TopCat.ι₁ : A ⟶ A ⊗ TopCat.I) g lN cN)
 /-- The entire original collar deformation remains over the unchanged bridge base. -/
 theorem deformation_over (hcut : cut < 1) :
     (strongDeformationRetract sqM sq cut hcut).H ≫ inclusion sqM sq cut ≫
-        FiberwiseBridge.projection sqM sqN sq b c w =
+        Quillen.FiberwiseBridge.projection sqM sqN sq b c w =
       fst (Collar sqM sq cut) TopCat.I ≫ inclusion sqM sq cut ≫
-        FiberwiseBridge.projection sqM sqN sq b c w := by
+        Quillen.FiberwiseBridge.projection sqM sqN sq b c w := by
   apply ConcreteCategory.hom_ext
   rintro ⟨z,t⟩
   let x := (collarHomeomorph sqM sq cut).symm z
   have hz : m x.val = z.val := congrArg Subtype.val ((collarHomeomorph sqM sq
     cut).apply_symm_apply z)
-  change FiberwiseBridge.projection sqM sqN sq b c w
+  change Quillen.FiberwiseBridge.projection sqM sqN sq b c w
     (m (((Quillen.MappingCylinder.TargetCollar.strongDeformationRetract sqM cut hcut).H
       (x,t)).val)) =
-      FiberwiseBridge.projection sqM sqN sq b c w z.val
+      Quillen.FiberwiseBridge.projection sqM sqN sq b c w z.val
   rw [← hz]
-  exact (ConcreteCategory.congr_hom (FiberwiseBridge.projection_left sqM sqN sq b c w) _).trans
+  exact (ConcreteCategory.congr_hom
+    (Quillen.FiberwiseBridge.projection_left sqM sqN sq b c w) _).trans
     ((ConcreteCategory.congr_hom (Quillen.MappingCylinder.TargetCollar.deformation_over sqM cut
       hcut b)
       (x,t)).trans
-      (ConcreteCategory.congr_hom (FiberwiseBridge.projection_left sqM sqN sq b c w) _).symm)
+      (ConcreteCategory.congr_hom
+        (Quillen.FiberwiseBridge.projection_left sqM sqN sq b c w) _).symm)
 
 end Quillen.FiberwiseBridge.TargetCollar
 
@@ -236,7 +239,7 @@ theorem bridgeTargetCollar_isOpen (cut : I) : IsOpen {z : d.Bridge | cut < d.bri
 /-- The strong deformation retract of the bridge target collar onto the original left overlap
 space `Q0`, for a cut strictly below one. -/
 def bridgeTargetCollarSDR (cut : I) (hcut : cut < 1) :
-    TheoremA.CylinderStrongDeformationRetract (d.bridgeTargetCollarTarget cut hcut) :=
+    Quillen.CylinderStrongDeformationRetract (d.bridgeTargetCollarTarget cut hcut) :=
   Quillen.FiberwiseBridge.TargetCollar.strongDeformationRetract d.cylinder0 d.bridge_isPushout
     cut hcut
 

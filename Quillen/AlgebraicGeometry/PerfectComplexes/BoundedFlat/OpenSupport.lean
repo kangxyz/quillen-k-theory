@@ -162,7 +162,7 @@ theorem boundedFlatPerfectSupportedToAcyclic_exact :
   pushout _ h := h.map (boundedFlatPerfectSupportedToAcyclic j)
 
 /-- The actual supported inclusion is preserved at the functor level. -/
-def boundedFlatPerfectAcyclicToSupported_inclusionIso :
+def boundedFlatPerfectAcyclicToSupportedInclusionIso :
     boundedFlatPerfectAcyclicToSupported j ⋙ ObjectProperty.ιOfLE
       (show boundedFlatPerfectSupported j ≤ boundedFlatPerfect X from fun _ h ↦ h.1) ≅
       acyclicInclusion (boundedFlatPerfectOpenNested j) :=

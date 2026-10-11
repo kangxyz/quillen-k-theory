@@ -180,6 +180,6 @@ theorem boundedFlatPerfectSupportedToPerfectSupported_comp (n : ℕ) :
       (boundedFlatPerfectToPerfectKMap X n).comp (boundedFlatPerfectSupportedKMap j n) := by
   unfold perfectSupportedKMap boundedFlatPerfectSupportedToPerfectSupportedKMap
     boundedFlatPerfectToPerfectKMap boundedFlatPerfectSupportedKMap Waldhausen.subcategoryKMap
-  rw [← Waldhausen.KMap_comp, ← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
 
 end Quillen.PerfectComplexes

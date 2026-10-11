@@ -60,7 +60,8 @@ def qcqsPerfectOpenKEquiv (n : ℕ) : PerfectOpenK j (n+1) ≃* PerfectK U (n+1)
     (qcqs_perfectOpenKRestrict_succ_bijective j n)
 
 @[simp] theorem qcqsPerfectOpenKEquiv_toMonoidHom (n : ℕ) :
-    (qcqsPerfectOpenKEquiv j n).toMonoidHom = perfectOpenKRestrict j (n+1) := rfl
+    (qcqsPerfectOpenKEquiv j n : PerfectOpenK j (n+1) →* PerfectK U (n+1)) =
+      perfectOpenKRestrict j (n+1) := rfl
 
 /-- The honest original K-zero endpoint is injective. -/
 theorem qcqs_perfectOpenKRestrict_zero_injective :

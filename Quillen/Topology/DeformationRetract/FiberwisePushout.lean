@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.CategoryTheory.TheoremA.RealizationGluing
+public import Quillen.Topology.DeformationRetract.Basic
 public import Quillen.Topology.HomotopyPullback.WeakLiftingComparison
 
 /-!
@@ -27,10 +27,10 @@ universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.TheoremA.CylinderStrongDeformationRetract
+namespace Quillen.CylinderStrongDeformationRetract
 variable {A B C D T : TopCat.{u}} {i : A ⟶ B} {f : A ⟶ C}
   {g : B ⟶ D} {j : C ⟶ D}
-  (h : CylinderStrongDeformationRetract i) (sq : IsPushout i f g j)
+  (h : Quillen.CylinderStrongDeformationRetract i) (sq : IsPushout i f g j)
 
 @[reassoc (attr := simp)] theorem pushout_inl_retraction :
     g ≫ (h.pushout sq).r = h.r ≫ f := by
@@ -72,7 +72,7 @@ theorem pushout_weakLifting (hp : WeakHomotopyLiftingProperty (j ≫ p).hom) :
     WeakHomotopyLiftingProperty p.hom := by
   let R := h.pushout sq
   refine weakLifting_of_fiberwise_deformation p.hom (j ≫ p).hom hp
-    j.hom R.r.hom rfl ?_ (homotopyOfCylinder R.H R.H₀ R.H₁).symm ?_
+    j.hom R.r.hom rfl ?_ (Quillen.homotopyOfCylinder R.H R.H₀ R.H₁).symm ?_
   · exact congrArg TopCat.Hom.hom (h.pushout_retraction_over sq p hH)
   · intro t d
     exact ConcreteCategory.congr_hom (h.pushout_homotopy_over sq p hH)
@@ -96,4 +96,4 @@ def pushoutStrictPullbackHomotopyEquiv
     (h.pushoutStrictPullbackHomotopyEquiv sq p hH hp a).toFun =
       HomotopyPullback.strictPullbackInclusion p.hom a := rfl
 
-end Quillen.TheoremA.CylinderStrongDeformationRetract
+end Quillen.CylinderStrongDeformationRetract

@@ -79,19 +79,19 @@ theorem realizedBisimplicialSigmaIso_naturality
 /-- HEP is invariant under actual isomorphisms of the source and target. -/
 theorem homotopyExtensionProperty_via_iso_square {A B A' B' : TopCat.{u}}
     {i : A ⟶ B} {j : A' ⟶ B'} (eA : A ≅ A') (eB : B ≅ B')
-    (w : i ≫ eB.hom = eA.hom ≫ j) (hj : homotopyExtensionProperty j) :
-    homotopyExtensionProperty i := by
+    (w : i ≫ eB.hom = eA.hom ≫ j) (hj : Quillen.homotopyExtensionProperty j) :
+    Quillen.homotopyExtensionProperty i := by
   have hi : i = eA.hom ≫ j ≫ eB.inv := by rw [← Category.assoc, ← w, Category.assoc]; simp
   rw [hi]
-  exact homotopyExtensionProperty_comp (homotopyExtensionProperty_of_isIso eA.hom)
-    (homotopyExtensionProperty_comp hj (homotopyExtensionProperty_of_isIso eB.inv))
+  exact Quillen.homotopyExtensionProperty_comp (Quillen.homotopyExtensionProperty_of_isIso eA.hom)
+    (Quillen.homotopyExtensionProperty_comp hj (Quillen.homotopyExtensionProperty_of_isIso eB.inv))
 
 /-- A family of genuinely realized bisimplicial HEP maps remains HEP after
 forming the actual coproduct and realizing. -/
 theorem homotopyExtensionProperty_realizedBisimplicialSigma
     {X Y : ι → SimplexCategoryᵒᵖ ⥤ SSet.{u}} (f : ∀ i, X i ⟶ Y i)
-    (hf : ∀ i, homotopyExtensionProperty (SSet.toTop.map (diagonalMap (f i)))) :
-    homotopyExtensionProperty (SSet.toTop.map (diagonalMap (bisimplicialSigmaMap f))) :=
+    (hf : ∀ i, Quillen.homotopyExtensionProperty (SSet.toTop.map (diagonalMap (f i)))) :
+    Quillen.homotopyExtensionProperty (SSet.toTop.map (diagonalMap (bisimplicialSigmaMap f))) :=
   homotopyExtensionProperty_via_iso_square
     (realizedBisimplicialSigmaIso X) (realizedBisimplicialSigmaIso Y)
     (realizedBisimplicialSigmaIso_naturality f)

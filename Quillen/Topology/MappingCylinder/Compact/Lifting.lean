@@ -100,11 +100,12 @@ abbrev StartPieces := (SourceStart (f := f) base b × TopCat.I) ⊕ TargetStart 
 def parameterQuotient : C(StartPieces (f := f) base b,CylinderStart sq base b) where
   toFun := Sum.elim
     (fun z ↦ ⟨(l (z.1.1.1,z.2),z.1.1.2),
-      (ConcreteCategory.congr_hom (TheoremA.mappingCylinderProjection_cylinder_assoc sq base)
+      (ConcreteCategory.congr_hom
+        (Quillen.MappingCylinder.mappingCylinderProjection_cylinder_assoc sq base)
         (z.1.1.1,z.2)).trans z.1.2⟩)
     (fun z ↦ ⟨(c z.1.1,z.1.2),
-      (ConcreteCategory.congr_hom (TheoremA.mappingCylinderProjection_target_assoc sq base)
-        z.1.1).trans z.2⟩)
+      (ConcreteCategory.congr_hom
+        (Quillen.MappingCylinder.mappingCylinderProjection_target_assoc sq base) z.1.1).trans z.2⟩)
   continuous_toFun := by
     apply Continuous.sumElim <;> fun_prop
 
@@ -121,9 +122,9 @@ theorem parameterQuotient_isQuotientMap [LocallyCompactSpace D]
     toFun z := ⟨Homeomorph.sumProdDistrib z.1,by
       rcases z with ⟨⟨z | z,d⟩,h⟩
       · exact (ConcreteCategory.congr_hom
-          (TheoremA.mappingCylinderProjection_cylinder_assoc sq base) z).symm.trans h
+          (Quillen.MappingCylinder.mappingCylinderProjection_cylinder_assoc sq base) z).symm.trans h
       · exact (ConcreteCategory.congr_hom
-          (TheoremA.mappingCylinderProjection_target_assoc sq base) z).symm.trans h⟩
+          (Quillen.MappingCylinder.mappingCylinderProjection_target_assoc sq base) z).symm.trans h⟩
     continuous_toFun := by dsimp only [P]; fun_prop }
   let e' : C(P,({z : (A × TopCat.I) × D // (f ≫ base) z.1.1 = b z.2}) ⊕ TargetStart base b) :=
     ⟨fun z ↦ sumSubtypeHomeomorph pred (e z),
@@ -172,7 +173,8 @@ theorem exists_piece_lift
           L (.inr (⟨(f a.1.1,a.1.2),a.2⟩ : TargetStart base b),t) := by
   classical
   have htarget (x : C) : projection sq base (c x) = base x :=
-    ConcreteCategory.congr_hom (TheoremA.mappingCylinderProjection_target_assoc sq base) x
+    ConcreteCategory.congr_hom
+      (Quillen.MappingCylinder.mappingCylinderProjection_target_assoc sq base) x
   let a₀ : C(SourceStart (f := f) base b,A) := ⟨fun z ↦ z.1.1,by fun_prop⟩
   let AH : C(unitInterval × SourceStart (f := f) base b,T) :=
     ⟨fun z ↦ H (z.1,z.2.1.2),by fun_prop⟩
@@ -226,8 +228,8 @@ theorem exists_piece_lift
     rcases z with ⟨a,s⟩ | a
     · change projection sq base (if t ≤ σ s.down then G₁ ((a,s),t) else G₂ ((a,s),t)) = H (t,a.1.2)
       split_ifs with ht
-      · exact (ConcreteCategory.congr_hom (TheoremA.mappingCylinderProjection_cylinder_assoc sq
-        base)
+      · exact (ConcreteCategory.congr_hom
+          (Quillen.MappingCylinder.mappingCylinderProjection_cylinder_assoc sq base)
           (LA (t,a),ULift.up (addTime s.down t))).trans (hLA t a)
       · change projection sq base (c (LQ (remainingTime t (σ s.down),qstart (a,s)))) = _
         rw [htarget]

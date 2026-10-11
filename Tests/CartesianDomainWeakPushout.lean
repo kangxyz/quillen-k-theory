@@ -31,8 +31,8 @@ variable {A B C P A' B' C' P' E T : TopCat.{u}}
   (wi : i ≫ p = b ≫ i') (wj : j ≫ p = c ≫ j')
   (q : E ⟶ T) (s : P' ⟶ T) (t : P ⟶ E) (w : t ≫ q = p ≫ s)
 
-example (hf : TheoremA.homotopyExtensionProperty f)
-    (hf' : TheoremA.homotopyExtensionProperty f')
+example (hf : Quillen.homotopyExtensionProperty f)
+    (hf' : Quillen.homotopyExtensionProperty f')
     (hA : IsWeakHomotopyEquivalence (comparisonA a b p wf wi q s t w).hom)
     (hB : IsWeakHomotopyEquivalence (comparisonB b p wi q s t w).hom)
     (hC : IsWeakHomotopyEquivalence (comparisonC c p wj q s t w).hom) :

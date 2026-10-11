@@ -51,7 +51,7 @@ def classifyingHomotopyEquiv (h : E.ResolutionHypothesis P) :
 @[simp] theorem classifyingHomotopyEquiv_toFun (h : E.ResolutionHypothesis P) :
     (classifyingHomotopyEquiv E P h).toFun =
       (classifyingSpaceMap (exactInclusion E P).mapQ).hom := by
-  letI : Fact (E.ResolutionHypothesis P) := ⟨h⟩
+  let : Fact (E.ResolutionHypothesis P) := ⟨h⟩
   change (stratumToAmbientHomotopyEquiv E P 0).toFun.comp
     (classifyingSpaceMap (intoStratumExact E P 0).mapQ).hom = _
   rw [stratumToAmbientHomotopyEquiv_toFun, ← TopCat.hom_comp,

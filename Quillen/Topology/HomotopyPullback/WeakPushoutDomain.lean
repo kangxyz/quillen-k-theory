@@ -55,8 +55,8 @@ include sq sq' wf wg wi wj in
 assemble across the displayed actual source and base pushouts. The result
 is the complete weak property of the unchanged constant-path comparison. -/
 theorem comparison_isWeakHomotopyEquivalence
-    (hf : TheoremA.homotopyExtensionProperty f)
-    (hf' : TheoremA.homotopyExtensionProperty f')
+    (hf : Quillen.homotopyExtensionProperty f)
+    (hf' : Quillen.homotopyExtensionProperty f')
     (hA : IsWeakHomotopyEquivalence (comparisonA a b p wf wi q s t w).hom)
     (hB : IsWeakHomotopyEquivalence (comparisonB b p wi q s t w).hom)
     (hC : IsWeakHomotopyEquivalence (comparisonC c p wj q s t w).hom) :

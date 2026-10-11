@@ -40,6 +40,7 @@ lemma map_acyclic {X : C} (hX : Acyclic N.coarse X) : Acyclic M.coarse (F.obj X)
     (M.coarse.isZero.to_ (F.obj X))]
   exact h
 
+/-- Restrict the original exact functor to the acyclic-object subcategories. -/
 def acyclicFunctor : AcyclicCategory N ⥤ AcyclicCategory M :=
   (acyclicObjects M).lift (acyclicInclusion N ⋙ F) (fun X => map_acyclic N M hFc X.property)
 
@@ -98,6 +99,7 @@ lemma acyclicFunctor_zero (h0 : F.obj V.zero = W.zero) :
 lemma coarse_zero_eq (h0 : F.obj V.zero = W.zero) : F.obj N.coarse.zero = M.coarse.zero := by
   rw [N.zero_eq, M.zero_eq, h0]
 
+/-- Lift an isomorphism of the original functors to their acyclic restrictions. -/
 def acyclicFunctorIso {G : C ⥤ D}
     (hGc : IsExact N.coarse.cof N.coarse.weq M.coarse.cof M.coarse.weq G) (e : F ≅ G) :
     acyclicFunctor N M hFc ≅ acyclicFunctor N M hGc :=

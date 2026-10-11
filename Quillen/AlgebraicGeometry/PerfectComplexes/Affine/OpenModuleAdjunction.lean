@@ -129,7 +129,7 @@ lemma openModuleChainAdjoint_precomp {P B : ModuleComplex R} {I : Complex U}
 
 /-- An original open derived equality becomes an actual module homotopy after
 the same genuine transpose of the target's injective-resolution arrow. -/
-def homotopy_comp_openModuleChainAdjoint_of_derived_eq
+def openModuleChainAdjointCompHomotopyOfDerivedEq
     {P B : ModuleComplex R} (I : Complex U) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (q : (restrict j).obj ((associatedComplex R).obj B) ⟶ I) (f g : P ⟶ B)
@@ -137,7 +137,7 @@ def homotopy_comp_openModuleChainAdjoint_of_derived_eq
       (toDerived U).map ((restrict j).map ((associatedComplex R).map g))) :
     Homotopy (f ≫ openModuleChainAdjoint R j q) (g ≫ openModuleChainAdjoint R j q) := by
   have := isKInjective_of_lowerBounded_injective I a hbound hinj
-  let H := Quillen.CochainComplex.homotopyOfDerivedEq_of_isKInjective
+  let H := Quillen.CochainComplex.homotopyOfDerivedEqOfIsKInjective
     ((restrict j).map ((associatedComplex R).map f) ≫ q)
     ((restrict j).map ((associatedComplex R).map g) ≫ q) (by
       change (toDerived U).map _ = (toDerived U).map _

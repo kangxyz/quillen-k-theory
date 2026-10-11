@@ -165,7 +165,7 @@ def bridgeChart (hV : IsOpen V) : d.M ≃ₜ {e : d.First // d.firstBase e ∈ V
 
 /-- The projection of the left chart inherits weak lifting from its genuine
 fibration by pushing out the given fiberwise deformation. -/
-theorem first_weakLifting (s0 : TheoremA.CylinderStrongDeformationRetract d.i0)
+theorem first_weakLifting (s0 : Quillen.CylinderStrongDeformationRetract d.i0)
     (h0 : s0.H ≫ d.bridgeBase = fst d.M TopCat.I ≫ d.bridgeBase)
     (hp0 : HomotopyLiftingProperty d.p0.hom) :
     WeakHomotopyLiftingProperty d.firstProjection.hom := by
@@ -179,7 +179,7 @@ theorem first_weakLifting (s0 : TheoremA.CylinderStrongDeformationRetract d.i0)
 /-- The actual restriction of the total projection over the left open set
 has weak lifting. -/
 theorem left_weakLifting (hU : IsOpen U)
-    (s0 : TheoremA.CylinderStrongDeformationRetract d.i0)
+    (s0 : Quillen.CylinderStrongDeformationRetract d.i0)
     (h0 : s0.H ≫ d.bridgeBase = fst d.M TopCat.I ≫ d.bridgeBase)
     (hp0 : HomotopyLiftingProperty d.p0.hom) :
     WeakHomotopyLiftingProperty (baseRestrictionMap d.projection.hom U) := by
@@ -268,7 +268,7 @@ def rightProjection : d.RightChart ⟶ TopCat.of V :=
 /-- The actual restriction of the total projection over the right open set
 has weak lifting, from the second primitive fiberwise deformation. -/
 theorem right_weakLifting (hV : IsOpen V)
-    (s1 : TheoremA.CylinderStrongDeformationRetract d.i1)
+    (s1 : Quillen.CylinderStrongDeformationRetract d.i1)
     (h1 : s1.H ≫ d.bridgeBase = fst d.M TopCat.I ≫ d.bridgeBase)
     (hp1 : HomotopyLiftingProperty d.p1.hom) :
     WeakHomotopyLiftingProperty (baseRestrictionMap d.projection.hom V) := by
@@ -286,8 +286,8 @@ the two open sets with its standard overlapping collars. -/
 theorem weakLifting (height : C(T, I))
     (hU : U = upperBaseCollar height)
     (hV : V = upperBaseCollar (reflectedHeight height))
-    (s0 : TheoremA.CylinderStrongDeformationRetract d.i0)
-    (s1 : TheoremA.CylinderStrongDeformationRetract d.i1)
+    (s0 : Quillen.CylinderStrongDeformationRetract d.i0)
+    (s1 : Quillen.CylinderStrongDeformationRetract d.i1)
     (h0 : s0.H ≫ d.bridgeBase = fst d.M TopCat.I ≫ d.bridgeBase)
     (h1 : s1.H ≫ d.bridgeBase = fst d.M TopCat.I ≫ d.bridgeBase)
     (hp0 : HomotopyLiftingProperty d.p0.hom)
@@ -311,8 +311,8 @@ canonical comparison homotopy equivalence to the homotopy pullback. -/
 def strictPullbackHomotopyEquiv (height : C(T, I))
     (hU : U = upperBaseCollar height)
     (hV : V = upperBaseCollar (reflectedHeight height))
-    (s0 : TheoremA.CylinderStrongDeformationRetract d.i0)
-    (s1 : TheoremA.CylinderStrongDeformationRetract d.i1)
+    (s0 : Quillen.CylinderStrongDeformationRetract d.i0)
+    (s1 : Quillen.CylinderStrongDeformationRetract d.i1)
     (h0 : s0.H ≫ d.bridgeBase = fst d.M TopCat.I ≫ d.bridgeBase)
     (h1 : s1.H ≫ d.bridgeBase = fst d.M TopCat.I ≫ d.bridgeBase)
     (hp0 : HomotopyLiftingProperty d.p0.hom)
@@ -326,8 +326,8 @@ def strictPullbackHomotopyEquiv (height : C(T, I))
 @[simp] theorem strictPullbackHomotopyEquiv_toFun (height : C(T, I))
     (hU : U = upperBaseCollar height)
     (hV : V = upperBaseCollar (reflectedHeight height))
-    (s0 : TheoremA.CylinderStrongDeformationRetract d.i0)
-    (s1 : TheoremA.CylinderStrongDeformationRetract d.i1)
+    (s0 : Quillen.CylinderStrongDeformationRetract d.i0)
+    (s1 : Quillen.CylinderStrongDeformationRetract d.i1)
     (h0 : s0.H ≫ d.bridgeBase = fst d.M TopCat.I ≫ d.bridgeBase)
     (h1 : s1.H ≫ d.bridgeBase = fst d.M TopCat.I ≫ d.bridgeBase)
     (hp0 : HomotopyLiftingProperty d.p0.hom)

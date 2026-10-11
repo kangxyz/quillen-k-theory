@@ -186,7 +186,8 @@ def boundedFlatPerfectSupportedPullbackCompIso (f : A ⟶ B) (g : B ⟶ C) :
   (Waldhausen.KMap_eq_of_iso (boundedFlatPerfectSupportedPullback_exact (f ≫ g))
     ((boundedFlatPerfectSupportedPullback_exact g).comp (boundedFlatPerfectSupportedPullback_exact
       f))
-    (boundedFlatPerfectSupportedPullbackCompIso f g) n).trans (Waldhausen.KMap_comp _ _ n)
+    (boundedFlatPerfectSupportedPullbackCompIso f g) n).trans
+      ((Waldhausen.KMap_comp_KMap _ _ n).symm)
 
 @[simp] theorem boundedFlatPerfectOpenKPullback_id (A : Quillen.Scheme.OpenPairs.{u}) (n : ℕ) :
     boundedFlatPerfectOpenKPullback (𝟙 A) n = MonoidHom.id _ :=
@@ -200,8 +201,8 @@ def boundedFlatPerfectSupportedPullbackCompIso (f : A ⟶ B) (g : B ⟶ C) :
       (boundedFlatPerfectOpenKPullback f n).comp (boundedFlatPerfectOpenKPullback g n) :=
   (Waldhausen.KMap_eq_of_iso (boundedFlatPerfectOpenPullback_exact (f ≫ g))
     ((boundedFlatPerfectOpenPullback_exact g).comp (boundedFlatPerfectOpenPullback_exact f))
-    (boundedFlatPerfectPullbackCompIso f.hom.right g.hom.right) n).trans (Waldhausen.KMap_comp _ _
-      n)
+    (boundedFlatPerfectPullbackCompIso f.hom.right g.hom.right) n).trans
+      ((Waldhausen.KMap_comp_KMap _ _ n).symm)
 
 theorem boundedFlatPerfectSupportedKMap_pullback (f : A ⟶ B) (n : ℕ) :
     (boundedFlatPerfectKPullback f.hom.right n).comp (boundedFlatPerfectSupportedKMap B.obj.hom n) =
@@ -209,14 +210,14 @@ theorem boundedFlatPerfectSupportedKMap_pullback (f : A ⟶ B) (n : ℕ) :
         := by
   unfold boundedFlatPerfectKPullback boundedFlatPerfectSupportedKMap
     boundedFlatPerfectSupportedKPullback Waldhausen.subcategoryKMap
-  rw [← Waldhausen.KMap_comp, ← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
 
 theorem boundedFlatPerfectOpenKMap_pullback (f : A ⟶ B) (n : ℕ) :
     (boundedFlatPerfectOpenKPullback f n).comp (boundedFlatPerfectOpenKMap B.obj.hom n) =
       (boundedFlatPerfectOpenKMap A.obj.hom n).comp (boundedFlatPerfectKPullback f.hom.right n) :=
         by
   unfold boundedFlatPerfectOpenKPullback boundedFlatPerfectOpenKMap boundedFlatPerfectKPullback
-  rw [← Waldhausen.KMap_comp, ← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
 
 /-- The contravariant degree-`n` K-functor on open pairs, using bounded-flat complexes acyclic on
 the specified open and geometric pair pullback. -/
@@ -225,8 +226,9 @@ def BoundedFlatPerfectSupportedKFunctor (n : ℕ) : Quillen.Scheme.OpenPairs.{u}
   obj X := GrpCat.of (BoundedFlatPerfectSupportedK X.unop.obj.hom n)
   map f := GrpCat.ofHom (boundedFlatPerfectSupportedKPullback f.unop n)
   map_id X := by apply GrpCat.hom_ext; exact boundedFlatPerfectSupportedKPullback_id X.unop n
-  map_comp f g := by apply GrpCat.hom_ext; exact boundedFlatPerfectSupportedKPullback_comp g.unop
-    f.unop n
+  map_comp f g := by
+    apply GrpCat.hom_ext
+    exact boundedFlatPerfectSupportedKPullback_comp g.unop f.unop n
 
 /-- The contravariant degree-`n` K-functor on open pairs for the bounded-flat model whose weak
 equivalences are detected on the specified open. -/
@@ -234,7 +236,8 @@ def BoundedFlatPerfectOpenKFunctor (n : ℕ) : Quillen.Scheme.OpenPairs.{u}ᵒ�
   obj X := GrpCat.of (BoundedFlatPerfectOpenK X.unop.obj.hom n)
   map f := GrpCat.ofHom (boundedFlatPerfectOpenKPullback f.unop n)
   map_id X := by apply GrpCat.hom_ext; exact boundedFlatPerfectOpenKPullback_id X.unop n
-  map_comp f g := by apply GrpCat.hom_ext; exact boundedFlatPerfectOpenKPullback_comp g.unop f.unop
-    n
+  map_comp f g := by
+    apply GrpCat.hom_ext
+    exact boundedFlatPerfectOpenKPullback_comp g.unop f.unop n
 
 end Quillen.PerfectComplexes

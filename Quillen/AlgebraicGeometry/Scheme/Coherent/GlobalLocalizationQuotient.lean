@@ -49,7 +49,8 @@ theorem quotientCoherentRestriction_isEquivalence_of_essSurj :
 /-- The original geometric restriction is localization by actual coherent
 support, using the equivalence of its constructed quotient. -/
 theorem finiteTypeSheavesRestriction_isLocalization_of_essSurj :
-    (finiteTypeSheavesRestriction j).IsLocalization (finiteTypeSheavesSupportedAway j).isoModSerre := by
+    (finiteTypeSheavesRestriction j).IsLocalization
+      (finiteTypeSheavesSupportedAway j).isoModSerre := by
   let := quotientCoherentRestriction_isEquivalence_of_essSurj j
   exact Functor.IsLocalization.of_equivalence_target
     (finiteTypeSheavesSupportedAway j).isoModSerre.Q (finiteTypeSheavesSupportedAway j).isoModSerre
@@ -58,7 +59,8 @@ theorem finiteTypeSheavesRestriction_isLocalization_of_essSurj :
 
 /-- Equivalently, actual open restriction is localization by its kernel. -/
 theorem finiteTypeSheavesRestriction_isLocalization_kernel_of_essSurj :
-    (finiteTypeSheavesRestriction j).IsLocalization (finiteTypeSheavesRestriction j).kernel.isoModSerre := by
+    (finiteTypeSheavesRestriction j).IsLocalization
+      (finiteTypeSheavesRestriction j).kernel.isoModSerre := by
   have h : (finiteTypeSheavesRestriction j).kernel.isoModSerre =
       (finiteTypeSheavesSupportedAway j).isoModSerre := by
     funext M N f

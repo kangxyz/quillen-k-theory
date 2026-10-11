@@ -7,7 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.CategoryTheory.TheoremA.RealizationSequential
-public import Quillen.CategoryTheory.TheoremA.RealizationCofibrationEquiv
+public import Quillen.Topology.DeformationRetract.Cofibration
 public import Quillen.CategoryTheory.TheoremA.RealizationColimitHomotopy
 
 /-!
@@ -72,10 +72,10 @@ theorem homotopy_extend_fixed {A B Z : TopCat.{u}} {i : A ⟶ B}
 stationary interval, without changing the preceding homotopy at all. -/
 def TimedDeformationRetract.comp {A B C : TopCat.{u}} {i : A ⟶ B} {j : B ⟶ C}
     {δ : ℝ} (hδ : 0 < δ) (hδ₁ : δ ≤ 1)
-    (h : TimedDeformationRetract i δ) (k : CylinderStrongDeformationRetract j) :
+    (h : TimedDeformationRetract i δ) (k : Quillen.CylinderStrongDeformationRetract j) :
     TimedDeformationRetract (i ≫ j) (δ / 2) := by
   let K : TopCat.Homotopy (𝟙 C) (k.r ≫ j) :=
-    (homotopyOfCylinder k.H k.H₀ k.H₁).symm
+    (Quillen.homotopyOfCylinder k.H k.H₀ k.H₁).symm
   have hK : ∀ t b, K (t, j b) = j b := by
     intro t b
     exact ConcreteCategory.congr_hom k.fixed (b, ULift.up (unitInterval.symm t))
@@ -131,11 +131,11 @@ def TimedDeformationRetract.comp {A B C : TopCat.{u}} {i : A ⟶ B} {j : B ⟶ C
 theorem TimedDeformationRetract.comp_restrict
     {A B C : TopCat.{u}} {i : A ⟶ B} {j : B ⟶ C}
     {δ : ℝ} (hδ : 0 < δ) (hδ₁ : δ ≤ 1)
-    (h : TimedDeformationRetract i δ) (k : CylinderStrongDeformationRetract j)
+    (h : TimedDeformationRetract i δ) (k : Quillen.CylinderStrongDeformationRetract j)
     (t : unitInterval) (b : B) :
     (h.comp hδ hδ₁ k).H (t, j b) = j (h.H (t, b)) := by
   let K : TopCat.Homotopy (𝟙 C) (k.r ≫ j) :=
-    (homotopyOfCylinder k.H k.H₀ k.H₁).symm
+    (Quillen.homotopyOfCylinder k.H k.H₀ k.H₁).symm
   have hK : ∀ s a, K (s, j a) = j a := by
     intro s a
     exact ConcreteCategory.congr_hom k.fixed (a, ULift.up (unitInterval.symm s))
@@ -178,7 +178,7 @@ theorem sequentialStationaryTime_le_one (n : ℕ) : sequentialStationaryTime n �
 /-- Recursively choose compatible timed deformations of all finite stages. -/
 def sequentialTimedDeformation
     (F : ℕ ⥤ TopCat.{u})
-    (h : ∀ n, CylinderStrongDeformationRetract (F.map (homOfLE (Nat.le_succ n)))) :
+    (h : ∀ n, Quillen.CylinderStrongDeformationRetract (F.map (homOfLE (Nat.le_succ n)))) :
     ∀ n, TimedDeformationRetract (sequentialInitialMap F n) (sequentialStationaryTime n)
   | 0 => TimedDeformationRetract.id (F.obj 0) 1
   | n + 1 => (sequentialTimedDeformation F h n).comp
@@ -187,7 +187,7 @@ def sequentialTimedDeformation
 @[reassoc]
 theorem sequentialTimedDeformation_retract_step
     (F : ℕ ⥤ TopCat.{u})
-    (h : ∀ n, CylinderStrongDeformationRetract (F.map (homOfLE (Nat.le_succ n))))
+    (h : ∀ n, Quillen.CylinderStrongDeformationRetract (F.map (homOfLE (Nat.le_succ n))))
     (n : ℕ) : F.map (homOfLE (Nat.le_succ n)) ≫ (sequentialTimedDeformation F h (n + 1)).r =
       (sequentialTimedDeformation F h n).r := by
   change F.map (homOfLE (Nat.le_succ n)) ≫ (h n).r ≫ _ = _
@@ -195,7 +195,7 @@ theorem sequentialTimedDeformation_retract_step
 
 theorem sequentialTimedDeformation_homotopy_step
     (F : ℕ ⥤ TopCat.{u})
-    (h : ∀ n, CylinderStrongDeformationRetract (F.map (homOfLE (Nat.le_succ n))))
+    (h : ∀ n, Quillen.CylinderStrongDeformationRetract (F.map (homOfLE (Nat.le_succ n))))
     (n : ℕ) (t : unitInterval) (x : F.obj n) :
     (sequentialTimedDeformation F h (n + 1)).H
       (t, F.map (homOfLE (Nat.le_succ n)) x) =
@@ -227,8 +227,8 @@ actual strong deformation retractions. No coherence of the given
 stagewise deformations is assumed. -/
 def sequentialStrongDeformationRetract
     (F : ℕ ⥤ TopCat.{u}) (c : Cocone F) (hc : IsColimit c)
-    (h : ∀ n, CylinderStrongDeformationRetract (F.map (homOfLE (Nat.le_succ n)))) :
-    CylinderStrongDeformationRetract (c.ι.app 0) := by
+    (h : ∀ n, Quillen.CylinderStrongDeformationRetract (F.map (homOfLE (Nat.le_succ n)))) :
+    Quillen.CylinderStrongDeformationRetract (c.ι.app 0) := by
   let T := sequentialTimedDeformation F h
   let d := sequentialCocone (fun n ↦ (T n).r)
     (sequentialTimedDeformation_retract_step F h)
@@ -265,7 +265,7 @@ def sequentialStrongDeformationRetract
     rw [← Category.assoc, (T n).H.ι₁_h, Category.assoc, hinit,
       ← Category.assoc, hr]
   let K : TopCat.Homotopy (r ≫ c.ι.app 0) (𝟙 c.pt) :=
-    (homotopyOfCylinder H hH₀ hH₁).symm
+    (Quillen.homotopyOfCylinder H hH₀ hH₁).symm
   refine ⟨r, hr 0, K.h, K.ι₀_h, K.ι₁_h, ?_⟩
   ext ⟨x, t⟩
   change H (c.ι.app 0 x, ULift.up (unitInterval.symm t.down)) = c.ι.app 0 x
@@ -277,17 +277,18 @@ def sequentialStrongDeformationRetract
 homotopy equivalence, with the actual initial colimit map as forward map. -/
 def sequentialHomotopyEquivOfCofibrations
     (F : ℕ ⥤ TopCat.{u}) (c : Cocone F) (hc : IsColimit c)
-    (hF : ∀ n, homotopyExtensionProperty (F.map (homOfLE (Nat.le_succ n))))
+    (hF : ∀ n, Quillen.homotopyExtensionProperty (F.map (homOfLE (Nat.le_succ n))))
     (eF : ∀ n, ContinuousMap.HomotopyEquiv (F.obj n) (F.obj (n + 1)))
     (heF : ∀ n, (eF n).toFun = (F.map (homOfLE (Nat.le_succ n))).hom) :
     ContinuousMap.HomotopyEquiv (F.obj 0) c.pt :=
   (sequentialStrongDeformationRetract F c hc fun n ↦
-    (homotopyExtensionProperty_strongDeformationRetract (hF n) (eF n) (heF n)).some).toHomotopyEquiv
+    (Quillen.homotopyExtensionProperty_strongDeformationRetract (hF n) (eF n) (heF
+      n)).some).toHomotopyEquiv
 
 @[simp]
 theorem sequentialHomotopyEquivOfCofibrations_toFun
     (F : ℕ ⥤ TopCat.{u}) (c : Cocone F) (hc : IsColimit c)
-    (hF : ∀ n, homotopyExtensionProperty (F.map (homOfLE (Nat.le_succ n))))
+    (hF : ∀ n, Quillen.homotopyExtensionProperty (F.map (homOfLE (Nat.le_succ n))))
     (eF : ∀ n, ContinuousMap.HomotopyEquiv (F.obj n) (F.obj (n + 1)))
     (heF : ∀ n, (eF n).toFun = (F.map (homOfLE (Nat.le_succ n))).hom) :
     (sequentialHomotopyEquivOfCofibrations F c hc hF eF heF).toFun =

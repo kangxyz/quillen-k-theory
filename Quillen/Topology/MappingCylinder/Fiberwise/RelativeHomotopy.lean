@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.Topology.DeformationRetract.Cofibration
 public import Quillen.Topology.MappingCylinder.Fiberwise.Retraction
 
 /-!
@@ -40,37 +41,38 @@ theorem mappingCylinder_relative_retraction_over
     (sq : IsPushout (TopCat.ι₁ : A ⟶ A ⊗ TopCat.I) f l c)
     (base : C ⟶ T) (r : M ⟶ A)
     (hir : (TopCat.ι₀ ≫ l) ≫ r = 𝟙 A)
-    (hr : r ≫ f ≫ base = TheoremA.mappingCylinderProjection sq ≫ base)
+    (hr : r ≫ f ≫ base = Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base)
     (F : TopCat.Homotopy (r ≫ (TopCat.ι₀ ≫ l)) (𝟙 M))
-    (hF : ∀ t m, (TheoremA.mappingCylinderProjection sq ≫ base) (F (t, m)) =
-      (TheoremA.mappingCylinderProjection sq ≫ base) m) :
+    (hF : ∀ t m, (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) (F (t, m)) =
+      (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) m) :
     ∃ K : TopCat.Homotopy (r ≫ (TopCat.ι₀ ≫ l)) (𝟙 M),
       (∀ t a, K (t, (TopCat.ι₀ ≫ l) a) = (TopCat.ι₀ ≫ l) a) ∧
-        ∀ t m, (TheoremA.mappingCylinderProjection sq ≫ base) (K (t, m)) =
-          (TheoremA.mappingCylinderProjection sq ≫ base) m := by
+        ∀ t m, (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) (K (t, m)) =
+          (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) m := by
   let j := TopCat.ι₀ ≫ l
-  let b := TheoremA.mappingCylinderProjection sq ≫ base
+  let b := Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base
   have hjbase : ∀ a, b (j a) = base (f a) :=
-    fun a ↦ ConcreteCategory.congr_hom (TheoremA.mappingCylinderProjection_start_assoc sq base) a
+    fun a ↦ ConcreteCategory.congr_hom
+      (Quillen.MappingCylinder.mappingCylinderProjection_start_assoc sq base) a
   have hjrbase : ∀ m, b (j (r m)) = b m := by
     intro m
     exact (hjbase (r m)).trans (ConcreteCategory.congr_hom hr m)
-  let K := TheoremA.retractionBacktrackHomotopy hir F
+  let K := Quillen.retractionBacktrackHomotopy hir F
   have hKbase : ∀ t m, b (K (t, m)) = b m := by
     intro t m
-    simp only [K, TheoremA.retractionBacktrackHomotopy, ContinuousMap.Homotopy.trans_apply]
+    simp only [K, Quillen.retractionBacktrackHomotopy, ContinuousMap.Homotopy.trans_apply]
     split_ifs
     · exact (hF _ (j (r m))).trans (hjrbase m)
     · exact hF _ m
   let Kc : C(M, C(I, M)) := (K.toContinuousMap.comp ContinuousMap.prodSwap).curry
   let G : C((I × A) × I, M) :=
-    ⟨fun z ↦ F (TheoremA.shrinkBacktrackTime z.1.1 z.2, j z.1.2), by fun_prop⟩
+    ⟨fun z ↦ F (Quillen.shrinkBacktrackTime z.1.1 z.2, j z.1.2), by fun_prop⟩
   have hG₀ : ∀ a, G.curry (0, a) = Kc (j a) := by
     intro a
     ext t
-    change F (TheoremA.shrinkBacktrackTime 0 t, j a) = K (t, j a)
-    rw [TheoremA.shrinkBacktrackTime_zero]
-    exact (TheoremA.retractionBacktrackHomotopy_restrict hir F t a).symm
+    change F (Quillen.shrinkBacktrackTime 0 t, j a) = K (t, j a)
+    rw [Quillen.shrinkBacktrackTime_zero]
+    exact (Quillen.retractionBacktrackHomotopy_restrict hir F t a).symm
   let qPath : TopCat.of C(I, M) ⟶ TopCat.of C(I, T) := TopCat.ofHom {
     toFun γ := b.hom.comp γ
     continuous_toFun := by
@@ -83,7 +85,8 @@ theorem mappingCylinder_relative_retraction_over
   have hHG₀ : TopCat.ι₀ ≫ HG = j ≫ TopCat.ofHom Kc := by
     ext a t
     exact ContinuousMap.congr_fun (hG₀ a) t
-  have hKcbase : TopCat.ofHom Kc ≫ qPath = TheoremA.mappingCylinderProjection sq ≫ basePath := by
+  have hKcbase : TopCat.ofHom Kc ≫ qPath = Quillen.MappingCylinder.mappingCylinderProjection sq ≫
+    basePath := by
     ext m t
     exact hKbase t m
   have hHGbase : HG ≫ qPath = fst A TopCat.I ≫ f ≫ basePath := by
@@ -120,19 +123,19 @@ theorem mappingCylinder_relative_retraction_over
     intro t a
     change Q (t, j a) 0 = j a
     rw [hQj]
-    change F (TheoremA.shrinkBacktrackTime t 0, j a) = j a
+    change F (Quillen.shrinkBacktrackTime t 0, j a) = j a
     simp
   have hL₁ : ∀ t a, L₁ (t, j a) = j a := by
     intro t a
     change Q (1, j a) t = j a
     rw [hQj]
-    change F (TheoremA.shrinkBacktrackTime 1 t, j a) = j a
+    change F (Quillen.shrinkBacktrackTime 1 t, j a) = j a
     simp
   have hL₂ : ∀ t a, L₂ (t, j a) = j a := by
     intro t a
     change Q (σ t, j a) 1 = j a
     rw [hQj]
-    change F (TheoremA.shrinkBacktrackTime (σ t) 1, j a) = j a
+    change F (Quillen.shrinkBacktrackTime (σ t) 1, j a) = j a
     simp
   refine ⟨(L₀.trans L₁).trans L₂, ?_, ?_⟩
   · intro t a
@@ -153,13 +156,13 @@ theorem mappingCylinder_sourceStrongDeformationRetract_over
     (hg : g ≫ f ≫ base = base)
     (hH : ∀ t a, base (f (H (t, a))) = base (f a))
     (hK : ∀ t x, base (K (t, x)) = base x) :
-    ∃ R : TheoremA.CylinderStrongDeformationRetract (TopCat.ι₀ ≫ l),
-      R.r ≫ f ≫ base = TheoremA.mappingCylinderProjection sq ≫ base ∧
-        R.H ≫ TheoremA.mappingCylinderProjection sq ≫ base =
-          fst M TopCat.I ≫ TheoremA.mappingCylinderProjection sq ≫ base := by
+    ∃ R : Quillen.CylinderStrongDeformationRetract (TopCat.ι₀ ≫ l),
+      R.r ≫ f ≫ base = Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base ∧
+        R.H ≫ Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base =
+          fst M TopCat.I ≫ Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base := by
   obtain ⟨r, hir, hr, F, hF⟩ := mappingCylinder_exists_source_retraction_over sq base g H K hg hH hK
   obtain ⟨L, hL, hLb⟩ := mappingCylinder_relative_retraction_over sq base r hir hr F hF
-  let R : TheoremA.CylinderStrongDeformationRetract (TopCat.ι₀ ≫ l) := {
+  let R : Quillen.CylinderStrongDeformationRetract (TopCat.ι₀ ≫ l) := {
     r := r
     retract := hir
     H := L.h

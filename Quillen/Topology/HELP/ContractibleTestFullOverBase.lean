@@ -32,7 +32,7 @@ theorem fullHELP_over_contracted_test
     (hf : ∀ b : B,CompactHomotopyExtensionLiftingProperty
       (HomotopyFiber.strictMapOver p q f sq b))
     (A D : TopCat.{u}) [CompactSpace A] [CompactSpace D]
-    (i : A ⟶ D) (hi : TheoremA.homotopyExtensionProperty i)
+    (i : A ⟶ D) (hi : Quillen.homotopyExtensionProperty i)
     (d₀ : D) (HD : (ContinuousMap.id D).Homotopy (ContinuousMap.const D d₀))
     (duration : C(D,unitInterval)) (hzero : ∀ x,duration x = 0 ↔ x ∈ Set.range i)
     (a : C(A,E)) (b : C(D,F)) (H : (f.comp a).Homotopy (b.comp i.hom))

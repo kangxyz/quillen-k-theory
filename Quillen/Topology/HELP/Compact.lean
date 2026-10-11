@@ -33,7 +33,7 @@ boundary homotopy, rather than merely agreeing at the endpoints. -/
 def CompactHomotopyExtensionLiftingProperty {X Y : Type u}
     [TopologicalSpace X] [TopologicalSpace Y] (f : C(X, Y)) : Prop :=
   ∀ (A B : TopCat.{u}) [CompactSpace A] [CompactSpace B] (i : A ⟶ B),
-    TheoremA.homotopyExtensionProperty i →
+    Quillen.homotopyExtensionProperty i →
     ∀ (a : C(A, X)) (b : C(B, Y)) (H : (f.comp a).Homotopy (b.comp i.hom)),
       ∃ c : C(B, X), c.comp i.hom = a ∧
         ∃ K : (f.comp c).Homotopy b, ∀ t x, K (t, i x) = H (t, x)
@@ -47,7 +47,7 @@ include hf
 endpoint projection against every compact cofibration. -/
 theorem endpoint_hasLiftingProperty_of_compactHELP
     {A B : TopCat.{u}} [CompactSpace A] [CompactSpace B]
-    (i : A ⟶ B) (hi : TheoremA.homotopyExtensionProperty i) :
+    (i : A ⟶ B) (hi : Quillen.homotopyExtensionProperty i) :
     HasLiftingProperty i (TopCat.ofHom (endpoint f)) where
   sq_hasLift {a b} sq := by
     let H : (f.comp ((source f).comp a.hom)).Homotopy (b.hom.comp i.hom) := {

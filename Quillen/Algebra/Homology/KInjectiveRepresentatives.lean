@@ -48,7 +48,7 @@ lemma exists_chain_representative_of_isKInjective
   simp
 
 /-- Equality in the original derived category is witnessed by an actual chain homotopy. -/
-def homotopyOfDerivedEq_of_isKInjective (f g : K ⟶ L)
+def homotopyOfDerivedEqOfIsKInjective (f g : K ⟶ L)
     (h : DerivedCategory.Q.map f = DerivedCategory.Q.map g) : Homotopy f g := by
   let e := DerivedCategory.quotientCompQhIso C
   apply HomotopyCategory.homotopyOfEq f g
@@ -66,7 +66,7 @@ lemma exists_chain_factorization_up_to_homotopy_into_isKInjective
     (h : DerivedCategory.Q.map u ≫ α = DerivedCategory.Q.map v) :
     ∃ f : B ⟶ L, DerivedCategory.Q.map f = α ∧ Nonempty (Homotopy (u ≫ f) v) := by
   obtain ⟨f, hf⟩ := exists_chain_representative_of_isKInjective α
-  refine ⟨f, hf, ⟨homotopyOfDerivedEq_of_isKInjective (u ≫ f) v ?_⟩⟩
+  refine ⟨f, hf, ⟨homotopyOfDerivedEqOfIsKInjective (u ≫ f) v ?_⟩⟩
   rw [Functor.map_comp, hf]
   exact h
 

@@ -48,7 +48,7 @@ Krull intersection, while dimension zero is already a field. -/
 theorem isDomain_of_dimension_le_one (R : Type u) [CommRing R]
     [IsRegularLocalRing R] (h : ringKrullDim R ≤ 1) : IsDomain R := by
   by_cases hzero : ringKrullDim R = 0
-  · letI := (isField_of_dimension_zero R hzero).toField
+  · let := (isField_of_dimension_zero R hzero).toField
     infer_instance
   · have he := (IsRegularLocalRing.iff_finrank_cotangentSpace R).mp inferInstance
     have hd : Module.finrank (ResidueField R) (CotangentSpace R) ≤ 1 := by
@@ -75,7 +75,7 @@ The required field structure is derived from regularity. -/
 theorem KToG_regularLocal_dimension_zero_bijective (R : CommRingCat.{u})
     [IsRegularLocalRing R] (h : ringKrullDim R = 0) (n : ℕ) :
     Function.Bijective (KToG (Spec R) n) := by
-  letI := (RegularLocal.isField_of_dimension_zero R h).toField
+  let := (RegularLocal.isField_of_dimension_zero R h).toField
   exact KToG_field_bijective R n
 
 /-- The canonical comparison for a regular local ring of dimension at

@@ -58,11 +58,13 @@ def mapHomologicalComplex {ι : Type w} (c : ComplexShape ι) :
     ext n : 1
     exact adj.right_triangle_components (K.X n)
 
+/-- The cochain quotient square for the left adjoint. -/
 local instance leftHomotopySquare :
     CatCommSq (F.mapHomologicalComplex (.up ℤ)) (HomotopyCategory.quotient C (.up ℤ))
       (HomotopyCategory.quotient D (.up ℤ)) (F.mapHomotopyCategory (.up ℤ)) :=
   ⟨(F.mapHomotopyCategoryFactors (.up ℤ)).symm⟩
 
+/-- The cochain quotient square for the right adjoint. -/
 local instance rightHomotopySquare :
     CatCommSq (G.mapHomologicalComplex (.up ℤ)) (HomotopyCategory.quotient D (.up ℤ))
       (HomotopyCategory.quotient C (.up ℤ)) (G.mapHomotopyCategory (.up ℤ)) :=

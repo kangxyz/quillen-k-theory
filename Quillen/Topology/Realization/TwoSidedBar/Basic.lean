@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.CategoryTheory.TheoremA.RealizationRows
+public import Quillen.Topology.Realization.Coproduct
 public import Quillen.CategoryTheory.TheoremA.Diagonal
 public import Mathlib.CategoryTheory.Category.ULift
 
@@ -33,7 +33,7 @@ variable (L : D ⥤ SimplexCategoryᵒᵖ) (H : D ⥤ SSet.{u})
 
 /-- The bar's actual inner simplicial row. -/
 def row (p : SimplexCategoryᵒᵖ) : SSet.{u} :=
-  simplicialSigma fun s : (nerve D).obj p ↦
+  Quillen.Realization.simplicialSigma fun s : (nerve D).obj p ↦
     H.obj (s.obj 0) ⊗ SSet.stdSimplex.obj (L.obj (s.obj (Fin.last p.unop.len))).unop
 
 /-- The final-vertex edge has the variance opposite to the first-vertex edge. -/

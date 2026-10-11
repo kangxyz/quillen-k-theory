@@ -7,8 +7,8 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.CategoryTheory.TheoremB.CartesianProducts
-public import Quillen.CategoryTheory.TheoremA.IntervalEndpoints
-public import Quillen.CategoryTheory.TheoremA.RealizationCofibrationEquiv
+public import Quillen.Topology.HELP.IntervalEndpoints
+public import Quillen.Topology.DeformationRetract.Cofibration
 
 /-!
 # The mapping-path fibration replacement
@@ -139,13 +139,13 @@ theorem endpoint_homotopy_lifting {A : Type u} [TopologicalSpace A]
         cases x <;> rfl
       exact hK.comp continuous_swap }
   have hKzero : ∀ x : A ⊕ A,
-      K (0, x) = P (TheoremA.intervalEndpoints (TopCat.of A) x) := by
+      K (0, x) = P (Quillen.intervalEndpoints (TopCat.of A) x) := by
     intro x
     cases x with
     | inl x => exact (a x).2.symm
     | inr x => exact hzero x
-  obtain ⟨Q, hQzero, hQend⟩ := TheoremA.homotopyExtensionProperty_continuous
-    (TheoremA.homotopyExtensionProperty_intervalEndpoints (TopCat.of A)) (TopCat.of Y) P K hKzero
+  obtain ⟨Q, hQzero, hQend⟩ := Quillen.homotopyExtensionProperty_continuous
+    (Quillen.homotopyExtensionProperty_intervalEndpoints (TopCat.of A)) (TopCat.of Y) P K hKzero
   let L : C(I × A, MappingPath f) := {
     toFun z := ⟨((a z.2).1.1, ⟨fun s ↦ Q (z.1, (z.2, ULift.up s)), by fun_prop⟩),
       hQend z.1 (Sum.inl z.2)⟩

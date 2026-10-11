@@ -36,7 +36,7 @@ variable {T : TopCat.{u}} {U V : Set T} (d : NormalizedOpenGluing.Data T U V)
 its endpoint's universal comparison, the genuine local fiberwise collar,
 and the actual bridge end's universal base-change weakness. -/
 theorem firstProjection_universalStrictPullbackComparison (hV : IsOpen V)
-    (R : TheoremA.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc))
+    (R : Quillen.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc))
     (hR : R.H ≫ d.bridgeEndCollarBase h cut =
       fst (d.BridgeEndCollar h cut) TopCat.I ≫ d.bridgeEndCollarBase h cut)
     (hp0 : UniversalStrictPullbackComparison d.p0.hom)
@@ -58,7 +58,7 @@ theorem firstProjection_universalStrictPullbackComparison (hV : IsOpen V)
 /-- Genuine compact HLP of the original endpoint is a sufficient comparison
 input; no HLP of the first projection or its open parameter loci is inferred. -/
 theorem firstProjection_universalStrictPullbackComparison_of_compact (hV : IsOpen V)
-    (R : TheoremA.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc))
+    (R : Quillen.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc))
     (hR : R.H ≫ d.bridgeEndCollarBase h cut =
       fst (d.BridgeEndCollar h cut) TopCat.I ≫ d.bridgeEndCollarBase h cut)
     (hp0 : CompactHomotopyLiftingProperty d.p0.hom)

@@ -58,7 +58,6 @@ theorem affineLocallyFiniteType_of_binary_openImmersionCover
 open immersions. This version applies directly to the two maps into a union. -/
 theorem exists_coherent_glued_subobject_of_openImmersionCover
     {U V X : Scheme.{u}} [IsLocallyNoetherian X]
-    [IsLocallyNoetherian U] [IsLocallyNoetherian V]
     (j : U ⟶ X) (a : V ⟶ X) [IsOpenImmersion j] [IsOpenImmersion a]
     (hcover : j.opensRange ⊔ a.opensRange = ⊤) (M : X.Modules)
     (A : FiniteTypeSheaves U) (B : FiniteTypeSheaves V)

@@ -38,7 +38,7 @@ point needs compact HELP. The lift extends the boundary exactly, and the
 comparison homotopy is relative to the whole boundary image. -/
 theorem strictHELP_on_contracted_test
     (A D : TopCat.{u}) [CompactSpace A] [CompactSpace D]
-    (i : A ⟶ D) (hi : TheoremA.homotopyExtensionProperty i)
+    (i : A ⟶ D) (hi : Quillen.homotopyExtensionProperty i)
     (d₀ : D) (HD : (ContinuousMap.id D).Homotopy (ContinuousMap.const D d₀))
     (α : C(A, E)) (β : C(D, F)) (w : f.comp α = β.comp i.hom)
     (hf : CompactHomotopyExtensionLiftingProperty
@@ -86,7 +86,7 @@ theorem strictHELP_on_contracted_test_of_all_fibers
     (hf : ∀ b : B, CompactHomotopyExtensionLiftingProperty
       (HomotopyFiber.strictMapOver p q f sq b))
     (A D : TopCat.{u}) [CompactSpace A] [CompactSpace D]
-    (i : A ⟶ D) (hi : TheoremA.homotopyExtensionProperty i)
+    (i : A ⟶ D) (hi : Quillen.homotopyExtensionProperty i)
     (d₀ : D) (HD : (ContinuousMap.id D).Homotopy (ContinuousMap.const D d₀))
     (α : C(A, E)) (β : C(D, F)) (w : f.comp α = β.comp i.hom) :
     ∃ c : C(D, E), c.comp i.hom = α ∧
@@ -97,7 +97,7 @@ theorem strictHELP_on_contracted_test_of_all_fibers
 spelled out literally at every time, rather than only at its endpoints. -/
 theorem strictHELP_on_contracted_test_boundary
     (A D : TopCat.{u}) [CompactSpace A] [CompactSpace D]
-    (i : A ⟶ D) (hi : TheoremA.homotopyExtensionProperty i)
+    (i : A ⟶ D) (hi : Quillen.homotopyExtensionProperty i)
     (d₀ : D) (HD : (ContinuousMap.id D).Homotopy (ContinuousMap.const D d₀))
     (α : C(A, E)) (β : C(D, F)) (w : f.comp α = β.comp i.hom)
     (hf : CompactHomotopyExtensionLiftingProperty

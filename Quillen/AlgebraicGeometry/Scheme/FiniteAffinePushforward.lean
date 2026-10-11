@@ -28,8 +28,10 @@ instance finiteRingHom_multiplicative : finiteRingHom.{u}.IsMultiplicative where
   id_mem R := RingHom.Finite.id R
   comp_mem _ _ hf hg := hg.comp hf
 
+/-- Commutative rings with actual finite ring homomorphisms as morphisms. -/
 abbrev FiniteRings := WideSubcategory finiteRingHom.{u}
 
+/-- The noetherian coordinate-ring property in the category of finite ring maps. -/
 abbrev noetherianFiniteRingProperty : ObjectProperty FiniteRings.{u} :=
   fun R => IsNoetherianRing R.obj
 

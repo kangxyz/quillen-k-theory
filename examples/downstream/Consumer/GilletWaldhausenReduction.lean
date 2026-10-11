@@ -7,7 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.Waldhausen.GilletWaldhausen.GlobalEulerReduction
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Basic
+public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.KernelClosure
 
 /-! Original-map finite and global fine-model K-class reductions. -/
 @[expose] public section

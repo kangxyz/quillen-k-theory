@@ -96,9 +96,9 @@ theorem realizedCommaRowFiberHomeomorph_symm_projection (p : SimplexCategoryᵒ�
     (s : ChainSpace D p) (x : ClassifyingSpace (CostructuredArrow F (s.obj 0))) :
     HomotopyFiber.projection (realizedCommaRowProjection F p) s
       ((realizedCommaRowFiberHomeomorph F p s).symm x) =
-      SSet.toTop.map (TheoremA.simplicialSigmaι
+      SSet.toTop.map (Quillen.Realization.simplicialSigmaι
         (fun t : (nerve D).obj p ↦ (TheoremA.commaNerveDiagram F).obj (t.obj 0)) s) x :=
-  TheoremA.realizationSigmaIso_inv_apply
+  Quillen.Realization.realizationSigmaIso_inv_apply
     (fun t : (nerve D).obj p ↦ (TheoremA.commaNerveDiagram F).obj (t.obj 0)) s x
 
 /-- The inverse includes the summand with the actual constant path in the

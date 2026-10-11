@@ -29,13 +29,17 @@ namespace Quillen
 and actual continuous based maps to the loops on the next space. There is
 no Omega-equivalence or stable-homotopy property among its fields. -/
 structure LoopPrespectrum where
+  /-- The topological space in each prespectrum degree. -/
   space : ℕ → TopCat.{u}
+  /-- The chosen point in each prespectrum degree. -/
   point (n : ℕ) : space n
+  /-- The based map to loops on the next prespectrum space. -/
   structureMap (n : ℕ) : C(space n, Path (point (n+1)) (point (n+1)))
   map_point (n : ℕ) : structureMap n (point n) = Path.refl (point (n+1))
 
 /-- Morphisms retain the original level maps and the exact loop-structure square. -/
 @[ext] structure LoopPrespectrum.Hom (E F : LoopPrespectrum.{u}) where
+  /-- The continuous based map in each prespectrum degree. -/
   map (n : ℕ) : C(E.space n, F.space n)
   map_point (n : ℕ) : map n (E.point n) = F.point n
   comm (n : ℕ) (x : E.space n) :
@@ -44,11 +48,13 @@ structure LoopPrespectrum where
 
 namespace LoopPrespectrum
 
+/-- The identity morphism of a loop prespectrum. -/
 def Hom.id (E : LoopPrespectrum.{u}) : Hom E E where
   map _ := ContinuousMap.id _
   map_point _ := rfl
   comm _ _ := by ext t; rfl
 
+/-- Composition of loop-prespectrum morphisms, defined by levelwise composition. -/
 def Hom.comp {E F G : LoopPrespectrum.{u}} (f : Hom E F) (g : Hom F G) : Hom E G where
   map n := (g.map n).comp (f.map n)
   map_point n := (congrArg (g.map n) (f.map_point n)).trans (g.map_point n)

@@ -111,6 +111,7 @@ theorem stratumQCocone_arrowSurjective :
   · simp only [eqToHom_refl, Category.comp_id, Category.id_comp]
     rfl
 
+omit [P.IsClosedUnderFiniteProducts] in
 /-- Objects lift in particular by lifting their identity arrows. -/
 theorem stratumQCocone_objectSurjective :
     ∀ X : (stratumQCocone E P).pt, ∃ j, ∃ x : (stratumQDiagram E P).obj j,
@@ -137,9 +138,9 @@ theorem stratumQCocone_eventuallyEqualObjects :
 
 instance stratumQCocone_faithful (j : StratumIndex.{u}) :
     (FilteredNerveColimit.leg (stratumQDiagram E P) (stratumQCocone E P) j).Faithful := by
-  letI : (exactInclusion E (E.ResolutionLength P (stratumRank j))).toFunctor.Full :=
+  let : (exactInclusion E (E.ResolutionLength P (stratumRank j))).toFunctor.Full :=
     inferInstanceAs (E.ResolutionLength P (stratumRank j)).ι.Full
-  letI : (exactInclusion E (E.ResolutionLength P (stratumRank j))).toFunctor.Faithful :=
+  let : (exactInclusion E (E.ResolutionLength P (stratumRank j))).toFunctor.Faithful :=
     inferInstanceAs (E.ResolutionLength P (stratumRank j)).ι.Faithful
   exact (exactInclusion E (E.ResolutionLength P (stratumRank j))).mapQ_faithful_of_fullyFaithful
 
@@ -164,6 +165,7 @@ def stratumToAmbientHomotopyEquiv (n : ℕ) :
         rfl)
     (stratumIndex n)
 
+omit [P.IsClosedUnderFiniteProducts] in
 @[simp] theorem stratumToAmbientHomotopyEquiv_toFun (n : ℕ) :
     (stratumToAmbientHomotopyEquiv E P n).toFun =
       (classifyingSpaceMap (exactInclusion E (E.ResolutionLength P n)).mapQ).hom := by

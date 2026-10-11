@@ -102,6 +102,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry TopologicalSpace
+universe u
 namespace Quillen.PerfectComplexes.SupportedMayerVietoris
 variable {V X : Scheme.{u}} [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace V]
   (j : V ⟶ X) [IsOpenImmersion j] (T Z : X.Opens)

@@ -6,7 +6,8 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.CategoryTheory.TheoremA.RealizationHEP
+public import Quillen.Topology.HELP.Basic
+public import Quillen.Topology.Realization.SubfamilyHEP
 
 /-!
 # Sequential composites of homotopy-extension maps
@@ -30,8 +31,8 @@ namespace Quillen.TheoremA
 /-- A sequential colimit of HEP maps has HEP relative to its initial stage. -/
 theorem homotopyExtensionProperty_sequential
     (F : ℕ ⥤ TopCat.{u}) (c : Cocone F) (hc : IsColimit c)
-    (hF : ∀ n, homotopyExtensionProperty (F.map (homOfLE (Nat.le_succ n)))) :
-    homotopyExtensionProperty (c.ι.app 0) := by
+    (hF : ∀ n, Quillen.homotopyExtensionProperty (F.map (homOfLE (Nat.le_succ n)))) :
+    Quillen.homotopyExtensionProperty (c.ι.app 0) := by
   intro Z f H hzero
   let Extension (n : ℕ) :=
     {K : F.obj n ⊗ TopCat.I ⟶ Z // TopCat.ι₀ ≫ K = c.ι.app n ≫ f}

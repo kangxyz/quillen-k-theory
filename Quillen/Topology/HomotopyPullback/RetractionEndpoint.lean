@@ -20,7 +20,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace Quillen.RetractionPullback
 variable {B X E : TopCat.{u}} {i : B ⟶ X}
-  (R : TheoremA.CylinderStrongDeformationRetract i) (p : E ⟶ B)
+  (R : Quillen.CylinderStrongDeformationRetract i) (p : E ⟶ B)
 
 /-- The projection from the strict pullback of `p` along the collar retraction to its collar
 coordinate in `X`. -/

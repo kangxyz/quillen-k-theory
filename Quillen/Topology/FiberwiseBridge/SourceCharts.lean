@@ -100,7 +100,8 @@ theorem side_isPushout :
   let es : A ≃ₜ OpenPushout.source (i := TopCat.ι₀ ≫ lM) (g := m) W :=
     allSubtypeHomeomorph _ (fun a ↦ by
       change Quillen.FiberwiseBridge.TargetCollar.height sqM sq (m ((TopCat.ι₀ ≫ lM) a)) < cut
-      rw [Quillen.FiberwiseBridge.TargetCollar.height_left, Quillen.MappingCylinder.TargetCollar.height_start]
+      rw [Quillen.FiberwiseBridge.TargetCollar.height_left,
+        Quillen.MappingCylinder.TargetCollar.height_start]
       exact hcut)
   let el : Quillen.MappingCylinder.SourceCollar.Collar sqM cut ≃ₜ OpenPushout.left (g := m) W :=
     Homeomorph.setCongr (side_preimage_left sqM sq cut).symm
@@ -115,7 +116,7 @@ theorem side_isPushout :
 
 /-- The chart genuinely retracts to its unchanged entire-cylinder end. -/
 def sideStrongDeformationRetract :
-    TheoremA.CylinderStrongDeformationRetract (sideEnd sqM sq cut hcut) :=
+    Quillen.CylinderStrongDeformationRetract (sideEnd sqM sq cut hcut) :=
   (Quillen.MappingCylinder.SourceCollar.strongDeformationRetract sqM cut hcut).pushout
     (side_isPushout sqM sq cut hcut)
 
@@ -127,7 +128,8 @@ theorem sideStrongDeformationRetract_over (p : Z ⟶ T)
         Quillen.MappingCylinder.SourceCollar.inclusion sqM cut ≫ m ≫ p) :
     (sideStrongDeformationRetract sqM sq cut hcut).H ≫ sideInclusion sqM sq cut ≫ p =
       fst (Side sqM sq cut) TopCat.I ≫ sideInclusion sqM sq cut ≫ p := by
-  apply (Quillen.MappingCylinder.SourceCollar.strongDeformationRetract sqM cut hcut).pushout_homotopy_over
+  apply (Quillen.MappingCylinder.SourceCollar.strongDeformationRetract sqM cut
+    hcut).pushout_homotopy_over
     (side_isPushout sqM sq cut hcut)
   exact hM
 
@@ -173,19 +175,22 @@ theorem intersection_isOpen : IsOpen (intersectionSet sqM sq cut sqN) :=
 
 include hcut in
 @[simp] theorem intersection_preimage_left :
-    m ⁻¹' intersectionSet sqM sq cut sqN = Quillen.MappingCylinder.SourceCollar.collarSet sqM cut := by
+    m ⁻¹' intersectionSet sqM sq cut sqN = Quillen.MappingCylinder.SourceCollar.collarSet sqM cut :=
+      by
   rw [intersectionSet, Set.preimage_inter, side_preimage_left,
     side_preimage_right sqN sq.flip cut hcut, Set.inter_univ]
 
 include hcut in
 @[simp] theorem intersection_preimage_right :
-    n ⁻¹' intersectionSet sqM sq cut sqN = Quillen.MappingCylinder.SourceCollar.collarSet sqN cut := by
+    n ⁻¹' intersectionSet sqM sq cut sqN = Quillen.MappingCylinder.SourceCollar.collarSet sqN cut :=
+      by
   rw [intersectionSet, Set.preimage_inter, side_preimage_right sqM sq cut hcut,
     side_preimage_left, Set.univ_inter]
 
 /-- The map from the left cylinder source collar into the intersection induced by its bridge
 inclusion. -/
-def intersectionLeft : Quillen.MappingCylinder.SourceCollar.Collar sqM cut ⟶ Intersection sqM sq cut sqN :=
+def intersectionLeft : Quillen.MappingCylinder.SourceCollar.Collar sqM cut ⟶ Intersection sqM sq cut
+  sqN :=
   TopCat.ofHom ⟨fun x ↦ ⟨m x.val, by
     change x.val ∈ m ⁻¹' intersectionSet sqM sq cut sqN
     rw [intersection_preimage_left sqM sq cut hcut sqN]
@@ -194,7 +199,8 @@ def intersectionLeft : Quillen.MappingCylinder.SourceCollar.Collar sqM cut ⟶ I
 
 /-- The map from the right cylinder source collar into the intersection induced by its bridge
 inclusion. -/
-def intersectionRight : Quillen.MappingCylinder.SourceCollar.Collar sqN cut ⟶ Intersection sqM sq cut sqN :=
+def intersectionRight : Quillen.MappingCylinder.SourceCollar.Collar sqN cut ⟶ Intersection sqM sq
+  cut sqN :=
   TopCat.ofHom ⟨fun x ↦ ⟨n x.val, by
     change x.val ∈ n ⁻¹' intersectionSet sqM sq cut sqN
     rw [intersection_preimage_right sqM sq cut hcut sqN]
@@ -227,7 +233,7 @@ theorem intersection_isPushout :
 
 /-- The overlap strongly deforms onto its actual left source collar. -/
 def intersectionStrongDeformationRetract :
-    TheoremA.CylinderStrongDeformationRetract (intersectionLeft sqM sq cut hcut sqN) :=
+    Quillen.CylinderStrongDeformationRetract (intersectionLeft sqM sq cut hcut sqN) :=
   (Quillen.MappingCylinder.SourceCollar.strongDeformationRetract sqN cut hcut).pushout
     (intersection_isPushout sqM sq cut hcut sqN).flip
 
@@ -240,7 +246,8 @@ theorem intersectionStrongDeformationRetract_over (p : Z ⟶ T)
     (intersectionStrongDeformationRetract sqM sq cut hcut sqN).H ≫
       intersectionInclusion sqM sq cut sqN ≫ p =
       fst (Intersection sqM sq cut sqN) TopCat.I ≫ intersectionInclusion sqM sq cut sqN ≫ p := by
-  apply (Quillen.MappingCylinder.SourceCollar.strongDeformationRetract sqN cut hcut).pushout_homotopy_over
+  apply (Quillen.MappingCylinder.SourceCollar.strongDeformationRetract sqN cut
+    hcut).pushout_homotopy_over
     (intersection_isPushout sqM sq cut hcut sqN).flip
   exact hN
 

@@ -32,14 +32,14 @@ homotopy on that same map, using the actual HEP correction. -/
 theorem fullHELP_at_fixed_boundary_of_strict
     {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y]
     (f : C(X, Y)) (A B : TopCat.{u}) (i : A ⟶ B)
-    (hi : TheoremA.homotopyExtensionProperty i) (a : C(A, X))
+    (hi : Quillen.homotopyExtensionProperty i) (a : C(A, X))
     (hf : ∀ b : C(B,Y), f.comp a = b.comp i.hom →
       ∃ c : C(B,X), c.comp i.hom = a ∧
         Nonempty ((f.comp c).HomotopyRel b (Set.range i)))
     (b : C(B,Y)) (H : (f.comp a).Homotopy (b.comp i.hom)) :
     ∃ c : C(B,X), c.comp i.hom = a ∧ ∃ K : (f.comp c).Homotopy b,
       ∀ t x, K (t,i x) = H (t,x) := by
-  obtain ⟨Q,hQ₀,hQA⟩ := TheoremA.homotopyExtensionProperty_continuous hi
+  obtain ⟨Q,hQ₀,hQA⟩ := Quillen.homotopyExtensionProperty_continuous hi
     (TopCat.of Y) b H.symm.toContinuousMap (fun x ↦ H.symm.map_zero_left x)
   let b' : C(B,Y) := ⟨fun x ↦ Q (1,x),by fun_prop⟩
   let T : b.Homotopy b' := {
@@ -62,7 +62,7 @@ theorem fullHELP_at_fixed_boundary_of_strict
     · change Q (unitInterval.symm _,i x) = H (_,x)
       rw [hQA]
       simp
-  obtain ⟨L',hL'⟩ := TheoremA.homotopyExtensionProperty_unpad_boundary hi
+  obtain ⟨L',hL'⟩ := Quillen.homotopyExtensionProperty_unpad_boundary hi
     (Z := TopCat.of Y) L H' hL
   exact ⟨c,hc,L',hL'⟩
 

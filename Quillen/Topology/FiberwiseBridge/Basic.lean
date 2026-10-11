@@ -36,10 +36,10 @@ theorem mappingCylinder_sourceStrongDeformationRetract_of_fiberwiseEquiv
     {l : A ⊗ TopCat.I ⟶ M} {c : B ⟶ M}
     (sq : IsPushout (TopCat.ι₁ : A ⟶ A ⊗ TopCat.I) f l c) (base : B ⟶ T)
     (E : FiberwiseHomotopyEquiv (f ≫ base).hom base.hom) (he : E.toMap = f.hom) :
-    ∃ R : TheoremA.CylinderStrongDeformationRetract (TopCat.ι₀ ≫ l),
-      R.r ≫ f ≫ base = TheoremA.mappingCylinderProjection sq ≫ base ∧
-        R.H ≫ TheoremA.mappingCylinderProjection sq ≫ base =
-          fst M TopCat.I ≫ TheoremA.mappingCylinderProjection sq ≫ base := by
+    ∃ R : Quillen.CylinderStrongDeformationRetract (TopCat.ι₀ ≫ l),
+      R.r ≫ f ≫ base = Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base ∧
+        R.H ≫ Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base =
+          fst M TopCat.I ≫ Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base := by
   let H : TopCat.Homotopy (f ≫ TopCat.ofHom E.invMap) (𝟙 A) :=
     E.left.cast (by rw [he]; rfl) rfl
   let K : TopCat.Homotopy (TopCat.ofHom E.invMap ≫ f) (𝟙 B) :=
@@ -59,16 +59,19 @@ theorem mappingCylinder_sourceStrongDeformationRetract_of_fibrations
     (sq : IsPushout (TopCat.ι₁ : A ⟶ A ⊗ TopCat.I) f l c) (base : B ⟶ T)
     (hA : HomotopyLiftingProperty (f ≫ base).hom) (hB : HomotopyLiftingProperty base.hom)
     (E : ContinuousMap.HomotopyEquiv A B) (he : E.toFun = f.hom) :
-    ∃ R : TheoremA.CylinderStrongDeformationRetract (TopCat.ι₀ ≫ l),
-      R.r ≫ f ≫ base = TheoremA.mappingCylinderProjection sq ≫ base ∧
-        R.H ≫ TheoremA.mappingCylinderProjection sq ≫ base =
-          fst M TopCat.I ≫ TheoremA.mappingCylinderProjection sq ≫ base := by
+    ∃ R : Quillen.CylinderStrongDeformationRetract (TopCat.ι₀ ≫ l),
+      R.r ≫ f ≫ base = Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base ∧
+        R.H ≫ Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base =
+          fst M TopCat.I ≫ Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base := by
   let F := fiberwiseEquivOfFibrationHomotopyEquiv (f ≫ base).hom base.hom hA hB E
     (by rw [he]; rfl)
   apply mappingCylinder_sourceStrongDeformationRetract_of_fiberwiseEquiv sq base F
   exact (fiberwiseEquivOfFibrationHomotopyEquiv_toMap _ _ _ _ _ _).trans he
 
-namespace FiberwiseBridge
+end Quillen.TheoremB
+
+namespace Quillen.FiberwiseBridge
+open Quillen.TheoremB
 variable {A B C M N Z T : TopCat.{u}} {f : A ⟶ B} {g : A ⟶ C}
   {lM : A ⊗ TopCat.I ⟶ M} {cM : B ⟶ M}
   {lN : A ⊗ TopCat.I ⟶ N} {cN : C ⟶ N}
@@ -81,16 +84,16 @@ variable {A B C M N Z T : TopCat.{u}} {f : A ⟶ B} {g : A ⟶ C}
 /-- The bridge projection to `T`, induced by the two mapping-cylinder projections followed by `b`
 and `c`; the equality `f ≫ b = g ≫ c` identifies their values on the common source. -/
 def projection : Z ⟶ T := sq.desc
-  (TheoremA.mappingCylinderProjection sqM ≫ b)
-  (TheoremA.mappingCylinderProjection sqN ≫ c) (by
-    simp only [Category.assoc, TheoremA.mappingCylinderProjection_start_assoc]
+  (Quillen.MappingCylinder.mappingCylinderProjection sqM ≫ b)
+  (Quillen.MappingCylinder.mappingCylinderProjection sqN ≫ c) (by
+    simp only [Category.assoc, Quillen.MappingCylinder.mappingCylinderProjection_start_assoc]
     exact w)
 
 @[reassoc (attr := simp)] theorem projection_left :
-    m ≫ projection sqM sqN sq b c w = TheoremA.mappingCylinderProjection sqM ≫ b :=
+    m ≫ projection sqM sqN sq b c w = Quillen.MappingCylinder.mappingCylinderProjection sqM ≫ b :=
   sq.inl_desc _ _ _
 @[reassoc (attr := simp)] theorem projection_right :
-    n ≫ projection sqM sqN sq b c w = TheoremA.mappingCylinderProjection sqN ≫ c :=
+    n ≫ projection sqM sqN sq b c w = Quillen.MappingCylinder.mappingCylinderProjection sqN ≫ c :=
   sq.inr_desc _ _ _
 
 /-- Both ends of the actual glued bridge strongly deform over its common
@@ -98,16 +101,16 @@ base, using only the two original fiberwise equivalences. -/
 theorem exists_strongDeformationRetracts
     (E : FiberwiseHomotopyEquiv (f ≫ b).hom b.hom) (he : E.toMap = f.hom)
     (F : FiberwiseHomotopyEquiv (g ≫ c).hom c.hom) (hf : F.toMap = g.hom) :
-    ∃ (R : TheoremA.CylinderStrongDeformationRetract (cM ≫ m))
-      (S : TheoremA.CylinderStrongDeformationRetract (cN ≫ n)),
+    ∃ (R : Quillen.CylinderStrongDeformationRetract (cM ≫ m))
+      (S : Quillen.CylinderStrongDeformationRetract (cN ≫ n)),
       R.H ≫ projection sqM sqN sq b c w = fst Z TopCat.I ≫ projection sqM sqN sq b c w ∧
       S.H ≫ projection sqM sqN sq b c w = fst Z TopCat.I ≫ projection sqM sqN sq b c w := by
   obtain ⟨R₀, _, hR₀⟩ := mappingCylinder_sourceStrongDeformationRetract_of_fiberwiseEquiv sqM b E he
   obtain ⟨R₁, _, hR₁⟩ := mappingCylinder_sourceStrongDeformationRetract_of_fiberwiseEquiv sqN c F hf
   let S₀ := R₁.pushout sq.flip
   let S₁ := R₀.pushout sq
-  let T₀ := TheoremA.mappingCylinderTargetStrongDeformationRetract sqM
-  let T₁ := TheoremA.mappingCylinderTargetStrongDeformationRetract sqN
+  let T₀ := Quillen.MappingCylinder.mappingCylinderTargetStrongDeformationRetract sqM
+  let T₁ := Quillen.MappingCylinder.mappingCylinderTargetStrongDeformationRetract sqN
   refine ⟨T₀.comp S₀, T₁.comp S₁, ?_, ?_⟩
   · apply T₀.comp_over S₀
     · simp only [projection_left]
@@ -124,5 +127,4 @@ include sq in
 /-- The common source maps strictly into the bridge from either cylinder. -/
 theorem source_square : (TopCat.ι₀ ≫ lM) ≫ m = (TopCat.ι₀ ≫ lN) ≫ n := sq.w
 
-end FiberwiseBridge
-end Quillen.TheoremB
+end Quillen.FiberwiseBridge

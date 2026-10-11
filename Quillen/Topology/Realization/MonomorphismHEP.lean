@@ -16,7 +16,7 @@ noncomputable section
 universe u
 open CategoryTheory MonoidalCategory
 open scoped Simplicial Topology unitInterval
-namespace Quillen.TheoremA
+namespace Quillen
 
 /-- Evaluation at the initial endpoint of the compact-open path space. -/
 def pathEvaluationZero (Z : TopCat.{u}) : TopCat.of C(unitInterval,Z) ⟶ Z :=
@@ -24,11 +24,11 @@ def pathEvaluationZero (Z : TopCat.{u}) : TopCat.of C(unitInterval,Z) ⟶ Z :=
 
 /-- HEP is exactly enough to lift a square against path evaluation. -/
 theorem pathEvaluationZero_hasLiftingProperty {A B : TopCat.{u}} (i : A ⟶ B)
-    (hi : homotopyExtensionProperty i) (Z : TopCat.{u}) :
-    HasLiftingProperty i (pathEvaluationZero Z) where
+    (hi : Quillen.homotopyExtensionProperty i) (Z : TopCat.{u}) :
+    HasLiftingProperty i (Quillen.pathEvaluationZero Z) where
   sq_hasLift {a b} sq := by
     let H : C(unitInterval × A,Z) := ⟨fun z ↦ a z.2 z.1, by fun_prop⟩
-    obtain ⟨K,hK₀,hKA⟩ := homotopyExtensionProperty_continuous hi Z b.hom H
+    obtain ⟨K,hK₀,hKA⟩ := Quillen.homotopyExtensionProperty_continuous hi Z b.hom H
       (fun x ↦ ConcreteCategory.congr_hom sq.w x)
     let l : B ⟶ TopCat.of C(unitInterval,Z) := TopCat.ofHom {
       toFun x := ⟨fun t ↦ K (t,x), by fun_prop⟩
@@ -47,8 +47,8 @@ theorem pathEvaluationZero_hasLiftingProperty {A B : TopCat.{u}} (i : A ⟶ B)
 
 /-- Actual realization takes every simplicial mono to a genuine HEP map.
 No extra compactness of the whole source or target realization is needed. -/
-theorem homotopyExtensionProperty_realization_mono {A B : SSet.{u}}
-    (i : A ⟶ B) [Mono i] : homotopyExtensionProperty (SSet.toTop.map i) := by
+theorem Realization.homotopyExtensionProperty_realization_mono {A B : SSet.{u}}
+    (i : A ⟶ B) [Mono i] : Quillen.homotopyExtensionProperty (SSet.toTop.map i) := by
   intro Z f H hzero
   let a : |A| ⟶ TopCat.of C(unitInterval,Z) := TopCat.ofHom {
     toFun x := ⟨fun t ↦ H (x, ULift.up t),
@@ -58,11 +58,11 @@ theorem homotopyExtensionProperty_realization_mono {A B : SSet.{u}}
       change Continuous (fun z : |A| × unitInterval ↦ H (z.1,ULift.up z.2))
       exact H.hom.continuous.comp
         (continuous_fst.prodMk (continuous_uliftUp.comp continuous_snd)) }
-  let : HasLiftingProperty (SSet.toTop.map i) (pathEvaluationZero Z) :=
-    Quillen.hasLiftingProperty_realization_mono (pathEvaluationZero Z)
-      (fun n ↦ pathEvaluationZero_hasLiftingProperty _
-        (homotopyExtensionProperty_realizationBoundary n) Z) i
-  have sq : CommSq a (SSet.toTop.map i) (pathEvaluationZero Z) f := by
+  let : HasLiftingProperty (SSet.toTop.map i) (Quillen.pathEvaluationZero Z) :=
+    Quillen.hasLiftingProperty_realization_mono (Quillen.pathEvaluationZero Z)
+      (fun n ↦ Quillen.pathEvaluationZero_hasLiftingProperty _
+        (Quillen.Realization.homotopyExtensionProperty_realizationBoundary n) Z) i
+  have sq : CommSq a (SSet.toTop.map i) (Quillen.pathEvaluationZero Z) f := by
     constructor
     apply ConcreteCategory.hom_ext
     intro x
@@ -77,4 +77,4 @@ theorem homotopyExtensionProperty_realization_mono {A B : SSet.{u}}
     rintro ⟨x,t⟩
     exact ContinuousMap.congr_fun (ConcreteCategory.congr_hom sq.fac_left x) t.down
 
-end Quillen.TheoremA
+end Quillen

@@ -7,7 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.Topology.HomotopyLifting.Stationary
-public import Quillen.CategoryTheory.TheoremA.RealizationCofibrationEquiv
+public import Quillen.Topology.DeformationRetract.Cofibration
 
 /-! # Actual homotopy extension over a fixed base
 
@@ -27,7 +27,7 @@ variable {E B : Type u} [TopologicalSpace E] [TopologicalSpace B]
 
 theorem HomotopyLiftingProperty.extend_over_fixed_base
     {q : C(E, B)} (hq : HomotopyLiftingProperty q)
-    (A D : TopCat.{u}) (i : A ⟶ D) (hi : TheoremA.homotopyExtensionProperty i)
+    (A D : TopCat.{u}) (i : A ⟶ D) (hi : Quillen.homotopyExtensionProperty i)
     (duration : C(D, unitInterval)) (hzero : ∀ x, duration x = 0 ↔ x ∈ Set.range i)
     (b : C(D, E)) (H : C(unitInterval × A, E))
     (h₀ : ∀ a, H (0, a) = b (i a))
@@ -35,7 +35,7 @@ theorem HomotopyLiftingProperty.extend_over_fixed_base
     ∃ T : C(unitInterval × D,E),
       (∀ x,T (0,x) = b x) ∧ (∀ t a,T (t,i a) = H (t,a)) ∧
       ∀ t x,q (T (t,x)) = q (b x) := by
-  obtain ⟨Q,hQ₀,hQA⟩ := TheoremA.homotopyExtensionProperty_continuous hi
+  obtain ⟨Q,hQ₀,hQA⟩ := Quillen.homotopyExtensionProperty_continuous hi
     (TopCat.of E) b H h₀
   let d : C(unitInterval × D,unitInterval) := ⟨fun z ↦ z.1 * duration z.2,by fun_prop⟩
   let P : C(unitInterval × (unitInterval × D),B) :=

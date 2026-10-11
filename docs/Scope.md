@@ -132,12 +132,18 @@ not supply vertical lifting. Keep these hypotheses when composing interfaces.
 
 ## Verification
 
-The candidate's complete compile, lint, and audits are pending. A scoped,
-matched typechecking measurement is recorded in [Performance.md](Performance.md).
-The configured check is `bash scripts/check.sh --rehash`: generation,
-layout and placeholder checks, script tests, library/tests, Batteries environment
-lint, native mathlib text lint, downstream clients, and explicit audit replay.
-Allowed foundation axioms are `propext`, `Classical.choice`, and `Quot.sound`.
+Local validation of the refactor candidate passes on Lean `v4.34.1` with mathlib
+pinned to `d13f23b723b8a846827a245b89c10fc7d3f11612`. Coverage includes import
+generation, layout and placeholder checks, 51 script tests, library/tests,
+Batteries environment lint, native mathlib text lint, downstream clients, and
+explicit audit replay. Validation used incremental builds, retaining successful
+stages on unchanged inputs after focused consumer repairs. The library audit
+covers 29,456 project declarations, including private helpers; the downstream
+audit covers 172 declarations. Allowed foundation axioms are `propext`,
+`Classical.choice`, and `Quot.sound`.
+
+The complete check entry is `bash scripts/check.sh --rehash`. A scoped, matched
+typechecking measurement is recorded in [Performance.md](Performance.md).
 See [Architecture.md](Architecture.md#trust-checks) for declaration coverage and
 [CONTRIBUTING.md](../CONTRIBUTING.md#typechecking-performance) for profiling.
 

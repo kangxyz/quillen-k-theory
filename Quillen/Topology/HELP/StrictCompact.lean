@@ -32,7 +32,7 @@ whole image of the given cofibration. -/
 def CompactStrictHELP {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y]
     (f : C(X, Y)) : Prop :=
   ∀ (A B : TopCat.{u}) [CompactSpace A] [CompactSpace B] (i : A ⟶ B),
-    TheoremA.homotopyExtensionProperty i →
+    Quillen.homotopyExtensionProperty i →
     ∀ (a : C(A, X)) (b : C(B, Y)), f.comp a = b.comp i.hom →
       ∃ c : C(B, X), c.comp i.hom = a ∧
         Nonempty ((f.comp c).HomotopyRel b (Set.range i))
@@ -51,7 +51,7 @@ theorem CompactStrictHELP.full
     {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y] {f : C(X, Y)}
     (hf : CompactStrictHELP f) : CompactHomotopyExtensionLiftingProperty f := by
   intro A B _ _ i hi a b H
-  obtain ⟨Q, hQ₀, hQA⟩ := TheoremA.homotopyExtensionProperty_continuous hi
+  obtain ⟨Q, hQ₀, hQA⟩ := Quillen.homotopyExtensionProperty_continuous hi
     (TopCat.of Y) b H.symm.toContinuousMap (fun x ↦ H.symm.map_zero_left x)
   let b' : C(B, Y) := ⟨fun x ↦ Q (1, x), by fun_prop⟩
   let T : b.Homotopy b' := {
@@ -74,7 +74,7 @@ theorem CompactStrictHELP.full
     · change Q (unitInterval.symm _, i x) = H (_, x)
       rw [hQA]
       simp
-  obtain ⟨L', hL'⟩ := TheoremA.homotopyExtensionProperty_unpad_boundary hi
+  obtain ⟨L', hL'⟩ := Quillen.homotopyExtensionProperty_unpad_boundary hi
     (Z := TopCat.of Y) L H' hL
   exact ⟨c, hc, L', hL'⟩
 

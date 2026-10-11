@@ -85,12 +85,14 @@ def coherentSupportQuotientEquivalence : CoherentSupportQuotient j ≌ FiniteTyp
 /-- Actual restriction of coherent sheaves is the Serre localization by
 sheaves whose ordinary stalk support lies outside the open. -/
 instance finiteTypeSheavesRestriction_isLocalization :
-    (finiteTypeSheavesRestriction j).IsLocalization (finiteTypeSheavesSupportedAway j).isoModSerre :=
+    (finiteTypeSheavesRestriction j).IsLocalization
+      (finiteTypeSheavesSupportedAway j).isoModSerre :=
   finiteTypeSheavesRestriction_isLocalization_of_essSurj j
 
 /-- The same actual geometric localization, expressed by its kernel. -/
 instance finiteTypeSheavesRestriction_isLocalization_kernel :
-    (finiteTypeSheavesRestriction j).IsLocalization (finiteTypeSheavesRestriction j).kernel.isoModSerre :=
+    (finiteTypeSheavesRestriction j).IsLocalization
+      (finiteTypeSheavesRestriction j).kernel.isoModSerre :=
   finiteTypeSheavesRestriction_isLocalization_kernel_of_essSurj j
 
 local instance : PreservesFiniteLimits (coherentRestrictionExact j).toFunctor :=

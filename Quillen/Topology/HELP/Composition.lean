@@ -53,7 +53,7 @@ theorem CompactHomotopyExtensionLiftingProperty.comp
       rw [hL]
       exact congrArg (g ∘ f) (ContinuousMap.congr_fun hd x).symm
     · exact hK _ x
-  obtain ⟨J', hJ'⟩ := TheoremA.homotopyExtensionProperty_unpad_boundary hi
+  obtain ⟨J', hJ'⟩ := Quillen.homotopyExtensionProperty_unpad_boundary hi
     (Z := TopCat.of Z) J H' hJ
   exact ⟨d, hd, J', hJ'⟩
 

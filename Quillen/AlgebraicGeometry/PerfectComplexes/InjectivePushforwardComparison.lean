@@ -23,6 +23,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace Quillen.PerfectComplexes
+/-- The standard derived model used for the original injective model comparison. -/
 local instance modelChangeStandardDerived (Y : Scheme.{u}) : HasDerivedCategory.{u+1} Y.Modules :=
   HasDerivedCategory.standard _
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]

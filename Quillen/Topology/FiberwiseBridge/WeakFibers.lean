@@ -50,28 +50,30 @@ theorem leftTarget_baseChange_isWeak_of_weak_fibers
       (HomotopyFiber.strictMapOver (g ≫ c).hom c.hom g.hom rfl t))
     {D : Type u} [TopologicalSpace D] (a : C(D,S)) :
     IsWeakHomotopyEquivalence (baseChangedMap
-      (FiberwiseBridge.projection sqM sqN sq b c w ≫ j).hom (cM ≫ m).hom a) := by
+      (Quillen.FiberwiseBridge.projection sqM sqN sq b c w ≫ j).hom (cM ≫ m).hom a) := by
   have hlift := endpoint_boundaryLifting_of_injective_base
     (Quillen.MappingCylinder.Compact.projection sqN c).hom (TopCat.ι₀ ≫ lN).hom j.hom hj
-    (Quillen.MappingCylinder.Compact.source_endpoint_boundaryLifting_of_weak_fibers sqN c hp hq hN hf)
+    (Quillen.MappingCylinder.Compact.source_endpoint_boundaryLifting_of_weak_fibers
+      sqN c hp hq hN hf)
   have hs := baseChangedMap_isWeakHomotopyEquivalence
     (j.hom.comp (Quillen.MappingCylinder.Compact.projection sqN c).hom) (TopCat.ι₀ ≫ lN).hom a hlift
   have hm : IsWeakHomotopyEquivalence (baseChangedMap
-      (FiberwiseBridge.projection sqM sqN sq b c w ≫ j).hom m.hom a) := by
+      (Quillen.FiberwiseBridge.projection sqM sqN sq b c w ≫ j).hom m.hom a) := by
     refine left_baseChange_isWeak_of_source_collars sqM sqN sq 1 zero_lt_one
-      (FiberwiseBridge.projection sqM sqN sq b c w ≫ j) ?_ ?_ a ?_
-    · simpa only [Category.assoc, FiberwiseBridge.projection_left_assoc] using
+      (Quillen.FiberwiseBridge.projection sqM sqN sq b c w ≫ j) ?_ ?_ a ?_
+    · simpa only [Category.assoc, Quillen.FiberwiseBridge.projection_left_assoc] using
         Quillen.MappingCylinder.SourceCollar.deformation_over sqM 1 zero_lt_one (b ≫ j)
-    · simpa only [Category.assoc, FiberwiseBridge.projection_right_assoc] using
+    · simpa only [Category.assoc, Quillen.FiberwiseBridge.projection_right_assoc] using
         Quillen.MappingCylinder.SourceCollar.deformation_over sqN 1 zero_lt_one (c ≫ j)
-    · rw [FiberwiseBridge.projection_right_assoc sqM sqN sq b c w j]
+    · rw [Quillen.FiberwiseBridge.projection_right_assoc sqM sqN sq b c w j]
       exact hs
   apply baseChangedMap_comp_isWeak
-    (FiberwiseBridge.projection sqM sqN sq b c w ≫ j).hom m.hom cM.hom a hm
+    (Quillen.FiberwiseBridge.projection sqM sqN sq b c w ≫ j).hom m.hom cM.hom a hm
   exact isWeakHomotopyEquivalence_of_homotopyEquiv
-    ((TheoremA.mappingCylinderTargetStrongDeformationRetract sqM).baseChangeHomotopyEquiv
-      (m ≫ FiberwiseBridge.projection sqM sqN sq b c w ≫ j) (by
-        simpa only [Category.assoc, FiberwiseBridge.projection_left_assoc] using
-          mappingCylinderTargetDeformation_over sqM (b ≫ j)) a)
+    ((Quillen.MappingCylinder.mappingCylinderTargetStrongDeformationRetract
+      sqM).baseChangeHomotopyEquiv
+      (m ≫ Quillen.FiberwiseBridge.projection sqM sqN sq b c w ≫ j) (by
+        simpa only [Category.assoc, Quillen.FiberwiseBridge.projection_left_assoc] using
+          Quillen.TheoremB.mappingCylinderTargetDeformation_over sqM (b ≫ j)) a)
 
 end Quillen.FiberwiseBridge.SourceCharts

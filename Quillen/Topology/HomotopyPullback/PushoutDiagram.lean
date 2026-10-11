@@ -163,7 +163,7 @@ def parameterCollapse : C(HomotopyPullback q.hom (baseParameter sq' s).hom,
     (parameterCollapse sq' q s z).1 = (CartesianPushout.collapseBase sq' z.1.1, z.1.2) := rfl
 
 /-- The actual parameter collapse is HE when the base attachment has HEP. -/
-def parameterCollapseHomotopyEquiv (hf' : TheoremA.homotopyExtensionProperty f') :
+def parameterCollapseHomotopyEquiv (hf' : Quillen.homotopyExtensionProperty f') :
     ContinuousMap.HomotopyEquiv (HomotopyPullback q.hom (baseParameter sq' s).hom)
       (HomotopyPullback q.hom s.hom) := by
   let e0 := (CartesianPushout.baseMapCongr q.hom (baseParameter sq' s).hom
@@ -177,7 +177,7 @@ def parameterCollapseHomotopyEquiv (hf' : TheoremA.homotopyExtensionProperty f')
                  left_inv := by simpa only [hE] using E.left_inv
                  right_inv := by simpa only [hE] using E.right_inv }
 
-@[simp] theorem parameterCollapseHomotopyEquiv_toFun (hf' : TheoremA.homotopyExtensionProperty f') :
+@[simp] theorem parameterCollapseHomotopyEquiv_toFun (hf' : Quillen.homotopyExtensionProperty f') :
     (parameterCollapseHomotopyEquiv sq' q s hf').toFun = parameterCollapse sq' q s := rfl
 
 /-- The path-space comparison for the base double cylinder followed by

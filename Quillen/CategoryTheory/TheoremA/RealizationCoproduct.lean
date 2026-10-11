@@ -6,7 +6,8 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.CategoryTheory.TheoremA.RealizationBoundary
+public import Quillen.Topology.Realization.Coproduct
+public import Quillen.Topology.Realization.SimplexBoundaryHEP
 
 /-! # Coproducts of actual homotopy-extension maps -/
 @[expose] public section
@@ -24,7 +25,7 @@ namespace Quillen.TheoremA
 /-- The continuous disjoint union of a family of maps. -/
 def topologicalSigmaMap {ι : Type u} {A B : ι → TopCat.{u}} (i : ∀ a, A a ⟶ B a) :
     TopCat.of (Σ a, A a) ⟶ TopCat.of (Σ a, B a) :=
-  TopCat.ofHom (sigmaContinuousMap fun a ↦ (i a).hom)
+  TopCat.ofHom (Quillen.sigmaContinuousMap fun a ↦ (i a).hom)
 
 @[reassoc (attr := simp)]
 theorem topologicalSigmaMap_ι {ι : Type u} {A B : ι → TopCat.{u}}
@@ -33,8 +34,8 @@ theorem topologicalSigmaMap_ι {ι : Type u} {A B : ι → TopCat.{u}}
 
 /-- An arbitrary disjoint union of maps with HEP has HEP. -/
 theorem homotopyExtensionProperty_sigma {ι : Type u} {A B : ι → TopCat.{u}}
-    (i : ∀ a, A a ⟶ B a) (hi : ∀ a, homotopyExtensionProperty (i a)) :
-    homotopyExtensionProperty (topologicalSigmaMap i) := by
+    (i : ∀ a, A a ⟶ B a) (hi : ∀ a, Quillen.homotopyExtensionProperty (i a)) :
+    Quillen.homotopyExtensionProperty (topologicalSigmaMap i) := by
   intro Z f H hzero
   have hstart (a : ι) : TopCat.ι₀ ≫ (TopCat.sigmaι A a ▷ TopCat.I) ≫ H =
       i a ≫ TopCat.sigmaι B a ≫ f := by
@@ -64,8 +65,9 @@ theorem homotopyExtensionProperty_sigma {ι : Type u} {A B : ι → TopCat.{u}}
 cofibration after taking its actual topological disjoint union. -/
 theorem homotopyExtensionProperty_sigmaSimplexBoundary {ι : Type u}
     (X : ι → TopCat.{u}) (n : ι → ℕ) :
-    homotopyExtensionProperty
-      (topologicalSigmaMap fun a ↦ parameterizedSimplexBoundaryInclusion (X a) (n a)) :=
-  homotopyExtensionProperty_sigma _ fun a ↦ homotopyExtensionProperty_simplexBoundary (X a) (n a)
+    Quillen.homotopyExtensionProperty
+      (topologicalSigmaMap fun a ↦ Quillen.parameterizedSimplexBoundaryInclusion (X a) (n a)) :=
+  homotopyExtensionProperty_sigma _ fun a ↦ Quillen.homotopyExtensionProperty_simplexBoundary (X a)
+    (n a)
 
 end Quillen.TheoremA

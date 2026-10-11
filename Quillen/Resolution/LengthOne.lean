@@ -89,7 +89,7 @@ def classifyingHomotopyEquivOfLengthOne (h : ∀ X, E.ResolutionLength P 1 X) :
     (h : ∀ X, E.ResolutionLength P 1 X) :
     (classifyingHomotopyEquivOfLengthOne E P h).toFun =
       (classifyingSpaceMap (exactInclusion E P).mapQ).hom := by
-  letI := E.admissibleSubobjectClosed_of_resolutionLength_one P h
+  let := E.admissibleSubobjectClosed_of_resolutionLength_one P h
   exact classifyingHomotopyEquivOfCovers_toFun E P _
 
 /-- All-degree Quillen resolution with a length-one bound. No categorical
@@ -97,7 +97,7 @@ contraction, inverse map, or K-group equivalence is assumed in the hypotheses. -
 theorem inclusionKMap_bijective_of_length_one
     (h : ∀ X, E.ResolutionLength P 1 X) (n : ℕ) :
     Function.Bijective (inclusionKMap E P n) := by
-  letI := E.admissibleSubobjectClosed_of_resolutionLength_one P h
+  let := E.admissibleSubobjectClosed_of_resolutionLength_one P h
   apply inclusionKMap_bijective_of_covers E P _ n
   intro X
   obtain ⟨R, _⟩ := h X

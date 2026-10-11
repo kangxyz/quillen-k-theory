@@ -25,7 +25,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
 namespace Quillen.CartesianRealization.Skeletal
-open TheoremA
+open TheoremA TheoremB
 variable {D : Type u} [SmallCategory D]
 
 /-- The unique simplex in each degree of the zero-simplex, used in point-valued replacement
@@ -287,8 +287,10 @@ retains the canonical finite-stage comparison required by weak assembly. -/
 theorem stageCartesian_of_restrictionCartesian (k n : ℕ) (h : k ≤ n)
     (hc : RestrictionCartesian H ((nerve D).skeleton.monotone h)) :
     ∃ e : ContinuousMap.HomotopyEquiv ((realizedReplacementSkeleton H).obj k)
-      (Quillen.CartesianRealization.Sequential.StagePullback (replacementProjectionTowerMap H) k n h),
-      e.toFun = Quillen.CartesianRealization.Sequential.stageComparison (replacementProjectionTowerMap H) k n h := by
+      (Quillen.CartesianRealization.Sequential.StagePullback
+        (replacementProjectionTowerMap H) k n h),
+      e.toFun = Quillen.CartesianRealization.Sequential.stageComparison
+        (replacementProjectionTowerMap H) k n h := by
   have hh : Cartesian ((replacementProjectionTowerMap H).app k).hom
       ((replacementProjectionTowerMap H).app n).hom
       ((realizedReplacementSkeleton H).map (homOfLE h)).hom

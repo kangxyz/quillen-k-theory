@@ -32,7 +32,7 @@ namespace Quillen.HomotopyPullbackDoubleCylinder
 
 variable {A B C D E T : TopCat.{u}} (f : A ⟶ B) (g : A ⟶ C)
   {l : A ⊗ TopCat.I ⟶ D} {e : TopCat.of (B ⊕ C) ⟶ D}
-  (sq : IsPushout (TheoremA.intervalEndpoints A) (DoubleCylinder.endMap f g) l e)
+  (sq : IsPushout (Quillen.intervalEndpoints A) (DoubleCylinder.endMap f g) l e)
   (q : E ⟶ T) (b : B ⟶ T) (c : C ⟶ T) (w : f ≫ b = g ≫ c)
 
 /-- The map from the disjoint union of the endpoint spaces to `T`, given by `b` on `B` and `c` on
@@ -42,7 +42,7 @@ def parameterEnds : TopCat.of (B ⊕ C) ⟶ T :=
 
 include w in
 theorem parameter_square :
-    TheoremA.intervalEndpoints A ≫ (fst A TopCat.I ≫ f ≫ b) =
+    Quillen.intervalEndpoints A ≫ (fst A TopCat.I ≫ f ≫ b) =
       DoubleCylinder.endMap f g ≫ parameterEnds b c := by
   apply ConcreteCategory.hom_ext
   intro x
@@ -118,7 +118,7 @@ def endsComparison : TopCat.of (HB q b ⊕ HC q c) ⟶ Target f g sq q b c w :=
       (rightComparison f g sq q b c w).hom.continuous⟩⟩
 
 theorem comparison_square :
-    TheoremA.intervalEndpoints (HA f q b) ≫ cylinderComparison f g sq q b c w =
+    Quillen.intervalEndpoints (HA f q b) ≫ cylinderComparison f g sq q b c w =
       DoubleCylinder.endMap (leftLeg f q b) (rightLeg f g q b c w) ≫
         endsComparison f g sq q b c w := by
   apply ConcreteCategory.hom_ext
@@ -137,7 +137,7 @@ theorem comparison_square :
 
 variable {Z : TopCat.{u}} {lh : HA f q b ⊗ TopCat.I ⟶ Z}
   {eh : TopCat.of (HB q b ⊕ HC q c) ⟶ Z}
-  (sqH : IsPushout (TheoremA.intervalEndpoints (HA f q b))
+  (sqH : IsPushout (Quillen.intervalEndpoints (HA f q b))
     (DoubleCylinder.endMap (leftLeg f q b) (rightLeg f g q b c w)) lh eh)
 
 /-- The canonical comparison to the homotopy pullback over the total base. -/
@@ -280,11 +280,11 @@ open DoubleCylinder
 
 variable {A B C D E T : TopCat.{u}} (f : A ⟶ B) (g : A ⟶ C)
   {l : A ⊗ TopCat.I ⟶ D} {e : TopCat.of (B ⊕ C) ⟶ D}
-  (sq : IsPushout (TheoremA.intervalEndpoints A) (DoubleCylinder.endMap f g) l e)
+  (sq : IsPushout (Quillen.intervalEndpoints A) (DoubleCylinder.endMap f g) l e)
   (q : E ⟶ T) (b : B ⟶ T) (c : C ⟶ T) (w : f ≫ b = g ≫ c)
   {Z : TopCat.{u}} {lh : HA f q b ⊗ TopCat.I ⟶ Z}
   {eh : TopCat.of (HB q b ⊕ HC q c) ⟶ Z}
-  (sqH : IsPushout (TheoremA.intervalEndpoints (HA f q b))
+  (sqH : IsPushout (Quillen.intervalEndpoints (HA f q b))
     (DoubleCylinder.endMap (leftLeg f q b) (rightLeg f g q b c w)) lh eh)
   (cut : I)
 

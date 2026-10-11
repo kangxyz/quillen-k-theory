@@ -135,10 +135,11 @@ theorem exists_fg_submodule_open_restriction_isIso
     exact hi
   exact ⟨i, hi'⟩
 
-/-- A quasicoherent affine sheaf coherent on a compact open contains a
-coherent subsheaf which is exactly the original sheaf on that open. -/
+/-- Over an arbitrary commutative ring, a quasicoherent affine sheaf of finite type on a
+compact open contains an affine-local finite-type subsheaf agreeing on that open.
+The construction uses a finitely generated global submodule and needs no noetherian hypothesis. -/
 theorem exists_coherent_subsheaf_restrict_isIso
-    (R : CommRingCat.{u}) [IsNoetherianRing R] (M : (Spec R).Modules)
+    (R : CommRingCat.{u}) (M : (Spec R).Modules)
     [M.IsQuasicoherent] (V : (Spec R).Opens) (hV : IsCompact (V : Set (Spec R)))
     (hM : affineLocallyFiniteType V.toScheme (M.restrict V.ι)) :
     ∃ (N : FiniteTypeSheaves (Spec R)) (i : N.obj ⟶ M), Mono i ∧
@@ -148,7 +149,8 @@ theorem exists_coherent_subsheaf_restrict_isIso
   have : IsIso M.fromTildeΓ := Scheme.Modules.isIso_fromTildeΓ_of_isQuasicoherent M
   let e : tilde P ≅ M := asIso M.fromTildeΓ
   have hP : affineLocallyFiniteType V.toScheme ((tilde P).restrict V.ι) :=
-    (affineLocallyFiniteType V.toScheme).prop_of_iso ((Scheme.Modules.restrictFunctor V.ι).mapIso e.symm) hM
+    (affineLocallyFiniteType V.toScheme).prop_of_iso
+      ((Scheme.Modules.restrictFunctor V.ι).mapIso e.symm) hM
   obtain ⟨L, hL, hi⟩ := exists_fg_submodule_open_restriction_isIso R P V hV hP
   have : Module.Finite R L := Module.Finite.of_fg hL
   let N : FiniteTypeSheaves (Spec R) :=

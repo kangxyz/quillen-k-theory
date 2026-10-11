@@ -64,6 +64,7 @@ def pastingIntoNestedEquiv :
     (strictPullbackHomotopyEquivOfLifting (baseProjection p₂ b') b
       (baseProjection_homotopyLiftingProperty p₂ b'))
 
+/-- Recover a homotopy equivalence with forward map `f` from its specified postcomposition. -/
 def equivalenceOfPostcomposition {X Y Z : Type u}
     [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace Z]
     (e : ContinuousMap.HomotopyEquiv Y Z) (t : ContinuousMap.HomotopyEquiv X Z)

@@ -81,7 +81,7 @@ def laurentSpecIso (R : CommRingCat.{u}) :
       Spec.map (Quillen.PolynomialBaseChange.laurentMap (integerMap R)) :=
   (laurentSpec_isPullback R).isoPullback_hom_snd
 
-@[reassoc (attr := simp)] lemma integerMap_naturality {R S : CommRingCat.{u}} (f : R ⟶ S) :
+@[simp, reassoc] lemma integerMap_naturality {R S : CommRingCat.{u}} (f : R ⟶ S) :
     integerMap R ≫ f = integerMap S := CommRingCat.isInitial.hom_ext _ _
 
 /-- Naturality of the original polynomial product isomorphism on every ring map. -/

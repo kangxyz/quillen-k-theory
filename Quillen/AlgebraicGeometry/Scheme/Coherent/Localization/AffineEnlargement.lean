@@ -70,7 +70,8 @@ theorem affineLocallyFiniteType_affine_enlargement
   let E := overlapRestrictIso W.ι a
   let i : Ap.obj ⟶ (N.restrict a).restrict q := (E.app N).hom
   have : Mono i := by dsimp only [i]; infer_instance
-  obtain ⟨B, b, hb, eB, heB⟩ := affineLocallyFiniteType_subobject_extension_affine R q (N.restrict a) Ap i
+  obtain ⟨B, b, hb, eB, heB⟩ :=
+    affineLocallyFiniteType_subobject_extension_affine R q (N.restrict a) Ap i
   have : Mono b := hb
   have he : (Scheme.Modules.restrictFunctor p).map (𝟙 (N.restrict W.ι)) ≫
       E.hom.app N = eB.inv ≫ (Scheme.Modules.restrictFunctor q).map b := by

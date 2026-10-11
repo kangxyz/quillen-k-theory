@@ -64,31 +64,31 @@ abbrev boundaryG (n : ℕ) :
 /-- The dévissage comparison retains the original pushforward map. -/
 theorem supportedGEquiv_pushforward (n : ℕ) :
     (inclusionG (openMap i) n).comp (supportedGEquiv i n).toMonoidHom = pushforwardG i n := by
-  letI := source_locallyNoetherian i
+  let := source_locallyNoetherian i
   simpa only [CoherentScheme.globalInclusionGMap_eq_smallKMap] using
     CoherentScheme.ClosedImmersion.General.closedSupportedGEquiv_pushforward i n
 
 /-- Exactness at G of the ambient scheme. -/
 theorem pushforward_range_eq_restrict_ker (n : ℕ) :
     (pushforwardG i n).range = (restrictG (openMap i) n).ker := by
-  letI := source_locallyNoetherian i
+  let := source_locallyNoetherian i
   exact CoherentScheme.ClosedImmersion.General.pushforward_range_eq_restriction_ker i n
 
 /-- Exactness at G of the open complement. -/
 theorem restrict_range_eq_boundary_ker (n : ℕ) :
     (restrictG (openMap i) (n + 1)).range = (boundaryG i n).ker := by
-  letI := source_locallyNoetherian i
+  let := source_locallyNoetherian i
   exact CoherentScheme.ClosedImmersion.General.restriction_range_eq_closedConnecting_ker i n
 
 /-- Exactness at G of the actual closed scheme. -/
 theorem boundary_range_eq_pushforward_ker (n : ℕ) :
     (boundaryG i n).range = (pushforwardG i n).ker := by
-  letI := source_locallyNoetherian i
+  let := source_locallyNoetherian i
   exact CoherentScheme.ClosedImmersion.General.closedConnecting_range_eq_pushforward_ker i n
 
 /-- The connective G₀ tail is surjective. -/
 theorem restrictG_zero_surjective : Function.Surjective (restrictG (openMap i) 0) := by
-  letI := source_locallyNoetherian i
+  let := source_locallyNoetherian i
   exact (CoherentScheme.ClosedImmersion.General.closed_open_longExact i).2.2.2
 
 /-- The full canonical closed–open connective sequence, including G₀. -/

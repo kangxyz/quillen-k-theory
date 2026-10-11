@@ -36,7 +36,7 @@ variable (X : TopCat.{u}) [DiscreteTopology X] (n : ℕ) {C D : TopCat.{u}}
     {f : TopCat.of (X × simplexBoundary n) ⟶ C}
     {g : TopCat.of (X × StdSimplex ℝ (Fin (n + 1))) ⟶ D}
     {j : C ⟶ D}
-    (sq : IsPushout (TheoremA.parameterizedSimplexBoundaryInclusion X n) f g j)
+    (sq : IsPushout (Quillen.parameterizedSimplexBoundaryInclusion X n) f g j)
 
 include sq in
 /-- Attaching any discrete family of `n`-simplices for `n ≥ 2` creates no new

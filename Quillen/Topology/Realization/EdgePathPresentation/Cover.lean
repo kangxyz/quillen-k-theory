@@ -34,7 +34,7 @@ namespace Quillen
 /-- The attaching locus is exactly the parametrized geometric boundary. -/
 theorem mem_range_parameterizedSimplexBoundary_iff (X : TopCat.{u}) (n : ℕ)
     (z : X × StdSimplex ℝ (Fin (n + 1))) :
-    z ∈ Set.range (TheoremA.parameterizedSimplexBoundaryInclusion X n) ↔
+    z ∈ Set.range (Quillen.parameterizedSimplexBoundaryInclusion X n) ↔
       z.2 ∈ simplexBoundary n := by
   constructor
   · rintro ⟨⟨a, b⟩, rfl⟩
@@ -48,7 +48,7 @@ variable (X : TopCat.{u}) [DiscreteTopology X] (n : ℕ) {C D : TopCat.{u}}
     {f : TopCat.of (X × simplexBoundary n) ⟶ C}
     {g : TopCat.of (X × StdSimplex ℝ (Fin (n + 1))) ⟶ D}
     {j : C ⟶ D}
-    (sq : IsPushout (TheoremA.parameterizedSimplexBoundaryInclusion X n) f g j)
+    (sq : IsPushout (Quillen.parameterizedSimplexBoundaryInclusion X n) f g j)
 
 /-- The interior chart of one simplex in the attaching family. -/
 def simplexAttachmentInteriorMap (a : X) : C(simplexInterior n, D) where
@@ -67,7 +67,7 @@ theorem isOpenEmbedding_simplexAttachmentInteriorMap (a : X) :
   apply IsOpenEmbedding.of_continuous_injective_isOpenMap
   · exact (simplexAttachmentInteriorMap X n (g := g) a).continuous
   · intro x y h
-    have hx : (a, x.1) ∉ Set.range (TheoremA.parameterizedSimplexBoundaryInclusion X n) := by
+    have hx : (a, x.1) ∉ Set.range (Quillen.parameterizedSimplexBoundaryInclusion X n) := by
       rw [mem_range_parameterizedSimplexBoundary_iff]
       rintro ⟨i, hi⟩
       exact (ne_of_gt (x.2 i)) hi
@@ -78,7 +78,7 @@ theorem isOpenEmbedding_simplexAttachmentInteriorMap (a : X) :
     let B' : Set (X × StdSimplex ℝ (Fin (n + 1))) :=
       {a} ×ˢ (((↑) : simplexInterior n → StdSimplex ℝ (Fin (n + 1))) '' W)
     have hB' : IsOpen B' := (isOpen_discrete _).prod hW'
-    have hdisj : B' ⊆ (Set.range (TheoremA.parameterizedSimplexBoundaryInclusion X n))ᶜ := by
+    have hdisj : B' ⊆ (Set.range (Quillen.parameterizedSimplexBoundaryInclusion X n))ᶜ := by
       rintro ⟨a', x⟩ ⟨ha', y, hy, rfl⟩
       rw [Set.mem_compl_iff, mem_range_parameterizedSimplexBoundary_iff]
       rintro ⟨i, hi⟩
@@ -120,7 +120,7 @@ theorem pairwiseDisjoint_simplexAttachmentInteriors :
   intro a b hab
   rw [Set.disjoint_left]
   rintro z ⟨x, hx⟩ ⟨y, hy⟩
-  have hxout : (a, x.1) ∉ Set.range (TheoremA.parameterizedSimplexBoundaryInclusion X n) := by
+  have hxout : (a, x.1) ∉ Set.range (Quillen.parameterizedSimplexBoundaryInclusion X n) := by
     rw [mem_range_parameterizedSimplexBoundary_iff]
     rintro ⟨i, hi⟩
     exact (ne_of_gt (x.2 i)) hi

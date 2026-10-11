@@ -53,7 +53,7 @@ lemma originalPrespectrumMap_comp {F : C ⥤ D} {G : D ⥤ E}
 
 /-- The canonically normalized identity spectrum map has its actual coherent
 homotopy to the literal identity map. -/
-def exactOriginalPrespectrumMap_id_homotopy :
+def exactOriginalPrespectrumMapIdHomotopy :
     LoopPrespectrum.Homotopy (exactOriginalPrespectrumMap W W (IsExact.id _ _))
       (𝟙 (originalPrespectrum W)) := by
   let h := IsExact.id W.cof W.weq
@@ -65,7 +65,7 @@ def exactOriginalPrespectrumMap_id_homotopy :
 
 /-- Composition holds by a genuine coherent spectrum homotopy induced by the
 canonical normalization isomorphism, rather than by a false strict equality. -/
-def exactOriginalPrespectrumMap_comp_homotopy {F : C ⥤ D} {G : D ⥤ E}
+def exactOriginalPrespectrumMapCompHomotopy {F : C ⥤ D} {G : D ⥤ E}
     (hF : IsExact W.cof W.weq V.cof V.weq F)
     (hG : IsExact V.cof V.weq U.cof U.weq G) :
     LoopPrespectrum.Homotopy (exactOriginalPrespectrumMap W U (hF.comp hG))

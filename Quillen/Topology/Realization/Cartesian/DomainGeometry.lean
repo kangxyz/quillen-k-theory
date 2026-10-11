@@ -127,9 +127,9 @@ theorem realizedOuterProductSigmaIso_naturality (X : SSet.{u}) {ι : Type u}
 actual categorical coproduct domain. -/
 theorem homotopyExtensionProperty_realizedOuterProductSigma (X : SSet.{u}) {ι : Type u}
     {K L : ι → SSet.{u}} (f : ∀ i, K i ⟶ L i)
-    (hf : ∀ i, homotopyExtensionProperty ((realizedOuterProductFunctor X).map (f i))) :
-    homotopyExtensionProperty ((realizedOuterProductFunctor X).map (Limits.Sigma.map f)) :=
-  homotopyExtensionProperty_of_iso_square _ _
+    (hf : ∀ i, Quillen.homotopyExtensionProperty ((realizedOuterProductFunctor X).map (f i))) :
+    Quillen.homotopyExtensionProperty ((realizedOuterProductFunctor X).map (Limits.Sigma.map f)) :=
+  Quillen.homotopyExtensionProperty_of_iso_square _ _
     (realizedOuterProductSigmaIso X K) (realizedOuterProductSigmaIso X L)
     (realizedOuterProductSigmaIso_naturality X f) (homotopyExtensionProperty_sigma _ hf)
 
@@ -207,16 +207,16 @@ theorem realizedOuterProductSkeleton_isPushout (X K : SSet.{u}) (n : ℕ) :
 
 /-- The realized boundary leg is a genuine cofibration for every coefficient. -/
 theorem homotopyExtensionProperty_realizedDomainCellsBoundary (X K : SSet.{u}) (n : ℕ) :
-    homotopyExtensionProperty
+    Quillen.homotopyExtensionProperty
       ((realizedOuterProductFunctor X).map (domainCellsBoundaryι K n)) :=
   homotopyExtensionProperty_realizedOuterProductSigma X (fun _ : DomainCell K n ↦ ∂Δ[n].ι)
     (fun _ ↦ homotopyExtensionProperty_enrichedBoundary X n)
 
 /-- Every realized coefficient-product successor inclusion has HEP. -/
 theorem homotopyExtensionProperty_realizedDomainSkeletonSucc (X K : SSet.{u}) (n : ℕ) :
-    homotopyExtensionProperty
+    Quillen.homotopyExtensionProperty
       ((realizedOuterProductFunctor X).map (domainSkeletonSucc K n)) :=
-  homotopyExtensionProperty_pushout (realizedOuterProductSkeleton_isPushout X K n).flip
+  Quillen.homotopyExtensionProperty_pushout (realizedOuterProductSkeleton_isPushout X K n).flip
     (homotopyExtensionProperty_realizedDomainCellsBoundary X K n)
 
 /-- The ordinary skeleton is generated in dimensions strictly below its index. -/
@@ -405,7 +405,7 @@ theorem realizedOuterProductSigmaIso_coefficient {X Y : SSet.{u}} (f : X ⟶ Y)
 
 /-- The corresponding actual base boundary leg is a genuine cofibration. -/
 theorem homotopyExtensionProperty_realizationDomainCellsBoundary (K : SSet.{u}) (n : ℕ) :
-    homotopyExtensionProperty (SSet.toTop.map (domainCellsBoundaryι K n)) :=
-  homotopyExtensionProperty_realization_mono _
+    Quillen.homotopyExtensionProperty (SSet.toTop.map (domainCellsBoundaryι K n)) :=
+  Quillen.Realization.homotopyExtensionProperty_realization_mono _
 
 end Quillen.CartesianRealization.Skeletal

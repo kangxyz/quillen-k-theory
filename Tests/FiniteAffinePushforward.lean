@@ -23,6 +23,7 @@ namespace Tests.FiniteAffinePushforward
 variable {R S T : CommRingCat.{u}} [IsNoetherianRing R] [IsNoetherianRing S] [IsNoetherianRing T]
   (φ : R ⟶ S) (hφ : φ.hom.Finite)
 
+omit [IsNoetherianRing R] [IsNoetherianRing S] in
 /-- The source sheaf and actual geometric direct image are unchanged. -/
 theorem original_sheaf (M : FiniteTypeSheaves (Spec S)) :
     ((coherentPushforward φ hφ).obj M).obj =

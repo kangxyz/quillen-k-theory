@@ -27,7 +27,7 @@ set_option backward.defeqAttrib.useBackward true
 namespace Quillen.HomotopyPullback
 
 variable {E D T B : TopCat.{u}} (q : E ⟶ T) (p : D ⟶ T) (S : Set D)
-  {i : B ⟶ TopCat.of S} (R : TheoremA.CylinderStrongDeformationRetract i)
+  {i : B ⟶ TopCat.of S} (R : Quillen.CylinderStrongDeformationRetract i)
   (hR : R.H ≫ R.r = fst (TopCat.of S) TopCat.I ≫ R.r)
   (b : B ⟶ T) (hr : restrictedParameter p.hom S = b.hom.comp R.r.hom)
 

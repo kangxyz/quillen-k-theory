@@ -11,6 +11,7 @@ public import Quillen.Waldhausen.Fibration.RelativeRows.Completion
 public import Quillen.Waldhausen.Fibration.RelativeRows.RealizationLifting
 public import Quillen.Waldhausen.Fibration.RelativeRows.FiltrationWeakEquivalence
 public import Quillen.Waldhausen.Fibration.Rows.JointFactorization
+public import Quillen.Waldhausen.Fibration.Rows.ExtensionAxiom
 public import Quillen.Topology.HELP.FiberwiseWeakEquivalence
 
 /-! Consumers of the original degreewise relative-row maps. -/
@@ -56,20 +57,20 @@ theorem actual_relative_fiber_zero (x : |sSet V.cof V.weq|) :
 
 /-- The actual original coarse-weak cofibration chain is completed by genuine cofibers. -/
 def actual_chain_completion (F : ComposableArrows C n.len)
-    (hF : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), V.cof (F.map f))
-    (hw : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), N.coarse.weq (F.map f)) : Obj N n :=
+    (hF : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), V.cof (F.map f))
+    (hw : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), N.coarse.weq (F.map f)) : Obj N n :=
   relativeCompletion N F hF hw
 
 def actual_chain_recovery (F : ComposableArrows C n.len)
-    (hF : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), V.cof (F.map f))
-    (hw : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), N.coarse.weq (F.map f)) :
+    (hF : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), V.cof (F.map f))
+    (hw : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), N.coarse.weq (F.map f)) :
     F ≅ (initialFiltrationFunctor N n).obj (actual_chain_completion N n F hF hw) :=
   relativeCompletionInitialIso N F hF hw
 
 theorem actual_chain_recovery_forward (F : ComposableArrows C n.len)
-    (hF : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), V.cof (F.map f))
-    (hw : ∀ {i j : Fin (n.len+1)} (f : i ⟶ j), N.coarse.weq (F.map f))
-    (i : Fin (n.len+1)) :
+    (hF : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), V.cof (F.map f))
+    (hw : ∀ {i j : Fin (n.len + 1)} (f : i ⟶ j), N.coarse.weq (F.map f))
+    (i : Fin (n.len + 1)) :
     (actual_chain_recovery N n F hF hw).hom.app i =
       QuotientRows.completionQuotient V (zeroAugment V F) (zeroAugment_map_cof V F hF)
         (interval 0 i.succ (Fin.zero_le _)) := rfl
@@ -107,7 +108,7 @@ theorem actual_weak_filtration_inverse (he : ExtensionAxiom N.coarse) :
 
 section FiberwiseOriginalMaps
 variable {E F B : Type u} [TopologicalSpace E] [TopologicalSpace F] [TopologicalSpace B]
-  (p : C(E,B)) (q : C(F,B)) (f : C(E,F)) (sq : q.comp f = p)
+  (p : C(E, B)) (q : C(F, B)) (f : C(E, F)) (sq : q.comp f = p)
   (hp : HomotopyLiftingProperty p) (hq : HomotopyLiftingProperty q)
   (hf : ∀ b, CompactHomotopyExtensionLiftingProperty (HomotopyFiber.strictMapOver p q f sq b))
 

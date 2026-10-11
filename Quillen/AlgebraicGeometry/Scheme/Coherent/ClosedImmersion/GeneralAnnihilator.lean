@@ -79,7 +79,8 @@ genuine affine quotient charts. -/
 def coherentAnnihilatorEquivalence :
     FiniteTypeSheaves Z ≌ (annihilatedByClosedIdeal i).FullSubcategory :=
   (coherentPushforward i).toEssImage.asEquivalence |>.trans
-    ((CategoryTheory.Equivalence.refl : FiniteTypeSheaves X ≌ FiniteTypeSheaves X).congrFullSubcategory
+    ((CategoryTheory.Equivalence.refl :
+      FiniteTypeSheaves X ≌ FiniteTypeSheaves X).congrFullSubcategory
       (P := coherentKilled i) (Q := annihilatedByClosedIdeal i)
       (coherentKilled_eq_annihilatedByClosedIdeal i).symm)
 

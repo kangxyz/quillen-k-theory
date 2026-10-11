@@ -73,6 +73,7 @@ lemma acyclicNullhomotopy_natural (h0 : F.obj V.zero = W.zero) (t : unitInterval
     (acyclicCylinder_natural N M hF hFc h0) (unitInterval.symm t) x
 
 
+/-- The canonical homotopy-fiber map induced by the exact functor and its zero equality. -/
 def fiberFunctorMap (h0 : F.obj V.zero = W.zero) : C(
     HomotopyFiber (changeWeakMap N) N.coarse.kBasepoint,
     HomotopyFiber (changeWeakMap M) M.coarse.kBasepoint) :=

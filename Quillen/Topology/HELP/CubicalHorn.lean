@@ -70,6 +70,7 @@ theorem hornTop_square (n : ℕ) :
 /-- The bottom origin, also present for the zero-dimensional cube. -/
 def hornZero (n : ℕ) : Horn.{u} n := ⟨(zero n,0),Or.inr rfl⟩
 
+/-- Project the horn to its bottom face. -/
 def hornBottom (n : ℕ) : C(Horn.{u} n,Horn.{u} n) :=
   ⟨fun z ↦ ⟨(z.val.1,0),Or.inr rfl⟩,by fun_prop⟩
 
@@ -83,6 +84,7 @@ def hornLower (n : ℕ) : (ContinuousMap.id (Horn.{u} n)).Homotopy (hornBottom n
   map_zero_left z := by apply Subtype.ext; exact Prod.ext rfl (by simp)
   map_one_left z := by apply Subtype.ext; exact Prod.ext rfl (by simp [hornBottom])
 
+/-- Contract the bottom face of the horn to its zero vertex. -/
 def hornBottomContraction (n : ℕ) : (hornBottom n).Homotopy
     (ContinuousMap.const _ (hornZero n)) where
   toFun z := ⟨(contraction n (z.1,z.2.val.1),0),Or.inr rfl⟩
@@ -119,6 +121,7 @@ variable {n : ℕ} {Z : TopCat.{u}} (b : cube.{u} n ⟶ Z)
   (h : TopCat.of (Horn.{u} n) ⟶ Z)
   (w : boundaryInclusion n ≫ b = topRim n ≫ h)
 
+/-- The set-level gluing of the top-face map and horn map on the product boundary. -/
 def hornTopDescFun (z : ProductBoundary.{u} n) : Z := by
   classical
   exact if hz : z.val.1.down ∈ Cube.boundary (Fin n) ∨ z.val.2 = 0
@@ -184,8 +187,8 @@ theorem hornTop_isPushout (n : ℕ) :
 
 /-- Horn inclusion HEP is the genuine cobase change of cube-boundary HEP. -/
 theorem hornInclusion_hep (n : ℕ) :
-    TheoremA.homotopyExtensionProperty (hornInclusion.{u} n) :=
-  TheoremA.homotopyExtensionProperty_pushout (hornTop_isPushout n) (boundaryInclusion_hep n)
+    Quillen.homotopyExtensionProperty (hornInclusion.{u} n) :=
+  Quillen.homotopyExtensionProperty_pushout (hornTop_isPushout n) (boundaryInclusion_hep n)
 
 /-- Product-coordinate whole boundary equals the actual next cube boundary. -/
 def productBoundaryHomeomorph (n : ℕ) : ProductBoundary.{u} n ≃ₜ boundary.{u} (n+1) where
@@ -217,10 +220,10 @@ theorem productBoundaryInclusion_factor (n : ℕ) :
 
 /-- Whole-boundary HEP uses only the literal next-cube coordinate homeomorphism. -/
 theorem productBoundaryInclusion_hep (n : ℕ) :
-    TheoremA.homotopyExtensionProperty (productBoundaryInclusion.{u} n) := by
+    Quillen.homotopyExtensionProperty (productBoundaryInclusion.{u} n) := by
   rw [← productBoundaryInclusion_factor]
-  exact TheoremA.homotopyExtensionProperty_comp (TheoremA.homotopyExtensionProperty_of_isIso _)
-    (TheoremA.homotopyExtensionProperty_comp (boundaryInclusion_hep (n+1))
-      (TheoremA.homotopyExtensionProperty_of_isIso _))
+  exact Quillen.homotopyExtensionProperty_comp (Quillen.homotopyExtensionProperty_of_isIso _)
+    (Quillen.homotopyExtensionProperty_comp (boundaryInclusion_hep (n+1))
+      (Quillen.homotopyExtensionProperty_of_isIso _))
 
 end Quillen.CubicalTests

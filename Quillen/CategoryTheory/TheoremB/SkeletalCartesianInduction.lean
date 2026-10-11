@@ -19,6 +19,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
+open TheoremB (replacementProjectionTowerMap)
 variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
 
 /-- Every simplex in the actual base skeleton has its canonical cartesian chart. -/
@@ -97,21 +98,25 @@ theorem stageRestrictionCartesian (k n : ℕ) (hkn : k ≤ n) :
 exactly its prescribed point-replacement tower comparison. -/
 theorem stageComparison_cartesian (k n : ℕ) (hkn : k ≤ n) :
     ∃ e : ContinuousMap.HomotopyEquiv ((realizedReplacementSkeleton H).obj k)
-      (Quillen.CartesianRealization.Sequential.StagePullback (replacementProjectionTowerMap H) k n hkn),
-      e.toFun = Quillen.CartesianRealization.Sequential.stageComparison (replacementProjectionTowerMap H) k n hkn :=
+      (Quillen.CartesianRealization.Sequential.StagePullback
+        (replacementProjectionTowerMap H) k n hkn),
+      e.toFun = Quillen.CartesianRealization.Sequential.stageComparison
+        (replacementProjectionTowerMap H) k n hkn :=
   stageCartesian_of_restrictionCartesian H k n hkn
     (stageRestrictionCartesian H htrans k n hkn)
 
 /-- A chosen equivalence for the actual finite-stage comparison. -/
 def stageComparisonHomotopyEquiv (k n : ℕ) (hkn : k ≤ n) :
     ContinuousMap.HomotopyEquiv ((realizedReplacementSkeleton H).obj k)
-      (Quillen.CartesianRealization.Sequential.StagePullback (replacementProjectionTowerMap H) k n hkn) :=
+      (Quillen.CartesianRealization.Sequential.StagePullback
+        (replacementProjectionTowerMap H) k n hkn) :=
   (stageComparison_cartesian H htrans k n hkn).choose
 
 @[simp]
 theorem stageComparisonHomotopyEquiv_toFun (k n : ℕ) (hkn : k ≤ n) :
     (stageComparisonHomotopyEquiv H htrans k n hkn).toFun =
-      Quillen.CartesianRealization.Sequential.stageComparison (replacementProjectionTowerMap H) k n hkn :=
+      Quillen.CartesianRealization.Sequential.stageComparison
+        (replacementProjectionTowerMap H) k n hkn :=
   (stageComparison_cartesian H htrans k n hkn).choose_spec
 
 end Quillen.CartesianRealization.Skeletal

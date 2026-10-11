@@ -50,14 +50,13 @@ end Quillen.SchemeSheaf
 namespace Quillen.CoherentScheme
 
 /-- The geometric identity comparison lifts to actual coherent sheaves. -/
-def coherentRestrictionIdIso (X : Scheme.{u}) [IsLocallyNoetherian X] :
+def coherentRestrictionIdIso (X : Scheme.{u}) :
     finiteTypeSheavesRestriction (𝟙 X) ≅ 𝟭 (FiniteTypeSheaves X) :=
   Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules X)
     (Functor.isoWhiskerLeft (finiteTypeSheavesToModules X) Scheme.Modules.restrictFunctorId)
 
 /-- The geometric composition comparison lifts to actual coherent sheaves. -/
 def coherentRestrictionCompIso {V U X : Scheme.{u}}
-    [IsLocallyNoetherian X] [IsLocallyNoetherian U] [IsLocallyNoetherian V]
     (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] :
     finiteTypeSheavesRestriction (i ≫ j) ≅
       finiteTypeSheavesRestriction j ⋙ finiteTypeSheavesRestriction i :=

@@ -95,7 +95,10 @@ lemma extensionByZero_supported_counit_quasiIso {U X : Scheme.{u}}
     {K : Complex X} (hK : perfectSupported T.ι K) :
     QuasiIso ((extensionByZeroAdjunction j).counit.app K) := by
   let V : Bool → Scheme.{u} := fun b => if b then U else T.toScheme
-  let f : ∀ b, V b ⟶ X := fun b => by cases b; exact T.ι; exact j
+  let f : ∀ b, V b ⟶ X := fun b => by
+    cases b with
+    | false => exact T.ι
+    | true => exact j
   have : ∀ b, IsOpenImmersion (f b) := by intro b; cases b <;> dsimp [f] <;> infer_instance
   apply quasiIso_of_openImmersionCover _ V f
   · intro x

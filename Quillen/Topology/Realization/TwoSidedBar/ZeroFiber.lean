@@ -107,7 +107,8 @@ theorem barZeroFiberMap_isWeakHomotopyEquivalence
     (h : Quillen.CartesianRealization.Skeletal.TransitionWeakCartesian
       (Functor.whiskerLeft indexProjection η)) (b : |J.obj (op ⦋0⦌)|) :
     IsWeakHomotopyEquivalence (barZeroFiberMap η b) := by
-  have hc := Quillen.CartesianRealization.Skeletal.replacementVertexComparison_isWeakHomotopyEquivalence
+  have hc :=
+    Quillen.CartesianRealization.Skeletal.replacementVertexComparison_isWeakHomotopyEquivalence
     (Functor.whiskerLeft indexProjection η) h (AsSmall.up.obj (op ⦋0⦌))
   let u := (SSet.toTop.map (dropMap H)).hom.comp (SSet.toTop.map (barZeroInclusion H)).hom
   let v := (SSet.toTop.map (dropMap J)).hom.comp (SSet.toTop.map (barZeroInclusion J)).hom

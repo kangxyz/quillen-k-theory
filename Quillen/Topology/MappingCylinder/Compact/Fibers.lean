@@ -29,27 +29,30 @@ variable {A C M T : TopCat.{u}} {f : A ⟶ C}
   (sq : IsPushout (TopCat.ι₁ : A ⟶ A ⊗ TopCat.I) f l c) (base : C ⟶ T)
 
 /-- The mapping-cylinder collapse to `C` followed by the specified base map `C ⟶ T`. -/
-abbrev projection : M ⟶ T := TheoremA.mappingCylinderProjection sq ≫ base
+abbrev projection : M ⟶ T := Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base
 
 /-- The literal collapse on the original strict fiber. -/
 def collapseFiber (t : T) : C({m : M // projection sq base m = t}, {x : C // base x = t}) :=
-  ⟨fun z ↦ ⟨TheoremA.mappingCylinderProjection sq z.val, z.property⟩, by fun_prop⟩
+  ⟨fun z ↦ ⟨Quillen.MappingCylinder.mappingCylinderProjection sq z.val, z.property⟩, by fun_prop⟩
 
 /-- The literal target inclusion on the original strict fiber. -/
 def targetFiber (t : T) : C({x : C // base x = t}, {m : M // projection sq base m = t}) :=
   ⟨fun z ↦ ⟨c z.val, (ConcreteCategory.congr_hom
-    (TheoremA.mappingCylinderProjection_target_assoc sq base) z.val).trans z.property⟩,
+    (Quillen.MappingCylinder.mappingCylinderProjection_target_assoc sq base) z.val).trans
+      z.property⟩,
     by fun_prop⟩
 
 /-- The literal source inclusion on the original strict fiber. -/
 def sourceFiber (t : T) :
     C({a : A // (f ≫ base) a = t}, {m : M // projection sq base m = t}) :=
   ⟨fun z ↦ ⟨(TopCat.ι₀ ≫ l) z.val, (ConcreteCategory.congr_hom
-    (TheoremA.mappingCylinderProjection_start_assoc sq base) z.val).trans z.property⟩,
+    (Quillen.MappingCylinder.mappingCylinderProjection_start_assoc sq base) z.val).trans
+      z.property⟩,
     by fun_prop⟩
 
 @[simp] theorem collapseFiber_val (t : T) (z : {m : M // projection sq base m = t}) :
-    (collapseFiber sq base t z).val = TheoremA.mappingCylinderProjection sq z.val := rfl
+    (collapseFiber sq base t z).val = Quillen.MappingCylinder.mappingCylinderProjection sq z.val :=
+      rfl
 @[simp] theorem targetFiber_val (t : T) (z : {x : C // base x = t}) :
     (targetFiber sq base t z).val = c z.val := rfl
 @[simp] theorem sourceFiber_val (t : T) (z : {a : A // (f ≫ base) a = t}) :
@@ -70,7 +73,7 @@ def collapseFiberHomotopyEquiv (t : T) :
       z.val) }⟩
   right_inv := ⟨(ContinuousMap.Homotopy.refl (ContinuousMap.id _)).cast (by
     ext z
-    exact (ConcreteCategory.congr_hom (TheoremA.mappingCylinderProjection_target sq)
+    exact (ConcreteCategory.congr_hom (Quillen.MappingCylinder.mappingCylinderProjection_target sq)
       z.val).symm) rfl⟩
 
 @[simp] theorem collapseFiberHomotopyEquiv_toFun (t : T) :
@@ -83,7 +86,8 @@ theorem collapseFiber_sourceFiber (t : T) :
     (collapseFiber sq base t).comp (sourceFiber sq base t) =
       HomotopyFiber.strictMapOver (f ≫ base).hom base.hom f.hom rfl t := by
   ext z
-  exact ConcreteCategory.congr_hom (TheoremA.mappingCylinderProjection_start sq) z.val
+  exact ConcreteCategory.congr_hom (Quillen.MappingCylinder.mappingCylinderProjection_start sq)
+    z.val
 
 /-- Full prescribed-boundary HELP for the original source inclusion at one
 actual strict fiber, without any HLP assertion on the mapping cylinder. -/

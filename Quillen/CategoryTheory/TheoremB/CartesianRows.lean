@@ -74,7 +74,7 @@ def sigmaSquareHomotopyEquiv (a : ι → κ)
     (e : ∀ i, ContinuousMap.HomotopyEquiv (X i) (Y (a i))) :
     ContinuousMap.HomotopyEquiv (Σ i, X i)
       (HomotopyPullback (sigmaProjection Y) (discreteReindexMap a)) :=
-  (TheoremA.sigmaHomotopyEquiv e).trans (sigmaPullbackHomeomorph a).toHomotopyEquiv
+  (Quillen.sigmaHomotopyEquiv e).trans (sigmaPullbackHomeomorph a).toHomotopyEquiv
 
 /-- The homotopy equivalence uses exactly the canonical comparison map. -/
 @[simp]

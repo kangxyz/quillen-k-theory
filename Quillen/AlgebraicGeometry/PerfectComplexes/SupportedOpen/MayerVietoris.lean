@@ -22,6 +22,7 @@ universe u
 namespace Quillen.PerfectComplexes.SupportedMayerVietoris
 variable {V X : Scheme.{u}} (j : V ⟶ X) [IsOpenImmersion j] (T Z : X.Opens)
 
+/-- The commutative structure on original supported K-groups supplied by additivity. -/
 local instance (Y : Scheme.{u}) (A : Y.Opens) (n : ℕ) : CommGroup (PerfectSupportedK A.ι n) :=
   Waldhausen.Additivity.KCommGroup (perfectSupportedWaldhausen A.ι) n
 
@@ -131,6 +132,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u
 namespace Quillen.PerfectComplexes.SupportedMayerVietoris
 variable {V X : Scheme.{u}} (j : V ⟶ X) [IsOpenImmersion j] (T Z : X.Opens)
+/-- The commutative structure on original supported K-groups supplied by additivity. -/
 local instance (Y : Scheme.{u}) (A : Y.Opens) (n : ℕ) : CommGroup (PerfectSupportedK A.ι n) :=
   Waldhausen.Additivity.KCommGroup (perfectSupportedWaldhausen A.ι) n
 
@@ -294,6 +296,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u
 namespace Quillen.PerfectComplexes.SupportedMayerVietoris
+/-- The commutative structure on original supported K-groups supplied by additivity. -/
 local instance (Y : Scheme.{u}) (A : Y.Opens) (n : ℕ) : CommGroup (PerfectSupportedK A.ι n) :=
   Quillen.Waldhausen.Additivity.KCommGroup (perfectSupportedWaldhausen A.ι) n
 variable {V X : Scheme.{u}} [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace V]

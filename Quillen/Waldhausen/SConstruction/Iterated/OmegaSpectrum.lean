@@ -34,6 +34,7 @@ universe u
 namespace Quillen.Waldhausen.IteratedS
 open Fibration Fibration.RelativeRows TheoremA
 
+/-- The augmented row insertion indexed by the simplicial time map. -/
 def rowTime (W : Model.{u}) {n : SimplexCategory} (τ : n ⟶ ⦋1⦌) :
     W ⟶ (rows (addInitial.obj n)).obj W := (insertion (relativeTime τ)).app W
 
@@ -77,10 +78,12 @@ def stageRelativeCylinder (r : ℕ) (W : Model.{u}) :
       (((stages r).map (rowTime W z.2.down) ≫
         (stages r).map ((rowsReindex (addInitial.map α.unop)).app W)).naturality α) z.1
 
+/-- The zero vertex of the diagonal stage path diagram. -/
 def stagePathVertex (r : ℕ) (W : Model.{u}) : (diagonalSSet (pathDiagram W ⋙ stages r)).obj (op
     ⦋0⦌) :=
   stageVertex r ((rows (addInitial.obj ⦋0⦌)).obj W)
 
+/-- The realization of the zero vertex in the stage path diagram. -/
 def stagePathPoint (r : ℕ) (W : Model.{u}) : |diagonalSSet (pathDiagram W ⋙ stages r)| :=
   realizationPoint (stagePathVertex r W)
 
@@ -115,6 +118,7 @@ lemma stageTotalTailMap_point (r : ℕ) (W : Model.{u}) :
   rw [realizationPoint_naturality]
   exact congrArg realizationPoint (stageVertex_naturality r (rowTail W ⦋0⦌))
 
+/-- The simplicial homotopy from the constant zero map to the total stage-fiber inclusion. -/
 def stageRelativeHomotopy (r : ℕ) (W : Model.{u}) :
     SSet.Homotopy (SSet.const (X := (stages r).obj W) (stagePathVertex r W))
       (stageTotalFiberInclusion r W) where
@@ -123,6 +127,7 @@ def stageRelativeHomotopy (r : ℕ) (W : Model.{u}) :
   h₁ := stageRelativeCylinder_one r W
   rel := by ext n z; exact z.1.property.elim
 
+/-- The realized homotopy from the constant zero map to the total stage-fiber inclusion. -/
 def stageRelativeTopHomotopy (r : ℕ) (W : Model.{u}) :
     (ContinuousMap.const (stageSpace r W) (stagePathPoint r W)).Homotopy
       (SSet.toTop.map (stageTotalFiberInclusion r W)).hom where

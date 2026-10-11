@@ -37,9 +37,9 @@ def weakArrowJointData : Fibration.RowFactorization.JointData
     (perfectSupportedOppositeWaldhausen T.ι) (complexOppositeWaldhausen j T) (complexCorestrict j T)
     (complexCorestrict_exact j T) (complexCorestrict_op_exact j T) (complexOpposite_compatible j T)
     (perfectSupportedOppositeJointData T.ι) (complexOppositeJointData j T)
-      (complexCorestrict_op_jointIso j T)
-    (complexCorestrict_op_jointIso_inv_inl j T) (complexCorestrict_op_jointIso_inv_inr j T)
-    (complexCorestrict_op_jointIso_inv_projection j T)
+      (complexCorestrictOpJointIso j T)
+    (complexCorestrictOpJointIso_inv_inl j T) (complexCorestrictOpJointIso_inv_inr j T)
+    (complexCorestrictOpJointIso_inv_projection j T)
 
 end Quillen.PerfectComplexes.SupportedOpenDerivedImage
 

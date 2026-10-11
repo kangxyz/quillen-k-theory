@@ -57,6 +57,7 @@ def supportedNegativeKForgetNat : (n : ℕ) → supportedNegativeKFunctor.{u} n 
       (NatTrans.op Scheme.Bass.pairMinus) (supportedNegativeKForgetNat n) ≫
         (supportedContractionForgetIso (negativeKFunctor n)).hom
 
+/-- The component of the forget-support map on the actual iterated Bass groups. -/
 abbrev supportedNegativeKForget (A : QuasiCompactOpenPairs.{u}) (n : ℕ) :
     supportedNegativeK A n ⟶ negativeK (quasiCompactOpenPairsBase.obj A) n :=
   (supportedNegativeKForgetNat n).app (op A)

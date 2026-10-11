@@ -24,7 +24,6 @@ open CategoryTheory Limits
 open scoped Topology unitInterval
 universe u v w
 namespace Quillen.CubicalSubdivision
-open TheoremA
 variable {E : Type u} {F : Type v} [TopologicalSpace E] [TopologicalSpace F]
   {f : C(E, F)}
 
@@ -66,17 +65,20 @@ theorem BoundaryLifting.presentation (hf : BoundaryLifting f) (n : ℕ)
 /-- The actual relative cylinder-boundary test is the next canonical cube
 boundary, via the existing literal first-coordinate homeomorphism. -/
 theorem BoundaryLifting.cylinder (hf : BoundaryLifting f) (n : ℕ)
-    (a : C(CylinderBoundary (CubicalTests.boundaryPresentation.{w} n).map, E))
+    (a : C(Quillen.CylinderBoundary (CubicalTests.boundaryPresentation.{w} n).map, E))
     (b : C(CubicalTests.cube.{w} n × unitInterval, F))
-    (hab : ∀ z, f (a z) = b (cylinderBoundaryMap (CubicalTests.boundaryPresentation n).map z)) :
+    (hab : ∀ z, f (a z) = b (Quillen.CylinderBoundary.cylinderBoundaryMap
+      (CubicalTests.boundaryPresentation n).map z)) :
     ∃ c : C(CubicalTests.cube.{w} n × unitInterval,E),
-      (∀ z,c (cylinderBoundaryMap (CubicalTests.boundaryPresentation n).map z) = a z) ∧
+      (∀ z,c (Quillen.CylinderBoundary.cylinderBoundaryMap (CubicalTests.boundaryPresentation n).map
+        z) = a z) ∧
         f.comp c = b := by
   let e := CubicalTests.stepHomeomorph.{w} n
   let b' := b.comp ⟨e.symm,e.symm.continuous⟩
   have hab' (z : (CubicalTests.boundaryPresentation.{w} (n+1)).space) :
       f (a z) = b' ((CubicalTests.boundaryPresentation (n+1)).map z) := by
-    change f (a z) = b (e.symm (e (cylinderBoundaryMap (CubicalTests.boundaryPresentation n).map
+    change f (a z) = b (e.symm (e (Quillen.CylinderBoundary.cylinderBoundaryMap
+      (CubicalTests.boundaryPresentation n).map
       z)))
     rw [Homeomorph.symm_apply_apply]
     exact hab z
@@ -115,59 +117,78 @@ theorem BoundaryLifting.homotopy_injective (hf : BoundaryLifting f) (x : E) (n :
         TopCat.ofHom ⟨Sum.elim (fun z ↦ p z.down) (fun z ↦ q z.down),
           (p.val.continuous.comp continuous_uliftDown).sumElim
             (q.val.continuous.comp continuous_uliftDown)⟩
-      have w : cylinderBoundaryEnds P.space ≫ S = cylinderBoundarySumMap P.map ≫ caps := by
+      have w : Quillen.CylinderBoundary.cylinderBoundaryEnds P.space ≫ S =
+        Quillen.CylinderBoundary.cylinderBoundarySumMap P.map ≫ caps := by
         ext z
         rcases z with a | a
         · exact (GenLoop.boundary p (P.map a).down (P.lands a)).symm
         · exact (GenLoop.boundary q (P.map a).down (P.lands a)).symm
-      let d : CylinderBoundary P.map ⟶ TopCat.of E := pushout.desc S caps w
-      have hS : cylinderBoundarySide P.map ≫ d = S := pushout.inl_desc _ _ _
-      have hcaps : cylinderBoundaryCaps P.map ≫ d = caps := pushout.inr_desc _ _ _
+      let d : Quillen.CylinderBoundary P.map ⟶ TopCat.of E := pushout.desc S caps w
+      have hS : Quillen.CylinderBoundary.cylinderBoundarySide P.map ≫ d = S := pushout.inl_desc _ _
+        _
+      have hcaps : Quillen.CylinderBoundary.cylinderBoundaryCaps P.map ≫ d = caps :=
+        pushout.inr_desc _ _ _
       let k : C(CubicalTests.cube.{u} n × unitInterval,F) :=
         ⟨fun z ↦ H (z.2,z.1.down),H.continuous.comp
           (continuous_snd.prodMk (continuous_uliftDown.comp continuous_fst))⟩
-      have hw (z : CylinderBoundary P.map) : f (d z) = k (cylinderBoundaryMap P.map z) := by
-        obtain ⟨z,rfl⟩ := pushout_sum_surjective (cylinderBoundary_isPushout P.map) z
+      have hw (z : Quillen.CylinderBoundary P.map) : f (d z) = k
+        (Quillen.CylinderBoundary.cylinderBoundaryMap P.map z) := by
+        obtain ⟨z,rfl⟩ := pushout_sum_surjective
+          (Quillen.CylinderBoundary.cylinderBoundary_isPushout P.map) z
         rcases z with ⟨a,t⟩ | (z | z)
-        · change f (d (cylinderBoundarySide P.map (a,t))) =
-            k (cylinderBoundaryMap P.map (cylinderBoundarySide P.map (a,t)))
-          have hd : d (cylinderBoundarySide P.map (a,t)) = x :=
+        · change f (d (Quillen.CylinderBoundary.cylinderBoundarySide P.map (a,t))) =
+            k (Quillen.CylinderBoundary.cylinderBoundaryMap P.map
+              (Quillen.CylinderBoundary.cylinderBoundarySide P.map (a,t)))
+          have hd : d (Quillen.CylinderBoundary.cylinderBoundarySide P.map (a,t)) = x :=
             ConcreteCategory.congr_hom hS (a,t)
-          have hj : cylinderBoundaryMap P.map (cylinderBoundarySide P.map (a,t)) = (P.map a,t) :=
-            ConcreteCategory.congr_hom (cylinderBoundarySide_map P.map) (a,t)
+          have hj : Quillen.CylinderBoundary.cylinderBoundaryMap P.map
+            (Quillen.CylinderBoundary.cylinderBoundarySide P.map (a,t)) = (P.map a,t) :=
+            ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundarySide_map P.map)
+              (a,t)
           rw [hd,hj]
           exact ((H.eq_fst t (P.lands a)).trans
             (congrArg f (GenLoop.boundary p (P.map a).down (P.lands a)))).symm
-        · change f (d (cylinderBoundaryCaps P.map (Sum.inl z))) =
-            k (cylinderBoundaryMap P.map (cylinderBoundaryCaps P.map (Sum.inl z)))
-          have hd : d (cylinderBoundaryCaps P.map (Sum.inl z)) = p z.down :=
+        · change f (d (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inl z))) =
+            k (Quillen.CylinderBoundary.cylinderBoundaryMap P.map
+              (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inl z)))
+          have hd : d (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inl z)) = p z.down
+            :=
             ConcreteCategory.congr_hom hcaps (Sum.inl z)
-          have hj : cylinderBoundaryMap P.map (cylinderBoundaryCaps P.map (Sum.inl z)) = (z,0) :=
-            ConcreteCategory.congr_hom (cylinderBoundaryCaps_map P.map) (Sum.inl z)
+          have hj : Quillen.CylinderBoundary.cylinderBoundaryMap P.map
+            (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inl z)) = (z,0) :=
+            ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundaryCaps_map P.map)
+              (Sum.inl z)
           rw [hd,hj]
           exact (H.apply_zero z.down).symm
-        · change f (d (cylinderBoundaryCaps P.map (Sum.inr z))) =
-            k (cylinderBoundaryMap P.map (cylinderBoundaryCaps P.map (Sum.inr z)))
-          have hd : d (cylinderBoundaryCaps P.map (Sum.inr z)) = q z.down :=
+        · change f (d (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inr z))) =
+            k (Quillen.CylinderBoundary.cylinderBoundaryMap P.map
+              (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inr z)))
+          have hd : d (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inr z)) = q z.down
+            :=
             ConcreteCategory.congr_hom hcaps (Sum.inr z)
-          have hj : cylinderBoundaryMap P.map (cylinderBoundaryCaps P.map (Sum.inr z)) = (z,1) :=
-            ConcreteCategory.congr_hom (cylinderBoundaryCaps_map P.map) (Sum.inr z)
+          have hj : Quillen.CylinderBoundary.cylinderBoundaryMap P.map
+            (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inr z)) = (z,1) :=
+            ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundaryCaps_map P.map)
+              (Sum.inr z)
           rw [hd,hj]
           exact (H.apply_one z.down).symm
       obtain ⟨c,hc,_⟩ := hf.cylinder n d.hom k hw
       have hside (a : P.space) (t : unitInterval) : c (P.map a,t) = x := by
-        have he := hc (cylinderBoundarySide P.map (a,t))
-        have hs := ConcreteCategory.congr_hom (cylinderBoundarySide_map P.map) (a,t)
+        have he := hc (Quillen.CylinderBoundary.cylinderBoundarySide P.map (a,t))
+        have hs := ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundarySide_map
+          P.map) (a,t)
         have hd := ConcreteCategory.congr_hom hS (a,t)
         exact (congrArg c hs).symm.trans (he.trans hd)
       have hzero (z : CubicalTests.cube.{u} n) : c (z,0) = p z.down := by
-        have he := hc (cylinderBoundaryCaps P.map (Sum.inl z))
-        have hs := ConcreteCategory.congr_hom (cylinderBoundaryCaps_map P.map) (Sum.inl z)
+        have he := hc (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inl z))
+        have hs := ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundaryCaps_map
+          P.map) (Sum.inl z)
         have hd := ConcreteCategory.congr_hom hcaps (Sum.inl z)
         exact (congrArg c hs).symm.trans (he.trans hd)
       have hone (z : CubicalTests.cube.{u} n) : c (z,1) = q z.down := by
-        have he := hc (cylinderBoundaryCaps P.map (Sum.inr z))
-        have hs := ConcreteCategory.congr_hom (cylinderBoundaryCaps_map P.map) (Sum.inr z)
+        have he := hc (Quillen.CylinderBoundary.cylinderBoundaryCaps P.map (Sum.inr z))
+        have hs := ConcreteCategory.congr_hom (Quillen.CylinderBoundary.cylinderBoundaryCaps_map
+          P.map) (Sum.inr z)
         have hd := ConcreteCategory.congr_hom hcaps (Sum.inr z)
         exact (congrArg c hs).symm.trans (he.trans hd)
       apply Quotient.sound

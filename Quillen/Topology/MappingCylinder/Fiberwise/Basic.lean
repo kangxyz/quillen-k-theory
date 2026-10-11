@@ -6,8 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.CategoryTheory.TheoremA.IntervalEndpoints
-public import Quillen.CategoryTheory.TheoremA.RealizationPushoutInvariance
+public import Quillen.Topology.HELP.IntervalEndpoints
 
 /-!
 # Parameter-preserving cylinder extension
@@ -55,9 +54,9 @@ theorem simplexBoundaryHomotopyExtension_invariant
 /-- The endpoint-pair coordinate homeomorphism retains the external parameter. -/
 theorem intervalEndpointDomainHomeomorph_symm_parameter
     (X : Type u) [TopologicalSpace X] (x : X) (b : simplexBoundary 1) :
-    Sum.elim id id ((TheoremA.intervalEndpointDomainHomeomorph X).symm (x, b)) = x := by
+    Sum.elim id id ((Quillen.intervalEndpointDomainHomeomorph X).symm (x, b)) = x := by
   classical
-  change Sum.elim id id (if b = TheoremA.boundaryZero then Sum.inl x else Sum.inr x) = x
+  change Sum.elim id id (if b = Quillen.boundaryZero then Sum.inl x else Sum.inr x) = x
   split_ifs <;> rfl
 
 /-- Initial interval data in one-simplex coordinates. -/
@@ -68,7 +67,7 @@ def intervalEndpointInitial {X Y : Type u} [TopologicalSpace X] [TopologicalSpac
 /-- Endpoint homotopies in one-simplex-boundary coordinates. -/
 def intervalEndpointSide {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y]
     (H : C((X ⊕ X) × I, Y)) : C((X × simplexBoundary 1) × I, Y) :=
-  ⟨fun z ↦ H ((TheoremA.intervalEndpointDomainHomeomorph X).symm z.1, z.2), by fun_prop⟩
+  ⟨fun z ↦ H ((Quillen.intervalEndpointDomainHomeomorph X).symm z.1, z.2), by fun_prop⟩
 
 theorem intervalEndpoint_compatible
     {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y]
@@ -77,14 +76,14 @@ theorem intervalEndpoint_compatible
     (h₁ : ∀ x, H (Sum.inr x, 0) = f (x, 1)) :
     ∀ x b, intervalEndpointSide H ((x, b), 0) = intervalEndpointInitial f (x, b.1) := by
   intro x b
-  rcases TheoremA.boundary_eq_zero_or_one b with rfl | rfl
-  · change H ((TheoremA.intervalEndpointDomainHomeomorph X).symm
-      ((TheoremA.intervalEndpointDomainHomeomorph X) (Sum.inl x)), 0) =
+  rcases Quillen.boundary_eq_zero_or_one b with rfl | rfl
+  · change H ((Quillen.intervalEndpointDomainHomeomorph X).symm
+      ((Quillen.intervalEndpointDomainHomeomorph X) (Sum.inl x)), 0) =
       f (x, StdSimplex.homeomorphI (StdSimplex.single 0))
     rw [Homeomorph.symm_apply_apply, StdSimplex.homeomorphI_single_zero]
     exact h₀ x
-  · change H ((TheoremA.intervalEndpointDomainHomeomorph X).symm
-      ((TheoremA.intervalEndpointDomainHomeomorph X) (Sum.inr x)), 0) =
+  · change H ((Quillen.intervalEndpointDomainHomeomorph X).symm
+      ((Quillen.intervalEndpointDomainHomeomorph X) (Sum.inr x)), 0) =
       f (x, StdSimplex.homeomorphI (StdSimplex.single 1))
     rw [Homeomorph.symm_apply_apply, StdSimplex.homeomorphI_single_one]
     exact h₁ x
@@ -119,13 +118,13 @@ theorem intervalEndpointExtension_left (x : X) (t : I) :
     intervalEndpointExtension f H h₀ h₁ ((x, 0), t) = H (Sum.inl x, t) := by
   change simplexBoundaryHomotopyExtension 1 (intervalEndpointInitial f) (intervalEndpointSide H)
     (intervalEndpoint_compatible f H h₀ h₁) ((x, StdSimplex.homeomorphI.symm 0), t) = _
-  have he : StdSimplex.homeomorphI.symm 0 = (TheoremA.boundaryZero).1 := by
+  have he : StdSimplex.homeomorphI.symm 0 = (Quillen.boundaryZero).1 := by
     apply StdSimplex.homeomorphI.injective
     rw [Homeomorph.apply_symm_apply]
     exact StdSimplex.homeomorphI_single_zero.symm
   rw [he, simplexBoundaryHomotopyExtension_side]
-  change H ((TheoremA.intervalEndpointDomainHomeomorph X).symm
-    ((TheoremA.intervalEndpointDomainHomeomorph X) (Sum.inl x)), t) = _
+  change H ((Quillen.intervalEndpointDomainHomeomorph X).symm
+    ((Quillen.intervalEndpointDomainHomeomorph X) (Sum.inl x)), t) = _
   rw [Homeomorph.symm_apply_apply]
 
 @[simp]
@@ -133,13 +132,13 @@ theorem intervalEndpointExtension_right (x : X) (t : I) :
     intervalEndpointExtension f H h₀ h₁ ((x, 1), t) = H (Sum.inr x, t) := by
   change simplexBoundaryHomotopyExtension 1 (intervalEndpointInitial f) (intervalEndpointSide H)
     (intervalEndpoint_compatible f H h₀ h₁) ((x, StdSimplex.homeomorphI.symm 1), t) = _
-  have he : StdSimplex.homeomorphI.symm 1 = (TheoremA.boundaryOne).1 := by
+  have he : StdSimplex.homeomorphI.symm 1 = (Quillen.boundaryOne).1 := by
     apply StdSimplex.homeomorphI.injective
     rw [Homeomorph.apply_symm_apply]
     exact StdSimplex.homeomorphI_single_one.symm
   rw [he, simplexBoundaryHomotopyExtension_side]
-  change H ((TheoremA.intervalEndpointDomainHomeomorph X).symm
-    ((TheoremA.intervalEndpointDomainHomeomorph X) (Sum.inr x)), t) = _
+  change H ((Quillen.intervalEndpointDomainHomeomorph X).symm
+    ((Quillen.intervalEndpointDomainHomeomorph X) (Sum.inr x)), t) = _
   rw [Homeomorph.symm_apply_apply]
 
 /-- Parameter-preserving endpoint extension: a common base map remains
@@ -154,7 +153,7 @@ theorem intervalEndpointExtension_invariant (q : Y → W) (base : X → W)
   · intro x b
     exact hf x _
   · intro x b t
-    change q (H ((TheoremA.intervalEndpointDomainHomeomorph X).symm (x, b), t)) = base x
+    change q (H ((Quillen.intervalEndpointDomainHomeomorph X).symm (x, b), t)) = base x
     rw [hH, intervalEndpointDomainHomeomorph_symm_parameter]
 
 end Quillen

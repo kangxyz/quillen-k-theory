@@ -30,6 +30,7 @@ universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace Quillen.PerfectComplexes
+/-- The standard derived model used for the original open pushforward comparisons. -/
 local instance openPushforwardStandardDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules
   :=
   HasDerivedCategory.standard _

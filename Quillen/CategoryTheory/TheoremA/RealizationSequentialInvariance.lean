@@ -7,7 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.CategoryTheory.TheoremA.SequentialHomotopyInvariance
-public import Quillen.CategoryTheory.TheoremA.RealizationCofibrationEquiv
+public import Quillen.Topology.DeformationRetract.Cofibration
 public import Quillen.CategoryTheory.TheoremA.RealizationColimitHomotopy
 public import Quillen.Topology.HomotopyFiber.SourceEquivalence
 
@@ -43,7 +43,7 @@ namespace Quillen.TheoremA
 lower successor map adjusts the upper-stage inverse to extend the preceding
 inverse exactly, without changing the specified forward map. -/
 theorem exists_compatible_inverse {A B C D : TopCat.{u}}
-    (i : A ⟶ B) (j : C ⟶ D) (hj : homotopyExtensionProperty j)
+    (i : A ⟶ B) (j : C ⟶ D) (hj : Quillen.homotopyExtensionProperty j)
     (e₀ : ContinuousMap.HomotopyEquiv A C) (e₁ : ContinuousMap.HomotopyEquiv B D)
     (sq : j.hom.comp e₀.toFun = e₁.toFun.comp i.hom) :
     ∃ e : ContinuousMap.HomotopyEquiv B D,
@@ -62,7 +62,7 @@ theorem exists_compatible_inverse {A B C D : TopCat.{u}}
   let K : (e₁.invFun.comp j.hom).Homotopy (i.hom.comp e₀.invFun) :=
     (L.cast rfl heq).trans
       ((H₁.comp (ContinuousMap.Homotopy.refl (i.hom.comp e₀.invFun))).cast rfl rfl)
-  obtain ⟨Q, hQ₀, hQ⟩ := homotopyExtensionProperty_continuous hj B
+  obtain ⟨Q, hQ₀, hQ⟩ := Quillen.homotopyExtensionProperty_continuous hj B
     e₁.invFun K.toContinuousMap K.map_zero_left
   let r : C(D, B) := ⟨fun x ↦ Q (1, x), Q.continuous.comp (continuous_const.prodMk continuous_id)⟩
   let R : e₁.invFun.Homotopy r := {

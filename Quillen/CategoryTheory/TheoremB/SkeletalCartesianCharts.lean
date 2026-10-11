@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.CategoryTheory.TheoremB.ReplacementSplitting
 public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianOne
 public import Quillen.Topology.HomotopyPullback.Pushout
 
@@ -127,7 +128,7 @@ nondegenerate ancestor, via an actual isomorphism. -/
 def simplexChartEpiCoefficientIso {n k : ℕ} (α : ⦋n⦌ ⟶ ⦋k⦌) [Epi α]
     (s : (nerve D).obj (op ⦋k⦌)) :
     H.obj (s.obj 0) ≅ H.obj (((nerve D).map α.op s).obj 0) := by
-  letI := firstVertexEdge_epi_isIso (D := D) α.op s
+  letI := Quillen.TheoremB.firstVertexEdge_epi_isIso (D := D) α.op s
   exact asIso (H.map (firstVertexEdge α.op s))
 
 /-- Unique nondegenerate presentation inside an arbitrary target restriction.

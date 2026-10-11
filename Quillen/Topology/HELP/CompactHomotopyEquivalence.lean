@@ -7,7 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.Topology.HELP.CompactRealizationLifting
-public import Quillen.CategoryTheory.TheoremA.RealizationRows
+public import Quillen.Topology.Realization.Coproduct
 
 /-!
 # Compact HELP gives actual homotopy equivalences between realizations
@@ -31,7 +31,7 @@ open TheoremA
 
 /-- Both endpoints of a simplicial cylinder, as an explicit coproduct map. -/
 def simplicialCylinderEndpoints (X : SSet.{u}) :
-    simplicialSigma (fun _ : ULift.{u} Bool ↦ X) ⟶ X ⊗ Δ[1] where
+    Quillen.Realization.simplicialSigma (fun _ : ULift.{u} Bool ↦ X) ⟶ X ⊗ Δ[1] where
   app p := ↾fun z ↦ if z.1.down then (SSet.ι₁ (X := X)).app p z.2 else (SSet.ι₀ (X := X)).app p z.2
   naturality p q α := by
     ext ⟨⟨b⟩, x⟩ : 3
@@ -41,12 +41,14 @@ def simplicialCylinderEndpoints (X : SSet.{u}) :
 
 @[simp]
 theorem simplicialCylinderEndpoints_zero (X : SSet.{u}) :
-    simplicialSigmaι (fun _ : ULift.{u} Bool ↦ X) ⟨false⟩ ≫ simplicialCylinderEndpoints X =
+    Quillen.Realization.simplicialSigmaι (fun _ : ULift.{u} Bool ↦ X) ⟨false⟩ ≫
+      simplicialCylinderEndpoints X =
       SSet.ι₀ := rfl
 
 @[simp]
 theorem simplicialCylinderEndpoints_one (X : SSet.{u}) :
-    simplicialSigmaι (fun _ : ULift.{u} Bool ↦ X) ⟨true⟩ ≫ simplicialCylinderEndpoints X =
+    Quillen.Realization.simplicialSigmaι (fun _ : ULift.{u} Bool ↦ X) ⟨true⟩ ≫
+      simplicialCylinderEndpoints X =
       SSet.ι₁ := rfl
 
 /-- The two endpoint copies are disjoint and each is simplicially embedded. -/
@@ -72,21 +74,25 @@ def homotopyOfRealizedEndpointLifting {E B : TopCat.{u}} (p : E ⟶ B)
     (hp : HasLiftingProperty (SSet.toTop.map (simplicialCylinderEndpoints X)) p)
     (a₀ a₁ : |X| ⟶ E) (b : |X| ⟶ B) (h₀ : a₀ ≫ p = b) (h₁ : a₁ ≫ p = b) :
     TopCat.Homotopy a₀ a₁ := by
-  let a := Cofan.IsColimit.desc (realizedSigmaIsColimit (fun _ : ULift.{u} Bool ↦ X))
+  let a := Cofan.IsColimit.desc (Quillen.Realization.realizedSigmaIsColimit (fun _ : ULift.{u} Bool
+    ↦ X))
     (fun t ↦ if t.down then a₁ else a₀)
-  have ha (t : ULift.{u} Bool) : SSet.toTop.map (simplicialSigmaι (fun _ : ULift.{u} Bool ↦ X)
+  have ha (t : ULift.{u} Bool) : SSet.toTop.map (Quillen.Realization.simplicialSigmaι (fun _ :
+    ULift.{u} Bool ↦ X)
     t) ≫ a =
       if t.down then a₁ else a₀ := Cofan.IsColimit.fac
-        (realizedSigmaIsColimit (fun _ : ULift.{u} Bool ↦ X))
+        (Quillen.Realization.realizedSigmaIsColimit (fun _ : ULift.{u} Bool ↦ X))
         (fun t ↦ if t.down then a₁ else a₀) t
   let q := SSet.toTop.map (fst X Δ[1]) ≫ b
   have sq : CommSq a (SSet.toTop.map (simplicialCylinderEndpoints X)) p q := by
     constructor
-    apply (realizedSigmaIsColimit (fun _ : ULift.{u} Bool ↦ X)).hom_ext
+    apply (Quillen.Realization.realizedSigmaIsColimit (fun _ : ULift.{u} Bool ↦ X)).hom_ext
     intro ⟨⟨t⟩⟩
-    change SSet.toTop.map (simplicialSigmaι (fun _ : ULift.{u} Bool ↦ X) ⟨t⟩) ≫ a ≫ p = _
+    change SSet.toTop.map (Quillen.Realization.simplicialSigmaι (fun _ : ULift.{u} Bool ↦ X) ⟨t⟩) ≫
+      a ≫ p = _
     rw [← Category.assoc, ha]
-    change _ = SSet.toTop.map (simplicialSigmaι (fun _ : ULift.{u} Bool ↦ X) ⟨t⟩) ≫
+    change _ = SSet.toTop.map (Quillen.Realization.simplicialSigmaι (fun _ : ULift.{u} Bool ↦ X)
+      ⟨t⟩) ≫
       SSet.toTop.map (simplicialCylinderEndpoints X) ≫ SSet.toTop.map (fst X Δ[1]) ≫ b
     rw [← Functor.map_comp_assoc, ← Functor.map_comp_assoc]
     cases t
@@ -100,7 +106,7 @@ def homotopyOfRealizedEndpointLifting {E B : TopCat.{u}} (p : E ⟶ B)
   have hL₁ : SSet.toTop.map (SSet.ι₁ (X := X)) ≫ L = a₁ := by
     rw [← simplicialCylinderEndpoints_one X, Functor.map_comp, Category.assoc, sq.fac_left, ha]
     simp
-  exact homotopyOfCylinder ((realizationCylinderIso X).inv ≫ L)
+  exact Quillen.homotopyOfCylinder ((realizationCylinderIso X).inv ≫ L)
     (by rw [← Category.assoc, realizationCylinderIso_inv_zero, hL₀])
     (by rw [← Category.assoc, realizationCylinderIso_inv_one, hL₁])
 

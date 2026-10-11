@@ -34,6 +34,8 @@ open Waldhausen
 attribute [local instance] HasDerivedCategory.standard Abelian.hasFiniteBiproducts
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens)
 
+/-- The full category of supported perfect complexes in the actual supported
+derived restriction image. -/
 abbrev Obj := (objects j T).FullSubcategory
 
 /-- The actual chosen supported zero belongs to the supported restriction image. -/
@@ -199,11 +201,13 @@ def flattenKEquiv (n : ℕ) : h.waldhausenStructure.K n ≃* (complexWaldhausen 
 
 /-- The forward K comparison is the actual original flattening map. -/
 @[simp] theorem flattenKEquiv_toMonoidHom (n : ℕ) :
-    (flattenKEquiv j T h n).toMonoidHom = KMap (flatten_exact j T h) n := rfl
+    (flattenKEquiv j T h n :
+      h.waldhausenStructure.K n →* (complexWaldhausen j T).K n) =
+        KMap (flatten_exact j T h) n := rfl
 
 /-- Original inclusion commutes with the flattening K comparison. -/
 theorem flattenKEquiv_inclusion (n : ℕ) :
-    (KMap (inclusion_exact j T) n).comp (flattenKEquiv j T h n).toMonoidHom =
+    (KMap (inclusion_exact j T) n).comp (flattenKEquiv j T h n) =
       KMap h.inclusion_exact n := by
   rw [flattenKEquiv_toMonoidHom, Quillen.Waldhausen.KMap_comp_KMap]
 
@@ -231,8 +235,8 @@ theorem inclusion_KMap_injective
   obtain ⟨b, rfl⟩ := (flattenKEquiv j T h n).surjective y
   apply congrArg (flattenKEquiv j T h n)
   apply h.inclusion_KMap_injective_general D hs n
-  change ((KMap (inclusion_exact j T) n).comp (flattenKEquiv j T h n).toMonoidHom) a =
-    ((KMap (inclusion_exact j T) n).comp (flattenKEquiv j T h n).toMonoidHom) b at hxy
+  change ((KMap (inclusion_exact j T) n).comp (flattenKEquiv j T h n)) a =
+    ((KMap (inclusion_exact j T) n).comp (flattenKEquiv j T h n)) b at hxy
   rwa [flattenKEquiv_inclusion] at hxy
 
 /-- The inverse flattening comparison retains the same original inclusion homomorphism. -/
@@ -241,12 +245,14 @@ theorem flattenKEquiv_symm_inclusion (n : ℕ) :
       KMap (inclusion_exact j T) n := by
   ext x
   have hx := DFunLike.congr_fun (flattenKEquiv_inclusion j T h n) ((flattenKEquiv j T h n).symm x)
-  simpa using hx.symm
+  exact hx.symm.trans (congrArg (KMap (inclusion_exact j T) n)
+    ((flattenKEquiv j T h n).apply_symm_apply x))
 
 /-- Flattening preserves the entire actual inclusion range in every degree. -/
 theorem flatten_inclusion_range (n : ℕ) :
     (KMap (inclusion_exact j T) n).range = (KMap h.inclusion_exact n).range := by
-  have hr : (flattenKEquiv j T h n).toMonoidHom.range = ⊤ :=
+  have hr : (flattenKEquiv j T h n :
+      h.waldhausenStructure.K n →* (complexWaldhausen j T).K n).range = ⊤ :=
     MonoidHom.range_eq_top.mpr (flattenKEquiv j T h n).surjective
   rw [← flattenKEquiv_inclusion j T h n, MonoidHom.range_comp, hr, Subgroup.map_top]
 

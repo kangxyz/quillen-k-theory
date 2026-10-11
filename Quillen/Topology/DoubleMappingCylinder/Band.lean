@@ -34,7 +34,7 @@ theorem bandToInterior_isEmbedding (lo hi : I) : IsEmbedding (bandToInterior lo 
 
 variable {A B C D : TopCat.{u}} (f : A ⟶ B) (g : A ⟶ C)
   {l : A ⊗ TopCat.I ⟶ D} {e : TopCat.of (B ⊕ C) ⟶ D}
-  (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e) (lo hi : I)
+  (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e) (lo hi : I)
 
 /-- The middle band with its actual subspace topology. -/
 abbrev BandSpace := {d : D // lo < height f g sq d ∧ height f g sq d < hi}

@@ -75,12 +75,13 @@ example {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
       Quillen.Scheme.restrictK j n ((vectorBundleToStrictKEquiv X n).symm y) := by
   apply (vectorBundleToStrictKEquiv U n).injective
   rw [MulEquiv.apply_symm_apply]
+  change strictKRestrict j n y = vectorBundleToStrictKMap U n
+    (Quillen.Scheme.restrictK j n ((vectorBundleToStrictKEquiv X n).symm y))
   have h := DFunLike.congr_fun (vectorBundleToStrictKMap_restrict j n)
     ((vectorBundleToStrictKEquiv X n).symm y)
   change strictKRestrict j n ((vectorBundleToStrictKEquiv X n)
     ((vectorBundleToStrictKEquiv X n).symm y)) = _ at h
-  simpa only [MulEquiv.apply_symm_apply, MonoidHom.comp_apply,
-    ← vectorBundleToStrictKEquiv_coe, MulEquiv.coe_toMonoidHom] using h
+  simpa only [MulEquiv.apply_symm_apply, MonoidHom.comp_apply] using h
 
 example {V U X : Scheme.{u}} [IsLocallyNoetherian V]
     [IsLocallyNoetherian U] [IsLocallyNoetherian X]
@@ -89,6 +90,7 @@ example {V U X : Scheme.{u}} [IsLocallyNoetherian V]
     Quillen.Scheme.restrictG i 0
       (Quillen.Scheme.restrictG j 0 (Quillen.Scheme.KToG X 0 x)) =
       Quillen.Scheme.KToG V 0 (Quillen.Scheme.restrictK (i ≫ j) 0 x) := by
-  rw [← DFunLike.congr_fun (Quillen.Scheme.restrictG_comp i j 0)
-    (Quillen.Scheme.KToG X 0 x)]
+  change ((Quillen.Scheme.restrictG i 0).comp (Quillen.Scheme.restrictG j 0))
+    (Quillen.Scheme.KToG X 0 x) = _
+  rw [← Quillen.Scheme.restrictG_comp]
   exact Quillen.Scheme.KToG_restrict_apply (i ≫ j) 0 x

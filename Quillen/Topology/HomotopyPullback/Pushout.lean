@@ -43,7 +43,7 @@ def baseMapCongr {X A B : Type u} [TopologicalSpace X] [TopologicalSpace A] [Top
 
 /-- The double mapping cylinder of the span `B ← A → C`, defined by its endpoint pushout. -/
 abbrev Cylinder {A B C : TopCat.{u}} (f : A ⟶ B) (g : A ⟶ C) : TopCat.{u} :=
-  pushout (TheoremA.intervalEndpoints A) (DoubleCylinder.endMap f g)
+  pushout (Quillen.intervalEndpoints A) (DoubleCylinder.endMap f g)
 /-- The canonical map of `A × I` into the double mapping cylinder of `f` and `g`. -/
 abbrev cylinderLine {A B C : TopCat.{u}} (f : A ⟶ B) (g : A ⟶ C) : A ⊗ TopCat.I ⟶ Cylinder f g :=
   pushout.inl _ _
@@ -52,7 +52,7 @@ abbrev cylinderEnd {A B C : TopCat.{u}} (f : A ⟶ B) (g : A ⟶ C) : TopCat.of 
     g :=
   pushout.inr _ _
 theorem cylinderSquare {A B C : TopCat.{u}} (f : A ⟶ B) (g : A ⟶ C) :
-    IsPushout (TheoremA.intervalEndpoints A) (DoubleCylinder.endMap f g) (cylinderLine f g)
+    IsPushout (Quillen.intervalEndpoints A) (DoubleCylinder.endMap f g) (cylinderLine f g)
       (cylinderEnd f g) :=
   IsPushout.of_hasPushout _ _
 
@@ -63,7 +63,7 @@ variable {A B C P A' B' C' P' : TopCat.{u}}
   (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C') (p : P ⟶ P')
   (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g')
   (wi : i ≫ p = b ≫ i') (wj : j ≫ p = c ≫ j')
-  (hf : TheoremA.homotopyExtensionProperty f) (hf' : TheoremA.homotopyExtensionProperty f')
+  (hf : Quillen.homotopyExtensionProperty f) (hf' : Quillen.homotopyExtensionProperty f')
 
 /-- The double-cylinder map induced by the strictly commuting span maps `a`, `b`, and `c`. -/
 abbrev cylinderMap : Cylinder f g ⟶ Cylinder f' g' :=
@@ -86,7 +86,7 @@ theorem collapse_square : p.hom.comp (collapse sq).hom =
 both horizontal maps are actual ordinary homotopy equivalences. -/
 def collapseSquareEquiv : ContinuousMap.HomotopyEquiv (Cylinder f g)
     (HomotopyPullback p.hom (collapseBase sq').hom) :=
-  TheoremA.homotopyEquivCancelRight
+  Quillen.homotopyEquivCancelRight
     (a := HomotopyPullback.comparison p.hom (collapseBase sq').hom
       (cylinderMap a b c wf wg).hom (collapse sq).hom (collapse_square sq sq' a b c p wf wg wi wj))
     (HomotopyPullback.sourceProjectionEquivOfParameterEquiv p.hom (collapseBase sq').hom

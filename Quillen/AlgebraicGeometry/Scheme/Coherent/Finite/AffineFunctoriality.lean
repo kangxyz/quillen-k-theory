@@ -25,7 +25,7 @@ variable {R S T : CommRingCat.{u}}
   [IsNoetherianRing R] [IsNoetherianRing S] [IsNoetherianRing T]
 
 /-- The actual finite direct image retains the original sheaf identity comparison. -/
-def coherentPushforwardIdIso (R : CommRingCat.{u}) [IsNoetherianRing R] :
+def coherentPushforwardIdIso (R : CommRingCat.{u}) :
     coherentPushforward (𝟙 R) (RingHom.Finite.id R) ≅ 𝟭 (FiniteTypeSheaves (Spec R)) :=
   Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules (Spec R))
     (Functor.isoWhiskerLeft (finiteTypeSheavesToModules (Spec R))

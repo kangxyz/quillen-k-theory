@@ -7,7 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.Waldhausen.GilletWaldhausen.FiniteTermKEquivalence
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Basic
+public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Exact
 
 /-! The original evaluation/insertion K-maps on actual finite term strata. -/
 @[expose] public section

@@ -53,7 +53,7 @@ theorem CompactHomotopyExtensionLiftingProperty.of_homotopy
   have hrel : (J.compContinuousMap i.hom).toContinuousMap.HomotopyRel
       J₀.toContinuousMap {z : unitInterval × A | z.1 = 0 ∨ z.1 = 1} :=
     (retraceHomotopy T).cast hJ.symm rfl
-  obtain ⟨J', hJ'⟩ := TheoremA.homotopyExtensionProperty_correct_boundary hi
+  obtain ⟨J', hJ'⟩ := Quillen.homotopyExtensionProperty_correct_boundary hi
     (Z := TopCat.of Y) J J₀ hrel
   refine ⟨c, hc, ⟨{ J' with prop' := ?_ }⟩⟩
   rintro t _ ⟨x, rfl⟩

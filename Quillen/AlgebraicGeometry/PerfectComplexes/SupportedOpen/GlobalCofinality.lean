@@ -63,8 +63,9 @@ def qcqsPerfectSupportedOpenKEquiv (n : ℕ) : PerfectSupportedOpenK j T (n+1) �
     (qcqs_perfectSupportedOpenKRestrict_succ_bijective j T hT n)
 
 @[simp] theorem qcqsPerfectSupportedOpenKEquiv_toMonoidHom (n : ℕ) :
-    (qcqsPerfectSupportedOpenKEquiv j T hT n).toMonoidHom = perfectSupportedOpenKRestrict j T (n+1)
-      := rfl
+    (qcqsPerfectSupportedOpenKEquiv j T hT n :
+      PerfectSupportedOpenK j T (n+1) →* PerfectSupportedK (j ⁻¹ᵁ T).ι (n+1)) =
+        perfectSupportedOpenKRestrict j T (n+1) := rfl
 
 /-- The honest original K-zero endpoint is injective. -/
 theorem qcqs_perfectSupportedOpenKRestrict_zero_injective :

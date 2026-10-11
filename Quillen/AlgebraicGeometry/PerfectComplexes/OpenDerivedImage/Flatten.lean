@@ -92,11 +92,12 @@ def flattenKEquiv (n : ℕ) : h.waldhausenStructure.K n ≃* (complexWaldhausen 
 
 /-- The forward K comparison is the actual original flattening map. -/
 @[simp] theorem flattenKEquiv_toMonoidHom (n : ℕ) :
-    (flattenKEquiv j h n).toMonoidHom = KMap (flatten_exact j h) n := rfl
+    (flattenKEquiv j h n :
+      h.waldhausenStructure.K n →* (complexWaldhausen j).K n) = KMap (flatten_exact j h) n := rfl
 
 /-- Original inclusion commutes with the flattening K comparison. -/
 theorem flattenKEquiv_inclusion (n : ℕ) :
-    (KMap (inclusion_exact j) n).comp (flattenKEquiv j h n).toMonoidHom =
+    (KMap (inclusion_exact j) n).comp (flattenKEquiv j h n) =
       KMap h.inclusion_exact n := by
   rw [flattenKEquiv_toMonoidHom, Quillen.Waldhausen.KMap_comp_KMap]
 
@@ -122,8 +123,8 @@ theorem inclusion_KMap_injective
   obtain ⟨b, rfl⟩ := (flattenKEquiv j h n).surjective y
   apply congrArg (flattenKEquiv j h n)
   apply h.inclusion_KMap_injective_general D hs n
-  change ((KMap (inclusion_exact j) n).comp (flattenKEquiv j h n).toMonoidHom) a =
-    ((KMap (inclusion_exact j) n).comp (flattenKEquiv j h n).toMonoidHom) b at hxy
+  change ((KMap (inclusion_exact j) n).comp (flattenKEquiv j h n)) a =
+    ((KMap (inclusion_exact j) n).comp (flattenKEquiv j h n)) b at hxy
   rwa [flattenKEquiv_inclusion] at hxy
 
 /-- The inverse flattening comparison retains the same original inclusion homomorphism. -/
@@ -132,12 +133,14 @@ theorem flattenKEquiv_symm_inclusion (n : ℕ) :
       KMap (inclusion_exact j) n := by
   ext x
   have hx := DFunLike.congr_fun (flattenKEquiv_inclusion j h n) ((flattenKEquiv j h n).symm x)
-  simpa using hx.symm
+  exact hx.symm.trans (congrArg (KMap (inclusion_exact j) n)
+    ((flattenKEquiv j h n).apply_symm_apply x))
 
 /-- Flattening preserves the entire actual inclusion range in every degree. -/
 theorem flatten_inclusion_range (n : ℕ) :
     (KMap (inclusion_exact j) n).range = (KMap h.inclusion_exact n).range := by
-  have hr : (flattenKEquiv j h n).toMonoidHom.range = ⊤ :=
+  have hr : (flattenKEquiv j h n :
+      h.waldhausenStructure.K n →* (complexWaldhausen j).K n).range = ⊤ :=
     MonoidHom.range_eq_top.mpr (flattenKEquiv j h n).surjective
   rw [← flattenKEquiv_inclusion j h n, MonoidHom.range_comp, hr, Subgroup.map_top]
 

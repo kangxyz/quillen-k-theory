@@ -38,6 +38,7 @@ def boundedFlatPerfectSupportedOpenWaldhausen : Waldhausen.Structure ((boundedFl
   Waldhausen.Structure.withInverseImageWeak
     ((boundedFlatPerfectSupportedInclusion_exact T.ι).comp (perfectSupportedRestrict_exact j T))
 
+/-- The original quasi-isomorphisms included in the weak maps detected on the open. -/
 def boundedFlatPerfectSupportedOpenNested :
     Waldhausen.Fibration.NestedWeakEquivalences (boundedFlatPerfectSupportedWaldhausen T.ι) :=
   Waldhausen.Structure.inverseImageWeakNested
@@ -73,14 +74,17 @@ theorem boundedFlatPerfectSupportedOpenInclusion_approximation [CompactSpace X] 
       f
     exact ⟨M, i, p, hi, (perfectSupportedOpenNested j T).le_weq p hp, hfac⟩
 
+/-- The connective K-groups of the bounded-flat supported relative-open category. -/
 abbrev BoundedFlatPerfectSupportedOpenK (n : ℕ) := (boundedFlatPerfectSupportedOpenWaldhausen j T).K
   n
 
+/-- The original K-map that enlarges weak equivalences by testing on the open. -/
 def boundedFlatPerfectSupportedOpenKMap (n : ℕ) :
     BoundedFlatPerfectSupportedK T.ι n →* BoundedFlatPerfectSupportedOpenK j T n :=
   Waldhausen.KMap (Waldhausen.Fibration.changeWeak_exact (boundedFlatPerfectSupportedOpenNested j
     T)) n
 
+/-- The K-map of the actual inclusion into supported relative perfect complexes. -/
 def boundedFlatPerfectSupportedOpenToPerfectSupportedOpenKMap (n : ℕ) :
     BoundedFlatPerfectSupportedOpenK j T n →* PerfectSupportedOpenK j T n :=
   Waldhausen.KMap (boundedFlatPerfectSupportedOpenInclusion_exact j T) n
@@ -94,13 +98,15 @@ theorem boundedFlatPerfectSupportedOpenToPerfectSupportedOpenKMap_bijective [Com
       (boundedFlatPerfectSupportedOpenInclusion_approximation j T)
     (boundedFlatPerfectSupportedOpenInclusion_exact j T) n
 
+/-- For a compact ambient scheme, the equivalence induced by the original bounded-flat inclusion. -/
 def boundedFlatPerfectSupportedOpenKEquiv [CompactSpace X] (n : ℕ) :
     BoundedFlatPerfectSupportedOpenK j T n ≃* PerfectSupportedOpenK j T n :=
   MulEquiv.ofBijective (boundedFlatPerfectSupportedOpenToPerfectSupportedOpenKMap j T n)
     (boundedFlatPerfectSupportedOpenToPerfectSupportedOpenKMap_bijective j T n)
 
 @[simp] theorem boundedFlatPerfectSupportedOpenKEquiv_toMonoidHom [CompactSpace X] (n : ℕ) :
-    (boundedFlatPerfectSupportedOpenKEquiv j T n).toMonoidHom =
+    (boundedFlatPerfectSupportedOpenKEquiv j T n :
+      BoundedFlatPerfectSupportedOpenK j T n →* PerfectSupportedOpenK j T n) =
       boundedFlatPerfectSupportedOpenToPerfectSupportedOpenKMap j T n := rfl
 
 /-- The unchanged original change-of-weak-equivalences map commutes with the
@@ -113,7 +119,7 @@ theorem boundedFlatPerfectSupportedOpenToPerfectSupportedOpen_comp (n : ℕ) :
   unfold boundedFlatPerfectSupportedOpenToPerfectSupportedOpenKMap
     boundedFlatPerfectSupportedOpenKMap
     perfectSupportedOpenKMap boundedFlatPerfectSupportedToPerfectSupportedKMap
-  rw [← Waldhausen.KMap_comp, ← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
 
 end Quillen.PerfectComplexes
 

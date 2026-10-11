@@ -32,7 +32,7 @@ variable {J : Type u} [SmallCategory J] [IsFiltered J]
 /-- Actual canonical filtered-colimit invariance. The transition inverses
 need not be coherent or preserve any chosen basepoint. -/
 def stageHomotopyEquiv
-    (e : ∀ {j k : J} (u : j ⟶ k), ContinuousMap.HomotopyEquiv |F.obj j| |F.obj k|)
+    (e : ∀ {j k : J} (_u : j ⟶ k), ContinuousMap.HomotopyEquiv |F.obj j| |F.obj k|)
     (he : ∀ {j k : J} (u : j ⟶ k), (e u).toFun = (SSet.toTop.map (F.map u)).hom)
     (j : J) : ContinuousMap.HomotopyEquiv |F.obj j| |c.pt| :=
   homotopyEquivOfCompactHELP (SSet.toTop.map (c.ι.app j)).hom
@@ -40,7 +40,7 @@ def stageHomotopyEquiv
 
 @[simp]
 theorem stageHomotopyEquiv_toFun
-    (e : ∀ {j k : J} (u : j ⟶ k), ContinuousMap.HomotopyEquiv |F.obj j| |F.obj k|)
+    (e : ∀ {j k : J} (_u : j ⟶ k), ContinuousMap.HomotopyEquiv |F.obj j| |F.obj k|)
     (he : ∀ {j k : J} (u : j ⟶ k), (e u).toFun = (SSet.toTop.map (F.map u)).hom)
     (j : J) : (stageHomotopyEquiv F c hc e he j).toFun =
       (SSet.toTop.map (c.ι.app j)).hom := rfl

@@ -142,7 +142,7 @@ theorem qcqsPerfect_zeroTail :
 /-- Compatibility with the unchanged relative boundary determines this endpoint uniquely. -/
 theorem qcqsPerfectConnectingHom_unique (n : ℕ)
     (δ : PerfectK U (n + 1) →* PerfectSupportedK j n)
-    (hδ : δ.comp (perfectOpenKRestrict j (n+1)) = perfectOpenConnectingHom j n) :
+    (hδ : δ.comp (perfectOpenKRestrict j (n + 1)) = perfectOpenConnectingHom j n) :
     δ = qcqsPerfectConnectingHom j n := by
   ext x
   obtain ⟨a, rfl⟩ := (qcqsPerfectOpenKEquiv j n).surjective x

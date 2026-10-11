@@ -26,13 +26,13 @@ set_option backward.defeqAttrib.useBackward true
 namespace Quillen.DoubleCylinder
 
 private def fiberCongr {X Y : Type u} [TopologicalSpace X] [TopologicalSpace Y]
-    (p : C(X,Y)) {y z : Y} (h : y = z) : {x : X // p x = y} ≃ₜ {x : X // p x = z} :=
+    (p : C(X, Y)) {y z : Y} (h : y = z) : {x : X // p x = y} ≃ₜ {x : X // p x = z} :=
   Homeomorph.setCongr (by rw [h])
 
 private theorem compactHELP_of_homeomorphs
     {X X' Y Y' : Type u} [TopologicalSpace X] [TopologicalSpace X']
     [TopologicalSpace Y] [TopologicalSpace Y']
-    (e : X' ≃ₜ X) (d : Y ≃ₜ Y') (f : C(X,Y)) (g : C(X',Y'))
+    (e : X' ≃ₜ X) (d : Y ≃ₜ Y') (f : C(X, Y)) (g : C(X', Y'))
     (w : (d.toHomotopyEquiv.toFun.comp f).comp e.toHomotopyEquiv.toFun = g)
     (hg : CompactHomotopyExtensionLiftingProperty g) :
     CompactHomotopyExtensionLiftingProperty f := by
@@ -45,8 +45,8 @@ variable {A B C D A' B' C' D' : TopCat.{u}}
   {f : A ⟶ B} {g : A ⟶ C} {f' : A' ⟶ B'} {g' : A' ⟶ C'}
   {l : A ⊗ TopCat.I ⟶ D} {e : TopCat.of (B ⊕ C) ⟶ D}
   {l' : A' ⊗ TopCat.I ⟶ D'} {e' : TopCat.of (B' ⊕ C') ⟶ D'}
-  (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
-  (sq' : IsPushout (TheoremA.intervalEndpoints A') (endMap f' g') l' e')
+  (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
+  (sq' : IsPushout (Quillen.intervalEndpoints A') (endMap f' g') l' e')
   (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C')
   (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g') (cut : unitInterval)
 
@@ -142,8 +142,8 @@ theorem leftCollarComparisonFiber_compactHELP (hcut : 0 < cut)
     have he : y = leftCollarInclusion f' g' sq' cut hcut z := Subtype.ext hz.symm
     subst y
     exact leftCollarComparisonFiber_end_compactHELP sq sq' a b c wf wg cut hcut z
-  · have hp : 0 < height f' g' sq' y.val := lt_of_le_of_ne (height f' g' sq' y.val).property.1
-    (Ne.symm hy)
+  · have hp : 0 < height f' g' sq' y.val :=
+      lt_of_le_of_ne (height f' g' sq' y.val).property.1 (Ne.symm hy)
     have hl : height f' g' sq' y.val < 1 := lt_of_lt_of_le y.property cut.property.2
     obtain ⟨z,hz⟩ := interior_surjective f' g' sq' y.val ⟨hp,hl⟩
     have ht : z.2.val < cut := by

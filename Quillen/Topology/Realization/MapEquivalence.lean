@@ -73,9 +73,9 @@ lemma pushout
   obtain ⟨ea, hea⟩ := ha
   obtain ⟨eb, heb⟩ := hb
   obtain ⟨ec, hec⟩ := hc
-  refine ⟨TheoremA.pushoutHomotopyEquivOfMap (sq.map SSet.toTop) (sq'.map SSet.toTop)
-    (TheoremA.homotopyExtensionProperty_realization_mono i)
-      (TheoremA.homotopyExtensionProperty_realization_mono i')
+  refine ⟨Quillen.Pushout.pushoutHomotopyEquivOfMap (sq.map SSet.toTop) (sq'.map SSet.toTop)
+    (Quillen.Realization.homotopyExtensionProperty_realization_mono i)
+      (Quillen.Realization.homotopyExtensionProperty_realization_mono i')
     (SSet.toTop.map a) (SSet.toTop.map b) (SSet.toTop.map c) (SSet.toTop.map d)
     ?_ ?_ ?_ ?_ ea hea eb heb ec hec, rfl⟩
   · simpa only [Functor.map_comp] using congrArg SSet.toTop.map wi

@@ -38,10 +38,10 @@ variable {T : TopCat.{u}} {U V : Set T} (d : Data T U V)
   apply ConcreteCategory.hom_ext
   intro z
   have hh := ConcreteCategory.congr_hom
-    (TheoremB.FiberwiseBridge.projection_left d.cylinder0 d.cylinder1 d.bridge_isPushout
+    (Quillen.FiberwiseBridge.projection_left d.cylinder0 d.cylinder1 d.bridge_isPushout
       d.q0 d.q1 d.square) (d.line0 z)
   have hk := ConcreteCategory.congr_hom
-    (TheoremA.mappingCylinderProjection_cylinder_assoc d.cylinder0 d.q0) z
+    (Quillen.MappingCylinder.mappingCylinderProjection_cylinder_assoc d.cylinder0 d.q0) z
   exact congrArg Subtype.val (hh.trans hk)
 
 @[reassoc] theorem totalLine1_projection :
@@ -52,10 +52,10 @@ variable {T : TopCat.{u}} {U V : Set T} (d : Data T U V)
   apply ConcreteCategory.hom_ext
   intro z
   have hh := ConcreteCategory.congr_hom
-    (TheoremB.FiberwiseBridge.projection_right d.cylinder0 d.cylinder1 d.bridge_isPushout
+    (Quillen.FiberwiseBridge.projection_right d.cylinder0 d.cylinder1 d.bridge_isPushout
       d.q0 d.q1 d.square) (d.line1 z)
   have hk := ConcreteCategory.congr_hom
-    (TheoremA.mappingCylinderProjection_cylinder_assoc d.cylinder1 d.q1) z
+    (Quillen.MappingCylinder.mappingCylinderProjection_cylinder_assoc d.cylinder1 d.q1) z
   exact (congrArg Subtype.val (hh.trans hk)).trans (d.over z.1).symm
 
 @[reassoc] theorem totalLeft_projection :
@@ -68,7 +68,7 @@ variable {T : TopCat.{u}} {U V : Set T} (d : Data T U V)
 
 variable {D : TopCat.{u}} {l : d.R ⊗ TopCat.I ⟶ D}
   {e : TopCat.of (d.E0 ⊕ d.E1) ⟶ D}
-  (sq : IsPushout (TheoremA.intervalEndpoints d.R) (DoubleCylinder.endMap d.leftLeg d.rightLeg) l e)
+  (sq : IsPushout (Quillen.intervalEndpoints d.R) (DoubleCylinder.endMap d.leftLeg d.rightLeg) l e)
 
 /-- The actual collapse to the space covered by the two base sets. -/
 def collapse : D ⟶ T := sq.desc

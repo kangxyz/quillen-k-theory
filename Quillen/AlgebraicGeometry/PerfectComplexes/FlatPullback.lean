@@ -153,7 +153,7 @@ theorem perfectKFlatPullback_comp {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ 
     perfectKFlatPullback (f ≫ g) n = (perfectKFlatPullback f n).comp (perfectKFlatPullback g n) :=
   (Waldhausen.KMap_eq_of_iso (perfectFlatPullback_waldhausenExact (f ≫ g))
     ((perfectFlatPullback_waldhausenExact g).comp (perfectFlatPullback_waldhausenExact f))
-    (perfectFlatPullbackCompIso f g) n).trans (Waldhausen.KMap_comp _ _ n)
+    (perfectFlatPullbackCompIso f g) n).trans ((Waldhausen.KMap_comp_KMap _ _ n).symm)
 
 /-- The original geometric open-restriction map is recovered without changing the model. -/
 theorem perfectKFlatPullback_eq_restrict {X Y : Scheme.{u}} (j : X ⟶ Y)
@@ -174,7 +174,7 @@ theorem perfectKFlatPullback_restrict {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
     (perfectKRestrict (f ⁻¹ᵁ U).ι n).comp (perfectKFlatPullback f n) =
       (perfectKFlatPullback (f ∣_ U) n).comp (perfectKRestrict U.ι n) := by
   unfold perfectKFlatPullback perfectKRestrict
-  rw [← Waldhausen.KMap_comp, ← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
   exact Waldhausen.KMap_eq_of_iso _ _ (perfectFlatPullbackRestrictIso f U) n
 
 /-- The original strict-to-locally-perfect comparison commutes with actual flat pullback. -/
@@ -182,7 +182,7 @@ theorem strictToPerfectKMap_flatPullback {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat 
     (perfectKFlatPullback f n).comp (strictToPerfectKMap Y n) =
       (strictToPerfectKMap X n).comp (strictKPullback f n) := by
   unfold perfectKFlatPullback strictToPerfectKMap strictKPullback Waldhausen.subcategoryKMap
-  rw [← Waldhausen.KMap_comp, ← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
 
 /-- The original public vector-bundle-to-perfect comparison is natural for flat morphisms. -/
 theorem vectorBundleToPerfectKMap_flatPullback {X Y : Scheme.{u}}

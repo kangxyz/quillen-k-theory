@@ -51,9 +51,9 @@ instance restrictedProperty_extensionClosed :
     (ExactSubcategory.exactStructure E Q).IsExtensionClosed (P.inverseImage Q.ι) where
   prop_middle hS h₁ h₃ := ExactStructure.IsExtensionClosed.prop_middle (E := E) hS h₁ h₃
 
-instance restrictedProperty_finiteProducts : (P.inverseImage Q.ι).IsClosedUnderFiniteProducts
-  :=
-  (ExactSubcategory.exactStructure E Q).extensionClosed_finiteProducts (P.inverseImage Q.ι)
+instance restrictedProperty_finiteProducts :
+    (P.inverseImage Q.ι).IsClosedUnderFiniteProducts where
+  isClosedUnderLimitsOfShape _ _ := inferInstance
 
 instance restrictedProperty_kernelClosed [E.IsKernelClosed P] :
     (ExactSubcategory.exactStructure E Q).IsKernelClosed (P.inverseImage Q.ι) where
@@ -162,11 +162,11 @@ inclusion; this is a categorical equivalence, not a resolution assumption. -/
 theorem inclusionOfLE_mapQ_isEquivalence_of_reverse (hPQ : P ≤ Q) (hQP : Q ≤ P) :
     (exactInclusionOfLE E P Q hPQ).mapQ.IsEquivalence := by
   let F := exactInclusionOfLE E P Q hPQ
-  letI : F.toFunctor.Full := inferInstanceAs (ObjectProperty.ιOfLE hPQ).Full
-  letI : F.toFunctor.Faithful := inferInstanceAs (ObjectProperty.ιOfLE hPQ).Faithful
-  letI : F.toFunctor.EssSurj :=
+  let : F.toFunctor.Full := inferInstanceAs (ObjectProperty.ιOfLE hPQ).Full
+  let : F.toFunctor.Faithful := inferInstanceAs (ObjectProperty.ιOfLE hPQ).Faithful
+  let : F.toFunctor.EssSurj :=
     ⟨fun Y => ⟨⟨Y.obj, hQP _ Y.property⟩, ⟨Iso.refl _⟩⟩⟩
-  letI : F.toFunctor.IsEquivalence := {}
+  let : F.toFunctor.IsEquivalence := {}
   change F.mapQ.IsEquivalence
   apply ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro X Y i hi
@@ -180,7 +180,7 @@ theorem inclusionOfLE_mapQ_isEquivalence_of_reverse (hPQ : P ≤ Q) (hQP : Q ≤
 K-map equivalence. -/
 theorem inclusionOfLEKMap_bijective_of_reverse (hPQ : P ≤ Q) (hQP : Q ≤ P) (n : ℕ) :
     Function.Bijective ((exactInclusionOfLE E P Q hPQ).KMap n) := by
-  letI := inclusionOfLE_mapQ_isEquivalence_of_reverse E P Q hPQ hQP
+  let := inclusionOfLE_mapQ_isEquivalence_of_reverse E P Q hPQ hQP
   exact (exactInclusionOfLE E P Q hPQ).KMap_bijective_of_mapQ_isEquivalence n
 
 /-- If every ambient object satisfies the predicate, the inherited exact
@@ -188,11 +188,11 @@ inclusion is an actual equivalence and its canonical K-map is bijective. -/
 theorem inclusionKMap_bijective_of_all (hP : ∀ X, P X) (n : ℕ) :
     Function.Bijective (inclusionKMap E P n) := by
   let F := exactInclusion E P
-  letI : F.toFunctor.Full := inferInstanceAs P.ι.Full
-  letI : F.toFunctor.Faithful := inferInstanceAs P.ι.Faithful
-  letI : F.toFunctor.EssSurj := ⟨fun Y => ⟨⟨Y, hP Y⟩, ⟨Iso.refl _⟩⟩⟩
-  letI : F.toFunctor.IsEquivalence := {}
-  letI : F.mapQ.IsEquivalence := by
+  let : F.toFunctor.Full := inferInstanceAs P.ι.Full
+  let : F.toFunctor.Faithful := inferInstanceAs P.ι.Faithful
+  let : F.toFunctor.EssSurj := ⟨fun Y => ⟨⟨Y, hP Y⟩, ⟨Iso.refl _⟩⟩⟩
+  let : F.toFunctor.IsEquivalence := {}
+  let : F.mapQ.IsEquivalence := by
     apply ExactFunctor.mapQ_isEquivalence_of_equivalence
     · intro X Y i hi
       obtain ⟨Z, p, hp, hS⟩ := hi

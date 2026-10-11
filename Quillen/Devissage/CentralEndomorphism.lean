@@ -74,8 +74,9 @@ def power (X : C) : ℕ → (X ⟶ X)
   | n + 1 => t.app X ≫ power X n
 
 omit [Abelian C] in
-omit [Abelian C] in
 @[simp] lemma power_zero (X : C) : power t X 0 = 𝟙 X := rfl
+
+omit [Abelian C] in
 @[simp] lemma power_succ (X : C) (n : ℕ) :
     power t X (n + 1) = t.app X ≫ power t X n := rfl
 
@@ -154,6 +155,7 @@ omit [Abelian C] in
     F.map ((scalar F f).app X) =
       FGModuleCat.ofHom (LinearMap.lsmul R (F.obj X) f) := F.map_preimage _
 
+omit [Abelian C] in
 lemma map_power_apply (f : R) (X : C) (n : ℕ) (m : F.obj X) :
     (F.map (power (scalar F f) X n)).hom.hom m = f ^ n • m := by
   induction n with

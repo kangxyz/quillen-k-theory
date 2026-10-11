@@ -24,6 +24,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
 universe u
 namespace Quillen.PerfectComplexes
+/-- The standard derived model used for the supported cocone comparisons. -/
 local instance supportedRoofDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _
 

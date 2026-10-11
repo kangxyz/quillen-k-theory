@@ -29,7 +29,7 @@ variable {A B C P A' B' C' P' : TopCat.{u}}
   (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C') (p : P ⟶ P')
   (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g')
   (wi : i ≫ p = b ≫ i') (wj : j ≫ p = c ≫ j')
-  (hf : TheoremA.homotopyExtensionProperty f) (hf' : TheoremA.homotopyExtensionProperty f')
+  (hf : Quillen.homotopyExtensionProperty f) (hf' : Quillen.homotopyExtensionProperty f')
   [hHaus : T2Space (Cylinder f' g')]
   (hL : IsWeakHomotopyEquivalence
     (HomotopyPullback.comparison b.hom f'.hom a.hom f.hom (congrArg TopCat.Hom.hom wf)))
@@ -76,7 +76,7 @@ variable {X Y Z : SSet.{u}} (α : X ⟶ Y) (β : X ⟶ Z)
   (aR : A ⟶ |X|) (bR : B ⟶ |Y|) (cR : C ⟶ |Z|)
   (wfR : f ≫ bR = aR ≫ SSet.toTop.map α) (wgR : g ≫ cR = aR ≫ SSet.toTop.map β)
   (wiR : i ≫ p = bR ≫ iR) (wjR : j ≫ p = cR ≫ jR)
-  (hfR : TheoremA.homotopyExtensionProperty (SSet.toTop.map α))
+  (hfR : Quillen.homotopyExtensionProperty (SSet.toTop.map α))
   (hLR : IsWeakHomotopyEquivalence (HomotopyPullback.comparison bR.hom
     (SSet.toTop.map α).hom aR.hom f.hom (congrArg TopCat.Hom.hom wfR)))
   (hRR : IsWeakHomotopyEquivalence (HomotopyPullback.comparison cR.hom

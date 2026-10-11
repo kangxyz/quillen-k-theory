@@ -41,7 +41,7 @@ theorem compactHELP_of_injective_compact_lifts (e : C(X, Y))
     map_zero_left x := he ((ContinuousMap.congr_fun hL (0, x)).trans (H.map_zero_left x))
     map_one_left x := he ((ContinuousMap.congr_fun hL (1, x)).trans
       ((H.map_one_left x).trans (ContinuousMap.congr_fun hc (i x)).symm)) }
-  obtain ⟨Q, hQ₀, hQA⟩ := TheoremA.homotopyExtensionProperty_continuous hi
+  obtain ⟨Q, hQ₀, hQA⟩ := Quillen.homotopyExtensionProperty_continuous hi
     (TopCat.of X) c K.symm.toContinuousMap (fun x ↦ K.symm.map_zero_left x)
   let d : C(B, X) := ⟨fun x ↦ Q (1, x), by fun_prop⟩
   have hd : d.comp i.hom = a := by

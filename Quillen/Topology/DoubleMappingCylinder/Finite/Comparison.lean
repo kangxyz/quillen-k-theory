@@ -26,8 +26,8 @@ variable {A B C D A' B' C' D' : TopCat.{u}}
   {f : A ⟶ B} {g : A ⟶ C} {f' : A' ⟶ B'} {g' : A' ⟶ C'}
   {l : A ⊗ TopCat.I ⟶ D} {e : TopCat.of (B ⊕ C) ⟶ D}
   {l' : A' ⊗ TopCat.I ⟶ D'} {e' : TopCat.of (B' ⊕ C') ⟶ D'}
-  (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
-  (sq' : IsPushout (TheoremA.intervalEndpoints A') (endMap f' g') l' e')
+  (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
+  (sq' : IsPushout (Quillen.intervalEndpoints A') (endMap f' g') l' e')
   (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C')
   (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g')
 
@@ -42,7 +42,7 @@ abbrev coverRight : TopCat.of (coverPartition sq).Overlap ⟶ TopCat.of (coverPa
 
 /-- The double mapping cylinder of the overlap inclusions into the two height charts. -/
 abbrev CoverCylinder : TopCat.{u} :=
-  pushout (TheoremA.intervalEndpoints (TopCat.of (coverPartition sq).Overlap)) (coverPartition
+  pushout (Quillen.intervalEndpoints (TopCat.of (coverPartition sq).Overlap)) (coverPartition
     sq).endMap
 /-- The canonical map of the cover overlap times `I` into the cover cylinder. -/
 abbrev coverLine : TopCat.of (coverPartition sq).Overlap ⊗ TopCat.I ⟶ CoverCylinder sq :=
@@ -50,21 +50,21 @@ abbrev coverLine : TopCat.of (coverPartition sq).Overlap ⊗ TopCat.I ⟶ CoverC
 /-- The canonical map of the two height charts into the cover cylinder. -/
 abbrev coverEnd : TopCat.of ((coverPartition sq).Left ⊕ (coverPartition sq).Right) ⟶
     CoverCylinder sq := pushout.inr _ _
-theorem coverSquare : IsPushout (TheoremA.intervalEndpoints (TopCat.of (coverPartition sq).Overlap))
+theorem coverSquare : IsPushout (Quillen.intervalEndpoints (TopCat.of (coverPartition sq).Overlap))
     (endMap (coverLeft sq) (coverRight sq)) (coverLine sq) (coverEnd sq) :=
       IsPushout.of_hasPushout _ _
 
 /-- The normalized fibration-span data associated to the given map of double cylinders. -/
 abbrev NData := data sq' a b c wf wg
 /-- The double mapping cylinder on the full left and right legs of the normalization data. -/
-abbrev Target : TopCat.{u} := pushout (TheoremA.intervalEndpoints (NData sq' a b c wf wg).R)
+abbrev Target : TopCat.{u} := pushout (Quillen.intervalEndpoints (NData sq' a b c wf wg).R)
   (endMap (NData sq' a b c wf wg).leftLeg (NData sq' a b c wf wg).rightLeg)
 /-- The canonical cylinder map from the common normalization space times `I` into `Target`. -/
 abbrev targetLine : (NData sq' a b c wf wg).R ⊗ TopCat.I ⟶ Target sq' a b c wf wg := pushout.inl _ _
 /-- The canonical map of the two normalization target spaces into `Target`. -/
 abbrev targetEnd : TopCat.of ((NData sq' a b c wf wg).E0 ⊕ (NData sq' a b c wf wg).E1) ⟶
     Target sq' a b c wf wg := pushout.inr _ _
-theorem targetSquare : IsPushout (TheoremA.intervalEndpoints (NData sq' a b c wf wg).R)
+theorem targetSquare : IsPushout (Quillen.intervalEndpoints (NData sq' a b c wf wg).R)
     (endMap (NData sq' a b c wf wg).leftLeg (NData sq' a b c wf wg).rightLeg)
       (targetLine sq' a b c wf wg) (targetEnd sq' a b c wf wg) := IsPushout.of_hasPushout _ _
 /-- The collapse from the normalized double cylinder to the original target total space `D'`. -/

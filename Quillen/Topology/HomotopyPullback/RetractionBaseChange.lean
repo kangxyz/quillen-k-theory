@@ -7,7 +7,8 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.Topology.HomotopyPullback.StrictComparison
-public import Quillen.CategoryTheory.TheoremA.RealizationPushoutInvariance
+public import Quillen.Topology.Pushout.HomotopyEquivalence
+public import Quillen.Topology.MappingCylinder.HomotopyExtension
 
 /-! Actual pullbacks over a base collar retraction. The interval
 contraction stays in each fiber of the retraction, so the end is a genuine
@@ -43,7 +44,7 @@ theorem HomotopyLiftingProperty.baseChange
 
 namespace RetractionPullback
 variable {B X E : TopCat.{u}} {i : B ⟶ X}
-  (R : TheoremA.CylinderStrongDeformationRetract i) (p : E ⟶ B)
+  (R : Quillen.CylinderStrongDeformationRetract i) (p : E ⟶ B)
 
 /-- The strict pullback of `p : E ⟶ B` along the collar retraction `R.r : X ⟶ B`. -/
 abbrev Space := {z : X × E // p z.2 = R.r z.1}
@@ -86,7 +87,7 @@ def homotopyEquiv : ContinuousMap.HomotopyEquiv E (Space R p) where
 
 section Comparison
 variable {Y : TopCat.{u}} {j : E ⟶ Y}
-  (S : TheoremA.CylinderStrongDeformationRetract j) (b : Y ⟶ X)
+  (S : Quillen.CylinderStrongDeformationRetract j) (b : Y ⟶ X)
   (w : b ≫ R.r = S.r ≫ p) (wj : j ≫ b = p ≫ i)
 
 /-- The canonical comparison from a mapped collar into the genuine
@@ -104,7 +105,7 @@ theorem comparison_end : j ≫ comparison R p S b w = TopCat.ofHom (inclusion R 
 /-- Naturality of the two collar retractions identifies the canonical
 local comparison itself as a homotopy equivalence. -/
 def comparisonHomotopyEquiv : ContinuousMap.HomotopyEquiv Y (Space R p) :=
-  TheoremA.homotopyEquivCancelLeft (A := E) (B := Y) (C := TopCat.of (Space R p))
+  Quillen.homotopyEquivCancelLeft (A := E) (B := Y) (C := TopCat.of (Space R p))
     (b := comparison R p S b w) S.toHomotopyEquiv rfl (homotopyEquiv R p hR)
     (congrArg TopCat.Hom.hom (comparison_end R p S b w wj).symm)
 

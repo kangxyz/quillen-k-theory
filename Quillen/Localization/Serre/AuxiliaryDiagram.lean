@@ -110,7 +110,7 @@ def quotientAuxiliaryCocone (V : Quotient P) : Cocone (quotientAuxiliaryDiagram 
   ι :=
     { app A := (auxiliaryToIsoStructuredWithBase P (asIso A.obj.hom)).toCatHom
       naturality A B f := by
-        simp only [Functor.const_obj_map, Category.comp_id]
+        simp only [Functor.const_obj_map]
         apply Cat.Hom.ext
         exact auxiliaryToIsoStructuredWithBase_postcompose P f.hom.left
           (auxiliaryLift_hom_isoModSerre P.isoModSerre.Q V P f)

@@ -102,7 +102,7 @@ theorem cartesianSigmaFixedTarget
     (h : ∀ i, Cartesian (p i) q (t i) (s i) (w i)) :
     Cartesian (sigmaMap p) q (ContinuousMap.sigma t) (ContinuousMap.sigma s)
       (sigmaFixedSquare q s p t w) := by
-  refine ⟨(TheoremA.sigmaHomotopyEquiv (fun i ↦ (h i).equiv)).trans
+  refine ⟨(Quillen.sigmaHomotopyEquiv (fun i ↦ (h i).equiv)).trans
     (sigmaPullbackHomeomorph q s).toHomotopyEquiv, ?_⟩
   apply ContinuousMap.ext
   rintro ⟨i, x⟩

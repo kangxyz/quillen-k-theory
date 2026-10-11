@@ -26,7 +26,7 @@ open scoped Topology unitInterval
 
 universe u
 
-namespace Quillen.TheoremA
+namespace Quillen
 
 /-- Cancel a specified homotopy equivalence from the right of a composite,
 retaining exactly the specified first continuous map. -/
@@ -48,9 +48,9 @@ theorem homotopyEquivCancelRight_toFun {A B C : Type*}
     {a : C(A, B)} {b : C(B, C)}
     (e : ContinuousMap.HomotopyEquiv B C) (he : e.toFun = b)
     (e' : ContinuousMap.HomotopyEquiv A C) (he' : e'.toFun = b.comp a) :
-    (homotopyEquivCancelRight e he e' he').toFun = a := rfl
+    (Quillen.homotopyEquivCancelRight e he e' he').toFun = a := rfl
 
-end Quillen.TheoremA
+end Quillen
 
 namespace Quillen.HomotopyPullback
 
@@ -70,7 +70,7 @@ def comparisonEquivOfSourceEquiv
     (he : e.toFun = comparison q k r g commQ) :
     ContinuousMap.HomotopyEquiv Z (HomotopyPullback p k) := by
   subst p
-  apply TheoremA.homotopyEquivCancelRight
+  apply Quillen.homotopyEquivCancelRight
     (a := comparison (q.comp E.toFun) k r f commP)
     (sourceEquiv k q E) rfl e
   rw [he]

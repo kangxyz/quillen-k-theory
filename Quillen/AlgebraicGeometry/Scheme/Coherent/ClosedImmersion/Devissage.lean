@@ -78,7 +78,8 @@ instance smallPushforward_full : (smallPushforward R f).Full := by
 
 instance smallPushforward_faithful : (smallPushforward R f).Faithful := by
   change (((equivSmallModel.{u+1} (FiniteTypeSheaves (Spec (principalRing R f)))).inverse ⋙
-    coherentPushforward R f) ⋙ (equivSmallModel.{u+1} (FiniteTypeSheaves (Spec R))).functor).Faithful
+    coherentPushforward R f) ⋙
+      (equivSmallModel.{u+1} (FiniteTypeSheaves (Spec R))).functor).Faithful
   infer_instance
 
 instance smallPushforwardToKilled_full : (smallPushforwardToKilled R f).Full where

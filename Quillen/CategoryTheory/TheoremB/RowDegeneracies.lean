@@ -7,7 +7,8 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.CategoryTheory.TheoremB.Rows
-public import Quillen.CategoryTheory.TheoremA.RealizationHEP
+public import Quillen.Topology.HELP.Basic
+public import Quillen.Topology.Realization.SubfamilyHEP
 public import Mathlib.AlgebraicTopology.SimplicialSet.Degenerate
 
 /-!
@@ -105,18 +106,18 @@ theorem sigmaReindexContinuousMap_homotopyExtensionProperty
     {ι κ : Type u} {X : ι → Type u} {Y : κ → Type u}
     [∀ i, TopologicalSpace (X i)] [∀ j, TopologicalSpace (Y j)]
     (a : ι → κ) (e : ∀ i, X i ≃ₜ Y (a i)) (ha : Function.Injective a) :
-    TheoremA.homotopyExtensionProperty
+    Quillen.homotopyExtensionProperty
       (TopCat.ofHom (sigmaReindexContinuousMap a (fun i ↦ (e i : C(X i, Y (a i)))))) := by
   let E : TopCat.of (Σ i, X i) ≅ TopCat.of (Σ j : Set.range a, Y j.1) :=
     TopCat.isoOfHomeo (sigmaReindexRangeHomeomorph a e ha)
   have hfac : TopCat.ofHom (sigmaReindexContinuousMap a
       (fun i ↦ (e i : C(X i, Y (a i))))) =
-      E.hom ≫ TopCat.ofHom (TheoremA.sigmaSubfamilyInclusion (X := Y) (Set.range a)) := rfl
+      E.hom ≫ TopCat.ofHom (Quillen.sigmaSubfamilyInclusion (X := Y) (Set.range a)) := rfl
   rw [hfac]
-  apply TheoremA.homotopyExtensionProperty_comp
-    (TheoremA.homotopyExtensionProperty_of_isIso E.hom)
-  exact TheoremA.homotopyExtensionProperty_of_continuous _ fun _ f K hzero ↦
-    TheoremA.sigmaSubfamily_homotopyExtension (Set.range a) f K hzero
+  apply Quillen.homotopyExtensionProperty_comp
+    (Quillen.homotopyExtensionProperty_of_isIso E.hom)
+  exact Quillen.homotopyExtensionProperty_of_continuous _ fun _ f K hzero ↦
+    Quillen.sigmaSubfamily_homotopyExtension (Set.range a) f K hzero
 
 variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
 
@@ -211,7 +212,7 @@ theorem replacementRowMap_degeneracy_realization_isClosedEmbedding
 coproduct coordinates. -/
 theorem topologicalRowMap_degeneracy_homotopyExtensionProperty
     {n : ℕ} (i : Fin (n + 1)) :
-    TheoremA.homotopyExtensionProperty
+    Quillen.homotopyExtensionProperty
       (TopCat.ofHom (topologicalRowMap H (SimplexCategory.σ i).op)) :=
   sigmaReindexContinuousMap_homotopyExtensionProperty
     (X := fun s : (nerve D).obj (op ⦋n⦌) ↦ |H.obj (s.obj 0)|)
@@ -222,32 +223,32 @@ theorem topologicalRowMap_degeneracy_homotopyExtensionProperty
 /-- Every actual realized row degeneracy satisfies homotopy extension. -/
 theorem replacementRowMap_degeneracy_realization_homotopyExtensionProperty
     {n : ℕ} (i : Fin (n + 1)) :
-    TheoremA.homotopyExtensionProperty
+    Quillen.homotopyExtensionProperty
       (SSet.toTop.map (TheoremA.replacementRowMap H (SimplexCategory.σ i).op)) := by
   rw [replacementRowMap_realization_eq]
-  exact TheoremA.homotopyExtensionProperty_comp
-    (TheoremA.homotopyExtensionProperty_of_isIso _)
-    (TheoremA.homotopyExtensionProperty_comp
+  exact Quillen.homotopyExtensionProperty_comp
+    (Quillen.homotopyExtensionProperty_of_isIso _)
+    (Quillen.homotopyExtensionProperty_comp
       (topologicalRowMap_degeneracy_homotopyExtensionProperty H i)
-      (TheoremA.homotopyExtensionProperty_of_isIso _))
+      (Quillen.homotopyExtensionProperty_of_isIso _))
 
 /-- The degenerate part of a replacement row consists of all fiber summands
 over degenerate base chains. -/
 def degenerateReplacementRow (n : ℕ) : SSet.{u} :=
-  TheoremA.simplicialSigma
+  Quillen.Realization.simplicialSigma
     (fun s : (nerve D).degenerate n ↦ H.obj (s.1.obj 0))
 
 /-- Canonical inclusion of the whole degenerate part into the row. -/
 def degenerateReplacementRowInclusion (n : ℕ) :
     degenerateReplacementRow H n ⟶ TheoremA.replacementRow H (op ⦋n⦌) :=
-  TheoremA.simplicialSubfamilyInclusion
+  Quillen.Realization.simplicialSubfamilyInclusion
     (fun s : (nerve D).obj (op ⦋n⦌) ↦ H.obj (s.obj 0)) ((nerve D).degenerate n)
 
 /-- The same inclusion in topological coproduct coordinates. -/
 def topologicalDegenerateRowInclusion (n : ℕ) :
     C((Σ s : (nerve D).degenerate n, |H.obj (s.1.obj 0)|),
       Σ s : (nerve D).obj (op ⦋n⦌), |H.obj (s.obj 0)|) :=
-  TheoremA.sigmaSubfamilyInclusion
+  Quillen.sigmaSubfamilyInclusion
     (X := fun s : (nerve D).obj (op ⦋n⦌) ↦ |H.obj (s.obj 0)|) ((nerve D).degenerate n)
 
 /-- The range of the degenerate-row inclusion is exactly the collection of
@@ -293,31 +294,31 @@ theorem topologicalDegenerateRowInclusion_isClosedEmbedding (n : ℕ) :
 /-- The whole degenerate-row inclusion satisfies categorical homotopy
 extension in genuine coproduct topologies. -/
 theorem topologicalDegenerateRowInclusion_homotopyExtensionProperty (n : ℕ) :
-    TheoremA.homotopyExtensionProperty (TopCat.ofHom (topologicalDegenerateRowInclusion H n)) :=
-  TheoremA.homotopyExtensionProperty_of_continuous _ fun _ f K hzero ↦
-    TheoremA.sigmaSubfamily_homotopyExtension ((nerve D).degenerate n) f K hzero
+    Quillen.homotopyExtensionProperty (TopCat.ofHom (topologicalDegenerateRowInclusion H n)) :=
+  Quillen.homotopyExtensionProperty_of_continuous _ fun _ f K hzero ↦
+    Quillen.sigmaSubfamily_homotopyExtension ((nerve D).degenerate n) f K hzero
 
 /-- The canonical inclusion into the actual realized row has homotopy
 extension against every target space. -/
 theorem degenerateReplacementRowInclusion_realization_homotopyExtensionProperty (n : ℕ) :
-    TheoremA.homotopyExtensionProperty
+    Quillen.homotopyExtensionProperty
       (SSet.toTop.map (degenerateReplacementRowInclusion H n)) :=
-  TheoremA.homotopyExtensionProperty_realizationSubfamily
+  Quillen.Realization.homotopyExtensionProperty_realizationSubfamily
     (fun s : (nerve D).obj (op ⦋n⦌) ↦ H.obj (s.obj 0)) ((nerve D).degenerate n)
 
 /-- Realizing the degenerate inclusion gives the canonical subfamily
 inclusion under the proved row homeomorphisms. -/
 theorem degenerateReplacementRowInclusion_realization_eq (n : ℕ) :
     SSet.toTop.map (degenerateReplacementRowInclusion H n) =
-      (TheoremA.realizationSigmaIso
+      (Quillen.Realization.realizationSigmaIso
         (fun s : (nerve D).degenerate n ↦ H.obj (s.1.obj 0))).hom ≫
       TopCat.ofHom (topologicalDegenerateRowInclusion H n) ≫
       (TheoremA.replacementRowRealizationIso H (op ⦋n⦌)).inv := by
-  have h := TheoremA.realizationSubfamilyInclusion_naturality
+  have h := Quillen.Realization.realizationSubfamilyInclusion_naturality
     (fun s : (nerve D).obj (op ⦋n⦌) ↦ H.obj (s.obj 0)) ((nerve D).degenerate n)
   change SSet.toTop.map (degenerateReplacementRowInclusion H n) ≫
       (TheoremA.replacementRowRealizationIso H (op ⦋n⦌)).hom =
-      (TheoremA.realizationSigmaIso
+      (Quillen.Realization.realizationSigmaIso
         (fun s : (nerve D).degenerate n ↦ H.obj (s.1.obj 0))).hom ≫
       TopCat.ofHom (topologicalDegenerateRowInclusion H n) at h
   rw [← Category.assoc, ← h]
@@ -329,7 +330,7 @@ theorem degenerateReplacementRowInclusion_realization_isOpenEmbedding (n : ℕ) 
   rw [degenerateReplacementRowInclusion_realization_eq]
   exact (TopCat.homeoOfIso (TheoremA.replacementRowRealizationIso H _).symm).isOpenEmbedding.comp
     ((topologicalDegenerateRowInclusion_isOpenEmbedding H n).comp
-      (TopCat.homeoOfIso (TheoremA.realizationSigmaIso _)).isOpenEmbedding)
+      (TopCat.homeoOfIso (Quillen.Realization.realizationSigmaIso _)).isOpenEmbedding)
 
 /-- The entire degenerate part is a closed subspace of the actual realized row. -/
 theorem degenerateReplacementRowInclusion_realization_isClosedEmbedding (n : ℕ) :
@@ -337,7 +338,7 @@ theorem degenerateReplacementRowInclusion_realization_isClosedEmbedding (n : ℕ
   rw [degenerateReplacementRowInclusion_realization_eq]
   exact (TopCat.homeoOfIso (TheoremA.replacementRowRealizationIso H _).symm).isClosedEmbedding.comp
     ((topologicalDegenerateRowInclusion_isClosedEmbedding H n).comp
-      (TopCat.homeoOfIso (TheoremA.realizationSigmaIso _)).isClosedEmbedding)
+      (TopCat.homeoOfIso (Quillen.Realization.realizationSigmaIso _)).isClosedEmbedding)
 
 /-- A commuting change of coordinates transports ranges by preimage. -/
 theorem range_eq_preimage_of_homeomorphs
@@ -372,10 +373,10 @@ theorem degenerateReplacementRowInclusion_realization_range (n : ℕ) :
       (TheoremA.replacementRowRealizationIso H (op ⦋n⦌)).hom ⁻¹'
         Set.range (topologicalDegenerateRowInclusion H n) :=
   range_eq_preimage_of_homeomorphs
-    (TopCat.homeoOfIso (TheoremA.realizationSigmaIso
+    (TopCat.homeoOfIso (Quillen.Realization.realizationSigmaIso
       (fun s : (nerve D).degenerate n ↦ H.obj (s.1.obj 0))))
     (TopCat.homeoOfIso (TheoremA.replacementRowRealizationIso H (op ⦋n⦌))) _ _
-    (fun x ↦ TheoremA.realizationSubfamilyInclusion_apply
+    (fun x ↦ Quillen.Realization.realizationSubfamilyInclusion_apply
       (fun s : (nerve D).obj (op ⦋n⦌) ↦ H.obj (s.obj 0)) ((nerve D).degenerate n) x)
 
 /-- In the actual realized row, the degenerate subspace is exactly the union

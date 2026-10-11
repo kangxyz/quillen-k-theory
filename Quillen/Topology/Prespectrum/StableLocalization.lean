@@ -30,6 +30,7 @@ def coherentHomotopyRelation : HomRel LoopPrespectrum.{u} :=
 /-- The actual category quotient by full coherent based homotopies. -/
 abbrev CoherentHomotopyCategory := CategoryTheory.Quotient coherentHomotopyRelation.{u}
 
+/-- The quotient functor identifying maps joined by a coherent prespectrum homotopy. -/
 def coherentHomotopyQuotient : LoopPrespectrum.{u} ⥤ CoherentHomotopyCategory.{u} :=
   CategoryTheory.Quotient.functor _
 
@@ -61,6 +62,7 @@ def coherentStableEquivalences : MorphismProperty CoherentHomotopyCategory.{u} :
 coherent homotopies. No stable model structure or triangulation is assumed. -/
 abbrev StableLocalization := coherentStableEquivalences.{u}.Localization
 
+/-- The functor to the localization at the stable equivalences. -/
 def toStableLocalization : LoopPrespectrum.{u} ⥤ StableLocalization.{u} :=
   coherentHomotopyQuotient ⋙ coherentStableEquivalences.Q
 

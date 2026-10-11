@@ -26,11 +26,11 @@ namespace Quillen
 
 /-- A nullhomotopic map on a genuine HEP subspace extends literally. -/
 theorem exists_extend_of_nullhomotopic {A D : TopCat.{u}} {X : Type u}
-    [TopologicalSpace X] (i : A ⟶ D) (hi : TheoremA.homotopyExtensionProperty i)
+    [TopologicalSpace X] (i : A ⟶ D) (hi : Quillen.homotopyExtensionProperty i)
     (a : C(A, X)) (ha : a.Nullhomotopic) :
     ∃ c : C(D, X), c.comp i.hom = a := by
   obtain ⟨x, ⟨H⟩⟩ := ha
-  obtain ⟨V, _, hV⟩ := TheoremA.homotopyExtensionProperty_continuous hi
+  obtain ⟨V, _, hV⟩ := Quillen.homotopyExtensionProperty_continuous hi
     (TopCat.of X) (ContinuousMap.const D x) H.symm.toContinuousMap
     (fun z => H.symm.map_zero_left z)
   refine ⟨⟨fun z => V (1, z), by fun_prop⟩, ?_⟩

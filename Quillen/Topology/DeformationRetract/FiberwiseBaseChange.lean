@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.CategoryTheory.TheoremA.RealizationGluing
+public import Quillen.Topology.DeformationRetract.Basic
 public import Quillen.Topology.FiberwiseMappingPath.BaseChange
 
 /-! # Actual base change of a fiberwise strong deformation retract
@@ -23,10 +23,10 @@ open scoped Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.TheoremA.CylinderStrongDeformationRetract
+namespace Quillen.CylinderStrongDeformationRetract
 open FiberwiseMappingPath
 variable {A C B : TopCat.{u}} {i : A ⟶ C}
-  (R : CylinderStrongDeformationRetract i) (q : C ⟶ B)
+  (R : Quillen.CylinderStrongDeformationRetract i) (q : C ⟶ B)
   (hR : R.H ≫ q = fst C TopCat.I ≫ q)
   {D : Type u} [TopologicalSpace D] (g : C(D, B))
 
@@ -66,4 +66,4 @@ def baseChangeHomotopyEquiv : ContinuousMap.HomotopyEquiv
 @[simp] theorem baseChangeHomotopyEquiv_toFun :
     (R.baseChangeHomotopyEquiv q hR g).toFun = baseChangedMap q.hom i.hom g := rfl
 
-end Quillen.TheoremA.CylinderStrongDeformationRetract
+end Quillen.CylinderStrongDeformationRetract

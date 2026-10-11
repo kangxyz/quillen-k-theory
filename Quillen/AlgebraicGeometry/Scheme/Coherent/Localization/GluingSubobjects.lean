@@ -141,7 +141,7 @@ def subobjectObstructionKernelIsLimit
 /-- A morphism into a binary product is zero if both components vanish,
 and the same holds after applying a product-preserving functor. -/
 lemma map_prod_lift_comp_eq_zero
-    {C D : Type*} [Category C] [Category D] [HasZeroMorphisms C] [HasZeroMorphisms D]
+    {C D : Type*} [Category C] [Category D] [HasZeroMorphisms D]
     (F : C ⥤ D)
     {T Y Z : C} [HasBinaryProduct Y Z] [PreservesLimit (pair Y Z) F]
     {A : D} (i : A ⟶ F.obj T) (f : T ⟶ Y) (g : T ⟶ Z)

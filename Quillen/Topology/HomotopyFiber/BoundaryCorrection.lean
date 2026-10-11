@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.CategoryTheory.TheoremA.RealizationPushoutProduct
+public import Quillen.Topology.HELP.RelativeCylinder
 public import Quillen.Topology.HomotopyFiber.SourceEquivalence
 
 /-! Correcting the restriction of a homotopy while preserving both global
@@ -18,13 +18,13 @@ universe u
 open CategoryTheory
 open scoped Topology unitInterval
 open unitInterval
-namespace Quillen.TheoremA
+namespace Quillen
 variable {A B Z : TopCat.{u}} {i : A ⟶ B}
 
 /-- A relative deformation of the boundary homotopy extends to the entire
 homotopy, with both original endpoint maps unchanged. -/
 theorem homotopyExtensionProperty_correct_boundary
-    (hi : homotopyExtensionProperty i) {f g : C(B, Z)}
+    (hi : Quillen.homotopyExtensionProperty i) {f g : C(B, Z)}
     (K : f.Homotopy g) (L : (f.comp i.hom).Homotopy (g.comp i.hom))
     (Q : (K.compContinuousMap i.hom).toContinuousMap.HomotopyRel L.toContinuousMap
       {z : unitInterval × A | z.1 = 0 ∨ z.1 = 1}) :
@@ -34,7 +34,7 @@ theorem homotopyExtensionProperty_correct_boundary
     ⟨fun z ↦ Q (z.2, (z.1.2, z.1.1)), by fun_prop⟩
   let R₀ : C(B × unitInterval, Z) := f.comp ContinuousMap.fst
   let R₁ : C(B × unitInterval, Z) := g.comp ContinuousMap.fst
-  obtain ⟨S, hS, hSA, hS₀, hS₁⟩ := homotopyExtensionProperty_interval_square_extension
+  obtain ⟨S, hS, hSA, hS₀, hS₁⟩ := Quillen.homotopyExtensionProperty_interval_square_extension
     hi F R R₀ R₁ (fun a t ↦ Q.map_zero_left (t, a))
     (fun b ↦ (K.map_zero_left b).symm) (fun b ↦ (K.map_one_left b).symm)
     (fun a t ↦ (Q.prop t (0, a) (Or.inl rfl)).trans (K.map_zero_left (i a)))
@@ -50,11 +50,11 @@ theorem homotopyExtensionProperty_correct_boundary
 /-- In particular, a constant prefix on the boundary may be removed exactly
 without changing the two endpoint maps anywhere in the ambient space. -/
 theorem homotopyExtensionProperty_unpad_boundary
-    (hi : homotopyExtensionProperty i) {f g : C(B, Z)}
+    (hi : Quillen.homotopyExtensionProperty i) {f g : C(B, Z)}
     (K : f.Homotopy g) (L : (f.comp i.hom).Homotopy (g.comp i.hom))
     (hK : ∀ t a, K (t, i a) = Path.delayReflLeft 0 (L.evalAt a) t) :
     ∃ K' : f.Homotopy g, ∀ t a, K' (t, i a) = L (t,a) := by
-  apply homotopyExtensionProperty_correct_boundary hi K L
+  apply Quillen.homotopyExtensionProperty_correct_boundary hi K L
   refine {
     toFun z := Path.delayReflLeft z.1 (L.evalAt z.2.2) z.2.1
     continuous_toFun := ?_
@@ -80,4 +80,4 @@ theorem homotopyExtensionProperty_unpad_boundary
       change Path.delayReflLeft s (L.evalAt a) 1 = K (1,i a)
       exact (Path.target (Path.delayReflLeft s (L.evalAt a))).trans (K.map_one_left (i a)).symm
 
-end Quillen.TheoremA
+end Quillen

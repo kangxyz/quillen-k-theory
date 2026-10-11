@@ -34,6 +34,7 @@ lemma perfectSupportedOpenForget_exact : IsExact
   pushout := (subcategoryInclusion_exact (perfectSupported T.ι) (locallyPerfect X) (fun _ h =>
     h.1)).pushout
 
+/-- The K-map of the actual functor forgetting auxiliary support in the relative-open category. -/
 def perfectSupportedOpenKForget (n : ℕ) : PerfectSupportedOpenK j T n →* PerfectOpenK j n :=
   KMap (perfectSupportedOpenForget_exact j T) n
 

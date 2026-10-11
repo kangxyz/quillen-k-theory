@@ -171,6 +171,7 @@ lemma stageTransformationFunction_one (r : ℕ)
   | succ r ih =>
     exact ih (rowsTransformation η n.unop) (rowsTransformation_weak η hη n.unop) A
 
+/-- The iterated-stage simplicial homotopy induced by an objectwise weak natural transformation. -/
 def stageTransformationHomotopy (r : ℕ) {V W : Model.{u}} {F G : V ⟶ W}
     (η : F.functor ⟶ G.functor) (hη : ∀ A, W.waldhausen.weq (η.app A)) :
     SSet.Homotopy ((stages r).map F) ((stages r).map G) where
@@ -179,6 +180,7 @@ def stageTransformationHomotopy (r : ℕ) {V W : Model.{u}} {F G : V ⟶ W}
   h₁ := by ext n A : 4; exact stageTransformationFunction_one r η hη n A
   rel := by ext n z; exact z.1.property.elim
 
+/-- The degenerate simplex obtained from the iterated-stage zero vertex. -/
 def stageZeroSimplex (r : ℕ) (W : Model.{u}) (n : SimplexCategoryᵒᵖ) :
     ((stages r).obj W).obj n :=
   ((stages r).obj W).map (n.unop.const ⦋0⦌ 0).op (stageVertex r W)

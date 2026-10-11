@@ -46,7 +46,7 @@ theorem original_representatives_homotopic
     (α : DerivedCategory.Q.obj K ⟶ DerivedCategory.Q.obj I)
     (f g : K ⟶ I) (hf : DerivedCategory.Q.map f = α) (hg : DerivedCategory.Q.map g = α) :
     Nonempty (Homotopy f g) :=
-  ⟨homotopyOfDerivedEq_of_isKInjective f g (hf.trans hg.symm)⟩
+  ⟨homotopyOfDerivedEqOfIsKInjective f g (hf.trans hg.symm)⟩
 
 /-- Any original scheme direct image preserves weak maps between actual injective models. -/
 theorem original_scheme_pushforward {U X : Scheme.{u}} (j : U ⟶ X)

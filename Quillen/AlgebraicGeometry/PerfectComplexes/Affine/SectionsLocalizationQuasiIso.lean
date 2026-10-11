@@ -134,9 +134,8 @@ lemma isIso_sectionsLocalizationLift_basicOpen {R : CommRingCat.{u}} (r q : R)
   have he : sectionsLocalizationLift R r (PrimeSpectrum.basicOpen q) M = e.hom := by
     apply scalarLocalize_hom_ext R r (sectionsIntersection_units R r (PrimeSpectrum.basicOpen q) M)
     intro x
-    rw [sectionsLocalizationLift_mk]
-    exact (IsLocalizedModule.linearEquiv_apply (Submonoid.powers r)
-      (scalarLocalizeMk R r ((affineSectionsAt R (PrimeSpectrum.basicOpen q)).obj M)) g x).symm
+    simp only [Functor.comp_obj, evaluation_obj_obj]
+    erw [sectionsLocalizationLift_mk]
   rw [he]
   infer_instance
 

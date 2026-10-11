@@ -130,7 +130,7 @@ theorem bridge_isPushout : IsPushout d.start0 d.start1 d.bridge0 d.bridge1 :=
   IsPushout.of_hasPushout _ _
 /-- The projection from the glued bridge to `U ∩ V` induced by `q0` and `q1`. -/
 def bridgeProjection : d.Bridge ⟶ TopCat.of (U ∩ V : Set T) :=
-  TheoremB.FiberwiseBridge.projection d.cylinder0 d.cylinder1 d.bridge_isPushout d.q0 d.q1 d.square
+  Quillen.FiberwiseBridge.projection d.cylinder0 d.cylinder1 d.bridge_isPushout d.q0 d.q1 d.square
 
 /-- The normalized gluing data are constructed from actual mapping
 cylinders, with no chosen global equivalence or deformation. -/
@@ -145,17 +145,17 @@ def normalized : NormalizedOpenGluing.Data T U V where
   i1 := d.end1 ≫ d.bridge1
   over0 e := by
     have hh := ConcreteCategory.congr_hom
-      (TheoremB.FiberwiseBridge.projection_left d.cylinder0 d.cylinder1 d.bridge_isPushout
+      (Quillen.FiberwiseBridge.projection_left d.cylinder0 d.cylinder1 d.bridge_isPushout
         d.q0 d.q1 d.square) (d.end0 e)
     have hh' := ConcreteCategory.congr_hom
-      (TheoremA.mappingCylinderProjection_target_assoc d.cylinder0 d.q0) e
+      (Quillen.MappingCylinder.mappingCylinderProjection_target_assoc d.cylinder0 d.q0) e
     exact congrArg Subtype.val (hh.trans hh')
   over1 e := by
     have hh := ConcreteCategory.congr_hom
-      (TheoremB.FiberwiseBridge.projection_right d.cylinder0 d.cylinder1 d.bridge_isPushout
+      (Quillen.FiberwiseBridge.projection_right d.cylinder0 d.cylinder1 d.bridge_isPushout
         d.q0 d.q1 d.square) (d.end1 e)
     have hh' := ConcreteCategory.congr_hom
-      (TheoremA.mappingCylinderProjection_target_assoc d.cylinder1 d.q1) e
+      (Quillen.MappingCylinder.mappingCylinderProjection_target_assoc d.cylinder1 d.q1) e
     exact congrArg Subtype.val (hh.trans hh')
 
 /-- Every primitive deformation required by normalized gluing is derived
@@ -165,8 +165,8 @@ theorem normalized_deformations
     (hR : HomotopyLiftingProperty (d.k0 ≫ d.q0).hom)
     (E : ContinuousMap.HomotopyEquiv d.R d.Q0) (he : E.toFun = d.k0.hom)
     (F : ContinuousMap.HomotopyEquiv d.R d.Q1) (hf : F.toFun = d.k1.hom) :
-    ∃ (s0 : TheoremA.CylinderStrongDeformationRetract d.normalized.i0)
-      (s1 : TheoremA.CylinderStrongDeformationRetract d.normalized.i1),
+    ∃ (s0 : Quillen.CylinderStrongDeformationRetract d.normalized.i0)
+      (s1 : Quillen.CylinderStrongDeformationRetract d.normalized.i1),
       s0.H ≫ d.normalized.bridgeBase = fst d.Bridge TopCat.I ≫ d.normalized.bridgeBase ∧
       s1.H ≫ d.normalized.bridgeBase = fst d.Bridge TopCat.I ≫ d.normalized.bridgeBase := by
   have hR' : HomotopyLiftingProperty (d.k1 ≫ d.q1).hom := by rw [← d.square]; exact hR
@@ -174,7 +174,7 @@ theorem normalized_deformations
     hR (d.q0_lifting hp0) E (by rw [he]; rfl)
   let FF := fiberwiseEquivOfFibrationHomotopyEquiv (d.k1 ≫ d.q1).hom d.q1.hom
     hR' (d.q1_lifting hp1) F (by rw [hf]; rfl)
-  obtain ⟨s0, s1, hs0, hs1⟩ := TheoremB.FiberwiseBridge.exists_strongDeformationRetracts
+  obtain ⟨s0, s1, hs0, hs1⟩ := Quillen.FiberwiseBridge.exists_strongDeformationRetracts
     d.cylinder0 d.cylinder1 d.bridge_isPushout d.q0 d.q1 d.square EF
     ((fiberwiseEquivOfFibrationHomotopyEquiv_toMap _ _ _ _ _ _).trans he) FF
     ((fiberwiseEquivOfFibrationHomotopyEquiv_toMap _ _ _ _ _ _).trans hf)

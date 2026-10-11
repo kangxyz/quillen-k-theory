@@ -29,6 +29,9 @@ variable (hF : IsExact V.cof V.weq W.cof W.weq F)
 variable (hG : IsExact V.cof V.weq W.cof W.weq G)
 variable (hc : IsCofibrationTransformation W a V)
 
+set_option maxHeartbeats 550000 in
+-- Lean 4.34.1 exhausts the default budget elaborating this map's outer naturality.
+-- The declaration-local allowance preserves the actual normalized pushout construction.
 /-- The actual mixed-cylinder deformation is a bisimplicial map. Its values
 are the genuine pushouts, not chosen equivalences or unspecified fillers. -/
 def normalizedMixedMap : outerCylinder (bisimplicialSSet V) ⟶ bisimplicialSSet W where

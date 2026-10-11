@@ -63,7 +63,10 @@ lemma exists_supported_perfect_extension_across_affine_openImmersion {U V X : Sc
     (E ⊞ E⟦(1 : ℤ)⟧) B hA (locallyPerfect_of_strictPerfect hB) e
   refine ⟨P, hP, u, hu, ?_⟩
   let Y : Bool → Scheme := fun t => if t then U else V
-  let q : ∀ t, Y t ⟶ X := fun t => by cases t; exact k; exact j
+  let q : ∀ t, Y t ⟶ X := fun t => by
+    cases t with
+    | false => exact k
+    | true => exact j
   have : ∀ t, IsOpenImmersion (q t) := by intro t; cases t <;> dsimp [q] <;> infer_instance
   apply isZero_restrict_of_openImmersionCover P Z Y q
   · intro x

@@ -50,7 +50,7 @@ private def sumRightHomeomorph {X Y : Type u} [TopologicalSpace X] [TopologicalS
 
 variable {A B C D : TopCat.{u}} (f : A ⟶ B) (g : A ⟶ C)
   {l : A ⊗ TopCat.I ⟶ D} {e : TopCat.of (B ⊕ C) ⟶ D}
-  (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e) (cut : I)
+  (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e) (cut : I)
 
 /-- The open collar containing the left endpoint. -/
 def leftCollarSet : Set D := {d | height f g sq d < cut}
@@ -120,7 +120,7 @@ abbrev rightCollarCylinderInclusion : RightCollarCylinder f g sq cut ⟶ RightCo
 /-- Restricting the ordinary pushout to the left collar leaves only its left end. -/
 theorem leftCollar_isPushout (hcut : 0 < cut) : IsPushout (leftCollarEndpoint f g sq cut hcut) f
     (leftCollarCylinderInclusion f g sq cut) (leftCollarInclusion f g sq cut hcut) := by
-  let es : A ≃ₜ OpenPushout.source (i := TheoremA.intervalEndpoints A) (g := l)
+  let es : A ≃ₜ OpenPushout.source (i := Quillen.intervalEndpoints A) (g := l)
       (leftCollarSet f g sq cut) := sumLeftHomeomorph _
     (fun a ↦ by
       change height f g sq (l (a, ULift.up 0)) < cut; rw [height_cylinder]; exact hcut)
@@ -139,7 +139,7 @@ theorem leftCollar_isPushout (hcut : 0 < cut) : IsPushout (leftCollarEndpoint f 
 /-- Restricting the ordinary pushout to the right collar leaves only its right end. -/
 theorem rightCollar_isPushout (hcut : cut < 1) : IsPushout (rightCollarEndpoint f g sq cut hcut) g
     (rightCollarCylinderInclusion f g sq cut) (rightCollarInclusion f g sq cut hcut) := by
-  let es : A ≃ₜ OpenPushout.source (i := TheoremA.intervalEndpoints A) (g := l)
+  let es : A ≃ₜ OpenPushout.source (i := Quillen.intervalEndpoints A) (g := l)
       (rightCollarSet f g sq cut) := sumRightHomeomorph _
     (fun a ↦ by
       change ¬ cut < height f g sq (l (a, ULift.up 0));
@@ -157,7 +157,7 @@ theorem rightCollar_isPushout (hcut : cut < 1) : IsPushout (rightCollarEndpoint 
 
 /-- The left half-open cylinder contracts to zero by `(a,t,s) ↦ (a,s*t)`. -/
 def leftCollarCylinderStrongDeformationRetract (hcut : 0 < cut) :
-    TheoremA.CylinderStrongDeformationRetract (leftCollarEndpoint f g sq cut hcut) where
+    Quillen.CylinderStrongDeformationRetract (leftCollarEndpoint f g sq cut hcut) where
   r := TopCat.ofHom ⟨fun z ↦ z.1.1, by fun_prop⟩
   retract := rfl
   H := TopCat.ofHom ⟨fun p ↦ ⟨(p.1.1.1, ULift.up (p.2.down * p.1.1.2.down)), by
@@ -200,7 +200,7 @@ def leftCollarCylinderStrongDeformationRetract (hcut : 0 < cut) :
 /-- The right half-open cylinder contracts to one by
 `(a,t,s) ↦ (a,1-s*(1-t))`. -/
 def rightCollarCylinderStrongDeformationRetract (hcut : cut < 1) :
-    TheoremA.CylinderStrongDeformationRetract (rightCollarEndpoint f g sq cut hcut) where
+    Quillen.CylinderStrongDeformationRetract (rightCollarEndpoint f g sq cut hcut) where
   r := TopCat.ofHom ⟨fun z ↦ z.1.1, by fun_prop⟩
   retract := rfl
   H := TopCat.ofHom ⟨fun p ↦ ⟨(p.1.1.1, ULift.up (σ (p.2.down * σ p.1.1.2.down))), by
@@ -245,13 +245,13 @@ def rightCollarCylinderStrongDeformationRetract (hcut : cut < 1) :
 
 /-- The actual left collar strongly deformation retracts onto `B`. -/
 def leftCollarStrongDeformationRetract (hcut : 0 < cut) :
-    TheoremA.CylinderStrongDeformationRetract (leftCollarInclusion f g sq cut hcut) :=
+    Quillen.CylinderStrongDeformationRetract (leftCollarInclusion f g sq cut hcut) :=
   (leftCollarCylinderStrongDeformationRetract f g sq cut hcut).pushout (leftCollar_isPushout f g
     sq cut hcut)
 
 /-- The actual right collar strongly deformation retracts onto `C`. -/
 def rightCollarStrongDeformationRetract (hcut : cut < 1) :
-    TheoremA.CylinderStrongDeformationRetract (rightCollarInclusion f g sq cut hcut) :=
+    Quillen.CylinderStrongDeformationRetract (rightCollarInclusion f g sq cut hcut) :=
   (rightCollarCylinderStrongDeformationRetract f g sq cut hcut).pushout (rightCollar_isPushout f
     g sq cut hcut)
 

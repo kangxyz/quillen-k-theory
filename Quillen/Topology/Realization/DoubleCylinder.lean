@@ -80,7 +80,7 @@ theorem simplicial_isPushout :
 /-- The entire endpoint pair realizes to the literal topological endpoint pair. -/
 theorem realizationEndpoints_square :
     SSet.toTop.map (simplicialEndpoints X) ≫ (realizationCylinderIso X).hom =
-      (realizationBinarySumIso X X).hom ≫ TheoremA.intervalEndpoints |X| := by
+      (realizationBinarySumIso X X).hom ≫ Quillen.intervalEndpoints |X| := by
   apply (isColimitOfHasBinaryCoproductOfPreservesColimit SSet.toTop X X).hom_ext
   intro j
   cases j with
@@ -132,7 +132,7 @@ def realizedEnds : TopCat.of (|Y| ⊕ |Z|) ⟶ |simplicial f g| :=
 
 /-- The realized simplicial double cylinder is an actual displayed topological pushout. -/
 theorem realized_isPushout :
-    IsPushout (TheoremA.intervalEndpoints |X|)
+    IsPushout (Quillen.intervalEndpoints |X|)
       (endMap (SSet.toTop.map f) (SSet.toTop.map g))
       (realizedCylinder f g) (realizedEnds f g) := by
   apply ((simplicial_isPushout f g).map SSet.toTop).of_iso
@@ -145,7 +145,7 @@ theorem realized_isPushout :
 
 variable {D : TopCat.{u}} {l : |X| ⊗ TopCat.I ⟶ D}
   {e : TopCat.of (|Y| ⊕ |Z|) ⟶ D}
-  (sq : IsPushout (TheoremA.intervalEndpoints |X|)
+  (sq : IsPushout (Quillen.intervalEndpoints |X|)
     (endMap (SSet.toTop.map f) (SSet.toTop.map g)) l e)
 
 /-- The canonical isomorphism to any displayed topological double cylinder. -/

@@ -23,15 +23,19 @@ universe u
 namespace Quillen.LoopPrespectrum.Telescope
 variable (E : ℕ → LoopPrespectrum.{u}) (f : ∀ i, E i ⟶ E (i + 1))
 
+/-- Identify consecutive stage cylinders and all their basepoint lines. -/
 inductive Relation (k : ℕ) : (Σ i, I × (E i).space k) → (Σ i, I × (E i).space k) → Prop
   | step (i : ℕ) (x : (E i).space k) : Relation k ⟨i,(1,x)⟩ ⟨i+1,(0,(f i).map k x)⟩
   | base (i : ℕ) (s : I) : Relation k ⟨i,(s,(E i).point k)⟩ ⟨0,(0,(E 0).point k)⟩
 
+/-- The quotient space of the reduced prespectrum telescope at each level. -/
 abbrev Space (k : ℕ) := Quot (Relation E f k)
 
+/-- The stage cylinder map into the levelwise telescope. -/
 def cylinder (k i : ℕ) : C(I × (E i).space k, Space E f k) :=
   ⟨fun z ↦ Quot.mk _ ⟨i,z⟩, continuous_quot_mk.comp (continuous_sigmaMk (i := i))⟩
 
+/-- The common basepoint of the levelwise telescope. -/
 def point (k : ℕ) : Space E f k := cylinder E f k 0 (0,(E 0).point k)
 
 @[simp] theorem cylinder_one (k i : ℕ) (x : (E i).space k) :
@@ -206,9 +210,9 @@ def map : prespectrum E f ⟶ prespectrum E' f' where
 
 @[simp] theorem map_comp (E'' : ℕ → LoopPrespectrum.{u}) (f'' : ∀ i, E'' i ⟶ E'' (i + 1))
     (b : ∀ i, E' i ⟶ E'' i) (hb : ∀ i, b i ≫ f'' i = f' i ≫ b (i + 1)) :
-    map E f E'' f'' (fun i ↦ a i ≫ b i)
-      (by intro i; rw [Category.assoc, hb, ← Category.assoc, ha, Category.assoc]) =
-      map E f E' f' a ha ≫ map E' f' E'' f'' b hb := by
+    map E f E' f' a ha ≫ map E' f' E'' f'' b hb =
+      map E f E'' f'' (fun i ↦ a i ≫ b i)
+        (by intro i; rw [Category.assoc, hb, ← Category.assoc, ha, Category.assoc]) := by
   apply hom_ext
   intro k i s x
   rfl

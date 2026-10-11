@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.CategoryTheory.TheoremA.RealizationPushoutProduct
+public import Quillen.Topology.HELP.RelativeCylinder
 public import Quillen.CategoryTheory.TheoremA.MappingCylinderDiagram
 
 /-!
@@ -43,12 +43,12 @@ theorem homotopyExtensionProperty_mappingCylinderLatching
     (sqM : IsPushout (TopCat.ι₁ : A ⟶ A ⊗ TopCat.I) f lM cM)
     (sqN : IsPushout (TopCat.ι₁ : B ⟶ B ⊗ TopCat.I) f' lN cN)
     (sqQ : IsPushout i (TopCat.ι₀ ≫ lM) bQ mQ)
-    (hi : homotopyExtensionProperty i) (hj : homotopyExtensionProperty j)
+    (hi : Quillen.homotopyExtensionProperty i) (hj : Quillen.homotopyExtensionProperty j)
     (w : i ≫ f' = f ≫ j)
     (hmline : (i ▷ TopCat.I) ≫ lN = lM ≫ m)
     (hmtarget : j ≫ cN = cM ≫ m)
     (hbq : bQ ≫ q = TopCat.ι₀ ≫ lN) (hmq : mQ ≫ q = m) :
-    homotopyExtensionProperty q := by
+    Quillen.homotopyExtensionProperty q := by
   intro Z k H hzero
   have hH₀ : ∀ x, H (x, ULift.up 0) = k (q x) :=
     fun x ↦ ConcreteCategory.congr_hom hzero x
@@ -66,7 +66,7 @@ theorem homotopyExtensionProperty_mappingCylinderLatching
     intro c
     change H (mQ (cM c), ULift.up 0) = k (cN (j c))
     rw [hH₀, hqM, hmC]
-  obtain ⟨V, hV₀, hVj⟩ := homotopyExtensionProperty_continuous hj Z kC HC hHC₀
+  obtain ⟨V, hV₀, hVj⟩ := Quillen.homotopyExtensionProperty_continuous hj Z kC HC hHC₀
   let kB : C(B × I, Z) := ⟨fun p ↦ k (lN (p.1, ULift.up p.2)), by fun_prop⟩
   let HA : C((A × I) × I, Z) :=
     ⟨fun p ↦ H (mQ (lM (p.1.1, ULift.up p.1.2)), ULift.up p.2), by fun_prop⟩
@@ -97,7 +97,7 @@ theorem homotopyExtensionProperty_mappingCylinderLatching
     rw [h1, h2, hVj]
     rfl
   obtain ⟨K, hK₀, hKA, hKL, hKR⟩ :=
-    homotopyExtensionProperty_interval_square_extension hi kB HA H₀ H₁ hkA hk₀ hk₁ hA₀ hA₁
+    Quillen.homotopyExtensionProperty_interval_square_extension hi kB HA H₀ H₁ hkA hk₀ hk₁ hA₀ hA₁
   let K' : (B ⊗ TopCat.I) ⊗ TopCat.I ⟶ Z :=
     TopCat.ofHom ⟨fun p : (B × TopCat.I) × TopCat.I ↦
       K ((p.1.1, p.1.2.down), p.2.down), by fun_prop⟩
@@ -142,11 +142,11 @@ theorem homotopyExtensionProperty_mappingCylinderLatching
 /-- The canonical relative latching map in an actual mapping-cylinder
 diagram has HEP as soon as both diagram transition maps do. -/
 theorem mappingCylinderLatchingMap_hep
-    {J : Type v} [Category.{w} J] [HasColimitsOfShape J TopCat.{u}]
+    {J : Type v} [Category.{w} J]
     {F G : J ⥤ TopCat.{u}} (η : F ⟶ G) {j k : J} (a : j ⟶ k)
-    (hF : homotopyExtensionProperty (F.map a))
-    (hG : homotopyExtensionProperty (G.map a)) :
-    homotopyExtensionProperty (mappingCylinderLatchingMap η a) := by
+    (hF : Quillen.homotopyExtensionProperty (F.map a))
+    (hG : Quillen.homotopyExtensionProperty (G.map a)) :
+    Quillen.homotopyExtensionProperty (mappingCylinderLatchingMap η a) := by
   apply homotopyExtensionProperty_mappingCylinderLatching
     (mappingCylinderDiagramSquare η j) (mappingCylinderDiagramSquare η k)
     (IsPushout.of_hasPushout (F.map a) ((mappingCylinderDiagramStart η).app j)) hF hG

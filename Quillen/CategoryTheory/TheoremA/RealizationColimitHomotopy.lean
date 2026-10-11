@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.CategoryTheory.TheoremA.RealizationGluing
+public import Quillen.Topology.DeformationRetract.Basic
 
 /-!
 # Gluing coherent diagram homotopies
@@ -48,7 +48,7 @@ def colimitDiagramHomotopy {F G : J ⥤ TopCat.{u}}
   let hcI := isColimitOfPreserves (tensorRight TopCat.I) hc
   have hfac (j : J) : (tensorRight TopCat.I).map (c.ι.app j) ≫ hcI.map d H.h =
       H.h.app j ≫ d.ι.app j := hcI.ι_map d H.h j
-  refine homotopyOfCylinder (hcI.map d H.h) ?_ ?_
+  refine Quillen.homotopyOfCylinder (hcI.map d H.h) ?_ ?_
   · apply hc.hom_ext
     intro j
     rw [← Category.assoc, ← TopCat.ι₀_comp, Category.assoc]

@@ -8,6 +8,7 @@ module
 
 public import Quillen.Waldhausen.Fibration.RelativeRows.CoarseEvaluation
 public import Quillen.Waldhausen.Fibration.Rows.SecondEndpoint
+public import Quillen.Waldhausen.Fibration.ComplexExtension
 public import Quillen.Waldhausen.GilletWaldhausen.FibrationModels
 
 /-! Actual original-model comparisons consumed through the public library. -/

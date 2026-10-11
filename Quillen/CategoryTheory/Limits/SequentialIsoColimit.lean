@@ -27,10 +27,12 @@ namespace Quillen.SequentialIsoColimit
 variable {C : Type u} [Category.{v} C] {X : ℕ → C} (f : ∀ n, X n ⟶ X (n + 1))
   [∀ n, IsIso (f n)]
 
+/-- Transport each stage backward along the transition isomorphisms to stage zero. -/
 def toZeroIso : ∀ n, X n ≅ X 0
   | 0 => Iso.refl _
   | n+1 => (asIso (f n)).symm ≪≫ toZeroIso n
 
+/-- The natural transformation from the sequence to its stage-zero constant diagram. -/
 def toZero : Functor.ofSequence f ⟶ (Functor.const ℕ).obj (X 0) :=
   NatTrans.ofSequence (fun n ↦ (toZeroIso f n).hom) (by
     intro n
@@ -38,13 +40,16 @@ def toZero : Functor.ofSequence f ⟶ (Functor.const ℕ).obj (X 0) :=
     change f n ≫ (inv (f n) ≫ (toZeroIso f n).hom) = (toZeroIso f n).hom ≫ 𝟙 _
     rw [← Category.assoc, IsIso.hom_inv_id, Category.id_comp, Category.comp_id])
 
+/-- The sequence is naturally isomorphic to its stage-zero constant diagram. -/
 def constIso : Functor.ofSequence f ≅ (Functor.const ℕ).obj (X 0) :=
   NatIso.ofComponents (fun n ↦ toZeroIso f n) (fun {_ _} a ↦ (toZero f).naturality a)
 
+/-- The cocone on stage zero defined by the inverse transition maps. -/
 def cocone : Cocone (Functor.ofSequence f) where
   pt := X 0
   ι := toZero f
 
+/-- The stage-zero cocone is colimiting when every transition is an isomorphism. -/
 def isColimit : IsColimit (cocone f) where
   desc s := s.ι.app 0
   fac s n := by

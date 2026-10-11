@@ -44,10 +44,10 @@ theorem mappingCylinder_exists_source_retraction_over
     (hH : ∀ t a, base (f (H (t, a))) = base (f a))
     (hK : ∀ t x, base (K (t, x)) = base x) :
     ∃ r : M ⟶ A, (TopCat.ι₀ ≫ l) ≫ r = 𝟙 A ∧
-      r ≫ f ≫ base = TheoremA.mappingCylinderProjection sq ≫ base ∧
+      r ≫ f ≫ base = Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base ∧
         ∃ F : TopCat.Homotopy (r ≫ (TopCat.ι₀ ≫ l)) (𝟙 M),
-          ∀ t m, (TheoremA.mappingCylinderProjection sq ≫ base) (F (t, m)) =
-            (TheoremA.mappingCylinderProjection sq ≫ base) m := by
+          ∀ t m, (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) (F (t, m)) =
+            (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) m := by
   let j := TopCat.ι₀ ≫ l
   let r₀ := mappingCylinderSourceInverse sq g
   let η := mappingCylinderSourceLeftHomotopy sq g H
@@ -60,12 +60,13 @@ theorem mappingCylinder_exists_source_retraction_over
   have hjr : j ≫ r = 𝟙 A := by
     dsimp [r, j]
     rw [← Category.assoc, ← TopCat.ι₁_comp, Category.assoc, hQj, η.ι₁_h]
-  have hrbase : r ≫ f ≫ base = TheoremA.mappingCylinderProjection sq ≫ base := by
+  have hrbase : r ≫ f ≫ base = Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base := by
     dsimp [r]
     simp only [Category.assoc]
     rw [hQbase, ← Category.assoc, TopCat.ι₁_fst, Category.id_comp]
-  let R : TopCat.Homotopy r₀ r := TheoremA.homotopyOfCylinder Q hQ₀ rfl
-  have hRbase : ∀ t m, base (f (R (t, m))) = (TheoremA.mappingCylinderProjection sq ≫ base) m := by
+  let R : TopCat.Homotopy r₀ r := Quillen.homotopyOfCylinder Q hQ₀ rfl
+  have hRbase : ∀ t m, base (f (R (t, m))) = (Quillen.MappingCylinder.mappingCylinderProjection sq ≫
+    base) m := by
     intro t m
     exact ConcreteCategory.congr_hom hQbase (m, ULift.up t)
   let F₀ := mappingCylinderSourceRightHomotopy sq g K
@@ -74,9 +75,9 @@ theorem mappingCylinder_exists_source_retraction_over
   intro t m
   simp only [F, ContinuousMap.Homotopy.trans_apply]
   split_ifs
-  · change (TheoremA.mappingCylinderProjection sq ≫ base) (j (R (σ _, m))) = _
+  · change (Quillen.MappingCylinder.mappingCylinderProjection sq ≫ base) (j (R (σ _, m))) = _
     exact (ConcreteCategory.congr_hom
-      (TheoremA.mappingCylinderProjection_start_assoc sq base) _).trans (hRbase _ m)
+      (Quillen.MappingCylinder.mappingCylinderProjection_start_assoc sq base) _).trans (hRbase _ m)
   · exact mappingCylinderSourceRightHomotopy_over sq base g K hg hK _ m
 
 end Quillen.TheoremB

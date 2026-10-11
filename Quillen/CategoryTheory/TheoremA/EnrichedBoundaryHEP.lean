@@ -7,7 +7,8 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.CategoryTheory.TheoremA.RealizationSkeleton
-public import Quillen.CategoryTheory.TheoremA.RealizationBoundary
+public import Quillen.Topology.HELP.Basic
+public import Quillen.Topology.Realization.SimplexBoundaryHEP
 
 /-!
 # Homotopy extension for the actual enriched boundary inclusions
@@ -367,7 +368,7 @@ theorem realizationProductBoundary_square (X : SSet.{u}) (n : ℕ) :
     SSet.toTop.map (X ◁ ∂Δ[n].ι) ≫
         (TopCat.isoOfHomeo (realizationProductSimplexParameterHomeomorph X n)).hom =
       (TopCat.isoOfHomeo (realizationProductBoundaryHomeomorph X n)).hom ≫
-        parameterizedSimplexBoundaryInclusion |X| n := by
+        Quillen.parameterizedSimplexBoundaryInclusion |X| n := by
   apply TopCat.hom_ext
   apply ContinuousMap.ext
   intro x
@@ -377,32 +378,20 @@ theorem realizationProductBoundary_square (X : SSet.{u}) (n : ℕ) :
   · exact congrArg (fun z : |X| × |(Δ[n] : SSet.{u})| ↦ z.1) h
   · exact congrArg (fun z ↦ SimplexCategory.toTopHomeo ⦋n⦌ z.2) h
 
-/-- Homotopy extension is invariant under an isomorphism of arrows. -/
-theorem homotopyExtensionProperty_of_iso_square
-    {A B C D : TopCat.{u}} (i : A ⟶ B) (j : C ⟶ D)
-    (eA : A ≅ C) (eB : B ≅ D) (h : i ≫ eB.hom = eA.hom ≫ j)
-    (hj : homotopyExtensionProperty j) : homotopyExtensionProperty i := by
-  have hi : i = eA.hom ≫ j ≫ eB.inv := by
-    rw [← Category.assoc, ← h]
-    simp
-  rw [hi]
-  exact homotopyExtensionProperty_comp (homotopyExtensionProperty_of_isIso eA.hom)
-    (homotopyExtensionProperty_comp hj (homotopyExtensionProperty_of_isIso eB.inv))
-
 /-- Realized simplicial products with a standard boundary have genuine HEP. -/
 theorem homotopyExtensionProperty_realizationProductBoundary (X : SSet.{u}) (n : ℕ) :
-    homotopyExtensionProperty (SSet.toTop.map (X ◁ ∂Δ[n].ι)) :=
-  homotopyExtensionProperty_of_iso_square _ _
+    Quillen.homotopyExtensionProperty (SSet.toTop.map (X ◁ ∂Δ[n].ι)) :=
+  Quillen.homotopyExtensionProperty_of_iso_square _ _
     (TopCat.isoOfHomeo (realizationProductBoundaryHomeomorph X n))
     (TopCat.isoOfHomeo (realizationProductSimplexParameterHomeomorph X n))
     (realizationProductBoundary_square X n)
-    (homotopyExtensionProperty_simplexBoundary |X| n)
+    (Quillen.homotopyExtensionProperty_simplexBoundary |X| n)
 
 /-- The actual enriched boundary map used in replacement skeleta has HEP. -/
 theorem homotopyExtensionProperty_enrichedBoundary (X : SSet.{u}) (n : ℕ) :
-    homotopyExtensionProperty
+    Quillen.homotopyExtensionProperty
       (SSet.toTop.map (diagonalMap (outerProductMap (X := X) ∂Δ[n].ι))) := by
-  apply homotopyExtensionProperty_of_iso_square _ (SSet.toTop.map (X ◁ ∂Δ[n].ι))
+  apply Quillen.homotopyExtensionProperty_of_iso_square _ (SSet.toTop.map (X ◁ ∂Δ[n].ι))
     (SSet.toTop.mapIso (diagonalOuterProductIso (∂Δ[n] : SSet.{u}) X))
     (SSet.toTop.mapIso (diagonalOuterProductIso Δ[n] X))
   · simpa only [Functor.mapIso_hom, ← Functor.map_comp] using
@@ -413,7 +402,8 @@ theorem homotopyExtensionProperty_enrichedBoundary (X : SSet.{u}) (n : ℕ) :
 theorem homotopyExtensionProperty_replacementCellBoundary
     {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
     {n : ℕ} (s : (nerve D).nonDegenerate n) :
-    homotopyExtensionProperty (SSet.toTop.map (diagonalMap (replacementCellBoundaryι H s))) :=
+    Quillen.homotopyExtensionProperty (SSet.toTop.map (diagonalMap (replacementCellBoundaryι H s)))
+      :=
   homotopyExtensionProperty_enrichedBoundary (H.obj (s.1.obj 0)) n
 
 end TheoremA

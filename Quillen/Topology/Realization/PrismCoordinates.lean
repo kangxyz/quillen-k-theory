@@ -418,4 +418,8 @@ theorem prismLift_adjacent_right_zero {n : ℕ}
   rw [← prismTail_castSucc]
   exact sub_eq_zero.mpr (prism_adjacent_overlap_height i hi hj).symm
 
+/-- Finite barycentric simplices are Hausdorff, as subspaces of finite real products. -/
+instance finiteStdSimplex_t2Space {M : Type*} [Finite M] : T2Space (StdSimplex ℝ M) :=
+  (StdSimplex.isEmbedding_toFun_comp_weights ℝ M).t2Space
+
 end Quillen

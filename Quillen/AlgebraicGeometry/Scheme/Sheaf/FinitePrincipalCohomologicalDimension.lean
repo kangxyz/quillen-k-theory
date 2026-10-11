@@ -54,7 +54,8 @@ lemma sectionsComplex_isLE_bot (K : CochainComplex (TopCat.Sheaf A X) ℤ) (n : 
   exact (homologyFunctor A (.up ℤ) i).map_isZero (isZero_sectionsComplex_bot K)
 
 variable (R : CommRingCat.{u})
-local instance : DecidableEq R := Classical.decEq _
+/-- Classical decidable equality for finite families of principal generators. -/
+local instance instDecidableEqCarrierQuillen : DecidableEq R := Classical.decEq _
 
 /-- The actual union of a finite family of principal opens. The family need
 not cover the ambient spectrum. -/

@@ -61,8 +61,9 @@ theorem stageMap_isRealizationWeakEquivalence
     (h : ∀ n, IsRealizationWeakEquivalence (η.app (op ⦋n⦌))) (n : ℕ) :
     IsRealizationWeakEquivalence (stageMap η n) := by
   induction n with
-  | zero => exact IsRealizationWeakEquivalence.of_isInitial _ (stageZeroIsInitial X)
-    (stageZeroIsInitial Y)
+  | zero =>
+    exact IsRealizationWeakEquivalence.of_isInitial _ (stageZeroIsInitial X)
+      (stageZeroIsInitial Y)
   | succ n ih =>
     let : CompactSpace |(Δ[n] : SSet.{u})| := (SimplexCategory.toTopHomeo ⦋n⦌).symm.compactSpace
     let : T2Space |(Δ[n] : SSet.{u})| := (SimplexCategory.toTopHomeo ⦋n⦌).symm.t2Space

@@ -36,6 +36,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace Quillen.PerfectComplexes
 
+/-- The standard derived model used to localize the actual sheaf extension by zero. -/
 local instance extensionByZeroStandardDerived (X : Scheme.{u}) : HasDerivedCategory.{u + 1}
   X.Modules :=
   HasDerivedCategory.standard _
@@ -49,7 +50,7 @@ def derivedExtensionByZero : Derived U ⥤ Derived X :=
 instance derivedExtensionByZero_additive : (derivedExtensionByZero j).Additive :=
   inferInstanceAs ((SchemeSheaf.extensionByZero j).mapDerivedCategory.Additive)
 
-instance derivedExtensionByZero_commShift : (derivedExtensionByZero j).CommShift ℤ :=
+instance derivedExtensionByZeroCommShift : (derivedExtensionByZero j).CommShift ℤ :=
   inferInstanceAs ((SchemeSheaf.extensionByZero j).mapDerivedCategory.CommShift ℤ)
 
 instance derivedExtensionByZero_isTriangulated : (derivedExtensionByZero j).IsTriangulated :=
@@ -60,10 +61,12 @@ def derivedExtensionByZeroFactors :
     toDerived U ⋙ derivedExtensionByZero j ≅ extensionByZero j ⋙ toDerived X :=
   (SchemeSheaf.extensionByZero j).mapDerivedCategoryFactors
 
+/-- The localization square comparing actual extension by zero with its derived functor. -/
 local instance extensionByZeroLocalizationSquare :
     CatCommSq (extensionByZero j) (toDerived U) (toDerived X) (derivedExtensionByZero j) :=
   ⟨(derivedExtensionByZeroFactors j).symm⟩
 
+/-- The localization square comparing actual restriction with its derived functor. -/
 local instance restrictLocalizationSquare :
     CatCommSq (restrict j) (toDerived X) (toDerived U) (derivedRestrict j) :=
   ⟨(derivedRestrictFactors j).symm⟩

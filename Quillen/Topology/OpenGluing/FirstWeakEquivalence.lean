@@ -101,7 +101,7 @@ def firstEndIntersectionTargetHomeomorph (hV : IsOpen V) :
 
 /-- On the end collar the original restricted map is the pushed-out local SDR. -/
 theorem firstEnd_restriction_collar_weak
-    (R : TheoremA.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc)) :
+    (R : Quillen.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc)) :
     IsWeakHomotopyEquivalence (restriction d.firstEnd.hom (d.firstEndCollarSet h hi cut)) := by
   have heq : (d.firstEndCollarEnd h hi cut hc).hom.comp
       (d.firstEndCollarSourceHomeomorph h hi cut hc).toHomotopyEquiv.toFun =
@@ -133,7 +133,7 @@ theorem firstEnd_restriction_overlap_weak (hV : IsOpen V)
 /-- On the intersection the map is the supplied actual local bridge SDR,
 not a restriction of an arbitrarily weak map. -/
 theorem firstEnd_restriction_intersection_weak (hV : IsOpen V)
-    (R : TheoremA.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc)) :
+    (R : Quillen.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc)) :
     IsWeakHomotopyEquivalence (restriction d.firstEnd.hom
       (d.firstEndCollarSet h hi cut ∩ d.firstBase ⁻¹' V)) := by
   have heq : (d.firstEndIntersectionTargetHomeomorph h hi cut hV).toHomotopyEquiv.toFun.comp
@@ -154,7 +154,7 @@ theorem firstEnd_restriction_intersection_weak (hV : IsOpen V)
 /-- The unchanged first attachment preserves ordinary weakness of its original
 bridge end. Its complete overlap condition is discharged by the genuine collar. -/
 theorem firstEnd_isWeakHomotopyEquivalence (hV : IsOpen V)
-    (R : TheoremA.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc))
+    (R : Quillen.CylinderStrongDeformationRetract (d.bridgeEndCollarEnd h hi cut hc))
     (hweak : IsWeakHomotopyEquivalence d.i0.hom) :
     IsWeakHomotopyEquivalence d.firstEnd.hom :=
   isWeakHomotopyEquivalence_of_two_open d.firstEnd.hom

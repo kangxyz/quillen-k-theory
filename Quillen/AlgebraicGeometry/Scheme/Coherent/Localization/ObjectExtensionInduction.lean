@@ -46,8 +46,7 @@ theorem affineLocallyFiniteType_subobject_on_compact_open_of_enlargement
       IsIso ((restrictFunctor W.ι).map s) ∧
       affineLocallyFiniteType (W ⊔ S).toScheme (N.restrict (W ⊔ S).ι) := by
   refine compact_open_induction_on S hS ?_ ?_
-  ·
-    refine ⟨M, 𝟙 M, inferInstance, inferInstance, ?_, ?_⟩
+  · refine ⟨M, 𝟙 M, inferInstance, inferInstance, ?_, ?_⟩
     · exact (restrictFunctor W.ι).map_isIso (𝟙 M)
     · rw [sup_bot_eq]
       exact hW
@@ -87,7 +86,8 @@ theorem affineLocallyFiniteType_subobject_extension_of_affine_enlargement
     ∃ (N : FiniteTypeSheaves X) (s : N.obj ⟶ M), Mono s ∧
       IsIso ((restrictFunctor W.ι).map s) := by
   obtain ⟨N, s, hN, hs, hsW, hNW⟩ :=
-    affineLocallyFiniteType_subobject_on_compact_open_of_enlargement henlarge M W hW ⊤ isCompact_univ
+    affineLocallyFiniteType_subobject_on_compact_open_of_enlargement
+      henlarge M W hW ⊤ isCompact_univ
   have hcoh : affineLocallyFiniteType X N := affineLocallyFiniteType_of_restrict_top N (by
     rw [show W ⊔ (⊤ : X.Opens) = ⊤ from sup_top_eq W] at hNW
     exact hNW)

@@ -56,7 +56,7 @@ lemma perfectSupportedKRestrict_comp_boundedFlat (n : ℕ) :
         (boundedFlatPerfectSupportedKPullback (supportRestrictionPair j T) n) := by
   unfold perfectSupportedKRestrict boundedFlatPerfectSupportedToPerfectSupportedKMap
     boundedFlatPerfectSupportedKPullback
-  rw [← Waldhausen.KMap_comp, ← Waldhausen.KMap_comp]
+  rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
   exact Waldhausen.KMap_eq_of_iso _ _
     (boundedFlatPerfectSupportedOriginalRestrictionIso j T) n
 

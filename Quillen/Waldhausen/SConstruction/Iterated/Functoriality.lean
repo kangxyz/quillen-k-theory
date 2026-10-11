@@ -40,6 +40,7 @@ def doubleMap : doubleS V ⟶ doubleS W where
     apply Subtype.ext
     apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 
+/-- The diagonal simplicial map induced by the original exact functor on double rows. -/
 def doubleDiagonalMap : doubleDiagonal V ⟶ doubleDiagonal W :=
   TheoremA.diagonalMap (doubleMap V W hF)
 

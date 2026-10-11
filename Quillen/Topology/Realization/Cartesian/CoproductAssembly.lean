@@ -38,7 +38,7 @@ varying-target coproduct square, with canonical comparison unchanged. -/
 theorem cartesianSigma (h : ∀ i, Cartesian (p i) (q i) (f i) (g i) (w i)) :
     Cartesian (sigmaMap p) (sigmaMap q) (sigmaMap f) (sigmaMap g) (sigmaSquare p q f g w) := by
   let es := fun i ↦ (h i).equiv.trans (componentPullbackHomeomorph q i (g i)).toHomotopyEquiv
-  refine ⟨(TheoremA.sigmaHomotopyEquiv es).trans
+  refine ⟨(Quillen.sigmaHomotopyEquiv es).trans
     (sigmaPullbackHomeomorph (sigmaMap q)
       (fun i ↦ (ContinuousMap.sigmaMk i).comp (g i))).toHomotopyEquiv, ?_⟩
   apply ContinuousMap.ext

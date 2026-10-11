@@ -27,7 +27,7 @@ open Quillen.CartesianRealization.Skeletal
 variable {ι : Type u} {X A : ι → Type u} [∀ i, TopologicalSpace (X i)]
   [∀ i, TopologicalSpace (A i)]
   {E T : Type u} [TopologicalSpace E] [TopologicalSpace T]
-  (q : C(E,T)) (s : ∀ i, C(A i,T)) (p : ∀ i, C(X i,A i)) (t : ∀ i, C(X i,E))
+  (q : C(E, T)) (s : ∀ i, C(A i, T)) (p : ∀ i, C(X i, A i)) (t : ∀ i, C(X i, E))
   (w : ∀ i, q.comp (t i) = (s i).comp (p i))
 
 /-- The original constant-path comparison is literally the sigma comparison

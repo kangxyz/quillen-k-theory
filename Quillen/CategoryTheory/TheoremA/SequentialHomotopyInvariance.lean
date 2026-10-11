@@ -37,8 +37,8 @@ colimits. No compatibility of the given inverse maps or homotopies is
 assumed. The specified natural transformation is retained exactly. -/
 def sequentialColimitHomotopyEquiv {F G : ℕ ⥤ TopCat.{u}}
     (η : F ⟶ G)
-    (hF : ∀ n, homotopyExtensionProperty (F.map (homOfLE (Nat.le_succ n))))
-    (hG : ∀ n, homotopyExtensionProperty (G.map (homOfLE (Nat.le_succ n))))
+    (hF : ∀ n, Quillen.homotopyExtensionProperty (F.map (homOfLE (Nat.le_succ n))))
+    (hG : ∀ n, Quillen.homotopyExtensionProperty (G.map (homOfLE (Nat.le_succ n))))
     (e : ∀ n, ContinuousMap.HomotopyEquiv (F.obj n) (G.obj n))
     (he : ∀ n, (e n).toFun = (η.app n).hom) :
     ContinuousMap.HomotopyEquiv (colimit F : TopCat.{u}) (colimit G : TopCat.{u}) := by
@@ -55,7 +55,8 @@ def sequentialColimitHomotopyEquiv {F G : ℕ ⥤ TopCat.{u}}
     E₀.trans (mappingCylinderDiagramColimitCollapseHomotopyEquiv η)
   have hE : E.toFun = (colim.map η).hom := by
     change (colim.map (mappingCylinderDiagramStart η) ≫
-      mappingCylinderProjection (mappingCylinderDiagramColimitSquare η)).hom = _
+      Quillen.MappingCylinder.mappingCylinderProjection (mappingCylinderDiagramColimitSquare η)).hom
+        = _
     rw [mappingCylinderDiagramColimitCollapse_start]
   exact { E with
     toFun := (colim.map η).hom
@@ -65,8 +66,8 @@ def sequentialColimitHomotopyEquiv {F G : ℕ ⥤ TopCat.{u}}
 @[simp]
 theorem sequentialColimitHomotopyEquiv_toFun {F G : ℕ ⥤ TopCat.{u}}
     (η : F ⟶ G)
-    (hF : ∀ n, homotopyExtensionProperty (F.map (homOfLE (Nat.le_succ n))))
-    (hG : ∀ n, homotopyExtensionProperty (G.map (homOfLE (Nat.le_succ n))))
+    (hF : ∀ n, Quillen.homotopyExtensionProperty (F.map (homOfLE (Nat.le_succ n))))
+    (hG : ∀ n, Quillen.homotopyExtensionProperty (G.map (homOfLE (Nat.le_succ n))))
     (e : ∀ n, ContinuousMap.HomotopyEquiv (F.obj n) (G.obj n))
     (he : ∀ n, (e n).toFun = (η.app n).hom) :
     (sequentialColimitHomotopyEquiv η hF hG e he).toFun = (colim.map η).hom := rfl
@@ -115,8 +116,8 @@ theorem colimitHomotopyEquivOfCocones_toFun
 skeletal exhaustions and other explicitly presented colimits. -/
 def sequentialCoconeHomotopyEquiv {F G : ℕ ⥤ TopCat.{u}}
     (η : F ⟶ G)
-    (hF : ∀ n, homotopyExtensionProperty (F.map (homOfLE (Nat.le_succ n))))
-    (hG : ∀ n, homotopyExtensionProperty (G.map (homOfLE (Nat.le_succ n))))
+    (hF : ∀ n, Quillen.homotopyExtensionProperty (F.map (homOfLE (Nat.le_succ n))))
+    (hG : ∀ n, Quillen.homotopyExtensionProperty (G.map (homOfLE (Nat.le_succ n))))
     (e : ∀ n, ContinuousMap.HomotopyEquiv (F.obj n) (G.obj n))
     (he : ∀ n, (e n).toFun = (η.app n).hom)
     (c : Cocone F) (hc : IsColimit c) (d : Cocone G) (hd : IsColimit d) :
@@ -126,8 +127,8 @@ def sequentialCoconeHomotopyEquiv {F G : ℕ ⥤ TopCat.{u}}
 @[simp]
 theorem sequentialCoconeHomotopyEquiv_toFun {F G : ℕ ⥤ TopCat.{u}}
     (η : F ⟶ G)
-    (hF : ∀ n, homotopyExtensionProperty (F.map (homOfLE (Nat.le_succ n))))
-    (hG : ∀ n, homotopyExtensionProperty (G.map (homOfLE (Nat.le_succ n))))
+    (hF : ∀ n, Quillen.homotopyExtensionProperty (F.map (homOfLE (Nat.le_succ n))))
+    (hG : ∀ n, Quillen.homotopyExtensionProperty (G.map (homOfLE (Nat.le_succ n))))
     (e : ∀ n, ContinuousMap.HomotopyEquiv (F.obj n) (G.obj n))
     (he : ∀ n, (e n).toFun = (η.app n).hom)
     (c : Cocone F) (hc : IsColimit c) (d : Cocone G) (hd : IsColimit d) :

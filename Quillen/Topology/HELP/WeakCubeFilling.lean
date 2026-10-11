@@ -42,7 +42,7 @@ theorem exists_extend_productBoundary (n : ℕ)
       ((hornContraction n).map_zero_left z)
     map_one_left z := congrArg (fun q ↦ a (hornInclusion n q))
       ((hornContraction n).map_one_left z) }
-  obtain ⟨V,hV₀,hVhorn⟩ := TheoremA.homotopyExtensionProperty_continuous
+  obtain ⟨V,hV₀,hVhorn⟩ := Quillen.homotopyExtensionProperty_continuous
     (hornInclusion_hep n) (TopCat.of X) a H.toContinuousMap H.map_zero_left
   let a₁ : C(ProductBoundary.{u} n,X) := ⟨fun z ↦ V (1,z),by fun_prop⟩
   have hhorn (z : Horn.{u} n) : a₁ (hornInclusion n z) = x :=
@@ -73,7 +73,7 @@ theorem exists_extend_productBoundary (n : ℕ)
     continuous_toFun := by fun_prop
     map_zero_left z := by simp only [unitInterval.symm_zero]; rfl
     map_one_left z := by simpa only [unitInterval.symm_one] using hV₀ z }
-  obtain ⟨W,_,hW⟩ := TheoremA.homotopyExtensionProperty_continuous
+  obtain ⟨W,_,hW⟩ := Quillen.homotopyExtensionProperty_continuous
     (productBoundaryInclusion_hep n) (TopCat.of X) L R.toContinuousMap
       (fun z ↦ (R.map_zero_left z).trans (hL z).symm)
   refine ⟨⟨fun z ↦ W (1,z),by fun_prop⟩,?_⟩

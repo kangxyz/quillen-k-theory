@@ -7,7 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.Topology.Realization.EdgePathPresentation.Collar
-public import Quillen.CategoryTheory.TheoremA.RealizationBoundary
+public import Quillen.Topology.Realization.SimplexBoundaryHEP
 public import Mathlib.CategoryTheory.Limits.Types.Pushouts
 
 /-!
@@ -72,7 +72,7 @@ theorem isClosedEmbedding_pushout_right
 closed, without any separation or compactness assumption on the parameters. -/
 theorem isClosedEmbedding_parameterizedSimplexBoundary
     (X : TopCat.{u}) (n : ℕ) :
-    IsClosedEmbedding (TheoremA.parameterizedSimplexBoundaryInclusion X n) := by
+    IsClosedEmbedding (Quillen.parameterizedSimplexBoundaryInclusion X n) := by
   exact (Homeomorph.refl X).isClosedEmbedding.prodMap
     (isClosed_simplexBoundary n).isClosedEmbedding_subtypeVal
 
@@ -82,7 +82,7 @@ variable (X : TopCat.{u}) (n : ℕ) {C D : TopCat.{u}}
     {f : TopCat.of (X × simplexBoundary n) ⟶ C}
     {g : TopCat.of (X × StdSimplex ℝ (Fin (n + 1))) ⟶ D}
     {j : C ⟶ D}
-    (sq : IsPushout (TheoremA.parameterizedSimplexBoundaryInclusion X n) f g j)
+    (sq : IsPushout (Quillen.parameterizedSimplexBoundaryInclusion X n) f g j)
 
 /-- Extend the simplex's radial boundary coordinate across the old space,
 where it has the constant value one. -/
@@ -90,7 +90,7 @@ def simplexAttachmentDefect : C(D, ℝ) := by
   let b : TopCat.of (X × StdSimplex ℝ (Fin (n + 1))) ⟶ TopCat.of (ULift.{u} ℝ) :=
     TopCat.ofHom ⟨fun z ↦ ULift.up (simplexBoundaryDefect z.2), by fun_prop⟩
   let c : C ⟶ TopCat.of (ULift.{u} ℝ) := TopCat.const (ULift.up (1 : ℝ))
-  have h : TheoremA.parameterizedSimplexBoundaryInclusion X n ≫ b = f ≫ c := by
+  have h : Quillen.parameterizedSimplexBoundaryInclusion X n ≫ b = f ≫ c := by
     apply ConcreteCategory.hom_ext
     intro z
     change ULift.up (simplexBoundaryDefect z.2.1) = ULift.up (1 : ℝ)

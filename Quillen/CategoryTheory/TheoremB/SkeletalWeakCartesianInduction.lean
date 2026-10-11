@@ -20,6 +20,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
+open TheoremB (replacementSkeletonComparison
+  replacementSkeletonComparison_isWeakHomotopyEquivalence_of_weakStages)
 variable {D : Type u} [SmallCategory D] {H J : D ⥤ SSet.{u}} (η : H ⟶ J)
 
 /-- All actual characteristic charts in one base skeleton are weak-cartesian. -/
@@ -84,7 +86,8 @@ theorem stageRestrictionWeakCartesian (htrans : TransitionWeakCartesian η)
 theorem stageComparison_isWeakHomotopyEquivalence (htrans : TransitionWeakCartesian η)
     (k n : ℕ) (hkn : k ≤ n) :
     IsWeakHomotopyEquivalence
-      (Quillen.CartesianRealization.Sequential.stageComparison (realizedReplacementSkeletonMap η) k n hkn) :=
+      (Quillen.CartesianRealization.Sequential.stageComparison
+        (realizedReplacementSkeletonMap η) k n hkn) :=
   stageWeakCartesian_of_restrictionWeakCartesian η k n hkn
     (stageRestrictionWeakCartesian η htrans k n hkn)
 

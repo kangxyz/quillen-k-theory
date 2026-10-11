@@ -37,7 +37,7 @@ theorem stage_compactHELP
     toFun := (SSet.toTop.map (F.map u)).hom
     left_inv := by simpa only [he u] using (e u).left_inv
     right_inv := by simpa only [he u] using (e u).right_inv }
-  obtain ⟨a',ha',L,hL⟩ := TheoremA.homotopyEquiv_HELP hi E a b' K
+  obtain ⟨a',ha',L,hL⟩ := Quillen.homotopyEquiv_HELP hi E a b' K
   have hcomp : (SSet.toTop.map (c.ι.app k)).hom.comp
       ((SSet.toTop.map (F.map u)).hom.comp a') =
       (SSet.toTop.map (c.ι.app j)).hom.comp a' := by

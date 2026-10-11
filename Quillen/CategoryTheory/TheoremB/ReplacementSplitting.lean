@@ -83,7 +83,7 @@ def nondegenerateTopologicalRow (n : ℕ) : TopCat.{u} :=
 /-- The canonical inclusion of nondegenerate base summands. -/
 def nondegenerateTopologicalRowInclusion (n : ℕ) :
     nondegenerateTopologicalRow H n ⟶ (topologicalReplacement H).obj (op ⦋n⦌) :=
-  TopCat.ofHom (TheoremA.sigmaSubfamilyInclusion
+  TopCat.ofHom (Quillen.sigmaSubfamilyInclusion
     (X := fun s : (nerve D).obj (op ⦋n⦌) ↦ |H.obj (s.obj 0)|) ((nerve D).nonDegenerate n))
 
 /-- Inclusion of the nondegenerate summands is an open embedding. -/

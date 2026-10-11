@@ -128,7 +128,8 @@ def smallPushforwardToKilledExact :
       (Devissage.subcategoryExactStructure (supportKilled i)) where
   toFunctor := smallPushforwardToKilled i
   map_conflation S h := by
-    change (ExactStructure.smallModel.{u+1} (abelianExactStructure (FiniteTypeSheaves Z))).conflation S at h
+    change (ExactStructure.smallModel.{u+1}
+      (abelianExactStructure (FiniteTypeSheaves Z))).conflation S at h
     rw [abelianExactStructure_smallModel] at h
     exact h.map_of_exact _
 
@@ -140,13 +141,15 @@ instance smallPushforwardToKilledExact_mapQ_isEquivalence :
     (smallPushforwardToKilledExact i).mapQ.IsEquivalence := by
   apply ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro M N a ha
-    change (ExactStructure.smallModel.{u+1} (abelianExactStructure (FiniteTypeSheaves Z))).inflation a
+    change (ExactStructure.smallModel.{u+1}
+      (abelianExactStructure (FiniteTypeSheaves Z))).inflation a
     rw [abelianExactStructure_smallModel, abelianExactStructure_inflation_iff]
     have : Mono ((smallPushforwardToKilled i).map a) :=
       (abelianExactStructure_inflation_iff _ _).mp ha
     exact Functor.mono_of_mono_map (smallPushforwardToKilled i) this
   · intro M N a ha
-    change (ExactStructure.smallModel.{u+1} (abelianExactStructure (FiniteTypeSheaves Z))).deflation a
+    change (ExactStructure.smallModel.{u+1}
+      (abelianExactStructure (FiniteTypeSheaves Z))).deflation a
     rw [abelianExactStructure_smallModel, abelianExactStructure_deflation_iff]
     have : Epi ((smallPushforwardToKilled i).map a) :=
       (abelianExactStructure_deflation_iff _ _).mp ha

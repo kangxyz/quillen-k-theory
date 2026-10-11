@@ -37,7 +37,7 @@ variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
 
 /-- Restrict a replacement row to a subcomplex of its base nerve. -/
 def replacementRestrictionRow (A : (nerve D).Subcomplex) (p : SimplexCategoryᵒᵖ) : SSet.{u} :=
-  simplicialSigma fun s : A.obj p ↦ H.obj (s.1.obj 0)
+  Quillen.Realization.simplicialSigma fun s : A.obj p ↦ H.obj (s.1.obj 0)
 
 /-- A simplex operator on the base restriction, including the required
 covariant transport from the first vertex. -/
@@ -48,7 +48,7 @@ def replacementRestrictionRowMap (A : (nerve D).Subcomplex)
     (H.map (firstVertexEdge α x.1.1)).app r x.2⟩
   naturality r s β := by
     ext x : 3
-    dsimp [replacementRestrictionRow, simplicialSigma]
+    dsimp [replacementRestrictionRow, Quillen.Realization.simplicialSigma]
     apply congrArg (Sigma.mk _)
     exact ConcreteCategory.congr_hom ((H.map (firstVertexEdge α x.1.1)).naturality β) x.2
 
@@ -128,7 +128,7 @@ def replacementSkeletonIsColimit : IsColimit (replacementSkeletonCocone H) := by
 /-- A product with a simplicial set in the outer variable and a simplicial
 set in the inner variable, expressed by explicit row coproducts. -/
 def outerProduct (K X : SSet.{u}) : SimplexCategoryᵒᵖ ⥤ SSet.{u} where
-  obj p := simplicialSigma fun _ : K.obj p ↦ X
+  obj p := Quillen.Realization.simplicialSigma fun _ : K.obj p ↦ X
   map α := {
     app := fun _ ↦ ↾fun x ↦ ⟨K.map α x.1, x.2⟩
     naturality := fun _ _ _ ↦ rfl }

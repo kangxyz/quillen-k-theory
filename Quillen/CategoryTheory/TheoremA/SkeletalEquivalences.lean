@@ -8,7 +8,8 @@ module
 
 public import Quillen.CategoryTheory.TheoremA.SkeletalNaturality
 public import Quillen.CategoryTheory.TheoremA.SkeletalCofibrations
-public import Quillen.CategoryTheory.TheoremA.RealizationPushoutInvariance
+public import Quillen.Topology.Pushout.HomotopyEquivalence
+public import Quillen.Topology.MappingCylinder.HomotopyExtension
 
 /-! # Objectwise equivalences on finite realized replacement skeleta -/
 @[expose] public section
@@ -113,7 +114,7 @@ def realizedBisimplicialSigmaHomotopyEquiv {ι : Type u}
       |diagonalSSet (bisimplicialSigma Y)| :=
   homotopyEquivOfIsoSquare _ _ (realizedBisimplicialSigmaIso X)
     (realizedBisimplicialSigmaIso Y) (realizedBisimplicialSigmaIso_naturality f)
-    (sigmaHomotopyEquiv e) (by
+    (Quillen.sigmaHomotopyEquiv e) (by
       apply ContinuousMap.ext
       intro x
       change (⟨x.1, (e x.1).toFun x.2⟩ : Σ i, |diagonalSSet (Y i)|) = _
@@ -199,7 +200,7 @@ def realizedReplacementSkeletonHomotopyEquivData (n : ℕ) :
     let b := R.map (replacementCellsMap η n)
     let c := (realizedReplacementSkeletonMap η).app n
     let d := (realizedReplacementSkeletonMap η).app (n + 1)
-    let E := pushoutHomotopyEquivOfMap
+    let E := Quillen.Pushout.pushoutHomotopyEquivOfMap
       (realizedReplacementSkeleton_isPushout H n).flip
       (realizedReplacementSkeleton_isPushout K n).flip
       (homotopyExtensionProperty_replacementCellsBoundary H n)

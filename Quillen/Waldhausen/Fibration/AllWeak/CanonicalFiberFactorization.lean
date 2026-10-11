@@ -58,7 +58,7 @@ def changeWeakFiberLift : C(W.Delooping,
 /-- Contracted-base projection and its strict section give the genuine equivalence. -/
 def changeWeakFiberLiftEquiv : ContinuousMap.HomotopyEquiv W.Delooping
     (HomotopyFiber (changeWeakMap (nested W)) (waldhausenStructure W).kBasepoint) :=
-  TheoremA.homotopyEquivCancelRight
+  Quillen.homotopyEquivCancelRight
     (a := changeWeakFiberLift W)
     (HomotopyFiber.projectionEquivOfContraction (changeWeakMap (nested W))
       (waldhausenStructure W).kBasepoint (contraction W)) rfl

@@ -97,8 +97,8 @@ theorem original_unique_preimage (R : CommRingCat.{u}) (n : ℕ)
   · exact congrArg (fun g ↦ g b) ((affineSchemeNegativeKIso n).inv_hom_id_app R)
   · intro a ha
     have h := congrArg (fun g ↦ g a) ((affineSchemeNegativeKIso n).hom_inv_id_app R)
-    change (affineSchemeNegativeKIso n).inv.app R ((affineSchemeNegativeKIso n).hom.app R a) = a at
-      h
+    change (affineSchemeNegativeKIso n).inv.app R
+      ((affineSchemeNegativeKIso n).hom.app R a) = a at h
     rw [ha] at h
     exact h.symm
 

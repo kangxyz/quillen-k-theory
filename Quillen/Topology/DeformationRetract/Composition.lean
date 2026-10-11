@@ -19,17 +19,17 @@ open unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.TheoremA.CylinderStrongDeformationRetract
+namespace Quillen.CylinderStrongDeformationRetract
 variable {A B C T : TopCat.{u}} {i : A ⟶ B} {j : B ⟶ C}
-  (R : CylinderStrongDeformationRetract i) (S : CylinderStrongDeformationRetract j)
+  (R : Quillen.CylinderStrongDeformationRetract i) (S : Quillen.CylinderStrongDeformationRetract j)
 
 /-- The explicit two-stage deformation underlying composition. -/
 def compHomotopy : TopCat.Homotopy ((S.r ≫ R.r) ≫ (i ≫ j)) (𝟙 C) :=
-  ((((TopCat.Homotopy.refl j).comp (homotopyOfCylinder R.H R.H₀ R.H₁)).compContinuousMap
-    S.r.hom).cast (by ext x; rfl) (by ext x; rfl)).trans (homotopyOfCylinder S.H S.H₀ S.H₁)
+  ((((TopCat.Homotopy.refl j).comp (Quillen.homotopyOfCylinder R.H R.H₀ R.H₁)).compContinuousMap
+    S.r.hom).cast (by ext x; rfl) (by ext x; rfl)).trans (Quillen.homotopyOfCylinder S.H S.H₀ S.H₁)
 
 /-- Strong deformation retractions compose as actual maps. -/
-def comp : CylinderStrongDeformationRetract (i ≫ j) where
+def comp : Quillen.CylinderStrongDeformationRetract (i ≫ j) where
   r := S.r ≫ R.r
   retract := by simp only [Category.assoc, ← Category.assoc j, S.retract, Category.id_comp,
     R.retract]
@@ -50,7 +50,7 @@ def comp : CylinderStrongDeformationRetract (i ≫ j) where
 
 /-- A projection fixed by a deformation is fixed by its retraction too. -/
 theorem retraction_over {A B T : TopCat.{u}} {i : A ⟶ B}
-    (R : CylinderStrongDeformationRetract i) (p : B ⟶ T)
+    (R : Quillen.CylinderStrongDeformationRetract i) (p : B ⟶ T)
     (hR : R.H ≫ p = fst B TopCat.I ≫ p) : R.r ≫ i ≫ p = p := by
   have hh := congrArg (fun k : B ⊗ TopCat.I ⟶ T ↦ TopCat.ι₀ ≫ k) hR
   simpa only [← Category.assoc, R.H₀, TopCat.ι₀_fst, Category.id_comp] using hh
@@ -69,4 +69,4 @@ theorem comp_over (p : C ⟶ T)
       (ConcreteCategory.congr_hom (S.retraction_over p hS) c)
   · exact ConcreteCategory.congr_hom hS (c, _)
 
-end Quillen.TheoremA.CylinderStrongDeformationRetract
+end Quillen.CylinderStrongDeformationRetract

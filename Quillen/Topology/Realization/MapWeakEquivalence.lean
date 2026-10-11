@@ -110,7 +110,7 @@ lemma pushout
   have hcollapse := isWeakHomotopyEquivalence_of_homotopyEquiv
     (DoubleCylinder.collapseHomotopyEquiv
       (CartesianPushout.cylinderSquare (SSet.toTop.map i') (SSet.toTop.map f'))
-      (sq'.map SSet.toTop) (TheoremA.homotopyExtensionProperty_realization_mono i'))
+      (sq'.map SSet.toTop) (Quillen.Realization.homotopyExtensionProperty_realization_mono i'))
   have hh := hcollapse.comp hd
   change IsWeakHomotopyEquivalence
     ((CartesianPushout.collapseBase (sq'.map SSet.toTop)).hom.comp
@@ -120,7 +120,7 @@ lemma pushout
   exact hh.of_comp_left (isWeakHomotopyEquivalence_of_homotopyEquiv
     (DoubleCylinder.collapseHomotopyEquiv
       (CartesianPushout.cylinderSquare (SSet.toTop.map i) (SSet.toTop.map f))
-      (sq.map SSet.toTop) (TheoremA.homotopyExtensionProperty_realization_mono i)))
+      (sq.map SSet.toTop) (Quillen.Realization.homotopyExtensionProperty_realization_mono i)))
 
 end IsRealizationWeakEquivalence
 end Quillen

@@ -31,8 +31,8 @@ variable {A B C D A' B' C' D' : TopCat.{u}}
   {f : A ⟶ B} {g : A ⟶ C} {f' : A' ⟶ B'} {g' : A' ⟶ C'}
   {l : A ⊗ TopCat.I ⟶ D} {e : TopCat.of (B ⊕ C) ⟶ D}
   {l' : A' ⊗ TopCat.I ⟶ D'} {e' : TopCat.of (B' ⊕ C') ⟶ D'}
-  (sq : IsPushout (TheoremA.intervalEndpoints A) (endMap f g) l e)
-  (sq' : IsPushout (TheoremA.intervalEndpoints A') (endMap f' g') l' e')
+  (sq : IsPushout (Quillen.intervalEndpoints A) (endMap f g) l e)
+  (sq' : IsPushout (Quillen.intervalEndpoints A') (endMap f' g') l' e')
   (a : A ⟶ A') (b : B ⟶ B') (c : C ⟶ C')
   (wf : f ≫ b = a ≫ f') (wg : g ≫ c = a ≫ g')
 
@@ -74,14 +74,14 @@ theorem inclusion_right : g ≫ inclusionC c = inclusionA a ≫ replacedRight a 
     (congrArg TopCat.Hom.hom wg)) x).symm
 
 /-- The double mapping cylinder of the span between the three mapping-path replacements. -/
-abbrev ReplacedTotal : TopCat.{u} := pushout (TheoremA.intervalEndpoints (ReplacedA a))
+abbrev ReplacedTotal : TopCat.{u} := pushout (Quillen.intervalEndpoints (ReplacedA a))
   (endMap (replacedLeft a b wf) (replacedRight a c wg))
 /-- The canonical map of the replaced source times `I` into the replaced double cylinder. -/
 abbrev replacedLine : ReplacedA a ⊗ TopCat.I ⟶ ReplacedTotal a b c wf wg := pushout.inl _ _
 /-- The canonical map of the two replaced target spaces into the replaced double cylinder. -/
 abbrev replacedEnd : TopCat.of (ReplacedB b ⊕ ReplacedC c) ⟶ ReplacedTotal a b c wf wg :=
     pushout.inr _ _
-theorem replacedSquare : IsPushout (TheoremA.intervalEndpoints (ReplacedA a))
+theorem replacedSquare : IsPushout (Quillen.intervalEndpoints (ReplacedA a))
     (endMap (replacedLeft a b wf) (replacedRight a c wg))
     (replacedLine a b c wf wg) (replacedEnd a b c wf wg) := IsPushout.of_hasPushout _ _
 

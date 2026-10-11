@@ -21,6 +21,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
+open TheoremB (pointDiagram)
 variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
 
 /-- The vertical cell projection preserves each actual coproduct summand. -/
