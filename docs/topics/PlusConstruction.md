@@ -15,6 +15,10 @@ against arbitrary ambient target modules. Noncommutative rings and the zero
 ring are included throughout; no regularity, noetherian, flatness, or invariant
 basis number assumption is added to these ring-specific statements.
 
+The [documentation map](../README.md) supplies the neighboring topics;
+[ExactCategories.md](ExactCategories.md) records the original Q/K interface,
+and [SpectraAndBass.md](SpectraAndBass.md) records the separate spectral theory.
+
 ## Public imports
 
 Use `import Quillen.KTheory.Plus` for the selected ring plus interfaces. For a
@@ -93,7 +97,7 @@ classes. The all-points homotopy for the completion-to-Q-fiber square and the
 finite corrected homotopy-group naturality statements retain their own tracks.
 
 The independent downstream client
-[`Consumer.RingPlusNaturality`](../examples/downstream/Consumer/RingPlusNaturality.lean)
+[`Consumer.RingPlusNaturality`](../../examples/downstream/Consumer/RingPlusNaturality.lean)
 uses the public interface for the exact positive square, corrected identity and
 composition, virtual object classes, a noncommutative matrix ring, and a map
 from the integers to the zero ring.
@@ -117,7 +121,7 @@ The target need not be finite or projective. This does not assert an adjunction
 within finite-projective subcategories: restriction of scalars need not
 preserve finite projectives.
 
-[`Consumer.RingScalarExtension`](../examples/downstream/Consumer/RingScalarExtension.lean)
+[`Consumer.RingScalarExtension`](../../examples/downstream/Consumer/RingScalarExtension.lean)
 checks the literal unit, Hom map, uniqueness and naturality, including
 noncommutative and zero-ring examples.
 

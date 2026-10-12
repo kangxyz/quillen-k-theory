@@ -3,8 +3,8 @@
 Contributions should provide reusable mathematical definitions, proofs, or
 interfaces. Keep hypotheses explicit and follow the conventions of
 [mathlib](https://leanprover-community.github.io/contribute/style.html).
-The [architecture](docs/Architecture.md) describes the current mathematical
-owners; [scope](docs/Scope.md) records the remaining comparisons.
+The [architecture](docs/development/Architecture.md) describes the current mathematical
+owners; [scope](docs/reference/Scope.md) records the remaining comparisons.
 
 ## Adding mathematics
 
@@ -65,7 +65,7 @@ Batteries environment lint, and native mathlib text lint; then builds the
 downstream package and explicitly replays both axiom audits. Library compilation
 uses `autoImplicit = false`, the mathlib standard linter set, and warnings as
 errors. The allowed foundation axioms are `propext`, `Classical.choice`, and
-`Quot.sound`; see [the audit boundary](docs/Architecture.md#trust-checks).
+`Quot.sound`; see [the audit boundary](docs/development/Architecture.md#trust-checks).
 
 ## Typechecking performance
 
@@ -92,7 +92,7 @@ Use profiles to select a bounded change, then compare matched unprofiled runs
 with the same threads, options, outputs, and cache treatment. Alternate variants
 and record durations; profiling overhead is not a production speed comparison.
 Current measurements and their scope are recorded in
-[Performance.md](docs/Performance.md).
+[Performance.md](docs/development/Performance.md).
 
 ## API evolution
 
@@ -101,13 +101,34 @@ constructions distinct interfaces and state exact hypotheses for comparisons.
 Module paths and declaration namespaces should reflect mathematical ownership.
 Use one canonical interface for each construction, with minimal necessary
 hypotheses and mathlib naming conventions. Update the
-[library guide](docs/Library.md) when imports or interfaces change.
+[API reference](docs/reference/API.md) when imports or interfaces change.
 
 The library uses `0.x` versions. Breaking import or API changes require a minor
 version bump and concise release notes; compatible corrections use patch
 releases. Consumers should pin a release tag or commit. Update
-[Scope.md](docs/Scope.md) when mathematical coverage changes and
-[ThomasonTrobaugh.md](docs/ThomasonTrobaugh.md) for geometric localization changes.
+[scope](docs/reference/Scope.md) when mathematical coverage changes and the
+relevant [topic guide](docs/README.md#mathematical-topics) when its objects,
+theorem inputs, canonical maps, or comparison boundary change.
+
+## Documentation
+
+The [documentation map](docs/README.md) owns topic navigation. Mathematical
+guides live in `docs/topics/`, the shared API and scope references in
+`docs/reference/`, and architecture and measured performance in
+`docs/development/`. Extend the natural owner rather than duplicating a chapter
+or adding a topic without existing mathematics and a reader.
+
+Describe actual objects before their comparisons. Link focused Lean modules
+and existing client proofs, retain all named data and hypotheses, and distinguish
+positive-degree equivalences from degree-zero image or tail statements. A
+constructed interface with conditional inputs does not realize those inputs
+for every proposed application. Keep open comparisons in the relevant guide
+and the cross-topic scope reference.
+
+After moving documentation, update its internal links and the documentation
+map. Check local paths and heading fragments, and compile any new Lean examples
+against the pinned package. Documentation-only changes preserve existing proof
+build evidence when source, dependencies, and runtime are unchanged.
 
 ## Dependency updates
 

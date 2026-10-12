@@ -17,12 +17,12 @@ For arbitrary unital rings, it also constructs an independent homological
 `BGL(R)⁺` model, a specified weak equivalence to the zero component of original
 Q loops, and positive K-group comparison maps natural under ring change.
 Finite-projective ring change has the scalar-extension Hom universal property
-against arbitrary target modules. See [the ring plus guide](docs/PlusConstruction.md)
+against arbitrary target modules. See [the ring plus guide](docs/topics/PlusConstruction.md)
 for the exact coefficient universes, basepoint paths, and remaining comparisons.
 
-The project is under development. [Mathematical scope](docs/Scope.md) records
-precise coverage and open boundaries; the [library guide](docs/Library.md)
-provides imports and public interfaces.
+The project is under development. The [documentation map](docs/README.md)
+connects its mathematical topic guides, [coverage and open boundaries](docs/reference/Scope.md),
+and [public API reference](docs/reference/API.md).
 
 ## Quick start
 
@@ -71,18 +71,15 @@ For ring plus comparison, use `Quillen.KTheory.Plus`; for the scalar-extension
 universal property, use
 `Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeUniversal`.
 `import Quillen` imports the complete library. See the
-[module-path conventions](docs/Library.md#module-paths-and-namespaces) when
+[module-path conventions](docs/reference/API.md#module-paths-and-namespaces) when
 choosing focused imports.
 
 ## Documentation
 
-- [Library guide](docs/Library.md): imports, canonical maps, spectra, Bass groups, and universes.
-- [Mathematical scope](docs/Scope.md): result families, hypotheses, and open comparisons.
-- [Perfect-complex localization](docs/ThomasonTrobaugh.md): relative models, support excision, Mayer–Vietoris, and degree zero.
-- [Ring plus construction](docs/PlusConstruction.md): the independent model, original Q comparison, components, and scalar extension.
-- [Architecture](docs/Architecture.md): mathematical owners and dependency boundaries.
-- [Typechecking performance](docs/Performance.md): measured costs and a verified instance-inference optimization.
-- [Contributing](CONTRIBUTING.md): extending the library and checking changes.
+Use the [documentation map](docs/README.md) to choose a mathematical topic or
+shared reference. It separates the seven topic guides from API, scope,
+architecture, and performance documentation. [Contributing](CONTRIBUTING.md)
+gives the source and checking workflow.
 
 ## Building and checking
 
@@ -96,7 +93,7 @@ bash scripts/check.sh --rehash
 The cache script selects required mathlib imports. The check script validates
 source structure, builds the library and tests, runs lint, builds the downstream
 package, and replays the transitive axiom audits. See
-[verification scope](docs/Scope.md#verification) for what these checks cover.
+[verification scope](docs/reference/Scope.md#verification) for what these checks cover.
 
 ## License
 

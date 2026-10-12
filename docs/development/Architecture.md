@@ -2,7 +2,8 @@
 
 The library is organized by mathematical objects and reusable interfaces.
 Source ownership and import dependencies support extension without a fixed
-list of future topics.
+list of future topics. The [documentation map](../README.md) connects the current
+reader guides and references.
 
 ## Source boundaries
 
@@ -14,7 +15,9 @@ list of future topics.
 | `Tests/` | Maintained tests and exhaustive library axiom audit |
 | `examples/downstream/` | Independently configured client package and audit |
 | `Tools/` and `scripts/` | Lint, source discovery, generation, cache, and checks |
-| `docs/` | Reader documentation |
+| `docs/topics/` | Mathematical guides organized by objects and comparison families |
+| `docs/reference/` | Shared API and mathematical scope references |
+| `docs/development/` | Source architecture and measured typechecking performance |
 
 Tests, tools, and clients depend on the library. Implementation source imports
 individual dependencies, avoiding broad facades. The structural checker rejects
@@ -46,7 +49,7 @@ consumes those foundations and the finite-projective module constructions.
 A module's path records its owner. Its declaration namespace should describe
 the mathematical construction and need not mirror the path. Geometric interfaces
 use `Quillen.Scheme` and `Quillen.PerfectComplexes`; generic constructions have
-their own canonical namespaces. See [Library.md](Library.md#module-paths-and-namespaces).
+their own canonical namespaces. See [the API reference](../reference/API.md#module-paths-and-namespaces).
 
 ## Import generation and extension
 
@@ -61,7 +64,7 @@ The generated root imports every library module. Clients can use a smaller
 individual module or topic import. The generator wraps long import lines and
 gives oversized import-only facades a local long-file bound derived from their
 generated size; the other style linters remain enabled. CI checks generation
-against the current source graph. See [CONTRIBUTING.md](../CONTRIBUTING.md) for
+against the current source graph. See [CONTRIBUTING.md](../../CONTRIBUTING.md) for
 extension rules.
 
 ## Trust checks
