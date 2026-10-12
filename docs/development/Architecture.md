@@ -27,7 +27,8 @@ cycles and reverse dependencies on tests, tools, or clients.
 
 | Owner | Principal objects and interfaces |
 | --- | --- |
-| `Algebra` | Module complexes, homological algebra, ring theory, stable matrix groups, and finite-projective scalar extension |
+| `Algebra` | Module complexes, homological algebra, ring theory, finite-defect Laurent parametrices, stable matrix groups, and finite-projective scalar extension |
+| `LinearAlgebra` | Generic linear product identities used by the module constructions |
 | `CategoryTheory` | Exact categories, Q-construction, small models, categorical localization, and Theorems A/B |
 | `Topology` | Based homotopy, fibers and cylinders, lifting, realization, prespectra, stable fibers, and categorical stable localization |
 | `KTheory` | Exact-category K-groups, canonical maps, and generic Bass diagrams and cokernel recursion |

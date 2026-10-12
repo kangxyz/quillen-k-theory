@@ -16,12 +16,15 @@ principal interfaces. Declaration names are relative to `Quillen.Waldhausen`.
 | [`KTheory`](../../Quillen/Waldhausen/KTheory.lean) | `Structure.Delooping`, `Structure.kBasepoint`, `Structure.K` |
 | [`Functoriality.KMap`](../../Quillen/Waldhausen/Functoriality/KMap.lean) | `IsExact`, `KMap`, identity, composition, and isomorphism invariance |
 | [`Additivity.GroupFormula`](../../Quillen/Waldhausen/Additivity/GroupFormula.lean) | `Additivity.K_mul_comm`, `Additivity.KMap_additivity_mul` |
+| [`SConstruction.Rows.CofiberTwoRow`](../../Quillen/Waldhausen/SConstruction/Rows/CofiberTwoRow.lean), [`GrothendieckComparison.CofiberPrismComposition`](../../Quillen/Waldhausen/GrothendieckComparison/CofiberPrismComposition.lean) | `QuotientRows.cofiberTwoRow`, `Structure.cofiberObjectLoopTrack`, `Structure.cofiberPrismCompositionLoops` |
 | [`QuillenComparison.ExactNaturality`](../../Quillen/Waldhausen/QuillenComparison/ExactNaturality.lean) | `QuillenComparison.comparisonKEquiv`, `comparisonKEquiv_exactFunctor_naturality` in that namespace |
 | [`Approximation.GeneralKEquivalence`](../../Quillen/Waldhausen/Approximation/GeneralKEquivalence.lean) | `HasApproximationProperty.KEquivGeneral` |
 | [`Cofinality.GeneralDense`](../../Quillen/Waldhausen/Cofinality/GeneralDense.lean) | `Cofinality.DenseCofiberData.inclusionKEquivGeneral`, `inclusion_KZero_exact_general` in that namespace |
 | [`Fibration.GeneralComparison`](../../Quillen/Waldhausen/Fibration/GeneralComparison.lean), [`Fibration.LongExactSequence`](../../Quillen/Waldhausen/Fibration/LongExactSequence.lean) | `Fibration.canonicalFiberMap_isWeakHomotopyEquivalence_general`, `Fibration.changeWeakConnectingHom` |
+| [`Fibration.CanonicalFiberComponentTranslation`](../../Quillen/Waldhausen/Fibration/CanonicalFiberComponentTranslation.lean) | `Fibration.canonicalFiberComponentEquiv` |
 | [`GilletWaldhausen.GeneralComparison`](../../Quillen/Waldhausen/GilletWaldhausen/GeneralComparison.lean) | `GilletWaldhausen.boundedTermsSingleCoarseKEquivGeneral` |
 | [`GrothendieckComparison.SmallModel`](../../Quillen/Waldhausen/GrothendieckComparison/SmallModel.lean) | `AlgebraicGrothendieck.grothendieckKZeroEquivOfSmallModel` |
+| [`GrothendieckComparison.ImageQuotientConeZero`](../../Quillen/Waldhausen/GrothendieckComparison/ImageQuotientConeZero.lean) | `AlgebraicGrothendieck.imageQuotient_changeWeakKMap_range_ker`, `AlgebraicGrothendieck.imageQuotientConeMap_stable_zero_bijective` |
 
 ## The structure, simplices, and degree convention
 
@@ -90,6 +93,39 @@ to the product of original K-groups, with the pair of source/cofiber K-maps forw
 The extension equivalences require `[Category.{u} C]` for `C : Type u`; product
 and functor-additivity interfaces allow the stated independent `u, v`.
 
+## Literal cofiber rows and object-loop tracks
+
+For `C : Type u` with `[Category.{v} C]` and `[HasZeroMorphisms C]`, let
+`W : Structure C`, `i : A ⟶ B`, and `hi : W.cof i`. Supply a quotient `q : B ⟶ Q` with
+`hQ : IsPushout i (0 : A ⟶ W.zero) q (0 : W.zero ⟶ Q)`.
+`QuotientRows.cofiberTwoRow W i q hi hQ` is the actual S₂ quotient row.
+Its [ordinal faces](../../Quillen/Waldhausen/SConstruction/Rows/CofiberTwoFaces.lean)
+are quotient, middle, and source, in face order `0, 1, 2`.
+[`W.cofiberObjectLoopTrack`](../../Quillen/Waldhausen/GrothendieckComparison/CofiberObjectTrack.lean)
+is the specified realized triangle homotopy from the source object loop followed
+by the quotient object loop to the middle object loop, with independent
+comparison and loop parameters.
+
+If also `hwi : W.weq i`,
+[`QuotientRows.cofiberTwo_quotient_weak`](../../Quillen/Waldhausen/SConstruction/Rows/CofiberTwoComparison.lean)
+proves the displayed zero-to-quotient arrow weak by gluing. The comparison from
+the identity-cofiber row has components `𝟙 A`, `i`, and `0 : W.zero ⟶ Q`;
+acyclicity of the quotient is a conclusion, not an extra input.
+[`W.cofiberPrismHomotopy`](../../Quillen/Waldhausen/GrothendieckComparison/CofiberPrismHomotopy.lean)
+retains both full triangles and their constant chosen-zero vertex lines.
+`W.cofiberPrismCompositionLoops` curries its actual composition cube into a
+continuous square of based loops, keeping comparison, nerve, and loop coordinates
+independent. Its nerve faces are the identity-cofiber and original quotient tracks.
+
+For arbitrary composable weak arrows `f : A ⟶ B` and `g : B ⟶ D`, the
+[weak-arrow nerve prism](../../Quillen/Waldhausen/GrothendieckComparison/WeakObjectCompositionPrism.lean)
+has the original first, second, and literal composite-arrow squares as its faces.
+[`W.weakObjectSquareCompositionTrack`](../../Quillen/Waldhausen/GrothendieckComparison/WeakObjectCompositionTrack.lean)
+compares the concatenated original weak-square loop-space paths with the path
+for `f ≫ g`, relative to their original object-loop endpoints. This weak-arrow
+interface requires `W.weq f` and `W.weq g`, without the cofiber family's
+`HasZeroMorphisms` hypothesis.
+
 ## Comparison with exact-category Q
 
 For `E : Quillen.ExactStructure C`,
@@ -157,6 +193,26 @@ original K-maps. `changeWeak_KMap_zero_surjective_of_weak` gives surjectivity on
 `N.coarse.K 0` by the pointed-set tail and connected acyclic S-space. Positive
 surjectivity separately requires injectivity of the preceding acyclic-inclusion
 map. The sequence supplies no negative boundary.
+
+### Prescribed loop-fiber normalization
+
+For nested structures `N`, an object `A`, and `[HasZeroMorphisms C]`,
+[`Fibration.canonicalFiberComponentEquiv N A`](../../Quillen/Waldhausen/Fibration/CanonicalFiberComponentTranslation.lean)
+is a homotopy equivalence between fibers of the original localization loop map,
+from the fiber over the constant loop to the fiber over `N.coarse.kZeroObjectLoop A`.
+It uses the original loop/fiber transpose, left concatenation by the fine object
+loop, and the actual identity-cofiber suffix path. `canonicalFiberComponentEquiv_object`
+gives exactly the prescribed translation of the transposed object-loop point for
+each `X : Fibration.AcyclicCategory N`.
+The [fiber-square formula](../../Quillen/Waldhausen/Fibration/CanonicalFiberObjectSquare.lean)
+reverses the zero-to-acyclic nerve time and retains the original object-loop time.
+
+[`Structure.identityCofiberComponentEquiv_eq`](../../Quillen/Waldhausen/Fibration/IdentityCofiberNormalization.lean)
+identifies the induced first homotopy-group normalization of the loop space with
+the standard left-component normalization. It does not identify the entire
+identity-cofiber and suffix-removal paths. The separate fibration theorem still
+retains its hypotheses above. Scalar-boundary applications and their geometric
+comparison questions are in [PerfectComplexes.md](PerfectComplexes.md).
 
 ## Dense cofinality and degree zero
 
@@ -230,6 +286,45 @@ No cylinder, factorization, `JointData`, or presentation premise is added to eit
 K₀ comparison. Classifying-space, Theorem B, S-additivity, and continuous-path
 generation dependencies remain. A triangulated-derived presentation needs a separate
 comparison.
+
+## Exact-functor image quotient at K₀
+
+For `C D : Type u` with `[Category.{v} C]` and `[Category.{v} D]`, let
+`hF : IsExact W.cof W.weq V.cof V.weq F`. The algebraic
+[`AlgebraicGrothendieck.ImageQuotient W F hF`](../../Quillen/Waldhausen/GrothendieckGroup/Image.lean)
+is `AlgebraicGrothendieck.Group V` modulo the range of the original `AlgebraicGrothendieck.map W F hF`.
+Its object grading `d := AlgebraicGrothendieck.imageQuotientGrading W F hF` defines a coarse structure
+on the original target: weak arrows are those with equal quotient grades, while
+the cofibrations and chosen zero are unchanged.
+
+Supply `T : FunctorialFactorization V.smallModel`, a specified functorial
+cofibration/weak-equivalence factorization in the fine target's small model.
+[`imageQuotient_coarseKZeroValueMap_bijective`](../../Quillen/Waldhausen/GrothendieckComparison/ImageQuotient.lean)
+then identifies `d.coarseStructure.K 0` with the multiplicatively written algebraic image quotient
+through the actual coarse value map. The
+[exactness declarations](../../Quillen/Waldhausen/GrothendieckComparison/ImageQuotientExact.lean)
+`imageQuotient_changeWeakKMap_range_ker` and `imageQuotient_changeWeakKMap_surjective`
+prove that the original changeWeak K₀ map is onto and its kernel is exactly
+`(KMap hF 0).range`. These results use the original Grothendieck comparison and
+its naturality; no assumed presentation or additional localization-fibration
+premise replaces them. Object and morphism universes may differ as stated above.
+
+[`imageQuotientConeMap W F hF`](../../Quillen/Waldhausen/GrothendieckComparison/ImageQuotientCone.lean)
+is the unshifted cone descent for the original exact prespectrum map. Its
+nullhomotopy reverses the specified zero-to-normalized-image transformation,
+and its inclusion face is the original changeWeak prespectrum map.
+With the same `T`, `imageQuotientConeMap_stable_zero_bijective` proves bijectivity
+in stable degree zero. The proof uses the original connective spectrum's
+cone/fiber comparison and vanishing in degree `-1`; the
+[general cone-descent interface](../../Quillen/Topology/Prespectrum/ConeDescZeroComparison.lean)
+retains these as explicit hypotheses. An all-degree stable-equivalence conclusion
+additionally needs actual concentration of its source and target; it does not
+follow from this degree-zero theorem alone.
+
+Focused examples in [Tests.CofiberObjectTrack](../../Tests/CofiberObjectTrack.lean),
+[Tests.CofiberPrismComposition](../../Tests/CofiberPrismComposition.lean), and
+[Tests.ImageQuotientKZeroExact](../../Tests/ImageQuotientKZeroExact.lean) retain the
+original faces, independent coordinates, and preimages under the original K-maps.
 
 ## Independent client examples and remaining comparisons
 

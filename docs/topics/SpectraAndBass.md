@@ -9,6 +9,11 @@ stage and gives natural maps to the actual telescope. Bijectivity of these
 telescope maps and identification with classical nonconnective K-theory remain
 separate comparisons.
 
+For a quasi-compact open of an affine scheme, a separate quotient-graded Bass
+telescope has zero stable groups in every integer degree. Its constructed
+natural Laurent-seed null supplies this vanishing; transfer to the original
+restriction/localization construction remains open.
+
 This guide treats the generic spectrum interfaces and the affine spectral Bass
 construction. The perfect-complex seeds, support categories, and geometric
 localization comparisons belong to [PerfectComplexes.md](PerfectComplexes.md).
@@ -26,12 +31,17 @@ the larger declaration surface.
 | `Waldhausen.SConstruction.Iterated.LocalizedFunctoriality` | `localizedSpectrumMap` and its strict laws |
 | `Topology.Prespectrum.FiberSequence` | Actual path-space fibers and signed stable long exact sequence |
 | `Topology.Prespectrum.ConeLinearExcision` | Cone-fiber excision with explicit growth and point HEP |
+| `Topology.Prespectrum.DiagramNullHomotopy` | Coefficient-natural whole null tracks and original isomorphism transport |
+| `Topology.Prespectrum.StrictSquareCofiberDescent` | Actual looped-cone/cofiber comparison and descent equations |
+| `Topology.Prespectrum.TelescopeConeDescentStable` | Compatible null descent, stable comparison, and signed telescope boundary |
 | `Topology.Prespectrum.TelescopeStableColimit` | T1 telescope stable-colimit comparison |
 | `Topology.Prespectrum.LoopTailReplacementFiberEquivalence` | Ω replacement and its actual fiber comparison |
 | `KTheory.Bass.StrictRingDiagram` | Bass endofunctor and transitions for a supplied strict seed |
+| `KTheory.Bass.StrictDiagramIterateNull` | Bass iteration of prescribed natural null tracks on unchanged arrows |
 | `AlgebraicGeometry.PerfectComplexes.Affine.BassNegativeGroups` | Ring-indexed cokernel recursion |
 | `AlgebraicGeometry.PerfectComplexes.Affine.SectionBassNegativeMap` | Finite-stage bottom comparison and natural telescope class map |
 | `AlgebraicGeometry.PerfectComplexes.Affine.SectionBassTelescopeSelfMap` | Stable map from the ambient telescope to its Bass image |
+| `AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassTelescope` | All-integer vanishing of the actual graded `Under R` telescope for quasi-compact `U` |
 
 The connective declaration namespace is `Quillen.Waldhausen.IteratedS`.
 Generic spectral declarations use `Quillen.LoopPrespectrum`; its telescope
@@ -163,6 +173,40 @@ tracks. Finite Bass stages below discharge their own excision hypotheses.
 General stable cone excision for arbitrary prespectra remains separate, as does
 any levelwise weak-equivalence criterion inferred solely from a trivial cone.
 
+## Natural null tracks and cofiber descent
+
+For strict diagrams `F,G,K : C ⥤ LoopPrespectrum` and transformations
+`a : F ⟶ G`, `b : G ⟶ K`,
+[`DiagramNullHomotopy`](../../Quillen/Topology/Prespectrum/DiagramNullHomotopy.lean)
+records whole based nullhomotopies of `a.app X ≫ b.app X` and their coefficient
+naturality at the same null time. Transport through specified diagram
+isomorphisms and their two commuting arrow squares retains the actual
+pre/postcomposition maps and unchanged time.
+`mappingConeDiagram` and `mappingConeDescTransformation` give the corresponding
+strict cone diagram and natural descent. `mappingConeDesc_naturality` requires
+the actual target square and equality of the supplied whole null tracks.
+
+`StrictSquare.sourceNullHomotopy` retains the original source-leg cone cylinder.
+The looped-cone/cofiber comparison and its descent equation in
+[`StrictSquareCofiberDescent`](../../Quillen/Topology/Prespectrum/StrictSquareCofiberDescent.lean)
+retain the four original corners and their whole zero-composite homotopy.
+Stable equivalence of this comparison keeps the two cone-fiber excision
+premises explicit. For individual spectra `E₀,E₁,E₂`, maps `f : E₀ ⟶ E₁`,
+`g : E₁ ⟶ E₂`, and a supplied whole null of `f ≫ g`, the degree-zero criterion
+[`mappingConeDesc_stable_zero_bijective`](../../Quillen/Topology/Prespectrum/ConeDescZeroComparison.lean)
+requires cone-fiber excision for `f`, vanishing of `π^st_(-1)(E₀)`, exactness of
+`π^st_0(E₀) → π^st_0(E₁) → π^st_0(E₂)`, and surjectivity of the latter map.
+Its conclusion is bijectivity in degree zero.
+
+Compatible stage null tracks descend through the original telescope cylinders
+with null time and cylinder height independent. `Telescope.coneIso_desc`
+identifies that descent with the original cone/telescope interchange.
+[`TelescopeConeDescentStable`](../../Quillen/Topology/Prespectrum/TelescopeConeDescentStable.lean)
+requires T1 stages and stagewise stable descents for the stable conclusion;
+the signed boundary equation retains stagewise cone-fiber excision as its
+hypothesis. These generic interfaces do not manufacture the geometric null or
+comparison data needed to apply them.
+
 ## Telescopes and loop-tail Ω replacement
 
 Reduced telescopes retain the original stage inclusions and cylinder coordinates.
@@ -282,9 +326,70 @@ isomorphism. The geometric support/localization endpoint and its remaining
 Laurent-boundary obligations are described in
 [PerfectComplexes.md](PerfectComplexes.md).
 
-Fixed-degree stabilization, bijectivity of the negative-class maps, classical
-telescope negative identification, and full all-iterate geometric comparison
-remain open. The connective S-spectrum comparison does not settle them.
+## The quotient-graded full-open Bass telescope
+
+Fix `R : CommRingCat.{u}` and an open immersion `j : U ⟶ Spec R`.
+The full-open section model at `a : Under R` evaluates on the specified
+pullback open `openSpace j a`. Its quotient grading is the raw-perfect K₀ class
+modulo the image of the original relative-open restriction. Grade equality
+coarsens weak equivalences while retaining the original objects, cofibrations,
+and chosen zero. These Models and their spectra lie in universe `u+1`.
+The pointwise restriction Model map preserves the whole chosen zero section
+literally. The geometric definitions and restriction comparison are described
+in [PerfectComplexes.md](PerfectComplexes.md).
+
+For every such open `j`, the initial graded Model has zero stable groups in
+degrees `d ≠ 0`, without a compactness assumption. The independent client
+[`Consumer.FullOpenGradedSectionStable`](../../examples/downstream/Consumer/FullOpenGradedSectionStable.lean)
+uses this concentration to prove that any supplied map between the actual
+graded Models induces an isomorphism in nonzero degree. It constructs no
+missing comparison and asserts no degree-zero isomorphism.
+
+With `[CompactSpace U]`, the actual coefficient diagram, Laurent seed, natural
+contraction, and Bass telescope are defined over `Under R`, with arbitrary
+coefficient arrows. No flatness, regularity, noetherian condition, or affineness
+of `U` is imposed. The original forward Laurent self-track has a whole relative
+contraction to the constant track of the same coefficient map.
+[`FullOpenGradedLaurentContractionNaturality`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/FullOpenGradedLaurentContractionNaturality.lean)
+retains the exact Model-square transports and independent comparison, action,
+and structure coordinates, including the level-zero internal loop coordinate.
+
+Cone inclusion and conjugation by the original source-leg cone null produce
+`boundedFlatAffineFullOpenGradedSectionBassSeedDiagramNull`, a constructed
+coefficient-natural whole null of the actual graded seed.
+[`strictDiagramIterateNull`](../../Quillen/KTheory/Bass/StrictDiagramIterateNull.lean)
+transports this same null through the existing Bass action and successor
+isomorphisms. `boundedFlatAffineFullOpenGradedSectionBassTransition_stableMap_eq_zero`
+therefore gives zero for every original finite transition at every `a : Under R`
+and every `d : ℤ`.
+
+The actual reduced telescope is
+`boundedFlatAffineFullOpenGradedSectionBassTelescopeFunctor`.
+[`boundedFlatAffineFullOpenGradedSectionBassTelescope_stableGroup_subsingleton`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/FullOpenGradedSectionBassTelescope.lean)
+gives vanishing of its stable group for every coefficient `a` and every integer
+degree `d`. Each original stage inclusion factors on stable groups through its
+zero next transition, and T1 finite-stage representability accounts for every
+telescope class. Initial graded concentration and individual-stage vanishing
+are not premises of this argument; no seed-null premise is supplied.
+
+Writing `seedFine` and `seedGraded` for the two actual seed transformations,
+and `q` for the fine-to-graded transformation, the exact equation
+`seedFine ≫ B.map(q) = q ≫ seedGraded` is already proved in
+[`FullOpenSectionBassSeedChangeWeak`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/FullOpenSectionBassSeedChangeWeak.lean).
+The remaining transfer requires the original section restriction coefficient
+square, localization null, initial cone-descent comparison in degree zero,
+and compatible coefficient/seed/two-time null data. The separate objectwise
+raw-perfect deficit/graded stable comparison for qcqs ambient schemes and
+quasi-compact opens does not supply these section diagram interfaces.
+Graded telescope vanishing does not yet transfer to the original ungraded
+localization telescope or identify classical negative groups.
+
+For the ambient and supported ungraded telescopes above, fixed-degree
+stabilization, classical negative identification, and full all-iterate comparison
+with the original raw geometric towers remain open; the ambient negative-class
+maps still have no bijectivity assertion. General qcqs instantiation and full
+nonconnective Thomason–Trobaugh localization remain separate obligations.
+The connective S-spectrum comparison does not settle these questions.
 See [Scope.md](../reference/Scope.md) for the global frontier and
 [Architecture.md](../development/Architecture.md#trust-checks) for the foundation
 audit boundary. Compilation and axiom audits concern encoded proofs; they do

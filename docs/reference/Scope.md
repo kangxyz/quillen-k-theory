@@ -30,12 +30,14 @@ interface or a successful compilation does not supply an additional comparison.
 | Auxiliary support, excision, and Mayer–Vietoris | Natural supported localization; open-cover support excision; connective two-open sequence and matching K₀-class gluing |
 | Finite pushforward | Coherent G and finite-flat vector-bundle/strict-perfect K direct images on locally noetherian schemes, with canonical comparison laws |
 | Derived sheaf operations | Bounded-below direct image, flasque/affine units, composition, projection formula, and canonical ordinary/derived base-change mates |
+| Laurent and Čech finite models | Finite-defect parametrices, projector/module homotopy models, actual sheaf Čech comparisons, and perfect derived projection images for vector-bundle singles and explicitly bounded vector-bundle complexes |
 | Projective-line geometry | Actual two-chart line, tautological line and quotient, cohomology/direct image, twisted diagonal triangles, and QC-single flat base change |
 | Spectra and stable localization | Iterated S Ω-spectrum, additive K-comparison, signed looping, stable fiber sequence, coherent-homotopy quotient, and categorical stable localization |
 | Finite homotopy excision | All-point connectivity, finite cube HELP, original double-cylinder gap bound, and S-model/finite Bass-stage stable cone sequences |
 | Telescopes and Ω replacement | T1 finite-stage representatives and stable colimits, strict cone/pushout interchange, track-defined maps, and loop-tail Ω replacement |
 | Bass groups and finite stages | Affine/scheme/supported cokernel recursions, strict Laurent seed and iterates, raw one-step comparisons, and natural finite-stage bottom-group isomorphisms |
 | Ambient and supported Bass telescopes | Actual towers, natural negative-class maps, signed coefficient cone sequences, stable Bass self-maps, and the support-forgetting square |
+| Full-open graded coefficient models | Original section restriction Model map, coefficient-natural graded seed null, and all-integer stable vanishing of the actual graded Bass telescope for quasi-compact opens of affine schemes |
 
 The subject guides cover [exact categories](../topics/ExactCategories.md),
 [Waldhausen theory](../topics/Waldhausen.md),
@@ -114,10 +116,18 @@ flat-base-change invertibility is a further obligation.
 
 The actual two-chart line over every commutative ring has its Laurent gluing,
 cohomology and relative direct-image calculations. The twisted diagonal exact
-sequence and projected triangles retain their original arrows. These results
-do not prove coefficient perfection, projective generation, or the
-projective-bundle formula. The precise sheaf and bounded-complex hypotheses
-are in [scheme K/G-theory](../topics/SchemeKTheory.md).
+sequence and projected triangles retain their original arrows. New finite-defect
+parametrices construct finite-projective Čech models from the actual chart
+modules. Every finite locally free sheaf on the line has an intrinsically
+perfect original derived projection image; the result extends to explicitly
+bounded complexes with finite locally free terms. This construction uses the
+split-kernel finite-parametrix argument and does not discharge the separate
+support-window premises of the older finite-coefficient retract criterion.
+
+Arbitrary locally-perfect representation and preservation, projective
+generation, and the projective-bundle formula remain separate. The precise
+sheaf and bounded-complex hypotheses are in
+[scheme K/G-theory](../topics/SchemeKTheory.md).
 
 ## Spectra and Bass groups
 
@@ -147,6 +157,22 @@ self-comparisons; these do not identify them with the classical nonconnective
 geometric theory. Fixed-open constructions retain their actual `Under R`
 domains and support-forgetting squares.
 
+For an open immersion `j : U ⟶ Spec R` with quasi-compact `U`, the actual
+quotient-graded full-open section diagram has a coefficient-natural whole
+Laurent self-track contraction and a natural nullhomotopy of its original
+Bass seed. Every original graded Bass transition has zero stable map in every
+integer degree; T1 finite-stage representatives then give zero stable groups
+for its actual reduced graded telescope. The argument assumes neither
+individual-stage vanishing nor an unconstructed seed null.
+
+The fine-to-graded seed square is already proved, and the original pointwise
+restriction Model map preserves the entire chosen zero section. The remaining
+transfer needs the original section restriction/localization null, its initial
+cone descent `d₀` with stable comparison, and compatible coefficient/seed/null
+data. The separate raw-perfect objectwise stable comparison does not provide
+that transfer. Graded telescope vanishing therefore supplies no classical
+negative-K vanishing, full nonconnective localization, or global qcqs theorem.
+
 ## Ring plus construction
 
 For every unital ring `R : Type u`, the independent zero component of
@@ -170,8 +196,8 @@ loop-map composites remain outside the stated interfaces.
 
 - Fixed-degree finite Bass-transition stabilization, bijectivity of the natural negative-class maps into the telescope, and classical telescope negative-group identification.
 - Full all-iterate comparison with the original geometric Bass tower, the fundamental theorem, and Laurent-unit boundary/relative-loop basepoint calculations, including the zero-section class and possible Nil terms.
-- Supported-section cone stability, its geometric localization comparison, full nonconnective Thomason–Trobaugh localization, negative boundaries, and nonconnective descent, retaining the K₀ image obstruction.
-- Proj identification, the full twisting-sheaf family, coefficient perfection, projective generation, and the projective-bundle formula. The finite-coefficient retract criterion remains conditional on its projectivity/splitting and uniform finite-window assumptions.
+- Original section restriction/localization-null and coefficient/seed-compatible cone descent, the initial `d₀` stable comparison, transfer from the proved graded vanishing to the original deficit/Bass telescope, global qcqs instantiation, full nonconnective Thomason–Trobaugh localization, negative boundaries, and nonconnective descent, retaining the K₀ image obstruction.
+- Proj identification, the full twisting-sheaf family, arbitrary locally-perfect coefficient preservation and bounded representation, projective generation, and the projective-bundle formula. The older finite-coefficient retract criterion retains its own projectivity/splitting and support-window assumptions; vector-bundle and explicitly bounded vector-bundle projection perfection are proved by the new finite-defect route.
 - General-source perfect preservation by derived direct image, unrestricted unbounded derived pushforward, and general bounded-below flat-base-change invertibility.
 - Strict/local equivalence on arbitrary nonaffine schemes and perfect pullback on arbitrary non-quasi-compact schemes.
 - General stable cofiber excision, the remaining quotient homotopy-invariance questions, and a standard stable model structure or triangulation for the categorical localization.

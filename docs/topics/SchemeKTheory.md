@@ -9,8 +9,9 @@ same sheaf functors and their natural comparison maps.
 The derived sheaf interfaces extend this geometry to bounded-below complexes.
 The actual two-chart projective line supplies cohomology, relative direct-image,
 base-change, and twisted diagonal computations over every commutative ring.
-Their derived triangles retain the original geometric arrows; the remaining
-perfectness and projective-bundle comparisons are stated separately.
+Its vector bundles and explicitly bounded vector-bundle complexes have perfect
+derived projection images. The triangles retain the original geometric arrows;
+arbitrary locally perfect inputs and projective generation remain separate.
 
 ## Public imports
 
@@ -31,6 +32,8 @@ and the sheaf geometry can be imported through their individual owners:
 | [`Scheme.VectorBundle.DerivedProjectionFormula`](../../Quillen/AlgebraicGeometry/Scheme/VectorBundle/DerivedProjectionFormula.lean) | `Quillen.SchemeSheaf.derivedProjectionFormulaIso` |
 | [`Scheme.Sheaf.DerivedFlatBaseChange`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/DerivedFlatBaseChange.lean) | `Quillen.SchemeSheaf.derivedFlatBaseChangeMap` |
 | [`Scheme.ProjectiveLine.DerivedCechTriangle`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DerivedCechTriangle.lean) | `Quillen.Scheme.ProjectiveLine.derivedCechTriangle` |
+| [`Scheme.ProjectiveLine.VectorBundleCech`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/VectorBundleCech.lean) | `Quillen.Scheme.ProjectiveLine.exists_original_vectorBundle_cech_model` |
+| [`Scheme.ProjectiveLine.DerivedCechCone`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DerivedCechCone.lean) | `Quillen.Scheme.ProjectiveLine.derivedCechConeIso` |
 | [`Scheme.ProjectiveLine.DiagonalProjectedTensorTriangle`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DiagonalProjectedTensorTriangle.lean) | `Quillen.Scheme.ProjectiveLine.diagonalCoefficientTensorTriangle` |
 
 Unqualified declaration names continue in the preceding displayed namespace.
@@ -316,6 +319,68 @@ every such single for flat cartesian base change of `p`. Its self-base-change
 isomorphism uses the actual relative square and projections; its hom is the
 original mate followed by the installed flat-pullback single comparison.
 
+### Finite-projective Čech models and the original derived image
+
+For every quasicoherent sheaf `M` on `twoChartLine R`,
+[`ModuleChartSections`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/ModuleChartSections.lean)
+constructs its actual polynomial chart-section modules and their Laurent
+overlap isomorphism. `chartSectionDifference_coordinates` identifies the
+original first-minus-second restriction difference with the scalar-extension
+unit on the positive chart minus the transported negative-chart unit. The
+negative scalar map sends the polynomial coordinate to `T⁻¹`; the positive
+map sends it to `T`. These coordinates and their adjunction-unit equations
+are constructed from the sheaf, rather than assumed transition data.
+
+When `M` is finite locally free, both chart modules are finite projective over
+`R[X]`. They need not be free on the entire chart or finite over `R`.
+[`VectorBundleCech`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/VectorBundleCech.lean)
+gives a homotopy-equivalent complex of finite projective `R`-modules supported
+in degrees zero and one. Its theorem
+`exists_original_vectorBundle_cech_model` concerns the literal signed section
+differential of the original pushed sheaf sequence. All commutative base
+rings are included, with no noetherian, regular, nonzero, or reduced hypothesis.
+
+The finite model comes from Laurent cutoff bounds, finite-free retractions
+of the polynomial chart modules, and rectangular projector transition matrices.
+[`LaurentProjectorFiniteDefects`](../../Quillen/Algebra/Polynomial/LaurentProjectorFiniteDefects.lean)
+factors both parametrix defects through actual finite coefficient modules.
+The algebraic step in
+[`FiniteParametrix`](../../Quillen/Algebra/Module/FiniteParametrix.lean)
+takes `d : A → B` and `s : B → A` with factorizations
+`d s + t r = id_B` through `F` and `s d + u v = id_A` through `G`.
+If `A` and `F` are projective and `F` and `G` finite, the enlarged split map
+`[d,t] : A × F → B` has a finite-projective kernel: a genuine retraction gives
+projectivity, and the proved surjection from `G × F` gives finite generation.
+Its second projection to `F` supplies the replacement differential and the
+original chain maps and homotopies. This proves finite generation without a
+uniform coefficient-support window for the older kernel embedding in
+`FiniteCoefficientRetract`; that older criterion retains its own premises.
+
+[`CechCounit`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/CechCounit.lean)
+uses the original affine counits on both pushed Čech terms and their naturality
+square. `originalSheafCechSectionsIso` in
+[`CechSheafComplex`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/CechSheafComplex.lean)
+reconstructs the signed sheaf complex as the cone of the degree-zero
+difference, shifted by `-1`. It does not assume quasicoherence of the total
+ordinary direct image of `M` or commutation of sections with homology.
+
+`derivedCechConeIso R M` identifies the actual D+ projection image, included
+in the ambient derived category, with that original shifted sheaf cone.
+The comparison rotates the existing derived Čech triangle, fixes its two
+ordinary vertices by identity maps, and retains the connecting square and
+the explicit minus-one shift. This identification needs quasicoherence,
+independently of a perfectness assumption.
+
+Combining it with the finite model proves perfection of the installed image
+for every vector-bundle single. Finite induction through the actual brutal-layer
+triangles extends the result to complexes with explicit lower and upper term
+bounds and finite locally free terms. The strict representatives and precise
+perfect-object statements are recorded in
+[projective-line perfect models](PerfectComplexes.md#projective-line-strict-models).
+The existence theorem does not choose coefficient-natural finite replacements
+or global bounded vector-bundle representatives of arbitrary locally perfect
+objects on the line.
+
 ## The twisted diagonal triangle
 
 On the relative square, `DiagonalIncidence` constructs
@@ -341,13 +406,17 @@ vertices remain actual derived-image objects.
 ## Remaining comparisons and independent consumers
 
 The two-chart construction has not been identified with Proj, a full
-twisting-sheaf family, or projective-bundle generation. Its Čech and flat
-base-change results concern quasicoherent singles; coefficient perfection and
-general bounded-below base change are not inferred. The finite-coefficient
-retract criterion in
-[`Quillen.Algebra.Module.FiniteCoefficientRetract`](../../Quillen/Algebra/Module/FiniteCoefficientRetract.lean)
-retains projectivity, splitting, and uniform finite-window premises; no
-production application discharges a missing perfect-pushforward conclusion.
+twisting-sheaf family, or projective-bundle generation. Derived projection
+perfection is proved for vector-bundle singles and explicitly bounded
+vector-bundle complexes. Arbitrary locally perfect inputs, global bounded
+representatives, inverse-twist tensor cancellation, and the required
+functorial perfect-coefficient identifications of the projected diagonal
+vertices remain separate. The Čech cone comparison concerns quasicoherent
+singles; general bounded-below flat base change is not inferred.
+The older
+[`FiniteCoefficientRetract`](../../Quillen/Algebra/Module/FiniteCoefficientRetract.lean)
+criterion retains its projectivity, splitting, and uniform-window premises;
+the finite-defect proof above supplies a different sufficient criterion.
 Proper pushforward, general-source derived perfect preservation, and
 unrestricted unbounded derived direct image remain separate.
 

@@ -20,6 +20,14 @@ Finite-projective ring change has the scalar-extension Hom universal property
 against arbitrary target modules. See [the ring plus guide](docs/topics/PlusConstruction.md)
 for the exact coefficient universes, basepoint paths, and remaining comparisons.
 
+The actual two-chart projective line also has finite-projective Čech models
+and perfect derived projection images for vector bundles and explicitly
+bounded complexes of vector bundles. For quasi-compact opens of affine schemes,
+full-open graded coefficient diagrams have natural Bass seed nullhomotopies
+and vanishing signed stable groups of their actual graded telescopes.
+The original-model transfer and full nonconnective localization remain separate comparisons; the
+[perfect-complex guide](docs/topics/PerfectComplexes.md) records their scope.
+
 The project is under development. The [documentation map](docs/README.md)
 connects its mathematical topic guides, [coverage and open boundaries](docs/reference/Scope.md),
 and [public API reference](docs/reference/API.md).

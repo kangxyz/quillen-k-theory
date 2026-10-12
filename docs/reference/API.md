@@ -19,6 +19,7 @@ obligations; [scope](Scope.md) gives the cross-topic boundary.
 | `Quillen.Waldhausen.Basic` | Cofibrations, weak equivalences, and chosen zero |
 | `Quillen.Waldhausen.KTheory` | Connective S-construction groups |
 | `Quillen.Waldhausen.GrothendieckComparison.SmallModel` | Classical Waldhausen K₀ with independent object and morphism universes |
+| `Quillen.Waldhausen.GrothendieckComparison.ImageQuotientExact` | Coarse image-quotient K₀ exactness under exactness and target factorization |
 | `Quillen.Waldhausen.Approximation.Basic` | Generic approximation property |
 | `Quillen.Waldhausen.FunctorialFactorization.Basic` | Generic functorial cofibration factorization |
 | `Quillen.Devissage.Homotopical` | Finite-filtration dévissage |
@@ -168,6 +169,35 @@ geometric seed and support/localization comparisons. A generic diagram
 interface, finite-stage isomorphism, or stable self-comparison does not supply
 an additional rectification or telescope-identification theorem.
 
+## Finite Čech models and full-open graded diagrams
+
+| Import after `Quillen.` | Principal interface |
+| --- | --- |
+| `Algebra.Module.FiniteParametrix` | `Quillen.Module.finite_projective_parametrixKernel` and the split finite-defect replacement |
+| `Algebra.ModuleComplex.LaurentModuleCech` | Finite-projective homotopy model of the literal module Čech differential |
+| `AlgebraicGeometry.Scheme.ProjectiveLine.VectorBundleCech` | Actual finite-projective chart-section Čech model for every finite locally free sheaf |
+| `AlgebraicGeometry.Scheme.ProjectiveLine.DerivedCechCone` | Original derived projection image and signed sheaf Čech cone comparison |
+| `AlgebraicGeometry.PerfectComplexes.ProjectiveLine.DerivedPushforwardVectorBundle` | `Quillen.PerfectComplexes.ProjectiveLine.perfect_derivedPushforward_vectorBundle` |
+| `AlgebraicGeometry.PerfectComplexes.ProjectiveLine.BoundedDerivedPushforward` | `Quillen.PerfectComplexes.ProjectiveLine.perfect_derivedPushforward_of_bounded_vectorBundle_terms` |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionKComparison` | Actual full-open section K and perfect-K comparison |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionRestrictionModel` | Original strict chosen-zero restriction Model map |
+| `AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedLaurentContractionNaturality` | Whole Laurent self-track contraction and coefficient naturality |
+| `AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassSeedDiagramNull` | Constructed natural nullhomotopy of the original graded Bass seed |
+| `AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassTelescope` | All-integer transition-zero and actual graded telescope stable-group vanishing |
+
+The [scheme guide](../topics/SchemeKTheory.md) records chart module data and the
+new finite-defect proof of projection perfection. The
+[perfect-complex guide](../topics/PerfectComplexes.md) records the actual
+relative/full-open models and original-map transfer boundary. The
+[spectrum guide](../topics/SpectraAndBass.md) gives generic natural-null and
+cone/telescope-descent interfaces and the graded telescope proof.
+
+The graded telescope is the specified `Under R` diagram for open
+`j : U ⟶ Spec R` with `CompactSpace U`. Its vanishing does not identify it
+with the original ungraded Bass telescope or with classical negative K-theory.
+The proved fine-to-graded seed square retains its original maps; the missing
+restriction/localization-null/cone-descent transfer is a separate construction.
+
 ## Ring plus and scalar extension
 
 The selected public facade is `Quillen.KTheory.Plus`. Names below are relative
@@ -207,6 +237,7 @@ interfaces:
 | Perfect complexes and derived geometry | [PerfectFoundations](../../examples/downstream/Consumer/PerfectFoundations.lean), [DerivedPushforwardComparison](../../examples/downstream/Consumer/DerivedPushforwardComparison.lean) |
 | Finite homotopy scope | [FiniteHELP](../../examples/downstream/Consumer/FiniteHELP.lean) |
 | Ring plus and scalar extension | [RingPlusNaturality](../../examples/downstream/Consumer/RingPlusNaturality.lean), [RingScalarExtension](../../examples/downstream/Consumer/RingScalarExtension.lean) |
+| Full-open graded stable concentration | [FullOpenGradedSectionStable](../../examples/downstream/Consumer/FullOpenGradedSectionStable.lean) |
 
 The maintained [tests](../../Tests) cover further constructions and regressions.
 Neither tests nor clients are dependencies of library source.

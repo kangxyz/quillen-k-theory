@@ -225,10 +225,38 @@ That guide records the ordinary arrows, installed D+ units, finite-locally-free
 projection formula, quasicoherent-single and bounded-complex scopes, and the
 twisted diagonal triangle.
 
-Those geometric triangles do not by themselves prove coefficient perfection
-or projective generation. Their use in a perfect-complex argument must retain
-its actual perfectness, splitting/projectivity, and finite-window hypotheses.
-The [remaining obligations](#remaining-obligations) below keep that boundary.
+### Projective-line strict models
+
+For every `R : CommRingCat.{u}` and finite locally free sheaf `M` on the actual
+`twoChartLine R`, the original signed sheaf Čech complex has a strict-perfect
+homotopy model on `Spec R`. The finite-projective chart-module construction
+and its actual counit and signed-cone comparisons are explained in
+[SchemeKTheory.md](SchemeKTheory.md#finite-projective-čech-models-and-the-original-derived-image).
+The relevant imports have prefix
+`Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine`; declaration names
+in this table have prefix `Quillen.PerfectComplexes.ProjectiveLine`:
+
+| Module | Actual perfect-complex interface |
+| --- | --- |
+| [`CechModel`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/CechModel.lean) | `exists_strictSheafCech_model`: a strict-perfect sheaf model with both chain maps and homotopies |
+| [`DerivedPushforwardVectorBundle`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/DerivedPushforwardVectorBundle.lean) | `exists_derivedPushforward_vectorBundle_strict_model` and `perfect_derivedPushforward_vectorBundle`: a strict representative and intrinsic perfection of the installed D+ projection image |
+| [`BoundedDerivedPushforward`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/BoundedDerivedPushforward.lean) | `perfect_derivedPushforward_of_bounded_vectorBundle_terms`: perfection for explicitly bounded complexes of finite locally free terms |
+
+The derived representative is an isomorphism in the ambient derived category
+after the actual D+ inclusion, with the original projection functor unchanged.
+The bounded theorem takes `K : CochainComplex.Plus (twoChartLine R).Modules`,
+integer bounds `a,b`, zero terms below `a` and above `b`, and finite local
+freeness of every term. Its proof uses shifts of bundle singles and finite
+induction through actual brutal-layer triangles. No noetherian, regular,
+free-chart, nonzero, or reduced hypothesis is imposed on the base ring.
+
+This supplies the vector-bundle and explicitly bounded vector-bundle subfamilies
+of the projection-perfectness problem. It does not produce global bounded
+vector-bundle representatives for arbitrary locally perfect inputs, identify
+the two projected diagonal vertices with functorial perfect coefficients, or
+prove projective generation. The finite-defect parametrix proof uses a genuine
+split kernel and finite generators; it does not instantiate the older
+`FiniteCoefficientRetract` uniform support-window premise.
 
 ## Bass groups and geometric spectral comparisons
 
@@ -445,8 +473,15 @@ prespectrum homotopies. The comparison is completely weak at every level and
 stable in every integer degree; the fine/coarse square retains the unchanged
 maps. `SupportedSectionOpenNull` reverses the actual weak zero-to-supported-section
 transformation, producing the specified coherent null cylinder of forgetting
-support followed by relative-open restriction. Stability of this supported-section
-cone requires its separate source comparison.
+support followed by relative-open restriction. `SupportedSectionAcyclicEvaluation`
+and `SupportedSectionAcyclicComparison` supply its exact source evaluation;
+`SupportedSectionOpenNullNaturality` retains the entire reversed null track.
+[`BoundedFlat.SupportedSectionOpenConeComparison`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/SupportedSectionOpenConeComparison.lean)
+then proves `boundedFlatAffineSupportedSectionOpenConeMap_isStableEquivalence`
+for every open immersion into an affine base, in every signed degree.
+Its connecting equation keeps the original fiber lift and null cylinder.
+The endpoint is the coarse relative-open section Model; replacing it by the
+full open endpoint retains a further comparison.
 
 `OpenConeFiberLoop` gives the genuine supported mapping cone and canonical
 fiber loop of an open-weak perfect arrow. `Affine.PolynomialScalarCone`
@@ -461,18 +496,139 @@ factorization extension object, quotient, and target inclusion.
 by negating only the shifted source and fixing the target, and
 `SplitComplexes.FactorizationSign` uses that exact sign isomorphism.
 
-The object/class comparison is not the Laurent-unit localization boundary
-identity. The actual relative-loop comparison, basepoint translation, and
-zero-section pushforward-class calculation remain open. No blanket perfect
-zero-section dévissage or omission of possible Nil contributions is asserted.
+[`CofiberObjectTrack`](../../Quillen/Waldhausen/GrothendieckComparison/CofiberObjectTrack.lean)
+gives `Quillen.Waldhausen.Structure.cofiberObjectLoopTrack` for a displayed
+cofibration and its zero-pushout quotient, in a category with zero morphisms.
+When the cofibration is weak,
+[`CofiberPrismComposition`](../../Quillen/Waldhausen/GrothendieckComparison/CofiberPrismComposition.lean)
+gives `Quillen.Waldhausen.Structure.cofiberPrismCompositionLoops`. The actual
+source–quotient–middle triangle and its cubes retain independent nerve,
+comparison, and loop coordinates. The canonical
+fiber transport retains literal left concatenation and the prescribed
+identity-cofiber suffix; its normalization on the first homotopy group of the
+loop space agrees with that of the standard suffix-removal path. This agreement
+does not identify the full paths.
+
+For an open immersion `j : U ⟶ X`, a global scalar `r : Γ(X, ⊤)`, a specified
+unit `q : Γ(U, ⊤)ˣ` with `j.appTop r = ↑q`, and `K : Perfect X`,
+[`ScalarCofiberSourcePath`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ScalarCofiberSourcePath.lean),
+`ScalarCofiberIteratedFiber`, and `ScalarCofiberPasting` compute the canonical
+iterated-fiber loop of the actual supported scalar cofiber. The source scalar
+need not be a unit and no qcqs assumption is added.
+[`perfectScalarCofiberBoundaryOrientation`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ScalarCofiberBoundaryOrientation.lean)
+is an endpoint-relative homotopy to the parameter reversal of the original
+forward weak scalar square. It remains at `K`'s original object-loop component.
+[`perfectScalarCofiberFiberBoundaryPath`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ScalarCofiberFiberBoundaryPath.lean)
+keeps the prescribed path from its loop inclusion to the translated canonical
+fiber point. The two original triangles and fine weak projection determine
+these paths; no replacement scalar or fiber map is chosen.
+
+The constant-component normalization needed for the Laurent-unit K₁ boundary,
+the zero-section pushforward-class formula, and possible Nil terms remain
+separate. No blanket perfect zero-section dévissage is asserted.
+
+## Image-quotient grading and cone maps
+
+For an exact functor `F` from a Waldhausen structure `W` to `V`, the actual
+image quotient is the algebraic Grothendieck group of `V` modulo the image
+of the original algebraic map of `F`. The coarse weak class is equality of
+these endpoint grades, retaining the original objects, cofibrations, and zero.
+The following generic imports are under
+`Quillen.Waldhausen.GrothendieckComparison`, with declaration namespace
+`Quillen.Waldhausen.AlgebraicGrothendieck`:
+
+| Module | Conclusion with original maps |
+| --- | --- |
+| [`ImageQuotient`](../../Quillen/Waldhausen/GrothendieckComparison/ImageQuotient.lean) | `imageQuotient_coarseKZeroValueMap_bijective` identifies coarse K₀ with the genuine image quotient |
+| [`ImageQuotientExact`](../../Quillen/Waldhausen/GrothendieckComparison/ImageQuotientExact.lean) | `imageQuotient_changeWeakKMap_surjective` and `imageQuotient_changeWeakKMap_range_ker` give surjectivity and kernel equal to the original exact-functor K₀ image |
+| [`ImageQuotientCone`](../../Quillen/Waldhausen/GrothendieckComparison/ImageQuotientCone.lean), [`ImageQuotientConeZero`](../../Quillen/Waldhausen/GrothendieckComparison/ImageQuotientConeZero.lean) | `imageQuotientConeMap` retains the specified whole null track; `imageQuotientConeMap_stable_zero_bijective` proves its stable degree-zero bijectivity |
+
+The K₀ conclusions retain `hF : IsExact W.cof W.weq V.cof V.weq F` and
+`T : FunctorialFactorization V.smallModel` for the fine target. They do not
+assume a K₀ presentation or localization exactness. The unshifted cone map
+uses the reversed specified zero-to-normalized-image transformation, and its
+inclusion face is exactly the original change-of-weakness map. Bijectivity in
+degree zero alone does not make it a stable equivalence in all signed degrees.
+
+[`OpenDeficitGradingStable`](../../Quillen/AlgebraicGeometry/PerfectComplexes/OpenDeficitGradingStable.lean)
+specializes this to `perfectOpenDeficitGradingMap j`. Stable degree-zero
+bijectivity holds for every open immersion. When `X` is qcqs and `U` is
+quasi-compact, concentration of its actual source and graded target supplies
+`perfectOpenDeficitGradingMap_isStableEquivalence` in every integer degree.
+This is the raw-perfect objectwise comparison; coefficient naturality, the
+inherited Laurent seed, and the original section comparison require their
+own compatible maps.
+
+## Graded full-open coefficient diagrams
+
+Fix an open immersion `j : U ⟶ Spec R`. At `a : Under R`, the full-open
+section category is the category of actual cocartesian sections of the
+bounded-flat pullback pseudofunctor over `Under a`. Original evaluation lands
+on the specified pullback open `openSpace j a`; its perfect K₀ class modulo
+the image of the actual relative-open restriction is the section grade.
+Only weak equivalences change to endpoint-grade equality. The inherited zero,
+objects, and cofibrations remain those of the full-open section category.
+The Models and prespectra live in universe `u + 1`.
+
+The pointwise original restriction is now
+`boundedFlatAffineSectionFullOpenModelMap j a` in
+[`BoundedFlat.FullOpenSectionRestrictionModel`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/FullOpenSectionRestrictionModel.lean).
+It is an exact Model morphism with literal preservation of the entire chosen
+zero section, for every open `j` and coefficient `a`. Likewise
+[`FullOpenGradedSectionStable`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/FullOpenGradedSectionStable.lean)
+proves `boundedFlatAffineFullOpenGradedSection_stable_subsingleton j a d hd`
+for each `d : ℤ` with `d ≠ 0`, without requiring compactness of `U`.
+[`Consumer.FullOpenGradedSectionStable`](../../examples/downstream/Consumer/FullOpenGradedSectionStable.lean)
+uses that concentration for any supplied morphism between the actual graded
+Models; it does not construct a missing comparison or settle degree zero.
+
+For the coefficient **diagrams** below, additionally assume `[CompactSpace U]`.
+The coefficient category is `Under R`, with arbitrary ring coefficient arrows;
+neither coefficient flatness nor affineness of `U` is assumed. Actual quotient
+pullback and its original evaluation equation make reindexing exact for grade
+weakness. `BoundedFlat.FullOpenGradedSectionDiagram` gives a strict Model diagram,
+its iterated-S prespectrum diagram, and the natural fine-to-graded map `q`.
+
+The geometric Laurent and Bass imports under
+`Quillen.AlgebraicGeometry.PerfectComplexes.Affine` expose the following
+interfaces, with declaration names in `Quillen.PerfectComplexes`:
+
+| Module | Coefficient-compatible result |
+| --- | --- |
+| [`FullOpenGradedLaurentContraction`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/FullOpenGradedLaurentContraction.lean), [`FullOpenGradedLaurentContractionNaturality`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/FullOpenGradedLaurentContractionNaturality.lean) | The whole forward-`T` Laurent self-track contracts to the constant track of the same coefficient map, naturally at both independent times |
+| [`FullOpenSectionBassSeedChangeWeak`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/FullOpenSectionBassSeedChangeWeak.lean) | `boundedFlatAffineFullOpenSectionBassSeed_changeWeak`: `seedFine ≫ Bass.map(q) = q ≫ seedGraded` |
+| [`FullOpenGradedSectionBassSeedDiagramNull`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/FullOpenGradedSectionBassSeedDiagramNull.lean) | The original graded Bass seed has a constructed whole coefficient-natural null |
+| [`FullOpenGradedSectionBassTransitionNull`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/FullOpenGradedSectionBassTransitionNull.lean) | Every unchanged transition has zero stable map for every stage `k : ℕ`, coefficient `a`, and signed degree `d : ℤ` |
+| [`FullOpenGradedSectionBassTelescope`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/FullOpenGradedSectionBassTelescope.lean) | Every original stage inclusion has zero stable map, and the actual graded reduced telescope has subsingleton stable groups in every integer degree |
+
+The Laurent contraction fixes its action endpoints and full basepoint line;
+it contracts a self-track, not the underlying coefficient map to zero. Its
+chosen zero endomorphism is weak by reflexivity of the endpoint grade.
+The resulting seed null retains the actual strict-square source-leg cone null,
+the reversed null path, and the original forward Laurent action. This null is
+constructed from the contraction, rather than supplied as a hypothesis.
+The telescope argument uses the original seed transitions and finite-stage
+representatives, without an assumption that individual stage groups vanish.
+Generic iteration and telescope machinery are described in
+[SpectraAndBass.md](SpectraAndBass.md).
+
+The fine-to-graded seed equation in the table is proved. The remaining transfer
+is from the original section restriction, localization null, and cone descent
+to this graded construction, including the section `d0` stable comparison and
+compatible coefficient, seed, and whole-null data. The pointwise restriction
+family still needs its required Model/prespectrum coefficient square. The
+raw-perfect objectwise deficit comparison above does not supply that section
+transfer. Neither the graded telescope result nor its nonzero-degree Model
+concentration identifies classical negative K-groups or proves global qcqs
+nonconnective localization.
 
 ## Remaining obligations
 
-- Identify the supported-section cone with the geometric localization cone, retain its original null track and boundary, and handle the honest degree-zero image endpoint before asserting full-open or nonconnective localization.
-- Prove the original Laurent-unit boundary/relative-loop calculation, basepoint translation, and zero-section class formula with their actual maps and possible Nil contributions.
+- Complete the original section restriction/localization-null/cone-descent transfer to the graded coefficient diagram, including the section `d0` stable comparison and compatible coefficient/seed/whole-null data. The coarse supported-section comparison and raw-perfect pointwise deficit map retain their stated endpoints.
+- Normalize the computed scalar-cofiber loop from its original object-loop component to the specified Laurent-unit K₁ boundary; prove the zero-section class formula and retain possible Nil contributions.
 - Establish fixed-degree stabilization of the finite seed transitions and bijectivity of the natural negative-class maps into the telescope. The finite-bottom isomorphisms and stable Bass self-comparisons do not discharge these obligations.
 - Compare all iterates with the complete original geometric Bass tower, identify classical telescope negative groups, and prove the fundamental theorem, negative localization boundaries, and nonconnective descent.
-- Prove coefficient perfection and projective generation for the derived diagonal route, the projective-bundle formula, Proj identification, and the full twisting-sheaf family. The finite-coefficient retract criterion retains its projectivity/splitting and uniform finite-window conditions.
+- Extend the proved vector-bundle and explicitly bounded vector-bundle projection theorem to the required arbitrary locally perfect inputs; identify the projected diagonal perfect coefficients, prove inverse-twist tensor cancellation and projective generation, and establish the projective-bundle formula, Proj identification, and full twisting-sheaf family. The older finite-coefficient retract criterion retains its own uniform-window premises.
 - Extend perfect preservation to the claimed general-source/unbounded direct-image scope, and establish general bounded-below flat-base-change invertibility beyond the available QC-single and open specializations.
 - Extend strict/local equivalence to arbitrary nonaffine schemes and perfect pullback to arbitrary non-quasi-compact schemes; compare the Waldhausen and triangulated-derived Grothendieck presentations.
 - Supply any needed general stable cofiber excision, replacement cofiber preservation, and higher raw-spectrum/telescope coherence. The categorical stable localization has no asserted standard stable model structure or triangulation.
