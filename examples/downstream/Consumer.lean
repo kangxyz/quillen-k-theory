@@ -6,6 +6,10 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Consumer.RingScalarExtension
+
+public import Consumer.RingPlusNaturality
+
 public import Consumer.GrothendieckComparison
 public import Consumer.StrictFiniteFlatPushforward
 public import Consumer.FiniteFlatPushforward

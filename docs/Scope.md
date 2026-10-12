@@ -13,6 +13,8 @@ ranges. This guide records their principal interfaces and remaining boundaries.
 | --- | --- |
 | Exact categories and Q-construction | Exact structures, restricted spans, composition, exact functors, and canonical K-maps |
 | Classical K₀ | Exact and Waldhausen object presentations, original object classes, inverse identities, and all-class exact-functor naturality |
+| Ring plus comparison | Independent homological stable-BGL model, original zero-component Q-loop weak equivalence, corrected positive K-map naturality, and completion/telescope K₀ components |
+| Finite-projective scalar extension | Matrix-image change of rings with a natural semilinear unit and the additive Hom universal property against arbitrary target modules |
 | Dévissage and resolution | Abelian finite-filtration dévissage and admissible finite-resolution comparisons |
 | Serre and G-localization | Specified Serre quotients, finite-module G-theory, and connective tails |
 | Scheme K/G-theory | Vector bundles, finite-type/coherent sheaves, restriction, K→G, and noetherian open/closed localization |
@@ -214,6 +216,38 @@ The supported-section null cylinder and scalar categorical-cofiber class
 transport do not identify that endpoint with all perfect complexes of the open
 or prove the Laurent-unit boundary formula.
 
+## Ring plus-construction work
+
+For every unital ring `R : Type u`, the independently constructed zero component
+of projective completion satisfies the homological plus specification for the
+original stable-BGL map and every target local system in coefficient universe
+`u + 1`. Its specified map to the identity component of original Q loops of
+finite projective right modules is a weak homotopy equivalence. The original
+positive K-group comparison is natural under actual ring-change maps in a
+common universe, retaining the specified basepoint paths and original KMap.
+Noncommutative and zero rings are included without additional hypotheses.
+
+The genuine path components of projective completion and the original
+projective telescope identify with the original Quillen K₀. The actual object
+and stage formulas retain numerator-minus-denominator classes; completion
+component naturality uses the original continuous map and KMap₀. This proves
+the original telescope component obligation, not a natural whole-space splitting.
+The independent homological plus proof does not use the later Q comparison
+or K₀ classification.
+
+The constructed matrix-image ring-change functor satisfies the
+scalar-extension Hom universal property against arbitrary ambient target
+modules, with a natural semilinear unit and unique target-linear lifts. The
+raw algebra permits independent ring and target-module universes without
+commutativity or flatness hypotheses. A separate literal noncommutative
+balanced-tensor carrier and comparison to that carrier remain unconstructed.
+General CW characterization/uniqueness, an HE upgrade, and a natural
+`K₀ × BGL⁺` splitting are not asserted. Loop-map naturality is proved on finite
+homotopy groups with the stated corrections, without a separately packaged
+based homotopy between the chosen loop-map composites.
+[PlusConstruction.md](PlusConstruction.md) records the exact interfaces,
+coefficient universes, and remaining boundaries.
+
 ## Remaining comparisons
 
 - Fixed-degree finite Bass-transition stabilization, bijectivity of the natural negative-class maps into the telescope, and classical telescope negative-group identification.
@@ -224,7 +258,7 @@ or prove the Laurent-unit boundary formula.
 - Strict/local equivalence on arbitrary nonaffine schemes and perfect pullback on arbitrary non-quasi-compact schemes.
 - General stable cofiber excision, the remaining quotient homotopy-invariance questions, and a standard stable model structure or triangulation for the categorical localization.
 - The triangulated-derived Grothendieck presentation of perfect objects, general exact-category dévissage/localization, and full Serre-pair coherence.
-- Cross-universe transport beyond the explicit small-model comparisons, plus-construction comparisons, and higher raw-spectrum/telescope coherence.
+- Cross-universe transport beyond the explicit small-model and common-ring-universe plus-comparison interfaces, literal noncommutative tensor-product scalar-extension identification, and higher raw-spectrum/telescope coherence.
 
 Regularity alone does not give the resolution property. Finite cube HELP does
 not imply arbitrary compact HELP, and endpoint collar deformation alone does

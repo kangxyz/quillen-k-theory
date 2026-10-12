@@ -4,7 +4,9 @@ Use an individual module for one interface. Whole-topic facades are convenient
 for broader developments; `import Quillen` imports the complete library.
 [Scope.md](Scope.md) records principal hypotheses and open boundaries, and
 [ThomasonTrobaugh.md](ThomasonTrobaugh.md) gives the geometric localization and
-Bass comparison route. Lean declarations specify the actual maps and conditions.
+Bass comparison route. [PlusConstruction.md](PlusConstruction.md) gives the ring
+plus/Q comparison and scalar-extension route. Lean declarations specify the
+actual maps and conditions.
 
 ## Migration to 0.4.1
 
@@ -743,6 +745,49 @@ transport does not prove the Laurent-unit boundary identity, relative-loop
 basepoint translation, or zero-section pushforward-class formula. Blanket
 perfect zero-section dévissage and omission of possible Nil terms are not
 asserted. See [ThomasonTrobaugh.md](ThomasonTrobaugh.md#remaining-obligations).
+
+## Ring plus comparison and original components
+
+`Quillen.KTheory.Plus` is the selected public facade for the homological plus
+certificate, original Q-loop weak equivalence, positive comparison naturality,
+and completion/telescope component classification. The individual imports below
+are available when only one of those interfaces is needed.
+
+Use `Quillen.KTheory.Plus.ProjectiveCompletionPositiveKNaturality` for
+`StableCompletion.zeroCompletionPositiveKEquiv_baseChange`, the exact positive
+comparison square with original maps and displayed path corrections.
+`Quillen.KTheory.Map.RightBaseChange` gives the original KMap identity and
+composition laws. The common ring universe is arbitrary; right modules use
+left modules over the opposite ring.
+
+`Quillen.KTheory.Plus.ProjectiveCompletionZerothHomotopy` provides
+`completionZerothHomotopyKZeroEquiv`, its original object-class formulas, and
+naturality for the continuous completion map and original KMap₀.
+`Quillen.KTheory.Plus.ProjectiveTelescopeKZero` provides
+`StableFreeRight.telescopeZerothHomotopyKZeroEquiv` and the exact original
+stage formula `[P] - [rankOnePower n]`.
+
+The independently compiled `Consumer.RingPlusNaturality` exercises the literal
+positive square, corrected identity/composition, original K₀ object classes,
+a noncommutative matrix ring, and a map to the zero ring. These interfaces do
+not identify matrix-image ring change with a separate tensor-product functor,
+or assert a natural whole-space splitting; see [Scope.md](Scope.md).
+
+## Scalar extension of original right modules
+
+Import `Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeUniversal`
+for `rightBaseChangeUnit`, `rightBaseChangeHomEquiv`, `rightBaseChangeLift`, and
+`rightBaseChange_existsUnique`. These use the constructed matrix-image
+functor and quantify arbitrary ambient target modules. Both source and target
+naturality retain the displayed unit and actual maps. Rings and ambient target
+modules may have independent universes; commutativity and flatness are absent.
+
+The lower-level owners are `Quillen.Algebra.Matrix.RightScalarExtension` for
+finite free modules and `Quillen.Algebra.Category.ModuleCat.MatrixImageScalarExtension`
+for idempotent images. The independent `Consumer.RingScalarExtension` exercises
+the exact public universal property, including a noncommutative ring and an
+actual map to the zero ring. This is a Hom-universal characterization of scalar
+extension; a separate literal balanced-tensor carrier comparison is not supplied.
 
 ## Client examples
 

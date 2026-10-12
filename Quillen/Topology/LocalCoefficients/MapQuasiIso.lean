@@ -1,0 +1,30 @@
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+module
+
+public import Quillen.Topology.LocalCoefficients.MapComposition
+public import Quillen.Topology.LocalCoefficients.Homology
+public import Mathlib.Algebra.Homology.QuasiIso
+
+/-! # Composition of original twisted spatial quasi-isomorphisms -/
+@[expose] public section
+noncomputable section
+open CategoryTheory
+universe u
+namespace Quillen.LocalCoefficients
+variable {X Y Z : Type u} [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace Z]
+
+/-- Composition retains the original spatial map and the mandatory pullback coefficient iso. -/
+theorem pushforwardChainMap_quasiIso_comp (f : C(X, Y)) (g : C(Y, Z))
+    (A : System.{u, u} Z) (hf : QuasiIso (pushforwardChainMap f (pullback g A)))
+    (hg : QuasiIso (pushforwardChainMap g A)) :
+    QuasiIso (pushforwardChainMap (g.comp f) A) := by
+  rw [pushforwardChainMap_comp]
+  change QuasiIso ((coefficientChainIso (pullbackCompositionIso f g A)).hom ≫
+    pushforwardChainMap f (pullback g A) ≫ pushforwardChainMap g A)
+  infer_instance
+
+end Quillen.LocalCoefficients

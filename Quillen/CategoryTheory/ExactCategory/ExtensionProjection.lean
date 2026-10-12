@@ -1,0 +1,62 @@
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Quillen K-theory contributors
+-/
+module
+
+public import Quillen.CategoryTheory.ExactCategory.ExtensionTotal
+public import Quillen.CategoryTheory.ExactCategory.ExtensionQuotientSpan
+
+/-!
+# The quotient-span assignment for the extension projection
+
+This constructs the actual original Q-span for each total extension arrow.
+Identity and composition in the Q quotient remain separate obligations; no
+functor is asserted until those laws are proved.
+-/
+@[expose] public section
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+universe v u
+open CategoryTheory CategoryTheory.Limits
+namespace Quillen.ExactStructure
+variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
+variable (E : ExactStructure C)
+
+/-- The quotient assigned to a total extension object. -/
+def extensionProjectionObject (x : E.ExtensionTotal) : C := (E.extensionQuotientData x).obj
+
+/-- The original admissible span assigned to an actual total extension morphism. -/
+def extensionProjectionSpan {x y : E.ExtensionTotal} (f : x ⟶ y) :
+    Span E.deflation E.inflation (E.extensionProjectionObject x)
+      (E.extensionProjectionObject y) := by
+  let h := (Quillen.Subdivision.domainMap f).hom
+  let i := x.fiber.unop.hom.hom
+  let k := f.base.hom
+  have w : (h ≫ i) ≫ k = y.fiber.unop.hom.hom := by
+    have hw := congrArg (fun a => a.hom) (Quillen.Subdivision.factorization f)
+    simpa only [WideSubcategory.comp_def, Category.assoc] using hw
+  let qH := E.extensionQuotientData
+    (E.extensionTotalOf h (Quillen.Subdivision.domainMap f).property)
+  let qX := E.extensionQuotientData x
+  let qY := E.extensionQuotientData y
+  have zY : (h ≫ i) ≫ k ≫ qY.π = 0 := by rw [← Category.assoc, w]; exact qY.zero
+  have cY : E.conflation (ShortComplex.mk ((h ≫ i) ≫ k) qY.π
+      (by simpa only [Category.assoc] using zY)) := by
+    simpa only [w] using qY.conflation
+  exact E.quotientSpanOfInflations h i k qH.π qX.π qY.π
+    qH.zero qX.zero zY qH.conflation qX.conflation cY f.base.property
+
+/-- The quotient assignment lands in the original Q construction. -/
+def extensionProjectionQObj (x : E.ExtensionTotal) : Quillen.Q E.deflation E.inflation :=
+  Quillen.Q.of E.deflation E.inflation (E.extensionProjectionObject x)
+
+/-- The actual Q morphism represented by the proved admissible quotient span.
+Functoriality is not yet asserted. -/
+def extensionProjectionQMap {x y : E.ExtensionTotal} (f : x ⟶ y) :
+    E.extensionProjectionQObj x ⟶ E.extensionProjectionQObj y :=
+  Quillen.Q.mkHom E.deflation E.inflation (E.extensionProjectionSpan f)
+
+end Quillen.ExactStructure

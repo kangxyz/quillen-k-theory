@@ -24,10 +24,11 @@ cycles and reverse dependencies on tests, tools, or clients.
 
 | Owner | Principal objects and interfaces |
 | --- | --- |
-| `Algebra` | Module complexes, homological algebra, and commutative algebra |
+| `Algebra` | Module complexes, homological algebra, ring theory, stable matrix groups, and finite-projective scalar extension |
 | `CategoryTheory` | Exact categories, Q-construction, small models, categorical localization, and Theorems A/B |
 | `Topology` | Based homotopy, fibers and cylinders, lifting, realization, prespectra, stable fibers, and categorical stable localization |
 | `KTheory` | Exact-category K-groups, canonical maps, and generic Bass diagrams and cokernel recursion |
+| `KTheory/Plus` | Projective group completion, original ring plus/Q comparison, ring-change naturality, and component classification |
 | `Devissage`, `Resolution`, `Localization`, `GTheory` | Filtration and resolution comparisons, localization, and finite-module G-theory |
 | `AlgebraicGeometry/Scheme` | Sheaves, vector bundles, finite-type/coherent sheaves, scheme K/G interfaces, base products, and projective-line charts |
 | `AlgebraicGeometry/PerfectComplexes` | Strict/local models, derived representatives, support, localization, Mayer–Vietoris, localized spectra, and Bass groups |
@@ -37,6 +38,10 @@ Categorical constructions and topology interact; subject directories do not
 impose a total order on dependencies. Generic topology belongs in `Topology`,
 including reusable foundations used by Theorem B. Generic approximation and
 functorial factorization interfaces are independent of the split-complex model.
+Twisted singular chains and local-system homology belong in
+`Topology/LocalCoefficients`; action localization and monoidal group completion
+belong in `CategoryTheory/GroupCompletion`. The ring-specific plus comparison
+consumes those foundations and the finite-projective module constructions.
 
 A module's path records its owner. Its declaration namespace should describe
 the mathematical construction and need not mirror the path. Geometric interfaces
