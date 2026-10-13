@@ -725,9 +725,13 @@ strict chart-window and terminal cycle tools under their actual top-epi and
 lower-term-bound inputs. `Strictification` now produces the actual global
 top-cycle epimorphism and strict derived model for bounded-below termwise-QC
 locally perfect inputs on P¹ over arbitrary R, including the zero ring.
-`NativePerfectPushforward` applies actual Rp to these representatives. Its
-intrinsic-perfect corollary still needs a genuine such representative; that
-producer and the exact/natural roof model remain separate.
+`NativePerfectPushforward` applies actual Rp to these representatives.
+`QuasicoherentRepresentative` now constructs a genuine bounded termwise-QC
+model for every intrinsic perfect D+ input, and `IntrinsicPerfectPushforward`
+supplies its global strict model and perfection of actual Rp. This includes
+the zero ring and needs no supplied replacement or noetherian premise.
+Naturality, the exact Waldhausen roof model and projective K-generation remain
+separate.
 `CoefficientSectionEvaluationTopology` also supplies literal original e/V
 levelwise equivalences and span/cone/loop HEP/T1.
 `CoefficientSectionEvaluationComposition` has independent ordinary acceptance
@@ -745,7 +749,7 @@ in the [TT localization roadmap](../development/TTLocalization.md).
 - Complete the Laurent-unit connecting-map and zero-section class formulas and retain possible Nil contributions; the normalized forward scalar K₁ comparison is proved.
 - Establish fixed-degree stabilization of the finite seed transitions and bijectivity of the natural negative-class maps into the telescope. The finite-bottom isomorphisms and stable Bass self-comparisons do not discharge these obligations.
 - Compare all iterates with the complete original geometric Bass tower, identify classical telescope negative groups, and prove the fundamental theorem, negative localization boundaries, and nonconnective descent.
-- Extend the proved vector-bundle and explicitly bounded vector-bundle projection theorem to the required arbitrary locally perfect inputs; identify the projected diagonal perfect coefficients, prove inverse-twist tensor cancellation and projective generation, and establish the projective-bundle formula, Proj identification, and full twisting-sheaf family. The older finite-coefficient retract criterion retains its own uniform-window premises.
+- Transport the actual twoChartLine R intrinsic-perfect projection theorem to native projective lines and the required general bases/supports; identify the natural projected diagonal, prove inverse-twist tensor cancellation and exact K-generation, and establish the projective-bundle formula, Proj identification, and full twisting-sheaf family. Objectwise P1 strictification and perfect Rp for intrinsic D+ inputs are proved; the older finite-coefficient retract criterion retains its own uniform-window premises.
 - Extend perfect preservation to the claimed general-source/unbounded direct-image scope, and establish general bounded-below flat-base-change invertibility beyond the available QC-single and open specializations.
 - Extend strict/local equivalence to arbitrary nonaffine schemes and perfect pullback to arbitrary non-quasi-compact schemes; compare the Waldhausen and triangulated-derived Grothendieck presentations.
 - Supply any needed general stable cofiber excision, replacement cofiber preservation, and higher raw-spectrum/telescope coherence. The categorical stable localization has no asserted standard stable model structure or triangulation.

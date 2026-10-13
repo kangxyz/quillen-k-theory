@@ -112,6 +112,7 @@ integration and downstream completion comparisons have separately scoped checks.
 | [TwoChartStableSpan](../../Quillen/KTheory/Bass/TwoChartStableSpan.lean), [TwoChartStableSequence](../../Quillen/KTheory/Bass/TwoChartStableSequence.lean) | Original signed span quotient, natural all-integer Bass short exact row, and its right cycles/image quotient under an actual plus retraction and the stated original-map cone/collapse stability inputs; geometric realization and classical seed preservation remain separate |
 | [CoefficientSupportedFiberLocalizationModels](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedFiberLocalizationModels.lean), [seed](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedFiberBassSeed.lean), [tower](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedFiberBassTower.lean), [telescope](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedFiberBassTelescope.lean), [localization](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedFullOpenBassLocalization.lean) | Actual auxiliary-supported native fiber, same joint zero, original Laurent seeds, whole null and finite/telescope cone comparison; postcomposition with original r_Z∞ gives the same-null stable fiber lift and signed boundary. Structural comparison needs only the open immersion; final fine stability needs compact P,Q,T and quasi-separated Q. No classical Kᴮ identification |
 | [ProjectiveLine/Strictification](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/Strictification.lean), [NativePerfectPushforward](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativePerfectPushforward.lean) | Actual global top-cycle epimorphism, finite induction/reassembly and strict derived model for bounded-below termwise-quasicoherent locally perfect inputs on P¹ over arbitrary R; actual Rp preserves perfection for those representatives. The arbitrary intrinsic-perfect QC-representative producer remains outside this accepted scope |
+| [QuasicoherentRepresentative](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/QuasicoherentRepresentative.lean), [IntrinsicPerfectPushforward](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/IntrinsicPerfectPushforward.lean) | Genuine bounded termwise-QC model, global strict model and perfection of actual Rp for every intrinsic perfect D+ input on twoChartLine R over arbitrary R, including the zero ring; no supplied replacement or noetherian premise. This is objectwise, without a natural exact roof model or K-equivalence |
 
 The original restriction seed square and whole canonical-null seed square are
 constructed without supplied compatibility premises. Their actual finite
@@ -361,7 +362,7 @@ not ordinary equivalence/approximation of this two-summand functor.
 | Step | Exact product and current owner | Acceptance and dependency |
 | --- | --- | --- |
 | P1: canonical line/tensor comparisons | Accepted natural p₁*(E⊗L)≅p₁*E⊗p₁*L and specified determinant pairing L⊗Q≅O, retaining actual unit/braiding/chart comparisons. | `PullbackTensorCompatibility` proves the literal canonical mate for any f and any other module sheaf; `LineTensorCompatibility` proves both chart multiplication equations with +1. Independent of perfect pushforward; P3 must still use these actual maps in its triangle. |
-| P2: arbitrary-perfect projection | Accepted strictification and actual Rp perfection for every bounded-below termwise-QC locally perfect representative. An intrinsic perfect D+ input is covered when supplied such a genuine representative. | `Strictification` produces the actual global top-cycle epi, finite attachment/termination and strict derived model; `NativePerfectPushforward` applies original Rp. Remaining producer: a genuine termwise-QC representative for every intrinsic perfect input, with no supplied replacement, noetherian or bounded-vector-bundle hypothesis. |
+| P2: arbitrary-perfect projection | Accepted genuine QC and strict models, and actual Rp perfection, for every intrinsic perfect D+ input on twoChartLine R. | `QuasicoherentRepresentative` constructs the original derived replacement; `IntrinsicPerfectPushforward` composes it with the accepted strictification and original Rp. No supplied replacement, noetherian or bounded-vector-bundle premise remains. This closes objectwise P2 over arbitrary R, not P3/P4's natural exact K model. |
 | P3: natural diagonal generation | Identify the existing projected incidence triangle, initially for vector bundles, as p*Rp*(E⊗L)→Q⊗p*Rp*E→E⊗Q; tensor by L and rotate to p*G₀(E)→E→L⊗p*G₁(E). | P1 supplies the first endpoint; existing self-base-change/projection formula supply the second. Retain incidence, quotient and connecting maps. Extend degreewise/totalize and descend through genuine roofs for all intrinsic perfect objects; P2 supplies perfect coefficients. |
 | P4: original K-inverse | Realize G and the diagonal sequence as exact/cofibration-compatible functors on a proved model of the original Perfect category; apply Waldhausen additivity. | Construct natural bounded-complex Čech comparison and the necessary weak-arrow/roof model equivalence. Normalize the positive projection by its canonical adjunction unit, prove O(-1) vanishing and Rp*(O(-2)⊗p*A)[1]≅A, then both original K-map composites, including zero. |
 | P5: native qcqs and supports | Transport the affine construction through `nativeAffineIso`, glue projection perfection on an affine base cover, and prove both coefficient functors preserve the actual inverse-image support. | Use canonical base change for the required open/flat maps. Arbitrary-base-map naturality needs its own tor-independent/perfect comparison; it is not supplied by current flat-base-change scope. |
@@ -375,9 +376,15 @@ map V[-b]→K epimorphic on Hᵇ. Its actual cone has strict chart amplitude
 [a,b−1]. At a=b the genuine terminal cycles are finite locally free; finite
 reassembly identifies a strict global derived model. These actual cone and
 quasi-isomorphism verifications are accepted without noetherian assumptions.
-The remaining intrinsic-QC producer is investigating bounded affine counits,
-their original derived-unit maps and the signed two-chart Čech sequence;
-an objectwise replacement will not supply P4's exact/natural roof model.
+The intrinsic-QC producer is now independently accepted and production-checked.
+It uses bounded affine counits, their original derived-unit maps, the literal
+lifted signed two-chart Čech arrow and its rotated triangle to construct a
+bounded termwise-QC model of the original input. The intrinsic consumer obtains
+its actual global strict model and perfect Rp image. A private-inclusive
+two-origin audit checks 63 declarations with standard-three axioms; the
+affected facades/Consumer compile and a fresh QuillenTest/Axioms replay checks
+48,464 declarations. These objectwise derived isomorphisms do not supply P4's
+exact/natural roof model.
 Relevant source
 anchors are [Stacks 0F8E](https://stacks.math.columbia.edu/tag/0F8E),
 [0F8F](https://stacks.math.columbia.edu/tag/0F8F) and
@@ -485,11 +492,10 @@ flowchart TD
 ```
 
 Continue focused proof products after the accepted prerequisites:
-E2-N/S's original cone/null/seed comparison, P2's intrinsic quasicoherent
-representative and P3/P4's diagonal/roof investigation, and native realization
-of B2-A/B's accepted spectral row. E2-C/W, full same-null G7 localization,
-P1's canonical tensor/line comparisons and P2's bounded-below quasicoherent
-strictification/pushforward are accepted inputs. Their exact enrollment and
+E2-N/S's original cone/null/seed comparison, P3/P4's diagonal/roof investigation,
+and native realization of B2-A/B's accepted spectral row. E2-C/W, full same-null
+G7 localization, P1's canonical tensor/line comparisons and complete objectwise
+P2 intrinsic-perfect strictification/pushforward are accepted inputs. Their exact enrollment and
 affected-client checks passed without a dependency rebuild. Mixed-variable and
 global-bottom products follow once their interfaces are fixed; do not populate
 every possible branch at once.

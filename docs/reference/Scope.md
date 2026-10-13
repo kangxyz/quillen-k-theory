@@ -205,9 +205,11 @@ canonical tautological pullback-tensor comparison are proved over arbitrary
 rings/maps. Conditional finite-attachment tools preserve actual strict chart
 windows. The global top-cycle epimorphism and finite strictification are now
 produced for bounded-below termwise-QC locally perfect representatives on P¹
-over arbitrary R; actual Rp preserves their perfection. Constructing such a
-representative for every intrinsic perfect input and an exact/natural roof model
-remain separate. Normalized evaluation/composition and chart/cylinder pasting
+over arbitrary R; actual Rp preserves their perfection. A genuine bounded
+termwise-QC model is also constructed for every intrinsic perfect D+ input;
+its global strict model and perfection under original Rp follow without a
+supplied replacement or noetherian premise. Naturality and an exact
+Waldhausen roof model remain separate. Normalized evaluation/composition and chart/cylinder pasting
 have ordinary mathematical acceptance; original source-null/seed and all raw
 iterate/telescope comparisons remain open.
 The signed Bass span quotient and natural short exact row are proved under
