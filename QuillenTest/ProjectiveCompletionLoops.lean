@@ -31,3 +31,32 @@ example (R : Type u) [Ring R] (U : GroupCompletionCategory R) (t : unitInterval)
       classifyingSpacePath ((completionIdentityProjectionIsoZero R).inv.app U)
         (unitInterval.symm t) :=
   completionToOriginalQHomotopyFiber_vertex_path R U t
+
+-- The unchanged generic fiber inverse is followed by exactly one reversal.
+example (R : Type u) [Ring R] (U : GroupCompletionCategory R)
+    (x : ClassifyingSpace (GroupCompletionCategory R)) :
+    completionToOriginalQLoops R U x =
+      ((originalQLoopFiberHomotopyEquiv R U).invFun
+        (completionToOriginalQHomotopyFiber R x)).symm := rfl
+
+example : IsWeakHomotopyEquivalence (originalQComparison (ZMod 1)) :=
+  originalQComparison_isWeakHomotopyEquivalence (ZMod 1)
+
+
+-- The standard map is the generic fiber inverse followed by one reversal.
+example (R : Type u) [Ring R] (U : GroupCompletionCategory R) :
+    completionToOriginalQLoops R U =
+      loopReversal.comp ((originalQLoopFiberHomotopyEquiv R U).invFun.comp
+        (completionToOriginalQHomotopyFiber R)) :=
+  completionToOriginalQLoops_eq_reversal_fiberInverse R U
+
+-- The supplied track is the specified reversed generic inverse track.
+example (R : Type u) [Ring R]
+    (U : GroupCompletionCategory R) :
+    letI : ContractibleSpace (ClassifyingSpace (LocalizedExtensionCategory R)) :=
+      localizedExtension_classifyingSpace_contractible R
+    completionToOriginalQLoopsBasepointPath R U =
+      loopReversalPath
+        (HomotopyFiber.loopEquivOfContractibleSourcePathInverseBasepointPath _
+          (completionQFiberPoint R U).1.1 _
+          (HomotopyFiber.toPath _ _ (completionQFiberPoint R U))) := rfl

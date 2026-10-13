@@ -22,6 +22,8 @@ public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeExten
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeFree
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeFreeCoherence
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeMonoidal
+public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeTensor
+public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeUnitCoherence
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeUniversal
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveComplement
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveDeflationEntry
@@ -45,14 +47,18 @@ public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveExtensionUnit
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveIdentityExtension
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveInflationAction
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveMonoidal
+public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveTensorBaseChangeExact
+public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveTensorCoherence
 public import Quillen.Algebra.Category.ModuleCat.IdempotentMatrix
 public import Quillen.Algebra.Category.ModuleCat.MatrixBaseChange
 public import Quillen.Algebra.Category.ModuleCat.MatrixImageFunctor
 public import Quillen.Algebra.Category.ModuleCat.MatrixImageScalarExtension
+public import Quillen.Algebra.Category.ModuleCat.MatrixImageTensor
 public import Quillen.Algebra.Category.ModuleCat.Monoidal.RestrictScalars
 public import Quillen.Algebra.Category.ModuleCat.Presheaf.TensorPushforward
 public import Quillen.Algebra.Category.ModuleCat.ProjectiveAutomorphismAdditivity
 public import Quillen.Algebra.Category.ModuleCat.ProjectiveAutomorphismClass
+public import Quillen.Algebra.Category.ModuleCat.RightScalarExtension
 public import Quillen.Algebra.Category.ModuleCat.ScalarExtensionUnit
 public import Quillen.Algebra.Category.ModuleCat.Sheaf.SheafificationPushforward
 public import Quillen.Algebra.Category.ModuleCat.Sheaf.Tensor
@@ -66,6 +72,7 @@ public import Quillen.Algebra.Category.ModuleCat.Sheaf.TensorRightUnit
 public import Quillen.Algebra.Category.ModuleCat.Sheaf.TensorSections
 public import Quillen.Algebra.FiniteAdjacentComplex
 public import Quillen.Algebra.FiniteAdjacentSection
+public import Quillen.Algebra.Group.Hom.KernelComparison
 public import Quillen.Algebra.Group.MayerVietoris
 public import Quillen.Algebra.Group.StableElementary
 public import Quillen.Algebra.Group.StableElementaryQuotient
@@ -157,6 +164,7 @@ public import Quillen.Algebra.Module.FiniteCoefficientRetract
 public import Quillen.Algebra.Module.FiniteParametrix
 public import Quillen.Algebra.Module.MatrixBaseChange
 public import Quillen.Algebra.Module.MatrixPresentation
+public import Quillen.Algebra.Module.RightScalarExtension
 public import Quillen.Algebra.ModuleComplex.BoundedFiniteDomination
 public import Quillen.Algebra.ModuleComplex.ConcentratedPerfectHomology
 public import Quillen.Algebra.ModuleComplex.FiniteDomination

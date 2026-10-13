@@ -31,6 +31,7 @@ open scoped ZeroObject
 open Quillen.Scheme Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine Quillen.Scheme.Bass
 namespace Quillen.PerfectComplexes.ProjectiveLine
 
+/-- The standard derived category of module sheaves, used for native projection base change. -/
 local instance nativePerfectProjectionStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
 
@@ -38,7 +39,7 @@ private theorem isIso_on_perfect_of_quasicoherent_single
     {U V : Scheme.{u}} [CompactSpace U]
     {F G : DerivedCategory.Plus U.Modules ⥤ DerivedCategory.Plus V.Modules}
     [F.CommShift ℤ] [G.CommShift ℤ] [F.IsTriangulated] [G.IsTriangulated]
-    [F.Additive] [G.Additive] (τ : F ⟶ G) [τ.CommShift ℤ]
+    (τ : F ⟶ G) [τ.CommShift ℤ]
     (hsingle : ∀ (M : U.Modules), M.IsQuasicoherent →
       IsIso (τ.app ((DerivedCategory.Plus.singleFunctor U.Modules 0).obj M)))
     (K : DerivedCategory.Plus U.Modules)

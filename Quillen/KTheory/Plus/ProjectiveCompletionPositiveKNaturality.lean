@@ -10,7 +10,7 @@ public import Quillen.KTheory.Plus.ProjectiveCompletionPositiveK
 public import Quillen.Topology.HomotopyFiber.LoopComparisonNaturality
 public import Quillen.Topology.HomotopyGroups.PathComponentPositiveNaturality
 
-/-! # Naturality of the original positive Quillen comparison -/
+/-! # Naturality of the standard positive Quillen comparison -/
 @[expose] public section
 noncomputable section
 open CategoryTheory
@@ -24,7 +24,20 @@ attribute [local instance] categoryDirectSumMonoidal directSumMonoidal
   rightBaseChangeCoreMonoidal
 variable {R S : Type u} [Ring R] [Ring S] (f : R →+* S)
 
-/-- Naturality of the unchanged completion-to-loop maps with their original based tracks. -/
+private theorem loopReversal_pathTransport
+    {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y] {x : X} {y : Y}
+    (c : C(X, Path y y)) (p : Path (c x) (Path.refl y)) (n : ℕ)
+    (a : HomotopyGroup.Pi n X x) :
+    pathTransport (loopReversalPath p) n
+      (homotopyGroupMap (loopReversal.comp c) rfl a) =
+    homotopyGroupMap loopReversal loopReversal_refl
+      (pathTransport p n (homotopyGroupMap c rfl a)) := by
+  exact (congrArg (pathTransport (loopReversalPath p) n)
+    (homotopyGroupMap_comp c rfl loopReversal rfl a)).trans
+      (pathTransport_naturality_of_track loopReversal p (loopReversalPath p)
+        rfl loopReversal_refl (fun _ ↦ rfl) n _)
+
+/-- Naturality of the standard comparison with its mapped prescribed basepoint tracks. -/
 theorem completionToOriginalQLoops_baseChange (n : ℕ)
     (a : HomotopyGroup.Pi n (ClassifyingSpace (StableCompletion.Completion R))
       (StableCompletion.zeroPoint R)) :
@@ -44,33 +57,86 @@ theorem completionToOriginalQLoops_baseChange (n : ℕ)
           (homotopyGroupMap (completionBaseChangeMap f) rfl a))) := by
   let := localizedExtension_classifyingSpace_contractible Rᵐᵒᵖ
   let := localizedExtension_classifyingSpace_contractible Sᵐᵒᵖ
-  have h := HomotopyFiber.loopComparison_naturality_pi
-    (classifyingSpaceMapUniversal (localizedExtensionBaseChange f))
-    (classifyingSpaceMap (rightBaseChangeExact f).normalizedQ).hom
-    (completionNormalizedProjectionHomotopy f)
-    (classifyingSpacePoint (exactStructure Rᵐᵒᵖ).qZero)
-    (classifyingSpacePoint (exactStructure Sᵐᵒᵖ).qZero)
-    (completionNormalizedQ_basepoint f)
-    (completionToOriginalQHomotopyFiber Rᵐᵒᵖ)
-    (completionToOriginalQHomotopyFiber Sᵐᵒᵖ) (completionBaseChangeMap f)
-    (completionFiberNaturality f) (StableCompletion.zeroPoint R)
-    (StableCompletion.zeroPoint S) (completionBaseChangeBasepointPath f) n a
-  have hr := homotopyGroupMap_comp
-    (completionToOriginalQHomotopyFiber Rᵐᵒᵖ) rfl
-    (originalQLoopFiberHomotopyEquiv Rᵐᵒᵖ (StableCompletion.stageObject R 0)).invFun rfl a
-  have hs := homotopyGroupMap_comp
-    (completionToOriginalQHomotopyFiber Sᵐᵒᵖ) rfl
-    (originalQLoopFiberHomotopyEquiv Sᵐᵒᵖ (StableCompletion.stageObject S 0)).invFun rfl
-    (pathTransport (completionBaseChangeBasepointPath f) n
-      (homotopyGroupMap (completionBaseChangeMap f) rfl a))
-  exact (congrArg (fun b ↦ homotopyGroupMap
-    (basedLoopMap (classifyingSpaceMap (rightBaseChangeExact f).normalizedQ).hom
-      (completionNormalizedQ_basepoint f))
-    (basedLoopMap_refl _ (completionNormalizedQ_basepoint f))
-      (pathTransport (completionToOriginalQLoopsBasepointPath Rᵐᵒᵖ
-        (StableCompletion.stageObject R 0)) n b)) hr).trans
-    (h.trans (congrArg (pathTransport (completionToOriginalQLoopsBasepointPath Sᵐᵒᵖ
-      (StableCompletion.stageObject S 0)) n) hs.symm))
+  let cR := (originalQLoopFiberHomotopyEquiv Rᵐᵒᵖ
+    (StableCompletion.stageObject R 0)).invFun.comp (completionToOriginalQHomotopyFiber Rᵐᵒᵖ)
+  let cS := (originalQLoopFiberHomotopyEquiv Sᵐᵒᵖ
+    (StableCompletion.stageObject S 0)).invFun.comp (completionToOriginalQHomotopyFiber Sᵐᵒᵖ)
+  let pR := HomotopyFiber.loopEquivOfContractibleSourcePathInverseBasepointPath _
+    (completionQFiberPoint Rᵐᵒᵖ (StableCompletion.stageObject R 0)).1.1 _
+    (HomotopyFiber.toPath _ _
+      (completionQFiberPoint Rᵐᵒᵖ (StableCompletion.stageObject R 0)))
+  let pS := HomotopyFiber.loopEquivOfContractibleSourcePathInverseBasepointPath _
+    (completionQFiberPoint Sᵐᵒᵖ (StableCompletion.stageObject S 0)).1.1 _
+    (HomotopyFiber.toPath _ _
+      (completionQFiberPoint Sᵐᵒᵖ (StableCompletion.stageObject S 0)))
+  have h : homotopyGroupMap
+      (basedLoopMap (classifyingSpaceMap (rightBaseChangeExact f).normalizedQ).hom
+        (completionNormalizedQ_basepoint f))
+      (basedLoopMap_refl _ (completionNormalizedQ_basepoint f))
+      (pathTransport pR n (homotopyGroupMap cR rfl a)) =
+    pathTransport pS n (homotopyGroupMap cS rfl
+      (pathTransport (completionBaseChangeBasepointPath f) n
+        (homotopyGroupMap (completionBaseChangeMap f) rfl a))) := by
+    have hfiber := HomotopyFiber.loopComparison_naturality_pi
+      (classifyingSpaceMapUniversal (localizedExtensionBaseChange f))
+      (classifyingSpaceMap (rightBaseChangeExact f).normalizedQ).hom
+      (completionNormalizedProjectionHomotopy f)
+      (classifyingSpacePoint (exactStructure Rᵐᵒᵖ).qZero)
+      (classifyingSpacePoint (exactStructure Sᵐᵒᵖ).qZero)
+      (completionNormalizedQ_basepoint f)
+      (completionToOriginalQHomotopyFiber Rᵐᵒᵖ)
+      (completionToOriginalQHomotopyFiber Sᵐᵒᵖ) (completionBaseChangeMap f)
+      (completionFiberNaturality f) (StableCompletion.zeroPoint R)
+      (StableCompletion.zeroPoint S) (completionBaseChangeBasepointPath f) n a
+    have hr := homotopyGroupMap_comp
+      (completionToOriginalQHomotopyFiber Rᵐᵒᵖ) rfl
+      (originalQLoopFiberHomotopyEquiv Rᵐᵒᵖ (StableCompletion.stageObject R 0)).invFun rfl a
+    have hs := homotopyGroupMap_comp
+      (completionToOriginalQHomotopyFiber Sᵐᵒᵖ) rfl
+      (originalQLoopFiberHomotopyEquiv Sᵐᵒᵖ (StableCompletion.stageObject S 0)).invFun rfl
+      (pathTransport (completionBaseChangeBasepointPath f) n
+        (homotopyGroupMap (completionBaseChangeMap f) rfl a))
+    exact (congrArg (fun b ↦ homotopyGroupMap
+      (basedLoopMap (classifyingSpaceMap (rightBaseChangeExact f).normalizedQ).hom
+        (completionNormalizedQ_basepoint f))
+      (basedLoopMap_refl _ (completionNormalizedQ_basepoint f))
+        (pathTransport pR n b)) hr).trans
+      (hfiber.trans (congrArg (pathTransport pS n) hs.symm))
+  change homotopyGroupMap
+      (basedLoopMap (classifyingSpaceMap (rightBaseChangeExact f).normalizedQ).hom
+        (completionNormalizedQ_basepoint f))
+      (basedLoopMap_refl _ (completionNormalizedQ_basepoint f))
+      (pathTransport (loopReversalPath pR) n
+        (homotopyGroupMap (loopReversal.comp cR) rfl a)) =
+    pathTransport (loopReversalPath pS) n
+      (homotopyGroupMap (loopReversal.comp cS) rfl
+        (pathTransport (completionBaseChangeBasepointPath f) n
+          (homotopyGroupMap (completionBaseChangeMap f) rfl a)))
+  have hcomm (b : HomotopyGroup.Pi n
+      (Path (classifyingSpacePoint (exactStructure Rᵐᵒᵖ).qZero)
+        (classifyingSpacePoint (exactStructure Rᵐᵒᵖ).qZero))
+      (Path.refl (classifyingSpacePoint (exactStructure Rᵐᵒᵖ).qZero))) :
+      homotopyGroupMap
+        (basedLoopMap (classifyingSpaceMap (rightBaseChangeExact f).normalizedQ).hom
+          (completionNormalizedQ_basepoint f))
+        (basedLoopMap_refl _ (completionNormalizedQ_basepoint f))
+        (homotopyGroupMap loopReversal loopReversal_refl b) =
+      homotopyGroupMap loopReversal loopReversal_refl
+        (homotopyGroupMap
+          (basedLoopMap (classifyingSpaceMap (rightBaseChangeExact f).normalizedQ).hom
+            (completionNormalizedQ_basepoint f))
+          (basedLoopMap_refl _ (completionNormalizedQ_basepoint f)) b) := by
+    refine Quotient.inductionOn b (fun p ↦ ?_)
+    rfl
+  exact ((congrArg (homotopyGroupMap
+      (basedLoopMap (classifyingSpaceMap (rightBaseChangeExact f).normalizedQ).hom
+        (completionNormalizedQ_basepoint f))
+      (basedLoopMap_refl _ (completionNormalizedQ_basepoint f)))
+        (loopReversal_pathTransport cR pR n a)).trans
+      ((hcomm _).trans (congrArg (homotopyGroupMap loopReversal loopReversal_refl) h))).trans
+    (loopReversal_pathTransport cS pS n
+      (pathTransport (completionBaseChangeBasepointPath f) n
+        (homotopyGroupMap (completionBaseChangeMap f) rfl a))).symm
 
 /-- The actual completion comparison commutes with the original exact-functor K-map
 in every positive degree, retaining the actual monoidal-unit basepoint edge. -/
@@ -101,7 +167,7 @@ theorem completionPositiveKEquiv_baseChange (n : ℕ)
 
 namespace StableCompletion
 
-/-- The unchanged zero-component comparison is natural for the actual ring map and
+/-- The standard zero-component comparison is natural for the actual ring map and
 its actual restricted monoidal-unit path, in every positive original K-degree. -/
 theorem zeroCompletionPositiveKEquiv_baseChange (n : ℕ)
     (a : HomotopyGroup.Pi (n + 1) (ZeroComponent R) (zeroBase R)) :

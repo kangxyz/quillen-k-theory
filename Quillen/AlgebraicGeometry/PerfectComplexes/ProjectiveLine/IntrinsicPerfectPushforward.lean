@@ -25,6 +25,7 @@ open CategoryTheory AlgebraicGeometry
 open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
 namespace Quillen.PerfectComplexes.ProjectiveLine
 
+/-- The standard derived category of module sheaves, used for intrinsic perfect direct images. -/
 local instance intrinsicProjectionStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
 

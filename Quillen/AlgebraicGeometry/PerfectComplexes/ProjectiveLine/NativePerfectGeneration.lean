@@ -32,6 +32,7 @@ open scoped ZeroObject
 open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
 namespace Quillen.PerfectComplexes.ProjectiveLine
 
+/-- The standard derived category of module sheaves, used for affine coefficient calculations. -/
 local instance affinePerfectGenerationStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
 

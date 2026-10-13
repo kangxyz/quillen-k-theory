@@ -8,7 +8,7 @@ public import Quillen.Topology.ClassifyingSpace.ProjectiveCompletionLoops
 public import Quillen.Topology.ClassifyingSpace.StableGeneralLinearCompletionBased
 public import Quillen.Topology.HomotopyGroups.PathComponentWeakEquivalence
 
-/-! # The original zero completion and the identity component of original Q loops -/
+/-! # The standard zero-completion comparison into the original Q loop component -/
 @[expose] public section
 noncomputable section
 universe u
@@ -19,13 +19,13 @@ variable (R : Type u) [Ring R]
 abbrev OriginalQLoopsZeroComponent :=
   pathComponent (Path.refl (classifyingSpacePoint (exactStructure Rᵐᵒᵖ).qZero))
 
-/-- The original completion-to-loop map restricted to its actual zero component. -/
+/-- The standard completion-to-loop map restricted to its actual zero component. -/
 def zeroCompletionToOriginalQLoops : C(ZeroComponent R, OriginalQLoopsZeroComponent R) :=
   pathComponentMap (completionToOriginalQLoops Rᵐᵒᵖ (stageObject R 0))
     (zeroPoint R) (Path.refl (classifyingSpacePoint (exactStructure Rᵐᵒᵖ).qZero))
     ⟨completionToOriginalQLoopsBasepointPath Rᵐᵒᵖ (stageObject R 0)⟩
 
-/-- The underlying map is precisely the parameterized original Q comparison. -/
+/-- The underlying map is precisely the parameterized standard comparison into original Q. -/
 @[simp] theorem zeroCompletionToOriginalQLoops_val (x : ZeroComponent R) :
     (zeroCompletionToOriginalQLoops R x).val =
       completionToOriginalQLoops Rᵐᵒᵖ (stageObject R 0) x.val := rfl
@@ -36,7 +36,7 @@ theorem zeroCompletionToOriginalQLoops_isWeakHomotopyEquivalence :
   (completionToOriginalQLoops_isWeakHomotopyEquivalence Rᵐᵒᵖ (stageObject R 0)).pathComponentMap
     (zeroPoint R) _ ⟨completionToOriginalQLoopsBasepointPath Rᵐᵒᵖ (stageObject R 0)⟩
 
-/-- The basepoint track is the restriction of the specified original comparison track. -/
+/-- The basepoint track is the restriction of the specified standard comparison track. -/
 def zeroCompletionToOriginalQLoopsBasepointPath :
     Path (zeroCompletionToOriginalQLoops R (zeroBase R))
       ⟨Path.refl (classifyingSpacePoint (exactStructure Rᵐᵒᵖ).qZero),
@@ -44,7 +44,7 @@ def zeroCompletionToOriginalQLoopsBasepointPath :
   pathComponentMapBasepointPath _ (zeroPoint R) _
     (completionToOriginalQLoopsBasepointPath Rᵐᵒᵖ (stageObject R 0))
 
-/-- Every point of the restricted track is the original track, without reparametrization. -/
+/-- Restriction retains every point of the specified standard track without reparametrization. -/
 @[simp] theorem zeroCompletionToOriginalQLoopsBasepointPath_val (t : unitInterval) :
     (zeroCompletionToOriginalQLoopsBasepointPath R t).val =
       completionToOriginalQLoopsBasepointPath Rᵐᵒᵖ (stageObject R 0) t := rfl

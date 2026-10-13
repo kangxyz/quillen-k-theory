@@ -59,6 +59,7 @@ theorem exists_chain_to_top_single
   refine ⟨g ≫ inv s, ?_⟩
   rw [Functor.map_comp, Functor.map_inv, hα]
 
+/-- The standard derived category of module sheaves, used for strict-model reassembly. -/
 local instance reassemblyStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
 

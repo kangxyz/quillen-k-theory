@@ -16,20 +16,25 @@ Lean declarations specify the actual statements and proof inputs.
 | Vector bundles, coherent sheaves, scheme K/G maps, finite direct image, and derived sheaf geometry | [Scheme K/G-theory](topics/SchemeKTheory.md) |
 | Strict and locally perfect complexes, support, relative localization, degree-zero image, and Mayer–Vietoris | [Perfect-complex localization](topics/PerfectComplexes.md) |
 | Connective spectra, stable maps and fibers, Bass recursions, finite stages, and telescopes | [Spectra and Bass groups](topics/SpectraAndBass.md) |
-| Independent ring-specific homological plus model, original Q comparison, components, and scalar extension | [Ring plus construction](topics/PlusConstruction.md) |
+| Independent ring plus model, exact standard Q-loop equivalence, original K₀–plus product, and balanced scalar extension | [Ring plus construction](topics/PlusConstruction.md) |
+| Comparison and ordinary uniqueness for original plus maps on actual Hausdorff CW spaces, with explicit universe transport | [Classical CW plus comparisons](topics/ClassicalCWPlus.md) |
+| Homological weak Whitehead, supplied and constructed covers, metric realization, loop geometry, and numerable domination | [Homotopy foundations](topics/HomotopyFoundations.md) |
 
 Start with the topic containing the objects you need. Follow its source links
 for exact declarations and its client links for public use. For example, a
 geometric localization question starts with perfect complexes, while a question
 about identifying Bass cokernels with telescope groups starts with spectra and
-Bass groups. General categorical and topological foundations remain in their
-source owners and the focused import reference.
+Bass groups. The classical CW guide records comparison and ordinary
+uniqueness for actual CW spaces; the homotopy guide records the underlying
+homological and geometric constructions. Follow the focused import reference
+for their source owners.
 
 ## Shared references and development
 
 | Document | Responsibility |
 | --- | --- |
 | [API reference](reference/API.md) | Import paths, canonical namespaces and maps, universes, and client entrypoints |
+| [Standard comparison normalization](reference/StandardSignMigration.md) | Public standard sign, original-map equations, basepoint tracks, and component labels |
 | [Mathematical scope](reference/Scope.md) | Cross-topic coverage, retained hypotheses, degree conventions, and unproved comparisons |
 | [Architecture](development/Architecture.md) | Mathematical source ownership, import direction, and trust-check implementation |
 | [Typechecking performance](development/Performance.md) | Reproducible measurements and their source/runtime scope |

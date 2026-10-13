@@ -14,27 +14,39 @@ constructed stable localization. The source is organized for reuse and extension
 to further constructions and comparisons.
 
 For arbitrary unital rings, it also constructs an independent homological
-`BGL(R)⁺` model, a specified weak equivalence to the zero component of original
-Q loops, and positive K-group comparison maps natural under ring change.
-Finite-projective ring change has the scalar-extension Hom universal property
-against arbitrary target modules. See [the ring plus guide](docs/topics/PlusConstruction.md)
-for the exact coefficient universes, basepoint paths, and remaining comparisons.
+`BGL(R)⁺` model and a homotopy equivalence with exactly the standard map to the
+zero component of original Q loops. The whole original Q-loop space is homotopy
+equivalent to discrete original K₀ times this specific plus model. Positive
+K-group comparisons are natural under ring change, and the product-to-loop map
+has ordinary homotopy naturality. Literal noncommutative balanced tensors
+identify with the original finite-projective scalar extension through its Hom
+universal property. See [the ring plus guide](docs/topics/PlusConstruction.md)
+for the coefficient universes, prescribed basepoint tracks and comparison boundaries.
+
+For original plus maps on actual Hausdorff CW spaces, it constructs comparison
+homotopy equivalences and proves ordinary uniqueness. Covers, lifts and double
+cylinders are constructed; mixed universes retain an explicit common
+coefficient bound. See [classical CW plus comparisons](docs/topics/ClassicalCWPlus.md)
+and [homotopy foundations](docs/topics/HomotopyFoundations.md).
 
 The actual two-chart projective line also has finite-projective Čech models
-and perfect derived projection images for vector bundles and explicitly
-bounded complexes of vector bundles. For quasi-compact opens of affine schemes,
+for vector bundles, objectwise global strict models of arbitrary intrinsic
+perfect objects in the bounded-below derived category, and perfect images
+under its original derived projection over every commutative ring, including
+the zero ring. Natural choices of models and functorial diagonal generation
+remain open. For quasi-compact opens of affine schemes,
 full-open graded coefficient diagrams have natural Bass seed nullhomotopies
 and vanishing signed stable groups of their actual graded telescopes.
 The original coarse-to-fine section telescope restriction is stable in every
 integer degree, and the supported telescope gives constructed affine full-open
 section-completion localization with its original signed boundary.
 Native global coefficient Models also have the same original coarse-to-fine
-completion comparison in every integer degree. Basic global supported
-localization and the auxiliary-supported coarse-to-fine completion comparison
-are also proved. Auxiliary-supported fiber localization, completed geometric
-evaluation and classical nonconnective identification remain separate
-comparisons; the [perfect-complex guide](docs/topics/PerfectComplexes.md)
-records their scope.
+completion comparison and supported localization in every integer degree,
+including the actual auxiliary-supported fiber and original signed boundary,
+under their stated compactness and quasi-separatedness conditions. Completed
+geometric evaluation, raw all-iterate and telescope comparisons, and classical
+nonconnective identification remain separate; the
+[perfect-complex guide](docs/topics/PerfectComplexes.md) records their scope.
 
 The project is under development. The [documentation map](docs/README.md)
 connects its mathematical topic guides, [coverage and open boundaries](docs/reference/Scope.md),
@@ -42,7 +54,7 @@ and [public API reference](docs/reference/API.md).
 
 ## Quick start
 
-The **0.5.0 development version** uses Lean **4.34.1** and the mathlib revision
+The **0.7.0 source-integration version** uses Lean **4.34.1** and the mathlib revision
 pinned in [lakefile.toml](lakefile.toml). Install
 [elan](https://github.com/leanprover/elan) to use the committed
 [toolchain](lean-toolchain).
@@ -61,9 +73,12 @@ For a published dependency, replace `path` with
 the selected release tag or commit. The candidate version does not itself
 identify a published tag.
 
-Version 0.5.0 consolidates shared foundations and moves generic algebra out of
-geometric and G-theory application owners. It removes obsolete imports and
-duplicate API spellings; see the [migration notes](docs/reference/API.md#migration-to-050).
+Version 0.7.0 integrates the classical CW and homotopy foundations and directly
+normalizes the public plus/Q comparison to the standard sign; see
+[standard comparison normalization](docs/reference/StandardSignMigration.md).
+The earlier 0.5.0 generic-owner refactor is preserved; its
+[migration notes](docs/reference/API.md#migration-to-050) locate the current
+foundations and remove obsolete imports and duplicate API spellings.
 
 Import the interface you need:
 
@@ -97,8 +112,8 @@ choosing focused imports.
 ## Documentation
 
 Use the [documentation map](docs/README.md) to choose a mathematical topic or
-shared reference. It separates the seven topic guides from API, scope,
-architecture, and performance documentation. [Contributing](CONTRIBUTING.md)
+shared reference. It connects the topic guides to API, scope, architecture,
+and performance documentation. [Contributing](CONTRIBUTING.md)
 gives the source and checking workflow.
 
 ## Building and checking

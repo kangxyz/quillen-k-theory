@@ -26,6 +26,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 namespace Quillen.PerfectComplexes.ProjectiveLine
 
+/-- The standard derived category of module sheaves, used for quasicoherent representatives. -/
 local instance qcRepresentativeStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
 

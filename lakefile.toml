@@ -1,5 +1,5 @@
 name = "quillen-k-theory"
-version = "0.5.0"
+version = "0.7.0"
 description = "A Lean library for Quillen K-theory and related mathematics."
 keywords = ["math", "algebraic-k-theory", "category-theory", "topology"]
 homepage = "https://github.com/kangxyz/quillen-k-theory"

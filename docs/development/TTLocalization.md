@@ -1,14 +1,14 @@
 # Thomason–Trobaugh localization roadmap
 
-Source basis: `4444574cd12bdaab888bd65c79ffba79ce0640ce` (0.5.0), Lean 4.34.1,
-with the pinned dependencies and identified uncommitted mathematical additions.
-The accepted baseline and `QuillenTest` namespace migration are locally
-checkpointed at `2e5c5550ef0082ca5b71d718678fc2dd2dc8b681`. Six further reviewed
-geometric and spectral prerequisites are checkpointed at
-`a167ffe3911b35bb9e1bfd074322039557daf094`. Later fixed leaves have their own
-source-review, strict-build and trust coverage.
-The remaining-work investigation below was reconciled on 2026-10-13 against
-the entry research rules at `9d92bce487400dcc5f8ed43dc31aaa64a6cb0e9b`.
+Continuation source basis: locally checkpointed
+`9398bbaa072dee2486e9eb1a8872d0eb46acf7d6`, Lean 4.34.1 and the pinned
+dependencies, with the identified 0.7.0 source integration and uncommitted
+mathematical leaves. The checkpoint includes `QuillenTest`, native
+auxiliary-supported completion localization and intrinsic-perfect P¹
+strictification/pushforward. The native spectral-row leaves have separate
+matched source review and strict-build coverage.
+The current continuation was reconciled on 2026-10-14 against the entry
+research rules at `080a7cd38b9be40fce85191cc3b2304bc3c4a662`.
 This roadmap records
 proof obligations and their actual consumers. Planned assertions are not library
 theorems until their source proofs and corresponding interfaces are accepted.
@@ -325,11 +325,19 @@ independently checked spacing/line wrapping. Its exact strong native build,
 | Step | Exact product | Proof route and acceptance |
 | --- | --- | --- |
 | E2-C: composition and chart descent | Accepted native equation above, relative comparison of split versus whiskered composition tracks, and Hc: cFine;eLaurent ≃ spanEvaluation;cRaw. | `CoefficientSectionEvaluationComposition` proves both actual chart faces and the moving cylinder face with independent comparison/track times. No caller-supplied coherence; no openness, compactness or flatness assumptions. Source-null and seed comparisons are separate E2-N/S obligations. |
-| E2-N: original source null | The actual whole-square cone map C and `Nold ≃ L ⋆ Nnew`, where Nold is the fine source null postcomposed with C, Nnew the original raw source null precomposed with e, and L the existing Laurent evaluation movement. | Use C's literal inclusion/cylinder equations, the positive-chart relative composition, and `CoefficientSectionEvaluationSourceLeg`'s cone boundary. Reassociate/cancel only through relative homotopies; retain the original positive source leg. |
-| E2-S: original one-step seed | A whole pointed homotopy `seedFine; loop(C) ≃ e; seedRaw`. | Combine E2-N with the accepted unit-pasting square using conjugation naturality. Prove the actual loop-coordinate equation. Stable-group equality alone does not supply this comparison. |
-| E2-W: actual levelwise equivalences | Accepted original e level homotopy equivalence, actual span evaluation completely weak/stable, and literal span/cone/loop point HEP/T1. | `CoefficientSectionEvaluationTopology` preserves the exact forward map. Cone-evaluation weakness still waits for C/Hc and its whole-square preservation theorem; it is not inferred from stability alone. |
+| E2-N: original source null | Accepted actual whole-square cone map C and `Nold ≃ L ⋆ Nnew`, where Nold is the fine source null postcomposed with C, Nnew the original raw source null precomposed with e, and L the existing Laurent evaluation movement. | `CoefficientSectionEvaluationSeedComparison` constructs C's literal inclusion/cylinder faces and relative null pasting from the positive-chart composition and original source-leg contraction. The original positive source leg and split track are retained. |
+| E2-S: original one-step seed | Accepted whole pointed homotopy `seedFine; loop(C) ≃ e; seedRaw`. | The same leaf combines actual null pasting with the original Laurent unit square and conjugation naturality. It proves the loop-coordinate equation with independent comparison, loop and structure times; no initial-seed invertibility is asserted. |
+| E2-W: actual levelwise equivalences | Accepted original e level homotopy equivalence, actual span evaluation completely weak/stable, literal span/cone/loop point HEP/T1 and levelwise weakness of the original cone evaluation C. | `CoefficientSectionEvaluationTopology` preserves the exact forward evaluation map; `CoefficientSectionEvaluationSeedComparison` applies the whole-square cone theorem to the constructed C and Hc. All-iterate equivalence still needs the genuine raw producer. |
 | E2-I: coherent raw iterates | Raw_0 and Raw_1 remain the existing raw objects. Construct Raw_2 with its original coefficient/chart maps, then an all-n producer of Raw_n, raw transitions, E_n and transition homotopies J_n. | First establish the full second-stage moving-square/composition faces. Then prove preservation of the required finite coherent diagram under span/cone/loop operations. Determine and realize the higher faces actually needed; a structure merely assuming them does not close this step. |
 | E2-T: telescope and boundary | The original fine-to-raw telescope map, all stage/initial/cylinder equations, coefficient/restriction naturality and the signed boundary comparison. | Apply `Telescope.mapOfHomotopies` to the proved E_n/J_n; use stagewise equivalences and actual T1 to prove all-signed stability. Moving-square and relative-transition faces from E2-I supply naturality/boundary. |
+
+Independent ordinary review accepts the original cone/null/seed leaf at its
+current production hash, including all relative-track and coordinate faces.
+The native source build and private-inclusive library audit cover it. The
+upstream composition repair only names two unchanged private propositions,
+retains their original proof bodies and passes default-budget incremental
+compilation, all 15 environment linters and the repaired-closure axiom audit.
+No package budget increase or linter exemption is used.
 
 The current raw native API has a one-step cone and seed, without a whole raw
 tower. `strictDiagramIterate` requires a literal prespectrum-valued functor and
@@ -421,19 +429,25 @@ positive-minus-inverse chart difference on π_d(E).
 
 | Step | New theorem product | Exact consumer and acceptance |
 | --- | --- | --- |
-| B2-A: all-degree span quotient | Accepted conditional π_d(span(E))≅coker(a_d) with the original signed representative and comparison. | `TwoChartStableSpan` uses an actual strict plus retraction, plus/right-inclusion excision and right-cone-collapse stability. Instantiate these on the native polynomial zero-evaluation maps and finite Model geometry; the native producer remains open. |
-| B2-B: natural spectral Bass row | Accepted conditional `0→coker(Δ_(d+1))→π_d(BE)→ker(Δ_d)/im(a_d)→0`, with actual row naturality. | `TwoChartStableSequence` retains the original Laurent cone inclusion, signed shift and cone boundary, and proves the right quotient identification. Add the original comparison-cone excision; discharge all retained data in each actual coefficient family before B2-E. |
+| B2-A: all-degree span quotient | Accepted π_d(span(E))≅coker(a_d) for the actual finite coefficient Model families, with the original signed representative and comparison. | `ModelDiagramTwoChartStableSequence` constructs the strict polynomial-zero retraction, plus/right-inclusion excision and right-cone-collapse stability for any `F : Under R ⥤ Model`, stage i and coefficient a. `CoefficientTwoChartStableSequence` applies it to the native ambient, open, supported and auxiliary-supported families under their original constructor hypotheses. |
+| B2-B: natural spectral Bass row | Accepted native `0→coker(Δ_(d+1))→π_d(BE)→ker(Δ_d)/im(a_d)→0` in every integer degree, with original coefficient-map naturality. | The native realization constructs the original comparison-cone excision as well as B2-A's data. It retains the Laurent cone inclusion, signed shift, cone boundary and right-quotient representatives. Its middle arrow is the original finite-diagram action B(g); no seed-transition equivalence or chart middle exactness is inferred. |
 | B2-C: recursive chart middle exactness | For every i, prove image(a(N_i))=kernel(Δ(N_i)), with original quotient maps and a constructed natural splitting of each Laurent quotient. | B1 supplies positive fundamental rows and h₀. Degree-zero middle exactness is a retract of the degree-one row over an independent Laurent variable. Prove mixed-variable geometric transports and commuting cokernel projections; descend h through the other variable, cancel the original epimorphic quotient, and transfer exactness through the resulting retract. Right exactness alone is insufficient. |
 | B2-D: original initial seed | Prove π_d(η) invertible for every d≥0, including zero. | Identify the actual Laurent loop/seed with the B1 operation via E2-S or an equally explicit direct section calculation. Combine the spectral row, classical boundary splitting and K₀ middle exactness. An auxiliary normalized group splitting must not replace the original seed. |
 | B2-E: exact lowest transition | Inductively prove π_d(t_i) invertible for d≥−i. | Apply B2-B to t_(i−1). For d≥1−i both end terms are controlled in degrees d,d+1. At d=−i the left term uses degree 1−i; source right term vanishes by connectivity, target right term by the bottom N_i comparison and B2-C. This includes the equality d=−i. |
 | B2-F: original stage-i leg | In degree −i, invert the tail starting at i and retain its canonical inclusion equation. Compose with the actual telescope-colimit comparison. | Prove bijectivity of the existing original negative-class map, not just an abstract group isomorphism. The transition from i must be included; stability only from i+1 fails even for ℤ --×2→ ℤ --id→ … . Nonnegative preservation uses the stage-zero leg. |
 | B2-G: native/global/supported producers | Build N_i(X_a,Z_a)≅π_(−i)(E_i(a)) and original negative maps for every consumed native family. | Current `SectionBassBottomComparison`, `NegativeMap` and `StableColimit` producers are affine. Use actual native polynomial/Laurent/chart isomorphisms and `DiagramTransport`; preserve coefficient/scheme maps, support forget/enlargement and open restriction. Do not declare different chosen pullbacks equal. |
 
-B2-A/B, mixed-variable transports for B2-C, and B2-G can start independently
-of the unresolved B1 calculations. Abstract results may carry their genuine
-inputs explicitly; the native B2 conclusion waits until those inputs are
-constructed. No retained premise named after desired localization, seed
-preservation or stabilization may be used to declare classical closure.
+B2-A/B's structural hypotheses are now realized for the original native
+finite coefficient Models. Independent ordinary review accepts both new leaves
+at their current source hashes; their strict source builds use the standard
+200,000-heartbeat budget. Native family hypotheses are unchanged, with no new
+affineness, compactness or quasi-separatedness premise. This closes the native
+spectral-row realization, while B2-C's chart middle exactness, B2-D's original
+seed preservation and B2-E/F's lowest-transition and canonical-leg assertions
+remain distinct obligations. Mixed-variable transports for B2-C and B2-G can
+advance independently of the unresolved B1 calculations. No retained premise
+named after desired localization, seed preservation or stabilization may be
+used to declare classical closure.
 
 ### F. Classical model and final diagram transport (B3)
 
@@ -492,10 +506,11 @@ flowchart TD
 ```
 
 Continue focused proof products after the accepted prerequisites:
-E2-N/S's original cone/null/seed comparison, P3/P4's diagonal/roof investigation,
-and native realization of B2-A/B's accepted spectral row. E2-C/W, full same-null
-G7 localization, P1's canonical tensor/line comparisons and complete objectwise
-P2 intrinsic-perfect strictification/pushforward are accepted inputs. Their exact enrollment and
+E2-I's genuine raw second-stage coherence, P3/P4's diagonal/roof investigation
+and B2-C/G's mixed-variable and native bottom-group producers. E2-C/N/S/W,
+full same-null G7 localization, P1's canonical tensor/line comparisons,
+complete objectwise P2 intrinsic-perfect strictification/pushforward and
+B2-A/B's native spectral row are accepted inputs. Their exact enrollment and
 affected-client checks passed without a dependency rebuild. Mixed-variable and
 global-bottom products follow once their interfaces are fixed; do not populate
 every possible branch at once.

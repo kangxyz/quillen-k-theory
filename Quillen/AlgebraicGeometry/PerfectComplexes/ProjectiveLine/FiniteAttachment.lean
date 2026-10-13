@@ -31,6 +31,7 @@ open HomologicalComplex
 open Quillen.Scheme.ProjectiveLine Quillen.SchemeSheaf
 namespace Quillen.PerfectComplexes.ProjectiveLine
 
+/-- The standard derived category of module sheaves, used for finite attachments. -/
 local instance finiteAttachmentStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
 

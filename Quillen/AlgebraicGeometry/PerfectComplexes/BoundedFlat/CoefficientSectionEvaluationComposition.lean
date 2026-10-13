@@ -113,6 +113,7 @@ private def transportComparison
   eqToIso (congrArg (fun V => S ⋙ V) hV) ≪≫ κ ≪≫
     eqToIso (congrArg₂ (fun U P => U ⋙ P) hU hP).symm
 
+/-- Transport a composition isomorphism along the displayed functor equalities. -/
 def CoefficientSectionEvaluationComposition.transportCompIso
     {D E F : Type*} [Category D] [Category E] [Category F]
     {Pf Pf' : D ⥤ E} {Pg Pg' : E ⥤ F} {Pfg Pfg' : D ⥤ F}
@@ -433,12 +434,17 @@ private theorem nativeLiftedIso_eq {i j : Index R} (f : i ⟶ j) :
 attribute [local irreducible] boundedFlatCoefficientOriginalEvaluation
 attribute [local semireducible] boundedFlatPullbackNormalizationIso
 
+-- Name the unchanged proposition so default type lint checks its compact interface.
+private def nativeEvaluationIsoEquality {i j : Index R} (f : i ⟶ j) : Prop :=
+  boundedFlatCoefficientSectionEvaluationIso f =
+    rebaseComparison (boundedFlatCoefficientSectionsMap f)
+      (boundedFlatCoefficientOriginalModelMap f).functor (nativeLiftedIso f)
+      (boundedFlatCoefficientSectionEvaluationNormalizationIso i)
+      (boundedFlatCoefficientSectionEvaluationNormalizationIso j)
+
 private theorem nativeEvaluationIso_eq {i j : Index R} (f : i ⟶ j) :
-    boundedFlatCoefficientSectionEvaluationIso f =
-      rebaseComparison (boundedFlatCoefficientSectionsMap f)
-        (boundedFlatCoefficientOriginalModelMap f).functor (nativeLiftedIso f)
-        (boundedFlatCoefficientSectionEvaluationNormalizationIso i)
-        (boundedFlatCoefficientSectionEvaluationNormalizationIso j) := by
+    nativeEvaluationIsoEquality f := by
+  unfold nativeEvaluationIsoEquality
   simp only [rebaseComparison, nativeLiftedIso_eq]
   unfold boundedFlatCoefficientSectionEvaluationIso
   dsimp only [id]
@@ -450,22 +456,27 @@ attribute [local irreducible] comparisonPasting boundedFlatCoefficientSectionEva
   boundedFlatCoefficientSectionEvaluationModelMap boundedFlatCoefficientOriginalModelMap
   boundedFlatCoefficientSectionSmallEquivalence rebaseComparison
 
+-- Name the unchanged proposition so default type lint checks its compact interface.
+private def nativeEvaluationIsoPasting {i j k : Index R} (f : i ⟶ j) (g : j ⟶ k) : Prop :=
+  comparisonPasting
+    (boundedFlatCoefficientSectionsMap f) (boundedFlatCoefficientSectionsMap g)
+    (boundedFlatCoefficientSectionsMap (f ≫ g))
+    (Quillen.CategoryTheory.StrictSections.underCocartesianReindex_comp
+      (boundedFlatCoefficientProjection R) f g)
+    (boundedFlatCoefficientSectionEvaluationModelMap i).functor
+    (boundedFlatCoefficientSectionEvaluationModelMap j).functor
+    (boundedFlatCoefficientSectionEvaluationModelMap k).functor
+    (boundedFlatCoefficientOriginalModelMap f).functor
+    (boundedFlatCoefficientOriginalModelMap g).functor
+    (boundedFlatCoefficientOriginalModelMap (f ≫ g)).functor
+    (boundedFlatCoefficientSectionEvaluationIso f)
+    (boundedFlatCoefficientSectionEvaluationIso g)
+    (boundedFlatCoefficientSectionEvaluationIso (f ≫ g))
+    (boundedFlatCoefficientOriginalModelCompIso f g)
+
 private theorem nativeEvaluationIso_pasting {i j k : Index R} (f : i ⟶ j) (g : j ⟶ k) :
-    comparisonPasting
-      (boundedFlatCoefficientSectionsMap f) (boundedFlatCoefficientSectionsMap g)
-      (boundedFlatCoefficientSectionsMap (f ≫ g))
-      (Quillen.CategoryTheory.StrictSections.underCocartesianReindex_comp
-        (boundedFlatCoefficientProjection R) f g)
-      (boundedFlatCoefficientSectionEvaluationModelMap i).functor
-      (boundedFlatCoefficientSectionEvaluationModelMap j).functor
-      (boundedFlatCoefficientSectionEvaluationModelMap k).functor
-      (boundedFlatCoefficientOriginalModelMap f).functor
-      (boundedFlatCoefficientOriginalModelMap g).functor
-      (boundedFlatCoefficientOriginalModelMap (f ≫ g)).functor
-      (boundedFlatCoefficientSectionEvaluationIso f)
-      (boundedFlatCoefficientSectionEvaluationIso g)
-      (boundedFlatCoefficientSectionEvaluationIso (f ≫ g))
-      (boundedFlatCoefficientOriginalModelCompIso f g) := by
+    nativeEvaluationIsoPasting f g := by
+  unfold nativeEvaluationIsoPasting
   apply comparisonPasting_of_eq (nativeEvaluationIso_eq f) (nativeEvaluationIso_eq g)
     (nativeEvaluationIso_eq (f ≫ g))
   exact rebaseComparisonPasting

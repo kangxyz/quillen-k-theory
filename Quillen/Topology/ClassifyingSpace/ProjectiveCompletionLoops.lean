@@ -7,6 +7,7 @@ module
 
 public import Quillen.Topology.ClassifyingSpace.ProjectiveCompletionHomotopyFiber
 public import Quillen.Topology.HomotopyFiber.ContractibleSourcePath
+public import Quillen.Topology.HomotopyGroups.Loop.Reversal
 
 /-! # The original projective completion and loops in the original Q space
 
@@ -40,47 +41,77 @@ def originalQLoopFiberHomotopyEquiv (U : GroupCompletionCategory R) :
   exact HomotopyFiber.loopEquivOfContractibleSourcePath _ (completionQFiberPoint R U).1.1 _
     (HomotopyFiber.toPath _ _ (completionQFiberPoint R U))
 
-/-- The completion maps to loops in the unchanged original Q space. -/
+/-- The original additive zero pair fixes the canonical based comparison. -/
+def completionZeroPair : GroupCompletionCategory R :=
+  completionPair R ⟨0⟩ ⟨0⟩
+
+/-- The standard completion comparison applies the loop/fiber inverse and reverses
+its loop parameter exactly once. -/
 def completionToOriginalQLoops (U : GroupCompletionCategory R) :
     C(ClassifyingSpace (GroupCompletionCategory R),
       Path (classifyingSpacePoint (exactStructure R).qZero)
         (classifyingSpacePoint (exactStructure R).qZero)) :=
-  (originalQLoopFiberHomotopyEquiv R U).invFun.comp
-    (completionToOriginalQHomotopyFiber R)
+  loopReversal.comp ((originalQLoopFiberHomotopyEquiv R U).invFun.comp
+    (completionToOriginalQHomotopyFiber R))
 
-/-- The chosen vertex is sent to the constant loop along a specified original track. -/
+/-- The standard comparison is pointwise reversal of the actual loop/fiber inverse. -/
+@[simp] theorem completionToOriginalQLoops_apply (U : GroupCompletionCategory R)
+    (x : ClassifyingSpace (GroupCompletionCategory R)) :
+    completionToOriginalQLoops R U x =
+      ((originalQLoopFiberHomotopyEquiv R U).invFun
+        (completionToOriginalQHomotopyFiber R x)).symm := rfl
+
+/-- The original loop/fiber inverse is unchanged; the canonical map adds one loop reversal. -/
+theorem completionToOriginalQLoops_eq_reversal_fiberInverse (U : GroupCompletionCategory R) :
+    completionToOriginalQLoops R U = loopReversal.comp
+      ((originalQLoopFiberHomotopyEquiv R U).invFun.comp
+        (completionToOriginalQHomotopyFiber R)) := rfl
+
+/-- The specified standard track reverses each inner loop, preserving the outer path direction. -/
 def completionToOriginalQLoopsBasepointPath (U : GroupCompletionCategory R) :
     Path (completionToOriginalQLoops R U (classifyingSpacePoint U))
       (Path.refl (classifyingSpacePoint (exactStructure R).qZero)) := by
   let : ContractibleSpace (ClassifyingSpace (LocalizedExtensionCategory R)) :=
     localizedExtension_classifyingSpace_contractible R
-  exact HomotopyFiber.loopEquivOfContractibleSourcePathInverseBasepointPath _
-    (completionQFiberPoint R U).1.1 _ (HomotopyFiber.toPath _ _ (completionQFiberPoint R U))
+  exact loopReversalPath
+    (HomotopyFiber.loopEquivOfContractibleSourcePathInverseBasepointPath _
+      (completionQFiberPoint R U).1.1 _
+      (HomotopyFiber.toPath _ _ (completionQFiberPoint R U)))
 
-/-- The actual loop comparison is a weak equivalence on all components. -/
+/-- The standard track is obtained from the specified loop/fiber track by reversing
+the inner loop coordinate; its outer path direction is unchanged. -/
+theorem completionToOriginalQLoopsBasepointPath_eq_reversal_fiberInverse
+    (U : GroupCompletionCategory R) :
+    letI : ContractibleSpace (ClassifyingSpace (LocalizedExtensionCategory R)) :=
+      localizedExtension_classifyingSpace_contractible R
+    completionToOriginalQLoopsBasepointPath R U =
+      loopReversalPath
+        (HomotopyFiber.loopEquivOfContractibleSourcePathInverseBasepointPath _
+          (completionQFiberPoint R U).1.1 _
+          (HomotopyFiber.toPath _ _ (completionQFiberPoint R U))) := rfl
+
+/-- The standard comparison remains a weak equivalence on every component. -/
 theorem completionToOriginalQLoops_isWeakHomotopyEquivalence (U : GroupCompletionCategory R) :
     IsWeakHomotopyEquivalence (completionToOriginalQLoops R U) :=
   (isWeakHomotopyEquivalence_of_homotopyEquiv
-    (originalQLoopFiberHomotopyEquiv R U).symm).comp
-      (completionToOriginalQHomotopyFiber_isWeakHomotopyEquivalence R)
+    (loopReversalHomeomorph (classifyingSpacePoint (exactStructure R).qZero)).toHomotopyEquiv).comp
+    ((isWeakHomotopyEquivalence_of_homotopyEquiv
+      (originalQLoopFiberHomotopyEquiv R U).symm).comp
+        (completionToOriginalQHomotopyFiber_isWeakHomotopyEquivalence R))
 
-/-- The original additive zero pair fixes the canonical based comparison. -/
-def completionZeroPair : GroupCompletionCategory R :=
-  completionPair R ⟨0⟩ ⟨0⟩
-
-/-- The canonical zero-based comparison with loops in the original Q construction. -/
+/-- The standard canonical comparison uses the unchanged additive zero pair. -/
 def originalQComparison :
     C(ClassifyingSpace (GroupCompletionCategory R),
       Path (classifyingSpacePoint (exactStructure R).qZero)
         (classifyingSpacePoint (exactStructure R).qZero)) :=
   completionToOriginalQLoops R (completionZeroPair R)
 
-/-- The canonical comparison is a weak equivalence, including dimension zero. -/
+/-- The standard zero-based comparison is a weak equivalence, including dimension zero. -/
 theorem originalQComparison_isWeakHomotopyEquivalence :
     IsWeakHomotopyEquivalence (originalQComparison R) :=
   completionToOriginalQLoops_isWeakHomotopyEquivalence R (completionZeroPair R)
 
-/-- The canonical comparison carries its specified original zero track. -/
+/-- The canonical comparison carries the pointwise reversed original zero track. -/
 def originalQComparisonBasepointPath :
     Path (originalQComparison R (classifyingSpacePoint (completionZeroPair R)))
       (Path.refl (classifyingSpacePoint (exactStructure R).qZero)) :=

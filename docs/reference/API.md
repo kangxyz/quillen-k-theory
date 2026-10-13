@@ -13,7 +13,17 @@ obligations; [scope](Scope.md) gives the cross-topic boundary.
 | `Quillen.CategoryTheory.ExactCategory.Basic` | Exact structures and conflations |
 | `Quillen.CategoryTheory.QConstruction.Basic` | Quillen's Q-construction |
 | `Quillen.KTheory.API` | Exact-category K-groups, canonical maps, equivalences, and small models |
-| `Quillen.KTheory.Plus` | Selected ring plus/Q comparison and component interfaces |
+| `Quillen.KTheory.Plus` | Standard ring plus/Q homotopy equivalences, original K₀–plus product and component interfaces |
+| `Quillen.Topology.PlusConstruction.ClassicalCWUniqueness` | Automatic comparison and ordinary uniqueness for original plus maps on actual same-universe Hausdorff CW spaces |
+| `Quillen.Topology.PlusConstruction.ClassicalCWUniquenessUniverseLift` | Mixed-universe comparison and ordinary uniqueness on the original actual CW spaces |
+| `Quillen.Topology.CWComplex.SimplyConnectedCover` | Constructed same-universe simply connected surjective cover of an actual connected Hausdorff CW subtype |
+| `Quillen.Topology.CWComplex.UniverseTransport` | Actual intrinsic CW subtype and literal ULift geometry |
+| `Quillen.Topology.HomotopyGroups.Loop.Reversal` | Actual inner-loop reflection and degree-shift formulas |
+| `Quillen.Algebra.Module.RightScalarExtension` | Literal noncommutative balanced right tensor and its universal properties |
+| `Quillen.Algebra.Category.ModuleCat.RightScalarExtension` | Tensor functor, identity/composition equivalences and literal-carrier triple coherence |
+| `Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeTensor` | Comparison with original scalar extension and explicit target lifts |
+| `Quillen.Algebra.Category.ModuleCat.FiniteProjectiveTensorCoherence` | Agreement with original identity/composition comparisons |
+| `Quillen.KTheory.Map.RightBaseChangeTensor` | Original zero-normalized K-map equality in every degree |
 | `Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeUniversal` | Scalar-extension unit and additive Hom universal property |
 | `Quillen.Algebra.Category.ModuleCat.Finite` | Finite-module Serre and exact-category interfaces on mathlib's finitely generated module category |
 | `Quillen.Algebra.Homology.FiniteProjectiveResolution` | Actual finite-projective resolutions and finite-free PID resolutions |
@@ -74,6 +84,34 @@ Projective-line applications use the single `polynomialChart` family in
 the plus chart and `false` selecting the minus chart.
 
 Mathematical hypotheses, original maps, and comparison boundaries are retained.
+
+## Standard comparison normalization
+
+The 0.7.0 source integration directly refactors the public plus/Q comparison
+to the standard `[P] - [R^n]` sign. The Q-construction, K-groups, canonical
+K-maps and generic loop/fiber inverse retain their definitions. The standard
+comparison inserts exactly one inner-loop reversal, with the outer direction
+of its prescribed basepoint track retained. See
+[standard comparison normalization](StandardSignMigration.md) for the exact
+map equations, labels and client changes. The 0.5.0 owner migration above is
+preserved.
+
+The generic `Quillen.loopReversalHomeomorph` belongs to
+`Quillen.Topology.HomotopyGroups.Loop.LeftComponentTranslation`, with an
+explicit basepoint. `Quillen.Topology.HomotopyGroups.Loop.Reversal` reuses that
+owner.
+
+## Version 0.7.0 source integration
+
+The imported sources include path-class endpoints and simply connected covers,
+actual CW lifting and Whitehead recognition, automatic same-universe and
+mixed-universe comparison and ordinary uniqueness for original plus maps, and
+explicit coefficient-universe transport. The
+[classical CW guide](../topics/ClassicalCWPlus.md) and
+[homotopy foundations](../topics/HomotopyFoundations.md) record their exact
+conditions. This is source integration; the package version does not identify
+a published tag. Current merged checking is recorded only at
+[verification](Scope.md#verification).
 
 ## Module paths and namespaces
 
@@ -210,6 +248,8 @@ an additional rectification or telescope-identification theorem.
 | `AlgebraicGeometry.Scheme.ProjectiveLine.DerivedCechCone` | Original derived projection image and signed sheaf Čech cone comparison |
 | `AlgebraicGeometry.PerfectComplexes.ProjectiveLine.DerivedPushforwardVectorBundle` | `Quillen.PerfectComplexes.ProjectiveLine.perfect_derivedPushforward_vectorBundle` |
 | `AlgebraicGeometry.PerfectComplexes.ProjectiveLine.BoundedDerivedPushforward` | `Quillen.PerfectComplexes.ProjectiveLine.perfect_derivedPushforward_of_bounded_vectorBundle_terms` |
+| `AlgebraicGeometry.PerfectComplexes.ProjectiveLine.QuasicoherentRepresentative` | `Quillen.PerfectComplexes.ProjectiveLine.exists_quasicoherent_model_of_perfect_plus` |
+| `AlgebraicGeometry.PerfectComplexes.ProjectiveLine.IntrinsicPerfectPushforward` | `Quillen.PerfectComplexes.ProjectiveLine.exists_strict_model_of_perfect_plus`, `perfect_derivedProjection_of_perfect` |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionKComparison` | Actual full-open section K and perfect-K comparison |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionRestrictionModel` | Original strict chosen-zero restriction Model map |
 | `AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedLaurentContractionNaturality` | Whole Laurent self-track contraction and coefficient naturality |
@@ -226,8 +266,38 @@ cone/telescope-descent interfaces and the graded telescope proof.
 The graded telescope is the specified `Under R` diagram for open
 `j : U ⟶ Spec R` with `CompactSpace U`. Its vanishing does not identify it
 with the original ungraded Bass telescope or with classical negative K-theory.
-The proved fine-to-graded seed square retains its original maps; the missing
-restriction/localization-null/cone-descent transfer is a separate construction.
+The fine-to-graded seed square retains its original maps. The section-completion
+owners below construct the original forward seeds, whole localization nulls
+and transition equations, and literal finite-stage and telescope restriction
+and cone maps.
+
+### Constructed section completions
+
+| Import after `Quillen.AlgebraicGeometry.PerfectComplexes.` | Principal interface |
+| --- | --- |
+| `Affine.FullOpenSectionBassRestrictionTower`, `Affine.FullOpenSectionBassRestrictionCofiber` | Original coarse-to-fine finite restriction and cofiber comparison |
+| `Affine.FullOpenSectionBassLocalization` | Actual supported full-open telescope fiber and original signed boundary |
+| `BoundedFlat.CoefficientOpenBassTower`, `BoundedFlat.CoefficientOpenBassTelescope` | Native finite and telescope restriction with the original transitions |
+| `BoundedFlat.CoefficientFullOpenBassLocalization` | Global native supported full-open telescope fiber and signed boundary |
+| `BoundedFlat.CoefficientSupportedOpenBassTower`, `BoundedFlat.CoefficientSupportedOpenBassTelescope` | Auxiliary-supported native finite and telescope restriction |
+| `BoundedFlat.CoefficientSupportedFiberBassTelescope`, `BoundedFlat.CoefficientSupportedFullOpenBassLocalization` | Original auxiliary-supported fiber, fine completion comparison and signed boundary |
+
+For open `j : U ⟶ Spec R` with compact `U`, the original coarse-to-fine section
+completion restriction is stable in every integer degree. The supported
+telescope maps to the actual full-open homotopy fiber through the same whole
+localization null, preserving the original signed connecting map.
+
+For a native open map `f : P ⟶ Q` in `Over (Spec R)`, final fine stability uses
+qcqs `Q.left` and compact `P.left`; auxiliary support by `T : Q.left.Opens`
+also requires compact `T`. These owners supply the corresponding constructed
+coarse-to-fine restriction, supported fiber and signed boundary. The graded
+Model definitions retain their own compactness conditions on `P.left` and
+`Q.left`. No coefficient flatness or noetherian assumption is added.
+
+The raw all-iterate and telescope comparisons and identification with classical
+nonconnective K-theory remain open; completed geometric evaluation is separate. The
+[perfect-complex guide](../topics/PerfectComplexes.md) and
+[spectrum guide](../topics/SpectraAndBass.md) record these distinct endpoints.
 
 ## Ring plus and scalar extension
 
@@ -238,19 +308,116 @@ to `Quillen.FiniteProjectiveModule`.
 | --- | --- |
 | `KTheory.Plus.StableGeneralLinearPlus` | `StableCompletion.stableZeroMap_isPlusConstruction` |
 | `KTheory.Plus.ProjectiveCompletionZeroLoops` | `StableCompletion.zeroCompletionToOriginalQLoops_isWeakHomotopyEquivalence` |
+| `KTheory.Plus.ProjectiveCompletionLoopHomotopyEquiv` | `completionToOriginalQLoopsHomotopyEquiv`, `originalQComparisonHomotopyEquiv`, `StableCompletion.zeroCompletionToOriginalQLoopsHomotopyEquiv` |
+| `KTheory.Plus.ProjectiveCompletionLoopLabels` | Actual standard component and stage labels |
+| `KTheory.Plus.ProjectiveCompletionLoopNaturality`, `KTheory.Plus.ProjectiveCompletionZeroLoopNaturality` | Actual ordinary naturality homotopies for the full and zero-component standard maps |
+| `KTheory.Plus.ProjectiveOriginalPlusProduct` | `OriginalKZeroPlusProduct`, `originalPlusProductToQLoopsHomotopyEquiv`, `originalQLoopsPlusProductHomotopyEquiv` |
+| `KTheory.Plus.ProjectiveOriginalPlusProductNaturality` | `originalPlusProductBaseChangeMap`, `originalPlusProductToQLoopsHomotopyEquiv_naturality` |
 | `KTheory.Plus.ProjectiveCompletionPositiveKNaturality` | `StableCompletion.zeroCompletionPositiveKEquiv_baseChange` |
 | `KTheory.Plus.ProjectiveCompletionZerothHomotopy` | `completionZerothHomotopyKZeroEquiv` and actual object-class naturality |
 | `KTheory.Plus.ProjectiveTelescopeKZero` | `StableFreeRight.telescopeZerothHomotopyKZeroEquiv` and original stage classes |
 | `KTheory.Map.RightBaseChange` | Original `rightBaseChangeExact.KMap` identity/composition laws |
 | `Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeUniversal` | `rightBaseChangeUnit`, `rightBaseChangeHomEquiv`, `rightBaseChangeLift`, `rightBaseChange_existsUnique` |
 
+The public standard comparison is one inner-loop reversal after the original
+generic loop/fiber inverse. Its prescribed track reflects the inner loop
+coordinate and retains the outer path direction. The actual comparison's
+component label is `grade(input) - grade(basepoint)`; the zero-stage label is
+`[P] - [rankOnePower n]`. Positive comparisons use the original loop-degree
+shift and mapped-track transport, with no dimension-parity factor. See
+[standard comparison normalization](StandardSignMigration.md).
+
+The comparison homotopy equivalences retain those exact standard forward maps and the
+original track. The product uses discrete original K₀ and the particular
+`StableCompletion.ZeroComponent` certified by `stableZeroMap_isPlusConstruction`.
+Its neutral slice, original classifier and standard labels are retained.
+Ring change of the product-to-loop map is by ordinary homotopy with the
+original K₀ and zero-completion maps. No natural chosen inverse, strictly
+pointed naturality, H-space, A∞ or infinite-loop splitting is asserted.
+
 The raw finite-free and idempotent-image scalar owners are
 `Quillen.Algebra.Matrix.RightScalarExtension` and
-`Quillen.Algebra.Category.ModuleCat.MatrixImageScalarExtension`. The
-[plus guide](../topics/PlusConstruction.md) retains the coefficient and ring
-universes, basepoint corrections, component formulas, and literal Hom-unit
-property. General CW uniqueness, whole-space splitting, and a separate
-balanced-tensor carrier comparison remain outside those interfaces.
+`Quillen.Algebra.Category.ModuleCat.MatrixImageScalarExtension`. The literal
+balanced tensor comparison, original unit/composition agreement, exactness
+and all-degree K-map equality are proved in the focused tensor imports above.
+Raw module and ring universes are independent; the original finite-projective
+source remains `Category.{u, u}`, and mixed-ring-universe comparisons lift the
+target explicitly. The original K-map and topological ring-change interfaces
+retain their common-ring-universe bounds. The [plus guide](../topics/PlusConstruction.md)
+records these scopes and the plus certificate's coefficient universe `u + 1`.
+Automatic comparison and ordinary uniqueness on actual Hausdorff CW spaces for original
+`IsPlusConstruction.{u,u,u}` certificates are now included. Common-universe
+chain/certificate transport, CW subtype/ULift geometry and the mixed-universe
+original-space assembly are also included. These results do not supply
+arbitrary CW-homotopy-type transport or prescribed-track coherence.
+
+## Classical CW plus comparisons and universe transport
+
+| Import after `Quillen.` | Public interface |
+| --- | --- |
+| `Topology.PlusConstruction.ClassicalCWUniqueness` | `Quillen.IsPlusConstruction.exists_classicalCWComparison`, `classicalCWHomotopyCancel`, `homotopic_classicalCWComparisons`, `classicalCWPlusUnique` |
+| `Topology.PlusConstruction.ClassicalCWUniquenessUniverseLift` | `Quillen.IsPlusConstruction.exists_classicalCWComparison_commonUniverse`, `classicalCWHomotopyCancelCommonUniverse`, `homotopic_classicalCWComparisons_commonUniverse`, `classicalCWPlusUnique_commonUniverse`, `classicalCWPlusUnique_successor` |
+| `Topology.PlusConstruction.UnivSubtype` | `Quillen.PlusConstruction.UnivSubtype.isPlusConstruction`, `liftPath_apply`, `kernel_lift`, `forward_down` |
+| `Topology.PlusConstruction.ClassicalCWComparison`, `Topology.PlusConstruction.ClassicalCWComparisonUniqueness` | Chosen-cover existence and ordinary uniqueness, retaining the covers, points, surjectivity and pushout inputs |
+| `Topology.CWComplex.Whitehead` | `Quillen.ClassicalCW.homotopyEquivOfWeakHomotopyEquivalence` with the exact original forward map |
+| `Topology.CWComplex.SimplyConnectedCover` | `Quillen.ClassicalCW.exists_simplyConnected_cover` |
+| `Topology.LocalCoefficients.CommonUniverseChains` | `Quillen.LocalCoefficients.CommonUniverseChains.liftMap`, `original_chainMap_retract_square`, `all_localCoefficients_liftMap` |
+| `Topology.PlusConstruction.CommonUniverse` | `Quillen.PlusConstruction.CommonUniverse.isPlusConstruction`, `basedPiOneMap_square`, `kernel_lift`, `liftPath_down`, `forward_down` |
+| `Topology.CWComplex.Subtype`, `Topology.CWComplex.ULift`, `Topology.CWComplex.UniverseTransport` | `Quillen.ClassicalCW.subtypeCWComplex`, `uliftCWComplex`, `uliftSubtypeCWComplex` and original-chart equations |
+
+The automatic theorem takes actual Hausdorff CW subtypes in `Type u`, original
+maps, points, tracks and subgroup, and original `IsPlusConstruction.{u,u,u}`
+certificates. It constructs a comparison homotopy equivalence under the source
+and proves ordinary homotopy uniqueness, with no supplied cover, lift, pushout
+or desired equivalence. No finite-dimensional, countable or locally finite
+restriction is added. The [classical CW guide](../topics/ClassicalCWPlus.md)
+records the exact contract and distinct chosen-cover branch.
+
+Common-universe transport needs the original coefficient quantifier already
+in `U = max u v w`; it does not resize smaller coefficients into larger ones.
+The included mixed-space assembly uses `U = max u v w z` for original ambient
+universes `u`, `v`, `w`, and returns a comparison on the original `B`, `C`.
+`classicalCWPlusUnique_successor` consumes literal original
+`IsPlusConstruction.{u,u+1,u+1}` certificates. Its ordinary under-source
+homotopy and ordinary uniqueness do not assert prescribed-track coherence;
+actual Hausdorff CW hypotheses remain explicit.
+
+## Homological and metric homotopy foundations
+
+| Import after `Quillen.` | Interface |
+| --- | --- |
+| `Topology.HomotopyGroups.SphericalHomotopyAddition` | Genuine signed spherical addition in degree m+2 |
+| `Topology.Realization.RelativeSphericalStraightening` | Full finite relative straightening with its specified fixed family |
+| `Topology.LocalCoefficients.FirstObstruction` | Absolute first obstruction from lower homotopy and degree-n homology vanishing |
+| `Topology.LocalCoefficients.HomologicalWhiteheadSimplyConnected` | Original integral homology isomorphisms imply complete weak equivalence for simply connected same-universe spaces |
+| `Topology.MetricOrderComplex.RealizationHomotopyEquiv` | Vertex-fixed weak/metric realization and based-loop homotopy equivalences |
+| `Topology.MetricOrderComplex.Equiconnection`, `Topology.MetricOrderComplex.LoopEquiconnection` | Actual metric connector and compact-open loop convex geometry |
+| `Topology.Realization.OrderedNerveRealizationMap` | Actual nerve return map using nondegenerate interpolation and canonical-epi weight aggregation |
+| `Topology.Realization.POUNerveClassifier` | Original partition-of-unity classifier into the weak realization |
+| `Topology.Realization.NumerableRealizationDomination`, `Topology.Realization.MetricRealizationDomination` | Constructed realization domination from the displayed cover/connector data |
+| `Topology.ClassifyingSpace.LoopDomination` | `RankedChainOrder.universalLoopDominationData` for original loops with independent categorical universes |
+| `Topology.LocalCoefficients.TwistedWhiteheadSuppliedCovers` | Original base-map weak equivalence with supplied simply connected covers and commuting lift |
+| `Topology.Covering.PathClassPrebundle`, `Topology.Covering.LocalConnectorHypotheses` | Actual surjective path-class cover from original local geometry |
+| `Topology.Covering.PathClassEndpoint`, `Topology.Covering.PathClassSimplyConnected` | Exact path-class endpoint equation and genuinely simply connected chart-topologized total |
+| `Topology.Covering.HomotopyPullbackTransfer`, `Topology.Covering.LocalConnectorTransfer` | Actual pullback cover transfer under the displayed homotopy equivalence |
+| `Topology.ClassifyingSpace.SimplyConnectedCover` | Constructed simply connected cover of an original path-connected categorical realization |
+| `Topology.Realization.Whitehead` | Exact-forward homotopy equivalence for weak equivalences between actual simplicial realizations |
+
+The [foundations guide](../topics/HomotopyFoundations.md) keeps the degree
+ranges, coefficients, spaces and maps explicit. Raw ordered interpolation
+has face/mono coherence; degeneracies are handled by summing repeated weights
+through the canonical epimorphism before interpolation in the actual return
+map. The constructed domination supplies the original-Q comparison bridge,
+without an additional assumed inverse.
+
+Supplied-cover twisted Whitehead retains all four spaces and coefficient
+systems in universe `u`, actual simply connected total spaces, a commuting
+lift and a fundamental-group isomorphism. The included path-class
+endpoint/universality theorem now proves simple connectedness of its actual
+prebundle total under path connectedness, local path connectedness and the
+displayed ambient-thin neighborhoods. Actual connected Hausdorff CW geometry
+supplies these inputs. Separate supplied-cover interfaces keep their explicit
+hypotheses. The original-Q homotopy equivalence and product retain the actual standard maps.
 
 ## Client examples
 
@@ -268,6 +435,11 @@ interfaces:
 | Perfect complexes and derived geometry | [PerfectFoundations](../../examples/downstream/Consumer/PerfectFoundations.lean), [DerivedPushforwardComparison](../../examples/downstream/Consumer/DerivedPushforwardComparison.lean) |
 | Finite homotopy scope | [FiniteHELP](../../examples/downstream/Consumer/FiniteHELP.lean) |
 | Ring plus and scalar extension | [RingPlusNaturality](../../examples/downstream/Consumer/RingPlusNaturality.lean), [RingScalarExtension](../../examples/downstream/Consumer/RingScalarExtension.lean) |
+| Homological and metric foundations | [HomologicalWhiteheadSimplyConnected](../../examples/downstream/Consumer/HomologicalWhiteheadSimplyConnected.lean), [MetricOrderLoops](../../examples/downstream/Consumer/MetricOrderLoops.lean), [NumerableDomination](../../examples/downstream/Consumer/NumerableDomination.lean) |
+| Supplied covers and path-class covering | [TwistedWhiteheadSuppliedCovers](../../examples/downstream/Consumer/TwistedWhiteheadSuppliedCovers.lean), [PathClassCovering](../../examples/downstream/Consumer/PathClassCovering.lean), [PathClassUniversality](../../examples/downstream/Consumer/PathClassUniversality.lean) |
+| Actual CW plus comparisons | [ClassicalCWPlusAutomatic](../../examples/downstream/Consumer/ClassicalCWPlusAutomatic.lean), [ClassicalCWPlus](../../examples/downstream/Consumer/ClassicalCWPlus.lean), [ClassicalCWPlusMixedUniverse](../../examples/downstream/Consumer/ClassicalCWPlusMixedUniverse.lean) |
+| Actual CW covers and universe transport | [CWSimplyConnectedCover](../../examples/downstream/Consumer/CWSimplyConnectedCover.lean), [CommonUniversePlus](../../examples/downstream/Consumer/CommonUniversePlus.lean), [CWUniverseTransport](../../examples/downstream/Consumer/CWUniverseTransport.lean) |
+| Standard-sign and original plus product | [StandardSignMigration](../../examples/downstream/Consumer/StandardSignMigration.lean), [OriginalQLoopHomotopyEquiv](../../examples/downstream/Consumer/OriginalQLoopHomotopyEquiv.lean), [OriginalPlusProduct](../../examples/downstream/Consumer/OriginalPlusProduct.lean) |
 | Full-open graded stable concentration | [FullOpenGradedSectionStable](../../examples/downstream/Consumer/FullOpenGradedSectionStable.lean) |
 
 The maintained [tests](../../QuillenTest) cover further constructions and regressions.

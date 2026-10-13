@@ -18,8 +18,9 @@ interface or a successful compilation does not supply an additional comparison.
 | Exact categories and Q-construction | Exact structures, restricted spans, composition, exact functors, and canonical K-maps |
 | Waldhausen theory | S-construction, additivity, Q/S comparison, and approximation/cofinality/fibration with their stated input data |
 | Classical K₀ | Exact and Waldhausen object presentations, original object classes, inverse identities, and all-class exact-functor naturality |
-| Ring plus comparison | Independent homological stable-BGL model, original zero-component Q-loop weak equivalence, corrected positive K-map naturality, and completion/telescope K₀ components |
-| Finite-projective scalar extension | Matrix-image change of rings with a natural semilinear unit and the additive Hom universal property against arbitrary target modules |
+| Ring plus comparison | Independent homological stable-BGL model, exact standard zero-component Q-loop homotopy equivalence, original K₀-times-plus product, and ordinary forward-map ring-change naturality |
+| Finite-projective scalar extension | Matrix-image change of rings, additive Hom universal property and literal noncommutative balanced-tensor identification with exact finite-projective base change |
+| Classical CW plus comparison | Constructed comparison homotopy equivalences and ordinary uniqueness for original plus maps on actual Hausdorff CW spaces, with an explicit common coefficient universe for mixed spaces |
 | Dévissage and resolution | Abelian finite-filtration dévissage and admissible finite-resolution comparisons |
 | Serre and G-localization | Specified Serre quotients, finite-module G-theory, and connective tails |
 | Scheme K/G-theory | Vector bundles, finite-type/coherent sheaves, restriction, K→G, and noetherian open/closed localization |
@@ -31,7 +32,7 @@ interface or a successful compilation does not supply an additional comparison.
 | Finite pushforward | Coherent G and finite-flat vector-bundle/strict-perfect K direct images on locally noetherian schemes, with canonical comparison laws |
 | Derived sheaf operations | Bounded-below direct image, flasque/affine units, composition, projection formula, and canonical ordinary/derived base-change mates |
 | Laurent and Čech finite models | Finite-defect parametrices, projector/module homotopy models, actual sheaf Čech comparisons, and perfect derived projection images for vector-bundle singles and explicitly bounded vector-bundle complexes |
-| Projective-line geometry | Actual two-chart line, tautological line and quotient, cohomology/direct image, twisted diagonal triangles, and QC-single flat base change |
+| Projective-line geometry | Actual two-chart line, tautological line and quotient, twisted diagonal triangles, intrinsic-perfect bounded QC/strict models and perfect original derived projection images over arbitrary commutative rings |
 | Spectra and stable localization | Iterated S Ω-spectrum, additive K-comparison, signed looping, stable fiber sequence, coherent-homotopy quotient, and categorical stable localization |
 | Finite homotopy excision | All-point connectivity, finite cube HELP, original double-cylinder gap bound, and S-model/finite Bass-stage stable cone sequences |
 | Telescopes and Ω replacement | T1 finite-stage representatives and stable colimits, strict cone/pushout interchange, track-defined maps, and loop-tail Ω replacement |
@@ -195,8 +196,8 @@ classes and native O/O(−1) two-summand chart formulas are proved, without a
 projective-line K-equivalence or initial-seed preservation claim. The canonical
 native flat-base-change mate now covers all intrinsic perfect inputs, and
 affine perfect coefficients have an objectwise chosen positive projection
-isomorphism and actual O(−1) vanishing. This supplies no perfect pushforward for
-arbitrary P¹ inputs or projective generation. Actual native/pair polynomial
+isomorphism and actual O(−1) vanishing. The intrinsic-perfect pushforward producer described below supplies the
+objectwise P¹ result; natural projective generation remains separate. Actual native/pair polynomial
 zero evaluation also splits the original common corner in all recursive Bass
 degrees, without supplying its middle exactness or seed stabilization.
 Original native section/span evaluation now has levelwise equivalence and
@@ -209,45 +210,60 @@ over arbitrary R; actual Rp preserves their perfection. A genuine bounded
 termwise-QC model is also constructed for every intrinsic perfect D+ input;
 its global strict model and perfection under original Rp follow without a
 supplied replacement or noetherian premise. Naturality and an exact
-Waldhausen roof model remain separate. Normalized evaluation/composition and chart/cylinder pasting
-have ordinary mathematical acceptance; original source-null/seed and all raw
-iterate/telescope comparisons remain open.
-The signed Bass span quotient and natural short exact row are proved under
-their explicit original retraction/excision/collapse data; native realization,
-recursive middle exactness and original seed preservation remain open.
+Waldhausen roof model remain separate. Normalized evaluation/composition and
+chart/cylinder pasting, the original whole-track cone evaluation and positive
+source-null/one-step seed comparison have independent mathematical acceptance.
+The cone evaluation is weak at every level. All raw iterate/telescope
+comparisons and initial-seed invertibility remain open.
+The signed Bass span quotient and natural short exact row are realized for
+the actual ambient, open, supported and auxiliary-supported coefficient Model
+families at every finite stage and in every integer degree. Polynomial zero
+evaluation and finite Model geometry construct their original retraction,
+excision and collapse data. The original family hypotheses remain; recursive
+chart middle exactness and original seed preservation remain open.
 These constructions do not identify classical Kᴮ. The current dependency plan is in the
 [TT localization roadmap](../development/TTLocalization.md).
 
 ## Ring plus construction
 
-For every unital ring `R : Type u`, the independent zero component of
-projective completion satisfies the explicit homological plus specification
-for all target local systems in coefficient universe `u + 1`. The specified
-original Q-loop map is a weak homotopy equivalence. Positive comparison
-naturality retains common-universe ring maps and their basepoint corrections.
-Actual completion and telescope components identify with original K₀;
-none of these statements supplies a whole-space splitting.
+For every unital ring `R : Type u`, including noncommutative rings and the
+zero ring, the independent zero component of projective completion satisfies
+the explicit homological plus specification for every target local system in
+coefficient universe `u + 1`. The exact standard map to the identity component
+of original Q loops is a homotopy equivalence with its prescribed track. The
+whole original Q-loop space is homotopy equivalent to discrete original K₀
+times this specific plus model. Its product-to-loop map has ordinary homotopy
+naturality under common-universe ring change; positive K-group comparisons
+retain their basepoint corrections. No natural chosen inverse or infinite-loop
+splitting is asserted. At stage `(n, P)` the standard class is `[P] - [R^n]`;
+[standard normalization](StandardSignMigration.md) records the direct refactor.
 
 The matrix-image ring-change functor has the additive scalar-extension Hom
 universal property for arbitrary ambient target modules, with independent
-source-ring, target-ring, and target-module universes. This does not construct
-a separate literal noncommutative balanced-tensor carrier. General CW
-characterization/uniqueness, arbitrary coefficient-universe transport, a
-homotopy-equivalence upgrade, and a separate based homotopy of the chosen
-loop-map composites remain outside the stated interfaces.
+source-ring, target-ring and target-module universes. Literal noncommutative
+balanced tensors identify with the original finite-projective scalar extension,
+including its unit and composition coherence.
+
+For original plus maps on actual Hausdorff CW subtypes, comparison homotopy
+equivalences and ordinary uniqueness are constructed without finite-dimensional,
+countable or locally finite restrictions. Mixed spaces retain a displayed
+common coefficient universe. Actual CW structures are required; arbitrary
+CW-homotopy-type transport, coherence relative to prescribed under-source
+tracks and a natural chosen inverse remain separate. See
+[the classical CW guide](../topics/ClassicalCWPlus.md).
 
 ## Remaining comparisons
 
 
 - Fixed-degree finite Bass-transition stabilization, bijectivity of the natural negative-class maps into the telescope, and classical telescope negative-group identification.
 - Full all-iterate comparison with the original geometric Bass tower, the fundamental theorem, and Laurent-unit boundary/relative-loop basepoint calculations, including the zero-section class and possible Nil terms.
-- Complete original source-null/seed/iterate/telescope evaluation and classical Thomason–Trobaugh identification, retaining the original K₀ image and signed boundary. Normalized geometric chart-composition, basic global supported localization and auxiliary-supported section-completion localization are proved.
-- Proj identification, the full twisting-sheaf family, arbitrary locally-perfect coefficient preservation and bounded representation, projective generation, and the projective-bundle formula. The older finite-coefficient retract criterion retains its own projectivity/splitting and support-window assumptions; vector-bundle and explicitly bounded vector-bundle projection perfection are proved by the new finite-defect route.
+- Complete original raw iterate/telescope evaluation and classical Thomason–Trobaugh identification, retaining the original K₀ image and signed boundary. Normalized geometric chart-composition, original cone/null/one-step seed comparison, basic global supported localization and auxiliary-supported section-completion localization are proved.
+- Proj identification, the full twisting-sheaf family, natural projective generation, the exact Waldhausen roof model and the projective-bundle K-equivalence. Every intrinsic perfect D+ input on the actual two-chart P¹ over an arbitrary commutative ring has a bounded QC model, a global strict model and a perfect original Rp image. These objectwise constructions do not supply the natural exact K-inverse.
 - General-source perfect preservation by derived direct image, unrestricted unbounded derived pushforward, and general bounded-below flat-base-change invertibility.
 - Strict/local equivalence on arbitrary nonaffine schemes and perfect pullback on arbitrary non-quasi-compact schemes.
 - General stable cofiber excision, the remaining quotient homotopy-invariance questions, and a standard stable model structure or triangulation for the categorical localization.
 - The triangulated-derived Grothendieck presentation of perfect objects, general exact-category dévissage/localization, and full Serre-pair coherence.
-- Cross-universe transport beyond the explicit small-model and common-ring-universe plus-comparison interfaces, literal noncommutative tensor-product scalar-extension identification, and higher raw-spectrum/telescope coherence.
+- Cross-universe transport beyond the explicit small-model and common-coefficient plus-comparison interfaces, coherent natural chosen inverses, and higher raw-spectrum/telescope coherence.
 
 Regularity alone does not give the resolution property. Finite cube HELP does
 not imply arbitrary compact HELP, and endpoint collar deformation alone does

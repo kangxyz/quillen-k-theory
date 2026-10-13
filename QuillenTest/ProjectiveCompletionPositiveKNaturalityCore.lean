@@ -7,7 +7,7 @@ module
 
 import Quillen.KTheory.Plus.ProjectiveCompletionPositiveKNaturality
 
-/-! Core consumers of the unchanged positive comparison and the specified ring-map paths. -/
+/-! Core consumers of the standard positive comparison and the specified ring-map paths. -/
 noncomputable section
 open Quillen Quillen.FiniteProjectiveModule
 universe u
@@ -34,3 +34,13 @@ example (f : R →+* S)
     (rightBaseChangeExact f).KMap 1
       (completionPositiveKEquiv Rᵐᵒᵖ (StableCompletion.stageObject R 0) 0 a) :=
   completionPositiveKEquiv_baseChange f 0 a
+
+example (f : R →+* S)
+    (a : HomotopyGroup.Pi 2 (ClassifyingSpace (StableCompletion.Completion R))
+      (StableCompletion.zeroPoint R)) :
+    completionPositiveKEquiv Sᵐᵒᵖ (StableCompletion.stageObject S 0) 1
+      (pathTransportMulEquiv (completionBaseChangeBasepointPath f) 1
+        (homotopyGroupMapHom (N := Fin 2) (completionBaseChangeMap f) rfl a)) =
+    (rightBaseChangeExact f).KMap 2
+      (completionPositiveKEquiv Rᵐᵒᵖ (StableCompletion.stageObject R 0) 1 a) :=
+  completionPositiveKEquiv_baseChange f 1 a
