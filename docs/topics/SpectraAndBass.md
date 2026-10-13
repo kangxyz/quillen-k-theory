@@ -11,8 +11,9 @@ separate comparisons.
 
 For a quasi-compact open of an affine scheme, a separate quotient-graded Bass
 telescope has zero stable groups in every integer degree. Its constructed
-natural Laurent-seed null supplies this vanishing; transfer to the original
-restriction/localization construction remains open.
+natural Laurent-seed null supplies this vanishing. The original compatible
+localization null now transfers the finite cone comparisons to the telescope,
+giving constructed affine full-open section-completion localization.
 
 This guide treats the generic spectrum interfaces and the affine spectral Bass
 construction. The perfect-complex seeds, support categories, and geometric
@@ -260,6 +261,15 @@ every nonpositive degree, with literal original K₀ at zero.
 preserve pointwise right exact sequences and cokernels through contraction
 and every ring-indexed iterate. They supply no negative localization boundary.
 
+The actual native zero section and its pair analogue now split polynomial
+projection pullback in every recursive negative degree and every nonnegative
+perfect K degree. `Bass.PolynomialZeroSection` and
+`Bass.SupportedPolynomialZeroSection` retain the original common-corner
+diagonal, its specified evaluation retraction and zero composite with the
+original plus-minus chart difference. The supported open need not be compact.
+Middle exactness, seed preservation and the stage-i colimit isomorphism do not
+follow from this splitting alone.
+
 The raw spectral step `affineBassStep R` is the parameter-looped cone of the
 actual two-polynomial-chart comparison to the Laurent corner.
 [`affineBassTransition`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/BassStep.lean)
@@ -376,19 +386,43 @@ Writing `seedFine` and `seedGraded` for the two actual seed transformations,
 and `q` for the fine-to-graded transformation, the exact equation
 `seedFine ≫ B.map(q) = q ≫ seedGraded` is already proved in
 [`FullOpenSectionBassSeedChangeWeak`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/FullOpenSectionBassSeedChangeWeak.lean).
-The remaining transfer requires the original section restriction coefficient
-square, localization null, initial cone-descent comparison in degree zero,
-and compatible coefficient/seed/two-time null data. The separate objectwise
-raw-perfect deficit/graded stable comparison for qcqs ambient schemes and
-quasi-compact opens does not supply these section diagram interfaces.
-Graded telescope vanishing does not yet transfer to the original ungraded
-localization telescope or identify classical negative groups.
+The actual fine tower and telescope, and the induced finite/telescope q maps,
+are constructed in `FullOpenSectionBassTower`, `FullOpenSectionBassTelescope`,
+`FullOpenSectionBassGradingTower` and `FullOpenSectionBassGradingTelescope`.
+The original r coefficient transformation and canonical whole localization
+null are constructed; `FullOpenSectionConeStable` proves its initial cone descent
+stable in every integer degree, including the honest degree-zero image quotient.
+`FullOpenSectionBassRestrictionTower` iterates the same null and stable cone
+comparison through every actual finite stage.
+
+The original r seed square and canonical-null time-slice seed squares are proved
+in `FullOpenSectionRestrictionSeed` and `FullOpenSectionGradingNullBassSeed`.
+`FullOpenSectionBassRestrictionCofiber` retains the actual finite nulls and their
+transition equations in the telescope. Its original cone descent is stable;
+graded signed vanishing and genuine finite Model excision therefore make the
+same r∞ stable in every integer degree. `FullOpenSectionBassLocalization`
+composes the supported coarse cone comparison with this restriction, giving
+the actual fine completion endpoint, the same whole-null fiber lift and the
+original signed connecting identity. Pointwise fine section evaluation is
+stable with its explicit universe lift and chosen-zero normalization;
+evaluation through the seeds, iterates and telescope remains separate.
+See the [TT localization roadmap](../development/TTLocalization.md).
 
 For the ambient and supported ungraded telescopes above, fixed-degree
 stabilization, classical negative identification, and full all-iterate comparison
 with the original raw geometric towers remain open; the ambient negative-class
-maps still have no bijectivity assertion. General qcqs instantiation and full
-nonconnective Thomason–Trobaugh localization remain separate obligations.
+maps still have no bijectivity assertion. Native global C/F/G Models now have
+their original Laurent seeds, canonical nulls, actual finite/telescope maps and
+graded contraction. The original coarse-to-fine completion restriction is
+stable for qcqs ambient schemes and quasi-compact opens. Basic global supported
+completion now has the actual cone and same-null stable fiber comparison, with
+its original signed boundary. Auxiliary-supported cofinality, honest K₀
+exactness and the initial signed cone are proved. Their original supported
+seeds, whole null-transition equations, finite/telescope maps and stable r_Z∞
+now have strict builds, independent ordinary review and matching private-origin
+foundation coverage. The native auxiliary fiber-forget localization remains
+open, as do completed
+geometric evaluation and classical nonconnective Thomason–Trobaugh identification.
 The connective S-spectrum comparison does not settle these questions.
 See [Scope.md](../reference/Scope.md) for the global frontier and
 [Architecture.md](../development/Architecture.md#trust-checks) for the foundation

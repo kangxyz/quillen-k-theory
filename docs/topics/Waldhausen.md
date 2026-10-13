@@ -321,9 +321,9 @@ retains these as explicit hypotheses. An all-degree stable-equivalence conclusio
 additionally needs actual concentration of its source and target; it does not
 follow from this degree-zero theorem alone.
 
-Focused examples in [Tests.CofiberObjectTrack](../../Tests/CofiberObjectTrack.lean),
-[Tests.CofiberPrismComposition](../../Tests/CofiberPrismComposition.lean), and
-[Tests.ImageQuotientKZeroExact](../../Tests/ImageQuotientKZeroExact.lean) retain the
+Focused examples in [QuillenTest.CofiberObjectTrack](../../QuillenTest/CofiberObjectTrack.lean),
+[QuillenTest.CofiberPrismComposition](../../QuillenTest/CofiberPrismComposition.lean), and
+[QuillenTest.ImageQuotientKZeroExact](../../QuillenTest/ImageQuotientKZeroExact.lean) retain the
 original faces, independent coordinates, and preimages under the original K-maps.
 
 ## Independent client examples and remaining comparisons

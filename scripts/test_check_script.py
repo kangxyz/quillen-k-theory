@@ -57,11 +57,11 @@ fi
             'python3 scripts/check_library_layout.py',
             'python3 scripts/check_placeholders.py',
             'python3 -m unittest discover -s scripts -p test_*.py',
-            'lake --rehash build Quillen Tests',
+            'lake --rehash build Quillen QuillenTest',
             'lake --rehash test',
             'lake --rehash lint',
             'lake --rehash exe lint-style',
-            'lake env lean -j2 Tests/Axioms.lean',
+            'lake env lean -j2 QuillenTest/Axioms.lean',
             'lake --rehash build',
             'lake env lean -j2 Audit.lean',
         ]
@@ -85,13 +85,13 @@ fi
         self.env['FAIL_LINT'] = '1'
         result = self.run_check()
         self.assertEqual(result.returncode, 10)
-        self.assertNotIn('Tests/Axioms.lean', self.log.read_text())
+        self.assertNotIn('QuillenTest/Axioms.lean', self.log.read_text())
 
     def test_failed_native_style_check_stops_before_trust_replay(self):
         self.env['FAIL_STYLE'] = '1'
         result = self.run_check()
         self.assertEqual(result.returncode, 11)
-        self.assertNotIn('Tests/Axioms.lean', self.log.read_text())
+        self.assertNotIn('QuillenTest/Axioms.lean', self.log.read_text())
 
     def test_cache_enrolls_native_tool_imports_with_modern_modifiers(self):
         shutil.copyfile(ROOT / 'scripts/cache.sh', self.root / 'scripts/cache.sh')

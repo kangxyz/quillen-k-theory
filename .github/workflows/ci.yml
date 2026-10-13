@@ -52,7 +52,7 @@ jobs:
           path: |
             .lake/build
             examples/downstream/.lake/build
-          key: project-build-v2-${{ runner.os }}-${{ runner.arch }}-${{ steps.project-cache-config.outputs.hash }}-${{ hashFiles('*.lean', 'Quillen/**/*.lean', 'Tests/**/*.lean', 'Tools/**/*.lean', 'examples/downstream/**/*.lean', '!examples/downstream/.lake/**') }}
+          key: project-build-v2-${{ runner.os }}-${{ runner.arch }}-${{ steps.project-cache-config.outputs.hash }}-${{ hashFiles('*.lean', 'Quillen/**/*.lean', 'QuillenTest/**/*.lean', 'Tools/**/*.lean', 'examples/downstream/**/*.lean', '!examples/downstream/.lake/**') }}
           restore-keys: |
             project-build-v2-${{ runner.os }}-${{ runner.arch }}-${{ steps.project-cache-config.outputs.hash }}-
             project-build-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.*', 'examples/downstream/lean-toolchain', 'examples/downstream/lake-manifest.json', 'examples/downstream/lakefile.*') }}-

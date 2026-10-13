@@ -270,7 +270,7 @@ interfaces:
 | Ring plus and scalar extension | [RingPlusNaturality](../../examples/downstream/Consumer/RingPlusNaturality.lean), [RingScalarExtension](../../examples/downstream/Consumer/RingScalarExtension.lean) |
 | Full-open graded stable concentration | [FullOpenGradedSectionStable](../../examples/downstream/Consumer/FullOpenGradedSectionStable.lean) |
 
-The maintained [tests](../../Tests) cover further constructions and regressions.
+The maintained [tests](../../QuillenTest) cover further constructions and regressions.
 Neither tests nor clients are dependencies of library source.
 [Scope](Scope.md#verification) and
 [architecture](../development/Architecture.md#trust-checks) describe the build

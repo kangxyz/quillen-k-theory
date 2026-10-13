@@ -1,8 +1,12 @@
 # Typechecking performance
 
 Use focused imports and explicit mathematical interfaces when extending the
-library. Profile a slow declaration before increasing its heartbeat limit. The
-[contributor guide](../../CONTRIBUTING.md) gives the pinned Lean profiling command.
+library. Proof iteration may use a temporary finite declaration-local budget
+to establish correctness. Before adopting the proof, restore the standard
+200,000 budget or settle a necessary finite local increase with an adjacent
+explanation, then recompile the module. Keep package defaults unchanged and
+retain a finite limit. Targeted profiling helps settle the retained budget;
+the [contributor guide](../../CONTRIBUTING.md) gives the pinned profiling command.
 This development reference records measurements and resource requirements;
 mathematical interfaces and hypotheses belong to the [topic guides](../README.md).
 

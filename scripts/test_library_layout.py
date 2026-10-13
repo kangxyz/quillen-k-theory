@@ -50,8 +50,9 @@ class LayoutGuardTests(unittest.TestCase):
         self.rejected('Stale generated imports')
 
     def test_library_test_import_bypasses_are_rejected(self):
-        for imported in ('Consumer.Bad', 'Tests.Bad', '«Tests».Bad',
-                         'audits.Bad', 'Quillen.Tests.Bad', '«Consumer».Bad'):
+        for imported in ('Consumer.Bad', 'Tests.Bad', '«Tests».Bad', 'Quillen.Tests.Bad',
+                         'QuillenTest.Bad', '«QuillenTest».Bad', 'audits.Bad',
+                         'Quillen.QuillenTest.Bad', '«Consumer».Bad'):
             with self.subTest(imported=imported):
                 self.write('Quillen/Algebra/A.lean',
                            'public meta import Mathlib.Foo /- hidden delimiter -/\n  '
@@ -59,7 +60,7 @@ class LayoutGuardTests(unittest.TestCase):
                 self.rejected('Forbidden library import')
 
     def test_modern_import_all_keeps_boundary_and_resolution_guards(self):
-        self.write('Quillen/Algebra/A.lean', 'module\npublic meta import all Tests.Bad\n')
+        self.write('Quillen/Algebra/A.lean', 'module\npublic meta import all QuillenTest.Bad\n')
         self.rejected('Forbidden library import')
         self.write('Quillen/Algebra/A.lean', 'module\nimport all Quillen.Missing\n')
         self.rejected('Unresolved local import')
@@ -73,7 +74,7 @@ class LayoutGuardTests(unittest.TestCase):
         self.assertEqual(check_layout(self.root)[0], [])
 
     def test_exhaustive_auditors_cannot_silently_switch_import_level(self):
-        for path in ('Tests/Axioms.lean', 'examples/downstream/Audit.lean'):
+        for path in ('QuillenTest/Axioms.lean', 'examples/downstream/Audit.lean'):
             with self.subTest(path=path):
                 self.write(path, '/- a comment before the header -/\nmodule\nimport Quillen\n')
                 self.generate()
@@ -83,7 +84,7 @@ class LayoutGuardTests(unittest.TestCase):
 
     def test_fake_imports_in_comments_and_strings_do_not_create_failures(self):
         self.write('Quillen/Algebra/A.lean', '''/- import Consumer.Bad /- nested -/ -/
-def s := "import Tests.Bad"
+def s := "import QuillenTest.Bad"
 ''')
         self.assertEqual(check_layout(self.root)[0], [])
 
@@ -156,30 +157,30 @@ def s := "import Tests.Bad"
 
 
     def test_trust_tests_accept_production_imports_and_require_enrollment(self):
-        self.write('Tests/Axioms.lean', 'import Quillen\n')
+        self.write('QuillenTest/Axioms.lean', 'import Quillen\n')
         self.generate()
         self.assertEqual(check_layout(self.root)[0], [])
-        self.write('Tests/NewPositiveTest.lean', 'import Quillen.Algebra.A\n')
+        self.write('QuillenTest/NewPositiveTest.lean', 'import Quillen.Algebra.A\n')
         self.rejected('missing enrollment')
         self.generate()
         self.assertEqual(check_layout(self.root)[0], [])
 
     def test_core_cannot_import_test_root_or_test_leaf(self):
-        self.write('Tests/Check.lean', 'import Quillen.Algebra.A\n')
+        self.write('QuillenTest/Check.lean', 'import Quillen.Algebra.A\n')
         self.generate()
-        for imported in ('Tests', 'Tests.Check'):
+        for imported in ('QuillenTest', 'QuillenTest.Check'):
             with self.subTest(imported=imported):
                 self.write('Quillen/Algebra/B.lean', 'import ' + imported + '\n')
                 self.rejected('Forbidden library import')
 
     def test_trust_test_cycle_is_detected(self):
-        self.write('Tests/A.lean', 'import Tests.B\n')
-        self.write('Tests/B.lean', 'import Tests.A\n')
+        self.write('QuillenTest/A.lean', 'import QuillenTest.B\n')
+        self.write('QuillenTest/B.lean', 'import QuillenTest.A\n')
         self.generate()
         self.rejected('Project import cycle')
 
     def test_unresolved_test_import_is_detected(self):
-        self.write('Tests/A.lean', 'import Tests.Missing\n')
+        self.write('QuillenTest/A.lean', 'import QuillenTest.Missing\n')
         self.generate()
         self.rejected('Unresolved local import')
 

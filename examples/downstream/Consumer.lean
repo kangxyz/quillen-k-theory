@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Quillen K-theory contributors
+Authors: kangxyz
 -/
 
 module
@@ -9,6 +9,7 @@ module
 public import Consumer.AffineClosed
 public import Consumer.AffineDerivedPushforward
 public import Consumer.ClosedGTheory
+public import Consumer.CoefficientFullOpenComparison
 public import Consumer.DerivedPushforwardComparison
 public import Consumer.Devissage
 public import Consumer.ExactFunctor
@@ -17,6 +18,7 @@ public import Consumer.FiniteHELP
 public import Consumer.FinitePushforward
 public import Consumer.FiniteTermK
 public import Consumer.FullOpenGradedSectionStable
+public import Consumer.FullOpenSectionComparison
 public import Consumer.GTheory
 public import Consumer.GilletWaldhausenReduction
 public import Consumer.GrothendieckComparison

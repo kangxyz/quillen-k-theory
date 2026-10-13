@@ -8,6 +8,7 @@ import unittest
 
 from generate_imports import (
     COPYRIGHT_HEADER, GENERATED_MARKER, generated_files, render_imports, stale_files,
+    source_authors,
 )
 from library_sources import (
     is_import_surface, lean_imports, module_path, project_imports, style_sources,
@@ -60,6 +61,21 @@ public import Mathlib.Data.Nat.Basic
 
 
 class ImportGenerationTests(unittest.TestCase):
+    @staticmethod
+    def header(authors):
+        return COPYRIGHT_HEADER.replace('Authors: Quillen K-theory contributors',
+                                        'Authors: ' + authors)
+
+    def test_authors_only_come_from_initial_copyright_header(self):
+        header = self.header(' Alice, Bob, Alice , , Élodie ')
+        body = '/- Authors: Body Credit -/\ndef s := "Authors: String Credit"\n'
+        self.assertEqual(source_authors(header + body), {'Alice', 'Bob', 'Élodie'})
+        for source in (body, '/- ordinary comment\nAuthors: Nobody\n-/\n',
+                       '-- preface\n' + header, header.replace('-/', ''),
+                       COPYRIGHT_HEADER.replace('Authors:', 'Other:') + body):
+            with self.subTest(source=source):
+                self.assertEqual(source_authors(source), set())
+
     def test_large_facade_keeps_complete_imports_and_computed_size_bound(self):
         modules = [f'Quillen.Future.M{i:04d}' for i in range(1600)]
         source = render_imports(modules, '# Future import surface', modern=True)
@@ -128,11 +144,70 @@ class ImportGenerationTests(unittest.TestCase):
         self.assertTrue(stale_files(self.root))
 
     def test_generator_preserves_hand_owned_files_and_implementations(self):
+        (self.root / 'Quillen/Algebra/A.lean').write_bytes(
+            (self.header('Original Author, Future Author') + 'def datum := 1\n')
+            .replace('\n', '\r\n').encode())
         originals = {path: path.read_bytes() for path in self.root.rglob('*.lean')
                      if path.name != 'Quillen.lean'}
         self.generate()
         self.generate()
         self.assertTrue(all(path.read_bytes() == content for path, content in originals.items()))
+
+    def test_source_contributors_are_scoped_deduplicated_and_sorted(self):
+        (self.root / 'Quillen/Algebra/A.lean').write_text(self.header('Zoe, Alice, Zoe'))
+        (self.root / 'Quillen/Algebra/Z.lean').write_text(self.header(' Bob , Alice'))
+        # A manually maintained facade remains a credited source at the root.
+        (self.root / 'Quillen/Scheme.lean').write_text(self.header('Manual Author'))
+        tests = self.root / 'QuillenTest'
+        tests.mkdir()
+        (tests / 'Axioms.lean').write_text(self.header('Test Author, Alice'))
+        original_test = (tests / 'Axioms.lean').read_bytes()
+        outputs = generated_files(self.root)
+        self.assertEqual(source_authors(outputs[Path('Quillen/Algebra.lean')]),
+                         {'Alice', 'Bob', 'Zoe'})
+        self.assertIn('Authors: Alice, Bob, Zoe\n', outputs[Path('Quillen/Algebra.lean')])
+        self.assertEqual(source_authors(outputs[Path('Quillen.lean')]),
+                         {'Alice', 'Bob', 'Zoe', 'Manual Author'})
+        self.assertEqual(source_authors(outputs[Path('QuillenTest.lean')]), {'Alice', 'Test Author'})
+        self.generate()
+        self.assertEqual((tests / 'Axioms.lean').read_bytes(), original_test)
+        self.assertEqual(generated_files(self.root), outputs)
+
+    def test_new_contributor_survives_regeneration_without_generated_feedback(self):
+        leaf = self.root / 'Quillen/Algebra/A.lean'
+        leaf.write_text(self.header('Original Author'))
+        self.generate()
+        # Stale top-level, nested, root, and test surfaces must not seed authors.
+        nested = self.root / 'Quillen/Algebra/Nested'
+        nested.mkdir()
+        (nested / 'Leaf.lean').write_text(self.header('Nested Author'))
+        stale = self.header('Stale Generated Author') + GENERATED_MARKER
+        nested.with_suffix('.lean').write_text(stale)
+        (self.root / 'Quillen/Algebra.lean').write_text(stale)
+        (self.root / 'Quillen.lean').write_text(stale)
+        tests = self.root / 'QuillenTest'
+        tests.mkdir()
+        (tests / 'Actual.lean').write_text(self.header('Test Author'))
+        (tests / 'OldFacade.lean').write_text(stale)
+        (self.root / 'QuillenTest.lean').write_text(stale)
+        leaf.write_text(self.header('Original Author, New Contributor'))
+        original = leaf.read_bytes()
+        self.generate()
+        self.generate()
+        self.assertEqual(leaf.read_bytes(), original)
+        for path in ('Quillen.lean', 'Quillen/Algebra.lean'):
+            self.assertEqual(source_authors((self.root / path).read_text()),
+                             {'Original Author', 'New Contributor', 'Nested Author'})
+        self.assertEqual(source_authors(nested.with_suffix('.lean').read_text()),
+                         {'Nested Author'})
+        self.assertEqual(source_authors((self.root / 'QuillenTest.lean').read_text()), {'Test Author'})
+        self.assertEqual(stale_files(self.root), [])
+
+    def test_headerless_fixtures_keep_neutral_fallback_and_render_api(self):
+        outputs = generated_files(self.root)
+        self.assertTrue(all(source.startswith(COPYRIGHT_HEADER + GENERATED_MARKER)
+                            for source in outputs.values()))
+        self.assertTrue(render_imports([], '# Empty').startswith(COPYRIGHT_HEADER))
 
     def test_cli_preserves_manual_future_facade_and_enrolls_its_family(self):
         directory = self.root / 'Quillen/Future'
@@ -202,7 +277,7 @@ class ImportGenerationTests(unittest.TestCase):
     def test_modern_generation_preserves_mode_and_keeps_test_auditor_legacy(self):
         for path in (self.root / 'Quillen').rglob('*.lean'):
             path.write_text('module\n')
-        tests = self.root / 'Tests'
+        tests = self.root / 'QuillenTest'
         tests.mkdir()
         (tests / 'Axioms.lean').write_text('import Quillen\n')
         for path, content in generated_files(self.root, modern_library=True).items():
@@ -210,8 +285,8 @@ class ImportGenerationTests(unittest.TestCase):
         self.assertEqual(stale_files(self.root), [])
         source = (self.root / 'Quillen.lean').read_text()
         self.assertIn('module\n\npublic import Quillen.Algebra', source)
-        self.assertNotIn('\nmodule\n', (self.root / 'Tests.lean').read_text())
-        self.assertEqual(lean_imports((self.root / 'Tests.lean').read_text()), ['Tests.Axioms'])
+        self.assertNotIn('\nmodule\n', (self.root / 'QuillenTest.lean').read_text())
+        self.assertEqual(lean_imports((self.root / 'QuillenTest.lean').read_text()), ['QuillenTest.Axioms'])
         (self.root / 'Quillen/Algebra/A.lean').write_text('def old : Nat := 1\n')
         with self.assertRaisesRegex(ValueError, 'cannot import legacy sources'):
             generated_files(self.root)
@@ -229,7 +304,7 @@ class ImportGenerationTests(unittest.TestCase):
 
 
     def test_trust_root_enrolls_all_tests_without_core_imports(self):
-        directory = self.root / 'Tests'
+        directory = self.root / 'QuillenTest'
         directory.mkdir()
         (directory / 'Axioms.lean').write_text('import Quillen\n')
         self.generate()
@@ -237,13 +312,13 @@ class ImportGenerationTests(unittest.TestCase):
                          ['Quillen.Algebra', 'Quillen.Algebra.A', 'Quillen.Algebra.Z',
                           'Quillen.Examples.Client', 'Quillen.Library', 'Quillen.Resolution',
                           'Quillen.Scheme'])
-        self.assertEqual(lean_imports((self.root / 'Tests.lean').read_text()),
-                         ['Tests.Axioms'])
+        self.assertEqual(lean_imports((self.root / 'QuillenTest.lean').read_text()),
+                         ['QuillenTest.Axioms'])
         (directory / 'Future.lean').write_text('import Quillen.Algebra.A\n')
-        self.assertEqual(stale_files(self.root), [Path('Tests.lean')])
+        self.assertEqual(stale_files(self.root), [Path('QuillenTest.lean')])
         self.generate()
-        self.assertEqual(lean_imports((self.root / 'Tests.lean').read_text()),
-                         ['Tests.Axioms', 'Tests.Future'])
+        self.assertEqual(lean_imports((self.root / 'QuillenTest.lean').read_text()),
+                         ['QuillenTest.Axioms', 'QuillenTest.Future'])
 
 
 if __name__ == '__main__':

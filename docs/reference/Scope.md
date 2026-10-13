@@ -37,7 +37,7 @@ interface or a successful compilation does not supply an additional comparison.
 | Telescopes and Ω replacement | T1 finite-stage representatives and stable colimits, strict cone/pushout interchange, track-defined maps, and loop-tail Ω replacement |
 | Bass groups and finite stages | Affine/scheme/supported cokernel recursions, strict Laurent seed and iterates, raw one-step comparisons, and natural finite-stage bottom-group isomorphisms |
 | Ambient and supported Bass telescopes | Actual towers, natural negative-class maps, signed coefficient cone sequences, stable Bass self-maps, and the support-forgetting square |
-| Full-open graded coefficient models | Original section restriction Model map, coefficient-natural graded seed null, and all-integer stable vanishing of the actual graded Bass telescope for quasi-compact opens of affine schemes |
+| Full-open coefficient models | Original restriction/null diagrams, signed finite cone comparisons, fine and graded Bass towers/telescopes, pointwise geometric evaluation and graded telescope vanishing |
 
 The subject guides cover [exact categories](../topics/ExactCategories.md),
 [Waldhausen theory](../topics/Waldhausen.md),
@@ -165,13 +165,39 @@ integer degree; T1 finite-stage representatives then give zero stable groups
 for its actual reduced graded telescope. The argument assumes neither
 individual-stage vanishing nor an unconstructed seed null.
 
-The fine-to-graded seed square is already proved, and the original pointwise
-restriction Model map preserves the entire chosen zero section. The remaining
-transfer needs the original section restriction/localization null, its initial
-cone descent `d₀` with stable comparison, and compatible coefficient/seed/null
-data. The separate raw-perfect objectwise stable comparison does not provide
-that transfer. Graded telescope vanishing therefore supplies no classical
-negative-K vanishing, full nonconnective localization, or global qcqs theorem.
+The fine-to-graded seed square is proved. The actual fine tower/telescope and
+induced grading maps, original restriction coefficient transformation,
+canonical whole localization null and signed initial/finite cone comparisons
+are constructed. Pointwise fine section evaluation is stable to the explicitly
+lifted bounded-flat prespectrum, and to the perfect prespectrum for compact U;
+chosen-zero normalization and original K-equations remain explicit.
+The original r seed square and canonical whole-null seed equations are now
+constructed. The same compatible finite null family gives a stable telescope
+cone descent; graded signed vanishing makes the original coarse-to-fine r∞
+stable. The supported telescope cone and the original whole-null fiber compare
+to this constructed fine completion, retaining the actual signed boundary.
+The native global C/F/G Models now have actual cofinality, honest K₀ image
+exactness, canonical nulls, original Laurent seeds and whole seed/null squares.
+Their literal towers and graded contraction prove the original r∞ stable for
+qcqs ambient schemes and quasi-compact opens. Actual auxiliary-supported
+Models, supported quotient grading and unit/relative-track evaluation are also
+supplied. Auxiliary-supported cofinality, honest K₀ image/kernel, canonical null
+and signed initial cone are proved. Basic global support has the actual
+same-null cone/fiber comparison to the fine completion and original signed
+boundary. The auxiliary-supported original seeds, whole null-transition
+equations, finite/telescope comparisons and stable r_Z∞ are also proved.
+The native auxiliary fiber-forget localization and completed geometric
+evaluation remain separate. Intrinsic Laurent unit K₁
+classes and native O/O(−1) two-summand chart formulas are proved, without a
+projective-line K-equivalence or initial-seed preservation claim. The canonical
+native flat-base-change mate now covers all intrinsic perfect inputs, and
+affine perfect coefficients have an objectwise chosen positive projection
+isomorphism and actual O(−1) vanishing. This supplies no perfect pushforward for
+arbitrary P¹ inputs or projective generation. Actual native/pair polynomial
+zero evaluation also splits the original common corner in all recursive Bass
+degrees, without supplying its middle exactness or seed stabilization.
+These constructions do not identify classical Kᴮ. The current dependency plan is in the
+[TT localization roadmap](../development/TTLocalization.md).
 
 ## Ring plus construction
 
@@ -196,7 +222,7 @@ loop-map composites remain outside the stated interfaces.
 
 - Fixed-degree finite Bass-transition stabilization, bijectivity of the natural negative-class maps into the telescope, and classical telescope negative-group identification.
 - Full all-iterate comparison with the original geometric Bass tower, the fundamental theorem, and Laurent-unit boundary/relative-loop basepoint calculations, including the zero-section class and possible Nil terms.
-- Original section restriction/localization-null and coefficient/seed-compatible cone descent, the initial `d₀` stable comparison, transfer from the proved graded vanishing to the original deficit/Bass telescope, global qcqs instantiation, full nonconnective Thomason–Trobaugh localization, negative boundaries, and nonconnective descent, retaining the K₀ image obstruction.
+- Normalized geometric chart-composition and complete seed/iterate/telescope evaluation, native auxiliary fiber-forget localization, and classical Thomason–Trobaugh identification, retaining the original K₀ image and signed boundary. Basic global supported localization and auxiliary-supported coarse-to-fine completion are proved.
 - Proj identification, the full twisting-sheaf family, arbitrary locally-perfect coefficient preservation and bounded representation, projective generation, and the projective-bundle formula. The older finite-coefficient retract criterion retains its own projectivity/splitting and support-window assumptions; vector-bundle and explicitly bounded vector-bundle projection perfection are proved by the new finite-defect route.
 - General-source perfect preservation by derived direct image, unrestricted unbounded derived pushforward, and general bounded-below flat-base-change invertibility.
 - Strict/local equivalence on arbitrary nonaffine schemes and perfect pullback on arbitrary non-quasi-compact schemes.

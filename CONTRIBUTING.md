@@ -18,12 +18,15 @@ Follow nearby library files for Lean's module system: `module`, explicit public
 imports where required by exported declarations, and an exposed public section.
 Include an English module docstring describing the objects, main declarations,
 assumptions, and references. New files carry author and Apache-2.0 headers.
+List the actual contributors in the initial copyright header's comma-separated
+`Authors:` field. When contributing to an existing implementation or test file,
+append your name without replacing earlier credits.
 Use English for maintained identifiers, comments, and documentation.
 
 Implementation modules import their precise dependencies. Whole-topic and
 whole-library facades serve clients. Importing a broad facade from an
 implementation can create a cycle or an unnecessary dependency closure.
-Library source must not import `Tests`, tools, or downstream clients.
+Library source must not import `QuillenTest`, tools, or downstream clients.
 
 After adding or moving modules, regenerate imports:
 
@@ -35,6 +38,12 @@ The generator discovers existing source modules and top-level subjects. It
 preserves hand-maintained facades and enrolls existing nested facades only when
 they carry the generator ownership marker. It does not require a fixed subject
 list or create an empty hierarchy of possible future topics.
+Each generated facade's `Authors:` list credits the contributors named in its
+enrolled hand-owned sources, deduplicated and sorted deterministically. Family
+facades use sources under their directory, the library root uses all production
+sources, and the test root uses hand-owned tests. Generated facade headers do
+not supply credits to other facades; a surface with no known source authors
+retains the neutral team fallback. Regeneration preserves hand-owned headers.
 
 Keep incomplete proofs and temporary probes outside the library and maintained
 tests. State a genuinely conditional theorem with its actual hypothesis;
@@ -42,7 +51,7 @@ placeholders and new axioms do not discharge a missing proof.
 
 ## Tests and checks
 
-Use `Tests/` for interface, mathematical-property, and regression tests.
+Use `QuillenTest/` for interface, mathematical-property, and regression tests.
 Use `examples/downstream/Consumer/` for client proofs compiled in a separate Lake
 package. Choose a meaningful property or public use rather than a list of
 names or a test that merely repeats its implementation.

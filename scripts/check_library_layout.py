@@ -10,7 +10,7 @@ from library_sources import (downstream_sources, lean_imports, module_name,
                              is_import_surface)
 
 ROOT = Path(__file__).resolve().parents[1]
-FORBIDDEN = {'audit', 'audits', 'consumer', 'test', 'tests'}
+FORBIDDEN = {'audit', 'audits', 'consumer', 'test', 'tests', 'quillentest'}
 FORBIDDEN_ROOTS = {'tools', 'scripts'}
 
 
@@ -40,7 +40,7 @@ def import_cycles(graph: dict[str, set[str]]) -> list[str]:
 def check_layout(root: Path) -> tuple[list[str], int]:
     errors = []
     modules, tests = source_modules(root), test_modules(root)
-    loose = {path.name for path in root.glob('*.lean')} - {'Quillen.lean', 'Tests.lean'}
+    loose = {path.name for path in root.glob('*.lean')} - {'Quillen.lean', 'QuillenTest.lean'}
     if loose:
         errors.append(f'Unclassified project-root Lean files: {sorted(loose)}')
     stale = stale_files(root)
@@ -63,7 +63,7 @@ def check_layout(root: Path) -> tuple[list[str], int]:
             errors.append(f'Generator-owned facade has no corresponding directory: {facade}')
     # Legacy import level loads every transitive private declaration for the
     # exhaustive inventories. A modern auditor may silently omit unused helpers.
-    for auditor in (Path('Tests/Axioms.lean'), Path('examples/downstream/Audit.lean')):
+    for auditor in (Path('QuillenTest/Axioms.lean'), Path('examples/downstream/Audit.lean')):
         path = root / auditor
         if path.exists() and uses_module_system(path.read_text()):
             errors.append(f'Exhaustive axiom auditor must retain legacy private imports: {auditor}')
@@ -83,7 +83,7 @@ def check_layout(root: Path) -> tuple[list[str], int]:
             # Production and trust-test modules resolve in the root package;
             # independently configured Consumer modules resolve in their package.
             target = None
-            if parts[0] in {'Quillen', 'Tests'}:
+            if parts[0] in {'Quillen', 'QuillenTest'}:
                 target = root / module_path(imported)
             elif relative in clients and parts[0] in client_roots:
                 target = client_root / module_path(imported)
@@ -95,7 +95,7 @@ def check_layout(root: Path) -> tuple[list[str], int]:
                 errors.append(f'Implementation imports broad facade in {relative}: {imported}')
         if relative in modules | tests:
             graph[module_name(relative)] = {name for name in imports
-                if name.split('.')[0] in {'Quillen', 'Tests'}}
+                if name.split('.')[0] in {'Quillen', 'QuillenTest'}}
     errors.extend('Project import cycle: ' + cycle for cycle in import_cycles(graph))
     return errors, len(modules)
 

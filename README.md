@@ -25,8 +25,16 @@ and perfect derived projection images for vector bundles and explicitly
 bounded complexes of vector bundles. For quasi-compact opens of affine schemes,
 full-open graded coefficient diagrams have natural Bass seed nullhomotopies
 and vanishing signed stable groups of their actual graded telescopes.
-The original-model transfer and full nonconnective localization remain separate comparisons; the
-[perfect-complex guide](docs/topics/PerfectComplexes.md) records their scope.
+The original coarse-to-fine section telescope restriction is stable in every
+integer degree, and the supported telescope gives constructed affine full-open
+section-completion localization with its original signed boundary.
+Native global coefficient Models also have the same original coarse-to-fine
+completion comparison in every integer degree. Basic global supported
+localization and the auxiliary-supported coarse-to-fine completion comparison
+are also proved. Auxiliary-supported fiber localization, completed geometric
+evaluation and classical nonconnective identification remain separate
+comparisons; the [perfect-complex guide](docs/topics/PerfectComplexes.md)
+records their scope.
 
 The project is under development. The [documentation map](docs/README.md)
 connects its mathematical topic guides, [coverage and open boundaries](docs/reference/Scope.md),

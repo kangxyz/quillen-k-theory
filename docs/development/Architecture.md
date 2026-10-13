@@ -12,14 +12,14 @@ reader guides and references.
 | `Quillen/` | Reusable mathematics |
 | `Quillen.lean` | Generated complete import surface |
 | `Quillen/<Subject>.lean` and owned nested facades | Whole-topic or selected public imports |
-| `Tests/` | Maintained tests and exhaustive library axiom audit |
+| `QuillenTest/` | Maintained tests and exhaustive library axiom audit |
 | `examples/downstream/` | Independently configured client package and audit |
 | `Tools/` and `scripts/` | Lint, source discovery, generation, cache, and checks |
 | `docs/topics/` | Mathematical guides organized by objects and comparison families |
 | `docs/reference/` | Shared API and mathematical scope references |
 | `docs/development/` | Source architecture and measured typechecking performance |
 
-Tests, tools, and clients depend on the library. Implementation source imports
+QuillenTest, tools, and clients depend on the library. Implementation source imports
 individual dependencies, avoiding broad facades. The structural checker rejects
 cycles and reverse dependencies on tests, tools, or clients.
 
@@ -81,7 +81,7 @@ extension rules.
 
 `scripts/check.sh` builds the library and tests, runs the configured lint
 checks, and builds the separate downstream package. It explicitly replays
-`Tests/Axioms.lean` and the downstream `Audit.lean`, because cached compiled
+`QuillenTest/Axioms.lean` and the downstream `Audit.lean`, because cached compiled
 modules do not re-execute audit commands.
 
 CI caches the complete root and downstream `.lake/build` directories across

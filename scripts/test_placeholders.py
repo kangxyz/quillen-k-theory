@@ -34,12 +34,12 @@ example : True := by
 
     def test_core_test_and_independent_client_all_scanned(self):
         self.write('Quillen/Bad.lean', 'axiom bad : False\n')
-        self.write('Tests.lean', '')
-        self.write('Tests/Bad.lean', 'example : True := by admit\n')
+        self.write('QuillenTest.lean', '')
+        self.write('QuillenTest/Bad.lean', 'example : True := by admit\n')
         self.write('examples/downstream/Consumer/Bad.lean', 'example : True := by sorry\n')
         errors = check_placeholders(self.root)
         self.assertEqual(len(errors), 3)
-        self.assertTrue(any('Tests/Bad.lean' in error for error in errors))
+        self.assertTrue(any('QuillenTest/Bad.lean' in error for error in errors))
         self.assertTrue(any('Consumer/Bad.lean' in error for error in errors))
 
     def test_downstream_dependency_cache_is_not_scanned(self):

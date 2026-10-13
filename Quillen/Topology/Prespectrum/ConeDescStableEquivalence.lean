@@ -1,7 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
-Authors: Quillen K-theory contributors
+Authors: kangxyz
 -/
 module
 
@@ -14,8 +14,9 @@ public import Quillen.Topology.Prespectrum.FiberSquareDetection
 The original target map and specified entire null track give the usual cone descent. Its
 strict square on the cone inclusion carries the literal cone-cylinder fiber lift to the
 specified original fiber lift. Actual stable excision and stability of that fiber lift then
-prove stability of the unchanged cone descent. Both premises remain explicit here; concrete
-Waldhausen applications discharge them from proved excision and the fibration theorem.
+prove stability of the unchanged cone descent. Conversely, excision and stable cone descent
+give stability of the specified original fiber lift. These premises remain explicit here;
+concrete Waldhausen applications discharge them from proved excision and the fibration theorem.
 -/
 @[expose] public section
 noncomputable section
@@ -71,5 +72,14 @@ theorem mappingConeDesc_isStableEquivalence
     ((stableHomotopyFunctor d).map (mappingConeFiberComparison f)) _).mp
   rw [← Functor.map_comp, mappingConeDescSquare_fiberComparison]
   exact hf d
+
+/-- Genuine original excision and stable cone descent make the same whole-null fiber lift stable. -/
+theorem homotopyFiberLift_isStableEquivalence_of_coneDesc
+    (he : IsStableEquivalence (mappingConeFiberComparison f))
+    (hd : IsStableEquivalence (mappingConeDesc f g H)) :
+    IsStableEquivalence (homotopyFiberLift g f H) := by
+  rw [← mappingConeDescSquare_fiberComparison]
+  exact he.comp (homotopyFiberMap_isStableEquivalence
+    (mappingConeDescSquare f g H) (IsStableEquivalence.id F) hd)
 
 end Quillen.LoopPrespectrum

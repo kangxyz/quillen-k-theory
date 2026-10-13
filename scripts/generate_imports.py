@@ -34,6 +34,18 @@ def generator_owned(source: str) -> bool:
     return source.startswith(GENERATED_MARKER)
 
 
+def source_authors(source: str) -> set[str]:
+    """Read comma-separated credits only from the initial copyright header."""
+    if not source.startswith('/-\nCopyright (c) '):
+        return set()
+    end = source.find('-/')
+    if end < 0:
+        return set()
+    return {name.strip() for line in source[:end].splitlines()
+            if line.startswith('Authors:')
+            for name in line.removeprefix('Authors:').split(',') if name.strip()}
+
+
 def family_facades(root: Path) -> set[Path]:
     """Create top-level surfaces; enroll existing nested opt-in surfaces only."""
     top_level = {Path('Quillen') / (path.name + '.lean')
@@ -46,11 +58,16 @@ def family_facades(root: Path) -> set[Path]:
     return top_level | nested
 
 
-def render_imports(modules: list[str], description: str, modern: bool = False) -> str:
+def render_imports(modules: list[str], description: str, modern: bool = False,
+                   authors: set[str] | None = None) -> str:
     prefix = 'public import ' if modern else 'import '
     imports = [prefix + name if len(prefix + name) <= 100
                else prefix.rstrip() + '\n  ' + name for name in sorted(modules)]
-    source = (COPYRIGHT_HEADER + GENERATED_MARKER
+    header = COPYRIGHT_HEADER
+    if authors:
+        header = header.replace('Authors: Quillen K-theory contributors',
+                                'Authors: ' + ', '.join(sorted(authors)))
+    source = (header + GENERATED_MARKER
             + ('module\n\n' if modern else '')
             + '\n'.join(imports)
             + '\n\n/-!\n' + description + '\n-/\n')
@@ -66,6 +83,10 @@ def render_imports(modules: list[str], description: str, modern: bool = False) -
 def generated_files(root: Path, modern_library: bool | None = None) -> dict[Path, str]:
     """Existing implementations are discovered; only these facades are managed."""
     modules = source_modules(root) - {Path('Quillen.lean')}
+    # Snapshot hand-owned credits before adding generated surfaces. Existing
+    # generated headers are never inputs, even when their credits are stale.
+    authors = {path: source_authors(source) for path in modules
+               if not generator_owned(source := (root / path).read_text())}
     if modern_library is None:
         library_root = root / 'Quillen.lean'
         modern_library = library_root.exists() and uses_module_system(library_root.read_text())
@@ -80,24 +101,30 @@ def generated_files(root: Path, modern_library: bool | None = None) -> dict[Path
         outputs[facade] = render_imports(
             [module_name(path) for path in modules if directory in path.parents],
             f'# {family}\n\nAll modules in the `{module_name(facade)}` family.\n'
-            'Use an individual module import for a smaller dependency closure.', modern_library)
+            'Use an individual module import for a smaller dependency closure.', modern_library,
+            {name for path, names in authors.items() if directory in path.parents
+             for name in names})
         modules.add(facade)
     outputs[Path('Quillen.lean')] = render_imports(
         [module_name(path) for path in modules],
         '# Quillen library\n\nThe exhaustive import surface for all project source modules.\n'
-        'Use thematic facades or individual module imports for smaller dependencies.', modern_library)
+        'Use thematic facades or individual module imports for smaller dependencies.', modern_library,
+        {name for names in authors.values() for name in names})
     if modern_library:
         legacy = sorted(path for path in modules if path not in outputs
                         and not uses_module_system((root / path).read_text()))
         if legacy:
             raise ValueError('Modern library facades cannot import legacy sources: '
                              + ', '.join(map(str, legacy)))
-    tests = test_modules(root) - {Path('Tests.lean')}
+    tests = test_modules(root) - {Path('QuillenTest.lean')}
     if test_modules(root):
-        outputs[Path('Tests.lean')] = render_imports(
+        outputs[Path('QuillenTest.lean')] = render_imports(
             [module_name(path) for path in tests],
             '# Quillen trust tests\n\nAll positive trust tests for the production library.\n'
-            'Tests are compiled separately and are never imported by production modules.')
+            'Tests are compiled separately and are never imported by production modules.',
+            authors={name for path in tests
+                     if not generator_owned(source := (root / path).read_text())
+                     for name in source_authors(source)})
     return outputs
 
 
@@ -127,7 +154,7 @@ def main() -> int:
     else:
         # Recheck ownership before any writes: another editor may have created
         # or taken over a family facade after discovery.
-        conflicts = [path for path in outputs if path not in {Path('Quillen.lean'), Path('Tests.lean')}
+        conflicts = [path for path in outputs if path not in {Path('Quillen.lean'), Path('QuillenTest.lean')}
                      and (args.root / path).exists()
                      and not generator_owned((args.root / path).read_text())]
         if conflicts:

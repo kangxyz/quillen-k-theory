@@ -5,7 +5,7 @@ keywords = ["math", "algebraic-k-theory", "category-theory", "topology"]
 homepage = "https://github.com/kangxyz/quillen-k-theory"
 license = "Apache-2.0"
 defaultTargets = ["Quillen"]
-testDriver = "Tests"
+testDriver = "QuillenTest"
 lintDriver = "batteries/runLinter"
 lintDriverArgs = ["Quillen"]
 builtinLint = true
@@ -15,7 +15,7 @@ name = "Quillen"
 leanOptions = {autoImplicit = false, weak.linter.mathlibStandardSet = true, weak.linter.style.longFile = 1500, warningAsError = true}
 
 [[lean_lib]]
-name = "Tests"
+name = "QuillenTest"
 
 [[lean_exe]]
 name = "lint-style"

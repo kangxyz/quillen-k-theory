@@ -460,12 +460,39 @@ or full-open localization conclusion.
 
 ## Relative-open sections and scalar cofibers
 
+Native joint scheme/coefficient sections now supply global coarse/fine/graded
+Models, actual cofinality and K₀ image exactness, canonical nulls, original
+Laurent seeds and whole seed/null compatibility. `CoefficientOpenBassTower`
+and `CoefficientOpenBassTelescope` retain those finite stages and transitions;
+the actual graded contraction makes the original coarse-to-fine completion
+restriction stable in every integer degree for qcqs ambient schemes and
+quasi-compact opens. `CoefficientSupportedSections` and
+`CoefficientSupportedOpenModels` supply the actual auxiliary-supported Models,
+with supported cofinality and completed localization still separate.
+`SupportedOpen.GrothendieckPullback`, `ImageQuotientPullback` and
+`CoefficientSupportedOpenGrading` now supply the actual supported quotient
+and G_Z/q_Z, retaining original relative-image witnesses; their coefficient
+action needs compact P/Q, while pointwise grading has no compactness premise.
+Supported cofinality/null/cones and completed localization remain separate.
+`CoefficientSectionEvaluationNaturality`, `CoefficientSectionEvaluationUnit`
+and `CoefficientLaurentEvaluation` preserve the actual evaluation tracks and
+forward units. Seed/iterate/telescope geometric comparison and classical Kᴮ
+identification remain open; see the [TT roadmap](../development/TTLocalization.md).
+
 `BoundedFlat.OpenConeComparison` proves the actual geometric acyclic-support
 cone stably equivalent to the original coarse relative-open S-prespectrum in
 every signed degree, with the original target face, null cylinder, and signed
 connecting map. Its geometric fibration and S-model excision premises are
 discharged. This is the coarse endpoint, retaining the genuine K₀ image
 obstruction to replacement by full open perfect K-theory.
+
+[`SupportedOpen.ConeComparison`](../../Quillen/AlgebraicGeometry/PerfectComplexes/SupportedOpen/ConeComparison.lean)
+packages the original perfect-complex auxiliary-support coarse comparison for
+arbitrary schemes and opens, with the same signed boundary.
+[`SupportedOpen.ExcisionSpectrum`](../../Quillen/AlgebraicGeometry/PerfectComplexes/SupportedOpen/ExcisionSpectrum.lean)
+realizes cover support excision by the original normalized restriction spectrum
+map and retains its original K-map in every nonnegative degree, including zero.
+Neither interface requires compactness or constructs a global completed theory.
 
 `BoundedFlat.SectionOpenEquivalence` and `SectionOpenComparison` give exact
 evaluation for the section coarse relative-open weak class and whole two-sided
@@ -523,9 +550,16 @@ keeps the prescribed path from its loop inclusion to the translated canonical
 fiber point. The two original triangles and fine weak projection determine
 these paths; no replacement scalar or fiber map is chosen.
 
-The constant-component normalization needed for the Laurent-unit K₁ boundary,
-the zero-section pushforward-class formula, and possible Nil terms remain
-separate. No blanket perfect zero-section dévissage is asserted.
+[`ScalarCofiberKOneNormalization`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ScalarCofiberKOneNormalization.lean)
+uses inverse-prefix translation and a specified cancellation path to normalize
+the actual object-loop component to coarse K₁, without assuming its K₀ class
+vanishes. This normalization is the inverse of the existing identity-cofiber
+component equivalence. The boundary class equals the inverse of the independently
+normalized forward scalar square, including the literal polynomial-coordinate
+specialization. Identification with the independently prescribed Laurent
+automorphism class, its connecting-map formula, the zero-section pushforward
+class and possible Nil terms remain separate. No blanket perfect zero-section
+dévissage is asserted.
 
 ## Image-quotient grading and cone maps
 
@@ -612,20 +646,79 @@ representatives, without an assumption that individual stage groups vanish.
 Generic iteration and telescope machinery are described in
 [SpectraAndBass.md](SpectraAndBass.md).
 
-The fine-to-graded seed equation in the table is proved. The remaining transfer
-is from the original section restriction, localization null, and cone descent
-to this graded construction, including the section `d0` stable comparison and
-compatible coefficient, seed, and whole-null data. The pointwise restriction
-family still needs its required Model/prespectrum coefficient square. The
-raw-perfect objectwise deficit comparison above does not supply that section
-transfer. Neither the graded telescope result nor its nonzero-degree Model
-concentration identifies classical negative K-groups or proves global qcqs
-nonconnective localization.
+The actual fine tower/telescope and induced finite/telescope q maps are provided
+by `Affine.FullOpenSectionBassTower`, `FullOpenSectionBassTelescope`,
+`FullOpenSectionBassGradingTower` and `FullOpenSectionBassGradingTelescope`.
+Fine constructions require only an open immersion; grading retains compact U.
+
+[`FullOpenSectionRestrictionDiagram`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/FullOpenSectionRestrictionDiagram.lean)
+gives the original coefficient-natural r, and
+[`FullOpenSectionGradingNull`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/FullOpenSectionGradingNull.lean)
+constructs its whole coefficient-natural null followed by q.
+[`FullOpenSectionConeStable`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/FullOpenSectionConeStable.lean)
+proves the actual null descent `Cone(r) → G` stable in every signed degree.
+Its zero comparison uses genuine restriction image exactness; the degree-one
+kernel uses restriction K₀ injectivity. `Affine.FullOpenSectionBassRestrictionTower`
+retains that same null and stable cone descent at every finite Bass stage.
+
+[`FullOpenSectionSpectrumComparison`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/FullOpenSectionSpectrumComparison.lean)
+gives a pointwise stable evaluation from the actual direct section Model to the
+explicitly lifted bounded-flat original prespectrum. Compact U makes the
+composed perfect evaluation stable. The original K-equations and chosen-zero
+normalization remain explicit; no seed or telescope evaluation is inferred.
+
+[`FullOpenSectionRestrictionSeed`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/FullOpenSectionRestrictionSeed.lean)
+proves the original r seed square, and
+[`FullOpenSectionGradingNullBassSeed`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/FullOpenSectionGradingNullBassSeed.lean)
+proves the canonical-null time-slice seed squares with the actual Laurent tracks.
+[`FullOpenSectionBassRestrictionCofiber`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/FullOpenSectionBassRestrictionCofiber.lean)
+forms the original compatible telescope null and proves r∞ stable in every
+integer degree by its stable cone descent and graded vanishing.
+[`FullOpenSectionBassLocalization`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/FullOpenSectionBassLocalization.lean)
+then gives the supported cone and fiber comparisons to the fine completion,
+with the same whole null and original signed boundary. The downstream
+`Consumer.FullOpenSectionComparison` constructs the actual localized coefficient
+diagram isomorphisms and their natural inverses.
+
+For arbitrary open arrows over `Spec R`, `BoundedFlat.CoefficientOpenSections`
+and `CoefficientOpenGrading` now construct actual global C/F/G and coefficient-natural
+r/q, using the joint native geometry and one global zero. C/F/r require no
+compactness; the graded coefficient diagram requires compact source and ambient
+schemes. Global cofinality, honest K₀ image exactness, canonical nulls and
+original Laurent seed/tower transfer are proved. The actual native supported
+cone and same-null fiber now compare stably to the fine completion for qcqs
+ambient schemes and compact opens, with the original signed boundary, in
+`CoefficientFullOpenBassLocalization` and its Models/Seed/Tower/Telescope owners.
+
+Auxiliary support has the actual supported cofinality, K₀ image/kernel,
+coefficient-natural null and all-integer initial cone comparison in
+`CoefficientSupportedOpenCofinality`, `CoefficientSupportedOpenKZeroExact`,
+`CoefficientSupportedOpenNull` and `CoefficientSupportedOpenConeStable`.
+Cofinality and cone stability require compact P,Q,T and quasi-separated Q;
+image/kernel requires compact P,Q, and q₀ surjectivity only compact P.
+`CoefficientSupportedOpenBassSeed` and `SeedCompatibility` now supply the
+original supported seeds and every whole-null seed square. The accepted
+`CoefficientSupportedOpenBassTower` and `BassTelescope` retain the literal finite
+stages, original telescope null, all-signed graded vanishing and stable r_Z∞,
+under the same compact P,Q,T and quasi-separated Q conditions for the final
+comparison. The native auxiliary fiber-forget cone and its signed localization
+into this fine supported completion still require construction.
+
+`CoefficientSectionEvaluationSourceLeg` supplies the original source-leg
+movement and raw-cone two-time interchange, without a normalized fine-to-raw
+cone/seed comparison. `ProjectiveLine.NativePerfectProjection` extends the
+canonical native flat-base-change mate to intrinsic perfect inputs.
+`NativePerfectGeneration` supplies affine perfect-coefficient projection and
+actual O(−1) vanishing; the positive isomorphism is objectwise chosen.
+Perfect pushforward of arbitrary P¹ inputs and projective generation remain open.
+Completed geometric evaluation and classical Kᴮ identification are also open.
+The detailed dependency plan is
+in the [TT localization roadmap](../development/TTLocalization.md).
 
 ## Remaining obligations
 
-- Complete the original section restriction/localization-null/cone-descent transfer to the graded coefficient diagram, including the section `d0` stable comparison and compatible coefficient/seed/whole-null data. The coarse supported-section comparison and raw-perfect pointwise deficit map retain their stated endpoints.
-- Normalize the computed scalar-cofiber loop from its original object-loop component to the specified Laurent-unit K₁ boundary; prove the zero-section class formula and retain possible Nil contributions.
+- Construct the native auxiliary fiber-forget cone, its original seed/null transfer, and signed global localization. The auxiliary-supported coarse-to-fine seeds, finite/telescope transfer and stable restriction are proved; basic native global supported localization is also proved.
+- Complete the Laurent-unit connecting-map and zero-section class formulas and retain possible Nil contributions; the normalized forward scalar K₁ comparison is proved.
 - Establish fixed-degree stabilization of the finite seed transitions and bijectivity of the natural negative-class maps into the telescope. The finite-bottom isomorphisms and stable Bass self-comparisons do not discharge these obligations.
 - Compare all iterates with the complete original geometric Bass tower, identify classical telescope negative groups, and prove the fundamental theorem, negative localization boundaries, and nonconnective descent.
 - Extend the proved vector-bundle and explicitly bounded vector-bundle projection theorem to the required arbitrary locally perfect inputs; identify the projected diagonal perfect coefficients, prove inverse-twist tensor cancellation and projective generation, and establish the projective-bundle formula, Proj identification, and full twisting-sheaf family. The older finite-coefficient retract criterion retains its own uniform-window premises.
