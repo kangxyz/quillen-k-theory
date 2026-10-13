@@ -2,6 +2,9 @@
 
 Source basis: `4444574cd12bdaab888bd65c79ffba79ce0640ce` (0.5.0), Lean 4.34.1,
 with the pinned dependencies and identified uncommitted mathematical additions.
+The accepted baseline is locally checkpointed at
+`2e5c5550ef0082ca5b71d718678fc2dd2dc8b681`; subsequent fixed leaves below
+have their own source-review, strict-build and trust coverage.
 The remaining-work investigation below was reconciled on 2026-10-13 against
 the entry research rules at `9d92bce487400dcc5f8ed43dc31aaa64a6cb0e9b`.
 This roadmap records
@@ -100,6 +103,10 @@ integration and downstream completion comparisons have separately scoped checks.
 | [NativePerfectProjection](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativePerfectProjection.lean), [NativePerfectGeneration](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativePerfectGeneration.lean) | Original native flat-base-change mate on all intrinsic perfect inputs; affine perfect coefficients have an objectwise chosen positive projection isomorphism and actual O(−1) projection vanishing; no perfect pushforward or P¹ generation assertion |
 | [PolynomialZeroSection](../../Quillen/AlgebraicGeometry/PerfectComplexes/Bass/PolynomialZeroSection.lean), [supported variant](../../Quillen/AlgebraicGeometry/PerfectComplexes/Bass/SupportedPolynomialZeroSection.lean) and their scheme/pair producers | Actual zero evaluation splits projection pullback and the original common corner in every recursive negative degree and every nonnegative perfect K degree, including zero; the original chart difference kills that corner, without claiming middle exactness or stabilization |
 | [ConeStableVanishing](../../Quillen/Topology/Prespectrum/ConeStableVanishing.lean), [cone/fiber converse](../../Quillen/Topology/Prespectrum/ConeDescStableEquivalence.lean) | Genuine cone excision plus signed cone vanishing detects the original arrow; stable cone descent gives the same whole-null stable fiber lift |
+| [CoefficientSectionEvaluationTopology](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSectionEvaluationTopology.lean) | Original normalized evaluation is levelwise homotopy equivalent and the actual moving span evaluation is completely weak, including level zero; original span/cone/loop HEP and T1, without extra compactness/flatness/open assumptions; Hc/C and seed comparison remain separate |
+| [LineTensorCompatibility](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/LineTensorCompatibility.lean), [PullbackTensorCompatibility](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/PullbackTensorCompatibility.lean) | The actual determinant gives L⊗Q≅O with both original chart signs +1; the canonical pullback-tensor mate is a natural isomorphism for the actual tautological line, arbitrary scheme morphisms and arbitrary module sheaves |
+| [FiniteAttachment](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FiniteAttachment.lean) | Actual smaller strict chart windows from a given finite locally free top attachment epi, finite top affine homology, and the terminal cycle-to-single quasi-isomorphism under the explicit lower term bound; the global epi/QC-replacement/perfect-pushforward producers remain separate |
+| [TwoChartStableSpan](../../Quillen/KTheory/Bass/TwoChartStableSpan.lean), [TwoChartStableSequence](../../Quillen/KTheory/Bass/TwoChartStableSequence.lean) | Original signed span quotient, natural all-integer Bass short exact row, and its right cycles/image quotient under an actual plus retraction and the stated original-map cone/collapse stability inputs; geometric realization and classical seed preservation remain separate |
 
 The original restriction seed square and whole canonical-null seed square are
 constructed without supplied compatibility premises. Their actual finite
@@ -249,6 +256,14 @@ its foundation audits establish a new classical comparison or a full release.
 The polynomial zero-evaluation splitting is distinct from the still-needed
 zero-locus pushforward/class calculation in the Laurent boundary proof.
 
+Six further fixed leaves now have independent ordinary mathematical acceptance,
+strict source builds and exhaustive origin coverage of 323 declarations,
+including private/generated helpers. This closes E2-W, the canonical P1
+line/tensor prerequisites, conditional P2 finite-attachment tools, and the
+conditional B2-A/B structural interface. Their exact conditions remain below;
+none supplies an unconstructed geometric producer. Facade enrollment and
+consumer integration have their own current boundary.
+
 ### S. Finish auxiliary-supported constructed localization (G6–G7)
 
 Let `f : P → Q` be the actual open arrow over `Spec R`, `T ⊂ Q` the open
@@ -301,7 +316,7 @@ cancellation lemma, retaining a clear explicit theorem type and the same maps.
 | E2-C: composition and chart descent | The native equation above, relative comparison of split versus whiskered composition tracks, and Hc: cFine;eLaurent ≃ spanEvaluation;cRaw. | `CoefficientSectionEvaluationNaturality`, `CompositionTrack`, normalized/small-model pasting, and `HomotopyPushout.descSquareHomotopy`. Prove both chart faces and the moving cylinder face with independent comparison/track times. No caller-supplied coherence. |
 | E2-N: original source null | The actual whole-square cone map C and `Nold ≃ L ⋆ Nnew`, where Nold is the fine source null postcomposed with C, Nnew the original raw source null precomposed with e, and L the existing Laurent evaluation movement. | Use C's literal inclusion/cylinder equations, the positive-chart relative composition, and `CoefficientSectionEvaluationSourceLeg`'s cone boundary. Reassociate/cancel only through relative homotopies; retain the original positive source leg. |
 | E2-S: original one-step seed | A whole pointed homotopy `seedFine; loop(C) ≃ e; seedRaw`. | Combine E2-N with the accepted unit-pasting square using conjugation naturality. Prove the actual loop-coordinate equation. Stable-group equality alone does not supply this comparison. |
-| E2-W: actual levelwise equivalences | Original normalized e and actual span evaluation weak at every level; after C exists, its actual cone/loop evaluation weak at every level. | Reuse `ExactModelEquivalence.level_isWeakHomotopyEquivalence` and whole-square pushout/cone preservation. Prove the needed point HEP, T1 and loop-point conditions for these actual objects. E2-W can start beside E2-C. |
+| E2-W: actual levelwise equivalences | Accepted original e level homotopy equivalence, actual span evaluation completely weak/stable, and literal span/cone/loop point HEP/T1. | `CoefficientSectionEvaluationTopology` preserves the exact forward map. Cone-evaluation weakness still waits for C/Hc and its whole-square preservation theorem; it is not inferred from stability alone. |
 | E2-I: coherent raw iterates | Raw_0 and Raw_1 remain the existing raw objects. Construct Raw_2 with its original coefficient/chart maps, then an all-n producer of Raw_n, raw transitions, E_n and transition homotopies J_n. | First establish the full second-stage moving-square/composition faces. Then prove preservation of the required finite coherent diagram under span/cone/loop operations. Determine and realize the higher faces actually needed; a structure merely assuming them does not close this step. |
 | E2-T: telescope and boundary | The original fine-to-raw telescope map, all stage/initial/cylinder equations, coefficient/restriction naturality and the signed boundary comparison. | Apply `Telescope.mapOfHomotopies` to the proved E_n/J_n; use stagewise equivalences and actual T1 to prove all-signed stability. Moving-square and relative-transition faces from E2-I supply naturality/boundary. |
 
@@ -335,7 +350,7 @@ not ordinary equivalence/approximation of this two-summand functor.
 
 | Step | Exact product and current owner | Acceptance and dependency |
 | --- | --- | --- |
-| P1: canonical line/tensor comparisons | Natural p₁*(E⊗L)≅p₁*E⊗p₁*L, specified L⊗Q≅O, and the needed unit/associativity comparisons for the actual tautological lines. | Construct the pullback-tensor mate from `modulePushforwardTensorMap`; prove inversion using actual line trivializations and restriction compatibility. Glue L⊗Q through its inverse transition functions. Independent of perfect pushforward. |
+| P1: canonical line/tensor comparisons | Accepted natural p₁*(E⊗L)≅p₁*E⊗p₁*L and specified determinant pairing L⊗Q≅O, retaining actual unit/braiding/chart comparisons. | `PullbackTensorCompatibility` proves the literal canonical mate for any f and any other module sheaf; `LineTensorCompatibility` proves both chart multiplication equations with +1. Independent of perfect pushforward; P3 must still use these actual maps in its triangle. |
 | P2: arbitrary-perfect projection | For every intrinsic perfect K on P¹, prove Rp*K perfect over Spec R. Existing `BoundedDerivedPushforward` only covers explicitly bounded vector-bundle terms. | Selected route: P¹-specific nonnoetherian strictification, then that finite-term theorem. First prove a finite attachment lowering the local strict amplitude, then terminate at a finite locally free syzygy and identify the original derived object. No extra bounded-vector-bundle or noetherian hypothesis may remain. |
 | P3: natural diagonal generation | Identify the existing projected incidence triangle, initially for vector bundles, as p*Rp*(E⊗L)→Q⊗p*Rp*E→E⊗Q; tensor by L and rotate to p*G₀(E)→E→L⊗p*G₁(E). | P1 supplies the first endpoint; existing self-base-change/projection formula supply the second. Retain incidence, quotient and connecting maps. Extend degreewise/totalize and descend through genuine roofs for all intrinsic perfect objects; P2 supplies perfect coefficients. |
 | P4: original K-inverse | Realize G and the diagonal sequence as exact/cofibration-compatible functors on a proved model of the original Perfect category; apply Waldhausen additivity. | Construct natural bounded-complex Čech comparison and the necessary weak-arrow/roof model equivalence. Normalize the positive projection by its canonical adjunction unit, prove O(-1) vanishing and Rp*(O(-2)⊗p*A)[1]≅A, then both original K-map composites, including zero. |
@@ -384,8 +399,8 @@ positive-minus-inverse chart difference on π_d(E).
 
 | Step | New theorem product | Exact consumer and acceptance |
 | --- | --- | --- |
-| B2-A: all-degree span quotient | Actual polynomial zero evaluation splits a_d in every signed degree. The original pushout LES therefore gives π_d(span(E))≅coker(a_d). | Transport the second chart by −1: the representative map is the difference of the original inclusions and its comparison is Δ_d. Kill the hidden ker(a_(d−1)) term by the actual retraction. Existing bottom-generation proofs cover only the lowest degree. |
-| B2-B: natural spectral Bass row | Prove `0→coker(Δ_(d+1))→π_d(BE)→ker(Δ_d)/im(a_d)→0`. | The left arrow is the original Laurent cone inclusion and signed loop shift. Encoding may first use the kernel of the induced coker(a_d)→Laurent map. Prove naturality for actual B(f); instantiate point-set excision from the finite Model geometry. |
+| B2-A: all-degree span quotient | Accepted conditional π_d(span(E))≅coker(a_d) with the original signed representative and comparison. | `TwoChartStableSpan` uses an actual strict plus retraction, plus/right-inclusion excision and right-cone-collapse stability. Instantiate these on the native polynomial zero-evaluation maps and finite Model geometry; the native producer remains open. |
+| B2-B: natural spectral Bass row | Accepted conditional `0→coker(Δ_(d+1))→π_d(BE)→ker(Δ_d)/im(a_d)→0`, with actual row naturality. | `TwoChartStableSequence` retains the original Laurent cone inclusion, signed shift and cone boundary, and proves the right quotient identification. Add the original comparison-cone excision; discharge all retained data in each actual coefficient family before B2-E. |
 | B2-C: recursive chart middle exactness | For every i, prove image(a(N_i))=kernel(Δ(N_i)), with original quotient maps and a constructed natural splitting of each Laurent quotient. | B1 supplies positive fundamental rows and h₀. Degree-zero middle exactness is a retract of the degree-one row over an independent Laurent variable. Prove mixed-variable geometric transports and commuting cokernel projections; descend h through the other variable, cancel the original epimorphic quotient, and transfer exactness through the resulting retract. Right exactness alone is insufficient. |
 | B2-D: original initial seed | Prove π_d(η) invertible for every d≥0, including zero. | Identify the actual Laurent loop/seed with the B1 operation via E2-S or an equally explicit direct section calculation. Combine the spectral row, classical boundary splitting and K₀ middle exactness. An auxiliary normalized group splitting must not replace the original seed. |
 | B2-E: exact lowest transition | Inductively prove π_d(t_i) invertible for d≥−i. | Apply B2-B to t_(i−1). For d≥1−i both end terms are controlled in degrees d,d+1. At d=−i the left term uses degree 1−i; source right term vanishes by connectivity, target right term by the bottom N_i comparison and B2-C. This includes the equality d=−i. |
@@ -454,11 +469,11 @@ flowchart TD
   B2 --> TT
 ```
 
-Start four focused proof products after this plan: G7's native auxiliary cone,
+Continue four focused proof products after the accepted prerequisites: G7's native auxiliary cone,
 E2-C's explicit transport/pasting bridge, P1's line/tensor maps beside P2's
-finite-attachment/roof investigation, and B2-A/B's generic spectral row.
-E2-W is another independent short product when its full transfer cost is
-worthwhile. Mixed-variable and global-bottom products follow once their
+finite-attachment/roof investigation, and native realization of B2-A/B's
+accepted spectral row. E2-W and P1's canonical tensor/line comparisons are now
+accepted inputs. Mixed-variable and global-bottom products follow once their
 interfaces are fixed; do not populate every possible branch at once.
 
 Use bounded mathematics at Sol 6.1/max for supported transfer, tensor/line

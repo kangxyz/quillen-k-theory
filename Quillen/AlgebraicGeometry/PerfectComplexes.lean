@@ -256,6 +256,8 @@ public import
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationSourceLeg
 public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationTopology
+public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationUnit
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationUnitPasting
@@ -559,6 +561,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.BoundedD
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.CechModel
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.DerivedPushforwardVectorBundle
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FiniteAttachment
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineTensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePerfectGeneration
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePerfectProjection

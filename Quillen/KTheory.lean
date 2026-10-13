@@ -52,6 +52,8 @@ public import Quillen.KTheory.Bass.StrictUnderTransition
 public import Quillen.KTheory.Bass.TwoChart
 public import Quillen.KTheory.Bass.TwoChartSigns
 public import Quillen.KTheory.Bass.TwoChartStableCokernel
+public import Quillen.KTheory.Bass.TwoChartStableSequence
+public import Quillen.KTheory.Bass.TwoChartStableSpan
 public import Quillen.KTheory.Equivalence
 public import Quillen.KTheory.Functor
 public import Quillen.KTheory.GrothendieckComparison.Basic

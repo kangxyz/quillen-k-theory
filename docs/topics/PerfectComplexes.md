@@ -711,6 +711,16 @@ canonical native flat-base-change mate to intrinsic perfect inputs.
 `NativePerfectGeneration` supplies affine perfect-coefficient projection and
 actual O(−1) vanishing; the positive isomorphism is objectwise chosen.
 Perfect pushforward of arbitrary P¹ inputs and projective generation remain open.
+The actual tautological line and quotient now have the canonical determinant
+pairing L⊗Q≅O, with both original chart formulas. The specified pullback-tensor
+mate is invertible for this line under arbitrary scheme maps and arbitrary
+other module sheaves. `ProjectiveLine.FiniteAttachment` supplies the shrinking
+strict chart-window and terminal cycle tools under their actual top-epi and
+lower-term-bound inputs; producing those inputs globally and the required QC
+representative still precedes arbitrary-perfect pushforward.
+`CoefficientSectionEvaluationTopology` also supplies literal original e/V
+levelwise equivalences and span/cone/loop HEP/T1. The normalized moving cone
+comparison and complete raw iteration remain separate.
 Completed geometric evaluation and classical Kᴮ identification are also open.
 The detailed dependency plan is
 in the [TT localization roadmap](../development/TTLocalization.md).

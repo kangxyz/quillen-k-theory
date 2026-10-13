@@ -196,6 +196,14 @@ isomorphism and actual O(−1) vanishing. This supplies no perfect pushforward f
 arbitrary P¹ inputs or projective generation. Actual native/pair polynomial
 zero evaluation also splits the original common corner in all recursive Bass
 degrees, without supplying its middle exactness or seed stabilization.
+Original native section/span evaluation now has levelwise equivalence and
+literal span/cone/loop HEP/T1. The P¹ line/quotient determinant pairing and
+canonical tautological pullback-tensor comparison are proved over arbitrary
+rings/maps. Conditional finite-attachment tools preserve actual strict chart
+windows; their global epimorphism/QC-representative inputs remain separate.
+The signed Bass span quotient and natural short exact row are proved under
+their explicit original retraction/excision/collapse data; native realization,
+recursive middle exactness and original seed preservation remain open.
 These constructions do not identify classical Kᴮ. The current dependency plan is in the
 [TT localization roadmap](../development/TTLocalization.md).
 

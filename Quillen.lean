@@ -452,6 +452,8 @@ public import
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationSourceLeg
 public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationTopology
+public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationUnit
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationUnitPasting
@@ -755,6 +757,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.BoundedD
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.CechModel
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.DerivedPushforwardVectorBundle
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FiniteAttachment
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineTensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePerfectGeneration
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePerfectProjection
@@ -990,10 +993,12 @@ public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalSupportedT
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalTensorPushforward
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalTensorTriangle
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.GlobalSections
+public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.LineTensorCompatibility
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.ModuleChartSections
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Native
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.NativeBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OpenBaseChange
+public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.PullbackTensorCompatibility
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.QuotientTensor
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.StructureSheafCohomology
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.StructureSheafDirectImage
@@ -1647,6 +1652,8 @@ public import Quillen.KTheory.Bass.StrictUnderTransition
 public import Quillen.KTheory.Bass.TwoChart
 public import Quillen.KTheory.Bass.TwoChartSigns
 public import Quillen.KTheory.Bass.TwoChartStableCokernel
+public import Quillen.KTheory.Bass.TwoChartStableSequence
+public import Quillen.KTheory.Bass.TwoChartStableSpan
 public import Quillen.KTheory.Equivalence
 public import Quillen.KTheory.Functor
 public import Quillen.KTheory.GrothendieckComparison.Basic

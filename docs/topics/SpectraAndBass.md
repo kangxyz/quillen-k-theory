@@ -424,6 +424,12 @@ foundation coverage. The native auxiliary fiber-forget localization remains
 open, as do completed
 geometric evaluation and classical nonconnective Thomason–Trobaugh identification.
 The connective S-spectrum comparison does not settle these questions.
+The conditional `Bass.TwoChartStableSpan` and `TwoChartStableSequence` now
+provide the signed span quotient, natural all-degree Bass short exact row,
+and actual cycles/image right-term identification. Their original plus
+retraction and cone/collapse stability inputs still need native geometric
+realization; recursive chart middle exactness and the original initial seed
+are not proved by this structural interface.
 See [Scope.md](../reference/Scope.md) for the global frontier and
 [Architecture.md](../development/Architecture.md#trust-checks) for the foundation
 audit boundary. Compilation and axiom audits concern encoded proofs; they do
