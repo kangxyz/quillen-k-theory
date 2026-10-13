@@ -252,6 +252,8 @@ public import
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationBassSeed
 public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationComposition
+public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationNaturality
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationSourceLeg
@@ -272,6 +274,15 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Coefficient
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedBassTelescope
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedBassTower
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedFiberBassSeed
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedFiberBassTelescope
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedFiberBassTower
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedFiberLocalizationModels
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedFullOpenBassLocalization
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenBassSeed
 public import
@@ -565,7 +576,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FiniteAt
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineTensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePerfectGeneration
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePerfectProjection
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePerfectPushforward
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeTwoSummands
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.Strictification
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Pullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PullbackCoherence
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PullbackFunctor

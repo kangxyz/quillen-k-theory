@@ -93,6 +93,22 @@ class ImportGenerationTests(unittest.TestCase):
         self.assertTrue(all(len(line) <= 100 for line in source.splitlines()))
         self.assertNotIn('set_option linter.style.longLine', source)
 
+    def test_module_name_width_boundary_keeps_complete_import_lines(self):
+        for modern in (False, True):
+            prefix = 'public import ' if modern else 'import '
+            for width in (98, 99, 100, 101):
+                name = 'Quillen.' + 'A' * (width - len('Quillen.'))
+                with self.subTest(modern=modern, width=width):
+                    source = render_imports([name], '# Width boundary', modern=modern)
+                    self.assertEqual(lean_imports(source), [name])
+                    self.assertTrue(is_import_surface(source))
+                    if width == 98:
+                        self.assertIn(prefix.rstrip() + '\n  ' + name + '\n', source)
+                    else:
+                        self.assertIn(prefix + name + '\n', source)
+                        self.assertNotIn(prefix.rstrip() + '\n', source)
+                    self.assertNotIn('set_option linter.style.longLine', source)
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix='quillen-generation-')
         self.root = Path(self.tmp.name)

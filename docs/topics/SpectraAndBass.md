@@ -420,9 +420,13 @@ its original signed boundary. Auxiliary-supported cofinality, honest K₀
 exactness and the initial signed cone are proved. Their original supported
 seeds, whole null-transition equations, finite/telescope maps and stable r_Z∞
 now have strict builds, independent ordinary review and matching private-origin
-foundation coverage. The native auxiliary fiber-forget localization remains
-open, as do completed
-geometric evaluation and classical nonconnective Thomason–Trobaugh identification.
+foundation coverage. The native auxiliary fiber-forget localization now has
+its actual union-support fiber, original seed/whole-null transfer and telescope
+cone/fiber comparison, including the signed boundary. Final fine stability
+requires compact P,Q,T and quasi-separated Q; the structural identities and
+fiber-to-coarse stability need only the open immersion. Completed geometric
+evaluation and classical nonconnective Thomason–Trobaugh identification remain
+open.
 The connective S-spectrum comparison does not settle these questions.
 The conditional `Bass.TwoChartStableSpan` and `TwoChartStableSequence` now
 provide the signed span quotient, natural all-degree Bass short exact row,

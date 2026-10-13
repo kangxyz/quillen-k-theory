@@ -186,8 +186,11 @@ and signed initial cone are proved. Basic global support has the actual
 same-null cone/fiber comparison to the fine completion and original signed
 boundary. The auxiliary-supported original seeds, whole null-transition
 equations, finite/telescope comparisons and stable r_Z∞ are also proved.
-The native auxiliary fiber-forget localization and completed geometric
-evaluation remain separate. Intrinsic Laurent unit K₁
+Native auxiliary fiber-forget localization now retains the actual union-support
+fiber, original forward seeds, whole canonical null and same-null telescope
+cone/fiber maps with their signed boundary. Final fine stability requires
+compact P,Q,T and quasi-separated Q. Completed geometric evaluation remains
+separate. Intrinsic Laurent unit K₁
 classes and native O/O(−1) two-summand chart formulas are proved, without a
 projective-line K-equivalence or initial-seed preservation claim. The canonical
 native flat-base-change mate now covers all intrinsic perfect inputs, and
@@ -200,7 +203,13 @@ Original native section/span evaluation now has levelwise equivalence and
 literal span/cone/loop HEP/T1. The P¹ line/quotient determinant pairing and
 canonical tautological pullback-tensor comparison are proved over arbitrary
 rings/maps. Conditional finite-attachment tools preserve actual strict chart
-windows; their global epimorphism/QC-representative inputs remain separate.
+windows. The global top-cycle epimorphism and finite strictification are now
+produced for bounded-below termwise-QC locally perfect representatives on P¹
+over arbitrary R; actual Rp preserves their perfection. Constructing such a
+representative for every intrinsic perfect input and an exact/natural roof model
+remain separate. Normalized evaluation/composition and chart/cylinder pasting
+have ordinary mathematical acceptance; original source-null/seed and all raw
+iterate/telescope comparisons remain open.
 The signed Bass span quotient and natural short exact row are proved under
 their explicit original retraction/excision/collapse data; native realization,
 recursive middle exactness and original seed preservation remain open.
@@ -230,7 +239,7 @@ loop-map composites remain outside the stated interfaces.
 
 - Fixed-degree finite Bass-transition stabilization, bijectivity of the natural negative-class maps into the telescope, and classical telescope negative-group identification.
 - Full all-iterate comparison with the original geometric Bass tower, the fundamental theorem, and Laurent-unit boundary/relative-loop basepoint calculations, including the zero-section class and possible Nil terms.
-- Normalized geometric chart-composition and complete seed/iterate/telescope evaluation, native auxiliary fiber-forget localization, and classical Thomason–Trobaugh identification, retaining the original K₀ image and signed boundary. Basic global supported localization and auxiliary-supported coarse-to-fine completion are proved.
+- Complete original source-null/seed/iterate/telescope evaluation and classical Thomason–Trobaugh identification, retaining the original K₀ image and signed boundary. Normalized geometric chart-composition, basic global supported localization and auxiliary-supported section-completion localization are proved.
 - Proj identification, the full twisting-sheaf family, arbitrary locally-perfect coefficient preservation and bounded representation, projective generation, and the projective-bundle formula. The older finite-coefficient retract criterion retains its own projectivity/splitting and support-window assumptions; vector-bundle and explicitly bounded vector-bundle projection perfection are proved by the new finite-defect route.
 - General-source perfect preservation by derived direct image, unrestricted unbounded derived pushforward, and general bounded-below flat-base-change invertibility.
 - Strict/local equivalence on arbitrary nonaffine schemes and perfect pullback on arbitrary non-quasi-compact schemes.

@@ -61,7 +61,9 @@ def family_facades(root: Path) -> set[Path]:
 def render_imports(modules: list[str], description: str, modern: bool = False,
                    authors: set[str] | None = None) -> str:
     prefix = 'public import ' if modern else 'import '
-    imports = [prefix + name if len(prefix + name) <= 100
+    # Complete import lines are exempt from mathlib's long-line lint, but
+    # continued module names are not. Keep names that cannot fit intact.
+    imports = [prefix + name if len(prefix + name) <= 100 or len(name) + 2 > 100
                else prefix.rstrip() + '\n  ' + name for name in sorted(modules)]
     header = COPYRIGHT_HEADER
     if authors:

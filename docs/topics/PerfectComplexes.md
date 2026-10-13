@@ -701,8 +701,14 @@ original supported seeds and every whole-null seed square. The accepted
 `CoefficientSupportedOpenBassTower` and `BassTelescope` retain the literal finite
 stages, original telescope null, all-signed graded vanishing and stable r_Z∞,
 under the same compact P,Q,T and quasi-separated Q conditions for the final
-comparison. The native auxiliary fiber-forget cone and its signed localization
-into this fine supported completion still require construction.
+comparison. `CoefficientSupportedFiberLocalizationModels` and its
+Seed/Tower/Telescope owners now construct the actual union-support fiber,
+literal forget/changeWeak maps and the same-joint-zero whole null.
+`CoefficientSupportedFullOpenBassLocalization` supplies its same-null stable
+fiber comparison to this fine supported completion and original signed
+boundary. Fiber-to-coarse stability and structural identities need only the
+open immersion; final fine stability requires compact P,Q,T and
+quasi-separated Q. This is constructed section-completion localization.
 
 `CoefficientSectionEvaluationSourceLeg` supplies the original source-leg
 movement and raw-cone two-time interchange, without a normalized fine-to-raw
@@ -716,18 +722,26 @@ pairing L⊗Q≅O, with both original chart formulas. The specified pullback-ten
 mate is invertible for this line under arbitrary scheme maps and arbitrary
 other module sheaves. `ProjectiveLine.FiniteAttachment` supplies the shrinking
 strict chart-window and terminal cycle tools under their actual top-epi and
-lower-term-bound inputs; producing those inputs globally and the required QC
-representative still precedes arbitrary-perfect pushforward.
+lower-term-bound inputs. `Strictification` now produces the actual global
+top-cycle epimorphism and strict derived model for bounded-below termwise-QC
+locally perfect inputs on P¹ over arbitrary R, including the zero ring.
+`NativePerfectPushforward` applies actual Rp to these representatives. Its
+intrinsic-perfect corollary still needs a genuine such representative; that
+producer and the exact/natural roof model remain separate.
 `CoefficientSectionEvaluationTopology` also supplies literal original e/V
-levelwise equivalences and span/cone/loop HEP/T1. The normalized moving cone
-comparison and complete raw iteration remain separate.
+levelwise equivalences and span/cone/loop HEP/T1.
+`CoefficientSectionEvaluationComposition` has independent ordinary acceptance
+for actual normalized pasting, the relative split-track comparison and both
+chart/cylinder faces of Hc, without openness, compactness or flatness.
+The original source-null/seed comparison and complete raw iteration remain
+separate. Its exact native strict build, private-origin trust, enrollment and
+affected-client integration pass at the current source identity.
 Completed geometric evaluation and classical Kᴮ identification are also open.
 The detailed dependency plan is
 in the [TT localization roadmap](../development/TTLocalization.md).
 
 ## Remaining obligations
 
-- Construct the native auxiliary fiber-forget cone, its original seed/null transfer, and signed global localization. The auxiliary-supported coarse-to-fine seeds, finite/telescope transfer and stable restriction are proved; basic native global supported localization is also proved.
 - Complete the Laurent-unit connecting-map and zero-section class formulas and retain possible Nil contributions; the normalized forward scalar K₁ comparison is proved.
 - Establish fixed-degree stabilization of the finite seed transitions and bijectivity of the natural negative-class maps into the telescope. The finite-bottom isomorphisms and stable Bass self-comparisons do not discharge these obligations.
 - Compare all iterates with the complete original geometric Bass tower, identify classical telescope negative groups, and prove the fundamental theorem, negative localization boundaries, and nonconnective descent.

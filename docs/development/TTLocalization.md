@@ -2,9 +2,11 @@
 
 Source basis: `4444574cd12bdaab888bd65c79ffba79ce0640ce` (0.5.0), Lean 4.34.1,
 with the pinned dependencies and identified uncommitted mathematical additions.
-The accepted baseline is locally checkpointed at
-`2e5c5550ef0082ca5b71d718678fc2dd2dc8b681`; subsequent fixed leaves below
-have their own source-review, strict-build and trust coverage.
+The accepted baseline and `QuillenTest` namespace migration are locally
+checkpointed at `2e5c5550ef0082ca5b71d718678fc2dd2dc8b681`. Six further reviewed
+geometric and spectral prerequisites are checkpointed at
+`a167ffe3911b35bb9e1bfd074322039557daf094`. Later fixed leaves have their own
+source-review, strict-build and trust coverage.
 The remaining-work investigation below was reconciled on 2026-10-13 against
 the entry research rules at `9d92bce487400dcc5f8ed43dc31aaa64a6cb0e9b`.
 This roadmap records
@@ -27,7 +29,7 @@ It also includes auxiliary closed support `Z` with quasi-compact complement:
 Kᴮ(X on Y ∩ Z) → Kᴮ(X on Z) → Kᴮ(U on U ∩ Z).
 ```
 
-Original images confirm that Sections 6.4, 6.6(a), 7.0 and 7.5(a) retain the
+Sections 6.4, 6.6(a), 7.0 and 7.5(a) retain the
 initial comparison in degrees `n ≥ 0`, including zero. Source:
 R. W. Thomason and T. Trobaugh, *Higher Algebraic K-Theory of Schemes and of
 Derived Categories*, The Grothendieck Festschrift III, Progress in Mathematics
@@ -50,14 +52,14 @@ Three targets must be distinguished:
 3. **Classical, global TT localization.** Identifying the completed objects
    with classical `Kᴮ`, preserving nonnegative groups, and completing global
    supported localization remain substantial separate branches. The native
-   global coarse-to-fine section-completion comparison and basic supported
-   fiber sequence are now supplied. Auxiliary-supported localization and
-   classical identification remain separate.
+   global coarse-to-fine section-completion comparison and both basic and
+   auxiliary-supported fiber sequences are now supplied. Completed geometric
+   evaluation and classical identification remain separate.
 
-The affine constructed transfer, native global completion comparison and basic
-global supported localization are supplied. Completed geometric evaluation,
-classical identification and auxiliary-supported localization still have distinct
-mathematical obligations; file or theorem counts do not measure their distance.
+The affine constructed transfer, native global completion comparison and
+global localization with auxiliary support are supplied. Completed geometric
+evaluation and classical identification still have distinct mathematical
+obligations; file or theorem counts do not measure their distance.
 
 ## Verified proof checkpoints
 
@@ -104,9 +106,12 @@ integration and downstream completion comparisons have separately scoped checks.
 | [PolynomialZeroSection](../../Quillen/AlgebraicGeometry/PerfectComplexes/Bass/PolynomialZeroSection.lean), [supported variant](../../Quillen/AlgebraicGeometry/PerfectComplexes/Bass/SupportedPolynomialZeroSection.lean) and their scheme/pair producers | Actual zero evaluation splits projection pullback and the original common corner in every recursive negative degree and every nonnegative perfect K degree, including zero; the original chart difference kills that corner, without claiming middle exactness or stabilization |
 | [ConeStableVanishing](../../Quillen/Topology/Prespectrum/ConeStableVanishing.lean), [cone/fiber converse](../../Quillen/Topology/Prespectrum/ConeDescStableEquivalence.lean) | Genuine cone excision plus signed cone vanishing detects the original arrow; stable cone descent gives the same whole-null stable fiber lift |
 | [CoefficientSectionEvaluationTopology](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSectionEvaluationTopology.lean) | Original normalized evaluation is levelwise homotopy equivalent and the actual moving span evaluation is completely weak, including level zero; original span/cone/loop HEP and T1, without extra compactness/flatness/open assumptions; Hc/C and seed comparison remain separate |
+| [CoefficientSectionEvaluationComposition](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSectionEvaluationComposition.lean) | Actual normalized evaluation pasting, relative comparison to the original split composition track, and Hc with both original chart faces and its moving cylinder face at independent times; no openness, compactness, flatness or caller-supplied coherence. Original cone/source-null/seed and all raw iteration remain separate |
 | [LineTensorCompatibility](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/LineTensorCompatibility.lean), [PullbackTensorCompatibility](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/PullbackTensorCompatibility.lean) | The actual determinant gives L⊗Q≅O with both original chart signs +1; the canonical pullback-tensor mate is a natural isomorphism for the actual tautological line, arbitrary scheme morphisms and arbitrary module sheaves |
 | [FiniteAttachment](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FiniteAttachment.lean) | Actual smaller strict chart windows from a given finite locally free top attachment epi, finite top affine homology, and the terminal cycle-to-single quasi-isomorphism under the explicit lower term bound; the global epi/QC-replacement/perfect-pushforward producers remain separate |
 | [TwoChartStableSpan](../../Quillen/KTheory/Bass/TwoChartStableSpan.lean), [TwoChartStableSequence](../../Quillen/KTheory/Bass/TwoChartStableSequence.lean) | Original signed span quotient, natural all-integer Bass short exact row, and its right cycles/image quotient under an actual plus retraction and the stated original-map cone/collapse stability inputs; geometric realization and classical seed preservation remain separate |
+| [CoefficientSupportedFiberLocalizationModels](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedFiberLocalizationModels.lean), [seed](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedFiberBassSeed.lean), [tower](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedFiberBassTower.lean), [telescope](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedFiberBassTelescope.lean), [localization](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedFullOpenBassLocalization.lean) | Actual auxiliary-supported native fiber, same joint zero, original Laurent seeds, whole null and finite/telescope cone comparison; postcomposition with original r_Z∞ gives the same-null stable fiber lift and signed boundary. Structural comparison needs only the open immersion; final fine stability needs compact P,Q,T and quasi-separated Q. No classical Kᴮ identification |
+| [ProjectiveLine/Strictification](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/Strictification.lean), [NativePerfectPushforward](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativePerfectPushforward.lean) | Actual global top-cycle epimorphism, finite induction/reassembly and strict derived model for bounded-below termwise-quasicoherent locally perfect inputs on P¹ over arbitrary R; actual Rp preserves perfection for those representatives. The arbitrary intrinsic-perfect QC-representative producer remains outside this accepted scope |
 
 The original restriction seed square and whole canonical-null seed square are
 constructed without supplied compatibility premises. Their actual finite
@@ -123,8 +128,9 @@ normalization isomorphism retains one explained finite declaration-local
 defaults remain 200,000. Finite higher scratch budgets remain available for
 proof iteration, followed by cost normalization after correctness. These
 constructions do not identify classical Kᴮ. G5 now supplies the original global
-coarse-to-fine coefficient completion comparison; auxiliary-supported localization and
-completed geometric evaluation remain separate obligations.
+coarse-to-fine coefficient completion comparison. The auxiliary-supported
+fiber/null localization is now independently accepted; completed geometric
+evaluation and classical identification remain separate obligations.
 
 ## Actual affine objects
 
@@ -274,22 +280,23 @@ pullback of `T` and `V_a = T_a ∪ range(f_a)`.
 | Step | Exact product and route | Required inputs and acceptance |
 | --- | --- | --- |
 | S1: G6 finite/telescope transfer | Literal `B^i(C_Z/F_Z/G_Z)`, original transitions, r_i/q_i and iterated canonical N_i; whole null-transition equation; signed G_Z∞ vanishing; original Cone(r_Z∞)→G_Z∞ and r_Z∞ stable. | Accepted, audited, enrolled and scoped-integrated. Graded coefficient data require compact P,Q. Final cone/r∞ stability additionally requires quasi-separated Q and compact T. Preserve every original finite and cylinder face. |
-| S2: native auxiliary fiber | Construct sections vanishing on V_a, the literal forget map into sections vanishing on T_a, the identity change of weakness to C_Z, and the canonical reversed zero-to-image null. | Use `CoefficientSupportedOpenModels`, actual `ιOfLE`, original evaluation, and `SupportedOpen/ConeComparison`. Transport the geometric auxiliary acyclic cone through exact evaluation equivalences. The initial native comparison needs no compactness premise. The basic unsupported ambient support sequence cannot replace this construction. |
-| S3: auxiliary seeds and completion | Lift the same ambient forward Laurent unit to the V_a-supported fiber; prove forget/changeWeak seed squares and every canonical-null time-slice square. Form the actual finite towers and telescope null, then compare Cone(forget∞)→C_Z∞. | Prove component preservation through the original inclusion functors. Use whole identity-action interchange, finite Model excision/T1 and telescope cone descent; retain separate null time and telescope height. No supplied compatibility or localization input. |
-| S4: final constructed auxiliary sequence | Postcompose S3 with the original r_Z∞. Produce the same-null stable fiber lift for Fiber_Z∞→A_Z∞→F_Z∞ and its signed connecting identity. | Compact P,Q,T and quasi-separated Q for the final stable comparison; retain weaker hypotheses on the projection/boundary identities where possible. Independent review covers the actual support union, all three maps, null, and signed boundary. |
+| S2: native auxiliary fiber | Accepted sections vanishing on V_a, literal forget into sections vanishing on T_a, identity change of weakness to C_Z, and canonical reversed zero-to-image null. | `CoefficientSupportedFiberLocalizationModels` produces native JointData, second-endpoint, extension and two-out-of-three inputs, and identifies the fiber with the acyclic category of the same native weak structure. Its same-null initial cone comparison is accepted without compactness or separation assumptions. Native private-origin trust and enrollment are separate checks. |
+| S3: auxiliary seeds and completion | Accepted same ambient forward Laurent unit on the V_a-supported fiber, forget/changeWeak seed squares and every canonical-null time-slice square; actual finite towers and telescope null; stable Cone(forget∞)→C_Z∞. | Original inclusion functors, whole identity-action interchange, finite Model excision/T1 and telescope cone descent; separate null time and telescope height. Only the original open immersion is required. No supplied compatibility or localization input. |
+| S4: final constructed auxiliary sequence | Accepted postcomposition with original r_Z∞, same-null stable fiber lift for Fiber_Z∞→A_Z∞→F_Z∞, projection and signed connecting identity. | Compact P,Q,T and quasi-separated Q for final fine stability; projection/boundary identities retain only the open immersion. Independent review covers actual support union, all three maps, whole null and signed boundary. |
 
-S2 is the immediate G7 milestone. Native literal forget/changeWeak maps and
-their null have a scratch proof, without an accepted initial cone yet.
-Geometric support properties choose independent zero objects: carry their
-actual normalization isomorphisms and prove whole-null coherence, rather than
-asserting these zeros equal. The selected alternative is to transport the
-supported JointData to the same native nested weak structure, prove its
-second-endpoint, extension and two-out-of-three properties, and identify the
-V_a-supported fiber with the native acyclic category before applying fibration.
-That route retains the native joint zero and still needs its actual producer.
-S3/S4 may be developed conditionally; acceptance waits for S2's actual proof.
-This package closes constructed
-section-completion localization, with no classical Kᴮ claim.
+S2's native route is now independently accepted. It retains the same joint
+zero throughout the fiber, native acyclic equivalence, fibration inputs and
+every level/time value of the canonical null. It does not identify independently
+chosen geometric zeros. Independent ordinary review also accepts the four
+downstream S3/S4 leaves at their exact strict production source hashes, with
+the same seeds, transition null, telescope faces and signed boundary. A current
+eight-origin audit covers this five-leaf family, the two P2 leaves below and
+E2-C: 356 declarations, including all private/generated origins, use only the
+standard three axioms. Enrollment, three affected facades and the Consumer
+root pass strict checks; a fresh QuillenTest/Axioms replay checks 48,401 project
+declarations. This closes constructed
+section-completion localization with auxiliary support, with no classical Kᴮ
+claim.
 
 ### E. Compare to the original raw geometric completion (E2)
 
@@ -304,16 +311,19 @@ first target is the component equation
 ```
 
 `transportS` is the named strict section-reindexing composition equality.
-Conjugate the existing Grothendieck/normalized/small-model composition formulas
-by the actual evaluation normalization isomorphisms. A checked generic
-specialization is available, but its concrete native bridge remains unproved.
-Direct dependent unfolding has timed out even with a finite 2,000,000 budget.
-The selected repair uses explicit equality transports and a generic pasting
-cancellation lemma, retaining a clear explicit theorem type and the same maps.
+The accepted E2-C proof conjugates the actual
+Grothendieck/normalized/small-model composition formulas by the evaluation
+normalization isomorphisms. Explicit equality transports and a generic pasting
+cancellation lemma supply the native bridge at the default 200,000 budget.
+The component equation is recoverable from the exported natural-transformation
+equation; both zero normalizations and the original geometric split track are
+retained. The production source differs from the reviewed source only by
+independently checked spacing/line wrapping. Its exact strong native build,
+129-origin private-inclusive audit and affected-facade integration passed.
 
 | Step | Exact product | Proof route and acceptance |
 | --- | --- | --- |
-| E2-C: composition and chart descent | The native equation above, relative comparison of split versus whiskered composition tracks, and Hc: cFine;eLaurent ≃ spanEvaluation;cRaw. | `CoefficientSectionEvaluationNaturality`, `CompositionTrack`, normalized/small-model pasting, and `HomotopyPushout.descSquareHomotopy`. Prove both chart faces and the moving cylinder face with independent comparison/track times. No caller-supplied coherence. |
+| E2-C: composition and chart descent | Accepted native equation above, relative comparison of split versus whiskered composition tracks, and Hc: cFine;eLaurent ≃ spanEvaluation;cRaw. | `CoefficientSectionEvaluationComposition` proves both actual chart faces and the moving cylinder face with independent comparison/track times. No caller-supplied coherence; no openness, compactness or flatness assumptions. Source-null and seed comparisons are separate E2-N/S obligations. |
 | E2-N: original source null | The actual whole-square cone map C and `Nold ≃ L ⋆ Nnew`, where Nold is the fine source null postcomposed with C, Nnew the original raw source null precomposed with e, and L the existing Laurent evaluation movement. | Use C's literal inclusion/cylinder equations, the positive-chart relative composition, and `CoefficientSectionEvaluationSourceLeg`'s cone boundary. Reassociate/cancel only through relative homotopies; retain the original positive source leg. |
 | E2-S: original one-step seed | A whole pointed homotopy `seedFine; loop(C) ≃ e; seedRaw`. | Combine E2-N with the accepted unit-pasting square using conjugation naturality. Prove the actual loop-coordinate equation. Stable-group equality alone does not supply this comparison. |
 | E2-W: actual levelwise equivalences | Accepted original e level homotopy equivalence, actual span evaluation completely weak/stable, and literal span/cone/loop point HEP/T1. | `CoefficientSectionEvaluationTopology` preserves the exact forward map. Cone-evaluation weakness still waits for C/Hc and its whole-square preservation theorem; it is not inferred from stability alone. |
@@ -351,19 +361,24 @@ not ordinary equivalence/approximation of this two-summand functor.
 | Step | Exact product and current owner | Acceptance and dependency |
 | --- | --- | --- |
 | P1: canonical line/tensor comparisons | Accepted natural p₁*(E⊗L)≅p₁*E⊗p₁*L and specified determinant pairing L⊗Q≅O, retaining actual unit/braiding/chart comparisons. | `PullbackTensorCompatibility` proves the literal canonical mate for any f and any other module sheaf; `LineTensorCompatibility` proves both chart multiplication equations with +1. Independent of perfect pushforward; P3 must still use these actual maps in its triangle. |
-| P2: arbitrary-perfect projection | For every intrinsic perfect K on P¹, prove Rp*K perfect over Spec R. Existing `BoundedDerivedPushforward` only covers explicitly bounded vector-bundle terms. | Selected route: P¹-specific nonnoetherian strictification, then that finite-term theorem. First prove a finite attachment lowering the local strict amplitude, then terminate at a finite locally free syzygy and identify the original derived object. No extra bounded-vector-bundle or noetherian hypothesis may remain. |
+| P2: arbitrary-perfect projection | Accepted strictification and actual Rp perfection for every bounded-below termwise-QC locally perfect representative. An intrinsic perfect D+ input is covered when supplied such a genuine representative. | `Strictification` produces the actual global top-cycle epi, finite attachment/termination and strict derived model; `NativePerfectPushforward` applies original Rp. Remaining producer: a genuine termwise-QC representative for every intrinsic perfect input, with no supplied replacement, noetherian or bounded-vector-bundle hypothesis. |
 | P3: natural diagonal generation | Identify the existing projected incidence triangle, initially for vector bundles, as p*Rp*(E⊗L)→Q⊗p*Rp*E→E⊗Q; tensor by L and rotate to p*G₀(E)→E→L⊗p*G₁(E). | P1 supplies the first endpoint; existing self-base-change/projection formula supply the second. Retain incidence, quotient and connecting maps. Extend degreewise/totalize and descend through genuine roofs for all intrinsic perfect objects; P2 supplies perfect coefficients. |
 | P4: original K-inverse | Realize G and the diagonal sequence as exact/cofibration-compatible functors on a proved model of the original Perfect category; apply Waldhausen additivity. | Construct natural bounded-complex Čech comparison and the necessary weak-arrow/roof model equivalence. Normalize the positive projection by its canonical adjunction unit, prove O(-1) vanishing and Rp*(O(-2)⊗p*A)[1]≅A, then both original K-map composites, including zero. |
 | P5: native qcqs and supports | Transport the affine construction through `nativeAffineIso`, glue projection perfection on an affine base cover, and prove both coefficient functors preserve the actual inverse-image support. | Use canonical base change for the required open/flat maps. Arbitrary-base-map naturality needs its own tor-independent/perfect comparison; it is not supplied by current flat-base-change scope. |
 
-P2's first finite-attachment target uses a termwise quasi-coherent,
-bounded-below representative with local strict models in a finite interval
-[a,b]. For a<b, find a finite-type quasi-coherent submodule of the b-cycles
-surjecting onto Hᵇ, cover it by a finite sum of powers of the actual line,
-and construct V[-b]→K whose cone has local strict amplitude [a,b−1]. Prove
-that amplitude assertion, not only cohomology vanishing. At a=b the remaining
-single cohomology sheaf must be finite locally free. Supply the cone and
-quasi-isomorphism verifications omitted by the source sketch. Relevant source
+P2's accepted strictification uses a termwise quasi-coherent, bounded-below
+representative with local strict models in a finite interval [a,b]. For a<b,
+finite generators of the actual top homology on both affine charts lift to
+cycle sections. The chart denominator and graph-gluing construction extends
+them through powers of the actual line and supplies a finite vector-bundle
+map V[-b]→K epimorphic on Hᵇ. Its actual cone has strict chart amplitude
+[a,b−1]. At a=b the genuine terminal cycles are finite locally free; finite
+reassembly identifies a strict global derived model. These actual cone and
+quasi-isomorphism verifications are accepted without noetherian assumptions.
+The remaining intrinsic-QC producer is investigating bounded affine counits,
+their original derived-unit maps and the signed two-chart Čech sequence;
+an objectwise replacement will not supply P4's exact/natural roof model.
+Relevant source
 anchors are [Stacks 0F8E](https://stacks.math.columbia.edu/tag/0F8E),
 [0F8F](https://stacks.math.columbia.edu/tag/0F8F) and
 [0GMM](https://stacks.math.columbia.edu/tag/0GMM); use finite-type
@@ -469,12 +484,15 @@ flowchart TD
   B2 --> TT
 ```
 
-Continue four focused proof products after the accepted prerequisites: G7's native auxiliary cone,
-E2-C's explicit transport/pasting bridge, P1's line/tensor maps beside P2's
-finite-attachment/roof investigation, and native realization of B2-A/B's
-accepted spectral row. E2-W and P1's canonical tensor/line comparisons are now
-accepted inputs. Mixed-variable and global-bottom products follow once their
-interfaces are fixed; do not populate every possible branch at once.
+Continue focused proof products after the accepted prerequisites:
+E2-N/S's original cone/null/seed comparison, P2's intrinsic quasicoherent
+representative and P3/P4's diagonal/roof investigation, and native realization
+of B2-A/B's accepted spectral row. E2-C/W, full same-null G7 localization,
+P1's canonical tensor/line comparisons and P2's bounded-below quasicoherent
+strictification/pushforward are accepted inputs. Their exact enrollment and
+affected-client checks passed without a dependency rebuild. Mixed-variable and
+global-bottom products follow once their interfaces are fixed; do not populate
+every possible branch at once.
 
 Use bounded mathematics at Sol 6.1/max for supported transfer, tensor/line
 comparisons, topology and fixed spectral-row obligations. Retain Astra/max for
