@@ -28,12 +28,4 @@ structure IsCompatibleDual {C : Type u} [Category.{v} C]
     (W.cof i ∧ IsPushout i z q s) ↔ (Wd.cof q.op ∧ IsPullback i z q s)
 
 
-/-- Maps out of any actual zero object are cofibrations. -/
-theorem Structure.cof_of_isZero {C : Type u} [Category.{v} C]
-    (W : Structure C) {Z X : C} (hZ : IsZero Z) (f : Z ⟶ X) : W.cof f := by
-  let e := hZ.iso W.isZero
-  have hf : f = e.hom ≫ W.isZero.to_ X := hZ.eq_of_src _ _
-  rw [hf]
-  exact W.cof.comp_mem _ _ (W.cof_iso _ inferInstance) (W.cof_zero _)
-
 end Quillen.Waldhausen

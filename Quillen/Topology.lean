@@ -780,6 +780,7 @@ public import Quillen.Topology.Realization.CompactFundamentalGroupoid
 public import Quillen.Topology.Realization.CompactGraph
 public import Quillen.Topology.Realization.CompactStages
 public import Quillen.Topology.Realization.Connectivity
+public import Quillen.Topology.Realization.Constant
 public import Quillen.Topology.Realization.Coproduct
 public import Quillen.Topology.Realization.Cylinder
 public import Quillen.Topology.Realization.CylinderEndpoints
@@ -856,6 +857,7 @@ public import Quillen.Topology.Realization.SimplexBoundaryHEP
 public import Quillen.Topology.Realization.SimplexCylinder
 public import Quillen.Topology.Realization.SimplexHomotopy
 public import Quillen.Topology.Realization.SimplicialColimits
+public import Quillen.Topology.Realization.Skeleton
 public import Quillen.Topology.Realization.SplitFiber
 public import Quillen.Topology.Realization.SplitFiberCartesian
 public import Quillen.Topology.Realization.SplitFiberCompactHELP
@@ -874,6 +876,7 @@ public import Quillen.Topology.Realization.ZeroSkeleton
 public import Quillen.Topology.SequentialColimit.CompactCartesian
 public import Quillen.Topology.ThickTransition.Basic
 public import Quillen.Topology.ThickTransition.MappingCylinder
+public import Quillen.Topology.UnitInterval
 
 /-!
 # Topology

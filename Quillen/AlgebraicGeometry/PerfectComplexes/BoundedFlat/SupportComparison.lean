@@ -74,7 +74,7 @@ theorem boundedFlatPerfectSupported_mappingCone {K L : Complex X}
     rw [quasiIso_iff]
     intro n
     exact (quasiIsoAt_iff_exactAt _ n (hK.2 n)).mpr (hL.2 n)
-  have hc := mappingCone_acyclic_of_quasiIso ((restrict j).map f)
+  have hc := Quillen.HomologicalAlgebra.mappingCone_acyclic_of_quasiIso ((restrict j).map f)
   intro n
   exact (hc n).of_iso
     (CochainComplex.mappingCone.mapHomologicalComplexIso f (Scheme.Modules.restrictFunctor j)).symm

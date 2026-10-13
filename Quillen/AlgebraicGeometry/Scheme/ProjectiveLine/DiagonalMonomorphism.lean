@@ -26,15 +26,6 @@ set_option backward.defeqAttrib.useBackward true
 
 namespace Quillen.Scheme.ProjectiveLine
 open PolynomialLaurent
-/-- One of the two original polynomial charts. -/
-def polynomialChart (R : CommRingCat.{u}) (b : Bool) :
-    Spec (.of (Polynomial R)) ⟶ twoChartLine R := if b then plusChart R else minusChart R
-instance (R : CommRingCat.{u}) (b : Bool) : IsOpenImmersion (polynomialChart R b) := by
-  cases b <;> dsimp [polynomialChart] <;> infer_instance
-/-- Each original chart lies over the actual polynomial projection. -/
-theorem polynomialChart_projection (R : CommRingCat.{u}) (b : Bool) :
-    polynomialChart R b ≫ projection R = polynomialProjection R := by
-  cases b <;> simp [polynomialChart, plusChart_projection, minusChart_projection]
 /-- The four genuine rectangle maps, indexed by ordered pairs of chart choices. -/
 def diagonalRectangle (R : CommRingCat.{u}) (b : Bool × Bool) :
     polynomialSquare R ⟶ relativeSquare R :=

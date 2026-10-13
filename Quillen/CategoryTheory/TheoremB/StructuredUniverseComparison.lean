@@ -7,7 +7,7 @@ module
 
 public import Quillen.CategoryTheory.TheoremB.StructuredFullWeakComparison
 public import Quillen.CategoryTheory.Comma.StructuredUniverseLift
-public import Quillen.Topology.ClassifyingSpace.UniverseHomotopy
+public import Quillen.Topology.ClassifyingSpace.UniverseHomotopyTracks
 
 /-!
 # The original structured Theorem B comparison in arbitrary universes
@@ -27,6 +27,9 @@ open CategoryTheory
 open scoped Topology unitInterval
 universe u₁ v₁ u₂ v₂
 namespace Quillen
+
+attribute [simp] classifyingSpaceUniversalHomotopy_vertex_track
+
 variable {C : Type u₁} [Category.{v₁} C] {D : Type u₂} [Category.{v₂} D]
 
 /-- A constant functor realizes to the constant map, in independent universes. -/
@@ -46,21 +49,6 @@ variable {C : Type u₁} [Category.{v₁} C] {D : Type u₂} [Category.{v₂} D]
   rw [show classifyingSpaceMap K = TopCat.const (classifyingSpacePoint (AsSmall.up.obj d))
     from classifyingSpaceMap_const_direct _]
   exact classifyingSpaceMapUniversal_point V _
-
-/-- The universal realized homotopy traverses the exact original component edge. -/
-@[simp] theorem classifyingSpaceUniversalHomotopy_vertex
-    {F G : C ⥤ D} (α : F ⟶ G) (c : C) (t : unitInterval) :
-    classifyingSpaceUniversalHomotopy α (t, classifyingSpacePoint c) =
-      classifyingSpacePath (α.app c) t := by
-  let U : C ⥤ AsSmall.{max u₁ v₁ u₂ v₂} C := AsSmall.up
-  let V : AsSmall.{max u₁ v₁ u₂ v₂} D ⥤ D := AsSmall.down
-  let α' := Functor.whiskerLeft (AsSmall.down : AsSmall.{max u₁ v₁ u₂ v₂} C ⥤ C)
-    (Functor.whiskerRight α (AsSmall.up : D ⥤ AsSmall.{max u₁ v₁ u₂ v₂} D))
-  change classifyingSpaceMapUniversal V (classifyingSpaceNaturalTransformationHomotopy α'
-    (t, classifyingSpaceMapUniversal U (classifyingSpacePoint c))) = _
-  rw [classifyingSpaceMapUniversal_point,
-    classifyingSpaceNaturalTransformationHomotopy_vertex, classifyingSpaceMapUniversal_path]
-  rfl
 
 /-- In common small universes, the universal homotopy is the original homotopy
 at every point and every interval parameter. -/
@@ -139,7 +127,7 @@ theorem structuredFiberComparisonUniversal_vertex_path (d : D)
     (X : StructuredArrow d F) (t : unitInterval) :
     (structuredFiberComparisonUniversal F d (classifyingSpacePoint X)).1.2 t =
       classifyingSpacePath X.hom (unitInterval.symm t) := by
-  rw [structuredFiberComparisonUniversal_path, classifyingSpaceUniversalHomotopy_vertex]
+  rw [structuredFiberComparisonUniversal_path, classifyingSpaceUniversalHomotopy_vertex_track]
   rfl
 
 /-- An identity structured arrow gives the exact constant-path basepoint. -/

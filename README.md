@@ -34,7 +34,7 @@ and [public API reference](docs/reference/API.md).
 
 ## Quick start
 
-The **0.4.1 development version** uses Lean **4.34.1** and the mathlib revision
+The **0.5.0 development version** uses Lean **4.34.1** and the mathlib revision
 pinned in [lakefile.toml](lakefile.toml). Install
 [elan](https://github.com/leanprover/elan) to use the committed
 [toolchain](lean-toolchain).
@@ -52,6 +52,10 @@ For a published dependency, replace `path` with
 `git = "https://github.com/kangxyz/quillen-k-theory.git"` and a `rev` pinned to
 the selected release tag or commit. The candidate version does not itself
 identify a published tag.
+
+Version 0.5.0 consolidates shared foundations and moves generic algebra out of
+geometric and G-theory application owners. It removes obsolete imports and
+duplicate API spellings; see the [migration notes](docs/reference/API.md#migration-to-050).
 
 Import the interface you need:
 

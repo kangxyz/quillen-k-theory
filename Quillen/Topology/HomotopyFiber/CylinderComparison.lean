@@ -5,6 +5,7 @@ Authors: Quillen K-theory contributors
 -/
 module
 
+public import Quillen.Topology.UnitInterval
 public import Quillen.Topology.HomotopyFiber.ContractibleSource
 public import Quillen.Topology.HomotopyFiber.WeakInvariance
 
@@ -48,12 +49,6 @@ def cylinderStrictLift : C(X, HomotopyFiber p b) where
   continuous_toFun := by
     apply Continuous.subtype_mk
     exact g.continuous.prodMk continuous_const
-
-@[fun_prop] lemma cylinder_interval_mul_continuous :
-    Continuous (fun z : unitInterval × unitInterval ↦ z.1 * z.2) := by
-  apply Continuous.subtype_mk
-  exact (continuous_subtype_val.comp continuous_fst).mul
-    (continuous_subtype_val.comp continuous_snd)
 
 /-- Move along the displayed original cylinder and retain its entire remaining
 projected path. At one endpoint this is loop inclusion; at the other it is

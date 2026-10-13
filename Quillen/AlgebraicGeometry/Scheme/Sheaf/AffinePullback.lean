@@ -10,11 +10,12 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffinePushforward
 public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
 
 /-!
-# Actual affine sheaf pullback and extension of scalars
+# Actual sheaf pullback, open restriction, and affine extension of scalars
 
 The comparison is obtained from the actual pushforward/global-sections
 square by uniqueness of left adjoints. In particular it concerns the genuine
-scheme-module pullback, including its adjunction unit.
+scheme-module pullback, including its adjunction unit. The generic open
+restriction square is the ordered composition of the actual pullback comparisons.
 -/
 @[expose] public section
 
@@ -26,6 +27,19 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped TensorProduct
 
 namespace Quillen.SchemeSheaf
+
+/-- Actual geometric pullback commutes with restriction across a commuting
+square with open horizontal maps. -/
+def pullbackOpenSquare {W X V Y : Scheme.{u}}
+    (p : W ⟶ X) (q : W ⟶ V) (f : X ⟶ Y) (a : V ⟶ Y)
+    [IsOpenImmersion p] [IsOpenImmersion a] (h : p ≫ f = q ≫ a) :
+    Scheme.Modules.pullback f ⋙ Scheme.Modules.restrictFunctor p ≅
+      Scheme.Modules.restrictFunctor a ⋙ Scheme.Modules.pullback q :=
+  Functor.isoWhiskerLeft _ (Scheme.Modules.restrictFunctorIsoPullback p) ≪≫
+    Scheme.Modules.pullbackComp p f ≪≫ Scheme.Modules.pullbackCongr h ≪≫
+    (Scheme.Modules.pullbackComp q a).symm ≪≫
+    Functor.isoWhiskerRight (Scheme.Modules.restrictFunctorIsoPullback a).symm _
+
 variable {R S : CommRingCat.{u}} (φ : R ⟶ S)
 
 /-- Actual affine sheaf pullback of an associated sheaf is associated to

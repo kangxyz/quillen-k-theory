@@ -15,6 +15,8 @@ obligations; [scope](Scope.md) gives the cross-topic boundary.
 | `Quillen.KTheory.API` | Exact-category K-groups, canonical maps, equivalences, and small models |
 | `Quillen.KTheory.Plus` | Selected ring plus/Q comparison and component interfaces |
 | `Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeUniversal` | Scalar-extension unit and additive Hom universal property |
+| `Quillen.Algebra.Category.ModuleCat.Finite` | Finite-module Serre and exact-category interfaces on mathlib's finitely generated module category |
+| `Quillen.Algebra.Homology.FiniteProjectiveResolution` | Actual finite-projective resolutions and finite-free PID resolutions |
 | `Quillen.KTheory.GrothendieckComparison.Equivalence` | Classical exact-category K₀ comparison |
 | `Quillen.Waldhausen.Basic` | Cofibrations, weak equivalences, and chosen zero |
 | `Quillen.Waldhausen.KTheory` | Connective S-construction groups |
@@ -29,6 +31,9 @@ obligations; [scope](Scope.md) gives the cross-topic boundary.
 | `Quillen.Topology.DeformationRetract.Basic` | Cylinder deformation retracts and pushout transport |
 | `Quillen.Topology.MappingCylinder.Basic` | Interval maps, cylinder projections, and retracts |
 | `Quillen.Topology.HELP.Basic` | Homotopy extension and continuous cylinder coordinates |
+| `Quillen.Topology.UnitInterval` | Shared interval multiplication continuity |
+| `Quillen.Topology.Realization.Constant` | The literal realization of a constant simplicial map |
+| `Quillen.Topology.Realization.Skeleton` | The bottom simplicial skeleton |
 | `Quillen.Topology.Pushout.HomotopyEquivalence` | Homotopy gluing and specified component maps |
 | `Quillen.Topology.Realization.SubfamilyHEP` | Homotopy extension for realized simplicial subfamilies |
 | `Quillen.AlgebraicGeometry.Scheme` | Selected geometric K/G interfaces |
@@ -43,6 +48,32 @@ Whole-topic imports include `Quillen.Algebra`, `Quillen.CategoryTheory`,
 `Quillen.Localization`, `Quillen.GTheory`, `Quillen.AlgebraicGeometry`, and
 `Quillen.Waldhausen`. `Quillen.AlgebraicGeometry.PerfectComplexes` is a generated
 nested facade; individual modules have smaller dependency closures.
+
+## Migration to 0.5.0
+
+The 0.5.0 refactor places generic foundations below their applications and
+uses one implementation of shared constructions. Obsolete module paths and
+duplicate declarations are removed; update imports and references directly.
+
+| Previous import | Current owner |
+| --- | --- |
+| `Quillen.GTheory.FiniteModules.Basic` | `Quillen.Algebra.Category.ModuleCat.Finite` |
+| `Quillen.AlgebraicGeometry.Scheme.Regular.FiniteProjectiveResolution` | `Quillen.Algebra.Homology.FiniteProjectiveResolution` |
+| `Quillen.AlgebraicGeometry.Scheme.Regular.LocalPrincipalDomain` | `Quillen.Algebra.RegularLocal.PrincipalDomain` |
+| `Quillen.Waldhausen.QuillenComparison.SpanNaturality` | `Quillen.CategoryTheory.QConstruction.SpanIsoNaturality` |
+
+Use `Quillen.ExactStructure.qSpan_iso_naturality` for the shared Q-span law and
+`Quillen.HomologicalAlgebra.mappingCone_acyclic_of_quasiIso` for cone acyclicity.
+The localization functor and representative-map law are
+`Quillen.GroupCompletion.Localization.actedMapFunctor` and
+`actedMapFunctor_mkHom`. The realization constant-map law is
+`Quillen.realization_const_apply`; the universal homotopy vertex-track law is
+`Quillen.classifyingSpaceUniversalHomotopy_vertex_track`.
+Projective-line applications use the single `polynomialChart` family in
+`Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Charts`, with `true` selecting
+the plus chart and `false` selecting the minus chart.
+
+Mathematical hypotheses, original maps, and comparison boundaries are retained.
 
 ## Module paths and namespaces
 

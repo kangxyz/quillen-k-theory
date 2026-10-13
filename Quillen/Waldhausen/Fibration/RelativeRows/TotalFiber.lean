@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.Topology.Realization.Constant
 public import Quillen.Waldhausen.Fibration.RelativeRows.CoarseEvaluation
 public import Quillen.Topology.HomotopyFiber.Basic
 
@@ -66,7 +67,7 @@ theorem totalFiberInclusion_tail :
   change (SSet.toTop.map (totalFiberInclusion N) ≫
     SSet.toTop.map (TheoremA.diagonalMap (tailSRows N))) x = _
   rw [← Functor.map_comp, totalFiberInclusion_tail]
-  exact realization_const _ x
+  exact realization_const_apply _ x
 
 /-- The original relative chosen point maps to the actual double-S chosen point. -/
 @[simp] theorem totalTailMap_basepoint :

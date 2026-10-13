@@ -7,6 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.Topology.Realization.Prism
+public import Quillen.Topology.Realization.Constant
 
 /-! # Endpoints of the geometric realization cylinder comparison -/
 @[expose] public section
@@ -19,18 +20,6 @@ open scoped Simplicial Topology unitInterval
 universe u
 
 namespace Quillen
-
-/-- A constant simplicial map realizes to the corresponding constant continuous map. -/
-theorem realization_const_apply {X Y : SSet.{u}} (y : Y _⦋0⦌) (x : |X|) :
-    SSet.toTop.map (SSet.const y) x = realizationPoint y := by
-  let p : X ⟶ Δ[0] := SSet.const (SSet.stdSimplex.obj₀Equiv.symm 0)
-  have h : (SSet.const y : X ⟶ Y) = p ≫ SSet.yonedaEquiv.symm y := by
-    simp [SSet.yonedaEquiv_symm_zero]
-  rw [h, Functor.map_comp, TopCat.comp_app]
-  change SSet.toTop.map (SSet.yonedaEquiv.symm y) _ =
-    SSet.toTop.map (SSet.yonedaEquiv.symm y) default
-  congr 1
-  exact Subsingleton.elim _ _
 
 /-- The realized constant vertex is the corresponding interval endpoint. -/
 @[simp] theorem realizationIntervalIso_zero_const :

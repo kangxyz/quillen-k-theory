@@ -7,7 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalNullHomotopy
-public import Mathlib.Algebra.Homology.HomotopyCategory.Acyclic
+public import Quillen.Algebra.Homology.MappingConeAcyclicity
 
 /-!
 # Local lifting through quasi-isomorphisms
@@ -31,17 +31,6 @@ open CategoryTheory.Pretriangulated CochainComplex
 universe u
 
 namespace Quillen.PerfectComplexes
-
-/-- The cone of a quasi-isomorphism is genuinely acyclic. -/
-theorem mappingCone_acyclic_of_quasiIso {A : Type*} [Category* A] [Abelian A]
-    {K L : CochainComplex A ℤ} (s : K ⟶ L) [QuasiIso s] : (mappingCone s).Acyclic := by
-  let P := HomotopyCategory.subcategoryAcyclic A
-  have hs : P.trW ((HomotopyCategory.quotient A (ComplexShape.up ℤ)).map s) := by
-    rw [← HomotopyCategory.quasiIso_eq_trW_subcategoryAcyclic]
-    exact (HomotopyCategory.quotient_map_mem_quasiIso_iff s).2 (inferInstanceAs (QuasiIso s))
-  exact (HomotopyCategory.quotient_obj_mem_subcategoryAcyclic_iff_acyclic _).1
-    ((P.trW_iff_of_distinguished (mappingCone.triangleh s)
-      (HomotopyCategory.mappingCone_triangleh_distinguished s)).1 hs)
 
 /-- Nullhomotopy after mapping into a cone produces a lift up to homotopy. -/
 theorem exists_lift_of_cone_nullHomotopy {A : Type*} [Category* A] [Abelian A]
@@ -67,7 +56,7 @@ theorem exists_local_quasiIso_lift {X : Scheme.{u}} {P K L : Complex X}
       ∃ g : (@restrict Y X j hj).obj P ⟶ (@restrict Y X j hj).obj K,
         Nonempty (Homotopy ((@restrict Y X j hj).map f) (g ≫ (@restrict Y X j hj).map s)) := by
   obtain ⟨Y, j, hj, y, hy, ⟨h⟩⟩ := exists_local_nullHomotopy hP
-    (f ≫ mappingCone.inr s) (mappingCone_acyclic_of_quasiIso s) x
+    (f ≫ mappingCone.inr s) (Quillen.HomologicalAlgebra.mappingCone_acyclic_of_quasiIso s) x
   let := hj
   let R := Scheme.Modules.restrictFunctor j
   let e := mappingCone.mapHomologicalComplexIso s R

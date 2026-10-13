@@ -40,7 +40,8 @@ theorem quasiIso_of_openImmersionCover {X : Scheme.{u}} {K L : Complex X} (f : K
   apply exactAt_of_openImmersionCover _ Y j hj n
   intro i
   let := hf i
-  exact (mappingCone_acyclic_of_quasiIso ((restrict (j i)).map f) n).of_iso
+  exact (Quillen.HomologicalAlgebra.mappingCone_acyclic_of_quasiIso
+    ((restrict (j i)).map f) n).of_iso
     (CochainComplex.mappingCone.mapHomologicalComplexIso f (Scheme.Modules.restrictFunctor (j
       i))).symm
 

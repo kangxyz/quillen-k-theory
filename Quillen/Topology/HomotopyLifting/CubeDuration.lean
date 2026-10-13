@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.Topology.UnitInterval
 public import Quillen.Topology.HomotopyLifting.Stationary
 public import Mathlib.Topology.Algebra.Monoid
 public import Quillen.Topology.HELP.CubeBoundaryHomeomorph
@@ -23,7 +24,7 @@ universe u
 The empty product is one, correctly excluding a boundary in dimension zero. -/
 def boundaryDuration (n : ℕ) : C(cube.{u} n,unitInterval) :=
   ⟨fun z ↦ ∏ i : Fin n,z.down i * σ (z.down i),by
-    let : ContinuousMul unitInterval := ⟨continuous_intervalMul⟩
+    let : ContinuousMul unitInterval := ⟨Quillen.continuous_intervalMul⟩
     apply continuous_finsetProd
     intro i _
     fun_prop⟩

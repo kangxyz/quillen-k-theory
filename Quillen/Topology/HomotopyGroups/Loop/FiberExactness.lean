@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.Topology.UnitInterval
 public import Quillen.Topology.HomotopyFiber.Sequence
 public import Quillen.Topology.HomotopyGroups.Loop.DegreeShift
 
@@ -29,12 +30,6 @@ namespace Quillen.HomotopyFiber
 variable {N : Type w} {X : Type u} {Y : Type v}
   [TopologicalSpace X] [TopologicalSpace Y]
 variable (f : C(X, Y)) (y : Y) (x : X) (h : f x = y)
-
-@[fun_prop]
-theorem continuous_intervalMul' : Continuous (fun z : I × I => z.1 * z.2) := by
-  apply Continuous.subtype_mk
-  exact (continuous_subtype_val.comp continuous_fst).mul
-    (continuous_subtype_val.comp continuous_snd)
 
 /-- Moving along a source loop contracts its image in the homotopy fiber. -/
 def loopMapInclusionNullhomotopy :

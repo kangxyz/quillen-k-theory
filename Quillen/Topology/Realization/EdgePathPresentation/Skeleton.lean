@@ -9,7 +9,7 @@ module
 public import Quillen.Topology.Realization.CompactFundamentalGroupoid
 public import Quillen.Topology.Realization.EdgePathPresentation.Attachment
 public import Quillen.CategoryTheory.TheoremA.EnrichedBoundaryHEP
-public import Mathlib.AlgebraicTopology.SimplicialSet.Skeleton
+public import Quillen.Topology.Realization.Skeleton
 
 /-!
 # Actual skeletal attachments and compact path reduction
@@ -216,11 +216,6 @@ abbrev realizedSkeletonCocone (X : SSet.{u}) : Cocone (realizedSkeletonTower X) 
 /-- The actual realization is the colimit of its skeletal tower. -/
 abbrev realizedSkeletonIsColimit (X : SSet.{u}) : IsColimit (realizedSkeletonCocone X) :=
   realizedRelativeSkeletonIsColimit ((⊥ : X.Subcomplex).ι)
-
-/-- The relative skeleton of the empty inclusion is the ordinary skeleton. -/
-theorem skeletonOfMono_bot (X : SSet.{u}) (n : ℕ) :
-    SSet.skeletonOfMono ((⊥ : X.Subcomplex).ι) n = X.skeleton n := by
-  simp [SSet.skeletonOfMono, SSet.Subcomplex.range]
 
 /-- Identification of each chosen stage with the ordinary simplicial skeleton. -/
 def realizedSkeletonStageIso (X : SSet.{u}) (n : ℕ) :

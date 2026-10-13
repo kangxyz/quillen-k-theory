@@ -27,26 +27,6 @@ set_option backward.defeqAttrib.useBackward true
 namespace Quillen.Waldhausen.QuotientRows
 variable {C : Type u} [Category.{v} C] (W : Structure C)
 
-/-- An arbitrary arrow between zero objects is a genuine zero arrow object. -/
-theorem arrow_isZero_of_components (X : Arrow C) (hl : IsZero X.left) (hr : IsZero X.right) :
-    IsZero X where
-  unique_to Y := by
-    refine ⟨{
-      default := Arrow.homMk (hl.to_ Y.left) (hr.to_ Y.right) (hl.eq_of_src _ _)
-      uniq := ?_ }⟩
-    intro f
-    apply Arrow.hom_ext
-    · exact hl.eq_of_src _ _
-    · exact hr.eq_of_src _ _
-  unique_from Y := by
-    refine ⟨{
-      default := Arrow.homMk (hl.from_ Y.left) (hr.from_ Y.right) (hr.eq_of_tgt _ _)
-      uniq := ?_ }⟩
-    intro f
-    apply Arrow.hom_ext
-    · exact hl.eq_of_tgt _ _
-    · exact hr.eq_of_tgt _ _
-
 /-- Reedy cofibrations of pointwise arrows are detected by the two original
 component Reedy squares, using the actual mapped relative pushouts. -/
 theorem pointwiseExtension_cof_iff
@@ -72,7 +52,7 @@ def arrowDiagram (n : SimplexCategory) : Arrow (Obj W n) ⥤ (Interval n ⥤ Arr
 /-- Original source and target row axioms give the actual arrow-valued row axioms. -/
 theorem arrowDiagram_isRow {n : SimplexCategory} (X : Arrow (Obj W n)) :
     IsRow (ArrowCategory.waldhausenStructure W) ((arrowDiagram W n).obj X) where
-  zero i := arrow_isZero_of_components _ (X.left.property.zero i) (X.right.property.zero i)
+  zero i := ArrowCategory.isZero_of_components _ (X.left.property.zero i) (X.right.property.zero i)
   cofibration i j k hij hjk :=
     ⟨X.left.property.cofibration i j k hij hjk, X.right.property.cofibration i j k hij hjk⟩
   quotient i j k hij hjk := ExtensionCategory.arrow_isPushout _ _ _ _
@@ -136,7 +116,7 @@ theorem rowsToArrow_exact (n : SimplexCategory) :
       (waldhausenStructure (ArrowCategory.waldhausenStructure W) n).weq
       (ArrowCategory.waldhausenStructure (waldhausenStructure W n)).cof
       (ArrowCategory.waldhausenStructure (waldhausenStructure W n)).weq (rowsToArrow W n) where
-  zero h := arrow_isZero_of_components _
+  zero h := ArrowCategory.isZero_of_components _
     ((postcompose_exact _ W (ArrowCategory.source_exact W) n).zero h)
     ((postcompose_exact _ W (ArrowCategory.target_exact W) n).zero h)
   cofibration _ h :=
@@ -153,7 +133,7 @@ theorem arrowToRows_exact (n : SimplexCategory) :
       (ArrowCategory.waldhausenStructure (waldhausenStructure W n)).weq
       (waldhausenStructure (ArrowCategory.waldhausenStructure W) n).cof
       (waldhausenStructure (ArrowCategory.waldhausenStructure W) n).weq (arrowToRows W n) where
-  zero h := isZero_of_components _ _ (fun p ↦ arrow_isZero_of_components _
+  zero h := isZero_of_components _ _ (fun p ↦ ArrowCategory.isZero_of_components _
     (evaluation_isZero W ((ArrowCategory.source_exact (waldhausenStructure W n)).zero h) p)
     (evaluation_isZero W ((ArrowCategory.target_exact (waldhausenStructure W n)).zero h) p))
   cofibration _ h := cof_of_rowsToArrow W h

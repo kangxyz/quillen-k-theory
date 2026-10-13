@@ -21,9 +21,6 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
 namespace Quillen.SchemeSheaf
-/-- The original section functor is additive by its pointwise module maps. -/
-local instance (R : CommRingCat.{u}) : (moduleSpecΓFunctor (R := R)).Additive where
-  map_add := by intros; rfl
 /-- Actual global-section exactness detects exactness of quasicoherent affine sheaves. -/
 theorem exact_of_exact_globalSections (R : CommRingCat.{u})
     (S : ShortComplex (Spec R).Modules)

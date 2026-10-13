@@ -89,7 +89,7 @@ theorem quasiIso_pullback_of_boundedAbove_stalkwiseFlat {X Y : Scheme.{u}} (f : 
       IsZero ((CochainComplex.mappingCone s).X n) :=
     (CochainComplex.mappingCone.isZero_X_iff s n).mpr ⟨hb (n + 1) (by omega), hc n (by omega)⟩
   have ha := acyclic_pullback_of_boundedAbove_stalkwiseFlat f _ ht
-    (PerfectComplexes.mappingCone_acyclic_of_quasiIso s) (max (b - 1) c) hu
+    (Quillen.HomologicalAlgebra.mappingCone_acyclic_of_quasiIso s) (max (b - 1) c) hu
   apply HomologicalAlgebra.quasiIso_of_mappingCone_acyclic
   intro n
   exact (ha n).of_iso

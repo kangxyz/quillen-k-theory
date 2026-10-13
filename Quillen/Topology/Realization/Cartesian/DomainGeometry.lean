@@ -9,6 +9,7 @@ module
 public import Quillen.CategoryTheory.TheoremA.SkeletalCofibrations
 public import Quillen.CategoryTheory.TheoremA.SkeletalNaturality
 public import Quillen.Topology.Realization.MonomorphismHEP
+public import Quillen.Topology.Realization.Skeleton
 
 /-!
 # Genuine skeletal attachments for coefficient-product domains
@@ -31,6 +32,8 @@ set_option backward.defeqAttrib.useBackward true
 
 namespace Quillen.CartesianRealization.Skeletal
 open TheoremA
+
+attribute [simp] skeletonOfMono_bot
 
 /-- External product with a fixed coefficient simplicial set. -/
 def outerProductFunctor (X : SSet.{u}) : SSet.{u} ⥤ (SimplexCategoryᵒᵖ ⥤ SSet.{u}) where
@@ -144,16 +147,11 @@ def domainCellEquiv (K : SSet.{u}) (n : ℕ) : DomainCell K n ≃ K.nonDegenerat
   left_inv _ := rfl
   right_inv _ := rfl
 
-/-- Relative skeleta from the empty subcomplex are the ordinary skeleta. -/
-@[simp] theorem skeletonOfInitial_eq (K : SSet.{u}) (n : ℕ) :
-    SSet.skeletonOfMono (SSet.Subcomplex.ι (⊥ : K.Subcomplex)) n = K.skeleton n := by
-  simp [SSet.skeletonOfMono]
-
 /-- Exact identification of the relative-cell-complex stage with the ordinary skeleton. -/
 def domainSkeletonIso (K : SSet.{u}) (n : ℕ) :
     (SSet.skeletonOfMono (SSet.Subcomplex.ι (⊥ : K.Subcomplex)) n : SSet.{u}) ≅
       (K.skeleton n : SSet.{u}) :=
-  SSet.Subcomplex.eqToIso (skeletonOfInitial_eq K n)
+  SSet.Subcomplex.eqToIso (skeletonOfMono_bot K n)
 
 /-- The coproduct of all standard simplices attached at one domain stage. -/
 abbrev domainCells (K : SSet.{u}) (n : ℕ) : SSet.{u} :=

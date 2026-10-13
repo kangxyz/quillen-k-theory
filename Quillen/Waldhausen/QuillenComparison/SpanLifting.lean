@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.Waldhausen.QuillenComparison.SpanNaturality
+public import Quillen.CategoryTheory.QConstruction.SpanIsoNaturality
 
 /-! # Lifting Q-naturality to the unique apex isomorphism
 
@@ -49,12 +49,12 @@ theorem exists_apexIso_of_q_naturality {X Y X' Y' : C}
       wr := t.wr }
   have hu : Q.mkHom E.deflation E.inflation u =
       Q.mkHom E.deflation E.inflation s ≫ (E.qIsoOfIso b).hom := by
-    have he := qSpan_iso_naturality E s u (Iso.refl X) b (Iso.refl s.apex)
+    have he := E.qSpan_iso_naturality s u (Iso.refl X) b (Iso.refl s.apex)
       (by simp [u]) (by simp [u])
     simpa using he.symm
   have hv : Q.mkHom E.deflation E.inflation v =
       (E.qIsoOfIso a).hom ≫ Q.mkHom E.deflation E.inflation t := by
-    have he := qSpan_iso_naturality E v t a (Iso.refl Y') (Iso.refl t.apex)
+    have he := E.qSpan_iso_naturality v t a (Iso.refl Y') (Iso.refl t.apex)
       (by simp [v]) (by simp [v])
     simpa using he
   have huv : Q.mkHom E.deflation E.inflation u = Q.mkHom E.deflation E.inflation v :=

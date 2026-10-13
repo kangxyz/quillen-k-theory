@@ -247,6 +247,7 @@ public import Quillen.CategoryTheory.RankedChain.Resolution
 public import Quillen.CategoryTheory.SemisimplexResolution.Append
 public import Quillen.CategoryTheory.SemisimplexResolution.Basic
 public import Quillen.CategoryTheory.SemisimplexResolution.Contraction
+public import Quillen.CategoryTheory.SimplexCategory
 public import Quillen.CategoryTheory.Sites.BasisExactness
 public import Quillen.CategoryTheory.Sites.CechComparison
 public import Quillen.CategoryTheory.Sites.CechExactSequences

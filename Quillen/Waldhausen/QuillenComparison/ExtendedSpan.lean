@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.CategoryTheory.QConstruction.SpanIsoNaturality
 public import Quillen.Waldhausen.QuillenComparison.ExtendedRows
 public import Quillen.Waldhausen.QuillenComparison.RecoverSubobjects
 public import Quillen.Waldhausen.QuillenComparison.FlagPresentation
@@ -192,7 +193,7 @@ theorem extendedRow_wholeSpan :
     (E.qIsoOfIso ((extendedRowMiddleIso E A hA p hp r hr).app
         (interval 0 (Fin.last n) (Fin.zero_le _)))).hom ≫
       Q.mkHom E.deflation E.inflation (extendedRepresentative E A hA p hp r hr) :=
-  qSpan_iso_naturality E _ _ _ _ (extendedRowApexIso E A hA p hp r hr)
+  E.qSpan_iso_naturality _ _ _ _ (extendedRowApexIso E A hA p hp r hr)
     (extendedRow_left_leg E A hA p hp r hr) (extendedRow_right_leg E A hA p hp r hr)
 
 /-- For an existing row, completing its initial flag recovers the prescribed
@@ -207,7 +208,7 @@ theorem extendedRepresentative_initialFlag (F : Row E ⦋n⦌) {P Z : C}
       Q.mkHom E.deflation E.inflation
         ({ apex := P, l := p, r := r, wl := hp, wr := hr } :
           Span E.deflation E.inflation ((initialFlag E F).obj (Fin.last n)) Z) := by
-  have h := qSpan_iso_naturality E
+  have h := E.qSpan_iso_naturality
     (extendedRepresentative E (initialFlag E F) (initialFlag_inflation E F) p hp r hr)
     ({ apex := P, l := p, r := r, wl := hp, wr := hr } :
       Span E.deflation E.inflation ((initialFlag E F).obj (Fin.last n)) Z)

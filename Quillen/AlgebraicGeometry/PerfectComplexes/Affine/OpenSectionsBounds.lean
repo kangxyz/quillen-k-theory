@@ -43,7 +43,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex T
 namespace Quillen.PerfectComplexes.Affine
 local instance openSectionsBoundsGlobalSections_additive (R : CommRingCat.{u}) (r : R) :
     (moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r))).Additive :=
-  moduleSpecΓFunctor_additive _
+  Quillen.SchemeSheaf.moduleSpecΓFunctor_additive _
 
 /-- The actual affine counit reflects the upper cohomology bound to original sections. -/
 lemma isLE_sections_of_injective {R : CommRingCat.{u}}

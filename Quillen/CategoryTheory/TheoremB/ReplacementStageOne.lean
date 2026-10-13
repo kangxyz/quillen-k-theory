@@ -139,6 +139,6 @@ theorem replacementVertex_base (d : D) (x : |H.obj d|) :
   change (SSet.toTop.map (replacementVertexInclusion H d) ≫
     SSet.toTop.map (replacementBaseMap H)) x = _
   rw [← Functor.map_comp]
-  exact realization_const (nerveVertex d) x
+  exact realization_const_apply (nerveVertex d) x
 
 end Quillen.TheoremA

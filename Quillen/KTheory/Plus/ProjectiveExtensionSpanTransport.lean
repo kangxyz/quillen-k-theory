@@ -25,7 +25,7 @@ def localizedExtensionSpanTransport {X Y : Category.{u, u} R}
     GroupCompletion.Localization (IsoCategory R) ((exactStructure R).ExtensionFiber Y) ⥤
       GroupCompletion.Localization (IsoCategory R) ((exactStructure R).ExtensionFiber X) := by
   letI := extensionSpanTransportLinear R s
-  exact GroupCompletion.Localization.map ((exactStructure R).extensionSpanTransport s)
+  exact GroupCompletion.Localization.actedMapFunctor ((exactStructure R).extensionSpanTransport s)
 
 /-- The actual localized transport fixes the denominator object. -/
 @[simp]
@@ -48,7 +48,8 @@ theorem localizedExtensionSpanTransport_mkHom {X Y : Category.{u, u} R}
         (Functor.LaxLeftLinear.μₗ ((exactStructure R).extensionSpanTransport s) T A.2 ≫
           ((exactStructure R).extensionSpanTransport s).map g) := by
   let := extensionSpanTransportLinear R s
-  exact GroupCompletion.Localization.map_mkHom ((exactStructure R).extensionSpanTransport s) T f g
+  exact GroupCompletion.Localization.actedMapFunctor_mkHom
+    ((exactStructure R).extensionSpanTransport s) T f g
 
 /-- The original localized span transport is a weak equivalence. Its source and target
 action categories are proved weakly contractible; no transport equivalence is assumed. -/

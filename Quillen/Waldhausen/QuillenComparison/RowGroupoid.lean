@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.CategoryTheory.QConstruction.SpanIsoNaturality
 public import Quillen.Waldhausen.QuillenComparison.Reindexing
 public import Mathlib.CategoryTheory.Core
 
@@ -76,7 +77,7 @@ def rowIntervalIso {F G : Row E n} (e : F ⟶ G) :
   NatIso.ofComponents
     (fun p ↦ E.qIsoOfIso (e.app (interval p.left p.right p.endpoints))) (by
       intro p q f
-      apply qSpan_iso_naturality E
+      apply E.qSpan_iso_naturality
         (intervalSpan E F.simplex 0 (leOfHom f)) (intervalSpan E G.simplex 0 (leOfHom f))
         (e.app (interval p.left p.right p.endpoints))
         (e.app (interval q.left q.right q.endpoints))

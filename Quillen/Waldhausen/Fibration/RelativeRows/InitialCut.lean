@@ -101,7 +101,7 @@ theorem cutToId_cof (n : SimplexCategory) (X : Obj N n) :
       cases k using Fin.cases with
       | zero => have h : j.val + 1 ≤ 0 := hjk; omega
       | succ k =>
-        apply ExtensionCategory.cof_from_any_zero (ExtensionCategory.waldhausenStructure V)
+        apply Structure.cof_of_isZero (ExtensionCategory.waldhausenStructure V)
         exact ExtensionCategory.isZero_of_components V _
           (X.obj.property.zero (0 : Fin (n.len + 1)).succ)
           (X.obj.property.zero (0 : Fin (n.len + 1)).succ)

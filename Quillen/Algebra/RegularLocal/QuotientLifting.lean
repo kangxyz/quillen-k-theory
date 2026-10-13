@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Regular.FiniteProjectiveResolution
+public import Quillen.Algebra.Homology.FiniteProjectiveResolution
 public import Mathlib.RingTheory.Regular.Free
 public import Mathlib.RingTheory.Regular.IsSMulRegular
 public import Mathlib.RingTheory.LocalRing.Module

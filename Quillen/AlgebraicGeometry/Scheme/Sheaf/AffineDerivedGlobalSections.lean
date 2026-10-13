@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineGlobalSections
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineSections
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.Flasque
 public import Mathlib.CategoryTheory.Abelian.RightDerived
 public import Mathlib.CategoryTheory.Abelian.GrothendieckCategory.EnoughInjectives
@@ -41,10 +42,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace Quillen.SchemeSheaf.AffineDerived
 
 open AffineCech
-
-instance globalSections_additive (R : CommRingCat.{u}) :
-    (moduleSpecΓFunctor (R := R)).Additive :=
-  Functor.additive_of_preserves_binary_products _
 
 /-- Applying the original affine global-sections functor to any injective
 resolution of a quasicoherent sheaf is exact in degree one. The resolution is

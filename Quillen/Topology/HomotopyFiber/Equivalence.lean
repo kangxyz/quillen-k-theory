@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.Topology.UnitInterval
 public import Quillen.Topology.HomotopyFiber.Sequence
 public import Quillen.Topology.HomotopyFiber.Map
 
@@ -28,12 +29,6 @@ universe u v
 namespace Quillen.HomotopyFiber
 variable {X : Type u} {Y : Type v} [TopologicalSpace X] [TopologicalSpace Y]
 variable {f g : C(X, Y)}
-
-@[fun_prop]
-theorem continuous_mulInterval : Continuous (fun z : I × I => z.1 * z.2) := by
-  apply Continuous.subtype_mk
-  exact (continuous_subtype_val.comp continuous_fst).mul
-    (continuous_subtype_val.comp continuous_snd)
 
 /-- Change the map defining a homotopy fiber by prepending the reversed
 pointwise path of the given homotopy. -/

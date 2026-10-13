@@ -20,10 +20,7 @@ namespace Quillen.FiniteProjectiveModule
 variable (R : Type u) [Ring R]
 attribute [local instance] categoryDirectSumMonoidal directSumMonoidal extensionFiberDirectSumAction
 
-@[simp]
-theorem extensionAction_obj_hom {C : Category.{u, u} R} (S : IsoCategory R)
-    (p : (exactStructure R).ExtensionFiber C) :
-    (S ⊙ₗ p).of.obj.hom = coprod.desc (0 : S.of ⟶ C) p.of.obj.hom := rfl
+attribute [simp] extensionAction_obj_hom
 
 /-- The actual pullback product, with fixed quotient, as a fiber object. -/
 abbrev extensionProductFiber {C : Category.{u, u} R}

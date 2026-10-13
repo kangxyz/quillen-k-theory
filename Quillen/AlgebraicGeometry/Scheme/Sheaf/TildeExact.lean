@@ -5,7 +5,7 @@ Authors: Quillen K-theory contributors
 -/
 module
 
-public import Mathlib.AlgebraicGeometry.Modules.Tilde
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineSections
 public import Mathlib.CategoryTheory.Abelian.Exact
 public import Mathlib.Algebra.Homology.ShortComplex.PreservesHomology
 

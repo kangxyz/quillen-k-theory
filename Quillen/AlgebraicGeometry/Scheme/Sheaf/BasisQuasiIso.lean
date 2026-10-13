@@ -7,7 +7,6 @@ module
 
 public import Quillen.CategoryTheory.Sites.BasisExactness
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.SheafEpi
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Basic
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Limits
 
 /-!

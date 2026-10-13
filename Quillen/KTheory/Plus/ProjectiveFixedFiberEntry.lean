@@ -58,16 +58,16 @@ lemma localizedFixedExtensionEntry_map_mkHom (C : Category.{u, u} R)
           ((exactStructure R).extensionDeflationEntry C).map g) := by
   change ((GroupCompletion.Localization.isoFiberEntry
     (exactStructure R).extensionProjection _).map
-      ((GroupCompletion.Localization.map
+      ((GroupCompletion.Localization.actedMapFunctor
         ((exactStructure R).extensionDeflationIsoFiber C)).map
           (GroupCompletion.Localization.mkHom (X := (A, p)) (Y := (B, q)) S f g))).hom.right = _
-  rw [GroupCompletion.Localization.map_mkHom]
-  change (GroupCompletion.Localization.map (IsoFiber.forget
+  rw [GroupCompletion.Localization.actedMapFunctor_mkHom]
+  change (GroupCompletion.Localization.actedMapFunctor (IsoFiber.forget
     (exactStructure R).extensionProjection _)).map
       (GroupCompletion.Localization.mkHom
         (X := (A, ((exactStructure R).extensionDeflationIsoFiber C).obj p))
         (Y := (B, ((exactStructure R).extensionDeflationIsoFiber C).obj q)) S f _) = _
-  rw [GroupCompletion.Localization.map_mkHom]
+  rw [GroupCompletion.Localization.actedMapFunctor_mkHom]
   change GroupCompletion.Localization.mkHom
     (X := (A, (exactStructure R).extensionOfDeflation p.of))
     (Y := (B, (exactStructure R).extensionOfDeflation q.of)) S f (𝟙 _ ≫ _) = _

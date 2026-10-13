@@ -13,7 +13,7 @@ public import Quillen.CategoryTheory.GroupCompletion.LocalizationFunctoriality
 
 A fully faithful, essentially surjective equivariant functor induces an
 equivalence on Grayson's original localization when its lineators are invertible.
-The functor is exactly `Localization.map`: its representatives retain their
+The functor is exactly `Localization.actedMapFunctor`: its representatives retain their
 denominators and first-coordinate maps. No equivariant inverse, braiding, or
 groupoid hypothesis is needed.
 -/
@@ -35,12 +35,12 @@ variable {C : Type u} [Category.{v} C] [MonoidalCategory C]
   {E : Type u₂} [Category.{v₂} E] [MonoidalLeftAction C E]
   (F : D ⥤ E) [F.LaxLeftLinear C]
 
-instance mapPair_faithful [F.Faithful] : (mapPair (C := C) F).Faithful where
+instance actedPairFunctor_faithful [F.Faithful] : (actedPairFunctor (C := C) F).Faithful where
   map_injective {X Y} f g h := by
     change (f.1, F.map f.2) = (g.1, F.map g.2) at h
     exact Prod.ext (Prod.mk.inj h).1 (F.map_injective (Prod.mk.inj h).2)
 
-instance mapPair_full [F.Full] : (mapPair (C := C) F).Full where
+instance actedPairFunctor_full [F.Full] : (actedPairFunctor (C := C) F).Full where
   map_surjective f := by
     refine ⟨(f.1, F.preimage f.2), ?_⟩
     apply Prod.ext
@@ -49,7 +49,7 @@ instance mapPair_full [F.Full] : (mapPair (C := C) F).Full where
 
 /-- Essential surjectivity descends without any invertibility assumption on
 the lineators: lift an original isomorphism with the denominator fixed. -/
-instance map_essSurj [F.EssSurj] : (map (C := C) F).EssSurj where
+instance actedMapFunctor_essSurj [F.EssSurj] : (actedMapFunctor (C := C) F).EssSurj where
   mem_essImage Y := by
     obtain ⟨X, ⟨e⟩⟩ := Functor.EssSurj.mem_essImage F Y.obj.2
     exact ⟨⟨(Y.obj.1, X)⟩,
@@ -57,8 +57,8 @@ instance map_essSurj [F.EssSurj] : (map (C := C) F).EssSurj where
 
 variable [∀ (s : C) (X : D), IsIso (μₗ F s X)]
 
-instance mapPair_lineator_isIso (s : C) (X : C × D) :
-    IsIso (μₗ (mapPair F) s X) := by
+instance actedPairFunctor_lineator_isIso (s : C) (X : C × D) :
+    IsIso (μₗ (actedPairFunctor F) s X) := by
   apply (isIso_prod_iff C E).2
   constructor
   · change IsIso (𝟙 (s ⊗ X.1))
@@ -68,25 +68,25 @@ instance mapPair_lineator_isIso (s : C) (X : C × D) :
 
 /-- Faithfulness of the exact quotient functor follows by reflecting the
 denominator relation through the original faithful functor. -/
-instance map_faithful [F.Faithful] : (map (C := C) F).Faithful :=
-  ActionLocalization.mapFunctor_faithful (mapPair F)
+instance actedMapFunctor_faithful [F.Faithful] : (actedMapFunctor (C := C) F).Faithful :=
+  ActionLocalization.mapFunctor_faithful (actedPairFunctor F)
 
 /-- Fullness lifts the second-coordinate representative by the inverse
 lineator, leaving the denominator and first-coordinate map unchanged. -/
-instance map_full [F.Full] : (map (C := C) F).Full :=
-  ActionLocalization.mapFunctor_full (mapPair F)
+instance actedMapFunctor_full [F.Full] : (actedMapFunctor (C := C) F).Full :=
+  ActionLocalization.mapFunctor_full (actedPairFunctor F)
 
-instance map_isEquivalence [F.Full] [F.Faithful] [F.EssSurj] :
-    (map (C := C) F).IsEquivalence where
+instance actedMapFunctor_isEquivalence [F.Full] [F.Faithful] [F.EssSurj] :
+    (actedMapFunctor (C := C) F).IsEquivalence where
 
 /-- The equivalence induced by the original equivariant functor on Grayson's
-localization; its forward functor is exactly `Localization.map F`. -/
+localization; its forward functor is exactly `Localization.actedMapFunctor F`. -/
 def mapEquivalence [F.Full] [F.Faithful] [F.EssSurj] :
     Localization C D ≌ Localization C E :=
-  (map F).asEquivalence
+  (actedMapFunctor F).asEquivalence
 
 @[simp]
 lemma mapEquivalence_functor [F.Full] [F.Faithful] [F.EssSurj] :
-    (mapEquivalence (C := C) F).functor = map F := rfl
+    (mapEquivalence (C := C) F).functor = actedMapFunctor F := rfl
 
 end Quillen.GroupCompletion.Localization

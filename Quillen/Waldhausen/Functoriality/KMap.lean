@@ -8,7 +8,7 @@ module
 
 public import Quillen.Waldhausen.PointedFunctor
 public import Quillen.Waldhausen.SConstruction.WeakNaturalTransformationBased
-public import Quillen.Topology.ClassifyingSpace.Constant
+public import Quillen.Topology.Realization.Constant
 
 /-! # Functoriality and weak-transformation invariance of the original K-maps
 
@@ -109,12 +109,6 @@ theorem KMap_eq_piMap_of_zeroEq
     (weakNaturalTransformationRealizationHomotopy_fixed_zero V W hF.rebase hF η
       (fun _ ↦ W.weq_iso _ inferInstance) (Quillen.rebaseFunctor_obj_base _ _ _ _) h0)
 
-/-- The original S-map preserves the identity functor exactly. -/
-@[simp] theorem sSetMap_id (V : Structure C) :
-    sSetMap (IsExact.id V.cof V.weq) = 𝟙 (sSet V.cof V.weq) := by
-  ext n A
-  rfl
-
 /-- The original S-map preserves composition exactly. -/
 @[simp] theorem sSetMap_comp_sSetMap {J : D ⥤ E}
     (hF : IsExact V.cof V.weq W.cof W.weq F)
@@ -211,7 +205,7 @@ theorem deloopingMap_zeroFunctor (V : Structure C) (W : Structure D) :
   ext p
   change SSet.toTop.map (sSetMap (zeroFunctor_isExact V W)) p = W.kBasepoint
   rw [sSetMap_zeroFunctor]
-  exact Quillen.realization_const _ p
+  exact Quillen.realization_const_apply _ p
 
 /-- The actual zero functor gives the trivial original K-homomorphism. -/
 @[simp] theorem KMap_zeroFunctor (V : Structure C) (W : Structure D) (n : ℕ) :

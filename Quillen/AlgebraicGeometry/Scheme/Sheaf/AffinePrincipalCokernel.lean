@@ -58,9 +58,6 @@ theorem spec_appTop_surjective {R S : CommRingCat.{u}} (φ : R ⟶ S)
 end Quillen.SchemeSheaf
 
 namespace Quillen.SchemeSheaf
-/-- Pointwise additivity of the actual affine global-section functor. -/
-local instance (R : CommRingCat.{u}) : (moduleSpecΓFunctor (R := R)).Additive where
-  map_add := by intros; rfl
 /-- The scalar and original structure-module map form the actual affine short complex. -/
 def affineUnitScalarSequence {R S : CommRingCat.{u}} (φ : R ⟶ S) (s : Γ(Spec R, ⊤))
     (hs : (Spec.map φ).appTop.hom s = 0) : ShortComplex (Spec R).Modules :=

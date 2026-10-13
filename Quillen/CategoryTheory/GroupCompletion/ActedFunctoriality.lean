@@ -46,6 +46,10 @@ instance actedPairFunctorLinear : (actedPairFunctor (C := C) F).LaxLeftLinear C 
 def actedMapFunctor : Localization C D ⥤ Localization C E :=
   ActionLocalization.mapFunctor (actedPairFunctor F)
 
+/-- The original denominator is unchanged on objects. -/
+theorem actedMapFunctor_obj (X : Localization C D) :
+    (actedMapFunctor F).obj X = ⟨(X.obj.1, F.obj X.obj.2)⟩ := rfl
+
 /-- The actual map on a quotient representative, with its lineator retained. -/
 theorem actedMapFunctor_mkHom {X Y : C × D} (s : C)
     (f : s ⊗ X.1 ⟶ Y.1) (g : s ⊙ₗ X.2 ⟶ Y.2) :
@@ -55,5 +59,11 @@ theorem actedMapFunctor_mkHom {X Y : C × D} (s : C)
   change mkHom (X := (X.1, F.obj X.2)) (Y := (Y.1, F.obj Y.2))
     s (𝟙 _ ≫ f) (μₗ F s X.2 ≫ F.map g) = _
   rw [Category.id_comp]
+
+/-- A unit-denominator arrow retains its first coordinate under descent. -/
+theorem actedMapFunctor_ofHom {X Y : C × D} (f : X ⟶ Y) :
+    (actedMapFunctor F).map (ActionLocalization.ofHom (C := C) f) =
+      ActionLocalization.ofHom (C := C) (f.1, F.map f.2) :=
+  ActionLocalization.mapFunctor_ofHom (actedPairFunctor F) f
 
 end Quillen.GroupCompletion.Localization

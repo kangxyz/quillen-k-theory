@@ -426,7 +426,6 @@ public import Quillen.Waldhausen.QuillenComparison.RowGroupoid
 public import Quillen.Waldhausen.QuillenComparison.RowSimplicial
 public import Quillen.Waldhausen.QuillenComparison.SimplicialMap
 public import Quillen.Waldhausen.QuillenComparison.SpanLifting
-public import Quillen.Waldhausen.QuillenComparison.SpanNaturality
 public import Quillen.Waldhausen.QuillenComparison.SparseRows
 public import Quillen.Waldhausen.QuillenComparison.VerticalSpans
 public import Quillen.Waldhausen.QuillenComparison.ZeroNormalization

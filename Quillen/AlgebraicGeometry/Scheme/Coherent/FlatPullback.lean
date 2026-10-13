@@ -29,18 +29,6 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.SchemeSheaf
 
-/-- Actual geometric pullback commutes with restriction across a commuting
-square with open horizontal maps. -/
-def pullbackOpenSquare {W X V Y : Scheme.{u}}
-    (p : W ⟶ X) (q : W ⟶ V) (f : X ⟶ Y) (a : V ⟶ Y)
-    [IsOpenImmersion p] [IsOpenImmersion a] (h : p ≫ f = q ≫ a) :
-    Scheme.Modules.pullback f ⋙ Scheme.Modules.restrictFunctor p ≅
-      Scheme.Modules.restrictFunctor a ⋙ Scheme.Modules.pullback q :=
-  Functor.isoWhiskerLeft _ (Scheme.Modules.restrictFunctorIsoPullback p) ≪≫
-    Scheme.Modules.pullbackComp p f ≪≫ Scheme.Modules.pullbackCongr h ≪≫
-    (Scheme.Modules.pullbackComp q a).symm ≪≫
-    Functor.isoWhiskerRight (Scheme.Modules.restrictFunctorIsoPullback a).symm _
-
 /-- An actual open cover detects sheaf monomorphisms, by stalkwise
 vanishing of the actual kernel. -/
 theorem mono_of_schemeOpenCover {X : Scheme.{u}} {M N : X.Modules}

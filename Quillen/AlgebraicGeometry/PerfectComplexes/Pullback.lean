@@ -77,7 +77,7 @@ theorem quasiIso_pullback_of_strictPerfect {X Y : Scheme.{u}} (f : X ⟶ Y)
     {K L : Complex Y} (hK : strictPerfect Y K) (hL : strictPerfect Y L)
     (s : K ⟶ L) [QuasiIso s] : QuasiIso ((pullbackComplex f).map s) := by
   have hc := acyclic_pullback_of_strictPerfect f (strictPerfect_mappingCone hK hL s)
-    (mappingCone_acyclic_of_quasiIso s)
+    (Quillen.HomologicalAlgebra.mappingCone_acyclic_of_quasiIso s)
   apply HomologicalAlgebra.quasiIso_of_mappingCone_acyclic
   intro n
   exact (hc n).of_iso (mappingCone.mapHomologicalComplexIso s (Scheme.Modules.pullback f))

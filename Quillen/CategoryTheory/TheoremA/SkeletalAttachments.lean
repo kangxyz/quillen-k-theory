@@ -8,6 +8,7 @@ module
 
 public import Quillen.CategoryTheory.TheoremA.RealizationSkeleton
 public import Quillen.CategoryTheory.TheoremA.DiagonalColimits
+public import Quillen.CategoryTheory.SimplexCategory
 
 /-! # Enriched attachments in the base-skeleton filtration -/
 @[expose] public section
@@ -96,18 +97,12 @@ theorem replacementCells_square (n : ℕ) :
     replacementCellsAttaching H n ≫ (replacementSkeleton H).map (homOfLE (Nat.le_succ n)) =
       replacementCellsBoundaryι H n ≫ replacementCellsCharacteristic H n := rfl
 
-/-- A surjective simplex operator preserves the first vertex. -/
-theorem simplex_epi_zero {p q : SimplexCategory} (f : p ⟶ q) [Epi f] :
-    f.toOrderHom 0 = 0 := by
-  obtain ⟨i, hi⟩ := (SimplexCategory.epi_iff_surjective (f := f)).mp inferInstance 0
-  exact le_antisymm (hi ▸ f.toOrderHom.monotone (Fin.zero_le i)) (Fin.zero_le _)
-
 /-- Degeneracy operators transport replacement fibers isomorphically. -/
 instance firstVertexEdge_isIso_of_epi {p q : SimplexCategory} (f : p ⟶ q) [Epi f]
     (s : (nerve D).obj (op q)) : IsIso (firstVertexEdge f.op s) := by
   dsimp [firstVertexEdge]
   have h : IsIso (homOfLE (Fin.zero_le (f.toOrderHom 0))) := by
-    have heq := simplex_epi_zero f
+    have heq := SimplexCategory.epi_zero f
     rw [heq]
     change IsIso (𝟙 (0 : Fin (q.len + 1)))
     infer_instance

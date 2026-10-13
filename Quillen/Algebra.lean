@@ -11,6 +11,7 @@ public import Quillen.Algebra.Category.ModuleCat.CartesianBaseChange
 public import Quillen.Algebra.Category.ModuleCat.CartesianProduct
 public import Quillen.Algebra.Category.ModuleCat.CoproductHomology
 public import Quillen.Algebra.Category.ModuleCat.FilteredColimits
+public import Quillen.Algebra.Category.ModuleCat.Finite
 public import Quillen.Algebra.Category.ModuleCat.FiniteMatrixBaseChange
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjective
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChange
@@ -99,6 +100,7 @@ public import Quillen.Algebra.Homology.DerivedPreEqualityDenominators
 public import Quillen.Algebra.Homology.EventualKernelComparison
 public import Quillen.Algebra.Homology.ExtendFunctor
 public import Quillen.Algebra.Homology.FilteredColimits
+public import Quillen.Algebra.Homology.FiniteProjectiveResolution
 public import Quillen.Algebra.Homology.HomotopyCategory.BoundedProperty
 public import Quillen.Algebra.Homology.HomotopyPullback
 public import Quillen.Algebra.Homology.HomotopyPullbackQuasiIso
@@ -188,11 +190,14 @@ public import Quillen.Algebra.Polynomial.LaurentProjectorFiniteDefects
 public import Quillen.Algebra.Polynomial.LaurentPullback
 public import Quillen.Algebra.Polynomial.LaurentSquare
 public import Quillen.Algebra.Polynomial.LaurentUnderSquare
+public import Quillen.Algebra.RegularLocal.DimensionZero
 public import Quillen.Algebra.RegularLocal.Domain
 public import Quillen.Algebra.RegularLocal.GlobalProjectiveDimension
+public import Quillen.Algebra.RegularLocal.LowDimension
 public import Quillen.Algebra.RegularLocal.ParameterAvoidance
 public import Quillen.Algebra.RegularLocal.ParameterQuotient
 public import Quillen.Algebra.RegularLocal.Parameters
+public import Quillen.Algebra.RegularLocal.PrincipalDomain
 public import Quillen.Algebra.RegularLocal.ProjectiveDimension
 public import Quillen.Algebra.RegularLocal.QuotientLifting
 

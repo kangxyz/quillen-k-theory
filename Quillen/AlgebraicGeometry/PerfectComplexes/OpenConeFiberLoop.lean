@@ -35,7 +35,8 @@ theorem perfectOpenWeak_mappingCone_supported :
   let : QuasiIso ((restrict j).map f.hom) :=
     (perfectOpenWeakWaldhausen_weq_iff j f).mp hf
   intro n
-  exact (mappingCone_acyclic_of_quasiIso ((restrict j).map f.hom) n).of_iso
+  exact (Quillen.HomologicalAlgebra.mappingCone_acyclic_of_quasiIso
+    ((restrict j).map f.hom) n).of_iso
     (CochainComplex.mappingCone.mapHomologicalComplexIso f.hom
       (Scheme.Modules.restrictFunctor j)).symm
 

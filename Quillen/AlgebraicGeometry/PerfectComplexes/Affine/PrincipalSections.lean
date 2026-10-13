@@ -32,7 +32,7 @@ namespace Quillen.PerfectComplexes.Affine
 
 local instance principalGlobalSections_additive (R : CommRingCat.{u}) (r : R) :
     (moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r))).Additive :=
-  moduleSpecΓFunctor_additive _
+  Quillen.SchemeSheaf.moduleSpecΓFunctor_additive _
 
 
 /-- Genuine affine global sections preserve a weak map from a quasicoherent-term complex
@@ -126,7 +126,7 @@ namespace Quillen.PerfectComplexes.Affine
 
 local instance principalScalarGlobalSections_additive (R : CommRingCat.{u}) (r : R) :
     (moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r))).Additive :=
-  moduleSpecΓFunctor_additive _
+  Quillen.SchemeSheaf.moduleSpecΓFunctor_additive _
 
 
 /-- Actual sections on an open of the affine scheme, with their original R-module structure. -/

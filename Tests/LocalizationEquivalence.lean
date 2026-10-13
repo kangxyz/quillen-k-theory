@@ -26,26 +26,26 @@ variable {C : Type u} [Category.{v} C] [MonoidalCategory C]
   {E : Type u₂} [Category.{v₂} E] [MonoidalLeftAction C E]
   (F : D ⥤ E) [F.LaxLeftLinear C]
 
-example [F.EssSurj] : (Localization.map (C := C) F).EssSurj := inferInstance
+example [F.EssSurj] : (Localization.actedMapFunctor (C := C) F).EssSurj := inferInstance
 
 variable [∀ (s : C) (X : D), IsIso (μₗ F s X)]
 
-example [F.Full] : (Localization.map (C := C) F).Full := inferInstance
+example [F.Full] : (Localization.actedMapFunctor (C := C) F).Full := inferInstance
 
-example [F.Faithful] : (Localization.map (C := C) F).Faithful := inferInstance
+example [F.Faithful] : (Localization.actedMapFunctor (C := C) F).Faithful := inferInstance
 
 example [F.Full] [F.Faithful] [F.EssSurj] :
-    (Localization.map (C := C) F).IsEquivalence := inferInstance
+    (Localization.actedMapFunctor (C := C) F).IsEquivalence := inferInstance
 
 example [F.Full] [F.Faithful] [F.EssSurj] : Localization C D ≌ Localization C E :=
   Localization.mapEquivalence F
 
 example [F.Full] {X Y : C × D} (s : C) (f : s ⊗ X.1 ⟶ Y.1)
     (g : s ⊙ₗ F.obj X.2 ⟶ F.obj Y.2) :
-    (Localization.map F).map (Localization.mkHom s f
+    (Localization.actedMapFunctor F).map (Localization.mkHom s f
       (F.preimage (inv (μₗ F s X.2) ≫ g))) =
       Localization.mkHom (X := (X.1, F.obj X.2)) (Y := (Y.1, F.obj Y.2)) s f g := by
-  rw [Localization.map_mkHom, F.map_preimage, IsIso.hom_inv_id_assoc]
+  rw [Localization.actedMapFunctor_mkHom, F.map_preimage, IsIso.hom_inv_id_assoc]
 
 example [F.Faithful] {X Y : C × D} (s t : C)
     (f : s ⊗ X.1 ⟶ Y.1) (g : s ⊙ₗ X.2 ⟶ Y.2)
@@ -55,8 +55,8 @@ example [F.Faithful] {X Y : C × D} (s t : C)
       Localization.mkHom (X := (X.1, F.obj X.2)) (Y := (Y.1, F.obj Y.2))
         t f' (μₗ F t X.2 ≫ F.map g')) :
     Localization.mkHom s f g = Localization.mkHom t f' g' := by
-  apply (Localization.map F).map_injective
-  rw [Localization.map_mkHom, Localization.map_mkHom]
+  apply (Localization.actedMapFunctor F).map_injective
+  rw [Localization.actedMapFunctor_mkHom, Localization.actedMapFunctor_mkHom]
   change Localization.mkHom (X := (X.1, F.obj X.2)) (Y := (Y.1, F.obj Y.2))
     s f (μₗ F s X.2 ≫ F.map g) =
     Localization.mkHom (X := (X.1, F.obj X.2)) (Y := (Y.1, F.obj Y.2))

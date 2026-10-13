@@ -35,11 +35,6 @@ section MapLaws
 variable {C D E : Type u} [Category.{v} C] [Category.{v} D] [Category.{v} E]
 variable (V : Structure C) (W : Structure D) (U : Structure E)
 
-/-- Strict identity for the original S-construction map. -/
-theorem sSetMap_identity : sSetMap (IsExact.id V.cof V.weq) = 𝟙 (sSet V.cof V.weq) := by
-  ext n A
-  rfl
-
 /-- Strict composition for the original S-construction map. -/
 theorem sSetMap_composition {F : C ⥤ D} {G : D ⥤ E}
     (hF : IsExact V.cof V.weq W.cof W.weq F)
@@ -52,7 +47,7 @@ theorem sSetMap_composition {F : C ⥤ D} {G : D ⥤ E}
 theorem deloopingMap_identity : (deloopingMap (IsExact.id V.cof V.weq)).hom =
     ContinuousMap.id V.Delooping := by
   unfold deloopingMap
-  rw [sSetMap_identity, CategoryTheory.Functor.map_id]
+  rw [sSetMap_id, CategoryTheory.Functor.map_id]
   rfl
 
 /-- Strict composition on the original realization. -/

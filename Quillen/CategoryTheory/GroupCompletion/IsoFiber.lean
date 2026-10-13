@@ -50,7 +50,7 @@ attribute [local instance] IsoFiber.monoidalLeftAction
 
 /-- Forget the base isomorphism only after forming the original localized category. -/
 def isoFiberForget : Localization S (IsoFiber F b) ⥤ Localization S C :=
-  map (IsoFiber.forget F b)
+  actedMapFunctor (IsoFiber.forget F b)
 
 /-- The original structure isomorphisms form a natural isomorphism after descent. -/
 def isoFiberProjectionIso : (Functor.const (Localization S (IsoFiber F b))).obj b ≅
@@ -61,7 +61,7 @@ def isoFiberProjectionIso : (Functor.const (Localization S (IsoFiber F b))).obj 
     change 𝟙 b ≫ Y.obj.2.obj.hom = X.obj.2.obj.hom ≫
       (fiberProjection F).map ((isoFiberForget F b).map (mkHom r.denom r.map.1 r.map.2))
     unfold isoFiberForget
-    rw [map_mkHom]
+    rw [actedMapFunctor_mkHom]
     change 𝟙 b ≫ Y.obj.2.obj.hom = X.obj.2.obj.hom ≫
       (fiberProjection F).map (mkHom (X := (X.obj.1, X.obj.2.obj.right))
         (Y := (Y.obj.1, Y.obj.2.obj.right)) r.denom r.map.1 (𝟙 _ ≫ r.map.2.hom.right))
@@ -79,9 +79,9 @@ instance isoFiberEntry_faithful : (isoFiberEntry (S := S) F b).Faithful where
     obtain ⟨r, rfl⟩ := ActionLocalization.mkHom_surjective X.obj Y.obj f
     obtain ⟨t, rfl⟩ := ActionLocalization.mkHom_surjective X.obj Y.obj g
     change ActionLocalization.mkHom
-      (ActionLocalization.HomRep.mapRep (mapPair (IsoFiber.forget F b)) r) =
+      (ActionLocalization.HomRep.mapRep (actedPairFunctor (IsoFiber.forget F b)) r) =
       ActionLocalization.mkHom
-        (ActionLocalization.HomRep.mapRep (mapPair (IsoFiber.forget F b)) t) at h'
+        (ActionLocalization.HomRep.mapRep (actedPairFunctor (IsoFiber.forget F b)) t) at h'
     obtain ⟨e, he⟩ := Quotient.exact h'
     apply Quotient.sound
     refine ⟨e, ?_⟩
@@ -112,8 +112,8 @@ instance isoFiberEntry_full : (isoFiberEntry (S := S) F b).Full where
         exact (Category.assoc _ _ _).trans hf)⟩
     refine ⟨mkHom r.denom r.map.1 g, ?_⟩
     apply IsoFiber.action_hom_ext (fiberProjection F) b
-    change (map (IsoFiber.forget F b)).map (mkHom r.denom r.map.1 g) = f.hom.right
-    rw [map_mkHom]
+    change (actedMapFunctor (IsoFiber.forget F b)).map (mkHom r.denom r.map.1 g) = f.hom.right
+    rw [actedMapFunctor_mkHom]
     change mkHom (X := (X.obj.1, X.obj.2.obj.right))
       (Y := (Y.obj.1, Y.obj.2.obj.right)) r.denom r.map.1 (𝟙 _ ≫ r.map.2) = _
     rw [Category.id_comp]

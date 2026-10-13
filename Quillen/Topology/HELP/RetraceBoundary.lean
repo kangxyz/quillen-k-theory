@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.Topology.UnitInterval
 public import Quillen.Topology.HomotopyFiber.BoundaryCorrection
 
 /-! # Removing a backtracking boundary homotopy
@@ -25,12 +26,6 @@ open unitInterval
 universe u v
 
 namespace Quillen
-
-@[fun_prop] theorem continuous_mulIntervalRetrace :
-    Continuous (fun z : I × I ↦ z.1 * z.2) := by
-  apply Continuous.subtype_mk
-  exact (continuous_subtype_val.comp continuous_fst).mul
-    (continuous_subtype_val.comp continuous_snd)
 
 /-- The continuous family of shrinking backtracking paths, in uncurried form. -/
 def retracePathFamily {A : Type u} {Z : Type v}

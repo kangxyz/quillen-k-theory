@@ -23,31 +23,31 @@ attribute [local instance] firstCoordinateLeftAction
 omit [BraidedCategory C] in
 /-- First-coordinate translation strictly commutes with the original descended functor. -/
 lemma map_firstCoordinateTranslation (s : C) {X Y : Localization C D} (f : X ⟶ Y) :
-    (map F).map ((firstCoordinateTranslation s).map f) =
-      (firstCoordinateTranslation s).map ((map F).map f) := by
+    (actedMapFunctor F).map ((firstCoordinateTranslation s).map f) =
+      (firstCoordinateTranslation s).map ((actedMapFunctor F).map f) := by
   obtain ⟨r, rfl⟩ := ActionLocalization.mkHom_surjective X.obj Y.obj f
-  change (map F).map ((firstCoordinateTranslation s).map
+  change (actedMapFunctor F).map ((firstCoordinateTranslation s).map
     (mkHom r.denom r.map.1 r.map.2)) =
-    (firstCoordinateTranslation s).map ((map F).map (mkHom r.denom r.map.1 r.map.2))
+    (firstCoordinateTranslation s).map ((actedMapFunctor F).map (mkHom r.denom r.map.1 r.map.2))
   rw [firstCoordinateTranslation_mkHom]
-  erw [map_mkHom]
-  rw [map_mkHom]
+  erw [actedMapFunctor_mkHom]
+  rw [actedMapFunctor_mkHom]
   erw [firstCoordinateTranslation_mkHom]
 
 /-- The induced functor preserves the complete first-coordinate action, with
 identity lineators and the original associativity and unit maps. -/
-instance mapFirstCoordinateLinear : (map (C := C) F).LaxLeftLinear C where
+instance actedMapFunctorFirstCoordinateLinear : (actedMapFunctor (C := C) F).LaxLeftLinear C where
   μₗ s X := 𝟙 _
   μₗ_naturality_left f X := by
     change secondFiberHom (F.obj X.obj.2) (X.obj.1 ◁ f) ≫ 𝟙 _ =
-      𝟙 _ ≫ (map F).map (secondFiberHom X.obj.2 (X.obj.1 ◁ f))
+      𝟙 _ ≫ (actedMapFunctor F).map (secondFiberHom X.obj.2 (X.obj.1 ◁ f))
     rw [map_secondFiberHom, Category.id_comp, Category.comp_id]
   μₗ_naturality_right s _ _ f := by
-    change (firstCoordinateTranslation s).map ((map F).map f) ≫ 𝟙 _ =
-      𝟙 _ ≫ (map F).map ((firstCoordinateTranslation s).map f)
+    change (firstCoordinateTranslation s).map ((actedMapFunctor F).map f) ≫ 𝟙 _ =
+      𝟙 _ ≫ (actedMapFunctor F).map ((firstCoordinateTranslation s).map f)
     rw [Category.id_comp, Category.comp_id, map_firstCoordinateTranslation]
   μₗ_associativity s t X := by
-    change 𝟙 _ ≫ (map F).map
+    change 𝟙 _ ≫ (actedMapFunctor F).map
       (secondFiberHom X.obj.2 (X.obj.1 ◁ (β_ t s).inv) ≫
         secondFiberHom X.obj.2 (α_ X.obj.1 t s).inv) =
       (secondFiberHom (F.obj X.obj.2) (X.obj.1 ◁ (β_ t s).inv) ≫
@@ -59,18 +59,18 @@ instance mapFirstCoordinateLinear : (map (C := C) F).LaxLeftLinear C where
   μₗ_unitality X := by
     change (secondFiberHom (F.obj X.obj.2) (X.obj.1 ◁ 𝟙 (𝟙_ C)) ≫
       secondFiberHom (F.obj X.obj.2) (ρ_ X.obj.1).hom) =
-      𝟙 _ ≫ (map F).map (secondFiberHom X.obj.2 (X.obj.1 ◁ 𝟙 (𝟙_ C)) ≫
+      𝟙 _ ≫ (actedMapFunctor F).map (secondFiberHom X.obj.2 (X.obj.1 ◁ 𝟙 (𝟙_ C)) ≫
         secondFiberHom X.obj.2 (ρ_ X.obj.1).hom)
     rw [Functor.map_comp, map_secondFiberHom, map_secondFiberHom, Category.id_comp]
 
 /-- The actual twice-localized functor. -/
 def iteratedMap : Localization C (Localization C D) ⥤ Localization C (Localization C E) :=
-  map (map F)
+  actedMapFunctor (actedMapFunctor F)
 
 /-- Iteration commutes with the original canonical unit entries. -/
 lemma iteratedMap_unitEntry :
     unitEntry (C := C) (D := Localization C D) ⋙ iteratedMap F =
-      map F ⋙ unitEntry := unitEntry_map (map F)
+      actedMapFunctor F ⋙ unitEntry := unitEntry_map (actedMapFunctor F)
 
 /-- Twice-localized equivariance preserves the actual chosen fiber entry;
 the common source functor on `C⁻¹C` is exactly the identity. -/
@@ -87,7 +87,7 @@ lemma iteratedFiberEntry_map (X : D) :
     (iteratedFiberEntry (F.obj X)).map (mkHom r.denom r.map.1 r.map.2)
   rw [iteratedFiberEntry_mkHom, iteratedFiberEntry_mkHom]
   unfold iteratedMap
-  erw [map_mkHom]
+  erw [actedMapFunctor_mkHom]
   rw [map_secondFiberHom]
   change mkHom
     (X := (A.obj.1, (⟨(A.obj.2, F.obj X)⟩ : Localization C E)))

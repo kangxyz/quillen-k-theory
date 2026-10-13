@@ -92,7 +92,7 @@ lemma tautologicalToTwistMinusUnit_minus :
 
 instance tautologicalToTwistMinusUnit_isIso : IsIso (tautologicalToTwistMinusUnit R) := by
   apply isIso_of_restrict_openCover (fun _ : Bool => Spec (.of (Polynomial R)))
-    (twistChart R) (twistChart_cover R)
+    (polynomialChart R) (polynomialChart_cover R)
   intro b
   cases b
   · change IsIso ((Scheme.Modules.restrictFunctor (minusChart R)).map _)

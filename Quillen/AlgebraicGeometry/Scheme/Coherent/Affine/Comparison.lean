@@ -90,6 +90,13 @@ with finite modules over the base ring. -/
 def finiteTypeSheavesSpecModuleEquivalence : FiniteTypeSheaves (Spec R) ≌ FiniteModule.{u, u} R :=
   (finiteTypeSheavesAffineEquivalence R).trans (affineFiniteTypeModuleEquivalence R)
 
+/-- The inverse of the actual composite affine sheaf/module equivalence is additive. -/
+instance finiteTypeSheavesSpecModuleEquivalence_inverse_additive :
+    (finiteTypeSheavesSpecModuleEquivalence R).inverse.Additive := by
+  let := preservesBinaryBiproducts_of_preservesBinaryProducts
+    (finiteTypeSheavesSpecModuleEquivalence R).inverse
+  exact Functor.additive_of_preservesBinaryBiproducts _
+
 instance finiteTypeSheavesAffineEquivalence_additive : (finiteTypeSheavesAffineEquivalence
   R).functor.Additive := by
   let := preservesBinaryBiproducts_of_preservesBinaryProducts (finiteTypeSheavesAffineEquivalence

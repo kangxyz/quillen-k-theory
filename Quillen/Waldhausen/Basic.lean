@@ -68,4 +68,12 @@ structure Structure (C : Type u) [Category.{v} C] where
 
 attribute [instance] Structure.cof_multiplicative Structure.weq_multiplicative
 
+/-- Maps out of any actual zero object are cofibrations. -/
+theorem Structure.cof_of_isZero.{u₁, v₁} {C : Type u₁} [Category.{v₁} C]
+    (W : Structure C) {Z X : C} (hZ : IsZero Z) (f : Z ⟶ X) : W.cof f := by
+  let e := hZ.iso W.isZero
+  have hf : f = e.hom ≫ W.isZero.to_ X := hZ.eq_of_src _ _
+  rw [hf]
+  exact W.cof.comp_mem _ _ (W.cof_iso _ inferInstance) (W.cof_zero _)
+
 end Quillen.Waldhausen

@@ -43,6 +43,13 @@ instance : IsOpenImmersion (minusChart R) := by
   change IsOpenImmersion (colimit.ι (span (laurentPlus R) (laurentMinus R)) WalkingSpan.right)
   infer_instance
 
+/-- One of the two original polynomial charts, with `true` selecting the positive chart. -/
+def polynomialChart (R : CommRingCat.{u}) (b : Bool) :
+    Spec (.of (Polynomial R)) ⟶ twoChartLine R := if b then plusChart R else minusChart R
+
+instance (R : CommRingCat.{u}) (b : Bool) : IsOpenImmersion (polynomialChart R b) := by
+  cases b <;> dsimp [polynomialChart] <;> infer_instance
+
 lemma overlap_equation : laurentPlus R ≫ plusChart R = laurentMinus R ≫ minusChart R :=
   pushout.condition
 
@@ -56,6 +63,11 @@ def projection : twoChartLine R ⟶ Spec R :=
 
 @[reassoc (attr := simp)] lemma minusChart_projection :
     minusChart R ≫ projection R = polynomialProjection R := pushout.inr_desc _ _ _
+
+/-- Each original chart lies over the actual polynomial projection. -/
+theorem polynomialChart_projection (R : CommRingCat.{u}) (b : Bool) :
+    polynomialChart R b ≫ projection R = polynomialProjection R := by
+  cases b <;> simp [polynomialChart, plusChart_projection, minusChart_projection]
 
 lemma charts_jointly_surjective (x : twoChartLine R) :
     (∃ a, plusChart R a = x) ∨ ∃ b, minusChart R b = x := by
@@ -78,6 +90,13 @@ lemma chart_ranges_cover : (plusChart R).opensRange ⊔ (minusChart R).opensRang
   rcases charts_jointly_surjective R x with ⟨a, rfl⟩ | ⟨b, rfl⟩
   · exact Or.inl ⟨a, rfl⟩
   · exact Or.inr ⟨b, rfl⟩
+
+/-- The original Boolean chart family covers the actual projective line. -/
+lemma polynomialChart_cover (x : twoChartLine R) :
+    ∃ (b : Bool) (y : Spec (.of (Polynomial R))), polynomialChart R b y = x := by
+  rcases charts_jointly_surjective R x with ⟨y, hy⟩ | ⟨y, hy⟩
+  · exact ⟨true, y, hy⟩
+  · exact ⟨false, y, hy⟩
 
 /-- The chart identifications are exactly the original Laurent transition. -/
 lemma chart_eq_iff (a b : Spec (.of (Polynomial R))) :

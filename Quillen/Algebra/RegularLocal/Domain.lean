@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.Algebra.RegularLocal.DimensionZero
 public import Quillen.Algebra.RegularLocal.ParameterAvoidance
 public import Quillen.Algebra.RegularLocal.ParameterQuotient
 
@@ -24,16 +25,6 @@ universe u
 open IsLocalRing
 
 namespace Quillen.RegularLocal
-
-/-- The dimension-zero case of regular local algebra: the maximal ideal has
-no generators, so it is zero and the ring is a field. -/
-theorem isField_of_regularLocal_dimension_zero (R : Type u) [CommRing R]
-    [IsRegularLocalRing R] (h : ringKrullDim R = 0) : IsField R := by
-  apply isField_iff_maximalIdeal_eq.mpr
-  apply (Submodule.spanFinrank_eq_zero_iff_eq_bot (maximalIdeal R).fg_of_isNoetherianRing).mp
-  have h' := IsRegularLocalRing.spanFinrank_maximalIdeal (R := R)
-  rw [h] at h'
-  exact_mod_cast h'
 
 /-- Every regular local ring of a specified finite dimension is a domain.
 The induction uses a minimal generator avoiding all minimal primes. -/

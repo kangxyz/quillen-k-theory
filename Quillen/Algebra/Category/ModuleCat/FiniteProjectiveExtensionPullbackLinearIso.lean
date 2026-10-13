@@ -24,12 +24,7 @@ local instance pullbackExtensionExists {X Y : Category.{u, u} R} (f : X ⟶ Y)
     (p : (exactStructure R).ExtensionOver Y) : HasPullback p.obj.hom f :=
   (exactStructure R).deflation.hasPullback f p.property
 
-/-- Direct sum retains the original quotient and kills the added summand. -/
-theorem extensionPullbackAdd_action_hom {Y : Category.{u, u} R}
-    (S : IsoCategory R) (p : (exactStructure R).ExtensionFiber Y) :
-    (S ⊙ₗ p).of.obj.hom = coprod.desc (0 : S.of ⟶ Y) p.of.obj.hom := rfl
-
-attribute [local simp] extensionPullbackAdd_action_hom
+attribute [local simp] extensionAction_obj_hom
 
 /-- Infer the original translated pullback after normalizing its quotient arrow. -/
 local instance pullbackExtensionSumExists {X Y : Category.{u, u} R} (f : X ⟶ Y)
@@ -155,6 +150,6 @@ def extensionPullbackAddIso {X Y : Category.{u, u} R} (f : X ⟶ Y)
     (Over.isoMk (extensionPullbackAddMiddleIso R f S p) (by
       exact extensionPullbackAddHom_snd R f S p)))
 
-attribute [-simp] extensionPullbackAdd_action_hom
+attribute [-simp] extensionAction_obj_hom
 
 end Quillen.FiniteProjectiveModule

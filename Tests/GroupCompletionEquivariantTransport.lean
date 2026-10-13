@@ -27,12 +27,13 @@ example (X : D) :
   iteratedFiberEntry_map F X
 
 example : unitEntry (C := C) (D := Localization C D) ⋙ iteratedMap F =
-    map F ⋙ unitEntry := iteratedMap_unitEntry F
+    actedMapFunctor F ⋙ unitEntry := iteratedMap_unitEntry F
 
 example (X : D)
     (hD : IsWeakHomotopyEquivalence (ContinuousMap.const
       (ClassifyingSpace (ActionLocalization C D)) (PUnit.unit : PUnit.{w₁ + 1})))
     (hE : IsWeakHomotopyEquivalence (ContinuousMap.const
       (ClassifyingSpace (ActionLocalization C E)) (PUnit.unit : PUnit.{w₂ + 1}))) :
-    IsWeakHomotopyEquivalence (classifyingSpaceMapUniversal (map (C := C) F)) :=
+    IsWeakHomotopyEquivalence
+      (classifyingSpaceMapUniversal (actedMapFunctor (C := C) F)) :=
   map_isWeakHomotopyEquivalence_of_weakBases F X hD hE

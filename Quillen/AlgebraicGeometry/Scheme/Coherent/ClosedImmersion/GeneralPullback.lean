@@ -31,17 +31,6 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.CoherentScheme.ClosedImmersion.General
 open Scheme.Modules
 
-/-- Pullback commutes with restriction through an actual commuting square
-whose horizontal chart maps are open immersions. -/
-def pullbackOpenSquare {W Z V X : Scheme.{u}}
-    (p : W ⟶ Z) (q : W ⟶ V) (i : Z ⟶ X) (a : V ⟶ X)
-    [IsOpenImmersion p] [IsOpenImmersion a] (h : p ≫ i = q ≫ a) :
-    Scheme.Modules.pullback i ⋙ restrictFunctor p ≅
-      restrictFunctor a ⋙ Scheme.Modules.pullback q :=
-  Functor.isoWhiskerLeft _ (restrictFunctorIsoPullback p) ≪≫
-    pullbackComp p i ≪≫ pullbackCongr h ≪≫ (pullbackComp q a).symm ≪≫
-    Functor.isoWhiskerRight (restrictFunctorIsoPullback a).symm _
-
 /-- Coherent sheaves pull back along a closed immersion into an affine
 scheme, using its actual quotient-ring presentation. -/
 theorem affineLocallyFiniteType_pullback_affine {Z : Scheme.{u}} (R : CommRingCat.{u})
@@ -94,7 +83,7 @@ theorem affineLocallyFiniteType_pullback {Z X : Scheme.{u}} [IsLocallyNoetherian
     affineLocallyFiniteType_pullback_affine (X.affineOpenCover.X j) (pullback.snd i a)
       (affineLocallyFiniteType_restrict a hM)
   exact (affineLocallyFiniteType (pullback i a)).prop_of_iso
-    ((pullbackOpenSquare (pullback.fst i a) (pullback.snd i a) i a
+    ((Quillen.SchemeSheaf.pullbackOpenSquare (pullback.fst i a) (pullback.snd i a) i a
       (pullback.condition (f := i) (g := a))).app M).symm h
 
 variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsLocallyNoetherian X]
@@ -118,7 +107,7 @@ def coherentPullbackOpenBaseChange {V : Scheme.{u}}
       finiteTypeSheavesRestriction a ⋙ coherentPullback (pullback.snd i a) :=
   Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules (pullback i a))
     (Functor.isoWhiskerLeft (finiteTypeSheavesToModules X)
-      (pullbackOpenSquare (pullback.fst i a) (pullback.snd i a) i a
+      (Quillen.SchemeSheaf.pullbackOpenSquare (pullback.fst i a) (pullback.snd i a) i a
         (pullback.condition (f := i) (g := a))))
 
 /-- The coherent adjunction is the restriction of the genuine sheaf

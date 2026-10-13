@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.GTheory.FiniteModules.Basic
+public import Quillen.Algebra.Category.ModuleCat.Finite
 public import Mathlib.AlgebraicGeometry.Modules.Tilde
 public import Mathlib.CategoryTheory.Abelian.Transfer
 public import Mathlib.CategoryTheory.ObjectProperty.Equivalence

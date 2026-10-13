@@ -79,7 +79,7 @@ local instance principalSectionsHomologyGlobalSections_isRightAdjoint (R : CommR
 
 local instance principalSectionsHomologyGlobalSections_additive (R : CommRingCat.{u}) (r : R) :
     (moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r))).Additive :=
-  moduleSpecΓFunctor_additive _
+  Quillen.SchemeSheaf.moduleSpecΓFunctor_additive _
 
 lemma principalSections_preservesRightHomology {R : CommRingCat.{u}}
     (I : Complex (Spec R)) (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))

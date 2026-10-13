@@ -85,7 +85,8 @@ theorem quasiIso_of_openCover {X : Scheme.{u}} {K L : Complex X} (f : K ⟶ L) {
   intro i
   let := hf i
   intro n
-  exact (mappingCone_acyclic_of_quasiIso ((restrict (U i).ι).map f) n).of_iso
+  exact (Quillen.HomologicalAlgebra.mappingCone_acyclic_of_quasiIso
+    ((restrict (U i).ι).map f) n).of_iso
     (CochainComplex.mappingCone.mapHomologicalComplexIso f (Scheme.Modules.restrictFunctor (U
       i).ι)).symm
 end Quillen.PerfectComplexes

@@ -7,7 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.GTheory.FiniteModules.Localization.Quotient
-public import Quillen.GTheory.FiniteModules.Basic
+public import Quillen.Algebra.Category.ModuleCat.Finite
 public import Quillen.CategoryTheory.SmallModel.Abelian
 public import Mathlib.CategoryTheory.Localization.Equivalence
 

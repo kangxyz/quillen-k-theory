@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.Waldhausen.GrothendieckComparison.WeakObjectCompositionCube
-public import Quillen.Topology.ClassifyingSpace.Constant
+public import Quillen.Topology.Realization.Constant
 
 /-! # Literal chosen-zero faces of the original weak-composition cube -/
 @[expose] public section
@@ -60,7 +60,7 @@ theorem weakObjectCompositionRealization_vertex (e : Fin 2) (z : StdSimplex ℝ 
     (SimplexCategory.const ⦋0⦌ ⦋1⦌ e) (𝟙 ⦋2⦌) (StdSimplex.single 0) z
   rw [bisimplexRealization_apply W
     (gridMap₂ (SimplexCategory.const ⦋0⦌ ⦋1⦌ e) (𝟙 ⦋2⦌) ⋙
-      W.weakObjectCompositionPrism f g hf hg), he, realization_const] at h
+      W.weakObjectCompositionPrism f g hf hg), he, realization_const_apply] at h
   have hc : (ConcreteCategory.hom (SimplexCategory.const ⦋0⦌ ⦋1⦌ e)) 0 = e := rfl
   have hi : (⇑(ConcreteCategory.hom (𝟙 ⦋2⦌)) : Fin 3 → Fin 3) = id := rfl
   have hb : realizationPoint (zeroSimplex W.cof W.weq W.zero W.isZero (op ⦋0⦌)) =

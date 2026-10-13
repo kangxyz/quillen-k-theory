@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.Topology.UnitInterval
 public import Quillen.Topology.HomotopyFiber.Equivalence
 
 /-!
@@ -26,12 +27,6 @@ universe u v
 
 namespace Quillen.HomotopyFiber
 variable {X : Type u} {Y : Type v} [TopologicalSpace X] [TopologicalSpace Y]
-
-@[fun_prop]
-theorem continuous_mulIntervalSource : Continuous (fun z : I × I => z.1 * z.2) := by
-  apply Continuous.subtype_mk
-  exact (continuous_subtype_val.comp continuous_fst).mul
-    (continuous_subtype_val.comp continuous_snd)
 
 /-- The canonical map of fibers induced by precomposition in the source. -/
 def sourceMap {Z : Type*} [TopologicalSpace Z] (f : C(X, Y)) (u : C(Z, X)) (y : Y) :

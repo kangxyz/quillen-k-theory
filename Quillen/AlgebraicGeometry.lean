@@ -735,13 +735,11 @@ public import Quillen.AlgebraicGeometry.Scheme.Regular.AffineProjective
 public import Quillen.AlgebraicGeometry.Scheme.Regular.AffineResolution
 public import Quillen.AlgebraicGeometry.Scheme.Regular.ChartBounds
 public import Quillen.AlgebraicGeometry.Scheme.Regular.Field
-public import Quillen.AlgebraicGeometry.Scheme.Regular.FiniteProjectiveResolution
 public import Quillen.AlgebraicGeometry.Scheme.Regular.GeneralComparison
 public import Quillen.AlgebraicGeometry.Scheme.Regular.GlobalComparison
 public import Quillen.AlgebraicGeometry.Scheme.Regular.GlobalResolution
 public import Quillen.AlgebraicGeometry.Scheme.Regular.KernelClosure
 public import Quillen.AlgebraicGeometry.Scheme.Regular.LocalLowDimension
-public import Quillen.AlgebraicGeometry.Scheme.Regular.LocalPrincipalDomain
 public import Quillen.AlgebraicGeometry.Scheme.Regular.Regularity
 public import Quillen.AlgebraicGeometry.Scheme.Regular.ResolutionProperty
 public import Quillen.AlgebraicGeometry.Scheme.Regular.SmallComparison
@@ -780,6 +778,7 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineRestrictionCoefficien
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineRestrictionSections
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineScalarAdjunction
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineScalarSquare
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineSections
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineSectionsCone
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineSupport
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.BasisQuasiIso

@@ -161,24 +161,10 @@ namespace Quillen.Scheme.ProjectiveLine
 open Quillen.SchemeSheaf
 variable (R : CommRingCat.{u})
 
-/-- The two original polynomial charts indexed by a Boolean. -/
-def twistChart (b : Bool) : Spec (.of (Polynomial R)) ⟶ twoChartLine R :=
-  if b then plusChart R else minusChart R
-instance twistChart_open (b : Bool) : IsOpenImmersion (twistChart R b) := by
-  cases b <;> dsimp [twistChart] <;> infer_instance
-
-lemma twistChart_cover (x : twoChartLine R) :
-    ∃ (b : Bool) (y : Spec (.of (Polynomial R))), twistChart R b y = x := by
-  have hx : x ∈ (plusChart R).opensRange ⊔ (minusChart R).opensRange := by
-    rw [chart_ranges_cover]; trivial
-  rcases hx with ⟨y, hy⟩ | ⟨y, hy⟩
-  · exact ⟨true, y, hy⟩
-  · exact ⟨false, y, hy⟩
-
 lemma twistMinusFunctor_shortExact (S : ShortComplex (twoChartLine R).Modules)
     (hS : S.ShortExact) : (S.map (twistMinusFunctor R)).ShortExact := by
   apply shortExact_of_restrict_openCover (fun _ : Bool => Spec (.of (Polynomial R)))
-    (twistChart R) (twistChart_cover R)
+    (polynomialChart R) (polynomialChart_cover R)
   intro b
   cases b
   · exact ShortComplex.shortExact_of_iso (S.mapNatIso (twistMinusMinusNatIso R)).symm
@@ -190,9 +176,9 @@ instance twistMinus_finiteLocallyFree (M : (twoChartLine R).Modules)
     [IsFiniteLocallyFree (twoChartLine R) M] :
     IsFiniteLocallyFree (twoChartLine R) (twistMinus R M) := by
   apply finiteLocallyFree_of_affineCharts (twistMinus R M)
-    (fun _ : Bool => CommRingCat.of (Polynomial R)) (twistChart R)
+    (fun _ : Bool => CommRingCat.of (Polynomial R)) (polynomialChart R)
   · intro x
-    obtain ⟨b, y, hy⟩ := twistChart_cover R x
+    obtain ⟨b, y, hy⟩ := polynomialChart_cover R x
     exact ⟨b, y, hy⟩
   · intro b
     cases b

@@ -29,10 +29,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace Quillen.PerfectComplexes.Affine
 open Quillen.ModuleComplex.PrincipalLocalization
 
-instance moduleSpecΓFunctor_additive (R : CommRingCat.{u}) :
-    (moduleSpecΓFunctor (R := R)).Additive where
-  map_add := by intros; rfl
-
 /-- The category of integer-indexed cochain complexes of `R`-modules. -/
 abbrev ModuleComplex (R : CommRingCat.{u}) := CochainComplex (ModuleCat.{u} R) ℤ
 

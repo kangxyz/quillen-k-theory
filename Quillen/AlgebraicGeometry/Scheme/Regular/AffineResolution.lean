@@ -7,7 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.Regular.AffineProjective
-public import Quillen.AlgebraicGeometry.Scheme.Regular.FiniteProjectiveResolution
+public import Quillen.Algebra.Homology.FiniteProjectiveResolution
 public import Quillen.Resolution.Transport
 
 /-!
@@ -90,12 +90,6 @@ instance coherentVectorBundle_kernelClosed_affine :
     exact (coherentVectorBundle_iff_projective R S.X₁).mpr
       (ExactStructure.IsKernelClosed.prop_kernel
         (E := CoherentScheme.finiteModuleExactStructure R) hT h₂' h₃')
-
-instance finiteTypeSheavesSpecModuleEquivalence_inverse_additive :
-    (CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R).inverse.Additive := by
-  let := preservesBinaryBiproducts_of_preservesBinaryProducts
-    (CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R).inverse
-  exact Functor.additive_of_preservesBinaryBiproducts _
 
 /-- Associated sheaves of finite modules, landing in the genuine global
 coherent category and retaining actual short exact sequences. -/

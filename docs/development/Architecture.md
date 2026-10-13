@@ -27,7 +27,7 @@ cycles and reverse dependencies on tests, tools, or clients.
 
 | Owner | Principal objects and interfaces |
 | --- | --- |
-| `Algebra` | Module complexes, homological algebra, ring theory, finite-defect Laurent parametrices, stable matrix groups, and finite-projective scalar extension |
+| `Algebra` | Finite-module exact categories and resolutions, module complexes, homological algebra, regular-local ring theory, finite-defect Laurent parametrices, stable matrix groups, and finite-projective scalar extension |
 | `LinearAlgebra` | Generic linear product identities used by the module constructions |
 | `CategoryTheory` | Exact categories, Q-construction, small models, categorical localization, and Theorems A/B |
 | `Topology` | Based homotopy, fibers and cylinders, lifting, realization, prespectra, stable fibers, and categorical stable localization |
@@ -46,6 +46,15 @@ Twisted singular chains and local-system homology belong in
 `Topology/LocalCoefficients`; action localization and monoidal group completion
 belong in `CategoryTheory/GroupCompletion`. The ring-specific plus comparison
 consumes those foundations and the finite-projective module constructions.
+
+Finite-module category foundations and finite-projective resolutions belong in
+`Algebra/Category/ModuleCat` and `Algebra/Homology`; their G-theory localization
+consumers remain in `GTheory`. Regular-local ring arguments belong in
+`Algebra/RegularLocal`, while the canonical scheme K-to-G comparisons remain in
+`AlgebraicGeometry/Scheme/Regular`. Shared realization, interval, simplex and
+arrow lemmas live below the theorem-specific constructions that use them.
+Chart selectors and open pullback squares are owned by the existing chart and
+sheaf interfaces, rather than repeated in their applications.
 
 A module's path records its owner. Its declaration namespace should describe
 the mathematical construction and need not mirror the path. Geometric interfaces

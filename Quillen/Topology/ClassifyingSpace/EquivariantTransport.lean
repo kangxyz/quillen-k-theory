@@ -58,7 +58,8 @@ theorem map_isWeakHomotopyEquivalence_of_weakBases (X : D)
       (ClassifyingSpace (ActionLocalization C D)) (PUnit.unit : PUnit.{w₁ + 1})))
     (hE : IsWeakHomotopyEquivalence (ContinuousMap.const
       (ClassifyingSpace (ActionLocalization C E)) (PUnit.unit : PUnit.{w₂ + 1}))) :
-    IsWeakHomotopyEquivalence (classifyingSpaceMapUniversal (map (C := C) F)) := by
+    IsWeakHomotopyEquivalence
+      (classifyingSpaceMapUniversal (actedMapFunctor (C := C) F)) := by
   have hiD := iteratedFiberEntry_isWeakHomotopyEquivalence_of_weakBase X hD
   have hiE := iteratedFiberEntry_isWeakHomotopyEquivalence_of_weakBase (F.obj X) hE
   rw [← iteratedFiberEntry_map F X, classifyingSpaceMapUniversal_comp] at hiE

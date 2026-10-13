@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.Topology.UnitInterval
 public import Quillen.Topology.HELP.CylinderBoundary
 public import Mathlib.Topology.Homotopy.HomotopyGroup
 
@@ -24,12 +25,6 @@ open CategoryTheory Limits
 open scoped Topology unitInterval
 universe u
 namespace Quillen.CubicalTests
-
-@[fun_prop] theorem continuous_intervalMul :
-    Continuous (fun z : unitInterval × unitInterval ↦ z.1 * z.2) := by
-  apply Continuous.subtype_mk
-  exact (continuous_subtype_val.comp continuous_fst).mul
-    (continuous_subtype_val.comp continuous_snd)
 
 /-- Universe-lifted actual finite cubes, with their original product topology. -/
 abbrev cube (n : ℕ) : TopCat.{u} := TopCat.of (ULift.{u} (Fin n → unitInterval))

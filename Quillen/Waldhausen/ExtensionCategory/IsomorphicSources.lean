@@ -68,11 +68,4 @@ theorem cof_of_zero_sources {X Y : Obj W} (f : X ⟶ Y)
   let : IsIso f.hom.left := hX.isIso hY _
   exact cof_of_left_isIso W f hf
 
-/-- Every original morphism from an actual zero object is a cofibration. -/
-theorem cof_from_any_zero {Z X : C} (hZ : IsZero Z) (f : Z ⟶ X) : W.cof f := by
-  let e : Z ≅ W.zero := hZ.iso W.isZero
-  have h : f = e.hom ≫ W.isZero.to_ X := hZ.eq_of_src _ _
-  rw [h]
-  exact W.cof.comp_mem _ _ (W.cof_iso _ (inferInstance : IsIso e.hom)) (W.cof_zero X)
-
 end Quillen.Waldhausen.ExtensionCategory

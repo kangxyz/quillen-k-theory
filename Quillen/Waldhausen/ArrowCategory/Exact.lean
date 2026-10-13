@@ -20,17 +20,6 @@ namespace ArrowCategory
 variable {C : Type u} [Category.{v} C] {D : Type u'} [Category.{v'} D]
   (V : Structure C) (W : Structure D) {F : C ⥤ D}
 
-theorem isZero_of_components (X : Arrow D) (hl : IsZero X.left) (hr : IsZero X.right) : IsZero X
-    where
-  unique_to Y := by
-    refine ⟨{ default := Arrow.homMk (hl.to_ _) (hr.to_ _) (hl.eq_of_src _ _), uniq := ?_ }⟩
-    intro f
-    exact Arrow.hom_ext _ _ (hl.eq_of_src _ _) (hr.eq_of_src _ _)
-  unique_from Y := by
-    refine ⟨{ default := Arrow.homMk (hl.from_ _) (hr.from_ _) (hr.eq_of_tgt _ _), uniq := ?_ }⟩
-    intro f
-    exact Arrow.hom_ext _ _ (hl.eq_of_tgt _ _) (hr.eq_of_tgt _ _)
-
 theorem mapArrow_exact (hF : IsExact V.cof V.weq W.cof W.weq F) :
     IsExact (waldhausenStructure V).cof (waldhausenStructure V).weq
       (waldhausenStructure W).cof (waldhausenStructure W).weq F.mapArrow where

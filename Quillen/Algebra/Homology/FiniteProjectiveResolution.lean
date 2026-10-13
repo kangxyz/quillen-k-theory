@@ -6,7 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
-public import Quillen.GTheory.FiniteModules.Basic
+public import Quillen.Algebra.Category.ModuleCat.Finite
 public import Quillen.Resolution.Finite
 public import Mathlib.Algebra.Category.ModuleCat.ProjectiveDimension
 public import Mathlib.CategoryTheory.Abelian.Exact

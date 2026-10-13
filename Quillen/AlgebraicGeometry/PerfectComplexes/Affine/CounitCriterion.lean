@@ -30,7 +30,7 @@ universe u
 namespace Quillen.PerfectComplexes.Affine
 local instance (R : CommRingCat.{u}) (r : R) :
     (moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r))).Additive :=
-  moduleSpecΓFunctor_additive _
+  Quillen.SchemeSheaf.moduleSpecΓFunctor_additive _
 
 
 lemma quasiIso_of_affineSections_on_principals (R : CommRingCat.{u})

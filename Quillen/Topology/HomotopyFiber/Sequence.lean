@@ -6,6 +6,7 @@ Authors: Quillen K-theory contributors
 
 module
 
+public import Quillen.Topology.UnitInterval
 public import Quillen.Topology.HomotopyFiber.Exactness
 public import Mathlib.Topology.Homotopy.HSpaces
 public import Mathlib.Topology.Homotopy.Equiv
@@ -95,12 +96,6 @@ theorem loopsRightInverseHomotopy_based (t : I) :
     loopsRightInverseHomotopy f y x h (t, Path.refl y) = Path.refl y := by
   ext s
   rfl
-
-@[fun_prop]
-theorem continuous_intervalMul : Continuous (fun z : I × I => z.1 * z.2) := by
-  apply Continuous.subtype_mk
-  exact (continuous_subtype_val.comp continuous_fst).mul
-    (continuous_subtype_val.comp continuous_snd)
 
 /-- The initial part of the return path, traversed backwards. -/
 def returnPrefix (z : IteratedFiber f y x) (s : I) :

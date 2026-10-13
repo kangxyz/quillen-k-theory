@@ -7,6 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.CategoryTheory.TheoremB.RowDegeneracies
+public import Quillen.CategoryTheory.SimplexCategory
 public import Mathlib.AlgebraicTopology.SimplicialSet.Splitting
 
 /-!
@@ -31,12 +32,6 @@ set_option backward.defeqAttrib.useBackward true
 
 namespace Quillen.TheoremB
 
-/-- A surjective simplex operator preserves the initial vertex. -/
-theorem simplex_epi_zero {p q : SimplexCategory} (f : p ⟶ q) [Epi f] :
-    f.toOrderHom 0 = 0 := by
-  obtain ⟨k, hk⟩ := (SimplexCategory.epi_iff_surjective.mp (inferInstance : Epi f)) 0
-  exact le_antisymm ((f.toOrderHom.monotone (Fin.zero_le k)).trans_eq hk) (Fin.zero_le _)
-
 variable {D : Type u} [SmallCategory D] (H : D ⥤ SSet.{u})
 
 /-- Every surjective simplex operator induces an isomorphism on a
@@ -45,7 +40,7 @@ theorem firstVertexEdge_epi_isIso {p q : SimplexCategoryᵒᵖ} (α : p ⟶ q)
     [Epi α.unop] (s : (nerve D).obj p) : IsIso (TheoremA.firstVertexEdge α s) := by
   change Fin (p.unop.len + 1) ⥤ D at s
   change IsIso (s.map (homOfLE (Fin.zero_le (α.unop.toOrderHom 0))))
-  rw [simplex_epi_zero α.unop]
+  rw [SimplexCategory.epi_zero α.unop]
   change IsIso (s.map (𝟙 (0 : Fin (p.unop.len + 1))))
   rw [s.map_id]
   infer_instance

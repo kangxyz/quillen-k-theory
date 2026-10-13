@@ -5,7 +5,7 @@ Authors: Quillen K-theory contributors
 -/
 module
 
-public import Quillen.GTheory.FiniteModules.Basic
+public import Quillen.Algebra.Category.ModuleCat.Finite
 public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
 public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRingsExact
 public import Mathlib.Algebra.Category.FGModuleCat.Limits

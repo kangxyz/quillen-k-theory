@@ -78,7 +78,7 @@ theorem vertexSection_snd (y : Y _⦋0⦌) (x : |X|) :
     SSet.toTop.map (snd X Y) (SSet.toTop.map (vertexSection X Y y) x) = realizationPoint y := by
   change (SSet.toTop.map (vertexSection X Y y) ≫ SSet.toTop.map (snd X Y)) x = _
   rw [← CategoryTheory.Functor.map_comp]
-  simpa only [vertexSection, lift_snd] using (realization_const (X := X) y x)
+  simpa only [vertexSection, lift_snd] using (realization_const_apply (X := X) y x)
 
 /-- The prescribed constant-path inclusion into the actual realized fiber. -/
 def fiberInclusion (y : Y _⦋0⦌) :

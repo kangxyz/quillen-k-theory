@@ -7,6 +7,7 @@ Authors: Quillen K-theory contributors
 module
 
 public import Quillen.Topology.Realization.MonomorphismHEP
+public import Quillen.Topology.Realization.Skeleton
 public import Quillen.CategoryTheory.TheoremA.SkeletalEquivalences
 public import Quillen.CategoryTheory.TheoremA.SequentialHomotopyInvariance
 public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Terminal
@@ -101,15 +102,11 @@ lemma realizesEquiv_pushout [PreservesColimits F] [F.PreservesMonomorphisms]
 /-- The skeletal stages used by the actual simplicial relative cell complex. -/
 abbrev stage (X : SSet.{u}) (n : ℕ) : SSet.{u} := (SSet.relativeCellComplex X).F.obj n
 
-lemma stage_eq_skeleton (X : SSet.{u}) (n : ℕ) :
-    SSet.skeletonOfMono (SSet.Subcomplex.ι (⊥ : X.Subcomplex)) n = X.skeleton n := by
-  simp [SSet.skeletonOfMono]
-
 /-- A simplicial set of dimension less than `n` equals its `n`-stage. -/
 def stageIsoOfDimension (X : SSet.{u}) (n : ℕ) [X.HasDimensionLT n] : stage X n ≅ X := by
   refine SSet.Subcomplex.eqToIso ?_ ≪≫ SSet.Subcomplex.topIso X
   change SSet.skeletonOfMono (SSet.Subcomplex.ι (⊥ : X.Subcomplex)) n = ⊤
-  rw [stage_eq_skeleton]
+  rw [skeletonOfMono_bot]
   apply (SSet.Subcomplex.eq_top_iff_of_hasDimensionLT _ n).2
   intro i hi x hx
   exact X.mem_skeleton x hi

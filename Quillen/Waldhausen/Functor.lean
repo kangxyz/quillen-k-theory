@@ -91,6 +91,13 @@ def sSetMap : sSet cof weq ⟶ sSet cof' weq' where
   app _ := ↾fun A ↦ ⟨A.1 ⋙ F, A.2.postcomp hF⟩
   naturality _ _ _ := by ext A; rfl
 
+/-- The original S-map preserves the identity functor exactly. -/
+@[simp] theorem sSetMap_id.{u₁, v₁} {C : Type u₁} [Category.{v₁} C]
+    (V : Structure C) :
+    sSetMap (IsExact.id V.cof V.weq) = 𝟙 (sSet V.cof V.weq) := by
+  ext n A
+  rfl
+
 /-- The map of actual geometric realizations. -/
 def deloopingMap : delooping cof weq ⟶ delooping cof' weq' :=
   SSet.toTop.map (sSetMap hF)

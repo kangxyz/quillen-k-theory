@@ -30,12 +30,6 @@ namespace Quillen.CoherentScheme.ClosedImmersion.Ideal
 open FiniteModuleLocalization.IdealClosedSupport
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (I : Ideal R)
 
-instance finiteTypeSheavesSpecModuleEquivalence_inverse_additive :
-    (finiteTypeSheavesSpecModuleEquivalence R).inverse.Additive := by
-  let := preservesBinaryBiproducts_of_preservesBinaryProducts
-    (finiteTypeSheavesSpecModuleEquivalence R).inverse
-  exact Functor.additive_of_preservesBinaryBiproducts _
-
 /-- The actual inverse affine equivalence is exact. -/
 def associatedCoherentExact :
     ExactFunctor (finiteModuleExactStructure.{u, u} R) (coherentExactStructure (Spec R)) where

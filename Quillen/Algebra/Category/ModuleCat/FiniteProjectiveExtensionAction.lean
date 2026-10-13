@@ -156,6 +156,11 @@ def extensionFiberDirectSumAction (C : Category.{u, u} R) :
 
 attribute [local instance] extensionFiberDirectSumAction
 
+/-- Direct sum retains the original quotient and kills the added summand. -/
+theorem extensionAction_obj_hom {C : Category.{u, u} R} (S : IsoCategory R)
+    (p : (exactStructure R).ExtensionFiber C) :
+    (S ⊙ₗ p).of.obj.hom = coprod.desc (0 : S.of ⟶ C) p.of.obj.hom := rfl
+
 /-- Grayson's category associated to the actual fixed-quotient extension action. -/
 abbrev ExtensionActionCategory (C : Category.{u, u} R) :=
   GroupCompletion.ActionLocalization (IsoCategory R) ((exactStructure R).ExtensionFiber C)

@@ -53,7 +53,7 @@ theorem telescopeUnitCompletionHomotopy_base (t : unitInterval) :
       completedRetractionZeroPath R t := by
   change classifyingSpaceUniversalHomotopy (telescopeUnitCompletionHom R)
       (t, classifyingSpacePoint (projectiveTelescopeBase R)) = _
-  rw [classifyingSpaceUniversalHomotopy_vertex, telescopeUnitCompletionHom_base]
+  rw [classifyingSpaceUniversalHomotopy_vertex_track, telescopeUnitCompletionHom_base]
   exact (path_mpr_apply
     (classifyingSpaceMapUniversal_point (completedRetraction R) (completedTelescopeBase R))
     (classifyingSpacePath ((completedRetractionZeroIso R).hom.app

@@ -12,6 +12,7 @@ public import Quillen.Algebra.Category.ModuleCat.CartesianBaseChange
 public import Quillen.Algebra.Category.ModuleCat.CartesianProduct
 public import Quillen.Algebra.Category.ModuleCat.CoproductHomology
 public import Quillen.Algebra.Category.ModuleCat.FilteredColimits
+public import Quillen.Algebra.Category.ModuleCat.Finite
 public import Quillen.Algebra.Category.ModuleCat.FiniteMatrixBaseChange
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjective
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChange
@@ -100,6 +101,7 @@ public import Quillen.Algebra.Homology.DerivedPreEqualityDenominators
 public import Quillen.Algebra.Homology.EventualKernelComparison
 public import Quillen.Algebra.Homology.ExtendFunctor
 public import Quillen.Algebra.Homology.FilteredColimits
+public import Quillen.Algebra.Homology.FiniteProjectiveResolution
 public import Quillen.Algebra.Homology.HomotopyCategory.BoundedProperty
 public import Quillen.Algebra.Homology.HomotopyPullback
 public import Quillen.Algebra.Homology.HomotopyPullbackQuasiIso
@@ -189,11 +191,14 @@ public import Quillen.Algebra.Polynomial.LaurentProjectorFiniteDefects
 public import Quillen.Algebra.Polynomial.LaurentPullback
 public import Quillen.Algebra.Polynomial.LaurentSquare
 public import Quillen.Algebra.Polynomial.LaurentUnderSquare
+public import Quillen.Algebra.RegularLocal.DimensionZero
 public import Quillen.Algebra.RegularLocal.Domain
 public import Quillen.Algebra.RegularLocal.GlobalProjectiveDimension
+public import Quillen.Algebra.RegularLocal.LowDimension
 public import Quillen.Algebra.RegularLocal.ParameterAvoidance
 public import Quillen.Algebra.RegularLocal.ParameterQuotient
 public import Quillen.Algebra.RegularLocal.Parameters
+public import Quillen.Algebra.RegularLocal.PrincipalDomain
 public import Quillen.Algebra.RegularLocal.ProjectiveDimension
 public import Quillen.Algebra.RegularLocal.QuotientLifting
 public import Quillen.AlgebraicGeometry
@@ -925,13 +930,11 @@ public import Quillen.AlgebraicGeometry.Scheme.Regular.AffineProjective
 public import Quillen.AlgebraicGeometry.Scheme.Regular.AffineResolution
 public import Quillen.AlgebraicGeometry.Scheme.Regular.ChartBounds
 public import Quillen.AlgebraicGeometry.Scheme.Regular.Field
-public import Quillen.AlgebraicGeometry.Scheme.Regular.FiniteProjectiveResolution
 public import Quillen.AlgebraicGeometry.Scheme.Regular.GeneralComparison
 public import Quillen.AlgebraicGeometry.Scheme.Regular.GlobalComparison
 public import Quillen.AlgebraicGeometry.Scheme.Regular.GlobalResolution
 public import Quillen.AlgebraicGeometry.Scheme.Regular.KernelClosure
 public import Quillen.AlgebraicGeometry.Scheme.Regular.LocalLowDimension
-public import Quillen.AlgebraicGeometry.Scheme.Regular.LocalPrincipalDomain
 public import Quillen.AlgebraicGeometry.Scheme.Regular.Regularity
 public import Quillen.AlgebraicGeometry.Scheme.Regular.ResolutionProperty
 public import Quillen.AlgebraicGeometry.Scheme.Regular.SmallComparison
@@ -970,6 +973,7 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineRestrictionCoefficien
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineRestrictionSections
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineScalarAdjunction
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineScalarSquare
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineSections
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineSectionsCone
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineSupport
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.BasisQuasiIso
@@ -1346,6 +1350,7 @@ public import Quillen.CategoryTheory.RankedChain.Resolution
 public import Quillen.CategoryTheory.SemisimplexResolution.Append
 public import Quillen.CategoryTheory.SemisimplexResolution.Basic
 public import Quillen.CategoryTheory.SemisimplexResolution.Contraction
+public import Quillen.CategoryTheory.SimplexCategory
 public import Quillen.CategoryTheory.Sites.BasisExactness
 public import Quillen.CategoryTheory.Sites.CechComparison
 public import Quillen.CategoryTheory.Sites.CechExactSequences
@@ -1491,7 +1496,6 @@ public import Quillen.Devissage.ReflectorFiltration
 public import Quillen.Devissage.Setup
 public import Quillen.Devissage.SpanLayers
 public import Quillen.GTheory
-public import Quillen.GTheory.FiniteModules.Basic
 public import Quillen.GTheory.FiniteModules.ClosedSupport
 public import Quillen.GTheory.FiniteModules.IdealClosedSupport
 public import Quillen.GTheory.FiniteModules.IdealPowerFiltration
@@ -2454,6 +2458,7 @@ public import Quillen.Topology.Realization.CompactFundamentalGroupoid
 public import Quillen.Topology.Realization.CompactGraph
 public import Quillen.Topology.Realization.CompactStages
 public import Quillen.Topology.Realization.Connectivity
+public import Quillen.Topology.Realization.Constant
 public import Quillen.Topology.Realization.Coproduct
 public import Quillen.Topology.Realization.Cylinder
 public import Quillen.Topology.Realization.CylinderEndpoints
@@ -2530,6 +2535,7 @@ public import Quillen.Topology.Realization.SimplexBoundaryHEP
 public import Quillen.Topology.Realization.SimplexCylinder
 public import Quillen.Topology.Realization.SimplexHomotopy
 public import Quillen.Topology.Realization.SimplicialColimits
+public import Quillen.Topology.Realization.Skeleton
 public import Quillen.Topology.Realization.SplitFiber
 public import Quillen.Topology.Realization.SplitFiberCartesian
 public import Quillen.Topology.Realization.SplitFiberCompactHELP
@@ -2548,6 +2554,7 @@ public import Quillen.Topology.Realization.ZeroSkeleton
 public import Quillen.Topology.SequentialColimit.CompactCartesian
 public import Quillen.Topology.ThickTransition.Basic
 public import Quillen.Topology.ThickTransition.MappingCylinder
+public import Quillen.Topology.UnitInterval
 public import Quillen.Waldhausen
 public import Quillen.Waldhausen.Additivity.BasedAdditivity
 public import Quillen.Waldhausen.Additivity.BasedHomotopyTools
@@ -2968,7 +2975,6 @@ public import Quillen.Waldhausen.QuillenComparison.RowGroupoid
 public import Quillen.Waldhausen.QuillenComparison.RowSimplicial
 public import Quillen.Waldhausen.QuillenComparison.SimplicialMap
 public import Quillen.Waldhausen.QuillenComparison.SpanLifting
-public import Quillen.Waldhausen.QuillenComparison.SpanNaturality
 public import Quillen.Waldhausen.QuillenComparison.SparseRows
 public import Quillen.Waldhausen.QuillenComparison.VerticalSpans
 public import Quillen.Waldhausen.QuillenComparison.ZeroNormalization

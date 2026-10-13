@@ -24,6 +24,18 @@ set_option backward.defeqAttrib.useBackward true
 namespace Quillen.Waldhausen.ArrowCategory
 variable {C : Type u} [Category.{v} C] (W : Structure C)
 
+/-- An arbitrary arrow between zero objects is a genuine zero arrow object. -/
+theorem isZero_of_components (X : Arrow C) (hl : IsZero X.left) (hr : IsZero X.right) : IsZero X
+    where
+  unique_to Y := by
+    refine ⟨{ default := Arrow.homMk (hl.to_ _) (hr.to_ _) (hl.eq_of_src _ _), uniq := ?_ }⟩
+    intro f
+    exact Arrow.hom_ext _ _ (hl.eq_of_src _ _) (hr.eq_of_src _ _)
+  unique_from Y := by
+    refine ⟨{ default := Arrow.homMk (hl.from_ _) (hr.from_ _) (hr.eq_of_tgt _ _), uniq := ?_ }⟩
+    intro f
+    exact Arrow.hom_ext _ _ (hl.eq_of_tgt _ _) (hr.eq_of_tgt _ _)
+
 /-- Commutative squares whose source and target component maps are both cofibrations in `W`. -/
 def cof : MorphismProperty (Arrow C) :=
   W.cof.inverseImage Arrow.leftFunc ⊓ W.cof.inverseImage Arrow.rightFunc
