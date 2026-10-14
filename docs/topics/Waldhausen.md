@@ -153,6 +153,18 @@ the actual `ThreeSideSquare.collapse`, including the full degree-zero loop and
 an independent spectrum structure coordinate. These laws require the stated
 path/surface lifts; they do not produce a lift for every native Bass track.
 
+[`CommonReferenceWhiskering`](../../Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceWhiskering.lean)
+retains an entire simplex family under the specified common-reference change.
+`SimplexDiagonalComposition` and `SimplexProductDiagram` form the actual
+composed diagram from two independently varying families.
+[`RealizationSimplexComposition`](../../Quillen/Waldhausen/SConstruction/Iterated/RealizationSimplexComposition.lean)
+identifies stage, realization and whole prespectrum evaluation using the actual
+realization-product homeomorphism and monotone grid parameter. Original zeros,
+all levels including zero, and the separate structure coordinate are retained.
+The original coefficient Bass application now supplies both chart pauses and
+its whole bottom surface with literal shared edges; the remaining compatible
+faces and genuine composition cylinder require additional construction.
+
 ## Comparison with exact-category Q
 
 For `E : Quillen.ExactStructure C`,

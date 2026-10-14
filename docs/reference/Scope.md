@@ -235,8 +235,15 @@ with whole-value-preserving producer factorizations. One merged 18-node
 diagram and the exact full original double-square scalar rectangle are now
 supplied, including complete geometric route faces and continuous three-side
 collapse. The generic terminal chart pause retains explicit lift premises.
-The compatible common Bass family, six shared boundary surfaces and the full
-composition cube remain open. The first Godement functor on
+Both original Bass chart pauses and the full prescribed bottom surface now
+share a merged 44-simplex, with six anchored reference/full dependent-node
+equalities and literal shared scalar edges at their original speeds. Generic
+varying-family composition uses the actual realization-product homeomorphism,
+with independent parameters and structure time. A separate actual 30-simplex
+now realizes the entire original H0 cylinder face, its four scalar edges at
+native speed, degree-zero loops, point and independent structure laws. The
+joint H0/chart/bottom family, whole H1/M surfaces and genuine six-face
+composition cylinder remain separate. The first Godement functor on
 all scheme module sheaves is exact, flasque-valued and has its original natural
 monic germ unit. Its exact cokernel iteration now supplies the natural augmented
 flasque sheaf resolution and original augmentation quasi-isomorphism, preserving
@@ -256,7 +263,32 @@ The literal lower-bounded locally-perfect inclusion
 now induces the original delooping weak equivalence and canonical K-map
 bijection on every quasi-compact scheme, including degree zero. Its actual
 opposite-App2/S-duality proof uses no Godement or global truncation-exactness
-premise. This source comparison does not construct the natural G/P4 inverse.
+premise. Literal exact G₀=p_* and G₁=p_*T(−⊗L)[1] now act on the actual
+flasque-perfect model, with an exact product and natural original installed
+unit/augmentation/shift comparisons over every R including zero. Actual exact
+Phi now totalizes the original O/O(-1) sum and agrees with the EXISTING native
+two-summand functor and K-map after literal model inclusion and actual affine
+transport. Naturality in coefficient-complex maps at each fixed R, original
+chosen zeros and both Product.KEquiv maps are retained in every degree,
+including zero. The canonical positive unit on original strict affine
+coefficients is a genuine quasi-isomorphism; its actual weak span proves the
+original positive K-map equality, and the literal strictTotal source K-map is
+bijective in every nonnegative degree. The literal model signed shift now
+induces inversion on original K-groups for every scheme and natural degree.
+The original determinant-normalized Euler conflation, weak-zero middle and
+actual additivity prove K(E2[1])=K(E0) on strict affine coefficients; its
+canonical connecting isomorphism is separately retained.
+[`FlasqueGPhiMatrix`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasqueGPhiMatrix.lean)
+proves the actual product-category K(G)∘K(Phi)=id and literal composite
+KMap(Phi⋙G)=id for every R and every natural degree, including zero. The four
+actual entries, proved strictTotal K-map surjectivity and unchanged original
+product K-equivalence are independently reviewed and native. The opposite
+PhiG identity, full P4 and the global/support extension remain separate.
+Actual LEFT-L tensor followed by totalization now maps the original diagonal
+conflation to exact functors, with native additivity in every natural degree.
+`FlasquePhiColumns` retains the literal positive and unshifted negative
+column expression for K(Phi)∘K(G); the three endpoint identifications are
+still required for the inverse.
 The original diagonal tensor sequence now extends to all bounded-below module
 coefficients as a genuine complex SES and canonical D+ triangle. Its whole-functor
 localization retains inverse roofs, original connecting maps and naturality;

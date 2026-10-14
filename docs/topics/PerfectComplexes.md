@@ -109,7 +109,57 @@ Its two forward natural weak units yield mutually inverse original inclusion
 and total K-maps for every scheme and every nonnegative degree, including
 zero. [`FlasqueBoundedBelowComparison`](../../Quillen/AlgebraicGeometry/PerfectComplexes/FlasqueBoundedBelowComparison.lean)
 identifies its literal composite inclusion into all perfect complexes on
-quasi-compact schemes. Actual G and the P4 two-summand inverse remain separate.
+quasi-compact schemes.
+[`FlasqueCoefficientZero`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasqueCoefficientZero.lean)
+and `FlasqueCoefficientOne` now construct literal exact G₀=p_* and
+G₁=p_*T(−⊗L)[1], with actual flasque-perfect outputs, original maps and signed
+shift. Their exact product and natural installed-unit/augmentation/shift
+comparisons are supplied over every commutative ring, including zero.
+[`FlasqueTwoSummands`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasqueTwoSummands.lean)
+now constructs actual exact Phi by totalizing the original O/O(-1) coproduct.
+Its natural forward weak unit and actual coproduct comparisons retain the
+original local sum.
+[`FlasqueNativePhiKMap`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasqueNativePhiKMap.lean)
+identifies its original K-map with the EXISTING native two-summand map through
+literal model inclusion and actual affine transport, preserving both unchanged
+Product.KEquiv maps and all degrees including zero. This has independent
+ordinary review, native public-root interfaces and a complete 143-origin audit.
+[`StrictPositiveRetraction`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/StrictPositiveRetraction.lean)
+proves the original canonical positive unit weak on strict affine coefficients
+and its actual forward weak-span K-map equality. `StrictPositiveSourceComparison`
+proves the literal strictTotal source K-map bijective over every R and in every
+natural degree, including zero; no natural strictification is supplied.
+[`FlasqueShift`](../../Quillen/AlgebraicGeometry/PerfectComplexes/FlasqueShift.lean)
+proves the literal signed shift induces inversion on the original model
+K-groups for every scheme and natural degree, including zero, through its
+actual identity-cone conflation and weak-zero transformation.
+[`EulerInverse`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/EulerInverse.lean)
+proves K(E2[1])=K(E0) for the original determinant-normalized projected Euler
+functors on strict affine coefficients. The actual conflation, weak-zero
+middle and original additivity supply this equality; `EulerConnecting` retains
+the canonical connecting isomorphism separately. These eight sources have
+independent review, native interfaces and a complete 257-origin audit.
+[`FlasqueGPhiMatrix`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasqueGPhiMatrix.lean)
+assembles all four actual entries into the original product-category
+K(G)∘K(Phi)=id and literal composite KMap(Phi⋙G)=id. The proof uses the
+original positive unit, O(-1) weak-zero maps, Euler comparison and signed
+shift, then the proved strictTotal source K-map surjectivity and unchanged
+Product.KEquiv. Independent complex ordinary review, 24 original native
+public-root examples and a complete 145-origin audit cover every R,
+including the zero ring, and every natural degree, including zero. The
+opposite PhiG identity and its three original endpoint weak spans remain
+separate; the full K-equivalence is not yet asserted.
+[`FlasqueTensorDiagonalAdditivity`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasqueTensorDiagonalAdditivity.lean)
+now gives original K(Gamma E2)=K(Gamma E1)*K(Gamma E3), with Gamma the
+actual LEFT-L tensor followed by totalization, a genuine mapped conflation
+and exact Reedy extension.
+[`FlasquePhiColumns`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasquePhiColumns.lean)
+gives K(Phi)(K(G)(x)) as the positive composite times the inverse unshifted
+negative composite, retaining the original coproduct, product coordinates,
+chosen zero and actual base shift. Independent ordinary reviews, 29 original
+public-root examples and a complete 53-origin audit passed. The actual
+three Gamma endpoint K-map identifications are the remaining PhiG step;
+no derived connecting-arrow comparison is inferred.
 
 `strictKPullback` accepts every scheme map. `perfectKPullback` accepts arbitrary
 maps between quasi-compact schemes, uses bounded-above flat representatives,

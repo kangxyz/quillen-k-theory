@@ -700,9 +700,13 @@ public import Quillen.Topology.OpenGluing.FirstUniversalComparison
 public import Quillen.Topology.OpenGluing.FirstWeakEquivalence
 public import Quillen.Topology.OpenGluing.GlobalWeakComparison
 public import Quillen.Topology.OpenGluing.RightChart
+public import Quillen.Topology.Path.BoundaryOfComparison
 public import Quillen.Topology.Path.HomotopyThreeRoutes
 public import Quillen.Topology.Path.PointHEP
+public import Quillen.Topology.Path.ProjectionPasteWord
 public import Quillen.Topology.Path.Separation
+public import Quillen.Topology.Path.SimplexCollapsedBoundary
+public import Quillen.Topology.Path.SimplexCollapsedEdges
 public import Quillen.Topology.PathSpace.Metric
 public import Quillen.Topology.PathSubdivision.FiniteIteration
 public import Quillen.Topology.PathSubdivision.FiniteStep
@@ -725,6 +729,7 @@ public import Quillen.Topology.PlusConstruction.DoubleCylinderWeakEquivalence
 public import Quillen.Topology.PlusConstruction.RealizationComparisonExistence
 public import Quillen.Topology.PlusConstruction.RealizationComparisonUniqueness
 public import Quillen.Topology.PlusConstruction.UnivSubtype
+public import Quillen.Topology.Prespectrum.ActualBoundaryWord
 public import Quillen.Topology.Prespectrum.CoherentHomotopyCongruence
 public import Quillen.Topology.Prespectrum.ConeArrowHomotopy
 public import Quillen.Topology.Prespectrum.ConeConeTranspose
@@ -806,6 +811,7 @@ public import Quillen.Topology.Prespectrum.ParameterLoopingStableEquivalence
 public import Quillen.Topology.Prespectrum.ParameterLoopingWeakEquivalence
 public import Quillen.Topology.Prespectrum.Point
 public import Quillen.Topology.Prespectrum.PositiveLevelEquivalence
+public import Quillen.Topology.Prespectrum.ProjectionStraighten
 public import Quillen.Topology.Prespectrum.PushoutArrowHomotopy
 public import Quillen.Topology.Prespectrum.PushoutCollapseNaturality
 public import Quillen.Topology.Prespectrum.PushoutConeCollapse
@@ -996,6 +1002,7 @@ public import Quillen.Topology.Realization.Homotopy
 public import Quillen.Topology.Realization.HomotopyBridge
 public import Quillen.Topology.Realization.HomotopyNaturality
 public import Quillen.Topology.Realization.HomotopySquare
+public import Quillen.Topology.Realization.JointSimplexParameter
 public import Quillen.Topology.Realization.MapEquivalence
 public import Quillen.Topology.Realization.MapWeakEquivalence
 public import Quillen.Topology.Realization.MetricPointStarRefinement
@@ -1043,7 +1050,9 @@ public import Quillen.Topology.Realization.SimplexBoundaryHEP
 public import Quillen.Topology.Realization.SimplexConnectivity
 public import Quillen.Topology.Realization.SimplexCylinder
 public import Quillen.Topology.Realization.SimplexFaceGluing
+public import Quillen.Topology.Realization.SimplexGridBoundary
 public import Quillen.Topology.Realization.SimplexHomotopy
+public import Quillen.Topology.Realization.SimplexProductParameter
 public import Quillen.Topology.Realization.SimplexSkeleton
 public import Quillen.Topology.Realization.SimplexStraighteningStep
 public import Quillen.Topology.Realization.SimplicialColimits

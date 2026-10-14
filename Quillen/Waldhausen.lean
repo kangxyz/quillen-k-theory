@@ -435,9 +435,11 @@ public import Quillen.Waldhausen.SConstruction.BisimplexRealization
 public import Quillen.Waldhausen.SConstruction.Bisimplicial
 public import Quillen.Waldhausen.SConstruction.Connected
 public import Quillen.Waldhausen.SConstruction.Iterated.Additivity
+public import Quillen.Waldhausen.SConstruction.Iterated.BassScalarBoundaryLiftOps
 public import Quillen.Waldhausen.SConstruction.Iterated.Category
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceFaces
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNodeTransport
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceWhiskering
 public import Quillen.Waldhausen.SConstruction.Iterated.CompositionHomotopyNaturality
 public import Quillen.Waldhausen.SConstruction.Iterated.ConeFiberExcision
 public import Quillen.Waldhausen.SConstruction.Iterated.ConeParameterLooping
@@ -461,6 +463,7 @@ public import Quillen.Waldhausen.SConstruction.Iterated.Interchange
 public import Quillen.Waldhausen.SConstruction.Iterated.LocalizedFunctoriality
 public import Quillen.Waldhausen.SConstruction.Iterated.LoopMap
 public import Quillen.Waldhausen.SConstruction.Iterated.LoopWeakEquivalence
+public import Quillen.Waldhausen.SConstruction.Iterated.ModelReferenceReanchor
 public import Quillen.Waldhausen.SConstruction.Iterated.NaturalHomotopy
 public import Quillen.Waldhausen.SConstruction.Iterated.NaturalTriangle
 public import Quillen.Waldhausen.SConstruction.Iterated.NormalizationAssociativity
@@ -481,6 +484,8 @@ public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumIsoNaturality
 public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumPastingHomotopy
 public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumTransformationTransport
 public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumZeroNaturality
+public import Quillen.Waldhausen.SConstruction.Iterated.ProjectionPasteLift
+public import Quillen.Waldhausen.SConstruction.Iterated.RealizationSimplexComposition
 public import Quillen.Waldhausen.SConstruction.Iterated.RelativeCylinder
 public import Quillen.Waldhausen.SConstruction.Iterated.ScalarChartPause
 public import Quillen.Waldhausen.SConstruction.Iterated.ScalarReassociationLifts
@@ -488,6 +493,7 @@ public import Quillen.Waldhausen.SConstruction.Iterated.ScalarRectangleLiftOps
 public import Quillen.Waldhausen.SConstruction.Iterated.ScalarRouteExtraction
 public import Quillen.Waldhausen.SConstruction.Iterated.ScalarTripleEvaluation
 public import Quillen.Waldhausen.SConstruction.Iterated.Separation
+public import Quillen.Waldhausen.SConstruction.Iterated.SimplexDiagonalComposition
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexFaces
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexFamily
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexIsomorphism
@@ -497,6 +503,7 @@ public import Quillen.Waldhausen.SConstruction.Iterated.SimplexLiftReassociation
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexParameterPaths
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexPathEmbedding
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexPrespectrum
+public import Quillen.Waldhausen.SConstruction.Iterated.SimplexProductDiagram
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexTriangleLift
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexTriangleSourceTransport
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexTriangleWhiskering

@@ -242,6 +242,25 @@ separate claims.
 
 ## Bass cokernels and the original Laurent seed
 
+The original coefficient Bass comparison now has scalar lifts for both
+complete chart pauses.
+[`BassMergedBoundarySimplex`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassMergedBoundarySimplex.lean)
+places those whole chart surfaces and the prescribed Laurent bottom
+L(r,cylinder(t,x)) in one common 44-simplex. All six reference/full-node
+equalities are proved;
+[`BassMergedScalarBoundary`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassMergedScalarBoundary.lean)
+retains literal shared chart/bottom edges at their original speeds, including
+degree-zero loops and independent structure time.
+[`BassH0Native`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassH0Native.lean)
+now evaluates the entire prescribed H0 cylinder surface in a separate actual
+30-simplex, retaining both projection rectangles and their five full shared
+nodes. All four original scalar edges, point and independent structure
+coordinates are proved at every level, including zero. The joint H0/chart/bottom
+family, whole H1/M faces and genuine six-face composition cylinder remain
+separate. The generic
+varying-family composition theorem supplies the actual realization-product
+parameter and does not supply these remaining geometric faces.
+
 For `R : CommRingCat.{u}`, the additive Bass contraction is the cokernel of
 `F(R[T]) ⊕ F(R[T]) → F(R[T,T⁻¹])`, with map `(a,b) ↦ F(plus)(a) - F(minus)(b)`.
 [`contraction`](../../Quillen/KTheory/Bass/Contraction.lean) retains this

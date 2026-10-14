@@ -371,8 +371,33 @@ including the original geometric route faces and continuous `ThreeSideSquare`
 collapse. `ScalarChartPause` supplies the generic native terminal pause from
 its explicit boundary and three side-path lifts. Its native helper is named
 `rectangleRotate` to preserve the existing distinct rotation interface.
-A compatible common Bass family, actual coefficient specialization, all six
-shared boundary surfaces and the interior cube remain separate.
+`BassChartScalarFaces` now discharges all pause premises for both actual
+coefficient charts. `BassCommonChartSimplex` preserves both complete native
+chart surfaces in a common 35-simplex. The exact generic composition in
+[`RealizationSimplexComposition`](../../Quillen/Waldhausen/SConstruction/Iterated/RealizationSimplexComposition.lean)
+uses the actual realization-product homeomorphism and monotone grid, retaining
+independent family parameters, degree-zero loops and structure time.
+`BassLaurentBottomFace` realizes the full prescribed bottom L(r,cylinder(t,x))
+through its actual 15-node grid.
+[`BassSharedNodes`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassSharedNodes.lean)
+proves all six anchored reference and complete dependent-node equalities.
+`BassMergedBoundarySimplex` retains both whole chart surfaces and the full bottom
+in one 44-simplex; `BassMergedScalarBoundary` proves the literal shared
+plus/bottom and minus/bottom edge equations at the original speeds.
+These results have independent ordinary review, native public-root interfaces
+and a complete 281-declaration canonical-origin audit.
+[`BassH0Native`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassH0Native.lean)
+now realizes the WHOLE original H0 cylinder face in one actual 30-simplex,
+retaining both full projection rectangles, five full shared outer nodes,
+original source transports and native pasting/collapse.
+[`BassH0ScalarEdges`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassH0ScalarEdges.lean)
+identifies all four scalar boundary paths at their original speeds. Original
+point, degree-zero loop and independent structure coordinates are retained.
+Independent mathematical/native-retention review, public-root interfaces and
+the complete 111-origin audit passed. The two scalar rotation names have
+definitionally equal entire homotopy data; the distinct proof-helper origin
+is explicitly retained. A joint H0/chart/bottom family, whole H1/M surfaces
+and the genuine interior cube remain separate.
 
 `CoefficientBassWholeLawCriterion` gives the exact null-square criterion for
 cone homotopies with a prescribed original inclusion track.
@@ -433,7 +458,7 @@ not ordinary equivalence/approximation of this two-summand functor.
 | P1: canonical line/tensor comparisons | Accepted natural p₁*(E⊗L)≅p₁*E⊗p₁*L and specified determinant pairing L⊗Q≅O, retaining actual unit/braiding/chart comparisons. | `PullbackTensorCompatibility` proves the literal canonical mate for any f and any other module sheaf; `LineTensorCompatibility` proves both chart multiplication equations with +1. The accepted P3 endpoint and contraction proofs use these actual maps; perfect pushforward remains a separate input. |
 | P2: arbitrary-perfect projection | Accepted genuine QC and strict models, and actual Rp perfection, for every intrinsic perfect D+ input on twoChartLine R. | `QuasicoherentRepresentative` constructs the original derived replacement; `IntrinsicPerfectPushforward` composes it with the accepted strictification and original Rp. No supplied replacement, noetherian or bounded-vector-bundle premise remains. This closes objectwise P2 over arbitrary R. The accepted P3 uses it to test original mate invertibility and coefficient perfectness; the P4 K-inverse remains separate. |
 | P3: natural diagonal generation | Accepted natural distinguished triangle p*G₀(K)→K→L⊗p*G₁(K), with G₀=Rp*K and G₁=Rp*(K⊗L)[1], for every intrinsic-perfect D+ input over arbitrary R, including zero. | `OriginalPerfectGeneration` retains the original self-base-change/projection endpoint maps, incidence/quotient/connecting naturality on genuine roofs, specified determinant contractions and units, negative shifted incidence, full original bundle-single correspondence and perfect coefficients. Independent complex ordinary review, native public-root interfaces and the complete 283-declaration origin audit passed. P3 is closed in this affine two-chart scope; the exact original K-inverse is P4. |
-| P4: original K-inverse | Realize G and the diagonal sequence as exact/cofibration-compatible functors on a proved model of the original Perfect category; apply Waldhausen additivity. | Construct natural bounded-complex Čech comparison and the necessary weak-arrow/roof model equivalence. Normalize the positive projection by its canonical adjunction unit, prove O(-1) vanishing and Rp*(O(-2)⊗p*A)[1]≅A, then both original K-map composites, including zero. |
+| P4: original K-inverse | Actual exact flasque model, G and Phi, original native K-map correspondence, and K(G)∘K(Phi)=id are supplied for arbitrary affine R and every natural degree, including zero. | `FlasqueGPhiMatrix` assembles the four actual entries using the original units, O(-1) vanishing, determinant-normalized Euler sequence, signed shift, proved strict-source K-map surjectivity and unchanged product K-equivalence. `FlasqueTensorDiagonalAdditivity` supplies the actual tensor-diagonal conflation and K(Gamma E2)=K(Gamma E1)*K(Gamma E3); `FlasquePhiColumns` supplies the signed original column formula. Combine the three actual natural endpoint weak spans to prove K(Phi)∘K(G)=id. |
 | P5: native qcqs and supports | Transport the affine construction through `nativeAffineIso`, glue projection perfection on an affine base cover, and prove both coefficient functors preserve the actual inverse-image support. | Use canonical base change for the required open/flat maps. Arbitrary-base-map naturality needs its own tor-independent/perfect comparison; it is not supplied by current flat-base-change scope. |
 
 P2's accepted strictification uses a termwise quasi-coherent, bounded-below
@@ -462,8 +487,8 @@ opposite App2 using the actual good-truncation unit and cocylinder factorization
 then transfers weakness through native S-duality. This applies to `twoChartLine R`
 for arbitrary R. P4 can therefore use a proved lower-bounded source comparison;
 the exact perfect/flasque Waldhausen model and its original K-map comparison
-are now supplied. Actual G and the two-summand K-additivity inverse remain
-separate.
+are now supplied. The actual exact G₀/G₁ and product G are also supplied;
+the two-summand K-additivity inverse remains separate.
 
 Relevant source
 anchors are [Stacks 0F8E](https://stacks.math.columbia.edu/tag/0F8E),
@@ -539,8 +564,70 @@ comparison to all perfect complexes requires quasi-compactness.
 `FlasquePushforwardExact` proves actual sheaf and complex short-exact
 preservation with flasque first terms, without bounds. These separately
 reviewed source results supply the exact model and a pushforward foundation;
-actual G, natural endpoint weak spans and the P4 two-summand inverse remain
-separate. No unbounded Godement augmentation is asserted.
+`FlasqueCoefficientZero`, `FlasqueCoefficientOperations` and
+`FlasqueCoefficientOne` now supply the actual exact G₀=p_* and
+G₁=p_*T(−⊗L)[1], with flasque-perfect values, original maps, lower bounds and
+native shift signs. Their product is exact, and their natural comparisons
+retain the installed derived units, actual augmentation and inclusion-shift
+equations. Ordinary review, full-root interfaces and the complete 132-new-origin
+audit passed. `FlasqueTwoSummands` and `FlasqueTwoSummandComparison` now supply
+actual exact Phi=T_P(p*A coproduct (L tensor p*B)) and its original forward
+weak unit/categorical coproduct comparison. `TautologicalCoefficientPullback`
+preserves the original line inclusion and both chart trivializations under
+arbitrary coefficient change. `NativeAffineTautological` and
+`NativeAffineTwoSummands` compare the actual original native geometry, twist
+and two-summand functor.
+[`FlasqueNativePhiKMap`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasqueNativePhiKMap.lean)
+retains the EXISTING original native two-summand K-map after literal model
+inclusion and actual inverse affine pullback, with unchanged Product.KEquiv
+and chosen-zero rebasing, for every R and every natural degree including zero.
+Naturality is in coefficient-complex maps at each fixed R. Independent ordinary
+review, current public-root interfaces and the complete 143-origin audit passed.
+[`StrictPositiveRetraction`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/StrictPositiveRetraction.lean)
+now proves the canonical geometric unit followed by pushed actual total
+augmentation is a genuine quasi-isomorphism on the original strict affine
+coefficients. Its actual forward weak span proves the original positive
+K-map equality. `StrictPositiveSourceComparison` proves the literal strictTotal
+source K-map bijective in every natural degree, including zero, using the
+original affine strict inclusion and proved lower-bounded/flasque comparisons.
+There is no natural strictification premise. Independent ordinary review,
+native root interfaces and the complete 42-origin audit passed.
+[`FlasqueShift`](../../Quillen/AlgebraicGeometry/PerfectComplexes/FlasqueShift.lean)
+now proves inversion for the actual signed model shift K-map on every scheme
+and in every natural degree, including zero, through the original identity
+cone, genuine cofibration/cofiber structure and weak-zero natural map.
+`EulerSequence`, `EulerFunctors`, `EulerNegative`, `EulerAdditivity` and
+`EulerMiddle` retain the original determinant-normalized Euler sequence after
+coefficient tensor, actual totalization and ordinary projection. Its real
+conflation gives K(E1)=K(E2)*K(E0), and its literal weak-zero middle gives
+K(E1)=1.
+[`EulerInverse`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/EulerInverse.lean)
+then proves K(E2[1])=K(E0) on every original strict affine source;
+`EulerConnecting` separately preserves the original connecting isomorphism
+and native shift sign. Outputs remain locally perfect/flasque, rather than
+termwise strict. Independent ordinary review, original all-degree/zero-ring
+interfaces and the complete 257-origin audit passed.
+[`FlasqueGPhiMatrix`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasqueGPhiMatrix.lean)
+now proves both the actual original product-category K(G)∘K(Phi)=id and
+the literal composite KMap(Phi⋙G)=id. Its four entries retain the actual
+positive units, negative vanishing, Euler comparison and signed shift; proved
+strictTotal K-map surjectivity and the unchanged Product.KEquiv extend them
+to every flasque coefficient input. Independent complex ordinary review,
+24 original public-root examples and the complete 145-origin audit passed
+over every R, including the zero ring, and every natural degree, including
+zero. The opposite PhiG identity, its three original endpoint weak spans,
+full P4 and the global/support extension remain separate.
+[`FlasqueTensorDiagonalAdditivity`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasqueTensorDiagonalAdditivity.lean)
+now gives K(Gamma E2)=K(Gamma E1)*K(Gamma E3) from the literal original
+diagonal conflation after exact LEFT-L tensor and totalization.
+[`FlasquePhiColumns`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasquePhiColumns.lean)
+expresses actual K(Phi)(K(G)(x)) as the positive composite times the inverse
+unshifted negative composite, using the original sum functor, product
+coordinates and actual base shift. These four sources have independent
+ordinary review, 29 original public-root examples and a complete 53-origin
+audit. The three Gamma endpoint K-map identifications still supply the
+remaining PhiG step; no connecting-arrow or full inverse follows from the
+formula alone. No unbounded Godement augmentation is asserted.
 
 Two concrete restrictions govern this route. `Scheme.Regular.ResolutionProperty`
 assumes local noetherianity and cannot supply P2 unchanged. Global direct

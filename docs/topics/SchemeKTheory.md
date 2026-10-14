@@ -513,8 +513,18 @@ also constructs objectwise global strict models and proves perfection of the
 original derived projection for every intrinsic perfect D+ input over an arbitrary
 commutative ring. The natural intrinsic-perfect diagonal generation,
 original endpoint/roof comparisons, inverse-twist contraction and signed
-rotation are supplied. The exact two-summand K-inverse and its global/support
-extension remain separate. The Čech cone comparison concerns quasicoherent
+rotation are supplied.
+[`TautologicalCoefficientPullback`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/TautologicalCoefficientPullback.lean)
+identifies the actual tautological line under every coefficient change,
+preserving its original inclusion and both chart trivializations without a
+flatness premise. `NativeAffineTautological` specializes this to the actual
+native affine comparison. Actual exact Phi and its original native two-summand
+K-map correspondence are supplied on the flasque model at each fixed R.
+[`FlasqueGPhiMatrix`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasqueGPhiMatrix.lean)
+proves the actual product-category K(G)∘K(Phi)=id, with the original four
+entries and product K-equivalence, for every R and natural degree, including
+zero. The opposite PhiG identity and the global/support extension remain
+separate. The Čech cone comparison concerns quasicoherent
 singles; general bounded-below flat base change is not inferred.
 The older
 [`FiniteCoefficientRetract`](../../Quillen/Algebra/Module/FiniteCoefficientRetract.lean)
