@@ -459,7 +459,7 @@ not ordinary equivalence/approximation of this two-summand functor.
 | P2: arbitrary-perfect projection | Accepted genuine QC and strict models, and actual Rp perfection, for every intrinsic perfect D+ input on twoChartLine R. | `QuasicoherentRepresentative` constructs the original derived replacement; `IntrinsicPerfectPushforward` composes it with the accepted strictification and original Rp. No supplied replacement, noetherian or bounded-vector-bundle premise remains. This closes objectwise P2 over arbitrary R. The accepted P3 tests original mate invertibility and coefficient perfectness; P4 now uses these actual comparisons to close the affine K-inverse. |
 | P3: natural diagonal generation | Accepted natural distinguished triangle p*G₀(K)→K→L⊗p*G₁(K), with G₀=Rp*K and G₁=Rp*(K⊗L)[1], for every intrinsic-perfect D+ input over arbitrary R, including zero. | `OriginalPerfectGeneration` retains the original self-base-change/projection endpoint maps, incidence/quotient/connecting naturality on genuine roofs, specified determinant contractions and units, negative shifted incidence, full original bundle-single correspondence and perfect coefficients. Independent complex ordinary review, native public-root interfaces and the complete 283-declaration origin audit passed. P3 is closed in this affine two-chart scope; P4 now supplies the exact original K-inverse. |
 | P4: original K-inverse | Both actual original model K-map composites are identity for every affine R and natural degree, including zero. The EXISTING nativeTwoSummandKMap is bijective, with the same literal forward map in nativeAffineTwoSummandKEquiv. | `FlasqueGPhiMatrix` proves GPhi from the four actual entries. `FlasquePhiInverse` proves PhiG from the original tensor-diagonal cofibration-sequence additivity, three genuine natural endpoint weak spans and the signed original Phi-column formula. `FlasqueNativePhiTransport` uses the original model inclusions and actual affine inverse geometry to retain the existing native map. Independent complex ordinary review and current public-root/origin checks passed. P4 is closed in this affine scope; P5 handles the global/support extension. |
-| P5: native qcqs and supports | Transport the affine construction through `nativeAffineIso`, glue projection perfection on an affine base cover, and prove both coefficient functors preserve the actual inverse-image support. | Use canonical base change for the required open/flat maps. Arbitrary-base-map naturality needs its own tor-independent/perfect comparison; it is not supplied by current flat-base-change scope. |
+| P5: native qcqs and supports | Accepted original native open K-map naturality, perfect Rp on every native quasi-compact base, and exact coefficient functors preserving support on every literal inverse-image base open. The global native/support K-inverse remains open. | `NativeOpenNaturality` retains the original native map and product coordinates in every natural degree. `NativeProjectionPerfect` glues actual projection perfection on affine base charts. `P5NativeCoefficientsZero`, `P5NativeCoefficientTensor`, `P5NativeCoefficientsOne` and `P5NativeCoefficientsSupport` retain literal G0/G1, the original signed shift and installed unit/augmentation, with no quasi-separatedness or compact-support-open premise for the coefficient/support conclusions. Arbitrary-base-map naturality still needs its own comparison. |
 
 P2's accepted strictification uses a termwise quasi-coherent, bounded-below
 representative with local strict models in a finite interval [a,b]. For a<b,
@@ -645,6 +645,25 @@ include zero. This closes affine P4. The separate specialized P3
 endpoint-unit/connecting comparisons, full P5, Proj/twisting-sheaf
 identification, Bass cube and final TT identification are not conclusions
 of this argument. No unbounded Godement augmentation is asserted.
+
+P5 now has six accepted native source leaves. `NativeOpenNaturality` proves
+the original native two-summand K-map square for actual base open immersions
+in every natural degree, including zero. `NativeProjectionPerfect` proves
+perfectness of the original derived projection for every intrinsic-perfect
+D+ input on the native projective line over any quasi-compact base, and
+local perfectness of literal ordinary p_*K on the original flasque model.
+`P5NativeCoefficientsZero` and `P5NativeCoefficientsOne` give exact literal
+G0=p_*K and G1=p_*T_P(K RIGHT tensor L)[1], preserving an original lower
+bound a and the shifted bound a-1 respectively. `P5NativeCoefficientsSupport`
+proves both coefficients preserve acyclicity on the literal inverse image
+of every base open, without quasi-separatedness or compactness of that open.
+The original derived unit, total augmentation, shift comparisons and their
+naturality are retained. Independent complex ordinary reviews, native ROOT
+interfaces and complete checked-origin audits cover all 84 prerequisite
+and 124 coefficient declarations. These results supply global coefficient
+construction and support preservation; they do not yet supply the global
+Phi/G inverse or a support K-bijection. Those require their actual K-map
+comparison and localization/Mayer–Vietoris assembly.
 
 Two concrete restrictions govern this route. `Scheme.Regular.ResolutionProperty`
 assumes local noetherianity and cannot supply P2 unchanged. Global direct

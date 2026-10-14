@@ -172,6 +172,23 @@ These are all-ring/all-natural-degree results, including the zero ring
 and K0. The specialized P3 endpoint-unit/connecting comparisons, general
 qcqs/support extension and final TT identification remain separate.
 
+The native extension now supplies
+[`NativeProjectionPerfect`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeProjectionPerfect.lean)
+for every quasi-compact base and intrinsic-perfect D+ input, together with
+literal ordinary projection perfectness on the original flasque model.
+[`NativeOpenNaturality`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeOpenNaturality.lean)
+retains the original native two-summand K-map square in every natural degree,
+including zero. The exact native coefficient pair is literal G0=p_*K and
+G1=p_*T_P(K RIGHT tensor L)[1]; it preserves the supplied lower bound a
+for G0 and a-1 for G1, with the original installed derived unit, total
+augmentation and signed-shift comparisons. For every base open Z, acyclicity
+of K on literal p^-1 Z implies acyclicity of both coefficients on Z through
+[`P5NativeCoefficientsSupport`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5NativeCoefficientsSupport.lean).
+These coefficient and support statements need neither quasi-separatedness
+nor compactness of the base open. Independent complex ordinary review and
+native checked-origin/ROOT interfaces cover the six sources; global Phi/G
+inversion and the support K-bijection remain open.
+
 `strictKPullback` accepts every scheme map. `perfectKPullback` accepts arbitrary
 maps between quasi-compact schemes, uses bounded-above flat representatives,
 and gives `PerfectKFunctor`. Its identity, composition, restriction, and
@@ -886,7 +903,7 @@ in the [TT localization roadmap](../development/TTLocalization.md).
 - Complete the Laurent-unit connecting-map and zero-section class formulas and retain possible Nil contributions; the normalized forward scalar K₁ comparison is proved.
 - Establish fixed-degree stabilization of the finite seed transitions and bijectivity of the natural negative-class maps into the telescope. The finite-bottom isomorphisms and stable Bass self-comparisons do not discharge these obligations.
 - Compare all iterates with the complete original geometric Bass tower, identify classical telescope negative groups, and prove the fundamental theorem, negative localization boundaries, and nonconnective descent.
-- Transport the actual twoChartLine R intrinsic-perfect projection theorem to native projective lines and the required general bases/supports; identify the natural projected diagonal, prove inverse-twist tensor cancellation and exact K-generation, and establish the projective-bundle formula, Proj identification, and full twisting-sheaf family. Objectwise P1 strictification and perfect Rp for intrinsic D+ inputs are proved; the older finite-coefficient retract criterion retains its own uniform-window premises.
+- Complete global native Phi/G inversion and the support K-bijection, identify the natural projected diagonal, and establish the projective-bundle formula, Proj identification, and full twisting-sheaf family. Intrinsic-perfect native projection perfection, original open K-map naturality and exact coefficient/support preservation are proved on every quasi-compact base. The older finite-coefficient retract criterion retains its own uniform-window premises.
 - Extend perfect preservation to the claimed general-source/unbounded direct-image scope, and establish general bounded-below flat-base-change invertibility beyond the available QC-single and open specializations.
 - Extend strict/local equivalence to arbitrary nonaffine schemes and perfect pullback to arbitrary non-quasi-compact schemes; compare the Waldhausen and triangulated-derived Grothendieck presentations.
 - Supply any needed general stable cofiber excision, replacement cofiber preservation, and higher raw-spectrum/telescope coherence. The categorical stable localization has no asserted standard stable model structure or triangulation.

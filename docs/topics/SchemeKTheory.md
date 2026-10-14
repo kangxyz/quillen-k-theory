@@ -529,7 +529,15 @@ now proves the opposite actual model K-map identity, and its original
 compact-model/affine-geometry transport makes the EXISTING native affine
 two-summand K-map bijective in every natural degree, including zero. The
 packaged nativeAffineTwoSummandKEquiv retains that literal forward map.
-The global/support extension remains P5. The Čech cone comparison concerns quasicoherent
+P5 now supplies original native open K-map naturality and intrinsic-perfect
+projection perfection over every quasi-compact base. Its exact original
+flasque coefficient pair G0=p_*K and G1=p_*T_P(K RIGHT tensor L)[1] sends
+acyclicity on literal p^-1 Z to acyclicity on every base open Z, without quasi-separatedness
+or compact-open assumptions. The original units, total augmentation, signed
+shift and supplied lower bounds are retained. Independent complex ordinary
+review and native ROOT/checked-origin interfaces cover these six source
+leaves. Global native Phi/G inversion and the support K-bijection remain
+open. The Čech cone comparison concerns quasicoherent
 singles; general bounded-below flat base change is not inferred.
 The older
 [`FiniteCoefficientRetract`](../../Quillen/Algebra/Module/FiniteCoefficientRetract.lean)

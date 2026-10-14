@@ -290,7 +290,15 @@ additivity. Both original model K-map composites are identity; the EXISTING
 nativeTwoSummandKMap is bijective over every affine R and natural degree,
 including zero. nativeAffineTwoSummandKEquiv retains its literal forward
 map. Independent complex ordinary review, original public-root interfaces
-and complete origin audits passed. The global/support extension remains P5.
+and complete origin audits passed. P5 now supplies original native open
+K-map naturality, global projection perfection on every quasi-compact base,
+and exact literal native G0/G1 with their original units and signed shift.
+For every base open Z, acyclicity of K on literal p^-1 Z implies acyclicity
+of both coefficients on Z, without quasi-separatedness or compactness of Z. These six
+native sources have independent complex ordinary reviews, native ROOT
+interfaces and complete checked-origin coverage of 84 prerequisite and
+124 coefficient declarations. The global native Phi/G inverse and support
+K-bijection remain separate.
 Actual LEFT-L tensor followed by totalization now maps the original diagonal
 conflation to exact functors, with native additivity in every natural degree.
 `FlasquePhiColumns` retains the literal positive and unshifted negative
@@ -349,7 +357,7 @@ tracks and a natural chosen inverse remain separate. See
 - Fixed-degree finite Bass-transition stabilization, bijectivity of the natural negative-class maps into the telescope, and classical telescope negative-group identification.
 - Full all-iterate comparison with the original geometric Bass tower, the fundamental theorem, and Laurent-unit boundary/relative-loop basepoint calculations, including the zero-section class and possible Nil terms.
 - Complete original raw iterate/telescope evaluation and classical Thomason–Trobaugh identification, retaining the original K₀ image and signed boundary. Normalized geometric chart-composition, original cone/null/one-step seed comparison, basic global supported localization and auxiliary-supported section-completion localization are proved.
-- Proj identification, the full twisting-sheaf family, the general projective-bundle formula and its qcqs/support extension. Intrinsic-perfect D+ generation and both actual model K-map inverse laws are supplied on the original affine two-chart P¹ over every commutative ring. The existing native affine two-summand K-map is bijective in every natural degree, including zero, with its literal forward map and original units, signs and product normalization retained. The separate specialized endpoint-unit/connecting comparisons and the global/support extension remain open.
+- Proj identification, the full twisting-sheaf family, the general projective-bundle formula and its qcqs/support K-inverse. Intrinsic-perfect D+ generation and both actual model K-map inverse laws are supplied on the original affine two-chart P¹ over every commutative ring. The existing native affine two-summand K-map is bijective in every natural degree, including zero, with its literal forward map and original units, signs and product normalization retained. Native projection perfection, original open K-map naturality and exact coefficient/support preservation are also supplied on general quasi-compact bases. The separate specialized endpoint-unit/connecting comparisons and the global/support K-inverse remain open.
 - General-source perfect preservation by derived direct image, unrestricted unbounded derived pushforward, and general bounded-below flat-base-change invertibility.
 - Strict/local equivalence on arbitrary nonaffine schemes and perfect pullback on arbitrary non-quasi-compact schemes.
 - General stable cofiber excision, the remaining quotient homotopy-invariance questions, and a standard stable model structure or triangulation for the categorical localization.
