@@ -147,8 +147,8 @@ shift, then the proved strictTotal source K-map surjectivity and unchanged
 Product.KEquiv. Independent complex ordinary review, 24 original native
 public-root examples and a complete 145-origin audit cover every R,
 including the zero ring, and every natural degree, including zero. The
-opposite PhiG identity and its three original endpoint weak spans remain
-separate; the full K-equivalence is not yet asserted.
+opposite PhiG identity and its three original endpoint weak spans are now
+supplied by the affine inverse family below.
 [`FlasqueTensorDiagonalAdditivity`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasqueTensorDiagonalAdditivity.lean)
 now gives original K(Gamma E2)=K(Gamma E1)*K(Gamma E3), with Gamma the
 actual LEFT-L tensor followed by totalization, a genuine mapped conflation
@@ -158,8 +158,19 @@ gives K(Phi)(K(G)(x)) as the positive composite times the inverse unshifted
 negative composite, retaining the original coproduct, product coordinates,
 chosen zero and actual base shift. Independent ordinary reviews, 29 original
 public-root examples and a complete 53-origin audit passed. The actual
-three Gamma endpoint K-map identifications are the remaining PhiG step;
-no derived connecting-arrow comparison is inferred.
+three Gamma endpoint K-map identifications now close PhiG.
+[`FlasquePhiInverse`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasquePhiInverse.lean)
+proves K(Phi)∘K(G)=id and literal KMap(G⋙Phi)=id. Both SAME original model
+K-map composites are identity. Its existing native affine two-summand map
+is bijective through the literal model inclusions and actual affine inverse
+geometry, and nativeAffineTwoSummandKEquiv has that literal forward map.
+The 26 endpoint/contraction prerequisites have independent reviews, 80
+original current public-root examples and a complete 514-origin audit.
+The final Gamma/transport/inverse ten-source family has independent complex
+ordinary review, 68 original examples and a complete 129-origin audit.
+These are all-ring/all-natural-degree results, including the zero ring
+and K0. The specialized P3 endpoint-unit/connecting comparisons, general
+qcqs/support extension and final TT identification remain separate.
 
 `strictKPullback` accepts every scheme map. `perfectKPullback` accepts arbitrary
 maps between quasi-compact schemes, uses bounded-above flat representatives,
@@ -302,7 +313,8 @@ now supplies the natural intrinsic-perfect generation triangle over every R,
 including zero, retaining the original self-base-change/projection endpoints,
 connecting maps on roofs, determinant contractions, units and signed rotation.
 Its G₀/G₁ coefficients are perfect and the original bundle-single triangle is
-recovered. The exact two-summand K-inverse remains separate.
+recovered. The exact affine two-summand K-inverse is now supplied by
+FlasquePhiInverse; the global/support extension remains separate.
 
 ### Projective-line strict models
 

@@ -448,7 +448,7 @@ nonnegative degree including zero, induced by
 G(E)   = (Rp* E, Rp*(E ⊗ O(-1))[1]).
 ```
 
-The candidate K-inverse G needs a genuine exact-model realization. Φ is not
+The actual K-inverse G is realized on the original exact flasque model. Φ is not
 generally an equivalence of perfect derived categories: cross-Hom between its two
 summands need not vanish. Generation therefore feeds a K-additivity proof,
 not ordinary equivalence/approximation of this two-summand functor.
@@ -456,9 +456,9 @@ not ordinary equivalence/approximation of this two-summand functor.
 | Step | Exact product and current owner | Acceptance and dependency |
 | --- | --- | --- |
 | P1: canonical line/tensor comparisons | Accepted natural p₁*(E⊗L)≅p₁*E⊗p₁*L and specified determinant pairing L⊗Q≅O, retaining actual unit/braiding/chart comparisons. | `PullbackTensorCompatibility` proves the literal canonical mate for any f and any other module sheaf; `LineTensorCompatibility` proves both chart multiplication equations with +1. The accepted P3 endpoint and contraction proofs use these actual maps; perfect pushforward remains a separate input. |
-| P2: arbitrary-perfect projection | Accepted genuine QC and strict models, and actual Rp perfection, for every intrinsic perfect D+ input on twoChartLine R. | `QuasicoherentRepresentative` constructs the original derived replacement; `IntrinsicPerfectPushforward` composes it with the accepted strictification and original Rp. No supplied replacement, noetherian or bounded-vector-bundle premise remains. This closes objectwise P2 over arbitrary R. The accepted P3 uses it to test original mate invertibility and coefficient perfectness; the P4 K-inverse remains separate. |
-| P3: natural diagonal generation | Accepted natural distinguished triangle p*G₀(K)→K→L⊗p*G₁(K), with G₀=Rp*K and G₁=Rp*(K⊗L)[1], for every intrinsic-perfect D+ input over arbitrary R, including zero. | `OriginalPerfectGeneration` retains the original self-base-change/projection endpoint maps, incidence/quotient/connecting naturality on genuine roofs, specified determinant contractions and units, negative shifted incidence, full original bundle-single correspondence and perfect coefficients. Independent complex ordinary review, native public-root interfaces and the complete 283-declaration origin audit passed. P3 is closed in this affine two-chart scope; the exact original K-inverse is P4. |
-| P4: original K-inverse | Actual exact flasque model, G and Phi, original native K-map correspondence, and K(G)∘K(Phi)=id are supplied for arbitrary affine R and every natural degree, including zero. | `FlasqueGPhiMatrix` assembles the four actual entries using the original units, O(-1) vanishing, determinant-normalized Euler sequence, signed shift, proved strict-source K-map surjectivity and unchanged product K-equivalence. `FlasqueTensorDiagonalAdditivity` supplies the actual tensor-diagonal conflation and K(Gamma E2)=K(Gamma E1)*K(Gamma E3); `FlasquePhiColumns` supplies the signed original column formula. Combine the three actual natural endpoint weak spans to prove K(Phi)∘K(G)=id. |
+| P2: arbitrary-perfect projection | Accepted genuine QC and strict models, and actual Rp perfection, for every intrinsic perfect D+ input on twoChartLine R. | `QuasicoherentRepresentative` constructs the original derived replacement; `IntrinsicPerfectPushforward` composes it with the accepted strictification and original Rp. No supplied replacement, noetherian or bounded-vector-bundle premise remains. This closes objectwise P2 over arbitrary R. The accepted P3 tests original mate invertibility and coefficient perfectness; P4 now uses these actual comparisons to close the affine K-inverse. |
+| P3: natural diagonal generation | Accepted natural distinguished triangle p*G₀(K)→K→L⊗p*G₁(K), with G₀=Rp*K and G₁=Rp*(K⊗L)[1], for every intrinsic-perfect D+ input over arbitrary R, including zero. | `OriginalPerfectGeneration` retains the original self-base-change/projection endpoint maps, incidence/quotient/connecting naturality on genuine roofs, specified determinant contractions and units, negative shifted incidence, full original bundle-single correspondence and perfect coefficients. Independent complex ordinary review, native public-root interfaces and the complete 283-declaration origin audit passed. P3 is closed in this affine two-chart scope; P4 now supplies the exact original K-inverse. |
+| P4: original K-inverse | Both actual original model K-map composites are identity for every affine R and natural degree, including zero. The EXISTING nativeTwoSummandKMap is bijective, with the same literal forward map in nativeAffineTwoSummandKEquiv. | `FlasqueGPhiMatrix` proves GPhi from the four actual entries. `FlasquePhiInverse` proves PhiG from the original tensor-diagonal cofibration-sequence additivity, three genuine natural endpoint weak spans and the signed original Phi-column formula. `FlasqueNativePhiTransport` uses the original model inclusions and actual affine inverse geometry to retain the existing native map. Independent complex ordinary review and current public-root/origin checks passed. P4 is closed in this affine scope; P5 handles the global/support extension. |
 | P5: native qcqs and supports | Transport the affine construction through `nativeAffineIso`, glue projection perfection on an affine base cover, and prove both coefficient functors preserve the actual inverse-image support. | Use canonical base change for the required open/flat maps. Arbitrary-base-map naturality needs its own tor-independent/perfect comparison; it is not supplied by current flat-base-change scope. |
 
 P2's accepted strictification uses a termwise quasi-coherent, bounded-below
@@ -534,7 +534,7 @@ now identifies the original endpoints naturally on intrinsic-perfect inputs,
 contracts the actual nested line tensors and performs the signed rotation.
 `OriginalPerfectGeneration` supplies p*Rp*K→K→L⊗p*(Rp*(K⊗L)[1]), with perfect
 coefficients, original connecting-map naturality and full bundle-single
-correspondence. The exact original two-summand K-inverse remains P4.
+correspondence. P4 now supplies the exact original affine two-summand K-inverse.
 
 The accepted `Scheme/Sheaf/GodementFirst` constructs the actual first Godement
 functor on all scheme module sheaves: the product of stalk skyscrapers, with
@@ -615,8 +615,8 @@ strictTotal K-map surjectivity and the unchanged Product.KEquiv extend them
 to every flasque coefficient input. Independent complex ordinary review,
 24 original public-root examples and the complete 145-origin audit passed
 over every R, including the zero ring, and every natural degree, including
-zero. The opposite PhiG identity, its three original endpoint weak spans,
-full P4 and the global/support extension remain separate.
+zero. The opposite PhiG identity and its actual natural endpoint weak-span
+comparisons are now supplied below. The qcqs/support extension remains P5.
 [`FlasqueTensorDiagonalAdditivity`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasqueTensorDiagonalAdditivity.lean)
 now gives K(Gamma E2)=K(Gamma E1)*K(Gamma E3) from the literal original
 diagonal conflation after exact LEFT-L tensor and totalization.
@@ -625,9 +625,26 @@ expresses actual K(Phi)(K(G)(x)) as the positive composite times the inverse
 unshifted negative composite, using the original sum functor, product
 coordinates and actual base shift. These four sources have independent
 ordinary review, 29 original public-root examples and a complete 53-origin
-audit. The three Gamma endpoint K-map identifications still supply the
-remaining PhiG step; no connecting-arrow or full inverse follows from the
-formula alone. No unbounded Godement augmentation is asserted.
+audit.
+[`FlasquePhiInverse`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasquePhiInverse.lean)
+now combines the actual first negative-column, second positive-column and
+third identity K-map comparisons with that original additivity and native
+K-group commutativity. It proves K(Phi)∘K(G)=id and literal KMap(G⋙Phi)=id
+in every natural degree, including zero. Together with GPhi it makes the
+SAME original Phi K-map bijective.
+[`FlasqueNativePhiTransport`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasqueNativePhiTransport.lean)
+retains the original compact-model inclusions, unchanged product
+K-equivalence and actual affine inverse pullback to prove bijectivity of
+the EXISTING nativeTwoSummandKMap. The packaged nativeAffineTwoSummandKEquiv
+has that literal forward map. Independent complex ordinary review, 68
+original current public-root examples and the complete 129-origin audit
+passed for the final ten-source family; its 26 endpoint/contraction
+prerequisites have independent reviews, 80 original interfaces and a
+complete 514-origin audit. All rings include zero and all natural degrees
+include zero. This closes affine P4. The separate specialized P3
+endpoint-unit/connecting comparisons, full P5, Proj/twisting-sheaf
+identification, Bass cube and final TT identification are not conclusions
+of this argument. No unbounded Godement augmentation is asserted.
 
 Two concrete restrictions govern this route. `Scheme.Regular.ResolutionProperty`
 assumes local noetherianity and cannot supply P2 unchanged. Global direct

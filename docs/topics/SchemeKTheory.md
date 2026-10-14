@@ -523,8 +523,13 @@ K-map correspondence are supplied on the flasque model at each fixed R.
 [`FlasqueGPhiMatrix`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasqueGPhiMatrix.lean)
 proves the actual product-category K(G)∘K(Phi)=id, with the original four
 entries and product K-equivalence, for every R and natural degree, including
-zero. The opposite PhiG identity and the global/support extension remain
-separate. The Čech cone comparison concerns quasicoherent
+zero.
+[`FlasquePhiInverse`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasquePhiInverse.lean)
+now proves the opposite actual model K-map identity, and its original
+compact-model/affine-geometry transport makes the EXISTING native affine
+two-summand K-map bijective in every natural degree, including zero. The
+packaged nativeAffineTwoSummandKEquiv retains that literal forward map.
+The global/support extension remains P5. The Čech cone comparison concerns quasicoherent
 singles; general bounded-below flat base change is not inferred.
 The older
 [`FiniteCoefficientRetract`](../../Quillen/Algebra/Module/FiniteCoefficientRetract.lean)

@@ -874,6 +874,13 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerMid
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerNegative
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerSequence
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FiniteAttachment
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FirstEndpointBeta
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FirstEndpointCoefficient
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FirstEndpointGamma
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FirstEndpointLiteralMaps
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FirstEndpointNativeSource
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FirstEndpointNegativeSpan
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FirstEndpointSpan
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientOne
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientOperations
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientZero
@@ -882,16 +889,32 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueD
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueDiagonalSequence
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueDiagonalVertices
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGPhiMatrix
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGammaCarrierComparisons
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGammaRightWeakPrecomposition
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGammaSecondComparison
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGammaSecondSpan
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGammaThirdComparison
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGammaThirdSpan
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGammaUnitInsertion
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueNativePhiKMap
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueNativePhiTransport
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueNegativeGamma
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasquePhiColumns
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasquePhiFirstEntry
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasquePhiInverse
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasquePhiOffDiagonal
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasquePhiSecondEntry
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasquePositiveSourceAssociation
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueTensorDiagonalAdditivity
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueTensorDiagonalSequence
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueThirdSpan
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueThirdSpanFormulas
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueThirdTensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueTwoSummandComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.IntrinsicPerfectPushforward
@@ -902,6 +925,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePe
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePerfectPushforward
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeTwoSummands
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.QuasicoherentRepresentative
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SecondEndpointAlignment
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SecondEndpointModels
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SecondEndpointResolution
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SecondEndpointSpan
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SecondEndpointUnderlying
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SelfBaseChangeAlpha
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SelfBaseChangeModel
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SelfBaseChangeSpan
@@ -1169,6 +1197,8 @@ public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.NativeAffineTautol
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.NativeBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OpenBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OriginalLineContraction
+public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OriginalLineContractionComplexes
+public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OriginalLineGodementContractions
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OriginalPerfectGeneration
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.PullbackTensorCompatibility
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.QuotientTensor
@@ -1309,6 +1339,8 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GlobalUnit
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GluingSubobjects
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementBaseChangeUnit
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementClosedSectionSpan
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementClosedSectionSpanLocalization
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementClosedSectionSpanUnits
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementComplex
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementDerivedSheaf
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementFirst
@@ -1319,9 +1351,12 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementStalkReflection
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementStalkSplit
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementStalkTotalHomotopy
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementStalkTotalMatrix
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementTensorUnit
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementTotalDerivedComparison
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementTotalExact
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementTotalQuasiIso
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementWeakComposition
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementWeakTransformation
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.InjectiveCech
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.InjectiveRestriction
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.IsomorphismFunctors
@@ -1341,6 +1376,7 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenFreeFunctor
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenFreeStalk
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenLocalization
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenPushforwardBaseChange
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OriginalUnitPostcomposition
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ProjectionFormula
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ProjectionFormulaOpenBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ProjectionFormulaStalk
@@ -1390,6 +1426,9 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TwoOpenSheafSequence
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.UnitPushforward
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.UnitScalarRestriction
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.UnitSections
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.WeakFunctorMap
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.WeakFunctorOpaque
+public import Quillen.AlgebraicGeometry.Scheme.Sheaf.WeakFunctorTransport
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.AffineProjectionFormula
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.AffineProjective
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.AffineRetract
@@ -3685,4 +3724,4 @@ Use thematic facades or individual module imports for smaller dependencies.
 -/
 
 -- The import-only facade follows the discovered source graph.
-set_option linter.style.longFile 3800
+set_option linter.style.longFile 3900

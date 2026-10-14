@@ -282,13 +282,20 @@ canonical connecting isomorphism is separately retained.
 proves the actual product-category K(G)∘K(Phi)=id and literal composite
 KMap(Phi⋙G)=id for every R and every natural degree, including zero. The four
 actual entries, proved strictTotal K-map surjectivity and unchanged original
-product K-equivalence are independently reviewed and native. The opposite
-PhiG identity, full P4 and the global/support extension remain separate.
+product K-equivalence are independently reviewed and native.
+[`FlasquePhiInverse`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/FlasquePhiInverse.lean)
+now proves the opposite K(Phi)∘K(G)=id and the literal composite KMap(G⋙Phi)=id
+through the actual three endpoint weak spans and original diagonal
+additivity. Both original model K-map composites are identity; the EXISTING
+nativeTwoSummandKMap is bijective over every affine R and natural degree,
+including zero. nativeAffineTwoSummandKEquiv retains its literal forward
+map. Independent complex ordinary review, original public-root interfaces
+and complete origin audits passed. The global/support extension remains P5.
 Actual LEFT-L tensor followed by totalization now maps the original diagonal
 conflation to exact functors, with native additivity in every natural degree.
 `FlasquePhiColumns` retains the literal positive and unshifted negative
-column expression for K(Phi)∘K(G); the three endpoint identifications are
-still required for the inverse.
+column expression for K(Phi)∘K(G); the actual three endpoint identifications
+now close the affine inverse.
 The original diagonal tensor sequence now extends to all bounded-below module
 coefficients as a genuine complex SES and canonical D+ triangle. Its whole-functor
 localization retains inverse roofs, original connecting maps and naturality;
@@ -296,9 +303,9 @@ the projected third term is naturally R(− tensor Q). Explicit whole original
 vector-bundle single correspondence is supplied. Natural intrinsic-perfect
 generation is now proved on the actual two-chart P¹ over every commutative R,
 including zero, with the original endpoint maps, specified contractions,
-negative shifted incidence and perfect G₀/G₁ coefficients. The actual
-two-summand K inverse, qcqs/support extension and projective-bundle formula
-remain separate.
+negative shifted incidence and perfect G₀/G₁ coefficients. The actual affine
+two-summand K inverse is supplied; qcqs/support extension and the broader
+projective-bundle formula remain separate.
 The signed Bass span quotient and natural short exact row are realized for
 the actual ambient, open, supported and auxiliary-supported coefficient Model
 families at every finite stage and in every integer degree. Polynomial zero
@@ -342,7 +349,7 @@ tracks and a natural chosen inverse remain separate. See
 - Fixed-degree finite Bass-transition stabilization, bijectivity of the natural negative-class maps into the telescope, and classical telescope negative-group identification.
 - Full all-iterate comparison with the original geometric Bass tower, the fundamental theorem, and Laurent-unit boundary/relative-loop basepoint calculations, including the zero-section class and possible Nil terms.
 - Complete original raw iterate/telescope evaluation and classical Thomason–Trobaugh identification, retaining the original K₀ image and signed boundary. Normalized geometric chart-composition, original cone/null/one-step seed comparison, basic global supported localization and auxiliary-supported section-completion localization are proved.
-- Proj identification, the full twisting-sheaf family, exact natural weak-span/additivity comparison, the projective-bundle K-equivalence and its qcqs/support extension. Intrinsic-perfect D+ generation on the actual two-chart P¹ is proved naturally over every commutative ring, with the original maps, contractions, signed rotation and perfect coefficients. The exact flasque-model comparison computes the original perfect K-groups on quasi-compact schemes; the two-summand K-inverse remains separate.
+- Proj identification, the full twisting-sheaf family, the general projective-bundle formula and its qcqs/support extension. Intrinsic-perfect D+ generation and both actual model K-map inverse laws are supplied on the original affine two-chart P¹ over every commutative ring. The existing native affine two-summand K-map is bijective in every natural degree, including zero, with its literal forward map and original units, signs and product normalization retained. The separate specialized endpoint-unit/connecting comparisons and the global/support extension remain open.
 - General-source perfect preservation by derived direct image, unrestricted unbounded derived pushforward, and general bounded-below flat-base-change invertibility.
 - Strict/local equivalence on arbitrary nonaffine schemes and perfect pullback on arbitrary non-quasi-compact schemes.
 - General stable cofiber excision, the remaining quotient homotopy-invariance questions, and a standard stable model structure or triangulation for the categorical localization.
