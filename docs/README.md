@@ -39,6 +39,7 @@ for their source owners.
 | [Architecture](development/Architecture.md) | Mathematical source ownership, import direction, and trust-check implementation |
 | [Typechecking performance](development/Performance.md) | Reproducible measurements and their source/runtime scope |
 | [TT localization roadmap](development/TTLocalization.md) | Audited endpoints, precise remaining comparisons, proof dependencies and current parallel milestones |
+| [TT continuation handoff](development/TTContinuationHandoff.md) | Closed P1–P5 scope, preserved downstream results, exact next assignments and portable checked-source basis |
 | [Contributing](../CONTRIBUTING.md) | Source and documentation changes, builds, checks, and dependency policy |
 
 Topic guides develop results in context. The API reference locates interfaces;

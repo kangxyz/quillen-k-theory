@@ -544,7 +544,15 @@ zero. Actual affine/iso/finite-cover induction and original Mayer–Vietoris
 and localization ladders discharge all premises; both equivalences retain
 the literal forward map and unchanged product normalization. Independent
 complex ordinary reviews and native ROOT/checked-origin coverage passed.
-Identification of the actual geometric G inverse remains open.
+The actual canonical positive unit and original native negative/Euler
+entries now prove GΦ=id for every quasi-compact base. The independent
+native Phi bijection then gives ΦG=id on qcqs bases through
+[`P5NativeGlobalInverse`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5NativeGlobalInverse.lean),
+which identifies the actual geometric G0/G1 pair with the EXISTING native
+inverse in every natural degree, including zero. Independent ordinary
+reviews, strict 200k sources, native style, 36 ROOT examples and complete
+377-origin checked-kernel coverage passed. Arbitrary-base-map naturality
+and general projective-bundle comparisons retain separate scope.
 The Čech cone comparison concerns quasicoherent
 singles; general bounded-below flat base change is not inferred.
 The older

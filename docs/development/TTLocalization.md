@@ -342,7 +342,9 @@ No package budget increase or linter exemption is used.
 `NerveSimplexFamily`, `SimplexFamily` and `SimplexFaces` now construct the
 genuine higher family with exact original triangle faces and independent
 structure time, under their explicit coherent-chain/weak-component inputs.
-This does not supply the still-missing native coefficient cube.
+Their generic hypotheses alone do not supply a native coefficient cube;
+the actual composition instance is now constructed by `MWholeNativeCube`
+below.
 
 The original Raw1 coefficient arrows are supplied by `CoefficientBassMap`.
 `CoefficientBassCoherence` and `CoefficientBassSpanComposition` now retain
@@ -396,23 +398,43 @@ point, degree-zero loop and independent structure coordinates are retained.
 Independent mathematical/native-retention review, public-root interfaces and
 the complete 111-origin audit passed. The two scalar rotation names have
 definitionally equal entire homotopy data; the distinct proof-helper origin
-is explicitly retained. A joint H0/chart/bottom family, whole H1/M surfaces
-and the genuine interior cube remain separate.
+is explicitly retained. The joint H0/chart/bottom family, whole H1/M
+surfaces and genuine composition interior cube are now supplied by the
+accepted H0/H1/M/Q family. `MWholeNative` retains all full native node
+identities in one actual 139-simplex, and `MWholeScalarFaces` proves all
+twelve whole shared edges before the scalar extension is used.
 
 `CoefficientBassWholeLawCriterion` gives the exact null-square criterion for
 cone homotopies with a prescribed original inclusion track.
 `CoefficientBassInteriorCube` displays the six-face cube sufficient for the
 selected chart-preserving composition route and its complete original
-comparison/cone/loop consumers. That cube remains unconstructed; its necessity
-for every possible whole cone law is not asserted.
+comparison/cone/loop consumers.
+[`MWholeNativeCube`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeNativeCube.lean)
+now constructs that actual cube for every `P : Over (Spec R)` and original
+coefficient arrows, retaining all six original faces, basepoints, degree-zero
+loops and independent structure time. No affineness premise on P or supplied
+cube remains.
+[`MWholeCubeConsumers`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeCubeConsumers.lean)
+constructs the whole original comparison square, cone composition with its
+literal Laurent inclusion track, and parameter-looped step composition.
+The finite scalar extension is owned by `SimplexCubeExtension` and
+`SimplexCubeFaces`. Independent ordinary reviews, fresh strict canonical
+source checks and native ROOT clients passed. All 1,619 defining origins,
+including 54 private names, occur in the checked kernel environment with
+only the standard three foundation axioms; full-private and ordinary ROOT
+coverage agree. The compact
+[source and evidence record](evidence/TTBassCube.json) preserves the exact
+scope and historical compiler boundaries. This closes the selected native
+composition cube, not the separate unit cube or raw tower.
 `CoefficientPolynomialUnit` and `CoefficientPolynomialSpanUnit` now construct
 the actual original polynomial unit square and whole original-span identity,
 retaining both chart tracks without a pause and the entire cylinder.
 `CoefficientBassUnitCharts` constructs both original Laurent chart unit squares.
 `CoefficientBassUnitInteriorCube` gives the exact six-face sufficient input and
-its Bass comparison-square consumer; the cube itself is still absent. Thus the
-whole original Bass comparison/cone/step identity remains open, even though its
-polynomial-span unit premise is now supplied.
+its Bass comparison-square consumer; this separate unit cube is still absent.
+Thus the whole original Bass comparison/cone/step identity remains open,
+even though its polynomial-span unit premise and the composition cube are
+now supplied.
 
 The current raw native API has a one-step cone and seed, without a whole raw
 tower. `strictDiagramIterate` requires a literal prespectrum-valued functor and
@@ -459,7 +481,7 @@ not ordinary equivalence/approximation of this two-summand functor.
 | P2: arbitrary-perfect projection | Accepted genuine QC and strict models, and actual Rp perfection, for every intrinsic perfect D+ input on twoChartLine R. | `QuasicoherentRepresentative` constructs the original derived replacement; `IntrinsicPerfectPushforward` composes it with the accepted strictification and original Rp. No supplied replacement, noetherian or bounded-vector-bundle premise remains. This closes objectwise P2 over arbitrary R. The accepted P3 tests original mate invertibility and coefficient perfectness; P4 now uses these actual comparisons to close the affine K-inverse. |
 | P3: natural diagonal generation | Accepted natural distinguished triangle p*G₀(K)→K→L⊗p*G₁(K), with G₀=Rp*K and G₁=Rp*(K⊗L)[1], for every intrinsic-perfect D+ input over arbitrary R, including zero. | `OriginalPerfectGeneration` retains the original self-base-change/projection endpoint maps, incidence/quotient/connecting naturality on genuine roofs, specified determinant contractions and units, negative shifted incidence, full original bundle-single correspondence and perfect coefficients. Independent complex ordinary review, native public-root interfaces and the complete 283-declaration origin audit passed. P3 is closed in this affine two-chart scope; P4 now supplies the exact original K-inverse. |
 | P4: original K-inverse | Both actual original model K-map composites are identity for every affine R and natural degree, including zero. The EXISTING nativeTwoSummandKMap is bijective, with the same literal forward map in nativeAffineTwoSummandKEquiv. | `FlasqueGPhiMatrix` proves GPhi from the four actual entries. `FlasquePhiInverse` proves PhiG from the original tensor-diagonal cofibration-sequence additivity, three genuine natural endpoint weak spans and the signed original Phi-column formula. `FlasqueNativePhiTransport` uses the original model inclusions and actual affine inverse geometry to retain the existing native map. Independent complex ordinary review and current public-root/origin checks passed. P4 is closed in this affine scope; P5 handles the global/support extension. |
-| P5: native qcqs and supports | Accepted bijectivity of the EXISTING native two-summand map on every qcqs base and of its original inverse-image supported map for compact base opens, in every natural degree including zero. Exact global G0/G1 and support preservation are supplied; identification of G with the global inverse remains open. | `NativeGlobalBundle` concretely discharges affine, iso and compact-union induction through the original Mayer–Vietoris maps, including final-pair K0 exactness. `NativeGlobalSupport` uses the original doubled localization row and canonical inverse-image open comparison. Both equivalences retain the literal forward map and original product normalization. The actual native Phi model and original boundary squares have independent ordinary reviews and native coverage. Arbitrary-base-map naturality still needs its own comparison. |
+| P5: native qcqs and supports | Both actual original qcqs model K-map inverse laws and identification of geometric G with the EXISTING native inverse are accepted, in every natural degree including zero. The original inverse-image supported map is bijective for compact base opens. | `P5PositiveUnitNative` and `P5NativeGPhiLaw` prove the actual canonical positive unit and GΦ=id on every quasi-compact base, with the original negative/Euler entries and product coordinates. `P5NativeGlobalPhi` transports the proved native qcqs bijection; `P5NativeGlobalInverse` proves ΦG=id and identifies nativeGeometricG with nativeGlobalTwoSummandKEquiv.symm. `NativeGlobalSupport` retains the original doubled localization row and inverse-image comparison. Exact coefficients/support preservation and original boundary squares remain unchanged. Independent ordinary reviews and native coverage passed. Arbitrary-base-map naturality still needs its own comparison. |
 
 P2's accepted strictification uses a termwise quasi-coherent, bounded-below
 representative with local strict models in a finite interval [a,b]. For a<b,
@@ -661,8 +683,8 @@ The original derived unit, total augmentation, shift comparisons and their
 naturality are retained. Independent complex ordinary reviews, native ROOT
 interfaces and complete checked-origin audits cover all 84 prerequisite
 and 124 coefficient declarations. These results supply global coefficient
-construction and support preservation; identification of the geometric G
-with the global inverse remains separate.
+construction and support preservation; the final geometric inverse
+identification is supplied by the separately checked closure below.
 
 `P5NativePhi`, `P5NativePhiObjects`, `P5NativePhiComparison` and
 `P5NativePhiSupport` now construct the actual native Phi model with the
@@ -693,8 +715,32 @@ original product coordinates. Independent complex ordinary reviews and
 native ROOT interfaces passed. Complete current origin coverage is 162
 unique declarations; the isolated 163-record sum repeats one identical
 generated restriction helper, whose type/value/axiom identity was checked.
-These results close global and supported Phi bijectivity. The actual
-geometric G inverse laws and final TT identification remain open.
+These results close global and supported Phi bijectivity.
+
+The four `P5PositiveUnit` sources now prove that the actual canonical
+unit A→p_*T(p^*A) is a natural weak map on every quasi-compact native base,
+without a termwise-QC, QS or supplied projection-isomorphism premise.
+`P5NativeNegativeVanishing`, `P5NativeOffDiagonal` and the native Euler
+sources retain the actual right tensor, original totalization and signed
+shift; their matrix is the pair of identical positive coefficients.
+[`P5NativeGPhiLaw`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5NativeGPhiLaw.lean)
+therefore proves GΦ=id in both original product coordinates and the actual
+product-model KMap, on every quasi-compact base and every natural degree.
+It does not use Phi bijectivity.
+[`P5NativeGlobalPhi`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5NativeGlobalPhi.lean)
+transports the already proved native qcqs bijection through the literal
+model inclusions.
+[`P5NativeGlobalInverse`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5NativeGlobalInverse.lean)
+then proves ΦG=id on qcqs bases and identifies the transported actual
+G0/G1 pair with the EXISTING nativeGlobalTwoSummandKEquiv.symm. No inverse
+is used to define geometric G. This closes P5 at the stated native qcqs
+and supported-Phi scope. Independent complex ordinary review, matching
+strict 200k leaves, current ROOT clients and native style passed. Full
+private and ordinary ROOT coverage agree on all 377 defining origins,
+with checked-kernel membership and only the standard three axioms; 36
+typed examples retain the original maps, zero degree, zero ring and signs.
+The [continuation handoff](TTContinuationHandoff.md) records the next
+assignments and portable evidence. Final TT identification remains open.
 
 Two concrete restrictions govern this route. `Scheme.Regular.ResolutionProperty`
 assumes local noetherianity and cannot supply P2 unchanged. Global direct
@@ -712,11 +758,37 @@ so this is a new theorem rather than a termwise reuse. General proper-perfect
 pushforward or dg-Morita routes require broader missing infrastructure; reserve
 them for a concrete failure of the selected P¹-specific route.
 
-After P4/P5, construct the original positive fundamental sequences and natural
-Laurent splitting. Pin the boundary calculation for the original [T] operation,
-including the cofiber's inverse orientation and the zero-locus class. The
-already accepted Laurent K₁ class and chart formulas do not supply this
-splitting. Keep all Nil contributions in the two chart images/quotient.
+The original positive exact row is now proved for
+`K_m(S) := PerfectK(Spec S, m)`, every commutative R including zero, and
+every n ≥ 0:
+
+```text
+1 → K_(n+1)(R) → K_(n+1)(R[T])²
+  → K_(n+1)(R[T,T^-1]) → K_n(R) → 1.
+```
+
+[`BassPositiveCharts`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/BassPositiveCharts.lean),
+[`BassPositiveMayerVietoris`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/BassPositiveMayerVietoris.lean)
+and [`BassPositiveFundamental`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/BassPositiveFundamental.lean)
+retain the actual polynomial evaluation retraction, positive restriction
+times inverse negative restriction, and first O-coordinate of the same
+native Phi inverse after the original T-first Mayer–Vietoris boundary.
+The connecting coefficient image is exactly `(a,a⁻¹)`. Independent complex
+ordinary review, matching strict canonical sources, current ROOT clients
+and all 110 checked defining origins passed, including K1 to K0.
+
+[`ScalarForwardRelativeBoundary`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ScalarForwardRelativeBoundary.lean)
+now computes the original coarse forward scalar K1 class under the actual
+relative localization boundary as the actual acyclic cofiber K0 class.
+The original inverse-prefix normalization and double-loop transpose give
+two inversions, which cancel. This relative positive sign has independent
+ordinary review and fresh canonical coverage of all 61 defining origins.
+The original fine Laurent [T] terminal boundary, its lower negative-chart
+inversion and actual O/O(-1) zero-locus class remain open. They are still
+needed for a natural Laurent splitting; exactness and the relative sign
+alone do not supply it. Classical ring-K identification, Nil vanishing,
+homotopy invariance and negative stabilization are not conclusions of these
+rows. Keep all Nil contributions in the chart images/quotient.
 
 ### B. Identify the original groups and colimit legs (B2)
 
@@ -728,7 +800,7 @@ positive-minus-inverse chart difference on π_d(E).
 | --- | --- | --- |
 | B2-A: all-degree span quotient | Accepted π_d(span(E))≅coker(a_d) for the actual finite coefficient Model families, with the original signed representative and comparison. | `ModelDiagramTwoChartStableSequence` constructs the strict polynomial-zero retraction, plus/right-inclusion excision and right-cone-collapse stability for any `F : Under R ⥤ Model`, stage i and coefficient a. `CoefficientTwoChartStableSequence` applies it to the native ambient, open, supported and auxiliary-supported families under their original constructor hypotheses. |
 | B2-B: natural spectral Bass row | Accepted native `0→coker(Δ_(d+1))→π_d(BE)→ker(Δ_d)/im(a_d)→0` in every integer degree, with original coefficient-map naturality. | The native realization constructs the original comparison-cone excision as well as B2-A's data. It retains the Laurent cone inclusion, signed shift, cone boundary and right-quotient representatives. Its middle arrow is the original finite-diagram action B(g); no seed-transition equivalence or chart middle exactness is inferred. |
-| B2-C: recursive chart middle exactness | For every i, prove image(a(N_i))=kernel(Δ(N_i)), with original quotient maps and a constructed natural splitting of each Laurent quotient. | B1 supplies positive fundamental rows and h₀. Degree-zero middle exactness is a retract of the degree-one row over an independent Laurent variable. Prove mixed-variable geometric transports and commuting cokernel projections; descend h through the other variable, cancel the original epimorphic quotient, and transfer exactness through the resulting retract. Right exactness alone is insufficient. |
+| B2-C: recursive chart middle exactness | For every i, prove image(a(N_i))=kernel(Δ(N_i)), with original quotient maps and a constructed natural splitting of each Laurent quotient. | B1's positive exact row is accepted; its original [T] boundary and h₀ splitting remain pending. Degree-zero middle exactness is a retract of the degree-one row over an independent Laurent variable. Prove mixed-variable geometric transports and commuting cokernel projections; descend h through the other variable, cancel the original epimorphic quotient, and transfer exactness through the resulting retract. Right exactness alone is insufficient. |
 | B2-D: original initial seed | Prove π_d(η) invertible for every d≥0, including zero. | Identify the actual Laurent loop/seed with the B1 operation via E2-S or an equally explicit direct section calculation. Combine the spectral row, classical boundary splitting and K₀ middle exactness. An auxiliary normalized group splitting must not replace the original seed. |
 | B2-E: exact lowest transition | Inductively prove π_d(t_i) invertible for d≥−i. | Apply B2-B to t_(i−1). For d≥1−i both end terms are controlled in degrees d,d+1. At d=−i the left term uses degree 1−i; source right term vanishes by connectivity, target right term by the bottom N_i comparison and B2-C. This includes the equality d=−i. |
 | B2-F: original stage-i leg | In degree −i, invert the tail starting at i and retain its canonical inclusion equation. Compose with the actual telescope-colimit comparison. | Prove bijectivity of the existing original negative-class map, not just an abstract group isomorphism. The transition from i must be included; stability only from i+1 fails even for ℤ --×2→ ℤ --id→ … . Nonnegative preservation uses the stage-zero leg. |
@@ -784,20 +856,20 @@ flowchart TD
   EC[E2 native composition] --> ES[Original cone/null/seed]
   EW[Actual levelwise evaluation] --> EI[Stage two and coherent raw iteration]
   ES --> EI
-  RU[Accepted original polynomial span unit] --> RC[Original Raw1 Bass unit/composition cubes]
+  RU[Accepted original polynomial span unit] --> RC[Composition cube accepted; unit cube open]
   RS[Accepted split simplex and whole lifts] --> NC[Accepted original exported triple evaluation]
   NC --> NR[Accepted original double-square rectangle]
   NR --> RC
   RC --> EI
   EI --> ET[Raw telescope and null-diagram comparison]
-  PT[Canonical line/tensor comparisons] --> PD[Natural diagonal and exact K model]
+  PT[Canonical line/tensor comparisons] --> PD[Accepted diagonal and projective-line K-inverses]
   CT[Accepted natural intrinsic-perfect generation triangle] --> PD
   PP[Accepted objectwise P2 perfect pushforward] --> PD
   GD[Accepted Godement sheaf resolution] --> GR[Accepted bounded-below total QI and derived comparison]
   GR --> FM[Accepted perfect/flasque Waldhausen K comparison]
   FM --> PD
   MB[Accepted lower-bounded to original K comparison] --> PD
-  PD --> BF[Positive fundamental theorem and Laurent splitting]
+  PD --> BF[Positive row accepted; Laurent splitting open]
   BF --> MC[Recursive group middle exactness]
   MV[Mixed-variable chart/cokernel transport] --> MC
   BF --> IS[Original initial seed preservation]
@@ -812,15 +884,15 @@ flowchart TD
   B2 --> TT
 ```
 
-Continue focused proof products after the accepted prerequisites:
-E2-I's genuine raw second-stage coherence, P3/P4's diagonal/roof investigation
-and B2-C/G's mixed-variable and native bottom-group producers. E2-C/N/S/W,
-full same-null G7 localization, P1's canonical tensor/line comparisons,
-complete objectwise P2 intrinsic-perfect strictification/pushforward and
-B2-A/B's native spectral row are accepted inputs. Their exact enrollment and
-affected-client checks passed without a dependency rebuild. Mixed-variable and
-global-bottom products follow once their interfaces are fixed; do not populate
-every possible branch at once.
+Continue from the [handoff](TTContinuationHandoff.md): the original fine
+[T] terminal boundary/Laurent splitting, the separate unit cube and genuine
+raw iterate/telescope comparison, and B2-C/G's mixed-variable and supported
+bottom-group producers. E2-C/N/S/W, the composition cube, full same-null G7
+localization, P1–P5, the positive Bass exact row and B2-A/B's native spectral
+row are accepted inputs at their recorded scope. Reuse their exact
+enrollment and affected-client coverage. Select a concrete next consumer;
+the general projective-bundle and arbitrary-base-map comparisons retain
+their own boundaries.
 
 Use bounded mathematics at Sol 6.1/max for supported transfer, tensor/line
 comparisons, topology and fixed spectral-row obligations. Retain Astra/max for

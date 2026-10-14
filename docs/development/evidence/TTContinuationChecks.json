@@ -1,0 +1,276 @@
+{
+  "purpose": "Portable fixed checked-source record for P1-P5 completion and subsequent TT handoff",
+  "date": "2026-10-15",
+  "delivery_commit": "The Git commit containing this file and TTContinuationHandoff.md",
+  "toolchain": "Lean 4.34.1",
+  "mathlib_revision": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+  "source_only_observation": "a364b7f7c324ffe8a4256588619d8024f4cdf139; historical compiler/body/check bases remain separate",
+  "P1_P5_scope": "Original affine diagonal generation and actual inverse maps; native QC GPhi identity, qcqs PhiG and native geometric-G identification; original compact-open supported Phi bijection; all natural degrees include0",
+  "new_source_count": 172,
+  "final_facades": [
+    {
+      "path": "Quillen.lean",
+      "sha256": "6abe5aa4224fcafa518f179c034c860d67aefc2f2a5099eb572919a7a8bcb8a2",
+      "family": "p5_final_inverse_admission",
+      "kind": "generated facade"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry.lean",
+      "sha256": "04445736a6b5a0563810700d14b2540589b1b323882fbd3473bd6410a1b0f604",
+      "family": "p5_final_inverse_admission",
+      "kind": "generated facade"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes.lean",
+      "sha256": "93189fe0c58347f2f7ae6b7a391b527e5f5ca14693e256cd0aac2087483ba34e",
+      "family": "p5_final_inverse_admission",
+      "kind": "generated facade"
+    },
+    {
+      "path": "Quillen/Topology.lean",
+      "sha256": "e520aa758c1485273674930e72e6fdf11fb8983177d90b3594f641eab570b9f6",
+      "family": "bass_relative_boundary_admission",
+      "kind": "generated facade"
+    }
+  ],
+  "families": [
+    {
+      "name": "Original H0/H1/M/Q composition cube",
+      "sources": 151,
+      "fixed_evidence": "TTBassCube.json",
+      "evidence_sha256": "92a880091cefd36811cbcb8470e59dd1e4885c8d9b3e04eed005ba1809090195",
+      "kernel_origins": 1619,
+      "private_origins": 54,
+      "scope": "Original composition cube and comparison/cone/parameter-looped composition; separate unit cube and full raw tower remain open",
+      "prepared_facades_boundary": "The four facade hashes in TTBassCube.json identify its earlier preparation; delivered facade hashes are in final_facades here"
+    },
+    {
+      "name": "Positive Bass exact row on PerfectK(Spec R)",
+      "sources": [
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/BassPositiveCharts.lean",
+          "sha256": "0db622409af6393aa5dd691ccba71a7f4ea6809bac45fe9d1c4a24cfe15bc9d7",
+          "family": "bass_positive_admission",
+          "kind": "absent canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/BassPositiveMayerVietoris.lean",
+          "sha256": "165939f55e4434ff0eb502c3f2f59f88f49f66a941c0222d28598247b38c528a",
+          "family": "bass_positive_admission",
+          "kind": "absent canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/BassPositiveFundamental.lean",
+          "sha256": "c7191f652be19a4b6c52a3090edba8dee56a4eb4396665cc675784e01e1fe296",
+          "family": "bass_positive_admission",
+          "kind": "absent canonical source"
+        }
+      ],
+      "ordinary_review_sha256": "c307cf4b98e51e3225227d6e4a8d779bd5365963664ffa597125362fcb14352f",
+      "producer_binding_sha256": "d6649745e3ee32c985210682f97ee7db30058fe32516daa3628a797ca6a0b592",
+      "kernel_origins": 110,
+      "original_typed_examples": 9,
+      "scope": "All commutative rings including0, all n>=0; literal signed chart difference and original MV/Phi-inverse terminal map; fine[T] value and splitting remain open"
+    },
+    {
+      "name": "Original relative scalar-to-cofiber boundary",
+      "sources": [
+        {
+          "path": "Quillen/Topology/HomotopyFiber/LoopComponentTransport.lean",
+          "sha256": "c93bd1e4b92d091927b7d4f8f15999819972bfa093dce8a3b42d3f5587962cd6",
+          "family": "bass_relative_boundary_admission",
+          "kind": "new canonical source"
+        },
+        {
+          "path": "Quillen/Topology/HomotopyFiber/ConnectingLoopPathClass.lean",
+          "sha256": "4ad80884122a685489b655518e6d373db9bcf847f7cf0168a773579b99f35e6e",
+          "family": "bass_relative_boundary_admission",
+          "kind": "new canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ScalarCofiberFiberComponent.lean",
+          "sha256": "cf230603f3418b6c8c2fe0270d985a1cc421b2ccafccea3f086cbf5f7cf68d84",
+          "family": "bass_relative_boundary_admission",
+          "kind": "new canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ScalarForwardRelativeBoundary.lean",
+          "sha256": "19745b87038cd0ee0b6d9845350d8ba22661f767ae7367e9b28439f8dc0a53f4",
+          "family": "bass_relative_boundary_admission",
+          "kind": "new canonical source"
+        }
+      ],
+      "ordinary_review_sha256": "ac90930fa678df794f9614e5dae09dc99b505b19d764de1ac47f5b656ddf2363",
+      "kernel_origins": 61,
+      "private_origins": 1,
+      "scope": "Coarse forward scalarK1 to actual relative-acyclic cofiberK0; two inversions cancel. No fine[T] terminal sign or Laurent splitting",
+      "original_metadata_boundary": "Original compact axiom strings were truncated; complete review reparse and fresh canonical kernel audit give the recorded coverage"
+    },
+    {
+      "name": "Final original native P5 inverse",
+      "sources": [
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5NativeNegativeVanishing.lean",
+          "sha256": "a4dfe13e4c931d2b2b2852fdb372a9d01c0730549cbcd3c437f9a145ddc0b24d",
+          "family": "p5_final_inverse_admission",
+          "kind": "absent canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5NativeOffDiagonal.lean",
+          "sha256": "40287b54db3c26bf24a50f192790990a70467c1999172981bbc6a7045d91b0f7",
+          "family": "p5_final_inverse_admission",
+          "kind": "absent canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5LocallySplitTensor.lean",
+          "sha256": "761c5e4f310c183b34150bb0b1e6e86594b8babb17405062b283a47d25413765",
+          "family": "p5_final_inverse_admission",
+          "kind": "absent canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5NativeEulerSequence.lean",
+          "sha256": "c0eee0e17cfcdacdc50b0f1bcd5f27e0f234f03fd273639dfa0b7b807bf4f8ff",
+          "family": "p5_final_inverse_admission",
+          "kind": "absent canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5NativeEulerFunctors.lean",
+          "sha256": "fa61846fbc51e5a71ff5a372baa971b92015c05e39adf22fa689d7ad33d8b661",
+          "family": "p5_final_inverse_admission",
+          "kind": "absent canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5NativeEulerAdditivity.lean",
+          "sha256": "b14f23fab1766f6cd8cd3e88f42c3a78a13b4371786f0621deefa821821d1b6d",
+          "family": "p5_final_inverse_admission",
+          "kind": "absent canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5NativeGPhiEntries.lean",
+          "sha256": "e55fc5b95d79374504fddc0e4096c3a89607283b5724a54ec49d3506591e33de",
+          "family": "p5_final_inverse_admission",
+          "kind": "absent canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5PositiveUnitAffine.lean",
+          "sha256": "e2a5e17578652e168b9679659a38015d6f1a771effbcf83fb8d740b8cd83edfd",
+          "family": "p5_final_inverse_admission",
+          "kind": "absent canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5PositiveUnitOpen.lean",
+          "sha256": "5c431ecd8bb08af3ce18cc4d638cada3b8b8d1cde05b6044df1ecd8add2d3446",
+          "family": "p5_final_inverse_admission",
+          "kind": "absent canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5PositiveUnitModel.lean",
+          "sha256": "a408abab9fde4150976797b0f4f85fc0acd628ef38e1e045e9022a6f243791b8",
+          "family": "p5_final_inverse_admission",
+          "kind": "absent canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5PositiveUnitNative.lean",
+          "sha256": "9c7c070b0557487850b72227f68592db2da65d2d62a88fc7e716aa5cc46021b6",
+          "family": "p5_final_inverse_admission",
+          "kind": "absent canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5NativeGPhiLaw.lean",
+          "sha256": "f0f6aa8b535d2b09457a152da0f657793c08e8ebdb24197d955fb1292af5dc54",
+          "family": "p5_final_inverse_admission",
+          "kind": "absent canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5NativeGlobalPhi.lean",
+          "sha256": "ad065da810b760b46f2ee02add809d6a2d5b6d6a34dafddd08500863e92f89d1",
+          "family": "p5_final_inverse_admission",
+          "kind": "absent canonical source"
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5NativeGlobalInverse.lean",
+          "sha256": "652532ee19d53667c3755b3a3d93f9ed821dc4ce69ffc7933bbb4e28bb9cf5e3",
+          "family": "p5_final_inverse_admission",
+          "kind": "absent canonical source"
+        }
+      ],
+      "ordinary_reviews": {
+        "entry7_scope": {
+          "sha256": "b0a213147bf6a1ca93c65a7242852285c1150af97966c103c14e239a880adeba",
+          "scope": "OldHH frontier only"
+        },
+        "unit4_scope": {
+          "sha256": "0faa58c6c1107477a3fa5a25a9dd11d3f4d1f2e048d83e0965b45c779ea70eb0",
+          "scope": "UNIT4 exactpositiveweak/Kid"
+        },
+        "integrated_final": {
+          "sha256": "cdc116a5bba0d2b960d9903115c6f809ad36991a640fe56502b9e084ac8be556",
+          "scope": "Exactunit4+law1+inverse2 withretainedentry7; originalbothinverse laws andnativeG=existinginverse; noTT/status"
+        }
+      },
+      "native_readiness_sha256": "6c31f870983dbb5c7c89259654bf688647c38cde35e5e27e36ebf042fa371c7f",
+      "native_manifest_sha256": "eec1d56830652a0b9b2390a2649deb9636a26b7528d08a9a5705e4dc2b9f2ab8",
+      "kernel_origins": 377,
+      "origin_families": {
+        "Entries7": 219,
+        "Unit4": 91,
+        "GPhiLaw1": 9,
+        "GlobalInverse2": 58
+      },
+      "full_private_equals_ordinary_ROOT": true,
+      "typed_examples": 36,
+      "original_examples": 33,
+      "additional_general_inverse_examples": 3,
+      "six_companions_per_leaf": 6,
+      "reused_matched_leaf_companions": 84,
+      "frozen_proof_replay_count": 0,
+      "scope": "Actual canonical positive unit/K-id and GPhi=id on allQC; PhiG=id and original nativeGeometricG equals existing nativeGlobalTwoSummandKEquiv.symm on qcqs; all n include0"
+    }
+  ],
+  "audit_conditions": {
+    "kernel_membership": "env.checked and env.toKernelEnv",
+    "allowed_transitive_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "new_leaf_default_heartbeats": 200000,
+    "autoImplicit": false,
+    "warnings_as_errors": true,
+    "native_style": "Maintained Mathlib native text/module options; legacy Python tooling outside supported native coverage"
+  },
+  "environment_count_boundary": {
+    "final14_driver": 9168,
+    "positive3_driver": 9150,
+    "relative4_driver": 9129,
+    "meaning": "Distinct actual audit-driver import contexts; not a mathematical-distance measure"
+  },
+  "review_version_reconciliation": {
+    "old_review_sha256": "a1c3ceb6e65d8f153d07c3c8be4d60b744366f2ee308fa73ea466c515a1ee318",
+    "final_review_sha256": "cdc116a5bba0d2b960d9903115c6f809ad36991a640fe56502b9e084ac8be556",
+    "only_added_field": "review_report",
+    "all_mathematical_fields_sources_outputs_verdicts_unchanged": true,
+    "correction_sha256": "c57bfe730e954e20cb97653bf3d675a2f8b2588be726e71587a0b18ad7994024"
+  },
+  "historical_boundaries": [
+    "Source-only HEAD observations do not relabel original compiler/body bases",
+    "Earlier seven-entry (H,H) and inverse pre-law48 records remain distinct from final identities and58 origins",
+    "Historical raw receipts without source-posthash retain that capture limitation",
+    "Godement source-format/server-only aliases and earlier default-argv Mathlib boundaries remain as recorded",
+    "Current scope is ordinary mathematical review and scoped native admission; no established-status or classical TT closure"
+  ],
+  "live_postcopy_checks": {
+    "generated_imports_exit_code": 0,
+    "layout_exit_code": 0,
+    "production_modules": 3832,
+    "trust_test_modules": 830,
+    "changed_document_local_links": 363,
+    "missing_local_links": 0,
+    "new_source_hashes_verified": 172,
+    "tracked_diff_whitespace_exit_code": 0,
+    "coverage": "Installed source/facade layout and changed Markdown; scoped native kernel/style/client checks recorded above"
+  },
+  "no_compiled_artifacts_archived": true,
+  "fresh_whole_library_proof_replay": false,
+  "remaining": "Fine[T] terminal boundary/Laurent splitting, separate unit cube, raw iterate/telescope comparison, recursive negative groups/lowest transitions and classical TT identification"
+}

@@ -33,8 +33,13 @@ The actual two-chart projective line also has finite-projective Čech models
 for vector bundles, objectwise global strict models of arbitrary intrinsic
 perfect objects in the bounded-below derived category, and perfect images
 under its original derived projection over every commutative ring, including
-the zero ring. Natural choices of models and functorial diagonal generation
-remain open. For quasi-compact opens of affine schemes,
+the zero ring. Natural intrinsic-perfect diagonal generation and both
+original affine K-map inverse laws are proved. On qcqs bases both actual
+native model inverse laws are proved, and the geometric coefficient pair
+is identified with the inverse of the existing two-summand native K-map.
+The original inverse-image supported map is bijective for compact base
+opens, including degree zero. The general projective-bundle formula and
+classical nonconnective identification remain separate. For quasi-compact opens of affine schemes,
 full-open graded coefficient diagrams have natural Bass seed nullhomotopies
 and vanishing signed stable groups of their actual graded telescopes.
 The original coarse-to-fine section telescope restriction is stable in every

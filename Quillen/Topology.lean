@@ -335,6 +335,7 @@ public import Quillen.Topology.HomotopyFiber.CompactHELP
 public import Quillen.Topology.HomotopyFiber.CompactLifting
 public import Quillen.Topology.HomotopyFiber.Components
 public import Quillen.Topology.HomotopyFiber.Connected
+public import Quillen.Topology.HomotopyFiber.ConnectingLoopPathClass
 public import Quillen.Topology.HomotopyFiber.ConnectingLoopTranspose
 public import Quillen.Topology.HomotopyFiber.ContractibleBase
 public import Quillen.Topology.HomotopyFiber.ContractibleBaseHELP
@@ -357,6 +358,7 @@ public import Quillen.Topology.HomotopyFiber.LESTail
 public import Quillen.Topology.HomotopyFiber.Loop
 public import Quillen.Topology.HomotopyFiber.LoopComparisonHomotopy
 public import Quillen.Topology.HomotopyFiber.LoopComparisonNaturality
+public import Quillen.Topology.HomotopyFiber.LoopComponentTransport
 public import Quillen.Topology.HomotopyFiber.LoopPrefixBasepointNaturality
 public import Quillen.Topology.HomotopyFiber.LoopPrefixGroups
 public import Quillen.Topology.HomotopyFiber.LoopPrefixHomotopy
@@ -702,8 +704,13 @@ public import Quillen.Topology.OpenGluing.GlobalWeakComparison
 public import Quillen.Topology.OpenGluing.RightChart
 public import Quillen.Topology.Path.BoundaryOfComparison
 public import Quillen.Topology.Path.HomotopyThreeRoutes
+public import Quillen.Topology.Path.ParameterBoundarySupport
+public import Quillen.Topology.Path.ParameterPastingSupport
+public import Quillen.Topology.Path.ParameterRangeClosure
 public import Quillen.Topology.Path.PointHEP
 public import Quillen.Topology.Path.ProjectionPasteWord
+public import Quillen.Topology.Path.ScalarPathCells
+public import Quillen.Topology.Path.ScalarRectangleConcatenation
 public import Quillen.Topology.Path.Separation
 public import Quillen.Topology.Path.SimplexCollapsedBoundary
 public import Quillen.Topology.Path.SimplexCollapsedEdges
@@ -799,8 +806,12 @@ public import Quillen.Topology.Prespectrum.LoopTailReplacementHomotopy
 public import Quillen.Topology.Prespectrum.LoopTailReplacementStableNaturality
 public import Quillen.Topology.Prespectrum.LoopTailStageStructure
 public import Quillen.Topology.Prespectrum.Looping
+public import Quillen.Topology.Prespectrum.MPostmappedLift
 public import Quillen.Topology.Prespectrum.MappingCone
 public import Quillen.Topology.Prespectrum.MappingConeWeakEquivalence
+public import Quillen.Topology.Prespectrum.NativeH1CellOps
+public import Quillen.Topology.Prespectrum.NativeHomotopyCells
+public import Quillen.Topology.Prespectrum.NativeMovingSquareCells
 public import Quillen.Topology.Prespectrum.NullLoopNaturality
 public import Quillen.Topology.Prespectrum.Omega
 public import Quillen.Topology.Prespectrum.OmegaConnectivity
@@ -1048,9 +1059,12 @@ public import Quillen.Topology.Realization.SimplexBoundaryChartsHomotopy
 public import Quillen.Topology.Realization.SimplexBoundaryFilling
 public import Quillen.Topology.Realization.SimplexBoundaryHEP
 public import Quillen.Topology.Realization.SimplexConnectivity
+public import Quillen.Topology.Realization.SimplexCubeExtension
+public import Quillen.Topology.Realization.SimplexCubeFaces
 public import Quillen.Topology.Realization.SimplexCylinder
 public import Quillen.Topology.Realization.SimplexFaceGluing
 public import Quillen.Topology.Realization.SimplexGridBoundary
+public import Quillen.Topology.Realization.SimplexGridColumn
 public import Quillen.Topology.Realization.SimplexHomotopy
 public import Quillen.Topology.Realization.SimplexProductParameter
 public import Quillen.Topology.Realization.SimplexSkeleton

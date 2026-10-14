@@ -242,8 +242,15 @@ varying-family composition uses the actual realization-product homeomorphism,
 with independent parameters and structure time. A separate actual 30-simplex
 now realizes the entire original H0 cylinder face, its four scalar edges at
 native speed, degree-zero loops, point and independent structure laws. The
-joint H0/chart/bottom family, whole H1/M surfaces and genuine six-face
-composition cylinder remain separate. The first Godement functor on
+joint H0/chart/bottom family and whole H1/M surfaces now belong to one
+actual 139-simplex. `MWholeNativeCube` constructs the genuine six-face
+composition cylinder, with all twelve whole edges, original level zero and
+independent structure time. `MWholeCubeConsumers` gives the original
+comparison, cone and parameter-looped step composition without a supplied
+cube or compatibility premise. Independent review and fresh canonical
+checks cover all 1,619 defining origins, including 54 private names; ROOT
+and full-private coverage agree. The separate unit cube, raw tower,
+telescope and classical identification remain open. The first Godement functor on
 all scheme module sheaves is exact, flasque-valued and has its original natural
 monic germ unit. Its exact cokernel iteration now supplies the natural augmented
 flasque sheaf resolution and original augmentation quasi-isomorphism, preserving
@@ -305,7 +312,14 @@ natural degree including zero. `NativeGlobalBundle` and `NativeGlobalSupport`
 retain the literal forward maps and original product coordinates through
 actual Mayer–Vietoris/localization ladders and two-stage affine-cover induction.
 Independent complex ordinary reviews and native ROOT/checked-origin coverage
-passed. The actual geometric G inverse laws remain separate.
+passed. The actual canonical positive unit and native negative/Euler
+entries now give original GΦ=id on every quasi-compact base.
+`P5NativeGlobalInverse` uses the independently proved Phi bijection to
+give ΦG=id on qcqs bases and identifies the actual geometric G with the
+EXISTING nativeGlobalTwoSummandKEquiv.symm. Both original ordered
+coordinates and product K-equivalence are retained. Independent complex
+ordinary review, strict 200k source coverage, 36 current ROOT examples and
+all 377 checked defining origins passed; ROOT and full-private coverage agree.
 Actual LEFT-L tensor followed by totalization now maps the original diagonal
 conflation to exact functors, with native additivity in every natural degree.
 `FlasquePhiColumns` retains the literal positive and unshifted negative
@@ -320,8 +334,8 @@ generation is now proved on the actual two-chart P¹ over every commutative R,
 including zero, with the original endpoint maps, specified contractions,
 negative shifted incidence and perfect G₀/G₁ coefficients. The actual affine
 two-summand K inverse and original native qcqs/support K-bijections are
-supplied; global geometric G identification and the broader projective-bundle
-formula remain separate.
+supplied, including the actual native qcqs geometric G inverse. The broader
+projective-bundle formula remains separate.
 The signed Bass span quotient and natural short exact row are realized for
 the actual ambient, open, supported and auxiliary-supported coefficient Model
 families at every finite stage and in every integer degree. Polynomial zero
@@ -363,9 +377,9 @@ tracks and a natural chosen inverse remain separate. See
 
 
 - Fixed-degree finite Bass-transition stabilization, bijectivity of the natural negative-class maps into the telescope, and classical telescope negative-group identification.
-- Full all-iterate comparison with the original geometric Bass tower, the fundamental theorem, and Laurent-unit boundary/relative-loop basepoint calculations, including the zero-section class and possible Nil terms.
+- Full all-iterate comparison with the original geometric Bass tower, the Laurent splitting and original fine [T] terminal boundary, including the zero-section class and possible Nil terms. The positive exact row on PerfectK(Spec R) and the original relative scalar-to-cofiber boundary are proved; they do not close these remaining comparisons.
 - Complete original raw iterate/telescope evaluation and classical Thomason–Trobaugh identification, retaining the original K₀ image and signed boundary. Normalized geometric chart-composition, original cone/null/one-step seed comparison, basic global supported localization and auxiliary-supported section-completion localization are proved.
-- Proj identification, the full twisting-sheaf family, and the general projective-bundle formula. Intrinsic-perfect D+ generation and both actual model K-map inverse laws are supplied on the original affine two-chart P¹ over every commutative ring. The EXISTING native two-summand K-map is bijective on every qcqs base, and the original inverse-image supported map is bijective for compact base opens, in every natural degree including zero. Literal forward maps, signs and product normalization are retained. Native projection perfection and exact coefficient/support preservation are supplied on general quasi-compact bases. The separate specialized endpoint-unit/connecting comparisons and identification of the actual global geometric G inverse remain open.
+- Proj identification, the full twisting-sheaf family, and the general projective-bundle formula. Intrinsic-perfect D+ generation and both actual affine model K-map inverse laws are supplied over every commutative ring. Both actual native qcqs model inverse laws and identification of geometric G with the EXISTING native inverse are supplied, together with original compact-open supported Phi bijectivity, in every natural degree including zero. Literal forward maps, signs and product normalization are retained. Native projection perfection and exact coefficient/support preservation hold on general quasi-compact bases. The separate specialized endpoint-unit/connecting and arbitrary-base-map comparisons remain open.
 - General-source perfect preservation by derived direct image, unrestricted unbounded derived pushforward, and general bounded-below flat-base-change invertibility.
 - Strict/local equivalence on arbitrary nonaffine schemes and perfect pullback on arbitrary non-quasi-compact schemes.
 - General stable cofiber excision, the remaining quotient homotopy-invariance questions, and a standard stable model structure or triangulation for the categorical localization.
