@@ -536,8 +536,16 @@ acyclicity on literal p^-1 Z to acyclicity on every base open Z, without quasi-s
 or compact-open assumptions. The original units, total augmentation, signed
 shift and supplied lower bounds are retained. Independent complex ordinary
 review and native ROOT/checked-origin interfaces cover these six source
-leaves. Global native Phi/G inversion and the support K-bijection remain
-open. The Čech cone comparison concerns quasicoherent
+leaves. The actual native Phi model, its original K-map comparison and
+inverse-image supported boundary naturality are also supplied. The EXISTING
+native two-summand K-map is now bijective on every qcqs base and its original
+supported map on every compact base open, for all natural degrees including
+zero. Actual affine/iso/finite-cover induction and original Mayer–Vietoris
+and localization ladders discharge all premises; both equivalences retain
+the literal forward map and unchanged product normalization. Independent
+complex ordinary reviews and native ROOT/checked-origin coverage passed.
+Identification of the actual geometric G inverse remains open.
+The Čech cone comparison concerns quasicoherent
 singles; general bounded-below flat base change is not inferred.
 The older
 [`FiniteCoefficientRetract`](../../Quillen/Algebra/Module/FiniteCoefficientRetract.lean)

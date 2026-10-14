@@ -459,7 +459,7 @@ not ordinary equivalence/approximation of this two-summand functor.
 | P2: arbitrary-perfect projection | Accepted genuine QC and strict models, and actual Rp perfection, for every intrinsic perfect D+ input on twoChartLine R. | `QuasicoherentRepresentative` constructs the original derived replacement; `IntrinsicPerfectPushforward` composes it with the accepted strictification and original Rp. No supplied replacement, noetherian or bounded-vector-bundle premise remains. This closes objectwise P2 over arbitrary R. The accepted P3 tests original mate invertibility and coefficient perfectness; P4 now uses these actual comparisons to close the affine K-inverse. |
 | P3: natural diagonal generation | Accepted natural distinguished triangle p*G₀(K)→K→L⊗p*G₁(K), with G₀=Rp*K and G₁=Rp*(K⊗L)[1], for every intrinsic-perfect D+ input over arbitrary R, including zero. | `OriginalPerfectGeneration` retains the original self-base-change/projection endpoint maps, incidence/quotient/connecting naturality on genuine roofs, specified determinant contractions and units, negative shifted incidence, full original bundle-single correspondence and perfect coefficients. Independent complex ordinary review, native public-root interfaces and the complete 283-declaration origin audit passed. P3 is closed in this affine two-chart scope; P4 now supplies the exact original K-inverse. |
 | P4: original K-inverse | Both actual original model K-map composites are identity for every affine R and natural degree, including zero. The EXISTING nativeTwoSummandKMap is bijective, with the same literal forward map in nativeAffineTwoSummandKEquiv. | `FlasqueGPhiMatrix` proves GPhi from the four actual entries. `FlasquePhiInverse` proves PhiG from the original tensor-diagonal cofibration-sequence additivity, three genuine natural endpoint weak spans and the signed original Phi-column formula. `FlasqueNativePhiTransport` uses the original model inclusions and actual affine inverse geometry to retain the existing native map. Independent complex ordinary review and current public-root/origin checks passed. P4 is closed in this affine scope; P5 handles the global/support extension. |
-| P5: native qcqs and supports | Accepted original native open K-map naturality, perfect Rp on every native quasi-compact base, and exact coefficient functors preserving support on every literal inverse-image base open. The global native/support K-inverse remains open. | `NativeOpenNaturality` retains the original native map and product coordinates in every natural degree. `NativeProjectionPerfect` glues actual projection perfection on affine base charts. `P5NativeCoefficientsZero`, `P5NativeCoefficientTensor`, `P5NativeCoefficientsOne` and `P5NativeCoefficientsSupport` retain literal G0/G1, the original signed shift and installed unit/augmentation, with no quasi-separatedness or compact-support-open premise for the coefficient/support conclusions. Arbitrary-base-map naturality still needs its own comparison. |
+| P5: native qcqs and supports | Accepted bijectivity of the EXISTING native two-summand map on every qcqs base and of its original inverse-image supported map for compact base opens, in every natural degree including zero. Exact global G0/G1 and support preservation are supplied; identification of G with the global inverse remains open. | `NativeGlobalBundle` concretely discharges affine, iso and compact-union induction through the original Mayer–Vietoris maps, including final-pair K0 exactness. `NativeGlobalSupport` uses the original doubled localization row and canonical inverse-image open comparison. Both equivalences retain the literal forward map and original product normalization. The actual native Phi model and original boundary squares have independent ordinary reviews and native coverage. Arbitrary-base-map naturality still needs its own comparison. |
 
 P2's accepted strictification uses a termwise quasi-coherent, bounded-below
 representative with local strict models in a finite interval [a,b]. For a<b,
@@ -661,9 +661,40 @@ The original derived unit, total augmentation, shift comparisons and their
 naturality are retained. Independent complex ordinary reviews, native ROOT
 interfaces and complete checked-origin audits cover all 84 prerequisite
 and 124 coefficient declarations. These results supply global coefficient
-construction and support preservation; they do not yet supply the global
-Phi/G inverse or a support K-bijection. Those require their actual K-map
-comparison and localization/Mayer–Vietoris assembly.
+construction and support preservation; identification of the geometric G
+with the global inverse remains separate.
+
+`P5NativePhi`, `P5NativePhiObjects`, `P5NativePhiComparison` and
+`P5NativePhiSupport` now construct the actual native Phi model with the
+original LEFT line tensor, chosen coproduct and total augmentation. Its
+K-map after model inclusion is the EXISTING nativeTwoSummandKMap, with the
+unchanged Product.KEquiv. Model support and the original unbounded-perfect
+two-summand functor preserve acyclicity on literal p^-1 Z for every base
+open Z. `NativeBoundaryNaturality` and `NativeInverseImageBoundary` give
+the actual supported functor, original forget-support square and original
+localization-boundary naturality for qcqs bases and compact opens, including
+K1(open) to supported K0. No caller-supplied open isomorphism is needed.
+The nine sources have independent complex ordinary reviews. Complete native
+private/ROOT-with-private coverage checks 208 declarations; ROOT alone checks
+206, with its exact two generated-helper differences recorded separately.
+
+`NativeGlobalBundle` now proves bijectivity of the original native map for
+every qcqs base and every natural degree, including zero. Its actual affine
+and scheme-isomorphism cases feed a proved compact binary-union step using
+the original T-first Mayer–Vietoris restriction, difference and connecting
+maps. `NativeFiniteCoverInduction` first handles finite affine unions on
+separated schemes, then compact overlaps inside each newly added affine
+chart on a general qcqs scheme. The original final local-pair K0 exactness
+supplies the required fifth-term slice without overlap-K0 surjectivity.
+`NativeGlobalSupport` then discharges all ambient bijectivity premises in
+the original supported localization ladder for every compact base open.
+Both packaged equivalences have the literal existing forward map and
+original product coordinates. Independent complex ordinary reviews and
+native ROOT interfaces passed. Complete current origin coverage is 162
+unique declarations; the isolated 163-record sum repeats one identical
+generated restriction helper, whose type/value/axiom identity was checked.
+These results close global and supported Phi bijectivity. The actual
+geometric G inverse laws and final TT identification remain open.
 
 Two concrete restrictions govern this route. `Scheme.Regular.ResolutionProperty`
 assumes local noetherianity and cannot supply P2 unchanged. Global direct

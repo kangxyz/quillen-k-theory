@@ -186,8 +186,27 @@ of K on literal p^-1 Z implies acyclicity of both coefficients on Z through
 [`P5NativeCoefficientsSupport`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/P5NativeCoefficientsSupport.lean).
 These coefficient and support statements need neither quasi-separatedness
 nor compactness of the base open. Independent complex ordinary review and
-native checked-origin/ROOT interfaces cover the six sources; global Phi/G
-inversion and the support K-bijection remain open.
+native checked-origin/ROOT interfaces cover the six sources.
+
+The actual native Phi model retains its original selected coproduct, LEFT
+line tensor, maps, common lower bound and total augmentation. Its model
+K-map agrees with the EXISTING original native two-summand map after the
+literal perfect-model inclusions and unchanged Product.KEquiv. Its model
+and the original unbounded-perfect functor preserve acyclicity on literal
+p^-1 Z for every base open Z. The original supported functor and canonical
+inverse-image comparison also commute with the actual localization boundary,
+including K1 to supported K0.
+[`NativeGlobalBundle`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeGlobalBundle.lean)
+now proves the existing native map bijective for every qcqs base and all
+natural degrees, including zero. Original Mayer–Vietoris maps and genuine
+final-pair K0 exactness provide compact binary-union closure; actual affine,
+iso and two-stage finite-cover induction discharge every local premise.
+[`NativeGlobalSupport`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeGlobalSupport.lean)
+proves the existing supported map bijective for every compact base open
+using the original localization row. Both packaged equivalences retain the
+literal forward map and original product normalization. Independent complex
+ordinary reviews and native ROOT/checked-origin interfaces passed. Identifying
+the actual geometric coefficient pair G with the global inverse remains open.
 
 `strictKPullback` accepts every scheme map. `perfectKPullback` accepts arbitrary
 maps between quasi-compact schemes, uses bounded-above flat representatives,
@@ -903,7 +922,7 @@ in the [TT localization roadmap](../development/TTLocalization.md).
 - Complete the Laurent-unit connecting-map and zero-section class formulas and retain possible Nil contributions; the normalized forward scalar K₁ comparison is proved.
 - Establish fixed-degree stabilization of the finite seed transitions and bijectivity of the natural negative-class maps into the telescope. The finite-bottom isomorphisms and stable Bass self-comparisons do not discharge these obligations.
 - Compare all iterates with the complete original geometric Bass tower, identify classical telescope negative groups, and prove the fundamental theorem, negative localization boundaries, and nonconnective descent.
-- Complete global native Phi/G inversion and the support K-bijection, identify the natural projected diagonal, and establish the projective-bundle formula, Proj identification, and full twisting-sheaf family. Intrinsic-perfect native projection perfection, original open K-map naturality and exact coefficient/support preservation are proved on every quasi-compact base. The older finite-coefficient retract criterion retains its own uniform-window premises.
+- Identify the actual geometric G with the proved native global inverse, identify the natural projected diagonal, and establish the general projective-bundle formula, Proj identification, and full twisting-sheaf family. Native qcqs and compact-open supported K-bijections retain their original forward maps. Intrinsic-perfect native projection perfection, original open K-map naturality and exact coefficient/support preservation are proved on every quasi-compact base. The older finite-coefficient retract criterion retains its own uniform-window premises.
 - Extend perfect preservation to the claimed general-source/unbounded direct-image scope, and establish general bounded-below flat-base-change invertibility beyond the available QC-single and open specializations.
 - Extend strict/local equivalence to arbitrary nonaffine schemes and perfect pullback to arbitrary non-quasi-compact schemes; compare the Waldhausen and triangulated-derived Grothendieck presentations.
 - Supply any needed general stable cofiber excision, replacement cofiber preservation, and higher raw-spectrum/telescope coherence. The categorical stable localization has no asserted standard stable model structure or triangulation.

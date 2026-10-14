@@ -297,8 +297,15 @@ For every base open Z, acyclicity of K on literal p^-1 Z implies acyclicity
 of both coefficients on Z, without quasi-separatedness or compactness of Z. These six
 native sources have independent complex ordinary reviews, native ROOT
 interfaces and complete checked-origin coverage of 84 prerequisite and
-124 coefficient declarations. The global native Phi/G inverse and support
-K-bijection remain separate.
+124 coefficient declarations. The actual native Phi model and original
+inverse-image supported boundary square are also supplied. The EXISTING
+native two-summand K-map is now bijective on every qcqs base, and its
+original supported map is bijective for every compact base open, in every
+natural degree including zero. `NativeGlobalBundle` and `NativeGlobalSupport`
+retain the literal forward maps and original product coordinates through
+actual Mayer–Vietoris/localization ladders and two-stage affine-cover induction.
+Independent complex ordinary reviews and native ROOT/checked-origin coverage
+passed. The actual geometric G inverse laws remain separate.
 Actual LEFT-L tensor followed by totalization now maps the original diagonal
 conflation to exact functors, with native additivity in every natural degree.
 `FlasquePhiColumns` retains the literal positive and unshifted negative
@@ -312,8 +319,9 @@ vector-bundle single correspondence is supplied. Natural intrinsic-perfect
 generation is now proved on the actual two-chart P¹ over every commutative R,
 including zero, with the original endpoint maps, specified contractions,
 negative shifted incidence and perfect G₀/G₁ coefficients. The actual affine
-two-summand K inverse is supplied; qcqs/support extension and the broader
-projective-bundle formula remain separate.
+two-summand K inverse and original native qcqs/support K-bijections are
+supplied; global geometric G identification and the broader projective-bundle
+formula remain separate.
 The signed Bass span quotient and natural short exact row are realized for
 the actual ambient, open, supported and auxiliary-supported coefficient Model
 families at every finite stage and in every integer degree. Polynomial zero
@@ -357,7 +365,7 @@ tracks and a natural chosen inverse remain separate. See
 - Fixed-degree finite Bass-transition stabilization, bijectivity of the natural negative-class maps into the telescope, and classical telescope negative-group identification.
 - Full all-iterate comparison with the original geometric Bass tower, the fundamental theorem, and Laurent-unit boundary/relative-loop basepoint calculations, including the zero-section class and possible Nil terms.
 - Complete original raw iterate/telescope evaluation and classical Thomason–Trobaugh identification, retaining the original K₀ image and signed boundary. Normalized geometric chart-composition, original cone/null/one-step seed comparison, basic global supported localization and auxiliary-supported section-completion localization are proved.
-- Proj identification, the full twisting-sheaf family, the general projective-bundle formula and its qcqs/support K-inverse. Intrinsic-perfect D+ generation and both actual model K-map inverse laws are supplied on the original affine two-chart P¹ over every commutative ring. The existing native affine two-summand K-map is bijective in every natural degree, including zero, with its literal forward map and original units, signs and product normalization retained. Native projection perfection, original open K-map naturality and exact coefficient/support preservation are also supplied on general quasi-compact bases. The separate specialized endpoint-unit/connecting comparisons and the global/support K-inverse remain open.
+- Proj identification, the full twisting-sheaf family, and the general projective-bundle formula. Intrinsic-perfect D+ generation and both actual model K-map inverse laws are supplied on the original affine two-chart P¹ over every commutative ring. The EXISTING native two-summand K-map is bijective on every qcqs base, and the original inverse-image supported map is bijective for compact base opens, in every natural degree including zero. Literal forward maps, signs and product normalization are retained. Native projection perfection and exact coefficient/support preservation are supplied on general quasi-compact bases. The separate specialized endpoint-unit/connecting comparisons and identification of the actual global geometric G inverse remain open.
 - General-source perfect preservation by derived direct image, unrestricted unbounded derived pushforward, and general bounded-below flat-base-change invertibility.
 - Strict/local equivalence on arbitrary nonaffine schemes and perfect pullback on arbitrary non-quasi-compact schemes.
 - General stable cofiber excision, the remaining quotient homotopy-invariance questions, and a standard stable model structure or triangulation for the categorical localization.
