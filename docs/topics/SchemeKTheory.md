@@ -35,6 +35,7 @@ and the sheaf geometry can be imported through their individual owners:
 | [`Scheme.ProjectiveLine.VectorBundleCech`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/VectorBundleCech.lean) | `Quillen.Scheme.ProjectiveLine.exists_original_vectorBundle_cech_model` |
 | [`Scheme.ProjectiveLine.DerivedCechCone`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DerivedCechCone.lean) | `Quillen.Scheme.ProjectiveLine.derivedCechConeIso` |
 | [`Scheme.ProjectiveLine.DiagonalProjectedTensorTriangle`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DiagonalProjectedTensorTriangle.lean) | `Quillen.Scheme.ProjectiveLine.diagonalCoefficientTensorTriangle` |
+| [`Scheme.ProjectiveLine.DiagonalComplexProjectedTriangle`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DiagonalComplexProjectedTriangle.lean) | `Quillen.Scheme.ProjectiveLine.diagonalDerivedComplexCoefficientTriangleFunctor` |
 
 Unqualified declaration names continue in the preceding displayed namespace.
 Below, geometric module paths abbreviated as `Scheme.…` have prefix
@@ -189,6 +190,11 @@ is invertible, while retaining the original augmentations and units:
 | [`AffinePushforwardAcyclicity`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/AffinePushforwardAcyclicity.lean), `AffineDerivedPushforward` | Every quasicoherent sheaf is acyclic for an affine morphism; the unit on its degree-zero single is invertible |
 | [`AffineBoundedDerivedPushforward`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/AffineBoundedDerivedPushforward.lean) | Explicit lower and upper term bounds and degreewise quasicoherence give the same installed-unit comparison |
 | [`FlasquePushforwardAcyclicity`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/FlasquePushforwardAcyclicity.lean), `FlasqueDerivedPushforward`, `FlasqueComplex`, `FlasqueComplexDerivedPushforward` | For every scheme map, flasque sheaves are acyclic and the unit is invertible on bounded-below flasque-term complexes, with no upper bound |
+| [`GodementFirst`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/GodementFirst.lean) | On every scheme and all module sheaves, the actual product of stalk skyscrapers is an exact flasque-valued functor with a natural monic germ unit |
+| [`GodementResolution`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/GodementResolution.lean) | Actual natural augmented flasque sheaf resolution from the exact cokernel iteration, with the original germ augmentation quasi-isomorphism and preservation of short exact sequences |
+| [`GodementComplex`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/GodementComplex.lean), `GodementTotalExact` | Actual natural totalization retains the lower bound and has flasque terms, preserving short exact sequences and degreewise monomorphisms |
+| [`FlasqueExtensions`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/FlasqueExtensions.lean), `FlasquePushforwardExact` | Actual flasque extension closure and direct-image short-exact preservation with flasque first terms; the complex direct-image statement requires no bound |
+| [`GodementTotalQuasiIso`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/GodementTotalQuasiIso.lean), `GodementTotalDerivedComparison` | Original total augmentation is a quasi-isomorphism for every Plus input; genuine weak maps are preserved, and Q(f_*T(K))≅Rf_*(Q(K)) is natural for every scheme map |
 | [`FlatInjectivePushforward`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/FlatInjectivePushforward.lean) | Flat direct image preserves injectives; the derived-Hom adjunction retains a bounded-below injective target complex |
 | [`AffineCompositeDerivedPushforward`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/AffineCompositeDerivedPushforward.lean) | The unit on `j_*M` is invertible when `j` and `j ≫ f` are affine and `M` is quasicoherent |
 
@@ -198,6 +204,35 @@ flasque. `derivedPushforwardPlusCompIso f g` constructs
 `R(g ∘ f)_* ≅ Rg_* Rf_*` with the ordinary composition isomorphism and both
 installed unit equations; it does not supply triple-composition coherence.
 
+`godementFirstProduct X` is the categorical product of the original
+`moduleStalk X x` and `moduleSkyscraper X x` functors. Its natural coordinate
+presentation has one stalk value at each point of an open, with scalars acting
+through their actual germs. Restriction discards coordinates; extension by zero
+proves flasqueness, and sheaf section extensionality proves the germ unit monic,
+including empty opens and schemes. Independent stalk preimages prove exactness
+on every section group and module. This establishes this particular product
+functor's exactness, with no quasicoherence, flatness or noetherian premise.
+`GodementResolution` constructs the natural cokernel C of that germ unit,
+proves it exact by the actual snake diagram, and iterates it. The resolution
+has terms G(C^n M) and the original quotient/unit differential. Its augmented
+sequence is exact, its terms are flasque, and its natural augmentation from
+M concentrated in degree zero is a quasi-isomorphism. The resolution preserves
+short exact sequences and degreewise zero objects. `GodementComplex`
+totalizes the actual degreewise resolution bicomplex. An original total
+degree is its finite diagonal biproduct for every lower-bounded input,
+so the same lower bound and termwise flasqueness are retained.
+`GodementTotalExact` proves exactness using exact coproducts in the actual
+module-sheaf category. The original stalk retraction and natural quotient
+sections give the signed total homotopy equivalence; exact, jointly
+conservative module stalks then reflect its original augmentation
+quasi-isomorphism. `godementTotalPlus` preserves genuine weak maps by
+naturality and two-out-of-three. Its installed-unit comparison computes
+the original derived direct image for every scheme morphism. All these
+assertions allow arbitrary module sheaves and schemes, including empty
+schemes, and require only the actual input lower bound. Unbounded
+totalization and the perfect/flasque Waldhausen roof K model remain
+separate.
+
 The sheafified tensor bifunctor, its left unit, and finite-free retract exactness
 live in [`Quillen.Algebra.Category.ModuleCat.Sheaf.Tensor`](../../Quillen/Algebra/Category/ModuleCat/Sheaf/Tensor.lean)
 and `TensorExact`, with their site and universe hypotheses.
@@ -206,6 +241,22 @@ and `TensorExact`, with their site and universe hypotheses.
 locally free coefficients using affine finite-free retractions, including the
 empty finite-free case. These constructions do not supply full monoidal coherence.
 
+[`PushforwardModuleStalk`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/PushforwardModuleStalk.lean)
+uses the actual pushforward germ map as a natural module-stalk isomorphism on
+an inducing image and proves zero stalks off a closed image.
+[`ClosedPushforwardExactness`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/ClosedPushforwardExactness.lean)
+therefore proves exact closed-immersion pushforward for arbitrary module sheaves,
+without quasicoherence, finite generation or noetherian assumptions.
+[`SectionPushforwardModuleStalk`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/SectionPushforwardModuleStalk.lean)
+retains the original stalk ring retraction when the immersion is a section.
+
+[`TensorStalkIso`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/TensorStalkIso.lean)
+identifies the literal sheaf tensor stalk with the tensor of the two module
+stalks, using the original pure-section germs in both directions.
+[`TensorStalkNaturality`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/TensorStalkNaturality.lean)
+preserves both original sheaf-variable maps. Neither coefficient requires
+flatness or quasicoherence.
+
 `Scheme.VectorBundle.ProjectionFormula` proves the ordinary projection formula
 for every scheme map, arbitrary source module sheaf, and finite locally free
 target coefficient. `projectionFormulaIso` has the original geometric
@@ -213,6 +264,15 @@ adjunction-unit composite as its forward arrow. `DerivedProjectionFormula`
 gives its bounded-below derived natural isomorphism, with both-variable
 naturality and the installed-unit equations; there is no upper bound or extra
 global flasqueness hypothesis.
+
+For a closed immersion and arbitrary coefficient/source module sheaves,
+[`ClosedImmersionProjectionFormula`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/ClosedImmersionProjectionFormula.lean)
+proves the original `projectionFormulaMap` invertible, with both-variable
+naturality. `PullbackStalkUnit` and `ProjectionFormulaStalk` retain its actual
+adjunction-unit germ and scalar-extension tensor formula on image stalks;
+both stalk objects vanish off the image. No coefficient flatness,
+quasicoherence or noetherian assumption is added. This ordinary comparison
+does not assert a general D+ tensor projection formula.
 
 ## Canonical base-change mates
 
@@ -401,17 +461,60 @@ diagonal-supported term by the original projection arrow.
 `RΔ_*(E ⊗ Q)`. `DiagonalProjectedTensorTriangle` then applies derived second
 projection; canonical composition and the geometric section identity identify
 the third vertex with the degree-zero single of `E ⊗ Q`. The first two
-vertices remain actual derived-image objects.
+vertices remain actual derived-image objects. `DiagonalGenerationEndpoints`
+and `DiagonalGenerationNaturality` give the natural vector-bundle endpoint
+identifications. `DiagonalLineRotation` applies the exact original line tensor
+and rotation, retaining the standard negative shifted incidence; nested line
+contraction and corrected derived roof representatives remain separate.
+
+[`DiagonalRestrictedStalkExactness`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DiagonalRestrictedStalkExactness.lean)
+proves that the original incidence sequence, stalked along the diagonal and
+restricted through the original projection stalk map, stays short exact after
+tensor with any coefficient module. The quotient is the flat quotient-line
+stalk; the coefficient module need not be flat.
+[`DiagonalAllCoefficientTensor`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DiagonalAllCoefficientTensor.lean)
+transfers it through the canonical tensor/pullback stalk comparisons and
+joint stalk reflection to both literal global tensor sequences. They are
+short exact for every line-module coefficient and every base-module coefficient.
+[`DiagonalAllCoefficientPushforward`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DiagonalAllCoefficientPushforward.lean)
+identifies the original diagonal-supported tensor term for arbitrary
+coefficients through the same projection/section arrows, exactly recovering
+the old bundle isomorphism.
+
+[`DiagonalCoefficientFunctors`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DiagonalCoefficientFunctors.lean)
+realizes exactness of all three actual vertex functors. The third is the original
+quotient-line tensor followed by exact diagonal pushforward through that same
+ordinary natural comparison. For arbitrary bounded-below coefficient complexes,
+[`DiagonalComplexTensorTriangle`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DiagonalComplexTensorTriangle.lean)
+constructs the literal degreewise short exact sequence and canonical distinguished
+D+ triangle. Its whole triangle functor inverts actual quasi-isomorphisms and
+descends through the original localization; the explicit inverse/forward roof
+formula and connecting square preserve every derived morphism.
+`DiagonalComplexProjectedTriangle` uses the original exact tensor/pushforward
+units and section comparison to identify the projected third term naturally
+with R(− tensor Q). `DiagonalComplexSingleComparison` proves the explicit whole
+original vector-bundle single-triangle correspondence. No flatness,
+quasicoherence, perfectness, noetherianity or upper term bound is imposed on the
+coefficient complex. [`OriginalPerfectGeneration`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/OriginalPerfectGeneration.lean)
+now identifies the original endpoints naturally on every intrinsic-perfect
+D+ input, uses the specified determinant contractions and units, and gives
+the signed rotated triangle p*Rp*K→K→L⊗p*(Rp*(K⊗L)[1]). Its coefficients are
+perfect, its original connecting map is natural on genuine roofs, and its
+full original bundle-single correspondence is explicit.
 
 ## Remaining comparisons and independent consumers
 
 The two-chart construction has not been identified with Proj, a full
-twisting-sheaf family, or projective-bundle generation. Derived projection
+twisting-sheaf family, or the projective-bundle K-equivalence. Derived projection
 perfection is proved for vector-bundle singles and explicitly bounded
-vector-bundle complexes. Arbitrary locally perfect inputs, global bounded
-representatives, inverse-twist tensor cancellation, and the required
-functorial perfect-coefficient identifications of the projected diagonal
-vertices remain separate. The Čech cone comparison concerns quasicoherent
+vector-bundle complexes. On the actual line,
+[`IntrinsicPerfectPushforward`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/IntrinsicPerfectPushforward.lean)
+also constructs objectwise global strict models and proves perfection of the
+original derived projection for every intrinsic perfect D+ input over an arbitrary
+commutative ring. The natural intrinsic-perfect diagonal generation,
+original endpoint/roof comparisons, inverse-twist contraction and signed
+rotation are supplied. The exact two-summand K-inverse and its global/support
+extension remain separate. The Čech cone comparison concerns quasicoherent
 singles; general bounded-below flat base change is not inferred.
 The older
 [`FiniteCoefficientRetract`](../../Quillen/Algebra/Module/FiniteCoefficientRetract.lean)

@@ -375,6 +375,7 @@ public import Quillen.CategoryTheory.TheoremB.VertexWeakAssembly
 public import Quillen.CategoryTheory.TheoremB.WeakComparison
 public import Quillen.CategoryTheory.TheoremB.WeakTransitionComparison
 public import Quillen.CategoryTheory.TheoremB.WeakVertexComparison
+public import Quillen.CategoryTheory.Triangulated.EndpointTransport
 public import Quillen.CategoryTheory.Triangulated.HomComparison
 public import Quillen.CategoryTheory.Triangulated.NatTransIso
 

@@ -82,6 +82,7 @@ Every row below includes degree zero and uses its canonical comparison map.
 | Affine `X` | `affineStrictToPerfectKEquiv`, `affineVectorBundleToPerfectKEquiv` | [Affine/SchemeKEquivalence.lean](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/SchemeKEquivalence.lean) |
 | Every open `j : U ⟶ Spec R` | `Affine.strictToPerfectOpenKEquiv R j n` | [Affine/OpenKEquivalence.lean](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/OpenKEquivalence.lean) |
 | Every open `j : U ⟶ Spec R` | `Affine.strictSupportedToPerfectKEquiv R j n` | [Affine/SupportedStrictPerfectKEquivalence.lean](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/SupportedStrictPerfectKEquivalence.lean) |
+| Quasi-compact `X` | `BoundedBelow.inclusion_KMap_bijective X n` | [BoundedBelowComparison.lean](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedBelowComparison.lean) |
 | Quasi-compact `X`, arbitrary localization open `U` and auxiliary open `T` | `boundedFlatPerfectSupportedOpenKEquiv j T n` | [BoundedFlat/SupportedOpenComparison.lean](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/SupportedOpenComparison.lean) |
 
 The affine comparisons impose no regularity or noetherianity and allow
@@ -89,6 +90,26 @@ non-quasi-compact opens. The bounded-flat supported relative comparison needs
 no quasi-separatedness and no compactness of either open. These are comparisons
 of the specified models on the ambient scheme; their K₀ statements do not
 supply full open-target surjectivity.
+
+`BoundedBelow.Obj X` retains the original locally perfect complexes and all
+their original chain maps, with an existential lower bound on terms. Its literal
+inclusion into `Perfect X` induces a weak equivalence of the original delooping
+map and a bijection of the canonical K-map in every connective degree, including
+zero, on every quasi-compact scheme. The proof constructs actual opposite App2:
+good truncation gives a weak arrow out of the source, and the existing opposite
+cocylinder supplies the retained commuting factorization. Native S-duality
+transfers it to the original inclusion. No Godement premise or exactness of a
+global truncation functor is assumed. This supplies a source-model comparison.
+The natural Godement totalization now has its original augmentation
+quasi-isomorphism, exact/cofibration and weak-arrow preservation, and
+installed derived-pushforward comparison for every lower-bounded input.
+[`FlasqueBoundedBelow`](../../Quillen/AlgebraicGeometry/PerfectComplexes/FlasqueBoundedBelow.lean)
+constructs the actual termwise-flasque full model and exact total functor.
+Its two forward natural weak units yield mutually inverse original inclusion
+and total K-maps for every scheme and every nonnegative degree, including
+zero. [`FlasqueBoundedBelowComparison`](../../Quillen/AlgebraicGeometry/PerfectComplexes/FlasqueBoundedBelowComparison.lean)
+identifies its literal composite inclusion into all perfect complexes on
+quasi-compact schemes. Actual G and the P4 two-summand inverse remain separate.
 
 `strictKPullback` accepts every scheme map. `perfectKPullback` accepts arbitrary
 maps between quasi-compact schemes, uses bounded-above flat representatives,
@@ -223,7 +244,15 @@ base-change mates, and the actual two-chart projective-line computations are
 owned by [SchemeKTheory.md](SchemeKTheory.md#derived-direct-image-tensor-and-projection-formulas).
 That guide records the ordinary arrows, installed D+ units, finite-locally-free
 projection formula, quasicoherent-single and bounded-complex scopes, and the
-twisted diagonal triangle.
+twisted diagonal triangle. Its original all-coefficient complex SES, D+
+triangle, genuine roof/connecting naturality and naturally projected quotient-line
+vertex are now supplied, with explicit vector-bundle single correspondence.
+[`OriginalPerfectGeneration`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/OriginalPerfectGeneration.lean)
+now supplies the natural intrinsic-perfect generation triangle over every R,
+including zero, retaining the original self-base-change/projection endpoints,
+connecting maps on roofs, determinant contractions, units and signed rotation.
+Its G₀/G₁ coefficients are perfect and the original bundle-single triangle is
+recovered. The exact two-summand K-inverse remains separate.
 
 ### Projective-line strict models
 
@@ -390,6 +419,52 @@ stage `i`. They retain the original recursive Laurent quotient, both chart signs
 coefficient maps, and stage-zero evaluation. These are diagonal bottom groups;
 no fixed-degree later-stage stabilization follows. Comparison with the earlier
 evaluation-based first-stage isomorphism is also separate.
+
+The native ambient extension
+[`CoefficientBassOriginalNegativeComparison`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassOriginalNegativeComparison.lean)
+uses the original scheme Bass recursion on the actual coefficient fibers of
+any compact scheme over `Spec R`. For every `i`, it gives the degree `-i`
+finite-stage isomorphism, naturally in coefficient arrows, preserving the
+original perfect K₀ evaluation and Laurent quotient. The actual native
+polynomial and Laurent products supply both chart transport squares.
+The finite comparison preserves original scheme restriction between compact
+endpoints through `CoefficientBassOriginalNegativeNaturality`. Supported groups
+and seed/transition invertibility remain separate.
+[`CoefficientBassNegativeMap`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeMap.lean)
+composes it with the original native telescope inclusion, preserving the
+successor Laurent representative. This class map is natural in coefficient
+arrows. `CoefficientBassSchemeRestrictionTelescope` preserves the actual
+Laurent action, seed, transitions and every telescope face under arbitrary
+scheme restriction. `CoefficientBassNegativeMapNaturality` gives the original
+class-map square for compact endpoints. Bijectivity and fixed-degree
+stabilization remain unproved.
+
+The original Raw1 polynomial-span unit is supplied by
+[`CoefficientPolynomialUnit`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientPolynomialUnit.lean)
+and `CoefficientPolynomialSpanUnit`: both original inclusion tracks keep their
+exact times, and the whole identity cylinder is retained. `NormalizedUnitCoherence`,
+`NormalizedUnitTrack`, `NormalizedUnitRoutes` and `OriginalUnitSquare` derive it
+from the genuine geometric units and actual chosen-zero normalization.
+`CoefficientBassUnitCharts` supplies the two original Laurent chart squares;
+the six-face Bass identity cube and hence the whole Bass identity remain open.
+
+[`SplitTripleSimplex`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/SplitTripleSimplex.lean)
+and `SplitTripleParameters` place the normalized triple and all four binary
+normalization intermediates in one actual eight-slot diagram. Its six complete
+displayed-component triangles have compatible whole-level scalar lifts.
+[`TripleNativeEvaluation`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/TripleNativeEvaluation.lean)
+now identifies their assembled evaluation with the EXPORTED original triple
+comparison at every level, both times and every input, including the full
+degree-zero loop coordinate. The two faithful producer factorizations preserve
+whole values. [`DoubleSquareMergedSimplex`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/DoubleSquareMergedSimplex.lean)
+provides the larger common 18-node diagram and full original faces.
+`DoubleSquareRectangleNative`, `DoubleSquareOriginalRectangle` and
+`DoubleSquareRectangleFaces` prove the whole original rectangle evaluation,
+complete geometric route faces and continuous three-side collapse. Generic
+`ScalarChartPause` retains its boundary and side-lift premises. The joint Bass
+family, all six compatible original boundary surfaces and the composition
+interior cube remain separate obligations. The [TT roadmap](../development/TTLocalization.md#e-compare-to-the-original-raw-geometric-completion-e2)
+records their exact role in genuine Raw2 and all-level geometric evaluation.
 
 ### Telescope, localization map, and supported self-comparison
 

@@ -278,6 +278,15 @@ and perfect raw steps have the original comparison
 `boundedFlatPerfectGeometricBassStepMap`, completely weak at positive levels
 and stable in every integer degree.
 
+[`PushoutIdentityFromUnitSquare`](../../Quillen/Topology/Prespectrum/PushoutIdentityFromUnitSquare.lean)
+descends a supplied identical-leg unit square to a whole identity homotopy of
+the actual reduced polynomial span. Both original chart tracks and every
+cylinder value are preserved; constant pieces are contracted within the
+relative comparison before the native three-side square descent. The native
+polynomial producer supplies that square in `CoefficientPolynomialSpanUnit`.
+This span identity does not supply the missing whole Bass comparison identity
+or coherent raw iteration.
+
 Cocartesian bounded-flat sections rectify coefficient pullback to the strict
 diagram `boundedFlatAffineSectionPrespectrumFunctor`. Objects and morphisms
 of the section category lie in universe `u+1`, although original bounded-flat
@@ -311,6 +320,36 @@ sum with chart difference. The parameter-loop shift retains its genuine sign.
 degree `-1`; evaluation transports it to the strict first stage. Equality with
 the separately constructed all-stage bottom comparison at `i = 1` remains a
 separate comparison.
+
+For a compact native ambient scheme `P` over `Spec R`,
+[`boundedFlatCoefficientAmbientNegativeKComparison`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassOriginalNegativeComparison.lean)
+identifies the original scheme `Bass.negativeKFunctor i` on each coefficient
+fiber with degree `-i` of `boundedFlatCoefficientAmbientBassDiagram P i`.
+The comparison is natural in every coefficient arrow. Its stage-zero map is
+the original perfect K₀/evaluation comparison, and its successor retains the
+original Laurent quotient through the genuine polynomial/Laurent product
+isomorphisms.
+[`CoefficientBassOriginalNegativeNaturality`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassOriginalNegativeNaturality.lean)
+also preserves the original scheme pullback for every map over the fixed base
+between compact endpoints. Supported comparisons and transition stabilization
+remain separate.
+
+[`boundedFlatCoefficientAmbientBassNegativeMap`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeMap.lean)
+then sends each original native class through that comparison and the original
+stage inclusion into the ambient coefficient telescope. Its Laurent quotient
+equation retains the successor-stage inclusion, without a bijectivity claim.
+The geometric
+[`CoefficientPolynomialLaurentSchemeNaturality`](../../Quillen/AlgebraicGeometry/Scheme/CoefficientPolynomialLaurentSchemeNaturality.lean)
+squares also preserve both products and both charts under arbitrary scheme-over-base
+maps. The original ambient Laurent track and seed are preserved by arbitrary
+scheme restriction in
+[`CoefficientBassSchemeRestrictionTelescope`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSchemeRestrictionTelescope.lean).
+The resulting actual telescope map retains every original inclusion/cylinder
+and its identity/composition laws.
+[`CoefficientBassNegativeMapNaturality`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeMapNaturality.lean)
+identifies the original negative-class restriction square with that same map
+when both endpoints are compact. This proves naturality, without bijectivity
+or stabilization.
 
 [`boundedFlatAffineSectionBassNegativeMap`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/SectionBassNegativeMap.lean)
 composes the finite bottom isomorphism with the original stage inclusion into

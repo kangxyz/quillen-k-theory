@@ -26,13 +26,13 @@ interface or a successful compilation does not supply an additional comparison.
 | Scheme K/G-theory | Vector bundles, finite-type/coherent sheaves, restriction, K→G, and noetherian open/closed localization |
 | Regular K→G | Regular affines; quasi-compact regular schemes with the resolution property |
 | Perfect complexes | Strict/local models, derived local perfectness, change of cofibrations, support, and bounded-flat representatives |
-| Model comparisons and pullback | Vector-bundle/strict equivalence on every scheme; affine strict/local equivalence; perfect pullback between quasi-compact schemes; explicit Gillet–Waldhausen term hypotheses |
+| Model comparisons and pullback | Vector-bundle/strict equivalence on every scheme; affine strict/local equivalence; canonical lower-bounded-to-original perfect K comparison on quasi-compact schemes; perfect pullback between quasi-compact schemes; explicit Gillet–Waldhausen term hypotheses |
 | Connective localization | Quasi-compact opens of qcqs schemes, positive equivalence, exact K₀ image, boundary, and connective tails |
 | Auxiliary support, excision, and Mayer–Vietoris | Natural supported localization; open-cover support excision; connective two-open sequence and matching K₀-class gluing |
 | Finite pushforward | Coherent G and finite-flat vector-bundle/strict-perfect K direct images on locally noetherian schemes, with canonical comparison laws |
 | Derived sheaf operations | Bounded-below direct image, flasque/affine units, composition, projection formula, and canonical ordinary/derived base-change mates |
 | Laurent and Čech finite models | Finite-defect parametrices, projector/module homotopy models, actual sheaf Čech comparisons, and perfect derived projection images for vector-bundle singles and explicitly bounded vector-bundle complexes |
-| Projective-line geometry | Actual two-chart line, tautological line and quotient, twisted diagonal triangles, intrinsic-perfect bounded QC/strict models and perfect original derived projection images over arbitrary commutative rings |
+| Projective-line geometry | Actual two-chart line, tautological line and quotient, original all-coefficient D+ diagonal triangles and genuine roof naturality, intrinsic-perfect bounded QC/strict models and perfect original derived projection images over arbitrary commutative rings |
 | Spectra and stable localization | Iterated S Ω-spectrum, additive K-comparison, signed looping, stable fiber sequence, coherent-homotopy quotient, and categorical stable localization |
 | Finite homotopy excision | All-point connectivity, finite cube HELP, original double-cylinder gap bound, and S-model/finite Bass-stage stable cone sequences |
 | Telescopes and Ω replacement | T1 finite-stage representatives and stable colimits, strict cone/pushout interchange, track-defined maps, and loop-tail Ω replacement |
@@ -125,8 +125,10 @@ bounded complexes with finite locally free terms. This construction uses the
 split-kernel finite-parametrix argument and does not discharge the separate
 support-window premises of the older finite-coefficient retract criterion.
 
-Arbitrary locally-perfect representation and preservation, projective
-generation, and the projective-bundle formula remain separate. The precise
+On the actual two-chart line, objectwise global strict models and perfect
+original derived projection images are also proved for every intrinsic perfect
+D+ input over an arbitrary commutative ring. Natural exact models on genuine
+roofs, projective generation, and the projective-bundle formula remain separate. The precise
 sheaf and bounded-complex hypotheses are in
 [scheme K/G-theory](../topics/SchemeKTheory.md).
 
@@ -149,10 +151,17 @@ cylinders. The loop-tail Ω replacement uses its levelwise T1 hypothesis; its
 fiber comparison does not imply cofiber preservation.
 
 Bass index `i` denotes degree `-i`. Affine, scheme, and supported negative
-groups are actual cokernel recursions with their original K₀ seeds. At finite
-stage `i`, the original negative group identifies with the stable group in
-degree `-i`, and lower stable groups vanish. The telescope inclusions give
-natural negative-class maps without a proved bijectivity or stabilization
+groups are actual cokernel recursions with their original K₀ seeds. Affine
+finite-stage comparisons identify the original group with degree `-i`, with
+vanishing below that degree. The compact native ambient comparison also
+identifies the original scheme recursion on every coefficient fiber with its
+finite-stage degree `-i` group, preserving coefficient maps and the original
+Laurent quotient. Its finite comparison and original negative-class telescope
+map are natural under scheme restriction between compact endpoints. The actual
+ambient seed/telescope restriction needs no compactness premise and preserves
+all original cylinder/inclusion faces and identity/composition. Supported
+original-group comparisons remain separate. Affine and compact native ambient
+telescope inclusions give original natural class maps without proved bijectivity or stabilization
 claim. The ambient and supported telescopes have their own stable Bass
 self-comparisons; these do not identify them with the classical nonconnective
 geometric theory. Fixed-open constructions retain their actual `Under R`
@@ -215,6 +224,49 @@ chart/cylinder pasting, the original whole-track cone evaluation and positive
 source-null/one-step seed comparison have independent mathematical acceptance.
 The cone evaluation is weak at every level. All raw iterate/telescope
 comparisons and initial-seed invertibility remain open.
+The original polynomial coefficient unit square and whole original-span unit
+are now constructed, with exact chart tracks and cylinder parameterization.
+Both Laurent chart unit squares are supplied; the whole Bass identity still
+requires its missing six-face cube or another complete original comparison.
+One eight-slot split-normalization simplex and its six displayed-component
+triangle lifts are constructed. Their assembled evaluation is now proved
+equal to the exported original triple track on all levels and parameters,
+with whole-value-preserving producer factorizations. One merged 18-node
+diagram and the exact full original double-square scalar rectangle are now
+supplied, including complete geometric route faces and continuous three-side
+collapse. The generic terminal chart pause retains explicit lift premises.
+The compatible common Bass family, six shared boundary surfaces and the full
+composition cube remain open. The first Godement functor on
+all scheme module sheaves is exact, flasque-valued and has its original natural
+monic germ unit. Its exact cokernel iteration now supplies the natural augmented
+flasque sheaf resolution and original augmentation quasi-isomorphism, preserving
+short exact sequences. Its actual natural totalization now retains every
+lower bound, has flasque terms, preserves short exact sequences and
+degreewise monomorphisms, and has the original augmentation quasi-isomorphism
+on every Plus complex over every scheme. Genuine weak maps are preserved;
+the installed derived-unit comparison Q(f_*T(K))≅Rf_*(Q(K)) is natural for
+every scheme map. The exact perfect/flasque model and roof K comparison
+remain separate from that totalization result. The actual flasque-perfect
+Waldhausen inclusion and Godement total now give two forward weak units and
+mutually inverse original K-maps on every scheme in every nonnegative degree,
+including zero. Their literal composite inclusion into all perfect complexes
+is bijective on quasi-compact schemes. Actual pushforward preserves short
+exact sheaf and complex sequences with flasque first terms without bounds.
+The literal lower-bounded locally-perfect inclusion
+now induces the original delooping weak equivalence and canonical K-map
+bijection on every quasi-compact scheme, including degree zero. Its actual
+opposite-App2/S-duality proof uses no Godement or global truncation-exactness
+premise. This source comparison does not construct the natural G/P4 inverse.
+The original diagonal tensor sequence now extends to all bounded-below module
+coefficients as a genuine complex SES and canonical D+ triangle. Its whole-functor
+localization retains inverse roofs, original connecting maps and naturality;
+the projected third term is naturally R(− tensor Q). Explicit whole original
+vector-bundle single correspondence is supplied. Natural intrinsic-perfect
+generation is now proved on the actual two-chart P¹ over every commutative R,
+including zero, with the original endpoint maps, specified contractions,
+negative shifted incidence and perfect G₀/G₁ coefficients. The actual
+two-summand K inverse, qcqs/support extension and projective-bundle formula
+remain separate.
 The signed Bass span quotient and natural short exact row are realized for
 the actual ambient, open, supported and auxiliary-supported coefficient Model
 families at every finite stage and in every integer degree. Polynomial zero
@@ -258,7 +310,7 @@ tracks and a natural chosen inverse remain separate. See
 - Fixed-degree finite Bass-transition stabilization, bijectivity of the natural negative-class maps into the telescope, and classical telescope negative-group identification.
 - Full all-iterate comparison with the original geometric Bass tower, the fundamental theorem, and Laurent-unit boundary/relative-loop basepoint calculations, including the zero-section class and possible Nil terms.
 - Complete original raw iterate/telescope evaluation and classical Thomason–Trobaugh identification, retaining the original K₀ image and signed boundary. Normalized geometric chart-composition, original cone/null/one-step seed comparison, basic global supported localization and auxiliary-supported section-completion localization are proved.
-- Proj identification, the full twisting-sheaf family, natural projective generation, the exact Waldhausen roof model and the projective-bundle K-equivalence. Every intrinsic perfect D+ input on the actual two-chart P¹ over an arbitrary commutative ring has a bounded QC model, a global strict model and a perfect original Rp image. These objectwise constructions do not supply the natural exact K-inverse.
+- Proj identification, the full twisting-sheaf family, exact natural weak-span/additivity comparison, the projective-bundle K-equivalence and its qcqs/support extension. Intrinsic-perfect D+ generation on the actual two-chart P¹ is proved naturally over every commutative ring, with the original maps, contractions, signed rotation and perfect coefficients. The exact flasque-model comparison computes the original perfect K-groups on quasi-compact schemes; the two-summand K-inverse remains separate.
 - General-source perfect preservation by derived direct image, unrestricted unbounded derived pushforward, and general bounded-below flat-base-change invertibility.
 - Strict/local equivalence on arbitrary nonaffine schemes and perfect pullback on arbitrary non-quasi-compact schemes.
 - General stable cofiber excision, the remaining quotient homotopy-invariance questions, and a standard stable model structure or triangulation for the categorical localization.

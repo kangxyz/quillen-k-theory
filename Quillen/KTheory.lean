@@ -12,8 +12,11 @@ public import Quillen.KTheory.Basic
 public import Quillen.KTheory.Bass.AffineDiagram
 public import Quillen.KTheory.Bass.Contraction
 public import Quillen.KTheory.Bass.DiagramTransport
+public import Quillen.KTheory.Bass.DiagramTransportNaturality
 public import Quillen.KTheory.Bass.Iteration
 public import Quillen.KTheory.Bass.IterationExactness
+public import Quillen.KTheory.Bass.ModelDiagramBottomComparison
+public import Quillen.KTheory.Bass.ModelDiagramBottomNaturality
 public import Quillen.KTheory.Bass.ModelDiagramCofiberBoundary
 public import Quillen.KTheory.Bass.ModelDiagramCofiberComparison
 public import Quillen.KTheory.Bass.ModelDiagramCofiberPreservation

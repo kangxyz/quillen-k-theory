@@ -95,7 +95,10 @@ public import Quillen.Algebra.Homology.ConnectingKernel
 public import Quillen.Algebra.Homology.DegreewiseSplitMono
 public import Quillen.Algebra.Homology.DerivedCategory.BoundedComparison
 public import Quillen.Algebra.Homology.DerivedCategory.BoundedRightDerivedUnit
+public import Quillen.Algebra.Homology.DerivedCategory.ExactDerivedContraction
 public import Quillen.Algebra.Homology.DerivedCategory.ExactFunctorHomology
+public import Quillen.Algebra.Homology.DerivedCategory.PlusBoundedComparison
+public import Quillen.Algebra.Homology.DerivedCategory.PlusComplexTriangle
 public import Quillen.Algebra.Homology.DerivedCategory.PlusSingleTriangle
 public import Quillen.Algebra.Homology.DerivedCategory.RightDerivedFunctorPlusComposition
 public import Quillen.Algebra.Homology.DerivedCategory.RightDerivedFunctorPlusCompositionShift

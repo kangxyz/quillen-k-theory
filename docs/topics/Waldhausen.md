@@ -126,6 +126,33 @@ for `f ≫ g`, relative to their original object-loop endpoints. This weak-arrow
 interface requires `W.weq f` and `W.weq g`, without the cofiber family's
 `HasZeroMorphisms` hypothesis.
 
+The higher-family owners
+[`NerveSimplexFamily`](../../Quillen/Waldhausen/SConstruction/NerveSimplexFamily.lean),
+[`SimplexFamily`](../../Quillen/Waldhausen/SConstruction/Iterated/SimplexFamily.lean)
+and [`SimplexFaces`](../../Quillen/Waldhausen/SConstruction/Iterated/SimplexFaces.lean)
+construct the genuine Delta[k] family through every finite S-stage and its
+jointly continuous realization. Their `ModelSimplex` input is a coherent
+chain of exact model functors with strict chosen-zero equations and weak
+transformation components. Subchain faces agree exactly with the entire
+original Delta[2] triangles; the chosen zero stays fixed for every simplex
+parameter and the spectrum structure coordinate stays independent. This
+family supplies higher comparison data when its concrete native input and
+face equations are realized; it does not construct a missing Bass cube.
+
+[`SimplexTriangleLift`](../../Quillen/Waldhausen/SConstruction/Iterated/SimplexTriangleLift.lean)
+and `SimplexParameterPaths` identify complete old triangles with barycentric
+scalar paths and surfaces at every level. `SimplexWhiskering`,
+`SimplexTriangleWhiskering`, `OriginalTriangleTransport` and
+`SimplexTriangleSourceTransport` retain actual pre/postcomposition and the
+displayed source-equality transports over their whole parameter families.
+[`SimplexLiftOperations`](../../Quillen/Waldhausen/SConstruction/Iterated/SimplexLiftOperations.lean),
+`SimplexLiftReassociation` and `SimplexLiftPasting` preserve supplied pointwise
+lifts through native reversal, concatenation, reparameterization, reassociation,
+constant-half contraction, cancellation and rotation. Their square descent uses
+the actual `ThreeSideSquare.collapse`, including the full degree-zero loop and
+an independent spectrum structure coordinate. These laws require the stated
+path/surface lifts; they do not produce a lift for every native Bass track.
+
 ## Comparison with exact-category Q
 
 For `E : Quillen.ExactStructure C`,

@@ -339,6 +339,56 @@ retains their original proof bodies and passes default-budget incremental
 compilation, all 15 environment linters and the repaired-closure axiom audit.
 No package budget increase or linter exemption is used.
 
+`NerveSimplexFamily`, `SimplexFamily` and `SimplexFaces` now construct the
+genuine higher family with exact original triangle faces and independent
+structure time, under their explicit coherent-chain/weak-component inputs.
+This does not supply the still-missing native coefficient cube.
+
+The original Raw1 coefficient arrows are supplied by `CoefficientBassMap`.
+`CoefficientBassCoherence` and `CoefficientBassSpanComposition` now retain
+actual coefficient tracks and the whole original polynomial-span composition.
+`CoefficientBassCompositionCharts` constructs both complete plus/minus chart
+squares, including the fixed span homotopy's terminal pause.
+`SimplexPrespectrum` and `SimplexIsomorphism` give parameter filling/common-chain
+machinery. `NormalizedPullbackSimplex` supplies the genuine normalized geometric
+tetrahedron. The accepted `BinaryNormalizationSimplex`, `SplitTripleSimplex`
+and `SplitTripleParameters` add the four actual binary-normalization intermediates
+in one eight-slot simplex and identify six complete displayed-component triangle
+faces at every level. The whole-lift calculus retains native whiskering,
+reassociation, contraction, rotation and the actual three-side square collapse.
+`TripleNativeEvaluation` now proves the assembled scalar evaluation equal
+to the EXPORTED `boundedFlatTripleTrackComparison` for arbitrary scheme maps,
+every level and both original times. The six whole native surface equations
+retain the right-hand source transport, full degree-zero loop and independent
+structure coordinate. Faithful constructor/source-cast factorizations in
+`CompositionTrack` and `NormalizationPasting` preserve their entire original
+values and parameters. `DoubleSquareMergedSimplex` supplies one actual
+18-node diagram, six complete shared nodes and three full original faces.
+`DoubleSquareRectangleNative`, `DoubleSquareOriginalRectangle` and
+`DoubleSquareRectangleFaces` identify one scalar rectangle with the literal
+original double-square comparison on every level, both times and every input,
+including the original geometric route faces and continuous `ThreeSideSquare`
+collapse. `ScalarChartPause` supplies the generic native terminal pause from
+its explicit boundary and three side-path lifts. Its native helper is named
+`rectangleRotate` to preserve the existing distinct rotation interface.
+A compatible common Bass family, actual coefficient specialization, all six
+shared boundary surfaces and the interior cube remain separate.
+
+`CoefficientBassWholeLawCriterion` gives the exact null-square criterion for
+cone homotopies with a prescribed original inclusion track.
+`CoefficientBassInteriorCube` displays the six-face cube sufficient for the
+selected chart-preserving composition route and its complete original
+comparison/cone/loop consumers. That cube remains unconstructed; its necessity
+for every possible whole cone law is not asserted.
+`CoefficientPolynomialUnit` and `CoefficientPolynomialSpanUnit` now construct
+the actual original polynomial unit square and whole original-span identity,
+retaining both chart tracks without a pause and the entire cylinder.
+`CoefficientBassUnitCharts` constructs both original Laurent chart unit squares.
+`CoefficientBassUnitInteriorCube` gives the exact six-face sufficient input and
+its Bass comparison-square consumer; the cube itself is still absent. Thus the
+whole original Bass comparison/cone/step identity remains open, even though its
+polynomial-span unit premise is now supplied.
+
 The current raw native API has a one-step cone and seed, without a whole raw
 tower. `strictDiagramIterate` requires a literal prespectrum-valued functor and
 strict transformations; raw geometric pullbacks instead have prescribed
@@ -352,6 +402,17 @@ perfect/stable comparisons that actually need it. Extend the final E2 package
 to every ambient, open, and supported row consumed by B3, with the same choices.
 
 ### P. Prove the necessary projective-line K-equivalence (B1)
+
+The K-theory framework follows TT 3.4--3.5: actual complicial/Waldhausen
+complex models, with derived categories used for homological comparisons.
+This selected rank-two proof is a direct arbitrary-ring diagonal-generation
+route. TT 4.3--4.4 instead first reduces the projective-bundle theorem to
+noetherian schemes and develops the regular-sheaf Quillen argument; see the
+[original proof, printed pp. 329--330](https://www.sas.rochester.edu/mth/sites/doug-ravenel/otherpapers/Thomason-Trobaugh.pdf#page=83).
+The local proof implementation therefore differs, while the target remains the
+original two-summand map. The explicit raw-track/cube work below records the
+chosen Lean model's required comparisons, rather than a verbatim transcription
+of the source proof.
 
 Start on the actual P¹ over an arbitrary commutative ring R, including the
 zero ring. The target is the existing `nativeTwoSummandKMap`, in every
@@ -369,9 +430,9 @@ not ordinary equivalence/approximation of this two-summand functor.
 
 | Step | Exact product and current owner | Acceptance and dependency |
 | --- | --- | --- |
-| P1: canonical line/tensor comparisons | Accepted natural p₁*(E⊗L)≅p₁*E⊗p₁*L and specified determinant pairing L⊗Q≅O, retaining actual unit/braiding/chart comparisons. | `PullbackTensorCompatibility` proves the literal canonical mate for any f and any other module sheaf; `LineTensorCompatibility` proves both chart multiplication equations with +1. Independent of perfect pushforward; P3 must still use these actual maps in its triangle. |
-| P2: arbitrary-perfect projection | Accepted genuine QC and strict models, and actual Rp perfection, for every intrinsic perfect D+ input on twoChartLine R. | `QuasicoherentRepresentative` constructs the original derived replacement; `IntrinsicPerfectPushforward` composes it with the accepted strictification and original Rp. No supplied replacement, noetherian or bounded-vector-bundle premise remains. This closes objectwise P2 over arbitrary R, not P3/P4's natural exact K model. |
-| P3: natural diagonal generation | Identify the existing projected incidence triangle, initially for vector bundles, as p*Rp*(E⊗L)→Q⊗p*Rp*E→E⊗Q; tensor by L and rotate to p*G₀(E)→E→L⊗p*G₁(E). | P1 supplies the first endpoint; existing self-base-change/projection formula supply the second. Retain incidence, quotient and connecting maps. Extend degreewise/totalize and descend through genuine roofs for all intrinsic perfect objects; P2 supplies perfect coefficients. |
+| P1: canonical line/tensor comparisons | Accepted natural p₁*(E⊗L)≅p₁*E⊗p₁*L and specified determinant pairing L⊗Q≅O, retaining actual unit/braiding/chart comparisons. | `PullbackTensorCompatibility` proves the literal canonical mate for any f and any other module sheaf; `LineTensorCompatibility` proves both chart multiplication equations with +1. The accepted P3 endpoint and contraction proofs use these actual maps; perfect pushforward remains a separate input. |
+| P2: arbitrary-perfect projection | Accepted genuine QC and strict models, and actual Rp perfection, for every intrinsic perfect D+ input on twoChartLine R. | `QuasicoherentRepresentative` constructs the original derived replacement; `IntrinsicPerfectPushforward` composes it with the accepted strictification and original Rp. No supplied replacement, noetherian or bounded-vector-bundle premise remains. This closes objectwise P2 over arbitrary R. The accepted P3 uses it to test original mate invertibility and coefficient perfectness; the P4 K-inverse remains separate. |
+| P3: natural diagonal generation | Accepted natural distinguished triangle p*G₀(K)→K→L⊗p*G₁(K), with G₀=Rp*K and G₁=Rp*(K⊗L)[1], for every intrinsic-perfect D+ input over arbitrary R, including zero. | `OriginalPerfectGeneration` retains the original self-base-change/projection endpoint maps, incidence/quotient/connecting naturality on genuine roofs, specified determinant contractions and units, negative shifted incidence, full original bundle-single correspondence and perfect coefficients. Independent complex ordinary review, native public-root interfaces and the complete 283-declaration origin audit passed. P3 is closed in this affine two-chart scope; the exact original K-inverse is P4. |
 | P4: original K-inverse | Realize G and the diagonal sequence as exact/cofibration-compatible functors on a proved model of the original Perfect category; apply Waldhausen additivity. | Construct natural bounded-complex Čech comparison and the necessary weak-arrow/roof model equivalence. Normalize the positive projection by its canonical adjunction unit, prove O(-1) vanishing and Rp*(O(-2)⊗p*A)[1]≅A, then both original K-map composites, including zero. |
 | P5: native qcqs and supports | Transport the affine construction through `nativeAffineIso`, glue projection perfection on an affine base cover, and prove both coefficient functors preserve the actual inverse-image support. | Use canonical base change for the required open/flat maps. Arbitrary-base-map naturality needs its own tor-independent/perfect comparison; it is not supplied by current flat-base-change scope. |
 
@@ -393,11 +454,93 @@ two-origin audit checks 63 declarations with standard-three axioms; the
 affected facades/Consumer compile and a fresh QuillenTest/Axioms replay checks
 48,464 declarations. These objectwise derived isomorphisms do not supply P4's
 exact/natural roof model.
+
+The accepted `PerfectComplexes/BoundedBelowComparison` computes the original
+locally-perfect K-groups from actual complexes with lower-bounded terms on every
+quasi-compact scheme, including the original K-map in degree zero. It constructs
+opposite App2 using the actual good-truncation unit and cocylinder factorization,
+then transfers weakness through native S-duality. This applies to `twoChartLine R`
+for arbitrary R. P4 can therefore use a proved lower-bounded source comparison;
+the exact perfect/flasque Waldhausen model and its original K-map comparison
+are now supplied. Actual G and the two-summand K-additivity inverse remain
+separate.
+
 Relevant source
 anchors are [Stacks 0F8E](https://stacks.math.columbia.edu/tag/0F8E),
 [0F8F](https://stacks.math.columbia.edu/tag/0F8F) and
 [0GMM](https://stacks.math.columbia.edu/tag/0GMM); use finite-type
 quasicoherence rather than coherence over a possibly noncoherent R.
+
+The vector-bundle P3 endpoint comparisons, coefficient naturality and exact
+line tensor/rotation are now supplied by `DiagonalGenerationEndpoints`,
+`DiagonalGenerationNaturality` and `DiagonalLineRotation`. They retain the
+original incidence triangle and its negative shifted incidence; nested line
+contraction, the corrected roof representative and arbitrary coefficient-complex
+extension remain separate.
+
+The all-coefficient route also has accepted native stalk prerequisites.
+`PushforwardModuleStalk` and `ClosedPushforwardExactness` identify the actual
+on-image module stalks and off-image zero stalks, proving exact closed-immersion
+pushforward on all module sheaves. `SectionPushforwardModuleStalk` retains the
+original projection/section ring retraction. `DiagonalRestrictedStalkExactness`
+uses the quotient line's flat stalk to tensor the restricted original incidence
+sequence with every coefficient module, without requiring that module to be
+flat. `TensorStalkIso` and `TensorStalkNaturality` supply the original natural
+sheaf tensor/stalk comparison. `ScalarExtensionTensor`, `SectionPullbackStalk`,
+`SectionPullbackTensorStalk` and `SheafStalkShortExact` transfer the on/off-image
+argument to `DiagonalAllCoefficientTensor`: both original global sequences
+are short exact for arbitrary line/base module coefficients. The actual
+closed-immersion projection arrow is now invertible for arbitrary modules
+through `PullbackStalkUnit`, `ProjectionFormulaStalk` and
+`ClosedImmersionProjectionFormula`; `DiagonalAllCoefficientPushforward`
+retains the original section composite and old bundle isomorphism.
+`DiagonalCoefficientFunctors` now realizes exactness of the three actual vertex
+functors. `DiagonalComplexTensorTriangle` constructs the literal all-coefficient
+complex short exact sequence and its canonical D+ triangle, then localizes the
+whole triangle functor through genuine quasi-isomorphisms and roofs. Its
+incidence, quotient and connecting arrows retain their original maps and signs.
+`DiagonalComplexProjectedTriangle` identifies the projected third vertex
+naturally with R(− tensor Q), using the actual closed projection formula,
+installed exact units and original diagonal/second-projection section comparison.
+`DiagonalComplexSingleComparison` recovers the whole original vector-bundle
+single triangle. These results hold for arbitrary bounded-below module
+coefficients over every R, including zero. The accepted full P3 family
+now identifies the original endpoints naturally on intrinsic-perfect inputs,
+contracts the actual nested line tensors and performs the signed rotation.
+`OriginalPerfectGeneration` supplies p*Rp*K→K→L⊗p*(Rp*(K⊗L)[1]), with perfect
+coefficients, original connecting-map naturality and full bundle-single
+correspondence. The exact original two-summand K-inverse remains P4.
+
+The accepted `Scheme/Sheaf/GodementFirst` constructs the actual first Godement
+functor on all scheme module sheaves: the product of stalk skyscrapers, with
+its natural monic germ unit, flasque values and exactness. Its explicit sections
+are pointwise stalk products, and their exactness is proved directly rather
+than inferred from arbitrary sheaf products. `GodementResolution` now constructs
+the exact natural cokernel functor, its iterates, the augmented flasque sheaf
+resolution and the original germ augmentation quasi-isomorphism. The resolution
+functor preserves short exact sequences. The accepted ten-source total family
+now supplies the actual natural totalization on all lower-bounded complexes
+of arbitrary module sheaves on every scheme. `GodementComplex` retains the
+same lower bound and has flasque terms; `GodementTotalExact` preserves
+short exact sequences and degreewise monomorphisms. The original signed
+stalk contraction and joint homology reflection prove the actual total
+augmentation quasi-isomorphism in `GodementTotalQuasiIso`, whose naturality
+also proves preservation of genuine weak arrows.
+`GodementTotalDerivedComparison` constructs the natural installed-unit
+comparison Q(f_*T(K))≅Rf_*(Q(K)) for every scheme map and every Plus input.
+The whole family has ordinary independent review, strict native builds and
+a complete 297-declaration defining-origin audit.
+`FlasqueBoundedBelow` now constructs the actual full Waldhausen model of
+lower-bounded locally perfect complexes with flasque terms, its literal
+inclusion and exact Godement total functor, and both forward natural weak
+units. `FlasqueBoundedBelowComparison` proves the two original K-map inverse
+laws in every nonnegative degree, including zero, on every scheme; its literal
+comparison to all perfect complexes requires quasi-compactness.
+`FlasquePushforwardExact` proves actual sheaf and complex short-exact
+preservation with flasque first terms, without bounds. These separately
+reviewed source results supply the exact model and a pushforward foundation;
+actual G, natural endpoint weak spans and the P4 two-summand inverse remain
+separate. No unbounded Godement augmentation is asserted.
 
 Two concrete restrictions govern this route. `Scheme.Regular.ResolutionProperty`
 assumes local noetherianity and cannot supply P2 unchanged. Global direct
@@ -435,7 +578,7 @@ positive-minus-inverse chart difference on π_d(E).
 | B2-D: original initial seed | Prove π_d(η) invertible for every d≥0, including zero. | Identify the actual Laurent loop/seed with the B1 operation via E2-S or an equally explicit direct section calculation. Combine the spectral row, classical boundary splitting and K₀ middle exactness. An auxiliary normalized group splitting must not replace the original seed. |
 | B2-E: exact lowest transition | Inductively prove π_d(t_i) invertible for d≥−i. | Apply B2-B to t_(i−1). For d≥1−i both end terms are controlled in degrees d,d+1. At d=−i the left term uses degree 1−i; source right term vanishes by connectivity, target right term by the bottom N_i comparison and B2-C. This includes the equality d=−i. |
 | B2-F: original stage-i leg | In degree −i, invert the tail starting at i and retain its canonical inclusion equation. Compose with the actual telescope-colimit comparison. | Prove bijectivity of the existing original negative-class map, not just an abstract group isomorphism. The transition from i must be included; stability only from i+1 fails even for ℤ --×2→ ℤ --id→ … . Nonnegative preservation uses the stage-zero leg. |
-| B2-G: native/global/supported producers | Build N_i(X_a,Z_a)≅π_(−i)(E_i(a)) and original negative maps for every consumed native family. | Current `SectionBassBottomComparison`, `NegativeMap` and `StableColimit` producers are affine. Use actual native polynomial/Laurent/chart isomorphisms and `DiagramTransport`; preserve coefficient/scheme maps, support forget/enlargement and open restriction. Do not declare different chosen pullbacks equal. |
+| B2-G: native/global/supported producers | Compact ambient native fibers now have N_i(X_a)≅π_(−i)(E_i(a)), naturally in coefficient arrows, with the original Laurent quotient. The original native telescope class map and geometric scheme/product/chart squares are also supplied. The finite comparison and original negative-class telescope map now preserve scheme restriction between compact endpoints. Supported original-group comparisons and canonical colimit identification remain separate. | `CoefficientBassKZeroComparison`, `CoefficientPolynomialLaurentTransport`, `CoefficientBassOriginalNegativeComparison`, `CoefficientBassNegativeMap`, `CoefficientPolynomialLaurentSchemeNaturality`, `CoefficientBassOriginalNegativeNaturality`, `CoefficientBassSchemeRestrictionTelescope` and `CoefficientBassNegativeMapNaturality` retain original K₀/evaluation, genuine products, quotients, Laurent tracks, seeds and every stage/cylinder face. Extend through actual support forget/enlargement and scheme/open restriction maps; retain every original quotient and inclusion. Do not declare different chosen pullbacks equal. |
 
 B2-A/B's structural hypotheses are now realized for the original native
 finite coefficient Models. Independent ordinary review accepts both new leaves
@@ -487,9 +630,19 @@ flowchart TD
   EC[E2 native composition] --> ES[Original cone/null/seed]
   EW[Actual levelwise evaluation] --> EI[Stage two and coherent raw iteration]
   ES --> EI
+  RU[Accepted original polynomial span unit] --> RC[Original Raw1 Bass unit/composition cubes]
+  RS[Accepted split simplex and whole lifts] --> NC[Accepted original exported triple evaluation]
+  NC --> NR[Accepted original double-square rectangle]
+  NR --> RC
+  RC --> EI
   EI --> ET[Raw telescope and null-diagram comparison]
   PT[Canonical line/tensor comparisons] --> PD[Natural diagonal and exact K model]
-  PP[Arbitrary-perfect P1 pushforward and roofs] --> PD
+  CT[Accepted natural intrinsic-perfect generation triangle] --> PD
+  PP[Accepted objectwise P2 perfect pushforward] --> PD
+  GD[Accepted Godement sheaf resolution] --> GR[Accepted bounded-below total QI and derived comparison]
+  GR --> FM[Accepted perfect/flasque Waldhausen K comparison]
+  FM --> PD
+  MB[Accepted lower-bounded to original K comparison] --> PD
   PD --> BF[Positive fundamental theorem and Laurent splitting]
   BF --> MC[Recursive group middle exactness]
   MV[Mixed-variable chart/cokernel transport] --> MC

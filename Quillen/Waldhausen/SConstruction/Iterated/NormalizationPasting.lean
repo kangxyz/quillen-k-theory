@@ -24,6 +24,59 @@ open CategoryTheory CategoryTheory.Functor
 universe u v
 namespace Quillen.Waldhausen.IteratedS
 
+
+/-- The literal source-equality transport in the existing original pasting. -/
+def originalPastingTransport {E F : Quillen.LoopPrespectrum.{u}} {f g : E ⟶ F}
+    {H H' K : Quillen.LoopPrespectrum.Homotopy f g} (e : H = H') (J : H.RelHomotopy K) :
+    H'.RelHomotopy K := (congrArg (fun A ↦ A.RelHomotopy K) e).mp J
+
+/-- Full value agreement with every certificate of the very same original type equality. -/
+theorem originalPastingTransport_eq_original {E F : Quillen.LoopPrespectrum.{u}}
+    {f g : E ⟶ F} {H H' K : Quillen.LoopPrespectrum.Homotopy f g}
+    (e : H = H') (J : H.RelHomotopy K) (p : H.RelHomotopy K = H'.RelHomotopy K) :
+    originalPastingTransport e J = p.mp J := by
+  subst H'
+  rfl
+
+/-- The named original source transport preserves the full two-time continuous map. -/
+theorem originalPastingTransport_level {E F : Quillen.LoopPrespectrum.{u}}
+    {f g : E ⟶ F} {H H' K : Quillen.LoopPrespectrum.Homotopy f g}
+    (e : H = H') (J : H.RelHomotopy K) (n : ℕ) :
+    ((originalPastingTransport e J).level n).toContinuousMap =
+      (J.level n).toContinuousMap := by
+  subst H'
+  rfl
+
+/-- The literal reversed relative concatenation used by original pasting. -/
+def originalPastingSplice {E F : Quillen.LoopPrespectrum.{u}} {f g : E ⟶ F}
+    {H K L : Quillen.LoopPrespectrum.Homotopy f g}
+    (J : K.RelHomotopy H) (J' : K.RelHomotopy L) : H.RelHomotopy L := J.symm.trans J'
+
+/-- Full value equality to the unchanged native operation, for arbitrary actual arguments. -/
+theorem originalPastingSplice_eq_original {E F : Quillen.LoopPrespectrum.{u}} {f g : E ⟶ F}
+    {H K L : Quillen.LoopPrespectrum.Homotopy f g}
+    (J : K.RelHomotopy H) (J' : K.RelHomotopy L) :
+    originalPastingSplice J J' = J.symm.trans J' := rfl
+
+/-- Project only the stored right transport; the original dyadic parameters are literal. -/
+theorem originalPastingSplice_replace_level {E F : Quillen.LoopPrespectrum.{u}}
+    {f g f' g' : E ⟶ F} {H K L : Quillen.LoopPrespectrum.Homotopy f g}
+    {H' K' : Quillen.LoopPrespectrum.Homotopy f' g'}
+    (J : K.RelHomotopy H) (J' : K.RelHomotopy L) (J'' : H'.RelHomotopy K') (n : ℕ)
+    (e : (J'.level n).toContinuousMap = (J''.level n).toContinuousMap)
+    (r s : unitInterval) (x : E.space n) :
+    (originalPastingSplice J J').level n (r, (s, x)) =
+      if hr : (r : ℝ) ≤ 1 / 2 then
+        J.level n (unitInterval.symm ⟨2 * r, (unitInterval.mul_pos_mem_iff zero_lt_two).2
+          ⟨r.2.1, hr⟩⟩, (s, x))
+      else J''.level n (⟨2 * r - 1, unitInterval.two_mul_sub_one_mem_iff.2
+        ⟨(not_le.1 hr).le, r.2.2⟩⟩, (s, x)) := by
+  change ((J.level n).symm.trans (J'.level n)) (r, (s, x)) = _
+  rw [ContinuousMap.HomotopyRel.trans_apply]
+  split
+  · rfl
+  · exact DFunLike.congr_fun e _
+
 section Original
 variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   (W : Structure C) (V : Structure D) {F G G' H : C ⥤ D}
@@ -51,9 +104,10 @@ def originalPrespectrumPastingHomotopy
     congr 1
   have J := originalPrespectrumTransformationCompositionHomotopy W V hF hG' hH
     h0F h0G' h0H η' θ' hη' hθ'
-  rw [← he] at J
-  exact (originalPrespectrumTransformationCompositionHomotopy W V hF hG hH
-    h0F h0G h0H η θ hη hθ).symm.trans J
+  let J := originalPastingTransport he.symm J
+  exact originalPastingSplice
+    (originalPrespectrumTransformationCompositionHomotopy W V hF hG hH
+      h0F h0G h0H η θ hη hθ) J
 end Original
 
 section Binary
@@ -157,5 +211,49 @@ def exactNormalizationRightPasting {F : C ⥤ D} {G G' : D ⥤ E}
     (fun _A ↦ normalizedWeakTransformation_weak hG hG' θ hθ _)
     (exactNormalizationCompIso_natural_right hF hG hG' θ)
 end Binary
+
+end Quillen.Waldhausen.IteratedS
+
+namespace Quillen.LoopPrespectrum.Homotopy.RelHomotopy
+private theorem pasting_transport_projection {E F : LoopPrespectrum.{u}} {f g : E ⟶ F}
+    {H H' K : Homotopy f g} (e : H = H')
+    (p : H.RelHomotopy K = H'.RelHomotopy K) (J : H.RelHomotopy K) (n : ℕ) :
+    ((p.mp J).level n).toContinuousMap = (J.level n).toContinuousMap := by
+  subst H'
+  rfl
+end Quillen.LoopPrespectrum.Homotopy.RelHomotopy
+
+namespace Quillen.Waldhausen.IteratedS
+variable {C D : Type u} [Category.{v} C] [Category.{v} D]
+  (W : Structure C) (V : Structure D) {F G G' H : C ⥤ D}
+  (hF : IsExact W.cof W.weq V.cof V.weq F)
+  (hG : IsExact W.cof W.weq V.cof V.weq G)
+  (hG' : IsExact W.cof W.weq V.cof V.weq G')
+  (hH : IsExact W.cof W.weq V.cof V.weq H)
+  (h0F : F.obj W.zero = V.zero) (h0G : G.obj W.zero = V.zero)
+  (h0G' : G'.obj W.zero = V.zero) (h0H : H.obj W.zero = V.zero)
+  (η : F ⟶ G) (θ : G ⟶ H) (η' : F ⟶ G') (θ' : G' ⟶ H)
+  (hη : ∀ A, V.weq (η.app A)) (hθ : ∀ A, V.weq (θ.app A))
+  (hη' : ∀ A, V.weq (η'.app A)) (hθ' : ∀ A, V.weq (θ'.app A))
+  (hcomp : η ≫ θ = η' ≫ θ')
+
+/-- Projection through the native pasting's stored initial-track transport. -/
+theorem originalPrespectrumPastingHomotopy_whole_level (n : ℕ) (r s : unitInterval)
+    (x : (originalPrespectrum W).space n) :
+    (originalPrespectrumPastingHomotopy W V hF hG hG' hH h0F h0G h0G' h0H
+      η θ η' θ' hη hθ hη' hθ' hcomp).level n (r, (s, x)) =
+      if hr : (r : ℝ) ≤ 1 / 2 then
+        (originalPrespectrumTransformationCompositionHomotopy W V hF hG hH
+          h0F h0G h0H η θ hη hθ).level n
+          (unitInterval.symm ⟨2 * r,
+            (unitInterval.mul_pos_mem_iff zero_lt_two).2 ⟨r.2.1, hr⟩⟩, (s, x))
+      else
+        (originalPrespectrumTransformationCompositionHomotopy W V hF hG' hH
+          h0F h0G' h0H η' θ' hη' hθ').level n
+          (⟨2 * r - 1, unitInterval.two_mul_sub_one_mem_iff.2
+            ⟨(not_le.1 hr).le, r.2.2⟩⟩, (s, x)) := by
+  unfold originalPrespectrumPastingHomotopy
+  apply originalPastingSplice_replace_level
+  exact originalPastingTransport_level _ _ _
 
 end Quillen.Waldhausen.IteratedS
