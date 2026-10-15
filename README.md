@@ -60,7 +60,10 @@ and [public API reference](docs/reference/API.md).
 ## Quick start
 
 The **0.7.0 source-integration version** uses Lean **4.34.1** and the mathlib revision
-pinned in [lakefile.toml](lakefile.toml). Install
+pinned in [lakefile.toml](lakefile.toml). General exact-category foundations come from
+[Aglib](https://github.com/kangxyz/aglib), pinned to
+`7760993163b3393592f78b4f20d537305534e818`. Fetching this private dependency
+requires repository access. Install
 [elan](https://github.com/leanprover/elan) to use the committed
 [toolchain](lean-toolchain).
 

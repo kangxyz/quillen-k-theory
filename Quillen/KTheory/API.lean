@@ -55,7 +55,8 @@ abbrev K (C : SmallExactCategory.{u}) (n : ℕ) := C.exactStructure.K n
 
 end Quillen.SmallExactCategory
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 
 variable {C D T : Type u} [Category.{u} C] [Category.{u} D] [Category.{u} T]
   [Preadditive C] [HasFiniteBiproducts C] [Preadditive D] [HasFiniteBiproducts D]
@@ -64,7 +65,7 @@ variable {C D T : Type u} [Category.{u} C] [Category.{u} D] [Category.{u} T]
 
 /-- Pointwise identity law for the canonical K-map. -/
 theorem KMap_id_apply (E : ExactStructure C) (n : ℕ) (x : E.K n) :
-    (ExactFunctor.id E).KMap n x = x := by
+    (CategoryTheory.ExactCategory.ExactFunctor.id E).KMap n x = x := by
   rw [KMap_id]
   rfl
 
@@ -75,4 +76,4 @@ theorem KMap_comp_apply (F : ExactFunctor EC ED) (G : ExactFunctor ED ET)
   rw [KMap_comp]
   rfl
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

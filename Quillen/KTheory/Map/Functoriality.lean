@@ -27,7 +27,8 @@ universe v u
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 
 variable {C D T : Type u} [Category.{v} C] [Category.{v} D] [Category.{v} T]
   [Preadditive C] [HasFiniteBiproducts C] [Preadditive D] [HasFiniteBiproducts D]
@@ -76,4 +77,4 @@ theorem KMap_comp (F : ExactFunctor EC ED) (G : ExactFunctor ED ET) (n : ℕ) :
       simp only [classifyingSpaceMap_comp, TopCat.hom_comp]
       exact homotopyGroupMap_comp _ _ _ _ a
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

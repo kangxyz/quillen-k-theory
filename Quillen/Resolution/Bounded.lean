@@ -19,6 +19,8 @@ is a separate union argument.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -113,14 +115,15 @@ omit [P.IsClosedUnderFiniteProducts] in
   induction k with
   | zero =>
     change ContinuousMap.id _ =
-      (classifyingSpaceMap (ExactFunctor.id (stratumExactStructure E P m)).mapQ).hom
-    rw [ExactFunctor.mapQ_id, classifyingSpaceMap_id]
+      (classifyingSpaceMap (CategoryTheory.ExactCategory.ExactFunctor.id (stratumExactStructure E P
+        m)).mapQ).hom
+    rw [CategoryTheory.ExactCategory.ExactFunctor.mapQ_id, classifyingSpaceMap_id]
     rfl
   | succ k ih =>
     change (stratumClassifyingHomotopyEquiv E P (m + k)).toFun.comp
       (stratumAddHomotopyEquiv E P m k).toFun = _
     rw [stratumClassifyingHomotopyEquiv_toFun, ih, ← TopCat.hom_comp,
-      ← classifyingSpaceMap_comp, ← ExactFunctor.mapQ_comp]
+      ← classifyingSpaceMap_comp, ← CategoryTheory.ExactCategory.ExactFunctor.mapQ_comp]
     rfl
 
 omit [P.IsClosedUnderFiniteProducts] in
@@ -134,15 +137,16 @@ theorem exists_stratumTransitionHomotopyEquiv {m n : ℕ} (h : m ≤ n) :
   | refl =>
     refine ⟨.refl _, ?_⟩
     change ContinuousMap.id _ =
-      (classifyingSpaceMap (ExactFunctor.id (stratumExactStructure E P m)).mapQ).hom
-    rw [ExactFunctor.mapQ_id, classifyingSpaceMap_id]
+      (classifyingSpaceMap (CategoryTheory.ExactCategory.ExactFunctor.id (stratumExactStructure E P
+        m)).mapQ).hom
+    rw [CategoryTheory.ExactCategory.ExactFunctor.mapQ_id, classifyingSpaceMap_id]
     rfl
   | @step n h ih =>
     obtain ⟨e, he⟩ := ih
     refine ⟨e.trans (stratumClassifyingHomotopyEquiv E P n), ?_⟩
     change (stratumClassifyingHomotopyEquiv E P n).toFun.comp e.toFun = _
     rw [stratumClassifyingHomotopyEquiv_toFun, he, ← TopCat.hom_comp,
-      ← classifyingSpaceMap_comp, ← ExactFunctor.mapQ_comp]
+      ← classifyingSpaceMap_comp, ← CategoryTheory.ExactCategory.ExactFunctor.mapQ_comp]
     rfl
 
 /-- Every ordered transition has an actual homotopy equivalence, with no
@@ -173,7 +177,7 @@ theorem intoStratumKMap_bijective (n k : ℕ) :
   | succ n ih =>
     have hf : (intoStratumExact E P n).comp (stratumExactInclusion E P n) =
         intoStratumExact E P (n + 1) := rfl
-    rw [← hf, ExactFunctor.KMap_comp]
+    rw [← hf, CategoryTheory.ExactCategory.ExactFunctor.KMap_comp]
     exact (stratumKMap_bijective E P n k).comp ih
 
 end Strata
@@ -189,7 +193,7 @@ theorem inclusionKMap_bijective_of_bounded (N : ℕ)
   have h₂ := inclusionKMap_bijective_of_all E (E.ResolutionLength P N) h k
   change Function.Bijective ((exactInclusion E P).KMap k)
   rw [← exactInclusionOfLE_comp E P (E.ResolutionLength P N) (E.le_resolutionLength P N),
-    ExactFunctor.KMap_comp]
+    CategoryTheory.ExactCategory.ExactFunctor.KMap_comp]
   exact h₂.comp h₁
 
 /-- The bounded-resolution equivalence with its forward map fixed. -/

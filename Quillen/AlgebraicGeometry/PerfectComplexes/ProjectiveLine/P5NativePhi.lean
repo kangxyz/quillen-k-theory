@@ -16,6 +16,8 @@ the original native line chart trivializations discharge the geometric inputs.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

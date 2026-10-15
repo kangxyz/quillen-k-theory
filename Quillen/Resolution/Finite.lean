@@ -29,7 +29,8 @@ universe v u v' u' w
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
@@ -184,9 +185,10 @@ under arbitrary admissible subobjects in the ambient exact category. -/
 class IsKernelClosed (P : ObjectProperty C) : Prop where
   prop_kernel : ∀ {S : ShortComplex C}, E.conflation S → P S.X₂ → P S.X₃ → P S.X₁
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 variable {C : Type u} {D : Type u'} [Category.{v} C] [Category.{v'} D]
   [Preadditive C] [Preadditive D] [HasFiniteBiproducts C] [HasFiniteBiproducts D]
   {EC : ExactStructure C} {ED : ExactStructure D}
@@ -208,4 +210,4 @@ def mapFiniteResolution (F : ExactFunctor EC ED) {P : C → Prop} {P' : D → Pr
   | of_mem hX => rfl
   | step S hS hP R ih => simp [mapFiniteResolution, ih]
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

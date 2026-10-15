@@ -18,6 +18,8 @@ whenever the original arrow is coarse-weak.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CochainComplex
 universe u v

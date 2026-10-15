@@ -13,7 +13,8 @@ public import Quillen.KTheory.Map.CoherenceData
 open CategoryTheory CategoryTheory.Limits ZeroObject
 noncomputable section
 universe u v
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 /-- The chosen quotient of an identity inflation is canonically the original zero object. -/
@@ -27,4 +28,4 @@ def identityProjectionIsoZero (A : C) :
     E.extensionProjectionQObj (E.extensionTotalOf (𝟙 A) (E.inflation.id_mem A)) ≅
       Q.of E.deflation E.inflation (0 : C) :=
   E.qIsoOfIso (E.identityQuotientIsoZero A)
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

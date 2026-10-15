@@ -25,7 +25,8 @@ universe v u
 open CategoryTheory CategoryTheory.Limits
 attribute [local instance] hasBinaryBiproducts_of_finite_biproducts
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
@@ -126,4 +127,4 @@ lemma deflation_of_comp_of_hasKernel {X Y Z : C} (r : X ⟶ Y) (p : Y ⟶ Z)
     [HasKernel p] (hrp : E.deflation (r ≫ p)) : E.deflation p :=
   E.deflation_of_comp_of_isKernel r p (kernel.condition p) (kernelIsKernel p) hrp
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

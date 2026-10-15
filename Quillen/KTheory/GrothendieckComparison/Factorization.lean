@@ -24,7 +24,8 @@ universe v u
 open CategoryTheory
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [Limits.HasFiniteBiproducts C]
   (E : ExactStructure C)
 
@@ -87,4 +88,4 @@ theorem grothendieckToKZero_injective_iff :
   · intro h x y hxy
     exact E.grothendieckQGroupoidEquiv.injective (h hxy)
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

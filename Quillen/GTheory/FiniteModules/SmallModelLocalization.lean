@@ -122,7 +122,7 @@ instance smallModelToAbelian_isEquivalence (A : Type u) [CommRing A] [IsNoetheri
 
 instance smallModelToAbelian_mapQ_isEquivalence (A : Type u) [CommRing A] [IsNoetherianRing A] :
     (smallModelToAbelian A).mapQ.IsEquivalence := by
-  apply ExactFunctor.mapQ_isEquivalence_of_equivalence
+  apply CategoryTheory.ExactCategory.ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro M N f hf
     change ((abelianExactStructure (FGModuleCat.{u} A)).smallModel).inflation f
     rw [abelianExactStructure_smallModel]
@@ -147,7 +147,8 @@ theorem smallKMap_comparison (n : ℕ) :
   change ((smallModelToAbelian (Localization S)).KMap n).comp
       ((exactFunctor S).smallModel.KMap n) =
     ((smallAbelianExactFunctor S).KMap n).comp ((smallModelToAbelian R).KMap n)
-  rw [← ExactFunctor.KMap_comp, ← ExactFunctor.KMap_comp]
+  rw [← CategoryTheory.ExactCategory.ExactFunctor.KMap_comp, ←
+    CategoryTheory.ExactCategory.ExactFunctor.KMap_comp]
   rfl
 
 /-- The supported small-model objects for a principal open are exactly

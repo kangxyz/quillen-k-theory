@@ -17,6 +17,8 @@ The endpoint isomorphisms use actual zero objects and original inclusions.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

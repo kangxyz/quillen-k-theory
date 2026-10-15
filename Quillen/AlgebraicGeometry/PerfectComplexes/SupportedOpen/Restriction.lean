@@ -22,6 +22,8 @@ No compactness or separation assumption is used for these constructions.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -70,7 +72,7 @@ instance perfectSupportedRestrict_additive : (perfectSupportedRestrict j T).Addi
   infer_instance
 
 /-- The original supported restriction preserves genuine short exact sequences. -/
-def perfectSupportedExactRestrict : Quillen.ExactFunctor
+def perfectSupportedExactRestrict : CategoryTheory.ExactCategory.ExactFunctor
     (ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (perfectSupported T.ι))
     (ExactSubcategory.exactStructure (abelianExactStructure (Complex U))
       (perfectSupported (j ⁻¹ᵁ T).ι)) where

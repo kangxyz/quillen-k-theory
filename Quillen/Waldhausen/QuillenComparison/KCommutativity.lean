@@ -22,7 +22,8 @@ noncomputable section
 open CategoryTheory Limits
 universe u v
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -43,4 +44,4 @@ Quillen K-group operations. -/
   toGroup := inferInstance
   mul_comm := E.K_mul_comm n
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

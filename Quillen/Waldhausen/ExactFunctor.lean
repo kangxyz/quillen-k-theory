@@ -23,7 +23,8 @@ noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe v u v' u'
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   {D : Type u'} [Category.{v'} D] [Preadditive D] [HasFiniteBiproducts D]
   {EC : ExactStructure C} {ED : ExactStructure D} (F : ExactFunctor EC ED)
@@ -39,4 +40,4 @@ theorem waldhausenExact : Waldhausen.IsExact
     exact F.toFunctor.map_isIso f
   pushout hi h := F.map_isPushout hi h
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

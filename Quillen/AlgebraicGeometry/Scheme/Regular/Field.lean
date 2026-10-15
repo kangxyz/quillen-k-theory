@@ -80,14 +80,15 @@ def coherentToVectorBundleFieldExact :
 def vectorBundleFieldUnitIso :
     ((vectorBundleToCoherentExact (Spec (CommRingCat.of k))).comp
       (coherentToVectorBundleFieldExact k)).toFunctor ≅
-      (ExactFunctor.id (vectorBundleExactStructure (Spec (CommRingCat.of k)))).toFunctor :=
+      (CategoryTheory.ExactCategory.ExactFunctor.id (vectorBundleExactStructure (Spec
+        (CommRingCat.of k)))).toFunctor :=
   Iso.refl _
 
 /-- The field inverse followed by inclusion keeps the same coherent sheaf. -/
 def vectorBundleFieldCounitIso :
     ((coherentToVectorBundleFieldExact k).comp
       (vectorBundleToCoherentExact (Spec (CommRingCat.of k)))).toFunctor ≅
-      (ExactFunctor.id (CoherentScheme.coherentExactStructure
+      (CategoryTheory.ExactCategory.ExactFunctor.id (CoherentScheme.coherentExactStructure
         (Spec (CommRingCat.of k)))).toFunctor :=
   Iso.refl _
 
@@ -109,9 +110,10 @@ theorem GToKField_comp_smallKMap (n : ℕ) :
       MonoidHom.id (K (Spec (CommRingCat.of k)) n) := by
   change ((SchemeSheaf.coherentToVectorBundleFieldExact k).smallKMap.{u+1} n).comp
       ((SchemeSheaf.vectorBundleToCoherentExact (Spec (CommRingCat.of k))).smallKMap.{u+1} n) = _
-  rw [← ExactFunctor.smallKMap_comp]
-  exact (ExactFunctor.smallKMap_eq_of_natIso.{u+1} (SchemeSheaf.vectorBundleFieldUnitIso k) n).trans
-    (ExactFunctor.smallKMap_id.{u+1} _ n)
+  rw [← CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp]
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u+1}
+    (SchemeSheaf.vectorBundleFieldUnitIso k) n).trans
+    (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_id.{u+1} _ n)
 
 /-- The canonical exact-functor K-map cancels the inverse field comparison. -/
 @[simp]
@@ -121,10 +123,11 @@ theorem smallKMap_comp_GToKField (n : ℕ) :
   change ((SchemeSheaf.vectorBundleToCoherentExact (Spec (CommRingCat.of k))).smallKMap.{u+1}
     n).comp
       ((SchemeSheaf.coherentToVectorBundleFieldExact k).smallKMap.{u+1} n) = _
-  rw [← ExactFunctor.smallKMap_comp]
-  exact (ExactFunctor.smallKMap_eq_of_natIso.{u+1} (SchemeSheaf.vectorBundleFieldCounitIso k)
+  rw [← CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp]
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u+1}
+    (SchemeSheaf.vectorBundleFieldCounitIso k)
     n).trans
-    (ExactFunctor.smallKMap_id.{u+1} _ n)
+    (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_id.{u+1} _ n)
 
 /-- The canonical finite-locally-free K-to-coherent-G map is bijective on a
 field spectrum, in every degree. -/

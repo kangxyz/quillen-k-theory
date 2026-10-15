@@ -59,8 +59,8 @@ example (n : ℕ) (P : IsoCategory (Matrix (Fin 2) (Fin 2) ℤ)ᵐᵒᵖ) :
           (exactStructure (Matrix (Fin 2) (Fin 2) ℤ)ᵐᵒᵖ).grothendieckClass
             (rankOnePower (Matrix (Fin 2) (Fin 2) ℤ)ᵐᵒᵖ n).of) := by
   rw [completionToOriginalQLoops_stage_kZero, map_div,
-    ExactStructure.kZeroToGrothendieck_objectClass,
-    ExactStructure.kZeroToGrothendieck_objectClass, ofAdd_sub]
+    CategoryTheory.ExactCategory.ExactStructure.kZeroToGrothendieck_objectClass,
+    CategoryTheory.ExactCategory.ExactStructure.kZeroToGrothendieck_objectClass, ofAdd_sub]
 
 -- A nonzero displayed grade still subtracts that exact basepoint class.
 example {R : Type u} [Ring R] (U : GroupCompletionCategory R)

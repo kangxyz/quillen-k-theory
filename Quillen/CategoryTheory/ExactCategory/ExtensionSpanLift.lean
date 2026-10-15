@@ -17,7 +17,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -122,4 +123,4 @@ theorem exists_extensionLift {X : C} (y : E.ExtensionTotal)
   let l := E.extensionSpanLift y s
   exact ⟨l.source, l.quotientIso, l.hom, l.projection_comp E⟩
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

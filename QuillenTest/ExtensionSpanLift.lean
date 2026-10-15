@@ -11,7 +11,7 @@ noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 
 example {X : C} (y : E.ExtensionTotal)
     (s : Span E.deflation E.inflation X (E.extensionProjectionObject y)) :

@@ -34,7 +34,7 @@ def gridProjection (n : SimplexCategory) : Grid n ⥤ Interval n :=
   (show Monotone (fun p : Grid n ↦ p.2) from fun _ _ h ↦ h.2).functor
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 
 /-- A quotient row satisfying the actual exact S-construction conditions.
 The constant nerve direction only records identity isomorphisms. -/
@@ -97,6 +97,6 @@ def rowIntervalComparison : Row E n ⥤ (NestedInterval n ⥤ Q E.deflation E.in
     change (E.qIsoOfIso ((e ≫ f).app _)).hom =
       (E.qIsoOfIso (e.app _)).hom ≫ (E.qIsoOfIso (f.app _)).hom
     change (E.qIsoOfIso (e.app _ ≪≫ f.app _)).hom = _
-    rw [ExactStructure.qIsoOfIso_trans, Iso.trans_hom]
+    rw [CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_trans, Iso.trans_hom]
 
 end Quillen.Waldhausen.QuillenComparison

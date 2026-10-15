@@ -46,20 +46,22 @@ def coherentPushforwardCompIso (f : X ⟶ Y) (g : Y ⟶ Z)
 /-- The original closed-immersion G-map preserves identity. -/
 @[simp] theorem coherentPushforwardGMap_id (X : Scheme.{u}) [IsLocallyNoetherian X] (n : ℕ) :
     coherentPushforwardGMap (𝟙 X) n = MonoidHom.id (G X n) := by
-  exact (ExactFunctor.smallKMap_eq_of_natIso
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := coherentPushforwardExact (𝟙 X))
-    (G := ExactFunctor.id (coherentExactStructure X))
-    (coherentPushforwardIdIso X) n).trans (ExactFunctor.smallKMap_id _ n)
+    (G := CategoryTheory.ExactCategory.ExactFunctor.id (coherentExactStructure X))
+    (coherentPushforwardIdIso X) n).trans (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_id _
+      n)
 
 /-- The original G-maps compose covariantly along closed immersions. -/
 @[simp] theorem coherentPushforwardGMap_comp (f : X ⟶ Y) (g : Y ⟶ Z)
     [IsClosedImmersion f] [IsClosedImmersion g] (n : ℕ) :
     coherentPushforwardGMap (f ≫ g) n =
       (coherentPushforwardGMap g n).comp (coherentPushforwardGMap f n) := by
-  exact (ExactFunctor.smallKMap_eq_of_natIso
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := coherentPushforwardExact (f ≫ g))
     (G := (coherentPushforwardExact f).comp (coherentPushforwardExact g))
-    (coherentPushforwardCompIso f g).symm n).trans (ExactFunctor.smallKMap_comp _ _ n)
+    (coherentPushforwardCompIso f g).symm n).trans
+      (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp _ _ n)
 
 /-- The original pushforwards along inverse scheme isomorphisms are mutual inverses. -/
 @[simp] theorem coherentPushforwardGMap_iso_inv_comp

@@ -16,7 +16,8 @@ set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
 attribute [local instance] hasBinaryBiproducts_of_finite_biproducts
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C) {X : C} (p q : E.ExtensionOver X)
 variable (k : E.ExtensionKernelData p) (l : E.ExtensionKernelData q)
@@ -71,4 +72,4 @@ def extensionProductKernelData : E.ExtensionKernelData (E.extensionProductObj p 
   conflation := E.conflation_of_isKernel _ (E.extensionProductKernelIsLimit p q k l)
     (E.extensionProductObj p q).property
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

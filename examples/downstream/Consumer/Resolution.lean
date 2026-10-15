@@ -23,7 +23,7 @@ open CategoryTheory CategoryTheory.Limits
 universe u
 namespace Consumer
 variable {C : Type u} [SmallCategory C] [Preadditive C] [HasFiniteBiproducts C]
-  (E : Quillen.ExactStructure C) (P : ObjectProperty C)
+  (E : CategoryTheory.ExactCategory.ExactStructure C) (P : ObjectProperty C)
   [P.ContainsZero] [P.IsClosedUnderIsomorphisms] [E.IsExtensionClosed P]
   [P.IsClosedUnderFiniteProducts] [E.IsKernelClosed P]
 

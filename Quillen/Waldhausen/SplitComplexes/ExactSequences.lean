@@ -18,6 +18,8 @@ splittings using exactness; no chain splitting is required.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 

@@ -15,7 +15,8 @@ public import Quillen.Topology.ClassifyingSpace.AsSmall
 open CategoryTheory CategoryTheory.Limits ZeroObject
 noncomputable section
 universe u v
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 /-- The actual extension projection, realized without changing either original space. -/
@@ -49,4 +50,4 @@ def extensionProjectionBasepointPath :
       (classifyingSpacePoint (Q.of E.deflation E.inflation (0 : C))) := by
   rw [extensionProjectionRealization_point]
   exact classifyingSpacePath (E.identityProjectionIsoZero (0 : C)).hom
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

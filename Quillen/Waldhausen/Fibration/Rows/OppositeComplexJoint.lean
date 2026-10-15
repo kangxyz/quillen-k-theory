@@ -22,6 +22,8 @@ and exactness properties are discharged from the actual structures.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

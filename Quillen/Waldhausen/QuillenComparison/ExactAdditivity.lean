@@ -25,7 +25,8 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory Limits
 universe u v
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 open Waldhausen.QuillenComparison
 variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   [Preadditive C] [Preadditive D] [HasFiniteBiproducts C] [HasFiniteBiproducts D]
@@ -57,4 +58,4 @@ theorem KMap_conflation_additivity (F G H : ExactFunctor E E')
     _ = F.KMap n (comparisonKEquiv E n y) * H.KMap n (comparisonKEquiv E n y) :=
       ((comparisonKEquiv E' n).map_mul _ _).trans (congrArg₂ (· * ·) hF hH)
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

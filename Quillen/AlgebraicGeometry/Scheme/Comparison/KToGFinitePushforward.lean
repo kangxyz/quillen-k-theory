@@ -35,8 +35,9 @@ theorem schemeKToG_pushforward (n : ℕ) :
       ((vectorBundleToCoherentExact Z).smallKMap n) =
     ((vectorBundleToCoherentExact X).smallKMap n).comp
       ((vectorBundlePushforwardExact f).smallKMap n)
-  rw [← ExactFunctor.smallKMap_comp, ← ExactFunctor.smallKMap_comp]
-  exact ExactFunctor.smallKMap_eq_of_natIso (Iso.refl _) n
+  rw [← CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, ←
+    CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp]
+  exact CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso (Iso.refl _) n
 
 end Quillen.SchemeSheaf
 

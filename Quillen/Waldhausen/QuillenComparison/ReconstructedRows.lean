@@ -137,7 +137,8 @@ theorem reconstructedInitialChainIso_app (i : Fin (n + 1)) :
       E.qIsoOfIso (reconstructedCentralIsoAt E F p hp r hr i) := by
   apply Iso.ext
   exact (reconstructedInitialChainIso_hom_app E F p hp r hr i).trans (by
-    simp only [reconstructedCentralIsoAt, ExactStructure.qIsoOfIso_trans, Iso.trans_hom,
+    simp only [reconstructedCentralIsoAt,
+      CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_trans, Iso.trans_hom,
       qIsoOfIso_eqToIso, eqToIso.hom])
 
 /-- In particular the terminal component of the old subchain retains exactly

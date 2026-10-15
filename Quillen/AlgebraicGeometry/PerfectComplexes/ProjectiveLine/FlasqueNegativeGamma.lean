@@ -16,6 +16,8 @@ Only the original totalization supplies flasque terms. No flasqueness of a line
 tensor is asserted, and no Godement/shift comparison is needed.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

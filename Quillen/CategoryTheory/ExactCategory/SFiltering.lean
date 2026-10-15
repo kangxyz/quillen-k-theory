@@ -31,10 +31,11 @@ universe v u v' u'
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-  (E : Quillen.ExactStructure C) (A : ObjectProperty C)
+  (E : CategoryTheory.ExactCategory.ExactStructure C) (A : ObjectProperty C)
 
 /-- Closure under admissible subobjects for the specified exact structure. -/
 def IsClosedUnderAdmissibleSubobjects : Prop :=
@@ -482,4 +483,4 @@ lemma weakIsomorphisms_respectsIso (h₀ : A 0) : (E.weakIsomorphisms A).Respect
   let : IsIso f := hf
   exact E.weakIsomorphisms_of_iso A h₀ (asIso f)
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

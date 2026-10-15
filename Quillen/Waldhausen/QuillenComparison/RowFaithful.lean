@@ -30,7 +30,7 @@ universe v u
 namespace Quillen.Waldhausen.QuillenComparison
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 variable {n : SimplexCategory}
 
 /-- A map of exact quotient rows is determined by its whole-interval component. -/

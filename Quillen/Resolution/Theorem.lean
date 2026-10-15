@@ -24,6 +24,8 @@ contractibility is part of the input.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -55,7 +57,8 @@ def classifyingHomotopyEquiv (h : E.ResolutionHypothesis P) :
   change (stratumToAmbientHomotopyEquiv E P 0).toFun.comp
     (classifyingSpaceMap (intoStratumExact E P 0).mapQ).hom = _
   rw [stratumToAmbientHomotopyEquiv_toFun, ← TopCat.hom_comp,
-    ← classifyingSpaceMap_comp, ← ExactFunctor.mapQ_comp, exactInclusionOfLE_comp]
+    ← classifyingSpaceMap_comp, ← CategoryTheory.ExactCategory.ExactFunctor.mapQ_comp,
+      exactInclusionOfLE_comp]
 
 /-- Canonical zero normalization, along its actual natural isomorphism. -/
 def normalizedClassifyingHomotopyEquiv (h : E.ResolutionHypothesis P) :

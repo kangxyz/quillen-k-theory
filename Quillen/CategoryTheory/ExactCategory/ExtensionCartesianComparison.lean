@@ -15,7 +15,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -72,4 +73,4 @@ theorem exists_extensionComparisonIso {x y z : E.ExtensionTotal}
   apply E.extensionTotalMiddle.map_injective
   exact hb
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

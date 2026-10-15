@@ -21,6 +21,8 @@ weak and define the original connecting map. No compactness premise is used.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry

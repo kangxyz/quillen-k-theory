@@ -20,6 +20,8 @@ with the actual strict-perfect K-map in every connective degree, including zero.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -53,7 +55,7 @@ theorem smallVectorBundleKMap_pullback {X Y : Scheme.{u}} (f : X ⟶ Y) (n : ℕ
     (SchemeSheaf.smallVectorBundleKMap X n).comp (Quillen.Scheme.pullbackK f n) =
       ((SchemeSheaf.vectorBundleExactPullback f).KMap n).comp
         (SchemeSheaf.smallVectorBundleKMap Y n) :=
-  Quillen.ExactFunctor.smallModelToOriginal_commonAmbientKMap_naturality.{u + 1, u}
+  ExactFunctor.smallModelToOriginal_commonAmbientKMap_naturality.{u + 1, u}
     (SchemeSheaf.vectorBundleExactPullback f) n
 
 /-- The original public small-model/Q/S equivalence is natural on all schemes. -/

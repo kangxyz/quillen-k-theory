@@ -17,7 +17,7 @@ pullbacks induces a functor of Q-categories. The morphism map is the map on
 actual span representatives, descended through the apex-isomorphism quotient.
 Its composition law uses the canonical pullback comparison isomorphism.
 
-The selective pullback hypothesis below is explicit. `Quillen.ExactFunctor`
+The selective pullback hypothesis below is explicit. `CategoryTheory.ExactCategory.ExactFunctor`
 derives it from additivity and preservation of conflations.
 -/
 @[expose] public section

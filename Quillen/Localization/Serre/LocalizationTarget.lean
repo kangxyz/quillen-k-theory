@@ -80,7 +80,7 @@ instance targetLiftExactFunctor_mapQ_isEquivalence :
     (targetLiftExactFunctor P L).mapQ.IsEquivalence := by
   let : (targetLiftExactFunctor P L).toFunctor.IsEquivalence :=
     targetLift_isEquivalence P L
-  apply ExactFunctor.mapQ_isEquivalence_of_equivalence
+  apply CategoryTheory.ExactCategory.ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro X Y f hf
     apply (abelianExactStructure_inflation_iff _ _).2
     exact (targetLift P L).mono_of_mono_map
@@ -107,7 +107,7 @@ quotient map with the K-map of the original localization functor. -/
 theorem targetKEquiv_comp_quotientKMap (n : ℕ) :
     (targetKEquiv P L n).toMonoidHom.comp (quotientKMap P n) = KMap P L n := by
   change ((targetLiftExactFunctor P L).KMap n).comp ((quotientExactFunctor P).KMap n) = _
-  rw [← ExactFunctor.KMap_comp, quotient_comp_targetLift]
+  rw [← CategoryTheory.ExactCategory.ExactFunctor.KMap_comp, quotient_comp_targetLift]
   rfl
 
 @[simp] theorem targetKEquiv_apply_quotientKMap (n : ℕ)

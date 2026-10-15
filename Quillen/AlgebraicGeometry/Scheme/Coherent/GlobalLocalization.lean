@@ -125,7 +125,8 @@ theorem globalInclusionGMap_eq_smallKMap (n : ℕ) :
         ((supportedCoherentInclusionExact j).smallModel.KMap n) =
       ((Devissage.exactInclusion (coherentGlobalSmallSupport j)).KMap n).comp
         ((coherentGlobalSupportComparison j).KMap n)
-    rw [← ExactFunctor.KMap_comp, ← ExactFunctor.KMap_comp,
+    rw [← CategoryTheory.ExactCategory.ExactFunctor.KMap_comp, ←
+      CategoryTheory.ExactCategory.ExactFunctor.KMap_comp,
       coherentGlobalSupportComparison_comp_inclusion]
   ext x
   apply (SmallModelLocalization.standardKEquiv.{u+1} (FiniteTypeSheaves X) n).injective
@@ -152,7 +153,7 @@ theorem global_inclusion_range_eq_restriction_ker (n : ℕ) :
   apply global_exact_transport
     (globalInclusionGMap j n) (restrictionGMap j n)
     (SmallModelGLocalization.inclusionKMap.{u+1} (coherentRestrictionExact j) n)
-    (ExactFunctor.smallKMap.{u+1} (coherentRestrictionExact j) n)
+    (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (coherentRestrictionExact j) n)
     (coherentGlobalSupportedGEquiv j n) (MulEquiv.refl _) (MulEquiv.refl _)
   · intro a; rfl
   · intro b; rfl
@@ -165,7 +166,7 @@ theorem global_restriction_range_eq_connecting_ker (n : ℕ) :
       (globalConnectingHom j n).ker := by
   apply global_exact_transport
     (restrictionGMap j (n + 1)) (globalConnectingHom j n)
-    (ExactFunctor.smallKMap.{u+1} (coherentRestrictionExact j) (n + 1))
+    (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (coherentRestrictionExact j) (n + 1))
     (SmallModelGLocalization.connectingHom.{u+1} (coherentRestrictionExact j) n)
     (MulEquiv.refl _) (MulEquiv.refl _) (coherentGlobalSupportedGEquiv j n)
   · intro a; rfl

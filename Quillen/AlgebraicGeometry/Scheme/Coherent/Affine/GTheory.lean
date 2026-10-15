@@ -45,11 +45,11 @@ def affineGlobalSectionsExact :
 /-- G-theory of finite modules over a commutative noetherian ring, in the base
 ring's universe. -/
 abbrev RingG (n : ℕ) : Type u :=
-  ExactStructure.SmallK.{u} (finiteModuleExactStructure.{u, u} R) n
+  CategoryTheory.ExactCategory.ExactStructure.SmallK.{u} (finiteModuleExactStructure.{u, u} R) n
 
 /-- G-theory of the actual coherent sheaf category on `Spec R`. -/
 abbrev AffineG (n : ℕ) : Type u :=
-  ExactStructure.SmallK.{u} (affineCoherentExactStructure R) n
+  CategoryTheory.ExactCategory.ExactStructure.SmallK.{u} (affineCoherentExactStructure R) n
 
 /-- The canonical map induced by actual global sections, transported to the
 chosen small models. -/
@@ -65,7 +65,7 @@ instance affineGlobalSectionsSmall_isEquivalence :
 
 instance affineGlobalSectionsSmall_mapQ_isEquivalence :
     ((affineGlobalSectionsExact R).smallModel).mapQ.IsEquivalence := by
-  apply ExactFunctor.mapQ_isEquivalence_of_equivalence
+  apply CategoryTheory.ExactCategory.ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro X Y i hi
     change (abelianExactStructure (FiniteModule.{u, u} R)).smallModel.inflation _ at hi
     change (abelianExactStructure (AffineFiniteType R)).smallModel.inflation i

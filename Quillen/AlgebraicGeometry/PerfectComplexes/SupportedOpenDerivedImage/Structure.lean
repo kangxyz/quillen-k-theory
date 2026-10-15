@@ -20,6 +20,8 @@ original complex cylinder. The exact supported roof property is explicit.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -107,7 +109,8 @@ instance complexCorestrict_additive : (complexCorestrict j T).Additive := by
   infer_instance
 
 /-- The genuine actual exact-subcategory restriction functor. -/
-def exactCorestrict : Quillen.ExactFunctor (ExactSubcategory.exactStructure (abelianExactStructure
+def exactCorestrict : CategoryTheory.ExactCategory.ExactFunctor (ExactSubcategory.exactStructure
+  (abelianExactStructure
   (Complex X)) (perfectSupported T.ι))
     (ExactSubcategory.exactStructure (abelianExactStructure (Complex U)) (complexObjects j T)) where
   toFunctor := complexCorestrict j T

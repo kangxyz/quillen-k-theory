@@ -93,7 +93,8 @@ instance strictPullback_additive {X Y : Scheme.{u}} (f : X ⟶ Y) :
 /-- Exactness on strict-perfect conflations follows from exactness on their
 finite locally free terms, not from ambient left exactness. -/
 def strictExactPullback {X Y : Scheme.{u}} (f : X ⟶ Y) :
-    Quillen.ExactFunctor (strictExactStructure Y) (strictExactStructure X) where
+    CategoryTheory.ExactCategory.ExactFunctor (strictExactStructure Y) (strictExactStructure X)
+      where
   toFunctor := strictPullback f
   map_conflation S hS := by
     apply HomologicalComplex.shortExact_of_degreewise_shortExact

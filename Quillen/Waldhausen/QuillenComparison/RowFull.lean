@@ -45,7 +45,7 @@ theorem centralInterval_last (n : SimplexCategory) :
   Subtype.ext (Prod.ext (lowerIndex_last n) (upperIndex_last n))
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 
 /-- Normalizing a terminal interval transports the original Q-span to the
 literal whole-row span, with exactly the induced endpoint isomorphism. -/
@@ -108,8 +108,8 @@ instance rowChainComparison_full (n : SimplexCategory) : (rowChainComparison E n
     let b := (centralTopIso E F).symm ≪≫ a (Fin.last n.len) ≪≫ centralTopIso E G
     have hb : (E.qIsoOfIso (centralTopIso E F)).hom ≫ (E.qIsoOfIso b).hom =
         (E.qIsoOfIso (a (Fin.last n.len))).hom ≫ (E.qIsoOfIso (centralTopIso E G)).hom := by
-      rw [← Iso.trans_hom, ← ExactStructure.qIsoOfIso_trans,
-        ← Iso.trans_hom, ← ExactStructure.qIsoOfIso_trans]
+      rw [← Iso.trans_hom, ← CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_trans,
+        ← Iso.trans_hom, ← CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_trans]
       congr 2
       simp [b]
     have h (i : Fin (n.len + 1)) :

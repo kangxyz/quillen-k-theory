@@ -15,6 +15,8 @@ public import Quillen.Waldhausen.SConstruction.Rows.JointFunctor
 /-! Actual canonical fiber and common-cylinder maps, without a fibration conclusion. -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CochainComplex Quillen Quillen.Waldhausen
 open scoped Topology

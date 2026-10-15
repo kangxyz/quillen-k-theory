@@ -22,7 +22,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -56,4 +57,4 @@ def extensionSpanTransport {X Y : C} (s : Span E.deflation E.inflation X Y) :
     E.ExtensionFiber Y ⥤ E.ExtensionFiber X :=
   E.extensionFiberPullback s.r ⋙ E.extensionFiberPostcompose s.l s.wl
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

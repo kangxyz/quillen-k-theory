@@ -21,6 +21,8 @@ cross-universe or scheme comparison from a chosen small presentation.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

@@ -26,7 +26,8 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits
 open scoped Topology
 universe u v
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
@@ -99,4 +100,4 @@ theorem continuous_loopKZeroLabel : Continuous E.loopKZeroLabel := by
 def continuousLoopKZeroLabel : C(Path E.kBasepoint E.kBasepoint, E.DiscreteKZero) :=
   ⟨E.loopKZeroLabel, E.continuous_loopKZeroLabel⟩
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

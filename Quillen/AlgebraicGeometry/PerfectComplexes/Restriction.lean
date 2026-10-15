@@ -78,7 +78,8 @@ instance strictRestrict_additive : (strictRestrict j).Additive := by
   infer_instance
 
 /-- Restriction preserves the actual inherited short exact sequences. -/
-def strictExactRestrict : Quillen.ExactFunctor (strictExactStructure X) (strictExactStructure U)
+def strictExactRestrict : CategoryTheory.ExactCategory.ExactFunctor (strictExactStructure X)
+  (strictExactStructure U)
   where
   toFunctor := strictRestrict j
   map_conflation S hS := by

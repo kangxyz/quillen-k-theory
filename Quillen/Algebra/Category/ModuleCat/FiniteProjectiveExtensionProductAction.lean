@@ -159,8 +159,9 @@ def extensionAddProductIso {C : Category.{u, u} R} (S T : IsoCategory R)
     (Over.isoMk (extensionAddProductMiddleIso R S T p q) (by
       change extensionAddProductHom R S T p q ≫
         (pullback.snd _ _ ≫ (T ⊙ₗ q).of.obj.hom) = _
-      simp only [extensionProductFiber, ExactStructure.extensionFiberProduct,
-      ExactStructure.extensionProductObj,
+      simp only [extensionProductFiber,
+        CategoryTheory.ExactCategory.ExactStructure.extensionFiberProduct,
+      CategoryTheory.ExactCategory.ExactStructure.extensionProductObj,
         prod_Hom, extensionAction_obj_hom, Over.mk_left, extensionAddProductHom,
         limit.lift_π_assoc, PullbackCone.mk_pt,
         cospan_right, PullbackCone.mk_π_app, coprod.desc_comp, zero_comp, colimit.ι_desc,

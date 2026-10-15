@@ -41,7 +41,8 @@ local instance : (coherentRestrictionExact (principalOpen R f)).toFunctor.IsLoca
 
 /-- The canonical upper-universe small model of actual closed pushforward. -/
 abbrev smallPushforward :=
-  (ExactFunctor.smallModel.{u+1} (coherentPushforwardExact R f)).toFunctor
+  (CategoryTheory.ExactCategory.ExactFunctor.smallModel.{u+1} (coherentPushforwardExact R
+    f)).toFunctor
 
 /-- The represented actual pushforward is killed by f, including the
 canonical small-model unit isomorphism. -/
@@ -123,12 +124,14 @@ instance smallPushforwardToKilled_additive : (smallPushforwardToKilled R f).Addi
 /-- Actual small closed pushforward with the original transported source
 exact structure, rather than a newly chosen unrelated K-map. -/
 def smallPushforwardToKilledExact :
-    ExactFunctor (ExactStructure.smallModel.{u+1} (coherentExactStructure (Spec (principalRing R
+    ExactFunctor (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1}
+      (coherentExactStructure (Spec (principalRing R
       f))))
       (Devissage.subcategoryExactStructure (supportKilled R f)) where
   toFunctor := smallPushforwardToKilled R f
   map_conflation S h := by
-    change (ExactStructure.smallModel.{u+1} (abelianExactStructure (FiniteTypeSheaves (Spec
+    change (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1} (abelianExactStructure
+      (FiniteTypeSheaves (Spec
       (principalRing R f))))).conflation S at h
     rw [abelianExactStructure_smallModel] at h
     exact h.map_of_exact _
@@ -139,16 +142,18 @@ instance smallPushforwardToKilledExact_isEquivalence :
 
 instance smallPushforwardToKilledExact_mapQ_isEquivalence :
     (smallPushforwardToKilledExact R f).mapQ.IsEquivalence := by
-  apply ExactFunctor.mapQ_isEquivalence_of_equivalence
+  apply CategoryTheory.ExactCategory.ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro M N a ha
-    change (ExactStructure.smallModel.{u+1} (abelianExactStructure (FiniteTypeSheaves (Spec
+    change (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1} (abelianExactStructure
+      (FiniteTypeSheaves (Spec
       (principalRing R f))))).inflation a
     rw [abelianExactStructure_smallModel, abelianExactStructure_inflation_iff]
     have : Mono ((smallPushforwardToKilled R f).map a) :=
       (abelianExactStructure_inflation_iff _ _).mp ha
     exact Functor.mono_of_mono_map (smallPushforwardToKilled R f) this
   · intro M N a ha
-    change (ExactStructure.smallModel.{u+1} (abelianExactStructure (FiniteTypeSheaves (Spec
+    change (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1} (abelianExactStructure
+      (FiniteTypeSheaves (Spec
       (principalRing R f))))).deflation a
     rw [abelianExactStructure_smallModel, abelianExactStructure_deflation_iff]
     have : Epi ((smallPushforwardToKilled R f).map a) :=
@@ -164,7 +169,8 @@ def closedSupportGEquiv (n : ℕ) :
 
 /-- The canonical factorization of actual closed pushforward through support. -/
 def smallPushforwardToSupportExact :
-    ExactFunctor (ExactStructure.smallModel.{u+1} (coherentExactStructure (Spec (principalRing R
+    ExactFunctor (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1}
+      (coherentExactStructure (Spec (principalRing R
       f))))
       (Devissage.subcategoryExactStructure (coherentPrincipalSmallSupport R f)) :=
   (smallPushforwardToKilledExact R f).comp (Devissage.exactInclusion (supportKilled R f))
@@ -174,7 +180,7 @@ def smallPushforwardToSupportExact :
     (↑(closedSupportGEquiv R f n) :
       CoherentScheme.G (Spec (principalRing R f)) n →* CoherentPrincipalSupportedG R f n) =
       (smallPushforwardToSupportExact R f).KMap n := by
-  rw [smallPushforwardToSupportExact, ExactFunctor.KMap_comp]
+  rw [smallPushforwardToSupportExact, CategoryTheory.ExactCategory.ExactFunctor.KMap_comp]
   rfl
 
 /-- The geometric dévissage comparison preserves exactly the canonical G-map
@@ -186,10 +192,10 @@ theorem closedSupportGEquiv_pushforward (n : ℕ) :
   have h : ((smallPushforwardToKilledExact R f).comp
       (Devissage.exactInclusion (supportKilled R f))).comp
       (Devissage.exactInclusion (coherentPrincipalSmallSupport R f)) =
-    (ExactFunctor.smallModel.{u+1} (coherentPushforwardExact R f)).comp
+    (CategoryTheory.ExactCategory.ExactFunctor.smallModel.{u+1} (coherentPushforwardExact R f)).comp
       (SmallModelLocalization.standardExactFunctor.{u+1} (FiniteTypeSheaves (Spec R))) := by rfl
   have hk := congrArg (fun F ↦ F.KMap n) h
-  simp only [ExactFunctor.KMap_comp] at hk
+  simp only [CategoryTheory.ExactCategory.ExactFunctor.KMap_comp] at hk
   ext x
   apply (SmallModelLocalization.standardKEquiv.{u+1} (FiniteTypeSheaves (Spec R)) n).injective
   change SmallModelLocalization.standardKEquiv.{u+1} (FiniteTypeSheaves (Spec R)) n

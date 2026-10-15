@@ -57,7 +57,7 @@ theorem schemeKToG_bijective_of_finite_resolutions
     (CoherentScheme.coherentExactStructure X).smallModel (coherentSmallVectorBundle X)
     (coherentSmallResolutionHypothesis X h) n
   change Function.Bijective ((vectorBundleToCoherentExact X).smallModel.KMap n)
-  rw [← vectorBundleSmall_factor X, ExactFunctor.KMap_comp]
+  rw [← vectorBundleSmall_factor X, CategoryTheory.ExactCategory.ExactFunctor.KMap_comp]
   exact h₂.comp h₁
 
 /-- Objectwise Ext-defined finite projective dimension produces the actual

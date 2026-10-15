@@ -16,6 +16,8 @@ actual admissible subobjects and the factorization of Q-spans.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -120,7 +122,7 @@ def subobjectsToComma (B : FullQ E P) :
       change (exactInclusion E P).mapQ.map
         ((ExactSubcategory.exactStructure E P).qInflation f.hom f.admissible) ≫
           E.qInflation Y.hom Y.admissible = E.qInflation X.hom X.admissible
-      rw [ExactFunctor.mapQ_qInflation, E.qInflation_comp]
+      rw [CategoryTheory.ExactCategory.ExactFunctor.mapQ_qInflation, E.qInflation_comp]
       simp only [ExactSubcategory.exactInclusion, ObjectProperty.ι_map, f.w])
   map_id X := by
     apply CostructuredArrow.hom_ext
@@ -164,7 +166,7 @@ def spanUnit (B : FullQ E P) (A : InheritedComma E P B)
           ((ExactSubcategory.exactStructure E P).qDeflation
             (P.homMk s.l : (spanSubobject E P B A s).obj ⟶ A.left.obj.of) _) ≫
           E.qInflation s.r s.wr = A.hom.hom
-        rw [ExactFunctor.mapQ_qDeflation]
+        rw [CategoryTheory.ExactCategory.ExactFunctor.mapQ_qDeflation]
         exact (E.qSpan_factor s).symm.trans hs)
 
 /-- The proposed universal reflection arrow into ordinary subobjects. -/

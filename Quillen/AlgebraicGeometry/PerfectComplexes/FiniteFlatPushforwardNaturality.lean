@@ -21,6 +21,8 @@ with the actual strict-perfect direct-image K-map in every connective degree, in
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -49,7 +51,7 @@ theorem smallVectorBundleKMap_finiteFlatPushforward {X Y : Scheme.{u}}
     (SchemeSheaf.smallVectorBundleKMap Y n).comp (SchemeSheaf.schemeKPushforward f n) =
       ((SchemeSheaf.vectorBundlePushforwardExact f).KMap n).comp
         (SchemeSheaf.smallVectorBundleKMap X n) :=
-  Quillen.ExactFunctor.smallModelToOriginal_commonAmbientKMap_naturality.{u + 1, u}
+  ExactFunctor.smallModelToOriginal_commonAmbientKMap_naturality.{u + 1, u}
     (SchemeSheaf.vectorBundlePushforwardExact f) n
 
 /-- The original small-model/Q/S equivalence commutes with finite flat direct image. -/

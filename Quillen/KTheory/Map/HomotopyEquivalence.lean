@@ -23,7 +23,8 @@ noncomputable section
 universe v u
 open CategoryTheory CategoryTheory.Limits
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   [Preadditive C] [HasFiniteBiproducts C] [Preadditive D] [HasFiniteBiproducts D]
   {EC : ExactStructure C} {ED : ExactStructure D}
@@ -38,8 +39,8 @@ theorem KMap_bijective_of_homotopyEquiv (F : ExactFunctor EC ED)
   have hp : e.toFun EC.kBasepoint = ED.kBasepoint := by
     rw [he]
     exact F.normalizedQ_map_point
-  simpa only [he, F.KMap_eq_piMap, ExactStructure.K, QHomotopyGroup,
-    ShiftedHomotopyGroup, ExactStructure.kBasepoint] using
+  simpa only [he, F.KMap_eq_piMap, CategoryTheory.ExactCategory.ExactStructure.K, QHomotopyGroup,
+    ShiftedHomotopyGroup, CategoryTheory.ExactCategory.ExactStructure.kBasepoint] using
     piMap_bijective_of_homotopyEquiv e hp n
 
 /-- An actual equivalence of the zero-based Quillen K-groups whose forward
@@ -57,4 +58,4 @@ def KEquivOfHomotopyEquiv (F : ExactFunctor EC ED)
     (↑(F.KEquivOfHomotopyEquiv e he n) : EC.K n →* ED.K n) = F.KMap n := rfl
 
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

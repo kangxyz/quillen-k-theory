@@ -25,7 +25,8 @@ set_option backward.isDefEq.respectTransparency.types false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
@@ -49,9 +50,10 @@ def loopComponentsKZeroEquiv :
   rw [MulEquiv.apply_symm_apply, fundamentalGroupLoopComponentEquiv_path]
   rfl
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   [Preadditive C] [HasFiniteBiproducts C] [Preadditive D] [HasFiniteBiproducts D]
   {EC : ExactStructure C} {ED : ExactStructure D}
@@ -62,7 +64,8 @@ theorem loopComponentsKZeroEquiv_naturality (F : ExactFunctor EC ED)
     F.KMap 0 (EC.loopComponentsKZeroEquiv (ZerothHomotopy.mk γ)) =
       ED.loopComponentsKZeroEquiv (ZerothHomotopy.mk
         (basedLoopMap (classifyingSpaceMap F.normalizedQ).hom F.normalizedQ_map_point γ)) := by
-  rw [ExactStructure.loopComponentsKZeroEquiv_mk, ExactStructure.loopComponentsKZeroEquiv_mk]
+  rw [CategoryTheory.ExactCategory.ExactStructure.loopComponentsKZeroEquiv_mk,
+    CategoryTheory.ExactCategory.ExactStructure.loopComponentsKZeroEquiv_mk]
   apply ED.kZeroFundamentalGroupEquiv.injective
   rw [MulEquiv.apply_symm_apply, F.KMap_eq_piMap]
   change HomotopyGroup.pi1MulEquivFundamentalGroup (piMap 0 _ _ _) = _
@@ -73,4 +76,4 @@ theorem loopComponentsKZeroEquiv_naturality (F : ExactFunctor EC ED)
   rw [MulEquiv.apply_symm_apply, FundamentalGroup.mapOfEq_apply]
   rfl
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

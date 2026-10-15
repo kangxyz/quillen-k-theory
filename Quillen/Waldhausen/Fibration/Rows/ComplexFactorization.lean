@@ -19,6 +19,8 @@ middle functoriality are proved, rather than inferred from component cofibrancy.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CochainComplex
 universe u v

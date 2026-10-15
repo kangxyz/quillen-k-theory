@@ -22,7 +22,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -70,4 +71,4 @@ def quotientSpanOfInflations {A' A B B' H X Y : C}
       (E.inflation.pushout_inr _ _ (E.inflation_of_conflation cK)) (E.inflation_of_iso e)
   exact ⟨pushout i pH, l, r, hl, hr⟩
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

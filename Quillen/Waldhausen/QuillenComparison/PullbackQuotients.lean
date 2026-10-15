@@ -28,7 +28,7 @@ universe v u
 namespace Quillen.Waldhausen.QuillenComparison
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 
 /-- A pullback of an actual kernel computes the kernel of the composite. -/
 def pullbackKernelComposite {P A B K Q : C} {a : K ⟶ P} {v : K ⟶ A}

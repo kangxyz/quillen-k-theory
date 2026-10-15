@@ -17,6 +17,8 @@ functors are genuinely exact. No global bound on all complexes is assumed.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

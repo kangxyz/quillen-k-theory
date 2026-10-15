@@ -112,8 +112,8 @@ instance endpointBounded_additive (M : (twoChartLine R).Modules)
 def endpointBoundedExactFunctor (M : (twoChartLine R).Modules)
     [IsFiniteLocallyFree (twoChartLine R) M]
     (hM : ∀ A, strictPerfect (twoChartLine R) ((endpointComplex R M).obj A)) :
-    Quillen.ExactFunctor (strictExactStructure (Spec R))
-      (Quillen.ExactSubcategory.exactStructure
+    CategoryTheory.ExactCategory.ExactFunctor (strictExactStructure (Spec R))
+      (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
         (Quillen.abelianExactStructure (Complex (twoChartLine R)))
         (BoundedBelow.objects (twoChartLine R))) where
   toFunctor := endpointBounded R M hM

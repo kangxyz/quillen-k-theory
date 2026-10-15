@@ -30,15 +30,16 @@ def grothendieckFunctor : SmallExactCategory.{u} ⥤ GrpCat.{u} where
   map_id C := by
     apply ConcreteCategory.hom_ext
     intro a
-    change (ExactFunctor.id C.exactStructure).grothendieckMap.toMultiplicative a = a
-    rw [ExactFunctor.grothendieckMap_id]
+    change (CategoryTheory.ExactCategory.ExactFunctor.id
+      C.exactStructure).grothendieckMap.toMultiplicative a = a
+    rw [CategoryTheory.ExactCategory.ExactFunctor.grothendieckMap_id]
     rfl
   map_comp F G := by
     apply ConcreteCategory.hom_ext
     intro a
     change (F.comp G).grothendieckMap.toMultiplicative a =
       G.grothendieckMap.toMultiplicative (F.grothendieckMap.toMultiplicative a)
-    rw [ExactFunctor.grothendieckMap_comp]
+    rw [CategoryTheory.ExactCategory.ExactFunctor.grothendieckMap_comp]
     rfl
 
 /-- The original canonical object-class comparison is a natural isomorphism

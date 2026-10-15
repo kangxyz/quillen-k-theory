@@ -73,11 +73,11 @@ namespace Quillen.Scheme
 theorem restrictK_id (X : AlgebraicGeometry.Scheme.{u}) (n : ℕ) :
     restrictK (𝟙 X) n = MonoidHom.id (K X n) := by
   change (SchemeSheaf.vectorBundleExactRestrict (𝟙 X)).smallKMap n = _
-  exact (ExactFunctor.smallKMap_eq_of_natIso
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := SchemeSheaf.vectorBundleExactRestrict (𝟙 X))
-    (G := ExactFunctor.id (SchemeSheaf.vectorBundleExactStructure X))
+    (G := CategoryTheory.ExactCategory.ExactFunctor.id (SchemeSheaf.vectorBundleExactStructure X))
     (SchemeSheaf.vectorBundleRestrictIdIso X) n).trans
-    (ExactFunctor.smallKMap_id _ n)
+    (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_id _ n)
 
 /-- Actual restriction is contravariantly compatible with composition on K-theory. -/
 @[simp high]
@@ -85,23 +85,23 @@ theorem restrictK_comp {V U X : AlgebraicGeometry.Scheme.{u}}
     (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] (n : ℕ) :
     restrictK (i ≫ j) n = (restrictK i n).comp (restrictK j n) := by
   change (SchemeSheaf.vectorBundleExactRestrict (i ≫ j)).smallKMap n = _
-  exact (ExactFunctor.smallKMap_eq_of_natIso
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := SchemeSheaf.vectorBundleExactRestrict (i ≫ j))
     (G := (SchemeSheaf.vectorBundleExactRestrict j).comp
       (SchemeSheaf.vectorBundleExactRestrict i))
     (SchemeSheaf.vectorBundleRestrictCompIso i j) n).trans
-    (ExactFunctor.smallKMap_comp _ _ n)
+    (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp _ _ n)
 
 /-- Actual restriction along the identity induces the identity on G-theory. -/
 @[simp high]
 theorem restrictG_id (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X]
     (n : ℕ) : restrictG (𝟙 X) n = MonoidHom.id (G X n) := by
   change (CoherentScheme.coherentRestrictionExact (𝟙 X)).smallKMap n = _
-  exact (ExactFunctor.smallKMap_eq_of_natIso
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := CoherentScheme.coherentRestrictionExact (𝟙 X))
-    (G := ExactFunctor.id (CoherentScheme.coherentExactStructure X))
+    (G := CategoryTheory.ExactCategory.ExactFunctor.id (CoherentScheme.coherentExactStructure X))
     (CoherentScheme.coherentRestrictionIdIso X) n).trans
-    (ExactFunctor.smallKMap_id _ n)
+    (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_id _ n)
 
 /-- Actual restriction is contravariantly compatible with composition on G-theory. -/
 @[simp high]
@@ -110,11 +110,11 @@ theorem restrictG_comp {V U X : AlgebraicGeometry.Scheme.{u}}
     (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] (n : ℕ) :
     restrictG (i ≫ j) n = (restrictG i n).comp (restrictG j n) := by
   change (CoherentScheme.coherentRestrictionExact (i ≫ j)).smallKMap n = _
-  exact (ExactFunctor.smallKMap_eq_of_natIso
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := CoherentScheme.coherentRestrictionExact (i ≫ j))
     (G := (CoherentScheme.coherentRestrictionExact j).comp
       (CoherentScheme.coherentRestrictionExact i))
     (CoherentScheme.coherentRestrictionCompIso i j) n).trans
-    (ExactFunctor.smallKMap_comp _ _ n)
+    (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp _ _ n)
 
 end Quillen.Scheme

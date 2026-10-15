@@ -23,7 +23,7 @@ universe v u
 namespace Quillen.Waldhausen.QuillenComparison
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C) {m n : SimplexCategory}
+variable (E : CategoryTheory.ExactCategory.ExactStructure C) {m n : SimplexCategory}
 variable (A : Fin (n.len + 1) ⥤ C)
 variable (hA : ∀ {i j} (f : i ⟶ j), E.inflation (A.map f))
 

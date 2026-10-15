@@ -113,7 +113,7 @@ theorem reconstructedRow_last_step_to_whole :
     (extendedMiddleInterval (Edgewise.ε.obj ⦋n⦌).len)
     (reconstructionOrdinalCast_penultimate n) (reconstructionOrdinalCast_last n)
   change _ ≫ (E.qIsoOfIso (_ ≪≫ _)).hom = _
-  rw [ExactStructure.qIsoOfIso_trans, Iso.trans_hom, ← Category.assoc]
+  rw [CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_trans, Iso.trans_hom, ← Category.assoc]
   simpa only [Category.assoc] using! congrArg (fun f ↦ f ≫
     (E.qIsoOfIso (extendedRowTopIso E (initialFlag E F)
       (initialFlag_inflation E F) p hp r hr)).hom) h
@@ -163,7 +163,7 @@ theorem reconstructedRow_last_step :
     { apex := P, l := p, r := r, wl := hp, wr := hr }
   have hc := congrArg (fun e ↦ (E.qIsoOfIso e).hom)
     (reconstructedCentralIsoAt_last_top E F p hp r hr)
-  simp only [ExactStructure.qIsoOfIso_trans, Iso.trans_hom] at hc
+  simp only [CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_trans, Iso.trans_hom] at hc
   have hi := congrArg Iso.hom (reconstructedInitialChainIso_app_last E F p hp r hr)
   have he : (reconstructedInitialChainIso E F p hp r hr).hom.app (Fin.last n) ≫
       (E.qIsoOfIso (centralTopIso E F)).hom =

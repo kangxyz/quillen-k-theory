@@ -81,7 +81,8 @@ lemma supportedStrictToPerfect_target_hasDualApproximation (R : CommRingCat.{u})
     have : Epi f.hom.right.hom := HomologicalComplex.epi_of_epi_f _
       (fun i => by have := hd i; infer_instance)
     constructor
-    · apply (Quillen.ExactSubcategory.deflation_iff (Quillen.abelianExactStructure (Complex
+    · apply (CategoryTheory.ExactCategory.ExactSubcategory.deflation_iff
+      (Quillen.abelianExactStructure (Complex
         (Spec R)))
         (strictSupported j) f.hom.left).mpr
       refine ⟨kernel f.hom.left.hom, hkc, kernel.ι f.hom.left.hom,
@@ -89,7 +90,8 @@ lemma supportedStrictToPerfect_target_hasDualApproximation (R : CommRingCat.{u})
       exact { exact := ShortComplex.exact_of_f_is_kernel _ (kernelIsKernel f.hom.left.hom)
               mono_f := inferInstance
               epi_g := inferInstance }
-    · apply (Quillen.ExactSubcategory.deflation_iff (Quillen.abelianExactStructure (Complex
+    · apply (CategoryTheory.ExactCategory.ExactSubcategory.deflation_iff
+      (Quillen.abelianExactStructure (Complex
         (Spec R)))
         (perfectSupported j) f.hom.right).mpr
       refine ⟨kernel f.hom.right.hom, hkd, kernel.ι f.hom.right.hom,

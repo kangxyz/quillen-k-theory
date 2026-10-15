@@ -15,7 +15,7 @@ public import Mathlib.CategoryTheory.Bicategory.Span.Basic
 This file constructs the category of admissible spans from the precise
 pullback-calculus hypotheses. It does not assert that arbitrary morphism
 properties form an exact structure. The proved adapter from exact categories
-is provided separately by `Quillen.ExactStructure` and `Quillen.KTheory`.
+is provided separately by `CategoryTheory.ExactCategory.ExactStructure` and `Quillen.KTheory`.
 
 The left leg is the deflation (admissible epimorphism); the right leg is the
 inflation (admissible monomorphism). Composition uses the actual categorical

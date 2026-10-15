@@ -18,6 +18,8 @@ the ambient-cofibration model separately from its split-cofibration variant.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

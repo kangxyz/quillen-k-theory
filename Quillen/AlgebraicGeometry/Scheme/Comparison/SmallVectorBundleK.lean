@@ -31,7 +31,8 @@ namespace Quillen.SchemeSheaf
 /-- The actual exact functor from the public small model to vector bundles. -/
 abbrev smallVectorBundleToOriginal (X : Scheme.{u}) :
     ExactFunctor (smallVectorBundleExactStructure X) (vectorBundleExactStructure X) :=
-  ExactStructure.smallModelToOriginal.{u + 1} (vectorBundleExactStructure X)
+  CategoryTheory.ExactCategory.ExactStructure.smallModelToOriginal.{u + 1}
+    (vectorBundleExactStructure X)
 
 /-- Public scheme K-theory maps canonically to the actual vector-bundle Q-model. -/
 def smallVectorBundleKMap (X : Scheme.{u}) (n : ℕ) :

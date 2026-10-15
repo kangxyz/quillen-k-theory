@@ -129,6 +129,6 @@ def supportedCoherentExactStructure : ExactStructure (SupportedFiniteTypeSheaves
 
 /-- Upper-universe G-theory with actual coherent support. -/
 abbrev SupportedG (n : ℕ) : Type (u+1) :=
-  ExactStructure.SmallK.{u+1} (supportedCoherentExactStructure j) n
+  CategoryTheory.ExactCategory.ExactStructure.SmallK.{u+1} (supportedCoherentExactStructure j) n
 
 end Quillen.CoherentScheme

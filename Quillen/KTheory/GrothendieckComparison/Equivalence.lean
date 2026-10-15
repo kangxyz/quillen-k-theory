@@ -21,7 +21,8 @@ constructed topological retraction. Both directions respect exact functors.
 noncomputable section
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
@@ -68,9 +69,10 @@ def grothendieckKZeroEquiv : Multiplicative E.GrothendieckGroup ≃* E.K 0 where
     E.grothendieckKZeroEquiv (Multiplicative.ofAdd (E.grothendieckClass X)) =
       E.kZeroObjectClass X := E.grothendieckToKZero_class X
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   [Preadditive C] [HasFiniteBiproducts C] [Preadditive D] [HasFiniteBiproducts D]
   {EC : ExactStructure C} {ED : ExactStructure D}
@@ -104,4 +106,4 @@ theorem kZeroToGrothendieck_naturality (F : ExactFunctor EC ED) :
     (EC.kZeroToGrothendieck (EC.grothendieckToKZero a)) = _
   rw [hc, hd]
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

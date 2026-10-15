@@ -15,7 +15,8 @@ noncomputable section
 universe v u
 open CategoryTheory CategoryTheory.Limits
 
-namespace Quillen.ExactStructure.FiniteResolution
+namespace CategoryTheory.ExactCategory.ExactStructure.FiniteResolution
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   {E : ExactStructure C} {P : ObjectProperty C} [P.IsClosedUnderIsomorphisms]
 
@@ -33,4 +34,4 @@ theorem length_ofIso {X Y : C} (e : X ≅ Y) (T : E.FiniteResolution P X) :
     (T.ofIso e).length = T.length := by
   cases T <;> rfl
 
-end Quillen.ExactStructure.FiniteResolution
+end CategoryTheory.ExactCategory.ExactStructure.FiniteResolution

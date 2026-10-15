@@ -46,7 +46,8 @@ theorem original_loop_label (γ : Path (exactStructure.{u, u} R).kBasepoint
     (exactStructure R).kBasepoint) :
     ((originalQLoopProductEquiv R γ).1).ofTopology =
       (exactStructure R).loopComponentsKZeroEquiv (ZerothHomotopy.mk γ) := by
-  rw [originalQLoopProductEquiv, ExactStructure.qLoopProductEquiv_label]
+  rw [originalQLoopProductEquiv,
+    CategoryTheory.ExactCategory.ExactStructure.qLoopProductEquiv_label]
   rfl
 
 /-- The standard original comparison has positive, unchanged completion class. -/

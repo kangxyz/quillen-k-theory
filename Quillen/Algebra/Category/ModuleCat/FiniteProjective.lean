@@ -23,6 +23,8 @@ opposite ring; commutativity and noetherianity are not assumed.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 universe u v
 open CategoryTheory CategoryTheory.Limits

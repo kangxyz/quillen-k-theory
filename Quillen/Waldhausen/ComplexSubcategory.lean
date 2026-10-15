@@ -24,6 +24,8 @@ hypotheses, rather than supplying any K-theory comparison or localization.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 
@@ -42,7 +44,7 @@ namespace Quillen.Waldhausen
 section GeneralSubcategory
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-  (E : Quillen.ExactStructure C) (P : ObjectProperty C)
+  (E : CategoryTheory.ExactCategory.ExactStructure C) (P : ObjectProperty C)
   [P.ContainsZero] [P.IsClosedUnderIsomorphisms] [E.IsExtensionClosed P]
   [P.IsClosedUnderFiniteProducts]
 

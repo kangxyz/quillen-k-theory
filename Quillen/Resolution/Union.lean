@@ -22,6 +22,8 @@ Filtered nerve realization invariance is the already-proved topological theorem.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -52,11 +54,12 @@ def stratumQDiagram : StratumIndex.{u} ⥤ Cat.{u,u} where
   map f := (stratumTransition E P (leOfHom (AsSmall.down.map f))).mapQ.toCatHom
   map_id j := by
     apply Cat.Hom.ext
-    change (ExactFunctor.id (stratumExactStructure E P (stratumRank j))).mapQ = 𝟭 _
-    exact ExactFunctor.mapQ_id _
+    change (CategoryTheory.ExactCategory.ExactFunctor.id (stratumExactStructure E P (stratumRank
+      j))).mapQ = 𝟭 _
+    exact CategoryTheory.ExactCategory.ExactFunctor.mapQ_id _
   map_comp f g := by
     apply Cat.Hom.ext
-    exact ExactFunctor.mapQ_comp
+    exact CategoryTheory.ExactCategory.ExactFunctor.mapQ_comp
       (stratumTransition E P (leOfHom (AsSmall.down.map f)))
       (stratumTransition E P (leOfHom (AsSmall.down.map g)))
 
@@ -71,7 +74,7 @@ def stratumQCocone : Cocone (stratumQDiagram E P) where
         change (stratumTransition E P (leOfHom (AsSmall.down.map f))).mapQ ⋙
           (exactInclusion E (E.ResolutionLength P (stratumRank k))).mapQ =
             (exactInclusion E (E.ResolutionLength P (stratumRank j))).mapQ
-        rw [← ExactFunctor.mapQ_comp, exactInclusionOfLE_comp] }
+        rw [← CategoryTheory.ExactCategory.ExactFunctor.mapQ_comp, exactInclusionOfLE_comp] }
 
 omit [P.IsClosedUnderFiniteProducts] in
 /-- A whole ambient Q-arrow, including its kernel and cokernel witnesses,

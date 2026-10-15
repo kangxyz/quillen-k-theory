@@ -32,7 +32,7 @@ def initialIntervals (n : SimplexCategory) : Fin (n.len + 1) ⥤ Interval n :=
     fun _ _ h ↦ ⟨le_rfl, h⟩).functor
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 variable {n : SimplexCategory}
 
 /-- The initial flag underlying an exact quotient row. -/

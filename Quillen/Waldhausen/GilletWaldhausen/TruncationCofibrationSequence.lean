@@ -73,7 +73,8 @@ theorem boundedAcyclicTruncation_isCofibrationSequence (n : ℤ) :
       (boundedAcyclicTruncationInclusion P n) (boundedAcyclicTruncationProjection P n) :=
   exactFunctorSequence_isCofibrationSequence _ _ _ _ (boundedAcyclicTruncation_comp_zero P n)
     (acyclicTruncationSequenceFunctor_conflation P n)
-    (boundedAcyclicTruncLEExactFunctor P n) (ExactFunctor.id (boundedAcyclicExactStructure P))
+    (boundedAcyclicTruncLEExactFunctor P n) (CategoryTheory.ExactCategory.ExactFunctor.id
+      (boundedAcyclicExactStructure P))
     (boundedAcyclicQuotientExactFunctor P n) rfl rfl rfl
 
 omit [P.ContainsZero] [P.IsClosedUnderIsomorphisms]

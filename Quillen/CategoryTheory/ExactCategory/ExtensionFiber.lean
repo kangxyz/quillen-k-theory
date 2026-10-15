@@ -24,7 +24,8 @@ fiber with a comma category or assume any Theorem B transition condition.
 noncomputable section
 universe v u
 open CategoryTheory CategoryTheory.Limits ZeroObject
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -110,4 +111,4 @@ def extensionOverZeroEquivalence : E.ExtensionOver (0 : C) ≌ C where
 def extensionFiberZeroEquivalence : E.ExtensionFiber (0 : C) ≌ Core C :=
   E.extensionOverZeroEquivalence.core
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

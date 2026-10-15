@@ -49,7 +49,7 @@ theorem comparisonIndices_naturality {n m : SimplexCategory} (α : n ⟶ m) :
     (fun i ↦ Prod.ext (upperIndex_naturality α i) (centralInterval_naturality α i))
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 
 /-- An edgewise S-simplex gives an actual chain of Q-arrows. -/
 def comparisonSimplex {n : SimplexCategory}

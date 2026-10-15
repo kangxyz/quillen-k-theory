@@ -18,6 +18,8 @@ are supplied by proved closure properties. Kernel closure is not required.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -77,7 +79,8 @@ theorem boundedTerms_of_shortExact {S : ShortComplex (CochainComplex A ℤ)}
       (fun h ↦ Or.inl (lt_of_lt_of_le h (min_le_right _ _)))
       (fun h ↦ Or.inr (lt_of_le_of_lt (le_max_right _ _) h)))
     exact (hs n).exact.isZero_X₂ (hz₁.eq_of_src _ _) (hz₃.eq_of_tgt _ _)
-  · exact ExactStructure.IsExtensionClosed.prop_middle (E := abelianExactStructure A)
+  · exact CategoryTheory.ExactCategory.ExactStructure.IsExtensionClosed.prop_middle (E :=
+    abelianExactStructure A)
       (hs n) (ht₁ n) (ht₃ n)
 
 instance boundedTerms_extensionClosed :

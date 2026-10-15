@@ -17,6 +17,8 @@ termwise bounded, and exact on the inherited termwise subcategory.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

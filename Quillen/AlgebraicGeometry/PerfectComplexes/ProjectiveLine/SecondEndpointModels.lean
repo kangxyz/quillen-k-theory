@@ -17,6 +17,8 @@ from Q tensor U and the original base-change target perfection theorem.
 -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

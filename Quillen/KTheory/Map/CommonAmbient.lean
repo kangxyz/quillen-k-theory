@@ -27,7 +27,8 @@ universe v₁ v₂
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 
 variable {C D : Type (max v₁ v₂)} [Category.{v₁} C] [Category.{v₂} D]
   [Preadditive C] [Preadditive D] [HasFiniteBiproducts C] [HasFiniteBiproducts D]
@@ -64,4 +65,4 @@ def commonAmbientKEquiv [F.mapQ.IsEquivalence] (n : ℕ) : EC.K n ≃* ED.K n :=
     (↑(F.commonAmbientKEquiv n) : EC.K n →* ED.K n) = F.commonAmbientKMap n := rfl
 
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

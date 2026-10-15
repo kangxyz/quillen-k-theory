@@ -17,6 +17,8 @@ quotients, as proved by exact restriction and its homology sequence.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped ZeroObject

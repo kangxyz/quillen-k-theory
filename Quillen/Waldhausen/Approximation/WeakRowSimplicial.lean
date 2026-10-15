@@ -26,7 +26,8 @@ namespace Quillen.Waldhausen
 open QuillenComparison
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-  (E : Quillen.ExactStructure C) (cof weq : MorphismProperty C) [weq.IsMultiplicative]
+  (E : CategoryTheory.ExactCategory.ExactStructure C) (cof weq : MorphismProperty C)
+    [weq.IsMultiplicative]
 
 /-- Reindexing retains the actual horizontal cofibrations and weak maps. -/
 def weakRowReindex {m n : SimplexCategory} (α : m ⟶ n) :

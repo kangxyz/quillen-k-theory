@@ -64,7 +64,8 @@ theorem classifyingSpace_contractible_of_semilatticeSup
 
 end Quillen
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
@@ -84,7 +85,7 @@ theorem isZero_source_of_qHom {X Y : E.QCategory} (f : X ⟶ Y)
     apply (cancel_epi s.l).1
     exact hS.eq_of_src _ _
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure
 
 namespace Quillen.Q
 

@@ -45,7 +45,7 @@ def extensionDeflationAddIso (C : Category.{u, u} R) (S : IsoCategory R)
         ((exactStructure R).extensionOfDeflationQuotientIso (S ⊙ₗ p).of).hom).1
       simp only [extensionDeflationAddQuotientIso, Iso.trans_hom, Iso.symm_hom,
         Iso.refl_hom, Category.id_comp, Category.assoc, Iso.inv_hom_id, Category.comp_id,
-        ExactStructure.extensionOfDeflationQuotientIso_π]
+        CategoryTheory.ExactCategory.ExactStructure.extensionOfDeflationQuotientIso_π]
       rw [← Category.assoc]
       have h := congrArg
         (fun z ↦ z ≫ ((exactStructure R).extensionOfDeflationQuotientIso p.of).hom)
@@ -133,7 +133,8 @@ def extensionDeflationIsoFiberLineator (C : Category.{u, u} R) (S : IsoCategory 
       ((exactStructure R).qIsoOfIso
         ((exactStructure R).extensionOfDeflationQuotientIso (S ⊙ₗ p).of)).inv
     rw [extensionDeflationAddIso_projection]
-    simp only [extensionDeflationAddQuotientIso, ExactStructure.qIsoOfIso_trans,
+    simp only [extensionDeflationAddQuotientIso,
+      CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_trans,
       Iso.trans_hom, Category.assoc, Iso.inv_hom_id_assoc]
     rfl))).hom
 

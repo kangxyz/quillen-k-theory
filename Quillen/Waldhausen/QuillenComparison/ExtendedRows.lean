@@ -28,7 +28,7 @@ def flagMiddleOrdinal (n : ℕ) : ⦋n⦌ ⟶ ⦋n + 1 + 1⦌ :=
   SimplexCategory.Hom.mk ⟨fun i ↦ i.castSucc.succ, fun _ _ h ↦ Fin.succ_le_succ_iff.mpr h⟩
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C) {n : ℕ}
+variable (E : CategoryTheory.ExactCategory.ExactStructure C) {n : ℕ}
 variable (A : Fin (n + 1) ⥤ C)
 variable (hA : ∀ {i j} (f : i ⟶ j), E.inflation (A.map f))
 variable {P Z : C} (p : P ⟶ A.obj (Fin.last n)) (hp : E.deflation p)

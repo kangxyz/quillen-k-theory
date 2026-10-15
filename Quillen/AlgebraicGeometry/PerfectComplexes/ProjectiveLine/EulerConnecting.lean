@@ -31,7 +31,8 @@ local instance toPlus_additive (X : Scheme.{u}) : (toPlus X).Additive := by
 
 lemma flasqueSequencePlus_shortExact {X : Scheme.{u}}
     (S : ShortComplex (FlasqueBoundedBelow.Obj X))
-    (hS : (Quillen.ExactSubcategory.exactStructure (Quillen.abelianExactStructure (Complex X))
+    (hS : (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
+      (Quillen.abelianExactStructure (Complex X))
       (FlasqueBoundedBelow.objects X)).conflation S) :
     ((S.map (toPlus X)).map (CochainComplex.Plus.ι X.Modules)).ShortExact := hS
 

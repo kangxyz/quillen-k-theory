@@ -103,7 +103,10 @@ def classifyingSpacePathToPoint {C : Type u} [Category.{v} C]
   obtain ⟨d, hd⟩ := classifyingSpace_joined_vertex x
   exact (classifyingSpace_joined_points c d).trans hd
 
-namespace ExactStructure
+end Quillen
+
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
@@ -121,6 +124,8 @@ def kBasepointPath (x : E.KSpace) : Path E.kBasepoint x :=
 theorem kSpace_zerothHomotopy_subsingleton : Subsingleton (ZerothHomotopy E.KSpace) :=
   inferInstance
 
-end ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure
+
+namespace Quillen
 
 end Quillen

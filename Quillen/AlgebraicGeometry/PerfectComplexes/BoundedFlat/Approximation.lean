@@ -22,6 +22,8 @@ uniform cohomology bound; no approximation or K-equivalence is assumed.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

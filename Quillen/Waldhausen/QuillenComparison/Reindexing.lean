@@ -38,7 +38,7 @@ def nestedIntervalMap {m n : SimplexCategory} (α : m ⟶ n) :
   map_comp _ _ := Subsingleton.elim _ _
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 variable {n : SimplexCategory} {F : Grid n ⥤ C}
 variable (hF : IsSimplex E.inflation (MorphismProperty.isomorphisms C) F)
 

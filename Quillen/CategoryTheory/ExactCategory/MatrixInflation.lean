@@ -23,7 +23,8 @@ open CategoryTheory CategoryTheory.Limits
 universe v u
 attribute [local instance] hasBinaryBiproducts_of_finite_biproducts
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 
 /-- Adding an unchanged summand is a genuine cobase change. -/
@@ -41,7 +42,7 @@ theorem isPushout_biprod_map_left {A B D : C} (i : A ⟶ B) :
     · simp
 
 /-- The graph of an arbitrary morphism is an admissible monomorphism. -/
-theorem inflation_graph (E : Quillen.ExactStructure C) {A D : C} (f : A ⟶ D) :
+theorem inflation_graph (E : CategoryTheory.ExactCategory.ExactStructure C) {A D : C} (f : A ⟶ D) :
     E.inflation (biprod.lift (𝟙 A) f) := by
   let p := biprod.desc (-f) (𝟙 D)
   have hp : E.deflation p := E.deflation_biprod_desc (-f) (𝟙 D) (E.deflation_id D)
@@ -57,7 +58,7 @@ theorem inflation_graph (E : Quillen.ExactStructure C) {A D : C} (f : A ⟶ D) :
     simpa using congrArg (fun k ↦ k ≫ biprod.fst) hm
 
 /-- Adding an arbitrary second coordinate to an admissible mono keeps it admissible. -/
-theorem inflation_biprod_lift (E : Quillen.ExactStructure C) {A B D : C}
+theorem inflation_biprod_lift (E : CategoryTheory.ExactCategory.ExactStructure C) {A B D : C}
     (i : A ⟶ B) (f : A ⟶ D) (hi : E.inflation i) :
     E.inflation (biprod.lift i f) := by
   have hm : E.inflation (biprod.map i (𝟙 D)) :=
@@ -66,4 +67,4 @@ theorem inflation_biprod_lift (E : Quillen.ExactStructure C) {A B D : C}
   convert hc using 1
   ext <;> simp
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

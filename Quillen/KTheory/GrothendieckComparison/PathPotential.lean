@@ -25,7 +25,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u v w z
 open CategoryTheory CategoryTheory.Limits
 open scoped Topology
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
@@ -83,4 +84,4 @@ def realizedQCocyclePotential :
         (Functor.const D).obj ((classifyingFundamentalGroupoidFunctor E.QCategory).obj E.qZero) :=
   (classifyingFundamentalGroupoidUniversalNaturality F).hom ≫ E.qCocyclePotential F φ hφ
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

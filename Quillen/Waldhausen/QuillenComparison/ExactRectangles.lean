@@ -49,7 +49,7 @@ def cokernelOfZeroPushout {A B Z D : C} {i : A ⟶ B} {z : A ⟶ Z}
     · simpa using hm
     · exact hZ.eq_of_src _ _
 
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 variable {n : SimplexCategory} {F : Grid n ⥤ C}
 variable (hF : IsSimplex E.inflation (MorphismProperty.isomorphisms C) F)
 

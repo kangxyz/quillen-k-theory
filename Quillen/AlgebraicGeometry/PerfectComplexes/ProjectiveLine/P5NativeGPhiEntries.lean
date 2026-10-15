@@ -12,6 +12,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.FlasqueShift
 /-! # Original native Euler zero, signed shift and actual coefficient entries -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

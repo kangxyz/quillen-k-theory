@@ -13,6 +13,8 @@ unique original term-category class over each coarse bounded-complex class.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u

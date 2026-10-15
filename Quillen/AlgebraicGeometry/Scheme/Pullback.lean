@@ -45,28 +45,28 @@ theorem pullbackK_eq_smallKMap (f : X ⟶ Y) (n : ℕ) :
 @[simp high]
 theorem pullbackK_id (X : AlgebraicGeometry.Scheme.{u}) (n : ℕ) :
     pullbackK (𝟙 X) n = MonoidHom.id (K X n) := by
-  exact (ExactFunctor.smallKMap_eq_of_natIso
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := SchemeSheaf.vectorBundleExactPullback (𝟙 X))
-    (G := ExactFunctor.id (SchemeSheaf.vectorBundleExactStructure X))
+    (G := CategoryTheory.ExactCategory.ExactFunctor.id (SchemeSheaf.vectorBundleExactStructure X))
     (SchemeSheaf.vectorBundlePullbackIdIso X) n).trans
-    (ExactFunctor.smallKMap_id _ n)
+    (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_id _ n)
 
 /-- Actual bundle pullback is strictly contravariantly functorial on K-groups. -/
 @[simp high]
 theorem pullbackK_comp (f : X ⟶ Y) (g : Y ⟶ Z) (n : ℕ) :
     pullbackK (f ≫ g) n = (pullbackK f n).comp (pullbackK g n) := by
-  exact (ExactFunctor.smallKMap_eq_of_natIso
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := SchemeSheaf.vectorBundleExactPullback (f ≫ g))
     (G := (SchemeSheaf.vectorBundleExactPullback g).comp
       (SchemeSheaf.vectorBundleExactPullback f))
     (SchemeSheaf.vectorBundlePullbackCompIso f g) n).trans
-    (ExactFunctor.smallKMap_comp _ _ n)
+    (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp _ _ n)
 
 /-- On an open immersion, the new pullback is exactly the existing geometric
 open-restriction K-map. -/
 theorem pullbackK_eq_restrictK (j : X ⟶ Y) [IsOpenImmersion j] (n : ℕ) :
     pullbackK j n = restrictK j n :=
-  ExactFunctor.smallKMap_eq_of_natIso
+  CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := SchemeSheaf.vectorBundleExactPullback j)
     (G := SchemeSheaf.vectorBundleExactRestrict j)
     (SchemeSheaf.vectorBundleRestrictIsoPullback j).symm n

@@ -44,27 +44,27 @@ def pullbackG (f : X ⟶ Y) [Flat f] (n : ℕ) : G Y n →* G X n :=
 @[simp high] theorem pullbackG_id (X : AlgebraicGeometry.Scheme.{u})
     [IsLocallyNoetherian X] (n : ℕ) :
     pullbackG (𝟙 X) n = MonoidHom.id (G X n) := by
-  exact (ExactFunctor.smallKMap_eq_of_natIso
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := CoherentScheme.coherentExactPullback (𝟙 X))
-    (G := ExactFunctor.id (CoherentScheme.coherentExactStructure X))
+    (G := CategoryTheory.ExactCategory.ExactFunctor.id (CoherentScheme.coherentExactStructure X))
     (CoherentScheme.coherentPullbackIdIso X) n).trans
-      (ExactFunctor.smallKMap_id _ n)
+      (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_id _ n)
 
 /-- Flat pullbacks are contravariantly functorial on coherent G-groups. -/
 @[simp high] theorem pullbackG_comp (f : X ⟶ Y) (g : Y ⟶ Z)
     [Flat f] [Flat g] (n : ℕ) :
     pullbackG (f ≫ g) n = (pullbackG f n).comp (pullbackG g n) := by
-  exact (ExactFunctor.smallKMap_eq_of_natIso
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := CoherentScheme.coherentExactPullback (f ≫ g))
     (G := (CoherentScheme.coherentExactPullback g).comp
       (CoherentScheme.coherentExactPullback f))
     (CoherentScheme.coherentPullbackCompIso f g) n).trans
-      (ExactFunctor.smallKMap_comp _ _ n)
+      (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp _ _ n)
 
 /-- Flat pullback agrees with the original open-restriction G-map. -/
 theorem pullbackG_eq_restrictG (j : X ⟶ Y) [IsOpenImmersion j] (n : ℕ) :
     pullbackG j n = restrictG j n :=
-  ExactFunctor.smallKMap_eq_of_natIso
+  CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := CoherentScheme.coherentExactPullback j)
     (G := CoherentScheme.coherentRestrictionExact j)
     (CoherentScheme.coherentRestrictionIsoPullback j).symm n
@@ -83,8 +83,9 @@ theorem KToG_pullback (f : X ⟶ Y) [Flat f] (n : ℕ) :
       ((SchemeSheaf.vectorBundleToCoherentExact Y).smallKMap n) =
     ((SchemeSheaf.vectorBundleToCoherentExact X).smallKMap n).comp
       ((SchemeSheaf.vectorBundleExactPullback f).smallKMap n)
-  rw [← ExactFunctor.smallKMap_comp, ← ExactFunctor.smallKMap_comp]
-  exact ExactFunctor.smallKMap_eq_of_natIso (Iso.refl _) n
+  rw [← CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, ←
+    CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp]
+  exact CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso (Iso.refl _) n
 
 /-- Elementwise naturality retains the same canonical comparison maps. -/
 theorem KToG_pullback_apply (f : X ⟶ Y) [Flat f] (n : ℕ) (x : K Y n) :

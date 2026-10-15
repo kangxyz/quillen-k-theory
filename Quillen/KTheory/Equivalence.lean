@@ -26,7 +26,8 @@ universe v₁ v₂ u₁ u₂ v u
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 section Mixed
 variable {C : Type u₁} {D : Type u₂} [Category.{v₁} C] [Category.{v₂} D]
   [Preadditive C] [Preadditive D] [HasFiniteBiproducts C] [HasFiniteBiproducts D]
@@ -124,4 +125,4 @@ def KEquivOfMapQIsEquivalence [F.mapQ.IsEquivalence] (n : ℕ) : EC.K n ≃* ED.
 
 
 end CommonUniverse
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

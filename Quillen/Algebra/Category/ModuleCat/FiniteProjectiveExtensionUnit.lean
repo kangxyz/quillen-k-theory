@@ -38,11 +38,12 @@ def extensionLeftUnitMiddleIso {C : Category.{u, u} R}
     (extensionProductFiber R ((exactStructure R).extensionUnit C) p).of.obj.left ≅
       p.of.obj.left where
   hom := pullback.snd _ _
-  inv := pullback.lift p.of.obj.hom (𝟙 _) (by simp [ExactStructure.extensionUnit])
+  inv := pullback.lift p.of.obj.hom (𝟙 _) (by simp
+    [CategoryTheory.ExactCategory.ExactStructure.extensionUnit])
   hom_inv_id := by
     apply pullback.hom_ext
     · simp only [Category.assoc, pullback.lift_fst, Category.id_comp]
-      simpa [ExactStructure.extensionUnit] using
+      simpa [CategoryTheory.ExactCategory.ExactStructure.extensionUnit] using
         (pullback.condition (f := (𝟙 C)) (g := p.of.obj.hom)).symm
     · simp
   inv_hom_id := by simp
@@ -53,12 +54,13 @@ def extensionRightUnitMiddleIso {C : Category.{u, u} R}
     (extensionProductFiber R p ((exactStructure R).extensionUnit C)).of.obj.left ≅
       p.of.obj.left where
   hom := pullback.fst _ _
-  inv := pullback.lift (𝟙 _) p.of.obj.hom (by simp [ExactStructure.extensionUnit])
+  inv := pullback.lift (𝟙 _) p.of.obj.hom (by simp
+    [CategoryTheory.ExactCategory.ExactStructure.extensionUnit])
   hom_inv_id := by
     apply pullback.hom_ext
     · simp
     · simp only [Category.assoc, pullback.lift_snd, Category.id_comp]
-      simpa [ExactStructure.extensionUnit] using
+      simpa [CategoryTheory.ExactCategory.ExactStructure.extensionUnit] using
         (pullback.condition (f := p.of.obj.hom) (g := (𝟙 C)))
   inv_hom_id := by simp
 

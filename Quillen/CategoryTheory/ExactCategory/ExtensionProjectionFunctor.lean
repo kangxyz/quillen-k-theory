@@ -19,7 +19,8 @@ between the strict fibers and extension groupoids remain further theorems.
 noncomputable section
 universe v u
 open CategoryTheory
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [Limits.HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -30,4 +31,4 @@ def extensionProjection : E.ExtensionTotal ⥤ Quillen.Q E.deflation E.inflation
   map_id := E.extensionProjectionQMap_id
   map_comp := E.extensionProjectionQMap_comp
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

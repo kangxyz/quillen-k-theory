@@ -23,7 +23,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
@@ -56,4 +57,4 @@ theorem qGrothendieckWeight_extensionProjection {x y : E.ExtensionTotal} (f : x 
     _ = E.grothendieckClass x.base.obj := by simpa [add_comm] using ha.symm
     _ = _ := hx
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

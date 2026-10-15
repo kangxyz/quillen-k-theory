@@ -124,7 +124,7 @@ instance smallClosedToKilledExact_isEquivalence :
 
 instance smallClosedToKilledExact_mapQ_isEquivalence :
     (smallClosedToKilledExact f).mapQ.IsEquivalence := by
-  apply ExactFunctor.mapQ_isEquivalence_of_equivalence
+  apply CategoryTheory.ExactCategory.ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro M N a ha
     rw [show (CoherentScheme.finiteModuleExactStructure.{u, u} (ClosedRing f)).smallModel =
       abelianExactStructure (SmallModel.{u} (FGModuleCat.{u} (ClosedRing f))) from
@@ -158,7 +158,8 @@ def closedSupportedKMap (n : ℕ) : G (ClosedRing f) n →* SupportedG (Submonoi
 /-- The monoid-hom coercion is the canonical forward map. -/
 @[simp] theorem closedSupportGEquiv_coe (n : ℕ) :
     ↑(closedSupportGEquiv f n) = closedSupportedKMap f n := by
-  rw [closedSupportedKMap, smallClosedToSupportExact, ExactFunctor.KMap_comp]
+  rw [closedSupportedKMap, smallClosedToSupportExact,
+    CategoryTheory.ExactCategory.ExactFunctor.KMap_comp]
   rfl
 
 /-- The actual closed-to-supported K-map is bijective in every connective degree. -/
@@ -179,7 +180,7 @@ theorem closedSupportGEquiv_pushforward (n : ℕ) :
       (Devissage.exactInclusion (smallTorsion (Submonoid.powers f))) =
     (closedRestrictionExact f).smallModel.comp (smallModelToAbelian R) := by rfl
   have hk := congrArg (fun F ↦ F.KMap n) h
-  simp only [ExactFunctor.KMap_comp] at hk
+  simp only [CategoryTheory.ExactCategory.ExactFunctor.KMap_comp] at hk
   ext x
   apply (smallAbelianKEquiv R n).injective
   change smallAbelianKEquiv R n ((smallAbelianKEquiv R n).symm

@@ -18,6 +18,8 @@ No ambient sheaf exactness, flat-map premise or derived-to-K shortcut is used.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -56,7 +58,7 @@ instance boundedFlatPerfectPullback_additive {Y : Scheme.{u}} (f : X ⟶ Y) :
 /-- Actual short exact sequences have flat quotient in each degree, so their pullbacks remain exact.
 -/
 def boundedFlatPerfectExactPullback {Y : Scheme.{u}} (f : X ⟶ Y) :
-    Quillen.ExactFunctor
+    CategoryTheory.ExactCategory.ExactFunctor
       (ExactSubcategory.exactStructure (abelianExactStructure (Complex Y)) (boundedFlatPerfect Y))
       (ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (boundedFlatPerfect X))
         where

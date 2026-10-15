@@ -24,7 +24,8 @@ universe v u
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
@@ -117,4 +118,4 @@ lemma kernel_mem_of_resolutionStep (hPQ : P ≤ Q) {S : ShortComplex C}
     (S := pullbackConflation (S := S) T.middle T.g)
     (E.pullbackConflation_mem hS T.g) hPB' (hPQ _ T.middle_mem)
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

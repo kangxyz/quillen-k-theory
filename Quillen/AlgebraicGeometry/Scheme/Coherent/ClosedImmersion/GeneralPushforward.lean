@@ -190,11 +190,12 @@ theorem coherentPushforwardGMap_openBaseChange {V : Scheme.{u}} [IsLocallyNoethe
     (restrictionGMap a n).comp (coherentPushforwardGMap i n) =
       (coherentPushforwardGMap (pullback.snd i a) n).comp
         (restrictionGMap (pullback.fst i a) n) := by
-  have h := ExactFunctor.smallKMap_eq_of_natIso.{u+1}
+  have h := CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u+1}
     (F := (coherentPushforwardExact i).comp (coherentRestrictionExact a))
     (G := (coherentRestrictionExact (pullback.fst i a)).comp
       (coherentPushforwardExact (pullback.snd i a)))
     (coherentOpenBaseChange i a) n
-  simpa only [ExactFunctor.smallKMap_comp, coherentPushforwardGMap, restrictionGMap] using h
+  simpa only [CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, coherentPushforwardGMap,
+    restrictionGMap] using h
 
 end Quillen.CoherentScheme.ClosedImmersion.General

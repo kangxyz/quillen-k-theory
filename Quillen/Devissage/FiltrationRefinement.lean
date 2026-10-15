@@ -24,7 +24,8 @@ open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.ExactStructure.Filtration
+namespace CategoryTheory.ExactCategory.ExactStructure.Filtration
+open Quillen
 variable {C : Type u} [Category.{v} C] [Abelian C] {P : ObjectProperty C}
 
 /-- Transport a filtration along an actual isomorphism of its endpoint. -/
@@ -92,4 +93,4 @@ theorem refine {Q : ObjectProperty C} {X : C}
     obtain ⟨G⟩ := h S.X₃ hQ
     exact extension S hS L G
 
-end Quillen.ExactStructure.Filtration
+end CategoryTheory.ExactCategory.ExactStructure.Filtration

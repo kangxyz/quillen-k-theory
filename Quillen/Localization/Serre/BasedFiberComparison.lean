@@ -150,7 +150,8 @@ This follows from the actual based nullhomotopy, not the still-open fiber-equiva
 theorem quotientKMap_comp_inclusion (n : ℕ) :
     (quotientKMap P n).comp (Devissage.KMap P n) = 1 := by
   change ((quotientExactFunctor P).KMap n).comp ((Devissage.exactInclusion P).KMap n) = 1
-  rw [ExactFunctor.KMap_eq_piMap, ExactFunctor.KMap_eq_piMap,
+  rw [CategoryTheory.ExactCategory.ExactFunctor.KMap_eq_piMap,
+    CategoryTheory.ExactCategory.ExactFunctor.KMap_eq_piMap,
     ← homotopyGroupMapHom_comp]
   exact piMap_eq_one_of_based_nullhomotopy n _
     (normalizedQuotientInclusionHomotopy P).toHomotopy

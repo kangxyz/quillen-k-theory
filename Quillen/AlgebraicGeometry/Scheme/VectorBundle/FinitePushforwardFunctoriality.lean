@@ -43,19 +43,21 @@ def vectorBundlePushforwardCompIso (f : X ⟶ Y) (g : Y ⟶ Z)
 /-- Identity direct image gives the identity original vector-bundle K-map. -/
 @[simp] theorem schemeKPushforward_id (X : Scheme.{u}) [IsLocallyNoetherian X] (n : ℕ) :
     schemeKPushforward (𝟙 X) n = MonoidHom.id (SchemeK X n) :=
-  (ExactFunctor.smallKMap_eq_of_natIso
+  (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := vectorBundlePushforwardExact (𝟙 X))
-    (G := ExactFunctor.id (vectorBundleExactStructure X))
-    (vectorBundlePushforwardIdIso X) n).trans (ExactFunctor.smallKMap_id _ n)
+    (G := CategoryTheory.ExactCategory.ExactFunctor.id (vectorBundleExactStructure X))
+    (vectorBundlePushforwardIdIso X) n).trans
+      (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_id _ n)
 
 /-- Actual finite flat direct images compose on the original K-groups. -/
 @[simp] theorem schemeKPushforward_comp (f : X ⟶ Y) (g : Y ⟶ Z)
     [AlgebraicGeometry.IsFinite f] [Flat f] [AlgebraicGeometry.IsFinite g] [Flat g] (n : ℕ) :
     schemeKPushforward (f ≫ g) n = (schemeKPushforward g n).comp (schemeKPushforward f n) :=
-  (ExactFunctor.smallKMap_eq_of_natIso
+  (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := vectorBundlePushforwardExact (f ≫ g))
     (G := (vectorBundlePushforwardExact f).comp (vectorBundlePushforwardExact g))
-    (vectorBundlePushforwardCompIso f g).symm n).trans (ExactFunctor.smallKMap_comp _ _ n)
+    (vectorBundlePushforwardCompIso f g).symm n).trans
+      (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp _ _ n)
 
 /-- The original open base-change isomorphism restricts to vector bundles. -/
 def vectorBundlePushforwardOpenBaseChange (f : X ⟶ Y)
@@ -72,11 +74,12 @@ theorem schemeKPushforward_openBaseChange (f : X ⟶ Y)
     {V : Scheme.{u}} [IsLocallyNoetherian V] (j : V ⟶ Y) [IsOpenImmersion j] (n : ℕ) :
     (schemeKRestrict j n).comp (schemeKPushforward f n) =
       (schemeKPushforward (pullback.snd f j) n).comp (schemeKRestrict (pullback.fst f j) n) := by
-  have h := ExactFunctor.smallKMap_eq_of_natIso.{u+1}
+  have h := CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u+1}
     (F := (vectorBundlePushforwardExact f).comp (vectorBundleExactRestrict j))
     (G := (vectorBundleExactRestrict (pullback.fst f j)).comp
       (vectorBundlePushforwardExact (pullback.snd f j)))
     (vectorBundlePushforwardOpenBaseChange f j) n
-  simpa only [ExactFunctor.smallKMap_comp, schemeKPushforward, schemeKRestrict] using h
+  simpa only [CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, schemeKPushforward,
+    schemeKRestrict] using h
 
 end Quillen.SchemeSheaf

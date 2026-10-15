@@ -23,9 +23,10 @@ universe v u
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-  (E : Quillen.ExactStructure C)
+  (E : CategoryTheory.ExactCategory.ExactStructure C)
 
 /-- Every endomorphism of the distinguished zero Q-vertex is the identity. -/
 theorem qZero_endomorphism_eq_id (f : E.qZero ⟶ E.qZero) : f = 𝟙 E.qZero := by
@@ -61,4 +62,4 @@ theorem qHom_subsingleton_of_isZero (X Y : E.QCategory) (hY : IsZero Y.obj.of) :
     exact Quillen.Q.mkHom_eq_of_apexIso E.deflation E.inflation s t
       (hS.iso hT) (hS.eq_of_src _ _) (hS.eq_of_src _ _)
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

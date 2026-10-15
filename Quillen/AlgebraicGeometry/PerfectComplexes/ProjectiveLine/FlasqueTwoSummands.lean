@@ -18,6 +18,8 @@ tensor, in O/O(-1) order. Their actual sum is followed by the admitted natural
 Godement total. Native affine-target correspondence is a separate geometry step.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

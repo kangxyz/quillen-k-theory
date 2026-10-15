@@ -43,7 +43,7 @@ theorem completionKZeroClass_eq_objectClasses (R : Type u) [Ring R]
       (exactStructure R).kZeroObjectClass X.obj.2.of /
         (exactStructure R).kZeroObjectClass X.obj.1.of := by
   simp only [completionKZeroClass, completionGrade, coreClass, ofAdd_sub,
-    map_div, ExactStructure.grothendieckToKZero_class]
+    map_div, CategoryTheory.ExactCategory.ExactStructure.grothendieckToKZero_class]
 
 variable {R S : Type u} [Ring R] [Ring S]
 
@@ -57,7 +57,8 @@ theorem completionGrade_baseChange (f : R →+* S) (X : StableCompletion.Complet
       (rightBaseChangeExact f).grothendieckMap
         ((exactStructure Rᵐᵒᵖ).grothendieckClass X.obj.2.of -
           (exactStructure Rᵐᵒᵖ).grothendieckClass X.obj.1.of)
-  rw [map_sub, ExactFunctor.grothendieckMap_class, ExactFunctor.grothendieckMap_class]
+  rw [map_sub, CategoryTheory.ExactCategory.ExactFunctor.grothendieckMap_class,
+    CategoryTheory.ExactCategory.ExactFunctor.grothendieckMap_class]
   rfl
 
 /-- The original K₀ map sends each virtual completion object class to that of its

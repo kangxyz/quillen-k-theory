@@ -88,7 +88,7 @@ instance coherentVectorBundle_kernelClosed_affine :
     have h₃' : CoherentScheme.finiteProjective R T.X₃ :=
       (coherentVectorBundle_iff_projective R S.X₃).mp h₃
     exact (coherentVectorBundle_iff_projective R S.X₁).mpr
-      (ExactStructure.IsKernelClosed.prop_kernel
+      (CategoryTheory.ExactCategory.ExactStructure.IsKernelClosed.prop_kernel
         (E := CoherentScheme.finiteModuleExactStructure R) hT h₂' h₃')
 
 /-- Associated sheaves of finite modules, landing in the genuine global

@@ -58,7 +58,8 @@ def extensionProjectionLinear :
     change _ ≫ (exactStructure R).extensionProjectionQMap (αₗ S T x).hom = _
     rw [directSumProjection_associator]
     simp only [directSumAssociatorQuotientIso, Iso.trans_symm,
-      ExactStructure.qIsoOfIso_trans, Iso.trans_hom, Iso.inv_hom_id_assoc]
+      CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_trans, Iso.trans_hom,
+        Iso.inv_hom_id_assoc]
     change _ = 𝟙 _ ≫
       ((exactStructure R).qIsoOfIso (directSumExtensionQuotientIso R T x)).inv ≫
       ((exactStructure R).qIsoOfIso

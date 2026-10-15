@@ -79,9 +79,10 @@ theorem completionQPathPotential_entry (U : GroupCompletionCategory R) :
           (classifyingSpacePoint ((completionIdentityEntry R).obj U))) ⟶
             FundamentalGroupoid.mk (classifyingSpacePoint (exactStructure R).qZero)) ≫
         (exactStructure R).grothendieckLoopClass (Multiplicative.ofAdd (completionGrade R U)) := by
-  dsimp only [completionQPathPotential, ExactStructure.realizedQCocyclePotential,
+  dsimp only [completionQPathPotential,
+    CategoryTheory.ExactCategory.ExactStructure.realizedQCocyclePotential,
     NatTrans.comp_app, classifyingFundamentalGroupoidUniversalNaturality,
-    ExactStructure.qCocyclePotential]
+    CategoryTheory.ExactCategory.ExactStructure.qCocyclePotential]
   simp only [← Groupoid.inv_eq_inv, fromZero_completionIdentityProjection]
   change eqToHom (congrArg FundamentalGroupoid.mk
     (classifyingSpaceMapUniversal_point (localizedExtensionProjection R)
@@ -162,11 +163,13 @@ theorem completionToOriginalQLoopsComponents_kZero (U : GroupCompletionCategory 
     (exactStructure R).loopComponentsKZeroEquiv (completionToOriginalQLoopsComponents R U a) =
       completionZerothHomotopyKZeroEquiv R a / completionKZeroClass R U := by
   obtain ⟨V, rfl⟩ := classifyingSpaceVertexComponent_surjective (GroupCompletionCategory R) a
-  rw [completionToOriginalQLoopsComponents_mk, ExactStructure.loopComponentsKZeroEquiv_mk,
+  rw [completionToOriginalQLoopsComponents_mk,
+    CategoryTheory.ExactCategory.ExactStructure.loopComponentsKZeroEquiv_mk,
     completionZerothHomotopyKZeroEquiv_point]
   apply (exactStructure R).kZeroFundamentalGroupEquiv.injective
   rw [MulEquiv.apply_symm_apply, completionToOriginalQLoops_vertex_class]
-  dsimp only [ExactStructure.grothendieckLoopClass, MonoidHom.comp_apply,
+  dsimp only [CategoryTheory.ExactCategory.ExactStructure.grothendieckLoopClass,
+    MonoidHom.comp_apply,
     MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_coe, completionKZeroClass]
   rw [ofAdd_sub, map_div, map_div]
   rfl

@@ -200,13 +200,15 @@ variable [Preadditive C] [HasFiniteBiproducts C]
 
 /-- Isomorphisms of original-category objects induce isomorphisms of the
 Q-category. Both arrows are admissible by the exact-category axioms. -/
-def ExactStructure.qIsoOfIso (E : ExactStructure C) {X Y : C} (e : X ≅ Y) :
+def _root_.CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso (E : ExactStructure C) {X Y : C} (e
+  : X ≅ Y) :
     Q.of E.deflation E.inflation X ≅ Q.of E.deflation E.inflation Y :=
   Q.isoOfIso E.deflation E.inflation e (E.inflation_of_iso e)
     (E.inflation_of_iso e.symm)
 
 @[simp]
-theorem ExactStructure.qIsoOfIso_refl (E : ExactStructure C) (X : C) :
+theorem _root_.CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_refl (E : ExactStructure C) (X
+  : C) :
     E.qIsoOfIso (Iso.refl X) = Iso.refl (Q.of E.deflation E.inflation X) := by
   apply Iso.ext
   rfl

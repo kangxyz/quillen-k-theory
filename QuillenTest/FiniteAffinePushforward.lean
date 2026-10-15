@@ -51,10 +51,12 @@ theorem original_closed_map [IsClosedImmersion (Spec.map φ)] (n : ℕ) (a : G (
 
 /-- The actual global-section comparison retains the upper-universe public G-group. -/
 theorem original_global_sections (n : ℕ) (a : G (Spec S) n) :
-    ExactFunctor.smallKMap.{u+1} (ClosedImmersion.Ideal.globalSectionsExact R) n (pushforwardG φ hφ
+    CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1}
+      (ClosedImmersion.Ideal.globalSectionsExact R) n (pushforwardG φ hφ
       n a) =
-      ExactFunctor.smallKMap.{u+1} (moduleRestrictionExact φ hφ) n
-        (ExactFunctor.smallKMap.{u+1} (ClosedImmersion.Ideal.globalSectionsExact S) n a) :=
+      CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (moduleRestrictionExact φ hφ) n
+        (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1}
+          (ClosedImmersion.Ideal.globalSectionsExact S) n a) :=
   DFunLike.congr_fun (pushforwardG_globalSections φ hφ n) a
 
 /-- Bundling does not change the original finite affine map. -/

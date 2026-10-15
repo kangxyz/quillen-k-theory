@@ -20,6 +20,8 @@ the categorical bookkeeping for adjacent resolution-length strata.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -49,7 +51,8 @@ def exactInclusionOfLE (h : P ≤ Q) :
 
 instance restrictedProperty_extensionClosed :
     (ExactSubcategory.exactStructure E Q).IsExtensionClosed (P.inverseImage Q.ι) where
-  prop_middle hS h₁ h₃ := ExactStructure.IsExtensionClosed.prop_middle (E := E) hS h₁ h₃
+  prop_middle hS h₁ h₃ := CategoryTheory.ExactCategory.ExactStructure.IsExtensionClosed.prop_middle
+    (E := E) hS h₁ h₃
 
 instance restrictedProperty_finiteProducts :
     (P.inverseImage Q.ι).IsClosedUnderFiniteProducts where
@@ -57,7 +60,8 @@ instance restrictedProperty_finiteProducts :
 
 instance restrictedProperty_kernelClosed [E.IsKernelClosed P] :
     (ExactSubcategory.exactStructure E Q).IsKernelClosed (P.inverseImage Q.ι) where
-  prop_kernel hS h₂ h₃ := ExactStructure.IsKernelClosed.prop_kernel (E := E) hS h₂ h₃
+  prop_kernel hS h₂ h₃ := CategoryTheory.ExactCategory.ExactStructure.IsKernelClosed.prop_kernel (E
+    := E) hS h₂ h₃
 
 /-- The original smaller category, lifted into the nested full subcategory. -/
 def nestedLift (h : P ≤ Q) : P.FullSubcategory ⥤ (P.inverseImage Q.ι).FullSubcategory :=
@@ -101,19 +105,19 @@ theorem nestedLift_ofEquivalence (h : P ≤ Q) :
     (ExactSubcategory.exactStructure (ExactSubcategory.exactStructure E Q)
       (P.inverseImage Q.ι)).ofEquivalence (nestedLift P Q h).asEquivalence =
       ExactSubcategory.exactStructure E P := by
-  apply ExactStructure.ext_conflation
+  apply CategoryTheory.ExactCategory.ExactStructure.ext_conflation
   funext S
   rfl
 
 instance nestedLiftExact_mapQ_isEquivalence (h : P ≤ Q) :
     (nestedLiftExact E P Q h).mapQ.IsEquivalence := by
-  apply ExactFunctor.mapQ_isEquivalence_of_equivalence
+  apply CategoryTheory.ExactCategory.ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro X Y i hi
     rw [← nestedLift_ofEquivalence E P Q h]
-    exact (ExactStructure.ofEquivalence_inflation_iff _ _ i).mpr hi
+    exact (CategoryTheory.ExactCategory.ExactStructure.ofEquivalence_inflation_iff _ _ i).mpr hi
   · intro X Y p hp
     rw [← nestedLift_ofEquivalence E P Q h]
-    exact (ExactStructure.ofEquivalence_deflation_iff _ _ p).mpr hp
+    exact (CategoryTheory.ExactCategory.ExactStructure.ofEquivalence_deflation_iff _ _ p).mpr hp
 
 @[simp] theorem nestedLift_factor (h : P ≤ Q) :
     (nestedLiftExact E P Q h).comp
@@ -130,7 +134,7 @@ theorem inclusionOfLEKMap_bijective_of_length_one [E.IsKernelClosed P]
   have h₁ := (nestedLiftExact E P Q hPQ).KMap_bijective_of_mapQ_isEquivalence n
   have h₂ := inclusionKMap_bijective_of_length_one
     (ExactSubcategory.exactStructure E Q) (P.inverseImage Q.ι) h n
-  rw [← nestedLift_factor E P Q hPQ, ExactFunctor.KMap_comp]
+  rw [← nestedLift_factor E P Q hPQ, CategoryTheory.ExactCategory.ExactFunctor.KMap_comp]
   exact h₂.comp h₁
 
 /-- The corresponding genuine classifying-space equivalence, with the
@@ -155,7 +159,8 @@ def inclusionOfLEClassifyingHomotopyEquivOfLengthOne [E.IsKernelClosed P]
     (P.inverseImage Q.ι) h).toFun.comp
       (classifyingSpaceMap (nestedLiftExact E P Q hPQ).mapQ).hom = _
   rw [classifyingHomotopyEquivOfLengthOne_toFun, ← TopCat.hom_comp,
-    ← classifyingSpaceMap_comp, ← ExactFunctor.mapQ_comp, nestedLift_factor]
+    ← classifyingSpaceMap_comp, ← CategoryTheory.ExactCategory.ExactFunctor.mapQ_comp,
+      nestedLift_factor]
 
 /-- Equal object classes give an actual equivalence for their inherited
 inclusion; this is a categorical equivalence, not a resolution assumption. -/
@@ -168,7 +173,7 @@ theorem inclusionOfLE_mapQ_isEquivalence_of_reverse (hPQ : P ≤ Q) (hQP : Q ≤
     ⟨fun Y => ⟨⟨Y.obj, hQP _ Y.property⟩, ⟨Iso.refl _⟩⟩⟩
   let : F.toFunctor.IsEquivalence := {}
   change F.mapQ.IsEquivalence
-  apply ExactFunctor.mapQ_isEquivalence_of_equivalence
+  apply CategoryTheory.ExactCategory.ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro X Y i hi
     obtain ⟨Z, hZ, p, hp, hS⟩ := (ExactSubcategory.inflation_iff E Q _).1 hi
     exact (ExactSubcategory.inflation_iff E P _).2 ⟨Z, hQP _ hZ, p, hp, hS⟩
@@ -193,7 +198,7 @@ theorem inclusionKMap_bijective_of_all (hP : ∀ X, P X) (n : ℕ) :
   let : F.toFunctor.EssSurj := ⟨fun Y => ⟨⟨Y, hP Y⟩, ⟨Iso.refl _⟩⟩⟩
   let : F.toFunctor.IsEquivalence := {}
   let : F.mapQ.IsEquivalence := by
-    apply ExactFunctor.mapQ_isEquivalence_of_equivalence
+    apply CategoryTheory.ExactCategory.ExactFunctor.mapQ_isEquivalence_of_equivalence
     · intro X Y i hi
       obtain ⟨Z, p, hp, hS⟩ := hi
       exact (ExactSubcategory.inflation_iff E P _).2 ⟨Z, hP Z, p, hp, hS⟩

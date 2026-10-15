@@ -27,7 +27,8 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits
 open scoped Topology unitInterval
 universe u v
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
@@ -122,9 +123,10 @@ theorem qLoopComponentProductChoiceHomotopy_identity
     E.qLoopComponentProductChoiceHomotopy r hr (t, (E.discreteKZeroIdentity, z)) = z.val :=
   normalizedLoopComponentProductHomotopy_zero _ _ _ _
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   [Preadditive C] [HasFiniteBiproducts C] [Preadditive D] [HasFiniteBiproducts D]
   {EC : ExactStructure C} {ED : ExactStructure D}
@@ -163,4 +165,4 @@ theorem qLoopComponentProductEquiv_naturality (F : ExactFunctor EC ED) :
     EC.qLoopRepresentative_identity ED.qLoopRepresentative_identity
     F.qLoopRepresentativeNaturalityPath
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

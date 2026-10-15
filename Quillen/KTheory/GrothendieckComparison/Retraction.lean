@@ -25,7 +25,8 @@ universe v u
 open CategoryTheory CategoryTheory.Limits
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
@@ -99,4 +100,4 @@ theorem kZeroToGrothendieck_surjective : Function.Surjective E.kZeroToGrothendie
 theorem qGroupoidToKZero_injective : Function.Injective E.qGroupoidToKZero :=
   E.grothendieckToKZero_injective_iff.mp E.grothendieckToKZero_injective
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

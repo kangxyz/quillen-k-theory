@@ -25,7 +25,8 @@ open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject Topology
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
@@ -114,4 +115,4 @@ theorem kZeroEdgeClass_mem_objectSubgroup {X Y : E.QCategory} (f : X ⟶ Y) :
   rw [h]
   exact Subgroup.subset_closure ⟨K, rfl⟩
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

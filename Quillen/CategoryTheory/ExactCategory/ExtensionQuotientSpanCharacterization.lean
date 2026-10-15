@@ -19,7 +19,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure.QuotientSpan
+namespace CategoryTheory.ExactCategory.ExactStructure.QuotientSpan
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C) {A' A B B' H X Y : C}
 variable (h : A' ⟶ A) (i : A ⟶ B) (k : B ⟶ B')
@@ -83,4 +84,4 @@ theorem mkHom_eq_of_cokernel (t : Span E.deflation E.inflation X Y)
   · apply (cancel_epi q).1
     rw [← Category.assoc, he, pr, projection_right]
 
-end Quillen.ExactStructure.QuotientSpan
+end CategoryTheory.ExactCategory.ExactStructure.QuotientSpan

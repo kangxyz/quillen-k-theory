@@ -13,7 +13,8 @@ public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
 noncomputable section
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -29,4 +30,4 @@ theorem deflation_coprod_desc {A B X : C} [HasBinaryCoproduct A B]
   convert h using 1
   simp [biprod.isoCoprod_inv, coprod.desc_comp]
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

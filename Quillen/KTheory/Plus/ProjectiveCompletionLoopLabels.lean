@@ -87,7 +87,7 @@ theorem completionToOriginalQLoops_normalizedQ_kZero_square (f : R →+* S)
         (ZerothHomotopy.mk
           (completionToOriginalQLoops Sᵐᵒᵖ (StableCompletion.stageObject S 0)
             (completionBaseChangeMap f x))) := by
-  rw [← ExactFunctor.loopComponentsKZeroEquiv_naturality]
+  rw [← CategoryTheory.ExactCategory.ExactFunctor.loopComponentsKZeroEquiv_naturality]
   exact completionToOriginalQLoopsComponents_kZero_baseChange f (ZerothHomotopy.mk x)
 
 end Quillen.FiniteProjectiveModule

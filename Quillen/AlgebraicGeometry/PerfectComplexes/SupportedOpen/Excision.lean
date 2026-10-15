@@ -22,6 +22,8 @@ zero. No quasi-compactness or separation hypothesis is used.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -55,7 +57,7 @@ instance instAdditivePerfectSupportedExtensionByZero : (perfectSupportedExtensio
   infer_instance
 
 /-- The exact functor on supported perfect objects induced by extension by zero. -/
-def perfectSupportedExactExtensionByZero : Quillen.ExactFunctor
+def perfectSupportedExactExtensionByZero : CategoryTheory.ExactCategory.ExactFunctor
     (ExactSubcategory.exactStructure (abelianExactStructure (Complex U)) (perfectSupported (j ⁻¹ᵁ
       T).ι))
     (ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (perfectSupported T.ι))

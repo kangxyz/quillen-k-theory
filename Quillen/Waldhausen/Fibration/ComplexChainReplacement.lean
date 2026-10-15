@@ -20,6 +20,8 @@ projection is only asserted to be a genuine quasi-isomorphism.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CochainComplex
 universe u v

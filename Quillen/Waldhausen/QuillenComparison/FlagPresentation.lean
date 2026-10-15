@@ -23,7 +23,7 @@ universe v u
 namespace Quillen.Waldhausen.QuillenComparison
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C) {n : SimplexCategory}
+variable (E : CategoryTheory.ExactCategory.ExactStructure C) {n : SimplexCategory}
 
 /-- The initial flag of an exact row is genuinely admissible. -/
 theorem initialFlag_inflation (F : Row E n) {i j : Fin (n.len + 1)} (f : i ⟶ j) :

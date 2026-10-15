@@ -34,7 +34,7 @@ namespace Quillen.Waldhausen
 open QuillenComparison
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-  (E : Quillen.ExactStructure C) (W V : Structure C)
+  (E : CategoryTheory.ExactCategory.ExactStructure C) (W V : Structure C)
   (hWE : W.cof ≤ E.inflation) (hEV : E.inflation ≤ V.cof) (n : SimplexCategory)
 
 /-- The unit is the actual quotient by the zero initial object. -/

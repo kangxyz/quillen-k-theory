@@ -17,6 +17,8 @@ their pullback. This is the algebraic reduction used in Weibel V.3.1.1.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -24,7 +26,8 @@ universe v u
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C) (P : ObjectProperty C)
 
@@ -75,7 +78,7 @@ theorem admissibleSubobjectClosed_of_resolutionLength_one
       exact E.prop_kernel_of_quotient_resolution_one P hS hT hY
         (R.mem_of_length_eq_zero hR0) hT₂ (Iso.refl _)
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure
 
 namespace Quillen.Resolution
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
@@ -95,7 +98,7 @@ homotopical assumption. -/
 theorem grothendieckMap_surjective (h : E.ResolutionHypothesis P) :
     Function.Surjective (exactInclusion E P).grothendieckMap := by
   apply AddMonoidHom.range_eq_top.mp
-  apply ExactStructure.grothendieckSubgroup_eq_top_of_classes
+  apply CategoryTheory.ExactCategory.ExactStructure.grothendieckSubgroup_eq_top_of_classes
   intro X
   obtain ⟨R⟩ := h X
   apply R.class_mem

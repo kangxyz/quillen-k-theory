@@ -27,7 +27,7 @@ universe v u w
 namespace Quillen.Waldhausen.QuillenComparison
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 variable {n : SimplexCategory}
 
 /-- Isomorphisms of initial subobjects commuting with one fixed top isomorphism

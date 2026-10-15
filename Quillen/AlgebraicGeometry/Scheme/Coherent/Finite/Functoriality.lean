@@ -44,20 +44,22 @@ def coherentPushforwardCompIso (f : X ⟶ Y) (g : Y ⟶ Z)
 /-- The original finite G-map preserves identity. -/
 @[simp] theorem coherentPushforwardGMap_id (X : Scheme.{u}) [IsLocallyNoetherian X] (n : ℕ) :
     coherentPushforwardGMap (𝟙 X) n = MonoidHom.id (G X n) := by
-  exact (ExactFunctor.smallKMap_eq_of_natIso
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := coherentPushforwardExact (𝟙 X))
-    (G := ExactFunctor.id (coherentExactStructure X))
-    (coherentPushforwardIdIso X) n).trans (ExactFunctor.smallKMap_id _ n)
+    (G := CategoryTheory.ExactCategory.ExactFunctor.id (coherentExactStructure X))
+    (coherentPushforwardIdIso X) n).trans (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_id _
+      n)
 
 /-- The original G-maps compose covariantly along finite morphisms. -/
 @[simp] theorem coherentPushforwardGMap_comp (f : X ⟶ Y) (g : Y ⟶ Z)
     [AlgebraicGeometry.IsFinite f] [AlgebraicGeometry.IsFinite g] (n : ℕ) :
     coherentPushforwardGMap (f ≫ g) n =
       (coherentPushforwardGMap g n).comp (coherentPushforwardGMap f n) := by
-  exact (ExactFunctor.smallKMap_eq_of_natIso
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
     (F := coherentPushforwardExact (f ≫ g))
     (G := (coherentPushforwardExact f).comp (coherentPushforwardExact g))
-    (coherentPushforwardCompIso f g).symm n).trans (ExactFunctor.smallKMap_comp _ _ n)
+    (coherentPushforwardCompIso f g).symm n).trans
+      (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp _ _ n)
 
 /-- The original pushforwards along inverse scheme isomorphisms are mutual inverses. -/
 @[simp] theorem coherentPushforwardGMap_iso_inv_comp
@@ -106,11 +108,12 @@ theorem coherentPushforwardGMap_openBaseChange (f : X ⟶ Y) [AlgebraicGeometry.
     (restrictionGMap a n).comp (coherentPushforwardGMap f n) =
       (coherentPushforwardGMap (pullback.snd f a) n).comp
         (restrictionGMap (pullback.fst f a) n) := by
-  have h := ExactFunctor.smallKMap_eq_of_natIso.{u+1}
+  have h := CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u+1}
     (F := (coherentPushforwardExact f).comp (coherentRestrictionExact a))
     (G := (coherentRestrictionExact (pullback.fst f a)).comp
       (coherentPushforwardExact (pullback.snd f a)))
     (coherentOpenBaseChange f a) n
-  simpa only [ExactFunctor.smallKMap_comp, coherentPushforwardGMap, restrictionGMap] using h
+  simpa only [CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, coherentPushforwardGMap,
+    restrictionGMap] using h
 
 end Quillen.CoherentScheme.Finite

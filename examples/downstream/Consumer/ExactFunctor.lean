@@ -32,7 +32,8 @@ variable {C D T : Type u} [Category.{u} C] [Category.{u} D] [Category.{u} T]
 def bundled : SmallExactCategory.{u} := SmallExactCategory.ofExactStructure E
 
 abbrev kGroupInstance (n : ℕ) : Group (E.K n) := inferInstance
-theorem identity_map (n : ℕ) (x : E.K n) : (ExactFunctor.id E).KMap n x = x := by simp
+theorem identity_map (n : ℕ) (x : E.K n) : (CategoryTheory.ExactCategory.ExactFunctor.id E).KMap n x
+  = x := by simp
 
 theorem composition_map (F : ExactFunctor E E') (G : ExactFunctor E' E'') (n : ℕ) (x : E.K n) :
     (F.comp G).KMap n x = G.KMap n (F.KMap n x) := by simp
@@ -48,5 +49,5 @@ theorem equivalence_forward_map (F : ExactFunctor E E') [F.mapQ.IsEquivalence] (
 
 theorem naturally_isomorphic_maps (F G : ExactFunctor E E')
     (e : F.toFunctor ≅ G.toFunctor) (n : ℕ) : F.KMap n = G.KMap n :=
-  ExactFunctor.KMap_eq_of_natIso e n
+  CategoryTheory.ExactCategory.ExactFunctor.KMap_eq_of_natIso e n
 end Consumer

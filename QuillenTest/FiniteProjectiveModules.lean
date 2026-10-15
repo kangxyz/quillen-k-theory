@@ -38,11 +38,12 @@ example (R : Type u) [Ring R] (M : Quillen.FiniteProjectiveModule.Category.{u, u
       Nonempty ((M.obj × Q) ≃ₗ[Rᵐᵒᵖ] (Fin n → Rᵐᵒᵖ)) :=
   exists_complement_equiv_fin M.obj
 
-example : Quillen.ExactStructure
+example : CategoryTheory.ExactCategory.ExactStructure
     (Quillen.FiniteProjectiveModule.Category (Matrix (Fin 2) (Fin 2) ℤ)) :=
   exactStructure _
 
-example : Quillen.ExactStructure (Quillen.FiniteProjectiveModule.Category (ZMod 1)) :=
+example : CategoryTheory.ExactCategory.ExactStructure (Quillen.FiniteProjectiveModule.Category (ZMod
+  1)) :=
   exactStructure _
 
 example : ∃ (n : ℕ) (Q : ModuleCat.{0} (ZMod 1)),

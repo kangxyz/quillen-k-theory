@@ -31,8 +31,8 @@ universe v u
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 
-namespace Quillen
-namespace ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
@@ -59,5 +59,4 @@ example (n : ℕ) : Group (E.K n) := inferInstance
 commutativity. K₀ commutativity requires a separate Q-specific theorem. -/
 example (n : ℕ) : CommGroup (E.K (n + 1)) := inferInstance
 
-end ExactStructure
-end Quillen
+end CategoryTheory.ExactCategory.ExactStructure

@@ -49,7 +49,10 @@ theorem piMap_classifying_eq_of_iso_of_subsingleton
   exact piMap_eq_of_based_homotopy n hbF hbG H.toHomotopy
     (fun t ↦ (H.prop t (classifyingSpacePoint c) (Set.mem_singleton _)).trans hbF)
 
-namespace ExactFunctor
+end Quillen
+
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 
 variable {C D : Type (max u v)} [Category.{v} C] [Category.{v} D]
   [Preadditive C] [Preadditive D] [HasFiniteBiproducts C] [HasFiniteBiproducts D]
@@ -126,5 +129,7 @@ theorem smallModelToOriginal_commonAmbientKMap_naturality
       F.normalizedQ_map_point] at hx
   exact hx
 
-end ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor
+
+namespace Quillen
 end Quillen

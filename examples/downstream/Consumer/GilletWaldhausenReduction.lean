@@ -12,6 +12,8 @@ public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.KernelClosure
 /-! Original-map finite and global fine-model K-class reductions. -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

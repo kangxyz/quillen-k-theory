@@ -28,7 +28,8 @@ open Quillen
 without replacing it by degreewise split epis. -/
 theorem actual_strict_fibration_class (X : Scheme.{u}) {A B : StrictPerfect X} (f : A ⟶ B) :
     (strictOppositeWaldhausen X).cof f.op ↔
-      (Quillen.ExactSubcategory.exactStructure (Quillen.abelianExactStructure (Complex X))
+      (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure (Quillen.abelianExactStructure
+        (Complex X))
         (strictPerfect X)).deflation f := Iff.rfl
 
 /-- The constructed perfect cocylinder factors the original map in its

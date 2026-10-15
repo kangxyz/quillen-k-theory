@@ -19,6 +19,8 @@ The K-equivalence retains the existing supported inclusion homomorphism.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped ZeroObject

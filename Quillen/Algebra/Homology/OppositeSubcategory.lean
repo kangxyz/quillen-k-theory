@@ -59,7 +59,8 @@ instance oppositeProperty_extensionClosed :
     have := hS.epi_g
     have h : (S.map (CochainComplex.opEquivalence C).inverse).unop.ShortExact :=
       (hS.map (CochainComplex.opEquivalence C).inverse).unop
-    exact ExactStructure.IsExtensionClosed.prop_middle (E := abelianExactStructure (CochainComplex C
+    exact CategoryTheory.ExactCategory.ExactStructure.IsExtensionClosed.prop_middle (E :=
+      abelianExactStructure (CochainComplex C
       ℤ)) (P := P) h h₃ h₁
 
 instance oppositeProperty_finiteProducts : (oppositeProperty P).IsClosedUnderFiniteProducts :=
@@ -100,7 +101,7 @@ lemma oppositeProperty_mappingCone
   have hs : (CochainComplex.mappingCone.triangleRotateShortComplex f).ShortExact :=
     shortExact_of_degreewise_shortExact _
       (fun n => (CochainComplex.mappingCone.triangleRotateShortComplexSplitting f n).shortExact)
-  exact ExactStructure.IsExtensionClosed.prop_middle
+  exact CategoryTheory.ExactCategory.ExactStructure.IsExtensionClosed.prop_middle
     (E := abelianExactStructure (CochainComplex Cᵒᵖ ℤ)) (P := oppositeProperty P)
     hs hL (oppositeProperty_shift P hshift K hK)
 

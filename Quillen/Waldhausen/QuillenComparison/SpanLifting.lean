@@ -26,7 +26,7 @@ universe v u
 namespace Quillen.Waldhausen.QuillenComparison
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 
 /-- A commuting Q-square with invertible endpoints lifts to an apex isomorphism. -/
 theorem exists_apexIso_of_q_naturality {X Y X' Y' : C}

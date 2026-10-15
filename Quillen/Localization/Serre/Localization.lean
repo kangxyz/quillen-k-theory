@@ -162,7 +162,8 @@ theorem grothendieckMap_comp_eq_zero
     (grothendieckMap P L).comp F.grothendieckMap = 0 := by
   apply EB.grothendieck_hom_ext
   intro X
-  simp only [AddMonoidHom.comp_apply, ExactFunctor.grothendieckMap_class,
+  simp only [AddMonoidHom.comp_apply,
+    CategoryTheory.ExactCategory.ExactFunctor.grothendieckMap_class,
     AddMonoidHom.zero_apply]
   exact grothendieckMap_class_eq_zero P L (hF X)
 

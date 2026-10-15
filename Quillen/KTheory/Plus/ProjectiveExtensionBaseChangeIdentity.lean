@@ -77,7 +77,7 @@ theorem rightBaseChangeIdentityProjection_zero (B : IsoCategory Rᵐᵒᵖ) :
     simp only [rightBaseChangeIdentityQuotientIso, Iso.trans_hom, Iso.symm_hom,
       Category.assoc, Iso.hom_inv_id_assoc, Iso.inv_hom_id, Category.comp_id]
   have h := congrArg (fun e ↦ (exactStructure Sᵐᵒᵖ).qIsoOfIso e) he
-  simp only [ExactStructure.qIsoOfIso_trans] at h
+  simp only [CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_trans] at h
   have hm := (rightBaseChangeExact f).mapQ_qIsoOfIso
     ((exactStructure Rᵐᵒᵖ).identityQuotientIsoZero B.of)
   erw [← hm] at h

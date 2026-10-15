@@ -115,7 +115,8 @@ def coherentExactStructure : ExactStructure (FiniteTypeSheaves X) := abelianExac
 
 /-- G-theory of a locally noetherian scheme, initially formed in the upper
 sheaf-object universe. No lowest-universe shrinking assertion is implicit. -/
-abbrev G (n : ℕ) : Type (u+1) := ExactStructure.SmallK.{u+1} (coherentExactStructure X) n
+abbrev G (n : ℕ) : Type (u+1) := CategoryTheory.ExactCategory.ExactStructure.SmallK.{u+1}
+  (coherentExactStructure X) n
 
 /-- Actual coherent inclusion is exact. -/
 def coherentInclusion : ExactFunctor (coherentExactStructure X) (abelianExactStructure X.Modules)

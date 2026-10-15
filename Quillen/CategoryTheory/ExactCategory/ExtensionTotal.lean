@@ -21,7 +21,8 @@ projection to the original Q category requires a separate construction.
 noncomputable section
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C]
 variable [Limits.HasFiniteBiproducts C] (E : ExactStructure C)
 
@@ -75,4 +76,4 @@ theorem ExtensionQuotientData.π_iso_hom {x : E.ExtensionTotal}
     (q r : E.ExtensionQuotientData x) : q.π ≫ (q.iso E r).hom = r.π :=
   (q.isColimit E).comp_coconePointUniqueUpToIso_hom (r.isColimit E) WalkingParallelPair.one
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

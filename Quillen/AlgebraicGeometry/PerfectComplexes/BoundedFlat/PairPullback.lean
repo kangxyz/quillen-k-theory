@@ -19,6 +19,8 @@ change-weak maps commute. No qc, flatness or cartesian-square premise is used.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -69,7 +71,7 @@ instance boundedFlatPerfectSupportedPullback_additive (f : A ⟶ B) :
 /-- Pullback along the open-pair square `f : A ⟶ B` as an exact functor on supported bounded-flat
 complexes with their inherited exact structures. -/
 def boundedFlatPerfectSupportedExactPullback (f : A ⟶ B) :
-    Quillen.ExactFunctor
+    CategoryTheory.ExactCategory.ExactFunctor
       (ExactSubcategory.exactStructure (abelianExactStructure (Complex B.obj.right))
         (boundedFlatPerfectSupported B.obj.hom))
       (ExactSubcategory.exactStructure (abelianExactStructure (Complex A.obj.right))

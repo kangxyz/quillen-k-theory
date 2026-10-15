@@ -19,7 +19,8 @@ with the repository's original strictly rebased homotopy-group map.
 
 For an exact functor, the supplied Q-isomorphism is obtained from the canonical
 zero-object isomorphism in the original exact category. No zero-object property
-in the Q-category is used, and the definition of `ExactFunctor.KMap` is unchanged.
+in the Q-category is used, and the definition of `CategoryTheory.ExactCategory.ExactFunctor.KMap` is
+  unchanged.
 -/
 
 @[expose] public section
@@ -94,7 +95,10 @@ theorem pointedShiftedHomotopyGroupMap_eq_pathTransport (F : C ⥤ D) (c : C) (d
 
 end Rebase
 
-namespace ExactFunctor
+end Quillen
+
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 
 variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   [Preadditive C] [HasFiniteBiproducts C] [Preadditive D] [HasFiniteBiproducts D]
@@ -149,6 +153,8 @@ theorem KMap_eq_pathTransport (F : ExactFunctor EC ED) (n : ℕ) :
         (piMap n (classifyingSpaceMap F.mapQ).hom rfl) :=
   pointedShiftedHomotopyGroupMap_eq_pathTransport F.mapQ _ _ _ n
 
-end ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor
+
+namespace Quillen
 
 end Quillen

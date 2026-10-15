@@ -19,7 +19,8 @@ universe u v
 open CategoryTheory CategoryTheory.Limits
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.ExactStructure.Filtration
+namespace CategoryTheory.ExactCategory.ExactStructure.Filtration
+open Quillen
 variable {C : Type u} [Category.{v} C] [Abelian C]
   {P : ObjectProperty C} (Q : ObjectProperty C)
   [Q.ContainsZero] [Q.IsClosedUnderSubobjects] [Q.IsClosedUnderQuotients]
@@ -47,4 +48,4 @@ def toFullSubcategory {X : C} (F : (abelianExactStructure C).Filtration P X) (hX
     have hT : T.ShortExact := CategoryTheory.ShortExact.reflects_shortExact_of_faithful Q.ι hS'
     exact .step T hT (ih h₁) hP
 
-end Quillen.ExactStructure.Filtration
+end CategoryTheory.ExactCategory.ExactStructure.Filtration

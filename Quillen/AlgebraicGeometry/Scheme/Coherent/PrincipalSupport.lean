@@ -98,7 +98,7 @@ instance coherentPrincipalSupportComparison_isEquivalence :
 
 instance coherentPrincipalSupportComparison_mapQ_isEquivalence :
     (coherentPrincipalSupportComparison R r).mapQ.IsEquivalence := by
-  apply ExactFunctor.mapQ_isEquivalence_of_equivalence
+  apply CategoryTheory.ExactCategory.ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro M N f hf
     change (abelianExactStructure
       (SupportedFiniteTypeSheaves (principalOpen R r))).smallModel.inflation f

@@ -20,6 +20,8 @@ completion. Only proved closure properties of the complex subcategory enter.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 

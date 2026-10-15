@@ -46,20 +46,21 @@ def coherentPushforwardCompIso (φ : R ⟶ S) (hφ : φ.hom.Finite)
 
 @[simp] theorem pushforwardG_id (R : CommRingCat.{u}) [IsNoetherianRing R] (n : ℕ) :
     pushforwardG (𝟙 R) (RingHom.Finite.id R) n = MonoidHom.id (G (Spec R) n) := by
-  exact (ExactFunctor.smallKMap_eq_of_natIso.{u+1}
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u+1}
     (F := coherentPushforwardExact (𝟙 R) (RingHom.Finite.id R))
-    (G := ExactFunctor.id (coherentExactStructure (Spec R)))
-    (coherentPushforwardIdIso R) n).trans (ExactFunctor.smallKMap_id _ n)
+    (G := CategoryTheory.ExactCategory.ExactFunctor.id (coherentExactStructure (Spec R)))
+    (coherentPushforwardIdIso R) n).trans (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_id _
+      n)
 
 @[simp] theorem pushforwardG_comp (φ : R ⟶ S) (hφ : φ.hom.Finite)
     (ψ : S ⟶ T) (hψ : ψ.hom.Finite) (n : ℕ) :
     pushforwardG (φ ≫ ψ) (hψ.comp hφ) n =
       (pushforwardG φ hφ n).comp (pushforwardG ψ hψ n) := by
-  exact (ExactFunctor.smallKMap_eq_of_natIso.{u+1}
+  exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u+1}
     (F := coherentPushforwardExact (φ ≫ ψ) (hψ.comp hφ))
     (G := (coherentPushforwardExact ψ hψ).comp (coherentPushforwardExact φ hφ))
     (coherentPushforwardCompIso φ hφ ψ hψ).symm n).trans
-      (ExactFunctor.smallKMap_comp _ _ n)
+      (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp _ _ n)
 
 /-- The established closed-immersion comparison is unchanged whenever this finite affine map is
   closed. -/
@@ -72,21 +73,24 @@ def coherentPushforwardClosedIso (φ : R ⟶ S) (hφ : φ.hom.Finite)
 theorem pushforwardG_eq_closed (φ : R ⟶ S) (hφ : φ.hom.Finite)
     [IsClosedImmersion (Spec.map φ)] (n : ℕ) :
     pushforwardG φ hφ n = ClosedImmersion.General.coherentPushforwardGMap (Spec.map φ) n :=
-  ExactFunctor.smallKMap_eq_of_natIso.{u+1}
+  CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u+1}
     (F := coherentPushforwardExact φ hφ)
     (G := ClosedImmersion.General.coherentPushforwardExact (Spec.map φ))
     (coherentPushforwardClosedIso φ hφ) n
 
 /-- Actual global sections commute with the new upper-universe public G-map. -/
 theorem pushforwardG_globalSections (φ : R ⟶ S) (hφ : φ.hom.Finite) (n : ℕ) :
-    (ExactFunctor.smallKMap.{u+1} (ClosedImmersion.Ideal.globalSectionsExact R) n).comp
+    (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1}
+      (ClosedImmersion.Ideal.globalSectionsExact R) n).comp
       (pushforwardG φ hφ n) =
-      (ExactFunctor.smallKMap.{u+1} (moduleRestrictionExact φ hφ) n).comp
-        (ExactFunctor.smallKMap.{u+1} (ClosedImmersion.Ideal.globalSectionsExact S) n) := by
-  have h := ExactFunctor.smallKMap_eq_of_natIso.{u+1}
+      (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (moduleRestrictionExact φ hφ)
+        n).comp
+        (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1}
+          (ClosedImmersion.Ideal.globalSectionsExact S) n) := by
+  have h := CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u+1}
     (F := (coherentPushforwardExact φ hφ).comp (ClosedImmersion.Ideal.globalSectionsExact R))
     (G := (ClosedImmersion.Ideal.globalSectionsExact S).comp (moduleRestrictionExact φ hφ))
     (coherentPushforwardSquare φ hφ) n
-  simpa only [ExactFunctor.smallKMap_comp, pushforwardG] using h
+  simpa only [CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, pushforwardG] using h
 
 end Quillen.CoherentScheme.FiniteAffine

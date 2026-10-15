@@ -17,6 +17,8 @@ actual admissible epis and kernels. The roof hypothesis is explicit.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -98,7 +100,8 @@ instance complexCorestrict_additive : (complexCorestrict j).Additive := by
   infer_instance
 
 /-- The genuine actual exact-subcategory restriction functor. -/
-def exactCorestrict : Quillen.ExactFunctor (ExactSubcategory.exactStructure (abelianExactStructure
+def exactCorestrict : CategoryTheory.ExactCategory.ExactFunctor (ExactSubcategory.exactStructure
+  (abelianExactStructure
   (Complex X)) (locallyPerfect X))
     (ExactSubcategory.exactStructure (abelianExactStructure (Complex U)) (complexObjects j)) where
   toFunctor := complexCorestrict j

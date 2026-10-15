@@ -51,14 +51,15 @@ theorem qGrothendieckWeight_localizedExtensionProjection
     ((localizedExtensionProjection R).map
       (GroupCompletion.Localization.mkHom h.denom h.map.1 h.map.2)) = _
   rw [localizedExtensionProjection_map_mkHom,
-    ExactStructure.qGrothendieckWeight_comp]
+    CategoryTheory.ExactCategory.ExactStructure.qGrothendieckWeight_comp]
   have hi : (exactStructure R).qGrothendieckWeight
       ((exactStructure R).qIsoOfIso
         (directSumExtensionQuotientIso R h.denom x.obj.2)).inv = 0 := by
     change (exactStructure R).grothendieckClass _ -
       (exactStructure R).grothendieckClass _ = 0
     exact sub_self _
-  rw [hi, zero_add, ExactStructure.qGrothendieckWeight_extensionProjection]
+  rw [hi, zero_add,
+    CategoryTheory.ExactCategory.ExactStructure.qGrothendieckWeight_extensionProjection]
   have hd := (exactStructure R).grothendieckClass_iso h.map.1.iso
   change coreClass R (h.denom ⊗ x.obj.1) = coreClass R y.obj.1 at hd
   rw [coreClass_tensor] at hd

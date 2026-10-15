@@ -103,10 +103,12 @@ lemma identityConeFunctor_shortExact {S : ShortComplex (Complex X)} (hS : S.Shor
     epi_g := by change Epi (F.map S.g); infer_instance }
 
 /-- The actual identity cone preserves the inherited original conflations. -/
-def identityConeExactFunctor : Quillen.ExactFunctor
-    (Quillen.ExactSubcategory.exactStructure (Quillen.abelianExactStructure (Complex X))
+def identityConeExactFunctor : CategoryTheory.ExactCategory.ExactFunctor
+    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure (Quillen.abelianExactStructure
+      (Complex X))
       (objects X))
-    (Quillen.ExactSubcategory.exactStructure (Quillen.abelianExactStructure (Complex X))
+    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure (Quillen.abelianExactStructure
+      (Complex X))
       (objects X)) where
   toFunctor := identityCone X
   map_conflation S hS := by
@@ -156,7 +158,8 @@ lemma coneFirst_second : coneFirst X ≫ coneSecond X = 0 := by
   exact (mappingCone.triangleRotateShortComplex (𝟙 K.obj)).zero
 
 lemma coneModelSequence_conflation (K : Obj X) :
-    (Quillen.ExactSubcategory.exactStructure (Quillen.abelianExactStructure (Complex X))
+    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure (Quillen.abelianExactStructure
+      (Complex X))
       (objects X)).conflation
       (ShortComplex.mk ((coneFirst X).app K) ((coneSecond X).app K)
         (NatTrans.congr_app (coneFirst_second X) K)) :=
@@ -170,11 +173,11 @@ lemma coneSequence_isCofibrationSequence :
   exactG := identityCone_exact X
   exactH := modelShift_exact X 1
   cofibration := {
-    app_cof K := (Quillen.ExactSubcategory.exactStructure
+    app_cof K := (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
       (Quillen.abelianExactStructure (Complex X)) (objects X)).inflation_of_conflation
         (coneModelSequence_conflation X K)
     relative_cof {K L} f hf := by
-      let E := Quillen.ExactSubcategory.exactStructure
+      let E := CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
         (Quillen.abelianExactStructure (Complex X)) (objects X)
       let φ := Waldhausen.GilletWaldhausen.exactFunctorSequenceMap
         (coneFirst X) (coneSecond X) (coneFirst_second X) f
@@ -187,7 +190,8 @@ lemma coneSequence_isCofibrationSequence :
         (coneModelSequence_conflation X K) (coneModelSequence_conflation X L)
         ((modelShift_exact X 1).cofibration f hf) }
   cofiber K := Waldhausen.QuillenComparison.isPushoutOfZeroCokernel _
-    ((Quillen.ExactSubcategory.exactStructure (Quillen.abelianExactStructure (Complex X))
+    ((CategoryTheory.ExactCategory.ExactSubcategory.exactStructure (Quillen.abelianExactStructure
+      (Complex X))
       (objects X)).cokernel _ (coneModelSequence_conflation X K))
     (waldhausen X).isZero _ _
 

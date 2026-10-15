@@ -46,7 +46,7 @@ theorem original_Quillen_additivity (F G H : ExactFunctor E E')
     (a : F.toFunctor ⟶ G.toFunctor) (b : G.toFunctor ⟶ H.toFunctor) (w : a ≫ b = 0)
     (hc : ∀ X, E'.conflation (ShortComplex.mk (a.app X) (b.app X) (NatTrans.congr_app w X)))
     (n : ℕ) (x : E.K n) : G.KMap n x = F.KMap n x * H.KMap n x :=
-  ExactFunctor.KMap_conflation_additivity F G H a b w hc n x
+  CategoryTheory.ExactCategory.ExactFunctor.KMap_conflation_additivity F G H a b w hc n x
 end Quillen
 section Extension
 variable {C : Type u} [Category.{u} C] (W : Structure C)

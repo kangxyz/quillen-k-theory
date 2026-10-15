@@ -53,8 +53,10 @@ theorem schemeKToG_restrict (n : ℕ) :
       ((vectorBundleToCoherentExact X).smallKMap n) =
     ((vectorBundleToCoherentExact U).smallKMap n).comp
       ((vectorBundleExactRestrict j).smallKMap n)
-  rw [← ExactFunctor.smallKMap_comp, ← ExactFunctor.smallKMap_comp]
-  exact ExactFunctor.smallKMap_eq_of_natIso (vectorBundleToCoherentRestrictIso j) n
+  rw [← CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, ←
+    CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp]
+  exact CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
+    (vectorBundleToCoherentRestrictIso j) n
 
 /-- Elementwise naturality of the comparison. -/
 theorem schemeKToG_restrict_apply (n : ℕ) (x : SchemeK X n) :

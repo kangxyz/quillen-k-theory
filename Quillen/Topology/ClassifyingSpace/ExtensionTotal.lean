@@ -25,7 +25,8 @@ universe u v
 
 open CategoryTheory CategoryTheory.Limits ZeroObject
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
@@ -54,4 +55,4 @@ def extensionTotalContraction :
 theorem extensionTotal_contractibleSpace : ContractibleSpace (ClassifyingSpace E.ExtensionTotal) :=
   Subdivision.contractibleSpace_of_isInitial (inflationZeroIsInitial E)
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

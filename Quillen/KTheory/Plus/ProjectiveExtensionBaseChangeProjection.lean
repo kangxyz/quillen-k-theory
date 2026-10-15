@@ -36,7 +36,7 @@ theorem localizedExtensionBaseChangeProjection_mkHom
           (GroupCompletion.Localization.mkHom (X := (A, x)) (Y := (B, y)) P a b)) := by
   rw [localizedExtensionProjection_map_mkHom, localizedExtensionBaseChange_mkHom,
     localizedExtensionProjection_map_mkHom, Functor.map_comp,
-    ExactStructure.extensionProjectionQMap_comp, Category.assoc]
+    CategoryTheory.ExactCategory.ExactStructure.extensionProjectionQMap_comp, Category.assoc]
   have hn := (rightBaseChangeExact f).extensionProjection_naturality b
   change (rightBaseChangeExact f).mapQ.map ((exactStructure Rᵐᵒᵖ).extensionProjectionQMap b) ≫
       ((exactStructure Sᵐᵒᵖ).qIsoOfIso ((rightBaseChangeExact f).extensionQuotientIso y)).hom =

@@ -12,6 +12,8 @@ public import Quillen.Resolution.LengthOne
 /-! # Applying the resolution theorem to the canonical scheme comparison -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -42,7 +44,7 @@ instance coherentSmallVectorBundle_containsZero : (coherentSmallVectorBundle X).
 instance coherentSmallVectorBundle_extensionClosed :
     (CoherentScheme.coherentExactStructure X).smallModel.IsExtensionClosed
       (coherentSmallVectorBundle X) where
-  prop_middle hS h₁ h₃ := ExactStructure.IsExtensionClosed.prop_middle
+  prop_middle hS h₁ h₃ := CategoryTheory.ExactCategory.ExactStructure.IsExtensionClosed.prop_middle
     (E := CoherentScheme.coherentExactStructure X) hS h₁ h₃
 
 instance coherentSmallVectorBundle_finiteProducts :
@@ -54,7 +56,7 @@ instance coherentSmallVectorBundle_kernelClosed
     [(CoherentScheme.coherentExactStructure X).IsKernelClosed (coherentVectorBundle X)] :
     (CoherentScheme.coherentExactStructure X).smallModel.IsKernelClosed
       (coherentSmallVectorBundle X) where
-  prop_kernel hS h₂ h₃ := ExactStructure.IsKernelClosed.prop_kernel
+  prop_kernel hS h₂ h₃ := CategoryTheory.ExactCategory.ExactStructure.IsKernelClosed.prop_kernel
     (E := CoherentScheme.coherentExactStructure X) hS h₂ h₃
 
 /-- Actual coherent resolutions descend to the actual chosen small model,
@@ -84,16 +86,22 @@ def vectorBundleSmallLift : SmallModel.{u+1} (FiniteLocallyFree X) ⥤
       (((equivSmallModel.{u+1} (FiniteLocallyFree X)).inverse.obj M).property))
 
 instance vectorBundleSmallLift_full : (vectorBundleSmallLift X).Full := by
-  dsimp [vectorBundleSmallLift, ExactFunctor.smallModel, ExactFunctor.comp,
-    ExactStructure.smallModelToOriginal, ExactStructure.originalToSmallModel,
-    ExactStructure.equivalenceExactFunctor, ExactStructure.equivalenceInverseExactFunctor,
+  dsimp [vectorBundleSmallLift, CategoryTheory.ExactCategory.ExactFunctor.smallModel,
+    CategoryTheory.ExactCategory.ExactFunctor.comp,
+    CategoryTheory.ExactCategory.ExactStructure.smallModelToOriginal,
+      CategoryTheory.ExactCategory.ExactStructure.originalToSmallModel,
+    CategoryTheory.ExactCategory.ExactStructure.equivalenceExactFunctor,
+      CategoryTheory.ExactCategory.ExactStructure.equivalenceInverseExactFunctor,
     vectorBundleToCoherentExact]
   infer_instance
 
 instance vectorBundleSmallLift_faithful : (vectorBundleSmallLift X).Faithful := by
-  dsimp [vectorBundleSmallLift, ExactFunctor.smallModel, ExactFunctor.comp,
-    ExactStructure.smallModelToOriginal, ExactStructure.originalToSmallModel,
-    ExactStructure.equivalenceExactFunctor, ExactStructure.equivalenceInverseExactFunctor,
+  dsimp [vectorBundleSmallLift, CategoryTheory.ExactCategory.ExactFunctor.smallModel,
+    CategoryTheory.ExactCategory.ExactFunctor.comp,
+    CategoryTheory.ExactCategory.ExactStructure.smallModelToOriginal,
+      CategoryTheory.ExactCategory.ExactStructure.originalToSmallModel,
+    CategoryTheory.ExactCategory.ExactStructure.equivalenceExactFunctor,
+      CategoryTheory.ExactCategory.ExactStructure.equivalenceInverseExactFunctor,
     vectorBundleToCoherentExact]
   infer_instance
 
@@ -151,19 +159,19 @@ theorem vectorBundleSmallLift_ofEquivalence :
     (ExactSubcategory.exactStructure (CoherentScheme.coherentExactStructure X).smallModel
       (coherentSmallVectorBundle X)).ofEquivalence (vectorBundleSmallLift X).asEquivalence =
       (vectorBundleExactStructure X).smallModel := by
-  apply ExactStructure.ext_conflation
+  apply CategoryTheory.ExactCategory.ExactStructure.ext_conflation
   funext S
   exact propext (vectorBundleSmallLift_conflation_iff X S)
 
 instance vectorBundleSmallLiftExact_mapQ_isEquivalence :
     (vectorBundleSmallLiftExact X).mapQ.IsEquivalence := by
-  apply ExactFunctor.mapQ_isEquivalence_of_equivalence
+  apply CategoryTheory.ExactCategory.ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro A B i hi
     rw [← vectorBundleSmallLift_ofEquivalence X]
-    exact (ExactStructure.ofEquivalence_inflation_iff _ _ i).mpr hi
+    exact (CategoryTheory.ExactCategory.ExactStructure.ofEquivalence_inflation_iff _ _ i).mpr hi
   · intro A B p hp
     rw [← vectorBundleSmallLift_ofEquivalence X]
-    exact (ExactStructure.ofEquivalence_deflation_iff _ _ p).mpr hp
+    exact (CategoryTheory.ExactCategory.ExactStructure.ofEquivalence_deflation_iff _ _ p).mpr hp
 
 /-- The actual canonical small comparison factors through the inherited
 small vector-bundle subcategory, with identical underlying map. -/
@@ -185,7 +193,7 @@ theorem schemeKToG_bijective_of_length_one
     (CoherentScheme.coherentExactStructure X).smallModel (coherentSmallVectorBundle X)
     (coherentSmallResolutionLength X 1 h) n
   change Function.Bijective ((vectorBundleToCoherentExact X).smallModel.KMap n)
-  rw [← vectorBundleSmall_factor X, ExactFunctor.KMap_comp]
+  rw [← vectorBundleSmall_factor X, CategoryTheory.ExactCategory.ExactFunctor.KMap_comp]
   exact h₂.comp h₁
 
 end Quillen.SchemeSheaf

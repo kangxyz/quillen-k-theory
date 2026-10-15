@@ -26,7 +26,8 @@ universe v u v' u'
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 variable {C : Type u} {D : Type u'} [Category.{v} C] [Category.{v'} D]
   [Preadditive C] [Preadditive D] [HasFiniteBiproducts C] [HasFiniteBiproducts D]
   {E : ExactStructure C} {E' : ExactStructure D}
@@ -111,4 +112,4 @@ lemma quotientDesc_map_conflation (hF : F.VanishesOn A)
   change E'.conflation (S.map (ExactQuotient.Q E A ⋙ F.quotientDesc A hF))
   simpa only [F.Q_comp_quotientDesc A hF] using F.map_conflation S hS
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

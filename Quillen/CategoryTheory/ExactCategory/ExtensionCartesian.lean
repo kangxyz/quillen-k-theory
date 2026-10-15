@@ -15,7 +15,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -51,4 +52,4 @@ theorem existsUnique_extensionFactor {x y z : E.ExtensionTotal}
   apply (cancel_mono f.base.hom).1
   exact congrArg (fun k => k.base.hom) (hh'.2.trans hcomp.symm)
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

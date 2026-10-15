@@ -26,8 +26,9 @@ variable {x y : (exactStructure R).ExtensionTotal} (f : x ⟶ y)
 
 local notation "E" => exactStructure R
 local notation "af" => Quillen.Subdivision.actionMap u f
-local notation "qf" => Quillen.ExactStructure.extensionProjectionCokernel (exactStructure R) f
-local notation "qa" => Quillen.ExactStructure.extensionProjectionCokernel
+local notation "qf" => CategoryTheory.ExactCategory.ExactStructure.extensionProjectionCokernel
+  (exactStructure R) f
+local notation "qa" => CategoryTheory.ExactCategory.ExactStructure.extensionProjectionCokernel
   (exactStructure R) (Quillen.Subdivision.actionMap u f)
 
 /-- The action reverses the actor map in the kernel coordinate. -/

@@ -12,6 +12,8 @@ public import Quillen.Waldhausen.ComplexSubcategory
 /-! # Actual bounded acyclic complexes in a termwise exact subcategory -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -76,7 +78,8 @@ theorem boundedAcyclic_of_shortExact {S : ShortComplex (CochainComplex A ℤ)}
       (fun h ↦ Or.inr (lt_of_le_of_lt (le_max_right _ _) h)))
     exact (hs n).exact.isZero_X₂ (hz₁.eq_of_src _ _) (hz₃.eq_of_tgt _ _)
   · intro n
-    exact ExactStructure.IsExtensionClosed.prop_middle (E := abelianExactStructure A)
+    exact CategoryTheory.ExactCategory.ExactStructure.IsExtensionClosed.prop_middle (E :=
+      abelianExactStructure A)
       (hs n) (ht₁ n) (ht₃ n)
 
 instance boundedAcyclic_extensionClosed :

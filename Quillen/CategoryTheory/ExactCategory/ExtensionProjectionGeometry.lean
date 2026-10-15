@@ -17,7 +17,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -86,4 +87,4 @@ theorem extensionProjection_right_isPullback {x y : E.ExtensionTotal} (f : x ⟶
       (E.extensionQuotientData y).π (E.extensionProjectionSpan f).r :=
   E.isPullback_of_inflation_isPushout f.base.property (E.extensionProjection_right_isPushout f)
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

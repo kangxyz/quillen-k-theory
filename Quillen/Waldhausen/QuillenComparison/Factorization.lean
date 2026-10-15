@@ -32,7 +32,7 @@ universe v u
 namespace Quillen.Waldhausen.QuillenComparison
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 
 /-- The canonical model-identification and upper-index restriction. -/
 def subdivisionToRows : Edgewise.subdivision (sSet E.inflation (MorphismProperty.isomorphisms C)) ⟶

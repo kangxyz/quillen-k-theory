@@ -17,6 +17,8 @@ at other degrees, and insertion after evaluation is the original layer.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

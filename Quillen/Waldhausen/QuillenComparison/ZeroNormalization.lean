@@ -34,7 +34,10 @@ theorem rebaseFunctor_eq_of_eq {C D : Type u} [Category.{v} C] [Category.{v} D]
   rw [he]
   exact rebaseFunctor_refl F c
 
-namespace ExactStructure
+end Quillen
+
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 
 /-- The original equality isomorphism induces precisely equality transport in Q. -/
@@ -42,9 +45,14 @@ theorem qIsoOfIso_eqToIso_of_eq (E : ExactStructure C) {X Y : C} (h : X = Y) :
     E.qIsoOfIso (eqToIso h) = eqToIso (congrArg (Q.of E.deflation E.inflation) h) := by
   subst Y
   exact E.qIsoOfIso_refl X
-end ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure
 
-namespace ExactFunctor
+namespace Quillen
+
+end Quillen
+
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   [Preadditive C] [Preadditive D] [HasFiniteBiproducts C] [HasFiniteBiproducts D]
   {EC : ExactStructure C} {ED : ExactStructure D} (F : ExactFunctor EC ED)
@@ -88,7 +96,8 @@ theorem normalizedQ_eq_mapQ_of_zeroEq (h : F.toFunctor.obj (0 : C) = (0 : D)) :
     (Q.of EC.deflation EC.inflation (0 : C))
     (Q.of ED.deflation ED.inflation (0 : D)) _
     (congrArg (Q.of ED.deflation ED.inflation) h)
-  rw [mapZeroObject_eq_eqToIso F h, ExactStructure.qIsoOfIso_eqToIso_of_eq]
+  rw [mapZeroObject_eq_eqToIso F h,
+    CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_eqToIso_of_eq]
 
 /-- The unmodified Q-map is based when the functor strictly preserves zero. -/
 theorem mapQ_map_point_of_zeroEq (h : F.toFunctor.obj (0 : C) = (0 : D)) :
@@ -102,5 +111,7 @@ theorem KMap_eq_piMap_of_zeroEq (h : F.toFunctor.obj (0 : C) = (0 : D)) (n : ℕ
     F.KMap n = piMap n (classifyingSpaceMap F.mapQ).hom (F.mapQ_map_point_of_zeroEq h) := by
   simp only [KMap_eq_piMap, normalizedQ_eq_mapQ_of_zeroEq F h]
 
-end ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor
+
+namespace Quillen
 end Quillen

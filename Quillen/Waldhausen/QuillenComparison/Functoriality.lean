@@ -32,8 +32,9 @@ namespace Quillen.Waldhausen.QuillenComparison
 
 variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   [Preadditive C] [Preadditive D] [HasFiniteBiproducts C] [HasFiniteBiproducts D]
-  {EC : Quillen.ExactStructure C} {ED : Quillen.ExactStructure D}
-  (F : Quillen.ExactFunctor EC ED)
+  {EC : CategoryTheory.ExactCategory.ExactStructure C} {ED :
+    CategoryTheory.ExactCategory.ExactStructure D}
+  (F : CategoryTheory.ExactCategory.ExactFunctor EC ED)
 
 /-- A genuine exact functor preserves exact S-diagrams. Cokernel squares
 are derived from the actual mapped conflations, rather than hypothesized. -/
@@ -60,16 +61,16 @@ def exactSSetMap : sSet EC.inflation (MorphismProperty.isomorphisms C) ⟶
   naturality _ _ _ := by ext A; rfl
 
 /-- Postcomposition by the identity exact functor is the identity simplicial map. -/
-@[simp] theorem exactSSetMap_id (E : Quillen.ExactStructure C) :
-    exactSSetMap (Quillen.ExactFunctor.id E) = 𝟙 _ := by
+@[simp] theorem exactSSetMap_id (E : CategoryTheory.ExactCategory.ExactStructure C) :
+    exactSSetMap (CategoryTheory.ExactCategory.ExactFunctor.id E) = 𝟙 _ := by
   ext n A
   apply Subtype.ext
   exact CategoryTheory.Functor.comp_id A.1
 
 /-- Exact-functor composition acts by the actual composite simplicial map. -/
 @[simp] theorem exactSSetMap_comp {T : Type u} [Category.{v} T]
-    [Preadditive T] [HasFiniteBiproducts T] {ET : Quillen.ExactStructure T}
-    (G : Quillen.ExactFunctor ED ET) :
+    [Preadditive T] [HasFiniteBiproducts T] {ET : CategoryTheory.ExactCategory.ExactStructure T}
+    (G : CategoryTheory.ExactCategory.ExactFunctor ED ET) :
     exactSSetMap (F.comp G) = exactSSetMap F ≫ exactSSetMap G := rfl
 
 /-- When expressed through the general Waldhausen adapter, this is the same

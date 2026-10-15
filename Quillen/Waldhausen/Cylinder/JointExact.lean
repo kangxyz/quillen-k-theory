@@ -18,6 +18,8 @@ using the unchanged cylinder maps, actual pushouts, and inherited admissibility.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

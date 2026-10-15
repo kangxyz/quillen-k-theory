@@ -21,6 +21,8 @@ with open restriction in every connective degree, including degree zero.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -57,7 +59,7 @@ theorem smallVectorBundleKMap_restrict {U X : Scheme.{u}}
     (SchemeSheaf.smallVectorBundleKMap U n).comp (Quillen.Scheme.restrictK j n) =
       ((SchemeSheaf.vectorBundleExactRestrict j).KMap n).comp
         (SchemeSheaf.smallVectorBundleKMap X n) :=
-  Quillen.ExactFunctor.smallModelToOriginal_commonAmbientKMap_naturality.{u + 1, u}
+  ExactFunctor.smallModelToOriginal_commonAmbientKMap_naturality.{u + 1, u}
     (SchemeSheaf.vectorBundleExactRestrict j) n
 
 /-- Naturality of the actual public small-model/Q/S equivalence. -/

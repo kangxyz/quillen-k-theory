@@ -11,6 +11,8 @@ public import Quillen.Waldhausen.GilletWaldhausen.GeneralComparison
 /-! Genuine mixed-universe consumers of the unchanged original maps. -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

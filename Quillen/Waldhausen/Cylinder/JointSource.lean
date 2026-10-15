@@ -22,6 +22,8 @@ in particular for both inherited isomorphism and quasi-isomorphism structures.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

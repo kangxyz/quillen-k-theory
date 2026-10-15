@@ -41,14 +41,16 @@ theorem relativePushout_inflation (E : ExactStructure C)
     [HasPushout S.f φ.τ₁] :
     E.inflation (pushout.desc φ.τ₂ T.f φ.comm₁₂.symm) := by
   let q := pushout.desc (f := S.f) (g := φ.τ₁) φ.τ₂ T.f φ.comm₁₂.symm
-  let U := ExactStructure.pushoutConflation T.X₁ φ.τ₁ (S := S)
+  let U := CategoryTheory.ExactCategory.ExactStructure.pushoutConflation T.X₁ φ.τ₁ (S := S)
   have hU : E.conflation U := E.pushoutConflation_mem hS φ.τ₁
-  have hiq : U.f ≫ q = T.f := by simp [U, q, ExactStructure.pushoutConflation]
+  have hiq : U.f ≫ q = T.f := by simp [U, q,
+    CategoryTheory.ExactCategory.ExactStructure.pushoutConflation]
   have hpq : U.g ≫ φ.τ₃ = q ≫ T.g := by
     apply pushout.hom_ext
-    · simp only [U, ExactStructure.pushoutConflation, q, pushout.inl_desc_assoc]
+    · simp only [U, CategoryTheory.ExactCategory.ExactStructure.pushoutConflation, q,
+      pushout.inl_desc_assoc]
       exact φ.comm₂₃.symm
-    · simp [U, ExactStructure.pushoutConflation, q, T.zero]
+    · simp [U, CategoryTheory.ExactCategory.ExactStructure.pushoutConflation, q, T.zero]
   have sq := E.isPullback_of_conflations_same_kernel hU hT q φ.τ₃ hiq hpq
   obtain ⟨Q, p, w, hQ⟩ := hφ
   exact E.inflation_of_conflation

@@ -20,8 +20,9 @@ universe v u
 namespace Quillen.Waldhausen.QuillenComparison
 variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   [Preadditive C] [Preadditive D] [HasFiniteBiproducts C] [HasFiniteBiproducts D]
-  {EC : Quillen.ExactStructure C} {ED : Quillen.ExactStructure D}
-  (F : Quillen.ExactFunctor EC ED)
+  {EC : CategoryTheory.ExactCategory.ExactStructure C} {ED :
+    CategoryTheory.ExactCategory.ExactStructure D}
+  (F : CategoryTheory.ExactCategory.ExactFunctor EC ED)
 
 /-- The original based Q/S isomorphism commutes with both genuine K-map APIs,
 without any extra pushout-preservation or zero-equality hypothesis. -/

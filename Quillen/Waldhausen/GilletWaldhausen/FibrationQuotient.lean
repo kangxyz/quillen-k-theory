@@ -20,6 +20,8 @@ universes and retains its explicit canonical-comparison hypothesis.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

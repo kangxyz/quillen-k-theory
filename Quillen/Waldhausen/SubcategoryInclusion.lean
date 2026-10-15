@@ -18,6 +18,8 @@ constructed; no assertion of equivalence or of localization is made.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 
@@ -46,7 +48,7 @@ instance subcategoryInclusion_additive : (ObjectProperty.ιOfLE h).Additive wher
 
 /-- The inclusion preserves inherited short exact sequences. -/
 def subcategoryExactInclusion :
-    Quillen.ExactFunctor
+    CategoryTheory.ExactCategory.ExactFunctor
       (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex A ℤ)) P)
       (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex A ℤ)) Q) where
   toFunctor := ObjectProperty.ιOfLE h

@@ -14,7 +14,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
@@ -165,4 +166,4 @@ def extensionDeflationSpanComma {X Y : C} (s : Span E.deflation E.inflation X Y)
     apply StructuredArrow.hom_ext
     exact (E.extensionDeflationSpanNatTrans s).naturality f
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

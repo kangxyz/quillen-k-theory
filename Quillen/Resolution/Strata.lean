@@ -25,7 +25,8 @@ universe v u
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C) (P Q : ObjectProperty C)
   [Q.IsClosedUnderIsomorphisms] [E.IsExtensionClosed Q] [E.IsKernelClosed Q]
@@ -107,9 +108,10 @@ theorem resolutionStep_extensionClosed (hPQ : P ≤ Q)
     exact E.resolutionStep_of_conflation P Q
       (E.pullbackConflationLeft_mem T.conflation S.g) T.syzygy_mem hPB
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C) (P : ObjectProperty C)
   [P.IsClosedUnderIsomorphisms] [P.ContainsZero]
@@ -178,4 +180,4 @@ instance resolutionLength_finiteProducts [E.IsExtensionClosed P] [E.IsKernelClos
   E.extensionClosed_finiteProducts (E.ResolutionLength P n)
 
 end LengthStrata
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

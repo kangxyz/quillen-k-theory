@@ -13,7 +13,7 @@ public import Quillen.KTheory.Map.NaturalIso
 
 The actual change-of-rings exact functors satisfy identity and composition up
 to their existing natural isomorphisms. Natural-isomorphism invariance of the
-original strictly rebased `ExactFunctor.KMap` gives strict identity and
+original strictly rebased `CategoryTheory.ExactCategory.ExactFunctor.KMap` gives strict identity and
 composition laws in every K-degree. All rings lie in the same universe; no
 flatness or nontriviality assumption is used.
 -/
@@ -33,20 +33,22 @@ variable {R S T : Type u} [Ring R] [Ring S] [Ring T]
 theorem rightBaseChangeExact_KMap_id (R : Type u) [Ring R] (n : ℕ) :
     (rightBaseChangeExact (RingHom.id R)).KMap n =
       MonoidHom.id ((exactStructure Rᵐᵒᵖ).K n) :=
-  (ExactFunctor.KMap_eq_of_natIso
+  (CategoryTheory.ExactCategory.ExactFunctor.KMap_eq_of_natIso
     (F := rightBaseChangeExact (RingHom.id R))
-    (G := ExactFunctor.id (exactStructure Rᵐᵒᵖ)) rightBaseChangeId n).trans
-      (ExactFunctor.KMap_id (exactStructure Rᵐᵒᵖ) n)
+    (G := CategoryTheory.ExactCategory.ExactFunctor.id (exactStructure Rᵐᵒᵖ)) rightBaseChangeId
+      n).trans
+      (CategoryTheory.ExactCategory.ExactFunctor.KMap_id (exactStructure Rᵐᵒᵖ) n)
 
 /-- Composition of ring homomorphisms induces the composite of the original K-maps. -/
 @[simp]
 theorem rightBaseChangeExact_KMap_comp (f : R →+* S) (g : S →+* T) (n : ℕ) :
     (rightBaseChangeExact (g.comp f)).KMap n =
       ((rightBaseChangeExact g).KMap n).comp ((rightBaseChangeExact f).KMap n) :=
-  (ExactFunctor.KMap_eq_of_natIso
+  (CategoryTheory.ExactCategory.ExactFunctor.KMap_eq_of_natIso
     (F := rightBaseChangeExact (g.comp f))
     (G := (rightBaseChangeExact f).comp (rightBaseChangeExact g))
     (rightBaseChangeComp f g).symm n).trans
-      (ExactFunctor.KMap_comp (rightBaseChangeExact f) (rightBaseChangeExact g) n)
+      (CategoryTheory.ExactCategory.ExactFunctor.KMap_comp (rightBaseChangeExact f)
+        (rightBaseChangeExact g) n)
 
 end Quillen.FiniteProjectiveModule

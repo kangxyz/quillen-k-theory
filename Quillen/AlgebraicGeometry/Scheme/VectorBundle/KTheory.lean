@@ -21,7 +21,7 @@ smaller universe `u`.
 
 This file does not identify realizations across universe changes. Independence
 of exact presentations within the chosen universe is provided by
-`ExactStructure.presentationKEquiv`.
+`CategoryTheory.ExactCategory.ExactStructure.presentationKEquiv`.
 -/
 @[expose] public section
 
@@ -46,23 +46,25 @@ abbrev SmallVectorBundle (X : Scheme.{u}) : Type (u + 1) :=
 /-- The exact structure transported to the actual categorical small model. -/
 abbrev smallVectorBundleExactStructure (X : Scheme.{u}) :
     ExactStructure (SmallVectorBundle X) :=
-  ExactStructure.smallModel.{u + 1} (vectorBundleExactStructure X)
+  CategoryTheory.ExactCategory.ExactStructure.smallModel.{u + 1} (vectorBundleExactStructure X)
 
 /-- The exact realization of small-model objects as actual vector bundles. -/
 def smallVectorBundleToSheaves (X : Scheme.{u}) :
     ExactFunctor (smallVectorBundleExactStructure X) (sheafExactStructure X) :=
-  (ExactStructure.smallModelToOriginal.{u + 1} (vectorBundleExactStructure X)).comp
+  (CategoryTheory.ExactCategory.ExactStructure.smallModelToOriginal.{u + 1}
+    (vectorBundleExactStructure X)).comp
     (vectorBundleExactInclusion X)
 
 /-- Genuine scheme K-theory, formed from finite locally free sheaves and their
 ambient short exact sequences in the explicitly enlarged small universe. -/
 abbrev SchemeK (X : Scheme.{u}) (n : ℕ) : Type (u + 1) :=
-  ExactStructure.SmallK.{u + 1} (vectorBundleExactStructure X) n
+  CategoryTheory.ExactCategory.ExactStructure.SmallK.{u + 1} (vectorBundleExactStructure X) n
 
 /-- The ambient sheaf inclusion induces its canonical map on K-groups.
 The target is K-theory of all module sheaves, not coherent G-theory. -/
 def schemeKToModuleSheafK (X : Scheme.{u}) (n : ℕ) :
-    SchemeK X n →* ExactStructure.SmallK.{u + 1} (sheafExactStructure X) n :=
+    SchemeK X n →* CategoryTheory.ExactCategory.ExactStructure.SmallK.{u + 1} (sheafExactStructure
+      X) n :=
   (vectorBundleExactInclusion X).smallKMap n
 
 end Quillen.SchemeSheaf

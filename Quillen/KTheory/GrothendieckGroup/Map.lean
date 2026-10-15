@@ -21,14 +21,16 @@ noncomputable section
 universe v₁ v₂ v₃ u₁ u₂ u₃
 open CategoryTheory CategoryTheory.Limits
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 variable {C : Type u₁} {D : Type u₂} {B : Type u₃}
   [Category.{v₁} C] [Category.{v₂} D] [Category.{v₃} B]
   [Preadditive C] [HasFiniteBiproducts C]
   [Preadditive D] [HasFiniteBiproducts D]
   [Preadditive B] [HasFiniteBiproducts B]
-  {EC : Quillen.ExactStructure C} {ED : Quillen.ExactStructure D}
-  {EB : Quillen.ExactStructure B}
+  {EC : CategoryTheory.ExactCategory.ExactStructure C} {ED :
+    CategoryTheory.ExactCategory.ExactStructure D}
+  {EB : CategoryTheory.ExactCategory.ExactStructure B}
 
 /-- Exact functors send the defining conflation relations to relations. -/
 def grothendieckMap (F : ExactFunctor EC ED) : EC.GrothendieckGroup →+ ED.GrothendieckGroup :=
@@ -43,16 +45,17 @@ lemma grothendieckMap_class (F : ExactFunctor EC ED) (X : C) :
 
 @[simp]
 lemma grothendieckMap_id :
-    (ExactFunctor.id EC).grothendieckMap = AddMonoidHom.id EC.GrothendieckGroup := by
+    (CategoryTheory.ExactCategory.ExactFunctor.id EC).grothendieckMap = AddMonoidHom.id
+      EC.GrothendieckGroup := by
   apply EC.grothendieck_hom_ext
   intro X
-  simp [ExactFunctor.id]
+  simp [CategoryTheory.ExactCategory.ExactFunctor.id]
 
 @[simp]
 lemma grothendieckMap_comp (F : ExactFunctor EC ED) (G : ExactFunctor ED EB) :
     (F.comp G).grothendieckMap = G.grothendieckMap.comp F.grothendieckMap := by
   apply EC.grothendieck_hom_ext
   intro X
-  simp [ExactFunctor.comp]
+  simp [CategoryTheory.ExactCategory.ExactFunctor.comp]
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

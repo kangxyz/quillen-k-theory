@@ -25,6 +25,8 @@ additivity, or localization conclusion is assumed or asserted.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 
@@ -87,7 +89,8 @@ theorem cycles_mem (n : ℤ) : P (K.cycles n) := by
   · induction n, hn using Int.leInductionDown with
     | base => exact top b le_rfl
     | pred n hn ih =>
-        apply ExactStructure.IsKernelClosed.prop_kernel (E := abelianExactStructure A)
+        apply CategoryTheory.ExactCategory.ExactStructure.IsKernelClosed.prop_kernel (E :=
+          abelianExactStructure A)
           (cycleSequence_shortExact K (n - 1) (hK _)) (hterms _)
         simpa only [cycleSequence, sub_add_cancel] using ih
   · exact top n (by omega)

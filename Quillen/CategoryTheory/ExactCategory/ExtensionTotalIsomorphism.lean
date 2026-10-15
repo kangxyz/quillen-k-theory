@@ -15,7 +15,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -124,4 +125,4 @@ theorem extensionIsoOfQuotientSquare_projection {x y : E.ExtensionTotal}
     infer_instance
   exact E.extensionProjectionQMap_eq_qIsoOfIso _ e w
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

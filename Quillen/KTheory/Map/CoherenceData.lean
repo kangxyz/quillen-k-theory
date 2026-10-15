@@ -78,7 +78,7 @@ variable {C D : Type u} [Category.{v} C] [Category.{v} D]
 
 /-- Original isomorphism composition is respected in an exact Q-category. -/
 @[simp]
-theorem ExactStructure.qIsoOfIso_trans (E : ExactStructure C)
+theorem _root_.CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_trans (E : ExactStructure C)
     {X Y Z : C} (e : X ≅ Y) (f : Y ≅ Z) :
     E.qIsoOfIso (e ≪≫ f) = E.qIsoOfIso e ≪≫ E.qIsoOfIso f :=
   Q.isoOfIso_trans E.deflation E.inflation e f _ _ _ _ _ _
@@ -86,7 +86,7 @@ theorem ExactStructure.qIsoOfIso_trans (E : ExactStructure C)
 /-- An exact functor's Q-functor takes the Q-isomorphism of an original
 isomorphism to the Q-isomorphism of its image. -/
 @[simp]
-theorem ExactFunctor.mapQ_qIsoOfIso (F : ExactFunctor EC ED)
+theorem _root_.CategoryTheory.ExactCategory.ExactFunctor.mapQ_qIsoOfIso (F : ExactFunctor EC ED)
     {X Y : C} (e : X ≅ Y) :
     F.mapQ.mapIso (EC.qIsoOfIso e) = ED.qIsoOfIso (F.toFunctor.mapIso e) := by
   apply Iso.ext
@@ -220,7 +220,8 @@ variable {C D T : Type u} [Category.{v} C] [Category.{v} D] [Category.{v} T]
 
 set_option backward.isDefEq.respectTransparency false in
 /-- Canonical zero-object isomorphisms obey composition after passage to Q. -/
-theorem ExactFunctor.comp_qZeroIso (F : ExactFunctor EC ED) (G : ExactFunctor ED ET) :
+theorem _root_.CategoryTheory.ExactCategory.ExactFunctor.comp_qZeroIso (F : ExactFunctor EC ED) (G :
+  ExactFunctor ED ET) :
     ET.qIsoOfIso (F.comp G).toFunctor.mapZeroObject =
       G.mapQ.mapIso (ED.qIsoOfIso F.toFunctor.mapZeroObject) ≪≫
         ET.qIsoOfIso G.toFunctor.mapZeroObject := by
@@ -236,18 +237,20 @@ theorem ExactFunctor.comp_qZeroIso (F : ExactFunctor EC ED) (G : ExactFunctor ED
         ET.qIsoOfIso G.toFunctor.mapZeroObject := ET.qIsoOfIso_trans _ _
     _ = G.mapQ.mapIso (ED.qIsoOfIso F.toFunctor.mapZeroObject) ≪≫
         ET.qIsoOfIso G.toFunctor.mapZeroObject := by
-      rw [ExactFunctor.mapQ_qIsoOfIso]
+      rw [CategoryTheory.ExactCategory.ExactFunctor.mapQ_qIsoOfIso]
 
 
 /-- The Q-functor normalized at the chosen zero objects. Its realization
-is the continuous map used in `ExactFunctor.KMap`. -/
-def ExactFunctor.normalizedQ (F : ExactFunctor EC ED) : EC.QCategory ⥤ ED.QCategory :=
+is the continuous map used in `CategoryTheory.ExactCategory.ExactFunctor.KMap`. -/
+def _root_.CategoryTheory.ExactCategory.ExactFunctor.normalizedQ (F : ExactFunctor EC ED) :
+  EC.QCategory ⥤ ED.QCategory :=
   rebaseFunctor F.mapQ (Q.of EC.deflation EC.inflation (0 : C))
     (Q.of ED.deflation ED.inflation (0 : D)) (ED.qIsoOfIso F.toFunctor.mapZeroObject)
 
 /-- The normalized Q-functor of an exact composite is the generic rebasing
 of the composite Q-functor with its compositional base isomorphism. -/
-theorem ExactFunctor.normalizedQ_comp_eq (F : ExactFunctor EC ED) (G : ExactFunctor ED ET) :
+theorem _root_.CategoryTheory.ExactCategory.ExactFunctor.normalizedQ_comp_eq (F : ExactFunctor EC
+  ED) (G : ExactFunctor ED ET) :
     (F.comp G).normalizedQ =
       rebaseFunctor (F.mapQ ⋙ G.mapQ) (Q.of EC.deflation EC.inflation (0 : C))
         (Q.of ET.deflation ET.inflation (0 : T))
@@ -257,7 +260,8 @@ theorem ExactFunctor.normalizedQ_comp_eq (F : ExactFunctor EC ED) (G : ExactFunc
 
 /-- The comparison natural isomorphism for the actual normalized Q-functors
 used by KMap. -/
-def ExactFunctor.normalizedQCompIso (F : ExactFunctor EC ED) (G : ExactFunctor ED ET) :
+def _root_.CategoryTheory.ExactCategory.ExactFunctor.normalizedQCompIso (F : ExactFunctor EC ED) (G
+  : ExactFunctor ED ET) :
     (F.comp G).normalizedQ ≅ F.normalizedQ ⋙ G.normalizedQ :=
   eqToIso (F.normalizedQ_comp_eq G) ≪≫
     rebaseFunctorCompIso F.mapQ G.mapQ
@@ -267,7 +271,7 @@ def ExactFunctor.normalizedQCompIso (F : ExactFunctor EC ED) (G : ExactFunctor E
       (ED.qIsoOfIso F.toFunctor.mapZeroObject) (ET.qIsoOfIso G.toFunctor.mapZeroObject)
 
 /-- The two normalized exact composites have equal chosen base objects. -/
-theorem ExactFunctor.normalizedQCompIso_obj_base
+theorem _root_.CategoryTheory.ExactCategory.ExactFunctor.normalizedQCompIso_obj_base
     (F : ExactFunctor EC ED) (G : ExactFunctor ED ET) :
     (F.comp G).normalizedQ.obj (Q.of EC.deflation EC.inflation (0 : C)) =
       (F.normalizedQ ⋙ G.normalizedQ).obj (Q.of EC.deflation EC.inflation (0 : C)) :=
@@ -281,7 +285,7 @@ theorem ExactFunctor.normalizedQCompIso_obj_base
 
 /-- The comparison for exact functors fixes zero: its component is identity
 under the equality of the chosen base objects. -/
-theorem ExactFunctor.normalizedQCompIso_hom_base
+theorem _root_.CategoryTheory.ExactCategory.ExactFunctor.normalizedQCompIso_hom_base
     (F : ExactFunctor EC ED) (G : ExactFunctor ED ET) :
     (F.normalizedQCompIso G).hom.app (Q.of EC.deflation EC.inflation (0 : C)) =
       eqToHom (F.normalizedQCompIso_obj_base G) :=

@@ -15,7 +15,7 @@ public import Quillen.KTheory.GrothendieckGroup.Map
 
 This file compares the actual based-loop map with the Q-arrow object classes;
 all basepoint transports use the canonical zero-object isomorphism already
-used by `ExactFunctor.KMap`.
+used by `CategoryTheory.ExactCategory.ExactFunctor.KMap`.
 -/
 @[expose] public section
 
@@ -73,7 +73,10 @@ def classifyingFundamentalGroupoidNaturality
       (classifyingSpaceMap_point F x).symm (classifyingSpaceMap_point F y).symm]
     exact congrArg Path.Homotopic.Quotient.mk (classifyingSpacePath_map F f))
 
-namespace ExactStructure
+end Quillen
+
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
     (E : ExactStructure C)
 
@@ -159,8 +162,13 @@ determined by the object generators; commutativity of the target is unnecessary.
   | add r s hr hs =>
       simp only [map_add, ofAdd_add, map_mul, hr, hs]
 
-end ExactStructure
-namespace ExactFunctor
+end CategoryTheory.ExactCategory.ExactStructure
+
+namespace Quillen
+end Quillen
+
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   [Preadditive C] [HasFiniteBiproducts C] [Preadditive D] [HasFiniteBiproducts D]
   {EC : ExactStructure C} {ED : ExactStructure D}
@@ -177,9 +185,11 @@ lemma mapQ_fromZero (F : ExactFunctor EC ED) (X : C) :
   have h : IsPullback (𝟙 (F.toFunctor.obj (0 : C))) e.hom e.hom (𝟙 (0 : D)) :=
     IsPullback.of_horiz_isIso ⟨by exact Subsingleton.elim _ _⟩
   apply ED.q_comp_of_isPullback _ _ _ _ h _ (Iso.refl _)
-  · simp [QCompatibleFunctor.mapSpan, Q.isoSpan, Q.of, ExactFunctor.toQCompatibleFunctor]
+  · simp [QCompatibleFunctor.mapSpan, Q.isoSpan, Q.of,
+    CategoryTheory.ExactCategory.ExactFunctor.toQCompatibleFunctor]
     simpa using F.toFunctor.mapZeroObject.hom_inv_id
-  · simp [QCompatibleFunctor.mapSpan, Q.of, ExactFunctor.toQCompatibleFunctor]
+  · simp [QCompatibleFunctor.mapSpan, Q.of,
+    CategoryTheory.ExactCategory.ExactFunctor.toQCompatibleFunctor]
 
 /-- The exact Q-functor preserves whole-apex arrows with the same canonical
 zero-object comparison. -/
@@ -194,8 +204,10 @@ lemma mapQ_fromZeroTotal (F : ExactFunctor EC ED) (X : C) :
       (𝟙 (F.toFunctor.obj X)) e.hom (0 : F.toFunctor.obj X ⟶ 0) :=
     (IsPullback.of_horiz_isIso ⟨by simp⟩).flip
   apply ED.q_comp_of_isPullback _ _ _ _ h _ (Iso.refl _)
-  · simp [QCompatibleFunctor.mapSpan, Q.isoSpan, Q.of, ExactFunctor.toQCompatibleFunctor]
-  · simp [QCompatibleFunctor.mapSpan, Q.of, ExactFunctor.toQCompatibleFunctor]
+  · simp [QCompatibleFunctor.mapSpan, Q.isoSpan, Q.of,
+    CategoryTheory.ExactCategory.ExactFunctor.toQCompatibleFunctor]
+  · simp [QCompatibleFunctor.mapSpan, Q.of,
+    CategoryTheory.ExactCategory.ExactFunctor.toQCompatibleFunctor]
 
 /-- Canonical object classes are natural for exact functors in every groupoid
 image, after conjugation by exactly the chosen zero-object isomorphism. -/
@@ -204,7 +216,8 @@ lemma qObjectClass_mapQ {T : Type*} [Groupoid T] (F : ExactFunctor EC ED)
     (H.mapIso (ED.qIsoOfIso F.toFunctor.mapZeroObject)).conj
         (EC.qObjectClass (F.mapQ ⋙ H) X) =
       ED.qObjectClass H (F.toFunctor.obj X) := by
-  simp only [Iso.conj_apply, ExactStructure.qObjectClass, Functor.comp_map,
+  simp only [Iso.conj_apply, CategoryTheory.ExactCategory.ExactStructure.qObjectClass,
+    Functor.comp_map,
     Functor.mapIso_inv, Functor.mapIso_hom]
   rw [← F.mapQ_fromZeroTotal X]
   simp only [← Groupoid.inv_eq_inv]
@@ -241,5 +254,7 @@ theorem grothendieckToKZero_naturality (F : ExactFunctor EC ED) :
   intro X
   simp
 
-end ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor
+
+namespace Quillen
 end Quillen

@@ -71,8 +71,10 @@ theorem mapQ_surjectionArrow {D : Type u} [Category.{v} D] [Abelian D]
   unfold surjectionArrow
   change mkHom _ _ (F.toQCompatibleFunctor.mapSpan _) = mkHom _ _ _
   refine mkHom_eq_of_apexIso _ _ _ _ (Iso.refl (F.toFunctor.obj Y)) ?_ ?_
-  · simp [QCompatibleFunctor.mapSpan, ExactFunctor.toQCompatibleFunctor]
-  · simp [QCompatibleFunctor.mapSpan, ExactFunctor.toQCompatibleFunctor]
+  · simp [QCompatibleFunctor.mapSpan,
+    CategoryTheory.ExactCategory.ExactFunctor.toQCompatibleFunctor]
+  · simp [QCompatibleFunctor.mapSpan,
+    CategoryTheory.ExactCategory.ExactFunctor.toQCompatibleFunctor]
 
 /-- Mapping an ordinary mono agrees with its identity-left-leg Q-arrow. -/
 @[simp]
@@ -87,7 +89,9 @@ theorem mapQ_inflationArrow {D : Type u} [Category.{v} D] [Abelian D]
   unfold inflationArrow
   change mkHom _ _ (F.toQCompatibleFunctor.mapSpan _) = mkHom _ _ _
   refine mkHom_eq_of_apexIso _ _ _ _ (Iso.refl (F.toFunctor.obj X)) ?_ ?_
-  · simp [QCompatibleFunctor.mapSpan, ExactFunctor.toQCompatibleFunctor]
-  · simp [QCompatibleFunctor.mapSpan, ExactFunctor.toQCompatibleFunctor]
+  · simp [QCompatibleFunctor.mapSpan,
+    CategoryTheory.ExactCategory.ExactFunctor.toQCompatibleFunctor]
+  · simp [QCompatibleFunctor.mapSpan,
+    CategoryTheory.ExactCategory.ExactFunctor.toQCompatibleFunctor]
 
 end Quillen.Q

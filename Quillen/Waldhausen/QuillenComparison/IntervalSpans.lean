@@ -59,7 +59,7 @@ theorem right_mono {p q : NestedInterval n} (h : p ≤ q) : p.right ≤ q.right 
 end NestedInterval
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 variable {n : SimplexCategory} {F : Grid n ⥤ C}
 variable (hF : IsSimplex E.inflation (MorphismProperty.isomorphisms C) F)
 

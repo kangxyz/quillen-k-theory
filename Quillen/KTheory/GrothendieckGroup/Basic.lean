@@ -18,7 +18,8 @@ This is the quotient of the free abelian group on objects by the relations
 rather than an additional defining relation. We prove its universal property for
 conflation-additive functions into arbitrary abelian groups.
 
-This algebraic group is not identified here with `ExactStructure.K E 0`.
+This algebraic group is not identified here with `CategoryTheory.ExactCategory.ExactStructure.K E
+  0`.
 That comparison requires a separate theorem about the Q-construction.
 -/
 @[expose] public section
@@ -30,7 +31,8 @@ universe v u w
 
 open CategoryTheory CategoryTheory.Limits
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
@@ -178,4 +180,4 @@ lemma grothendieckClass_of_isZero {X : C} (hX : IsZero X) :
     E.grothendieckClass X = 0 :=
   (E.grothendieckClass_iso (hX.iso (isZero_zero C))).trans E.grothendieckClass_zero
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

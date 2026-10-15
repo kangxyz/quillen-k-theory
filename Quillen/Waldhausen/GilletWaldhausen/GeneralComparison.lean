@@ -21,6 +21,8 @@ category and all actual maps remain unchanged.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

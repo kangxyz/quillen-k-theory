@@ -38,7 +38,8 @@ theorem originalQLoopProductEquiv_comparison_label
     (x : ClassifyingSpace (GroupCompletionCategory R)) :
     ((originalQLoopProductEquiv R (originalQComparison R x)).1).ofTopology =
       completionZerothHomotopyKZeroEquiv R (ZerothHomotopy.mk x) := by
-  rw [originalQLoopProductEquiv, ExactStructure.qLoopProductEquiv_label]
+  rw [originalQLoopProductEquiv,
+    CategoryTheory.ExactCategory.ExactStructure.qLoopProductEquiv_label]
   exact originalQComparison_kZero R x
 
 /-- A standard right-module completion stage has numerator-minus-denominator product coordinate. -/
@@ -48,7 +49,8 @@ theorem originalQLoopProductEquiv_stage_label (n : ℕ) (P : IsoCategory Rᵐᵒ
         (classifyingSpacePoint (completionPair Rᵐᵒᵖ (rankOnePower Rᵐᵒᵖ n) P)))).1).ofTopology =
       (exactStructure Rᵐᵒᵖ).kZeroObjectClass P.of /
         (exactStructure Rᵐᵒᵖ).kZeroObjectClass (rankOnePower Rᵐᵒᵖ n).of := by
-  rw [originalQLoopProductEquiv, ExactStructure.qLoopProductEquiv_label]
+  rw [originalQLoopProductEquiv,
+    CategoryTheory.ExactCategory.ExactStructure.qLoopProductEquiv_label]
   exact completionToOriginalQLoops_stage_kZero R n P
 
 /-- The original constant-loop component is included exactly on the neutral product slice. -/

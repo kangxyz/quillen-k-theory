@@ -27,7 +27,8 @@ set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
@@ -130,4 +131,4 @@ def qCoreEquivalence : Core C ≌ Core (Q E.deflation E.inflation) :=
 theorem qCoreEquivalence_map {X Y : Core C} (f : X ⟶ Y) :
     ((E.qCoreEquivalence).functor.map f).iso = E.qIsoOfIso f.iso := rfl
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

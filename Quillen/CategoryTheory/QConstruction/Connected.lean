@@ -23,10 +23,11 @@ universe v u
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-  (E : Quillen.ExactStructure C)
+  (E : CategoryTheory.ExactCategory.ExactStructure C)
 
 /-- The distinguished object of Q, corresponding to zero in the original category. -/
 abbrev qZero : E.QCategory := Quillen.Q.of E.deflation E.inflation (0 : C)
@@ -49,4 +50,4 @@ instance qCategory_isConnected : IsConnected E.QCategory := by
   intro α f hf X Y
   exact (hf (E.fromZero X)).symm.trans (hf (E.fromZero Y))
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

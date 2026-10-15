@@ -37,7 +37,7 @@ variable (R : CommRingCat.{u}) [IsNoetherianRing R]
 /-- G-theory of the actual global coherent category on an affine scheme,
 formed in the base ring's universe using its proved smallness. -/
 abbrev SpecG (n : ℕ) : Type u :=
-  ExactStructure.SmallK.{u} (coherentExactStructure (Spec R)) n
+  CategoryTheory.ExactCategory.ExactStructure.SmallK.{u} (coherentExactStructure (Spec R)) n
 
 /-- The canonical K-map induced by the identity-on-sheaves comparison. -/
 def specGToAffineG (n : ℕ) : SpecG R n →* AffineG R n :=
@@ -52,7 +52,7 @@ instance coherentToAffineSmall_isEquivalence :
 
 instance coherentToAffineSmall_mapQ_isEquivalence :
     ((coherentToAffineExact R).smallModel).mapQ.IsEquivalence := by
-  apply ExactFunctor.mapQ_isEquivalence_of_equivalence
+  apply CategoryTheory.ExactCategory.ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro X Y i hi
     change (abelianExactStructure (AffineFiniteType R)).smallModel.inflation _ at hi
     change (abelianExactStructure (FiniteTypeSheaves (Spec R))).smallModel.inflation i

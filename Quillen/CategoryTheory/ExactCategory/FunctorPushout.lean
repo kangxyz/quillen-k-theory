@@ -76,7 +76,10 @@ theorem isPushoutOfBiprodCokernel (w : i ≫ g = f ≫ j)
 
 end PushoutCokernel
 
-namespace ExactFunctor
+end Quillen
+
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   {D : Type u'} [Category.{v'} D] [Preadditive D] [HasFiniteBiproducts D]
   {EC : ExactStructure C} {ED : ExactStructure D} (F : ExactFunctor EC ED)
@@ -106,5 +109,7 @@ theorem map_isPushout {A B T P : C} {i : A ⟶ B} {f : A ⟶ T}
   exact isPushoutOfBiprodCokernel w
     (ED.cokernel _ (ED.iso_closed e (F.map_conflation S hS)))
 
-end ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor
+
+namespace Quillen
 end Quillen

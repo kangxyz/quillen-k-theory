@@ -12,6 +12,8 @@ public import Quillen.Waldhausen.Functoriality.ExactEquivalence
 /-! # The actual supported relative fiber is support on the original union -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped ZeroObject

@@ -24,7 +24,7 @@ universe v u
 namespace Quillen.Waldhausen.QuillenComparison
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 
 /-- The admissible one-step flag zero to the specified object. -/
 def objectFlag (X : C) : ComposableArrows C 1 := zeroPrefixFlag (mk₀ X)

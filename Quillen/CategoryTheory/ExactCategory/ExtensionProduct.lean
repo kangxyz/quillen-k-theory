@@ -21,7 +21,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -80,4 +81,4 @@ theorem extensionDiagonal_naturality {X : C} {p q : E.ExtensionOver X} (f : p ‚ü
   apply Over.OverMorphism.ext
   apply pullback.hom_ext <;> simp [extensionDiagonal, extensionProduct]
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

@@ -100,7 +100,8 @@ private theorem qIso_symm_hom {A B : Category.{u, u} Sᵐᵒᵖ} (e : A ≅ B) :
   apply (cancel_epi ((exactStructure Sᵐᵒᵖ).qIsoOfIso e).hom).1
   rw [Iso.hom_inv_id]
   have h := congrArg Iso.hom ((exactStructure Sᵐᵒᵖ).qIsoOfIso_trans e e.symm)
-  simpa only [Iso.self_symm_id, ExactStructure.qIsoOfIso_refl, Iso.refl_hom,
+  simpa only [Iso.self_symm_id, CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_refl,
+    Iso.refl_hom,
     Iso.trans_hom] using h.symm
 
 /-- The actual quotient comparison intertwines the original direct-sum lineators in Q. -/
@@ -120,7 +121,8 @@ theorem rightBaseChangeExtensionProjection_lineator :
     (directSumExtensionQuotientIso Rᵐᵒᵖ P x))
   simp only [Functor.mapIso_inv] at hm
   erw [hm]
-  simp only [rightBaseChangeExtensionTensorQuotientIso, ExactStructure.qIsoOfIso_trans,
+  simp only [rightBaseChangeExtensionTensorQuotientIso,
+    CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_trans,
     Iso.trans_hom, Iso.inv_hom_id_assoc]
   rw [qIso_symm_hom, Iso.hom_inv_id_assoc, Functor.mapIso_symm, qIso_symm_hom]
   rfl

@@ -56,7 +56,7 @@ theorem isIso_gluing {A B D P A' B' D' P' : C}
 variable [Preadditive C] [HasFiniteBiproducts C]
 
 /-- Every Quillen exact category gives a genuine Waldhausen category. -/
-def ofExactCategory (E : Quillen.ExactStructure C) : Structure C where
+def ofExactCategory (E : CategoryTheory.ExactCategory.ExactStructure C) : Structure C where
   zero := 0
   isZero := isZero_zero C
   cof := E.inflation

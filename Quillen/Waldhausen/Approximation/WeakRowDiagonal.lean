@@ -27,7 +27,7 @@ namespace Quillen.Waldhausen
 open QuillenComparison
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C) (cof weq : MorphismProperty C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C) (cof weq : MorphismProperty C)
   [weq.IsMultiplicative] (hcof : cof ≤ E.inflation)
 variable {n : SimplexCategory} {F : Grid n ⥤ C}
 variable (hF : IsSimplex cof weq F)

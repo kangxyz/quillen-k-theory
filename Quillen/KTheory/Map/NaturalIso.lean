@@ -27,7 +27,8 @@ universe v u v₁ v₂ u₁ u₂
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 
 variable {C : Type u₁} {D : Type u₂} [Category.{v₁} C] [Category.{v₂} D]
   [Preadditive C] [HasFiniteBiproducts C]
@@ -87,7 +88,7 @@ def mapQIso (e : F.toFunctor ≅ G.toFunctor) : F.mapQ ≅ G.mapQ :=
 theorem mapQIso_app (e : F.toFunctor ≅ G.toFunctor) (X : C) :
     (mapQIso e).app (Q.of EC.deflation EC.inflation X) = ED.qIsoOfIso (e.app X) := rfl
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor
 
 namespace Quillen
 
@@ -127,7 +128,10 @@ theorem rebaseFunctorNatIso_hom_base (α : F ≅ G) (c : C) (d : D)
 
 end RebaseNaturalIso
 
-namespace ExactFunctor
+end Quillen
+
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   [Preadditive C] [HasFiniteBiproducts C]
   [Preadditive D] [HasFiniteBiproducts D]
@@ -139,7 +143,7 @@ maps to the original zero object are unique. -/
 theorem mapQIso_comp_qZeroIso (e : F.toFunctor ≅ G.toFunctor) :
     (mapQIso e).app (Q.of EC.deflation EC.inflation (0 : C)) ≪≫
       ED.qIsoOfIso G.toFunctor.mapZeroObject = ED.qIsoOfIso F.toFunctor.mapZeroObject := by
-  rw [mapQIso_app, ← ExactStructure.qIsoOfIso_trans]
+  rw [mapQIso_app, ← CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_trans]
   congr 1
   apply Iso.ext
   apply Subsingleton.elim
@@ -176,5 +180,7 @@ theorem KMap_eq_of_natIso (e : F.toFunctor ≅ G.toFunctor) (n : ℕ) :
   exact piMap_eq_of_based_homotopy n F.normalizedQ_map_point G.normalizedQ_map_point
     H.toHomotopy hH
 
-end ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor
+
+namespace Quillen
 end Quillen

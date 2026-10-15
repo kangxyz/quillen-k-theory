@@ -16,7 +16,8 @@ public import Mathlib.CategoryTheory.Localization.Equivalence
 Conjugating an actual exact localization by the chosen small-model equivalences
 preserves its Serre-localization theorem. The kernel is still the actual inverse
 image of zero under the conjugated functor. This construction is the underlying
-functor used by `ExactFunctor.smallModel`, so its canonical K-map is retained.
+functor used by `CategoryTheory.ExactCategory.ExactFunctor.smallModel`, so its canonical K-map is
+  retained.
 -/
 @[expose] public section
 
@@ -101,7 +102,7 @@ instance standardExactFunctor_isEquivalence :
 
 instance standardExactFunctor_mapQ_isEquivalence :
     (standardExactFunctor.{w} C).mapQ.IsEquivalence := by
-  apply ExactFunctor.mapQ_isEquivalence_of_equivalence
+  apply CategoryTheory.ExactCategory.ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro M N f hf
     rw [abelianExactStructure_smallModel]
     exact hf
@@ -138,7 +139,8 @@ theorem smallKMap_comparison
       ((standardFunctor F).KMap n).comp (standardKEquiv C n).toMonoidHom := by
   change ((standardExactFunctor D).KMap n).comp (F.smallModel.KMap n) =
     ((standardFunctor F).KMap n).comp ((standardExactFunctor C).KMap n)
-  rw [← ExactFunctor.KMap_comp, ← ExactFunctor.KMap_comp]
+  rw [← CategoryTheory.ExactCategory.ExactFunctor.KMap_comp, ←
+    CategoryTheory.ExactCategory.ExactFunctor.KMap_comp]
   rfl
 
 end Quillen.SmallModelLocalization

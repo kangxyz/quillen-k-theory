@@ -36,7 +36,7 @@ def extendedMiddleInterval (n : ℕ) : NestedInterval ⦋n + 1 + 1⦌ :=
     (flagMiddleOrdinal n).toOrderHom.monotone (Fin.zero_le _)⟩
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C) {n : ℕ}
+variable (E : CategoryTheory.ExactCategory.ExactStructure C) {n : ℕ}
 variable (A : Fin (n + 1) ⥤ C)
 variable (hA : ∀ {i j} (f : i ⟶ j), E.inflation (A.map f))
 variable {P Z : C} (p : P ⟶ A.obj (Fin.last n)) (hp : E.deflation p)

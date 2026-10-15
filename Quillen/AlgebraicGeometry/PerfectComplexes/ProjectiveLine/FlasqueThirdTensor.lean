@@ -12,6 +12,8 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementClosedSectionSpan
 /-! # Original right quotient-line tensor and its flasque total -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

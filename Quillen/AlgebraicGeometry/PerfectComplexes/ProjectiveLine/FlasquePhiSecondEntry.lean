@@ -16,6 +16,8 @@ the actual shifted Euler square endpoint. Original right-tensor symmetry,
 two-line associator, signed shift, and the E0 left unitor are retained.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

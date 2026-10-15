@@ -15,7 +15,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -43,4 +44,4 @@ theorem inflation_kernelMap_comp {A B K X Y Z : C}
   rw [← heq]
   exact E.inflation_comp _ _ (E.inflation_of_conflation hBase) (E.inflation_of_iso e)
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

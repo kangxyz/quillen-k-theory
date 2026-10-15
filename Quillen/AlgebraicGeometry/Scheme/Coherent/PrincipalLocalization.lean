@@ -93,7 +93,8 @@ theorem globalPrincipal_inclusion_range_eq_restriction_ker (n : ℕ) :
   apply principal_exact_transport
     (globalPrincipalInclusionGMap R r n) (restrictionGMap (principalOpen R r) n)
     (SmallModelGLocalization.inclusionKMap.{u+1} (coherentRestrictionExact (principalOpen R r)) n)
-    (ExactFunctor.smallKMap.{u+1} (coherentRestrictionExact (principalOpen R r)) n)
+    (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (coherentRestrictionExact
+      (principalOpen R r)) n)
     (coherentPrincipalSupportedGEquiv R r n) (MulEquiv.refl _) (MulEquiv.refl _)
   · intro a; rfl
   · intro b; rfl
@@ -106,7 +107,8 @@ theorem globalPrincipal_restriction_range_eq_connecting_ker (n : ℕ) :
       (globalPrincipalConnectingHom R r n).ker := by
   apply principal_exact_transport
     (restrictionGMap (principalOpen R r) (n + 1)) (globalPrincipalConnectingHom R r n)
-    (ExactFunctor.smallKMap.{u+1} (coherentRestrictionExact (principalOpen R r)) (n + 1))
+    (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (coherentRestrictionExact
+      (principalOpen R r)) (n + 1))
     (SmallModelGLocalization.connectingHom.{u+1} (coherentRestrictionExact (principalOpen R r)) n)
     (MulEquiv.refl _) (MulEquiv.refl _) (coherentPrincipalSupportedGEquiv R r n)
   · intro a; rfl

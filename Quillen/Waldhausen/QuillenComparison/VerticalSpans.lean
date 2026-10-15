@@ -24,7 +24,7 @@ universe v u
 namespace Quillen.Waldhausen.QuillenComparison
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 variable {n : SimplexCategory} {F : Grid n ⥤ C}
 variable (hF : IsSimplex E.inflation (MorphismProperty.isomorphisms C) F)
 
@@ -101,6 +101,7 @@ def rowsQFunctor : Fin (n.len + 1) ⥤ (NestedInterval n ⥤ Q E.deflation E.inf
     change (E.qIsoOfIso (verticalIso E hF s u _ p.endpoints)).hom =
       (E.qIsoOfIso (verticalIso E hF s t _ p.endpoints)).hom ≫
         (E.qIsoOfIso (verticalIso E hF t u _ p.endpoints)).hom
-    rw [← Iso.trans_hom, ← ExactStructure.qIsoOfIso_trans, verticalIso_comp]
+    rw [← Iso.trans_hom, ← CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_trans,
+      verticalIso_comp]
 
 end Quillen.Waldhausen.QuillenComparison

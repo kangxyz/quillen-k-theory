@@ -25,6 +25,8 @@ issue; the object predicate here is explicitly local perfectness.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 
@@ -67,7 +69,7 @@ instance perfectRestrict_additive : (perfectRestrict j).Additive := by
   infer_instance
 
 /-- Exactness of actual restriction for the inherited exact structures. -/
-def perfectExactRestrict : Quillen.ExactFunctor
+def perfectExactRestrict : CategoryTheory.ExactCategory.ExactFunctor
     (ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (locallyPerfect X))
     (ExactSubcategory.exactStructure (abelianExactStructure (Complex U)) (locallyPerfect U)) where
   toFunctor := perfectRestrict j

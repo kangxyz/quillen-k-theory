@@ -45,8 +45,9 @@ private theorem piMap_of_commuting_square
 
 variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   [Preadditive C] [Preadditive D] [HasFiniteBiproducts C] [HasFiniteBiproducts D]
-  {EC : Quillen.ExactStructure C} {ED : Quillen.ExactStructure D}
-  (F : Quillen.ExactFunctor EC ED)
+  {EC : CategoryTheory.ExactCategory.ExactStructure C} {ED :
+    CategoryTheory.ExactCategory.ExactStructure D}
+  (F : CategoryTheory.ExactCategory.ExactFunctor EC ED)
 
 /-- Strict zero preservation retains the actual constant zero simplex in every degree. -/
 theorem exactSSetMap_zeroSimplex_of_zeroEq
@@ -150,7 +151,8 @@ The Quillen map is the existing normalized map, not a newly defined substitute. 
 theorem comparisonKEquiv_naturality (n : ℕ) :
     (comparisonKEquiv ED n).toMonoidHom.comp (normalizedExactSKMap F n) =
       (F.KMap n).comp (comparisonKEquiv EC n).toMonoidHom := by
-  simpa only [normalizedExactSKMap, Quillen.ExactFunctor.zeroNormalized_KMap] using
+  simpa only [normalizedExactSKMap, CategoryTheory.ExactCategory.ExactFunctor.zeroNormalized_KMap]
+    using
     comparisonKEquiv_naturality_of_zeroEq F.zeroNormalized F.zeroNormalized_obj_zero n
 
 private theorem piMap_congr_map {X Y : Type*} [TopologicalSpace X] [TopologicalSpace Y]

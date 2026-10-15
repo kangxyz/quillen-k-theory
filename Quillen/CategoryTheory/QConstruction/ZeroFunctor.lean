@@ -23,9 +23,10 @@ universe u v u' v'
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-  (E : Quillen.ExactStructure C) {D : Type u'} [Category.{v'} D]
+  (E : CategoryTheory.ExactCategory.ExactStructure C) {D : Type u'} [Category.{v'} D]
 
 /-- The zero-image condition determines a genuine natural isomorphism to the
 constant Q-zero functor, because all the relevant Q-hom sets are subsingletons. -/
@@ -36,4 +37,4 @@ def qFunctorIsoConstZero (F : D ⥤ E.QCategory)
       exact (E.qHom_subsingleton_of_isZero (F.obj X) E.qZero
         (isZero_zero C)).elim _ _)
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

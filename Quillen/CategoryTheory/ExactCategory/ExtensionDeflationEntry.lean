@@ -16,7 +16,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
@@ -203,4 +204,4 @@ def extensionDeflationIsoFiberEquivalence (X : C) :
     E.ExtensionFiber X ≌ IsoFiber E.extensionProjection (Q.of E.deflation E.inflation X) :=
   (E.extensionDeflationIsoFiber X).asEquivalence
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

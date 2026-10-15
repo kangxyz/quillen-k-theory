@@ -38,7 +38,7 @@ variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 
 /-- An exact quotient row whose horizontal cofibrations lie in the stated class. -/
 @[ext]
-structure WeakRow (E : Quillen.ExactStructure C) (cof weq : MorphismProperty C)
+structure WeakRow (E : CategoryTheory.ExactCategory.ExactStructure C) (cof weq : MorphismProperty C)
     (n : SimplexCategory) where
   /-- The exact quotient row, whose horizontal interval maps are additionally required to lie in
   `cof`. -/
@@ -49,7 +49,7 @@ structure WeakRow (E : Quillen.ExactStructure C) (cof weq : MorphismProperty C)
 
 namespace WeakRow
 
-variable {E : Quillen.ExactStructure C} {cof weq : MorphismProperty C}
+variable {E : CategoryTheory.ExactCategory.ExactStructure C} {cof weq : MorphismProperty C}
   {n : SimplexCategory} [weq.IsMultiplicative]
 
 instance : Category (WeakRow E cof weq n) where
@@ -83,7 +83,7 @@ end WeakRow
 
 section Completion
 
-variable (E : Quillen.ExactStructure C) (W V : Structure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C) (W V : Structure C)
   (hWE : W.cof ≤ E.inflation) (hEV : E.inflation ≤ V.cof) {n : SimplexCategory}
 
 include hEV in

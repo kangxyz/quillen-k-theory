@@ -19,6 +19,8 @@ comparison nor the Gillet–Waldhausen equivalence is asserted here.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 
@@ -36,7 +38,7 @@ namespace Quillen.PerfectComplexes
 variable (X : Scheme.{u})
 
 /-- The actual inherited exact structure on strict perfect complexes. -/
-abbrev strictExactStructure : Quillen.ExactStructure (StrictPerfect X) :=
+abbrev strictExactStructure : CategoryTheory.ExactCategory.ExactStructure (StrictPerfect X) :=
   ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (strictPerfect X)
 
 instance vectorBundleInclusion_additive : (vectorBundleInclusion X).Additive := by
@@ -46,7 +48,8 @@ instance vectorBundleInclusion_additive : (vectorBundleInclusion X).Additive := 
 /-- Placing vector bundles in degree zero preserves every ambient conflation,
 including sequences which split only locally. -/
 def vectorBundleExactInclusion :
-    Quillen.ExactFunctor (SchemeSheaf.vectorBundleExactStructure X) (strictExactStructure X) where
+    CategoryTheory.ExactCategory.ExactFunctor (SchemeSheaf.vectorBundleExactStructure X)
+      (strictExactStructure X) where
   toFunctor := vectorBundleInclusion X
   map_conflation S hS := by
     have hs : (S.map (SchemeSheaf.finiteLocallyFree X).ι).ShortExact := hS

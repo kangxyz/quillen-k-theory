@@ -15,7 +15,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -36,4 +37,4 @@ instance extensionProjection_stronglyCartesian {x y : E.ExtensionTotal} (f : x �
       refine ⟨?_, hh'.2⟩
       exact (IsHomLift.eq_of_isHomLift E.extensionProjection w h').symm
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

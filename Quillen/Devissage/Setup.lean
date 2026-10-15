@@ -155,7 +155,7 @@ groups. This is not the homotopical dévissage theorem or the `K₀` comparison.
 theorem grothendieckMap_surjective (h : FiltrationHypothesis P) :
     Function.Surjective (grothendieckMap P) := by
   apply AddMonoidHom.range_eq_top.mp
-  apply ExactStructure.grothendieckSubgroup_eq_top_of_classes
+  apply CategoryTheory.ExactCategory.ExactStructure.grothendieckSubgroup_eq_top_of_classes
   intro X
   obtain ⟨F⟩ := h X
   exact class_mem_range P F

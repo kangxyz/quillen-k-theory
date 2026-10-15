@@ -19,6 +19,8 @@ cycles and terms do not generally send quasi-isomorphisms to isomorphisms.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

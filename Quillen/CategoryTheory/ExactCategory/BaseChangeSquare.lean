@@ -20,7 +20,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -52,4 +53,4 @@ theorem conflation_of_isPullback {S : ShortComplex C} (hS : E.conflation S)
         exact hk.fac (KernelFork.ofι (a ≫ k) (by
           rw [Category.assoc, sq.w, ← Category.assoc, ha, zero_comp])) WalkingParallelPair.zero
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

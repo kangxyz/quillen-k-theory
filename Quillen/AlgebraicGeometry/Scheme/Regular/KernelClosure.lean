@@ -53,7 +53,7 @@ instance coherentVectorBundle_kernelClosed (X : Scheme.{u}) [IsLocallyNoetherian
       finiteLocallyFree_restrict (U.f i) S.X₂.obj
     have h₃' : coherentVectorBundle (Spec (U.X i)) T.X₃ :=
       finiteLocallyFree_restrict (U.f i) S.X₃.obj
-    exact ExactStructure.IsKernelClosed.prop_kernel
+    exact CategoryTheory.ExactCategory.ExactStructure.IsKernelClosed.prop_kernel
       (E := CoherentScheme.coherentExactStructure (Spec (U.X i))) hT h₂' h₃'
 
 end Quillen.SchemeSheaf

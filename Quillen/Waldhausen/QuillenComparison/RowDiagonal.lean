@@ -28,7 +28,7 @@ def rowRestriction {n : SimplexCategory} (t : Fin (n.len + 1)) : Interval n ⥤ 
     fun _ _ h ↦ ⟨le_rfl, h⟩).functor
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 variable {n : SimplexCategory} {F : Grid n ⥤ C}
 variable (hF : IsSimplex E.inflation (MorphismProperty.isomorphisms C) F)
 

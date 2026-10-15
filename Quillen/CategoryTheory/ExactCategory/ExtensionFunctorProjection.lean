@@ -17,7 +17,8 @@ set_option backward.isDefEq.respectTransparency.types false
 set_option backward.defeqAttrib.useBackward true
 universe u v u' v'
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 variable {C : Type u} {D : Type u'} [Category.{v} C] [Category.{v'} D]
   [Preadditive C] [Preadditive D] [HasFiniteBiproducts C] [HasFiniteBiproducts D]
   {E : ExactStructure C} {E' : ExactStructure D} (F : ExactFunctor E E')
@@ -95,4 +96,4 @@ def extensionProjectionIso :
 theorem extensionProjectionIso_hom_app (x : E.ExtensionTotal) :
     F.extensionProjectionIso.hom.app x = (E'.qIsoOfIso (F.extensionQuotientIso x)).hom := rfl
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

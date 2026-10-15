@@ -17,6 +17,8 @@ before Godement totalization; ordinary projection is used only afterwards.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

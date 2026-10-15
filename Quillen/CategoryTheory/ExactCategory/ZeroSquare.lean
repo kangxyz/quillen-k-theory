@@ -22,7 +22,8 @@ open scoped ZeroObject
 universe u v
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C) {A B Z Q : C}
   {i : A ⟶ B} {z : A ⟶ Z} {q : B ⟶ Q} {s : Z ⟶ Q}
@@ -76,4 +77,4 @@ theorem inflation_pushout_zero_iff_deflation_pullback (hZ : IsZero Z) :
   ⟨fun h => E.deflation_pullback_of_inflation_pushout_zero hZ h.1 h.2,
    fun h => E.inflation_pushout_of_deflation_pullback_zero hZ h.1 h.2⟩
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

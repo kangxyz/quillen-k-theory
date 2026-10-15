@@ -31,7 +31,7 @@ theorem centralIntervalFunctor_naturality {n m : SimplexCategory} (α : n ⟶ m)
   apply CategoryTheory.Functor.ext (fun i ↦ centralInterval_naturality α i)
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 
 /-- The Q-valued interval functor of an exact row commutes strictly with reindexing. -/
 theorem rowIntervalFunctor_reindex {n m : SimplexCategory} (α : n ⟶ m) (F : Row E m) :

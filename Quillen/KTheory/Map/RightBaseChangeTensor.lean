@@ -32,7 +32,7 @@ variable {R S : Type u} [Ring R] [Ring S]
 /-- Literal tensor scalar extension induces the original K-map in every degree. -/
 theorem rightTensorBaseChangeExact_KMap (f : R →+* S) (n : ℕ) :
     (rightTensorBaseChangeExact f).KMap n = (rightBaseChangeExact f).KMap n :=
-  ExactFunctor.KMap_eq_of_natIso (F := rightTensorBaseChangeExact f)
+  CategoryTheory.ExactCategory.ExactFunctor.KMap_eq_of_natIso (F := rightTensorBaseChangeExact f)
     (G := rightBaseChangeExact f) (rightTensorBaseChangeIso f) n
 
 end Quillen.FiniteProjectiveModule

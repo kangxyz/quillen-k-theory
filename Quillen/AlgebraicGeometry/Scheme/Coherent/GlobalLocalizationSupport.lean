@@ -120,7 +120,7 @@ instance coherentGlobalSupportComparison_isEquivalence :
 
 instance coherentGlobalSupportComparison_mapQ_isEquivalence :
     (coherentGlobalSupportComparison j).mapQ.IsEquivalence := by
-  apply ExactFunctor.mapQ_isEquivalence_of_equivalence
+  apply CategoryTheory.ExactCategory.ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro M N f hf
     change (abelianExactStructure (SupportedFiniteTypeSheaves j)).smallModel.inflation f
     rw [abelianExactStructure_smallModel, abelianExactStructure_inflation_iff]

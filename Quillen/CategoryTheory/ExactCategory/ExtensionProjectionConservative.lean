@@ -17,7 +17,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -83,4 +84,4 @@ instance extensionProjection_reflectsIsomorphisms : E.extensionProjection.Reflec
       inferInstanceAs (IsIso (E.extensionProjection.map f))
     exact E.extensionProjection_isIso f
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

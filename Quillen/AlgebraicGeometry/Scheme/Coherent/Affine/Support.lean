@@ -85,6 +85,7 @@ def supportedAffineCoherentExactStructure : ExactStructure (SupportedAffineFinit
 
 /-- G-theory with support, formed from the actual supported coherent category. -/
 abbrev SupportedAffineG (n : ℕ) : Type u :=
-  ExactStructure.SmallK.{u} (supportedAffineCoherentExactStructure R j) n
+  CategoryTheory.ExactCategory.ExactStructure.SmallK.{u} (supportedAffineCoherentExactStructure R j)
+    n
 
 end Quillen.CoherentScheme

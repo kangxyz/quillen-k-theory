@@ -19,7 +19,8 @@ set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
@@ -89,9 +90,10 @@ lemma qDeflation_injective {X Y : C} {p q : Y ⟶ X}
   have he : e.hom = 𝟙 Y := by simpa using hr
   simpa [he] using hl.symm
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 variable {C : Type u} {D : Type u} [Category.{v} C] [Category.{v} D]
   [Preadditive C] [Preadditive D] [HasFiniteBiproducts C] [HasFiniteBiproducts D]
   {EC : ExactStructure C} {ED : ExactStructure D}
@@ -100,16 +102,20 @@ variable {C : Type u} {D : Type u} [Category.{v} C] [Category.{v} D]
     {X Y : C} (i : X ⟶ Y) (hi : EC.inflation i) :
     F.mapQ.map (EC.qInflation i hi) =
       ED.qInflation (F.toFunctor.map i) (F.map_inflation i hi) := by
-  simp only [ExactStructure.qInflation, ExactFunctor.mapQ,
-    QCompatibleFunctor.mapQ_mkHom, QCompatibleFunctor.mapSpan, ExactFunctor.toQCompatibleFunctor]
+  simp only [CategoryTheory.ExactCategory.ExactStructure.qInflation,
+    CategoryTheory.ExactCategory.ExactFunctor.mapQ,
+    QCompatibleFunctor.mapQ_mkHom, QCompatibleFunctor.mapSpan,
+      CategoryTheory.ExactCategory.ExactFunctor.toQCompatibleFunctor]
   apply Q.mkHom_eq_of_apexIso _ _ _ _ (Iso.refl (F.toFunctor.obj X)) <;> simp
 
 @[simp] lemma mapQ_qDeflation (F : ExactFunctor EC ED)
     {X Y : C} (p : X ⟶ Y) (hp : EC.deflation p) :
     F.mapQ.map (EC.qDeflation p hp) =
       ED.qDeflation (F.toFunctor.map p) (F.map_deflation p hp) := by
-  simp only [ExactStructure.qDeflation, ExactFunctor.mapQ,
-    QCompatibleFunctor.mapQ_mkHom, QCompatibleFunctor.mapSpan, ExactFunctor.toQCompatibleFunctor]
+  simp only [CategoryTheory.ExactCategory.ExactStructure.qDeflation,
+    CategoryTheory.ExactCategory.ExactFunctor.mapQ,
+    QCompatibleFunctor.mapQ_mkHom, QCompatibleFunctor.mapSpan,
+      CategoryTheory.ExactCategory.ExactFunctor.toQCompatibleFunctor]
   apply Q.mkHom_eq_of_apexIso _ _ _ _ (Iso.refl (F.toFunctor.obj X)) <;> simp
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

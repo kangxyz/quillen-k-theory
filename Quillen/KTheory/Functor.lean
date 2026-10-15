@@ -39,7 +39,10 @@ structure SmallExactCategory : Type (u + 1) where
 attribute [instance] SmallExactCategory.category SmallExactCategory.preadditive
   SmallExactCategory.finiteBiproducts
 
-namespace ExactFunctor
+end Quillen
+
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 
 /-- The proof data of exactness do not alter equality of exact functors. -/
 @[ext]
@@ -52,17 +55,19 @@ theorem ext_toFunctor {C D : Type u} [Category.{u} C] [Category.{u} D]
   cases h
   rfl
 
-end ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor
+
+namespace Quillen
 
 namespace SmallExactCategory
 
 instance : Category.{u} SmallExactCategory.{u} where
   Hom C D := ExactFunctor C.exactStructure D.exactStructure
-  id C := ExactFunctor.id C.exactStructure
+  id C := CategoryTheory.ExactCategory.ExactFunctor.id C.exactStructure
   comp F G := F.comp G
-  id_comp := by intros; apply ExactFunctor.ext_toFunctor; rfl
-  comp_id := by intros; apply ExactFunctor.ext_toFunctor; rfl
-  assoc := by intros; apply ExactFunctor.ext_toFunctor; rfl
+  id_comp := by intros; apply CategoryTheory.ExactCategory.ExactFunctor.ext_toFunctor; rfl
+  comp_id := by intros; apply CategoryTheory.ExactCategory.ExactFunctor.ext_toFunctor; rfl
+  assoc := by intros; apply CategoryTheory.ExactCategory.ExactFunctor.ext_toFunctor; rfl
 
 /-- The actual group-valued Quillen K-functor in a fixed nonnegative degree. -/
 def KFunctor (n : ℕ) : SmallExactCategory.{u} ⥤ GrpCat.{u} where
@@ -71,11 +76,12 @@ def KFunctor (n : ℕ) : SmallExactCategory.{u} ⥤ GrpCat.{u} where
   map_id C := by
     apply ConcreteCategory.hom_ext
     intro x
-    exact DFunLike.congr_fun (ExactFunctor.KMap_id C.exactStructure n) x
+    exact DFunLike.congr_fun (CategoryTheory.ExactCategory.ExactFunctor.KMap_id C.exactStructure n)
+      x
   map_comp F G := by
     apply ConcreteCategory.hom_ext
     intro x
-    exact DFunLike.congr_fun (ExactFunctor.KMap_comp F G n) x
+    exact DFunLike.congr_fun (CategoryTheory.ExactCategory.ExactFunctor.KMap_comp F G n) x
 
 end SmallExactCategory
 end Quillen

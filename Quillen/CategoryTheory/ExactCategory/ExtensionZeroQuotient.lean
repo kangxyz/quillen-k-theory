@@ -15,7 +15,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits ZeroObject
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
@@ -59,4 +60,4 @@ def identityExtensionIsoOfZeroQuotient (x : E.ExtensionTotal)
     change 𝟙 _ ≫ x.fiber.unop.hom.hom = 𝟙 _ ≫ x.fiber.unop.hom.hom
     rfl)
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

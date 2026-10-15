@@ -17,7 +17,8 @@ set_option backward.isDefEq.respectTransparency false
 open CategoryTheory CategoryTheory.Limits
 universe v u
 
-namespace Quillen.ExactSubcategory
+namespace CategoryTheory.ExactCategory.ExactSubcategory
+open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C) (P : ObjectProperty C)
@@ -33,4 +34,4 @@ theorem cokernel_mem_of_inflation {X Y : P.FullSubcategory} (f : X ⟶ Y)
   let e := (E.cokernel _ hS).coconePointUniqueUpToIso (cokernelIsCokernel f.hom)
   exact P.prop_of_iso e hZ
 
-end Quillen.ExactSubcategory
+end CategoryTheory.ExactCategory.ExactSubcategory

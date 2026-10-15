@@ -22,6 +22,8 @@ compatible object universe `A : Type (max u v)` and hom universe v.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

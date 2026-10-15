@@ -21,7 +21,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 
@@ -59,4 +60,4 @@ def extensionProjectionQMap {x y : E.ExtensionTotal} (f : x ⟶ y) :
     E.extensionProjectionQObj x ⟶ E.extensionProjectionQObj y :=
   Quillen.Q.mkHom E.deflation E.inflation (E.extensionProjectionSpan f)
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

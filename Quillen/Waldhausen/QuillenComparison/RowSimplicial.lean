@@ -31,7 +31,7 @@ def intervalMap {m n : SimplexCategory} (α : m ⟶ n) : Interval m ⥤ Interval
     fun _ _ h ↦ ⟨α.toOrderHom.monotone h.1, α.toOrderHom.monotone h.2⟩).functor
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 
 /-- Restriction is a functor on the groupoid of exact S-rows. -/
 def rowReindex {m n : SimplexCategory} (α : m ⟶ n) : Row E n ⥤ Row E m where
@@ -79,6 +79,6 @@ def rowChainComparison (n : SimplexCategory) :
     change (E.qIsoOfIso ((e ≫ f).app _)).hom =
       (E.qIsoOfIso (e.app _)).hom ≫ (E.qIsoOfIso (f.app _)).hom
     change (E.qIsoOfIso (e.app _ ≪≫ f.app _)).hom = _
-    rw [ExactStructure.qIsoOfIso_trans, Iso.trans_hom]
+    rw [CategoryTheory.ExactCategory.ExactStructure.qIsoOfIso_trans, Iso.trans_hom]
 
 end Quillen.Waldhausen.QuillenComparison

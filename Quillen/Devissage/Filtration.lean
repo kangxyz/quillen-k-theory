@@ -32,7 +32,8 @@ universe v u w
 
 open CategoryTheory CategoryTheory.Limits
 
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
@@ -145,9 +146,10 @@ theorem grothendieckClassesSubgroup_eq_top_of_filtrations
   obtain ⟨F⟩ := h X
   exact F.class_mem_generated
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 
 universe v₂ u₂
 
@@ -164,7 +166,7 @@ theorem grothendieckMap_surjective_of_filtrations (F : ExactFunctor EC ED)
       (fun Z => ∃ X, Nonempty (F.toFunctor.obj X ≅ Z)) Y)) :
     Function.Surjective F.grothendieckMap := by
   apply AddMonoidHom.range_eq_top.mp
-  apply ExactStructure.grothendieckSubgroup_eq_top_of_classes
+  apply CategoryTheory.ExactCategory.ExactStructure.grothendieckSubgroup_eq_top_of_classes
   intro Y
   obtain ⟨G⟩ := h Y
   apply G.class_mem
@@ -173,4 +175,4 @@ theorem grothendieckMap_surjective_of_filtrations (F : ExactFunctor EC ED)
   rw [F.grothendieckMap_class]
   exact ED.grothendieckClass_iso e
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor

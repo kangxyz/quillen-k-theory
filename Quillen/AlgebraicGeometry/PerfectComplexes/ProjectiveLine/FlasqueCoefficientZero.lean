@@ -20,6 +20,8 @@ intrinsic projective-line pushforward theorem prove perfection of the values.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

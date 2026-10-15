@@ -29,7 +29,7 @@ universe v u
 namespace Quillen.Waldhausen.QuillenComparison
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
-variable (E : Quillen.ExactStructure C)
+variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 
 /-- Every finite Q-chain has a genuine exact-row preimage up to chain isomorphism. -/
 theorem exists_row_of_chain (n : ℕ) (G : ComposableArrows (Q E.deflation E.inflation) n) :

@@ -22,7 +22,8 @@ set_option backward.isDefEq.respectTransparency.types false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
@@ -64,4 +65,4 @@ theorem kZeroEdgeClass_eq_grothendieckToKZero {X Y : E.QCategory} (f : X ⟶ Y) 
   exact congrArg E.qGroupoidToKZero
     (E.grothendieckToQGroupoid_qGroupoidToGrothendieck _).symm
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure

@@ -15,7 +15,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v u' v'
 open CategoryTheory CategoryTheory.Limits
-namespace Quillen.ExactStructure
+namespace CategoryTheory.ExactCategory.ExactStructure
+open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 
 /-- Any actual cokernel of an admissible inflation belongs to its conflation. -/
@@ -32,9 +33,10 @@ lemma conflation_of_isCokernel (E : ExactStructure C) {X Y Z : C}
     ShortComplex.isoMk (Iso.refl _) (Iso.refl _) e (by simp) (by simpa using he.symm)
   exact E.iso_closed se hs
 
-end Quillen.ExactStructure
+end CategoryTheory.ExactCategory.ExactStructure
 
-namespace Quillen.ExactFunctor
+namespace CategoryTheory.ExactCategory.ExactFunctor
+open Quillen
 variable {C : Type u} {D : Type u'} [Category.{v} C] [Category.{v'} D]
   [Preadditive C] [Preadditive D] [HasFiniteBiproducts C] [HasFiniteBiproducts D]
   {E : ExactStructure C} {E' : ExactStructure D} (F : ExactFunctor E E')
@@ -89,4 +91,4 @@ def extensionQuotientIso (x : E.ExtensionTotal) :
       (E'.extensionQuotientData (F.extensionTotalFunctor.obj x)).π :=
   (F.mapExtensionQuotientData x).π_iso_hom E' (E'.extensionQuotientData _)
 
-end Quillen.ExactFunctor
+end CategoryTheory.ExactCategory.ExactFunctor
