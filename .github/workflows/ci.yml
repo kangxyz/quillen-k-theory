@@ -17,7 +17,7 @@ jobs:
   library:
     outputs:
       native-artifact: ${{ steps.native-stage.outputs.artifact-name }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 360
     env:
       LEAN_NUM_THREADS: 1
@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: kangxyz/aglib
-          ref: b7713c414aacaad13d07b83d6bab1f0216191595
+          ref: e3f6c759d2a1ece1387518aecba7393a863718a9
           path: .cache-tooling
           persist-credentials: false
       - name: Install the pinned Lean toolchain
@@ -133,7 +133,7 @@ jobs:
   publish-cache:
     needs: library
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
       actions: read
@@ -142,7 +142,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: kangxyz/aglib
-          ref: b7713c414aacaad13d07b83d6bab1f0216191595
+          ref: e3f6c759d2a1ece1387518aecba7393a863718a9
           path: .cache-tooling
           persist-credentials: false
       - name: Publish immutable public native cache asset

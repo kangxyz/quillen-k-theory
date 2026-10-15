@@ -67,6 +67,35 @@ class CacheKeyTests(unittest.TestCase):
                     self.assertNotEqual(config_hash(self.root), baseline)
                     path.write_text(CONFIG)
 
+    def test_native_storage_policy_absent_true_false_preserves_legacy_key(self):
+        baseline = config_hash(self.root)
+        for package in PACKAGES:
+            path = self.root / package / 'lakefile.toml'
+            for enabled in (None, True, False):
+                for restored in (None, True, False):
+                    flags = ''.join(f'{name} = {str(value).lower()}\n'
+                                    for name, value in [('enableArtifactCache', enabled),
+                                                        ('restoreAllArtifacts', restored)]
+                                    if value is not None)
+                    with self.subTest(package=package, enabled=enabled, restored=restored):
+                        path.write_text(flags + CONFIG)
+                        self.assertEqual(config_hash(self.root), baseline)
+            path.write_text(CONFIG)
+
+    def test_nested_storage_named_fields_remain_significant(self):
+        baseline = config_hash(self.root)
+        for package in PACKAGES:
+            path = self.root / package / 'lakefile.toml'
+            for table in ('[leanOptions]', '[[require]]\nname="other-dependency"'):
+                for field in ('enableArtifactCache', 'restoreAllArtifacts'):
+                    digests = []
+                    for value in ('true', 'false'):
+                        path.write_text(CONFIG + f'\n{table}\n{field}={value}\n')
+                        digests.append(config_hash(self.root))
+                    self.assertNotIn(baseline, digests)
+                    self.assertNotEqual(*digests)
+            path.write_text(CONFIG)
+
     def test_raw_pins_toolchains_and_lean_config_presence(self):
         baseline = config_hash(self.root)
         for package in PACKAGES:

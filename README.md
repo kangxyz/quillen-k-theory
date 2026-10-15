@@ -136,7 +136,10 @@ recent compatible producer assets can seed unchanged leaves. Producer revisions
 remain explicit and ordinary `--rehash` builds decide actual input applicability.
 After successful main checks, a separate publish job creates a public native
 cache prerelease for downstream consumers. Existing checkout caches and all
-normal checks remain in place.
+normal checks remain in place. Legacy configuration keys exclude only top-level
+package `version`, `enableArtifactCache` and `restoreAllArtifacts`, preserving
+pre-migration conventional outputs. Compiler options, pins and toolchains remain
+significant, and normal Lake input validation still applies.
 
 For local upstream reuse, set `AGLIB_CACHE_TOOLING` to a reviewed Aglib tooling
 checkout and run before the selected leaf's normal rehashed build:
