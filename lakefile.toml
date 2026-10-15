@@ -9,6 +9,8 @@ testDriver = "QuillenTest"
 lintDriver = "batteries/runLinter"
 lintDriverArgs = ["Quillen"]
 builtinLint = true
+enableArtifactCache = true
+restoreAllArtifacts = true
 
 [[lean_lib]]
 name = "Quillen"

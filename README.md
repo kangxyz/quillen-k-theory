@@ -121,6 +121,35 @@ universal property, use
 [module-path conventions](docs/reference/API.md#module-paths-and-namespaces) when
 choosing focused imports.
 
+## Native build cache
+
+The package enables Lean 4.34.1 Lake's native artifact cache and restores
+conventional `.lake/build` files for audits. Checkouts keep separate writable
+build directories while Lake shares immutable artifacts and native input
+mappings. Mathlib retains `lake exe cache get` through the existing cache route.
+
+CI uses the canonical [Aglib cache protocol](https://github.com/kangxyz/aglib/blob/main/doc/CACHING.md)
+from a separately pinned tooling checkout, without changing mathematical pins.
+It restores native partial progress across manifest/pin changes and imports
+public upstream cache release assets. Exact-pin assets are preferred; bounded
+recent compatible producer assets can seed unchanged leaves. Producer revisions
+remain explicit and ordinary `--rehash` builds decide actual input applicability.
+After successful main checks, a separate publish job creates a public native
+cache prerelease for downstream consumers. Existing checkout caches and all
+normal checks remain in place.
+
+For local upstream reuse, set `AGLIB_CACHE_TOOLING` to a reviewed Aglib tooling
+checkout and run before the selected leaf's normal rehashed build:
+
+```sh
+python3 "$AGLIB_CACHE_TOOLING/.github/actions/lake-cache/cache.py" --root . restore \
+  --repositories kangxyz/aglib
+```
+
+No dependency update or cross-repository credential is required. An unavailable
+or incompatible cache falls back to normal compilation. Cache hits do not
+replace current checks or establish new verification evidence.
+
 ## Documentation
 
 Use the [documentation map](docs/README.md) to choose a mathematical topic or

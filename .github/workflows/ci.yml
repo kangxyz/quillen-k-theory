@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -14,6 +15,8 @@ concurrency:
 
 jobs:
   library:
+    outputs:
+      native-artifact: ${{ steps.native-stage.outputs.artifact-name }}
     runs-on: ubuntu-latest
     timeout-minutes: 360
     env:
@@ -26,6 +29,14 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Check source organization
         run: bash scripts/check.sh --source-only
+      # Tooling is pinned independently of accepted mathematical dependencies.
+      - name: Check out shared native Lake cache tooling
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: kangxyz/aglib
+          ref: b7713c414aacaad13d07b83d6bab1f0216191595
+          path: .cache-tooling
+          persist-credentials: false
       - name: Install the pinned Lean toolchain
         env:
           ELAN_HOME: ${{ runner.temp }}/elan
@@ -55,6 +66,12 @@ jobs:
         run: |
           config_hash=$(python3 scripts/cache_key.py)
           echo "hash=$config_hash" >> "$GITHUB_OUTPUT"
+      - name: Restore shared native Lake artifacts and pinned upstream CI artifacts
+        id: native-cache
+        uses: ./.cache-tooling/.github/actions/lake-cache
+        with:
+          mode: restore
+          repositories: kangxyz/aglib
       - name: Restore incremental project builds
         id: project-cache
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
@@ -74,6 +91,24 @@ jobs:
         run: |
           lean --version
           bash scripts/check.sh --ci --rehash
+      - name: Export checked native Lake mappings
+        run: |
+          python3 .cache-tooling/scripts/build_serial.py --root "$PWD" --rehash \
+            --receipt-dir "$RUNNER_TEMP/native-cache-export" \
+            --outputs "$RUNNER_TEMP/native-outputs.jsonl" Quillen QuillenTest
+      - name: Publish native artifacts for downstream dependencies
+        id: native-stage
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        uses: ./.cache-tooling/.github/actions/lake-cache
+        with:
+          mode: publish
+          mappings: ${{ runner.temp }}/native-outputs.jsonl
+      - name: Save native artifacts, including partial build progress
+        if: ${{ always() && steps.native-cache.outputs.cache-key != '' }}
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.native-cache.outputs.cache-path }}
+          key: ${{ steps.native-cache.outputs.cache-key }}
       - name: Report guarded check receipts
         if: ${{ always() && steps.checks.outcome != 'skipped' }}
         run: |
@@ -95,3 +130,23 @@ jobs:
             examples/downstream/.lake/build
             .lake/packages/Aglib/.lake/build
           key: project-build-v3-${{ runner.os }}-${{ runner.arch }}-${{ steps.project-cache-config.outputs.hash }}-${{ hashFiles('*.lean', 'Quillen/**/*.lean', 'QuillenTest/**/*.lean', 'Tools/**/*.lean', 'examples/downstream/**/*.lean', '!examples/downstream/.lake/**') }}-${{ github.run_id }}-${{ github.run_attempt }}
+  publish-cache:
+    needs: library
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - name: Check out shared native Lake cache tooling
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: kangxyz/aglib
+          ref: b7713c414aacaad13d07b83d6bab1f0216191595
+          path: .cache-tooling
+          persist-credentials: false
+      - name: Publish immutable public native cache asset
+        uses: ./.cache-tooling/.github/actions/lake-cache
+        with:
+          mode: release
+          artifact: ${{ needs.library.outputs.native-artifact }}
