@@ -32,7 +32,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
 open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
 open Quillen.Waldhausen.AlgebraicGrothendieck
-open Quillen.CategoryTheory.StrictSections Quillen.Scheme.CoefficientBaseChange
+open Quillen.CategoryTheory.StrictSections AlgebraicGeometry.Scheme.CoefficientBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)
@@ -166,7 +166,7 @@ def boundedFlatCoefficientSupportedOpenImageMap {a b : Under R} (g : a ⟶ b) :
   perfectSupportedOpenImageQuotientPullback (schemeMap f a)
     (boundedFlatCoefficientSupportOpen Q T a) (schemeMap f b)
     (boundedFlatCoefficientSupportPairMap Q T g)
-    (Quillen.Scheme.CoefficientBaseChange.map
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
       (i := (op P, a)) (k := (op P, b)) (𝟙 (op P), g))
     (boundedFlatCoefficientOpenSquare f g).symm
 
@@ -180,7 +180,7 @@ theorem boundedFlatCoefficientSupportedOpenImageMap_value {a b : Under R} (g : a
   change perfectSupportedOpenImageQuotientPullback (schemeMap f a)
     (boundedFlatCoefficientSupportOpen Q T a) (schemeMap f b)
     (boundedFlatCoefficientSupportPairMap Q T g)
-    (Quillen.Scheme.CoefficientBaseChange.map
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
       (i := (op P, a)) (k := (op P, b)) (𝟙 (op P), g))
     (boundedFlatCoefficientOpenSquare f g).symm
       ((perfectSupportedOpenDeficitGrading (schemeMap f a)
@@ -192,7 +192,7 @@ theorem boundedFlatCoefficientSupportedOpenImageMap_value {a b : Under R} (g : a
   have h₀ := perfectSupportedOpenImageQuotientPullback_boundedFlat_objectClass
     (schemeMap f a) (boundedFlatCoefficientSupportOpen Q T a) (schemeMap f b)
     (boundedFlatCoefficientSupportPairMap Q T g)
-    (Quillen.Scheme.CoefficientBaseChange.map
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
       (i := (op P, a)) (k := (op P, b)) (𝟙 (op P), g))
     (boundedFlatCoefficientOpenSquare f g).symm
     ((boundedFlatCoefficientSupportedEvaluation

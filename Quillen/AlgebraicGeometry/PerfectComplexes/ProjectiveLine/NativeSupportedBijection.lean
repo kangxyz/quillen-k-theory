@@ -16,6 +16,8 @@ the original ambient maps on the base and its compact open. The four ambient
 hypotheses are explicit; this module does not prove them.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -23,7 +25,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
 
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 
 /-- The compact base open inherits quasi-separatedness through its actual open embedding. -/
 instance nativeOpenBase_quasiSeparatedSpace (X : QuasiCompactSchemes.{u})
@@ -32,10 +34,10 @@ instance nativeOpenBase_quasiSeparatedSpace (X : QuasiCompactSchemes.{u})
   change QuasiSeparatedSpace Z.toScheme
   exact Z.ι.isOpenEmbedding.quasiSeparatedSpace
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace Quillen.PerfectComplexes.ProjectiveLine
-open Quillen.Scheme Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
 
 private theorem mulExact_prodMap {A B C : Type*} [Group A] [Group B] [Group C]
     (f : A →* B) (g : B →* C) (h : Function.MulExact f g) :

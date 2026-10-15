@@ -22,7 +22,7 @@ namespace QuillenTest.OpenPerfectGluing
 theorem original_unit_degree {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
     (K : Complex U) (n : ℤ) :
     ((extensionByZeroAdjunction j).unit.app K).f n =
-      (Quillen.SchemeSheaf.extensionByZeroRestrictAdjunction j).unit.app (K.X n) := rfl
+      (AlgebraicGeometry.Scheme.Modules.extensionByZeroRestrictAdjunction j).unit.app (K.X n) := rfl
 
 /-- The actual adjoint of a local map restricts to that original map, without a QC premise. -/
 theorem original_adjoint_restriction {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]

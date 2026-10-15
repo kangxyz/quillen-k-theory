@@ -14,14 +14,16 @@ original braiding and original units contract L tensor (Q tensor E), or
 L tensor (E tensor Q), naturally in arbitrary module sheaves and genuine D+ roofs.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits
   CategoryTheory.MonoidalCategory AlgebraicGeometry SheafOfModulesOfCommRing
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 local instance originalContractionStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})
@@ -85,7 +87,7 @@ def originalDerivedLeftLineContractionIso :
       (tautologicalQuotientLine R)).rightDerivedFunctorPlus ⋙
         (moduleTensorLeftFunctor (twoChartLine R) (tautologicalLine R)).rightDerivedFunctorPlus ≅
       𝟭 (DerivedCategory.Plus (twoChartLine R).Modules) :=
-  Quillen.DerivedCategoryPlus.exactDerivedContractionIso
+  DerivedCategory.Plus.exactDerivedContractionIso
     (moduleTensorLeftFunctor (twoChartLine R) (tautologicalQuotientLine R))
     (moduleTensorLeftFunctor (twoChartLine R) (tautologicalLine R))
     (originalLeftLineContractionIso R)
@@ -96,7 +98,7 @@ def originalDerivedRightLineContractionIso :
       (tautologicalQuotientLine R)).rightDerivedFunctorPlus ⋙
         (moduleTensorLeftFunctor (twoChartLine R) (tautologicalLine R)).rightDerivedFunctorPlus ≅
       𝟭 (DerivedCategory.Plus (twoChartLine R).Modules) :=
-  Quillen.DerivedCategoryPlus.exactDerivedContractionIso
+  DerivedCategory.Plus.exactDerivedContractionIso
     (moduleTensorRightFunctor (twoChartLine R) (tautologicalQuotientLine R))
     (moduleTensorLeftFunctor (twoChartLine R) (tautologicalLine R))
     (originalRightLineContractionIso R)
@@ -111,7 +113,7 @@ theorem originalDerivedLeftLineContractionIso_unit
       DerivedCategory.Plus.Q.map
         ((NatIso.mapCochainComplexPlus (originalLeftLineContractionIso R)).hom.app K ≫
           (Functor.mapCochainComplexPlusIdIso (twoChartLine R).Modules).hom.app K) :=
-  Quillen.DerivedCategoryPlus.exactDerivedContractionIso_unit _ _ _ K
+  DerivedCategory.Plus.exactDerivedContractionIso_unit _ _ _ K
 
 /-- The original braiding, determinant and both installed exact line units are retained. -/
 theorem originalDerivedRightLineContractionIso_unit
@@ -123,5 +125,5 @@ theorem originalDerivedRightLineContractionIso_unit
       DerivedCategory.Plus.Q.map
         ((NatIso.mapCochainComplexPlus (originalRightLineContractionIso R)).hom.app K ≫
           (Functor.mapCochainComplexPlusIdIso (twoChartLine R).Modules).hom.app K) :=
-  Quillen.DerivedCategoryPlus.exactDerivedContractionIso_unit _ _ _ K
-end Quillen.Scheme.ProjectiveLine
+  DerivedCategory.Plus.exactDerivedContractionIso_unit _ _ _ K
+end AlgebraicGeometry.Scheme.ProjectiveLine

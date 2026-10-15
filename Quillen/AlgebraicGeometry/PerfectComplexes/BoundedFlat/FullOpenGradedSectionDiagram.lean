@@ -19,7 +19,7 @@ The change from fine to graded weakness is an actual natural transformation of t
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
-open Quillen.CategoryTheory.StrictSections Quillen.Scheme.AffineOpenPair
+open Quillen.CategoryTheory.StrictSections AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R)

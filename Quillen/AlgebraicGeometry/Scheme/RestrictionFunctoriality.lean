@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.KTheory
 public import Quillen.AlgebraicGeometry.Scheme.GTheory
 public import Quillen.CategoryTheory.SmallModel.Functoriality
@@ -22,6 +23,13 @@ asserted.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -29,7 +37,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The geometric identity comparison lifts to actual vector bundles. -/
 def vectorBundleRestrictIdIso (X : Scheme.{u}) :
@@ -45,9 +53,9 @@ def vectorBundleRestrictCompIso {V U X : Scheme.{u}}
     (Functor.isoWhiskerLeft (finiteLocallyFree X).ι
       (Scheme.Modules.restrictFunctorComp i j))
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 /-- The geometric identity comparison lifts to actual coherent sheaves. -/
 def coherentRestrictionIdIso (X : Scheme.{u}) :
@@ -64,19 +72,20 @@ def coherentRestrictionCompIso {V U X : Scheme.{u}}
     (Functor.isoWhiskerLeft (finiteTypeSheavesToModules X)
       (Scheme.Modules.restrictFunctorComp i j))
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 /-- Actual restriction along the identity induces the identity on K-theory. -/
 @[simp high]
 theorem restrictK_id (X : AlgebraicGeometry.Scheme.{u}) (n : ℕ) :
     restrictK (𝟙 X) n = MonoidHom.id (K X n) := by
-  change (SchemeSheaf.vectorBundleExactRestrict (𝟙 X)).smallKMap n = _
+  change (AlgebraicGeometry.Scheme.Modules.vectorBundleExactRestrict (𝟙 X)).smallKMap n = _
   exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
-    (F := SchemeSheaf.vectorBundleExactRestrict (𝟙 X))
-    (G := CategoryTheory.ExactCategory.ExactFunctor.id (SchemeSheaf.vectorBundleExactStructure X))
-    (SchemeSheaf.vectorBundleRestrictIdIso X) n).trans
+    (F := AlgebraicGeometry.Scheme.Modules.vectorBundleExactRestrict (𝟙 X))
+    (G := CategoryTheory.ExactCategory.ExactFunctor.id
+      (AlgebraicGeometry.Scheme.Modules.vectorBundleExactStructure X))
+    (AlgebraicGeometry.Scheme.Modules.vectorBundleRestrictIdIso X) n).trans
     (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_id _ n)
 
 /-- Actual restriction is contravariantly compatible with composition on K-theory. -/
@@ -84,23 +93,24 @@ theorem restrictK_id (X : AlgebraicGeometry.Scheme.{u}) (n : ℕ) :
 theorem restrictK_comp {V U X : AlgebraicGeometry.Scheme.{u}}
     (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] (n : ℕ) :
     restrictK (i ≫ j) n = (restrictK i n).comp (restrictK j n) := by
-  change (SchemeSheaf.vectorBundleExactRestrict (i ≫ j)).smallKMap n = _
+  change (AlgebraicGeometry.Scheme.Modules.vectorBundleExactRestrict (i ≫ j)).smallKMap n = _
   exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
-    (F := SchemeSheaf.vectorBundleExactRestrict (i ≫ j))
-    (G := (SchemeSheaf.vectorBundleExactRestrict j).comp
-      (SchemeSheaf.vectorBundleExactRestrict i))
-    (SchemeSheaf.vectorBundleRestrictCompIso i j) n).trans
+    (F := AlgebraicGeometry.Scheme.Modules.vectorBundleExactRestrict (i ≫ j))
+    (G := (AlgebraicGeometry.Scheme.Modules.vectorBundleExactRestrict j).comp
+      (AlgebraicGeometry.Scheme.Modules.vectorBundleExactRestrict i))
+    (AlgebraicGeometry.Scheme.Modules.vectorBundleRestrictCompIso i j) n).trans
     (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp _ _ n)
 
 /-- Actual restriction along the identity induces the identity on G-theory. -/
 @[simp high]
 theorem restrictG_id (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X]
     (n : ℕ) : restrictG (𝟙 X) n = MonoidHom.id (G X n) := by
-  change (CoherentScheme.coherentRestrictionExact (𝟙 X)).smallKMap n = _
+  change (AlgebraicGeometry.Scheme.Modules.Coherent.coherentRestrictionExact (𝟙 X)).smallKMap n = _
   exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
-    (F := CoherentScheme.coherentRestrictionExact (𝟙 X))
-    (G := CategoryTheory.ExactCategory.ExactFunctor.id (CoherentScheme.coherentExactStructure X))
-    (CoherentScheme.coherentRestrictionIdIso X) n).trans
+    (F := AlgebraicGeometry.Scheme.Modules.Coherent.coherentRestrictionExact (𝟙 X))
+    (G := CategoryTheory.ExactCategory.ExactFunctor.id
+      (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X))
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentRestrictionIdIso X) n).trans
     (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_id _ n)
 
 /-- Actual restriction is contravariantly compatible with composition on G-theory. -/
@@ -109,12 +119,13 @@ theorem restrictG_comp {V U X : AlgebraicGeometry.Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian U] [IsLocallyNoetherian V]
     (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] (n : ℕ) :
     restrictG (i ≫ j) n = (restrictG i n).comp (restrictG j n) := by
-  change (CoherentScheme.coherentRestrictionExact (i ≫ j)).smallKMap n = _
+  change (AlgebraicGeometry.Scheme.Modules.Coherent.coherentRestrictionExact (i ≫ j)).smallKMap n =
+    _
   exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
-    (F := CoherentScheme.coherentRestrictionExact (i ≫ j))
-    (G := (CoherentScheme.coherentRestrictionExact j).comp
-      (CoherentScheme.coherentRestrictionExact i))
-    (CoherentScheme.coherentRestrictionCompIso i j) n).trans
+    (F := AlgebraicGeometry.Scheme.Modules.Coherent.coherentRestrictionExact (i ≫ j))
+    (G := (AlgebraicGeometry.Scheme.Modules.Coherent.coherentRestrictionExact j).comp
+      (AlgebraicGeometry.Scheme.Modules.Coherent.coherentRestrictionExact i))
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentRestrictionCompIso i j) n).trans
     (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp _ _ n)
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

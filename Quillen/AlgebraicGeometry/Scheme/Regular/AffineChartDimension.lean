@@ -19,6 +19,12 @@ vector bundle to an affine chart is used as a projective object.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -27,21 +33,23 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {X : AlgebraicGeometry.Scheme.{u}} [IsLocallyNoetherian X]
   (R : CommRingCat.{u}) (j : Spec R ⟶ X) [IsOpenImmersion j]
 
 /-- Restrict a genuine coherent sheaf to an affine chart, take its finite
 module under the tilde equivalence, and forget finiteness. -/
-def coherentChartModule : CoherentScheme.FiniteTypeSheaves X ⥤ ModuleCat.{u} R := by
-  letI := CoherentScheme.noetherian_affineChart R j
-  exact CoherentScheme.finiteTypeSheavesRestriction j ⋙
-    (CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R).functor ⋙
-      (CoherentScheme.finiteModule R).ι
+def coherentChartModule : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X ⥤
+  ModuleCat.{u} R := by
+  letI := AlgebraicGeometry.Scheme.Modules.Coherent.noetherian_affineChart R j
+  exact AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesRestriction j ⋙
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence
+      R).functor ⋙
+      (ModuleCat.finiteModule R).ι
 
 instance coherentChartModule_additive : (coherentChartModule R j).Additive := by
-  have := CoherentScheme.noetherian_affineChart R j
-  let E := CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R
+  have := AlgebraicGeometry.Scheme.Modules.Coherent.noetherian_affineChart R j
+  let E := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence R
   let := preservesBinaryBiproducts_of_preservesBinaryProducts E.functor
   have : E.functor.Additive := Functor.additive_of_preservesBinaryBiproducts _
   dsimp [coherentChartModule]
@@ -49,37 +57,46 @@ instance coherentChartModule_additive : (coherentChartModule R j).Additive := by
 
 /-- Actual global coherent short exact sequences stay exact in the module
 category of an affine chart. -/
-theorem coherentChartModule_shortExact (S : ShortComplex (CoherentScheme.FiniteTypeSheaves X))
+theorem coherentChartModule_shortExact (S : ShortComplex
+  (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X))
     (hS : S.ShortExact) : (S.map (coherentChartModule R j)).ShortExact := by
-  have := CoherentScheme.noetherian_affineChart R j
-  exact ((hS.map_of_exact (CoherentScheme.finiteTypeSheavesRestriction j)).map_of_exact
-    (CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R).functor).map_of_exact
-      (CoherentScheme.finiteModule R).ι
+  have := AlgebraicGeometry.Scheme.Modules.Coherent.noetherian_affineChart R j
+  exact ((hS.map_of_exact
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesRestriction j)).map_of_exact
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence
+      R).functor).map_of_exact
+      (ModuleCat.finiteModule R).ι
 
 /-- Finite local freeness on the affine chart is exactly projectivity of
 its finite section module, expressed in the ambient module category. -/
-theorem coherentChartModule_projective_iff (M : CoherentScheme.FiniteTypeSheaves X) :
+theorem coherentChartModule_projective_iff (M :
+  AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) :
     Projective ((coherentChartModule R j).obj M) ↔
       IsFiniteLocallyFree (Spec R) (M.obj.restrict j) := by
-  have := CoherentScheme.noetherian_affineChart R j
-  let N := (CoherentScheme.finiteTypeSheavesRestriction j).obj M
-  change Projective (((CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R).functor.obj N).obj)
+  have := AlgebraicGeometry.Scheme.Modules.Coherent.noetherian_affineChart R j
+  let N := (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesRestriction j).obj M
+  change Projective
+    (((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence
+    R).functor.obj N).obj)
     ↔
     coherentVectorBundle (Spec R) N
   exact (IsProjective.iff_projective
-    (((CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R).functor.obj N).obj)).symm.trans
+    (((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence
+      R).functor.obj N).obj)).symm.trans
       (coherentVectorBundle_iff_projective R N).symm
 
 /-- A global vector bundle gives a projective module on every affine chart;
 no global sheaf-projectivity assertion is made. -/
-theorem coherentChartModule_projective (M : CoherentScheme.FiniteTypeSheaves X)
+theorem coherentChartModule_projective (M :
+  AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X)
     (hM : coherentVectorBundle X M) : Projective ((coherentChartModule R j).obj M) := by
   have : IsFiniteLocallyFree X M.obj := hM
   exact (coherentChartModule_projective_iff R j M).mpr (finiteLocallyFree_restrict j M.obj)
 
 /-- Each genuine global vector-bundle cover drops the local projective
 dimension of its coherent kernel by one on every affine chart. -/
-theorem coherentChartModule_syzygy (S : ShortComplex (CoherentScheme.FiniteTypeSheaves X))
+theorem coherentChartModule_syzygy (S : ShortComplex
+  (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X))
     (hS : S.ShortExact) (hP : coherentVectorBundle X S.X₂) (n : ℕ)
     [HasProjectiveDimensionLE ((coherentChartModule R j).obj S.X₃) (n + 1)] :
     HasProjectiveDimensionLE ((coherentChartModule R j).obj S.X₁) n := by
@@ -90,17 +107,19 @@ theorem coherentChartModule_syzygy (S : ShortComplex (CoherentScheme.FiniteTypeS
     (coherentChartModule_projective R j S.X₂ hP)).mp hdim
 
 /-- The actual chart module is finite. -/
-instance coherentChartModule_finite (M : CoherentScheme.FiniteTypeSheaves X) :
+instance coherentChartModule_finite (M :
+  AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) :
     Module.Finite R ((coherentChartModule R j).obj M) := by
-  have := CoherentScheme.noetherian_affineChart R j
+  have := AlgebraicGeometry.Scheme.Modules.Coherent.noetherian_affineChart R j
   change Module.Finite R
-    (((CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R).functor.obj
-      ((CoherentScheme.finiteTypeSheavesRestriction j).obj M)).obj)
+    (((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence
+      R).functor.obj
+      ((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesRestriction j).obj M)).obj)
   infer_instance
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 /-- A finite affine subcover of a quasi-compact scheme, retaining the
 actual chart rings and open-immersion maps from the chosen affine cover. -/
@@ -118,4 +137,4 @@ instance instFintypeFiniteAffineOpenCover (X : AlgebraicGeometry.Scheme.{u}) [Co
   change Fintype X.affineCover.finiteSubcover.I₀
   infer_instance
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

@@ -15,6 +15,8 @@ The actual chart pullbacks retain the original columns `(1,t)`, `(s,1)` and quot
 -/
 
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 universe u v u' v'
@@ -23,8 +25,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 /-- The positive tautological chart, through the original restriction-to-pullback comparison. -/
 def tautologicalPullbackPlusIso (R : CommRingCat.{u}) :
     (AlgebraicGeometry.Scheme.Modules.pullback (plusChart R)).obj (tautologicalLine R) ≅
@@ -106,4 +108,4 @@ theorem tautologicalQuotientMap_pullback_minus (R : CommRingCat.{u}) :
   rw [Iso.hom_inv_id_app_assoc, tautologicalQuotientMap_minus]
   rw [← Category.assoc, restrictFunctorIsoPullback_unitSquare]
   rfl
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

@@ -14,7 +14,7 @@ public import Quillen.Topology.Prespectrum.RelativeHomotopySquarePasting
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 variable {R S : CommRingCat.{u}} (f : R ⟶ S)

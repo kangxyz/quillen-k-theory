@@ -23,7 +23,7 @@ noncomputable section
 universe u
 
 open AlgebraicGeometry
-open Quillen.Scheme Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeGlobal
 

@@ -16,6 +16,9 @@ module sheaves. This supplies the extension property needed for inherited exact
 and Waldhausen structures on flat-complex models; no splitting is assumed.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -23,7 +26,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Genuine flat modules are closed under arbitrary short exact extensions. -/
 theorem moduleFlat_middle_of_shortExact {R : Type u} [CommRing R]
@@ -72,4 +75,4 @@ theorem stalkwiseFlat_middle_of_shortExact {X : Scheme.{u}} {S : ShortComplex X.
   let : Module.Flat (X.presheaf.stalk x) (S.map (moduleStalk X x)).X₃ := h₃ x
   exact moduleFlat_middle_of_shortExact (hS.map_of_exact (moduleStalk X x))
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

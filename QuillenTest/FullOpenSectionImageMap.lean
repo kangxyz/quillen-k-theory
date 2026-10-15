@@ -17,7 +17,7 @@ and original full-open section reindexing on arbitrary coefficient arrows.
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.PerfectComplexes Quillen.Waldhausen.AlgebraicGrothendieck
-open Quillen.Scheme.AffineOpenPair
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.FullOpenSectionImageMap
 

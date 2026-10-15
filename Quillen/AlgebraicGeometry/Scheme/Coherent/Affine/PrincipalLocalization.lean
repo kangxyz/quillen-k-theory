@@ -25,6 +25,12 @@ the support term with coherent sheaves on a closed subscheme without dévissage.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -32,7 +38,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (r : R)
 
 local instance : PreservesFiniteLimits (affinePrincipalRestrictionExact R r).toFunctor :=
@@ -82,4 +88,4 @@ theorem principal_localization_GZero_tail :
     (principal_localization_longExact R r).2.2.1 0,
     (principal_localization_longExact R r).1 0, principal_GZero_surjective R r⟩
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

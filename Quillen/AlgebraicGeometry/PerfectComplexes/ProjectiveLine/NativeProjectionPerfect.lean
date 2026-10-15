@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Identity
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineTensor
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.NativeBaseChange
@@ -18,13 +19,27 @@ isomorphism and descended along an actual affine open cover. All comparisons
 use the installed derived units and original cartesian base-change mate.
 -/
 @[expose] public section
+open Quillen
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.PerfectComplexes.ProjectiveLine
+export AlgebraicGeometry.Scheme.Modules
+  (derivedFlatPullbackPlusIdIso)
+end Quillen.PerfectComplexes.ProjectiveLine
+
+end
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.Scheme Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Modules
+  AlgebraicGeometry.Scheme.ProjectiveLine
 namespace Quillen.PerfectComplexes.ProjectiveLine
 
 local instance nativeProjectionPerfectStandard (X : Scheme.{u}) :
@@ -49,12 +64,6 @@ theorem perfect_derivedFlatPullbackPlus {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f
         (derivedFlatPullbackPlus f).mapIso eL))
     ((perfectDerivedObjects_toDerived_iff X ((pullbackComplex f).obj L.obj)).mpr
       (locallyPerfect_flatPullback f hL))
-
-/-- The installed derived pullback along the identity, compared with the identity functor. -/
-def derivedFlatPullbackPlusIdIso (X : Scheme.{u}) :
-    derivedFlatPullbackPlus (𝟙 X) ≅ 𝟭 (DerivedCategory.Plus X.Modules) :=
-  (Scheme.Modules.pullback (𝟙 X)).rightDerivedFunctorPlusIso
-    (Scheme.Modules.pullbackId X) ≪≫ Functor.rightDerivedFunctorPlusIdIso X.Modules
 
 /-- The original native affine comparison gives a cartesian square over the identity base. -/
 theorem nativeAffineProjection_isPullback (R : CommRingCat.{u}) :

@@ -23,7 +23,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 universe u
 namespace Quillen.PerfectComplexes.Bass
-open Quillen.Scheme
+open AlgebraicGeometry.Scheme
 
 /-- The genuine map enlarging support from X\V to X\U, induced by U ⊆ V. -/
 def supportedNegativeKEnlarge (X : QuasiCompactSchemes.{u}) {U V : X.obj.Opens}

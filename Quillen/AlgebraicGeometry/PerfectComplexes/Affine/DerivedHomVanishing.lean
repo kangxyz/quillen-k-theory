@@ -28,6 +28,9 @@ replacement theorem.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -84,7 +87,8 @@ lemma principalRestriction_associated_derivedHom_single_eq_zero (R : CommRingCat
     (M : (Spec (CommRingCat.of (Localization.Away r))).Modules) [M.IsQuasicoherent]
     (a b : ℤ) (hbound : ∀ n, n < b → IsZero (P.X n)) (hab : a < b)
     (φ : (toDerived (Spec (CommRingCat.of (Localization.Away r)))).obj
-        ((restrict (CoherentScheme.principalOpen R r)).obj ((associatedComplex R).obj P)) ⟶
+        ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
+          ((associatedComplex R).obj P)) ⟶
       (toDerived (Spec (CommRingCat.of (Localization.Away r)))).obj
         ((_root_.CochainComplex.singleFunctor (Spec (CommRingCat.of (Localization.Away r))).Modules
           a).obj M)) :
@@ -137,7 +141,8 @@ lemma principalRestriction_associated_derivedHom_single_shift_eq_zero
     (M : (Spec (CommRingCat.of (Localization.Away r))).Modules) [M.IsQuasicoherent]
     (a b n : ℤ) (hbound : ∀ i, i < b → IsZero (P.X i)) (hab : a + n < b)
     (φ : ((toDerived (Spec (.of (Localization.Away r)))).obj
-        ((restrict (CoherentScheme.principalOpen R r)).obj ((associatedComplex R).obj P)))⟦n⟧ ⟶
+        ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
+          ((associatedComplex R).obj P)))⟦n⟧ ⟶
       (toDerived (Spec (.of (Localization.Away r)))).obj
         ((_root_.CochainComplex.singleFunctor (Spec (.of (Localization.Away r))).Modules a).obj M))
           :
@@ -145,7 +150,8 @@ lemma principalRestriction_associated_derivedHom_single_shift_eq_zero
   apply strictPerfect_derivedHom_single_shift_eq_zero (.of (Localization.Away r)) _
     (strictPerfect_restrict _ (strictPerfect_associated R hP)) M a b n _ hab φ
   intro i hi
-  exact (Scheme.Modules.restrictFunctor (CoherentScheme.principalOpen R r)).map_isZero
+  exact (Scheme.Modules.restrictFunctor
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map_isZero
     ((tilde.functor R).map_isZero (hbound i hi))
 
 /-- The genuine derived finite-projective model suffices; original source terms are unrestricted. -/

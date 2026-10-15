@@ -37,7 +37,7 @@ theorem original_boundary_zero_comparison {U X : Scheme.{u}} (j : U ⟶ X) [IsOp
       perfectOpenConnectingHom j 0 (boundedFlatPerfectOpenToPerfectOpenKMap j 1 x) :=
   DFunLike.congr_fun (boundedFlatPerfectOpenConnectingHom_comparison j 0) x
 
-variable {A B C : Quillen.Scheme.QuasiCompactOpenPairs.{u}}
+variable {A B C : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}}
 
 /-- Arbitrary pair pullback commutes with the original K₁-to-supported-K₀ boundary. -/
 theorem original_boundary_zero_pullback (f : A ⟶ B) (x : PerfectOpenK B.obj.obj.hom 1) :

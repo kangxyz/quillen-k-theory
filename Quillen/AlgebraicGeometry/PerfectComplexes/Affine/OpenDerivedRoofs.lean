@@ -31,6 +31,9 @@ all-sheaf targets are outside this theorem's scope.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -111,7 +114,7 @@ lemma exists_quasiCompact_open_derived_module_roof (R : CommRingCat.{u})
     exact ((B.exactAt_of_isGE b n hn).map (tilde.functor R)).map
       (Scheme.Modules.restrictFunctor W.ι)
   have hEqc (n : ℤ) : (E.homology n).IsQuasicoherent := by
-    apply CoherentScheme.quasicoherent_homology E
+    apply AlgebraicGeometry.Scheme.Modules.Coherent.quasicoherent_homology E
     intro m
     change ((Scheme.Modules.restrictFunctor W.ι).obj ((tilde.functor R).obj (B.X
       m))).IsQuasicoherent
@@ -188,7 +191,7 @@ lemma exists_quasiCompact_open_module_equality (R : CommRingCat.{u})
     exact ((B.exactAt_of_isGE b n hn).map (tilde.functor R)).map
       (Scheme.Modules.restrictFunctor W.ι)
   have hEqc (n : ℤ) : (E.homology n).IsQuasicoherent := by
-    apply CoherentScheme.quasicoherent_homology E
+    apply AlgebraicGeometry.Scheme.Modules.Coherent.quasicoherent_homology E
     intro m
     change ((Scheme.Modules.restrictFunctor W.ι).obj ((tilde.functor R).obj (B.X
       m))).IsQuasicoherent

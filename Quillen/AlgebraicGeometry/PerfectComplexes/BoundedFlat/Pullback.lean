@@ -27,7 +27,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped ZeroObject
-open Quillen.SchemeSheaf Quillen.CochainComplex
+open AlgebraicGeometry.Scheme.Modules Quillen.CochainComplex
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
 

@@ -23,7 +23,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open CochainComplex.HomComplex
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
+  AlgebraicGeometry.Scheme.PolynomialLaurent
 open Quillen.PerfectComplexes Quillen.PerfectComplexes.ProjectiveLine
 namespace QuillenTest.ProjectiveLineSheafCechModel
 

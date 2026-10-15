@@ -31,7 +31,7 @@ Cone descent and comparison of the original source nulls remain separate obligat
 noncomputable section
 open CategoryTheory AlgebraicGeometry Opposite Quillen.LoopPrespectrum
 open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange
-open Quillen.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.CoefficientBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}

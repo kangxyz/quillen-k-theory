@@ -16,6 +16,9 @@ passes to retracts, and the full category of stalkwise-flat module sheaves is
 idempotent complete. No quasicoherence or affineness is required.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -23,7 +26,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Genuine sheaf retracts preserve flatness of all actual module stalks. -/
 theorem stalkwiseFlat_of_retract {X : Scheme.{u}} {M N : X.Modules}
@@ -49,4 +52,4 @@ instance stalkwiseFlat_isIdempotentComplete (X : Scheme.{u}) :
     · exact ObjectProperty.hom_ext _ hir
     · exact ObjectProperty.hom_ext _ hri
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

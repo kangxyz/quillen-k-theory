@@ -18,7 +18,7 @@ initial open remains explicit.
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.Scheme.AffineOpenPair Quillen.Waldhausen
+open Quillen.PerfectComplexes AlgebraicGeometry.Scheme.AffineOpenPair Quillen.Waldhausen
 universe u
 namespace QuillenTest.FullOpenSectionRestrictionCofinality
 

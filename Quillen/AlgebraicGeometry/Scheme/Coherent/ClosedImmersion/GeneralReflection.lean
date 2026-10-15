@@ -19,6 +19,12 @@ closed essential image are then consequences of the proved adjunction.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -27,7 +33,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped ZeroObject
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme.ClosedImmersion.General
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsLocallyNoetherian X]
   (i : Z ⟶ X) [IsClosedImmersion i]
 
@@ -92,4 +98,4 @@ theorem coherentKilled_iff_unit_isIso (M : FiniteTypeSheaves X) :
     coherentKilled i M ↔ IsIso ((coherentAdjunction i).unit.app M) :=
   (coherentAdjunction i).isIso_unit_app_iff_mem_essImage.symm
 
-end Quillen.CoherentScheme.ClosedImmersion.General
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

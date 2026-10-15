@@ -225,13 +225,14 @@ theorem principalFiltrationHypothesis : Devissage.FiltrationHypothesis (principa
 /-- Classical dévissage for the canonical killed-by-`f` inclusion. This is an
 isomorphism on K-groups, and does not identify the two abelian categories. -/
 def principalDevissageKEquiv (n : ℕ) :
-    (Devissage.subcategoryExactStructure (principalKilled f)).K n ≃*
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure (principalKilled f)).K n ≃*
       SupportedG (Submonoid.powers f) n :=
   Devissage.KEquiv (principalKilled f) (principalFiltrationHypothesis f) n
 
 /-- The underlying monoid homomorphism of this K-equivalence. -/
 @[simp] theorem principalDevissageKEquiv_coe (n : ℕ) :
-    (↑(principalDevissageKEquiv f n) : (Devissage.subcategoryExactStructure (principalKilled
+    (↑(principalDevissageKEquiv f n) : (CategoryTheory.ObjectProperty.subcategoryExactStructure
+      (principalKilled
         f)).K n →* SupportedG (Submonoid.powers f) n) = Devissage.KMap (principalKilled f) n := rfl
 
 

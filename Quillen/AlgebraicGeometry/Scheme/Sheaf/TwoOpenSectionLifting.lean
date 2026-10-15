@@ -16,13 +16,16 @@ by actual kernel sections. Further lemmas preserve signed-difference surjectivit
 and surjective overlap maps, and obtain local lifts from genuine restricted splittings.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.SchemeSheaf.TwoOpen
+namespace AlgebraicGeometry.Scheme.Modules.TwoOpen
 variable {X : Scheme.{u}}
 
 private lemma app_comp_apply {A B C : X.Modules} (f : A ⟶ B) (g : B ⟶ C)
@@ -114,9 +117,9 @@ lemma difference_surjective_prod (M N : X.Modules) (U V : X.Opens)
   have hh := congrArg (fun f : M ⨯ N ⟶ M ⨯ N => (f.app (U ⊓ V)).hom z) hid
   exact hh
 
-end Quillen.SchemeSheaf.TwoOpen
+end AlgebraicGeometry.Scheme.Modules.TwoOpen
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 open TwoOpen
 /-- A splitting of the actual restricted sheaf morphism gives surjectivity on original image
 sections. -/
@@ -127,4 +130,4 @@ lemma section_surjective_of_restriction_split {U X : Scheme.{u}} (j : U ⟶ X)
   apply (AddCommGrpCat.epi_iff_surjective _).mp
   change Epi ((sectionsFunctor U W).map ((Scheme.Modules.restrictFunctor j).map f))
   infer_instance
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

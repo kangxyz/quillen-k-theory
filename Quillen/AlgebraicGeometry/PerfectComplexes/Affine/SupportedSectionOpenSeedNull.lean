@@ -23,7 +23,7 @@ compatibility is supplied, and no relative-open endpoint is replaced by a full-o
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.KTheory.Bass Quillen.PolynomialBaseChange Quillen.Scheme.AffineOpenPair
+open Quillen.KTheory.Bass Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

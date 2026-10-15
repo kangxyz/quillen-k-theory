@@ -64,7 +64,7 @@ theorem empty_open_original_power (R : CommRingCat.{u}) (r : R)
     ext i : 1
     have hz : IsZero (((restrict (⊥ : (Spec R).Opens).ι).obj ((associatedComplex R).obj P)).X i) :=
       by
-      rw [SchemeSheaf.isZero_iff_stalks]
+      rw [AlgebraicGeometry.Scheme.Modules.isZero_iff_stalks]
       intro x
       exact False.elim x.property
     exact hz.eq_of_src _ _
@@ -116,7 +116,7 @@ theorem zero_divisor_disjoint_principals
   ext i : 1
   have hz : IsZero (((restrict (⊥ : (Spec (.of (ZMod 6))).Opens).ι).obj
       ((associatedComplex (.of (ZMod 6))).obj P)).X i) := by
-    rw [SchemeSheaf.isZero_iff_stalks]
+    rw [AlgebraicGeometry.Scheme.Modules.isZero_iff_stalks]
     intro x
     exact False.elim x.property
   exact hz.eq_of_src _ _

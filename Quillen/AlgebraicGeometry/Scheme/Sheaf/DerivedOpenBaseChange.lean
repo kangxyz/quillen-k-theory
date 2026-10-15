@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedPushforwardPlus
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.InjectiveRestriction
@@ -17,26 +18,32 @@ and its preservation of injectives. The result needs only the actual open immers
 quasicoherence, affine, finite, flat or noetherian assumptions on the direct-image morphism.
 -/
 @[expose] public section
+
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.SchemeSheaf
+export AlgebraicGeometry.Scheme.Modules
+  (derivedRestrictionPlus isIso_derivedRestrictionPlusUnit)
+end Quillen.SchemeSheaf
+
+end
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard ambient derived categories used by the original functors. -/
 local instance derivedOpenBaseChangeStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
-
-/-- The original bounded-below right-derived open restriction. -/
-def derivedRestrictionPlus {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] :
-    DerivedCategory.Plus X.Modules ⥤ DerivedCategory.Plus U.Modules :=
-  (Scheme.Modules.restrictFunctor j).rightDerivedFunctorPlus
-
-/-- Original open restriction computes its bounded-below derived functor on every complex. -/
-theorem isIso_derivedRestrictionPlusUnit {U X : Scheme.{u}}
-    (j : U ⟶ X) [IsOpenImmersion j] :
-    IsIso (Scheme.Modules.restrictFunctor j).rightDerivedFunctorPlusUnit :=
-  (Scheme.Modules.restrictFunctor j).isIso_rightDerivedFunctorPlusUnit_of_preservesHomology
 
 /-- The actual original open base-change isomorphism for bounded-below derived direct image. -/
 def derivedPushforwardPlusOpenBaseChange {Z U X : Scheme.{u}}
@@ -46,7 +53,7 @@ def derivedPushforwardPlusOpenBaseChange {Z U X : Scheme.{u}}
   ((Scheme.Modules.pushforward f).rightDerivedFunctorPlusCompIsoOfPreservesHomology
     (Scheme.Modules.restrictFunctor j)).symm ≪≫
   (Scheme.Modules.pushforward f ⋙ Scheme.Modules.restrictFunctor j).rightDerivedFunctorPlusIso
-    (Quillen.CoherentScheme.openBaseChange f j) ≪≫
+    (AlgebraicGeometry.Scheme.Modules.openBaseChange f j) ≪≫
   Functor.rightDerivedFunctorPlusCompIsoOfPreservesInjectives
     (Scheme.Modules.restrictFunctor (pullback.fst f j))
     (Scheme.Modules.pushforward (pullback.snd f j))
@@ -60,7 +67,8 @@ lemma derivedPushforwardPlusOpenBaseChange_unit {Z U X : Scheme.{u}}
         (Scheme.Modules.restrictFunctor j)).app K ≫
       (derivedPushforwardPlusOpenBaseChange f j).hom.app (DerivedCategory.Plus.Q.obj K) =
     DerivedCategory.Plus.Q.map
-        ((NatIso.mapCochainComplexPlus (Quillen.CoherentScheme.openBaseChange f j)).hom.app K) ≫
+        ((NatIso.mapCochainComplexPlus (AlgebraicGeometry.Scheme.Modules.openBaseChange f
+          j)).hom.app K) ≫
       (Functor.rightDerivedFunctorPlusCompUnit
         (Scheme.Modules.restrictFunctor (pullback.fst f j))
         (Scheme.Modules.pushforward (pullback.snd f j))).app K := by
@@ -69,11 +77,11 @@ lemma derivedPushforwardPlusOpenBaseChange_unit {Z U X : Scheme.{u}}
   let P := Scheme.Modules.restrictFunctor (pullback.fst f j)
   let G := Scheme.Modules.pushforward (pullback.snd f j)
   let eL := F.rightDerivedFunctorPlusCompIsoOfPreservesHomology A
-  let eM := (F ⋙ A).rightDerivedFunctorPlusIso (Quillen.CoherentScheme.openBaseChange f j)
+  let eM := (F ⋙ A).rightDerivedFunctorPlusIso (AlgebraicGeometry.Scheme.Modules.openBaseChange f j)
   let eR := P.rightDerivedFunctorPlusCompIsoOfPreservesInjectives G
   have hL := F.rightDerivedFunctorPlusCompIsoOfPreservesHomology_hom_app A K
   have hM := (F ⋙ A).rightDerivedFunctorPlusIso_hom_app
-    (Quillen.CoherentScheme.openBaseChange f j) K
+    (AlgebraicGeometry.Scheme.Modules.openBaseChange f j) K
   have hR := P.rightDerivedFunctorPlusCompIsoOfPreservesInjectives_hom_app G K
   rw [← Functor.rightDerivedFunctorPlusCompUnit_app F A K] at hL
   rw [← Functor.rightDerivedFunctorPlusCompUnit_app P G K] at hR
@@ -83,4 +91,4 @@ lemma derivedPushforwardPlusOpenBaseChange_unit {Z U X : Scheme.{u}}
   simp only [Category.assoc, Iso.hom_inv_id_app_assoc]
   rw [← Category.assoc, hM, Category.assoc, hR]
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

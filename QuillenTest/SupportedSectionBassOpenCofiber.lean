@@ -18,7 +18,7 @@ No geometric, topology or excision hypothesis is supplied beyond the original op
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen Quillen.LoopPrespectrum Quillen.PerfectComplexes
-open Quillen.Scheme.AffineOpenPair
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.SupportedSectionBassOpenCofiber
 

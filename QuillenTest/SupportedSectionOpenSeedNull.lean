@@ -17,7 +17,7 @@ reversed null values, including their actual zero-map endpoint.
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.Scheme.AffineOpenPair Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.PolynomialBaseChange
 universe u
 namespace QuillenTest.SupportedSectionOpenSeedNull
 

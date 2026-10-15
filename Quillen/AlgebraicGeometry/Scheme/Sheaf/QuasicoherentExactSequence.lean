@@ -16,13 +16,19 @@ subobjects of quasicoherent sheaves are quasicoherent.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Original ambient exactness and four quasicoherent ends detect the middle sheaf. -/
 lemma quasicoherent_of_five_exact {X : Scheme.{u}}
@@ -58,7 +64,9 @@ lemma quasicoherent_of_five_exact {X : Scheme.{u}}
   have hT : T.Exact := (ShortComplex.exact_iff_of_epi_of_isIso_of_mono φ).mp hgh
   have hS : S.ShortExact :=
     { exact := (ShortComplex.exact_iff_of_epi_of_isIso_of_mono ψ).mpr hT }
-  have : S.X₁.IsQuasicoherent := CoherentScheme.quasicoherent_cokernel f
-  have : S.X₃.IsQuasicoherent := CoherentScheme.quasicoherent_kernel k
+  have : S.X₁.IsQuasicoherent :=
+    AlgebraicGeometry.Scheme.Modules.QuasiCoherent.quasicoherent_cokernel f
+  have : S.X₃.IsQuasicoherent := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.quasicoherent_kernel
+    k
   exact quasicoherent_of_shortExact hS
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

@@ -26,7 +26,8 @@ equivalence is asserted here. Each family retains the hypotheses of its original
 @[expose] public section
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
-open Quillen.KTheory.Bass Quillen.PolynomialBaseChange Quillen.Scheme.CoefficientBaseChange
+open Quillen.KTheory.Bass Quillen.PolynomialBaseChange
+  AlgebraicGeometry.Scheme.CoefficientBaseChange
 open Quillen.Bass.TwoChartStable
 universe u
 namespace Quillen.PerfectComplexes
@@ -55,8 +56,8 @@ theorem boundedFlatCoefficientPolynomialZero_projection (Q : Over (Spec R)) (a :
       𝟙 (space (op Q, a)) := by
   unfold boundedFlatCoefficientPolynomialZero polynomialProjection
   rw [← coefficientMap_comp, modelDiagramPolynomialCoefficient_zero]
-  change Quillen.Scheme.CoefficientBaseChange.map (𝟙 (op Q, a)) = _
-  exact Quillen.Scheme.CoefficientBaseChange.map_id (op Q, a)
+  change AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (𝟙 (op Q, a)) = _
+  exact AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_id (op Q, a)
 
 /-- All structural-row inputs are constructed on every original fine ambient coefficient stage.
 -/

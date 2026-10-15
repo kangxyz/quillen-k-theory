@@ -13,6 +13,9 @@ Original global functions act on every actual module sheaf, and original units a
 automorphisms with their literal inverse scalar.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -20,7 +23,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Actual multiplication by a global function on every original module sheaf. -/
 def globalScalar (X : Scheme.{u}) (r : Γ(X, ⊤)) : 𝟭 X.Modules ⟶ 𝟭 X.Modules where
@@ -85,4 +88,4 @@ def globalUnitIso (X : Scheme.{u}) (r : (Γ(X, ⊤))ˣ) : 𝟭 X.Modules ≅ �
       ((X.presheaf.map (homOfLE (show U.unop ≤ ⊤ from le_top)).op (↑r⁻¹)) • m) = m
     rw [smul_smul, ← map_mul, Units.mul_inv, map_one, one_smul]
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

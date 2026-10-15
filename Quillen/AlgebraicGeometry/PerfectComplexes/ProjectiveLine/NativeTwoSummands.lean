@@ -27,7 +27,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.ProjectiveLine
-open Quillen.Scheme Quillen.Scheme.Bass Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Bass AlgebraicGeometry.Scheme.ProjectiveLine
 open Quillen.Waldhausen Quillen.Waldhausen.ExtensionCategory
 
 /-- Boolean indexing of the two original native chart maps. -/

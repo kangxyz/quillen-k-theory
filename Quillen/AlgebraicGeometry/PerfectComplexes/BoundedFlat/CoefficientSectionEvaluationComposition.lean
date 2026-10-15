@@ -40,7 +40,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
 open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
-open Quillen.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.CoefficientBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 
@@ -344,7 +344,8 @@ theorem CoefficientSectionEvaluationComposition.nativeOriginalModelMap_functor {
   : i ⟶ j) :
     (boundedFlatCoefficientOriginalModelMap f).functor =
       smallModelFunctor
-        (boundedFlatNormalizedPullback (Quillen.Scheme.CoefficientBaseChange.map f)) := rfl
+        (boundedFlatNormalizedPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)) :=
+          rfl
 
 private def nativeLiftedIso {i j : Index R} (f : i ⟶ j) :
     boundedFlatCoefficientSectionsMap f ⋙
@@ -355,7 +356,8 @@ private def nativeLiftedIso {i j : Index R} (f : i ⟶ j) :
     (nativeSmallEvaluation_functor i) (nativeSmallEvaluation_functor j)
     (nativeOriginalModelMap_functor f)
     (smallCoefficientIso (boundedFlatCoefficientPseudofunctor R) f
-      (boundedFlatPullbackNormalizationIso (Quillen.Scheme.CoefficientBaseChange.map f)))
+      (boundedFlatPullbackNormalizationIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
+        f)))
 
 /-- The actual original target composition, with only equality transports of native functor names.
 -/
@@ -366,9 +368,10 @@ def boundedFlatCoefficientOriginalModelCompIso {i j k : Index R} (f : i ⟶ j) (
   transportCompIso (nativeOriginalModelMap_functor f) (nativeOriginalModelMap_functor g)
     (nativeOriginalModelMap_functor (f ≫ g))
     (smallCoefficientCompIso (boundedFlatCoefficientPseudofunctor R) f g
-      (boundedFlatPullbackNormalizationIso (Quillen.Scheme.CoefficientBaseChange.map f))
-      (boundedFlatPullbackNormalizationIso (Quillen.Scheme.CoefficientBaseChange.map g))
-      (boundedFlatPullbackNormalizationIso (Quillen.Scheme.CoefficientBaseChange.map (f ≫ g))))
+      (boundedFlatPullbackNormalizationIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
+      (boundedFlatPullbackNormalizationIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g))
+      (boundedFlatPullbackNormalizationIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (f
+        ≫ g))))
 
 attribute [local irreducible] boundedFlatPerfectPullback boundedFlatPullbackNormalizationIso
   nativeLiftedIso boundedFlatCoefficientOriginalModelCompIso
@@ -394,9 +397,10 @@ private theorem nativeLiftedIso_pasting {i j k : Index R} (f : i ⟶ j) (g : j �
   unfold nativeLiftedIso boundedFlatCoefficientOriginalModelCompIso
   exact smallCoefficientTransportPasting.{u + 1, u, u + 1, u}
     (boundedFlatCoefficientPseudofunctor R) f g
-    (boundedFlatPullbackNormalizationIso (Quillen.Scheme.CoefficientBaseChange.map f))
-    (boundedFlatPullbackNormalizationIso (Quillen.Scheme.CoefficientBaseChange.map g))
-    (boundedFlatPullbackNormalizationIso (Quillen.Scheme.CoefficientBaseChange.map (f ≫ g)))
+    (boundedFlatPullbackNormalizationIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
+    (boundedFlatPullbackNormalizationIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g))
+    (boundedFlatPullbackNormalizationIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (f ≫
+      g)))
     (boundedFlatCoefficientSectionSmallEquivalence i).functor
     (boundedFlatCoefficientSectionSmallEquivalence j).functor
     (boundedFlatCoefficientSectionSmallEquivalence k).functor
@@ -419,17 +423,19 @@ private theorem nativeLiftedIso_eq {i j : Index R} (f : i ⟶ j) :
         (boundedFlatCoefficientOriginalEvaluation j) AsSmall.up).symm ≪≫
       smallModelWhiskerIso (boundedFlatCoefficientOriginalEvaluation i)
         (boundedFlatCoefficientSectionsMap f ⋙ boundedFlatCoefficientOriginalEvaluation j)
-        (boundedFlatPerfectPullback (Quillen.Scheme.CoefficientBaseChange.map f))
-        (boundedFlatNormalizedPullback (Quillen.Scheme.CoefficientBaseChange.map f))
+        (boundedFlatPerfectPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
+        (boundedFlatNormalizedPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
         (boundedFlatCoefficientSectionReindexIso f)
-        (boundedFlatPullbackNormalizationIso (Quillen.Scheme.CoefficientBaseChange.map f)) := by
+        (boundedFlatPullbackNormalizationIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
+          f)) := by
   unfold nativeLiftedIso
   apply eq_of_heq
   exact (transportComparison_heq (boundedFlatCoefficientSectionsMap f)
     (nativeSmallEvaluation_functor i) (nativeSmallEvaluation_functor j)
     (nativeOriginalModelMap_functor f) _).trans (heq_of_eq
       (smallCoefficientIso_eq (boundedFlatCoefficientPseudofunctor R) f
-        (boundedFlatPullbackNormalizationIso (Quillen.Scheme.CoefficientBaseChange.map f))))
+        (boundedFlatPullbackNormalizationIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
+          f))))
 
 attribute [local irreducible] boundedFlatCoefficientOriginalEvaluation
 attribute [local semireducible] boundedFlatPullbackNormalizationIso
@@ -503,9 +509,9 @@ private theorem nativePseudofunctor_mapComp_hom {i j k : Index R}
     (f : i ⟶ j) (g : j ⟶ k) :
     ((boundedFlatCoefficientPseudofunctor R).mapComp f.toLoc g.toLoc).hom.toNatTrans =
       eqToHom (congrArg boundedFlatPerfectPullback
-        (Quillen.Scheme.CoefficientBaseChange.map_comp f g)) ≫
-      (boundedFlatPerfectPullbackCompIso (Quillen.Scheme.CoefficientBaseChange.map g)
-        (Quillen.Scheme.CoefficientBaseChange.map f)).hom := by
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_comp f g)) ≫
+      (boundedFlatPerfectPullbackCompIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g)
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)).hom := by
   simp only [boundedFlatCoefficientPseudofunctor, Pseudofunctor.comp_mapComp,
     Iso.trans_hom, Cat.Hom.toNatTrans_comp, PrelaxFunctor.map₂Iso_hom,
     Functor.toPseudofunctor_mapComp]
@@ -524,26 +530,27 @@ private theorem nativeNormalization_transport {X Y : Scheme.{u}} {f g : X ⟶ Y}
 
 /-- Joint coefficient composition retains the original geometric equality and zero paths. -/
 def boundedFlatCoefficientNormalizedCompIso {i j k : Index R} (f : i ⟶ j) (g : j ⟶ k) :
-    boundedFlatNormalizedPullback (Quillen.Scheme.CoefficientBaseChange.map (f ≫ g)) ≅
-    boundedFlatNormalizedPullback (Quillen.Scheme.CoefficientBaseChange.map f) ⋙
-      boundedFlatNormalizedPullback (Quillen.Scheme.CoefficientBaseChange.map g) :=
+    boundedFlatNormalizedPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (f ≫ g)) ≅
+    boundedFlatNormalizedPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f) ⋙
+      boundedFlatNormalizedPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g) :=
   normalizedCoefficientCompIso (boundedFlatCoefficientPseudofunctor R) f g
-    (boundedFlatPullbackNormalizationIso (Quillen.Scheme.CoefficientBaseChange.map f))
-    (boundedFlatPullbackNormalizationIso (Quillen.Scheme.CoefficientBaseChange.map g))
-    (boundedFlatPullbackNormalizationIso (Quillen.Scheme.CoefficientBaseChange.map (f ≫ g)))
+    (boundedFlatPullbackNormalizationIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
+    (boundedFlatPullbackNormalizationIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g))
+    (boundedFlatPullbackNormalizationIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (f ≫
+      g)))
 
 private theorem nativeNormalizedCompIso_hom {i j k : Index R} (f : i ⟶ j) (g : j ⟶ k) :
     (boundedFlatCoefficientNormalizedCompIso f g).hom =
     eqToHom (congrArg boundedFlatNormalizedPullback
-      (Quillen.Scheme.CoefficientBaseChange.map_comp f g)) ≫
-      (boundedFlatNormalizedPullbackCompIso (Quillen.Scheme.CoefficientBaseChange.map g)
-        (Quillen.Scheme.CoefficientBaseChange.map f)).hom := by
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_comp f g)) ≫
+      (boundedFlatNormalizedPullbackCompIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g)
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)).hom := by
   simp only [boundedFlatCoefficientNormalizedCompIso, normalizedCoefficientCompIso,
     boundedFlatNormalizedPullbackCompIso, Iso.trans_hom, Iso.symm_hom,
     Cat.Hom.toNatIso_hom, nativePseudofunctor_mapComp_hom,
     isoWhiskerRight_hom, isoWhiskerLeft_hom, Category.assoc]
   rw [reassoc_of% nativeNormalization_transport
-    (Quillen.Scheme.CoefficientBaseChange.map_comp f g)]
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_comp f g)]
   rfl
 
 /-- The actual binary target transformation whiskered by the normalized evaluation. -/
@@ -715,7 +722,8 @@ theorem CoefficientSectionEvaluationComposition.nativeSecondRouteHomotopy_level 
       (fun _ => (boundedFlatPerfectWaldhausen (space k)).smallModel.weq_iso _
         inferInstance)).level n =
     ((boundedFlatCoefficientSectionEvaluationHomotopy f).postcomp
-      (boundedFlatPerfectPrespectrumMap (Quillen.Scheme.CoefficientBaseChange.map g))).level n := by
+      (boundedFlatPerfectPrespectrumMap (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
+        g))).level n := by
   exact prespectrumTransformationHomotopy_postcomp_level
     (F := boundedFlatCoefficientSectionModelMap f ≫
       boundedFlatCoefficientSectionEvaluationModelMap j)
@@ -749,36 +757,40 @@ private theorem nativeOriginalCompHomotopy_level {i j k : Index R}
       (boundedFlatCoefficientOriginalModelCompIso f g).hom
       (fun _ => (boundedFlatPerfectWaldhausen (space k)).smallModel.weq_iso _
         inferInstance)).level n =
-    (boundedFlatNormalizedCompTrack (Quillen.Scheme.CoefficientBaseChange.map g)
-      (Quillen.Scheme.CoefficientBaseChange.map f)).level n := by
+    (boundedFlatNormalizedCompTrack (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)).level n := by
   rw [boundedFlatNormalizedCompTrack_level]
   apply prespectrumTransformationHomotopy_level_eq_of_heq
   · exact congrArg (fun p => modelMap (boundedFlatPerfectWaldhausen (space i))
       (boundedFlatPerfectWaldhausen (space k)) (boundedFlatNormalizedPullback_exact p)
-      (boundedFlatNormalizedPullback_obj_zero p)) (Quillen.Scheme.CoefficientBaseChange.map_comp f
+      (boundedFlatNormalizedPullback_obj_zero p))
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_comp f
         g)
   · exact (modelMap_comp (boundedFlatPerfectWaldhausen (space i))
       (boundedFlatPerfectWaldhausen (space j)) (boundedFlatPerfectWaldhausen (space k))
-      (boundedFlatNormalizedPullback_exact (Quillen.Scheme.CoefficientBaseChange.map f))
-      (boundedFlatNormalizedPullback_exact (Quillen.Scheme.CoefficientBaseChange.map g))
+      (boundedFlatNormalizedPullback_exact (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
+      (boundedFlatNormalizedPullback_exact (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g))
       (boundedFlatNormalizedPullback_obj_zero _) (boundedFlatNormalizedPullback_obj_zero _)).symm
   · unfold boundedFlatCoefficientOriginalModelCompIso
     have hβ := transportCompIso_hom_heq
       (nativeOriginalModelMap_functor f) (nativeOriginalModelMap_functor g)
       (nativeOriginalModelMap_functor (f ≫ g))
       (smallCoefficientCompIso (boundedFlatCoefficientPseudofunctor R) f g
-        (boundedFlatPullbackNormalizationIso (Quillen.Scheme.CoefficientBaseChange.map f))
-        (boundedFlatPullbackNormalizationIso (Quillen.Scheme.CoefficientBaseChange.map g))
-        (boundedFlatPullbackNormalizationIso (Quillen.Scheme.CoefficientBaseChange.map (f ≫ g))))
+        (boundedFlatPullbackNormalizationIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
+          f))
+        (boundedFlatPullbackNormalizationIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
+          g))
+        (boundedFlatPullbackNormalizationIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
+          (f ≫ g))))
     refine hβ.trans ?_
     unfold smallCoefficientCompIso
     change HEq (whiskerLeft AsSmall.down (whiskerRight
       (boundedFlatCoefficientNormalizedCompIso f g).hom AsSmall.up)) _
     rw [nativeNormalizedCompIso_hom]
     exact small_transport_heq (congrArg boundedFlatNormalizedPullback
-      (Quillen.Scheme.CoefficientBaseChange.map_comp f g))
-      (boundedFlatNormalizedPullbackCompIso (Quillen.Scheme.CoefficientBaseChange.map g)
-        (Quillen.Scheme.CoefficientBaseChange.map f)).hom
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_comp f g))
+      (boundedFlatNormalizedPullbackCompIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g)
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)).hom
 
 private theorem target_route_heq
     {A B C D : Type*} [Category A] [Category B] [Category C] [Category D]
@@ -802,8 +814,8 @@ theorem CoefficientSectionEvaluationComposition.nativeTargetHomotopy_level {i j 
       (fun _ => (boundedFlatPerfectWaldhausen (space k)).smallModel.weq_iso _
         inferInstance)).level n =
     (Homotopy.precomp (boundedFlatCoefficientSectionEvaluationPrespectrumMap i)
-      (boundedFlatNormalizedCompTrack (Quillen.Scheme.CoefficientBaseChange.map g)
-        (Quillen.Scheme.CoefficientBaseChange.map f))).level n := by
+      (boundedFlatNormalizedCompTrack (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g)
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))).level n := by
   trans (prespectrumTransformationHomotopy
     (F := boundedFlatCoefficientSectionEvaluationModelMap i ≫
       boundedFlatCoefficientOriginalModelMap (f ≫ g))
@@ -835,14 +847,15 @@ def boundedFlatCoefficientSectionCompositionTotalRoute {i j k : Index R}
     Homotopy ((boundedFlatCoefficientSectionPrespectrumFunctor R).map (f ≫ g) ≫
       boundedFlatCoefficientSectionEvaluationPrespectrumMap k)
     ((boundedFlatCoefficientSectionEvaluationPrespectrumMap i ≫
-      boundedFlatPerfectPrespectrumMap (Quillen.Scheme.CoefficientBaseChange.map f)) ≫
-        boundedFlatPerfectPrespectrumMap (Quillen.Scheme.CoefficientBaseChange.map g)) :=
+      boundedFlatPerfectPrespectrumMap (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)) ≫
+        boundedFlatPerfectPrespectrumMap (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g))
+          :=
   ((boundedFlatCoefficientSectionEvaluationHomotopy (f ≫ g)).trans
     (Homotopy.precomp (boundedFlatCoefficientSectionEvaluationPrespectrumMap i)
-      ((boundedFlatNormalizedCompTrack (Quillen.Scheme.CoefficientBaseChange.map g)
-        (Quillen.Scheme.CoefficientBaseChange.map f)).cast
+      ((boundedFlatNormalizedCompTrack (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g)
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)).cast
           (congrArg boundedFlatPerfectPrespectrumMap
-            (Quillen.Scheme.CoefficientBaseChange.map_comp f g).symm) rfl))).cast
+            (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_comp f g).symm) rfl))).cast
     rfl (Category.assoc _ _ _).symm
 
 /-- Original evaluation followed by the unchanged split geometric composition track. -/
@@ -851,14 +864,16 @@ def boundedFlatCoefficientSectionCompositionSplitRoute {i j k : Index R}
     Homotopy ((boundedFlatCoefficientSectionPrespectrumFunctor R).map (f ≫ g) ≫
       boundedFlatCoefficientSectionEvaluationPrespectrumMap k)
     ((boundedFlatCoefficientSectionEvaluationPrespectrumMap i ≫
-      boundedFlatPerfectPrespectrumMap (Quillen.Scheme.CoefficientBaseChange.map f)) ≫
-        boundedFlatPerfectPrespectrumMap (Quillen.Scheme.CoefficientBaseChange.map g)) :=
+      boundedFlatPerfectPrespectrumMap (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)) ≫
+        boundedFlatPerfectPrespectrumMap (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g))
+          :=
   ((boundedFlatCoefficientSectionEvaluationHomotopy (f ≫ g)).trans
     (Homotopy.precomp (boundedFlatCoefficientSectionEvaluationPrespectrumMap i)
-      ((boundedFlatPerfectPrespectrumCompHomotopy (Quillen.Scheme.CoefficientBaseChange.map g)
-        (Quillen.Scheme.CoefficientBaseChange.map f)).cast
+      ((boundedFlatPerfectPrespectrumCompHomotopy
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g)
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)).cast
           (congrArg boundedFlatPerfectPrespectrumMap
-            (Quillen.Scheme.CoefficientBaseChange.map_comp f g).symm) rfl))).cast
+            (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_comp f g).symm) rfl))).cast
     rfl (Category.assoc _ _ _).symm
 
 /-- Both original joint evaluation tracks with the prescribed strict source endpoint. -/
@@ -867,8 +882,9 @@ def boundedFlatCoefficientSectionCompositionWhiskeredRoute {i j k : Index R}
     Homotopy ((boundedFlatCoefficientSectionPrespectrumFunctor R).map (f ≫ g) ≫
       boundedFlatCoefficientSectionEvaluationPrespectrumMap k)
     ((boundedFlatCoefficientSectionEvaluationPrespectrumMap i ≫
-      boundedFlatPerfectPrespectrumMap (Quillen.Scheme.CoefficientBaseChange.map f)) ≫
-        boundedFlatPerfectPrespectrumMap (Quillen.Scheme.CoefficientBaseChange.map g)) :=
+      boundedFlatPerfectPrespectrumMap (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)) ≫
+        boundedFlatPerfectPrespectrumMap (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g))
+          :=
   ((Homotopy.precomp ((boundedFlatCoefficientSectionPrespectrumFunctor R).map f)
     (boundedFlatCoefficientSectionEvaluationHomotopy g)).cast
       ((Category.assoc _ _ _).symm.trans
@@ -876,7 +892,7 @@ def boundedFlatCoefficientSectionCompositionWhiskeredRoute {i j k : Index R}
           ((boundedFlatCoefficientSectionPrespectrumFunctor R).map_comp f g).symm))
       (Category.assoc _ _ _).symm).trans
     ((boundedFlatCoefficientSectionEvaluationHomotopy f).postcomp
-      (boundedFlatPerfectPrespectrumMap (Quillen.Scheme.CoefficientBaseChange.map g)))
+      (boundedFlatPerfectPrespectrumMap (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g)))
 
 /-- The actual joint composition equation compares both whole original evaluation routes. -/
 def boundedFlatCoefficientSectionCompositionRelHomotopy {i j k : Index R}
@@ -887,10 +903,11 @@ def boundedFlatCoefficientSectionCompositionRelHomotopy {i j k : Index R}
       (boundedFlatCoefficientSectionCompositionSplitRoute f g) :=
     ((Homotopy.RelHomotopy.refl (boundedFlatCoefficientSectionEvaluationHomotopy (f ≫ g))).hcomp
       (Homotopy.RelHomotopy.precomp (boundedFlatCoefficientSectionEvaluationPrespectrumMap i)
-        ((boundedFlatNormalizedCompTrackComparison (Quillen.Scheme.CoefficientBaseChange.map g)
-          (Quillen.Scheme.CoefficientBaseChange.map f)).cast
+        ((boundedFlatNormalizedCompTrackComparison
+          (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g)
+          (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)).cast
             (congrArg boundedFlatPerfectPrespectrumMap
-              (Quillen.Scheme.CoefficientBaseChange.map_comp f g).symm) rfl))).cast
+              (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_comp f g).symm) rfl))).cast
         rfl (Category.assoc _ _ _).symm
   have Jw : (boundedFlatCoefficientSectionCompositionTotalRoute f g).RelHomotopy
       (boundedFlatCoefficientSectionCompositionWhiskeredRoute f g) := by
@@ -1044,14 +1061,14 @@ private theorem nativeChartGeometricLevels (a : Under R)
         rfl (Category.assoc _ _ _).symm)
       (Homotopy.precomp (boundedFlatCoefficientSectionEvaluationPrespectrumMap (op P, a))
       ((boundedFlatPerfectPrespectrumCompHomotopy
-        (Quillen.Scheme.CoefficientBaseChange.map
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
           (i := (op P, (polynomialUnderFunctor R).obj a))
           (k := (op P, (laurentUnderFunctor R).obj a)) (𝟙 (op P), k))
-        (Quillen.Scheme.CoefficientBaseChange.map
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
           (i := (op P, a)) (k := (op P, (polynomialUnderFunctor R).obj a))
           (𝟙 (op P), (polynomialUnderCoefficient R).app a))).cast
         (congrArg boundedFlatPerfectPrespectrumMap
-          (Quillen.Scheme.CoefficientBaseChange.map_comp
+          (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_comp
             (i := (op P, a)) (k := (op P, (polynomialUnderFunctor R).obj a))
             (l := (op P, (laurentUnderFunctor R).obj a))
             (𝟙 (op P), (polynomialUnderCoefficient R).app a) (𝟙 (op P), k)).symm) rfl)) := by

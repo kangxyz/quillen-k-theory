@@ -223,7 +223,7 @@ variable [CompactSpace X]
 /-- The actual auxiliary-support change as a morphism of quasi-compact open pairs. -/
 def qcSupportChangeOpenPair :
     (⟨supportOpenPair S, (by change CompactSpace X; infer_instance)⟩ :
-      Quillen.Scheme.QuasiCompactOpenPairs.{u}) ⟶
+      AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}) ⟶
       ⟨supportOpenPair T, (by change CompactSpace X; infer_instance)⟩ :=
   ObjectProperty.homMk (supportChangeOpenPair h)
 

@@ -31,37 +31,37 @@ open Quillen
 /-- An arbitrary map of affine schemes has a contravariant bundle K-map,
 without flatness or open-immersion assumptions. -/
 def affinePullback {R S : CommRingCat.{u}} (φ : R ⟶ S) (n : ℕ) :
-    Quillen.Scheme.K (Spec R) n →* Quillen.Scheme.K (Spec S) n :=
-  Quillen.Scheme.pullbackK (Spec.map φ) n
+    AlgebraicGeometry.Scheme.K (Spec R) n →* AlgebraicGeometry.Scheme.K (Spec S) n :=
+  AlgebraicGeometry.Scheme.pullbackK (Spec.map φ) n
 
 /-- Pulling back a finite free sheaf along an arbitrary morphism retains the
 same finite generator type. -/
 def finiteFreePullback {X Y : AlgebraicGeometry.Scheme.{u}} (f : X ⟶ Y) (n : ℕ) :
-    (Scheme.Modules.pullback f).obj (SchemeSheaf.finiteFree (X := Y) n).obj ≅
-      (SchemeSheaf.finiteFree (X := X) n).obj :=
-  SchemeSheaf.pullbackFreeIso f (ULift (Fin n))
+    (Scheme.Modules.pullback f).obj (AlgebraicGeometry.Scheme.Modules.finiteFree (X := Y) n).obj ≅
+      (AlgebraicGeometry.Scheme.Modules.finiteFree (X := X) n).obj :=
+  AlgebraicGeometry.Scheme.Modules.pullbackFreeIso f (ULift (Fin n))
 
 /-- Even when the first two sheaves are not assumed finite locally free,
 a finite locally free quotient suffices for pullback exactness. -/
 theorem exactWithBundleQuotient {X Y : AlgebraicGeometry.Scheme.{u}} (f : X ⟶ Y)
     (S : ShortComplex Y.Modules) (hS : S.ShortExact)
-    [SchemeSheaf.IsFiniteLocallyFree Y S.X₃] :
+    [AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree Y S.X₃] :
     (S.map (Scheme.Modules.pullback f)).ShortExact :=
-  SchemeSheaf.shortExact_pullback f hS
+  AlgebraicGeometry.Scheme.Modules.shortExact_pullback f hS
 
 /-- The full-scheme K-functor retains the original open-restriction map. -/
-theorem existingOpenMap {X Y : Quillen.Scheme.OpenImmersionSchemes.{u}ᵒᵖ}
+theorem existingOpenMap {X Y : AlgebraicGeometry.Scheme.OpenImmersionSchemes.{u}ᵒᵖ}
     (f : X ⟶ Y) (n : ℕ) :
-    ((Quillen.Scheme.KOpenFunctor n).map f).hom =
-      Quillen.Scheme.pullbackK f.unop.hom n :=
-  (Quillen.Scheme.pullbackK_eq_restrictK f.unop.hom n).symm
+    ((AlgebraicGeometry.Scheme.KOpenFunctor n).map f).hom =
+      AlgebraicGeometry.Scheme.pullbackK f.unop.hom n :=
+  (AlgebraicGeometry.Scheme.pullbackK_eq_restrictK f.unop.hom n).symm
 
 /-- Successive arbitrary pullbacks compute the map of the composite. -/
 theorem composablePullbacks {X Y Z : AlgebraicGeometry.Scheme.{u}}
-    (f : X ⟶ Y) (g : Y ⟶ Z) (n : ℕ) (x : Quillen.Scheme.K Z n) :
-    Quillen.Scheme.pullbackK (f ≫ g) n x =
-      Quillen.Scheme.pullbackK f n (Quillen.Scheme.pullbackK g n x) := by
-  rw [Quillen.Scheme.pullbackK_comp]
+    (f : X ⟶ Y) (g : Y ⟶ Z) (n : ℕ) (x : AlgebraicGeometry.Scheme.K Z n) :
+    AlgebraicGeometry.Scheme.pullbackK (f ≫ g) n x =
+      AlgebraicGeometry.Scheme.pullbackK f n (AlgebraicGeometry.Scheme.pullbackK g n x) := by
+  rw [AlgebraicGeometry.Scheme.pullbackK_comp]
   rfl
 
 end QuillenTest.VectorBundlePullback

@@ -29,7 +29,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped ZeroObject
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 namespace Quillen.PerfectComplexes.ProjectiveLine
 
 /-- The standard derived category of module sheaves, used for affine coefficient calculations. -/
@@ -73,7 +73,7 @@ private theorem isZero_on_affinePerfect_of_vectorBundle_single
   let : Q.IsTriangulatedClosed₂ := .mk' (fun T hT h₁ h₃ =>
     T.isZero₂_of_isZero₁₃ hT h₁ h₃)
   have hs (n : ℤ) : Q (J.obj ((HomotopyCategory.Plus.quotient (Spec R).Modules).obj
-      (Quillen.CochainComplex.singlePlus (C.obj.X n) n))) := by
+      (CochainComplex.singlePlus (C.obj.X n) n))) := by
     have hz := hsingle (P.obj.X n) (P.property.2 n)
     let e := ((DerivedCategory.Plus.singleFunctors (Spec R).Modules).shiftIso
       (-n) n 0 (by omega)).app (P.obj.X n)
@@ -85,7 +85,7 @@ private theorem isZero_on_affinePerfect_of_vectorBundle_single
       ((shiftFunctor (DerivedCategory.Plus Z.Modules) (-n)).map_isZero hz).of_iso e'.symm
     exact hn.of_iso (F.mapIso
       ((DerivedCategory.Plus.quotientCompQhIso (Spec R).Modules).app
-        (Quillen.CochainComplex.singlePlus (C.obj.X n) n)))
+        (CochainComplex.singlePlus (C.obj.X n) n)))
   have h := HomotopyCategory.Plus.property_obj_of_term_bounds J Q C a b
     (fun i hi => hab i (Or.inl hi)) (fun i hi => hab i (Or.inr hi)) hs
   have h' : IsZero (F.obj (DerivedCategory.Plus.Q.obj C)) :=

@@ -20,6 +20,8 @@ The comparison with principal-open sheaf restriction is a separate theorem.
 -/
 @[expose] public section
 
+open ModuleCat
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -31,8 +33,8 @@ namespace Quillen.FiniteModuleLocalization
 variable {R : Type u} [CommRing R] [IsNoetherianRing R] (S : Submonoid R)
 
 /-- The actual finite-module localization, as an exact functor. -/
-def exactFunctor : ExactFunctor (CoherentScheme.finiteModuleExactStructure.{u, u} R)
-    (CoherentScheme.finiteModuleExactStructure.{u, u} (Localization S)) where
+def exactFunctor : ExactFunctor (ModuleCat.finiteModuleExactStructure.{u, u} R)
+    (ModuleCat.finiteModuleExactStructure.{u, u} (Localization S)) where
   toFunctor := functor S
   map_conflation _ h := h.map_of_exact _
 
@@ -109,7 +111,7 @@ def smallAbelianExactFunctor :
 /-- The identity comparison from the transported small exact structure to
 its equal standard abelian exact structure. -/
 def smallModelToAbelian (A : Type u) [CommRing A] [IsNoetherianRing A] :
-    ExactFunctor (CoherentScheme.finiteModuleExactStructure.{u, u} A).smallModel
+    ExactFunctor (ModuleCat.finiteModuleExactStructure.{u, u} A).smallModel
       (abelianExactStructure (SmallModel.{u} (FGModuleCat.{u} A))) where
   toFunctor := 𝟭 _
   map_conflation _ h := by
@@ -135,7 +137,7 @@ instance smallModelToAbelian_mapQ_isEquivalence (A : Type u) [CommRing A] [IsNoe
 /-- Canonical identity-induced equivalence between the two proved-equal
 small exact structures on finite modules. -/
 def smallAbelianKEquiv (A : Type u) [CommRing A] [IsNoetherianRing A] (n : ℕ) :
-    (CoherentScheme.finiteModuleExactStructure.{u, u} A).SmallK n ≃*
+    (ModuleCat.finiteModuleExactStructure.{u, u} A).SmallK n ≃*
       (abelianExactStructure (SmallModel.{u} (FGModuleCat.{u} A))).K n :=
   (smallModelToAbelian A).KEquivOfMapQIsEquivalence n
 

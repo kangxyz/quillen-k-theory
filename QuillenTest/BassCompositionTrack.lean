@@ -11,7 +11,8 @@ public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurent
 /-! The actual positive and inverse-coordinate Laurent legs retain their original binary tracks. -/
 @[expose] public section
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.Scheme.PolynomialLaurent
+open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
+  AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace QuillenTest.BassCompositionTrack
 

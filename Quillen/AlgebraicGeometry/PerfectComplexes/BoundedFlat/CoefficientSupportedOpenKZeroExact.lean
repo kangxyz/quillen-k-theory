@@ -28,7 +28,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
 open Quillen.Waldhausen Quillen.Waldhausen.AlgebraicGrothendieck
-open Quillen.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.CoefficientBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 

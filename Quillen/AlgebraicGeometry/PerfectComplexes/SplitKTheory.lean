@@ -73,8 +73,8 @@ variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 /-- Open restriction preserves the degreewise splittings themselves. -/
 theorem degreewiseSplitMono_restrict {K L : Complex X} {f : K ⟶ L}
-    (hf : Waldhausen.degreewiseSplitMono f) :
-    Waldhausen.degreewiseSplitMono ((restrict j).map f) := by
+    (hf : CochainComplex.degreewiseSplitMono f) :
+    CochainComplex.degreewiseSplitMono ((restrict j).map f) := by
   intro n
   let : IsSplitMono (f.f n) := hf n
   change IsSplitMono ((Scheme.Modules.restrictFunctor j).map (f.f n))

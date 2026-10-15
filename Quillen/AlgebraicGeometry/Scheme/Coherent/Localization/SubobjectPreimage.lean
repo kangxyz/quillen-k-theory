@@ -17,13 +17,19 @@ a quasicoherent subsheaf. Finite approximation is a subsequent step.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 /-- The quasicoherent preimage kernel of an actual coherent open subsheaf.
 No finite generation of the ambient module sheaf is assumed. -/
@@ -51,4 +57,4 @@ theorem quasicoherent_subobject_preimage
     h₁.conePointUniqueUpToIso h₂, ?_⟩
   exact (h₁.conePointUniqueUpToIso_hom_comp h₂ WalkingParallelPair.zero).symm
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

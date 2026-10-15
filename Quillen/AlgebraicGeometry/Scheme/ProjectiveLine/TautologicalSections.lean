@@ -18,14 +18,16 @@ exactly `difference R (-1)`, hence bijective. All maps are original sheaf and
 scheme restrictions, and the base ring may be the zero ring.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 universe u
-namespace Quillen.Scheme.ProjectiveLine
-open PolynomialLaurent Quillen.SchemeSheaf Quillen.SchemeSheaf.TwoOpen
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open PolynomialLaurent AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.TwoOpen
 variable (R : CommRingCat.{u})
 
 /-- The original positive-chart sections in the chosen actual trivialization. -/
@@ -305,4 +307,4 @@ theorem tautological_difference_injective :
     exact congrArg Prod.snd hab
 
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

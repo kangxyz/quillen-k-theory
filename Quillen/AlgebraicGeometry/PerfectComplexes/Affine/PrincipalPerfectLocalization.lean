@@ -16,6 +16,9 @@ surjectivity onto K-zero of the open.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -26,7 +29,8 @@ variable (R : CommRingCat.{u}) (r : R)
 
 /-- The original principal relative endpoint is injective in every connective degree. -/
 theorem principal_perfectOpenKRestrict_injective (n : ℕ) :
-    Function.Injective (perfectOpenKRestrict (CoherentScheme.principalOpen R r) n) := by
+    Function.Injective (perfectOpenKRestrict
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) n) := by
   cases n with
   | zero => exact principal_perfectOpenKRestrict_zero_injective R r
   | succ n => exact (principal_perfectOpenKRestrict_succ_bijective R r n).injective
@@ -34,30 +38,38 @@ theorem principal_perfectOpenKRestrict_injective (n : ℕ) :
 /-- Genuine supported boundary from original perfect K-theory of the principal open. -/
 def principalPerfectConnectingHom (n : ℕ) :
     PerfectK (Spec (.of (Localization.Away r))) (n + 1) →*
-      PerfectSupportedK (CoherentScheme.principalOpen R r) n :=
-  (perfectOpenConnectingHom (CoherentScheme.principalOpen R r) n).comp
+      PerfectSupportedK (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) n :=
+  (perfectOpenConnectingHom (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+    n).comp
     (principalPerfectOpenKEquiv R r n).symm.toMonoidHom
 
 /-- The transported boundary retains the entire original relative boundary homomorphism. -/
 theorem principalPerfectConnectingHom_comp_relative (n : ℕ) :
     (principalPerfectConnectingHom R r n).comp
-      (perfectOpenKRestrict (CoherentScheme.principalOpen R r) (n + 1)) =
-    perfectOpenConnectingHom (CoherentScheme.principalOpen R r) n := by
+      (perfectOpenKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (n +
+        1)) =
+    perfectOpenConnectingHom (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) n :=
+      by
   ext a
-  change perfectOpenConnectingHom (CoherentScheme.principalOpen R r) n
+  change perfectOpenConnectingHom (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+    n
     ((principalPerfectOpenKEquiv R r n).symm ((principalPerfectOpenKEquiv R r n) a)) = _
   rw [MulEquiv.symm_apply_apply]
 
 /-- Exactness at original perfect K-theory on the affine base, including degree zero. -/
 theorem range_perfectSupportedKMap_eq_ker_principal_perfectKRestrict (n : ℕ) :
-    (perfectSupportedKMap (CoherentScheme.principalOpen R r) n).range =
-      (perfectKRestrict (CoherentScheme.principalOpen R r) n).ker := by
+    (perfectSupportedKMap (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+      n).range =
+      (perfectKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) n).ker :=
+        by
   rw [range_perfectSupportedKMap_eq_ker_perfectOpenKMap]
   ext x
-  change perfectOpenKMap (CoherentScheme.principalOpen R r) n x = 1 ↔
-    perfectKRestrict (CoherentScheme.principalOpen R r) n x = 1
+  change perfectOpenKMap (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) n x = 1
+    ↔
+    perfectKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) n x = 1
   have he := DFunLike.congr_fun
-    (perfectOpenKRestrict_comp_perfectOpenKMap (CoherentScheme.principalOpen R r) n) x
+    (perfectOpenKRestrict_comp_perfectOpenKMap
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) n) x
   constructor
   · intro hx
     rw [← he, MonoidHom.comp_apply, hx, map_one]
@@ -68,7 +80,8 @@ theorem range_perfectSupportedKMap_eq_ker_principal_perfectKRestrict (n : ℕ) :
 /-- The new boundary has exactly the original relative boundary image. -/
 theorem range_principalPerfectConnectingHom (n : ℕ) :
     (principalPerfectConnectingHom R r n).range =
-      (perfectOpenConnectingHom (CoherentScheme.principalOpen R r) n).range := by
+      (perfectOpenConnectingHom (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+        n).range := by
   ext x
   constructor
   · rintro ⟨a, rfl⟩
@@ -80,61 +93,77 @@ theorem range_principalPerfectConnectingHom (n : ℕ) :
 /-- Exactness at original supported perfect K-theory, including its degree-zero group. -/
 theorem range_principalPerfectConnectingHom_eq_ker_perfectSupportedKMap (n : ℕ) :
     (principalPerfectConnectingHom R r n).range =
-      (perfectSupportedKMap (CoherentScheme.principalOpen R r) n).ker := by
+      (perfectSupportedKMap (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+        n).ker := by
   rw [range_principalPerfectConnectingHom,
     range_perfectOpenConnectingHom_eq_ker_perfectSupportedKMap]
 
 /-- Exactness at positive original perfect K-theory of the principal open. -/
 theorem range_principal_perfectKRestrict_eq_ker_principalPerfectConnectingHom (n : ℕ) :
-    (perfectKRestrict (CoherentScheme.principalOpen R r) (n + 1)).range =
+    (perfectKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (n +
+      1)).range =
       (principalPerfectConnectingHom R r n).ker := by
   ext x
   constructor
   · rintro ⟨a, rfl⟩
     change principalPerfectConnectingHom R r n
-      (perfectKRestrict (CoherentScheme.principalOpen R r) (n + 1) a) = 1
+      (perfectKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (n + 1)
+        a) = 1
     rw [← DFunLike.congr_fun
-      (perfectOpenKRestrict_comp_perfectOpenKMap (CoherentScheme.principalOpen R r) (n + 1)) a]
+      (perfectOpenKRestrict_comp_perfectOpenKMap
+        (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (n + 1)) a]
     change ((principalPerfectConnectingHom R r n).comp
-      (perfectOpenKRestrict (CoherentScheme.principalOpen R r) (n + 1)))
-      (perfectOpenKMap (CoherentScheme.principalOpen R r) (n + 1) a) = 1
+      (perfectOpenKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (n +
+        1)))
+      (perfectOpenKMap (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (n + 1) a)
+        = 1
     rw [principalPerfectConnectingHom_comp_relative]
-    have hm : perfectOpenKMap (CoherentScheme.principalOpen R r) (n + 1) a ∈
-        (perfectOpenKMap (CoherentScheme.principalOpen R r) (n + 1)).range := ⟨a, rfl⟩
+    have hm : perfectOpenKMap (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (n
+      + 1) a ∈
+        (perfectOpenKMap (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (n +
+          1)).range := ⟨a, rfl⟩
     rw [range_perfectOpenKMap_eq_ker_perfectOpenConnectingHom] at hm
     exact hm
   · intro hx
     have hm : (principalPerfectOpenKEquiv R r n).symm x ∈
-        (perfectOpenConnectingHom (CoherentScheme.principalOpen R r) n).ker := hx
+        (perfectOpenConnectingHom (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+          n).ker := hx
     rw [← range_perfectOpenKMap_eq_ker_perfectOpenConnectingHom] at hm
     obtain ⟨a, ha⟩ := hm
     refine ⟨a, ?_⟩
     rw [← DFunLike.congr_fun
-      (perfectOpenKRestrict_comp_perfectOpenKMap (CoherentScheme.principalOpen R r) (n + 1)) a]
+      (perfectOpenKRestrict_comp_perfectOpenKMap
+        (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (n + 1)) a]
     change principalPerfectOpenKEquiv R r n
-      (perfectOpenKMap (CoherentScheme.principalOpen R r) (n + 1) a) = x
+      (perfectOpenKMap (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (n + 1) a)
+        = x
     rw [ha, MulEquiv.apply_symm_apply]
 
 /-- All recurring positions of the actual principal connective localization sequence. -/
 theorem principalPerfect_positiveLongExactSequence (n : ℕ) :
-    (perfectKRestrict (CoherentScheme.principalOpen R r) (n + 1)).range =
+    (perfectKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (n +
+      1)).range =
       (principalPerfectConnectingHom R r n).ker ∧
     (principalPerfectConnectingHom R r n).range =
-      (perfectSupportedKMap (CoherentScheme.principalOpen R r) n).ker ∧
-    (perfectSupportedKMap (CoherentScheme.principalOpen R r) n).range =
-      (perfectKRestrict (CoherentScheme.principalOpen R r) n).ker :=
+      (perfectSupportedKMap (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+        n).ker ∧
+    (perfectSupportedKMap (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+      n).range =
+      (perfectKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) n).ker :=
   ⟨range_principal_perfectKRestrict_eq_ker_principalPerfectConnectingHom R r n,
     range_principalPerfectConnectingHom_eq_ker_perfectSupportedKMap R r n,
     range_perfectSupportedKMap_eq_ker_principal_perfectKRestrict R r n⟩
 
 /-- The actual K₁(open) → K₀(support) → K₀(base) → K₀(open) exact tail. -/
 theorem principalPerfect_zeroTail :
-    (perfectKRestrict (CoherentScheme.principalOpen R r) 1).range =
+    (perfectKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) 1).range =
       (principalPerfectConnectingHom R r 0).ker ∧
     (principalPerfectConnectingHom R r 0).range =
-      (perfectSupportedKMap (CoherentScheme.principalOpen R r) 0).ker ∧
-    (perfectSupportedKMap (CoherentScheme.principalOpen R r) 0).range =
-      (perfectKRestrict (CoherentScheme.principalOpen R r) 0).ker :=
+      (perfectSupportedKMap (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+        0).ker ∧
+    (perfectSupportedKMap (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+      0).range =
+      (perfectKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) 0).ker :=
   principalPerfect_positiveLongExactSequence R r 0
 
 end Quillen.PerfectComplexes.Affine

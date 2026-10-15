@@ -10,6 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalConnect
 /-! # Original principal localization naturality consumers -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -37,9 +40,11 @@ theorem original_principal_obstruction_preserved (f : principalOpenPair R r ⟶ 
 /-- Actual extendibility of a positive class is preserved, using the original boundary and LES. -/
 theorem original_extendible_class_pulls_back (f : principalOpenPair R r ⟶ principalOpenPair S s)
     (n : ℕ) (x : PerfectK (Spec (.of (Localization.Away s))) (n+1))
-    (hx : x ∈ (perfectKRestrict (Quillen.CoherentScheme.principalOpen S s) (n+1)).range) :
+    (hx : x ∈ (perfectKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen S s)
+      (n+1)).range) :
     perfectKPullback f.hom.hom.left (n+1) x ∈
-      (perfectKRestrict (Quillen.CoherentScheme.principalOpen R r) (n+1)).range := by
+      (perfectKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+        (n+1)).range := by
   rw [range_principal_perfectKRestrict_eq_ker_principalPerfectConnectingHom] at hx ⊢
   exact original_principal_obstruction_preserved f n x hx
 

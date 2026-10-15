@@ -22,7 +22,7 @@ variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 /-- Apply genuine module-sheaf extension by zero in each original cochain degree. -/
 def extensionByZero : Complex U ⥤ Complex X :=
-  (SchemeSheaf.extensionByZero j).mapHomologicalComplex (.up ℤ)
+  (AlgebraicGeometry.Scheme.Modules.extensionByZero j).mapHomologicalComplex (.up ℤ)
 
 instance extensionByZero_additive : (extensionByZero j).Additive := by
   unfold extensionByZero
@@ -32,31 +32,39 @@ instance extensionByZero_additive : (extensionByZero j).Additive := by
 def extensionByZeroAdjunction : extensionByZero j ⊣ restrict j where
   unit := {
     app K := {
-      f n := (SchemeSheaf.extensionByZeroRestrictAdjunction j).unit.app (K.X n)
-      comm' p q _ := ((SchemeSheaf.extensionByZeroRestrictAdjunction j).unit.naturality (K.d p
+      f n := (AlgebraicGeometry.Scheme.Modules.extensionByZeroRestrictAdjunction j).unit.app (K.X n)
+      comm' p q _ := ((AlgebraicGeometry.Scheme.Modules.extensionByZeroRestrictAdjunction
+        j).unit.naturality (K.d p
         q)).symm }
     naturality {K L} f := by
       ext n : 1
-      exact (SchemeSheaf.extensionByZeroRestrictAdjunction j).unit.naturality (f.f n) }
+      exact (AlgebraicGeometry.Scheme.Modules.extensionByZeroRestrictAdjunction j).unit.naturality
+        (f.f n) }
   counit := {
     app K := {
-      f n := (SchemeSheaf.extensionByZeroRestrictAdjunction j).counit.app (K.X n)
-      comm' p q _ := ((SchemeSheaf.extensionByZeroRestrictAdjunction j).counit.naturality (K.d p
+      f n := (AlgebraicGeometry.Scheme.Modules.extensionByZeroRestrictAdjunction j).counit.app (K.X
+        n)
+      comm' p q _ := ((AlgebraicGeometry.Scheme.Modules.extensionByZeroRestrictAdjunction
+        j).counit.naturality (K.d p
         q)).symm }
     naturality {K L} f := by
       ext n : 1
-      exact (SchemeSheaf.extensionByZeroRestrictAdjunction j).counit.naturality (f.f n) }
+      exact (AlgebraicGeometry.Scheme.Modules.extensionByZeroRestrictAdjunction j).counit.naturality
+        (f.f n) }
   left_triangle_components K := by
     ext n : 1
-    exact (SchemeSheaf.extensionByZeroRestrictAdjunction j).left_triangle_components (K.X n)
+    exact (AlgebraicGeometry.Scheme.Modules.extensionByZeroRestrictAdjunction
+      j).left_triangle_components (K.X n)
   right_triangle_components K := by
     ext n : 1
-    exact (SchemeSheaf.extensionByZeroRestrictAdjunction j).right_triangle_components (K.X n)
+    exact (AlgebraicGeometry.Scheme.Modules.extensionByZeroRestrictAdjunction
+      j).right_triangle_components (K.X n)
 
 instance extensionByZero_unit_app_isIso (K : Complex U) :
     IsIso ((extensionByZeroAdjunction j).unit.app K) := by
   let : ∀ n, IsIso (((extensionByZeroAdjunction j).unit.app K).f n) := fun n =>
-    inferInstanceAs (IsIso ((SchemeSheaf.extensionByZeroRestrictAdjunction j).unit.app (K.X n)))
+    inferInstanceAs (IsIso ((AlgebraicGeometry.Scheme.Modules.extensionByZeroRestrictAdjunction
+      j).unit.app (K.X n)))
   exact _root_.HomologicalComplex.Hom.isIso_of_components _
 
 instance extensionByZero_unit_isIso : IsIso (extensionByZeroAdjunction j).unit := by
@@ -102,13 +110,13 @@ instance restrict_extensionByZero_counit_isIso (L : Complex X) :
     IsIso ((restrict j).map ((extensionByZeroAdjunction j).counit.app L)) := by
   let : ∀ n, IsIso (((restrict j).map ((extensionByZeroAdjunction j).counit.app L)).f n) := fun n =>
     inferInstanceAs (IsIso ((Scheme.Modules.restrictFunctor j).map
-      ((SchemeSheaf.extensionByZeroRestrictAdjunction j).counit.app (L.X n))))
+      ((AlgebraicGeometry.Scheme.Modules.extensionByZeroRestrictAdjunction j).counit.app (L.X n))))
   exact _root_.HomologicalComplex.Hom.isIso_of_components _
 
 /-- Actual extension by zero preserves all quasi-isomorphisms of sheaf complexes. -/
 instance extensionByZero_quasiIso {K L : Complex U} (f : K ⟶ L) [QuasiIso f] :
     QuasiIso ((extensionByZero j).map f) := by
-  let : (SchemeSheaf.extensionByZero j).PreservesHomology :=
+  let : (AlgebraicGeometry.Scheme.Modules.extensionByZero j).PreservesHomology :=
     Functor.preservesHomology_of_preservesMonos_and_cokernels _
   unfold extensionByZero
   infer_instance
@@ -117,7 +125,7 @@ instance extensionByZero_quasiIso {K L : Complex U} (f : K ⟶ L) [QuasiIso f] :
 def extensionByZeroMapHomotopy {K : Complex U} {L : Complex X}
     {f g : K ⟶ (restrict j).obj L} (H : Homotopy f g) :
     Homotopy (extensionByZeroMap j f) (extensionByZeroMap j g) :=
-  ((SchemeSheaf.extensionByZero j).mapHomotopy H).compRight
+  ((AlgebraicGeometry.Scheme.Modules.extensionByZero j).mapHomotopy H).compRight
     ((extensionByZeroAdjunction j).counit.app L)
 
 end Quillen.PerfectComplexes

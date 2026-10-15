@@ -19,6 +19,10 @@ dimension or resolution hypothesis on the original regular ring is assumed.
 -/
 @[expose] public section
 
+open ModuleCat
+
+open AlgebraicGeometry.Scheme
+
 noncomputable section
 universe u
 open CategoryTheory IsLocalRing
@@ -71,10 +75,10 @@ theorem hasProjectiveDimensionLE_of_regularLocal_dimension_le
 tower, extracted from the proved projective-dimension theorem. -/
 theorem finiteProjectiveResolution_of_regularLocal
     (R : Type u) [CommRing R] [IsRegularLocalRing R]
-    (M : CoherentScheme.FiniteModule.{u, u} R) :
-    Nonempty ((CoherentScheme.finiteModuleExactStructure R).FiniteResolution
-      (CoherentScheme.finiteProjective R) M) :=
-  CoherentScheme.nonempty_finiteProjectiveResolution_of_projectiveDimension_ne_top R M
+    (M : ModuleCat.FiniteModule.{u, u} R) :
+    Nonempty ((ModuleCat.finiteModuleExactStructure R).FiniteResolution
+      (AlgebraicGeometry.Scheme.Modules.Coherent.finiteProjective R) M) :=
+  Modules.Coherent.nonempty_finiteProjectiveResolution_of_projectiveDimension_ne_top R M
     (projectiveDimension_ne_top_of_regularLocal R M.obj)
 
 end Quillen.RegularLocal

@@ -23,7 +23,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen.IteratedS Quillen.Scheme.AffineOpenPair
+open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair
 open Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes

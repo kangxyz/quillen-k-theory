@@ -18,6 +18,12 @@ an arbitrary isomorphism between the four underlying functors.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
@@ -25,7 +31,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-namespace Quillen.CoherentScheme.ClosedImmersion.General
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 open Scheme.Modules
 variable {Z V X : Scheme.{u}} (i : Z ⟶ X) (a : V ⟶ X) [IsOpenImmersion a]
 
@@ -149,4 +155,4 @@ def kernelUnitOpenBaseChange (M : FiniteTypeSheaves X) :
 
 end FiniteTypeSheaves
 
-end Quillen.CoherentScheme.ClosedImmersion.General
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

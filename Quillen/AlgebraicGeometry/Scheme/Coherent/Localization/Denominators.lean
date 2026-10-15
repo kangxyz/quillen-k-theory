@@ -22,13 +22,19 @@ assuming coherent extension or a quotient equivalence.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 variable {U X : Scheme.{u}} [IsLocallyNoetherian X] [IsLocallyNoetherian U]
   (j : U ⟶ X) [IsOpenImmersion j]
@@ -83,4 +89,4 @@ theorem finiteTypeSheavesRestriction_map_eq_iff_denominator {M N : FiniteTypeShe
     apply (cancel_epi ((finiteTypeSheavesRestriction j).map s)).mp
     simpa only [← Functor.map_comp] using congrArg (finiteTypeSheavesRestriction j).map hfg
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

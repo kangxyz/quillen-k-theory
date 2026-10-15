@@ -20,14 +20,16 @@ it makes no assertion about arbitrary perfect complexes or derived generation.
 -/
 
 @[expose] public section
+open Quillen
+
 
 section
 
 noncomputable section
 universe u
 open CategoryTheory AlgebraicGeometry
-open Quillen.SchemeSheaf
-namespace Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 /-- A finite locally free sheaf has a finite module of positive-chart sections. -/
 theorem plusChartModule_finite [IsFiniteLocallyFree (twoChartLine R) M] :
@@ -49,7 +51,7 @@ theorem minusChartModule_projective [IsFiniteLocallyFree (twoChartLine R) M] :
     Module.Projective (Polynomial R) (minusChartModule R M) :=
   projective_globalSections_of_finiteLocallyFree (.of (Polynomial R)) (M.restrict (minusChart R))
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 end
 
 end
@@ -61,8 +63,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.SchemeSheaf Quillen.LaurentProjector Quillen.ModuleComplex
-namespace Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules Quillen.LaurentProjector Quillen.ModuleComplex
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 
 /-- The algebraic Laurent Cech complex identified with the original chart-section complex. -/
@@ -90,7 +92,7 @@ theorem exists_chartSectionDifference_model [IsFiniteLocallyFree (twoChartLine R
     (plusChartModule R M) (minusChartModule R M) (chartModuleOverlapIso R M)
   exact ⟨P, hP, hfin, ⟨(HomotopyEquiv.ofIso (chartSectionCechIso R M).symm).trans h⟩⟩
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 end
 
 end
@@ -102,8 +104,9 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModuleCat HomologicalComplex
-open Quillen.SchemeSheaf Quillen.Scheme.PolynomialLaurent Quillen.ModuleComplex
-namespace Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
+  Quillen.ModuleComplex
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 
 /-- The original sheaf-difference complex identified with its actual chart coordinates. -/
@@ -132,7 +135,7 @@ theorem exists_original_vectorBundle_cech_model [IsFiniteLocallyFree (twoChartLi
   obtain ⟨P, hP, hfin, ⟨h⟩⟩ := exists_chartSectionDifference_model R M
   exact ⟨P, hP, hfin, ⟨(HomotopyEquiv.ofIso (originalCechCoordinateIso R M)).trans h⟩⟩
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 end
 
 end

@@ -70,7 +70,7 @@ theorem actual_section_laurent_iterate_negative_iso (i : ℕ)
     IsIso ((stableHomotopyFunctor (-(Int.ofNat k + 1))).map
       (((KTheory.Bass.strictRingDiagramIterate i).map a).app R)) :=
   KTheory.Bass.modelDiagramIterate_map_isStableEquivalence
-    PolynomialBaseChange.laurentSquareFunctor i
+    CommRingCat.PolynomialLaurent.laurentSquareFunctor i
     PerfectComplexes.boundedFlatAffineSectionModelFunctor
     PerfectComplexes.boundedFlatAffineSectionModelFunctor a ha R _
 

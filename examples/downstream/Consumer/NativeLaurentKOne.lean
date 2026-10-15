@@ -13,13 +13,13 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.NativeLaurentClassCompa
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.Scheme.Bass
+open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes AlgebraicGeometry.Scheme.Bass
 universe u
 
 namespace Consumer.NativeLaurentKOne
 
 /-- The original native Bass map on a qc scheme has exactly the forward rank-one T class. -/
-theorem forward_qc (X : Quillen.Scheme.QuasiCompactSchemes.{u}) :
+theorem forward_qc (X : AlgebraicGeometry.Scheme.QuasiCompactSchemes.{u}) :
     perfectOpenKRestrict (plus.app X).hom 1
         (perfectScalarForwardKOneClass (plus.app X).hom
           (rankOnePerfect (polynomialFunctor.obj X).obj)

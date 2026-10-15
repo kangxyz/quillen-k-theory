@@ -23,6 +23,12 @@ input, not a quotient-equivalence assumption or an asserted instance.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -30,7 +36,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 variable {U X : Scheme.{u}} [IsLocallyNoetherian X] [IsLocallyNoetherian U]
   (j : U ⟶ X) [IsOpenImmersion j]
@@ -87,4 +93,4 @@ theorem quotientCoherentRestriction_full_of_quasicoherent_pushforward
     hPush _ inferInstance
   exact affineLocallyFiniteType_subobject_extension_of_quasicoherent_pushforward j H A i
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

@@ -23,6 +23,9 @@ unstabilized target, global strictification, or Thomason–Trobaugh cofinality.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -38,7 +41,8 @@ its original shift, up to an actual chain-homotopy equivalence. -/
 theorem exists_principal_strict_extension_after_shift (R : CommRingCat.{u}) (r : R)
     (P : StrictPerfect (Spec (.of (Localization.Away r)))) :
     ∃ Q : StrictPerfect (Spec R), Nonempty
-      (HomotopyEquiv ((restrict (CoherentScheme.principalOpen R r)).obj Q.obj)
+      (HomotopyEquiv ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+        r)).obj Q.obj)
         (P.obj ⊞ P.obj⟦(1 : ℤ)⟧)) := by
   let S := CommRingCat.of (Localization.Away r)
   let : (tilde.functor S).Additive :=
@@ -71,8 +75,10 @@ complex. This is density up to summands, with explicit geometric chain maps. -/
 theorem exists_principal_strict_homotopy_retract (R : CommRingCat.{u}) (r : R)
     (P : StrictPerfect (Spec (.of (Localization.Away r)))) :
     ∃ (Q : StrictPerfect (Spec R))
-      (i : P.obj ⟶ (restrict (CoherentScheme.principalOpen R r)).obj Q.obj)
-      (p : (restrict (CoherentScheme.principalOpen R r)).obj Q.obj ⟶ P.obj),
+      (i : P.obj ⟶ (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
+        Q.obj)
+      (p : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj Q.obj ⟶
+        P.obj),
       Nonempty (Homotopy (i ≫ p) (𝟙 P.obj)) := by
   obtain ⟨Q, ⟨e⟩⟩ := exists_principal_strict_extension_after_shift R r P
   refine ⟨Q, biprod.inl ≫ e.inv, e.hom ≫ biprod.fst, ⟨?_⟩⟩
@@ -85,7 +91,8 @@ strict restriction, with no freeness hypothesis on the original target. -/
 theorem exists_principal_strict_derived_extension_after_shift (R : CommRingCat.{u}) (r : R)
     (P : StrictPerfect (Spec (.of (Localization.Away r)))) :
     ∃ Q : StrictPerfect (Spec R), Nonempty
-      ((toDerived _).obj ((restrict (CoherentScheme.principalOpen R r)).obj Q.obj) ≅
+      ((toDerived _).obj ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+        r)).obj Q.obj) ≅
         (toDerived _).obj (P.obj ⊞ P.obj⟦(1 : ℤ)⟧)) := by
   obtain ⟨Q, ⟨e⟩⟩ := exists_principal_strict_extension_after_shift R r P
   exact ⟨Q, ⟨asIso ((toDerived _).map e.hom)⟩⟩
@@ -96,7 +103,8 @@ theorem exists_principal_strict_derived_retract (R : CommRingCat.{u}) (r : R)
     (P : StrictPerfect (Spec (.of (Localization.Away r)))) :
     ∃ Q : StrictPerfect (Spec R), Nonempty
       (Retract ((toDerived _).obj P.obj)
-        ((toDerived _).obj ((restrict (CoherentScheme.principalOpen R r)).obj Q.obj))) := by
+        ((toDerived _).obj ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
+          R r)).obj Q.obj))) := by
   obtain ⟨Q, i, p, ⟨h⟩⟩ := exists_principal_strict_homotopy_retract R r P
   refine ⟨Q, ⟨⟨(toDerived _).map i, (toDerived _).map p, ?_⟩⟩⟩
   rw [← Functor.map_comp, toDerived_map_eq_of_homotopy h, CategoryTheory.Functor.map_id]

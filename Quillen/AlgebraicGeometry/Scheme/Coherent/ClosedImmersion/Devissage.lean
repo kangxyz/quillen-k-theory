@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.SupportDevissage
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GTheory
 
@@ -19,6 +20,12 @@ the supported G-equivalence, with the original canonical pushforward map.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -26,7 +33,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme.ClosedImmersion
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (f : R)
 
 local instance : PreservesFiniteLimits (coherentRestrictionExact (principalOpen R f)).toFunctor :=
@@ -127,7 +134,7 @@ def smallPushforwardToKilledExact :
     ExactFunctor (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1}
       (coherentExactStructure (Spec (principalRing R
       f))))
-      (Devissage.subcategoryExactStructure (supportKilled R f)) where
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure (supportKilled R f)) where
   toFunctor := smallPushforwardToKilled R f
   map_conflation S h := by
     change (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1} (abelianExactStructure
@@ -163,7 +170,8 @@ instance smallPushforwardToKilledExact_mapQ_isEquivalence :
 /-- Public scheme G-theory of the principal closed subscheme is equivalent
 to the actual compatible supported G-term by geometric dévissage. -/
 def closedSupportGEquiv (n : ℕ) :
-    CoherentScheme.G (Spec (principalRing R f)) n ≃* CoherentPrincipalSupportedG R f n :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec (principalRing R f)) n ≃*
+      CoherentPrincipalSupportedG R f n :=
   ((smallPushforwardToKilledExact R f).KEquivOfMapQIsEquivalence n).trans
     (supportDevissageKEquiv R f n)
 
@@ -172,13 +180,16 @@ def smallPushforwardToSupportExact :
     ExactFunctor (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1}
       (coherentExactStructure (Spec (principalRing R
       f))))
-      (Devissage.subcategoryExactStructure (coherentPrincipalSmallSupport R f)) :=
-  (smallPushforwardToKilledExact R f).comp (Devissage.exactInclusion (supportKilled R f))
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure (coherentPrincipalSmallSupport R f))
+        :=
+  (smallPushforwardToKilledExact R f).comp (CategoryTheory.ObjectProperty.exactInclusion
+    (supportKilled R f))
 
 /-- The monoid-hom coercion is the canonical forward map. -/
 @[simp] theorem closedSupportGEquiv_coe (n : ℕ) :
     (↑(closedSupportGEquiv R f n) :
-      CoherentScheme.G (Spec (principalRing R f)) n →* CoherentPrincipalSupportedG R f n) =
+      AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec (principalRing R f)) n →*
+        CoherentPrincipalSupportedG R f n) =
       (smallPushforwardToSupportExact R f).KMap n := by
   rw [smallPushforwardToSupportExact, CategoryTheory.ExactCategory.ExactFunctor.KMap_comp]
   rfl
@@ -190,8 +201,8 @@ theorem closedSupportGEquiv_pushforward (n : ℕ) :
       (coherentRestrictionExact (principalOpen R f)) n).comp
         (closedSupportGEquiv R f n).toMonoidHom = coherentPushforwardGMap R f n := by
   have h : ((smallPushforwardToKilledExact R f).comp
-      (Devissage.exactInclusion (supportKilled R f))).comp
-      (Devissage.exactInclusion (coherentPrincipalSmallSupport R f)) =
+      (CategoryTheory.ObjectProperty.exactInclusion (supportKilled R f))).comp
+      (CategoryTheory.ObjectProperty.exactInclusion (coherentPrincipalSmallSupport R f)) =
     (CategoryTheory.ExactCategory.ExactFunctor.smallModel.{u+1} (coherentPushforwardExact R f)).comp
       (SmallModelLocalization.standardExactFunctor.{u+1} (FiniteTypeSheaves (Spec R))) := by rfl
   have hk := congrArg (fun F ↦ F.KMap n) h
@@ -206,4 +217,4 @@ theorem closedSupportGEquiv_pushforward (n : ℕ) :
   rw [MulEquiv.apply_symm_apply]
   exact DFunLike.congr_fun hk x
 
-end Quillen.CoherentScheme.ClosedImmersion
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

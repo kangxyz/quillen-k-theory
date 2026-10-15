@@ -5,6 +5,8 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Aglib.Algebra.Homology.MappingCone.Identity
+public import Aglib.Algebra.Homology.QuasiIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientOperations
 public import Quillen.Waldhausen.Cylinder.Pushout
 public import Quillen.Waldhausen.Cylinder.ZeroEndpoint
@@ -15,6 +17,20 @@ public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 
 /-! # Original cone-of-identity additivity and the signed shift on the flasque model -/
 @[expose] public section
+open Quillen
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.PerfectComplexes.FlasqueBoundedBelow
+export CochainComplex
+  (coneSequence_shortExact identityConeFunctor_additive identityConeFunctor_map_mono
+  identityConeFunctor_shortExact quasiIso_of_two_acyclic)
+end Quillen.PerfectComplexes.FlasqueBoundedBelow
+
+end
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -27,18 +43,6 @@ namespace Quillen.PerfectComplexes.FlasqueBoundedBelow
 open Waldhausen.SplitFactorization
 open ProjectiveLine.FlasqueCoefficients
 variable (X : Scheme.{u})
-
-instance identityConeFunctor_additive : (identityConeFunctor (A := X.Modules)).Additive where
-  map_add := by
-    intro K L f g
-    exact Quillen.CochainComplex.mappingCone_map_add (𝟙 K) (𝟙 L)
-      f g f g (by simp) (by simp)
-
-/-- The native original cone sequence retains its signed connecting quotient. -/
-lemma coneSequence_shortExact (K : Complex X) :
-    (mappingCone.triangleRotateShortComplex (𝟙 K)).ShortExact :=
-  HomologicalComplex.shortExact_of_degreewise_shortExact _
-    (fun n => (mappingCone.triangleRotateShortComplexSplitting (𝟙 K) n).shortExact)
 
 /-- The literal identity cone stays in the original flasque, lower-bounded perfect model. -/
 lemma identityCone_objects (K : Obj X) :
@@ -57,51 +61,6 @@ instance identityCone_additive : (identityCone X).Additive where
     exact Quillen.CochainComplex.mappingCone_map_add (𝟙 K.obj) (𝟙 L.obj)
       f.hom g.hom f.hom g.hom (by simp) (by simp)
 
-/-- Neighboring-term biproducts show that the original cone functor preserves monomorphisms. -/
-lemma identityConeFunctor_map_mono {K L : Complex X} (f : K ⟶ L) [Mono f] :
-    Mono (identityConeFunctor.map f) := by
-  apply HomologicalComplex.mono_of_mono_f
-  intro n
-  let : Mono (f.f (n + 1)) := (HomologicalComplex.eval X.Modules (.up ℤ) (n + 1)).map_mono f
-  let : Mono (f.f n) := (HomologicalComplex.eval X.Modules (.up ℤ) n).map_mono f
-  have h : Mono ((identityConeFunctor.map f).f n ≫ (identityConeTermIso L n).hom) := by
-    rw [← identityConeTermIso_naturality]
-    infer_instance
-  exact mono_of_mono _ (identityConeTermIso L n).hom
-
-/-- Actual pushout preservation and the actual zero cone retain the cokernel universal property. -/
-lemma identityConeFunctor_shortExact {S : ShortComplex (Complex X)} (hS : S.ShortExact) :
-    (S.map identityConeFunctor).ShortExact := by
-  let F : Complex X ⥤ Complex X := identityConeFunctor
-  let : F.Additive := ⟨by
-    intro K L f g
-    exact Quillen.CochainComplex.mappingCone_map_add (𝟙 K) (𝟙 L)
-      f g f g (by simp) (by simp)⟩
-  have hp : IsPushout S.f (0 : S.X₁ ⟶ 0) S.g (0 : 0 ⟶ S.X₃) :=
-    Waldhausen.QuillenComparison.isPushoutOfZeroCokernel S.zero hS.gIsCokernel
-      (isZero_zero _) _ _
-  have hFp := identityConeFunctor_map_isPushout hp
-  have hFzero : IsZero (F.obj (0 : Complex X)) := identityCone_isZero (isZero_zero _)
-  have hc : IsColimit (CokernelCofork.ofπ (F.map S.g)
-      (show F.map S.f ≫ F.map S.g = 0 by rw [← F.map_comp, S.zero, F.map_zero])) := by
-    refine Cofork.IsColimit.mk _ (fun s => hFp.desc s.π 0 (by
-      rw [CokernelCofork.condition s, comp_zero])) ?_ ?_
-    · intro s
-      exact hFp.inl_desc _ _ _
-    · intro s m hm
-      apply hFp.hom_ext
-      · rw [hFp.inl_desc]
-        exact hm
-      · exact hFzero.eq_of_src _ _
-  have : Mono S.f := hS.mono_f
-  have : Mono (F.map S.f) := identityConeFunctor_map_mono X S.f
-  have : Epi (F.map S.g) := epi_of_isColimit_cofork hc
-  change (S.map F).ShortExact
-  exact {
-    exact := ShortComplex.exact_of_g_is_cokernel _ hc
-    mono_f := by change Mono (F.map S.f); infer_instance
-    epi_g := by change Epi (F.map S.g); infer_instance }
-
 /-- The actual identity cone preserves the inherited original conflations. -/
 def identityConeExactFunctor : CategoryTheory.ExactCategory.ExactFunctor
     (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure (Quillen.abelianExactStructure
@@ -115,13 +74,9 @@ def identityConeExactFunctor : CategoryTheory.ExactCategory.ExactFunctor
     change ((S.map (objects X).ι).map identityConeFunctor).ShortExact
     exact identityConeFunctor_shortExact X hS
 
-lemma quasiIso_of_two_acyclic {K L : Complex X} (f : K ⟶ L)
-    (hK : K.Acyclic) (hL : L.Acyclic) : QuasiIso f :=
-  (quasiIso_iff f).mpr (fun n => (quasiIsoAt_iff_exactAt f n (hK n)).mpr (hL n))
-
 /-- Every original identity cone is acyclic, for arbitrary original flasque-perfect input. -/
 lemma identityCone_acyclic (K : Obj X) : ((identityCone X).obj K).obj.Acyclic :=
-  Quillen.HomologicalAlgebra.mappingCone_acyclic_of_quasiIso (𝟙 K.obj)
+  CochainComplex.mappingCone_acyclic_of_quasiIso (𝟙 K.obj)
 
 lemma identityCone_zero {K : Obj X} (hK : IsZero K) : IsZero ((identityCone X).obj K) := by
   have hz := identityCone_isZero ((objects X).ι.map_isZero hK)

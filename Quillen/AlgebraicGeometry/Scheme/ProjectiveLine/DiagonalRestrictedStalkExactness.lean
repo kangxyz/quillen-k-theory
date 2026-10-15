@@ -24,6 +24,8 @@ exact. This does not yet identify the result with the stalks of the sheafified
 tensor sequence: the native tensor/stalk comparison remains a separate obligation.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -32,8 +34,8 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 
 /-- Restriction of the original incidence stalk sequence along the original first projection. -/
 def diagonalRestrictedStalkSequence (R : CommRingCat.{u}) (x : twoChartLine R) :
@@ -126,4 +128,4 @@ theorem diagonalPushforward_shortExact_all (R : CommRingCat.{u})
   let : IsClosedImmersion (relativeDiagonal R) := isClosedImmersion_relativeDiagonal R
   exact shortExact_pushforward_of_closedImmersion (relativeDiagonal R) hS
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

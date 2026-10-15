@@ -14,14 +14,16 @@ Every comparison below is a composition of specified original triangle
 isomorphisms, not an arbitrary completion of a triangle or a chosen strict model.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits
   CategoryTheory.Pretriangulated AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.PerfectComplexes
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules Quillen.PerfectComplexes
 local instance generationSingleStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u}) (E : (twoChartLine R).Modules)
@@ -67,4 +69,4 @@ def diagonalRotatedGenerationSingleIso :
       diagonalLineRotatedTriangle R E :=
   (diagonalRotatedGenerationToOriginalIso R).app (originalPerfectPlusSingle R E) ≪≫
     diagonalOriginalLineRotatedSingleIso R E
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

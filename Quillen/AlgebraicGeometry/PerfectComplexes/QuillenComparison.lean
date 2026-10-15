@@ -30,27 +30,29 @@ namespace Quillen.PerfectComplexes
 
 /-- Public scheme K is canonically the exact vector-bundle S-theory. -/
 def vectorBundleQSEquiv (X : Scheme.{u}) (n : ℕ) :
-    Quillen.Scheme.K X n ≃*
-      (Waldhausen.ofExactCategory (SchemeSheaf.vectorBundleExactStructure X)).K n :=
-  (SchemeSheaf.smallVectorBundleKEquiv X n).trans
-    (Waldhausen.QuillenComparison.comparisonKEquiv (SchemeSheaf.vectorBundleExactStructure X)
+    AlgebraicGeometry.Scheme.K X n ≃*
+      (Waldhausen.ofExactCategory (AlgebraicGeometry.Scheme.Modules.vectorBundleExactStructure X)).K
+        n :=
+  (AlgebraicGeometry.Scheme.Modules.smallVectorBundleKEquiv X n).trans
+    (Waldhausen.QuillenComparison.comparisonKEquiv
+      (AlgebraicGeometry.Scheme.Modules.vectorBundleExactStructure X)
       n).symm
 
 /-- The monoid-hom coercion is the canonical forward map. -/
 @[simp] theorem vectorBundleQSEquiv_coe (X : Scheme.{u}) (n : ℕ) :
     ↑(vectorBundleQSEquiv X n) =
       (Waldhausen.QuillenComparison.comparisonKEquiv
-        (SchemeSheaf.vectorBundleExactStructure X) n).symm.toMonoidHom.comp
-          (SchemeSheaf.smallVectorBundleKMap X n) := rfl
+        (AlgebraicGeometry.Scheme.Modules.vectorBundleExactStructure X) n).symm.toMonoidHom.comp
+          (AlgebraicGeometry.Scheme.Modules.smallVectorBundleKMap X n) := rfl
 
 /-- The canonical degree-zero comparison from public scheme K to strict-perfect K. -/
 def vectorBundleToStrictKMap (X : Scheme.{u}) (n : ℕ) :
-    Quillen.Scheme.K X n →* StrictK X n :=
+    AlgebraicGeometry.Scheme.K X n →* StrictK X n :=
   (vectorBundleSComparison X n).comp (vectorBundleQSEquiv X n).toMonoidHom
 
 /-- The canonical degree-zero comparison from public scheme K to locally-perfect K. -/
 def vectorBundleToPerfectKMap (X : Scheme.{u}) (n : ℕ) :
-    Quillen.Scheme.K X n →* PerfectK X n :=
+    AlgebraicGeometry.Scheme.K X n →* PerfectK X n :=
   (vectorBundleToPerfectSMap X n).comp (vectorBundleQSEquiv X n).toMonoidHom
 
 /-- The two canonical degree-zero maps commute with the existing strict/local map. -/

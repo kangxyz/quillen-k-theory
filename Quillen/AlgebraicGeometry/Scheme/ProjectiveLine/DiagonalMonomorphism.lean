@@ -17,6 +17,8 @@ over every commutative ring, including the zero ring. No diagonal cokernel or ge
 theorem is inferred.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 universe u v
@@ -24,7 +26,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent
 /-- The four genuine rectangle maps, indexed by ordered pairs of chart choices. -/
 def diagonalRectangle (R : CommRingCat.{u}) (b : Bool × Bool) :
@@ -54,10 +56,10 @@ theorem diagonalRectangles_cover (R : CommRingCat.{u}) (x : relativeSquare R) :
   change Set.range (diagonalRectangle R (a,b)) = _ at h
   rw [h]
   exact ⟨ha,hb⟩
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 /-- The actual incidence is monic on every original rectangle. -/
 theorem mono_diagonalIncidence_rectangle (R : CommRingCat.{u}) (b : Bool × Bool) :
     Mono ((Scheme.Modules.pullback (diagonalRectangle R b)).map (diagonalIncidence R)) := by
@@ -74,4 +76,4 @@ theorem mono_diagonalIncidence (R : CommRingCat.{u}) : Mono (diagonalIncidence R
   intro b
   have := mono_diagonalIncidence_rectangle R b
   exact mono_restrict_of_mono_pullback _ _
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

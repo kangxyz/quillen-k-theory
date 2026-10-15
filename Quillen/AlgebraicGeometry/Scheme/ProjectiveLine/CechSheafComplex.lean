@@ -17,6 +17,8 @@ terms and their naturality square; no homology of sections is assumed.
 -/
 
 @[expose] public section
+open Quillen
+
 
 section
 
@@ -25,8 +27,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.SchemeSheaf Quillen.Scheme.PolynomialLaurent
-namespace Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 
 /-- The shifted cone of the literal pushforward of the original signed sheaf difference. -/
@@ -57,7 +59,7 @@ def originalSheafCechSectionsIso [M.IsQuasicoherent] :
     (TwoOpen.sheafDifference (laurentPlus R) (laurentMinus R)
       (plusChart R) (minusChart R) (overlap_equation R) M))
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 end
 
 end

@@ -22,7 +22,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
 namespace Quillen.PerfectComplexes.ProjectiveLine
-open Quillen.Scheme Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
 
 /-- Original geometric restriction through a scheme isomorphism is an actual K-equivalence. -/
 def perfectKRestrictIsoEquiv {U X : Scheme.{u}} (e : U ≅ X) (n : ℕ) :

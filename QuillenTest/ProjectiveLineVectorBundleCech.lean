@@ -21,8 +21,8 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModuleCat HomologicalComplex
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine Quillen.ModuleComplex
-open Quillen.Scheme.PolynomialLaurent Quillen.LaurentProjector
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine Quillen.ModuleComplex
+open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.LaurentProjector
 universe u
 namespace QuillenTest.ProjectiveLineVectorBundleCech
 

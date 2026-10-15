@@ -16,12 +16,14 @@ diagonal in the affine rectangle. Both same-chart base-change diagrams retain
 the actual relative diagonal and original rectangle maps over an arbitrary base ring.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent Quillen.PolynomialBaseChange
 /-- Evaluation on the actual equal-coordinate affine diagonal. -/
 def diagonalEvaluation (R : CommRingCat.{u}) :
@@ -81,4 +83,4 @@ theorem sameChart_diagonal_isPullback (R : CommRingCat.{u})
       simp [intersectionToRectangle, polynomialDiagonal, fst_eq_snd_of_mono_eq]
   · simp
   · simp
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

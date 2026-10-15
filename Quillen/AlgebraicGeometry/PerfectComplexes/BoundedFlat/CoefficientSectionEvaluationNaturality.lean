@@ -28,7 +28,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
 open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
-open Quillen.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.CoefficientBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}
@@ -39,7 +39,7 @@ def boundedFlatCoefficientOriginalModelMap {i k : Index R} (f : i ⟶ k) :
     modelOf (boundedFlatPerfectWaldhausen (space i)) ⟶
       modelOf (boundedFlatPerfectWaldhausen (space k)) :=
   modelMap _ _ (boundedFlatPerfectPullback_exact
-    (Quillen.Scheme.CoefficientBaseChange.map f)).rebase
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)).rebase
     (Quillen.rebaseFunctor_obj_base _ _ _ _)
 
 set_option maxHeartbeats 1200000 in
@@ -50,8 +50,8 @@ def boundedFlatCoefficientSectionEvaluationIso {i k : Index R} (f : i ⟶ k) :
       boundedFlatCoefficientSectionEvaluationModelMap k).functor ≅
       (boundedFlatCoefficientSectionEvaluationModelMap i ≫
         boundedFlatCoefficientOriginalModelMap f).functor := by
-  let p := boundedFlatPerfectPullback (Quillen.Scheme.CoefficientBaseChange.map f)
-  let h := boundedFlatPerfectPullback_exact (Quillen.Scheme.CoefficientBaseChange.map f)
+  let p := boundedFlatPerfectPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)
+  let h := boundedFlatPerfectPullback_exact (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)
   let z := Quillen.rebaseFunctorIso p
     (boundedFlatPerfectWaldhausen (space i)).zero
     (boundedFlatPerfectWaldhausen (space k)).zero
@@ -79,7 +79,8 @@ def boundedFlatCoefficientSectionEvaluationHomotopy {i k : Index R} (f : i ⟶ k
       ((boundedFlatCoefficientSectionPrespectrumFunctor R).map f ≫
         boundedFlatCoefficientSectionEvaluationPrespectrumMap k)
       (boundedFlatCoefficientSectionEvaluationPrespectrumMap i ≫
-        boundedFlatPerfectPrespectrumMap (Quillen.Scheme.CoefficientBaseChange.map f)) :=
+        boundedFlatPerfectPrespectrumMap (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
+          :=
   (prespectrumTransformationHomotopy
     (V := boundedFlatCoefficientSectionModel i)
     (W := modelOf (boundedFlatPerfectWaldhausen (space k)))
@@ -114,13 +115,13 @@ theorem boundedFlatCoefficientSectionEvaluationLocalizedIso_naturality {i k : In
     (boundedFlatCoefficientSectionLocalizedSpectrumFunctor R).map f ≫
         (boundedFlatCoefficientSectionEvaluationLocalizedIso k).hom =
       (boundedFlatCoefficientSectionEvaluationLocalizedIso i).hom ≫
-        boundedFlatLocalizedPullback (Quillen.Scheme.CoefficientBaseChange.map f) := by
+        boundedFlatLocalizedPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f) := by
   change toStableLocalization.map
       ((boundedFlatCoefficientSectionPrespectrumFunctor R).map f) ≫
       toStableLocalization.map (boundedFlatCoefficientSectionEvaluationPrespectrumMap k) =
     toStableLocalization.map (boundedFlatCoefficientSectionEvaluationPrespectrumMap i) ≫
       toStableLocalization.map
-        (boundedFlatPerfectPrespectrumMap (Quillen.Scheme.CoefficientBaseChange.map f))
+        (boundedFlatPerfectPrespectrumMap (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
   have h := toStableLocalization_map_eq_of_homotopy
     (boundedFlatCoefficientSectionEvaluationHomotopy f)
   simpa only [Functor.map_comp] using h
@@ -128,7 +129,8 @@ theorem boundedFlatCoefficientSectionEvaluationLocalizedIso_naturality {i k : In
 /-- The actual joint evaluation family is a genuine natural isomorphism. -/
 def boundedFlatCoefficientSectionEvaluationLocalizedNatIso (R : CommRingCat.{u}) :
     boundedFlatCoefficientSectionLocalizedSpectrumFunctor R ≅
-      Quillen.Scheme.CoefficientBaseChange.functor R ⋙ BoundedFlatLocalizedSpectrumFunctor :=
+      AlgebraicGeometry.Scheme.BaseChange.Coefficients.functor R ⋙
+        BoundedFlatLocalizedSpectrumFunctor :=
   NatIso.ofComponents boundedFlatCoefficientSectionEvaluationLocalizedIso
     boundedFlatCoefficientSectionEvaluationLocalizedIso_naturality
 
@@ -141,32 +143,33 @@ def boundedFlatCoefficientSectionEvaluationLocalizedNatIso (R : CommRingCat.{u})
 /-- Restrict the same original family to an arbitrary actual coefficient row. -/
 def boundedFlatCoefficientSectionRowEvaluationLocalizedNatIso (P : Over (Spec R)) :
     row P ⋙ boundedFlatCoefficientSectionLocalizedSpectrumFunctor R ≅
-      row P ⋙ Quillen.Scheme.CoefficientBaseChange.functor R ⋙
+      row P ⋙ AlgebraicGeometry.Scheme.BaseChange.Coefficients.functor R ⋙
         BoundedFlatLocalizedSpectrumFunctor :=
   isoWhiskerLeft (row P) (boundedFlatCoefficientSectionEvaluationLocalizedNatIso R)
 
 /-- The unchanged native coefficient fibers as quasi-compact schemes with all original maps. -/
 def boundedFlatCoefficientQuasiCompactRow (P : Over (Spec R)) [CompactSpace P.left] :
-    Under R ⥤ Quillen.Scheme.QuasiCompactSchemes.{u}ᵒᵖ where
+    Under R ⥤ AlgebraicGeometry.Scheme.QuasiCompactSchemes.{u}ᵒᵖ where
   obj a := op ⟨space (op P, a), compactSpace_space (op P, a)⟩
   map g := (ObjectProperty.homMk
-    (Quillen.Scheme.CoefficientBaseChange.map (𝟙 (op P), g))).op
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (𝟙 (op P), g))).op
   map_id a := by
     apply Quiver.Hom.unop_inj
     apply ObjectProperty.hom_ext
-    exact Quillen.Scheme.CoefficientBaseChange.map_id (op P, a)
+    exact AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_id (op P, a)
   map_comp {a b c} g h := by
     apply Quiver.Hom.unop_inj
     apply ObjectProperty.hom_ext
-    exact Quillen.Scheme.CoefficientBaseChange.map_comp
+    exact AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_comp
       (i := (op P, a)) (k := (op P, b)) (l := (op P, c))
       (𝟙 (op P), g) (𝟙 (op P), h)
 
 /-- The quasi-compact lift retains precisely the original native geometric row. -/
 theorem boundedFlatCoefficientQuasiCompactRow_inclusion (P : Over (Spec R))
     [CompactSpace P.left] :
-    boundedFlatCoefficientQuasiCompactRow P ⋙ Quillen.Scheme.quasiCompactSchemesInclusion.op =
-      row P ⋙ Quillen.Scheme.CoefficientBaseChange.functor R := rfl
+    boundedFlatCoefficientQuasiCompactRow P ⋙
+      AlgebraicGeometry.Scheme.quasiCompactSchemesInclusion.op =
+      row P ⋙ AlgebraicGeometry.Scheme.BaseChange.Coefficients.functor R := rfl
 
 /-- Original perfect spectra and arbitrary derived pullbacks on the actual compact native row. -/
 def boundedFlatCoefficientPerfectLocalizedSpectrumFunctor (P : Over (Spec R))
@@ -176,7 +179,7 @@ def boundedFlatCoefficientPerfectLocalizedSpectrumFunctor (P : Over (Spec R))
 /-- The original bounded-flat inclusion is natural for arbitrary derived pullback. -/
 def boundedFlatCoefficientPerfectInclusionLocalizedNatIso (P : Over (Spec R))
     [CompactSpace P.left] :
-    row P ⋙ Quillen.Scheme.CoefficientBaseChange.functor R ⋙
+    row P ⋙ AlgebraicGeometry.Scheme.BaseChange.Coefficients.functor R ⋙
         BoundedFlatLocalizedSpectrumFunctor ≅
       boundedFlatCoefficientPerfectLocalizedSpectrumFunctor P :=
   isoWhiskerLeft (boundedFlatCoefficientQuasiCompactRow P) boundedFlatPerfectSpectrumNatIso

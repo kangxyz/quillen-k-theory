@@ -17,13 +17,15 @@ The negative-line derived image is zero. These are specific objects over arbitra
 no general preservation of perfect complexes by the projection is asserted.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 /-- The standard ambient derived category used by the installed direct-image unit. -/
 local instance derivedProjectionStandard (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _
@@ -93,4 +95,4 @@ lemma isZero_derivedProjection_tautologicalLine :
       (singleZeroPlus (twoChartLine R) (tautologicalLine R)))).symm ≪≫
       DerivedCategory.Plus.Q.mapIso (pushforwardSingleZeroPlusIso (projection R) _))
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

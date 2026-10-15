@@ -17,12 +17,14 @@ projection therefore splits on pairs, without requiring a quasi-compact
 vanishing open. Both actual Laurent charts retain this pair projection.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.Scheme.Bass
+namespace AlgebraicGeometry.Scheme.Bass
 
 /-- The original first projection applied to both entries of the supported product. -/
 def pairBaseProductProjection {S : AlgebraicGeometry.Scheme.{u}}
@@ -94,4 +96,4 @@ theorem pairPolynomialProjection_base (A : QuasiCompactOpenPairs.{u}) :
     quasiCompactOpenPairsBase.map (pairPolynomialProjection.app A) =
       polynomialProjection.app (quasiCompactOpenPairsBase.obj A) := rfl
 
-end Quillen.Scheme.Bass
+end AlgebraicGeometry.Scheme.Bass

@@ -10,6 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalImageEx
 /-! Semantic consumers of genuine principal strict weak-image closure. -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -48,9 +51,10 @@ theorem actual_backward_weak_witness (R : CommRingCat.{u}) (r : R)
     {A B : StrictPerfect (Spec (.of (Localization.Away r)))} (f : A ⟶ B)
     (hf : (strictWaldhausen _).weq f)
     (hB : Quillen.Waldhausen.ApproximationImage.objects (strictWaldhausen _)
-      (strictRestrict (Quillen.CoherentScheme.principalOpen R r)) B) :
+      (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)) B) :
     ∃ (E : StrictPerfect (Spec R))
-      (q : (restrict (Quillen.CoherentScheme.principalOpen R r)).obj E.obj ⟶ A.obj),
+      (q : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj E.obj ⟶
+        A.obj),
       ∀ n, IsIso (homologyMap q n) := by
   obtain ⟨E, q, hq⟩ := (principal_strict_image_iff_of_weak R r f hf).mpr hB
   have : QuasiIso q.hom := hq
@@ -63,11 +67,12 @@ theorem actual_quotient_square_extension (R : CommRingCat.{u}) (r : R)
     (hi : (strictWaldhausen _).cof i)
     (h : IsPushout i ((strictWaldhausen _).isZero.from_ A) q ((strictWaldhausen _).isZero.to_ Q))
     (hA : Quillen.Waldhausen.ApproximationImage.objects (strictWaldhausen _)
-      (strictRestrict (Quillen.CoherentScheme.principalOpen R r)) A)
+      (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)) A)
     (hQ : Quillen.Waldhausen.ApproximationImage.objects (strictWaldhausen _)
-      (strictRestrict (Quillen.CoherentScheme.principalOpen R r)) Q) :
+      (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)) Q) :
     ∃ (E : StrictPerfect (Spec R))
-      (p : (restrict (Quillen.CoherentScheme.principalOpen R r)).obj E.obj ⟶ B.obj),
+      (p : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj E.obj ⟶
+        B.obj),
       ∀ n, IsIso (homologyMap p n) := by
   obtain ⟨E, p, hp⟩ := principal_strict_image_extension R r hi h hA hQ
   have : QuasiIso p.hom := hp

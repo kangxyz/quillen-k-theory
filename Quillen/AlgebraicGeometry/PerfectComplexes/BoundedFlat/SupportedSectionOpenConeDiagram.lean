@@ -21,7 +21,7 @@ No Bass cofiber-preservation or telescope transition compatibility is assumed he
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.Scheme.AffineOpenPair Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

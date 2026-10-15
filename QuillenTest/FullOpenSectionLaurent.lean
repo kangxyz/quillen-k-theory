@@ -16,7 +16,7 @@ The degree-zero consumer retains the same unit-action time through every coeffic
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Scheme.AffineOpenPair Quillen.PerfectComplexes Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.PerfectComplexes Quillen.PolynomialBaseChange
 universe u
 namespace QuillenTest.FullOpenSectionLaurent
 
@@ -29,7 +29,7 @@ theorem original_T_hom_terms (a : Under R)
     ((boundedFlatPerfect (openSpace j ((laurentUnderFunctor R).obj a))).ι.map
       ((boundedFlatAffineFullOpenOriginalEvaluation j ((laurentUnderFunctor R).obj a)).map
         ((boundedFlatAffineFullOpenSectionLaurentUnitIso j a).hom.app s))).f n =
-      (Quillen.SchemeSheaf.globalScalar (openSpace j ((laurentUnderFunctor R).obj a))
+      (AlgebraicGeometry.Scheme.Modules.globalScalar (openSpace j ((laurentUnderFunctor R).obj a))
         ((inclusion j ((laurentUnderFunctor R).obj a)).appTop
           ((Scheme.ΓSpecIso (CommRingCat.of (LaurentPolynomial a.right))).inv
             (LaurentPolynomial.T 1)))).app
@@ -46,7 +46,7 @@ theorem original_T_inv_terms (a : Under R)
     ((boundedFlatPerfect (openSpace j ((laurentUnderFunctor R).obj a))).ι.map
       ((boundedFlatAffineFullOpenOriginalEvaluation j ((laurentUnderFunctor R).obj a)).map
         ((boundedFlatAffineFullOpenSectionLaurentUnitIso j a).inv.app s))).f n =
-      (Quillen.SchemeSheaf.globalScalar (openSpace j ((laurentUnderFunctor R).obj a))
+      (AlgebraicGeometry.Scheme.Modules.globalScalar (openSpace j ((laurentUnderFunctor R).obj a))
         ((inclusion j ((laurentUnderFunctor R).obj a)).appTop
           ((Scheme.ΓSpecIso (CommRingCat.of (LaurentPolynomial a.right))).inv
             (LaurentPolynomial.T (-1))))).app

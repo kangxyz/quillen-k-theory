@@ -27,7 +27,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 namespace Quillen.PerfectComplexes.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 /-- A finite locally free input has an actual strict-perfect homotopy model of its sheaf Cech

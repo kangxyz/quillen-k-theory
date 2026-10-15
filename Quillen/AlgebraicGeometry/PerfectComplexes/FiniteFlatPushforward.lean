@@ -20,6 +20,9 @@ commutes with this actual functor. No direct image of arbitrary locally perfect
 representatives is asserted.
 -/
 @[expose] public section
+
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -32,11 +35,12 @@ variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsLocallyNoetherian X]
 
 /-- A strict perfect complex with its original terms regarded as coherent sheaves. -/
 def strictToCoherentComplex (Y : Scheme.{u}) :
-    StrictPerfect Y ⥤ CochainComplex (CoherentScheme.FiniteTypeSheaves Y) ℤ where
+    StrictPerfect Y ⥤ CochainComplex
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves Y) ℤ where
   obj K :=
     { X := fun n ↦ ⟨K.obj.X n, by
         let := K.property.2 n
-        exact SchemeSheaf.coherent_of_finiteLocallyFree (K.obj.X n)⟩
+        exact AlgebraicGeometry.Scheme.Modules.coherent_of_finiteLocallyFree (K.obj.X n)⟩
       d := fun i j ↦ ObjectProperty.homMk (K.obj.d i j)
       shape := fun i j hij ↦ by
         apply ObjectProperty.hom_ext
@@ -58,7 +62,7 @@ theorem strictPerfect_pushforward {K : Complex Z} (hK : strictPerfect Z K) :
   refine ⟨⟨a, b, fun n hn ↦ (Scheme.Modules.pushforward f).map_isZero (hb n hn)⟩,
     fun n ↦ by
       let := hv n
-      exact SchemeSheaf.finiteLocallyFree_pushforward f (K.X n)⟩
+      exact AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_pushforward f (K.X n)⟩
 
 /-- Actual direct image restricted to bounded vector-bundle complexes. -/
 def strictFiniteFlatPushforward : StrictPerfect Z ⥤ StrictPerfect X :=
@@ -72,9 +76,9 @@ instance strictFiniteFlatPushforward_additive : (strictFiniteFlatPushforward f).
 /-- The original degree-zero inclusion commutes with finite flat direct image. -/
 def vectorBundleInclusionFiniteFlatPushforwardIso :
     vectorBundleInclusion Z ⋙ strictFiniteFlatPushforward f ≅
-      SchemeSheaf.vectorBundlePushforward f ⋙ vectorBundleInclusion X :=
+      AlgebraicGeometry.Scheme.Modules.vectorBundlePushforward f ⋙ vectorBundleInclusion X :=
   Functor.fullyFaithfulCancelRight (strictPerfect X).ι
-    (Functor.isoWhiskerLeft (SchemeSheaf.finiteLocallyFree Z).ι
+    (Functor.isoWhiskerLeft (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree Z).ι
       (HomologicalComplex.singleMapHomologicalComplex
         (Scheme.Modules.pushforward f) (ComplexShape.up ℤ) 0))
 
@@ -84,14 +88,16 @@ theorem strictFiniteFlatPushforward_quasiIso {K L : StrictPerfect Z} (s : K ⟶ 
   let sc := (strictToCoherentComplex Z).map s
   have : QuasiIso sc :=
     (HomologicalComplex.quasiIso_map_iff_of_preservesHomology sc
-      (CoherentScheme.finiteTypeSheavesToModules Z)).mp (by
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesToModules Z)).mp (by
         change QuasiIso s.hom
         infer_instance)
-  have : (CoherentScheme.Finite.coherentPushforward f).PreservesHomology :=
+  have : (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.coherentPushforward
+    f).PreservesHomology :=
     Functor.preservesHomology_of_preservesMonos_and_cokernels _
   exact HomologicalComplex.quasiIso_map_of_preservesHomology
-    (((CoherentScheme.Finite.coherentPushforward f).mapHomologicalComplex (.up ℤ)).map sc)
-    (CoherentScheme.finiteTypeSheavesToModules X)
+    (((AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.coherentPushforward
+      f).mapHomologicalComplex (.up ℤ)).map sc)
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesToModules X)
 
 /-- Finite flat direct image preserves all inherited strict-perfect conflations. -/
 def strictExactFiniteFlatPushforward :
@@ -100,14 +106,16 @@ def strictExactFiniteFlatPushforward :
   map_conflation S hS := by
     apply HomologicalComplex.shortExact_of_degreewise_shortExact
     intro n
-    let ev : StrictPerfect Z ⥤ SchemeSheaf.FiniteLocallyFree Z :=
-      (SchemeSheaf.finiteLocallyFree Z).lift
+    let ev : StrictPerfect Z ⥤ AlgebraicGeometry.Scheme.Modules.FiniteLocallyFree Z :=
+      (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree Z).lift
         ((strictPerfect Z).ι ⋙ HomologicalComplex.eval Z.Modules (.up ℤ) n)
         (fun K ↦ K.property.2 n)
-    have h : (SchemeSheaf.vectorBundleExactStructure Z).conflation (S.map ev) :=
+    have h : (AlgebraicGeometry.Scheme.Modules.vectorBundleExactStructure Z).conflation (S.map ev)
+      :=
       (HomologicalComplex.shortExact_iff_degreewise_shortExact
         (S.map (strictPerfect Z).ι)).mp hS n
-    exact (SchemeSheaf.vectorBundlePushforwardExact f).map_conflation (S.map ev) h
+    exact (AlgebraicGeometry.Scheme.Modules.vectorBundlePushforwardExact f).map_conflation (S.map
+      ev) h
 
 /-- Actual direct image preserves cofibrations, their pushouts, and quasi-isomorphisms. -/
 theorem strictFiniteFlatPushforward_waldhausenExact :

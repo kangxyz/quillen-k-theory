@@ -10,10 +10,13 @@ public import Quillen.Algebra.Homology.DerivedCategory.BoundedRightDerivedUnit
 
 /-! # The actual affine derived unit on bounded quasicoherent complexes -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard ambient derived category used by the actual unit. -/
 local instance affineBoundedDerivedPushforwardStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -32,4 +35,4 @@ theorem isIso_derivedPushforwardPlusUnit_of_term_bounds {Z X : Scheme.{u}}
   let := hqc n
   exact isIso_derivedPushforwardPlusUnit_single f (K.obj.X n)
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

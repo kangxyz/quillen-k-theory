@@ -19,6 +19,12 @@ annihilated objects, rather than all sheaves with the same closed support.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -39,7 +45,7 @@ instance killedBy_quotients : (killedBy I).IsClosedUnderQuotients where
 
 end Quillen.FiniteModuleLocalization.IdealClosedSupport
 
-namespace Quillen.CoherentScheme.ClosedImmersion.General
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 
 /-- Scheme isomorphisms give actual coherent restriction equivalences. -/
 def coherentIsoEquivalence {Z X : Scheme.{u}} (e : Z ≅ X) :
@@ -108,4 +114,4 @@ instance coherentAdjunction_affine_unit_epi (M : FiniteTypeSheaves (Spec R)) :
     Epi ((coherentAdjunction i).unit.app M) :=
   ReflectorDevissage.unit_epi_of_essImage_quotient_closed (coherentAdjunction i) M
 
-end Quillen.CoherentScheme.ClosedImmersion.General
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

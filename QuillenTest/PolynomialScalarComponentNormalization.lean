@@ -23,7 +23,7 @@ noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
 open Quillen.Waldhausen Quillen.Waldhausen.Fibration
-open Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace QuillenTest.PolynomialScalarComponentNormalization
 

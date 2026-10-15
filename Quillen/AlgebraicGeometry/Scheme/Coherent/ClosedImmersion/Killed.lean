@@ -17,6 +17,12 @@ larger category with f-power-torsion sections; that passage needs dévissage.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -24,7 +30,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme.ClosedImmersion
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 open FiniteModuleLocalization
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (f : R)
 
@@ -122,4 +128,4 @@ def coherentPushforwardToKilledExact :
   toFunctor := coherentPushforwardToKilled R f
   map_conflation _ h := h.map_of_exact _
 
-end Quillen.CoherentScheme.ClosedImmersion
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

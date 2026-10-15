@@ -14,13 +14,16 @@ second base leg is required to be open; the first remains flat.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The original standard ambient categories. -/
 local instance horizontalLocalizationStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules :=
@@ -44,4 +47,4 @@ theorem isIso_derivedFlatBaseChangeMap_pullback_iff [IsOpenImmersion k]
     derivedFlatBaseChangeHorizontalComposite_app]
   rw [isIso_comp_left_iff, ← Category.assoc, isIso_comp_right_iff,
     isIso_comp_right_iff]
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

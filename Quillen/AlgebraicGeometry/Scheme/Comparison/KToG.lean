@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Coherent
 public import Quillen.AlgebraicGeometry.Scheme.KTheory
 public import Quillen.AlgebraicGeometry.Scheme.GTheory
@@ -22,6 +24,12 @@ The comparison commutes with actual geometric open restriction.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -30,12 +38,12 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 variable (X : Scheme.{u}) [IsLocallyNoetherian X]
 
 /-- The canonical comparison is the small-model K-map of the actual exact inclusion. -/
-def schemeKToG (n : ℕ) : SchemeK X n →* CoherentScheme.G X n :=
+def schemeKToG (n : ℕ) : SchemeK X n →* AlgebraicGeometry.Scheme.Modules.Coherent.G X n :=
   (vectorBundleToCoherentExact X).smallKMap n
 
 @[simp]
@@ -47,9 +55,9 @@ variable {X} {U : Scheme.{u}} [IsLocallyNoetherian U]
 
 /-- The canonical K-to-G comparison commutes with actual open restriction. -/
 theorem schemeKToG_restrict (n : ℕ) :
-    (CoherentScheme.restrictionGMap j n).comp (schemeKToG X n) =
+    (AlgebraicGeometry.Scheme.Modules.Coherent.restrictionGMap j n).comp (schemeKToG X n) =
       (schemeKToG U n).comp (schemeKRestrict j n) := by
-  change ((CoherentScheme.coherentRestrictionExact j).smallKMap n).comp
+  change ((AlgebraicGeometry.Scheme.Modules.Coherent.coherentRestrictionExact j).smallKMap n).comp
       ((vectorBundleToCoherentExact X).smallKMap n) =
     ((vectorBundleToCoherentExact U).smallKMap n).comp
       ((vectorBundleExactRestrict j).smallKMap n)
@@ -60,29 +68,29 @@ theorem schemeKToG_restrict (n : ℕ) :
 
 /-- Elementwise naturality of the comparison. -/
 theorem schemeKToG_restrict_apply (n : ℕ) (x : SchemeK X n) :
-    CoherentScheme.restrictionGMap j n (schemeKToG X n x) =
+    AlgebraicGeometry.Scheme.Modules.Coherent.restrictionGMap j n (schemeKToG X n x) =
       schemeKToG U n (schemeKRestrict j n x) :=
   DFunLike.congr_fun (schemeKToG_restrict j n) x
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 /-- The canonical comparison from genuine scheme K-theory to coherent G-theory. -/
 def KToG (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X] (n : ℕ) :
-    K X n →* G X n := SchemeSheaf.schemeKToG X n
+    K X n →* G X n := AlgebraicGeometry.Scheme.Modules.schemeKToG X n
 
 @[simp]
 theorem KToG_eq_smallKMap (X : AlgebraicGeometry.Scheme.{u})
     [IsLocallyNoetherian X] (n : ℕ) :
-    KToG X n = (SchemeSheaf.vectorBundleToCoherentExact X).smallKMap n := rfl
+    KToG X n = (AlgebraicGeometry.Scheme.Modules.vectorBundleToCoherentExact X).smallKMap n := rfl
 
 /-- The public comparison is natural for actual open restriction on K and G. -/
 theorem KToG_restrict {U X : AlgebraicGeometry.Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian U]
     (j : U ⟶ X) [IsOpenImmersion j] (n : ℕ) :
     (restrictG j n).comp (KToG X n) = (KToG U n).comp (restrictK j n) :=
-  SchemeSheaf.schemeKToG_restrict j n
+  AlgebraicGeometry.Scheme.Modules.schemeKToG_restrict j n
 
 /-- The pointwise form of the public restriction square. -/
 theorem KToG_restrict_apply {U X : AlgebraicGeometry.Scheme.{u}}
@@ -91,4 +99,4 @@ theorem KToG_restrict_apply {U X : AlgebraicGeometry.Scheme.{u}}
     restrictG j n (KToG X n x) = KToG U n (restrictK j n x) :=
   DFunLike.congr_fun (KToG_restrict j n) x
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

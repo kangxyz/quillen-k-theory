@@ -20,7 +20,7 @@ No compatibility with the original seed transition is inferred here.
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen Quillen.PerfectComplexes Quillen.LoopPrespectrum
-open Quillen.Waldhausen.IteratedS Quillen.Scheme.PolynomialLaurent
+open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped unitInterval
 universe u
 namespace QuillenTest.SectionBassEvaluationEquivalence

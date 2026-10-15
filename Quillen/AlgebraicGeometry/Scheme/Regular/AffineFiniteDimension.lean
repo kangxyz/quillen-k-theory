@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.Algebra.RegularLocal.ProjectiveDimension
 public import Quillen.AlgebraicGeometry.Scheme.Regular.GeneralComparison
 public import Mathlib.RingTheory.LocalProperties.ProjectiveDimension
@@ -20,6 +21,12 @@ resolution theorem. No K-equivalence or resolution theorem is assumed.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,7 +35,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped ModuleCat.Algebra
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 /-- A uniform dimension bound on an actual regular ring bounds the projective
 dimension of all finite modules, by the proved regular-local theorem. -/
@@ -46,9 +53,9 @@ theorem hasProjectiveDimensionLE_of_regular_dimension_le
   exact RegularLocal.hasProjectiveDimensionLE_of_regularLocal_dimension_le
     (Localization.AtPrime p.asIdeal) d hd' (M.localizedModule p.asIdeal.primeCompl)
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 /-- The canonical K-to-G comparison for a regular ring with a stated finite
 dimension bound, in every nonnegative degree. Every homological hypothesis
@@ -56,11 +63,13 @@ is discharged from regularity and the dimension bound. -/
 theorem KToG_regular_dimension_le_bijective (R : CommRingCat.{u}) [IsRegularRing R]
     (d : ℕ) (hd : ringKrullDim R ≤ (d : ℕ)) (n : ℕ) :
     Function.Bijective (KToG (Spec R) n) := by
-  apply SchemeSheaf.schemeKToG_bijective_of_finite_resolutions (Spec R) _ n
-  apply SchemeSheaf.coherentResolutionHypothesis_of_finite_projectiveDimension R
+  apply AlgebraicGeometry.Scheme.Modules.schemeKToG_bijective_of_finite_resolutions (Spec R) _ n
+  apply AlgebraicGeometry.Scheme.Modules.coherentResolutionHypothesis_of_finite_projectiveDimension
+    R
   intro M
   exact (projectiveDimension_ne_top_iff M.obj).mpr
-    ⟨d, CoherentScheme.hasProjectiveDimensionLE_of_regular_dimension_le R d hd M.obj⟩
+    ⟨d, AlgebraicGeometry.Scheme.Modules.Coherent.hasProjectiveDimensionLE_of_regular_dimension_le R
+      d hd M.obj⟩
 
 /-- The actual canonical comparison packaged as an equivalence. -/
 def KToGRegularFiniteDimensionEquiv (R : CommRingCat.{u}) [IsRegularRing R]
@@ -84,4 +93,4 @@ theorem KToG_regular_finiteDimension_bijective (R : CommRingCat.{u}) [IsRegularR
   apply KToG_regular_dimension_le_bijective R d _ n
   exact le_of_eq (by rw [← ha, ← hd]; rfl)
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

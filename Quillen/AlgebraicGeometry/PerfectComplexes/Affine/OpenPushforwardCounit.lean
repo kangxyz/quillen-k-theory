@@ -27,6 +27,11 @@ ordinary direct image or quasicoherence of its terms.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
+open AlgebraicGeometry.Scheme
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -41,7 +46,7 @@ lemma isIso_affineSectionsComplexRestriction_pushforward {R : CommRingCat.{u}}
     IsIso (affineSectionsComplexRestriction R h ((pushforwardComplex j).obj I)) := by
   have hcomp (n : ℤ) : IsIso
       ((affineSectionsComplexRestriction R h ((pushforwardComplex j).obj I)).f n) :=
-    CoherentScheme.AffineSections.isIso_pushforward_modulesSpecToSheaf_map_of_preimage_eq
+    Modules.QuasiCoherent.AffineSections.isIso_pushforward_modulesSpecToSheaf_map_of_preimage_eq
       j (I.X n) (homOfLE h) heq
   exact HomologicalComplex.Hom.isIso_of_components _
 
@@ -111,7 +116,7 @@ lemma openPushforward_quasicoherent_homology {R : CommRingCat.{u}}
   let := quasiIso_openPushforward_associatedSectionsCounit W hW I a hbound hinj hqc
   have : IsIso (HomologicalComplex.homologyMap (associatedSectionsCounit R J) n) :=
     (quasiIsoAt_iff_isIso_homologyMap _ _).mp inferInstance
-  have h := CoherentScheme.quasicoherent_homology
+  have h := AlgebraicGeometry.Scheme.Modules.Coherent.quasicoherent_homology
     ((associatedComplex R).obj ((sectionsComplex R).obj J)) (fun i => by
       change ((tilde.functor R).obj _).IsQuasicoherent
       infer_instance) n

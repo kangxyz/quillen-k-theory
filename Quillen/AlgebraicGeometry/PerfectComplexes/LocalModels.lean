@@ -43,20 +43,24 @@ theorem HasStrictModel.of_iso {X : Scheme.{u}} {K L : Complex X}
 
 /-- Strict representatives Quillen.PerfectComplexes.restrict along actual open immersions. -/
 theorem HasStrictModel.restrict {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    {K : Complex X} (hK : HasStrictModel K) : HasStrictModel ((Quillen.PerfectComplexes.restrict
+    {K : Complex X} (hK : HasStrictModel K) : HasStrictModel
+      ((AlgebraicGeometry.Scheme.Modules.Complex.restrict
       j).obj K) := by
   obtain ⟨P, ⟨e⟩⟩ := hK
-  exact ⟨⟨(Quillen.PerfectComplexes.restrict j).obj P.obj, strictPerfect_restrict j P.property⟩,
+  exact ⟨⟨(AlgebraicGeometry.Scheme.Modules.Complex.restrict j).obj P.obj, strictPerfect_restrict j
+    P.property⟩,
     ⟨restrictDerivedIso j e⟩⟩
 
 /-- A strict local model remains available after shrinking the open. -/
 theorem HasStrictModel.restrict_of_le {X : Scheme.{u}} {U V : X.Opens}
-    (h : V ≤ U) {K : Complex X} (hK : HasStrictModel ((Quillen.PerfectComplexes.restrict U.ι).obj
+    (h : V ≤ U) {K : Complex X} (hK : HasStrictModel
+      ((AlgebraicGeometry.Scheme.Modules.Complex.restrict U.ι).obj
       K)) :
-    HasStrictModel ((Quillen.PerfectComplexes.restrict V.ι).obj K) := by
+    HasStrictModel ((AlgebraicGeometry.Scheme.Modules.Complex.restrict V.ι).obj K) := by
   let j := X.homOfLE h
-  let e : Quillen.PerfectComplexes.restrict U.ι ⋙ Quillen.PerfectComplexes.restrict j ≅
-    Quillen.PerfectComplexes.restrict V.ι :=
+  let e : AlgebraicGeometry.Scheme.Modules.Complex.restrict U.ι ⋙
+    AlgebraicGeometry.Scheme.Modules.Complex.restrict j ≅
+    AlgebraicGeometry.Scheme.Modules.Complex.restrict V.ι :=
     restrictCompIso j U.ι ≪≫ eqToIso (restrict_congr (by simp [j]))
   exact (hK.restrict j).of_iso (e.app K)
 
@@ -65,8 +69,9 @@ one common neighborhood of a chosen point. -/
 theorem exists_common_strictModels {X : Scheme.{u}} {K L : Complex X}
     (hK : locallyPerfect X K) (hL : locallyPerfect X L) (x : X) :
     ∃ (U : X.Opens), x ∈ U ∧
-      HasStrictModel ((Quillen.PerfectComplexes.restrict U.ι).obj K) ∧ HasStrictModel
-        ((Quillen.PerfectComplexes.restrict U.ι).obj L) := by
+      HasStrictModel ((AlgebraicGeometry.Scheme.Modules.Complex.restrict U.ι).obj K) ∧
+        HasStrictModel
+        ((AlgebraicGeometry.Scheme.Modules.Complex.restrict U.ι).obj L) := by
   obtain ⟨U, hxU, P, eP⟩ := hK x
   obtain ⟨V, hxV, Q, eQ⟩ := hL x
   exact ⟨U ⊓ V, ⟨hxU, hxV⟩,
@@ -77,15 +82,17 @@ theorem exists_common_strictModels {X : Scheme.{u}} {K L : Complex X}
 This allows finite successive shrinkings to be kept as a composite immersion. -/
 theorem locallyPerfect_of_openImmersion_models {X : Scheme.{u}} {K : Complex X}
     (hK : ∀ x : X, ∃ (Y : Scheme.{u}) (j : Y ⟶ X) (hj : IsOpenImmersion j) (y : Y),
-      j y = x ∧ HasStrictModel ((@Quillen.PerfectComplexes.restrict Y X j hj).obj K)) :
+      j y = x ∧ HasStrictModel ((@AlgebraicGeometry.Scheme.Modules.Complex.restrict Y X j hj).obj
+        K)) :
         locallyPerfect X K := by
   intro x
   obtain ⟨Y, j, hj, y, hy, h⟩ := hK x
   let := hj
   let U : X.Opens := j.opensRange
   let t : U.toScheme ⟶ Y := j.isoOpensRange.inv
-  let e : Quillen.PerfectComplexes.restrict j ⋙ Quillen.PerfectComplexes.restrict t ≅
-    Quillen.PerfectComplexes.restrict U.ι :=
+  let e : AlgebraicGeometry.Scheme.Modules.Complex.restrict j ⋙
+    AlgebraicGeometry.Scheme.Modules.Complex.restrict t ≅
+    AlgebraicGeometry.Scheme.Modules.Complex.restrict U.ι :=
     restrictCompIso t j ≪≫ eqToIso (restrict_congr j.isoOpensRange_inv_comp)
   obtain ⟨P, eP⟩ := (h.restrict t).of_iso (e.app K)
   refine ⟨U, ?_, P, eP⟩

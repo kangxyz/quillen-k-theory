@@ -39,7 +39,7 @@ theorem boundedFlatAffineSectionPrespectrum_point_homotopyExtensionProperty
 /-- Every actual Bass stage and every original level has T1 separation, with no extra premise. -/
 instance boundedFlatAffineSectionBassDiagramSpaceT1Space (i : ℕ) (R : CommRingCat.{u})
     (k : ℕ) : T1Space (((boundedFlatAffineSectionBassDiagram i).obj R).space k) :=
-  KTheory.Bass.strictDiagramIterateSpaceT1Space PolynomialBaseChange.laurentSquareFunctor i
+  KTheory.Bass.strictDiagramIterateSpaceT1Space CommRingCat.PolynomialLaurent.laurentSquareFunctor i
     boundedFlatAffineSectionPrespectrumFunctor R k
 
 /-- Every chosen point at every iterated stage remains genuinely well-based. -/
@@ -48,7 +48,7 @@ theorem boundedFlatAffineSectionBassDiagram_point_homotopyExtensionProperty
     Quillen.homotopyExtensionProperty (TopCat.ofHom (ContinuousMap.const PUnit.{u + 2}
       (((boundedFlatAffineSectionBassDiagram i).obj R).point k))) :=
   KTheory.Bass.strictDiagramIterate_point_homotopyExtensionProperty
-    PolynomialBaseChange.laurentSquareFunctor i boundedFlatAffineSectionPrespectrumFunctor
+    CommRingCat.PolynomialLaurent.laurentSquareFunctor i boundedFlatAffineSectionPrespectrumFunctor
     boundedFlatAffineSectionPrespectrum_point_homotopyExtensionProperty R k
 
 /-- The unchanged reduced Bass telescope is T1 at every original level. -/

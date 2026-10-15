@@ -20,6 +20,11 @@ is natural for these actual flat pullbacks.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -28,26 +33,28 @@ universe u
 open CategoryTheory AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 variable {X Y Z : AlgebraicGeometry.Scheme.{u}}
   [IsLocallyNoetherian X] [IsLocallyNoetherian Y] [IsLocallyNoetherian Z]
 
 /-- Pullback on the existing coherent G-groups along a flat scheme morphism. -/
 def pullbackG (f : X ⟶ Y) [Flat f] (n : ℕ) : G Y n →* G X n :=
-  (CoherentScheme.coherentExactPullback f).smallKMap n
+  (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactPullback f).smallKMap n
 
 /-- The public G-map uses precisely actual geometric coherent pullback. -/
 @[simp] theorem pullbackG_eq_smallKMap (f : X ⟶ Y) [Flat f] (n : ℕ) :
-    pullbackG f n = (CoherentScheme.coherentExactPullback f).smallKMap n := rfl
+    pullbackG f n = (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactPullback f).smallKMap n
+      := rfl
 
 /-- Identity pullback is the identity on the original coherent G-groups. -/
 @[simp high] theorem pullbackG_id (X : AlgebraicGeometry.Scheme.{u})
     [IsLocallyNoetherian X] (n : ℕ) :
     pullbackG (𝟙 X) n = MonoidHom.id (G X n) := by
   exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
-    (F := CoherentScheme.coherentExactPullback (𝟙 X))
-    (G := CategoryTheory.ExactCategory.ExactFunctor.id (CoherentScheme.coherentExactStructure X))
-    (CoherentScheme.coherentPullbackIdIso X) n).trans
+    (F := AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactPullback (𝟙 X))
+    (G := CategoryTheory.ExactCategory.ExactFunctor.id
+      (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X))
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentPullbackIdIso X) n).trans
       (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_id _ n)
 
 /-- Flat pullbacks are contravariantly functorial on coherent G-groups. -/
@@ -55,34 +62,36 @@ def pullbackG (f : X ⟶ Y) [Flat f] (n : ℕ) : G Y n →* G X n :=
     [Flat f] [Flat g] (n : ℕ) :
     pullbackG (f ≫ g) n = (pullbackG f n).comp (pullbackG g n) := by
   exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
-    (F := CoherentScheme.coherentExactPullback (f ≫ g))
-    (G := (CoherentScheme.coherentExactPullback g).comp
-      (CoherentScheme.coherentExactPullback f))
-    (CoherentScheme.coherentPullbackCompIso f g) n).trans
+    (F := AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactPullback (f ≫ g))
+    (G := (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactPullback g).comp
+      (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactPullback f))
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentPullbackCompIso f g) n).trans
       (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp _ _ n)
 
 /-- Flat pullback agrees with the original open-restriction G-map. -/
 theorem pullbackG_eq_restrictG (j : X ⟶ Y) [IsOpenImmersion j] (n : ℕ) :
     pullbackG j n = restrictG j n :=
   CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso
-    (F := CoherentScheme.coherentExactPullback j)
-    (G := CoherentScheme.coherentRestrictionExact j)
-    (CoherentScheme.coherentRestrictionIsoPullback j).symm n
+    (F := AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactPullback j)
+    (G := AlgebraicGeometry.Scheme.Modules.Coherent.coherentRestrictionExact j)
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentRestrictionIsoPullback j).symm n
 
 omit [IsLocallyNoetherian X] in
 /-- The actual bundle-to-coherent inclusion commutes with arbitrary pullback
 as a functor, before flatness is needed for the coherent exact structure. -/
 theorem vectorBundleToCoherent_pullback (f : X ⟶ Y) :
-    SchemeSheaf.vectorBundleToCoherent Y ⋙ CoherentScheme.coherentPullback f =
-      SchemeSheaf.vectorBundlePullback f ⋙ SchemeSheaf.vectorBundleToCoherent X := rfl
+    AlgebraicGeometry.Scheme.Modules.vectorBundleToCoherent Y ⋙
+      AlgebraicGeometry.Scheme.Modules.Coherent.coherentPullback f =
+      AlgebraicGeometry.Scheme.Modules.vectorBundlePullback f ⋙
+        AlgebraicGeometry.Scheme.Modules.vectorBundleToCoherent X := rfl
 
 /-- Naturality of the original canonical K-to-G map for actual flat pullback. -/
 theorem KToG_pullback (f : X ⟶ Y) [Flat f] (n : ℕ) :
     (pullbackG f n).comp (KToG Y n) = (KToG X n).comp (pullbackK f n) := by
-  change ((CoherentScheme.coherentExactPullback f).smallKMap n).comp
-      ((SchemeSheaf.vectorBundleToCoherentExact Y).smallKMap n) =
-    ((SchemeSheaf.vectorBundleToCoherentExact X).smallKMap n).comp
-      ((SchemeSheaf.vectorBundleExactPullback f).smallKMap n)
+  change ((AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactPullback f).smallKMap n).comp
+      ((AlgebraicGeometry.Scheme.Modules.vectorBundleToCoherentExact Y).smallKMap n) =
+    ((AlgebraicGeometry.Scheme.Modules.vectorBundleToCoherentExact X).smallKMap n).comp
+      ((AlgebraicGeometry.Scheme.Modules.vectorBundleExactPullback f).smallKMap n)
   rw [← CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, ←
     CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp]
   exact CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso (Iso.refl _) n
@@ -145,4 +154,4 @@ def KToGFlatNatTrans (n : ℕ) : KLocallyNoetherianFlatFunctor.{u} n ⟶ GFlatFu
 @[simp] theorem KToGFlatNatTrans_app (n : ℕ) (X : LocallyNoetherianFlatSchemes.{u}ᵒᵖ) :
     ((KToGFlatNatTrans n).app X).hom = KToG X.unop.obj.obj n := rfl
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

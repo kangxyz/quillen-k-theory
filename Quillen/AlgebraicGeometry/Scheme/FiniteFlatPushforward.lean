@@ -16,13 +16,15 @@ The public functor uses the original finite flat vector-bundle direct image.
 Forgetting flatness retains the original scheme and its finite morphism.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
 universe u
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 /-- Actual finite flat scheme morphisms. -/
 abbrev finiteFlatMorphisms : MorphismProperty AlgebraicGeometry.Scheme.{u} :=
@@ -56,13 +58,13 @@ instance locallyNoetherianFiniteFlatSchemes_isLocallyNoetherian
 def KFiniteFlatPushforwardFunctor (n : ℕ) :
     LocallyNoetherianFiniteFlatSchemes.{u} ⥤ GrpCat.{u + 1} where
   obj X := GrpCat.of (K X.obj.obj n)
-  map f := GrpCat.ofHom (SchemeSheaf.schemeKPushforward f.hom.hom n)
+  map f := GrpCat.ofHom (AlgebraicGeometry.Scheme.Modules.schemeKPushforward f.hom.hom n)
   map_id X := by
     apply GrpCat.hom_ext
-    exact SchemeSheaf.schemeKPushforward_id X.obj.obj n
+    exact AlgebraicGeometry.Scheme.Modules.schemeKPushforward_id X.obj.obj n
   map_comp f g := by
     apply GrpCat.hom_ext
-    exact SchemeSheaf.schemeKPushforward_comp f.hom.hom g.hom.hom n
+    exact AlgebraicGeometry.Scheme.Modules.schemeKPushforward_comp f.hom.hom g.hom.hom n
 
 /-- Forgetting flatness retains the original schemes and finite scheme maps. -/
 def forgetFiniteFlat : LocallyNoetherianFiniteFlatSchemes.{u} ⥤ LocallyNoetherianFiniteSchemes.{u}
@@ -70,4 +72,4 @@ def forgetFiniteFlat : LocallyNoetherianFiniteFlatSchemes.{u} ⥤ LocallyNoether
   obj X := ⟨⟨X.obj.obj⟩, X.property⟩
   map f := ObjectProperty.homMk ⟨f.hom.hom, f.hom.property.1⟩
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

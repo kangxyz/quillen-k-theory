@@ -21,13 +21,14 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine Quillen.Scheme.Bass
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
+  AlgebraicGeometry.Scheme.Bass
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
 
 /-- The same original compact affine base used by nativeTwoSummands. -/
-abbrev affineBase (R : CommRingCat.{u}) : Quillen.Scheme.QuasiCompactSchemes.{u} :=
+abbrev affineBase (R : CommRingCat.{u}) : AlgebraicGeometry.Scheme.QuasiCompactSchemes.{u} :=
   ⟨Spec R, inferInstance⟩
 
 /-- Actual geometric transport from the native product line to the original two-chart line. -/
@@ -59,7 +60,8 @@ instance nativeLinePullbackTensorMap_isIso (R : CommRingCat.{u})
     IsIso (modulePullbackTensorMap (nativeAffineIso R).hom
       (nativeTautologicalLine (affineBase R)) E) := by
   apply modulePullbackTensorMap_isIso_of_trivializingCover (nativeAffineIso R).hom
-    (fun _ : Bool => (Quillen.Scheme.Bass.polynomialFunctor.obj (affineBase R)).obj)
+    (fun _ : Bool => (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialFunctor.obj
+      (affineBase R)).obj)
     (nativeChart (affineBase R)) (nativeChart_cover (affineBase R))
     (nativeTautologicalLine (affineBase R)) E (nativeLineChartIso (affineBase R))
 

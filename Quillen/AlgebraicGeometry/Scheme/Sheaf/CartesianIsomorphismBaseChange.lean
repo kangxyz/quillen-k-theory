@@ -11,13 +11,16 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianBaseChange
 /-! # The original cartesian mate for an isomorphism -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (f : U ⟶ X) (j : V ⟶ X)
   (h : IsPullback a b f j) [IsIso f]
 /-- Base change of an actual scheme isomorphism retains an invertible original ordinary mate. -/
@@ -29,4 +32,4 @@ theorem isIso_cartesianBaseChangeMap_of_isIso : IsIso (cartesianBaseChangeMap a 
     (Scheme.Modules.pullbackPushforwardAdjunction a)
     (Scheme.Modules.pullbackPushforwardAdjunction j)
     (TwoSquare.mk _ _ _ _ (cartesianPushforwardSquare a b f j h).hom)
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

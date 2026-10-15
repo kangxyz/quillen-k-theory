@@ -20,6 +20,8 @@ annihilated by a power of that element.
 -/
 @[expose] public section
 
+open ModuleCat
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -59,10 +61,11 @@ variable {R : Type u} [CommRing R] [IsNoetherianRing R] (S : Submonoid R)
 
 /-- Finite-module G-theory in the actual chosen small model. -/
 abbrev G (A : Type u) [CommRing A] [IsNoetherianRing A] (n : ℕ) :=
-  (CoherentScheme.finiteModuleExactStructure.{u, u} A).SmallK n
+  (ModuleCat.finiteModuleExactStructure.{u, u} A).SmallK n
 
 /-- The supported G-term, formed from the genuine Serre kernel on the small model. -/
-abbrev SupportedG (n : ℕ) := (Devissage.subcategoryExactStructure (smallTorsion S)).K n
+abbrev SupportedG (n : ℕ) := (CategoryTheory.ObjectProperty.subcategoryExactStructure (smallTorsion
+  S)).K n
 
 /-- The canonical scalar-localization map. -/
 def localizationKMap (n : ℕ) : G R n →* G (Localization S) n :=

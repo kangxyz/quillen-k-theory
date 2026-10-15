@@ -23,7 +23,7 @@ actual Bass seed remains separate.
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange
-open Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 variable {R S : CommRingCat.{u}} {U V : Scheme.{u}}

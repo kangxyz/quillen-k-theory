@@ -105,7 +105,7 @@ actual homotopical dévissage isomorphism in every degree. -/
 def KEquiv {C : Type u} [Category.{u} C] [Abelian C]
     (ts : List (𝟭 C ⟶ 𝟭 C))
     (h : ∀ X : C, ∀ t ∈ ts, ∃ n : ℕ, power t X n = 0) (n : ℕ) :
-    (Devissage.subcategoryExactStructure (killedByAll ts)).K n ≃*
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure (killedByAll ts)).K n ≃*
       (abelianExactStructure C).K n :=
   Devissage.KEquiv _ (filtrationHypothesis ts h) n
 

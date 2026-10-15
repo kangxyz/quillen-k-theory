@@ -20,10 +20,12 @@ objects. At the identity algebra the original projection is an actual isomorphis
 with the independently chosen pullback object.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.Scheme.AffineOpenPair
+namespace AlgebraicGeometry.Scheme.AffineOpenPair
 variable {R : CommRingCat.{u}} {U : AlgebraicGeometry.Scheme.{u}}
     (j : U ⟶ Spec R) [IsOpenImmersion j]
 
@@ -89,4 +91,4 @@ theorem identityProjectionIso_inclusion :
       rw [Spec.map_id]
       exact Category.comp_id (inclusion j (Under.mk (𝟙 R)))
 
-end Quillen.Scheme.AffineOpenPair
+end AlgebraicGeometry.Scheme.AffineOpenPair

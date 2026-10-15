@@ -32,14 +32,15 @@ variable (P : ObjectProperty C) [P.IsSerreClass]
 instance epiAuxiliary_obj_epi {N : C} (X : EpiAuxiliaryKernel P N) :
     Epi X.obj.obj.of.hom := X.property.2
 
-lemma subcategoryQ_surjection_iff {X Y : (Devissage.subcategoryExactStructure P).QCategory}
+lemma subcategoryQ_surjection_iff {X Y : (CategoryTheory.ObjectProperty.subcategoryExactStructure
+  P).QCategory}
     (f : X ⟶ Y) : Q.IsSurjection ((Devissage.mapQ P).map f) ↔ Q.IsSurjection f := by
-  let : (Devissage.exactInclusion P).toFunctor.ReflectsIsomorphisms :=
+  let : (CategoryTheory.ObjectProperty.exactInclusion P).toFunctor.ReflectsIsomorphisms :=
     inferInstanceAs P.ι.ReflectsIsomorphisms
-  exact Q.isSurjection_mapQ_iff (Devissage.exactInclusion P) f
+  exact Q.isSurjection_mapQ_iff (CategoryTheory.ObjectProperty.exactInclusion P) f
 
 section ReflectionData
-variable {N : C} {T : (Devissage.subcategoryExactStructure P).QCategory}
+variable {N : C} {T : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory}
   (A : EpiKernelComma P N T) {U : C}
   (i : (overKernel N).obj A.left.obj.obj.of ⟶ U) [Mono i]
   (p : T.obj.of.obj ⟶ U) [Epi p]
@@ -175,27 +176,29 @@ end ReflectionData
 /-- Every full kernel-comma object has an actual universal arrow to the
 surjective-kernel subcategory. -/
 instance surjectiveKernelComma_inclusion_hasInitial (N : C)
-    (T : (Devissage.subcategoryExactStructure P).QCategory) (A : EpiKernelComma P N T) :
+    (T : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory) (A : EpiKernelComma
+      P N T) :
     HasInitial (StructuredArrow A (surjectiveKernelCommaProperty P N T).ι) := by
   obtain ⟨U, i, p, hi, hp, hc⟩ := Q.exists_cospan ((Devissage.mapQ P).map A.hom)
   exact (kernelCommaReflectionStructuredIsInitial P A i p hc).hasInitial
 
 /-- The actual left adjoint which reflects a kernel Q-arrow to its surjective
 cospan after enlarging the extension kernel. -/
-def kernelCommaReflector (N : C) (T : (Devissage.subcategoryExactStructure P).QCategory) :
+def kernelCommaReflector (N : C) (T : (CategoryTheory.ObjectProperty.subcategoryExactStructure
+  P).QCategory) :
     EpiKernelComma P N T ⥤ SurjectiveKernelComma P N T :=
   leftAdjointOfStructuredArrowInitials (surjectiveKernelCommaProperty P N T).ι
 
 /-- The reflection is a genuine adjunction with the existing full-subcategory inclusion. -/
 def kernelCommaReflectionAdjunction (N : C)
-    (T : (Devissage.subcategoryExactStructure P).QCategory) :
+    (T : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory) :
     kernelCommaReflector P N T ⊣ (surjectiveKernelCommaProperty P N T).ι :=
   adjunctionOfStructuredArrowInitials (surjectiveKernelCommaProperty P N T).ι
 
 /-- The full kernel comma has contractible classifying space. The proof
 uses the constructed reflection and the proved initial object in its image. -/
 theorem epiKernelComma_contractible (N : C)
-    (T : (Devissage.subcategoryExactStructure P).QCategory) :
+    (T : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory) :
     ContractibleSpace (ClassifyingSpace (EpiKernelComma P N T)) := by
   let := surjectiveKernelComma_contractible P N T
   exact (adjunctionClassifyingHomotopyEquiv (kernelCommaReflectionAdjunction P N
@@ -205,7 +208,7 @@ theorem epiKernelComma_contractible (N : C)
 derived from actual contractible commas rather than supplied as an assumption. -/
 def epiAuxiliaryKernelClassifyingHomotopyEquiv (N : C) :
     ContinuousMap.HomotopyEquiv (ClassifyingSpace (EpiAuxiliaryKernel P N))
-      (ClassifyingSpace (Devissage.subcategoryExactStructure P).QCategory) :=
+      (ClassifyingSpace (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory) :=
   TheoremA.contractibleCommaClassifyingHomotopyEquiv (epiAuxiliaryKernelFunctor P N)
     (epiKernelComma_contractible P N)
 

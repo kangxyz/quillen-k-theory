@@ -13,7 +13,8 @@ Actual section transitions, arbitrary Laurent coefficient images and the origina
 -/
 @[expose] public section
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.Scheme.PolynomialLaurent
+open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
+  AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace QuillenTest.SectionLaurentUnit
 
@@ -51,7 +52,7 @@ theorem further_coefficient_action_on_terms {R S T : CommRingCat.{u}}
     ((boundedFlatPerfect (Spec T)).ι.map
       ((boundedFlatAffineEvaluationAt (.of (LaurentPolynomial R)) (Under.mk (h ≫ g))).map
         ((boundedFlatAffineSectionLaurentUnitIso R).hom.app s))).f n =
-      (SchemeSheaf.globalScalar (Spec T)
+      (AlgebraicGeometry.Scheme.Modules.globalScalar (Spec T)
         ((Scheme.ΓSpecIso T).inv (g.hom (h.hom (LaurentPolynomial.T 1))))).app
           (((boundedFlatAffineEvaluationAt (.of (LaurentPolynomial R))
             (Under.mk (h ≫ g))).obj s).obj.X n) :=
@@ -64,7 +65,7 @@ theorem further_coefficient_inverse_action_on_terms {R S T : CommRingCat.{u}}
     ((boundedFlatPerfect (Spec T)).ι.map
       ((boundedFlatAffineEvaluationAt (.of (LaurentPolynomial R)) (Under.mk (h ≫ g))).map
         ((boundedFlatAffineSectionLaurentUnitIso R).inv.app s))).f n =
-      (SchemeSheaf.globalScalar (Spec T)
+      (AlgebraicGeometry.Scheme.Modules.globalScalar (Spec T)
         ((Scheme.ΓSpecIso T).inv (g.hom (h.hom (LaurentPolynomial.T (-1)))))).app
           (((boundedFlatAffineEvaluationAt (.of (LaurentPolynomial R))
             (Under.mk (h ≫ g))).obj s).obj.X n) :=

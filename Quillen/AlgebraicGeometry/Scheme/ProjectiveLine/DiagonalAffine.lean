@@ -20,6 +20,8 @@ of the original diagonal along a rectangle is the actual intersection of its two
 Local cokernel identifications and global short exactness are not asserted here.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 universe u v
@@ -27,7 +29,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent Quillen.PolynomialBaseChange
 /-- The actual rectangle is the spectrum of the iterated polynomial ring. -/
 def polynomialSquareIso (R : CommRingCat.{u}) :
@@ -95,10 +97,10 @@ theorem diagonalPolynomial_minus_minus_regular (R : CommRingCat.{u}) :
       (Polynomial (Polynomial R))⁰ := by
   apply Polynomial.mem_nonzeroDivisors_of_coeff_mem 1
   simp
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 /-- The original plus-plus incidence scalar is monic on its genuine rectangle. -/
 theorem mono_incidenceScalar_plus_plus (R : CommRingCat.{u}) :
     Mono (unitMul (polynomialSquare R)
@@ -215,9 +217,9 @@ theorem mono_diagonalIncidence_minus_minus (R : CommRingCat.{u}) :
   exact mono_of_mono _ (rectangleQuotientIso R (minusChart R) (minusChart R)
       (minusChart_projection R) (minusChart_projection R)
     (tautologicalQuotientPullbackMinusIso R)).hom
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent
 variable (R : CommRingCat.{u})
     (j k : Spec (.of (Polynomial R)) ⟶ twoChartLine R)
@@ -241,4 +243,4 @@ theorem rectangle_diagonal_isPullback :
   · apply pullback.hom_ext <;> simp [intersectionToRectangle]
   · rfl
   · apply pullback.hom_ext <;> simp [rectangleMap]
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

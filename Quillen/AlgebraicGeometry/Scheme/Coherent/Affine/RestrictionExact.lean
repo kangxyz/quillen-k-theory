@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.RestrictionExact
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Support
 public import Quillen.GTheory.FiniteModules.Localization.Quotient
@@ -20,6 +21,25 @@ is identified with the actual stalk-support condition.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.CoherentScheme
+export AlgebraicGeometry.Scheme.Modules.Coherent
+  (affinePrincipalRestrictionExact affinePrincipalRestriction_additive
+  affinePrincipalRestriction_preservesFiniteColimits
+  affinePrincipalRestriction_preservesFiniteLimits principalRestriction_kernel_eq_support)
+end Quillen.CoherentScheme
+
+end
+
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -27,59 +47,16 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (r : R)
-
-instance affinePrincipalRestriction_preservesFiniteLimits :
-    PreservesFiniteLimits (affinePrincipalRestriction R r) := by
-  have : PreservesFiniteLimits
-      (affinePrincipalRestriction R r ⋙ affineFiniteTypeToModules (CommRingCat.of (Localization.Away
-        r))) := by
-    rw [affinePrincipalRestriction_comp_inclusion]
-    infer_instance
-  exact preservesFiniteLimits_of_reflects_of_preserves (affinePrincipalRestriction R r)
-    (affineFiniteTypeToModules (CommRingCat.of (Localization.Away r)))
-
-instance affinePrincipalRestriction_preservesFiniteColimits :
-    PreservesFiniteColimits (affinePrincipalRestriction R r) := by
-  have : PreservesFiniteColimits
-      (affinePrincipalRestriction R r ⋙ affineFiniteTypeToModules (CommRingCat.of (Localization.Away
-        r))) := by
-    rw [affinePrincipalRestriction_comp_inclusion]
-    infer_instance
-  exact preservesFiniteColimits_of_reflects_of_preserves (affinePrincipalRestriction R r)
-    (affineFiniteTypeToModules (CommRingCat.of (Localization.Away r)))
-
-instance affinePrincipalRestriction_additive : (affinePrincipalRestriction R r).Additive := by
-  let := preservesBinaryBiproducts_of_preservesBinaryProducts (affinePrincipalRestriction R r)
-  exact Functor.additive_of_preservesBinaryBiproducts _
-
-/-- The exact functor whose underlying functor is actual geometric restriction. -/
-def affinePrincipalRestrictionExact :
-    ExactFunctor (affineCoherentExactStructure R)
-      (affineCoherentExactStructure (CommRingCat.of (Localization.Away r))) where
-  toFunctor := affinePrincipalRestriction R r
-  map_conflation _ h := h.map_of_exact _
-
-omit [IsNoetherianRing R] in
-/-- The kernel is exactly the geometric support subcategory already defined
-using actual restriction, equivalently stalk support in the open complement. -/
-theorem principalRestriction_kernel_eq_support :
-    (affinePrincipalRestriction R r).kernel = affineSupportedAway R (principalOpen R r) := by
-  funext M
-  apply propext
-  change IsZero ((affinePrincipalRestriction R r).obj M) ↔
-    IsZero ((affineFiniteTypeToModules (CommRingCat.of (Localization.Away r))).obj
-      ((affinePrincipalRestriction R r).obj M))
-  exact ⟨Functor.map_isZero _, fun h => IsZero.of_full_of_faithful_of_isZero _ _ h⟩
 
 /-- The actual coherent restriction functor has the Serre localization
 universal property for its actual kernel. -/
 instance affinePrincipalRestriction_isLocalization_kernel :
     (affinePrincipalRestriction R r).IsLocalization
       (affinePrincipalRestriction R r).kernel.isoModSerre := by
-  let L := FiniteModuleLocalization.functor (Submonoid.powers r)
-  let P := FiniteModuleLocalization.torsion (Submonoid.powers r)
+  let L := ModuleCat.FiniteLocalization.functor (Submonoid.powers r)
+  let P := ModuleCat.FiniteLocalization.torsion (Submonoid.powers r)
   let e := affineFiniteTypeModuleEquivalence R
   let e' := affineFiniteTypeModuleEquivalence (CommRingCat.of (Localization.Away r))
   let square : CatCommSq e.functor (affinePrincipalRestriction R r) L e'.functor :=
@@ -119,4 +96,4 @@ instance affinePrincipalRestriction_isLocalization :
   rw [← h]
   infer_instance
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

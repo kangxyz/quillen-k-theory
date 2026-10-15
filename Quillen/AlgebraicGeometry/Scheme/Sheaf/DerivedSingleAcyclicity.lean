@@ -18,6 +18,9 @@ and its naturality. A binary product of acyclic single sheaves is acyclic.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 
 section
@@ -25,7 +28,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- Use the standard derived category of actual module sheaves. -/
 local instance derivedSingleComparisonStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules :=
@@ -88,7 +91,7 @@ theorem derivedPushforwardPlusSingleIso_naturality {X Y : Scheme.{u}} (f : X ⟶
         ((Scheme.Modules.pushforward f).map φ))
   simpa only [Functor.map_comp] using
     congrArg DerivedCategory.Plus.Q.map (pushforwardSingleZeroPlusIso_naturality f φ)
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 end
 
 section
@@ -96,7 +99,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- Use the standard derived category of actual module sheaves. -/
 local instance derivedSingleProductStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules :=
@@ -123,5 +126,5 @@ theorem isIso_derivedPushforwardPlusUnit_single_prod {X Y : Scheme.{u}} (f : X �
     inferInstanceAs (IsIso ((derivedPushforwardPlusUnit f).app (singleZeroPlus X N)))
   change IsIso (α.app (M ⨯ N))
   apply NatTrans.isIso_app_prod
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 end

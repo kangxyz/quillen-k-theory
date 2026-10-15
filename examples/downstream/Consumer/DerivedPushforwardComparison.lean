@@ -12,7 +12,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPushforwardCompa
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.SchemeSheaf
+open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes AlgebraicGeometry.Scheme.Modules
 universe u
 namespace Consumer.DerivedPushforwardComparison
 local instance standardDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=

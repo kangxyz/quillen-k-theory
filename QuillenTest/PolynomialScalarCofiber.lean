@@ -12,7 +12,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PolynomialScalar
 @[expose] public section
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.PerfectComplexes
-open Quillen.PerfectComplexes.Affine Quillen.Scheme.PolynomialLaurent
+open Quillen.PerfectComplexes.Affine AlgebraicGeometry.Scheme.PolynomialLaurent
 open Quillen.Waldhausen Quillen.Waldhausen.Fibration Quillen.Waldhausen.SplitFactorization
 universe u
 namespace QuillenTest.PolynomialScalarCofiber

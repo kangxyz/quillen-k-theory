@@ -17,10 +17,12 @@ we retain the existing projection isomorphism, rather than identifying its sourc
 original open. No quasi-compactness assumption is used.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Opposite
 universe u
-namespace Quillen.Scheme.AffineOpenPair
+namespace AlgebraicGeometry.Scheme.AffineOpenPair
 variable {R : CommRingCat.{u}} {U : AlgebraicGeometry.Scheme.{u}}
     (j : U ⟶ Spec R) [IsOpenImmersion j]
 
@@ -52,4 +54,4 @@ theorem openFunctor_identityProjection :
       ((inclusionTransformation j).app (Under.mk (𝟙 R))).unop :=
   identityProjectionIso_inclusion j
 
-end Quillen.Scheme.AffineOpenPair
+end AlgebraicGeometry.Scheme.AffineOpenPair

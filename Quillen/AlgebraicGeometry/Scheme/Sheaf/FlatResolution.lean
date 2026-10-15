@@ -19,6 +19,9 @@ module sheaves, exact in every positive degree. Nothing in the construction
 assumes the existence of a flat replacement or of a derived equivalence.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -27,7 +30,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Opposite
 open HomologicalComplex
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The map of explicit free covers sends each local-section generator to its image. -/
 def flatCoverMap {X : Scheme.{u}} {M N : X.Modules} (p : M ⟶ N) :
@@ -143,4 +146,4 @@ instance flatResolutionToSingle_quasiIso (X : Scheme.{u}) (M : X.Modules) :
       · exact flatResolution_exactAt_succ X M n
       · exact ChainComplex.exactAt_succ_single_obj M n⟩
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

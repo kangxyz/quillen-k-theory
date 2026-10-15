@@ -19,7 +19,7 @@ forward-T scalar square; it does not replace that scalar by an unproved inverse-
 noncomputable section
 open CategoryTheory AlgebraicGeometry Convexity
 open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration Quillen.Scheme.PolynomialLaurent
+open Quillen.Waldhausen Quillen.Waldhausen.Fibration AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped Topology
 universe u
 namespace QuillenTest.PolynomialScalarBoundaryOrientation

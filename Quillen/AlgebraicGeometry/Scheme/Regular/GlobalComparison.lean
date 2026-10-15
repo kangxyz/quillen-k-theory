@@ -20,12 +20,14 @@ are proved by global coherent syzygies and local projective-dimension bounds.
 No finite Krull dimension or global projectivity of vector bundles is used.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 universe u
 open AlgebraicGeometry
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 variable (X : AlgebraicGeometry.Scheme.{u}) [IsRegular X] [CompactSpace X]
   [HasResolutionProperty X]
@@ -34,8 +36,8 @@ variable (X : AlgebraicGeometry.Scheme.{u}) [IsRegular X] [CompactSpace X]
 quasi-compact scheme with the ordinary resolution property. -/
 theorem KToG_regular_resolutionProperty_bijective (n : ℕ) :
     Function.Bijective (KToG X n) :=
-  SchemeSheaf.schemeKToG_bijective_of_finite_resolutions X
-    SchemeSheaf.coherentResolutionHypothesis_of_regular_resolutionProperty n
+  AlgebraicGeometry.Scheme.Modules.schemeKToG_bijective_of_finite_resolutions X
+    AlgebraicGeometry.Scheme.Modules.coherentResolutionHypothesis_of_regular_resolutionProperty n
 
 /-- The canonical global vector-bundle K-to-G equivalence for a regular
 scheme with the resolution property, in every nonnegative degree. -/
@@ -64,4 +66,4 @@ theorem KToGRegularEquiv_spec (R : CommRingCat.{u}) [IsRegularRing R] (n : ℕ) 
   ext x
   rfl
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

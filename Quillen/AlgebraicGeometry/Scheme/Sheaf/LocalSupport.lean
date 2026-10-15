@@ -18,6 +18,9 @@ scheme. The local hypotheses are actual sheaf and module conditions; no
 closed-support conclusion is supplied as finiteness data.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -28,7 +31,7 @@ universe u v
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Closedness of stalk support is local for an actual open cover of schemes. -/
 theorem isClosed_support_iff_openCover {X : Scheme.{u}} (𝒰 : X.OpenCover.{v})
@@ -63,4 +66,4 @@ theorem isClosed_support_of_finite_affineCover {X : Scheme.{u}}
   exact isClosed_support_of_finite_globalSections
     ((Scheme.Modules.restrictFunctor (𝒰.f i)).obj M)
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

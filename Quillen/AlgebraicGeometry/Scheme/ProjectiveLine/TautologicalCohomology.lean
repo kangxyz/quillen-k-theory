@@ -17,14 +17,16 @@ This concerns the actual tautological subline on `twoChartLine`; no Proj compari
 or projective-bundle K-theory formula is asserted.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 universe u
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.SchemeSheaf.TwoOpen
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.TwoOpen
 variable (R : CommRingCat.{u})
 
 /-- First actual derived global sections of the tautological line vanish. -/
@@ -65,4 +67,4 @@ theorem isZero_rightDerived_tautologicalLine (n : ℕ) :
       ((sectionsFunctor (twoChartLine R) ⊤).rightDerivedZeroIsoSelf.app (tautologicalLine R))
   | succ n => exact isZero_rightDerived_tautologicalLine_succ R n
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

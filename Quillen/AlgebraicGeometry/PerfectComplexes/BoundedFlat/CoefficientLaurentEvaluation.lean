@@ -26,8 +26,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
 open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
-open Quillen.Scheme.CoefficientBaseChange Quillen.PolynomialBaseChange
-open Quillen.FunctorIdentityAutomorphism Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.CoefficientBaseChange Quillen.PolynomialBaseChange
+open Quillen.FunctorIdentityAutomorphism AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)
@@ -45,7 +45,7 @@ def boundedFlatCoefficientFullOpenLaurentEvaluationOldUnit (a : Under R) :=
 def boundedFlatCoefficientFullOpenLaurentEvaluationNewUnit (_f : P ⟶ Q) (a : Under R) :=
   Homotopy.precomp (boundedFlatCoefficientSectionEvaluationPrespectrumMap (op P, a))
     (boundedFlatPerfectUnitHomotopy
-      (Quillen.Scheme.CoefficientBaseChange.map
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
         (i := (op P, a)) (k := (op P, (laurentUnderFunctor R).obj a))
         (𝟙 (op P), (laurentUnderCoefficient R).app a))
       (boundedFlatCoefficientUnit (op P, (laurentUnderFunctor R).obj a)

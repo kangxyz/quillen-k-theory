@@ -13,13 +13,16 @@ public import Quillen.Algebra.Homology.DerivedCategory.PlusSingleTriangle
 /-! # Flat base change from the original signed two-open triangle -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard derived category of module sheaves. -/
 local instance twoOpenBaseChangeStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -87,4 +90,4 @@ theorem isIso_derivedFlatBaseChangeMap_twoOpen_single
   exact isIso₁_of_isIso₂₃ (NatTrans.mapTriangleHom α hS.singleTrianglePlus)
     (F.map_distinguished _ hS.singleTrianglePlus_distinguished)
     (G.map_distinguished _ hS.singleTrianglePlus_distinguished) h₂ h₃
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

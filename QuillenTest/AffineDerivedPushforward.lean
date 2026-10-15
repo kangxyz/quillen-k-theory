@@ -23,25 +23,30 @@ local instance standardDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Mod
 theorem original_integer_augmentation {Z X : Scheme.{u}} (f : Z ⟶ X) [IsAffineHom f]
     (M : Z.Modules) [M.IsQuasicoherent] (I : InjectiveResolution M) :
     QuasiIso (((Scheme.Modules.pushforward f).mapHomologicalComplex (.up ℤ)).map I.ι') :=
-  SchemeSheaf.quasiIso_pushforward_injectiveResolution_int f M I
+  AlgebraicGeometry.Scheme.Modules.quasiIso_pushforward_injectiveResolution_int f M I
 
 /-- The original bounded-below derived unit on every quasicoherent module is invertible. -/
 theorem original_single_unit {Z X : Scheme.{u}} (f : Z ⟶ X) [IsAffineHom f]
     (M : Z.Modules) [M.IsQuasicoherent] :
-    IsIso ((SchemeSheaf.derivedPushforwardPlusUnit f).app (SchemeSheaf.singleZeroPlus Z M)) :=
-  SchemeSheaf.isIso_derivedPushforwardPlusUnit_single f M
+    IsIso ((AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlusUnit f).app
+      (AlgebraicGeometry.Scheme.Modules.singleZeroPlus Z M)) :=
+  AlgebraicGeometry.Scheme.Modules.isIso_derivedPushforwardPlusUnit_single f M
 
 /-- Naturality retains the original map of degree-zero sheaves. -/
 theorem original_single_square {Z X : Scheme.{u}} (f : Z ⟶ X)
     (M N : Z.Modules) (s : M ⟶ N) :
     DerivedCategory.Plus.Q.map ((Scheme.Modules.pushforward f).mapCochainComplexPlus.map
         (ObjectProperty.homMk ((CochainComplex.singleFunctor Z.Modules 0).map s) :
-          SchemeSheaf.singleZeroPlus Z M ⟶ SchemeSheaf.singleZeroPlus Z N)) ≫
-        (SchemeSheaf.derivedPushforwardPlusUnit f).app (SchemeSheaf.singleZeroPlus Z N) =
-      (SchemeSheaf.derivedPushforwardPlusUnit f).app (SchemeSheaf.singleZeroPlus Z M) ≫
-        (DerivedCategory.Plus.Q ⋙ SchemeSheaf.derivedPushforwardPlus f).map
+          AlgebraicGeometry.Scheme.Modules.singleZeroPlus Z M ⟶
+            AlgebraicGeometry.Scheme.Modules.singleZeroPlus Z N)) ≫
+        (AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlusUnit f).app
+          (AlgebraicGeometry.Scheme.Modules.singleZeroPlus Z N) =
+      (AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlusUnit f).app
+        (AlgebraicGeometry.Scheme.Modules.singleZeroPlus Z M) ≫
+        (DerivedCategory.Plus.Q ⋙ AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlus f).map
           (ObjectProperty.homMk ((CochainComplex.singleFunctor Z.Modules 0).map s) :
-            SchemeSheaf.singleZeroPlus Z M ⟶ SchemeSheaf.singleZeroPlus Z N) :=
-  (SchemeSheaf.derivedPushforwardPlusUnit f).naturality _
+            AlgebraicGeometry.Scheme.Modules.singleZeroPlus Z M ⟶
+              AlgebraicGeometry.Scheme.Modules.singleZeroPlus Z N) :=
+  (AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlusUnit f).naturality _
 
 end QuillenTest.AffineDerivedPushforward

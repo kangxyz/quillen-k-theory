@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.ZeroSection
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeGlobalBundle
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPullback
 
@@ -16,6 +17,19 @@ legs. Actual polynomial evaluation retracts the coefficient map on the
 original perfect K-groups, in every natural degree and over every base ring.
 -/
 @[expose] public section
+open Quillen
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.PerfectComplexes.ProjectiveLine.BassPositive
+export AlgebraicGeometry.Scheme.PolynomialLaurent
+  (polynomialZeroSection polynomialZeroSection_projection)
+end Quillen.PerfectComplexes.ProjectiveLine.BassPositive
+
+end
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -24,7 +38,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.BassPositive
-open Quillen.Scheme Quillen.Scheme.ProjectiveLine Quillen.Scheme.Bass
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine AlgebraicGeometry.Scheme.Bass
 open FlasqueTwoSummands
 
 variable (R : CommRingCat.{u})
@@ -136,19 +150,6 @@ theorem affineNativeChart_cover (x : (nativeLineFunctor.obj (affineBase R)).obj)
 def polynomialCoefficientKMap (n : ℕ) :
     PerfectK (Spec R) n →* PerfectK (Spec (.of (Polynomial R))) n :=
   perfectKFlatPullback (PolynomialLaurent.polynomialProjection R) n
-
-/-- Actual zero evaluation of the original polynomial ring, as a scheme section. -/
-def polynomialZeroSection : Spec R ⟶ Spec (.of (Polynomial R)) :=
-  Spec.map (CommRingCat.ofHom (Polynomial.evalRingHom (0 : R)))
-
-@[reassoc (attr := simp)] lemma polynomialZeroSection_projection :
-    polynomialZeroSection R ≫ PolynomialLaurent.polynomialProjection R = 𝟙 (Spec R) := by
-  have h : CommRingCat.ofHom (Polynomial.C : R →+* Polynomial R) ≫
-      CommRingCat.ofHom (Polynomial.evalRingHom (0 : R)) = 𝟙 R := by
-    ext r
-    exact Polynomial.eval_C
-  change Spec.map _ ≫ Spec.map _ = _
-  rw [← Spec.map_comp, h, Spec.map_id]
 
 /-- The original arbitrary geometric perfect pullback along actual polynomial evaluation. -/
 def polynomialEvaluationKMap (n : ℕ) :

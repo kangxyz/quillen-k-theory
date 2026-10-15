@@ -14,13 +14,15 @@ Use actual local line trivializations on an arbitrary bounded-below representati
 No global strict model or quasicoherent representative is selected here.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.PerfectComplexes
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules Quillen.PerfectComplexes
 local instance derivedLinePerfectStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})
@@ -68,4 +70,4 @@ theorem perfect_derivedTautologicalRightTensor
   exact (perfectDerivedObjects (twoChartLine R)).prop_of_iso
     (DerivedCategory.Plus.ι.mapIso e)
     ((perfectDerivedObjects_toDerived_iff (twoChartLine R) _).mpr ht)
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

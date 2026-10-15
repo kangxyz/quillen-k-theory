@@ -18,6 +18,9 @@ The genuine exact small-model equivalence therefore induces an actual
 based K-group equivalence. No cross-universe realization assertion is used.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
@@ -26,7 +29,7 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The actual exact functor from the public small model to vector bundles. -/
 abbrev smallVectorBundleToOriginal (X : Scheme.{u}) :
@@ -36,17 +39,17 @@ abbrev smallVectorBundleToOriginal (X : Scheme.{u}) :
 
 /-- Public scheme K-theory maps canonically to the actual vector-bundle Q-model. -/
 def smallVectorBundleKMap (X : Scheme.{u}) (n : ℕ) :
-    Quillen.Scheme.K X n →* (vectorBundleExactStructure X).K n :=
+    AlgebraicGeometry.Scheme.K X n →* (vectorBundleExactStructure X).K n :=
   (smallVectorBundleToOriginal X).commonAmbientKMap n
 
 /-- The public small presentation and actual vector-bundle Q-model have
 canonically equivalent K-groups in the same realization universe. -/
 def smallVectorBundleKEquiv (X : Scheme.{u}) (n : ℕ) :
-    Quillen.Scheme.K X n ≃* (vectorBundleExactStructure X).K n :=
+    AlgebraicGeometry.Scheme.K X n ≃* (vectorBundleExactStructure X).K n :=
   (smallVectorBundleToOriginal X).commonAmbientKEquiv n
 
 /-- The monoid-hom coercion is the canonical forward map. -/
 @[simp] theorem smallVectorBundleKEquiv_coe (X : Scheme.{u}) (n : ℕ) :
     ↑(smallVectorBundleKEquiv X n) = smallVectorBundleKMap X n := rfl
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

@@ -23,7 +23,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 namespace QuillenTest.DerivedProjectionFormula
 
 open Quillen

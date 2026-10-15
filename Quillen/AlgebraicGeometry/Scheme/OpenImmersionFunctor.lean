@@ -18,6 +18,8 @@ G-theory and the K-to-G comparison are further restricted to locally
 noetherian objects. Every map is the public geometric restriction map.
 -/
 @[expose] public section
+open Quillen
+
 
 
 noncomputable section
@@ -27,7 +29,7 @@ universe u
 open CategoryTheory AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 /-- Schemes with only open immersions as morphisms. -/
 abbrev OpenImmersionSchemes :=
@@ -106,4 +108,4 @@ def KToGOpenNatTrans (n : ℕ) :
 theorem KToGOpenNatTrans_app (n : ℕ) (X : LocallyNoetherianOpenSchemes.{u}ᵒᵖ) :
     ((KToGOpenNatTrans n).app X).hom = KToG X.unop.obj.obj n := rfl
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

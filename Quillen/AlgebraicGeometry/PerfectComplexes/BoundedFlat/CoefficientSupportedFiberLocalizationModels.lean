@@ -41,7 +41,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits AlgebraicGeometry Opposite
 open Quillen.Waldhausen Quillen.Waldhausen.Fibration Quillen.Waldhausen.IteratedS
 open Quillen.LoopPrespectrum
-open Quillen.Scheme.CoefficientBaseChange HomologicalComplex
+open AlgebraicGeometry.Scheme.CoefficientBaseChange HomologicalComplex
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)
@@ -104,8 +104,8 @@ theorem boundedFlatCoefficientSupportedFiberForget_exact (a : Under R) :
       from le_sup_left)
   have h : l ≫ (boundedFlatCoefficientFiberSupportOpen f T a).ι =
       (boundedFlatCoefficientSupportOpen Q T a).ι ≫
-        Quillen.Scheme.CoefficientBaseChange.map (𝟙 (op Q, a)) := by
-    rw [Quillen.Scheme.CoefficientBaseChange.map_id, Category.comp_id]
+        AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (𝟙 (op Q, a)) := by
+    rw [AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_id, Category.comp_id]
     exact Scheme.homOfLE_ι _ _
   have hM : boundedFlatCoefficientSupportedSectionsMap
       (boundedFlatCoefficientFiberSupportOpen f T a).ι

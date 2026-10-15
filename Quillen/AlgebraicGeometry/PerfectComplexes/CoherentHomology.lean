@@ -21,6 +21,9 @@ perfect-to-G K-theory map.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -33,23 +36,27 @@ namespace Quillen.PerfectComplexes
 noetherian schemes, without termwise coherence or a global strict model. -/
 theorem locallyPerfect_coherent_homology {X : Scheme.{u}} [IsLocallyNoetherian X]
     {K : Complex X} (hK : locallyPerfect X K) (i : ℤ) :
-    CoherentScheme.affineLocallyFiniteType X (K.homology i) := by
-  apply CoherentScheme.affineLocallyFiniteType_of_openNeighborhoods
+    AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineLocallyFiniteType X (K.homology i) := by
+  apply AlgebraicGeometry.Scheme.Modules.Coherent.affineLocallyFiniteType_of_openNeighborhoods
   intro x
   obtain ⟨U, hx, P, ⟨e⟩⟩ := hK x
   let : IsLocallyNoetherian U.toScheme := isLocallyNoetherian_of_isOpenImmersion U.ι
-  have hP : CoherentScheme.affineLocallyFiniteType U.toScheme (P.obj.homology i) :=
-    CoherentScheme.affineLocallyFiniteType_homology P.obj (fun n => by
+  have hP : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineLocallyFiniteType U.toScheme
+    (P.obj.homology i) :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.affineLocallyFiniteType_homology P.obj (fun n => by
       let := P.property.2 n
-      exact CoherentScheme.affineLocallyFiniteType_of_finitePresentation (P.obj.X n)) i
-  exact ⟨U, hx, (CoherentScheme.affineLocallyFiniteType U.toScheme).prop_of_iso
+      exact
+        AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineLocallyFiniteType_of_finitePresentation
+        (P.obj.X n)) i
+  exact ⟨U, hx, (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineLocallyFiniteType
+    U.toScheme).prop_of_iso
     ((homologyIsoOfDerivedIso e i).symm ≪≫ restrictHomologyIso U.ι K i) hP⟩
 
 /-- The original actual homology functor on perfect objects takes values in
 coherent sheaves. It is not asserted to be an exact functor. -/
 def coherentHomology (X : Scheme.{u}) [IsLocallyNoetherian X] (i : ℤ) :
-    Perfect X ⥤ CoherentScheme.FiniteTypeSheaves X :=
-  (CoherentScheme.affineLocallyFiniteType X).lift
+    Perfect X ⥤ AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X :=
+  (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineLocallyFiniteType X).lift
     ((locallyPerfect X).ι ⋙ HomologicalComplex.homologyFunctor X.Modules (ComplexShape.up ℤ) i)
     (fun K => locallyPerfect_coherent_homology K.property i)
 
@@ -61,11 +68,13 @@ theorem coherentHomology_obj (X : Scheme.{u}) [IsLocallyNoetherian X]
 theorem coherentHomology_map_isIso {X : Scheme.{u}} [IsLocallyNoetherian X]
     (i : ℤ) {K L : Perfect X} (f : K ⟶ L) [QuasiIso f.hom] :
     IsIso ((coherentHomology X i).map f) := by
-  let : IsIso ((CoherentScheme.finiteTypeSheavesToModules X).map ((coherentHomology X i).map f)) :=
+  let : IsIso ((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesToModules X).map
+    ((coherentHomology X i).map f)) :=
     by
     change IsIso (HomologicalComplex.homologyMap f.hom i)
     infer_instance
-  exact isIso_of_reflects_iso _ (CoherentScheme.finiteTypeSheavesToModules X)
+  exact isIso_of_reflects_iso _
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesToModules X)
 
 /-- Coherent-valued homology commutes naturally with the original perfect
 open restriction and the original coherent open restriction. -/
@@ -73,9 +82,11 @@ def coherentHomologyRestrictIso {U X : Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian U]
     (j : U ⟶ X) [IsOpenImmersion j] (i : ℤ) :
     perfectRestrict j ⋙ coherentHomology U i ≅
-      coherentHomology X i ⋙ CoherentScheme.finiteTypeSheavesRestriction j :=
+      coherentHomology X i ⋙
+        AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesRestriction j :=
   NatIso.ofComponents
-    (fun K => (CoherentScheme.affineLocallyFiniteType U).isoMk (restrictHomologyIso j K.obj i))
+    (fun K => (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineLocallyFiniteType U).isoMk
+      (restrictHomologyIso j K.obj i))
     (fun f => by
       apply ObjectProperty.hom_ext
       exact ShortComplex.mapHomologyIso_hom_naturality
@@ -86,7 +97,8 @@ def coherentHomologyRestrictIso {U X : Scheme.{u}}
 locally noetherianity supplies coherence in every degree. -/
 theorem locallyPerfect_bounded_coherent_homology {X : Scheme.{u}}
     [IsLocallyNoetherian X] [CompactSpace X] {K : Complex X} (hK : locallyPerfect X K) :
-    (∀ i : ℤ, CoherentScheme.affineLocallyFiniteType X (K.homology i)) ∧
+    (∀ i : ℤ, AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineLocallyFiniteType X (K.homology
+      i)) ∧
       ∃ a b : ℤ, ∀ i : ℤ, i < a ∨ b < i → IsZero (K.homology i) :=
   ⟨locallyPerfect_coherent_homology hK, locallyPerfect_homology_bounded hK⟩
 

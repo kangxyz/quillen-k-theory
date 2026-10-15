@@ -20,15 +20,17 @@ tautological subline is pulled back along the actual second projection.
 No projective-bundle formula or projection-perfectness premise is used.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.Scheme.Bass
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Bass
+open AlgebraicGeometry.Scheme.Modules
 
 instance integerProjection_quasiCompact : QuasiCompact (projection integerRing.{u}) := by
   exact (HasAffineProperty.iff_of_isAffine (P := @QuasiCompact)).mpr inferInstance
@@ -166,4 +168,4 @@ def nativeTautologicalMinusIso (X : QuasiCompactSchemes.{u}) :
     (Scheme.Modules.pullback _).mapIso (tautologicalLineMinusIso integerRing) ≪≫
     pullbackUnitIso _
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

@@ -30,6 +30,11 @@ argument using this affine-chart theorem as its geometric input.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
+open AlgebraicGeometry.Scheme
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -79,24 +84,26 @@ local instance principalSectionsHomologyGlobalSections_isRightAdjoint (R : CommR
 
 local instance principalSectionsHomologyGlobalSections_additive (R : CommRingCat.{u}) (r : R) :
     (moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r))).Additive :=
-  Quillen.SchemeSheaf.moduleSpecΓFunctor_additive _
+  AlgebraicGeometry.Scheme.Modules.moduleSpecΓFunctor_additive _
 
 lemma principalSections_preservesRightHomology {R : CommRingCat.{u}}
     (I : Complex (Spec R)) (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n)) (r : R)
-    (hqc : ∀ n, (((restrict (CoherentScheme.principalOpen R r)).obj I).homology n).IsQuasicoherent)
+    (hqc : ∀ n, (((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
+      I).homology n).IsQuasicoherent)
     (n : ℤ) : (affineSectionsAt R (PrimeSpectrum.basicOpen r)).PreservesRightHomologyOf (I.sc n) :=
       by
-  let j := CoherentScheme.principalOpen R r
+  let j := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r
   let J := (restrict j).obj I
   have hb (n : ℤ) (hn : n < a) : IsZero (J.X n) :=
     (Scheme.Modules.restrictFunctor j).map_isZero (hbound n hn)
   have hi (n : ℤ) : Injective (J.X n) := by
     let := hinj n
-    exact SchemeSheaf.injective_restrict j (I.X n)
+    exact AlgebraicGeometry.Scheme.Modules.injective_restrict j (I.X n)
   let : (moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r))).PreservesRightHomologyOf
       ((I.sc n).map (Scheme.Modules.restrictFunctor j)) :=
-    SchemeSheaf.AffineCech.globalSections_preservesRightHomology J a hb hi hqc n
+    AlgebraicGeometry.Scheme.Modules.AffineCech.globalSections_preservesRightHomology J a hb hi hqc
+      n
   let : (Scheme.Modules.restrictFunctor j ⋙ moduleSpecΓFunctor
       (R := CommRingCat.of (Localization.Away r))).PreservesRightHomologyOf (I.sc n) :=
     SheafCohomology.preservesRightHomologyOf_comp _ _ _
@@ -122,13 +129,16 @@ namespace Quillen.PerfectComplexes.Affine
 are quasicoherent only after restriction to the chosen principal chart. -/
 lemma isIso_sectionsLocalizationLift_basicOpen {R : CommRingCat.{u}} (r q : R)
     (M : (Spec R).Modules)
-    [(M.restrict (CoherentScheme.principalOpen R q)).IsQuasicoherent] :
+    [(M.restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+      q)).IsQuasicoherent] :
     IsIso (sectionsLocalizationLift R r (PrimeSpectrum.basicOpen q) M) := by
-  let g := CoherentScheme.AffineSections.restriction M (PrimeSpectrum.basicOpen q) r
+  let g := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.AffineSections.restriction M
+    (PrimeSpectrum.basicOpen q) r
   let : IsLocalizedModule (Submonoid.powers r) g :=
-    (CoherentScheme.AffineSections.clearsDenominators_iff_isLocalized M
+    (Modules.QuasiCoherent.AffineSections.clearsDenominators_iff_isLocalized M
       (PrimeSpectrum.basicOpen q) r).mp
-      (CoherentScheme.AffineSections.clearsDenominators_basicOpen M q r)
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.AffineSections.clearsDenominators_basicOpen M
+        q r)
   let e := (IsLocalizedModule.linearEquiv (Submonoid.powers r)
     (scalarLocalizeMk R r ((affineSectionsAt R (PrimeSpectrum.basicOpen q)).obj M)) g).toModuleIso
   have he : sectionsLocalizationLift R r (PrimeSpectrum.basicOpen q) M = e.hom := by
@@ -144,13 +154,15 @@ chart. Its cohomology hypothesis is confined to that chart. -/
 lemma quasiIso_sectionsLocalizationComplexComparison_basicOpen {R : CommRingCat.{u}}
     (r q : R) (I : Complex (Spec R)) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
-    (hqc : ∀ n, (((restrict (CoherentScheme.principalOpen R q)).obj I).homology n).IsQuasicoherent)
+    (hqc : ∀ n, (((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R q)).obj
+      I).homology n).IsQuasicoherent)
       :
     QuasiIso (sectionsLocalizationComplexComparison R r (PrimeSpectrum.basicOpen q) I) := by
   have hqcr (n : ℤ) :
-      (((restrict (CoherentScheme.principalOpen R (q * r))).obj I).homology n).IsQuasicoherent := by
-    let j := CoherentScheme.principalOpen R q
-    let k := CoherentScheme.principalOpen R (q * r)
+      (((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R (q * r))).obj
+        I).homology n).IsQuasicoherent := by
+    let j := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R q
+    let k := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R (q * r)
     have hkj : Set.range k ⊆ Set.range j := by
       rw [← Scheme.Hom.coe_opensRange, ← Scheme.Hom.coe_opensRange,
         Scheme.Hom.opensRange_localizationAway, Scheme.Hom.opensRange_localizationAway]
@@ -185,14 +197,18 @@ lemma quasiIso_sectionsLocalizationComplexComparison_basicOpen {R : CommRingCat.
     SheafCohomology.preservesRightHomologyOf_natIso
       (affineSectionsAtCongr R (PrimeSpectrum.basicOpen_mul q r)) (I.sc n)
   let h := (I.sc n).homologyData.right
-  have hH : (h.H.restrict (CoherentScheme.principalOpen R q)).IsQuasicoherent := by
-    have hIH : ((I.homology n).restrict (CoherentScheme.principalOpen R q)).IsQuasicoherent :=
+  have hH : (h.H.restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+    q)).IsQuasicoherent := by
+    have hIH : ((I.homology n).restrict
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R q)).IsQuasicoherent :=
       (SheafOfModules.isQuasicoherent (Spec (CommRingCat.of (Localization.Away
         q))).ringCatSheaf).prop_of_iso
-        (restrictHomologyIso (CoherentScheme.principalOpen R q) I n) (hqc n)
+        (restrictHomologyIso (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R q) I n)
+          (hqc n)
     exact (SheafOfModules.isQuasicoherent (Spec (CommRingCat.of (Localization.Away
       q))).ringCatSheaf).prop_of_iso
-      ((Scheme.Modules.restrictFunctor (CoherentScheme.principalOpen R q)).mapIso h.homologyIso) hIH
+      ((Scheme.Modules.restrictFunctor (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
+        R q)).mapIso h.homologyIso) hIH
   let := isIso_sectionsLocalizationLift_basicOpen r q h.H
   let γ := ShortComplex.RightHomologyMapData.natTransApp h
     (sectionsLocalizationComparison R r (PrimeSpectrum.basicOpen q))

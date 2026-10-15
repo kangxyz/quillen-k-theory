@@ -13,7 +13,7 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Quillen.Waldhausen.IteratedS
-open Quillen.PolynomialBaseChange Quillen.Scheme.CoefficientBaseChange
+open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
 universe u
 namespace Quillen.PerfectComplexes.BassH1Merged
 variable {R : CommRingCat.{u}} (P : Over (Spec R))

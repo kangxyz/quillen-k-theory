@@ -63,14 +63,20 @@ theorem actual_global_K0_joint_kernel
 end
 
 theorem actual_scheme_global_reduction (X : AlgebraicGeometry.Scheme.{u}) (k : ℕ)
-    (x : (ofExactCategory (boundedTermsExactStructure (SchemeSheaf.finiteLocallyFree X))).K k) :
-    ∃! p : (ofExactCategory (boundedAcyclicExactStructure (SchemeSheaf.finiteLocallyFree X))).K k ×
+    (x : (ofExactCategory (boundedTermsExactStructure
+      (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree X))).K k) :
+    ∃! p : (ofExactCategory (boundedAcyclicExactStructure
+      (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree X))).K k ×
         (ofExactCategory (ExactSubcategory.exactStructure
-          (abelianExactStructure X.Modules) (SchemeSheaf.finiteLocallyFree X))).K k,
-      KMap (boundedAcyclicTermsExactInclusion (SchemeSheaf.finiteLocallyFree X)).waldhausenExact k
+          (abelianExactStructure X.Modules) (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree
+            X))).K k,
+      KMap (boundedAcyclicTermsExactInclusion (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree
+        X)).waldhausenExact k
         p.1 *
-        KMap (boundedTermsSingleExactFunctor.{u,u+1} (SchemeSheaf.finiteLocallyFree X)
+        KMap (boundedTermsSingleExactFunctor.{u,u+1}
+          (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree X)
           0).waldhausenExact k p.2 = x :=
-  boundedTerms_existsUnique_acyclic_single_zero.{u,u+1} (SchemeSheaf.finiteLocallyFree X) k x
+  boundedTerms_existsUnique_acyclic_single_zero.{u,u+1}
+    (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree X) k x
 
 end Consumer

@@ -22,7 +22,7 @@ assert a full-open cofinality equivalence or identify independently chosen zeros
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Scheme.AffineOpenPair
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]
@@ -34,7 +34,7 @@ def boundedFlatAffineFixedBasePseudofunctor : Pseudofunctor (LocallyDiscrete (Un
 /-- The actual coefficient square in the original open-pair category. -/
 def boundedFlatAffineFullOpenPairSquare {a b : Under R} (f : a ⟶ b) :
     (⟨Arrow.mk (inclusion j b), (show IsOpenImmersion (inclusion j b) from inferInstance)⟩ :
-      Quillen.Scheme.OpenPairs) ⟶
+      AlgebraicGeometry.Scheme.OpenPairs) ⟶
       ⟨Arrow.mk (inclusion j a), (show IsOpenImmersion (inclusion j a) from inferInstance)⟩ :=
   ObjectProperty.homMk (Arrow.homMk (openMap j f) (Spec.map f.right)
     (openMap_inclusion j f))

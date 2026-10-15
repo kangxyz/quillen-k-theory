@@ -27,7 +27,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf
+open AlgebraicGeometry.Scheme.Modules
 open scoped ZeroObject
 attribute [local instance] Abelian.hasFiniteBiproducts
 

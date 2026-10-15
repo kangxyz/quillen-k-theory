@@ -26,10 +26,11 @@ namespace Quillen.PerfectComplexes
 theorem boundedFlatAffineSectionBassDiagram_bass_obj (i : ℕ) :
     KTheory.Bass.strictRingDiagramFunctor.obj (boundedFlatAffineSectionBassDiagram.{u} i) =
       boundedFlatAffineSectionBassDiagram (i + 1) := by
-  change (KTheory.Bass.strictDiagramFunctor PolynomialBaseChange.laurentSquareFunctor).obj
-      ((KTheory.Bass.strictDiagramIterate PolynomialBaseChange.laurentSquareFunctor i).obj
+  change (KTheory.Bass.strictDiagramFunctor CommRingCat.PolynomialLaurent.laurentSquareFunctor).obj
+      ((KTheory.Bass.strictDiagramIterate CommRingCat.PolynomialLaurent.laurentSquareFunctor i).obj
         boundedFlatAffineSectionPrespectrumFunctor) =
-    (KTheory.Bass.strictDiagramIterate PolynomialBaseChange.laurentSquareFunctor (i + 1)).obj
+    (KTheory.Bass.strictDiagramIterate CommRingCat.PolynomialLaurent.laurentSquareFunctor (i +
+      1)).obj
       boundedFlatAffineSectionPrespectrumFunctor
   rw [KTheory.Bass.strictDiagramIterate_succ_right]
   rfl
@@ -38,10 +39,12 @@ theorem boundedFlatAffineSectionBassDiagram_bass_obj (i : ℕ) :
 theorem boundedFlatAffineSectionBassDiagram_iterate_obj (n i : ℕ) :
     (KTheory.Bass.strictRingDiagramIterate n).obj (boundedFlatAffineSectionBassDiagram.{u} i) =
       boundedFlatAffineSectionBassDiagram (i + n) := by
-  change (KTheory.Bass.strictDiagramIterate PolynomialBaseChange.laurentSquareFunctor n).obj
-      ((KTheory.Bass.strictDiagramIterate PolynomialBaseChange.laurentSquareFunctor i).obj
+  change (KTheory.Bass.strictDiagramIterate CommRingCat.PolynomialLaurent.laurentSquareFunctor
+    n).obj
+      ((KTheory.Bass.strictDiagramIterate CommRingCat.PolynomialLaurent.laurentSquareFunctor i).obj
         boundedFlatAffineSectionPrespectrumFunctor) =
-    (KTheory.Bass.strictDiagramIterate PolynomialBaseChange.laurentSquareFunctor (i + n)).obj
+    (KTheory.Bass.strictDiagramIterate CommRingCat.PolynomialLaurent.laurentSquareFunctor (i +
+      n)).obj
       boundedFlatAffineSectionPrespectrumFunctor
   rw [KTheory.Bass.strictDiagramIterate_add]
   rfl

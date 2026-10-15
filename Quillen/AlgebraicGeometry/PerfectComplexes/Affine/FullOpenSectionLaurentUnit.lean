@@ -20,7 +20,7 @@ this action to the inverse unit.
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Scheme.AffineOpenPair Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.AffineOpenPair AlgebraicGeometry.Scheme.PolynomialLaurent
 open Quillen.PolynomialBaseChange
 universe u
 namespace Quillen.PerfectComplexes

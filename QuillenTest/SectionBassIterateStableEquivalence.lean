@@ -64,16 +64,17 @@ theorem actual_iterated_zero (i j : ℕ)
 theorem actual_original_seed_iteration (i n : ℕ) (R : CommRingCat.{u}) :
     (boundedFlatAffineSectionBassTransition (i + n)).app R ≫
         ((eqToHom (KTheory.Bass.strictDiagramIterate_add
-          PolynomialBaseChange.laurentSquareFunctor i n)).app
+          CommRingCat.PolynomialLaurent.laurentSquareFunctor i n)).app
             (KTheory.Bass.strictRingDiagramFunctor.obj
               boundedFlatAffineSectionPrespectrumFunctor)).app R =
       ((eqToHom (KTheory.Bass.strictDiagramIterate_add
-        PolynomialBaseChange.laurentSquareFunctor i n)).app
+        CommRingCat.PolynomialLaurent.laurentSquareFunctor i n)).app
           boundedFlatAffineSectionPrespectrumFunctor).app R ≫
         ((KTheory.Bass.strictRingDiagramIterate n).map
           (boundedFlatAffineSectionBassTransition i)).app R :=
   congrArg (fun a ↦ a.app R)
     ((eqToHom (KTheory.Bass.strictDiagramIterate_add
-      PolynomialBaseChange.laurentSquareFunctor i n)).naturality boundedFlatAffineSectionBassSeed)
+      CommRingCat.PolynomialLaurent.laurentSquareFunctor i n)).naturality
+        boundedFlatAffineSectionBassSeed)
 
 end QuillenTest.SectionBassIterateStableEquivalence

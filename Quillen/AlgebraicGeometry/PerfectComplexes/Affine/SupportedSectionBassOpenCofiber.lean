@@ -23,7 +23,7 @@ relative-open section Model. Original seed-relative and telescope compatibility 
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
-open Quillen.KTheory.Bass Quillen.Waldhausen.IteratedS Quillen.Scheme.AffineOpenPair
+open Quillen.KTheory.Bass Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

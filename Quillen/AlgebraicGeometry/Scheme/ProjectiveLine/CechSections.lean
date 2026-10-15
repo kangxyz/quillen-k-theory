@@ -19,6 +19,8 @@ Both signs and the negative-chart overlap identification are retained.
 -/
 
 @[expose] public section
+open Quillen
+
 
 section
 
@@ -27,8 +29,9 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModuleCat
-open Quillen.SchemeSheaf Quillen.Scheme.PolynomialLaurent Quillen.LaurentProjector
-namespace Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
+  Quillen.LaurentProjector
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 
 /-- The positive overlap used by the original sheaf sequence is open. -/
@@ -92,7 +95,7 @@ theorem original_plus_restriction :
     (CommRingCat.ofHom LaurentPolynomial.C) (positive_constants R)
     (plusChart R) (projection R) (plusChart_projection R) M
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 end
 
 end
@@ -104,8 +107,9 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModuleCat
-open Quillen.SchemeSheaf Quillen.Scheme.PolynomialLaurent Quillen.LaurentProjector
-namespace Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
+  Quillen.LaurentProjector
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 
 /-- The negative overlap remains the original open immersion. -/
@@ -188,7 +192,7 @@ theorem original_minus_restriction :
   rw [overlapLocalizedSectionsIso_congr, ← Category.assoc]
   rw [original_negative_nested_restriction, Category.assoc]
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 end
 
 end
@@ -200,8 +204,9 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModuleCat
-open Quillen.SchemeSheaf Quillen.Scheme.PolynomialLaurent Quillen.LaurentProjector
-namespace Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
+  Quillen.LaurentProjector
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 
 /-- The original source comparison preserves the first categorical projection. -/
@@ -234,7 +239,7 @@ theorem originalCechSourceIso_hom_snd :
   erw [prod.map_snd, prodComparison_snd_assoc]
   rfl
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 end
 
 end
@@ -246,8 +251,9 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModuleCat
-open Quillen.SchemeSheaf Quillen.Scheme.PolynomialLaurent Quillen.LaurentProjector
-namespace Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
+  Quillen.LaurentProjector
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 
 /-- The original TwoOpen sheaf difference becomes the literal signed chart-section map. -/
@@ -270,7 +276,7 @@ theorem original_sheafDifference_sections :
   erw [originalCechSourceIso_hom_fst_assoc R M,
     originalCechSourceIso_hom_snd_assoc R M]
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 end
 
 end

@@ -12,6 +12,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedModuleRep
 /-! Semantic consumers of actual projective stabilization and principal extension. -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -62,7 +65,8 @@ theorem actual_strict_restriction_weak_image (R : CommRingCat.{u}) (r : R)
     (P : StrictPerfect (Spec (.of (Localization.Away r)))) :
     ∃ (Q : StrictPerfect (Spec R))
       (T : StrictPerfect (Spec (.of (Localization.Away r))))
-      (f : (strictRestrict (CoherentScheme.principalOpen R r)).obj Q ⟶ T),
+      (f : (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj Q
+        ⟶ T),
       T.obj = (P.obj ⊞ P.obj⟦(1 : ℤ)⟧) ∧ (strictWaldhausen _).weq f := by
   obtain ⟨Q, ⟨e⟩⟩ := exists_principal_strict_extension_after_shift R r P
   have hT : strictPerfect _ (P.obj ⊞ P.obj⟦(1 : ℤ)⟧) :=
@@ -75,7 +79,8 @@ theorem actual_derived_split_idempotent (R : CommRingCat.{u}) (r : R)
     (P : StrictPerfect (Spec (.of (Localization.Away r)))) :
     ∃ (Q : StrictPerfect (Spec R))
       (h : Retract ((toDerived _).obj P.obj)
-        ((toDerived _).obj ((restrict (CoherentScheme.principalOpen R r)).obj Q.obj))),
+        ((toDerived _).obj ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
+          R r)).obj Q.obj))),
       (h.r ≫ h.i) ≫ (h.r ≫ h.i) = h.r ≫ h.i := by
   obtain ⟨Q, ⟨h⟩⟩ := exists_principal_strict_derived_retract R r P
   exact ⟨Q, h, by simp [Category.assoc]⟩

@@ -19,6 +19,12 @@ universal property for the original restriction functor.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -26,7 +32,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 variable {U X : Scheme.{u}} [IsLocallyNoetherian X] [IsLocallyNoetherian U]
   (j : U ⟶ X) [IsOpenImmersion j] [(finiteTypeSheavesRestriction j).EssSurj]
@@ -72,4 +78,4 @@ theorem finiteTypeSheavesRestriction_isLocalization_kernel_of_essSurj :
   rw [h]
   exact finiteTypeSheavesRestriction_isLocalization_of_essSurj j
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

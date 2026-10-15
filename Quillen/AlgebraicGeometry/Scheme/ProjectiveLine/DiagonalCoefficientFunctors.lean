@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Tensor.Exact
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Symmetry
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalAllCoefficientTensor
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalAllCoefficientPushforward
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatPullback
@@ -18,6 +20,20 @@ flatness or perfect representative is assumed.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.SchemeSheaf
+export AlgebraicGeometry.Scheme.Modules
+  (moduleTensorRightLeftIso moduleTensorRight_preservesHomology)
+end Quillen.SchemeSheaf
+
+end
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -25,31 +41,11 @@ universe u
 open CategoryTheory CategoryTheory.Limits
   CategoryTheory.MonoidalCategory CategoryTheory.BraidedCategory
   AlgebraicGeometry SheafOfModulesOfCommRing
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
+end AlgebraicGeometry.Scheme.Modules
 
-/-- Sheafify the original presheaf braiding to interchange tensor variables. -/
-def moduleTensorRightLeftIso (X : Scheme.{u}) (M : X.Modules) :
-    moduleTensorRightFunctor X M ≅ moduleTensorLeftFunctor X M :=
-  Functor.isoWhiskerLeft (toPresheaf X.sheaf)
-    (Functor.isoWhiskerRight (tensorLeftIsoTensorRight
-      ((toPresheaf X.sheaf).obj M)).symm (associatedSheaf X.sheaf))
-
-/-- Tensoring on the right with a vector bundle is exact on arbitrary module coefficients. -/
-instance moduleTensorRight_preservesHomology {X : Scheme.{u}} (M : X.Modules)
-    [IsFiniteLocallyFree X M] : (moduleTensorRightFunctor X M).PreservesHomology := by
-  let : PreservesFiniteLimits (moduleTensorLeftFunctor X M) :=
-    Functor.preservesFiniteLimits_of_preservesHomology _
-  let : PreservesFiniteColimits (moduleTensorLeftFunctor X M) :=
-    Functor.preservesFiniteColimits_of_preservesHomology _
-  let : PreservesFiniteLimits (moduleTensorRightFunctor X M) :=
-    preservesFiniteLimits_of_natIso (moduleTensorRightLeftIso X M).symm
-  let : PreservesFiniteColimits (moduleTensorRightFunctor X M) :=
-    preservesFiniteColimits_of_natIso (moduleTensorRightLeftIso X M).symm
-  infer_instance
-end Quillen.SchemeSheaf
-
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 variable (R : CommRingCat.{u})
 
 /-- The original first projection is flat, being base change of the original flat projection. -/
@@ -158,4 +154,4 @@ instance diagonalCoefficientThird_preservesHomology :
   let : PreservesFiniteColimits (diagonalCoefficientFunctor R (diagonalIncidenceSequence R).X₃) :=
     preservesFiniteColimits_of_natIso (diagonalCoefficientThirdIso R).symm
   infer_instance
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

@@ -11,7 +11,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassS
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.LoopPrespectrum
-open Quillen.Scheme.PolynomialLaurent Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.BoundedFlatBassStep
 
@@ -29,7 +29,8 @@ theorem inverse_terms (R : CommRingCat.{u})
     (K : BoundedFlatPerfect (Spec (.of (LaurentPolynomial R)))) (n : ℤ) :
     ((boundedFlatPerfect _).ι.map
       ((boundedFlatPerfectGlobalUnitIso _ (laurentGlobalUnit R)).inv.app K)).f n =
-      (SchemeSheaf.globalScalar _ (↑(laurentGlobalUnit R)⁻¹)).app (K.obj.X n) :=
+      (AlgebraicGeometry.Scheme.Modules.globalScalar _ (↑(laurentGlobalUnit R)⁻¹)).app (K.obj.X n)
+        :=
   boundedFlatPerfectGlobalUnitIso_inv_terms _ _ K n
 
 /-- The complete transition loop retains the actual conjugated Laurent-unit track. -/

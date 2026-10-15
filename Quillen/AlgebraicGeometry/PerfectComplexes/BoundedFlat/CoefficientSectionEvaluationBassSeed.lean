@@ -21,7 +21,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
 open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
-open Quillen.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.CoefficientBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}
@@ -30,7 +30,7 @@ variable {R : CommRingCat.{u}}
 def boundedFlatCoefficientLaurentUnitHomotopy (P : Over (Spec R)) (a : Under R) :=
   boundedFlatPerfectUnitHomotopy (laurentProjection P a)
     (boundedFlatCoefficientUnit (op P, (laurentUnderFunctor R).obj a)
-      (Quillen.Scheme.PolynomialLaurent.laurentGlobalUnit a.right))
+      (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentGlobalUnit a.right))
 
 /-- Parameter-correct looping of the original raw native two-chart cone. -/
 def boundedFlatCoefficientBassStep (P : Over (Spec R)) (a : Under R) : LoopPrespectrum :=

@@ -69,15 +69,15 @@ theorem inverseImageOpen {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] (U : Y.Opens)
 /-- Naturality retains the original public vector-bundle comparison. -/
 theorem originalPublicComparison {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] (n : ℕ) :
     (perfectKFlatPullback f n).comp (vectorBundleToPerfectKMap Y n) =
-      (vectorBundleToPerfectKMap X n).comp (Quillen.Scheme.pullbackK f n) :=
+      (vectorBundleToPerfectKMap X n).comp (AlgebraicGeometry.Scheme.pullbackK f n) :=
   vectorBundleToPerfectKMap_flatPullback f n
 
 /-- The bundled functor's maps are the geometric maps, rather than transported comparison maps. -/
-theorem bundledMap {X Y : Quillen.Scheme.FlatSchemes.{u}ᵒᵖ} (f : X ⟶ Y) (n : ℕ) :
+theorem bundledMap {X Y : AlgebraicGeometry.Scheme.FlatSchemes.{u}ᵒᵖ} (f : X ⟶ Y) (n : ℕ) :
     ((PerfectKFlatFunctor n).map f).hom = perfectKFlatPullback f.unop.hom n := rfl
 
 /-- The natural transformation's components are the original public comparison. -/
-theorem bundledComparison (X : Quillen.Scheme.FlatSchemes.{u}ᵒᵖ) (n : ℕ) :
+theorem bundledComparison (X : AlgebraicGeometry.Scheme.FlatSchemes.{u}ᵒᵖ) (n : ℕ) :
     ((vectorBundleToPerfectFlatNatTrans n).app X).hom = vectorBundleToPerfectKMap X.unop.obj n :=
       rfl
 

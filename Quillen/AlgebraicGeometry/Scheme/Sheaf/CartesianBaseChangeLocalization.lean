@@ -11,12 +11,15 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenCoverExactness
 /-! # Target-open localization of the original geometric base-change mate -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 open Scheme.Modules
 variable {W' W U V' V X : Scheme.{u}}
   (c : W' ⟶ W) (d : W' ⟶ V') (k : V' ⟶ V)
@@ -32,9 +35,9 @@ theorem isIso_cartesianBaseChangeMap_pullback_iff (M : U.Modules) :
   rw [← isIso_comp_left_iff ((pullbackComp k j).hom.app ((pushforward f).obj M))]
   rw [cartesianBaseChangeMap_paste_horiz c d k a b f j hs h M]
   rw [← Category.assoc, isIso_comp_right_iff, isIso_comp_right_iff]
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 universe v
 /-- Actual target-open localizations detect invertibility of the original geometric mate. -/
 theorem isIso_cartesianBaseChangeMap_of_openCover
@@ -53,4 +56,4 @@ theorem isIso_cartesianBaseChangeMap_of_openCover
     (hs i) h M).mpr (hM i)
   exact (NatIso.isIso_map_iff (Scheme.Modules.restrictFunctorIsoPullback (k i)) _).mpr
     inferInstance
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

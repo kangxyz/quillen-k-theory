@@ -24,6 +24,9 @@ Degree-zero exactness uses preservation of the actual augmentation kernel.
 No resolution term or successive kernel is assumed quasicoherent.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -31,7 +34,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf.AffineDerived
+namespace AlgebraicGeometry.Scheme.Modules.AffineDerived
 
 /-- Exact tilde makes its right adjoint preserve injective objects. -/
 instance globalSections_preservesInjectiveObjects (R : CommRingCat.{u}) :
@@ -87,4 +90,4 @@ def globalSectionsInjectiveResolution :
     change Injective (moduleSpecΓFunctor.obj (I.cocomplex.X n))
     infer_instance
 
-end Quillen.SchemeSheaf.AffineDerived
+end AlgebraicGeometry.Scheme.Modules.AffineDerived

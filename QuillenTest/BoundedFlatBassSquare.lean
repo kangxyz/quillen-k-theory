@@ -11,7 +11,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassS
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.LoopPrespectrum
-open Quillen.Waldhausen.IteratedS Quillen.Scheme.PolynomialLaurent
+open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace QuillenTest.BoundedFlatBassSquare
 

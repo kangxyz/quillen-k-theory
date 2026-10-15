@@ -13,13 +13,19 @@ public import Mathlib.AlgebraicGeometry.PullbackCarrier
 /-! # Genuine closed support and its affine/open base-change identifications -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-namespace Quillen.CoherentScheme.ClosedImmersion.Ideal
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal
 variable (R : CommRingCat.{u}) (I : Ideal R)
 
 /-- The actual quotient closed immersion has precisely the zero-locus image. -/
@@ -28,9 +34,9 @@ theorem closedMap_range : Set.range (closedMap R I) = PrimeSpectrum.zeroLocus (I
   rw [range_comap_of_surjective _ _ Ideal.Quotient.mk_surjective,
     Ideal.mk_ker]
 
-end Quillen.CoherentScheme.ClosedImmersion.Ideal
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal
 
-namespace Quillen.CoherentScheme.ClosedImmersion.General
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 variable {Z X : Scheme.{u}} (i : Z ⟶ X) [IsClosedImmersion i]
 
 /-- The actual open complement of the closed immersion's underlying image. -/
@@ -49,7 +55,8 @@ variable [IsLocallyNoetherian X]
 omit [IsLocallyNoetherian X] in
 /-- Support on the actual closed image is precisely vanishing on its open complement. -/
 theorem supported_iff (M : FiniteTypeSheaves X) :
-    finiteTypeSheavesSupportedAway (openMap i) M ↔ SchemeSheaf.support M.obj ⊆ Set.range i := by
+    finiteTypeSheavesSupportedAway (openMap i) M ↔ AlgebraicGeometry.Scheme.Modules.support M.obj ⊆
+      Set.range i := by
   rw [finiteTypeSheavesSupportedAway_iff_support_subset, openMap_range, compl_compl]
 
 omit [IsLocallyNoetherian X] in
@@ -60,8 +67,8 @@ theorem supported_restrict {V : Scheme.{u}}
     finiteTypeSheavesSupportedAway (openMap (pullback.snd i a))
       ((finiteTypeSheavesRestriction a).obj M) := by
   rw [supported_iff, Scheme.Pullback.range_snd]
-  change SchemeSheaf.support (M.obj.restrict a) ⊆ a ⁻¹' Set.range i
-  rw [SchemeSheaf.support_restrict]
+  change AlgebraicGeometry.Scheme.Modules.support (M.obj.restrict a) ⊆ a ⁻¹' Set.range i
+  rw [AlgebraicGeometry.Scheme.Modules.support_restrict]
   exact Set.preimage_mono ((supported_iff i M).mp hM)
 
 variable [IsLocallyNoetherian Z]
@@ -73,7 +80,7 @@ theorem coherentPushforward_supported (M : FiniteTypeSheaves Z) :
   have : IsEmpty (pullback i (openMap i) : Scheme) :=
     Scheme.isEmpty_pullback i (openMap i) (by rw [openMap_range]; exact disjoint_compl_right)
   have hz : IsZero ((Scheme.Modules.restrictFunctor (pullback.fst i (openMap i))).obj M.obj) := by
-    apply (SchemeSheaf.isZero_iff_stalks _).mpr
+    apply (AlgebraicGeometry.Scheme.Modules.isZero_iff_stalks _).mpr
     intro x
     exact isEmptyElim x
   have hz' := (Scheme.Modules.pushforward (pullback.snd i (openMap i))).map_isZero hz
@@ -87,4 +94,4 @@ theorem coherentKilled_le_supported :
   exact (finiteTypeSheavesSupportedAway (openMap i)).prop_of_iso e
     (coherentPushforward_supported i N)
 
-end Quillen.CoherentScheme.ClosedImmersion.General
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

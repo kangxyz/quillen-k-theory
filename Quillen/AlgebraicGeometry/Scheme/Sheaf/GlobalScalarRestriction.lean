@@ -9,12 +9,15 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GlobalScalarPullback
 
 /-! Original restriction maps preserve the actual global scalar action. -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The original open restriction takes scalar multiplication to the actual restricted scalar. -/
 lemma restrict_map_globalScalar {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
@@ -29,4 +32,4 @@ lemma restrict_map_globalScalar {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersio
   exact (globalScalar U (j.appTop r)).naturality
     ((Scheme.Modules.restrictFunctorIsoPullback j).hom.app M)
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

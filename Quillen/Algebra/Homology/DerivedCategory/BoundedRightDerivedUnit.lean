@@ -37,13 +37,13 @@ theorem rightDerivedFunctorPlusUnit_isIso_of_term_bounds (K : CochainComplex.Plu
     (a b : ℤ) (hl : ∀ i, i < a → IsZero (K.obj.X i))
     (hu : ∀ i, b < i → IsZero (K.obj.X i))
     (hs : ∀ n, IsIso (F.rightDerivedFunctorPlusUnit.app
-      (Quillen.CochainComplex.singlePlus (K.obj.X n) 0))) :
+      (CochainComplex.singlePlus (K.obj.X n) 0))) :
     IsIso (F.rightDerivedFunctorPlusUnit.app K) := by
   rw [rightDerivedFunctorPlusUnit_isIso_iff]
-  apply Quillen.CochainComplex.isIso_app_of_term_bounds
+  apply CochainComplex.isIso_app_of_term_bounds
     F.rightDerivedFunctorPlusUnith K a b hl hu
   intro n
-  apply Quillen.CochainComplex.isIso_app_single_of_zero
+  apply CochainComplex.isIso_app_single_of_zero
   exact (F.rightDerivedFunctorPlusUnit_isIso_iff _).mp (hs n)
 
 end CategoryTheory.Functor

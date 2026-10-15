@@ -18,7 +18,7 @@ supported map and the positive/inverse Laurent legs over the fixed base ring.
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen.IteratedS Quillen.Scheme.AffineOpenPair
+open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair
 open Quillen.PolynomialBaseChange
 universe u
 namespace QuillenTest.SupportedSectionDiagram

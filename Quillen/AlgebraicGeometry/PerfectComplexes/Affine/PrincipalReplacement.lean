@@ -19,6 +19,9 @@ perfect object or any extension/cofinality theorem.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -32,13 +35,13 @@ namespace Quillen.PerfectComplexes.Affine
 geometric chain maps from affine strict-perfect to termwise quasicoherent complexes. -/
 theorem geometric_strict_chain_replacement (R : CommRingCat.{u}) (r : R)
     {K L : Complex (Spec R)} (hK : strictPerfect (Spec R) K) (hL : ∀ i, (L.X i).IsQuasicoherent)
-    (φ : (restrict (Quillen.CoherentScheme.principalOpen R r)).obj K ⟶
-      (restrict (Quillen.CoherentScheme.principalOpen R r)).obj L) :
+    (φ : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj K ⟶
+      (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj L) :
     ∃ (s : K ⟶ K) (g : K ⟶ L),
-      IsIso ((restrict (Quillen.CoherentScheme.principalOpen R r)).map s) ∧
-      (restrict (Quillen.CoherentScheme.principalOpen R r)).map s ≫ φ =
-        (restrict (Quillen.CoherentScheme.principalOpen R r)).map g := by
-  let J := restrict (Quillen.CoherentScheme.principalOpen R r)
+      IsIso ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map s) ∧
+      (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map s ≫ φ =
+        (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map g := by
+  let J := restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
   let A := associatedComplex R
   let K₀ := (sectionsComplex R).obj K
   let L₀ := (sectionsComplex R).obj L

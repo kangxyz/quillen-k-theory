@@ -48,7 +48,7 @@ def IsBounded {X : Scheme.{u}} (K : Complex X) : Prop :=
 
 /-- Globally bounded complexes of finite locally free sheaves. -/
 def strictPerfect (X : Scheme.{u}) : ObjectProperty (Complex X) := fun K ↦
-  IsBounded K ∧ ∀ n : ℤ, SchemeSheaf.IsFiniteLocallyFree X (K.X n)
+  IsBounded K ∧ ∀ n : ℤ, AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X (K.X n)
 
 /-- The full category of strict perfect complexes. -/
 abbrev StrictPerfect (X : Scheme.{u}) := (strictPerfect X).FullSubcategory
@@ -59,7 +59,8 @@ variable {X : Scheme.{u}}
 theorem strictPerfect_of_isZero {K : Complex X} (hK : IsZero K) : strictPerfect X K := by
   have h (n : ℤ) : IsZero (K.X n) :=
     (HomologicalComplex.eval X.Modules (ComplexShape.up ℤ) n).map_isZero hK
-  exact ⟨⟨0, 0, fun n _ ↦ h n⟩, fun n ↦ SchemeSheaf.finiteLocallyFree_of_isZero (h n)⟩
+  exact ⟨⟨0, 0, fun n _ ↦ h n⟩, fun n ↦ AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_of_isZero
+    (h n)⟩
 
 instance strictPerfect_containsZero : (strictPerfect X).ContainsZero where
   exists_zero := ⟨0, isZero_zero _, strictPerfect_of_isZero (isZero_zero _)⟩
@@ -71,7 +72,7 @@ theorem strictPerfect_of_iso {K L : Complex X} (e : K ≅ L)
   let en (n : ℤ) := (HomologicalComplex.eval X.Modules (ComplexShape.up ℤ) n).mapIso e
   refine ⟨⟨a, b, fun n hn ↦ (hb n hn).of_iso (en n).symm⟩, ?_⟩
   intro n
-  exact (SchemeSheaf.finiteLocallyFree_iff_of_iso (en n)).1 (hv n)
+  exact (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_iff_of_iso (en n)).1 (hv n)
 
 instance strictPerfect_closedUnderIsomorphisms : (strictPerfect X).IsClosedUnderIsomorphisms where
   of_iso e hK := strictPerfect_of_iso e hK
@@ -93,7 +94,8 @@ theorem strictPerfect_of_shortExact {S : ShortComplex (Complex X)}
       (fun h ↦ Or.inr (lt_of_le_of_lt (le_max_right _ _) h)))
     exact (hs n).exact.isZero_X₂ (h₁.eq_of_src _ _) (h₃.eq_of_tgt _ _)
   · intro n
-    exact @SchemeSheaf.finiteLocallyFree_of_shortExact X _ (hs n) (hv₁ n) (hv₃ n)
+    exact @AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_of_shortExact X _ (hs n) (hv₁ n) (hv₃
+      n)
 
 instance strictPerfect_extensionClosed :
     (abelianExactStructure (Complex X)).IsExtensionClosed (strictPerfect X) where
@@ -113,7 +115,8 @@ These are not defined using the ordinary Q-category of complexes. -/
 abbrev StrictK (X : Scheme.{u}) (n : ℕ) := (strictWaldhausen X).K n
 
 /-- A vector bundle, placed in degree zero, is a strict perfect complex. -/
-theorem single_strictPerfect (M : X.Modules) [SchemeSheaf.IsFiniteLocallyFree X M] :
+theorem single_strictPerfect (M : X.Modules) [AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X
+  M] :
     strictPerfect X ((HomologicalComplex.single X.Modules (ComplexShape.up ℤ) 0).obj M) := by
   constructor
   · refine ⟨0, 0, fun n hn ↦ ?_⟩
@@ -122,15 +125,16 @@ theorem single_strictPerfect (M : X.Modules) [SchemeSheaf.IsFiniteLocallyFree X 
     by_cases hn : n = 0
     · subst n
       simpa only [HomologicalComplex.single_obj_X_self] using
-        (inferInstance : SchemeSheaf.IsFiniteLocallyFree X M)
-    · exact SchemeSheaf.finiteLocallyFree_of_isZero
+        (inferInstance : AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X M)
+    · exact AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_of_isZero
         (HomologicalComplex.isZero_single_obj_X _ _ _ _ hn)
 
 /-- The canonical degree-zero inclusion of vector bundles into strict perfect
 complexes. A comparison on K-theory still requires its comparison theorem. -/
-def vectorBundleInclusion (X : Scheme.{u}) : SchemeSheaf.FiniteLocallyFree X ⥤ StrictPerfect X :=
+def vectorBundleInclusion (X : Scheme.{u}) : AlgebraicGeometry.Scheme.Modules.FiniteLocallyFree X ⥤
+  StrictPerfect X :=
   (strictPerfect X).lift
-    ((SchemeSheaf.finiteLocallyFree X).ι ⋙
+    ((AlgebraicGeometry.Scheme.Modules.finiteLocallyFree X).ι ⋙
       HomologicalComplex.single X.Modules (ComplexShape.up ℤ) 0)
     (fun M ↦ single_strictPerfect M.obj)
 

@@ -14,13 +14,15 @@ proves generation by the original flat pullback and its original left-L tensor.
 No equivalence with two summands and no K-theory inverse is inferred.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.PerfectComplexes
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules Quillen.PerfectComplexes
 local instance originalGenerationStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})
@@ -42,4 +44,4 @@ theorem originalPerfectPlus_generation
     (diagonalRotatedGenerationTriangle_distinguished R K)
   · exact h₀ ((diagonalGenerationG0 R).obj K) (perfect_diagonalGenerationG0 R K)
   · exact h₁ ((diagonalGenerationG1 R).obj K) (perfect_diagonalGenerationG1 R K)
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

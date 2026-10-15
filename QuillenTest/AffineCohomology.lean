@@ -26,8 +26,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Opposite
-open PrimeSpectrum Quillen.SchemeSheaf Quillen.SchemeSheaf.AffineCech
-open Quillen.SchemeSheaf.AffineDerived QuillenTest.AffineCechSections
+open PrimeSpectrum AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.AffineCech
+open AlgebraicGeometry.Scheme.Modules.AffineDerived QuillenTest.AffineCechSections
 
 namespace QuillenTest.AffineCohomology
 
@@ -100,7 +100,7 @@ lemma original_cocycle_on_principal_open {R : CommRingCat.{u}}
       res M (inf_le_inf inf_le_left le_rfl) (c i k)) :
     ∃ b : ∀ i, Section M (basicOpen (f i)), ∀ i j,
       res M inf_le_right (b j) - res M inf_le_left (b i) = c i j :=
-  Quillen.Cech.exists_cechOne_coboundary_of_exact
+  CategoryTheory.Cech.exists_cechOne_coboundary_of_exact
     (X := TopCat.of (Spec R)) (R := R)
     (fun i => (basicOpen (f i) : (Spec R).Opens)) (modulesSpecToSheaf.obj M).obj
     (principalCech_exactAt_succ_on_basicOpen M r f hf 0) c hc

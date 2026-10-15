@@ -17,13 +17,19 @@ Thus the unit-kernel filtration is locally the actual ideal-power filtration.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-namespace Quillen.CoherentScheme.ClosedImmersion.General
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 open FiniteModuleLocalization.IdealClosedSupport
 variable {Z : Scheme.{u}} [IsLocallyNoetherian Z]
   (R : CommRingCat.{u}) [IsNoetherianRing R]
@@ -63,4 +69,4 @@ theorem kernelUnit_range_eq_idealProduct (M : FiniteTypeSheaves (Spec R)) :
       exact htarget r hr _
     exact (he y).mp hq
 
-end Quillen.CoherentScheme.ClosedImmersion.General
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

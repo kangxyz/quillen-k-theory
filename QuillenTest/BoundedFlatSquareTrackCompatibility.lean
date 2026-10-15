@@ -12,7 +12,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassS
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PerfectComplexes
-open Quillen.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
 universe u
 namespace QuillenTest.BoundedFlatSquareTrackCompatibility
 

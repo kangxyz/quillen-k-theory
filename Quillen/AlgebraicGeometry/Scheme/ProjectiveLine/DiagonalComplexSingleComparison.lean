@@ -16,14 +16,16 @@ including its original connecting arrow and cone sign.
 -/
 
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated
   AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 local instance diagonalComplexSingleStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})
@@ -102,4 +104,4 @@ def diagonalDerivedComplexSingleTriangleIso (E : (twoChartLine R).Modules)
       diagonalBundleTensorTrianglePlus R E :=
   (diagonalDerivedComplexTriangleFactors R).app (singleZeroPlus (twoChartLine R) E) ≪≫
     diagonalComplexSingleTriangleIso R E
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

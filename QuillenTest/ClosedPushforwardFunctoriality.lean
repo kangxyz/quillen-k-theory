@@ -18,6 +18,9 @@ composite map with the original pushforwards in their covariant order.
 
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 open CategoryTheory AlgebraicGeometry
@@ -25,7 +28,7 @@ universe u
 namespace QuillenTest.ClosedPushforwardFunctoriality
 
 open Quillen
-open CoherentScheme.ClosedImmersion.General
+open AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 
 /-- Identity on the original public closed G-map, with its inferred source noetherianity. -/
 theorem original_id (X : AlgebraicGeometry.Scheme.{u}) [IsNoetherian X] (n : ℕ) :
@@ -45,17 +48,18 @@ theorem composite_open_base_change {X Y Z V : AlgebraicGeometry.Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian Y] [IsLocallyNoetherian Z]
     [IsLocallyNoetherian V] (f : X ⟶ Y) (g : Y ⟶ Z)
     [IsClosedImmersion f] [IsClosedImmersion g] (a : V ⟶ Z) [IsOpenImmersion a] (n : ℕ) :
-    (CoherentScheme.restrictionGMap a n).comp
+    (AlgebraicGeometry.Scheme.Modules.Coherent.restrictionGMap a n).comp
       ((coherentPushforwardGMap g n).comp (coherentPushforwardGMap f n)) =
       (coherentPushforwardGMap (Limits.pullback.snd (f ≫ g) a) n).comp
-        (CoherentScheme.restrictionGMap (Limits.pullback.fst (f ≫ g) a) n) := by
+        (AlgebraicGeometry.Scheme.Modules.Coherent.restrictionGMap (Limits.pullback.fst (f ≫ g) a)
+          n) := by
   rw [← coherentPushforwardGMap_comp]
   exact coherentPushforwardGMap_openBaseChange (f ≫ g) a n
 
 /-- The displayed inverse comparison is the genuine inverse scheme pushforward. -/
 theorem original_inverse {X Y : AlgebraicGeometry.Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian Y] (e : X ≅ Y) (n : ℕ)
-    (x : CoherentScheme.G X n) :
+    (x : AlgebraicGeometry.Scheme.Modules.Coherent.G X n) :
     (coherentPushforwardGEquiv e n).symm
       (coherentPushforwardGMap e.hom n x) = x :=
   (coherentPushforwardGEquiv e n).symm_apply_apply x

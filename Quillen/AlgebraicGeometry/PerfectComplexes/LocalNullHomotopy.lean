@@ -74,7 +74,7 @@ theorem exists_local_nullHomotopy_from_approx (N : ℕ)
     {X : Scheme.{u}} {K L : Complex X} (a : ℤ) (f : K ⟶ L) (α : Cochain K L (-1))
     (hα : HomotopyAbove f α (a + N - 1))
     (hb : ∀ p : ℤ, p < a → IsZero (K.X p))
-    (hv : ∀ p : ℤ, SchemeSheaf.IsFiniteLocallyFree X (K.X p))
+    (hv : ∀ p : ℤ, AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X (K.X p))
     (hL : L.Acyclic) (x : X) :
     ∃ (Y : Scheme.{u}) (j : Y ⟶ X) (hj : IsOpenImmersion j) (y : Y), j y = x ∧
       Nonempty (Homotopy ((@restrict Y X j hj).map f) 0) := by
@@ -89,12 +89,14 @@ theorem exists_local_nullHomotopy_from_approx (N : ℕ)
       have ha : HomotopyAbove f α (a + N) := by
         convert hα using 1
         omega
-      let : SchemeSheaf.IsFiniteLocallyFree X (K.X (a + N)) := hv _
+      let : AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X (K.X (a + N)) := hv _
       obtain ⟨O, hxO, β, hβ⟩ := exists_local_homotopy_step f α (a + N) ha (hL _) x
       have hb' (p : ℤ) (hp : p < a) : IsZero (((restrict O.ι).obj K).X p) :=
         (Scheme.Modules.restrictFunctor O.ι).map_isZero (hb p hp)
-      have hv' (p : ℤ) : SchemeSheaf.IsFiniteLocallyFree O.toScheme (((restrict O.ι).obj K).X p) :=
-        @SchemeSheaf.finiteLocallyFree_restrict O.toScheme X O.ι inferInstance (K.X p) (hv p)
+      have hv' (p : ℤ) : AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree O.toScheme (((restrict
+        O.ι).obj K).X p) :=
+        @AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_restrict O.toScheme X O.ι inferInstance
+          (K.X p) (hv p)
       obtain ⟨Y, j, hj, y, hy, ⟨h⟩⟩ := ih ((restrict O.ι).map f) β hβ hb' hv'
         (acyclic_restrict O.ι hL) ⟨x, hxO⟩
       let := hj

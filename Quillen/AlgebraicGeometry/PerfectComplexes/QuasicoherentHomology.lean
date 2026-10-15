@@ -44,7 +44,7 @@ lemma quasicoherent_homology_mappingCone {X : Scheme.{u}} {K L : Complex X} (f :
   have : (T.obj₂.homology n).IsQuasicoherent := hL n
   have : (T.obj₁.homology (n+1)).IsQuasicoherent := hK (n+1)
   have : (T.obj₂.homology (n+1)).IsQuasicoherent := hL (n+1)
-  exact SchemeSheaf.quasicoherent_of_five_exact a b c d
+  exact AlgebraicGeometry.Scheme.Modules.quasicoherent_of_five_exact a b c d
     (CochainComplex.homologyMap_comp_eq_zero_of_distTriang T hT n)
     (CochainComplex.homologyMap_homologyδOfTriangle T hT n (n+1))
     (CochainComplex.homologyδOfTriangle_homologyMap T hT n (n+1))

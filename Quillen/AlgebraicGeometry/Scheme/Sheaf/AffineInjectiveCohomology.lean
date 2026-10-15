@@ -21,6 +21,9 @@ right homology data. Neither the opcycles nor the injective terms are assumed
 quasicoherent. No global exactness of sections on all sheaves is claimed.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -29,7 +32,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Opposite
 open PrimeSpectrum Quillen.Cech HomologicalComplex
-namespace Quillen.SchemeSheaf.AffineCech
+namespace AlgebraicGeometry.Scheme.Modules.AffineCech
 
 /-- Actual positive Čech exactness on every finite principal cover of a principal open. -/
 def principalCechAcyclic {R : CommRingCat.{u}} (M : (Spec R).Modules) : Prop :=
@@ -199,4 +202,4 @@ lemma globalSections_preservesRightHomology {R : CommRingCat.{u}}
     { f := hp, g' := inferInstance }
   exact Functor.PreservesRightHomologyOf.mk' moduleSpecΓFunctor (I.sc n).homologyData.right
 
-end Quillen.SchemeSheaf.AffineCech
+end AlgebraicGeometry.Scheme.Modules.AffineCech

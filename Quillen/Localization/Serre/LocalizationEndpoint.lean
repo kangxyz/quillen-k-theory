@@ -35,7 +35,8 @@ structure KLocalizationSequence where
   /-- The boundary homomorphism from degree `n + 1` K-theory of the Serre quotient to degree `n`
   K-theory of the Serre subcategory, compatible with the specified fiber comparison. -/
   connecting : ∀ n : ℕ,
-    (quotientExactStructure P).K (n + 1) →* (Devissage.subcategoryExactStructure P).K n
+    (quotientExactStructure P).K (n + 1) →* (CategoryTheory.ObjectProperty.subcategoryExactStructure
+      P).K n
   comparison_connecting : ∀ n,
     (localizationFiberComparisonHom P n).comp (connecting n) = fiberConnectingHom P n
   exact_ambient : ∀ n,
@@ -50,14 +51,15 @@ structure KLocalizationSequence where
 isomorphism; the forward map is unchanged. -/
 def localizationFiberEquivOfBijective (n : ℕ)
     (h : Function.Bijective (localizationFiberComparisonHom P n)) :
-    (Devissage.subcategoryExactStructure P).K n ≃*
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure P).K n ≃*
       HomotopyGroup.Pi (n + 1) (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P) :=
   MulEquiv.ofBijective (localizationFiberComparisonHom P n) h
 
 /-- The underlying monoid homomorphism of this K-equivalence. -/
 @[simp] theorem localizationFiberEquivOfBijective_coe (n : ℕ)
     (h : Function.Bijective (localizationFiberComparisonHom P n)) :
-    (↑(localizationFiberEquivOfBijective P n h) : (Devissage.subcategoryExactStructure P).K n →*
+    (↑(localizationFiberEquivOfBijective P n h) :
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure P).K n →*
         HomotopyGroup.Pi (n + 1) (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P)) =
       localizationFiberComparisonHom P n := rfl
 
@@ -65,7 +67,7 @@ def localizationFiberEquivOfBijective (n : ℕ)
 /-- Transporting the actual connecting map through the canonical comparison
 retains its defining equation, rather than choosing an unrelated exact map. -/
 theorem comparison_comp_connectingHomOfComparison (n : ℕ)
-    (e : (Devissage.subcategoryExactStructure P).K n ≃*
+    (e : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).K n ≃*
       HomotopyGroup.Pi (n + 1) (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P))
     (he : e.toMonoidHom = localizationFiberComparisonHom P n) :
     (localizationFiberComparisonHom P n).comp (connectingHomOfComparison P n e) =
@@ -96,7 +98,7 @@ comparison equation whenever the comparison is injective. -/
 theorem connecting_unique_of_comparison_injective (n : ℕ)
     (h : Function.Injective (localizationFiberComparisonHom P n))
     (δ δ' : (quotientExactStructure P).K (n + 1) →*
-      (Devissage.subcategoryExactStructure P).K n)
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure P).K n)
     (hδ : (localizationFiberComparisonHom P n).comp δ = fiberConnectingHom P n)
     (hδ' : (localizationFiberComparisonHom P n).comp δ' = fiberConnectingHom P n) :
     δ = δ' := by

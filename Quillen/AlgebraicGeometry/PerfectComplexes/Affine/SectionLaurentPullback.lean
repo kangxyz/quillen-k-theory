@@ -18,7 +18,7 @@ bounded-flat geometric Laurent pullback and the already existing original unit a
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.Scheme.PolynomialLaurent
+open CategoryTheory AlgebraicGeometry AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 variable (R : CommRingCat.{u})

@@ -16,6 +16,9 @@ composition, and naturality of the original canonical K-to-G map.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -41,8 +44,8 @@ theorem arbitraryQuasicoherence {X Y : AlgebraicGeometry.Scheme.{u}} (f : X ⟶ 
 even for a morphism that is not assumed flat. -/
 theorem coherentUnderlyingSheaf {X Y : AlgebraicGeometry.Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian Y] (f : X ⟶ Y)
-    (M : CoherentScheme.FiniteTypeSheaves Y) :
-    ((CoherentScheme.coherentPullback f).obj M).obj =
+    (M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves Y) :
+    ((AlgebraicGeometry.Scheme.Modules.Coherent.coherentPullback f).obj M).obj =
       (Scheme.Modules.pullback f).obj M.obj := rfl
 
 /-- Actual flat ring maps preserve sheaf short exact sequences of
@@ -52,38 +55,38 @@ theorem affineExactness {R S : CommRingCat.{u}} (φ : R ⟶ S) (hφ : φ.hom.Fla
     [C.X₁.IsQuasicoherent] [C.X₂.IsQuasicoherent] :
     (C.map (Scheme.Modules.pullback (Spec.map φ))).ShortExact := by
   have : Flat (Spec.map φ) := Flat.SpecMap_iff.mpr hφ
-  exact CoherentScheme.shortExact_pullback_of_flat (Spec.map φ) hC
+  exact AlgebraicGeometry.Scheme.Modules.QuasiCoherent.shortExact_pullback_of_flat (Spec.map φ) hC
 
 /-- An actual flat ring map induces the canonical G-map between noetherian spectra. -/
 def affineGMap {R S : CommRingCat.{u}} [IsNoetherianRing R] [IsNoetherianRing S]
     (φ : R ⟶ S) (hφ : φ.hom.Flat) (n : ℕ) :
-    Quillen.Scheme.G (Spec R) n →* Quillen.Scheme.G (Spec S) n := by
+    AlgebraicGeometry.Scheme.G (Spec R) n →* AlgebraicGeometry.Scheme.G (Spec S) n := by
   have : Flat (Spec.map φ) := Flat.SpecMap_iff.mpr hφ
-  exact Quillen.Scheme.pullbackG (Spec.map φ) n
+  exact AlgebraicGeometry.Scheme.pullbackG (Spec.map φ) n
 
 /-- Successive flat pullbacks compute the map of the actual composite. -/
 theorem compositeGMap {X Y Z : AlgebraicGeometry.Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian Y] [IsLocallyNoetherian Z]
     (f : X ⟶ Y) (g : Y ⟶ Z) [Flat f] [Flat g] (n : ℕ)
-    (x : Quillen.Scheme.G Z n) :
-    Quillen.Scheme.pullbackG (f ≫ g) n x =
-      Quillen.Scheme.pullbackG f n (Quillen.Scheme.pullbackG g n x) := by
-  rw [Quillen.Scheme.pullbackG_comp]
+    (x : AlgebraicGeometry.Scheme.G Z n) :
+    AlgebraicGeometry.Scheme.pullbackG (f ≫ g) n x =
+      AlgebraicGeometry.Scheme.pullbackG f n (AlgebraicGeometry.Scheme.pullbackG g n x) := by
+  rw [AlgebraicGeometry.Scheme.pullbackG_comp]
   rfl
 
 /-- The new flat G-map agrees with the already-existing open restriction. -/
 theorem originalOpenRestriction {X Y : AlgebraicGeometry.Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian Y] (j : X ⟶ Y)
     [IsOpenImmersion j] (n : ℕ) :
-    Quillen.Scheme.pullbackG j n = Quillen.Scheme.restrictG j n :=
-  Quillen.Scheme.pullbackG_eq_restrictG j n
+    AlgebraicGeometry.Scheme.pullbackG j n = AlgebraicGeometry.Scheme.restrictG j n :=
+  AlgebraicGeometry.Scheme.pullbackG_eq_restrictG j n
 
 /-- The natural square uses the original public K, G and K-to-G maps. -/
 theorem originalComparisonSquare {X Y : AlgebraicGeometry.Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian Y] (f : X ⟶ Y) [Flat f]
-    (n : ℕ) (x : Quillen.Scheme.K Y n) :
-    Quillen.Scheme.pullbackG f n (Quillen.Scheme.KToG Y n x) =
-      Quillen.Scheme.KToG X n (Quillen.Scheme.pullbackK f n x) :=
-  Quillen.Scheme.KToG_pullback_apply f n x
+    (n : ℕ) (x : AlgebraicGeometry.Scheme.K Y n) :
+    AlgebraicGeometry.Scheme.pullbackG f n (AlgebraicGeometry.Scheme.KToG Y n x) =
+      AlgebraicGeometry.Scheme.KToG X n (AlgebraicGeometry.Scheme.pullbackK f n x) :=
+  AlgebraicGeometry.Scheme.KToG_pullback_apply f n x
 
 end QuillenTest.CoherentFlatPullback

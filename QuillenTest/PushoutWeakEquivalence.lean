@@ -13,7 +13,7 @@ on every signed stable group. -/
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen Quillen.LoopPrespectrum Quillen.PerfectComplexes
-open Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped Topology unitInterval
 universe u
 namespace QuillenTest.PushoutWeakEquivalence

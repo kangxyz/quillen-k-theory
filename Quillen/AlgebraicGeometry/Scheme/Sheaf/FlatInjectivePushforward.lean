@@ -17,10 +17,13 @@ makes the original direct image preserve injective sheaves. No preservation
 of perfect objects or acyclicity of quasicoherent coefficients is assumed.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard ambient derived category of actual module sheaves. -/
 local instance standardDerivedSheaves (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _
@@ -78,4 +81,4 @@ theorem flatPushforwardDerivedHomEquiv_map {Z X : Scheme.{u}} (f : Z ⟶ X) [Fla
   exact (Scheme.Modules.pullbackPushforwardAdjunction f).cochainDerivedHomEquivOfKInjective_map
     K I s
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

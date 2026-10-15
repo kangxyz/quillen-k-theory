@@ -11,11 +11,14 @@ public import Quillen.AlgebraicGeometry.Scheme.Comparison.KToGFinitePushforward
 original sheaf maps, exact sequences, open base change and canonical K-to-G. -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf
+open AlgebraicGeometry.Scheme.Modules
 attribute [local instance] Abelian.hasFiniteBiproducts
 universe u
 namespace QuillenTest.FiniteFlatPushforward
@@ -58,14 +61,15 @@ theorem original_open_base_change (j : U ⟶ X) [IsOpenImmersion j] (n : ℕ) (x
 
 /-- The original K-to-G square agrees on every input K-class. -/
 theorem original_KToG (n : ℕ) (x : SchemeK Z n) :
-    CoherentScheme.Finite.coherentPushforwardGMap f n (schemeKToG Z n x) =
+    AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.coherentPushforwardGMap f n
+      (schemeKToG Z n x) =
       schemeKToG X n (schemeKPushforward f n x) :=
   congrArg (fun h ↦ h x) (schemeKToG_pushforward f n)
 
 /-- The bundled natural comparison is the original public K-to-G homomorphism. -/
-theorem public_comparison_app (Y : Quillen.Scheme.LocallyNoetherianFiniteFlatSchemes.{u})
+theorem public_comparison_app (Y : AlgebraicGeometry.Scheme.LocallyNoetherianFiniteFlatSchemes.{u})
     (n : ℕ) :
-    ((Quillen.Scheme.KToGFiniteFlatPushforward n).app Y).hom =
-      Quillen.Scheme.KToG Y.obj.obj n := rfl
+    ((AlgebraicGeometry.Scheme.KToGFiniteFlatPushforward n).app Y).hom =
+      AlgebraicGeometry.Scheme.KToG Y.obj.obj n := rfl
 
 end QuillenTest.FiniteFlatPushforward

@@ -16,6 +16,9 @@ an affine scheme. A regular global scalar therefore gives a monomorphism of the 
 structure module. An actual affine scheme identification transports this statement.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 noncomputable section
 universe u v
@@ -23,7 +26,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- Injectivity on global sections detects a mono between actual quasicoherent affine sheaves. -/
 theorem mono_of_mono_globalSections (R : CommRingCat.{u})
     {M N : (Spec R).Modules} [M.IsQuasicoherent] [N.IsQuasicoherent]
@@ -67,4 +70,4 @@ theorem mono_unitMul_of_affineModel (R : CommRingCat.{u}) {X : Scheme.{u}}
     infer_instance
   have : Mono (F.map (unitMul X s)) := mono_of_mono _ (pullbackUnitIso e.hom).hom
   exact F.mono_of_mono_map inferInstance
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

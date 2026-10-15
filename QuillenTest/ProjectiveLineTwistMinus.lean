@@ -11,9 +11,12 @@ public import Mathlib.Data.ZMod.Basic
 
 /-! # Consumers of the canonical negative twist and its original maps -/
 @[expose] public section
+
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 universe u
 namespace QuillenTest.ProjectiveLineTwistMinus
 
@@ -58,8 +61,10 @@ theorem original_scalar_transition (R : CommRingCat.{u}) (M : (twoChartLine R).M
     (Scheme.Modules.restrictFunctor (pullback.fst (plusChart R) (minusChart R))).map
         (twistMinusPlusIso R M).hom ≫
       (moduleMulIso _ (overlapCoordinateUnit R)).hom ≫
-      (Quillen.CoherentScheme.overlapRestrictIso (plusChart R) (minusChart R)).hom.app M =
-    (Quillen.CoherentScheme.overlapRestrictIso (plusChart R) (minusChart R)).hom.app
+      (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso (plusChart R) (minusChart
+        R)).hom.app M =
+    (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso (plusChart R) (minusChart
+      R)).hom.app
         (twistMinus R M) ≫
       (Scheme.Modules.restrictFunctor (pullback.snd (plusChart R) (minusChart R))).map
         (twistMinusMinusIso R M).hom :=

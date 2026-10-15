@@ -18,7 +18,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace QuillenTest.CartesianBaseChangeMates
 
 open Quillen
-open SchemeSheaf Scheme.Modules
+open AlgebraicGeometry.Scheme.Modules Scheme.Modules
 /-- The original standard ambient categories. -/
 local instance standard (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _

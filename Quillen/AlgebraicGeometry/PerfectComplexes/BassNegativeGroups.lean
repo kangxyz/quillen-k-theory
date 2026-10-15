@@ -28,7 +28,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 universe u
 namespace Quillen.PerfectComplexes.Bass
-open Quillen.Scheme
+open AlgebraicGeometry.Scheme
 
 /-- The commutative group structure on original perfect K0 supplied by additivity. -/
 local instance perfectKZeroCommGroup (X : QuasiCompactSchemes.{u}) : CommGroup (PerfectK X.obj 0) :=
@@ -48,8 +48,9 @@ def perfectKZeroFunctor : QuasiCompactSchemes.{u}ᵒᵖ ⥤ AddCommGrpCat.{u+1} 
 /-- Genuine group-level Bass recursion on qc schemes. Index n denotes K_{-n}. -/
 def negativeKFunctor : ℕ → QuasiCompactSchemes.{u}ᵒᵖ ⥤ AddCommGrpCat.{u+1}
   | 0 => perfectKZeroFunctor
-  | n+1 => Quillen.Bass.TwoChart.contraction (NatTrans.op Scheme.Bass.plus) (NatTrans.op
-    Scheme.Bass.minus)
+  | n+1 => Quillen.Bass.TwoChart.contraction (NatTrans.op
+    AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus) (NatTrans.op
+    AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus)
       (negativeKFunctor n)
 
 /-- The Bass group K_{-n} of an actual quasi-compact scheme. -/
@@ -74,15 +75,21 @@ abbrev negativeKPullback {X Y : QuasiCompactSchemes.{u}} (f : X ⟶ Y) (n : ℕ)
 
 /-- The actual Laurent quotient arrow in each successive negative degree. -/
 def negativeKπ (X : QuasiCompactSchemes.{u}) (n : ℕ) :
-    negativeK (Scheme.Bass.laurentFunctor.obj X) n ⟶ negativeK X (n+1) :=
-  (Quillen.Bass.TwoChart.contractionπ (NatTrans.op Scheme.Bass.plus) (NatTrans.op Scheme.Bass.minus)
+    negativeK (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.laurentFunctor.obj X) n ⟶
+      negativeK X (n+1) :=
+  (Quillen.Bass.TwoChart.contractionπ (NatTrans.op
+    AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus) (NatTrans.op
+    AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus)
     (negativeKFunctor n)).app (op X)
 
 @[reassoc] lemma negativeKπ_naturality {X Y : QuasiCompactSchemes.{u}}
     (f : X ⟶ Y) (n : ℕ) :
-    negativeKPullback (Scheme.Bass.laurentFunctor.map f) n ≫ negativeKπ X n =
+    negativeKPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.laurentFunctor.map f) n ≫
+      negativeKπ X n =
       negativeKπ Y n ≫ negativeKPullback f (n+1) :=
-  (Quillen.Bass.TwoChart.contractionπ (NatTrans.op Scheme.Bass.plus) (NatTrans.op Scheme.Bass.minus)
+  (Quillen.Bass.TwoChart.contractionπ (NatTrans.op
+    AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus) (NatTrans.op
+    AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus)
     (negativeKFunctor n)).naturality f.op
 
 lemma negativeKπ_surjective (X : QuasiCompactSchemes.{u}) (n : ℕ) :
@@ -91,17 +98,21 @@ lemma negativeKπ_surjective (X : QuasiCompactSchemes.{u}) (n : ℕ) :
 
 /-- The literal two-chart relation on the actual relative polynomial/Laurent schemes. -/
 lemma negativeKπ_eq_zero_iff (X : QuasiCompactSchemes.{u}) (n : ℕ)
-    (x : negativeK (Scheme.Bass.laurentFunctor.obj X) n) :
-    negativeKπ X n x = 0 ↔ ∃ a b : negativeK (Scheme.Bass.polynomialFunctor.obj X) n,
-      negativeKPullback (Scheme.Bass.plus.app X) n a -
-        negativeKPullback (Scheme.Bass.minus.app X) n b = x :=
+    (x : negativeK (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.laurentFunctor.obj X) n) :
+    negativeKπ X n x = 0 ↔ ∃ a b : negativeK
+      (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialFunctor.obj X) n,
+      negativeKPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus.app X) n a -
+        negativeKPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus.app X) n b = x
+          :=
   Quillen.Bass.TwoChart.contractionπ_eq_zero_iff _ _ _ _ _
 
 /-- The exact categorical Bass presentation of each successor degree. -/
 lemma negativeK_exact (X : QuasiCompactSchemes.{u}) (n : ℕ) :
     (ShortComplex.mk
-      (Quillen.Bass.TwoChart.polynomialDifference (NatTrans.op Scheme.Bass.plus)
-        (NatTrans.op Scheme.Bass.minus) (negativeKFunctor n) (op X)) (negativeKπ X n)
+      (Quillen.Bass.TwoChart.polynomialDifference (NatTrans.op
+        AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus)
+        (NatTrans.op AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus) (negativeKFunctor n)
+          (op X)) (negativeKπ X n)
       (Quillen.Bass.TwoChart.polynomialDifference_contractionπ _ _ _ _)).Exact :=
   Quillen.Bass.TwoChart.contraction_exact _ _ _ _
 
@@ -116,25 +127,37 @@ lemma negativeKPullback_flat {X Y : QuasiCompactSchemes.{u}}
 
 /-- Descent of a prescribed Laurent homomorphism annihilating both original chart pullbacks. -/
 def negativeKDesc (X : QuasiCompactSchemes.{u}) (n : ℕ) {A : AddCommGrpCat.{u + 1}}
-    (f : negativeK (Scheme.Bass.laurentFunctor.obj X) n ⟶ A)
-    (hp : negativeKPullback (Scheme.Bass.plus.app X) n ≫ f = 0)
-    (hm : negativeKPullback (Scheme.Bass.minus.app X) n ≫ f = 0) :
+    (f : negativeK (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.laurentFunctor.obj X) n ⟶ A)
+    (hp : negativeKPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus.app X) n ≫ f =
+      0)
+    (hm : negativeKPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus.app X) n ≫ f
+      = 0) :
     negativeK X (n+1) ⟶ A :=
-  Quillen.Bass.TwoChart.contractionDescOfCharts (NatTrans.op Scheme.Bass.plus)
-    (NatTrans.op Scheme.Bass.minus) (negativeKFunctor n) (op X) f hp hm
+  Quillen.Bass.TwoChart.contractionDescOfCharts (NatTrans.op
+    AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus)
+    (NatTrans.op AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus) (negativeKFunctor n) (op
+      X) f hp hm
 
 @[reassoc (attr := simp)] lemma negativeKπ_desc (X : QuasiCompactSchemes.{u}) (n : ℕ)
-    {A : AddCommGrpCat.{u + 1}} (f : negativeK (Scheme.Bass.laurentFunctor.obj X) n ⟶ A)
-    (hp : negativeKPullback (Scheme.Bass.plus.app X) n ≫ f = 0)
-    (hm : negativeKPullback (Scheme.Bass.minus.app X) n ≫ f = 0) :
+    {A : AddCommGrpCat.{u + 1}} (f : negativeK
+      (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.laurentFunctor.obj X) n ⟶ A)
+    (hp : negativeKPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus.app X) n ≫ f =
+      0)
+    (hm : negativeKPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus.app X) n ≫ f
+      = 0) :
     negativeKπ X n ≫ negativeKDesc X n f hp hm = f :=
-  Quillen.Bass.TwoChart.contractionπ_descOfCharts (NatTrans.op Scheme.Bass.plus)
-    (NatTrans.op Scheme.Bass.minus) (negativeKFunctor n) (op X) f hp hm
+  Quillen.Bass.TwoChart.contractionπ_descOfCharts (NatTrans.op
+    AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus)
+    (NatTrans.op AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus) (negativeKFunctor n) (op
+      X) f hp hm
 
 lemma negativeKDesc_unique (X : QuasiCompactSchemes.{u}) (n : ℕ)
-    {A : AddCommGrpCat.{u + 1}} (f : negativeK (Scheme.Bass.laurentFunctor.obj X) n ⟶ A)
-    (hp : negativeKPullback (Scheme.Bass.plus.app X) n ≫ f = 0)
-    (hm : negativeKPullback (Scheme.Bass.minus.app X) n ≫ f = 0)
+    {A : AddCommGrpCat.{u + 1}} (f : negativeK
+      (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.laurentFunctor.obj X) n ⟶ A)
+    (hp : negativeKPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus.app X) n ≫ f =
+      0)
+    (hm : negativeKPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus.app X) n ≫ f
+      = 0)
     (g : negativeK X (n + 1) ⟶ A) (hg : negativeKπ X n ≫ g = f) :
     g = negativeKDesc X n f hp hm := by
   exact (cancel_epi (negativeKπ X n)).mp (hg.trans (negativeKπ_desc X n f hp hm).symm)

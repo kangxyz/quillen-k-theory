@@ -27,7 +27,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 universe u
 namespace Quillen.PerfectComplexes.Bass
-open Quillen.Scheme
+open AlgebraicGeometry.Scheme
 
 /-- The commutative group structure on original supported K0 supplied by additivity. -/
 local instance supportedKZeroCommGroup (A : QuasiCompactOpenPairs.{u}) :

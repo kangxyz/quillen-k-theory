@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.GlobalLocalizationSupport
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.GlobalLocalizationQuotient
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.ObjectExtension
@@ -26,6 +28,12 @@ needed.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -34,7 +42,7 @@ universe u w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 private theorem global_exact_transport
     {A B C A' B' C' : Type w}
@@ -123,7 +131,7 @@ theorem globalInclusionGMap_eq_smallKMap (n : ℕ) :
           (coherentGlobalSupportedGEquiv j n).toMonoidHom := by
     change ((SmallModelLocalization.standardExactFunctor.{u+1} (FiniteTypeSheaves X)).KMap n).comp
         ((supportedCoherentInclusionExact j).smallModel.KMap n) =
-      ((Devissage.exactInclusion (coherentGlobalSmallSupport j)).KMap n).comp
+      ((CategoryTheory.ObjectProperty.exactInclusion (coherentGlobalSmallSupport j)).KMap n).comp
         ((coherentGlobalSupportComparison j).KMap n)
     rw [← CategoryTheory.ExactCategory.ExactFunctor.KMap_comp, ←
       CategoryTheory.ExactCategory.ExactFunctor.KMap_comp,
@@ -236,4 +244,4 @@ theorem global_localization_GZero_tail :
     global_inclusion_range_eq_restriction_ker j 0,
     global_GZero_surjective j⟩
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

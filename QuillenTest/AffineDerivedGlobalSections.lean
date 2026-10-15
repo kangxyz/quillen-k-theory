@@ -24,7 +24,7 @@ with flasque kernel lift sections without conditions on the other terms.
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
-open Quillen.SchemeSheaf Quillen.SchemeSheaf.AffineDerived
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.AffineDerived
 open QuillenTest.AffineCechSections
 
 namespace QuillenTest.AffineDerivedGlobalSections

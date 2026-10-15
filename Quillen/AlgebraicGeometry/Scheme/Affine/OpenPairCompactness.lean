@@ -16,10 +16,12 @@ Base change therefore gives compactness of each actual fixed pullback open.
 No flatness hypothesis is imposed on the coefficient arrow.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.Scheme.AffineOpenPair
+namespace AlgebraicGeometry.Scheme.AffineOpenPair
 
 /-- Every original fixed pullback open is compact when the initial open is compact. -/
 theorem compactSpace_openSpace {R : CommRingCat.{u}} {U : AlgebraicGeometry.Scheme.{u}}
@@ -28,4 +30,4 @@ theorem compactSpace_openSpace {R : CommRingCat.{u}} {U : AlgebraicGeometry.Sche
   exact inferInstanceAs
     (CompactSpace ((pullback j (Spec.map a.hom)) : AlgebraicGeometry.Scheme.{u}))
 
-end Quillen.Scheme.AffineOpenPair
+end AlgebraicGeometry.Scheme.AffineOpenPair

@@ -12,14 +12,16 @@ two actual vertices with their original coefficient derived functors. The
 projected comparisons keep the literal original second-projection functor.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits
   CategoryTheory.Pretriangulated AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 local instance vertexComparisonStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})
@@ -94,4 +96,4 @@ def diagonalDerivedComplexProjectedSecondIso :
     isoWhiskerRight (diagonalDerivedComplexSecondIso R)
       (derivedPushforwardPlus (relativeSecond R))
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

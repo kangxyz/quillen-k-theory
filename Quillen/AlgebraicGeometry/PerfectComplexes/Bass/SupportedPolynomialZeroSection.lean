@@ -22,7 +22,7 @@ stabilization are separate obligations.
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite Quillen.Scheme
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite AlgebraicGeometry.Scheme
 universe u
 namespace Quillen.PerfectComplexes.Bass
 
@@ -86,19 +86,21 @@ namespace Quillen.PerfectComplexes
 
 /-- The same actual pair zero section splits supported perfect K in every nonnegative degree. -/
 theorem perfectSupportedKPolynomialPullback_evaluation (A : QuasiCompactOpenPairs.{u}) (n : ℕ) :
-    (perfectSupportedKPullback (Quillen.Scheme.Bass.pairPolynomialZero.app A) n).comp
-      (perfectSupportedKPullback (Quillen.Scheme.Bass.pairPolynomialProjection.app A) n) =
+    (perfectSupportedKPullback (AlgebraicGeometry.Scheme.Bass.pairPolynomialZero.app A) n).comp
+      (perfectSupportedKPullback (AlgebraicGeometry.Scheme.Bass.pairPolynomialProjection.app A) n) =
       MonoidHom.id (PerfectSupportedK A.obj.obj.hom n) := by
-  rw [← perfectSupportedKPullback_comp, Quillen.Scheme.Bass.pairPolynomialZero_projection]
+  rw [← perfectSupportedKPullback_comp, AlgebraicGeometry.Scheme.Bass.pairPolynomialZero_projection]
   exact perfectSupportedKPullback_id A n
 
 /-- Original supported perfect K projection pullback is injective, including degree zero. -/
 theorem perfectSupportedKPolynomialPullback_injective (A : QuasiCompactOpenPairs.{u}) (n : ℕ) :
     Function.Injective
-      (perfectSupportedKPullback (Quillen.Scheme.Bass.pairPolynomialProjection.app A) n) := by
+      (perfectSupportedKPullback (AlgebraicGeometry.Scheme.Bass.pairPolynomialProjection.app A) n)
+        := by
   have h : Function.LeftInverse
-      (perfectSupportedKPullback (Quillen.Scheme.Bass.pairPolynomialZero.app A) n)
-      (perfectSupportedKPullback (Quillen.Scheme.Bass.pairPolynomialProjection.app A) n) := fun x =>
+      (perfectSupportedKPullback (AlgebraicGeometry.Scheme.Bass.pairPolynomialZero.app A) n)
+      (perfectSupportedKPullback (AlgebraicGeometry.Scheme.Bass.pairPolynomialProjection.app A) n)
+        := fun x =>
     congrArg (fun f => f x) (perfectSupportedKPolynomialPullback_evaluation A n)
   exact h.injective
 

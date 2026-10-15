@@ -22,6 +22,8 @@ identification, derived projection formulas and generation remain separate.
 -/
 
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -29,8 +31,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open DerivedCategory CategoryTheory.Pretriangulated
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 
 /-- The standard derived category of modules on the original relative square. -/
 local instance diagonalBundleTensorStandardDerived (R : CommRingCat.{u}) :
@@ -128,4 +130,4 @@ theorem diagonalBundleTensorTriangle_mor₂ (R : CommRingCat.{u}) (M : (twoChart
         ((Scheme.Modules.pullback (relativeFirst R)).obj M)).map
         (diagonalQuotientMap R)) := rfl
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

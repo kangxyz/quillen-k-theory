@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.Principal
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.ComparisonGTheory
 public import Quillen.CategoryTheory.SmallModel.Functoriality
@@ -21,6 +22,12 @@ separate; no cross-universe realization identification is used.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,7 +35,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme.ClosedImmersion
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 open FiniteModuleLocalization
 
 variable (R : CommRingCat.{u}) [IsNoetherianRing R]
@@ -42,7 +49,8 @@ variable (f : R)
 
 /-- The canonical principal closed pushforward on the public global G-groups. -/
 def coherentPushforwardGMap (n : ℕ) :
-    CoherentScheme.G (Spec (principalRing R f)) n →* CoherentScheme.G (Spec R) n :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec (principalRing R f)) n →*
+      AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec R) n :=
   CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (coherentPushforwardExact R f) n
 
 /-- The exact comparison square induces equality of canonical upper-universe
@@ -84,4 +92,4 @@ theorem specPushforwardGMap_square (n : ℕ) :
     (coherentPushforwardSquare R f) n
   simpa only [CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, specPushforwardGMap] using h
 
-end Quillen.CoherentScheme.ClosedImmersion
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

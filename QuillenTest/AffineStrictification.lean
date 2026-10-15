@@ -19,6 +19,9 @@ quasi-isomorphism from a strict-perfect module complex.
 
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -49,9 +52,11 @@ including restrictions to empty principal opens. -/
 theorem actual_restricted_strict_model (R : CommRingCat.{u})
     (K : Complex (Spec R)) (hK : locallyPerfect (Spec R) K) (r : R) :
     ∃ P : StrictPerfect (Spec R),
-      Nonempty ((toDerived _).obj ((restrict (Quillen.CoherentScheme.principalOpen R r)).obj P.obj)
+      Nonempty ((toDerived _).obj ((restrict
+        (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj P.obj)
         ≅
-        (toDerived _).obj ((restrict (Quillen.CoherentScheme.principalOpen R r)).obj K)) := by
+        (toDerived _).obj ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+          r)).obj K)) := by
   obtain ⟨P, ⟨e⟩⟩ := locallyPerfect_exists_strictPerfect_representative R hK
   exact ⟨P, ⟨restrictDerivedIso _ e⟩⟩
 
@@ -61,9 +66,10 @@ theorem actual_zmod_six_empty_restriction
     (K : Complex (Spec (CommRingCat.of (ZMod 6))))
     (hK : locallyPerfect _ K) :
     ∃ P : StrictPerfect (Spec (CommRingCat.of (ZMod 6))),
-      Nonempty ((toDerived _).obj ((restrict (Quillen.CoherentScheme.principalOpen
+      Nonempty ((toDerived _).obj ((restrict
+        (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
         (CommRingCat.of (ZMod 6)) 0)).obj P.obj) ≅
-        (toDerived _).obj ((restrict (Quillen.CoherentScheme.principalOpen
+        (toDerived _).obj ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
           (CommRingCat.of (ZMod 6)) 0)).obj K)) :=
   actual_restricted_strict_model _ K hK 0
 

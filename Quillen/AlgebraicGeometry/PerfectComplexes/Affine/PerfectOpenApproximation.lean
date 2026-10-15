@@ -29,6 +29,9 @@ cutoffs are retained for the subsequent genuine Ext-vanishing argument.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -47,7 +50,7 @@ lemma exists_principal_module_model_on_open (R : CommRingCat.{u})
     (r : R) (hr : PrimeSpectrum.basicOpen r ≤ W) :
     ∃ P : ModuleComplex (.of (Localization.Away r)), moduleStrictPerfect _ P ∧
       Nonempty (DerivedCategory.Q.obj ((localize r (.up ℤ)).obj K) ≅ DerivedCategory.Q.obj P) := by
-  let j := CoherentScheme.principalOpen R r
+  let j := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r
   have hjW : Set.range j ⊆ Set.range W.ι := by
     rw [Scheme.Opens.range_ι, ← Scheme.Hom.coe_opensRange, Scheme.Hom.opensRange_localizationAway r]
     exact hr
@@ -98,7 +101,8 @@ lemma exists_strict_approximation_on_compact_open (R : CommRingCat.{u})
     (hK : locallyPerfect W.toScheme ((restrict W.ι).obj ((associatedComplex R).obj K))) :
     ∃ (c : ℤ), c ≤ cutoff ∧ ∃ (P : ModuleComplex R) (_ : moduleStrictPerfect R P) (f : P ⟶ K),
       let D := (restrict W.ι).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))
-      SchemeSheaf.IsFiniteLocallyFree W.toScheme (D.homology c) ∧ D.IsGE c ∧ D.IsLE c ∧
+      AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree W.toScheme (D.homology c) ∧ D.IsGE c ∧
+        D.IsLE c ∧
         Nonempty ((toDerived W.toScheme).obj D ≅ (toDerived W.toScheme).obj
           ((CochainComplex.singleFunctor W.toScheme.Modules c).obj (D.homology c))) := by
   classical
@@ -115,12 +119,15 @@ lemma exists_strict_approximation_on_compact_open (R : CommRingCat.{u})
         by
     obtain ⟨P, hP, hb, he⟩ := hc₀ r
     exact ⟨P, hP, fun i hi => hb i (lt_of_lt_of_le hi (min_le_left _ _)), he⟩
-  have hjW (r : s) : Set.range (CoherentScheme.principalOpen R r.val) ⊆ Set.range W.ι := by
+  have hjW (r : s) : Set.range (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+    r.val) ⊆ Set.range W.ι := by
     rw [Scheme.Opens.range_ι, ← Scheme.Hom.coe_opensRange, Scheme.Hom.opensRange_localizationAway
       r.val]
     exact hsr r
-  let k (r : s) := IsOpenImmersion.lift W.ι (CoherentScheme.principalOpen R r.val) (hjW r)
-  have hk (r : s) : k r ≫ W.ι = CoherentScheme.principalOpen R r.val :=
+  let k (r : s) := IsOpenImmersion.lift W.ι
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r.val) (hjW r)
+  have hk (r : s) : k r ≫ W.ι = AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r.val
+    :=
     IsOpenImmersion.lift_fac _ _ _
   have hki (r : s) : IsOpenImmersion (k r) := by
     have : IsOpenImmersion (k r ≫ W.ι) := by rw [hk]; infer_instance
@@ -131,7 +138,8 @@ lemma exists_strict_approximation_on_compact_open (R : CommRingCat.{u})
       exact x.property
     obtain ⟨r, hx⟩ := Opens.mem_iSup.mp hx
     obtain ⟨hr, hx⟩ := Opens.mem_iSup.mp hx
-    have hx' : W.ι x ∈ Set.range (CoherentScheme.principalOpen R r) := by
+    have hx' : W.ι x ∈ Set.range (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+      := by
       rw [← Scheme.Hom.coe_opensRange, Scheme.Hom.opensRange_localizationAway r]
       exact hx
     obtain ⟨y, hy⟩ := hx'
@@ -161,7 +169,8 @@ lemma locallyPerfect_exists_original_strict_approximation (R : CommRingCat.{u})
       Nonempty ((toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj K)) ≅
         (toDerived W.toScheme).obj E) ∧
       let D := (restrict W.ι).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))
-      SchemeSheaf.IsFiniteLocallyFree W.toScheme (D.homology n) ∧ D.IsGE n ∧ D.IsLE n ∧
+      AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree W.toScheme (D.homology n) ∧ D.IsGE n ∧
+        D.IsLE n ∧
         Nonempty ((toDerived W.toScheme).obj D ≅ (toDerived W.toScheme).obj
           ((CochainComplex.singleFunctor W.toScheme.Modules n).obj (D.homology n))) := by
   obtain ⟨K, a, b, hKa, hKb, ⟨eK⟩⟩ :=

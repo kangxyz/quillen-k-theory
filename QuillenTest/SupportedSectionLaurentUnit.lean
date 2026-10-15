@@ -19,7 +19,7 @@ an assumed homotopy or compatibility conclusion.
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange
-open Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped unitInterval
 universe u
 namespace QuillenTest.SupportedSectionLaurentUnit

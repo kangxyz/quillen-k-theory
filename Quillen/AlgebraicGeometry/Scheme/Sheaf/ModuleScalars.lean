@@ -14,13 +14,16 @@ Global ring sections act naturally on every module sheaf. The action commutes wi
 restriction and specializes to the structure-module action.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {X : Scheme.{u}}
 
 /-- Multiplication by an original global ring section on a module sheaf. -/
@@ -110,4 +113,4 @@ lemma moduleMul_unit (s : Γ(X, ⊤)) :
     x * (X.presheaf.map (homOfLE (show U ≤ ⊤ from le_top)).op).hom s
   exact mul_comm _ _
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

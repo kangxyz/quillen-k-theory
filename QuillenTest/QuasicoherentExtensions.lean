@@ -28,7 +28,7 @@ theorem original_middle_counit_inverse (R : CommRingCat.{u})
     [S.X₁.IsQuasicoherent] [S.X₃.IsQuasicoherent] :
     ∃ a : S.X₂ ⟶ (tilde.functor R).obj (moduleSpecΓFunctor.obj S.X₂),
       S.X₂.fromTildeΓ ≫ a = 𝟙 _ ∧ a ≫ S.X₂.fromTildeΓ = 𝟙 _ := by
-  have := SchemeSheaf.isIso_fromTildeΓ_of_shortExact R hS
+  have := AlgebraicGeometry.Scheme.Modules.isIso_fromTildeΓ_of_shortExact R hS
   exact ⟨inv S.X₂.fromTildeΓ, IsIso.hom_inv_id _, IsIso.inv_hom_id _⟩
 
 /-- The reconstructed middle arrow commutes with the original inclusion and
@@ -41,7 +41,7 @@ theorem original_middle_counit_squares (R : CommRingCat.{u})
         S.X₁.fromTildeΓ ≫ S.f ∧
       (tilde.functor R).map (moduleSpecΓFunctor.map S.g) ≫ S.X₃.fromTildeΓ =
         S.X₂.fromTildeΓ ≫ S.g := by
-  exact ⟨SchemeSheaf.isIso_fromTildeΓ_of_shortExact R hS,
+  exact ⟨AlgebraicGeometry.Scheme.Modules.isIso_fromTildeΓ_of_shortExact R hS,
     Scheme.Modules.fromTildeΓNatTrans.naturality S.f,
     Scheme.Modules.fromTildeΓNatTrans.naturality S.g⟩
 
@@ -59,12 +59,12 @@ theorem original_open_restriction {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmers
     {S : ShortComplex X.Modules} (hS : S.ShortExact)
     [S.X₁.IsQuasicoherent] [S.X₃.IsQuasicoherent] :
     ((Scheme.Modules.restrictFunctor j).obj S.X₂).IsQuasicoherent := by
-  have := SchemeSheaf.quasicoherent_of_shortExact hS
+  have := AlgebraicGeometry.Scheme.Modules.quasicoherent_of_shortExact hS
   exact Scheme.Modules.isQuasicoherent_restrictFunctor j S.X₂
 
 local instance emptyAffineGlobalSectionsIsRightAdjoint :
     (moduleSpecΓFunctor (R := CommRingCat.of (ZMod 1))).IsRightAdjoint :=
-  SchemeSheaf.AffineCech.globalSections_isRightAdjoint _
+  AlgebraicGeometry.Scheme.Modules.AffineCech.globalSections_isRightAdjoint _
 
 /-- The zero-ring affine case includes the original counit and actual
 short exact global-section sequence, with arbitrary original middle sheaf. -/
@@ -73,7 +73,8 @@ theorem empty_affine_original_counit
     [S.X₁.IsQuasicoherent] [S.X₃.IsQuasicoherent] :
     S.X₂.IsQuasicoherent ∧ IsIso S.X₂.fromTildeΓ ∧
       (S.map (moduleSpecΓFunctor (R := CommRingCat.of (ZMod 1)))).ShortExact :=
-  ⟨SchemeSheaf.quasicoherent_of_shortExact hS,
-    SchemeSheaf.isIso_fromTildeΓ_of_shortExact _ hS,
-    SchemeSheaf.AffineCech.shortExact_globalSections_of_quasicoherent_kernel hS⟩
+  ⟨AlgebraicGeometry.Scheme.Modules.quasicoherent_of_shortExact hS,
+    AlgebraicGeometry.Scheme.Modules.isIso_fromTildeΓ_of_shortExact _ hS,
+    AlgebraicGeometry.Scheme.Modules.AffineCech.shortExact_globalSections_of_quasicoherent_kernel
+      hS⟩
 end QuillenTest.QuasicoherentExtensions

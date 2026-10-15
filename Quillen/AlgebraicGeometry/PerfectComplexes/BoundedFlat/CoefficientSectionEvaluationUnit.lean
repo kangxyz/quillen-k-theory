@@ -24,7 +24,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
 open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
-open Quillen.Scheme.CoefficientBaseChange Quillen.FunctorIdentityAutomorphism
+open AlgebraicGeometry.Scheme.CoefficientBaseChange Quillen.FunctorIdentityAutomorphism
 universe u u₁ v₁
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}
@@ -84,10 +84,10 @@ def boundedFlatCoefficientOriginalModelUnit {i k : Index R} (f : i ⟶ k)
       (boundedFlatCoefficientOriginalModelMap f).functor :=
   whiskerLeft AsSmall.down (whiskerRight
     (normalizedWeakTransformation
-      (boundedFlatPerfectPullback_exact (Quillen.Scheme.CoefficientBaseChange.map f))
-      (boundedFlatPerfectPullback_exact (Quillen.Scheme.CoefficientBaseChange.map f))
+      (boundedFlatPerfectPullback_exact (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
+      (boundedFlatPerfectPullback_exact (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
       (boundedFlatPerfectPullbackUnitIso
-        (Quillen.Scheme.CoefficientBaseChange.map f) r).hom) AsSmall.up)
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f) r).hom) AsSmall.up)
 
 /-- Its forward component is exactly the same target unit on the actual normalized raw functor. -/
 theorem boundedFlatCoefficientOriginalModelUnit_eq {i k : Index R} (f : i ⟶ k)
@@ -103,8 +103,8 @@ theorem boundedFlatCoefficientOriginalModelUnit_eq {i k : Index R} (f : i ⟶ k)
   rw [onFunctor_hom_app, boundedFlatCoefficientSmallUnitIso, map_lift_hom]
   simp only [boundedFlatCoefficientOriginalModelUnit, whiskerLeft_app, whiskerRight_app,
     AsSmall.down_map, AsSmall.up_map_down, normalizedWeakTransformation, NatTrans.comp_app]
-  let p := boundedFlatPerfectPullback (Quillen.Scheme.CoefficientBaseChange.map f)
-  let h := boundedFlatPerfectPullback_exact (Quillen.Scheme.CoefficientBaseChange.map f)
+  let p := boundedFlatPerfectPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)
+  let h := boundedFlatPerfectPullback_exact (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)
   let q := Quillen.rebaseFunctor p
     (boundedFlatPerfectWaldhausen (space i)).zero
     (boundedFlatPerfectWaldhausen (space k)).zero

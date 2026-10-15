@@ -31,7 +31,7 @@ theorem boundedFlatAffineSectionBassDiagram_homotopyGroup_subsingleton_at
     Subsingleton (HomotopyGroup.Pi k
       (((boundedFlatAffineSectionBassDiagram i).obj R).space (n + i + 2)) x) := by
   have hπ := KTheory.Bass.strictDiagramIterate_homotopyGroup_subsingleton
-    PolynomialBaseChange.laurentSquareFunctor i boundedFlatAffineSectionPrespectrumFunctor
+    CommRingCat.PolynomialLaurent.laurentSquareFunctor i boundedFlatAffineSectionPrespectrumFunctor
     boundedFlatAffineSectionPrespectrum_point_homotopyExtensionProperty 0
     (fun S m j hj y ↦ Waldhausen.IteratedS.prespectrum_positiveLevel_homotopyGroup_subsingleton_at
       (boundedFlatAffineSectionModel S) (m + 1) j (by omega) y) R n k hk

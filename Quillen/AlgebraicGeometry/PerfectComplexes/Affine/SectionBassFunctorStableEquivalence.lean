@@ -48,11 +48,11 @@ theorem boundedFlatAffineSectionBass_functorMap_isStableEquivalence
     (hη : ∀ R, IsStableEquivalence (η.app R)) (R : CommRingCat.{u}) :
     IsStableEquivalence ((KTheory.Bass.strictRingDiagramFunctor.map η).app R) := by
   exact boundedFlatAffineSectionBass_squareMap_isStableEquivalence i j
-    (PolynomialBaseChange.laurentSquareFunctor.obj R)
-    (PolynomialBaseChange.laurentSquareFunctor.obj R)
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R)
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R)
     (((Functor.mapArrowFunctor (Arrow CommRingCat) (Arrow LoopPrespectrum)).map
       ((Functor.mapArrowFunctor CommRingCat LoopPrespectrum).map η)).app
-        (PolynomialBaseChange.laurentSquareFunctor.obj R))
+        (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R))
     (hη _) (hη _) (hη _) (hη _)
 
 end Quillen.PerfectComplexes

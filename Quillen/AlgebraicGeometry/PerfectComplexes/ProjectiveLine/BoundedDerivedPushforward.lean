@@ -21,7 +21,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 namespace Quillen.PerfectComplexes.ProjectiveLine
 /-- The standard derived category of the original module sheaves. -/
 local instance boundedProjectivePushforwardStandard (X : Scheme.{u}) :
@@ -58,11 +58,11 @@ theorem perfect_derivedPushforward_of_bounded_vectorBundle_terms
   let F := DerivedCategory.Plus.Qh ⋙ J
   have hs (n : ℤ) : perfectDerivedObjects (Spec R)
       (F.obj ((HomotopyCategory.Plus.quotient (twoChartLine R).Modules).obj
-        (Quillen.CochainComplex.singlePlus (K.obj.X n) n))) := by
+        (CochainComplex.singlePlus (K.obj.X n) n))) := by
     let := hterms n
     exact (perfectDerivedObjects (Spec R)).prop_of_iso
       (J.mapIso ((DerivedCategory.Plus.quotientCompQhIso (twoChartLine R).Modules).app
-        (Quillen.CochainComplex.singlePlus (K.obj.X n) n))).symm
+        (CochainComplex.singlePlus (K.obj.X n) n))).symm
       (perfect_derivedPushforward_vectorBundle_single R (K.obj.X n) n)
   let : (perfectDerivedObjects (Spec R)).ContainsZero :=
     instContainsZeroDerivedPerfectDerivedObjects (Spec R)

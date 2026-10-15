@@ -15,13 +15,16 @@ installed composite units and applies the actual right-derived universal propert
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The original standard ambient categories. -/
 local instance horizontalStandard (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _
@@ -248,4 +251,4 @@ theorem derivedFlatBaseChangeMap_paste_horiz :
   funext K
   exact (derivedFlatBaseChangeHorizontalComposite_unit c d k a b f j hs h K).trans
     (derivedFlatBaseChangeMap_unit (c ≫ a) d f (k ≫ j) (hs.paste_horiz h) K).symm
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

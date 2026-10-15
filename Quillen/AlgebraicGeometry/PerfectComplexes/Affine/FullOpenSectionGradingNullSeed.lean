@@ -25,7 +25,7 @@ uses these same whole tracks.
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange Quillen.Scheme.PolynomialLaurent
+open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R)

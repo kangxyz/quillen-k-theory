@@ -12,7 +12,7 @@ public import Quillen.Waldhausen.SplitComplexes.FactorizationSign
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
-open Quillen.PerfectComplexes.Affine Quillen.Scheme.PolynomialLaurent
+open Quillen.PerfectComplexes.Affine AlgebraicGeometry.Scheme.PolynomialLaurent
 open Quillen.Waldhausen Quillen.Waldhausen.Fibration
 universe u
 namespace QuillenTest.PolynomialScalarCone

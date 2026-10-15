@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatPullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PullbackNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.RestrictionFunctoriality
@@ -20,6 +21,19 @@ K-groups satisfy identity, composition, open restriction, and comparison
 naturality. No global strict representative is required.
 -/
 @[expose] public section
+open Quillen
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.PerfectComplexes
+export AlgebraicGeometry.Scheme.Modules.Complex
+  (pullbackFunctor_preservesHomology)
+end Quillen.PerfectComplexes
+
+end
+
+
 
 open CategoryTheory.ExactCategory
 
@@ -32,19 +46,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes
-
-instance pullbackComplex_preservesFiniteLimits {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
-    PreservesFiniteLimits (pullbackComplex f) := by unfold pullbackComplex; infer_instance
-
-instance pullbackFunctor_preservesHomology {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
-    (Scheme.Modules.pullback f).PreservesHomology :=
-  Functor.preservesHomology_of_preservesMonos_and_cokernels _
-
-/-- Actual flat pullback preserves every quasi-isomorphism of module-sheaf complexes. -/
-instance pullbackComplex_quasiIso {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
-    {K L : Complex Y} (s : K ⟶ L) [QuasiIso s] : QuasiIso ((pullbackComplex f).map s) := by
-  unfold pullbackComplex
-  infer_instance
 
 /-- The actual flat termwise pullback, followed by localization, inverts quasi-isomorphisms. -/
 theorem pullback_toDerived_inverts {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
@@ -190,7 +191,7 @@ theorem strictToPerfectKMap_flatPullback {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat 
 theorem vectorBundleToPerfectKMap_flatPullback {X Y : Scheme.{u}}
     (f : X ⟶ Y) [Flat f] (n : ℕ) :
     (perfectKFlatPullback f n).comp (vectorBundleToPerfectKMap Y n) =
-      (vectorBundleToPerfectKMap X n).comp (Quillen.Scheme.pullbackK f n) := by
+      (vectorBundleToPerfectKMap X n).comp (AlgebraicGeometry.Scheme.pullbackK f n) := by
   rw [← strictToPerfect_comp_vectorBundleToStrictKMap,
     ← strictToPerfect_comp_vectorBundleToStrictKMap,
     ← MonoidHom.comp_assoc, strictToPerfectKMap_flatPullback,

@@ -21,6 +21,9 @@ noetherian hypothesis is imposed on the sheaf. Derived base change is separate.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 open CategoryTheory.ShortComplex
 
@@ -29,7 +32,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf.TwoOpen
+namespace AlgebraicGeometry.Scheme.Modules.TwoOpen
 variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
   [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]
   (h : a ≫ j = b ≫ k) (M : X.Modules)
@@ -56,7 +59,7 @@ theorem sheafAugmentation_difference :
 def sheafSequence : ShortComplex X.Modules :=
   ShortComplex.mk (sheafAugmentation j k M) (sheafDifference a b j k h M)
     (sheafAugmentation_difference a b j k h M)
-end Quillen.SchemeSheaf.TwoOpen
+end AlgebraicGeometry.Scheme.Modules.TwoOpen
 end
 
 section
@@ -64,7 +67,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf.TwoOpen
+namespace AlgebraicGeometry.Scheme.Modules.TwoOpen
 variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
   [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]
   (h : IsPullback a b j k) (M : X.Modules)
@@ -126,7 +129,7 @@ theorem sheafSequence_shortExact
   cases i
   · exact sheafSequence_restrict_right_shortExact a b j k h M
   · exact sheafSequence_restrict_left_shortExact a b j k h M
-end Quillen.SchemeSheaf.TwoOpen
+end AlgebraicGeometry.Scheme.Modules.TwoOpen
 end
 
 section
@@ -134,7 +137,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf.TwoOpen
+namespace AlgebraicGeometry.Scheme.Modules.TwoOpen
 variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
   [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]
   (h : a ≫ j = b ≫ k)
@@ -168,5 +171,5 @@ def sheafSequenceFunctor : X.Modules ⥤ ShortComplex X.Modules where
     ext : 1 <;> simp [sheafSequenceMap, sheafSequence]
   map_comp φ ψ := by
     ext : 1 <;> simp [sheafSequenceMap, sheafSequence, Functor.map_comp]
-end Quillen.SchemeSheaf.TwoOpen
+end AlgebraicGeometry.Scheme.Modules.TwoOpen
 end

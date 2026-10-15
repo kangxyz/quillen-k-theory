@@ -26,12 +26,16 @@ morphisms. Strict reassembly uses only chain realization into a top single,
 not global projectivity of vector bundles or unrestricted chain realization.
 -/
 @[expose] public section
+
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry Opposite
-open Quillen.SchemeSheaf Quillen.CoherentScheme Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.Coherent
+  AlgebraicGeometry.Scheme.ProjectiveLine
 namespace Quillen.PerfectComplexes.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
 
@@ -67,7 +71,7 @@ local instance reassemblyStandard (X : Scheme.{u}) :
 reassembles to a strict model of the original object in the exact interval.
 Only maps to the top single are realized by chain maps. -/
 theorem strict_model_of_top_attachment {X : Scheme.{u}} (K : Complex X)
-    (V : X.Modules) [SchemeSheaf.IsFiniteLocallyFree X V]
+    (V : X.Modules) [AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X V]
     (a b : ℤ) (hab : a ≤ b)
     (f : (CochainComplex.singleFunctor X.Modules b).obj V ⟶ K)
     (P : StrictPerfect X)
@@ -425,7 +429,7 @@ theorem exists_vectorBundle_lift_plus (R : CommRingCat.{u})
     dsimp only [q]
     rw [Scheme.Hom.opensRange_pullbackSnd]
     exact (minusChart_preimage_plusRange R).trans
-      (Quillen.Scheme.PolynomialLaurent.laurentMinus_opensRange R)
+      (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentMinus_opensRange R)
   obtain ⟨n, g, hg⟩ := exists_unit_map_denominator q (M.restrict k) Polynomial.X hq u
   have hcoord : q.appTop.hom ((Scheme.ΓSpecIso (.of (Polynomial R))).inv.hom
       (Polynomial.X ^ n)) = ↑((overlapCoordinateUnit R ^ n)⁻¹) := by
@@ -468,7 +472,7 @@ theorem exists_vectorBundle_lift_minus (R : CommRingCat.{u})
     dsimp only [p]
     rw [Scheme.Hom.opensRange_pullbackFst]
     exact (plusChart_preimage_minusRange R).trans
-      (Quillen.Scheme.PolynomialLaurent.laurentPlus_opensRange R)
+      (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentPlus_opensRange R)
   obtain ⟨n, f, hf⟩ := exists_unit_map_denominator p (M.restrict j) Polynomial.X hp u
   have hcoord : p.appTop.hom ((Scheme.ΓSpecIso (.of (Polynomial R))).inv.hom
       (Polynomial.X ^ n)) = ↑(overlapCoordinateUnit R ^ n) := by
@@ -494,7 +498,8 @@ theorem exists_finite_free_lift_of_affine_epi (R : CommRingCat.{u})
     (q : M ⟶ H) [Epi q] [Module.Finite R (moduleSpecΓFunctor.obj H)] :
     ∃ I : Type u, Finite I ∧
       ∃ l : SheafOfModules.free (R := (Spec R).ringCatSheaf) I ⟶ M, Epi (l ≫ q) := by
-  obtain ⟨G, hG⟩ := CoherentScheme.affineFiniteSheaf_exists_generatingSections R
+  obtain ⟨G, hG⟩ :=
+    AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineFiniteSheaf_exists_generatingSections R
     (M := H) ⟨inferInstance, inferInstance⟩
   have : G.IsFiniteType := hG
   have : Epi (moduleSpecΓFunctor.map q) := epi_globalSections_of_quasicoherent R q
@@ -653,7 +658,8 @@ theorem exists_vectorBundle_single_epi_top (R : CommRingCat.{u})
         rintro (_ | _)
         · exact hqc b
         · exact hqc (b + 1))
-  have : (K.homology b).IsQuasicoherent := CoherentScheme.quasicoherent_homology K hqc b
+  have : (K.homology b).IsQuasicoherent :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.quasicoherent_homology K hqc b
   have : Module.Finite (Polynomial R)
       (moduleSpecΓFunctor.obj ((K.homology b).restrict (plusChart R))) := by
     have := restriction_isLE (plusChart R) K b

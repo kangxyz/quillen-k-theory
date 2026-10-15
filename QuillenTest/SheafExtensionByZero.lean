@@ -17,7 +17,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Opposite
-open Quillen.SchemeSheaf
+open AlgebraicGeometry.Scheme.Modules
 
 namespace QuillenTest.SheafExtensionByZero
 

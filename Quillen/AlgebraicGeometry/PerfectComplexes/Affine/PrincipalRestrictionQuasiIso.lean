@@ -21,6 +21,9 @@ The family need not cover Spec R; arbitrary rings and empty opens are allowed.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -34,7 +37,7 @@ open Quillen.ModuleComplex.PrincipalLocalization
 def principalChartAssociatedComplexNatIso (R : CommRingCat.{u}) {U : Scheme.{u}}
     (j : U ⟶ Spec R) [IsOpenImmersion j] (r : R)
     (k : Spec (.of (Localization.Away r)) ⟶ U) [IsOpenImmersion k]
-    (hk : k ≫ j = CoherentScheme.principalOpen R r) :
+    (hk : k ≫ j = AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) :
     associatedComplex R ⋙ restrict j ⋙ restrict k ≅
       localize r (.up ℤ) ⋙ associatedComplex (.of (Localization.Away r)) :=
   Functor.isoWhiskerLeft (associatedComplex R) (restrictCompIso k j) ≪≫
@@ -44,7 +47,7 @@ def principalChartAssociatedComplexNatIso (R : CommRingCat.{u}) {U : Scheme.{u}}
 lemma quasiIso_principalChart_iff (R : CommRingCat.{u}) {U : Scheme.{u}}
     (j : U ⟶ Spec R) [IsOpenImmersion j] (r : R)
     (k : Spec (.of (Localization.Away r)) ⟶ U) [IsOpenImmersion k]
-    (hk : k ≫ j = CoherentScheme.principalOpen R r)
+    (hk : k ≫ j = AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
     {P B : ModuleComplex R} (f : P ⟶ B) :
     QuasiIso ((restrict k).map ((restrict j).map ((associatedComplex R).map f))) ↔
       QuasiIso ((localize r (.up ℤ)).map f) := by
@@ -57,7 +60,7 @@ lemma quasiIso_localize_of_restrict_associated (R : CommRingCat.{u})
     (W : (Spec R).Opens) {P B : ModuleComplex R} (f : P ⟶ B)
     [QuasiIso ((restrict W.ι).map ((associatedComplex R).map f))]
     (r : R) (hr : PrimeSpectrum.basicOpen r ≤ W) : QuasiIso ((localize r (.up ℤ)).map f) := by
-  let j := CoherentScheme.principalOpen R r
+  let j := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r
   have hjW : Set.range j ⊆ Set.range W.ι := by
     rw [Scheme.Opens.range_ι, ← Scheme.Hom.coe_opensRange, Scheme.Hom.opensRange_localizationAway r]
     exact hr
@@ -75,12 +78,15 @@ lemma quasiIso_restrict_associated_of_principalUnion (R : CommRingCat.{u})
   have hsr (r : s) : PrimeSpectrum.basicOpen r.val ≤ W := by
     rw [← hs]
     exact Quillen.SheafCohomology.basicOpen_le_principalUnion R r.property
-  have hjW (r : s) : Set.range (CoherentScheme.principalOpen R r.val) ⊆ Set.range W.ι := by
+  have hjW (r : s) : Set.range (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+    r.val) ⊆ Set.range W.ι := by
     rw [Scheme.Opens.range_ι, ← Scheme.Hom.coe_opensRange, Scheme.Hom.opensRange_localizationAway
       r.val]
     exact hsr r
-  let k (r : s) := IsOpenImmersion.lift W.ι (CoherentScheme.principalOpen R r.val) (hjW r)
-  have hk (r : s) : k r ≫ W.ι = CoherentScheme.principalOpen R r.val :=
+  let k (r : s) := IsOpenImmersion.lift W.ι
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r.val) (hjW r)
+  have hk (r : s) : k r ≫ W.ι = AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r.val
+    :=
     IsOpenImmersion.lift_fac _ _ _
   have hki (r : s) : IsOpenImmersion (k r) := by
     have : IsOpenImmersion (k r ≫ W.ι) := by rw [hk]; infer_instance
@@ -91,7 +97,8 @@ lemma quasiIso_restrict_associated_of_principalUnion (R : CommRingCat.{u})
       exact x.property
     obtain ⟨r, hx⟩ := TopologicalSpace.Opens.mem_iSup.mp hx
     obtain ⟨hr, hx⟩ := TopologicalSpace.Opens.mem_iSup.mp hx
-    have hx' : W.ι x ∈ Set.range (CoherentScheme.principalOpen R r) := by
+    have hx' : W.ι x ∈ Set.range (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+      := by
       rw [← Scheme.Hom.coe_opensRange, Scheme.Hom.opensRange_localizationAway r]
       exact hx
     obtain ⟨y, hy⟩ := hx'

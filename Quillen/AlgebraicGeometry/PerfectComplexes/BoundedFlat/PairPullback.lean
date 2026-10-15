@@ -27,10 +27,10 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf
+open AlgebraicGeometry.Scheme.Modules
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
-variable {A B C : Quillen.Scheme.OpenPairs.{u}}
+variable {A B C : AlgebraicGeometry.Scheme.OpenPairs.{u}}
 
 /-- The actual pullback/restriction square for any morphism of open pairs. -/
 def pullbackComplexOpenPairIso (f : A ⟶ B) :
@@ -159,7 +159,7 @@ def boundedFlatPerfectOpenKPullback (f : A ⟶ B) (n : ℕ) :
 
 /-- The natural isomorphism identifying supported bounded-flat pullback along the identity
 open-pair morphism with the identity functor. -/
-def boundedFlatPerfectSupportedPullbackIdIso (A : Quillen.Scheme.OpenPairs.{u}) :
+def boundedFlatPerfectSupportedPullbackIdIso (A : AlgebraicGeometry.Scheme.OpenPairs.{u}) :
     boundedFlatPerfectSupportedPullback (𝟙 A) ≅ 𝟭 (boundedFlatPerfectSupported
       A.obj.hom).FullSubcategory :=
   Functor.fullyFaithfulCancelRight (boundedFlatPerfectSupported A.obj.hom).ι
@@ -175,7 +175,8 @@ def boundedFlatPerfectSupportedPullbackCompIso (f : A ⟶ B) (g : B ⟶ C) :
     (Functor.isoWhiskerLeft (boundedFlatPerfectSupported C.obj.hom).ι
       (pullbackComplexCompIso f.hom.right g.hom.right))
 
-@[simp] theorem boundedFlatPerfectSupportedKPullback_id (A : Quillen.Scheme.OpenPairs.{u}) (n : ℕ) :
+@[simp] theorem boundedFlatPerfectSupportedKPullback_id (A : AlgebraicGeometry.Scheme.OpenPairs.{u})
+  (n : ℕ) :
     boundedFlatPerfectSupportedKPullback (𝟙 A) n = MonoidHom.id _ :=
   (Waldhausen.KMap_eq_of_iso (boundedFlatPerfectSupportedPullback_exact (𝟙 A))
     (Waldhausen.IsExact.id (boundedFlatPerfectSupportedWaldhausen A.obj.hom).cof
@@ -191,7 +192,8 @@ def boundedFlatPerfectSupportedPullbackCompIso (f : A ⟶ B) (g : B ⟶ C) :
     (boundedFlatPerfectSupportedPullbackCompIso f g) n).trans
       ((Waldhausen.KMap_comp_KMap _ _ n).symm)
 
-@[simp] theorem boundedFlatPerfectOpenKPullback_id (A : Quillen.Scheme.OpenPairs.{u}) (n : ℕ) :
+@[simp] theorem boundedFlatPerfectOpenKPullback_id (A : AlgebraicGeometry.Scheme.OpenPairs.{u}) (n :
+  ℕ) :
     boundedFlatPerfectOpenKPullback (𝟙 A) n = MonoidHom.id _ :=
   (Waldhausen.KMap_eq_of_iso (boundedFlatPerfectOpenPullback_exact (𝟙 A))
     (Waldhausen.IsExact.id (boundedFlatPerfectOpenWaldhausen A.obj.hom).cof
@@ -223,7 +225,8 @@ theorem boundedFlatPerfectOpenKMap_pullback (f : A ⟶ B) (n : ℕ) :
 
 /-- The contravariant degree-`n` K-functor on open pairs, using bounded-flat complexes acyclic on
 the specified open and geometric pair pullback. -/
-def BoundedFlatPerfectSupportedKFunctor (n : ℕ) : Quillen.Scheme.OpenPairs.{u}ᵒᵖ ⥤ GrpCat.{u + 1}
+def BoundedFlatPerfectSupportedKFunctor (n : ℕ) : AlgebraicGeometry.Scheme.OpenPairs.{u}ᵒᵖ ⥤
+  GrpCat.{u + 1}
   where
   obj X := GrpCat.of (BoundedFlatPerfectSupportedK X.unop.obj.hom n)
   map f := GrpCat.ofHom (boundedFlatPerfectSupportedKPullback f.unop n)
@@ -234,7 +237,8 @@ def BoundedFlatPerfectSupportedKFunctor (n : ℕ) : Quillen.Scheme.OpenPairs.{u}
 
 /-- The contravariant degree-`n` K-functor on open pairs for the bounded-flat model whose weak
 equivalences are detected on the specified open. -/
-def BoundedFlatPerfectOpenKFunctor (n : ℕ) : Quillen.Scheme.OpenPairs.{u}ᵒᵖ ⥤ GrpCat.{u + 1} where
+def BoundedFlatPerfectOpenKFunctor (n : ℕ) : AlgebraicGeometry.Scheme.OpenPairs.{u}ᵒᵖ ⥤ GrpCat.{u +
+  1} where
   obj X := GrpCat.of (BoundedFlatPerfectOpenK X.unop.obj.hom n)
   map f := GrpCat.ofHom (boundedFlatPerfectOpenKPullback f.unop n)
   map_id X := by apply GrpCat.hom_ext; exact boundedFlatPerfectOpenKPullback_id X.unop n

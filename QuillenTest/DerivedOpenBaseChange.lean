@@ -9,10 +9,13 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedOpenBaseChange
 
 /-! Consumers retain the actual module base-change map, both original units, and derived arrows. -/
 @[expose] public section
+
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.SchemeSheaf
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicGeometry.Scheme.Modules
 universe u
 namespace QuillenTest.DerivedOpenBaseChange
 
@@ -27,7 +30,8 @@ lemma original_unit_square {Z U X : Scheme.{u}} (f : Z ⟶ X) (j : U ⟶ X)
       (derivedRestrictionPlus j).map ((derivedPushforwardPlusUnit f).app K) ≫
       (derivedPushforwardPlusOpenBaseChange f j).hom.app (DerivedCategory.Plus.Q.obj K) =
     DerivedCategory.Plus.Q.map
-        ((NatIso.mapCochainComplexPlus (Quillen.CoherentScheme.openBaseChange f j)).hom.app K) ≫
+        ((NatIso.mapCochainComplexPlus (AlgebraicGeometry.Scheme.Modules.openBaseChange f
+          j)).hom.app K) ≫
       (derivedPushforwardPlusUnit (pullback.snd f j)).app
         ((Scheme.Modules.restrictFunctor (pullback.fst f j)).mapCochainComplexPlus.obj K) ≫
       (derivedPushforwardPlus (pullback.snd f j)).map

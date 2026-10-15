@@ -11,6 +11,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.KTheory
 /-! Semantic consumers of original strict principal-open map factorization. -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -58,16 +61,17 @@ theorem actual_perfect_target_factorization (R : CommRingCat.{u}) (r : R)
     (A E : StrictPerfect (Spec R))
     (B : Perfect (Spec (.of (Localization.Away r))))
     (hB : ∀ i, (B.obj.X i).IsQuasicoherent)
-    (q : (perfectRestrict (CoherentScheme.principalOpen R r)).obj
+    (q : (perfectRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
       ((strictToPerfect _).obj E) ⟶ B) (hq : (perfectWaldhausen _).weq q)
-    (f : (perfectRestrict (CoherentScheme.principalOpen R r)).obj
+    (f : (perfectRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
       ((strictToPerfect _).obj A) ⟶ B) :
     ∃ (M : StrictPerfect (Spec R))
       (a : (strictToPerfect _).obj A ⟶ (strictToPerfect _).obj M)
-      (p : (perfectRestrict (CoherentScheme.principalOpen R r)).obj
+      (p : (perfectRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
         ((strictToPerfect _).obj M) ⟶ B),
       (perfectWaldhausen _).weq p ∧
-        (perfectRestrict (CoherentScheme.principalOpen R r)).map a ≫ p = f := by
+        (perfectRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map a ≫
+          p = f := by
   have : QuasiIso q.hom := hq
   obtain ⟨M, a, p, hp, hf⟩ := exists_principal_geometric_map_factorization R r A E hB q.hom f.hom
   exact ⟨M, ObjectProperty.homMk a, ObjectProperty.homMk p, hp, ObjectProperty.hom_ext _ hf⟩
@@ -76,19 +80,24 @@ theorem actual_perfect_target_factorization (R : CommRingCat.{u}) (r : R)
 map on every homology object with its actual weak comparison. -/
 theorem actual_strict_factorization_homology (R : CommRingCat.{u}) (r : R)
     {A : StrictPerfect (Spec R)} {B : StrictPerfect (Spec (.of (Localization.Away r)))}
-    (f : (strictRestrict (CoherentScheme.principalOpen R r)).obj A ⟶ B)
+    (f : (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj A ⟶
+      B)
     (E : StrictPerfect (Spec R))
-    (q : (strictRestrict (CoherentScheme.principalOpen R r)).obj E ⟶ B)
+    (q : (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj E ⟶
+      B)
     (hq : (strictWaldhausen _).weq q) :
     ∃ (M : StrictPerfect (Spec R)) (a : A ⟶ M)
-      (p : (strictRestrict (CoherentScheme.principalOpen R r)).obj M ⟶ B),
+      (p : (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj M
+        ⟶ B),
       QuasiIso p.hom ∧ ∀ i,
-        homologyMap ((restrict (CoherentScheme.principalOpen R r)).map a.hom) i ≫
+        homologyMap ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+          r)).map a.hom) i ≫
           homologyMap p.hom i = homologyMap f.hom i := by
   obtain ⟨M, a, p, hp, hf⟩ := exists_principal_strict_map_factorization R r f E q hq
   have : QuasiIso p.hom := hp
   refine ⟨M, a, p, this, fun i => ?_⟩
-  have hf' : (restrict (CoherentScheme.principalOpen R r)).map a.hom ≫ p.hom = f.hom :=
+  have hf' : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map a.hom
+    ≫ p.hom = f.hom :=
     congrArg (fun t => t.hom) hf
   simpa only [homologyMap_comp] using congrArg (fun t => homologyMap t i) hf'
 

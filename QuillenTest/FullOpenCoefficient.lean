@@ -15,7 +15,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionLaurentUn
 @[expose] public section
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.Scheme.AffineOpenPair
+open Quillen.PerfectComplexes AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.FullOpenCoefficient
 
@@ -83,11 +83,11 @@ theorem originalLaurentRestriction (a : Under R)
     (boundedFlatAffineSectionFullOpenRestriction j a).map
       ((boundedFlatAffineSectionUnitIso a.right
         (Units.map (Spec.map h).appTop.hom.toMonoidHom
-          (Quillen.Scheme.PolynomialLaurent.laurentGlobalUnit R))).hom.app s) =
+          (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentGlobalUnit R))).hom.app s) =
       (boundedFlatPerfectGlobalUnitIso (openSpace j a)
         (Units.map (inclusion j a).appTop.hom.toMonoidHom
           (Units.map (Spec.map h).appTop.hom.toMonoidHom
-            (Quillen.Scheme.PolynomialLaurent.laurentGlobalUnit R)))).hom.app
+            (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentGlobalUnit R)))).hom.app
         ((boundedFlatAffineSectionFullOpenRestriction j a).obj s) :=
   boundedFlatAffineSectionFullOpenRestriction_unit j a _ s
 

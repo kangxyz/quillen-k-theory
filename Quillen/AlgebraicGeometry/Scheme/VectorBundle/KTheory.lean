@@ -24,6 +24,9 @@ of exact presentations within the chosen universe is provided by
 `CategoryTheory.ExactCategory.ExactStructure.presentationKEquiv`.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -32,7 +35,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The actual vector-bundle category is essentially small in `u + 1`. -/
 instance vectorBundle_essentiallySmall (X : Scheme.{u}) :
@@ -67,4 +70,4 @@ def schemeKToModuleSheafK (X : Scheme.{u}) (n : ℕ) :
       X) n :=
   (vectorBundleExactInclusion X).smallKMap n
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

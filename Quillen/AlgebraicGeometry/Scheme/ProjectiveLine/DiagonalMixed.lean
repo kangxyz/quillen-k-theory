@@ -15,12 +15,14 @@ Its surjectivity proves closedness, and the actual overlap is the base change of
 original relative diagonal along the positive-negative rectangle.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent Quillen.PolynomialBaseChange Quillen.PolynomialDiagonal
 /-- The original mixed affine diagonal induced by T and its inverse. -/
 def mixedPolynomialDiagonal (R : CommRingCat.{u}) :
@@ -72,4 +74,4 @@ theorem mixedChart_diagonal_isPullback (R : CommRingCat.{u}) :
         (mixedPolynomialDiagonal_second R).symm
   · simp
   · simp
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

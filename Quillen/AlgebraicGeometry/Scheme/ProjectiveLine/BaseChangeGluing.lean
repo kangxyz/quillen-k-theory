@@ -14,13 +14,15 @@ The original coefficient squares form an equifibered gluing diagram. Relative gl
 its actual chart inverse images, retaining the original two-chart scheme and its structural map.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent Quillen.PolynomialBaseChange
 
 private abbrev chartCover (R : CommRingCat.{u}) :=
@@ -143,4 +145,4 @@ lemma coefficientMap_isPullback {R S : CommRingCat.{u}} (f : R ⟶ S) :
     (by simp [AlgebraicGeometry.Scheme.Cover.pullbackHom]; rfl)
     (by simp; rfl) (by simp) (by simp)
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

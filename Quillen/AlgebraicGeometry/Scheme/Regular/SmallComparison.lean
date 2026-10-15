@@ -12,6 +12,12 @@ public import Quillen.Resolution.LengthOne
 /-! # Applying the resolution theorem to the canonical scheme comparison -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 open CategoryTheory.ExactCategory
 
 noncomputable section
@@ -22,54 +28,64 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped ZeroObject
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X]
 
 /-- The actual vector-bundle property on the chosen small coherent category. -/
 def coherentSmallVectorBundle :
-    ObjectProperty (SmallModel.{u+1} (CoherentScheme.FiniteTypeSheaves X)) :=
-  fun M => coherentVectorBundle X ((equivSmallModel.{u+1} (CoherentScheme.FiniteTypeSheaves
+    ObjectProperty (SmallModel.{u+1}
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X)) :=
+  fun M => coherentVectorBundle X ((equivSmallModel.{u+1}
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves
     X)).inverse.obj M)
 
 instance coherentSmallVectorBundle_isoClosed :
     (coherentSmallVectorBundle X).IsClosedUnderIsomorphisms where
   of_iso e h := (coherentVectorBundle X).prop_of_iso
-    ((equivSmallModel.{u+1} (CoherentScheme.FiniteTypeSheaves X)).inverse.mapIso e) h
+    ((equivSmallModel.{u+1} (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves
+      X)).inverse.mapIso e) h
 
 instance coherentSmallVectorBundle_containsZero : (coherentSmallVectorBundle X).ContainsZero where
   exists_zero := ⟨0, isZero_zero _, (coherentVectorBundle X).prop_of_isZero
-    ((equivSmallModel.{u+1} (CoherentScheme.FiniteTypeSheaves X)).inverse.map_isZero
+    ((equivSmallModel.{u+1} (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves
+      X)).inverse.map_isZero
       (isZero_zero _))⟩
 
 instance coherentSmallVectorBundle_extensionClosed :
-    (CoherentScheme.coherentExactStructure X).smallModel.IsExtensionClosed
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
+      X).smallModel.IsExtensionClosed
       (coherentSmallVectorBundle X) where
   prop_middle hS h₁ h₃ := CategoryTheory.ExactCategory.ExactStructure.IsExtensionClosed.prop_middle
-    (E := CoherentScheme.coherentExactStructure X) hS h₁ h₃
+    (E := AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X) hS h₁ h₃
 
 instance coherentSmallVectorBundle_finiteProducts :
     (coherentSmallVectorBundle X).IsClosedUnderFiniteProducts :=
-  (CoherentScheme.coherentExactStructure X).smallModel.extensionClosed_finiteProducts
+  (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
+    X).smallModel.extensionClosed_finiteProducts
     (coherentSmallVectorBundle X)
 
 instance coherentSmallVectorBundle_kernelClosed
-    [(CoherentScheme.coherentExactStructure X).IsKernelClosed (coherentVectorBundle X)] :
-    (CoherentScheme.coherentExactStructure X).smallModel.IsKernelClosed
+    [(AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).IsKernelClosed
+      (coherentVectorBundle X)] :
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).smallModel.IsKernelClosed
       (coherentSmallVectorBundle X) where
   prop_kernel hS h₂ h₃ := CategoryTheory.ExactCategory.ExactStructure.IsKernelClosed.prop_kernel
-    (E := CoherentScheme.coherentExactStructure X) hS h₂ h₃
+    (E := AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X) hS h₂ h₃
 
 /-- Actual coherent resolutions descend to the actual chosen small model,
 without changing their length or forgetting any admissible sequence. -/
 theorem coherentSmallResolutionLength (n : ℕ)
-    (h : ∀ M, (CoherentScheme.coherentExactStructure X).ResolutionLength
+    (h : ∀ M, (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).ResolutionLength
       (coherentVectorBundle X) n M) :
-    ∀ M, (CoherentScheme.coherentExactStructure X).smallModel.ResolutionLength
+    ∀ M, (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
+      X).smallModel.ResolutionLength
       (coherentSmallVectorBundle X) n M := by
   intro M
-  let E := equivSmallModel.{u+1} (CoherentScheme.FiniteTypeSheaves X)
+  let E := equivSmallModel.{u+1} (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves
+    X)
   obtain ⟨T, hT⟩ := h (E.inverse.obj M)
-  let T' := (CoherentScheme.coherentExactStructure X).originalToSmallModel.mapFiniteResolution
+  let T' := (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
+    X).originalToSmallModel.mapFiniteResolution
     (P' := coherentSmallVectorBundle X)
     (fun N hN => (coherentVectorBundle X).prop_of_iso (E.unitIso.app N) hN) T
   exact ⟨T'.ofIso (E.counitIso.app M), by simpa [T'] using hT⟩
@@ -80,7 +96,8 @@ def vectorBundleSmallLift : SmallModel.{u+1} (FiniteLocallyFree X) ⥤
     (coherentSmallVectorBundle X).FullSubcategory :=
   (coherentSmallVectorBundle X).lift (vectorBundleToCoherentExact X).smallModel.toFunctor
     (fun M => (coherentVectorBundle X).prop_of_iso
-      ((equivSmallModel.{u+1} (CoherentScheme.FiniteTypeSheaves X)).unitIso.app
+      ((equivSmallModel.{u+1} (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves
+        X)).unitIso.app
         ((vectorBundleToCoherent X).obj ((equivSmallModel.{u+1} (FiniteLocallyFree
           X)).inverse.obj M)))
       (((equivSmallModel.{u+1} (FiniteLocallyFree X)).inverse.obj M).property))
@@ -112,7 +129,8 @@ instance vectorBundleSmallLift_additive : (vectorBundleSmallLift X).Additive := 
 instance vectorBundleSmallLift_essSurj : (vectorBundleSmallLift X).EssSurj where
   mem_essImage Z := by
     let EV := equivSmallModel.{u+1} (FiniteLocallyFree X)
-    let EC := equivSmallModel.{u+1} (CoherentScheme.FiniteTypeSheaves X)
+    let EC := equivSmallModel.{u+1}
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X)
     let V : FiniteLocallyFree X := ⟨(EC.inverse.obj Z.obj).obj, Z.property⟩
     let e : ((vectorBundleToCoherentExact X).smallModel.toFunctor).obj (EV.functor.obj V) ≅
         Z.obj :=
@@ -126,7 +144,8 @@ instance vectorBundleSmallLift_isEquivalence : (vectorBundleSmallLift X).IsEquiv
 /-- Restricting the codomain does not alter the actual exact comparison. -/
 def vectorBundleSmallLiftExact :
     ExactFunctor (vectorBundleExactStructure X).smallModel
-      (ExactSubcategory.exactStructure (CoherentScheme.coherentExactStructure X).smallModel
+      (ExactSubcategory.exactStructure
+        (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).smallModel
         (coherentSmallVectorBundle X)) where
   toFunctor := vectorBundleSmallLift X
   map_conflation S hS := (vectorBundleToCoherentExact X).smallModel.map_conflation S hS
@@ -134,11 +153,13 @@ def vectorBundleSmallLiftExact :
 /-- The lifted equivalence reflects the actual inherited exact structure. -/
 theorem vectorBundleSmallLift_conflation_iff
     (S : ShortComplex (SmallModel.{u + 1} (FiniteLocallyFree X))) :
-    (ExactSubcategory.exactStructure (CoherentScheme.coherentExactStructure X).smallModel
+    (ExactSubcategory.exactStructure
+      (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).smallModel
       (coherentSmallVectorBundle X)).conflation (S.map (vectorBundleSmallLift X)) ↔
       (vectorBundleExactStructure X).smallModel.conflation S := by
   let EV := equivSmallModel.{u+1} (FiniteLocallyFree X)
-  let EC := equivSmallModel.{u+1} (CoherentScheme.FiniteTypeSheaves X)
+  let EC := equivSmallModel.{u+1} (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves
+    X)
   let T := (S.map EV.inverse).map (vectorBundleToCoherent X)
   change (T.map (EC.functor ⋙ EC.inverse)).ShortExact ↔
     (vectorBundleExactStructure X).conflation (S.map EV.inverse)
@@ -156,7 +177,8 @@ instance vectorBundleSmallLiftExact_isEquivalence :
 /-- Pullback along the genuine lifted equivalence gives exactly the existing
 small vector-bundle exact structure. -/
 theorem vectorBundleSmallLift_ofEquivalence :
-    (ExactSubcategory.exactStructure (CoherentScheme.coherentExactStructure X).smallModel
+    (ExactSubcategory.exactStructure
+      (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).smallModel
       (coherentSmallVectorBundle X)).ofEquivalence (vectorBundleSmallLift X).asEquivalence =
       (vectorBundleExactStructure X).smallModel := by
   apply CategoryTheory.ExactCategory.ExactStructure.ext_conflation
@@ -177,28 +199,31 @@ instance vectorBundleSmallLiftExact_mapQ_isEquivalence :
 small vector-bundle subcategory, with identical underlying map. -/
 theorem vectorBundleSmall_factor :
     (vectorBundleSmallLiftExact X).comp
-      (Resolution.exactInclusion (CoherentScheme.coherentExactStructure X).smallModel
+      (Resolution.exactInclusion (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
+        X).smallModel
         (coherentSmallVectorBundle X)) = (vectorBundleToCoherentExact X).smallModel := rfl
 
 /-- Quillen's proved length-one theorem applies to the original canonical
 scheme K-to-G map. The only hypothesis is the actual algebraic resolution
 condition, with the exact subcategory's kernel closure. -/
 theorem schemeKToG_bijective_of_length_one
-    [(CoherentScheme.coherentExactStructure X).IsKernelClosed (coherentVectorBundle X)]
-    (h : ∀ M, (CoherentScheme.coherentExactStructure X).ResolutionLength
+    [(AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).IsKernelClosed
+      (coherentVectorBundle X)]
+    (h : ∀ M, (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).ResolutionLength
       (coherentVectorBundle X) 1 M) (n : ℕ) :
     Function.Bijective (schemeKToG X n) := by
   have h₁ := (vectorBundleSmallLiftExact X).KMap_bijective_of_mapQ_isEquivalence n
   have h₂ := Resolution.inclusionKMap_bijective_of_length_one
-    (CoherentScheme.coherentExactStructure X).smallModel (coherentSmallVectorBundle X)
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).smallModel
+      (coherentSmallVectorBundle X)
     (coherentSmallResolutionLength X 1 h) n
   change Function.Bijective ((vectorBundleToCoherentExact X).smallModel.KMap n)
   rw [← vectorBundleSmall_factor X, CategoryTheory.ExactCategory.ExactFunctor.KMap_comp]
   exact h₂.comp h₁
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 variable (R : CommRingCat.{u}) [IsDomain R] [IsPrincipalIdealRing R]
 
 /-- Over the spectrum of a principal ideal domain, the canonical inclusion
@@ -206,8 +231,8 @@ of vector bundles into coherent sheaves induces an isomorphism on every
 nonnegative K-group. All resolution hypotheses are proved from the PID
 submodule theorem. -/
 theorem KToG_pid_bijective (n : ℕ) : Function.Bijective (KToG (Spec R) n) :=
-  SchemeSheaf.schemeKToG_bijective_of_length_one (Spec R)
-    (SchemeSheaf.coherentResolution_length_le_one_of_pid R) n
+  AlgebraicGeometry.Scheme.Modules.schemeKToG_bijective_of_length_one (Spec R)
+    (AlgebraicGeometry.Scheme.Modules.coherentResolution_length_le_one_of_pid R) n
 
 /-- The actual canonical K-to-G equivalence for a principal ideal domain. -/
 def KToGPIDEquiv (n : ℕ) : K (Spec R) n ≃* G (Spec R) n :=
@@ -217,4 +242,4 @@ def KToGPIDEquiv (n : ℕ) : K (Spec R) n ≃* G (Spec R) n :=
 @[simp] theorem KToGPIDEquiv_coe (n : ℕ) :
     ↑(KToGPIDEquiv R n) = KToG (Spec R) n := rfl
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

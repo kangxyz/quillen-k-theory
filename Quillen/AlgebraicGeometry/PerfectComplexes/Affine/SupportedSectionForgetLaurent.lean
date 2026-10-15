@@ -21,7 +21,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
-open Quillen.Scheme.AffineOpenPair Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]
@@ -66,7 +66,7 @@ theorem boundedFlatAffineSupportedDiagramLaurentForgetUnitSquare (a : Under R) :
   Quillen.FunctorIdentityAutomorphism.onFunctor_whisker_square _ _ _ _ _ _ _
     (boundedFlatAffineSupportedSectionUnitIso_forget
       (inclusion j ((laurentUnderFunctor R).obj a))
-      (Quillen.Scheme.PolynomialLaurent.laurentGlobalUnit a.right))
+      (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentGlobalUnit a.right))
 
 /-- Forgetting support retains every original time value of the realized Laurent action. -/
 theorem boundedFlatAffineSupportedDiagramLaurentHomotopy_forget_apply

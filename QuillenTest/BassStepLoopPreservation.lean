@@ -16,7 +16,7 @@ compatibility track is kept explicit throughout.
 
 open CategoryTheory AlgebraicGeometry
 open Quillen Quillen.LoopPrespectrum Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS
-open Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 
 namespace QuillenTest.BassStepLoopPreservation
 

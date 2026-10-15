@@ -45,7 +45,8 @@ lemma strictPerfect_kernel_of_epi {X : Scheme.{u}} {K L : Complex X}
     have : Mono ((kernel.ι f).f i) := (hs i).mono_f
     exact IsZero.of_mono ((kernel.ι f).f i) (hb i hi)
   · intro i
-    exact @SchemeSheaf.finiteLocallyFree_kernel_of_shortExact X _ (hs i) (hK.2 i) (hL.2 i)
+    exact @AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_kernel_of_shortExact X _ (hs i) (hK.2
+      i) (hL.2 i)
 
 /-- An actual ambient epi between locally-perfect complexes has a
 locally-perfect categorical kernel, without any compactness hypothesis. -/

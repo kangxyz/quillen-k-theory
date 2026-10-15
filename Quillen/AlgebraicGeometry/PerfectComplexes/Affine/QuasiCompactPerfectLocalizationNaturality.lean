@@ -21,7 +21,7 @@ namespace Quillen.PerfectComplexes.Affine
 
 /-- The original affine scheme and its original open, as the established geometric pair. -/
 abbrev affineOpenPair (R : CommRingCat.{u}) (W : (Spec R).Opens) :
-    Quillen.Scheme.QuasiCompactOpenPairs.{u} :=
+    AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u} :=
   ⟨⟨Arrow.mk W.ι, (show IsOpenImmersion W.ι from inferInstance)⟩,
     (show CompactSpace (Spec R) from inferInstance)⟩
 

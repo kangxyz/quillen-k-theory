@@ -14,7 +14,7 @@ actual raw restriction image and original perfect evaluation, without replacing 
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.Scheme.AffineOpenPair
+open Quillen.PerfectComplexes AlgebraicGeometry.Scheme.AffineOpenPair
 open Quillen.Waldhausen Quillen.Waldhausen.AlgebraicGrothendieck
 universe u
 namespace QuillenTest.FullOpenSectionGradingLift

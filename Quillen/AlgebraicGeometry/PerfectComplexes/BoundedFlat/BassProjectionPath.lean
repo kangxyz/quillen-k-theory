@@ -13,7 +13,7 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite Convexity
-open Quillen.PolynomialBaseChange Quillen.Scheme.CoefficientBaseChange
+open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
 open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
 open scoped Simplicial Topology unitInterval
 universe u

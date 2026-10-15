@@ -35,7 +35,8 @@ abbrev NormalizedZeroStructuredComma :=
 /-- The functor from the Serre subcategory Q-category to the normalized structured zero-comma
 category, using the inverse of the natural zero comparison as its structure arrow. -/
 def normalizedSerreToZeroStructuredComma :
-    (Devissage.subcategoryExactStructure P).QCategory ⥤ NormalizedZeroStructuredComma P :=
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory ⥤
+      NormalizedZeroStructuredComma P :=
   (inclusionNormalizedQ P).toStructuredArrow _ (quotientNormalizedQ P)
     (fun X ↦ (normalizedQuotientInclusionZeroIso P).inv.app X)
     (fun f ↦ by simpa using ((normalizedQuotientInclusionZeroIso P).inv.naturality f).symm)
@@ -58,7 +59,7 @@ def normalizedSerreToZeroStructuredCommaIso :
 /-- The already proved raw structured inclusion transports by actual natural
 isomorphisms, retaining the normalized inclusion as its forward map. -/
 def normalizedZeroStructuredCommaClassifyingHomotopyEquiv :
-    ContinuousMap.HomotopyEquiv (Devissage.subcategoryExactStructure P).KSpace
+    ContinuousMap.HomotopyEquiv (CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace
       (ClassifyingSpace (NormalizedZeroStructuredComma P)) :=
   TheoremA.homotopyEquivWithMap
     ((zeroStructuredCommaClassifyingHomotopyEquiv P).trans
@@ -86,7 +87,7 @@ def normalizedZeroStructuredCommaClassifyingHomotopyEquiv :
 /-- The source-zero route uses precisely the reversed inverse of the
 normalized natural isomorphism, not a separately chosen nullhomotopy. -/
 theorem normalizedSerreToZeroStructuredComma_nullhomotopy (t : unitInterval)
-    (x : (Devissage.subcategoryExactStructure P).KSpace) :
+    (x : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace) :
     TheoremB.structuredCommaNullhomotopy (quotientNormalizedQ P)
       (quotientExactStructure P).qZero
       (t, classifyingSpaceMap (normalizedSerreToZeroStructuredComma P) x) =
@@ -109,7 +110,8 @@ theorem normalizedQuotient_structuredTransitions
 
 /-- The complete normalized structured comparison into the actual fiber. -/
 def normalizedStructuredFiberComparison :
-    C((Devissage.subcategoryExactStructure P).KSpace, NormalizedLocalizationFiber P) :=
+    C((CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace,
+      NormalizedLocalizationFiber P) :=
   (TheoremB.structuredFiberComparison (quotientNormalizedQ P)
     (quotientExactStructure P).qZero).comp
       (classifyingSpaceMap (normalizedSerreToZeroStructuredComma P)).hom
@@ -146,15 +148,17 @@ def normalizedStructuredFiberComparisonHomotopy :
 its source coordinate or the endpoints of its path coordinate. -/
 theorem normalizedStructuredFiberComparisonHomotopy_based (s : unitInterval) :
     normalizedStructuredFiberComparisonHomotopy P
-      (s, (Devissage.subcategoryExactStructure P).kBasepoint) = normalizedFiberBasepoint P := by
+      (s, (CategoryTheory.ObjectProperty.subcategoryExactStructure P).kBasepoint) =
+        normalizedFiberBasepoint P := by
   apply Subtype.ext
   apply Prod.ext
-  · exact (Devissage.exactInclusion P).normalizedQ_map_point
+  · exact (CategoryTheory.ObjectProperty.exactInclusion P).normalizedQ_map_point
   · apply ContinuousMap.ext
     intro t
     exact TheoremB.naturalIsoInverseHomotopy_vertex_of_subsingleton
       (normalizedQuotientInclusionZeroIso P).symm
-      (Devissage.subcategoryExactStructure P).qZero (quotientExactStructure P).qZero
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure P).qZero (quotientExactStructure
+        P).qZero
       rfl (normalizedComposite_obj_zero P)
       (fun Y ↦ (quotientExactStructure P).qHom_subsingleton_of_isZero _ _ (isZero_zero _)) s t
 

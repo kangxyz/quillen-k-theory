@@ -17,6 +17,8 @@ pushforward of the quotient line and the resulting short complex. Exactness is n
 -/
 
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 universe u v u' v'
@@ -25,8 +27,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 /-- The original relative fiber square of the two-chart line. -/
 def relativeSquare (R : CommRingCat.{u}) : Scheme.{u} :=
   pullback (projection R) (projection R)
@@ -110,4 +112,4 @@ theorem diagonalIncidence_quotient (R : CommRingCat.{u}) :
 def diagonalIncidenceSequence (R : CommRingCat.{u}) :
     ShortComplex (relativeSquare R).Modules :=
   ShortComplex.mk (diagonalIncidence R) (diagonalQuotientMap R) (diagonalIncidence_quotient R)
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

@@ -29,13 +29,13 @@ open Quillen
 def originalLaurentSquare (i : ℕ) (R : CommRingCat.{u}) :
     Arrow (Arrow LoopPrespectrum.{u + 1}) :=
   (boundedFlatAffineSectionBassDiagram i).mapArrow.mapArrow.obj
-    (PolynomialBaseChange.laurentSquareFunctor.obj R)
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R)
 
 /-- The actual original coefficient map of Laurent squares. -/
 def originalLaurentSquareMap (i : ℕ) {R S : CommRingCat.{u}} (f : R ⟶ S) :
     originalLaurentSquare i R ⟶ originalLaurentSquare i S :=
   (boundedFlatAffineSectionBassDiagram i).mapArrow.mapArrow.map
-    (PolynomialBaseChange.laurentSquareFunctor.map f)
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.map f)
 
 variable (i : ℕ) {R S : CommRingCat.{u}} (f : R ⟶ S)
   (Hf : Homotopy
@@ -60,12 +60,12 @@ theorem actual_whole_track_laurent_stable
     (hc : IsStableEquivalence (originalLaurentSquareMap i f).right.left) :
     IsStableEquivalence (originalWholeTrackMap i f Hf Hg) :=
   boundedFlatAffineSectionBass_wholeTrackPushout_isStableEquivalence i i
-    (PolynomialBaseChange.laurentSquareFunctor.obj R).left.left
-    (PolynomialBaseChange.laurentSquareFunctor.obj R).left.right
-    (PolynomialBaseChange.laurentSquareFunctor.obj R).right.left
-    (PolynomialBaseChange.laurentSquareFunctor.obj S).left.left
-    (PolynomialBaseChange.laurentSquareFunctor.obj S).left.right
-    (PolynomialBaseChange.laurentSquareFunctor.obj S).right.left
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).left.left
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).left.right
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).right.left
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj S).left.left
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj S).left.right
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj S).right.left
     _ _ _ _ _ _ _ Hf Hg ha hb hc
 
 /-- The original whole-track map is invertible in every negative signed stable degree. -/

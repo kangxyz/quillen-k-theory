@@ -21,13 +21,15 @@ including the zero ring, are allowed.
 -/
 
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry DerivedCategory CategoryTheory.Pretriangulated
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 /-- Standard original module-sheaf derived categories. -/
 local instance projectedTensorStandardDerived (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
@@ -117,4 +119,4 @@ theorem diagonalCoefficientTensorTriangle_distinguished :
       distTriang (DerivedCategory.Plus (twoChartLine R).Modules) :=
   isomorphic_distinguished _ (diagonalProjectedTensorTriangle_distinguished R E) _
     (diagonalCoefficientTensorTriangleIso R E)
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

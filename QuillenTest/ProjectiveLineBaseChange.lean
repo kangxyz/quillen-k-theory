@@ -11,8 +11,8 @@ public import Mathlib.Data.ZMod.Basic
 /-! Consumers retain original coefficient maps and their cartesian overlap universal property. -/
 @[expose] public section
 noncomputable section
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.Scheme.ProjectiveLine
-open Quillen.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
 universe u
 namespace QuillenTest.ProjectiveLineBaseChange
 

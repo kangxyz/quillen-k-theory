@@ -24,7 +24,7 @@ is assumed, and no new stable-excision hypothesis is introduced.
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
-open Quillen.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 variable (R : CommRingCat.{u})

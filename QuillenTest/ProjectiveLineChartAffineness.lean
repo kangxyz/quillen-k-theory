@@ -14,8 +14,8 @@ public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.ChartAffineness
 
 universe u
 
-open CategoryTheory AlgebraicGeometry Quillen.Scheme.ProjectiveLine
-open Quillen.Scheme.PolynomialLaurent
+open CategoryTheory AlgebraicGeometry AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 
 namespace QuillenTest.ProjectiveLineChartAffineness
 

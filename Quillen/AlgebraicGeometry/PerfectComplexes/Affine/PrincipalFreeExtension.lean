@@ -20,6 +20,9 @@ full Thomason–Trobaugh cofinality remain separate.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -37,7 +40,8 @@ theorem exists_principal_strict_extension_of_free_sections (R : CommRingCat.{u})
     (hfree : ∀ i, Module.Free (Localization.Away r)
       (((sectionsComplex (.of (Localization.Away r))).obj P.obj).X i)) :
     ∃ Q : StrictPerfect (Spec R), Nonempty
-      ((restrict (CoherentScheme.principalOpen R r)).obj Q.obj ≅ P.obj) := by
+      ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj Q.obj ≅
+        P.obj) := by
   let S := CommRingCat.of (Localization.Away r)
   let K := (sectionsComplex S).obj P.obj
   have hK := moduleStrictPerfect_sections S P.property
@@ -58,7 +62,8 @@ theorem principalStrictRestrict_essImage_of_free_sections (R : CommRingCat.{u}) 
     (P : StrictPerfect (Spec (.of (Localization.Away r))))
     (hfree : ∀ i, Module.Free (Localization.Away r)
       (((sectionsComplex (.of (Localization.Away r))).obj P.obj).X i)) :
-    (strictRestrict (CoherentScheme.principalOpen R r)).essImage P := by
+    (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).essImage P
+      := by
   obtain ⟨Q, ⟨e⟩⟩ := exists_principal_strict_extension_of_free_sections R r P hfree
   exact ⟨Q, ⟨ObjectProperty.isoMk _ e⟩⟩
 

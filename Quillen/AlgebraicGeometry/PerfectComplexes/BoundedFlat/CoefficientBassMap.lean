@@ -5,6 +5,7 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationSourceLeg
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SquareTrackProjection
 public import Quillen.Topology.Prespectrum.RelativeHomotopySquarePasting
@@ -29,24 +30,19 @@ owners. Coefficient identity/composition, full null/seed/evaluation naturality a
 raw iteration remain separate obligations.
 -/
 @[expose] public section
+open Quillen
+
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange Quillen.Scheme.CoefficientBaseChange
+open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} (P : Over (Spec R))
-
-/-- The actual contravariant coefficient maps preserve a natural-transformation square. -/
-theorem coefficientTransformation_naturality
-    {M N : Under R ⥤ Under R} (α : M ⟶ N) {a b : Under R} (u : a ⟶ b) :
-    coefficientMap P (N.map u) ≫ coefficientMap P (α.app a) =
-      coefficientMap P (α.app b) ≫ coefficientMap P (M.map u) := by
-  rw [← coefficientMap_comp, ← coefficientMap_comp]
-  exact congrArg (coefficientMap P) (α.naturality u).symm
 
 variable {a b : Under R} (u : a ⟶ b)
 

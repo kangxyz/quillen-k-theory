@@ -16,7 +16,7 @@ cofibrations, relative weak maps, pushouts and structure time all remain explici
 @[expose] public section
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.Waldhausen.IteratedS Quillen.Scheme.AffineOpenPair
+open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.SectionOpenCoefficient
 

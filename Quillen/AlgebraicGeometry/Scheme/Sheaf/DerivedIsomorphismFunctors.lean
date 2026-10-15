@@ -12,13 +12,16 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatPullbackComposit
 /-! # Derived functors and base change for scheme isomorphisms -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The original standard module-sheaf derived categories. -/
 local instance isomorphismBaseChangeStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -47,9 +50,9 @@ theorem isIso_derivedFlatBaseChangeMap_of_isIso :
       DerivedCategory.Plus.Q)
   change IsIso e.hom
   infer_instance
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The original standard module-sheaf derived categories. -/
 local instance derivedIsomorphismStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -76,4 +79,4 @@ theorem derivedFlatPullbackPlus_isEquivalence_of_isIso :
         (Scheme.Modules.pullbackCongr (IsIso.hom_inv_id f) ≪≫ Scheme.Modules.pullbackId X) ≪≫
       Functor.rightDerivedFunctorPlusIdIso X.Modules
   exact Functor.IsEquivalence.mk' (derivedFlatPullbackPlus (inv f)) eY.symm eX
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

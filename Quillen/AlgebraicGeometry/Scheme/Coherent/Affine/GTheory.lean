@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Exact
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Exact
 public import Quillen.CategoryTheory.SmallModel.Abelian
 
@@ -20,6 +21,23 @@ G-theory of finite `R`-modules.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.CoherentScheme
+export AlgebraicGeometry.Scheme.Modules.Coherent
+  (affineGlobalSectionsExact affineGlobalSections_additive)
+end Quillen.CoherentScheme
+
+end
+
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -27,20 +45,8 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 variable (R : CommRingCat.{u}) [IsNoetherianRing R]
-
-instance affineGlobalSections_additive : (affineFiniteTypeModuleEquivalence R).functor.Additive :=
-  by
-  let := preservesBinaryBiproducts_of_preservesBinaryProducts (affineFiniteTypeModuleEquivalence
-    R).functor
-  exact Functor.additive_of_preservesBinaryBiproducts _
-
-/-- The actual global-sections equivalence as an exact functor. -/
-def affineGlobalSectionsExact :
-    ExactFunctor (affineCoherentExactStructure R) (finiteModuleExactStructure.{u, u} R) where
-  toFunctor := (affineFiniteTypeModuleEquivalence R).functor
-  map_conflation _ h := h.map_of_exact _
 
 /-- G-theory of finite modules over a commutative noetherian ring, in the base
 ring's universe. -/
@@ -86,4 +92,4 @@ def affineGEquiv (n : ℕ) : AffineG R n ≃* RingG R n :=
 @[simp] theorem affineGEquiv_coe (n : ℕ) :
     ↑(affineGEquiv R n) = affineGToRingG R n := rfl
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

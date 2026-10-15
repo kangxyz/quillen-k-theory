@@ -450,7 +450,8 @@ theorem zeroComma_object_mem (X : ZeroComma P) : P X.left.obj.of :=
 /-- The canonical zero comparison lifts the Q-inclusion to the zero comma
 category. The components are exactly the ones used in the localization
 nullhomotopy. -/
-def serreToZeroComma : (Devissage.subcategoryExactStructure P).QCategory ⥤ ZeroComma P :=
+def serreToZeroComma : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory ⥤
+  ZeroComma P :=
   (Devissage.mapQ P).toCostructuredArrow (quotientMapQ P) _
     (fun X => (quotientInclusionZeroIso P).hom.app X) (fun f => by
       simpa using (quotientInclusionZeroIso P).hom.naturality f)
@@ -473,7 +474,7 @@ instance serreToZeroComma_full : (serreToZeroComma P).Full where
 
 instance serreToZeroComma_essSurj : (serreToZeroComma P).EssSurj where
   mem_essImage X := by
-    let Y : (Devissage.subcategoryExactStructure P).QCategory :=
+    let Y : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory :=
       Q.of _ _ ⟨X.left.obj.of, zeroComma_object_mem P X⟩
     refine ⟨Y, ⟨CostructuredArrow.isoMk (Iso.refl _) ?_⟩⟩
     exact ((quotientExactStructure P).qHom_subsingleton_of_isZero _ _
@@ -484,19 +485,19 @@ instance serreToZeroComma_isEquivalence : (serreToZeroComma P).IsEquivalence whe
 
 /-- The Serre Q-category is equivalent to the actual zero comma category. -/
 def zeroCommaEquivalence :
-    (Devissage.subcategoryExactStructure P).QCategory ≌ ZeroComma P :=
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory ≌ ZeroComma P :=
   (serreToZeroComma P).asEquivalence
 
 /-- Realization gives a homotopy equivalence with the canonical comparison
 as its forward map, not just an abstract equivalence of homotopy types. -/
 def zeroCommaClassifyingHomotopyEquiv :
-    ContinuousMap.HomotopyEquiv (Devissage.subcategoryExactStructure P).KSpace
+    ContinuousMap.HomotopyEquiv (CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace
       (ClassifyingSpace (ZeroComma P)) :=
   equivalenceClassifyingHomotopyEquiv (zeroCommaEquivalence P)
 
 @[simp]
 theorem zeroCommaClassifyingHomotopyEquiv_apply
-    (x : (Devissage.subcategoryExactStructure P).KSpace) :
+    (x : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace) :
     zeroCommaClassifyingHomotopyEquiv P x = classifyingSpaceMap (serreToZeroComma P) x := rfl
 
 /-- The realized comparison lies strictly over the canonical inclusion map. -/
@@ -522,7 +523,7 @@ theorem serreToZeroComma_transformation :
 /-- The canonical comma homotopy restricts pointwise to the chosen quotient
 nullhomotopy, including its complete path coordinate. -/
 theorem serreToZeroComma_nullhomotopy (t : unitInterval)
-    (x : (Devissage.subcategoryExactStructure P).KSpace) :
+    (x : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace) :
     TheoremB.commaNullhomotopy (quotientMapQ P) (quotientExactStructure P).qZero
       (t, classifyingSpaceMap (serreToZeroComma P) x) =
       quotientInclusionNullhomotopy P (t, x) := by
@@ -556,7 +557,7 @@ abbrev ZeroStructuredComma := StructuredArrow (quotientExactStructure P).qZero (
 /-- The Serre inclusion lifted to the structured comma category using the
 inverse of the same canonical categorical zero comparison. -/
 def serreToZeroStructuredComma :
-    (Devissage.subcategoryExactStructure P).QCategory ⥤ ZeroStructuredComma P :=
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory ⥤ ZeroStructuredComma P :=
   (Devissage.mapQ P).toStructuredArrow (quotientExactStructure P).qZero (quotientMapQ P)
     (fun X => (quotientInclusionZeroIso P).inv.app X) (fun f => by
       simpa using ((quotientInclusionZeroIso P).inv.naturality f).symm)
@@ -738,7 +739,7 @@ theorem zeroStructuredFiber_contractible (X : ZeroStructuredComma P) :
 /-- Quillen's source-zero comma comparison is a genuine homotopy equivalence,
 with the canonical inclusion lift as its forward map. -/
 def zeroStructuredCommaClassifyingHomotopyEquiv :
-    ContinuousMap.HomotopyEquiv (Devissage.subcategoryExactStructure P).KSpace
+    ContinuousMap.HomotopyEquiv (CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace
       (ClassifyingSpace (ZeroStructuredComma P)) :=
   TheoremA.contractibleCommaClassifyingHomotopyEquiv (serreToZeroStructuredComma P)
     (zeroStructuredFiber_contractible P)

@@ -19,6 +19,8 @@ of the input sheaf.
 -/
 
 @[expose] public section
+open Quillen
+
 
 section
 
@@ -27,7 +29,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 /-- Invertibility of the original affine counit passes through the actual binary product. -/
 private theorem isIso_productCounit (R : CommRingCat.{u})
     (M N : (Spec R).Modules) [IsIso M.fromTildeΓ] [IsIso N.fromTildeΓ] :
@@ -41,7 +43,7 @@ private theorem isIso_productCounit (R : CommRingCat.{u})
   exact NatTrans.isIso_app_prod _ _ Scheme.Modules.fromTildeΓNatTrans M N
 
 
-open Quillen.SchemeSheaf Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules) [M.IsQuasicoherent]
 
 /-- The original product term of the pushed Cech sequence has an invertible counit. -/
@@ -78,7 +80,7 @@ theorem isIso_cechOverlapCounit :
       (plusChart R) (projection R) (plusChart_projection R))
     (M.restrict (laurentPlus R ≫ plusChart R))
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 end
 
 end

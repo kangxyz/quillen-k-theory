@@ -71,7 +71,7 @@ theorem acyclic_of_openCover {X : Scheme.{u}} (K : Complex X) {ι : Type w}
     (hK : ∀ i, ((restrict (U i).ι).obj K).Acyclic) : K.Acyclic := by
   intro n
   rw [HomologicalComplex.exactAt_iff_isZero_homology]
-  apply SchemeSheaf.isZero_of_openCover _ U hU
+  apply AlgebraicGeometry.Scheme.Modules.isZero_of_openCover _ U hU
   intro i
   exact ((HomologicalComplex.exactAt_iff_isZero_homology _ _).mp (hK i n)).of_iso
     (restrictHomologyIso (U i).ι K n).symm
@@ -80,12 +80,12 @@ theorem acyclic_of_openCover {X : Scheme.{u}} (K : Complex X) {ι : Type w}
 theorem quasiIso_of_openCover {X : Scheme.{u}} {K L : Complex X} (f : K ⟶ L) {ι : Type w}
     (U : ι → X.Opens) (hU : ∀ x : X, ∃ i, x ∈ U i)
     (hf : ∀ i, QuasiIso ((restrict (U i).ι).map f)) : QuasiIso f := by
-  apply HomologicalAlgebra.quasiIso_of_mappingCone_acyclic
+  apply CochainComplex.quasiIso_of_mappingCone_acyclic
   apply acyclic_of_openCover _ U hU
   intro i
   let := hf i
   intro n
-  exact (Quillen.HomologicalAlgebra.mappingCone_acyclic_of_quasiIso
+  exact (CochainComplex.mappingCone_acyclic_of_quasiIso
     ((restrict (U i).ι).map f) n).of_iso
     (CochainComplex.mappingCone.mapHomologicalComplexIso f (Scheme.Modules.restrictFunctor (U
       i).ι)).symm

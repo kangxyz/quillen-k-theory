@@ -22,7 +22,7 @@ No equivalence of support inclusion or negative localization statement is assert
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
-open Quillen.KTheory.Bass Quillen.Scheme.AffineOpenPair
+open Quillen.KTheory.Bass AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

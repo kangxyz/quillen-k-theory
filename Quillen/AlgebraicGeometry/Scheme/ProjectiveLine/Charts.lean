@@ -18,11 +18,13 @@ along the Laurent chart, with inverse coordinate transition. Comparisons with
 Proj, twisting sheaves, and projective pushforward are separate constructions.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent
 variable (R : CommRingCat.{u})
 
@@ -212,4 +214,4 @@ instance instFlatProjection : Flat (projection R) := by
     | left => change Flat (plusChart R ≫ projection R); rw [plusChart_projection]; infer_instance
     | right => change Flat (minusChart R ≫ projection R); rw [minusChart_projection]; infer_instance
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

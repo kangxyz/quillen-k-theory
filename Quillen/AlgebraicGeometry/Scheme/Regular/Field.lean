@@ -20,6 +20,12 @@ and the induced canonical comparison is an isomorphism in every degree.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -27,7 +33,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- A genuinely finite free module gives a finite locally free sheaf by
 transporting its basis through the actual tilde/free-sheaf comparison. -/
@@ -47,9 +53,11 @@ variable (k : Type u) [Field k]
 locally free. The proof chooses a finite basis of global sections. -/
 theorem finiteLocallyFree_of_coherent_field
     (M : (Spec (CommRingCat.of k)).Modules)
-    (hM : CoherentScheme.affineLocallyFiniteType (Spec (CommRingCat.of k)) M) :
+    (hM : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineLocallyFiniteType (Spec
+      (CommRingCat.of k)) M) :
     IsFiniteLocallyFree (Spec (CommRingCat.of k)) M := by
-  have h := (CoherentScheme.affineLocallyFiniteType_spec_iff (CommRingCat.of k) M).mp hM
+  have h := (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineLocallyFiniteType_spec_iff
+    (CommRingCat.of k) M).mp hM
   have : M.IsQuasicoherent := h.1
   have : Module.Finite k (moduleSpecΓFunctor.obj M) := h.2
   have : IsFiniteLocallyFree (Spec (CommRingCat.of k))
@@ -61,7 +69,7 @@ theorem finiteLocallyFree_of_coherent_field
 /-- The inverse to the actual vector-bundle inclusion on a field spectrum.
 It retains the sheaf and every sheaf morphism. -/
 def coherentToVectorBundleField :
-    CoherentScheme.FiniteTypeSheaves (Spec (CommRingCat.of k)) ⥤
+    AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves (Spec (CommRingCat.of k)) ⥤
       FiniteLocallyFree (Spec (CommRingCat.of k)) :=
   ObjectProperty.ιOfLE (fun M hM => finiteLocallyFree_of_coherent_field k M hM)
 
@@ -70,11 +78,13 @@ instance coherentToVectorBundleField_additive : (coherentToVectorBundleField k).
 
 /-- The inverse preserves actual short exact sheaf sequences. -/
 def coherentToVectorBundleFieldExact :
-    ExactFunctor (CoherentScheme.coherentExactStructure (Spec (CommRingCat.of k)))
+    ExactFunctor (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec
+      (CommRingCat.of k)))
       (vectorBundleExactStructure (Spec (CommRingCat.of k))) where
   toFunctor := coherentToVectorBundleField k
   map_conflation S hS :=
-    (CoherentScheme.coherent_shortExact_iff (Spec (CommRingCat.of k)) S).mp hS
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherent_shortExact_iff (Spec (CommRingCat.of k))
+      S).mp hS
 
 /-- Inclusion followed by the field inverse keeps the same vector bundle. -/
 def vectorBundleFieldUnitIso :
@@ -88,44 +98,50 @@ def vectorBundleFieldUnitIso :
 def vectorBundleFieldCounitIso :
     ((coherentToVectorBundleFieldExact k).comp
       (vectorBundleToCoherentExact (Spec (CommRingCat.of k)))).toFunctor ≅
-      (CategoryTheory.ExactCategory.ExactFunctor.id (CoherentScheme.coherentExactStructure
+      (CategoryTheory.ExactCategory.ExactFunctor.id
+        (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
         (Spec (CommRingCat.of k)))).toFunctor :=
   Iso.refl _
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 variable (k : Type u) [Field k]
 
 /-- The K-theory map of the actual inverse exact functor over a field. -/
 def GToKField (n : ℕ) :
     G (Spec (CommRingCat.of k)) n →* K (Spec (CommRingCat.of k)) n :=
-  (SchemeSheaf.coherentToVectorBundleFieldExact k).smallKMap.{u+1} n
+  (AlgebraicGeometry.Scheme.Modules.coherentToVectorBundleFieldExact k).smallKMap.{u+1} n
 
 /-- The inverse field comparison cancels the canonical exact-functor K-map. -/
 @[simp]
 theorem GToKField_comp_smallKMap (n : ℕ) :
     (GToKField k n).comp
-      ((SchemeSheaf.vectorBundleToCoherentExact (Spec (CommRingCat.of k))).smallKMap.{u+1} n) =
+      ((AlgebraicGeometry.Scheme.Modules.vectorBundleToCoherentExact (Spec (CommRingCat.of
+        k))).smallKMap.{u+1} n) =
       MonoidHom.id (K (Spec (CommRingCat.of k)) n) := by
-  change ((SchemeSheaf.coherentToVectorBundleFieldExact k).smallKMap.{u+1} n).comp
-      ((SchemeSheaf.vectorBundleToCoherentExact (Spec (CommRingCat.of k))).smallKMap.{u+1} n) = _
+  change ((AlgebraicGeometry.Scheme.Modules.coherentToVectorBundleFieldExact k).smallKMap.{u+1}
+    n).comp
+      ((AlgebraicGeometry.Scheme.Modules.vectorBundleToCoherentExact (Spec (CommRingCat.of
+        k))).smallKMap.{u+1} n) = _
   rw [← CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp]
   exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u+1}
-    (SchemeSheaf.vectorBundleFieldUnitIso k) n).trans
+    (AlgebraicGeometry.Scheme.Modules.vectorBundleFieldUnitIso k) n).trans
     (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_id.{u+1} _ n)
 
 /-- The canonical exact-functor K-map cancels the inverse field comparison. -/
 @[simp]
 theorem smallKMap_comp_GToKField (n : ℕ) :
-    ((SchemeSheaf.vectorBundleToCoherentExact (Spec (CommRingCat.of k))).smallKMap.{u+1} n).comp
+    ((AlgebraicGeometry.Scheme.Modules.vectorBundleToCoherentExact (Spec (CommRingCat.of
+      k))).smallKMap.{u+1} n).comp
       (GToKField k n) = MonoidHom.id (G (Spec (CommRingCat.of k)) n) := by
-  change ((SchemeSheaf.vectorBundleToCoherentExact (Spec (CommRingCat.of k))).smallKMap.{u+1}
+  change ((AlgebraicGeometry.Scheme.Modules.vectorBundleToCoherentExact (Spec (CommRingCat.of
+    k))).smallKMap.{u+1}
     n).comp
-      ((SchemeSheaf.coherentToVectorBundleFieldExact k).smallKMap.{u+1} n) = _
+      ((AlgebraicGeometry.Scheme.Modules.coherentToVectorBundleFieldExact k).smallKMap.{u+1} n) = _
   rw [← CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp]
   exact (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u+1}
-    (SchemeSheaf.vectorBundleFieldCounitIso k)
+    (AlgebraicGeometry.Scheme.Modules.vectorBundleFieldCounitIso k)
     n).trans
     (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_id.{u+1} _ n)
 
@@ -147,4 +163,4 @@ def KToGFieldEquiv (n : ℕ) :
 @[simp] theorem KToGFieldEquiv_coe (n : ℕ) :
     ↑(KToGFieldEquiv k n) = KToG (Spec (CommRingCat.of k)) n := rfl
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

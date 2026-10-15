@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.FinitePresentation
 
@@ -18,32 +19,38 @@ The support group here is defined, without claiming a global localization LES.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+
+
 noncomputable section
 universe u
 open CategoryTheory AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 /-- Genuine coherent G-theory in the explicit global small universe `u + 1`. -/
 abbrev G (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X] (n : ℕ) :
-    Type (u + 1) := CoherentScheme.G X n
+    Type (u + 1) := AlgebraicGeometry.Scheme.Modules.Coherent.G X n
 
 /-- The canonical G-map of actual geometric open restriction. -/
 def restrictG {U X : AlgebraicGeometry.Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian U]
     (j : U ⟶ X) [IsOpenImmersion j] (n : ℕ) : G X n →* G U n :=
-  CoherentScheme.restrictionGMap j n
+  AlgebraicGeometry.Scheme.Modules.Coherent.restrictionGMap j n
 
 /-- The public restriction map retains the original exact-functor construction. -/
 @[simp] theorem restrictG_eq_smallKMap {U X : AlgebraicGeometry.Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian U]
     (j : U ⟶ X) [IsOpenImmersion j] (n : ℕ) :
-    restrictG j n = (CoherentScheme.coherentRestrictionExact j).smallKMap n := rfl
+    restrictG j n = (AlgebraicGeometry.Scheme.Modules.Coherent.coherentRestrictionExact j).smallKMap
+      n := rfl
 
 /-- G-theory of actual coherent sheaves supported outside the chosen open. -/
 abbrev SupportedG {U X : AlgebraicGeometry.Scheme.{u}} [IsLocallyNoetherian X]
     (j : U ⟶ X) [IsOpenImmersion j] (n : ℕ) : Type (u + 1) :=
-  CoherentScheme.SupportedG j n
+  AlgebraicGeometry.Scheme.Modules.Coherent.SupportedG j n
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

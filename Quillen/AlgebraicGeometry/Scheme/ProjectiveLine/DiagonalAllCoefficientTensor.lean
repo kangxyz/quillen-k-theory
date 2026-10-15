@@ -19,6 +19,8 @@ pullback/tensor/scalar comparisons. Off the original diagonal, the original
 incidence stalk is an isomorphism and the original quotient stalk vanishes.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -27,8 +29,8 @@ open CategoryTheory CategoryTheory.Limits CategoryTheory.MonoidalCategory
   AlgebraicGeometry SheafOfModulesOfCommRing
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 
 /-- At an actual diagonal point, the original tensor sequence is short exact
 for an arbitrary coefficient sheaf on the first factor. -/
@@ -93,4 +95,4 @@ theorem diagonalTensorSequence_shortExact_all (R : CommRingCat.{u}) (M : (Spec R
     ((diagonalIncidenceSequence R).mapNatIso ((tensorFunctor (relativeSquare R).sheaf).mapIso e))
     (diagonalBundleTensorSequence_shortExact_all R ((Scheme.Modules.pullback (projection R)).obj M))
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

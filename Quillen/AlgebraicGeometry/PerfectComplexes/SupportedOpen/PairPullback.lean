@@ -36,7 +36,8 @@ variable {U' X' U X : Scheme.{u}} (j' : U' ⟶ X') (j : U ⟶ X)
 
 /-- The second actual square, involving the original localization opens. -/
 def supportedOpenRestrictionSquare :
-    (⟨Arrow.mk j', (by change IsOpenImmersion j'; infer_instance)⟩ : Quillen.Scheme.OpenPairs.{u}) ⟶
+    (⟨Arrow.mk j', (by change IsOpenImmersion j'; infer_instance)⟩ :
+      AlgebraicGeometry.Scheme.OpenPairs.{u}) ⟶
       ⟨Arrow.mk j, (by change IsOpenImmersion j; infer_instance)⟩ :=
   ObjectProperty.homMk (Arrow.homMk g f.hom.right w.symm)
 
@@ -95,7 +96,7 @@ lemma perfectSupportedOpenKPullback_comp_boundedFlat (n : ℕ) :
 /-- The same original support square in the existing compact-base pair category. -/
 def qcSupportedBaseSquare :
     (⟨supportOpenPair S, (by change CompactSpace X'; infer_instance)⟩ :
-      Quillen.Scheme.QuasiCompactOpenPairs.{u}) ⟶
+      AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}) ⟶
       ⟨supportOpenPair T, (by change CompactSpace X; infer_instance)⟩ :=
   ObjectProperty.homMk f
 

@@ -49,7 +49,7 @@ def affineStrictToPerfectKEquiv (X : Scheme.{u}) [IsAffine X] (n : ℕ) :
 
 /-- Original vector-bundle/perfect K equivalence on every affine scheme. -/
 def affineVectorBundleToPerfectKEquiv (X : Scheme.{u}) [IsAffine X] (n : ℕ) :
-    Quillen.Scheme.K X n ≃* PerfectK X n :=
+    AlgebraicGeometry.Scheme.K X n ≃* PerfectK X n :=
   MulEquiv.ofBijective (vectorBundleToPerfectKMap X n)
     (vectorBundleToPerfectKMap_bijective_of_isAffine X n)
 
@@ -74,7 +74,7 @@ lemma affineStrictToPerfectKEquiv_symm_pullback {X Y : Scheme.{u}} [IsAffine X] 
 lemma affineVectorBundleToPerfectKEquiv_symm_pullback {X Y : Scheme.{u}} [IsAffine X] [IsAffine Y]
     (f : X ⟶ Y) (n : ℕ) (x : PerfectK Y n) :
     (affineVectorBundleToPerfectKEquiv X n).symm (perfectKPullback f n x) =
-      Quillen.Scheme.pullbackK f n ((affineVectorBundleToPerfectKEquiv Y n).symm x) := by
+      AlgebraicGeometry.Scheme.pullbackK f n ((affineVectorBundleToPerfectKEquiv Y n).symm x) := by
   apply (vectorBundleToPerfectKMap_bijective_of_isAffine X n).injective
   change affineVectorBundleToPerfectKEquiv X n ((affineVectorBundleToPerfectKEquiv X n).symm _) = _
   rw [MulEquiv.apply_symm_apply]

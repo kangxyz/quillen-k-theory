@@ -10,6 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenSectionsBoun
 /-! Original-map and endpoint consumers of geometric finite-open section bounds. -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -81,8 +84,9 @@ lemma original_model_homology_maps (R : CommRingCat.{u}) (W : (Spec R).Opens)
 lemma zero_principal_homology_bound {R : CommRingCat.{u}}
     (I : Complex (Spec R)) (a b : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
-    (hqc : ∀ n, (((restrict (CoherentScheme.principalOpen R 0)).obj I).homology n).IsQuasicoherent)
-    [((restrict (CoherentScheme.principalOpen R 0)).obj I).IsLE b] :
+    (hqc : ∀ n, (((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R 0)).obj
+      I).homology n).IsQuasicoherent)
+    [((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R 0)).obj I).IsLE b] :
     CochainComplex.IsLE (((affineSectionsAt R (PrimeSpectrum.basicOpen (0 :
       R))).mapHomologicalComplex
       (.up ℤ)).obj I) b :=

@@ -18,13 +18,15 @@ the original geometric unit and the original section-pullback map.
 -/
 
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 /-- The original diagonal-supported tensor identification for a vector bundle. -/
 def diagonalTensorPushforwardIso (R : CommRingCat.{u}) (E : (twoChartLine R).Modules)
     [IsFiniteLocallyFree (twoChartLine R) E] (M : (twoChartLine R).Modules) :
@@ -50,4 +52,4 @@ theorem diagonalTensorPushforwardIso_hom (R : CommRingCat.{u})
         ((moduleTensorCoefficientMap (twoChartLine R)
           ((sectionPullbackIso (relativeDiagonal R) (relativeFirst R)
             (relativeDiagonal_first R)).hom.app E)).app M) := rfl
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

@@ -5,17 +5,21 @@ Authors: Quillen K-theory contributors
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Carrier
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueThirdTensor
 
 /-! # Actual original third endpoint span in the flasque perfect model -/
 
 @[expose] public section
+open Quillen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueThirdEndpoint
@@ -241,17 +245,6 @@ lemma centerTotal_flasque (R : CommRingCat.{u})
   let := ha
   exact godementTotal_isFlasque (centerInputPlus R K).obj a
     (fun i hi => CochainComplex.isZero_of_isStrictlyGE (centerInputPlus R K).obj a i hi) n
-
-/-- Composition of the prescribed proof-forgetting comparisons. -/
-def forgetComposeIso
-    {C D E X Y Z : Type*} [Category C] [Category D] [Category E]
-    [Category X] [Category Y] [Category Z]
-    (F : C ⥤ D) (G : D ⥤ E) (U : X ⥤ Y) (V : Y ⥤ Z)
-    (I : C ⥤ X) (J : D ⥤ Y) (K : E ⥤ Z)
-    (eF : F ⋙ J ≅ I ⋙ U) (eG : G ⋙ K ≅ J ⋙ V) :
-    (F ⋙ G) ⋙ K ≅ I ⋙ U ⋙ V :=
-  associator F G K ≪≫ isoWhiskerLeft F eG ≪≫
-    (associator F J V).symm ≪≫ isoWhiskerRight eF V ≪≫ associator I U V
 
 /-- The original section image of the source total, before product totalization. -/
 def centerSectionRaw (R : CommRingCat.{u}) :

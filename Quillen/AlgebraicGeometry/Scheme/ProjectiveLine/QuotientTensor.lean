@@ -19,13 +19,15 @@ over every base ring, including the zero ring.
 -/
 
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry SheafOfModulesOfCommRing
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 /-- The original positive chart trivialization of tensor with the quotient line. -/
 def quotientTensorPlusIso (R : CommRingCat.{u}) (E : (twoChartLine R).Modules) :
     ((moduleTensorLeftFunctor (twoChartLine R) E).obj (tautologicalQuotientLine R)).restrict
@@ -65,4 +67,4 @@ instance quotientTensor_finiteLocallyFree (R : CommRingCat.{u}) (E : (twoChartLi
     cases b
     · exact finiteLocallyFree_of_iso (quotientTensorMinusIso R E).symm
     · exact finiteLocallyFree_of_iso (quotientTensorPlusIso R E).symm
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

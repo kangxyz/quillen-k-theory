@@ -21,6 +21,12 @@ extension theorems. They are deliberately not assumed or asserted here.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,7 +34,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 variable {U X : Scheme.{u}} [IsLocallyNoetherian X] [IsLocallyNoetherian U]
   (j : U ⟶ X) [IsOpenImmersion j]
@@ -129,8 +135,8 @@ image sheaf, rather than an abstract replacement for support. -/
 theorem finiteTypeSheavesRestriction_map_eq_zero_iff_image_support_subset
     {M N : FiniteTypeSheaves X} (f : M ⟶ N) :
     (finiteTypeSheavesRestriction j).map f = 0 ↔
-      SchemeSheaf.support (Abelian.image f).obj ⊆ (Set.range j)ᶜ := by
+      AlgebraicGeometry.Scheme.Modules.support (Abelian.image f).obj ⊆ (Set.range j)ᶜ := by
   rw [finiteTypeSheavesRestriction_map_eq_zero_iff_image_supported,
     finiteTypeSheavesSupportedAway_iff_support_subset]
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

@@ -8,7 +8,7 @@ import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BassGeometricComparison
 /-! The proved geometric Bass comparison keeps all original cylinder, loop and stable endpoints. -/
 open CategoryTheory AlgebraicGeometry
 open Quillen Quillen.LoopPrespectrum Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS
-open Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace QuillenTest.BassGeometricComparison
 

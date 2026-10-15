@@ -19,6 +19,9 @@ quasi-isomorphisms.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -56,7 +59,7 @@ lemma original_principal_comparison_naturality (R : CommRingCat.{u}) (r : R)
       ((principalDerivedLocalization R r).map f.hom) ≫
       ((perfectDerivedEquivalencePrincipalIso R r).hom.app L).hom =
     ((perfectDerivedEquivalencePrincipalIso R r).hom.app K).hom ≫
-      (derivedRestrict (Quillen.CoherentScheme.principalOpen R r)).map
+      (derivedRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map
         ((associatedDerived R).map f.hom) := by
   exact congrArg (fun g => g.hom) ((perfectDerivedEquivalencePrincipalIso R r).hom.naturality f)
 

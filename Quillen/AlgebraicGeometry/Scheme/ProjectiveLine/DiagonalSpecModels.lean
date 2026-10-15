@@ -14,6 +14,8 @@ squares with the literal equal-coordinate and mixed evaluation spectrum maps. Th
 mixed evaluation retains both original Laurent legs and its signed principal kernel.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 universe u
@@ -22,7 +24,7 @@ open Polynomial
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open Quillen.PolynomialDiagonal PolynomialLaurent
 /-- The actual equal-coordinate spectrum square retains the original diagonal and chart map. -/
 theorem equalSpec_diagonal_isPullback (R : CommRingCat.{u})
@@ -48,9 +50,9 @@ theorem mixedSpec_diagonal_isPullback (R : CommRingCat.{u}) :
   · simp [mixedPolynomialDiagonal]
   · simp
   · simp
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent Quillen.PolynomialBaseChange Quillen.PolynomialDiagonal
 /-- The original opposite mixed evaluation sends the first variable to T^-1 and the second to T. -/
 def oppositeMixedEvaluation (R : CommRingCat.{u}) :
@@ -101,4 +103,4 @@ theorem oppositeMixedSpec_diagonal_isPullback (R : CommRingCat.{u}) :
     (Spec.map (oppositeMixedEvaluation R) ≫ (polynomialSquareIso R).hom)
     (oppositeMixedEvaluation_first R) (oppositeMixedEvaluation_second R)
   apply h.of_iso (Iso.refl _) (Iso.refl _) (polynomialSquareIso R).symm (Iso.refl _) <;> simp
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

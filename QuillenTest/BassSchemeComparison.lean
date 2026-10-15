@@ -26,42 +26,46 @@ open Quillen.Bass
 
 /-- Both coefficient extensions are actual pushouts for every original ring map. -/
 theorem coefficient_pushouts {R S : CommRingCat.{u}} (f : R ⟶ S) :
-    IsPushout f (Quillen.PolynomialBaseChange.coefficient R)
-      (Quillen.PolynomialBaseChange.coefficient S) (Quillen.PolynomialBaseChange.polynomialMap f) ∧
-    IsPushout f (Quillen.PolynomialBaseChange.laurentCoefficient R)
-      (Quillen.PolynomialBaseChange.laurentCoefficient S) (Quillen.PolynomialBaseChange.laurentMap
+    IsPushout f (CommRingCat.PolynomialLaurent.coefficient R)
+      (CommRingCat.PolynomialLaurent.coefficient S) (CommRingCat.PolynomialLaurent.polynomialMap f)
+        ∧
+    IsPushout f (CommRingCat.PolynomialLaurent.laurentCoefficient R)
+      (CommRingCat.PolynomialLaurent.laurentCoefficient S) (CommRingCat.PolynomialLaurent.laurentMap
         f) :=
-  ⟨Quillen.PolynomialBaseChange.polynomial_isPushout f,
-    Quillen.PolynomialBaseChange.laurent_isPushout f⟩
+  ⟨CommRingCat.PolynomialLaurent.polynomial_isPushout f,
+    CommRingCat.PolynomialLaurent.laurent_isPushout f⟩
 
 /-- The original Laurent coordinate and its inverse survive actual coefficient extension. -/
 theorem original_coordinates {R S : CommRingCat.{u}} (f : R ⟶ S) :
-    Quillen.PolynomialBaseChange.laurentMap f (LaurentPolynomial.T 1) = LaurentPolynomial.T 1 ∧
-    Quillen.PolynomialBaseChange.laurentMap f (LaurentPolynomial.T (-1)) = LaurentPolynomial.T (-1)
+    CommRingCat.PolynomialLaurent.laurentMap f (LaurentPolynomial.T 1) = LaurentPolynomial.T 1 ∧
+    CommRingCat.PolynomialLaurent.laurentMap f (LaurentPolynomial.T (-1)) = LaurentPolynomial.T (-1)
       :=
-  ⟨Quillen.PolynomialBaseChange.laurentMap_T f 1,
-    Quillen.PolynomialBaseChange.laurentMap_T f (-1)⟩
+  ⟨CommRingCat.PolynomialLaurent.laurentMap_T f 1,
+    CommRingCat.PolynomialLaurent.laurentMap_T f (-1)⟩
 
 /-- The actual base-product identification preserves the original structural projection. -/
 theorem original_projection (R : CommRingCat.{u}) :
-    (Quillen.Scheme.Bass.polynomialSpecIso R).hom ≫ pullback.fst _ _ =
-      Quillen.Scheme.PolynomialLaurent.polynomialProjection R ∧
-    (Quillen.Scheme.Bass.laurentSpecIso R).hom ≫ pullback.fst _ _ =
-      Quillen.Scheme.PolynomialLaurent.laurentProjection R :=
-  ⟨Quillen.Scheme.Bass.polynomialSpecIso_hom_fst R,
-    Quillen.Scheme.Bass.laurentSpecIso_hom_fst R⟩
+    (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialSpecIso R).hom ≫ pullback.fst _ _
+      =
+      AlgebraicGeometry.Scheme.PolynomialLaurent.polynomialProjection R ∧
+    (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.laurentSpecIso R).hom ≫ pullback.fst _ _ =
+      AlgebraicGeometry.Scheme.PolynomialLaurent.laurentProjection R :=
+  ⟨AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialSpecIso_hom_fst R,
+    AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.laurentSpecIso_hom_fst R⟩
 
 /-- Both chart squares use the literal natural isomorphism in the variance required by K. -/
 theorem original_chart_squares (R : CommRingCat.{u}) :
-    Quillen.Scheme.Bass.affineSchemeFunctor.map (plus.app R) ≫
-      Quillen.Scheme.Bass.laurentDiagramIso.hom.app R =
-    Quillen.Scheme.Bass.polynomialDiagramIso.hom.app R ≫
-      (NatTrans.op Quillen.Scheme.Bass.plus).app (Quillen.Scheme.Bass.affineSchemeFunctor.obj R) ∧
-    Quillen.Scheme.Bass.affineSchemeFunctor.map (minus.app R) ≫
-      Quillen.Scheme.Bass.laurentDiagramIso.hom.app R =
-    Quillen.Scheme.Bass.polynomialDiagramIso.hom.app R ≫
-      (NatTrans.op Quillen.Scheme.Bass.minus).app (Quillen.Scheme.Bass.affineSchemeFunctor.obj R) :=
-  ⟨Quillen.Scheme.Bass.diagramIso_plus R,Quillen.Scheme.Bass.diagramIso_minus R⟩
+    AlgebraicGeometry.Scheme.Bass.affineSchemeFunctor.map (plus.app R) ≫
+      AlgebraicGeometry.Scheme.Bass.laurentDiagramIso.hom.app R =
+    AlgebraicGeometry.Scheme.Bass.polynomialDiagramIso.hom.app R ≫
+      (NatTrans.op AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus).app
+        (AlgebraicGeometry.Scheme.Bass.affineSchemeFunctor.obj R) ∧
+    AlgebraicGeometry.Scheme.Bass.affineSchemeFunctor.map (minus.app R) ≫
+      AlgebraicGeometry.Scheme.Bass.laurentDiagramIso.hom.app R =
+    AlgebraicGeometry.Scheme.Bass.polynomialDiagramIso.hom.app R ≫
+      (NatTrans.op AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus).app
+        (AlgebraicGeometry.Scheme.Bass.affineSchemeFunctor.obj R) :=
+  ⟨AlgebraicGeometry.Scheme.Bass.diagramIso_plus R,AlgebraicGeometry.Scheme.Bass.diagramIso_minus R⟩
 
 /-- The genuine comparison preserves every original K0 element exactly. -/
 theorem original_Kzero_identity (R : CommRingCat.{u})
@@ -73,7 +77,8 @@ theorem original_map_naturality {R S : CommRingCat.{u}} (f : R ⟶ S) (n : ℕ)
     (a : negativeK R n) :
     (affineSchemeNegativeKIso n).hom.app S (negativeKMap f n a) =
       (Quillen.PerfectComplexes.Bass.negativeKFunctor n).map
-        (Quillen.Scheme.Bass.affineSchemeFunctor.map f) ((affineSchemeNegativeKIso n).hom.app R a)
+        (AlgebraicGeometry.Scheme.Bass.affineSchemeFunctor.map f) ((affineSchemeNegativeKIso
+          n).hom.app R a)
           :=
   congrArg (fun g ↦ g a) (affineSchemeNegativeKIso_naturality f n)
 
@@ -81,16 +86,17 @@ theorem original_map_naturality {R S : CommRingCat.{u}} (f : R ⟶ S) (n : ℕ)
 theorem original_representative (R : CommRingCat.{u}) (n : ℕ)
     (a : negativeK (laurentFunctor.obj R) n) :
     (affineSchemeNegativeKIso (n+1)).hom.app R (negativeKπ R n a) =
-      Quillen.PerfectComplexes.Bass.negativeKπ (Quillen.Scheme.Bass.affineSchemeFunctor.obj R).unop
+      Quillen.PerfectComplexes.Bass.negativeKπ
+        (AlgebraicGeometry.Scheme.Bass.affineSchemeFunctor.obj R).unop
         n
         ((Quillen.PerfectComplexes.Bass.negativeKFunctor n).map
-          (Quillen.Scheme.Bass.laurentDiagramIso.hom.app R)
+          (AlgebraicGeometry.Scheme.Bass.laurentDiagramIso.hom.app R)
             ((affineSchemeNegativeKIso n).hom.app (laurentFunctor.obj R) a)) :=
   congrArg (fun g ↦ g a) (affineSchemeNegativeKIso_π R n)
 
 /-- Every scheme class over Spec has a unique original affine Bass class in every degree. -/
 theorem original_unique_preimage (R : CommRingCat.{u}) (n : ℕ)
-    (b : (Quillen.Scheme.Bass.affineSchemeFunctor ⋙
+    (b : (AlgebraicGeometry.Scheme.Bass.affineSchemeFunctor ⋙
       Quillen.PerfectComplexes.Bass.negativeKFunctor n).obj R) :
     ∃! a : negativeK R n, (affineSchemeNegativeKIso n).hom.app R a = b := by
   refine ⟨(affineSchemeNegativeKIso n).inv.app R b,?_,?_⟩
@@ -107,22 +113,22 @@ theorem empty_affine_representative (n : ℕ) :
     negativeKπ (.of (ZMod 1)) n ≫ (affineSchemeNegativeKIso (n+1)).hom.app (.of (ZMod 1)) =
       (affineSchemeNegativeKIso n).hom.app (laurentFunctor.obj (.of (ZMod 1))) ≫
         (Quillen.PerfectComplexes.Bass.negativeKFunctor n).map
-          (Quillen.Scheme.Bass.laurentDiagramIso.hom.app (.of (ZMod 1))) ≫
+          (AlgebraicGeometry.Scheme.Bass.laurentDiagramIso.hom.app (.of (ZMod 1))) ≫
             Quillen.PerfectComplexes.Bass.negativeKπ
-              (Quillen.Scheme.Bass.affineSchemeFunctor.obj (.of (ZMod 1))).unop n :=
+              (AlgebraicGeometry.Scheme.Bass.affineSchemeFunctor.obj (.of (ZMod 1))).unop n :=
   affineSchemeNegativeKIso_π (.of (ZMod 1)) n
 
 /-- Prescribed maps out of the scheme group are recovered from the original affine quotient. -/
 theorem original_prescribed_descent (R : CommRingCat.{u}) (n : ℕ)
     {A : AddCommGrpCat.{u+1}}
-    (g : (Quillen.Scheme.Bass.affineSchemeFunctor ⋙
+    (g : (AlgebraicGeometry.Scheme.Bass.affineSchemeFunctor ⋙
       Quillen.PerfectComplexes.Bass.negativeKFunctor (n+1)).obj R ⟶ A) :
     negativeKπ R n ≫ (affineSchemeNegativeKIso (n+1)).hom.app R ≫ g =
       (affineSchemeNegativeKIso n).hom.app (laurentFunctor.obj R) ≫
         (Quillen.PerfectComplexes.Bass.negativeKFunctor n).map
-          (Quillen.Scheme.Bass.laurentDiagramIso.hom.app R) ≫
+          (AlgebraicGeometry.Scheme.Bass.laurentDiagramIso.hom.app R) ≫
             Quillen.PerfectComplexes.Bass.negativeKπ
-              (Quillen.Scheme.Bass.affineSchemeFunctor.obj R).unop n ≫ g :=
+              (AlgebraicGeometry.Scheme.Bass.affineSchemeFunctor.obj R).unop n ≫ g :=
   affineSchemeNegativeKIso_π_assoc R n g
 
 /-- Cokernel transport uses independent category and group universes and the original projection. -/

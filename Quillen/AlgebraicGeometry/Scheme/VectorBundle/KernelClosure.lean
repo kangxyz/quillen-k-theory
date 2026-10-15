@@ -19,6 +19,12 @@ asserts projectivity of vector bundles in the global sheaf category.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 open CategoryTheory.ExactCategory
 
 
@@ -29,7 +35,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- A kernel of an ambient epi between affine vector bundles is a vector bundle,
 over an arbitrary commutative ring. -/
@@ -43,10 +49,13 @@ theorem finiteLocallyFree_kernel_of_shortExact_affine (R : CommRingCat.{u})
     · exact inferInstanceAs S.X₂.IsQuasicoherent
     · exact inferInstanceAs S.X₃.IsQuasicoherent)
   have : S.X₁.IsQuasicoherent := h₁
-  let T : ShortComplex (CoherentScheme.AffineQuasicoherent R) :=
+  let T : ShortComplex (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.AffineQuasicoherent R) :=
     ShortComplex.mk
-      (Q.homMk S.f : (⟨S.X₁, h₁⟩ : CoherentScheme.AffineQuasicoherent R) ⟶ ⟨S.X₂, inferInstance⟩)
-      (Q.homMk S.g : (⟨S.X₂, inferInstance⟩ : CoherentScheme.AffineQuasicoherent R) ⟶
+      (Q.homMk S.f : (⟨S.X₁, h₁⟩ :
+        AlgebraicGeometry.Scheme.Modules.QuasiCoherent.AffineQuasicoherent R) ⟶ ⟨S.X₂,
+        inferInstance⟩)
+      (Q.homMk S.g : (⟨S.X₂, inferInstance⟩ :
+        AlgebraicGeometry.Scheme.Modules.QuasiCoherent.AffineQuasicoherent R) ⟶
         ⟨S.X₃, inferInstance⟩) (ObjectProperty.hom_ext _ S.zero)
   have hT : T.ShortExact := {
     exact := Functor.reflects_exact_of_faithful Q.ι T hS.exact
@@ -124,4 +133,4 @@ theorem vectorBundle_deflation_of_ambient_epi {X : Scheme.{u}}
     mono_f := inferInstance
     epi_g := inferInstance }
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

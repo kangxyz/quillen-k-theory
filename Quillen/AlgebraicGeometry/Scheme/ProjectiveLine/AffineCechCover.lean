@@ -20,11 +20,13 @@ No Cech-to-derived comparison or projective bundle formula is asserted. The base
 is an arbitrary commutative ring, including the zero ring.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u v
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent
 variable (R : CommRingCat.{u})
 
@@ -107,4 +109,4 @@ theorem isAffineOpen_cechIntersection (n : ℕ) (a : Fin (n + 1) → Bool) :
   rw [h]
   exact isAffineOpen_iInf_chartOpen R a
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

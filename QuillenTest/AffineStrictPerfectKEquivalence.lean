@@ -17,6 +17,9 @@ non-domain, and the genuine all-scheme weak-arrow joint factorization.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -36,7 +39,7 @@ lemma actual_public_forward (R : CommRingCat.{u}) (n : ℕ) :
 /-- Every original perfect K₀ class lifts uniquely along the unchanged
 public map from original scheme Q-theory. -/
 lemma public_K0_unique_lift (R : CommRingCat.{u}) (x : PerfectK (Spec R) 0) :
-    ∃! y : Quillen.Scheme.K (Spec R) 0, vectorBundleToPerfectKMap (Spec R) 0 y = x := by
+    ∃! y : AlgebraicGeometry.Scheme.K (Spec R) 0, vectorBundleToPerfectKMap (Spec R) 0 y = x := by
   obtain ⟨y, hy⟩ := (vectorBundleToPerfectKMap_bijective R 0).surjective x
   exact ⟨y, hy, fun z hz => (vectorBundleToPerfectKMap_bijective R 0).injective (hz.trans hy.symm)⟩
 
@@ -69,10 +72,12 @@ lemma original_inverse_pullback (R S : CommRingCat.{u}) (f : Spec S ⟶ Spec R) 
 /-- The actual original principal restriction square holds even when the
 localization is the zero ring and the starting ring has zero divisors. -/
 lemma zero_localization_original_square (n : ℕ) :
-    (perfectKRestrict (CoherentScheme.principalOpen (.of (ZMod 6)) 0) n).comp
+    (perfectKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen (.of (ZMod 6))
+      0) n).comp
       (strictToPerfectKEquiv (.of (ZMod 6)) n).toMonoidHom =
     (strictToPerfectKEquiv (.of (Localization.Away (0 : ZMod 6))) n).toMonoidHom.comp
-      (strictKRestrict (CoherentScheme.principalOpen (.of (ZMod 6)) 0) n) :=
+      (strictKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen (.of (ZMod 6))
+        0) n) :=
   strictToPerfectKMap_restrict _ n
 
 /-- Actual joint data works on every scheme, before any affine App2 input. -/

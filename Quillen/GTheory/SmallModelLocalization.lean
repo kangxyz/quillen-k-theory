@@ -63,7 +63,8 @@ abbrev supported : ObjectProperty (SmallModel.{w} C) :=
   (SmallModelLocalization.functor F.toFunctor).kernel
 
 /-- The genuine supported K-term in the chosen small model. -/
-abbrev SupportedK (n : ℕ) := (Devissage.subcategoryExactStructure (supported F)).K n
+abbrev SupportedK (n : ℕ) := (CategoryTheory.ObjectProperty.subcategoryExactStructure (supported
+  F)).K n
 
 /-- The canonical inclusion, followed by the identity exact-structure comparison. -/
 def inclusionKMap (n : ℕ) : SupportedK F n →* (abelianExactStructure C).SmallK n :=

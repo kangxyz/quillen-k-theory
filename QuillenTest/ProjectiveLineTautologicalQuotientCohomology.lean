@@ -14,7 +14,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf.TwoOpen Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules.TwoOpen AlgebraicGeometry.Scheme.ProjectiveLine
 universe u
 namespace QuillenTest.ProjectiveLineTautologicalQuotientCohomology
 

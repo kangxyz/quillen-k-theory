@@ -35,12 +35,15 @@ def affineSchemeKZeroIso : affineKZeroFunctor.{u} ≅
 
 /-- The genuine geometric chart comparison transports the actual next Bass cokernel. -/
 def affineSchemeContractionIso
-    (F : Quillen.Scheme.QuasiCompactSchemes.{u}ᵒᵖ ⥤ AddCommGrpCat.{u + 1})
+    (F : AlgebraicGeometry.Scheme.QuasiCompactSchemes.{u}ᵒᵖ ⥤ AddCommGrpCat.{u + 1})
   :
     contraction (Scheme.Bass.affineSchemeFunctor ⋙ F) ≅
       Scheme.Bass.affineSchemeFunctor ⋙
-        TwoChart.contraction (NatTrans.op Scheme.Bass.plus) (NatTrans.op Scheme.Bass.minus) F :=
-  TwoChart.contractionTransportIso (NatTrans.op Scheme.Bass.plus) (NatTrans.op Scheme.Bass.minus)
+        TwoChart.contraction (NatTrans.op AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus)
+          (NatTrans.op AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus) F :=
+  TwoChart.contractionTransportIso (NatTrans.op
+    AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus) (NatTrans.op
+    AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus)
     plus minus Scheme.Bass.affineSchemeFunctor Scheme.Bass.polynomialDiagramIso
     Scheme.Bass.laurentDiagramIso Scheme.Bass.diagramIso_plus Scheme.Bass.diagramIso_minus F
 

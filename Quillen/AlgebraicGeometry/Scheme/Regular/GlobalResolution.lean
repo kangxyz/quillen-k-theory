@@ -21,6 +21,12 @@ affine cover. Vector bundles are never asserted globally projective.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -29,13 +35,14 @@ universe u v
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {X : AlgebraicGeometry.Scheme.{u}} [IsLocallyNoetherian X]
 
 /-- Zero chart-module projective dimension means the original coherent
 sheaf is an actual finite locally free sheaf. -/
 theorem coherentVectorBundle_of_affineCoverDimensionLE_zero
-    (U : X.AffineOpenCover.{v}) (M : CoherentScheme.FiniteTypeSheaves X)
+    (U : X.AffineOpenCover.{v}) (M :
+      AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X)
     (hM : AffineCoverDimensionLE U M 0) : coherentVectorBundle X M := by
   apply finiteLocallyFree_of_schemeOpenCover M.obj U.openCover
   intro i
@@ -48,8 +55,9 @@ The syzygies are genuine coherent kernels, and every resolving term is a
 finite locally free sheaf on the original scheme. -/
 theorem coherentResolution_length_le_of_affineCoverDimensionLE
     [Scheme.HasResolutionProperty X] (U : X.AffineOpenCover.{v}) (n : ℕ)
-    (M : CoherentScheme.FiniteTypeSheaves X) (hM : AffineCoverDimensionLE U M n) :
-    ∃ T : (CoherentScheme.coherentExactStructure X).FiniteResolution
+    (M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) (hM :
+      AffineCoverDimensionLE U M n) :
+    ∃ T : (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).FiniteResolution
         (coherentVectorBundle X) M, T.length ≤ n := by
   induction n generalizing M with
   | zero =>
@@ -63,9 +71,9 @@ theorem coherentResolution_length_le_of_affineCoverDimensionLE
     obtain ⟨T, hT⟩ := ih K hK
     exact ⟨.step (ShortComplex.mk i p w) hS hP T, Nat.succ_le_succ hT⟩
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {X : AlgebraicGeometry.Scheme.{u}}
 
 /-- Every coherent sheaf on a quasi-compact regular scheme with the ordinary
@@ -73,7 +81,7 @@ resolution property admits an actual finite global vector-bundle resolution.
 The bound may depend on the sheaf, even if the scheme has infinite dimension. -/
 theorem coherentResolutionHypothesis_of_regular_resolutionProperty
     [Scheme.IsRegular X] [CompactSpace X] [Scheme.HasResolutionProperty X] :
-    (CoherentScheme.coherentExactStructure X).ResolutionHypothesis
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).ResolutionHypothesis
       (coherentVectorBundle X) := by
   intro M
   obtain ⟨n, hn⟩ := exists_finiteCoverDimensionLE_of_regular M
@@ -81,4 +89,4 @@ theorem coherentResolutionHypothesis_of_regular_resolutionProperty
     (Scheme.finiteAffineOpenCover X) n M hn
   exact ⟨T⟩
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

@@ -14,12 +14,14 @@ The actual polynomial global section X restricts to the existing Laurent global 
 No invertibility of X on the whole polynomial spectrum is asserted.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
 universe u
-namespace Quillen.Scheme.PolynomialLaurent
+namespace AlgebraicGeometry.Scheme.PolynomialLaurent
 
 /-- The literal polynomial variable as an original global section of the polynomial spectrum. -/
 def polynomialGlobalCoordinate (R : CommRingCat.{u}) : Γ(Spec (.of (Polynomial R)), ⊤) :=
@@ -47,4 +49,4 @@ theorem polynomialGlobalCoordinate_laurentPlus (R : CommRingCat.{u}) :
   rw [laurentGlobalUnit_original_T]
   exact h
 
-end Quillen.Scheme.PolynomialLaurent
+end AlgebraicGeometry.Scheme.PolynomialLaurent

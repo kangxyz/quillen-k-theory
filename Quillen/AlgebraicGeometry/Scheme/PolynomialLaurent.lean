@@ -6,94 +6,18 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.BaseProduct
-public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurent
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Relative
 
-/-!
-The genuine relative polynomial/Laurent schemes on arbitrary qc bases, their actual coordinate open
-immersions, flat projections and exact natural projection triangles. Morphisms of the qc base
-category are unrestricted.
--/
+/-! # Compatibility imports for the canonical Aglib interface -/
 @[expose] public section
 
-
+-- Transitional names share Aglib declarations and canonical instances.
 noncomputable section
-set_option backward.isDefEq.respectTransparency false
-set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-universe u
 namespace Quillen.Scheme.Bass
-
-/-- The universe-lifted integer ring used as the common base for Bass products. -/
-abbrev integerRing : CommRingCat.{u} := .of (ULift.{u} ℤ)
-
-/-- The actual relative affine line X × Spec(Z[t]). -/
-def polynomialFunctor : QuasiCompactSchemes.{u} ⥤ QuasiCompactSchemes.{u} :=
-  qcBaseProductFunctor (PolynomialLaurent.polynomialProjection integerRing)
-
-/-- The actual relative Laurent scheme X × Spec(Z[t,t⁻¹]). -/
-def laurentFunctor : QuasiCompactSchemes.{u} ⥤ QuasiCompactSchemes.{u} :=
-  qcBaseProductFunctor (PolynomialLaurent.laurentProjection integerRing)
-
-/-- The original plus-coordinate open chart, base changed over the actual integral base. -/
-def plus : laurentFunctor.{u} ⟶ polynomialFunctor.{u} :=
-  qcBaseProductTransformation _ _ (PolynomialLaurent.laurentPlus integerRing)
-    (PolynomialLaurent.laurentPlus_projection integerRing)
-
-/-- The original inverse-coordinate open chart, with no choice of local coordinates on X. -/
-def minus : laurentFunctor.{u} ⟶ polynomialFunctor.{u} :=
-  qcBaseProductTransformation _ _ (PolynomialLaurent.laurentMinus integerRing)
-    (PolynomialLaurent.laurentMinus_projection integerRing)
-
-instance instIsOpenImmersionPlus (X : QuasiCompactSchemes.{u}) : IsOpenImmersion (plus.app X).hom :=
-  by
-  exact instIsOpenImmersionBaseProductTransformation _ _ _
-    (PolynomialLaurent.laurentPlus_projection integerRing) X.obj
-
-instance instIsOpenImmersionMinus (X : QuasiCompactSchemes.{u}) : IsOpenImmersion (minus.app X).hom
-  :=
-  by
-  exact instIsOpenImmersionBaseProductTransformation _ _ _
-    (PolynomialLaurent.laurentMinus_projection integerRing) X.obj
-
-/-- The original relative affine-line projection. -/
-def polynomialProjection : polynomialFunctor.{u} ⟶ 𝟭 _ where
-  app X := ⟨(baseProductProjection _).app X.obj⟩
-  naturality {X Y} f := by
-    apply ObjectProperty.hom_ext
-    exact (baseProductProjection _).naturality f.hom
-
-/-- The original relative Laurent projection. -/
-def laurentProjection : laurentFunctor.{u} ⟶ 𝟭 _ where
-  app X := ⟨(baseProductProjection _).app X.obj⟩
-  naturality {X Y} f := by
-    apply ObjectProperty.hom_ext
-    exact (baseProductProjection _).naturality f.hom
-
-instance instFlatPolynomialProjection (X : QuasiCompactSchemes.{u}) :
-    Flat (polynomialProjection.app X).hom := by
-  change Flat (pullback.fst (toIntegerBase X.obj) (PolynomialLaurent.polynomialProjection
-    integerRing))
-  infer_instance
-
-instance instFlatLaurentProjection (X : QuasiCompactSchemes.{u}) :
-    Flat (laurentProjection.app X).hom := by
-  change Flat (pullback.fst (toIntegerBase X.obj) (PolynomialLaurent.laurentProjection integerRing))
-  infer_instance
-
-@[reassoc (attr := simp)] lemma plus_projection (X : QuasiCompactSchemes.{u}) :
-    plus.app X ≫ polynomialProjection.app X = laurentProjection.app X := by
-  apply ObjectProperty.hom_ext
-  exact baseProductTransformation_projection _ _ _
-    (PolynomialLaurent.laurentPlus_projection integerRing) X.obj
-
-@[reassoc (attr := simp)] lemma minus_projection (X : QuasiCompactSchemes.{u}) :
-    minus.app X ≫ polynomialProjection.app X = laurentProjection.app X := by
-  apply ObjectProperty.hom_ext
-  exact baseProductTransformation_projection _ _ _
-    (PolynomialLaurent.laurentMinus_projection integerRing) X.obj
-
-
+export AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
+  (instFlatLaurentProjection instFlatPolynomialProjection instIsOpenImmersionMinus
+  instIsOpenImmersionPlus integerRing laurentFunctor laurentProjection minus minus_projection
+  plus plus_projection polynomialFunctor polynomialProjection)
 end Quillen.Scheme.Bass
 
 end

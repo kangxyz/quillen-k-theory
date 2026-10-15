@@ -5,33 +5,17 @@ Authors: kangxyz
 -/
 module
 
-public import Mathlib.AlgebraicGeometry.Scheme
-public import Mathlib.CategoryTheory.ObjectProperty.FullSubcategory
+public import Aglib.AlgebraicGeometry.Properties.QuasiCompactCategory
 
-/-! # Quasi-compact schemes with all scheme morphisms
-
-This full subcategory restricts objects only. Its morphisms have no flatness,
-separatedness or quasi-compactness premise.
--/
+/-! # Compatibility imports for the canonical Aglib interface -/
 @[expose] public section
 
-
-universe u
-open CategoryTheory AlgebraicGeometry
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
 namespace Quillen.Scheme
-
-/-- Quasi-compactness of a scheme, with no restriction on its morphisms. -/
-abbrev quasiCompactSchemeProperty : ObjectProperty AlgebraicGeometry.Scheme.{u} :=
-  fun X => CompactSpace X
-
-/-- Quasi-compact schemes with all scheme morphisms. -/
-abbrev QuasiCompactSchemes := quasiCompactSchemeProperty.{u}.FullSubcategory
-
-instance quasiCompactSchemes_compactSpace (X : QuasiCompactSchemes.{u}) :
-    CompactSpace X.obj := X.property
-
-/-- The full-subcategory inclusion of quasi-compact schemes into all schemes. -/
-abbrev quasiCompactSchemesInclusion : QuasiCompactSchemes.{u} ⥤ AlgebraicGeometry.Scheme.{u} :=
-  quasiCompactSchemeProperty.{u}.ι
-
+export AlgebraicGeometry.Scheme
+  (QuasiCompactSchemes quasiCompactSchemeProperty quasiCompactSchemesInclusion
+  quasiCompactSchemes_compactSpace)
 end Quillen.Scheme
+
+end

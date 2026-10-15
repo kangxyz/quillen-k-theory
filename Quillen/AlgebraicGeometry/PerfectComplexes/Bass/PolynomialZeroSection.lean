@@ -22,19 +22,21 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
-open Quillen.Scheme
+open AlgebraicGeometry.Scheme
 universe u
 
 namespace Quillen.PerfectComplexes.Bass
 
 /-- Actual polynomial evaluation at zero in each original recursive negative group. -/
 def negativeKPolynomialEvaluation (X : QuasiCompactSchemes.{u}) (n : ℕ) :
-    negativeK (Scheme.Bass.polynomialFunctor.obj X) n ⟶ negativeK X n :=
+    negativeK (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialFunctor.obj X) n ⟶
+      negativeK X n :=
   negativeKPullback (Scheme.Bass.polynomialZero.app X) n
 
 @[reassoc (attr := simp)]
 theorem negativeKPolynomialPullback_evaluation (X : QuasiCompactSchemes.{u}) (n : ℕ) :
-    negativeKPullback (Scheme.Bass.polynomialProjection.app X) n ≫
+    negativeKPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialProjection.app
+      X) n ≫
       negativeKPolynomialEvaluation X n = 𝟙 (negativeK X n) := by
   rw [negativeKPolynomialEvaluation, ← negativeKPullback_comp,
     Scheme.Bass.polynomialZero_projection]
@@ -42,18 +44,24 @@ theorem negativeKPolynomialPullback_evaluation (X : QuasiCompactSchemes.{u}) (n 
 
 /-- Projection pullback is injective in every original Bass degree, without regularity. -/
 theorem negativeKPolynomialPullback_injective (X : QuasiCompactSchemes.{u}) (n : ℕ) :
-    Function.Injective (negativeKPullback (Scheme.Bass.polynomialProjection.app X) n) := by
+    Function.Injective (negativeKPullback
+      (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialProjection.app X) n) := by
   have h : Function.LeftInverse (negativeKPolynomialEvaluation X n)
-      (negativeKPullback (Scheme.Bass.polynomialProjection.app X) n) := fun x =>
+      (negativeKPullback
+        (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialProjection.app X) n) := fun x
+        =>
     ConcreteCategory.congr_hom (negativeKPolynomialPullback_evaluation X n) x
   exact h.injective
 
 /-- The actual common corner enters both original polynomial chart groups. -/
 def negativeKCommonCorner (X : QuasiCompactSchemes.{u}) (n : ℕ) :
-    negativeK X n ⟶ negativeK (Scheme.Bass.polynomialFunctor.obj X) n ⊞
-      negativeK (Scheme.Bass.polynomialFunctor.obj X) n :=
-  biprod.lift (negativeKPullback (Scheme.Bass.polynomialProjection.app X) n)
-    (negativeKPullback (Scheme.Bass.polynomialProjection.app X) n)
+    negativeK X n ⟶ negativeK
+      (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialFunctor.obj X) n ⊞
+      negativeK (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialFunctor.obj X) n :=
+  biprod.lift (negativeKPullback
+    (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialProjection.app X) n)
+    (negativeKPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialProjection.app
+      X) n)
 
 @[reassoc (attr := simp)]
 theorem negativeKCommonCorner_evaluation (X : QuasiCompactSchemes.{u}) (n : ℕ) :
@@ -73,12 +81,15 @@ theorem negativeKCommonCorner_injective (X : QuasiCompactSchemes.{u}) (n : ℕ) 
 @[reassoc (attr := simp)]
 theorem negativeKCommonCorner_difference (X : QuasiCompactSchemes.{u}) (n : ℕ) :
     negativeKCommonCorner X n ≫
-      Quillen.Bass.TwoChart.polynomialDifference (NatTrans.op Scheme.Bass.plus)
-        (NatTrans.op Scheme.Bass.minus) (negativeKFunctor n) (op X) = 0 := by
+      Quillen.Bass.TwoChart.polynomialDifference (NatTrans.op
+        AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus)
+        (NatTrans.op AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus) (negativeKFunctor n)
+          (op X) = 0 := by
   simp only [negativeKCommonCorner, Quillen.Bass.TwoChart.polynomialDifference,
     biprod.lift_desc, Preadditive.comp_neg, negativeKPullback, NatTrans.op_app,
-    ← Functor.map_comp, ← op_comp, Scheme.Bass.plus_projection,
-    Scheme.Bass.minus_projection, add_neg_cancel]
+    ← Functor.map_comp, ← op_comp,
+      AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus_projection,
+    AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus_projection, add_neg_cancel]
 
 end Quillen.PerfectComplexes.Bass
 
@@ -86,23 +97,29 @@ namespace Quillen.PerfectComplexes
 
 /-- The same actual zero section splits perfect K pullback in all nonnegative degrees. -/
 theorem perfectKPolynomialPullback_evaluation (X : QuasiCompactSchemes.{u}) (n : ℕ) :
-    (perfectKPullback (Quillen.Scheme.Bass.polynomialZero.app X).hom n).comp
-      (perfectKPullback (Quillen.Scheme.Bass.polynomialProjection.app X).hom n) =
+    (perfectKPullback (AlgebraicGeometry.Scheme.Bass.polynomialZero.app X).hom n).comp
+      (perfectKPullback
+        (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialProjection.app X).hom n) =
       MonoidHom.id (PerfectK X.obj n) := by
   rw [← perfectKPullback_comp]
-  have h := congrArg (fun f => f.hom) (Quillen.Scheme.Bass.polynomialZero_projection X)
-  change (Quillen.Scheme.Bass.polynomialZero.app X).hom ≫
-    (Quillen.Scheme.Bass.polynomialProjection.app X).hom = 𝟙 X.obj at h
+  have h := congrArg (fun f => f.hom) (AlgebraicGeometry.Scheme.Bass.polynomialZero_projection X)
+  change (AlgebraicGeometry.Scheme.Bass.polynomialZero.app X).hom ≫
+    (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialProjection.app X).hom = 𝟙 X.obj
+      at h
   rw [h]
   exact perfectKPullback_id X.obj n
 
 /-- Original perfect K projection pullback is injective, including degree zero. -/
 theorem perfectKPolynomialPullback_injective (X : QuasiCompactSchemes.{u}) (n : ℕ) :
     Function.Injective
-      (perfectKPullback (Quillen.Scheme.Bass.polynomialProjection.app X).hom n) := by
+      (perfectKPullback
+        (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialProjection.app X).hom n) :=
+        by
   have h : Function.LeftInverse
-      (perfectKPullback (Quillen.Scheme.Bass.polynomialZero.app X).hom n)
-      (perfectKPullback (Quillen.Scheme.Bass.polynomialProjection.app X).hom n) := fun x =>
+      (perfectKPullback (AlgebraicGeometry.Scheme.Bass.polynomialZero.app X).hom n)
+      (perfectKPullback
+        (AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.polynomialProjection.app X).hom n) :=
+        fun x =>
     congrArg (fun f => f x) (perfectKPolynomialPullback_evaluation X n)
   exact h.injective
 

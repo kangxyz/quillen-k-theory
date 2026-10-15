@@ -37,9 +37,10 @@ def fiberConnectingHom (n : ℕ) :
 
 /-- The transport formula, whose supplied isomorphism remains a proof obligation. -/
 def connectingHomOfComparison (n : ℕ)
-    (e : (Devissage.subcategoryExactStructure P).K n ≃*
+    (e : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).K n ≃*
       HomotopyGroup.Pi (n + 1) (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P)) :
-    (quotientExactStructure P).K (n + 1) →* (Devissage.subcategoryExactStructure P).K n :=
+    (quotientExactStructure P).K (n + 1) →* (CategoryTheory.ObjectProperty.subcategoryExactStructure
+      P).K n :=
   e.symm.toMonoidHom.comp (fiberConnectingHom P n)
 
 /-- Exactness at ambient K, once the actual canonical comparison is surjective. -/
@@ -63,7 +64,7 @@ theorem inclusion_range_eq_quotient_ker_of_comparison_surjective (n : ℕ)
 /-- Exactness at quotient K after transport; the map to the fiber is the actual
 loop connecting map, and the quotient map remains the canonical K-map. -/
 theorem quotient_range_eq_connecting_ker_of_comparison (n : ℕ)
-    (e : (Devissage.subcategoryExactStructure P).K n ≃*
+    (e : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).K n ≃*
       HomotopyGroup.Pi (n + 1) (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P)) :
     (quotientKMap P (n + 1)).range = (connectingHomOfComparison P n e).ker := by
   have ht := HomotopyFiber.range_piMap_eq_ker_connectingHom
@@ -79,7 +80,7 @@ theorem quotient_range_eq_connecting_ker_of_comparison (n : ℕ)
 /-- Exactness at the Serre category requires the supplied isomorphism to have
 exactly the canonical comparison as its forward homomorphism. -/
 theorem connecting_range_eq_inclusion_ker_of_comparison (n : ℕ)
-    (e : (Devissage.subcategoryExactStructure P).K n ≃*
+    (e : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).K n ≃*
       HomotopyGroup.Pi (n + 1) (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P))
     (he : e.toMonoidHom = localizationFiberComparisonHom P n) :
     (connectingHomOfComparison P n e).range = (Devissage.KMap P n).ker := by
@@ -91,7 +92,7 @@ theorem connecting_range_eq_inclusion_ker_of_comparison (n : ℕ)
   have hp : (localizationFiberProjectionHom P n).comp e.toMonoidHom =
       Devissage.KMap P n := by
     rw [he, localizationFiberComparisonHom_projection]
-  have hp' (a : (Devissage.subcategoryExactStructure P).K n) :
+  have hp' (a : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).K n) :
       localizationFiberProjectionHom P n (e a) = Devissage.KMap P n a :=
     DFunLike.congr_fun hp a
   ext a
@@ -129,7 +130,7 @@ theorem quotientKZero_surjective_of_comparison_piZero_surjective
     (h : Function.Surjective (homotopyGroupMap (N := Fin 0)
       (basedLocalizationFiberComparison P) (basedLocalizationFiberComparison_basepoint P))) :
     Function.Surjective (quotientKMap P 0) := by
-  let E := Devissage.subcategoryExactStructure P
+  let E := CategoryTheory.ObjectProperty.subcategoryExactStructure P
   let : PathConnectedSpace E.KSpace := E.kSpace_pathConnected
   have hs : Subsingleton (HomotopyGroup.Pi 0 E.KSpace E.kBasepoint) :=
     (HomotopyGroup.pi0EquivZerothHomotopy (X := E.KSpace) (x :=

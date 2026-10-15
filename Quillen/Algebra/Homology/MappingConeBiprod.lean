@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Homology.MappingCone.Identity
 public import Mathlib.Algebra.Homology.HomotopyCategory.Pretriangulated
 public import Mathlib.CategoryTheory.Preadditive.Biproducts
 
@@ -18,6 +19,9 @@ inclusion commutes with this isomorphism. Only an additive category with
 binary biproducts is required.
 -/
 @[expose] public section
+open Quillen
+
+
 
 
 noncomputable section
@@ -28,16 +32,6 @@ universe v u
 namespace Quillen.CochainComplex
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasBinaryBiproducts C]
 open _root_.CochainComplex
-
-lemma mappingCone_map_add {K₁ L₁ K₂ L₂ : CochainComplex C ℤ}
-    (f : K₁ ⟶ L₁) (g : K₂ ⟶ L₂) (a a' : K₁ ⟶ K₂) (b b' : L₁ ⟶ L₂)
-    (h : f ≫ b = a ≫ g) (h' : f ≫ b' = a' ≫ g) :
-    mappingCone.map f g (a + a') (b + b') (by simp [Preadditive.comp_add, Preadditive.add_comp, h,
-      h']) =
-      mappingCone.map f g a b h + mappingCone.map f g a' b' h' := by
-  ext n
-  simp [mappingCone.ext_from_iff _ (n + 1) n rfl, mappingCone.map,
-    Preadditive.comp_add, Preadditive.add_comp]
 
 lemma mappingCone_map_zero {K₁ L₁ K₂ L₂ : CochainComplex C ℤ}
     (f : K₁ ⟶ L₁) (g : K₂ ⟶ L₂) :

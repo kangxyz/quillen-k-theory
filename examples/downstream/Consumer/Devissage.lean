@@ -29,7 +29,8 @@ variable {C : Type u} [SmallCategory C] [Abelian C]
 
 -- The finite-filtration hypothesis produces an actual multiplicative equivalence.
 def devissageEquivalence (h : Devissage.FiltrationHypothesis P) (n : ℕ) :
-    (Devissage.subcategoryExactStructure P).K n ≃* (abelianExactStructure C).K n :=
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure P).K n ≃* (abelianExactStructure C).K n
+      :=
   Devissage.KEquiv P h n
 
 theorem devissage_forward_map (h : Devissage.FiltrationHypothesis P) (n : ℕ) :

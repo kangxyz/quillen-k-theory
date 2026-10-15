@@ -33,6 +33,9 @@ are included. Compactness is explicit when extracting a finite principal cover.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -43,7 +46,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex T
 namespace Quillen.PerfectComplexes.Affine
 local instance openSectionsBoundsGlobalSections_additive (R : CommRingCat.{u}) (r : R) :
     (moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r))).Additive :=
-  Quillen.SchemeSheaf.moduleSpecΓFunctor_additive _
+  AlgebraicGeometry.Scheme.Modules.moduleSpecΓFunctor_additive _
 
 /-- The actual affine counit reflects the upper cohomology bound to original sections. -/
 lemma isLE_sections_of_injective {R : CommRingCat.{u}}
@@ -73,18 +76,19 @@ of the restricted sheaf complex by affine acyclicity. -/
 lemma isLE_principalSections_of_injective {R : CommRingCat.{u}} (I : Complex (Spec R))
     (a b : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n)) (r : R)
-    (hqc : ∀ n, (((restrict (CoherentScheme.principalOpen R r)).obj I).homology n).IsQuasicoherent)
-    [((restrict (CoherentScheme.principalOpen R r)).obj I).IsLE b] :
+    (hqc : ∀ n, (((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
+      I).homology n).IsQuasicoherent)
+    [((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj I).IsLE b] :
     CochainComplex.IsLE (((affineSectionsAt R (PrimeSpectrum.basicOpen r)).mapHomologicalComplex
       (.up ℤ)).obj I) b := by
-  let j := CoherentScheme.principalOpen R r
+  let j := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r
   let J := (restrict j).obj I
   have hJ : J.IsLE b := inferInstance
   have hb (n : ℤ) (hn : n < a) : IsZero (J.X n) :=
     (Scheme.Modules.restrictFunctor j).map_isZero (hbound n hn)
   have hi (n : ℤ) : Injective (J.X n) := by
     let := hinj n
-    exact SchemeSheaf.injective_restrict j (I.X n)
+    exact AlgebraicGeometry.Scheme.Modules.injective_restrict j (I.X n)
   have hΓ := isLE_sections_of_injective J a b hb hi hqc
   let F := ModuleCat.restrictScalars (algebraMap R (Localization.Away r))
   have hF : CochainComplex.IsLE ((F.mapHomologicalComplex (.up ℤ)).obj
@@ -106,8 +110,9 @@ lemma principalRestriction_quasicoherent_of_open {R : CommRingCat.{u}}
     (I : Complex (Spec R)) (W : (Spec R).Opens)
     (hqc : ∀ n, (((restrict W.ι).obj I).homology n).IsQuasicoherent)
     (r : R) (hr : PrimeSpectrum.basicOpen r ≤ W) (n : ℤ) :
-    (((restrict (CoherentScheme.principalOpen R r)).obj I).homology n).IsQuasicoherent := by
-  let j := CoherentScheme.principalOpen R r
+    (((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj I).homology
+      n).IsQuasicoherent := by
+  let j := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r
   have hjW : Set.range j ⊆ Set.range W.ι := by
     rw [Scheme.Opens.range_ι, ← Scheme.Hom.coe_opensRange,
       Scheme.Hom.opensRange_localizationAway r]
@@ -130,10 +135,11 @@ lemma principalRestriction_bounds_of_open {R : CommRingCat.{u}}
     [((restrict W.ι).obj I).IsLE b]
     (hqc : ∀ n, (((restrict W.ι).obj I).homology n).IsQuasicoherent)
     (r : R) (hr : PrimeSpectrum.basicOpen r ≤ W) :
-    ((restrict (CoherentScheme.principalOpen R r)).obj I).IsLE b ∧
-      (∀ n, (((restrict (CoherentScheme.principalOpen R r)).obj I).homology n).IsQuasicoherent) :=
+    ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj I).IsLE b ∧
+      (∀ n, (((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
+        I).homology n).IsQuasicoherent) :=
         by
-  let j := CoherentScheme.principalOpen R r
+  let j := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r
   have hjW : Set.range j ⊆ Set.range W.ι := by
     rw [Scheme.Opens.range_ι, ← Scheme.Hom.coe_opensRange,
       Scheme.Hom.opensRange_localizationAway r]
@@ -169,7 +175,7 @@ lemma isLE_sections_finitePrincipal_of_injective {R : CommRingCat.{u}}
   let K := ((modulesSpecToSheaf (R := R)).mapHomologicalComplex (.up ℤ)).obj I
   have hf (n : ℤ) : TopCat.Presheaf.IsFlasque (K.X n).obj := by
     let := hinj n
-    let := SchemeSheaf.injective_isFlasque (Spec R) (I.X n)
+    let := AlgebraicGeometry.Scheme.Modules.injective_isFlasque (Spec R) (I.X n)
     exact isFlasque_modulesSpecToSheaf (I.X n)
   apply SheafCohomology.sectionsComplex_isLE_principalUnion R K W b ?_ s hs
   intro r hr
@@ -189,7 +195,7 @@ lemma exists_isLE_sections_compactOpen_of_injective {R : CommRingCat.{u}}
   let K := ((modulesSpecToSheaf (R := R)).mapHomologicalComplex (.up ℤ)).obj I
   have hf (n : ℤ) : TopCat.Presheaf.IsFlasque (K.X n).obj := by
     let := hinj n
-    let := SchemeSheaf.injective_isFlasque (Spec R) (I.X n)
+    let := AlgebraicGeometry.Scheme.Modules.injective_isFlasque (Spec R) (I.X n)
     exact isFlasque_modulesSpecToSheaf (I.X n)
   apply SheafCohomology.exists_sectionsComplex_isLE_of_isCompact R K W hW b
   intro r hr

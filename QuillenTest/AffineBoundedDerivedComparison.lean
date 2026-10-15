@@ -17,6 +17,9 @@ zero-divisor consumers. Original sheaf-complex terms need not be QC.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -56,7 +59,7 @@ lemma equivalence_keeps_principal_restriction (R : CommRingCat.{u}) (r : R)
     (K : DerivedCategory.Bounded (ModuleCat.{u} R)) :
     Nonempty ((associatedDerived (CommRingCat.of (Localization.Away r))).obj
       ((principalDerivedLocalization R r).obj K.obj) ≅
-      (derivedRestrict (CoherentScheme.principalOpen R r)).obj
+      (derivedRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
         (((boundedDerivedEquivalence R).functor.obj K).obj)) :=
   ⟨(principalDerivedComparisonIso R r).app K.obj⟩
 

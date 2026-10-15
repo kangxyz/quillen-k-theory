@@ -19,12 +19,14 @@ No degree-one vanishing, twisting-sheaf computation, pushforward perfection,
 or projective bundle formula is asserted.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.SchemeSheaf.TwoOpen
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.TwoOpen
 universe u
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent
 variable (R : CommRingCat.{u})
 
@@ -45,4 +47,4 @@ theorem isZero_rightDerived_globalSections_add_two
   twoAffine_isZero_rightDerived_add_two (plusChart R) (minusChart R)
     (laurentPlus R ≫ plusChart R) (chart_ranges_cover R) (chart_ranges_inter R).symm M n
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

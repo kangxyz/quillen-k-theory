@@ -21,6 +21,12 @@ affine strictification hypothesis on the original complex.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -28,7 +34,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 /-- Quasicoherence is local on actual open neighborhoods. -/
 theorem quasicoherent_of_openNeighborhoods {X : Scheme.{u}} (M : X.Modules)
@@ -78,7 +84,7 @@ theorem quasicoherent_homology {X : Scheme.{u}} (K : Quillen.PerfectComplexes.Co
   exact (SheafOfModules.isQuasicoherent X.ringCatSheaf).prop_of_iso
     S.homologyIsoCokernelLift.symm h
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent
 
 namespace Quillen.PerfectComplexes
 
@@ -107,11 +113,11 @@ ambient derived category of all module sheaves, with no global strict model
 or termwise quasicoherence assumed. -/
 theorem locallyPerfect_quasicoherent_homology {X : Scheme.{u}} {K : Complex X}
     (hK : locallyPerfect X K) (i : ℤ) : (K.homology i).IsQuasicoherent := by
-  apply CoherentScheme.quasicoherent_of_openNeighborhoods
+  apply AlgebraicGeometry.Scheme.Modules.Coherent.quasicoherent_of_openNeighborhoods
   intro x
   obtain ⟨U, hxU, P, ⟨e⟩⟩ := hK x
   have hP : (P.obj.homology i).IsQuasicoherent :=
-    CoherentScheme.quasicoherent_homology P.obj (fun n => by
+    AlgebraicGeometry.Scheme.Modules.Coherent.quasicoherent_homology P.obj (fun n => by
       let := P.property.2 n
       infer_instance) i
   exact ⟨U, hxU,
@@ -146,13 +152,13 @@ theorem locallyPerfect_homology_bounded {X : Scheme.{u}} [CompactSpace X]
   obtain ⟨A, hA⟩ := (s.finite_toSet.image a).bddBelow
   obtain ⟨B, hB⟩ := (s.finite_toSet.image b).bddAbove
   refine ⟨A, B, fun i hi => ?_⟩
-  apply (SchemeSheaf.isZero_iff_stalks _).mpr
+  apply (AlgebraicGeometry.Scheme.Modules.isZero_iff_stalks _).mpr
   intro y
   obtain ⟨x, hxs, hy⟩ := Set.mem_iUnion₂.mp (hs (Set.mem_univ y))
   have hAx : A ≤ a x := hA ⟨x, hxs, rfl⟩
   have hxB : b x ≤ B := hB ⟨x, hxs, rfl⟩
   have hz := hvan x i (by rcases hi with hi | hi <;> omega)
-  have hs := (SchemeSheaf.isZero_iff_stalks _).mp hz ⟨y, hy⟩
+  have hs := (AlgebraicGeometry.Scheme.Modules.isZero_iff_stalks _).mp hz ⟨y, hy⟩
   exact hs.of_iso ((Scheme.Modules.restrictStalkNatIso (U x).ι ⟨y, hy⟩).app
     (K.homology i)).symm
 

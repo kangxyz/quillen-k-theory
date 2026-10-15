@@ -18,6 +18,12 @@ the geometric unit by an unrelated quotient map.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -25,7 +31,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme.ClosedImmersion.General
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 open FiniteModuleLocalization.IdealClosedSupport
 variable {Z : Scheme.{u}} [IsLocallyNoetherian Z]
   (R : CommRingCat.{u}) [IsNoetherianRing R]
@@ -122,4 +128,4 @@ theorem kernelIterate_isZero_of_power_annihilator (M : FiniteTypeSheaves (Spec R
   | succ n ih =>
     exact ih _ (kernelUnit_power_annihilator R i I e hi M n h)
 
-end Quillen.CoherentScheme.ClosedImmersion.General
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

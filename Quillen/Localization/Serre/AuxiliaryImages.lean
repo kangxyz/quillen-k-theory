@@ -72,12 +72,13 @@ def auxiliaryImageFunctor (N : C) : AuxiliaryKernel P N ⥤ AuxiliaryImagePoset 
   map_comp _ _ := Subsingleton.elim _ _
 
 /-- The full kernel comma for the entire auxiliary category. -/
-abbrev AuxiliaryKernelComma (N : C) (T : (Devissage.subcategoryExactStructure P).QCategory) :=
+abbrev AuxiliaryKernelComma (N : C) (T : (CategoryTheory.ObjectProperty.subcategoryExactStructure
+  P).QCategory) :=
   CostructuredArrow (auxiliaryKernelFunctor P N) T
 
 /-- The kernel comma has the same concrete image projection. -/
 def auxiliaryKernelCommaImageFunctor (N : C)
-    (T : (Devissage.subcategoryExactStructure P).QCategory) :
+    (T : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory) :
     AuxiliaryKernelComma P N T ⥤ AuxiliaryImagePoset P N :=
   CostructuredArrow.proj _ _ ⋙ auxiliaryImageFunctor P N
 

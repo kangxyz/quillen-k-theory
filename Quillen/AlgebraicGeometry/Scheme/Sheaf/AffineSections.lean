@@ -6,25 +6,16 @@ Authors: kangxyz
 
 module
 
-public import Mathlib.AlgebraicGeometry.Modules.Tilde
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Sections
 
-/-! # The actual affine module global-sections functor
-
-The original `moduleSpecΓFunctor` is additive by its pointwise module maps over
-every commutative ring. This provider supplies the same functor law to affine
-exactness, derived global sections, and strict-perfect module models.
--/
+/-! # Compatibility imports for the canonical Aglib interface -/
 @[expose] public section
 
+-- Transitional names share Aglib declarations and canonical instances.
 noncomputable section
-universe u
-open CategoryTheory AlgebraicGeometry
-
 namespace Quillen.SchemeSheaf
-
-/-- The original affine section functor is additive by its pointwise module maps. -/
-instance moduleSpecΓFunctor_additive (R : CommRingCat.{u}) :
-    (moduleSpecΓFunctor (R := R)).Additive where
-  map_add := by intros; rfl
-
+export AlgebraicGeometry.Scheme.Modules
+  (moduleSpecΓFunctor_additive)
 end Quillen.SchemeSheaf
+
+end

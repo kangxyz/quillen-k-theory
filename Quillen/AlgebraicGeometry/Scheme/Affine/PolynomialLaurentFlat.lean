@@ -15,6 +15,8 @@ Flatness follows from the actual coefficient pushouts. The resulting scheme squa
 literal coefficient homomorphisms and both Laurent chart maps.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 
@@ -22,7 +24,7 @@ open CategoryTheory AlgebraicGeometry
 
 universe u
 
-namespace Quillen.Scheme.PolynomialLaurent
+namespace AlgebraicGeometry.Scheme.PolynomialLaurent
 
 open Quillen.PolynomialBaseChange
 
@@ -58,4 +60,4 @@ lemma laurentMap_minus :
   simpa only [laurentMinus, ← Spec.map_comp] using
     congrArg Spec.map (minus_naturality f).symm
 
-end Quillen.Scheme.PolynomialLaurent
+end AlgebraicGeometry.Scheme.PolynomialLaurent

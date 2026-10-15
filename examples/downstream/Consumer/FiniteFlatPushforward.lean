@@ -17,13 +17,14 @@ namespace Consumer.FiniteFlatPushforward
 
 /-- The public natural comparison commutes on every original K-class. -/
 theorem comparison_on_elements
-    {X Y : Quillen.Scheme.LocallyNoetherianFiniteFlatSchemes.{u}}
+    {X Y : AlgebraicGeometry.Scheme.LocallyNoetherianFiniteFlatSchemes.{u}}
     (f : X ⟶ Y) (n : ℕ)
-    (x : (Quillen.Scheme.KFiniteFlatPushforwardFunctor n).obj X) :
-    (Quillen.Scheme.KToGFiniteFlatPushforward n).app Y
-        ((Quillen.Scheme.KFiniteFlatPushforwardFunctor n).map f x) =
-      ((Quillen.Scheme.forgetFiniteFlat ⋙ Quillen.Scheme.GFinitePushforwardFunctor n).map f)
-        ((Quillen.Scheme.KToGFiniteFlatPushforward n).app X x) :=
-  congrArg (fun h ↦ h x) ((Quillen.Scheme.KToGFiniteFlatPushforward n).naturality f)
+    (x : (AlgebraicGeometry.Scheme.KFiniteFlatPushforwardFunctor n).obj X) :
+    (AlgebraicGeometry.Scheme.KToGFiniteFlatPushforward n).app Y
+        ((AlgebraicGeometry.Scheme.KFiniteFlatPushforwardFunctor n).map f x) =
+      ((AlgebraicGeometry.Scheme.forgetFiniteFlat ⋙
+        AlgebraicGeometry.Scheme.GFinitePushforwardFunctor n).map f)
+        ((AlgebraicGeometry.Scheme.KToGFiniteFlatPushforward n).app X x) :=
+  congrArg (fun h ↦ h x) ((AlgebraicGeometry.Scheme.KToGFiniteFlatPushforward n).naturality f)
 
 end Consumer.FiniteFlatPushforward

@@ -12,6 +12,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalPerfect
 /-! # Original principal localization boundaries under geometric pair pullback -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -20,9 +23,11 @@ universe u
 namespace Quillen.PerfectComplexes.Affine
 
 /-- The actual principal open immersion, regarded as a qc ambient open pair. -/
-abbrev principalOpenPair (R : CommRingCat.{u}) (r : R) : Quillen.Scheme.QuasiCompactOpenPairs.{u} :=
-  ⟨⟨Arrow.mk (CoherentScheme.principalOpen R r),
-    show IsOpenImmersion (CoherentScheme.principalOpen R r) from inferInstance⟩,
+abbrev principalOpenPair (R : CommRingCat.{u}) (r : R) :
+  AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u} :=
+  ⟨⟨Arrow.mk (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r),
+    show IsOpenImmersion (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) from
+      inferInstance⟩,
     show CompactSpace (Spec R) from inferInstance⟩
 
 instance principalOpenPair_compactLeft (R : CommRingCat.{u}) (r : R) :
@@ -57,13 +62,17 @@ theorem principalPerfect_longExactSequence_pullback
     (f : principalOpenPair R r ⟶ principalOpenPair S s) (n : ℕ) :
     (perfectSupportedKPullback f n).comp (principalPerfectConnectingHom S s n) =
       (principalPerfectConnectingHom R r n).comp (perfectKPullback f.hom.hom.left (n+1)) ∧
-    (perfectKPullback f.hom.hom.right n).comp (perfectSupportedKMap (CoherentScheme.principalOpen S
+    (perfectKPullback f.hom.hom.right n).comp (perfectSupportedKMap
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen S
       s) n) =
-      (perfectSupportedKMap (CoherentScheme.principalOpen R r) n).comp (perfectSupportedKPullback f
+      (perfectSupportedKMap (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+        n).comp (perfectSupportedKPullback f
         n) ∧
-    (perfectKPullback f.hom.hom.left n).comp (perfectKRestrict (CoherentScheme.principalOpen S s) n)
+    (perfectKPullback f.hom.hom.left n).comp (perfectKRestrict
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen S s) n)
       =
-      (perfectKRestrict (CoherentScheme.principalOpen R r) n).comp (perfectKPullback f.hom.hom.right
+      (perfectKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) n).comp
+        (perfectKPullback f.hom.hom.right
         n) :=
   ⟨principalPerfectConnectingHom_pullback f n, perfectSupportedKMap_pullback f n,
     perfectKRestrict_pairPullback f n⟩

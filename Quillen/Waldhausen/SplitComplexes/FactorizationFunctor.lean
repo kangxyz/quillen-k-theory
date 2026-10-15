@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Homology.MappingCone.Identity
 public import Quillen.Waldhausen.SplitComplexes.FactorizationQuotient
 
 /-!
@@ -15,6 +16,19 @@ The identity-cone construction defines a middle-object functor with natural incl
     projection maps on complexes.
 -/
 @[expose] public section
+open Quillen
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.Waldhausen.SplitFactorization
+export CochainComplex
+  (identityConeFunctor)
+end Quillen.Waldhausen.SplitFactorization
+
+end
+
+
 
 
 noncomputable section
@@ -29,15 +43,6 @@ universe v u
 namespace Quillen.Waldhausen.SplitFactorization
 
 variable {A : Type u} [Category.{v} A] [Abelian A]
-
-/-- Functorial identity cones. -/
-def identityConeFunctor : CochainComplex A ℤ ⥤ CochainComplex A ℤ where
-  obj K := mappingCone (𝟙 K)
-  map f := mappingCone.map _ _ f f (by simp)
-  map_id K := mappingCone.map_id _
-  map_comp f g := by
-    ext n
-    simp [mappingCone.ext_from_iff _ (n + 1) n rfl, mappingCone.map]
 
 /-- The actual factorization object depends functorially on the input arrow. -/
 def middleFunctor : Arrow (CochainComplex A ℤ) ⥤ CochainComplex A ℤ where

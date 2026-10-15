@@ -27,13 +27,19 @@ separatedness, or quasicoherence of the middle sheaf is assumed.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The ORIGINAL affine counit is invertible on the middle term of a
 short exact sequence with quasicoherent ends. -/
@@ -66,7 +72,7 @@ an arbitrary scheme. Exactness is that of the original ambient sheaf category. -
 theorem quasicoherent_of_shortExact {X : Scheme.{u}}
     {S : ShortComplex X.Modules} (hS : S.ShortExact)
     [S.X₁.IsQuasicoherent] [S.X₃.IsQuasicoherent] : S.X₂.IsQuasicoherent := by
-  apply CoherentScheme.quasicoherent_of_affineCharts S.X₂
+  apply AlgebraicGeometry.Scheme.Modules.QuasiCoherent.quasicoherent_of_affineCharts S.X₂
   intro R j _
   have : ((S.map (Scheme.Modules.restrictFunctor j)).X₁).IsQuasicoherent :=
     Scheme.Modules.isQuasicoherent_restrictFunctor j S.X₁
@@ -82,4 +88,4 @@ instance quasicoherent_isClosedUnderExtensions (X : Scheme.{u}) :
     let : S.X₁.IsQuasicoherent := h₁
     let : S.X₃.IsQuasicoherent := h₃
     exact quasicoherent_of_shortExact hS
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

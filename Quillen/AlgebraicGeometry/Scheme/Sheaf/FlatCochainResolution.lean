@@ -18,6 +18,9 @@ a quasi-isomorphism. Arbitrary geometric pullback can be applied to these genuin
 representatives for single sheaves.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -26,7 +29,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Opposite
 open HomologicalComplex
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- A zero module sheaf has flat actual module stalks. -/
 theorem stalkwiseFlat_of_isZero {X : Scheme.{u}} (M : X.Modules) (hM : IsZero M) :
@@ -102,4 +105,4 @@ theorem quasiIso_pullback_flatCochainResolutionπ {X Y : Scheme.{u}} (f : X ⟶ 
     (fun n hn => HomologicalComplex.isZero_single_obj_X _ _ _ _ (by omega))
     (flatCochainResolutionπ Y M)
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

@@ -19,10 +19,15 @@ submodule. These statements need no noetherianity hypothesis.
 -/
 @[expose] public section
 
+open ModuleCat
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 universe u v w
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 /-- A finite localized module is already the localization of some finitely
 generated submodule of the original, possibly infinitely generated, module. -/
@@ -94,4 +99,4 @@ theorem exists_fg_submodule_localized_eq_top_finite
   rw [← htop i]
   exact (Submodule.localized'gi (S i) (p i) (f i)).gc.monotone_l (le_iSup L i)
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

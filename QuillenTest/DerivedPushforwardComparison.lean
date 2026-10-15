@@ -11,7 +11,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPushforwardCompa
 @[expose] public section
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.PerfectComplexes
+open AlgebraicGeometry.Scheme.Modules Quillen.PerfectComplexes
 universe u
 namespace QuillenTest.DerivedPushforwardComparison
 

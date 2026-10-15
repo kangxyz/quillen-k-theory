@@ -18,6 +18,8 @@ its passage to all supported modules is the proved image-filtration dévissage.
 -/
 @[expose] public section
 
+open ModuleCat
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -110,11 +112,11 @@ def smallClosedEquivalence : SmallModel.{u} (FGModuleCat.{u} (ClosedRing f)) ≌
 
 /-- This equivalence uses the original transported exact structure on its source. -/
 def smallClosedToKilledExact :
-    ExactFunctor (CoherentScheme.finiteModuleExactStructure.{u, u} (ClosedRing f)).smallModel
-      (Devissage.subcategoryExactStructure (principalKilled f)) where
+    ExactFunctor (ModuleCat.finiteModuleExactStructure.{u, u} (ClosedRing f)).smallModel
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure (principalKilled f)) where
   toFunctor := smallClosedToKilled f
   map_conflation S h := by
-    rw [show (CoherentScheme.finiteModuleExactStructure.{u, u} (ClosedRing f)).smallModel =
+    rw [show (ModuleCat.finiteModuleExactStructure.{u, u} (ClosedRing f)).smallModel =
       abelianExactStructure (SmallModel.{u} (FGModuleCat.{u} (ClosedRing f))) from
       abelianExactStructure_smallModel _] at h
     exact h.map_of_exact _
@@ -126,14 +128,14 @@ instance smallClosedToKilledExact_mapQ_isEquivalence :
     (smallClosedToKilledExact f).mapQ.IsEquivalence := by
   apply CategoryTheory.ExactCategory.ExactFunctor.mapQ_isEquivalence_of_equivalence
   · intro M N a ha
-    rw [show (CoherentScheme.finiteModuleExactStructure.{u, u} (ClosedRing f)).smallModel =
+    rw [show (ModuleCat.finiteModuleExactStructure.{u, u} (ClosedRing f)).smallModel =
       abelianExactStructure (SmallModel.{u} (FGModuleCat.{u} (ClosedRing f))) from
       abelianExactStructure_smallModel _]
     rw [abelianExactStructure_inflation_iff]
     have : Mono ((smallClosedToKilled f).map a) := (abelianExactStructure_inflation_iff _ _).1 ha
     exact Functor.mono_of_mono_map (smallClosedToKilled f) this
   · intro M N a ha
-    rw [show (CoherentScheme.finiteModuleExactStructure.{u, u} (ClosedRing f)).smallModel =
+    rw [show (ModuleCat.finiteModuleExactStructure.{u, u} (ClosedRing f)).smallModel =
       abelianExactStructure (SmallModel.{u} (FGModuleCat.{u} (ClosedRing f))) from
       abelianExactStructure_smallModel _]
     rw [abelianExactStructure_deflation_iff]
@@ -147,9 +149,11 @@ def closedSupportGEquiv (n : ℕ) : G (ClosedRing f) n ≃* SupportedG (Submonoi
 
 /-- Actual closed restriction of scalars with codomain in the supported category. -/
 def smallClosedToSupportExact :
-    ExactFunctor (CoherentScheme.finiteModuleExactStructure.{u, u} (ClosedRing f)).smallModel
-      (Devissage.subcategoryExactStructure (smallTorsion (Submonoid.powers f))) :=
-  (smallClosedToKilledExact f).comp (Devissage.exactInclusion (principalKilled f))
+    ExactFunctor (ModuleCat.finiteModuleExactStructure.{u, u} (ClosedRing f)).smallModel
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure (smallTorsion (Submonoid.powers f)))
+        :=
+  (smallClosedToKilledExact f).comp (CategoryTheory.ObjectProperty.exactInclusion (principalKilled
+    f))
 
 /-- The canonical closed-to-supported map, induced by actual restriction of scalars. -/
 def closedSupportedKMap (n : ℕ) : G (ClosedRing f) n →* SupportedG (Submonoid.powers f) n :=
@@ -176,8 +180,9 @@ pushforward, including the small-model and zero-object normalizations. -/
 theorem closedSupportGEquiv_pushforward (n : ℕ) :
     (supportedKMap (Submonoid.powers f) n).comp (closedSupportGEquiv f n).toMonoidHom =
       closedPushforwardKMap f n := by
-  have h : ((smallClosedToKilledExact f).comp (Devissage.exactInclusion (principalKilled f))).comp
-      (Devissage.exactInclusion (smallTorsion (Submonoid.powers f))) =
+  have h : ((smallClosedToKilledExact f).comp (CategoryTheory.ObjectProperty.exactInclusion
+    (principalKilled f))).comp
+      (CategoryTheory.ObjectProperty.exactInclusion (smallTorsion (Submonoid.powers f))) =
     (closedRestrictionExact f).smallModel.comp (smallModelToAbelian R) := by rfl
   have hk := congrArg (fun F ↦ F.KMap n) h
   simp only [CategoryTheory.ExactCategory.ExactFunctor.KMap_comp] at hk

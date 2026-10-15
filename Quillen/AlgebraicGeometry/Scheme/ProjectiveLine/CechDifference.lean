@@ -21,13 +21,15 @@ of the structure sheaf. It does not identify that complex with right-derived
 global sections. The base is an arbitrary commutative ring.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
 universe u
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent
 variable (R : CommRingCat.{u})
 
@@ -73,4 +75,4 @@ theorem chartSectionsDifference_surjective : Function.Surjective (chartSectionsD
   rw [chartSectionsDifference_coordinates]
   simpa using hab
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

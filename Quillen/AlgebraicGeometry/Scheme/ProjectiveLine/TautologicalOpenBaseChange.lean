@@ -20,13 +20,18 @@ preserves the original inclusion into the unit square.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.PolynomialBaseChange Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.Modules
 variable {R S : CommRingCat.{u}} (f : R ⟶ S)
 
 lemma polynomialMap_coordinate :
@@ -81,10 +86,10 @@ lemma tautologicalOpenInclusion_minus :
       (tautologicalLine R) (tautologicalLineMinusIso R) (tautologicalLineInclusion R)
       (polynomialCoordinate R) (tautologicalLineInclusion_minus R)
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.Coherent
 variable {R S : CommRingCat.{u}} (f : R ⟶ S) [IsOpenImmersion (Spec.map f)]
 
 lemma tautologicalOpenInclusion_obstruction :
@@ -202,4 +207,4 @@ lemma tautologicalOpenIso_minus :
   rw [Functor.map_comp, tautologicalLineInclusion_minus, tautologicalOpenInclusion_minus] at h
   simpa only [Category.assoc] using h
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

@@ -28,7 +28,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped ZeroObject
-open Quillen.Scheme Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine Quillen.Scheme.Bass
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Modules
+  AlgebraicGeometry.Scheme.ProjectiveLine AlgebraicGeometry.Scheme.Bass
 namespace Quillen.PerfectComplexes.ProjectiveLine
 
 /-- The standard derived category of module sheaves, used for native projection base change. -/
@@ -122,14 +123,14 @@ theorem isIso_nativeProjectionBaseChange_single
   let : IsAffineHom (Bass.plus.app Y).hom :=
     MorphismProperty.of_isPullback
       (baseProductTransformation_isPullback _ _ _
-        (Quillen.Scheme.PolynomialLaurent.laurentPlus_projection integerRing) Y.obj).flip
+        (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentPlus_projection integerRing) Y.obj).flip
       inferInstance
   let : IsAffineHom (polynomialProjection.app Y).hom := by
     change IsAffineHom (pullback.fst (toIntegerBase Y.obj)
-      (Quillen.Scheme.PolynomialLaurent.polynomialProjection integerRing))
+      (AlgebraicGeometry.Scheme.PolynomialLaurent.polynomialProjection integerRing))
     exact MorphismProperty.pullback_fst _ _
       (inferInstance : IsAffineHom
-        (Quillen.Scheme.PolynomialLaurent.polynomialProjection integerRing))
+        (AlgebraicGeometry.Scheme.PolynomialLaurent.polynomialProjection integerRing))
   let : IsAffineHom ((nativePlus.app Y).hom ≫ (nativeProjection.app Y).hom) := by
     simpa only [← ObjectProperty.FullSubcategory.comp_hom, nativePlus_projection] using
       (inferInstance : IsAffineHom (polynomialProjection.app Y).hom)

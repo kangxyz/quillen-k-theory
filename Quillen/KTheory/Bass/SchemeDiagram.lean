@@ -15,6 +15,8 @@ diagram identifications. The two original chart transformations retain literal c
 the variance used by K-theory.
 -/
 @[expose] public section
+open Quillen
+
 
 
 noncomputable section
@@ -22,7 +24,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 universe u
-namespace Quillen.Scheme.Bass
+namespace AlgebraicGeometry.Scheme.Bass
 
 /-- The genuine prime-spectrum functor, landing in the opposite of qc schemes. -/
 def affineSchemeFunctor : CommRingCat.{u} ⥤ QuasiCompactSchemes.{u}ᵒᵖ where
@@ -46,7 +48,7 @@ def polynomialDiagramIso :
     intro R S f
     apply Quiver.Hom.unop_inj
     apply ObjectProperty.hom_ext
-    change (polynomialSpecIso S).inv ≫ Spec.map (Quillen.PolynomialBaseChange.polynomialMap f) =
+    change (polynomialSpecIso S).inv ≫ Spec.map (CommRingCat.PolynomialLaurent.polynomialMap f) =
       (baseProductFunctor (PolynomialLaurent.polynomialProjection integerRing)).map (Spec.map f) ≫
         (polynomialSpecIso R).inv
     apply (Iso.inv_comp_eq (polynomialSpecIso S)).2
@@ -62,7 +64,7 @@ def laurentDiagramIso :
     intro R S f
     apply Quiver.Hom.unop_inj
     apply ObjectProperty.hom_ext
-    change (laurentSpecIso S).inv ≫ Spec.map (Quillen.PolynomialBaseChange.laurentMap f) =
+    change (laurentSpecIso S).inv ≫ Spec.map (CommRingCat.PolynomialLaurent.laurentMap f) =
       (baseProductFunctor (PolynomialLaurent.laurentProjection integerRing)).map (Spec.map f) ≫
         (laurentSpecIso R).inv
     apply (Iso.inv_comp_eq (laurentSpecIso S)).2
@@ -97,6 +99,6 @@ def laurentDiagramIso :
   rw [← Category.assoc,←
     polynomialLaurentSpecIso_minus,Category.assoc,Iso.hom_inv_id,Category.comp_id]
 
-end Quillen.Scheme.Bass
+end AlgebraicGeometry.Scheme.Bass
 
 end

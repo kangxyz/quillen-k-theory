@@ -15,6 +15,8 @@ Their literal supported sum commutes with the original qcqs localization
 boundary, with domain K(n+1) and supported target K(n), including n = 0.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -23,7 +25,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.ProjectiveLine
-open Quillen.Scheme Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
 open Waldhausen Waldhausen.ExtensionCategory OpenFunctorNaturality
 
 variable {U X : QuasiCompactSchemes.{u}} (f : U ⟶ X) [IsOpenImmersion f.hom]
@@ -120,7 +122,7 @@ theorem nativeTwoSummandKMap_connecting (n : ℕ) (a b : PerfectK U.obj (n + 1))
 
 end Quillen.PerfectComplexes.ProjectiveLine
 
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 
 variable (X : QuasiCompactSchemes.{u}) (Z : X.obj.Opens) [CompactSpace Z.toScheme]
 
@@ -155,4 +157,4 @@ def nativeProjectionOpenIso : (nativeLineFunctor.obj (nativeOpenBase X Z)).obj �
       ((nativeProjection.app X).hom ⁻¹ᵁ Z).ι :=
   (nativeMap_isPullback (nativeOpenBaseInclusion X Z)).isoIsPullback_inv_fst _ _ _
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

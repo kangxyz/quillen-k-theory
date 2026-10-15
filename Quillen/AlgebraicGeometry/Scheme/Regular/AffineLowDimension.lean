@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Regular.LocalLowDimension
 public import Mathlib.RingTheory.LocalProperties.ProjectiveDimension
 
@@ -20,6 +21,12 @@ the canonical Quillen comparison.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,7 +35,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped ModuleCat.Algebra
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 /-- The finite-free syzygy theorem over a PID gives the independent
 Ext-vanishing bound, without assuming projective dimension. -/
@@ -68,20 +75,23 @@ theorem hasProjectiveDimensionLE_one_of_regular_dim_le_one
   exact hasProjectiveDimensionLE_one_of_pid (Localization.AtPrime p.asIdeal)
     (M.localizedModule p.asIdeal.primeCompl)
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 /-- For a regular Noetherian ring of dimension at most one, the existing
 canonical vector-bundle K-to-coherent G comparison is bijective in every
 nonnegative degree. -/
 theorem KToG_regular_dimension_le_one_bijective (R : CommRingCat.{u}) [IsRegularRing R]
     (hd : ringKrullDim R ≤ 1) (n : ℕ) : Function.Bijective (KToG (Spec R) n) := by
-  apply SchemeSheaf.schemeKToG_bijective_of_length_one (Spec R) _ n
+  apply AlgebraicGeometry.Scheme.Modules.schemeKToG_bijective_of_length_one (Spec R) _ n
   intro M
-  have := CoherentScheme.hasProjectiveDimensionLE_one_of_regular_dim_le_one R hd
-    ((CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R).functor.obj M).obj
-  exact SchemeSheaf.coherentResolution_length_le_of_projectiveDimensionLE R 1 M
+  have :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.hasProjectiveDimensionLE_one_of_regular_dim_le_one R
+    hd
+    ((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence
+      R).functor.obj M).obj
+  exact AlgebraicGeometry.Scheme.Modules.coherentResolution_length_le_of_projectiveDimensionLE R 1 M
 
 /-- The actual canonical equivalence for a regular affine ring of dimension
 at most one. The forward homomorphism is the existing `Scheme.KToG`. -/
@@ -94,4 +104,4 @@ def KToGRegularDimOneEquiv (R : CommRingCat.{u}) [IsRegularRing R]
     (hd : ringKrullDim R ≤ 1) (n : ℕ) :
     ↑(KToGRegularDimOneEquiv R hd n) = KToG (Spec R) n := rfl
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

@@ -120,7 +120,7 @@ theorem targetKEquiv_comp_quotientKMap (n : ℕ) :
 the genuine canonical path-space boundary along the constructed equivalence. -/
 def actualConnectingHom (n : ℕ) :
     (abelianExactStructure D).K (n + 1) →*
-      (Devissage.subcategoryExactStructure P).K n :=
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure P).K n :=
   (connectingHom P n).comp (targetKEquiv P L (n + 1)).symm.toMonoidHom
 
 /-- The transported boundary is exactly the canonical boundary under the

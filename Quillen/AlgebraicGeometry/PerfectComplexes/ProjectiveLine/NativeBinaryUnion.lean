@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Morphisms.OpenImmersion.Cartesian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeMayerVietorisGlue
 
 /-! # Literal compact-open binary unions for the original native Phi property
@@ -14,6 +15,9 @@ the compact base of the original Mayer-Vietoris sequence; its first open and
 overlap are identified by canonical original open-immersion isomorphisms.
 -/
 @[expose] public section
+open Quillen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -21,7 +25,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace Quillen.PerfectComplexes.ProjectiveLine
-open Quillen.Scheme Quillen.Scheme.ProjectiveLine NativeMayerVietoris
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine NativeMayerVietoris
 
 /-- Original native Phi is bijective in every connective degree, for each compactness witness. -/
 def NativePhiBijective (X : Scheme.{u}) : Prop :=
@@ -40,14 +44,6 @@ theorem nativePhiBijective_of_iso {X Y : Scheme.{u}} (e : X ≅ Y)
 theorem nativePhiBijective_of_isAffine (X : Scheme.{u}) [IsAffine X] : NativePhiBijective X := by
   intro c n
   exact nativeTwoSummandKMap_bijective_of_isAffine ⟨X, c⟩ n
-
-private theorem cartesian_openRange {W U V X : Scheme.{u}}
-    (a : W ⟶ U) (b : W ⟶ V) (f : U ⟶ X) (g : V ⟶ X)
-    [IsOpenImmersion a] [IsOpenImmersion g] (h : IsPullback a b f g) :
-    a.opensRange = f ⁻¹ᵁ g.opensRange := by
-  have hh : (h.isoPullback.hom ≫ pullback.fst f g).opensRange = f ⁻¹ᵁ g.opensRange := by
-    rw [Scheme.Hom.opensRange_comp_of_isIso, Scheme.Hom.opensRange_pullbackFst]
-  simpa only [h.isoPullback_hom_fst] using hh
 
 /-- The actual original native property is closed under literal compact-open binary unions. -/
 theorem nativePhiBijective_union (Y : Scheme.{u}) [QuasiSeparatedSpace Y]

@@ -16,14 +16,19 @@ For each module sheaf, the kernel of the paired chart obstructions glues the act
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.Coherent
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 
 /-- The paired direct-image obstructions to lying in both original chart columns. -/
@@ -118,4 +123,4 @@ lemma twistMinusInclusion_minus :
     (Scheme.Modules.restrictFunctor (minusChart R))).conePointUniqueUpToIso_hom_comp
       (twistMinusMinusIsKernel R M) WalkingParallelPair.zero).symm
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

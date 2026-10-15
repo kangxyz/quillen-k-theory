@@ -23,6 +23,12 @@ upper universe. No cross-universe realization comparison is asserted here.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -30,7 +36,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 variable (R : CommRingCat.{u}) [IsNoetherianRing R]
 
@@ -81,4 +87,4 @@ theorem specGRingEquiv_toMonoidHom (n : ℕ) :
     (specGRingEquiv R n).toMonoidHom =
       (affineGToRingG R n).comp (specGToAffineG R n) := rfl
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

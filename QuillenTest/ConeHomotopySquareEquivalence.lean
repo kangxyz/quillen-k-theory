@@ -14,7 +14,7 @@ midpoint, and cancellation of a whole arrow homotopy on the original signed stab
 noncomputable section
 
 open CategoryTheory AlgebraicGeometry Quillen Quillen.LoopPrespectrum Quillen.PerfectComplexes
-open Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped unitInterval
 universe u
 namespace QuillenTest.ConeHomotopySquareEquivalence

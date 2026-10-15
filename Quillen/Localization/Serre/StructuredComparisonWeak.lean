@@ -50,27 +50,32 @@ theorem quotientNormalized_obj_zero :
       (quotientExactStructure P).qZero := rebaseFunctor_obj_base _ _ _ _
 
 theorem normalizedSerreToZeroStructuredComma_obj_zero :
-    (normalizedSerreToZeroStructuredComma P).obj (Devissage.subcategoryExactStructure P).qZero =
+    (normalizedSerreToZeroStructuredComma P).obj
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure P).qZero =
       StructuredArrow.mk (eqToHom (quotientNormalized_obj_zero P).symm) := by
-  have hi : (inclusionNormalizedQ P).obj (Devissage.subcategoryExactStructure P).qZero =
+  have hi : (inclusionNormalizedQ P).obj (CategoryTheory.ObjectProperty.subcategoryExactStructure
+    P).qZero =
       (abelianExactStructure C).qZero :=
     rebaseFunctor_obj_base (Devissage.mapQ P)
-      (Devissage.subcategoryExactStructure P).qZero (abelianExactStructure C).qZero
-      ((abelianExactStructure C).qIsoOfIso (Devissage.exactInclusion P).toFunctor.mapZeroObject)
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure P).qZero (abelianExactStructure
+        C).qZero
+      ((abelianExactStructure C).qIsoOfIso (CategoryTheory.ObjectProperty.exactInclusion
+        P).toFunctor.mapZeroObject)
   refine StructuredArrow.obj_ext _ _ hi ?_
   apply (cancel_mono (eqToHom (quotientNormalized_obj_zero P))).1
   exact ((quotientExactStructure P).qHom_subsingleton_of_isZero _ _ (isZero_zero _)).elim _ _
 
 theorem normalizedSerreToZeroStructuredComma_map_basepoint :
     classifyingSpaceMap (normalizedSerreToZeroStructuredComma P)
-      (Devissage.subcategoryExactStructure P).kBasepoint =
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure P).kBasepoint =
       classifyingSpacePoint (StructuredArrow.mk (eqToHom (quotientNormalized_obj_zero P).symm)) :=
   (classifyingSpaceMap_point (normalizedSerreToZeroStructuredComma P)
-    (Devissage.subcategoryExactStructure P).qZero).trans
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure P).qZero).trans
       (congrArg classifyingSpacePoint (normalizedSerreToZeroStructuredComma_obj_zero P))
 
 theorem normalizedStructuredFiberComparison_basepoint :
-    normalizedStructuredFiberComparison P (Devissage.subcategoryExactStructure P).kBasepoint =
+    normalizedStructuredFiberComparison P (CategoryTheory.ObjectProperty.subcategoryExactStructure
+      P).kBasepoint =
       normalizedFiberBasepoint P :=
   ((normalizedStructuredFiberComparisonHomotopy P).map_one_left _).symm.trans
     (normalizedStructuredFiberComparisonHomotopy_based P 1)

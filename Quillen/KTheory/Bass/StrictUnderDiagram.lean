@@ -29,20 +29,20 @@ def strictRingDiagramRestriction (R : CommRingCat.{u}) :
 /-- Restricting original Laurent squares commutes literally with the same cone-loop functor. -/
 theorem strictRingDiagramRestriction_comp_bass (R : CommRingCat.{u}) :
     strictRingDiagramRestriction.{u,w} R ⋙
-        strictDiagramFunctor (PolynomialBaseChange.laurentUnderSquareFunctor R) =
+        strictDiagramFunctor (CommRingCat.PolynomialLaurent.laurentUnderSquareFunctor R) =
       strictRingDiagramFunctor ⋙ strictRingDiagramRestriction R := rfl
 
 /-- Every original finite iterate restricts by the same literal diagram functor equality. -/
 theorem strictRingDiagramRestriction_comp_iterate (R : CommRingCat.{u}) (n : ℕ) :
     strictRingDiagramRestriction.{u,w} R ⋙
-        strictDiagramIterate (PolynomialBaseChange.laurentUnderSquareFunctor R) n =
+        strictDiagramIterate (CommRingCat.PolynomialLaurent.laurentUnderSquareFunctor R) n =
       strictRingDiagramIterate n ⋙ strictRingDiagramRestriction R := by
   induction n with
   | zero => rfl
   | succ n ih =>
     change strictRingDiagramRestriction R ⋙
-      (strictDiagramFunctor (PolynomialBaseChange.laurentUnderSquareFunctor R) ⋙
-        strictDiagramIterate (PolynomialBaseChange.laurentUnderSquareFunctor R) n) =
+      (strictDiagramFunctor (CommRingCat.PolynomialLaurent.laurentUnderSquareFunctor R) ⋙
+        strictDiagramIterate (CommRingCat.PolynomialLaurent.laurentUnderSquareFunctor R) n) =
       (strictRingDiagramFunctor ⋙ strictRingDiagramIterate n) ⋙ strictRingDiagramRestriction R
     rw [← Functor.assoc, strictRingDiagramRestriction_comp_bass, Functor.assoc, ih,
       ← Functor.assoc]
@@ -51,7 +51,7 @@ theorem strictRingDiagramRestriction_comp_iterate (R : CommRingCat.{u}) (n : ℕ
 def strictRingDiagramUnderSeed (R : CommRingCat.{u})
     {F : CommRingCat.{u} ⥤ LoopPrespectrum.{w}} (η : F ⟶ strictRingDiagramFunctor.obj F) :
     Under.forget R ⋙ F ⟶
-      (strictDiagramFunctor (PolynomialBaseChange.laurentUnderSquareFunctor R)).obj
+      (strictDiagramFunctor (CommRingCat.PolynomialLaurent.laurentUnderSquareFunctor R)).obj
         (Under.forget R ⋙ F) :=
   (strictRingDiagramRestriction R).map η ≫
     eqToHom (congrArg (fun H ↦ H.obj F) (strictRingDiagramRestriction_comp_bass R).symm)

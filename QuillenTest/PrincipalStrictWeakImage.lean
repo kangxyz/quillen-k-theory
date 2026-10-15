@@ -10,6 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalStrictW
 /-! # Unconditional original principal strict-image comparison consumers -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
@@ -22,20 +25,25 @@ variable (R : CommRingCat.{u}) (r : R)
 /-- Genuine geometry and the actual cone cylinder supply a strict source cofibration. -/
 theorem actual_principal_cofibration_factorization
     {A : StrictPerfect (Spec R)} {B : StrictPerfect (Spec (.of (Localization.Away r)))}
-    (f : (strictRestrict (CoherentScheme.principalOpen R r)).obj A ⟶ B)
+    (f : (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj A ⟶
+      B)
     (E : StrictPerfect (Spec R))
-    (q : (strictRestrict (CoherentScheme.principalOpen R r)).obj E ⟶ B)
+    (q : (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj E ⟶
+      B)
     (hq : (strictWaldhausen _).weq q) :
     ∃ (M : StrictPerfect (Spec R)) (a : A ⟶ M)
-      (p : (strictRestrict (CoherentScheme.principalOpen R r)).obj M ⟶ B),
+      (p : (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj M
+        ⟶ B),
       (strictWaldhausen (Spec R)).cof a ∧ (strictWaldhausen _).weq p ∧
-        (strictRestrict (CoherentScheme.principalOpen R r)).map a ≫ p = f :=
+        (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map a ≫
+          p = f :=
   (principal_approximationOnImage R r).lift f ⟨E, q, hq⟩
 
 /-- Relative weakness is precisely actual original restriction weakness. -/
 theorem actual_relative_weak_iff {A B : StrictPerfect (Spec R)} (f : A ⟶ B) :
-    (coarseWaldhausen (CoherentScheme.principalOpen R r)).weq f ↔
-      (strictWaldhausen _).weq ((strictRestrict (CoherentScheme.principalOpen R r)).map f) :=
+    (coarseWaldhausen (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).weq f ↔
+      (strictWaldhausen _).weq ((strictRestrict
+        (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map f) :=
         Iff.rfl
 
 /-- The genuine inherited target preserves every displayed original pushout along a cofibration. -/
@@ -46,7 +54,8 @@ theorem actual_image_pushout {A B E Q : PrincipalObj R r}
 
 /-- All actual source-based homotopy maps of the original corestriction are bijective. -/
 theorem actual_principal_homotopy_map
-    (x : (coarseWaldhausen (CoherentScheme.principalOpen R r)).Delooping) (n : ℕ) :
+    (x : (coarseWaldhausen (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+      r)).Delooping) (n : ℕ) :
     Function.Bijective (homotopyGroupMap (N := Fin n)
       (deloopingMap (principalCorestrict_exact R r)).hom (x := x) rfl) :=
   (principal_deloopingMap_isWeakHomotopyEquivalence R r).homotopy_bijective x n
@@ -60,7 +69,8 @@ theorem unique_original_relative_preimage (n : ℕ) (y : (principalWaldhausen R 
 
 /-- The comparison preserves the exact original map to strict-perfect K-theory on the open. -/
 theorem inverse_relative_restriction (n : ℕ) (y : (principalWaldhausen R r).K n) :
-    relativeKRestrict (CoherentScheme.principalOpen R r) n ((principalKEquiv R r n).symm y) =
+    relativeKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) n
+      ((principalKEquiv R r n).symm y) =
       KMap (principalInclusion_exact R r) n y := by
   rw [← DFunLike.congr_fun (principalInclusion_comp_corestrict R r n)
     ((principalKEquiv R r n).symm y), MonoidHom.comp_apply]
@@ -72,12 +82,15 @@ theorem inverse_relative_restriction (n : ℕ) (y : (principalWaldhausen R r).K 
 theorem original_fine_restriction_composite (n : ℕ) :
     (KMap (principalInclusion_exact R r) n).comp
       ((principalKEquiv R r n).toMonoidHom.comp
-        (KMap (Fibration.changeWeak_exact (nested (CoherentScheme.principalOpen R r))) n)) =
-      strictKRestrict (CoherentScheme.principalOpen R r) n := by
+        (KMap (Fibration.changeWeak_exact (nested
+          (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r))) n)) =
+      strictKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) n := by
   ext x
   exact (DFunLike.congr_fun (principalInclusion_comp_corestrict R r n)
-    (KMap (Fibration.changeWeak_exact (nested (CoherentScheme.principalOpen R r))) n x)).trans
-      (DFunLike.congr_fun (relativeKRestrict_comp_changeWeak (CoherentScheme.principalOpen R r) n)
+    (KMap (Fibration.changeWeak_exact (nested
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r))) n x)).trans
+      (DFunLike.congr_fun (relativeKRestrict_comp_changeWeak
+        (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) n)
         x)
 
 end QuillenTest.StrictOpenWeakImage

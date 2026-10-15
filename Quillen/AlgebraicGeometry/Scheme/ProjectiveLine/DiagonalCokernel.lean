@@ -19,6 +19,8 @@ has the cokernel universal property over every base ring, including the zero rin
 No projective-bundle or generation theorem is inferred here.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 universe u
@@ -27,8 +29,8 @@ open Polynomial
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.Scheme.ProjectiveLine
-open PolynomialLaurent Quillen.SchemeSheaf Quillen.PolynomialDiagonal
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open PolynomialLaurent AlgebraicGeometry.Scheme.Modules Quillen.PolynomialDiagonal
 /-- The original quotient arrow is a cokernel on the actual plus-plus affine rectangle. -/
 def diagonalPlusPlusCokernel (R : CommRingCat.{u}) :
     IsColimit (CokernelCofork.ofπ
@@ -153,10 +155,10 @@ def diagonalMinusMinusCokernel (R : CommRingCat.{u}) :
       (minusChart_projection R)
       (tautologicalQuotientPullbackMinusIso R))
     s (diagonalIncidence_minus_minus R) hs hk (diagonalEvaluation_surjective R)
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 /-- The four original affine-spectrum rectangles in the relative square. -/
 def diagonalSpecRectangle (R : CommRingCat.{u}) (b : Bool × Bool) :
     Spec (.of (Polynomial (Polynomial R))) ⟶ relativeSquare R :=
@@ -207,4 +209,4 @@ def diagonalQuotientIsCokernel (R : CommRingCat.{u}) :
     IsColimit (CokernelCofork.ofπ (diagonalQuotientMap R) (diagonalIncidence_quotient R)) := by
   have := (diagonalIncidenceSequence_shortExact R).epi_g
   exact (diagonalIncidenceSequence_shortExact R).exact.gIsCokernel
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

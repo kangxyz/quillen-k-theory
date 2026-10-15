@@ -20,6 +20,12 @@ universe as the public global `G` and `SupportedG` definitions.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -28,7 +34,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 variable {U X : Scheme.{u}} [IsLocallyNoetherian X] [IsLocallyNoetherian U]
   (j : U ⟶ X) [IsOpenImmersion j]
@@ -71,13 +77,13 @@ theorem coherentGlobalSmallSupportEquivalence_comp_inclusion :
 /-- The genuine exact inclusion of actual supported coherent sheaves. -/
 def supportedCoherentInclusionExact :
     ExactFunctor (supportedCoherentExactStructure j) (coherentExactStructure X) :=
-  Devissage.exactInclusion (finiteTypeSheavesSupportedAway j)
+  CategoryTheory.ObjectProperty.exactInclusion (finiteTypeSheavesSupportedAway j)
 
 /-- The compatible support category is abelian under the actual noetherian
 hypotheses, using its Serre-class closure properties. -/
 instance instAbelianCoherentGlobalSmallSupport :
     Abelian (coherentGlobalSmallSupport j).FullSubcategory :=
-  Devissage.subcategoryAbelian (coherentGlobalSmallSupport j)
+  CategoryTheory.ObjectProperty.subcategoryAbelian (coherentGlobalSmallSupport j)
 
 /-- The compatible supported K-term in the upper universe. -/
 abbrev CoherentGlobalSupportedG (n : ℕ) : Type (u + 1) :=
@@ -110,7 +116,7 @@ def coherentGlobalSupportComparison :
 at the level of exact functors, before applying K-theory. -/
 theorem coherentGlobalSupportComparison_comp_inclusion :
     (coherentGlobalSupportComparison j).comp
-        (Devissage.exactInclusion (coherentGlobalSmallSupport j)) =
+        (CategoryTheory.ObjectProperty.exactInclusion (coherentGlobalSmallSupport j)) =
       (supportedCoherentInclusionExact j).smallModel.comp
         (SmallModelLocalization.standardExactFunctor.{u + 1} (FiniteTypeSheaves X)) := rfl
 
@@ -138,4 +144,4 @@ def coherentGlobalSupportedGEquiv (n : ℕ) :
     SupportedG j n ≃* CoherentGlobalSupportedG j n :=
   (coherentGlobalSupportComparison j).KEquivOfMapQIsEquivalence n
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

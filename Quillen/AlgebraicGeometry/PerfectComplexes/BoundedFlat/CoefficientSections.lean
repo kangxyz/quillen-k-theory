@@ -36,14 +36,14 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open Quillen.CategoryTheory.StrictSections Quillen.CategoryTheory.GrothendieckZeroSections
-open Quillen.Waldhausen.IteratedS Quillen.Scheme.CoefficientBaseChange
+open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.CoefficientBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 
 /-- The original bounded-flat pullback pseudofunctor on the actual joint native family. -/
 def boundedFlatCoefficientPseudofunctor (R : CommRingCat.{u}) :
     Pseudofunctor (LocallyDiscrete (Index R)) Cat :=
-  (Quillen.Scheme.CoefficientBaseChange.functor R).toPseudofunctor.comp
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.functor R).toPseudofunctor.comp
     boundedFlatPerfectPseudofunctor
 
 /-- The actual total category retains every original geometric fiber and transition. -/
@@ -64,7 +64,7 @@ theorem boundedFlatCoefficientPseudofunctor_obj (i : Index R) :
 /-- Both original index coordinates act by the same original geometric pullback functor. -/
 theorem boundedFlatCoefficientPseudofunctor_map {i k : Index R} (f : i ⟶ k) :
     ((boundedFlatCoefficientPseudofunctor R).map f.toLoc).toFunctor =
-      boundedFlatPerfectPullback (Quillen.Scheme.CoefficientBaseChange.map f) := rfl
+      boundedFlatPerfectPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f) := rfl
 
 /-- Actual cocartesian sections over the coslice of one joint index. -/
 abbrev BoundedFlatCoefficientSections (i : Index R) :=
@@ -116,7 +116,7 @@ theorem boundedFlatCoefficientChosenZero_isZero (i : Index R) :
 theorem boundedFlatCoefficientChosenZero_map_isZero {i k : Index R} (f : i ⟶ k) :
     IsZero (((boundedFlatCoefficientPseudofunctor R).map f.toLoc).toFunctor.obj
       (boundedFlatCoefficientChosenZero i)) :=
-  (boundedFlatPerfectPullback (Quillen.Scheme.CoefficientBaseChange.map f)).map_isZero
+  (boundedFlatPerfectPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)).map_isZero
     (boundedFlatPerfectWaldhausen (space i)).isZero
 
 /-- One actual zero section on the entire joint index, independent of an initial row. -/
@@ -208,7 +208,7 @@ theorem boundedFlatCoefficientSectionEquivalence_inverse_exact (i : Index R) :
 def boundedFlatCoefficientSectionReindexIso {i k : Index R} (f : i ⟶ k) :
     boundedFlatCoefficientSectionsMap f ⋙ boundedFlatCoefficientOriginalEvaluation k ≅
       boundedFlatCoefficientOriginalEvaluation i ⋙
-        boundedFlatPerfectPullback (Quillen.Scheme.CoefficientBaseChange.map f) := by
+        boundedFlatPerfectPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f) := by
   unfold boundedFlatCoefficientOriginalEvaluation
   exact eqToIso (Quillen.CategoryTheory.GrothendieckSections.originalEvaluation_reindex
     (boundedFlatCoefficientPseudofunctor R) i f) ≪≫
@@ -224,7 +224,7 @@ theorem boundedFlatCoefficientSectionsMap_evaluation_exact {i k : Index R} (f : 
   Waldhausen.ExtensionCategory.isExact_of_natIso
     (boundedFlatCoefficientSectionWaldhausen i) (boundedFlatPerfectWaldhausen (space k))
     ((boundedFlatCoefficientOriginalEvaluation_exact i).comp
-      (boundedFlatPerfectPullback_exact (Quillen.Scheme.CoefficientBaseChange.map f)))
+      (boundedFlatPerfectPullback_exact (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)))
     (boundedFlatCoefficientSectionReindexIso f).symm
 
 /-- Original joint reindexing preserves zero, cofibrations, weak maps and pushouts. -/

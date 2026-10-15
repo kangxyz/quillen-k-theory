@@ -29,7 +29,7 @@ open CategoryTheory AlgebraicGeometry
 namespace Quillen.PerfectComplexes
 
 /-- Locally-perfect K-theory with its actual flat pullback maps. -/
-def PerfectKFlatFunctor (n : ℕ) : Quillen.Scheme.FlatSchemes.{u}ᵒᵖ ⥤ GrpCat.{u + 1} where
+def PerfectKFlatFunctor (n : ℕ) : AlgebraicGeometry.Scheme.FlatSchemes.{u}ᵒᵖ ⥤ GrpCat.{u + 1} where
   obj X := GrpCat.of (PerfectK X.unop.obj n)
   map f := GrpCat.ofHom (perfectKFlatPullback f.unop.hom n)
   map_id X := by
@@ -40,7 +40,7 @@ def PerfectKFlatFunctor (n : ℕ) : Quillen.Scheme.FlatSchemes.{u}ᵒᵖ ⥤ Grp
     exact perfectKFlatPullback_comp g.unop.hom f.unop.hom n
 
 @[simp]
-theorem PerfectKFlatFunctor_map {X Y : Quillen.Scheme.FlatSchemes.{u}ᵒᵖ} (f : X ⟶ Y)
+theorem PerfectKFlatFunctor_map {X Y : AlgebraicGeometry.Scheme.FlatSchemes.{u}ᵒᵖ} (f : X ⟶ Y)
     (n : ℕ) : ((PerfectKFlatFunctor n).map f).hom = perfectKFlatPullback f.unop.hom n := rfl
 
 /-- The original strict-to-local comparison is natural on all flat scheme maps. -/
@@ -53,12 +53,13 @@ def strictToPerfectFlatNatTrans (n : ℕ) :
     exact (strictToPerfectKMap_flatPullback f.unop.hom n).symm
 
 @[simp]
-theorem strictToPerfectFlatNatTrans_app (n : ℕ) (X : Quillen.Scheme.FlatSchemes.{u}ᵒᵖ) :
+theorem strictToPerfectFlatNatTrans_app (n : ℕ) (X : AlgebraicGeometry.Scheme.FlatSchemes.{u}ᵒᵖ) :
     ((strictToPerfectFlatNatTrans n).app X).hom = strictToPerfectKMap X.unop.obj n := rfl
 
 /-- The original public vector-bundle-to-local comparison is natural for flat maps. -/
 def vectorBundleToPerfectFlatNatTrans (n : ℕ) :
-    (wideSubcategoryInclusion (@Flat : MorphismProperty Scheme.{u})).op ⋙ Quillen.Scheme.KFunctor n
+    (wideSubcategoryInclusion (@Flat : MorphismProperty Scheme.{u})).op ⋙
+      AlgebraicGeometry.Scheme.KFunctor n
       ⟶
       PerfectKFlatFunctor n where
   app X := GrpCat.ofHom (vectorBundleToPerfectKMap X.unop.obj n)
@@ -67,7 +68,8 @@ def vectorBundleToPerfectFlatNatTrans (n : ℕ) :
     exact (vectorBundleToPerfectKMap_flatPullback f.unop.hom n).symm
 
 @[simp]
-theorem vectorBundleToPerfectFlatNatTrans_app (n : ℕ) (X : Quillen.Scheme.FlatSchemes.{u}ᵒᵖ) :
+theorem vectorBundleToPerfectFlatNatTrans_app (n : ℕ) (X :
+  AlgebraicGeometry.Scheme.FlatSchemes.{u}ᵒᵖ) :
     ((vectorBundleToPerfectFlatNatTrans n).app X).hom = vectorBundleToPerfectKMap X.unop.obj n :=
       rfl
 

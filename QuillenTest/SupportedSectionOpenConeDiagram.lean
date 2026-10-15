@@ -17,7 +17,7 @@ relative-open component, without any Bass-transition or full-open endpoint asser
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.Waldhausen.IteratedS Quillen.Scheme.AffineOpenPair
+open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.SupportedSectionOpenConeDiagram
 

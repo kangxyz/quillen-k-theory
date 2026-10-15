@@ -23,7 +23,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 namespace QuillenTest.DerivedPushforwardComposition
 
 open Quillen
@@ -35,11 +35,11 @@ local instance compositionStandardDerived (X : Scheme.{u}) :
 /-- The exact integer kernel sequence retains its literal differential kernel lift. -/
 theorem original_integer_kernel {X : Scheme.{u}} (K : CochainComplex X.Modules ℤ)
     (n : ℤ) (hK : K.ExactAt (n + 1)) :
-    (Quillen.CochainComplex.kernelSequence K n).ShortExact ∧
-      (Quillen.CochainComplex.kernelSequence K n).g =
+    (CochainComplex.kernelSequence K n).ShortExact ∧
+      (CochainComplex.kernelSequence K n).g =
         kernel.lift (K.d (n + 1) (n + 2)) (K.d n (n + 1))
           (K.d_comp_d n (n + 1) (n + 2)) :=
-  ⟨Quillen.CochainComplex.kernelSequence_shortExact K n hK, rfl⟩
+  ⟨CochainComplex.kernelSequence_shortExact K n hK, rfl⟩
 
 /-- Original direct image preserves every degree of a bounded-below acyclic flasque complex. -/
 theorem original_acyclic_direct_image {X Y : Scheme.{u}} (f : X ⟶ Y)

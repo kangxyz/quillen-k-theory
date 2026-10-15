@@ -17,6 +17,9 @@ the ambient module nor splitting of the approximation triangle is asserted.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -30,7 +33,8 @@ open Quillen.ModuleComplex.PrincipalLocalization
 def principalChartAssociatedComplexIso (R : CommRingCat.{u}) {U : Scheme.{u}}
     (j : U ⟶ Spec R) [IsOpenImmersion j] (r : R)
     (k : Spec (.of (Localization.Away r)) ⟶ U) [IsOpenImmersion k]
-    (hk : k ≫ j = CoherentScheme.principalOpen R r) (C : ModuleComplex R) :
+    (hk : k ≫ j = AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (C :
+      ModuleComplex R) :
     (restrict k).obj ((restrict j).obj ((associatedComplex R).obj C)) ≅
       (associatedComplex (.of (Localization.Away r))).obj ((localize r (.up ℤ)).obj C) :=
   (restrictCompIso k j).app ((associatedComplex R).obj C) ≪≫
@@ -44,26 +48,27 @@ theorem vectorBundle_single_of_principal_concentration
     (C : ModuleComplex R) (a : ℤ) (s : Finset R)
     (k : ∀ r : s, Spec (.of (Localization.Away r.val)) ⟶ U)
     [∀ r : s, IsOpenImmersion (k r)]
-    (hk : ∀ r : s, k r ≫ j = CoherentScheme.principalOpen R r.val)
+    (hk : ∀ r : s, k r ≫ j = AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r.val)
     (hcover : ∀ x : U, ∃ r : s, ∃ y, k r y = x)
     (hlocal : ∀ r : s,
       let L : ModuleComplex (.of (Localization.Away r.val)) := (localize r.val (.up ℤ)).obj C
       L.IsLE a ∧ L.IsGE a ∧ Module.Finite (Localization.Away r.val) (L.homology a) ∧
         Projective (L.homology a)) :
     let D := (restrict j).obj ((associatedComplex R).obj C)
-    SchemeSheaf.IsFiniteLocallyFree U (D.homology a) ∧ D.IsGE a ∧ D.IsLE a ∧
+    AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree U (D.homology a) ∧ D.IsGE a ∧ D.IsLE a ∧
       Nonempty ((toDerived U).obj D ≅ (toDerived U).obj
         ((CochainComplex.singleFunctor U.Modules a).obj (D.homology a))) := by
   let D := (restrict j).obj ((associatedComplex R).obj C)
   let Y (r : s) := Spec (.of (Localization.Away r.val))
   have hmodels (r : s) : ((restrict (k r)).obj D).IsLE a ∧
       ((restrict (k r)).obj D).IsGE a ∧
-      SchemeSheaf.IsFiniteLocallyFree (Y r) (((restrict (k r)).obj D).homology a) := by
+      AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree (Y r) (((restrict (k r)).obj D).homology
+        a) := by
     let L : ModuleComplex (.of (Localization.Away r.val)) := (localize r.val (.up ℤ)).obj C
     obtain ⟨hhi, hlo, hfin, hproj⟩ := hlocal r
     let F := tilde.functor (.of (Localization.Away r.val))
     let : F.Additive := AlgebraicGeometry.instAdditiveModuleCatCarrierModulesSpecFunctor
-    let : F.PreservesHomology := SchemeSheaf.tilde_preservesHomology _
+    let : F.PreservesHomology := AlgebraicGeometry.Scheme.Modules.tilde_preservesHomology _
     let E := (associatedComplex (.of (Localization.Away r.val))).obj L
     have hEhi : E.IsLE a := by
       rw [CochainComplex.isLE_iff]
@@ -80,9 +85,10 @@ theorem vectorBundle_single_of_principal_concentration
       (HomologicalComplex.homologyFunctor _ _ a).mapIso e ≪≫ (L.sc a).mapHomologyIso F
     have : Module.Projective (Localization.Away r.val) (L.homology a) :=
       ModuleCat.projective_of_module_projective _
-    have : SchemeSheaf.IsFiniteLocallyFree (Y r) (F.obj (L.homology a)) :=
-      SchemeSheaf.finiteLocallyFree_tilde_of_finite_projective (.of (Localization.Away r.val)) _
-    exact ⟨hle, hge, SchemeSheaf.finiteLocallyFree_of_iso eH.symm⟩
+    have : AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree (Y r) (F.obj (L.homology a)) :=
+      AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_tilde_of_finite_projective (.of
+        (Localization.Away r.val)) _
+    exact ⟨hle, hge, AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_of_iso eH.symm⟩
   have hge := isGE_of_openImmersionCover D Y k hcover a (fun r => (hmodels r).2.1)
   have hle := isLE_of_openImmersionCover D Y k hcover a (fun r => (hmodels r).1)
   obtain ⟨hvb, he⟩ := exists_vectorBundle_single_of_openImmersionCover D Y k hcover a
@@ -97,7 +103,7 @@ theorem exists_moduleStrictPerfect_approximation_with_vectorBundle_remainder
     (K : ModuleComplex R) (a b : ℤ) (s : Finset R)
     (k : ∀ r : s, Spec (.of (Localization.Away r.val)) ⟶ U)
     [∀ r : s, IsOpenImmersion (k r)]
-    (hk : ∀ r : s, k r ≫ j = CoherentScheme.principalOpen R r.val)
+    (hk : ∀ r : s, k r ≫ j = AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r.val)
     (hcover : ∀ x : U, ∃ r : s, ∃ y, k r y = x)
     (hbound : ∀ r : s, CochainComplex.IsLE ((localize r.val (.up ℤ)).obj K) b)
     (hlocal : ∀ r : s, ∃ P : ModuleComplex (CommRingCat.of (Localization.Away r.val)),
@@ -106,7 +112,7 @@ theorem exists_moduleStrictPerfect_approximation_with_vectorBundle_remainder
       Nonempty (DerivedCategory.Q.obj ((localize r.val (.up ℤ)).obj K) ≅ DerivedCategory.Q.obj P)) :
     ∃ (P : ModuleComplex R) (_ : moduleStrictPerfect R P) (f : P ⟶ K),
       let D := (restrict j).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))
-      SchemeSheaf.IsFiniteLocallyFree U (D.homology a) ∧ D.IsGE a ∧ D.IsLE a ∧
+      AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree U (D.homology a) ∧ D.IsGE a ∧ D.IsLE a ∧
         Nonempty ((toDerived U).obj D ≅ (toDerived U).obj
           ((CochainComplex.singleFunctor U.Modules a).obj (D.homology a))) := by
   obtain ⟨P, hP, f, hf⟩ :=

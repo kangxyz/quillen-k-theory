@@ -20,6 +20,9 @@ derived direct image, and the connecting morphism is explicitly preserved.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 
 section
@@ -27,7 +30,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf.TwoOpen
+namespace AlgebraicGeometry.Scheme.Modules.TwoOpen
 /-- Use the standard derived category of actual module sheaves. -/
 local instance twoOpenDerivedTermsStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules :=
@@ -56,7 +59,7 @@ theorem isIso_sheafSequence_third_derivedUnit :
     IsIso ((derivedPushforwardPlusUnit f).app
       (singleZeroPlus X (sheafSequence a b j k h M).X₃)) :=
   isIso_derivedPushforwardPlusUnit_pushforward_single (a ≫ j) f (M.restrict (a ≫ j))
-end Quillen.SchemeSheaf.TwoOpen
+end AlgebraicGeometry.Scheme.Modules.TwoOpen
 end
 
 section
@@ -64,7 +67,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Pretriangulated AlgebraicGeometry
-namespace Quillen.SchemeSheaf.TwoOpen
+namespace AlgebraicGeometry.Scheme.Modules.TwoOpen
 /-- Use the standard derived category of actual module sheaves. -/
 local instance twoOpenDerivedTriangleStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules :=
@@ -112,5 +115,5 @@ theorem sheafDerivedCechTriangle_distinguished :
   let := isIso_sheafSequence_second_derivedUnit a b j k h.w f M
   let := isIso_sheafSequence_third_derivedUnit a b j k h.w f M
   exact acyclicShortExactTriangle_distinguished f (sheafSequence_shortExact a b j k h M hcover)
-end Quillen.SchemeSheaf.TwoOpen
+end AlgebraicGeometry.Scheme.Modules.TwoOpen
 end

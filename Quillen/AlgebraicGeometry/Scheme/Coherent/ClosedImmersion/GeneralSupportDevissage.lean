@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralNilpotence
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.GlobalLocalization
 public import Quillen.Devissage.FiltrationSubcategory
@@ -23,6 +24,12 @@ the genuine supported-coherent small presentation.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -30,7 +37,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme.ClosedImmersion.General
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsNoetherian X]
   (i : Z ⟶ X) [IsClosedImmersion i]
 
@@ -57,13 +64,13 @@ abbrev supportKilled : ObjectProperty (SmallSupport i) :=
 instance supportRepresentation_preservesFiniteLimits : PreservesFiniteLimits (supportRepresentation
   i) := by
   let : PreservesFiniteLimits (coherentGlobalSmallSupport (openMap i)).ι :=
-    Devissage.inclusion_preservesFiniteLimits _
+    CategoryTheory.ObjectProperty.inclusion_preservesFiniteLimits _
   exact comp_preservesFiniteLimits _ _
 
 instance supportRepresentation_preservesFiniteColimits : PreservesFiniteColimits
   (supportRepresentation i) := by
   let : PreservesFiniteColimits (coherentGlobalSmallSupport (openMap i)).ι :=
-    Devissage.inclusion_preservesFiniteColimits _
+    CategoryTheory.ObjectProperty.inclusion_preservesFiniteColimits _
   exact comp_preservesFiniteColimits _ _
 
 instance supportKilled_containsZero : (supportKilled i).ContainsZero := by
@@ -113,8 +120,8 @@ theorem supportFiltrationHypothesis : Devissage.FiltrationHypothesis (supportKil
 /-- The canonical annihilated-object inclusion is a genuine homotopical
 K-equivalence onto the actual compatible supported term. -/
 def supportDevissageKEquiv (n : ℕ) :
-    (Devissage.subcategoryExactStructure (supportKilled i)).K n ≃*
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure (supportKilled i)).K n ≃*
       CoherentGlobalSupportedG (openMap i) n :=
   Devissage.KEquiv (supportKilled i) (supportFiltrationHypothesis i) n
 
-end Quillen.CoherentScheme.ClosedImmersion.General
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

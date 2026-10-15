@@ -152,7 +152,7 @@ def strictToPerfectKEquiv (R : CommRingCat.{u}) (n : ℕ) :
 /-- Original scheme Q-theory and all-sheaf locally-perfect K-theory agree on
 every affine scheme through the unchanged public comparison homomorphism. -/
 def vectorBundleToPerfectKEquiv (R : CommRingCat.{u}) (n : ℕ) :
-    Quillen.Scheme.K (Spec R) n ≃* PerfectK (Spec R) n :=
+    AlgebraicGeometry.Scheme.K (Spec R) n ≃* PerfectK (Spec R) n :=
   MulEquiv.ofBijective (vectorBundleToPerfectKMap (Spec R) n)
     (vectorBundleToPerfectKMap_bijective R n)
 

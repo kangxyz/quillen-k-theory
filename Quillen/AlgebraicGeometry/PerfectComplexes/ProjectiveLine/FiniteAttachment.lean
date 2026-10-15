@@ -22,13 +22,16 @@ attachment is a separate geometric step.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
 open HomologicalComplex
-open Quillen.Scheme.ProjectiveLine Quillen.SchemeSheaf
+open AlgebraicGeometry.Scheme.ProjectiveLine AlgebraicGeometry.Scheme.Modules
 namespace Quillen.PerfectComplexes.ProjectiveLine
 
 /-- The standard derived category of module sheaves, used for finite attachments. -/
@@ -201,7 +204,7 @@ theorem finite_top_homology_sections (R : CommRingCat.{u})
     let := P.property.2 b
     exact finiteLocallyFree_of_iso e.symm
   have : (P.obj.homology b).IsQuasicoherent :=
-    CoherentScheme.quasicoherent_homology P.obj (fun i => by
+    AlgebraicGeometry.Scheme.Modules.Coherent.quasicoherent_homology P.obj (fun i => by
       let := P.property.2 i
       infer_instance) b
   have : Epi (moduleSpecΓFunctor.map (P.obj.homologyπ b)) :=
@@ -261,7 +264,7 @@ explicit input; constructing it globally is a separate geometric obligation. -/
 theorem twoChartStrictLowerModels_mappingCone_single
     (R : CommRingCat.{u}) (K : Complex (twoChartLine R))
     (V : (twoChartLine R).Modules)
-    [SchemeSheaf.IsFiniteLocallyFree (twoChartLine R) V]
+    [AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree (twoChartLine R) V]
     (a b : ℤ) (hab : a < b) [K.IsLE b]
     (hK : twoChartStrictLowerModels R K a)
     (f : (CochainComplex.singleFunctor _ b).obj V ⟶ K)

@@ -16,6 +16,9 @@ The intermediate scheme and its projection need not be affine.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 section
 
@@ -24,7 +27,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {R A : CommRingCat.{u}} {X : Scheme.{u}}
 variable (a : R ⟶ A) (j : Spec A ⟶ X) (p : X ⟶ Spec R) (h : j ≫ p = Spec.map a)
 
@@ -41,7 +44,7 @@ theorem isIso_chartPushforward_counit (N : (Spec A).Modules) [N.IsQuasicoherent]
     (SheafOfModules.isQuasicoherent (Spec R).ringCatSheaf).prop_of_iso e.symm hN
   infer_instance
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 end
 
 end

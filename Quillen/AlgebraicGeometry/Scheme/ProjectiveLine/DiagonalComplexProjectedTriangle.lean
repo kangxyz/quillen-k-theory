@@ -17,14 +17,16 @@ The first two projected terms remain their actual derived-image objects.
 -/
 
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits
   CategoryTheory.Pretriangulated AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 local instance diagonalComplexProjectedStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 local instance diagonalComplexProjectedClosed (R : CommRingCat.{u}) :
@@ -261,4 +263,4 @@ theorem diagonalDerivedComplexCoefficientTriangle_connecting_naturality
   rw [diagonalDerivedComplexCoefficientTriangleMap_hom₃] at h
   exact h
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

@@ -53,7 +53,7 @@ lemma associatedDerived_single_shift_map_bijective (R : CommRingCat.{u})
     simp only [e, eX, eB, eY, Iso.homCongr_apply, Iso.trans_hom, Functor.mapIso_hom,
       ShiftedHom.map, Category.assoc]
     rfl
-  have hbij := SchemeSheaf.AffineDerived.tilde_mapExt_bijective X Y n
+  have hbij := AlgebraicGeometry.Scheme.Modules.AffineDerived.tilde_mapExt_bijective X Y n
   constructor
   · intro f g hfg
     obtain ⟨α, rfl⟩ := (Ext.homEquiv (X := X) (Y := Y) (n := n)).surjective f

@@ -26,7 +26,7 @@ universe u
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open DerivedCategory CategoryTheory.Pretriangulated
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace QuillenTest.ProjectiveLineDiagonalTensorTriangle
 

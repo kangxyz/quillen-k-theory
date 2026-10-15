@@ -19,7 +19,7 @@ All original coefficient homotopies and geometric composition tracks are retaine
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
-open Quillen.PolynomialBaseChange Quillen.Scheme.PolynomialLaurent
+open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 

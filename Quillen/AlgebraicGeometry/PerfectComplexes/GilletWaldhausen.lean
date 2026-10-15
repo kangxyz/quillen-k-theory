@@ -31,7 +31,8 @@ namespace Quillen.PerfectComplexes
 theorem vectorBundleSComparison_bijective (X : Scheme.{u}) (n : ℕ) :
     Function.Bijective (vectorBundleSComparison X n) := by
   rw [vectorBundleSComparison_eq_coarseSingle]
-  exact boundedTermsSingle_coarse_KMap_bijective_general (SchemeSheaf.finiteLocallyFree X) n
+  exact boundedTermsSingle_coarse_KMap_bijective_general
+    (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree X) n
 
 /-- The exact public comparison from scheme Q-theory to strict-perfect K is bijective. -/
 theorem vectorBundleToStrictKMap_bijective (X : Scheme.{u}) (n : ℕ) :
@@ -40,7 +41,7 @@ theorem vectorBundleToStrictKMap_bijective (X : Scheme.{u}) (n : ℕ) :
 
 /-- The equivalence retains the actual public comparison as its forward map. -/
 def vectorBundleToStrictKEquiv (X : Scheme.{u}) (n : ℕ) :
-    Quillen.Scheme.K X n ≃* StrictK X n :=
+    AlgebraicGeometry.Scheme.K X n ≃* StrictK X n :=
   MulEquiv.ofBijective (vectorBundleToStrictKMap X n) (vectorBundleToStrictKMap_bijective X n)
 
 /-- The monoid-hom coercion is the canonical forward map. -/

@@ -56,7 +56,8 @@ theorem boundedFlatAffineSectionsMap_supported
     (s : BoundedFlatAffineSections R) (hs : boundedFlatAffineSectionSupported j s) :
     boundedFlatAffineSectionSupported j' ((boundedFlatAffineSectionsMap f).obj s) := by
   let sq : (⟨Arrow.mk j', (show IsOpenImmersion j' from inferInstance)⟩ :
-      Quillen.Scheme.OpenPairs) ⟶ ⟨Arrow.mk j, (show IsOpenImmersion j from inferInstance)⟩ :=
+      AlgebraicGeometry.Scheme.OpenPairs) ⟶ ⟨Arrow.mk j, (show IsOpenImmersion j from
+        inferInstance)⟩ :=
     ObjectProperty.homMk (Arrow.homMk l (Spec.map f) h)
   have hp := boundedFlatPerfectSupported_pairPullback sq
     (K := ((boundedFlatAffineOriginalEvaluation R).obj s).obj)

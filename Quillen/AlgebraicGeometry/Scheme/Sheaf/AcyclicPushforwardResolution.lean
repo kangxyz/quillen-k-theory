@@ -15,12 +15,15 @@ The original augmentation remains a quasi-isomorphism whenever the actual direct
 resolution is exact in positive degrees. No affine or quasicoherence hypothesis is required.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Positive-degree exactness of the actual direct-image resolution preserves its augmentation. -/
 theorem quasiIso_pushforward_injectiveResolution_of_exact {Z X : Scheme.{u}}
@@ -64,4 +67,4 @@ theorem quasiIso_pushforward_injectiveResolution_int_of_quasiIso {Z X : Scheme.{
     ((F.mapHomologicalComplex (.up ℕ)).map I.ι) ComplexShape.embeddingUpNat)
   infer_instance
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

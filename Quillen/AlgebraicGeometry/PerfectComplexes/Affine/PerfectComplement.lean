@@ -93,7 +93,7 @@ theorem locallyPerfect_exists_original_strict_derived_retract
   obtain ⟨K, a, b, P, n, f, _, _, hP, hn, ⟨eK⟩, hM, _, _, ⟨eD⟩⟩ :=
     locallyPerfect_exists_original_strict_approximation R W hW E hE c
   let D := (restrict W.ι).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))
-  have : SchemeSheaf.IsFiniteLocallyFree W.toScheme (D.homology n) := hM
+  have : AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree W.toScheme (D.homology n) := hM
   have hz : originalApproximationBoundary R W.ι f eK = 0 := by
     apply (cancel_mono eD.hom).mp
     simpa only [zero_comp] using hc (D.homology n) n hn
@@ -131,7 +131,7 @@ theorem locallyPerfect_exists_arbitrarily_low_original_split
         (toDerived W.toScheme).obj E),
       n ≤ cutoff ∧
       let D := (restrict W.ι).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))
-      SchemeSheaf.IsFiniteLocallyFree W.toScheme (D.homology n) ∧
+      AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree W.toScheme (D.homology n) ∧
       ∃ _eD : (toDerived W.toScheme).obj D ≅
         (toDerived W.toScheme).obj ((CochainComplex.singleFunctor W.toScheme.Modules n).obj
           (D.homology n)),
@@ -153,7 +153,7 @@ theorem locallyPerfect_exists_arbitrarily_low_original_split
   obtain ⟨K, a, b, P, n, f, _, _, hP, hn, ⟨eK⟩, hM, _, _, ⟨eD⟩⟩ :=
     locallyPerfect_exists_original_strict_approximation R W hW E hE (min c cutoff)
   let D := (restrict W.ι).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))
-  have : SchemeSheaf.IsFiniteLocallyFree W.toScheme (D.homology n) := hM
+  have : AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree W.toScheme (D.homology n) := hM
   have hz : originalApproximationBoundary R W.ι f eK = 0 := by
     apply (cancel_mono eD.hom).mp
     simpa only [zero_comp] using hc (D.homology n) n (hn.trans (min_le_left _ _))
@@ -173,7 +173,8 @@ theorem locallyPerfect_exists_actual_perfect_complement
       n ≤ cutoff ∧
       let D := (restrict W.ι).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))
       let C := ((CochainComplex.singleFunctor W.toScheme.Modules n).obj (D.homology n))⟦(-1 : ℤ)⟧
-      SchemeSheaf.IsFiniteLocallyFree W.toScheme (D.homology n) ∧ strictPerfect W.toScheme C ∧
+      AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree W.toScheme (D.homology n) ∧ strictPerfect
+        W.toScheme C ∧
       originalApproximationBoundary R W.ι f eK = 0 ∧
       ∃ e : (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj P)) ≅
           (toDerived W.toScheme).obj (C ⊞ E),
@@ -182,7 +183,7 @@ theorem locallyPerfect_exists_actual_perfect_complement
   obtain ⟨K, P, n, hP, f, eK, hn, hM, eD, hz, _, e, he⟩ :=
     locallyPerfect_exists_arbitrarily_low_original_split R W hW E hE cutoff
   let D := (restrict W.ι).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))
-  have : SchemeSheaf.IsFiniteLocallyFree W.toScheme (D.homology n) := hM
+  have : AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree W.toScheme (D.homology n) := hM
   let S := (CochainComplex.singleFunctor W.toScheme.Modules n).obj (D.homology n)
   let C := S⟦(-1 : ℤ)⟧
   let eC := ((toDerived W.toScheme).commShiftIso (-1 : ℤ)).app S

@@ -22,7 +22,7 @@ example (X : Scheme.{u}) (n : ℕ) :
     Function.Bijective (vectorBundleSComparison X n) := vectorBundleSComparison_bijective X n
 
 example (X : Scheme.{u}) (y : StrictK X 0) :
-    ∃! x : Quillen.Scheme.K X 0, vectorBundleToStrictKMap X 0 x = y := by
+    ∃! x : AlgebraicGeometry.Scheme.K X 0, vectorBundleToStrictKMap X 0 x = y := by
   obtain ⟨x,hx⟩ := (vectorBundleToStrictKMap_bijective X 0).surjective y
   exact ⟨x,hx,fun z hz ↦ (vectorBundleToStrictKMap_bijective X 0).injective (hz.trans hx.symm)⟩
 
@@ -33,7 +33,7 @@ example (X : Scheme.{u}) (n : ℕ) (y : StrictK X n) :
     vectorBundleToStrictKMap X n ((vectorBundleToStrictKEquiv X n).symm y) = y :=
   (vectorBundleToStrictKEquiv X n).apply_symm_apply y
 
-example (X : Scheme.{u}) (n : ℕ) (x : Quillen.Scheme.K X n) :
+example (X : Scheme.{u}) (n : ℕ) (x : AlgebraicGeometry.Scheme.K X n) :
     (vectorBundleToStrictKEquiv X n).symm (vectorBundleToStrictKMap X n x) = x :=
   (vectorBundleToStrictKEquiv X n).symm_apply_apply x
 

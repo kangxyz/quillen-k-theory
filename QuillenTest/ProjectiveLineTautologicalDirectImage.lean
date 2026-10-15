@@ -12,7 +12,8 @@ public import Mathlib.Data.ZMod.Basic
 @[expose] public section
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.SchemeSheaf.TwoOpen Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.TwoOpen
+  AlgebraicGeometry.Scheme.ProjectiveLine
 open Quillen.PolynomialBaseChange
 universe u
 namespace QuillenTest.ProjectiveLineTautologicalDirectImage

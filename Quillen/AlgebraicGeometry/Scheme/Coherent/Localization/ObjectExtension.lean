@@ -20,13 +20,19 @@ additional hypotheses.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 open Scheme.Modules
 
@@ -86,4 +92,4 @@ instance finiteTypeSheavesRestriction_essSurj
     (j : U ⟶ X) [IsOpenImmersion j] : (finiteTypeSheavesRestriction j).EssSurj where
   mem_essImage A := affineLocallyFiniteType_extension j A
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

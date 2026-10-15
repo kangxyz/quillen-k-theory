@@ -25,7 +25,7 @@ Naturality and actual geometric comparison tracks are supplied separately.
 noncomputable section
 open CategoryTheory AlgebraicGeometry Opposite Quillen.LoopPrespectrum
 open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
-open Quillen.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.CoefficientBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}

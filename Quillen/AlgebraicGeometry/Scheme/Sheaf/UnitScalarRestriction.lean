@@ -13,6 +13,9 @@ Pullback trivializations pass to actual open restriction through the original co
 Further restriction retains the literal scalar section pulled back by the scheme map.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 noncomputable section
 universe u
@@ -20,7 +23,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- A pullback trivialization determines the original open-restriction trivialization. -/
 def restrictionUnitTrivialization {X Y : Scheme.{u}} (j : X ⟶ Y) [IsOpenImmersion j]
     {M : Y.Modules} (e : (Scheme.Modules.pullback j).obj M ≅
@@ -55,4 +58,4 @@ theorem restrictUnitTrivialization_map {X Y : Scheme.{u}}
   dsimp only [restrictUnitTrivialization, Iso.trans_hom, Functor.mapIso_hom]
   rw [← Category.assoc, ← Functor.map_comp, hf, Functor.map_comp, Category.assoc,
     unitMul_restrict, Category.assoc]
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

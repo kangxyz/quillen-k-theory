@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralDevissage
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralAnnihilator
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.AffineIdealKernel
@@ -22,6 +24,12 @@ ideal-kernel dévissage. All groups are the public upper-universe G-groups.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -29,7 +37,7 @@ universe u w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme.ClosedImmersion.General
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 
 private theorem exact_transport
     {A B C A' B' C' : Type w}
@@ -73,7 +81,7 @@ local instance : (coherentRestrictionExact (openMap i)).toFunctor.IsLocalization
 /-- Actual closed-scheme G-theory agrees with the public supported G-group,
 by the proved geometric dévissage and exact small-presentation comparisons. -/
 def closedSupportedGEquiv (n : ℕ) :
-    CoherentScheme.G Z n ≃* SupportedG (openMap i) n :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.G Z n ≃* SupportedG (openMap i) n :=
   (closedSupportGEquiv i n).trans (coherentGlobalSupportedGEquiv (openMap i) n).symm
 
 /-- The public supported comparison retains the original actual closed
@@ -91,8 +99,8 @@ theorem closedSupportedGEquiv_pushforward (n : ℕ) :
 
 /-- The boundary into G-theory of the actual closed subscheme. -/
 def closedConnectingHom (n : ℕ) :
-    CoherentScheme.G (openComplement i).toScheme (n + 1) →*
-      CoherentScheme.G Z n :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.G (openComplement i).toScheme (n + 1) →*
+      AlgebraicGeometry.Scheme.Modules.Coherent.G Z n :=
   (closedSupportedGEquiv i n).symm.toMonoidHom.comp (globalConnectingHom (openMap i) n)
 
 /-- Exactness at G_n(X), with canonical actual i_* and j*. -/
@@ -155,4 +163,4 @@ theorem closed_open_GZero_tail :
     pushforward_range_eq_restriction_ker i 0,
     global_GZero_surjective (openMap i)⟩
 
-end Quillen.CoherentScheme.ClosedImmersion.General
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

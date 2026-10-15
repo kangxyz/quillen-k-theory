@@ -12,13 +12,16 @@ its literal map and the installed right-derived composite units.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The original standard ambient derived categories. -/
 local instance flatCompositionStandard (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _
@@ -64,4 +67,4 @@ theorem derivedFlatPullbackPlusCompIso_inv_unit (K : CochainComplex.Plus X.Modul
   erw [← Category.assoc, ← CategoryTheory.Functor.map_comp]
   simp only [Iso.inv_hom_id_app, CategoryTheory.Functor.map_id]
   erw [Category.id_comp]
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

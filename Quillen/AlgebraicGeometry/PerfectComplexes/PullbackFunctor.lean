@@ -45,7 +45,7 @@ def StrictKFunctor (n : ℕ) : Scheme.{u}ᵒᵖ ⥤ GrpCat.{u + 1} where
 /-- The existing vector-bundle/strict-perfect equivalence is natural for every
 scheme morphism, without defining pullback by transport along that equivalence. -/
 def vectorBundleToStrictNatIso (n : ℕ) :
-    Quillen.Scheme.KFunctor.{u} n ≅ StrictKFunctor n :=
+    AlgebraicGeometry.Scheme.KFunctor.{u} n ≅ StrictKFunctor n :=
   NatIso.ofComponents
     (fun X ↦ (vectorBundleToStrictKEquiv X.unop n).toGrpIso)
     (fun f ↦ by
@@ -63,7 +63,7 @@ def vectorBundleToStrictNatIso (n : ℕ) :
 /-- The inverse of the original comparison also commutes with pullback. -/
 theorem vectorBundleToStrictKEquiv_symm_pullback {X Y : Scheme.{u}}
     (f : X ⟶ Y) (n : ℕ) :
-    (Quillen.Scheme.pullbackK f n).comp
+    (AlgebraicGeometry.Scheme.pullbackK f n).comp
         (vectorBundleToStrictKEquiv Y n).symm.toMonoidHom =
       (vectorBundleToStrictKEquiv X n).symm.toMonoidHom.comp (strictKPullback f n) := by
   exact (GrpCat.hom_ext_iff.mp ((vectorBundleToStrictNatIso n).inv.naturality f.op)).symm

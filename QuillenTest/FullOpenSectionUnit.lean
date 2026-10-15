@@ -12,7 +12,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionFull
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Scheme.AffineOpenPair Quillen.PerfectComplexes
+open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.PerfectComplexes
 universe u
 namespace QuillenTest.FullOpenSectionUnit
 
@@ -48,11 +48,11 @@ theorem originalUnit_hom_terms (a : Under R) (r : (Γ(Spec a.right, ⊤))ˣ)
       ((boundedFlatAffineFullOpenOriginalEvaluation j a).map
         ((boundedFlatAffineFullOpenSectionUnitIso j a
           (boundedFlatAffineFullOpenUnit j a r)).hom.app s))).f n =
-      (Quillen.SchemeSheaf.globalScalar (openSpace j a)
+      (AlgebraicGeometry.Scheme.Modules.globalScalar (openSpace j a)
         (↑(boundedFlatAffineFullOpenUnit j a r))).app
           (((boundedFlatAffineFullOpenOriginalEvaluation j a).obj s).obj.X n) := by
   rw [boundedFlatAffineFullOpenOriginalEvaluation_map_sectionUnitIso_hom,
     boundedFlatPerfectGlobalUnitIso_hom_original, complexGlobalUnitIso_original_terms]
-  dsimp only [Quillen.SchemeSheaf.globalUnitIso]
+  dsimp only [AlgebraicGeometry.Scheme.Modules.globalUnitIso]
 
 end QuillenTest.FullOpenSectionUnit

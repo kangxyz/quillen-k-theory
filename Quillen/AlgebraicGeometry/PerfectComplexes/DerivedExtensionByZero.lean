@@ -45,21 +45,23 @@ variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 /-- The genuine exact sheaf extension by zero on the original ambient derived categories. -/
 def derivedExtensionByZero : Derived U ⥤ Derived X :=
-  (SchemeSheaf.extensionByZero j).mapDerivedCategory
+  (AlgebraicGeometry.Scheme.Modules.extensionByZero j).mapDerivedCategory
 
 instance derivedExtensionByZero_additive : (derivedExtensionByZero j).Additive :=
-  inferInstanceAs ((SchemeSheaf.extensionByZero j).mapDerivedCategory.Additive)
+  inferInstanceAs ((AlgebraicGeometry.Scheme.Modules.extensionByZero j).mapDerivedCategory.Additive)
 
 instance derivedExtensionByZeroCommShift : (derivedExtensionByZero j).CommShift ℤ :=
-  inferInstanceAs ((SchemeSheaf.extensionByZero j).mapDerivedCategory.CommShift ℤ)
+  inferInstanceAs ((AlgebraicGeometry.Scheme.Modules.extensionByZero j).mapDerivedCategory.CommShift
+    ℤ)
 
 instance derivedExtensionByZero_isTriangulated : (derivedExtensionByZero j).IsTriangulated :=
-  inferInstanceAs ((SchemeSheaf.extensionByZero j).mapDerivedCategory.IsTriangulated)
+  inferInstanceAs ((AlgebraicGeometry.Scheme.Modules.extensionByZero
+    j).mapDerivedCategory.IsTriangulated)
 
 /-- Its original localization factorization is the one for the actual exact sheaf functor. -/
 def derivedExtensionByZeroFactors :
     toDerived U ⋙ derivedExtensionByZero j ≅ extensionByZero j ⋙ toDerived X :=
-  (SchemeSheaf.extensionByZero j).mapDerivedCategoryFactors
+  (AlgebraicGeometry.Scheme.Modules.extensionByZero j).mapDerivedCategoryFactors
 
 /-- The localization square comparing actual extension by zero with its derived functor. -/
 local instance extensionByZeroLocalizationSquare :

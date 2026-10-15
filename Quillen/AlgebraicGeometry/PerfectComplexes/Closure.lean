@@ -50,7 +50,7 @@ theorem strictPerfect_mappingCone (hP : strictPerfect X P) (hQ : strictPerfect X
     exact ⟨hbP (j + 1) (by omega), hbQ j (by omega)⟩
   · intro j
     let e := HomologicalComplex.homotopyCofiber.XIsoBiprod f j (j + 1) rfl
-    apply (SchemeSheaf.finiteLocallyFree_iff_of_iso e).2
-    exact (SchemeSheaf.sheafExactStructure X).prop_biprod
-      (SchemeSheaf.finiteLocallyFree X) (hvP (j + 1)) (hvQ j)
+    apply (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_iff_of_iso e).2
+    exact (AlgebraicGeometry.Scheme.Modules.sheafExactStructure X).prop_biprod
+      (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree X) (hvP (j + 1)) (hvQ j)
 end Quillen.PerfectComplexes

@@ -17,7 +17,8 @@ seed or for the change of weaknesses.
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange Quillen.Scheme.AffineOpenPair
+open Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange
+  AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.SectionOpenBassSeed
 

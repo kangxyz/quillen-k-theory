@@ -22,7 +22,7 @@ comparison from the existing coarse section diagram are separate constructions.
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.CategoryTheory.StrictSections Quillen.Scheme.AffineOpenPair
+open Quillen.CategoryTheory.StrictSections AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

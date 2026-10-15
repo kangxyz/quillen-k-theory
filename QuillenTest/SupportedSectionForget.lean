@@ -16,7 +16,7 @@ fixed-pullback coefficient diagram and whole Laurent action retain their actual 
 @[expose] public section
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.Waldhausen.IteratedS
-open Quillen.Scheme.AffineOpenPair Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.PolynomialBaseChange
 universe u
 namespace QuillenTest.SupportedSectionForget
 

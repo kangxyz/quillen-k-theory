@@ -16,13 +16,16 @@ ordinary mate equation and installed composite units on all bounded-below comple
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The original standard ambient categories. -/
 local instance verticalStandard (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _
@@ -271,4 +274,4 @@ theorem derivedFlatBaseChangeMap_paste_vert :
   funext K
   exact (derivedFlatBaseChangeVerticalComposite_unit c d g a b f j hs h K).trans
     (derivedFlatBaseChangeMap_unit c (d ≫ b) (g ≫ f) j (hs.paste_vert h) K).symm
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

@@ -23,14 +23,19 @@ Proj or computation of its derived global sections is asserted here.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 universe u
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.Scheme.ProjectiveLine
-open PolynomialLaurent Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open PolynomialLaurent AlgebraicGeometry.Scheme.Modules
 variable (R : CommRingCat.{u})
 
 /-- The original polynomial coordinate section under the canonical affine section isomorphism. -/
@@ -127,7 +132,8 @@ structure TautologicalLineData where
 def tautologicalLineData : TautologicalLineData R := Classical.choice (by
   let := firstColumn_mono (plusChart R) (polynomialCoordinate R)
   let := secondColumn_mono (minusChart R) (polynomialCoordinate R)
-  obtain ⟨N, i, hi, eU, eV, hU, hV⟩ := Quillen.CoherentScheme.exists_glued_subobject
+  obtain ⟨N, i, hi, eU, eV, hU, hV⟩ :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.exists_glued_subobject
     (plusChart R) (minusChart R)
     (firstColumn (plusChart R) (polynomialCoordinate R))
     (secondColumn (minusChart R) (polynomialCoordinate R))
@@ -172,12 +178,14 @@ lemma tautologicalLine_transition :
     (Scheme.Modules.restrictFunctor (pullback.fst (plusChart R) (minusChart R))).map
         (tautologicalLinePlusIso R).hom ≫
       (columnTransition (plusChart R) (minusChart R) (overlapCoordinateUnit R)).hom =
-    (Quillen.CoherentScheme.overlapRestrictIso (plusChart R) (minusChart R)).hom.app
+    (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso (plusChart R) (minusChart
+      R)).hom.app
         (tautologicalLine R) ≫
       (Scheme.Modules.restrictFunctor (pullback.snd (plusChart R) (minusChart R))).map
         (tautologicalLineMinusIso R).hom := by
   let := secondColumn_mono (minusChart R) (polynomialCoordinate R)
-  have hn := (Quillen.CoherentScheme.overlapRestrictIso (plusChart R) (minusChart R)).hom.naturality
+  have hn := (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso (plusChart R) (minusChart
+    R)).hom.naturality
     (tautologicalLineInclusion R)
   dsimp only [Functor.comp_map] at hn
   rw [tautologicalLineInclusion_plus, tautologicalLineInclusion_minus,
@@ -220,4 +228,4 @@ instance tautologicalLine_finiteLocallyFree :
     · exact finiteLocallyFree_of_iso (tautologicalLineMinusIso R).symm
     · exact finiteLocallyFree_of_iso (tautologicalLinePlusIso R).symm
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

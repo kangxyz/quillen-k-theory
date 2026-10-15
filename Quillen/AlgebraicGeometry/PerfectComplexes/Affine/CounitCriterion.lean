@@ -21,6 +21,9 @@ geometry in applications.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -30,7 +33,7 @@ universe u
 namespace Quillen.PerfectComplexes.Affine
 local instance (R : CommRingCat.{u}) (r : R) :
     (moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r))).Additive :=
-  Quillen.SchemeSheaf.moduleSpecΓFunctor_additive _
+  AlgebraicGeometry.Scheme.Modules.moduleSpecΓFunctor_additive _
 
 
 lemma quasiIso_of_affineSections_on_principals (R : CommRingCat.{u})
@@ -38,7 +41,7 @@ lemma quasiIso_of_affineSections_on_principals (R : CommRingCat.{u})
     (hf : ∀ r : R, QuasiIso
       (((affineSectionsAt R (PrimeSpectrum.basicOpen r)).mapHomologicalComplex (.up ℤ)).map f)) :
     QuasiIso f := by
-  apply SchemeSheaf.quasiIso_of_sections_on_principals R f
+  apply AlgebraicGeometry.Scheme.Modules.quasiIso_of_sections_on_principals R f
   intro r
   let := hf r
   change QuasiIso (((forget₂ (ModuleCat R) AddCommGrpCat).mapHomologicalComplex (.up ℤ)).map
@@ -51,11 +54,12 @@ lemma quasiIso_associatedSectionsCounit_of_principalComparisons (R : CommRingCat
     QuasiIso (associatedSectionsCounit R K) := by
   apply quasiIso_of_affineSections_on_principals R
   intro r
-  let j := CoherentScheme.principalOpen R r
+  let j := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r
   let S := (ModuleCat.restrictScalars (algebraMap R (Localization.Away r))).mapHomologicalComplex
     (.up ℤ)
   let e := NatIso.mapHomologicalComplex (principalRestrictionSectionsIso R r) (.up ℤ)
-  let t := (NatIso.mapHomologicalComplex (CoherentScheme.localizationRestrictionNatIso R r)
+  let t := (NatIso.mapHomologicalComplex
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.localizationRestrictionNatIso R r)
     (.up ℤ)).hom.app ((sectionsComplex R).obj K)
   have ht : IsIso (S.map t) := by dsimp [t, S]; infer_instance
   have h : QuasiIso (S.map (principalSectionsComplexComparison R r K)) := by
@@ -77,7 +81,7 @@ lemma quasicoherent_homology_of_principalComparisons (R : CommRingCat.{u})
   let := quasiIso_associatedSectionsCounit_of_principalComparisons R K hK
   have : IsIso (HomologicalComplex.homologyMap (associatedSectionsCounit R K) n) :=
     (quasiIsoAt_iff_isIso_homologyMap _ _).mp inferInstance
-  have hqc := CoherentScheme.quasicoherent_homology
+  have hqc := AlgebraicGeometry.Scheme.Modules.Coherent.quasicoherent_homology
     ((associatedComplex R).obj ((sectionsComplex R).obj K)) (fun i => by
       change ((tilde.functor R).obj _).IsQuasicoherent
       infer_instance) n

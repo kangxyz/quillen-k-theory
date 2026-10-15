@@ -58,13 +58,13 @@ theorem original_open_map {X Y : Scheme.{u}} [CompactSpace X] [CompactSpace Y]
 
 /-- The original vector-bundle comparison commutes with arbitrary pullback in degree zero. -/
 theorem vector_bundle_zero {X Y : Scheme.{u}} [CompactSpace X] [CompactSpace Y]
-    (f : X ⟶ Y) (x : Quillen.Scheme.K Y 0) :
+    (f : X ⟶ Y) (x : AlgebraicGeometry.Scheme.K Y 0) :
     perfectKPullback f 0 (vectorBundleToPerfectKMap Y 0 x) =
-      vectorBundleToPerfectKMap X 0 (Quillen.Scheme.pullbackK f 0 x) :=
+      vectorBundleToPerfectKMap X 0 (AlgebraicGeometry.Scheme.pullbackK f 0 x) :=
   DFunLike.congr_fun (vectorBundleToPerfectKMap_pullback f 0) x
 
 /-- The inverse of the genuine model comparison is natural as well. -/
-theorem original_inverse_comparison {X Y : Quillen.Scheme.QuasiCompactSchemes.{u}ᵒᵖ}
+theorem original_inverse_comparison {X Y : AlgebraicGeometry.Scheme.QuasiCompactSchemes.{u}ᵒᵖ}
     (f : X ⟶ Y) (n : ℕ) :
     ((boundedFlatPerfectToPerfectNatIso n).inv.app Y).hom.comp
         (perfectKPullback f.unop.hom n) =
@@ -73,7 +73,7 @@ theorem original_inverse_comparison {X Y : Quillen.Scheme.QuasiCompactSchemes.{u
   GrpCat.hom_ext_iff.mp ((boundedFlatPerfectToPerfectNatIso n).inv.naturality f)
 
 /-- The bundled original functor retains its literal new original-group map. -/
-theorem bundled_map {X Y : Quillen.Scheme.QuasiCompactSchemes.{u}ᵒᵖ}
+theorem bundled_map {X Y : AlgebraicGeometry.Scheme.QuasiCompactSchemes.{u}ᵒᵖ}
     (f : X ⟶ Y) (n : ℕ) :
     ((PerfectKFunctor n).map f).hom = perfectKPullback f.unop.hom n := rfl
 

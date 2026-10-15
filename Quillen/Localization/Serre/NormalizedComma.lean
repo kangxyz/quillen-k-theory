@@ -32,9 +32,11 @@ def quotientNormalizedIso : quotientMapQ P ≅ quotientNormalizedQ P :=
 
 /-- The canonical natural isomorphism from the raw inclusion to its zero normalization. -/
 def inclusionNormalizedIso : Devissage.mapQ P ≅ inclusionNormalizedQ P :=
-  rebaseFunctorIso (Devissage.mapQ P) (Devissage.subcategoryExactStructure P).qZero
+  rebaseFunctorIso (Devissage.mapQ P) (CategoryTheory.ObjectProperty.subcategoryExactStructure
+    P).qZero
     (abelianExactStructure C).qZero
-    ((abelianExactStructure C).qIsoOfIso (Devissage.exactInclusion P).toFunctor.mapZeroObject)
+    ((abelianExactStructure C).qIsoOfIso (CategoryTheory.ObjectProperty.exactInclusion
+      P).toFunctor.mapZeroObject)
 
 /-- The costructured-arrow category of Q-arrows from the image of the normalized quotient
 functor to the quotient Q-zero object. -/
@@ -43,7 +45,7 @@ abbrev NormalizedZeroComma :=
 
 /-- The normalized nullhomotopy determines the exact normalized zero-comma comparison. -/
 def normalizedSerreToZeroComma :
-    (Devissage.subcategoryExactStructure P).QCategory ⥤ NormalizedZeroComma P :=
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory ⥤ NormalizedZeroComma P :=
   (inclusionNormalizedQ P).toCostructuredArrow (quotientNormalizedQ P) _
     (fun X ↦ (normalizedQuotientInclusionZeroIso P).hom.app X)
     (fun f ↦ by simpa using (normalizedQuotientInclusionZeroIso P).hom.naturality f)
@@ -67,12 +69,12 @@ instance normalizedSerreToZeroComma_isEquivalence :
 
 /-- The normalized Serre comparison is a genuine categorical equivalence. -/
 def normalizedZeroCommaEquivalence :
-    (Devissage.subcategoryExactStructure P).QCategory ≌ NormalizedZeroComma P :=
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory ≌ NormalizedZeroComma P :=
   (normalizedSerreToZeroComma P).asEquivalence
 
 /-- Its actual realized homotopy equivalence uses exactly the normalized comparison. -/
 def normalizedZeroCommaClassifyingHomotopyEquiv :
-    ContinuousMap.HomotopyEquiv (Devissage.subcategoryExactStructure P).KSpace
+    ContinuousMap.HomotopyEquiv (CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace
       (ClassifyingSpace (NormalizedZeroComma P)) :=
   equivalenceClassifyingHomotopyEquiv (normalizedZeroCommaEquivalence P)
 
@@ -92,7 +94,7 @@ def normalizedZeroCommaClassifyingHomotopyEquiv :
 /-- The complete normalized comma homotopy is the already-chosen based
 localization nullhomotopy, including every value of its path coordinate. -/
 theorem normalizedSerreToZeroComma_nullhomotopy (t : unitInterval)
-    (x : (Devissage.subcategoryExactStructure P).KSpace) :
+    (x : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace) :
     TheoremB.commaNullhomotopy (quotientNormalizedQ P) (quotientExactStructure P).qZero
       (t, classifyingSpaceMap (normalizedSerreToZeroComma P) x) =
       normalizedQuotientInclusionHomotopy P (t, x) := by

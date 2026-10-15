@@ -25,13 +25,19 @@ or perfect complexes.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The unchanged finite flat affine direct image preserves actual finite local bases.
 No noetherianity of the source is assumed separately. -/
@@ -44,7 +50,7 @@ theorem finiteLocallyFree_pushforward_affine {R S : CommRingCat.{u}} [IsNoetheri
   have : Module.Projective S N := projective_globalSections_of_finiteLocallyFree S M
   let P := (ModuleCat.restrictScalars φ.hom).obj N
   have : Module.Finite R P :=
-    ((CoherentScheme.FiniteAffine.moduleRestriction φ hφ).obj
+    ((ModuleCat.FiniteRestrictionScalars.moduleRestriction φ hφ).obj
       ⟨N, (show Module.Finite S N from inferInstance)⟩).property
   have : Module.Flat R P := flat_restrictScalars φ.hom hflat N
   have : Module.FinitePresentation R P := Module.finitePresentation_of_finite R P
@@ -52,7 +58,7 @@ theorem finiteLocallyFree_pushforward_affine {R S : CommRingCat.{u}} [IsNoetheri
   have : IsFiniteLocallyFree (Spec R) (tilde P) :=
     finiteLocallyFree_tilde_of_finite_projective R P
   let e : tilde P ≅ (Scheme.Modules.pushforward (Spec.map φ)).obj M :=
-    ((SchemeSheaf.tildePushforwardIso φ).app N).symm ≪≫
+    ((AlgebraicGeometry.Scheme.Modules.tildePushforwardIso φ).app N).symm ≪≫
       (Scheme.Modules.pushforward (Spec.map φ)).mapIso (asIso M.fromTildeΓ)
   exact finiteLocallyFree_of_iso e
 
@@ -61,7 +67,8 @@ theorem finiteLocallyFree_pushforward_affine_target {Z : Scheme.{u}}
     (R : CommRingCat.{u}) [IsNoetherianRing R] (f : Z ⟶ Spec R)
     [AlgebraicGeometry.IsFinite f] [Flat f] (M : Z.Modules) [IsFiniteLocallyFree Z M] :
     IsFiniteLocallyFree (Spec R) ((Scheme.Modules.pushforward f).obj M) := by
-  obtain ⟨S, φ, hφ, e, hf⟩ := CoherentScheme.Finite.exists_affine_presentation R f
+  obtain ⟨S, φ, hφ, e, hf⟩ :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.exists_affine_presentation R f
   have hφflat : φ.hom.Flat := by
     have h : Spec.map φ = e.inv ≫ f := by
       rw [hf, ← Category.assoc, Iso.inv_hom_id, Category.id_comp]
@@ -87,7 +94,8 @@ theorem finiteLocallyFree_pushforward {Z X : Scheme.{u}} [IsLocallyNoetherian X]
   let U := X.affineOpenCover
   apply finiteLocallyFree_of_affineCharts _ U.X U.f (fun x ↦ ⟨U.idx x, U.covers x⟩)
   intro i
-  have : IsNoetherianRing (U.X i) := CoherentScheme.noetherian_affineChart _ (U.f i)
+  have : IsNoetherianRing (U.X i) :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.noetherian_affineChart _ (U.f i)
   have : IsFiniteLocallyFree (pullback f (U.f i))
       ((Scheme.Modules.restrictFunctor (pullback.fst f (U.f i))).obj M) :=
     finiteLocallyFree_restrict _ M
@@ -96,7 +104,7 @@ theorem finiteLocallyFree_pushforward {Z X : Scheme.{u}} [IsLocallyNoetherian X]
         ((Scheme.Modules.restrictFunctor (pullback.fst f (U.f i))).obj M)) :=
     finiteLocallyFree_pushforward_affine_target _ (pullback.snd f (U.f i)) _
   exact @finiteLocallyFree_of_iso _ _ _
-    ((CoherentScheme.openBaseChange f (U.f i)).app M).symm this
+    ((AlgebraicGeometry.Scheme.Modules.openBaseChange f (U.f i)).app M).symm this
 
 variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsLocallyNoetherian X]
   (f : Z ⟶ X) [AlgebraicGeometry.IsFinite f] [Flat f]
@@ -119,10 +127,10 @@ def vectorBundlePushforwardExact :
   map_conflation S hS := by
     apply (vectorBundleToCoherent_shortExact_iff X _).mpr
     exact ((vectorBundleToCoherent_shortExact_iff Z S).mp hS).map_of_exact
-      (CoherentScheme.Finite.coherentPushforward f)
+      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.coherentPushforward f)
 
 /-- The canonical finite flat covariant map on vector-bundle K-theory. -/
 def schemeKPushforward (n : ℕ) : SchemeK Z n →* SchemeK X n :=
   (vectorBundlePushforwardExact f).smallKMap n
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

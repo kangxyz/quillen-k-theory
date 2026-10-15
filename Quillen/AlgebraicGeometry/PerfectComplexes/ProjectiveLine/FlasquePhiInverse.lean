@@ -23,7 +23,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
-open Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasquePhiInverse
 open FlasqueTwoSummands FlasqueCoefficients FlasqueTensorAdditivity FlasqueGammaEndpoints

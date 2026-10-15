@@ -19,6 +19,9 @@ of the flat models, and these remain quasi-isomorphisms after arbitrary pullback
 The forgetful functor to presheaves is never assumed exact.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -27,7 +30,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open Quillen.CochainComplex
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Forgetting to the actual module presheaf preserves strict upper support. -/
 def underlyingPresheafBoundedFunctor (X : Scheme.{u}) :
@@ -152,4 +155,4 @@ theorem pullback_flatModelMap_quasiIso (f : X ⟶ Y) {K L : BoundedAboveComplex 
     (fun n hn => (flatModel Y K).isZero_of_isStrictlyLE _ n hn)
     (fun n hn => (flatModel Y L).isZero_of_isStrictlyLE _ n hn) _
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

@@ -5,33 +5,16 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurent
-public import Quillen.Algebra.Polynomial.LaurentBaseChange
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Units
 
-/-! The actual Laurent global unit is preserved by every coefficient morphism. -/
+/-! # Compatibility imports for the canonical Aglib interface -/
 @[expose] public section
+
+-- Transitional names share Aglib declarations and canonical instances.
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PolynomialBaseChange
-universe u
 namespace Quillen.Scheme.PolynomialLaurent
-
-/-- Coefficient pullback preserves the original Laurent coordinate as a genuine global unit. -/
-lemma laurentGlobalUnit_coefficient {R S : CommRingCat.{u}} (f : R ⟶ S) :
-    Units.map (Spec.map (laurentMap f)).appTop.hom.toMonoidHom (laurentGlobalUnit R) =
-      laurentGlobalUnit S := by
-  apply Units.ext
-  apply (ConcreteCategory.bijective_of_isIso
-    (Scheme.ΓSpecIso (.of (LaurentPolynomial S))).hom).injective
-  change (Scheme.ΓSpecIso (.of (LaurentPolynomial S))).hom
-    ((Spec.map (laurentMap f)).appTop (↑(laurentGlobalUnit R))) = _
-  have h := ConcreteCategory.congr_hom (Scheme.ΓSpecIso_naturality (laurentMap f))
-    (↑(laurentGlobalUnit R))
-  change (Scheme.ΓSpecIso (.of (LaurentPolynomial S))).hom
-    ((Spec.map (laurentMap f)).appTop (↑(laurentGlobalUnit R))) =
-      laurentMap f ((Scheme.ΓSpecIso (.of (LaurentPolynomial R))).hom
-        (↑(laurentGlobalUnit R))) at h
-  rw [laurentGlobalUnit_original_T, laurentMap_T] at h
-  rw [laurentGlobalUnit_original_T]
-  exact h
-
+export AlgebraicGeometry.Scheme.PolynomialLaurent
+  (laurentGlobalUnit_coefficient)
 end Quillen.Scheme.PolynomialLaurent
+
+end

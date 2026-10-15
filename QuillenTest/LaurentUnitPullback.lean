@@ -12,7 +12,7 @@ public import Quillen.AlgebraicGeometry.Scheme.Affine.LaurentUnitNaturality
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
-open Quillen.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
 universe u
 namespace QuillenTest.LaurentUnitPullback
 
@@ -22,13 +22,13 @@ variable {R S : CommRingCat.{u}} (f : R ⟶ S)
 /-- Every actual Laurent module sheaf has the unchanged pulled-back coordinate action. -/
 theorem sheaf_scalar (M : (Spec (.of (LaurentPolynomial R))).Modules) :
     (Scheme.Modules.pullback (Spec.map (laurentMap f))).map
-      ((SchemeSheaf.globalScalar _ (↑(laurentGlobalUnit R))).app M) =
-    (SchemeSheaf.globalScalar _ (↑(laurentGlobalUnit S))).app
+      ((AlgebraicGeometry.Scheme.Modules.globalScalar _ (↑(laurentGlobalUnit R))).app M) =
+    (AlgebraicGeometry.Scheme.Modules.globalScalar _ (↑(laurentGlobalUnit S))).app
       ((Scheme.Modules.pullback (Spec.map (laurentMap f))).obj M) := by
   have h := congrArg Units.val (laurentGlobalUnit_coefficient f)
   change (Spec.map (laurentMap f)).appTop (↑(laurentGlobalUnit R)) =
     ↑(laurentGlobalUnit S) at h
-  rw [SchemeSheaf.pullback_map_globalScalar, h]
+  rw [AlgebraicGeometry.Scheme.Modules.pullback_map_globalScalar, h]
 
 /-- The original bounded-flat coefficient pullback preserves the actual Laurent automorphism. -/
 theorem original_unit (K : BoundedFlatPerfect (Spec (.of (LaurentPolynomial R)))) :

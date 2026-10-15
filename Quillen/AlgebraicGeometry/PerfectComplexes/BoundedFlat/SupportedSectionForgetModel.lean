@@ -20,7 +20,7 @@ This is an inclusion toward localization, with no equivalence or localization as
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
-open Quillen.Scheme.AffineOpenPair
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

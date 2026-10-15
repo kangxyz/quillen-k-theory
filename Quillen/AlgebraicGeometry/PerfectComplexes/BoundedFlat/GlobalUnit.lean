@@ -62,7 +62,7 @@ lemma boundedFlatPerfectGlobalUnitIso_inv_terms (X : Scheme.{u}) (r : (Γ(X, ⊤
     (K : BoundedFlatPerfect X) (n : ℤ) :
     ((boundedFlatPerfect X).ι.map
       ((boundedFlatPerfectGlobalUnitIso X r).inv.app K)).f n =
-      (SchemeSheaf.globalScalar X (↑r⁻¹)).app (K.obj.X n) := by
+      (AlgebraicGeometry.Scheme.Modules.globalScalar X (↑r⁻¹)).app (K.obj.X n) := by
   rw [boundedFlatPerfectGlobalUnitIso_inv_original]
   apply SheafOfModules.hom_ext
   apply PresheafOfModules.hom_ext

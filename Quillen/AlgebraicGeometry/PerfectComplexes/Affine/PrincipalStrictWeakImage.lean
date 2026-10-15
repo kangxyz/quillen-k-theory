@@ -20,6 +20,9 @@ Strict/all-perfect comparison and image-inclusion cofinality remain separate.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
@@ -32,42 +35,44 @@ variable (R : CommRingCat.{u}) (r : R)
 /-- Genuine principal-open geometric factorization proves restricted App2;
 no map-factorization or approximation hypothesis is supplied. -/
 theorem principal_approximationOnImage : ApproximationImage.HasApproximationOnImage
-    (coarseWaldhausen (CoherentScheme.principalOpen R r)) (strictWaldhausen _)
-      (strictRestrict (CoherentScheme.principalOpen R r)) :=
+    (coarseWaldhausen (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r))
+      (strictWaldhausen _)
+      (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)) :=
   ApproximationImage.HasApproximationOnImage.of_factorization _ _ _
-    (sourceFactorization (CoherentScheme.principalOpen R r))
-    (restriction_exact (CoherentScheme.principalOpen R r)).weak (fun _ hf ↦ hf)
+    (sourceFactorization (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r))
+    (restriction_exact (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).weak (fun
+      _ hf ↦ hf)
     (fun f hB ↦ by
       obtain ⟨E, q, hq⟩ := hB
       exact Affine.exists_principal_strict_map_factorization R r f E q hq)
 
 /-- The actual full category of strict targets with a weak original restriction witness. -/
 abbrev PrincipalObj := ApproximationImage.Obj (strictWaldhausen _)
-  (strictRestrict (CoherentScheme.principalOpen R r))
+  (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r))
 
 /-- Its inherited Waldhausen structure is proved from genuine principal map replacement. -/
 def principalWaldhausen : Structure (PrincipalObj R r) :=
   ApproximationImage.waldhausenStructure (principal_approximationOnImage R r)
-    (restriction_exact (CoherentScheme.principalOpen R r))
+    (restriction_exact (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r))
 
 /-- Original strict restriction corestricts exactly to the actual constructed image. -/
 theorem principalCorestrict_exact : IsExact
-    (coarseWaldhausen (CoherentScheme.principalOpen R r)).cof
-    (coarseWaldhausen (CoherentScheme.principalOpen R r)).weq
+    (coarseWaldhausen (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).cof
+    (coarseWaldhausen (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).weq
     (principalWaldhausen R r).cof (principalWaldhausen R r).weq
     (ApproximationImage.corestrict (strictWaldhausen _)
-      (strictRestrict (CoherentScheme.principalOpen R r))) :=
+      (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r))) :=
   ApproximationImage.corestrict_exact (principal_approximationOnImage R r)
-    (restriction_exact (CoherentScheme.principalOpen R r))
+    (restriction_exact (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r))
 
 /-- The original inclusion of the actual witnessed strict image is exact. -/
 theorem principalInclusion_exact : IsExact (principalWaldhausen R r).cof (principalWaldhausen R
   r).weq
     (strictWaldhausen _).cof (strictWaldhausen _).weq
     (ApproximationImage.objects (strictWaldhausen _)
-      (strictRestrict (CoherentScheme.principalOpen R r))).ι :=
+      (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r))).ι :=
   ApproximationImage.inclusion_exact (principal_approximationOnImage R r)
-    (restriction_exact (CoherentScheme.principalOpen R r))
+    (restriction_exact (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r))
 
 /-- Complete weakness of the literal original principal strict corestriction S-map. -/
 theorem principal_deloopingMap_isWeakHomotopyEquivalence :
@@ -75,11 +80,13 @@ theorem principal_deloopingMap_isWeakHomotopyEquivalence :
   let : (strictWaldhausen (Spec (.of (Localization.Away r)))).weq.HasTwoOutOfThreeProperty :=
     inferInstanceAs (subcategoryWeakEquivalences (strictPerfect _)).HasTwoOutOfThreeProperty
   exact ApproximationImage.corestrict_deloopingMap_isWeakHomotopyEquivalence
-    (principal_approximationOnImage R r) (restriction_exact (CoherentScheme.principalOpen R r))
-    (coarseJointData (CoherentScheme.principalOpen R r))
+    (principal_approximationOnImage R r) (restriction_exact
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r))
+    (coarseJointData (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r))
 
 /-- Actual principal strict relative approximation, on every original connective K-map. -/
-def principalKEquiv (n : ℕ) : (coarseWaldhausen (CoherentScheme.principalOpen R r)).K n ≃*
+def principalKEquiv (n : ℕ) : (coarseWaldhausen
+  (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).K n ≃*
     (principalWaldhausen R r).K n :=
   KEquivOfWeakRealization (principalCorestrict_exact R r)
     (principal_deloopingMap_isWeakHomotopyEquivalence R r) n
@@ -91,8 +98,8 @@ def principalKEquiv (n : ℕ) : (coarseWaldhausen (CoherentScheme.principalOpen 
 /-- Composing the equivalence with image inclusion recovers actual relative restriction. -/
 theorem principalInclusion_comp_corestrict (n : ℕ) :
     (KMap (principalInclusion_exact R r) n).comp (KMap (principalCorestrict_exact R r) n) =
-      relativeKRestrict (CoherentScheme.principalOpen R r) n :=
+      relativeKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) n :=
   ApproximationImage.inclusion_KMap_comp_corestrict (principal_approximationOnImage R r)
-    (restriction_exact (CoherentScheme.principalOpen R r)) n
+    (restriction_exact (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)) n
 
 end Quillen.PerfectComplexes.StrictOpenWeakImage

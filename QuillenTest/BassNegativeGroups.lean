@@ -98,8 +98,9 @@ theorem original_flat_KminusOne_relation (R : CommRingCat.{u})
     (x : PerfectK (Spec (.of (LaurentPolynomial R))) 0) :
     negativeKπ R 0 (Additive.ofMul x) = 0 ↔
       ∃ a b : PerfectK (Spec (.of (Polynomial R))) 0,
-        perfectKFlatPullback (Quillen.Scheme.PolynomialLaurent.laurentPlus R) 0 a *
-          (perfectKFlatPullback (Quillen.Scheme.PolynomialLaurent.laurentMinus R) 0 b)⁻¹ = x := by
+        perfectKFlatPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentPlus R) 0 a *
+          (perfectKFlatPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentMinus R) 0 b)⁻¹ =
+            x := by
   constructor
   · intro h
     obtain ⟨a,b,hab⟩ := (negativeKπ_eq_zero_iff R 0 (Additive.ofMul x)).mp h
@@ -115,8 +116,9 @@ theorem original_flat_KminusOne_relation (R : CommRingCat.{u})
     refine ⟨Additive.ofMul a,Additive.ofMul b,?_⟩
     rw [negativeKMap_plus_zero,negativeKMap_minus_zero]
     change @Additive.ofMul (PerfectK (Spec (.of (LaurentPolynomial R))) 0)
-      (perfectKFlatPullback (Quillen.Scheme.PolynomialLaurent.laurentPlus R) 0 a /
-        perfectKFlatPullback (Quillen.Scheme.PolynomialLaurent.laurentMinus R) 0 b) = Additive.ofMul
+      (perfectKFlatPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentPlus R) 0 a /
+        perfectKFlatPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentMinus R) 0 b) =
+          Additive.ofMul
           x
     rw [div_eq_mul_inv,hab]
 

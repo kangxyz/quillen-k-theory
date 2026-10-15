@@ -19,19 +19,21 @@ Krull intersection. No projective-dimension or resolution hypothesis is imposed.
 The endpoints here use the original canonical scheme K-to-G homomorphism.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 universe u
 open AlgebraicGeometry IsLocalRing
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 /-- The canonical comparison for a zero-dimensional regular local ring.
 The required field structure is derived from regularity. -/
 theorem KToG_regularLocal_dimension_zero_bijective (R : CommRingCat.{u})
     [IsRegularLocalRing R] (h : ringKrullDim R = 0) (n : ℕ) :
     Function.Bijective (KToG (Spec R) n) := by
-  let := (RegularLocal.isField_of_regularLocal_dimension_zero R h).toField
+  let := (IsRegularLocalRing.isField_of_regularLocal_dimension_zero R h).toField
   exact KToG_field_bijective R n
 
 /-- The canonical comparison for a regular local ring of dimension at
@@ -55,4 +57,4 @@ def KToGRegularLocalDimOneEquiv (R : CommRingCat.{u})
     [IsRegularLocalRing R] (h : ringKrullDim R ≤ 1) (n : ℕ) :
     ↑(KToGRegularLocalDimOneEquiv R h n) = KToG (Spec R) n := rfl
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

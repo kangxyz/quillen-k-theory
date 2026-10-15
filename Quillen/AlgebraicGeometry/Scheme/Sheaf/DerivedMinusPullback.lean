@@ -18,6 +18,9 @@ natural identity comparison. No flat-map, quasicoherence, replacement-existence,
 or derived-equivalence hypothesis is assumed.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -26,7 +29,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u w₁ w₂
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open Quillen.CochainComplex
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 variable {X Y : Scheme.{u}} (f : X ⟶ Y)
     [HasDerivedCategory.{w₁} Y.Modules] [HasDerivedCategory.{w₂} X.Modules]
@@ -90,4 +93,4 @@ def derivedPullbackMinusIdIso [HasDerivedCategory.{w₁} X.Modules] :
     (resolvedPullbackFunctorMinus (𝟙 X)) (boundedAboveQMinus X.Modules)
     (derivedPullbackMinus (𝟙 X)) (𝟭 _) (resolvedPullbackMinusIdIso X)
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

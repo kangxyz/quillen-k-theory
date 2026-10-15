@@ -38,9 +38,9 @@ theorem original_conflation (S : ShortComplex (StrictPerfect Z))
   (strictExactFiniteFlatPushforward f).map_conflation S hS
 
 /-- The original public Kvb-to-strict comparison commutes on each K-class. -/
-theorem original_K_comparison (n : ℕ) (x : Quillen.SchemeSheaf.SchemeK Z n) :
+theorem original_K_comparison (n : ℕ) (x : AlgebraicGeometry.Scheme.Modules.SchemeK Z n) :
     strictKFiniteFlatPushforward f n (vectorBundleToStrictKMap Z n x) =
-      vectorBundleToStrictKMap X n (Quillen.SchemeSheaf.schemeKPushforward f n x) :=
+      vectorBundleToStrictKMap X n (AlgebraicGeometry.Scheme.Modules.schemeKPushforward f n x) :=
   DFunLike.congr_fun (vectorBundleToStrictKMap_finiteFlatPushforward f n) x
 
 end QuillenTest.StrictFiniteFlatPushforward

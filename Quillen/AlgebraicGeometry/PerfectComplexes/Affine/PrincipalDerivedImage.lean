@@ -26,6 +26,9 @@ obstruction is asserted.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -94,13 +97,14 @@ lemma exists_principal_strict_quasiIso_iff_moduleDerivedImage
     (B : Complex (Spec (.of (Localization.Away r))))
     (hB : ∀ i, (B.X i).IsQuasicoherent) :
     (∃ (E : StrictPerfect (Spec R))
-      (q : (restrict (CoherentScheme.principalOpen R r)).obj E.obj ⟶ B), QuasiIso q) ↔
+      (q : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj E.obj ⟶
+        B), QuasiIso q) ↔
       principalModuleDerivedImage R r
         (DerivedCategory.Q.obj ((sectionsComplex (.of (Localization.Away r))).obj B)) := by
   let S := CommRingCat.of (Localization.Away r)
   let L := localize r (.up ℤ)
   let G := associatedComplex S
-  let J := restrict (CoherentScheme.principalOpen R r)
+  let J := restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
   let T := (sectionsComplex S).obj B
   let eB : G.obj T ≅ B := associatedSectionsIsoOfQuasicoherent S B hB
   let e := principalRestrictionAssociatedComplexIso R r
@@ -129,7 +133,7 @@ characterization; it is not a separately assumed derived-density condition. -/
 lemma principal_strict_image_iff_moduleDerivedImage (R : CommRingCat.{u}) (r : R)
     (B : StrictPerfect (Spec (.of (Localization.Away r)))) :
     Waldhausen.ApproximationImage.objects (strictWaldhausen _)
-      (strictRestrict (CoherentScheme.principalOpen R r)) B ↔
+      (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)) B ↔
       principalModuleDerivedImage R r
         (DerivedCategory.Q.obj ((sectionsComplex (.of (Localization.Away r))).obj B.obj)) := by
   have hB (i : ℤ) : (B.obj.X i).IsQuasicoherent := by
@@ -148,9 +152,9 @@ lemma principal_strict_image_iff_of_weak (R : CommRingCat.{u}) (r : R)
     {A B : StrictPerfect (Spec (.of (Localization.Away r)))} (f : A ⟶ B)
     (hf : (strictWaldhausen _).weq f) :
     Waldhausen.ApproximationImage.objects (strictWaldhausen _)
-      (strictRestrict (CoherentScheme.principalOpen R r)) A ↔
+      (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)) A ↔
     Waldhausen.ApproximationImage.objects (strictWaldhausen _)
-      (strictRestrict (CoherentScheme.principalOpen R r)) B := by
+      (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)) B := by
   rw [principal_strict_image_iff_moduleDerivedImage, principal_strict_image_iff_moduleDerivedImage]
   have hA (i : ℤ) : (A.obj.X i).IsQuasicoherent := by
     let := A.property.2 i

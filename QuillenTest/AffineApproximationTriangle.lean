@@ -72,7 +72,7 @@ theorem original_input_arbitrary_cutoff (W : (Spec R).Opens)
           (((restrict W.ι).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))).homology
             n))),
       moduleStrictPerfect R P ∧ n ≤ cutoff ∧
-        Quillen.SchemeSheaf.IsFiniteLocallyFree W.toScheme
+        AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree W.toScheme
           (((restrict W.ι).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))).homology
             n) ∧
         originalApproximationSingleTriangle R W.ι f eK n eD ∈ distTriang (Derived W.toScheme) := by

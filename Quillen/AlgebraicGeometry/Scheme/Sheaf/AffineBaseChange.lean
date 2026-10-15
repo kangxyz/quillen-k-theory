@@ -16,12 +16,15 @@ nor finite generation is required. This is an ordinary sheaf statement; it does 
 assert derived flat base change.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable (R S A B : Type u) [CommRing R] [CommRing S] [CommRing A] [CommRing B]
   [Algebra R S] [Algebra R A] [Algebra R B] [Algebra A B] [Algebra S B]
   [IsScalarTower R A B] [IsScalarTower R S B]
@@ -115,4 +118,4 @@ theorem isIso_affineBaseChangeMap
     IsIso ((cartesianBaseChangeMap _ _ _ _ h).app M) := by
   rw [← NatTrans.isIso_app_iff_of_iso _ (asIso M.fromTildeΓ)]
   exact isIso_affineBaseChangeMap_tilde R S A B h (moduleSpecΓFunctor.obj M)
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

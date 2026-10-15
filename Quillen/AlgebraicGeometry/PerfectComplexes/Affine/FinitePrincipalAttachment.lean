@@ -27,6 +27,9 @@ This is the finite-cover attachment step in Stacks Project, Tag 08EC.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -47,7 +50,8 @@ lemma exists_finiteFree_epi_on_principals (M : ModuleCat.{u} R) (s : Finset R)
     ∃ (m : ℕ) (g : ModuleCat.of R (Fin m → R) ⟶ M),
       ∀ r : s, Epi ((ModuleCat.localizedModuleFunctor (Submonoid.powers r.val)).map g) := by
   let := hfinite
-  obtain ⟨N, hN, htop⟩ := Quillen.CoherentScheme.exists_fg_submodule_localized_eq_top_finite
+  obtain ⟨N, hN, htop⟩ :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.exists_fg_submodule_localized_eq_top_finite
     (fun r : s => Submonoid.powers r.val) (fun r => Localization.Away r.val)
     (fun r => M.localizedModule (Submonoid.powers r.val))
     (fun r => M.localizedModuleMkLinearMap (Submonoid.powers r.val))
@@ -60,7 +64,7 @@ lemma exists_finiteFree_epi_on_principals (M : ModuleCat.{u} R) (s : Finset R)
   refine ⟨m, q' ≫ i, fun r => ?_⟩
   let F := ModuleCat.localizedModuleFunctor (Submonoid.powers r.val)
   have : IsIso (F.map i) :=
-    Quillen.CoherentScheme.isIso_localized_subtype_of_eq_top
+    AlgebraicGeometry.Scheme.Modules.Coherent.isIso_localized_subtype_of_eq_top
       (CommRingCat.of R) (Submonoid.powers r.val) M N (htop r)
   change Epi (F.map (q' ≫ i))
   rw [F.map_comp]

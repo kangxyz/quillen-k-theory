@@ -55,7 +55,7 @@ theorem original_chart_difference (i : ℕ) (R : CommRingCat.{u}) :
       (stableHomotopyFunctor (-(i : ℤ))).map (mappingConeInclusion
         (StrictSquare.comparison
           ((boundedFlatAffineSectionBassDiagram i).mapArrow.mapArrow.obj
-            (Quillen.PolynomialBaseChange.laurentSquare R)))) = 0 := by
+            (CommRingCat.PolynomialLaurent.laurentSquare R)))) = 0 := by
   rw [← boundedFlatAffineSectionBassBottomConeIso_π, ← Category.assoc]
   simp only [Quillen.Bass.polynomialDifference_contractionπ, Limits.zero_comp]
 

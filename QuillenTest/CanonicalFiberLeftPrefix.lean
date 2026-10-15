@@ -14,7 +14,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PolynomialScalar
 noncomputable section
 open CategoryTheory AlgebraicGeometry unitInterval
 open Quillen.Waldhausen Quillen.Waldhausen.Fibration
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine Quillen.Scheme.PolynomialLaurent
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+  AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped Topology
 universe u v
 namespace QuillenTest.CanonicalFiberLeftPrefix

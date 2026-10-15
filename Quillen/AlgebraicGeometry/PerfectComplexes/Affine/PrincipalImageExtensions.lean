@@ -22,6 +22,9 @@ comparison is assumed.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -63,11 +66,14 @@ lemma principal_strict_witness_extension (R : CommRingCat.{u}) (r : R)
     (h₂ : ∀ i, (S.X₂.X i).IsQuasicoherent)
     (h₃ : ∀ i, (S.X₃.X i).IsQuasicoherent)
     (hA : ∃ (E : StrictPerfect (Spec R))
-      (q : (restrict (CoherentScheme.principalOpen R r)).obj E.obj ⟶ S.X₁), QuasiIso q)
+      (q : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj E.obj ⟶
+        S.X₁), QuasiIso q)
     (hC : ∃ (E : StrictPerfect (Spec R))
-      (q : (restrict (CoherentScheme.principalOpen R r)).obj E.obj ⟶ S.X₃), QuasiIso q) :
+      (q : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj E.obj ⟶
+        S.X₃), QuasiIso q) :
     ∃ (E : StrictPerfect (Spec R))
-      (q : (restrict (CoherentScheme.principalOpen R r)).obj E.obj ⟶ S.X₂), QuasiIso q := by
+      (q : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj E.obj ⟶
+        S.X₂), QuasiIso q := by
   rw [exists_principal_strict_quasiIso_iff_moduleDerivedImage R r S.X₂ h₂]
   have hT := shortExact_sections_of_quasicoherent (.of (Localization.Away r)) S hS h₁ h₂ h₃
   exact (principalModuleDerivedImage R r).ext_of_isTriangulatedClosed₂
@@ -83,11 +89,11 @@ lemma principal_strict_image_extension (R : CommRingCat.{u}) (r : R)
     (h : IsPushout i ((strictWaldhausen _).isZero.from_ A) q
       ((strictWaldhausen _).isZero.to_ Q))
     (hA : Waldhausen.ApproximationImage.objects (strictWaldhausen _)
-      (strictRestrict (CoherentScheme.principalOpen R r)) A)
+      (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)) A)
     (hQ : Waldhausen.ApproximationImage.objects (strictWaldhausen _)
-      (strictRestrict (CoherentScheme.principalOpen R r)) Q) :
+      (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)) Q) :
     Waldhausen.ApproximationImage.objects (strictWaldhausen _)
-      (strictRestrict (CoherentScheme.principalOpen R r)) B := by
+      (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)) B := by
   let X := Spec (.of (Localization.Away r))
   let P := strictPerfect X
   have hp := Waldhausen.fullSubcategory_map_pushout (abelianExactStructure (Complex X)) P hi h

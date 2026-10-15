@@ -19,6 +19,12 @@ proved equivalences transport the Serre-localization universal property.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -27,7 +33,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (r : R)
 
@@ -90,4 +96,4 @@ instance coherentPrincipalRestriction_isLocalization :
   rw [← h]
   infer_instance
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

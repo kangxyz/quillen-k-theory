@@ -14,7 +14,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.SchemeSheaf
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicGeometry.Scheme.Modules
 namespace QuillenTest.AffineDerivedBaseChangeCoordinates
 
 open Quillen

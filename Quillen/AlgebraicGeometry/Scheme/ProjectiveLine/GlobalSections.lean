@@ -19,6 +19,8 @@ No higher sheaf-cohomology, twisting-sheaf, or perfect-pushforward conclusion
 is asserted here. No nontriviality or noetherian hypothesis is used.
 -/
 @[expose] public section
+open Quillen
+
 
 
 noncomputable section
@@ -26,7 +28,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 universe u
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent
 variable (R : CommRingCat.{u})
 
@@ -105,4 +107,4 @@ lemma globalSectionsIso_inv : (globalSectionsIso R).inv =
   ext r
   simp
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

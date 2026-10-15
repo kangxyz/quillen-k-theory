@@ -19,77 +19,90 @@ extra input. All groups below are the original public scheme G-groups.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
+open AlgebraicGeometry.Scheme
+open Quillen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 universe u
 open CategoryTheory AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.Scheme.Closed
+namespace AlgebraicGeometry.Scheme.Closed
 variable {Z X : AlgebraicGeometry.Scheme.{u}} [IsNoetherian X]
   (i : Z ⟶ X) [IsClosedImmersion i]
 
 include i in
 /-- A closed subscheme of a noetherian scheme is locally noetherian. -/
 theorem source_locallyNoetherian : IsLocallyNoetherian Z :=
-  CoherentScheme.ClosedImmersion.General.closedSource_isLocallyNoetherian i
+  AlgebraicGeometry.Scheme.closedSource_isLocallyNoetherian i
 
 include i in
 /-- The stronger global noetherianity conclusion is also derived. -/
 theorem source_noetherian : IsNoetherian Z :=
-  CoherentScheme.ClosedImmersion.General.closedSource_isNoetherian i
+  AlgebraicGeometry.Scheme.closedSource_isNoetherian i
 
 /-- The actual open complement of the closed image. -/
-abbrev openScheme := (CoherentScheme.ClosedImmersion.General.openComplement i).toScheme
+abbrev openScheme :=
+  (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.openComplement i).toScheme
 
 /-- Its actual geometric open immersion. -/
-abbrev openMap := CoherentScheme.ClosedImmersion.General.openMap i
+abbrev openMap := AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.openMap i
 
 /-- The canonical map of the original exact coherent sheaf pushforward. -/
 abbrev pushforwardG (n : ℕ) : @G Z (source_locallyNoetherian i) n →* G X n := by
   letI := source_locallyNoetherian i
-  exact CoherentScheme.ClosedImmersion.General.coherentPushforwardGMap i n
+  exact
+    AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.coherentPushforwardGMap i
+    n
 
 /-- Genuine geometric dévissage, with G of the original closed scheme. -/
 abbrev supportedGEquiv (n : ℕ) :
     @G Z (source_locallyNoetherian i) n ≃* SupportedG (openMap i) n := by
   letI := source_locallyNoetherian i
-  exact CoherentScheme.ClosedImmersion.General.closedSupportedGEquiv i n
+  exact AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.closedSupportedGEquiv
+    i n
 
 /-- The actual transported localization boundary. -/
 abbrev boundaryG (n : ℕ) :
     G (openScheme i) (n + 1) →* @G Z (source_locallyNoetherian i) n := by
   letI := source_locallyNoetherian i
-  exact CoherentScheme.ClosedImmersion.General.closedConnectingHom i n
+  exact AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.closedConnectingHom i
+    n
 
 /-- The dévissage comparison retains the original pushforward map. -/
 theorem supportedGEquiv_pushforward (n : ℕ) :
     (inclusionG (openMap i) n).comp (supportedGEquiv i n).toMonoidHom = pushforwardG i n := by
   let := source_locallyNoetherian i
-  simpa only [CoherentScheme.globalInclusionGMap_eq_smallKMap] using
-    CoherentScheme.ClosedImmersion.General.closedSupportedGEquiv_pushforward i n
+  simpa only [AlgebraicGeometry.Scheme.Modules.Coherent.globalInclusionGMap_eq_smallKMap] using
+    Modules.Coherent.Pushforward.ClosedImmersion.closedSupportedGEquiv_pushforward i n
 
 /-- Exactness at G of the ambient scheme. -/
 theorem pushforward_range_eq_restrict_ker (n : ℕ) :
     (pushforwardG i n).range = (restrictG (openMap i) n).ker := by
   let := source_locallyNoetherian i
-  exact CoherentScheme.ClosedImmersion.General.pushforward_range_eq_restriction_ker i n
+  exact Modules.Coherent.Pushforward.ClosedImmersion.pushforward_range_eq_restriction_ker i n
 
 /-- Exactness at G of the open complement. -/
 theorem restrict_range_eq_boundary_ker (n : ℕ) :
     (restrictG (openMap i) (n + 1)).range = (boundaryG i n).ker := by
   let := source_locallyNoetherian i
-  exact CoherentScheme.ClosedImmersion.General.restriction_range_eq_closedConnecting_ker i n
+  exact Modules.Coherent.Pushforward.ClosedImmersion.restriction_range_eq_closedConnecting_ker i n
 
 /-- Exactness at G of the actual closed scheme. -/
 theorem boundary_range_eq_pushforward_ker (n : ℕ) :
     (boundaryG i n).range = (pushforwardG i n).ker := by
   let := source_locallyNoetherian i
-  exact CoherentScheme.ClosedImmersion.General.closedConnecting_range_eq_pushforward_ker i n
+  exact Modules.Coherent.Pushforward.ClosedImmersion.closedConnecting_range_eq_pushforward_ker i n
 
 /-- The connective G₀ tail is surjective. -/
 theorem restrictG_zero_surjective : Function.Surjective (restrictG (openMap i) 0) := by
   let := source_locallyNoetherian i
-  exact (CoherentScheme.ClosedImmersion.General.closed_open_longExact i).2.2.2
+  exact (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.closed_open_longExact
+    i).2.2.2
 
 /-- The full canonical closed–open connective sequence, including G₀. -/
 theorem localization_longExact :
@@ -99,4 +112,4 @@ theorem localization_longExact :
     Function.Surjective (restrictG (openMap i) 0) :=
   ⟨pushforward_range_eq_restrict_ker i, restrict_range_eq_boundary_ker i,
     boundary_range_eq_pushforward_ker i, restrictG_zero_surjective i⟩
-end Quillen.Scheme.Closed
+end AlgebraicGeometry.Scheme.Closed

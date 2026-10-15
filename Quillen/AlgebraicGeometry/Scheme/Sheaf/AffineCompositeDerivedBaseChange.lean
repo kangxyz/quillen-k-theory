@@ -11,12 +11,15 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedSingleAcyclicity
 /-! # Original affine-composite chart base change -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard derived category of module sheaves. -/
 local instance affineCompositeBaseChangeStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -50,4 +53,4 @@ theorem isIso_derivedFlatBaseChangeMap_affinePushforward_single :
   exact (NatTrans.isIso_app_iff_of_iso (derivedFlatBaseChangeMap a b f j h)
     (derivedPushforwardPlusSingleIso g N)).mp
       (isIso_derivedFlatBaseChangeMap_affineDerivedImage c d g a b f j hs h N)
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

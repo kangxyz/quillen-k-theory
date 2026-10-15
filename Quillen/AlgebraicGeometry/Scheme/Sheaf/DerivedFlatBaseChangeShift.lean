@@ -12,13 +12,16 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedPushforwardSection
 /-! # Shift compatibility of the actual derived flat base-change mate -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard ambient derived categories of the original module sheaves. -/
 local instance shiftStandard (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _
@@ -41,4 +44,4 @@ theorem derivedFlatBaseChangeMap_commShift :
   let := F.isRightDerivedFunctor_comp_of_preservesHomology J
   unfold derivedFlatBaseChangeMap
   apply Functor.commShift_rightDerivedDesc (F.rightDerivedFunctorPlus ⋙ J.rightDerivedFunctorPlus)
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

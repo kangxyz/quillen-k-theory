@@ -18,7 +18,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen.Scheme.PolynomialLaurent Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.PolynomialLaurent AlgebraicGeometry.Scheme.ProjectiveLine
 universe u
 namespace QuillenTest.ProjectiveLineCech
 

@@ -22,6 +22,8 @@ or general regular-local theorem is assumed here.
 -/
 @[expose] public section
 
+open ModuleCat
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -80,9 +82,9 @@ parameter lifts to an actual finite free resolution before reduction.
 This is the homological induction step over the smaller quotient ring. -/
 theorem finiteFreeResolution_of_quotientProjectiveDimension
     (x : R) (hx : x ∈ maximalIdeal R) (hxR : IsSMulRegular R x)
-    (n : ℕ) (M : CoherentScheme.FiniteModule.{u, u} R) (hxM : IsSMulRegular M.obj x)
+    (n : ℕ) (M : ModuleCat.FiniteModule.{u, u} R) (hxM : IsSMulRegular M.obj x)
     [HasProjectiveDimensionLE (ModuleCat.of (R ⧸ Ideal.span {x}) (QuotSMulTop x M.obj)) n] :
-    ∃ T : (CoherentScheme.finiteModuleExactStructure R).FiniteResolution
+    ∃ T : (ModuleCat.finiteModuleExactStructure R).FiniteResolution
       (fun N => Module.Free R N.obj) M, T.length ≤ n := by
   have hne : Ideal.span {x} ≠ ⊤ :=
     ne_top_of_le_ne_top (maximalIdeal.isMaximal R).ne_top ((Ideal.span_singleton_le_iff_mem
@@ -105,10 +107,12 @@ theorem finiteFreeResolution_of_quotientProjectiveDimension
     have : Module.FinitePresentation R M.obj := Module.finitePresentation_of_finite R M.obj
     exact ⟨.of_mem ((Module.free_quotSMulTop_iff_free R M.obj hxJ hxM).mp hfree), le_rfl⟩
   | succ n ih =>
-    obtain ⟨K, P, i, p, w, hfree, hS⟩ := CoherentScheme.exists_finiteFree_shortExact R M
+    obtain ⟨K, P, i, p, w, hfree, hS⟩ :=
+      AlgebraicGeometry.Scheme.Modules.Coherent.exists_finiteFree_shortExact R M
     have : Module.Free R P.obj := hfree
-    let S := (ShortComplex.mk i p w).map (CoherentScheme.finiteModule R).ι
-    have hS' : S.ShortExact := (CoherentScheme.finiteModule_shortExact_iff R _).mp hS
+    let S := (ShortComplex.mk i p w).map (ModuleCat.finiteModule R).ι
+    have hS' : S.ShortExact :=
+      (AlgebraicGeometry.Scheme.Modules.Coherent.finiteModule_shortExact_iff R _).mp hS
     have hxK : IsSMulRegular K.obj x :=
       (isSMulRegular_free x hxR P.obj).of_injective i.hom.hom hS'.moduleCat_injective_f
     have hQ := quotientShortComplex_shortExact x S hS' hxM
@@ -129,8 +133,8 @@ omit [IsLocalRing R] in
 /-- A tower of actual finite free conflations has the expected Ext-defined
 projective-dimension bound. This is proved recursively from exact sequences. -/
 theorem finiteFreeResolution_hasProjectiveDimensionLE
-    {M : CoherentScheme.FiniteModule.{u, u} R}
-    (T : (CoherentScheme.finiteModuleExactStructure R).FiniteResolution
+    {M : ModuleCat.FiniteModule.{u, u} R}
+    (T : (ModuleCat.finiteModuleExactStructure R).FiniteResolution
       (fun N => Module.Free R N.obj) M) : HasProjectiveDimensionLE M.obj T.length := by
   induction T with
   | @of_mem N hN =>
@@ -139,8 +143,8 @@ theorem finiteFreeResolution_hasProjectiveDimensionLE
     infer_instance
   | step S hS hP T ih =>
     have : Module.Free R S.X₂.obj := hP
-    have hS' := (CoherentScheme.finiteModule_shortExact_iff R S).mp hS
-    have hP' : Projective (S.map (CoherentScheme.finiteModule R).ι).X₂ := by
+    have hS' := (AlgebraicGeometry.Scheme.Modules.Coherent.finiteModule_shortExact_iff R S).mp hS
+    have hP' : Projective (S.map (ModuleCat.finiteModule R).ι).X₂ := by
       change Projective S.X₂.obj
       infer_instance
     exact (hS'.hasProjectiveDimensionLT_X₃_iff T.length hP').mpr ih
@@ -149,8 +153,8 @@ omit [IsLocalRing R] in
 /-- A tower whose length is bounded by `n` supplies the corresponding
 independent projective-dimension bound. -/
 theorem hasProjectiveDimensionLE_of_finiteFreeResolution
-    {M : CoherentScheme.FiniteModule.{u, u} R}
-    (T : (CoherentScheme.finiteModuleExactStructure R).FiniteResolution
+    {M : ModuleCat.FiniteModule.{u, u} R}
+    (T : (ModuleCat.finiteModuleExactStructure R).FiniteResolution
       (fun N => Module.Free R N.obj) M) (n : ℕ) (hT : T.length ≤ n) :
     HasProjectiveDimensionLE M.obj n := by
   have := finiteFreeResolution_hasProjectiveDimensionLE R T
@@ -164,12 +168,13 @@ theorem finiteFreeResolution_of_quotientRingBound
     (x : R) (hx : x ∈ maximalIdeal R) (hxR : IsSMulRegular R x) (n : ℕ)
     (h : ∀ N : ModuleCat.{u} (R ⧸ Ideal.span {x}), Module.Finite (R ⧸ Ideal.span {x}) N →
       HasProjectiveDimensionLE N n)
-    (M : CoherentScheme.FiniteModule.{u, u} R) :
-    ∃ T : (CoherentScheme.finiteModuleExactStructure R).FiniteResolution
+    (M : ModuleCat.FiniteModule.{u, u} R) :
+    ∃ T : (ModuleCat.finiteModuleExactStructure R).FiniteResolution
       (fun N => Module.Free R N.obj) M, T.length ≤ n + 1 := by
-  obtain ⟨K, P, i, p, w, hfree, hS⟩ := CoherentScheme.exists_finiteFree_shortExact R M
+  obtain ⟨K, P, i, p, w, hfree, hS⟩ :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.exists_finiteFree_shortExact R M
   have : Module.Free R P.obj := hfree
-  have hS' := (CoherentScheme.finiteModule_shortExact_iff R _).mp hS
+  have hS' := (AlgebraicGeometry.Scheme.Modules.Coherent.finiteModule_shortExact_iff R _).mp hS
   have hxK : IsSMulRegular K.obj x :=
     (isSMulRegular_free x hxR P.obj).of_injective i.hom.hom hS'.moduleCat_injective_f
   have hfin : Module.Finite (R ⧸ Ideal.span {x}) (QuotSMulTop x K.obj) :=
@@ -185,7 +190,7 @@ theorem hasProjectiveDimensionLE_of_quotientRingBound
     (h : ∀ N : ModuleCat.{u} (R ⧸ Ideal.span {x}), Module.Finite (R ⧸ Ideal.span {x}) N →
       HasProjectiveDimensionLE N n)
     (M : ModuleCat.{u} R) [Module.Finite R M] : HasProjectiveDimensionLE M (n + 1) := by
-  let N : CoherentScheme.FiniteModule.{u, u} R := ⟨M, (show Module.Finite R M from inferInstance)⟩
+  let N : ModuleCat.FiniteModule.{u, u} R := ⟨M, (show Module.Finite R M from inferInstance)⟩
   obtain ⟨T, hT⟩ := finiteFreeResolution_of_quotientRingBound R x hx hxR n h N
   exact hasProjectiveDimensionLE_of_finiteFreeResolution R T (n + 1) hT
 

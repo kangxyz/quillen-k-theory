@@ -7,14 +7,16 @@ public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalPerfectGen
 
 /-! # Actual original unit equations for the generation endpoint comparisons -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits
   CategoryTheory.Pretriangulated AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 local instance generationUnitStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})
@@ -103,4 +105,4 @@ theorem diagonalPerfectGenerationSecondMap_app
         (diagonalDerivedComplexProjectedSecondIso R).inv.app K := by
   dsimp [diagonalPerfectGenerationSecondMap]
   simp only [Category.id_comp]
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

@@ -19,6 +19,8 @@ difference and the higher two-affine-cover theorem give vanishing in every posit
 All statements allow arbitrary commutative rings, including the zero ring.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -26,8 +28,8 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.SchemeSheaf.TwoOpen
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.TwoOpen
 variable (R : CommRingCat.{u})
 
 /-- The positive signed row supplies an explicit section of the restricted quotient map. -/
@@ -141,4 +143,4 @@ lemma tautologicalQuotientGlobalSectionsIso_hom :
       (unitSquareGlobalSectionsIso R).hom ≫
         Scheme.Modules.Hom.app (tautologicalQuotientMap R) ⊤ := rfl
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

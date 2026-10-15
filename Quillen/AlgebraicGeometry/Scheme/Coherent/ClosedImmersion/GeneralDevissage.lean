@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralSupportDevissage
 
 /-!
@@ -18,6 +19,12 @@ the supported G-equivalence, with the original canonical pushforward map.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -25,7 +32,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme.ClosedImmersion.General
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsNoetherian X]
   (i : Z ⟶ X) [IsClosedImmersion i]
 
@@ -127,7 +134,7 @@ exact structure, rather than a newly chosen unrelated K-map. -/
 def smallPushforwardToKilledExact :
     ExactFunctor (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1}
       (coherentExactStructure (Z)))
-      (Devissage.subcategoryExactStructure (supportKilled i)) where
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure (supportKilled i)) where
   toFunctor := smallPushforwardToKilled i
   map_conflation S h := by
     change (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1}
@@ -160,7 +167,7 @@ instance smallPushforwardToKilledExact_mapQ_isEquivalence :
 /-- Public scheme G-theory of the closed subscheme is equivalent
 to the actual compatible supported G-term by geometric dévissage. -/
 def closedSupportGEquiv (n : ℕ) :
-    CoherentScheme.G Z n ≃* CoherentGlobalSupportedG (openMap i) n :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.G Z n ≃* CoherentGlobalSupportedG (openMap i) n :=
   ((smallPushforwardToKilledExact i).KEquivOfMapQIsEquivalence n).trans
     (supportDevissageKEquiv i n)
 
@@ -168,13 +175,15 @@ def closedSupportGEquiv (n : ℕ) :
 def smallPushforwardToSupportExact :
     ExactFunctor (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1}
       (coherentExactStructure (Z)))
-      (Devissage.subcategoryExactStructure (coherentGlobalSmallSupport (openMap i))) :=
-  (smallPushforwardToKilledExact i).comp (Devissage.exactInclusion (supportKilled i))
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure (coherentGlobalSmallSupport (openMap
+        i))) :=
+  (smallPushforwardToKilledExact i).comp (CategoryTheory.ObjectProperty.exactInclusion
+    (supportKilled i))
 
 /-- The monoid-hom coercion is the canonical forward map. -/
 @[simp] theorem closedSupportGEquiv_coe (n : ℕ) :
     (↑(closedSupportGEquiv i n) :
-      CoherentScheme.G Z n →* CoherentGlobalSupportedG (openMap i) n) =
+      AlgebraicGeometry.Scheme.Modules.Coherent.G Z n →* CoherentGlobalSupportedG (openMap i) n) =
       (smallPushforwardToSupportExact i).KMap n := by
   rw [smallPushforwardToSupportExact, CategoryTheory.ExactCategory.ExactFunctor.KMap_comp]
   rfl
@@ -186,8 +195,8 @@ theorem closedSupportGEquiv_pushforward (n : ℕ) :
       (coherentRestrictionExact (openMap i)) n).comp
         (closedSupportGEquiv i n).toMonoidHom = coherentPushforwardGMap i n := by
   have h : ((smallPushforwardToKilledExact i).comp
-      (Devissage.exactInclusion (supportKilled i))).comp
-      (Devissage.exactInclusion (coherentGlobalSmallSupport (openMap i))) =
+      (CategoryTheory.ObjectProperty.exactInclusion (supportKilled i))).comp
+      (CategoryTheory.ObjectProperty.exactInclusion (coherentGlobalSmallSupport (openMap i))) =
     (CategoryTheory.ExactCategory.ExactFunctor.smallModel.{u+1} (coherentPushforwardExact i)).comp
       (SmallModelLocalization.standardExactFunctor.{u+1} (FiniteTypeSheaves X)) := by rfl
   have hk := congrArg (fun F ↦ F.KMap n) h
@@ -202,4 +211,4 @@ theorem closedSupportGEquiv_pushforward (n : ℕ) :
   rw [MulEquiv.apply_symm_apply]
   exact DFunLike.congr_fun hk x
 
-end Quillen.CoherentScheme.ClosedImmersion.General
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

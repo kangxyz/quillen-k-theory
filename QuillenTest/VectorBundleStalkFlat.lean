@@ -16,7 +16,7 @@ geometric pullback and the original strict-perfect complex terms.
 @[expose] public section
 
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.SchemeSheaf
+open CategoryTheory AlgebraicGeometry AlgebraicGeometry.Scheme.Modules
 universe u
 namespace QuillenTest.VectorBundleStalkFlat
 

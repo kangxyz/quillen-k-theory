@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Homology.MappingCone.Identity
 public import Quillen.Waldhausen.Cylinder.RelativeComplex
 
 /-! # The actual zero-source cylinder endpoint
@@ -15,6 +16,19 @@ isomorphism, whose inverse is the original target section. Its naturality
 is the existing cylinder naturality, not an assumed normalization.
 -/
 @[expose] public section
+open Quillen
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.Waldhausen.SplitFactorization
+export CochainComplex
+  (identityCone_isZero)
+end Quillen.Waldhausen.SplitFactorization
+
+end
+
+
 
 
 noncomputable section
@@ -25,16 +39,6 @@ universe v u w t
 
 namespace Quillen.Waldhausen.SplitFactorization
 variable {A : Type u} [Category.{v} A] [Abelian A]
-
-/-- The identity cone of a genuinely zero complex is genuinely zero. -/
-theorem identityCone_isZero {K : CochainComplex A ℤ} (hK : IsZero K) :
-    IsZero (mappingCone (𝟙 K)) := by
-  rw [IsZero.iff_id_eq_zero]
-  ext n
-  have h := (mappingCone.isZero_X_iff (𝟙 K) n).2
-    ⟨(eval A (ComplexShape.up ℤ) (n + 1)).map_isZero hK,
-      (eval A (ComplexShape.up ℤ) n).map_isZero hK⟩
-  exact h.eq_of_src _ _
 
 /-- The original projection and section are mutually inverse on zero sources. -/
 def projectionIsoOfIsZeroSource {K L : CochainComplex A ℤ} (f : K ⟶ L)

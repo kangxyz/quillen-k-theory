@@ -22,6 +22,9 @@ left adjoints; both original unit and counit formulas retain the scalar and
 open-restriction coherence maps. All sheaves are ambient module sheaves.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -30,7 +33,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Opposite
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Module-sheaf morphisms are detected on the original abelian-group stalks. -/
 lemma isIso_of_stalkFunctor {X : Scheme.{u}} {M N : X.Modules} (f : M ⟶ N)
@@ -236,4 +239,4 @@ lemma extensionByZeroComp_unit {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
     H =≫ (Scheme.Modules.restrictFunctorComp a j).hom.app
       ((extensionByZero j).obj ((extensionByZero a).obj M))
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

@@ -16,13 +16,18 @@ sheaf by an isomorphism preserving its actual inclusion into the structure-modul
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.Coherent
 variable (R : CommRingCat.{u})
 
 lemma tautologicalLineInclusion_twistMinusObstruction :
@@ -117,4 +122,4 @@ lemma twistMinusUnitIso_inclusion :
   rw [← tautologicalToTwistMinusUnit_inclusion, ← Category.assoc]
   exact Iso.inv_hom_id_assoc (asIso (tautologicalToTwistMinusUnit R)) _
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

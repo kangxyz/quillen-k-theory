@@ -17,7 +17,8 @@ kernel and opposite Laurent coordinates, over nonreduced and zero-ring bases as 
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Polynomial
-open Quillen.Scheme.ProjectiveLine Quillen.SchemeSheaf Quillen.PolynomialDiagonal
+open AlgebraicGeometry.Scheme.ProjectiveLine AlgebraicGeometry.Scheme.Modules
+  Quillen.PolynomialDiagonal
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace QuillenTest.ProjectiveLineDiagonalCokernel

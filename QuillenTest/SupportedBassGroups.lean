@@ -22,29 +22,35 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 universe u
 namespace SupportedBassConsumers
-open Quillen.Scheme Quillen.PerfectComplexes Quillen.PerfectComplexes.Bass
+open AlgebraicGeometry.Scheme Quillen.PerfectComplexes Quillen.PerfectComplexes.Bass
 
 /-- The polynomial vanishing open is the actual inverse-image open, with no qc-open premise. -/
 theorem original_polynomial_support_square (A : QuasiCompactOpenPairs.{u}) :
-    IsPullback ((Quillen.Scheme.Bass.pairPolynomialFunctor.obj A).obj.obj.hom)
-      (pullback.fst (Quillen.Scheme.Bass.toIntegerBase A.obj.obj.left)
-        (Quillen.Scheme.PolynomialLaurent.polynomialProjection Quillen.Scheme.Bass.integerRing))
-      (pullback.fst (Quillen.Scheme.Bass.toIntegerBase A.obj.obj.right)
-        (Quillen.Scheme.PolynomialLaurent.polynomialProjection Quillen.Scheme.Bass.integerRing))
+    IsPullback ((AlgebraicGeometry.Scheme.Bass.pairPolynomialFunctor.obj A).obj.obj.hom)
+      (pullback.fst (AlgebraicGeometry.Scheme.Products.toIntegerBase A.obj.obj.left)
+        (AlgebraicGeometry.Scheme.PolynomialLaurent.polynomialProjection
+          AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.integerRing))
+      (pullback.fst (AlgebraicGeometry.Scheme.Products.toIntegerBase A.obj.obj.right)
+        (AlgebraicGeometry.Scheme.PolynomialLaurent.polynomialProjection
+          AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.integerRing))
           A.obj.obj.hom :=
-  Quillen.Scheme.Bass.baseProductFunctor_map_isPullback _ _
+  AlgebraicGeometry.Scheme.Bass.baseProductFunctor_map_isPullback _ _
 
 /-- Both components of the genuine inverse-coordinate pair chart are open immersions. -/
 theorem original_inverse_chart (A : QuasiCompactOpenPairs.{u}) :
-    IsOpenImmersion (Quillen.Scheme.Bass.pairMinus.app A).hom.hom.left ∧
-    IsOpenImmersion (Quillen.Scheme.Bass.pairMinus.app A).hom.hom.right := by
-  change IsOpenImmersion ((Quillen.Scheme.Bass.baseProductTransformation _ _
-    (Quillen.Scheme.PolynomialLaurent.laurentMinus Quillen.Scheme.Bass.integerRing)
-    (Quillen.Scheme.PolynomialLaurent.laurentMinus_projection Quillen.Scheme.Bass.integerRing)).app
+    IsOpenImmersion (AlgebraicGeometry.Scheme.Bass.pairMinus.app A).hom.hom.left ∧
+    IsOpenImmersion (AlgebraicGeometry.Scheme.Bass.pairMinus.app A).hom.hom.right := by
+  change IsOpenImmersion ((AlgebraicGeometry.Scheme.Products.baseProductTransformation _ _
+    (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentMinus
+      AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.integerRing)
+    (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentMinus_projection
+      AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.integerRing)).app
       A.obj.obj.left) ∧
-    IsOpenImmersion ((Quillen.Scheme.Bass.baseProductTransformation _ _
-    (Quillen.Scheme.PolynomialLaurent.laurentMinus Quillen.Scheme.Bass.integerRing)
-    (Quillen.Scheme.PolynomialLaurent.laurentMinus_projection Quillen.Scheme.Bass.integerRing)).app
+    IsOpenImmersion ((AlgebraicGeometry.Scheme.Products.baseProductTransformation _ _
+    (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentMinus
+      AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.integerRing)
+    (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentMinus_projection
+      AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.integerRing)).app
       A.obj.obj.right)
   exact ⟨inferInstance,inferInstance⟩
 
@@ -65,20 +71,21 @@ theorem original_pair_composition {A B C : QuasiCompactOpenPairs.{u}}
 /-- Every supported negative class is an original Laurent class with the exact chart relation. -/
 theorem original_supported_presentation (A : QuasiCompactOpenPairs.{u}) (n : ℕ)
     (y : supportedNegativeK A (n+1)) :
-    ∃ x : supportedNegativeK (Quillen.Scheme.Bass.pairLaurentFunctor.obj A) n,
+    ∃ x : supportedNegativeK (AlgebraicGeometry.Scheme.Bass.pairLaurentFunctor.obj A) n,
       supportedNegativeKπ A n x = y ∧
-      (y = 0 ↔ ∃ a b : supportedNegativeK (Quillen.Scheme.Bass.pairPolynomialFunctor.obj A) n,
-        supportedNegativeKPullback (Quillen.Scheme.Bass.pairPlus.app A) n a -
-          supportedNegativeKPullback (Quillen.Scheme.Bass.pairMinus.app A) n b = x) := by
+      (y = 0 ↔ ∃ a b : supportedNegativeK (AlgebraicGeometry.Scheme.Bass.pairPolynomialFunctor.obj
+        A) n,
+        supportedNegativeKPullback (AlgebraicGeometry.Scheme.Bass.pairPlus.app A) n a -
+          supportedNegativeKPullback (AlgebraicGeometry.Scheme.Bass.pairMinus.app A) n b = x) := by
   obtain ⟨x,rfl⟩ := supportedNegativeKπ_surjective A n y
   exact ⟨x,rfl,supportedNegativeKπ_eq_zero_iff A n x⟩
 
 /-- A prescribed original Laurent homomorphism has exactly one quotient descent. -/
 theorem original_supported_unique_descent (A : QuasiCompactOpenPairs.{u}) (n : ℕ)
     {B : AddCommGrpCat.{u+1}}
-    (f : supportedNegativeK (Quillen.Scheme.Bass.pairLaurentFunctor.obj A) n ⟶ B)
-    (hp : supportedNegativeKPullback (Quillen.Scheme.Bass.pairPlus.app A) n ≫ f = 0)
-    (hm : supportedNegativeKPullback (Quillen.Scheme.Bass.pairMinus.app A) n ≫ f = 0) :
+    (f : supportedNegativeK (AlgebraicGeometry.Scheme.Bass.pairLaurentFunctor.obj A) n ⟶ B)
+    (hp : supportedNegativeKPullback (AlgebraicGeometry.Scheme.Bass.pairPlus.app A) n ≫ f = 0)
+    (hm : supportedNegativeKPullback (AlgebraicGeometry.Scheme.Bass.pairMinus.app A) n ≫ f = 0) :
     ∃! g : supportedNegativeK A (n+1) ⟶ B, supportedNegativeKπ A n ≫ g = f :=
   ⟨supportedNegativeKDesc A n f hp hm,supportedNegativeKπ_desc A n f hp hm,
     fun g hg ↦ supportedNegativeKDesc_unique A n f hp hm g hg⟩
@@ -91,10 +98,10 @@ theorem original_forget_zero (A : QuasiCompactOpenPairs.{u}) (a : PerfectSupport
 
 /-- Forgetting support retains the actual Laurent representative, with no auxiliary equivalence. -/
 theorem original_forget_representative (A : QuasiCompactOpenPairs.{u}) (n : ℕ)
-    (a : supportedNegativeK (Quillen.Scheme.Bass.pairLaurentFunctor.obj A) n) :
+    (a : supportedNegativeK (AlgebraicGeometry.Scheme.Bass.pairLaurentFunctor.obj A) n) :
     supportedNegativeKForget A (n+1) (supportedNegativeKπ A n a) =
       negativeKπ (quasiCompactOpenPairsBase.obj A) n
-        (supportedNegativeKForget (Quillen.Scheme.Bass.pairLaurentFunctor.obj A) n a) :=
+        (supportedNegativeKForget (AlgebraicGeometry.Scheme.Bass.pairLaurentFunctor.obj A) n a) :=
   congrArg (fun g ↦ g a) (supportedNegativeKForget_π A n)
 
 /-- Original arbitrary pair maps commute with support forgetting in every degree. -/
@@ -119,10 +126,10 @@ theorem original_nested_support (X : QuasiCompactSchemes.{u}) {U V W : X.obj.Ope
 /-- The absolute class of an original supported element survives every enlargement. -/
 theorem original_support_absolute_class (X : QuasiCompactSchemes.{u}) {U V : X.obj.Opens}
     (h : U ≤ V) (n : ℕ)
-    (a : supportedNegativeK (Quillen.Scheme.Bass.openSupportPair X V) n) :
-    supportedNegativeKForget (Quillen.Scheme.Bass.openSupportPair X U) n
+    (a : supportedNegativeK (AlgebraicGeometry.Scheme.Bass.openSupportPair X V) n) :
+    supportedNegativeKForget (AlgebraicGeometry.Scheme.Bass.openSupportPair X U) n
       (supportedNegativeKEnlarge X h n a) =
-        supportedNegativeKForget (Quillen.Scheme.Bass.openSupportPair X V) n a :=
+        supportedNegativeKForget (AlgebraicGeometry.Scheme.Bass.openSupportPair X V) n a :=
   congrArg (fun g ↦ g a) (supportedNegativeKEnlarge_forget X h n)
 
 end SupportedBassConsumers

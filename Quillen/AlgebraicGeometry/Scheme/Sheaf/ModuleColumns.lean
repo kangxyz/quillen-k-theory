@@ -18,13 +18,19 @@ inclusions.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
   (M : X.Modules) (s : Γ(U, ⊤))
 
@@ -82,7 +88,7 @@ def moduleColumnTransition {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     (v : (Γ(pullback j k, ⊤))ˣ) :
     (M.restrict j).restrict (pullback.fst j k) ≅
       (M.restrict k).restrict (pullback.snd j k) :=
-  moduleMulIso _ v ≪≫ (Quillen.CoherentScheme.overlapRestrictIso j k).app M
+  moduleMulIso _ v ≪≫ (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).app M
 
 lemma moduleColumns_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k] (M : X.Modules)
@@ -90,7 +96,7 @@ lemma moduleColumns_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     (hs : (pullback.fst j k).appTop.hom s = ↑v)
     (ht : (pullback.snd j k).appTop.hom t = ↑v⁻¹) :
     (Scheme.Modules.restrictFunctor (pullback.fst j k)).map (moduleFirstColumn j M s) ≫
-        (Quillen.CoherentScheme.overlapRestrictIso j k).hom.app (M ⨯ M) =
+        (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.app (M ⨯ M) =
       (moduleColumnTransition j k M v).hom ≫
         (Scheme.Modules.restrictFunctor (pullback.snd j k)).map (moduleSecondColumn k M t) := by
   apply (isLimitOfPreserves
@@ -101,7 +107,7 @@ lemma moduleColumns_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
         ((Scheme.Modules.restrictFunctor k).map prod.fst) = (_ ≫ _) ≫
         (Scheme.Modules.restrictFunctor (pullback.snd j k)).map
           ((Scheme.Modules.restrictFunctor k).map prod.fst)
-    have hn := (Quillen.CoherentScheme.overlapRestrictIso j k).hom.naturality
+    have hn := (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.naturality
       (show M ⨯ M ⟶ M from prod.fst)
     dsimp only [Functor.comp_map] at hn
     rw [Category.assoc, ← hn, ← Category.assoc, ← Functor.map_comp,
@@ -114,7 +120,7 @@ lemma moduleColumns_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
         ((Scheme.Modules.restrictFunctor k).map prod.snd) = (_ ≫ _) ≫
         (Scheme.Modules.restrictFunctor (pullback.snd j k)).map
           ((Scheme.Modules.restrictFunctor k).map prod.snd)
-    have hn := (Quillen.CoherentScheme.overlapRestrictIso j k).hom.naturality
+    have hn := (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.naturality
       (show M ⨯ M ⟶ M from prod.snd)
     dsimp only [Functor.comp_map] at hn
     rw [Category.assoc, ← hn, ← Category.assoc, ← Functor.map_comp,
@@ -157,9 +163,9 @@ lemma moduleSecondColumn_naturality {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImme
       Category.assoc, ← Functor.map_comp, prod.map_snd, Functor.map_comp,
       ← Category.assoc, moduleSecondColumn_snd, Category.id_comp]
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (s : Γ(U, ⊤))
 
 lemma moduleFirstColumn_unit :
@@ -193,4 +199,4 @@ lemma moduleSecondColumn_unit :
   · change _ ≫ (Scheme.Modules.restrictFunctor j).map prod.snd =
       (_ ≫ _) ≫ (Scheme.Modules.restrictFunctor j).map prod.snd
     rw [moduleSecondColumn_snd, Category.assoc, secondColumn_snd, Iso.hom_inv_id]
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

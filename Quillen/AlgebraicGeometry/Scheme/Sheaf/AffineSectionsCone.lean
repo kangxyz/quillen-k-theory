@@ -17,6 +17,9 @@ module cone with the original sheaf cone. The arrow square is counit naturality.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 section
 
@@ -25,7 +28,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable (R : CommRingCat.{u}) {M N : (Spec R).Modules}
 variable [M.IsQuasicoherent] [N.IsQuasicoherent] (f : M ⟶ N)
 
@@ -46,7 +49,7 @@ def affineSectionsCechIso :
     congrArg (single (Spec R).Modules (.up ℤ) 0).map
       (Scheme.Modules.fromTildeΓNatTrans.naturality f)
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 end
 
 end

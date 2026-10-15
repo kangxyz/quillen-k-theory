@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.Limits.Shapes.ZeroObjects
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativePhi
 
 /-! # Literal native Phi objects, original coproduct comparisons and bounds
@@ -14,13 +15,27 @@ with the ambient cochain coproduct is the actual categorical coproduct compariso
 Godement total maps that comparison without changing the original Phi functor.
 -/
 @[expose] public section
+open Quillen
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativePhi
+export CategoryTheory.Limits
+  (coprod_isZero)
+end Quillen.PerfectComplexes.ProjectiveLine.P5NativePhi
+
+end
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.Scheme Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Modules
+  AlgebraicGeometry.Scheme.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativePhi
@@ -97,14 +112,6 @@ def PhiComplexIso (X : QuasiCompactSchemes.{u})
           ((tensorByLineComplex (nativeTautologicalLine X)).obj
             ((pullbackComplex (nativeProjection.app X).hom).obj K.2.obj))) :=
   (godementTotal (nativeLineFunctor.obj X).obj).mapIso ((beforeTotalComplexIso X).app K)
-
-/-- An actual selected coproduct of two zero objects is zero. -/
-lemma coprod_isZero {C : Type*} [Category C] [HasZeroMorphisms C] (A B : C)
-    [HasBinaryCoproduct A B] (hA : IsZero A) (hB : IsZero B) : IsZero (A ⨿ B) := by
-  rw [IsZero.iff_id_eq_zero]
-  apply coprod.hom_ext
-  · exact hA.eq_of_src _ _
-  · exact hB.eq_of_src _ _
 
 /-- Both original summands retain a given common strict lower bound. -/
 lemma rawBeforeTotal_isStrictlyGE (X : QuasiCompactSchemes.{u})

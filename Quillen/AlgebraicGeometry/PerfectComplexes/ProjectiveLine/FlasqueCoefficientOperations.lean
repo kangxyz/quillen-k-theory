@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineTensor
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Tautological
@@ -16,6 +17,9 @@ Right tensor by the actual tautological line is exact before Godement total.
 The original shift preserves the flasque model and its inherited exact structure.
 -/
 @[expose] public section
+open Quillen
+
+
 
 open CategoryTheory.ExactCategory
 noncomputable section
@@ -23,7 +27,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
@@ -41,27 +45,6 @@ instance rightLineModule_preservesHomology {X : Scheme.{u}} (L : X.Modules)
   ((CategoryTheory.Functor.exact_tfae (moduleTensorByLineRight L)).out 1 3).mp
     (fun (S : ShortComplex X.Modules) (hs : S.ShortExact) =>
       hs.map_of_exact (moduleTensorByLineRight L))
-
-instance rightLineComplex_additive {X : Scheme.{u}} (L : X.Modules) :
-    (tensorByLineRightComplex L).Additive := by
-  unfold tensorByLineRightComplex
-  infer_instance
-
-instance rightLineComplex_preservesFiniteLimits {X : Scheme.{u}} (L : X.Modules)
-    [IsFiniteLocallyFree X L] : PreservesFiniteLimits (tensorByLineRightComplex L) := by
-  unfold tensorByLineRightComplex
-  infer_instance
-
-instance rightLineComplex_preservesFiniteColimits {X : Scheme.{u}} (L : X.Modules)
-    [IsFiniteLocallyFree X L] : PreservesFiniteColimits (tensorByLineRightComplex L) := by
-  unfold tensorByLineRightComplex
-  infer_instance
-
-instance rightLineComplex_quasiIso {X : Scheme.{u}} (L : X.Modules)
-    [IsFiniteLocallyFree X L] {K M : Complex X} (f : K ⟶ M) [QuasiIso f] :
-    QuasiIso ((tensorByLineRightComplex L).map f) := by
-  unfold tensorByLineRightComplex
-  infer_instance
 
 /-- The actual original two charts of the projective line. -/
 def lineChart (R : CommRingCat.{u}) (b : Bool) :

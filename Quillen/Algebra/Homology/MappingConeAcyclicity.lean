@@ -5,30 +5,16 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Homology.MappingConeQuasiIso
+public import Aglib.Algebra.Homology.MappingCone.Acyclicity
 
-/-!
-# Acyclicity of the original quasi-isomorphism cone
-
-The original distinguished mapping-cone triangle proves the forward cone
-criterion for quasi-isomorphisms, complementing the existing converse theorem.
--/
-
+/-! # Compatibility imports for the canonical Aglib interface -/
 @[expose] public section
-noncomputable section
 
-section
-open CategoryTheory CategoryTheory.Pretriangulated CochainComplex
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
 namespace Quillen.HomologicalAlgebra
-/-- The actual mapping cone of an original quasi-isomorphism is acyclic. -/
-theorem mappingCone_acyclic_of_quasiIso {A : Type*} [Category* A] [Abelian A]
-    {K L : CochainComplex A ℤ} (s : K ⟶ L) [QuasiIso s] : (mappingCone s).Acyclic := by
-  let P := HomotopyCategory.subcategoryAcyclic A
-  have hs := (HomotopyCategory.quotient_map_mem_quasiIso_iff s).2
-    (show QuasiIso s from inferInstance)
-  rw [HomotopyCategory.quasiIso_eq_trW_subcategoryAcyclic] at hs
-  exact (HomotopyCategory.quotient_obj_mem_subcategoryAcyclic_iff_acyclic _).1
-    ((P.trW_iff_of_distinguished (mappingCone.triangleh s)
-      (HomotopyCategory.mappingCone_triangleh_distinguished s)).1 hs)
+export CochainComplex
+  (mappingCone_acyclic_of_quasiIso)
 end Quillen.HomologicalAlgebra
+
 end

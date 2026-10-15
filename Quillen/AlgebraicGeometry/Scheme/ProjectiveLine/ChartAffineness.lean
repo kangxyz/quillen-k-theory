@@ -18,6 +18,8 @@ open. This applies over arbitrary commutative rings, including the zero ring.
 -/
 
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -26,8 +28,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.Scheme.PolynomialLaurent
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 variable (R : CommRingCat.{u})
 
 /-- The original negative chart meets the positive chart in its actual Laurent open. -/
@@ -64,4 +66,4 @@ instance minusChart_isAffineHom : IsAffineHom (minusChart R) := by
   · refine ⟨(minusChart R).opensRange, ⟨b, rfl⟩, isAffineOpen_opensRange _, ?_⟩
     simpa using isAffineOpen_top (Spec (.of (Polynomial R)))
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

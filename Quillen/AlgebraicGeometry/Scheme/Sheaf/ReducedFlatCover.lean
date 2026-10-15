@@ -18,6 +18,9 @@ not asserted. The resulting cover of complexes is epic in every degree but
 is not asserted to be a quasi-isomorphism.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -25,7 +28,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- A zero-preserving left resolution, obtained by actually splitting the reduced idempotent. -/
 def reducedFlatSheafLeftResolution (X : Scheme.{u}) :
@@ -87,4 +90,4 @@ instance reducedFlatCoverComplexAugmentation_degree_epi (X : Scheme.{u})
   change Epi ((reducedFlatCoverAugmentation X).app (K.X n) ≫ 𝟙 _)
   infer_instance
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

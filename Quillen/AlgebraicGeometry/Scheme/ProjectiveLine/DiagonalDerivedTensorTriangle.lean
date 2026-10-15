@@ -22,13 +22,15 @@ This gives a genuine derived diagonal term; it does not assert generation.
 -/
 
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry DerivedCategory CategoryTheory.Pretriangulated
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 /-- Standard original derived categories for both geometric schemes. -/
 local instance diagonalDerivedTensorStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
@@ -86,4 +88,4 @@ theorem diagonalDerivedTensorTriangle_distinguished :
     diagonalDerivedTensorTriangle R E ∈ distTriang (DerivedCategory (relativeSquare R).Modules) :=
   isomorphic_distinguished _ (diagonalSupportedTensorTriangle_distinguished R E) _
     (diagonalDerivedTensorTriangleIso R E)
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

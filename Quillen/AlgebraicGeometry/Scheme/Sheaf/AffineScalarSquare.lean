@@ -17,12 +17,15 @@ geometric square. Reflection through the fully faithful spectrum functor supplie
 the coordinate-ring pushout from the genuine cartesian square.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable (R S A B : Type u) [CommRing R] [CommRing S] [CommRing A] [CommRing B]
   [Algebra R S] [Algebra R A] [Algebra R B] [Algebra A B] [Algebra S B]
   [IsScalarTower R A B] [IsScalarTower R S B]
@@ -104,4 +107,4 @@ theorem tildePushforwardIso_square (N : ModuleCat B) :
           ((ModuleCat.restrictScalars (algebraMap S B)).obj N)))
     (affinePushforwardSquare_globalSections R S A B h (tilde N))
   simpa only [Category.assoc, Functor.comp_obj, tilde.functor_obj, CommRingCat.hom_ofHom] using he
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

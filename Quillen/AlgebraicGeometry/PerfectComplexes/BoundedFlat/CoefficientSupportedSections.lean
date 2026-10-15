@@ -28,7 +28,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.CategoryTheory.StrictSections Quillen.Scheme.CoefficientBaseChange
+open Quillen.CategoryTheory.StrictSections AlgebraicGeometry.Scheme.CoefficientBaseChange
 open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
@@ -188,14 +188,15 @@ theorem boundedFlatCoefficientSupportedSectionEquivalence_inverse_exact
 
 section Reindex
 variable (j : U ⟶ space i) (j' : V ⟶ space k) [IsOpenImmersion j] [IsOpenImmersion j']
-  (f : i ⟶ k) (l : V ⟶ U) (h : l ≫ j = j' ≫ Quillen.Scheme.CoefficientBaseChange.map f)
+  (f : i ⟶ k) (l : V ⟶ U) (h : l ≫ j = j' ≫ AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)
 include l h
 
 /-- The specified original support square over the native joint map. -/
 def boundedFlatCoefficientSupportSquare :
-    (⟨Arrow.mk j', (show IsOpenImmersion j' from inferInstance)⟩ : Quillen.Scheme.OpenPairs) ⟶
+    (⟨Arrow.mk j', (show IsOpenImmersion j' from inferInstance)⟩ :
+      AlgebraicGeometry.Scheme.OpenPairs) ⟶
       ⟨Arrow.mk j, (show IsOpenImmersion j from inferInstance)⟩ :=
-  ObjectProperty.homMk (Arrow.homMk l (Quillen.Scheme.CoefficientBaseChange.map f) h)
+  ObjectProperty.homMk (Arrow.homMk l (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f) h)
 
 /-- Original joint reindexing preserves actual support on the specified support square. -/
 theorem boundedFlatCoefficientSectionsMap_supported
@@ -266,24 +267,25 @@ theorem boundedFlatCoefficientSupportedPairPullback_forget :
     boundedFlatPerfectSupportedPullback (boundedFlatCoefficientSupportSquare j j' f l h) ⋙
         (boundedFlatPerfectSupported j').ι =
       (boundedFlatPerfectSupported j).ι ⋙
-        pullbackComplex (Quillen.Scheme.CoefficientBaseChange.map f) :=
+        pullbackComplex (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f) :=
   Quillen.ObjectProperty.lift_comp_ι (boundedFlatPerfectSupported j')
     ((boundedFlatPerfectSupported j).ι ⋙
-      pullbackComplex (Quillen.Scheme.CoefficientBaseChange.map f))
+      pullbackComplex (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
     (fun K ↦ boundedFlatPerfectSupported_pairPullback
       (boundedFlatCoefficientSupportSquare j j' f l h) K.property)
 
 omit l h in
 /-- The actual bounded-flat pullback keeps the original complex pullback literally. -/
 theorem boundedFlatCoefficientOriginalPullback_forget :
-    boundedFlatPerfectPullback (Quillen.Scheme.CoefficientBaseChange.map f) ⋙
+    boundedFlatPerfectPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f) ⋙
         (boundedFlatPerfect (space k)).ι =
       (boundedFlatPerfect (space i)).ι ⋙
-        pullbackComplex (Quillen.Scheme.CoefficientBaseChange.map f) :=
+        pullbackComplex (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f) :=
   Quillen.ObjectProperty.lift_comp_ι (boundedFlatPerfect (space k))
     ((boundedFlatPerfect (space i)).ι ⋙
-      pullbackComplex (Quillen.Scheme.CoefficientBaseChange.map f))
-    (fun K ↦ boundedFlatPerfect_pullback (Quillen.Scheme.CoefficientBaseChange.map f) K.property)
+      pullbackComplex (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
+    (fun K ↦ boundedFlatPerfect_pullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)
+      K.property)
 
 section
 attribute [local irreducible] boundedFlatCoefficientSupportedEvaluation
@@ -296,15 +298,15 @@ theorem boundedFlatCoefficientSupportedEvaluationPullback_forget :
         (boundedFlatPerfectSupported j').ι =
       (boundedFlatCoefficientSectionSupported j).ι ⋙
         (boundedFlatCoefficientOriginalEvaluation i ⋙
-          boundedFlatPerfectPullback (Quillen.Scheme.CoefficientBaseChange.map f)) ⋙
+          boundedFlatPerfectPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)) ⋙
           (boundedFlatPerfect (space k)).ι :=
   Quillen.ObjectProperty.comp_forget_eq_of_comparison
     (boundedFlatCoefficientSectionSupported j) (boundedFlatPerfectSupported j)
     (boundedFlatPerfectSupported j') (boundedFlatCoefficientSupportedEvaluation j)
     (boundedFlatPerfectSupportedPullback (boundedFlatCoefficientSupportSquare j j' f l h))
     (boundedFlatCoefficientOriginalEvaluation i) (boundedFlatPerfect (space i)).ι
-    (pullbackComplex (Quillen.Scheme.CoefficientBaseChange.map f))
-    (boundedFlatPerfectPullback (Quillen.Scheme.CoefficientBaseChange.map f))
+    (pullbackComplex (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
+    (boundedFlatPerfectPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
     (boundedFlatPerfect (space k)).ι (boundedFlatCoefficientSupportedEvaluation_forget j)
     (boundedFlatCoefficientSupportedPairPullback_forget j j' f l h)
     (boundedFlatCoefficientOriginalPullback_forget f)
@@ -383,7 +385,8 @@ def boundedFlatCoefficientSupportedSectionModel
 /-- Original supported reindexing is an exact, literally zero-preserving Model map. -/
 def boundedFlatCoefficientSupportedSectionModelMap
     (j : U ⟶ space i) (j' : V ⟶ space k) [IsOpenImmersion j] [IsOpenImmersion j']
-    (f : i ⟶ k) (l : V ⟶ U) (h : l ≫ j = j' ≫ Quillen.Scheme.CoefficientBaseChange.map f) :
+    (f : i ⟶ k) (l : V ⟶ U) (h : l ≫ j = j' ≫ AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
+      f) :
     boundedFlatCoefficientSupportedSectionModel j ⟶ boundedFlatCoefficientSupportedSectionModel j'
     where
   functor := boundedFlatCoefficientSupportedSectionsMap j j' f l h
@@ -399,7 +402,7 @@ private theorem supported_lift_congr {C D : Type*} [Category* C] [Category* D]
 /-- Identity on the joint index is literal identity for every actual support square over it. -/
 theorem boundedFlatCoefficientSupportedSectionsMap_id
     (j : U ⟶ space i) [IsOpenImmersion j] (l : U ⟶ U)
-    (h : l ≫ j = j ≫ Quillen.Scheme.CoefficientBaseChange.map (𝟙 i)) :
+    (h : l ≫ j = j ≫ AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (𝟙 i)) :
     boundedFlatCoefficientSupportedSectionsMap j j (𝟙 i) l h =
       𝟭 (BoundedFlatCoefficientSupportedSections j) := by
   change (boundedFlatCoefficientSectionSupported j).lift
@@ -414,9 +417,9 @@ theorem boundedFlatCoefficientSupportedSectionsMap_comp
     (j : U ⟶ space i) (j' : V ⟶ space k) (j'' : W ⟶ space t)
     [IsOpenImmersion j] [IsOpenImmersion j'] [IsOpenImmersion j'']
     (f : i ⟶ k) (g : k ⟶ t) (l : V ⟶ U) (m : W ⟶ V) (n : W ⟶ U)
-    (hf : l ≫ j = j' ≫ Quillen.Scheme.CoefficientBaseChange.map f)
-    (hg : m ≫ j' = j'' ≫ Quillen.Scheme.CoefficientBaseChange.map g)
-    (hfg : n ≫ j = j'' ≫ Quillen.Scheme.CoefficientBaseChange.map (f ≫ g)) :
+    (hf : l ≫ j = j' ≫ AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)
+    (hg : m ≫ j' = j'' ≫ AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g)
+    (hfg : n ≫ j = j'' ≫ AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (f ≫ g)) :
     boundedFlatCoefficientSupportedSectionsMap j j'' (f ≫ g) n hfg =
       boundedFlatCoefficientSupportedSectionsMap j j' f l hf ⋙
         boundedFlatCoefficientSupportedSectionsMap j' j'' g m hg := by
@@ -436,10 +439,10 @@ theorem boundedFlatCoefficientSupportedSectionsMap_square
     [IsOpenImmersion j] [IsOpenImmersion j'] [IsOpenImmersion j₂] [IsOpenImmersion j₃]
     (f : i ⟶ k) (g : k ⟶ t) (f' : i ⟶ k') (g' : k' ⟶ t)
     (l : V ⟶ U) (m : W ⟶ V) (l' : V' ⟶ U) (m' : W ⟶ V')
-    (hf : l ≫ j = j' ≫ Quillen.Scheme.CoefficientBaseChange.map f)
-    (hg : m ≫ j' = j₃ ≫ Quillen.Scheme.CoefficientBaseChange.map g)
-    (hf' : l' ≫ j = j₂ ≫ Quillen.Scheme.CoefficientBaseChange.map f')
-    (hg' : m' ≫ j₂ = j₃ ≫ Quillen.Scheme.CoefficientBaseChange.map g')
+    (hf : l ≫ j = j' ≫ AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)
+    (hg : m ≫ j' = j₃ ≫ AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g)
+    (hf' : l' ≫ j = j₂ ≫ AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f')
+    (hg' : m' ≫ j₂ = j₃ ≫ AlgebraicGeometry.Scheme.BaseChange.Coefficients.map g')
     (h : f ≫ g = f' ≫ g') :
     boundedFlatCoefficientSupportedSectionsMap j j' f l hf ⋙
         boundedFlatCoefficientSupportedSectionsMap j' j₃ g m hg =

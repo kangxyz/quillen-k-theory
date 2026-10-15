@@ -19,14 +19,16 @@ base opens. Thus every original right-derived module-sheaf direct image, includi
 vanishes for the actual projection over any commutative base ring.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.SchemeSheaf.TwoOpen
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.TwoOpen
 
 lemma projection_tautological_resolution_on_open_exact {R S : CommRingCat.{u}} (f : R ⟶ S)
     [IsOpenImmersion (Spec.map f)] (I : InjectiveResolution (tautologicalLine R)) (n : ℕ) :
@@ -57,7 +59,7 @@ lemma projection_tautological_resolution_exact (R : CommRingCat.{u})
   let : PreservesFiniteLimits F := inferInstanceAs
     (PreservesFiniteLimits (SheafOfModules.toSheaf (Spec R).ringCatSheaf))
   have h : ((F.mapHomologicalComplex _).obj K).ExactAt n := by
-    apply Quillen.SheafCohomology.exactAt_of_sections_on_basis _ _
+    apply TopCat.Sheaf.exactAt_of_sections_on_basis _ _
       PrimeSpectrum.isBasis_basic_opens
     rintro U ⟨r, rfl⟩
     change (((sectionsFunctor (twoChartLine R)
@@ -82,4 +84,4 @@ lemma isZero_pushforward_projection_tautologicalLine (R : CommRingCat.{u}) :
     ((Scheme.Modules.pushforward (projection R)).rightDerivedZeroIsoSelf.app
       (tautologicalLine R)).symm
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

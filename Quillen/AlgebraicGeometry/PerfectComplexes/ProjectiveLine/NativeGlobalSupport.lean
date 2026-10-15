@@ -23,7 +23,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
 namespace Quillen.PerfectComplexes.ProjectiveLine
-open Quillen.Scheme Quillen.Scheme.ProjectiveLine Waldhausen
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine Waldhausen
 
 variable (X : QuasiCompactSchemes.{u}) [QuasiSeparatedSpace X.obj] (Z : X.obj.Opens)
   [CompactSpace Z.toScheme]

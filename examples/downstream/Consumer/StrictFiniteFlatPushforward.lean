@@ -19,9 +19,9 @@ namespace Consumer.StrictFiniteFlatPushforward
 theorem original_degree_zero {Z X : Scheme.{u}}
     [IsLocallyNoetherian Z] [IsLocallyNoetherian X]
     (f : Z ⟶ X) [AlgebraicGeometry.IsFinite f] [Flat f]
-    (x : Quillen.SchemeSheaf.SchemeK Z 0) :
+    (x : AlgebraicGeometry.Scheme.Modules.SchemeK Z 0) :
     strictKFiniteFlatPushforward f 0 (vectorBundleToStrictKMap Z 0 x) =
-      vectorBundleToStrictKMap X 0 (Quillen.SchemeSheaf.schemeKPushforward f 0 x) :=
+      vectorBundleToStrictKMap X 0 (AlgebraicGeometry.Scheme.Modules.schemeKPushforward f 0 x) :=
   DFunLike.congr_fun (vectorBundleToStrictKMap_finiteFlatPushforward f 0) x
 
 end Consumer.StrictFiniteFlatPushforward

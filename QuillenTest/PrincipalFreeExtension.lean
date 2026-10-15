@@ -12,6 +12,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalRestriction
 /-! Semantic consumers of genuine finite-free principal-open descent. -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -61,7 +64,7 @@ theorem actual_perfect_restriction_image (R : CommRingCat.{u}) (r : R)
     (P : StrictPerfect (Spec (.of (Localization.Away r))))
     (hfree : ∀ i, Module.Free (Localization.Away r)
       (((sectionsComplex (.of (Localization.Away r))).obj P.obj).X i)) :
-    (perfectRestrict (CoherentScheme.principalOpen R r)).essImage
+    (perfectRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).essImage
       ((strictToPerfect _).obj P) := by
   obtain ⟨Q, ⟨e⟩⟩ := exists_principal_strict_extension_of_free_sections R r P hfree
   exact ⟨(strictToPerfect _).obj Q, ⟨ObjectProperty.isoMk _ e⟩⟩
@@ -73,7 +76,8 @@ theorem actual_geometric_quasiIso_extension (R : CommRingCat.{u}) (r : R)
     (hfree : ∀ i, Module.Free (Localization.Away r)
       (((sectionsComplex (.of (Localization.Away r))).obj P.obj).X i)) :
     ∃ (Q : StrictPerfect (Spec R))
-      (e : (restrict (CoherentScheme.principalOpen R r)).obj Q.obj ≅ P.obj),
+      (e : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj Q.obj ≅
+        P.obj),
       QuasiIso e.hom ∧ QuasiIso e.inv := by
   obtain ⟨Q, ⟨e⟩⟩ := exists_principal_strict_extension_of_free_sections R r P hfree
   exact ⟨Q, e, inferInstance, inferInstance⟩

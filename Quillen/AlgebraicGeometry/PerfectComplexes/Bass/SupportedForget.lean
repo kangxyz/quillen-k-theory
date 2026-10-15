@@ -24,7 +24,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 universe u
 namespace Quillen.PerfectComplexes.Bass
-open Quillen.Scheme
+open AlgebraicGeometry.Scheme
 
 /-- The original supported-to-absolute K0 homomorphism as a genuine natural transformation. -/
 def supportedKZeroForget : supportedKZeroFunctor.{u} ⟶
@@ -40,10 +40,12 @@ def supportedContractionForgetIso
     Quillen.Bass.TwoChart.contraction (NatTrans.op Scheme.Bass.pairPlus)
       (NatTrans.op Scheme.Bass.pairMinus) (quasiCompactOpenPairsBase.op ⋙ F) ≅
     quasiCompactOpenPairsBase.op ⋙
-      Quillen.Bass.TwoChart.contraction (NatTrans.op Scheme.Bass.plus) (NatTrans.op
-        Scheme.Bass.minus) F :=
-  Quillen.Bass.TwoChart.contractionTransportIso (NatTrans.op Scheme.Bass.plus) (NatTrans.op
-    Scheme.Bass.minus)
+      Quillen.Bass.TwoChart.contraction (NatTrans.op
+        AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus) (NatTrans.op
+        AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus) F :=
+  Quillen.Bass.TwoChart.contractionTransportIso (NatTrans.op
+    AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus) (NatTrans.op
+    AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus)
     (NatTrans.op Scheme.Bass.pairPlus) (NatTrans.op Scheme.Bass.pairMinus)
     quasiCompactOpenPairsBase.op (Iso.refl _) (Iso.refl _)
     (by intro A; rfl)

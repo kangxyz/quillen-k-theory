@@ -18,6 +18,8 @@ No reducedness or nontriviality hypothesis on the base ring is required.
 -/
 
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 universe u v u' v'
@@ -26,8 +28,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf PolynomialLaurent
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules PolynomialLaurent
 /-- The original affine-line fiber square over the base ring. -/
 def polynomialSquare (R : CommRingCat.{u}) : Scheme.{u} :=
   pullback (polynomialProjection R) (polynomialProjection R)
@@ -164,10 +166,10 @@ theorem diagonalIncidence_rectangle
       (pullbackUnitSquareIso (relativeSecond R)).hom,
     Iso.inv_hom_id, CategoryTheory.Functor.map_id, Category.id_comp]
   simpa only [Category.assoc] using congrArg (fun z => z ≫ D) hC
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf PolynomialLaurent
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules PolynomialLaurent
 /-- The actual first polynomial coordinate on the affine rectangle. -/
 def rectangleFirstCoordinate (R : CommRingCat.{u}) : Γ(polynomialSquare R, ⊤) :=
   (polynomialFirst R).appTop.hom (polynomialCoordinate R)
@@ -298,4 +300,4 @@ theorem diagonalIncidence_minus_minus (R : CommRingCat.{u}) :
       (cographRow_pullback (polynomialSecond R) (polynomialCoordinate R)))
   rw [cographColumn_cographRow_unitMul] at h
   exact h
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

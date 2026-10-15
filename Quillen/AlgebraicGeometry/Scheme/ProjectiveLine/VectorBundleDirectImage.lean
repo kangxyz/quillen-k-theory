@@ -18,12 +18,15 @@ its actual negative twist. The latter has zero bounded-below derived direct imag
 hold over arbitrary commutative rings, by literal finite-free retracts and naturality.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The geometric adjunction unit on the structure module is its original ringed-site unit. -/
 theorem pullbackAdjunctionUnit_unit {X Y : Scheme.{u}} (f : X ⟶ Y) :
     (Scheme.Modules.pullbackPushforwardAdjunction f).unit.app
@@ -33,10 +36,10 @@ theorem pullbackAdjunctionUnit_unit {X Y : Scheme.{u}} (f : X ⟶ Y) :
   have : (TopologicalSpace.Opens.map f.base).Final := inferInstance
   exact SheafOfModules.pullbackPushforwardAdjunction_homEquiv_pullbackObjUnitToUnit
     f.toRingCatSheafHom
-end Quillen.SchemeSheaf
-namespace Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.Modules
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
-open SchemeSheaf
+open AlgebraicGeometry.Scheme.Modules
 /-- The original geometric adjunction unit is invertible on the base structure module. -/
 theorem isIso_projectionAdjunctionUnit_unit (R : CommRingCat.{u}) :
     IsIso ((AlgebraicGeometry.Scheme.Modules.pullbackPushforwardAdjunction
@@ -172,4 +175,4 @@ theorem derivedProjectionPullbackBundleIso_hom (R : CommRingCat.{u})
       (derivedPushforwardPlusUnit (projection R)).app
         (singleZeroPlus (twoChartLine R)
           ((AlgebraicGeometry.Scheme.Modules.pullback (projection R)).obj M)) := rfl
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

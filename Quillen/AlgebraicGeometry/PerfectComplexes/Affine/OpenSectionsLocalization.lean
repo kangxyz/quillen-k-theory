@@ -52,7 +52,7 @@ lemma affineSectionsComplex_isPullback (R : CommRingCat.{u}) (I : Complex (Spec 
       (affineSectionsComplexRestriction R hTU I) (affineSectionsComplexRestriction R hTV I) := by
   subst W
   subst T
-  exact SheafCohomology.sectionsComplex_isPullback (affineUnderlyingSheafComplex R I) U V
+  exact TopCat.Sheaf.sectionsComplex_isPullback (affineUnderlyingSheafComplex R I) U V
 
 /-- Injective sheaf terms give actual epic section restriction chain maps. -/
 lemma epi_affineSectionsComplexRestriction (R : CommRingCat.{u}) (I : Complex (Spec R))
@@ -63,7 +63,8 @@ lemma epi_affineSectionsComplexRestriction (R : CommRingCat.{u}) (I : Complex (S
   let := hinj n
   change Epi ((modulesSpecToSheaf.obj (I.X n)).obj.map (homOfLE h).op)
   rw [ModuleCat.epi_iff_surjective]
-  exact SchemeSheaf.injective_sections_restrict_surjective (Spec R) (I.X n) (homOfLE h)
+  exact AlgebraicGeometry.Scheme.Modules.injective_sections_restrict_surjective (Spec R) (I.X n)
+    (homOfLE h)
 
 /-- The original localized comparison is weak on a union if it is weak on both opens
 and their actual intersection. This is genuine pullback gluing of section complexes. -/

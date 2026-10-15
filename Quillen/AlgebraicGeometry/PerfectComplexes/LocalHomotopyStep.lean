@@ -52,7 +52,7 @@ private theorem cochain_v_heq (α : Cochain K L (-1)) (p q r : ℤ)
 lift through the target's differential onto cycles. -/
 theorem exists_local_homotopy_step (f : K ⟶ L) (α : Cochain K L (-1)) (n : ℤ)
     (hα : HomotopyAbove f α n) (hL : L.ExactAt n)
-    [SchemeSheaf.IsFiniteLocallyFree X (K.X n)] (x : X) :
+    [AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X (K.X n)] (x : X) :
     ∃ (U : X.Opens), x ∈ U ∧
       ∃ β : Cochain ((restrict U.ι).obj K) ((restrict U.ι).obj L) (-1),
         HomotopyAbove ((restrict U.ι).map f) β (n - 1) := by

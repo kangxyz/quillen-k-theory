@@ -19,6 +19,9 @@ bounded finite-projective module complex. All rings are arbitrary.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -52,7 +55,7 @@ theorem strictPerfect_associated (R : CommRingCat.{u}) {K : ModuleComplex R}
   refine ⟨⟨a, b, fun i hi => (tilde.functor R).map_isZero (hb i hi)⟩, fun i => ?_⟩
   let := (hp i).1
   let := (hp i).2
-  exact SchemeSheaf.finiteLocallyFree_tilde_of_finite_projective R (K.X i)
+  exact AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_tilde_of_finite_projective R (K.X i)
 
 /-- Global sections of an affine strict-perfect sheaf complex are bounded
 and degreewise finite projective, without a noetherianity assumption. -/
@@ -61,8 +64,8 @@ theorem moduleStrictPerfect_sections (R : CommRingCat.{u}) {K : Complex (Spec R)
   obtain ⟨⟨a, b, hb⟩, hp⟩ := hK
   refine ⟨⟨a, b, fun i hi => moduleSpecΓFunctor.map_isZero (hb i hi)⟩, fun i => ?_⟩
   let := hp i
-  exact ⟨SchemeSheaf.finite_globalSections_of_finiteLocallyFree R (K.X i),
-    SchemeSheaf.projective_globalSections_of_finiteLocallyFree R (K.X i)⟩
+  exact ⟨AlgebraicGeometry.Scheme.Modules.finite_globalSections_of_finiteLocallyFree R (K.X i),
+    AlgebraicGeometry.Scheme.Modules.projective_globalSections_of_finiteLocallyFree R (K.X i)⟩
 
 /-- The actual counit reconstructs every termwise quasicoherent affine
 sheaf complex from its genuine module complex of global sections. -/
@@ -121,25 +124,30 @@ naturally with actual geometric restriction to the principal open. -/
 def principalRestrictionAssociatedIso (R : CommRingCat.{u}) (r : R) :
     ModuleCat.localizedModuleFunctor (Submonoid.powers r) ⋙
       tilde.functor (CommRingCat.of (Localization.Away r)) ≅
-    tilde.functor R ⋙ Scheme.Modules.restrictFunctor (CoherentScheme.principalOpen R r) := by
-  let F := tilde.functor R ⋙ Scheme.Modules.restrictFunctor (CoherentScheme.principalOpen R r)
+    tilde.functor R ⋙ Scheme.Modules.restrictFunctor
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) := by
+  let F := tilde.functor R ⋙ Scheme.Modules.restrictFunctor
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
   let T := tilde.functor (CommRingCat.of (Localization.Away r))
   let Γ := moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r))
   let α : F ⋙ Γ ⋙ T ⟶ F ⋙ 𝟭 _ :=
     Functor.whiskerLeft F Scheme.Modules.fromTildeΓNatTrans
   have (M : ModuleCat.{u} R) : IsIso (α.app M) := by
     have : (F.obj M).IsQuasicoherent :=
-      Scheme.Modules.isQuasicoherent_restrictFunctor (CoherentScheme.principalOpen R r) (tilde M)
+      Scheme.Modules.isQuasicoherent_restrictFunctor
+        (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (tilde M)
     exact Scheme.Modules.isIso_fromTildeΓ_of_isQuasicoherent (F.obj M)
   have : IsIso α := NatIso.isIso_of_isIso_app α
-  exact Functor.isoWhiskerRight (CoherentScheme.localizationRestrictionNatIso R r) T ≪≫
+  exact Functor.isoWhiskerRight
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.localizationRestrictionNatIso R r) T ≪≫
     Functor.associator F Γ T ≪≫ asIso α ≪≫ Functor.rightUnitor F
 
 /-- The actual localization/restriction comparison on complexes. -/
 def principalRestrictionAssociatedComplexIso (R : CommRingCat.{u}) (r : R) :
     localize r (ComplexShape.up ℤ) ⋙
       associatedComplex (CommRingCat.of (Localization.Away r)) ≅
-    associatedComplex R ⋙ restrict (CoherentScheme.principalOpen R r) :=
+    associatedComplex R ⋙ restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+      r) :=
   by
     letI : (tilde.functor (CommRingCat.of (Localization.Away r))).Additive :=
       AlgebraicGeometry.instAdditiveModuleCatCarrierModulesSpecFunctor
@@ -177,14 +185,17 @@ sheaf complexes. The source is a bounded finite-projective complex, and
 restriction is the existing geometric functor. -/
 theorem exists_principal_chain_fraction (R : CommRingCat.{u}) (r : R)
     {K L : ModuleComplex R} (hK : moduleStrictPerfect R K)
-    (f : (restrict (CoherentScheme.principalOpen R r)).obj ((associatedComplex R).obj K) ⟶
-      (restrict (CoherentScheme.principalOpen R r)).obj ((associatedComplex R).obj L)) :
+    (f : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
+      ((associatedComplex R).obj K) ⟶
+      (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
+        ((associatedComplex R).obj L)) :
     ∃ (n : ℕ) (g : K ⟶ L),
-      IsIso ((restrict (CoherentScheme.principalOpen R r)).map
+      IsIso ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map
         ((associatedComplex R).map (r ^ n • 𝟙 K))) ∧
-      (restrict (CoherentScheme.principalOpen R r)).map
+      (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map
         ((associatedComplex R).map (r ^ n • 𝟙 K)) ≫ f =
-      (restrict (CoherentScheme.principalOpen R r)).map ((associatedComplex R).map g) := by
+      (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map
+        ((associatedComplex R).map g) := by
   let B := associatedComplex (CommRingCat.of (Localization.Away r))
   let e := principalRestrictionAssociatedComplexIso R r
   let : B.Full := associatedComplex_full _
@@ -195,13 +206,16 @@ theorem exists_principal_chain_fraction (R : CommRingCat.{u}) (r : R)
     rw [hβ]
     simp
   refine ⟨n, g, ?_, ?_⟩
-  · change IsIso ((associatedComplex R ⋙ restrict (CoherentScheme.principalOpen R r)).map _)
+  · change IsIso ((associatedComplex R ⋙ restrict
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map _)
     rw [← NatIso.naturality_1 e (r ^ n • 𝟙 K)]
     change IsIso (e.inv.app K ≫ B.map ((localize r (ComplexShape.up ℤ)).map
       (r ^ n • 𝟙 K)) ≫ e.hom.app K)
     infer_instance
-  · change (associatedComplex R ⋙ restrict (CoherentScheme.principalOpen R r)).map _ ≫ f =
-      (associatedComplex R ⋙ restrict (CoherentScheme.principalOpen R r)).map g
+  · change (associatedComplex R ⋙ restrict
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map _ ≫ f =
+      (associatedComplex R ⋙ restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
+        R r)).map g
     rw [hf, ← NatIso.naturality_1 e (r ^ n • 𝟙 K), ← NatIso.naturality_1 e g]
     simpa only [Functor.comp_map, B, Functor.map_comp, Category.assoc, Iso.hom_inv_id_app_assoc]
       using

@@ -17,13 +17,19 @@ without repeating the compact-open induction.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 open Scheme.Modules
 
@@ -93,4 +99,4 @@ theorem affineLocallyFiniteType_subobject_extension_of_affine_enlargement
     exact hNW)
   exact ⟨⟨N, hcoh⟩, s, hs, hsW⟩
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

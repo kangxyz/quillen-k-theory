@@ -25,18 +25,18 @@ namespace Quillen.KTheory.Bass
 /-- Bass on strict ring diagrams, using the literal polynomial and Laurent coefficient square. -/
 def strictRingDiagramFunctor :
     (CommRingCat.{u} ⥤ LoopPrespectrum.{w}) ⥤ (CommRingCat.{u} ⥤ LoopPrespectrum.{w}) :=
-  strictDiagramFunctor PolynomialBaseChange.laurentSquareFunctor
+  strictDiagramFunctor CommRingCat.PolynomialLaurent.laurentSquareFunctor
 
 /-- Every iterate is again a strict ring diagram with an action on every coefficient map. -/
 def strictRingDiagramIterate (n : ℕ) :
     (CommRingCat.{u} ⥤ LoopPrespectrum.{w}) ⥤ (CommRingCat.{u} ⥤ LoopPrespectrum.{w}) :=
-  strictDiagramIterate PolynomialBaseChange.laurentSquareFunctor n
+  strictDiagramIterate CommRingCat.PolynomialLaurent.laurentSquareFunctor n
 
 /-- Apply the nth Bass endofunctor to the supplied seed, without introducing a new unit. -/
 def strictRingDiagramTransition {F : CommRingCat.{u} ⥤ LoopPrespectrum.{w}}
     (η : F ⟶ strictRingDiagramFunctor.obj F) (n : ℕ) :
     (strictRingDiagramIterate n).obj F ⟶ (strictRingDiagramIterate (n + 1)).obj F :=
-  strictDiagramTransition PolynomialBaseChange.laurentSquareFunctor η n
+  strictDiagramTransition CommRingCat.PolynomialLaurent.laurentSquareFunctor η n
 
 /-- The iterated original seed commutes literally with every coefficient map. -/
 theorem strictRingDiagramTransition_naturality

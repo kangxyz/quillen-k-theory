@@ -15,13 +15,15 @@ installed single-pullback unit. No coefficient-perfection or generation claim is
 -/
 
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.Scheme.PolynomialLaurent
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
 /-- The standard derived category of module sheaves. -/
 local instance projectiveFlatBaseChangeStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -74,4 +76,4 @@ def derivedSelfBaseChangeSingleIso (M : (twoChartLine R).Modules) [M.IsQuasicohe
         ((Scheme.Modules.pullback (relativeFirst R)).obj M)) :=
   derivedProjectionBaseChangeSingleIso R (relativeFirst R) (relativeSecond R) (projection R)
     (IsPullback.of_hasPullback (projection R) (projection R)) M
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

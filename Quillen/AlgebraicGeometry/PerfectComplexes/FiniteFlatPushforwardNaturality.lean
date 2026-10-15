@@ -39,7 +39,8 @@ theorem vectorBundleSComparison_finiteFlatPushforward {X Y : Scheme.{u}}
     (f : X ⟶ Y) [AlgebraicGeometry.IsFinite f] [Flat f] (n : ℕ) :
     (strictKFiniteFlatPushforward f n).comp (vectorBundleSComparison X n) =
       (vectorBundleSComparison Y n).comp
-        (Waldhausen.KMap (SchemeSheaf.vectorBundlePushforwardExact f).waldhausenExact n) := by
+        (Waldhausen.KMap (AlgebraicGeometry.Scheme.Modules.vectorBundlePushforwardExact
+          f).waldhausenExact n) := by
   unfold strictKFiniteFlatPushforward vectorBundleSComparison
   rw [Quillen.Waldhausen.KMap_comp_KMap, Quillen.Waldhausen.KMap_comp_KMap]
   exact Waldhausen.KMap_eq_of_iso _ _ (vectorBundleInclusionFiniteFlatPushforwardIso f) n
@@ -48,31 +49,35 @@ theorem vectorBundleSComparison_finiteFlatPushforward {X Y : Scheme.{u}}
 theorem smallVectorBundleKMap_finiteFlatPushforward {X Y : Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian Y]
     (f : X ⟶ Y) [AlgebraicGeometry.IsFinite f] [Flat f] (n : ℕ) :
-    (SchemeSheaf.smallVectorBundleKMap Y n).comp (SchemeSheaf.schemeKPushforward f n) =
-      ((SchemeSheaf.vectorBundlePushforwardExact f).KMap n).comp
-        (SchemeSheaf.smallVectorBundleKMap X n) :=
+    (AlgebraicGeometry.Scheme.Modules.smallVectorBundleKMap Y n).comp
+      (AlgebraicGeometry.Scheme.Modules.schemeKPushforward f n) =
+      ((AlgebraicGeometry.Scheme.Modules.vectorBundlePushforwardExact f).KMap n).comp
+        (AlgebraicGeometry.Scheme.Modules.smallVectorBundleKMap X n) :=
   ExactFunctor.smallModelToOriginal_commonAmbientKMap_naturality.{u + 1, u}
-    (SchemeSheaf.vectorBundlePushforwardExact f) n
+    (AlgebraicGeometry.Scheme.Modules.vectorBundlePushforwardExact f) n
 
 /-- The original small-model/Q/S equivalence commutes with finite flat direct image. -/
 theorem vectorBundleQSEquiv_finiteFlatPushforward {X Y : Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian Y]
     (f : X ⟶ Y) [AlgebraicGeometry.IsFinite f] [Flat f] (n : ℕ) :
-    (Waldhausen.KMap (SchemeSheaf.vectorBundlePushforwardExact f).waldhausenExact n).comp
+    (Waldhausen.KMap (AlgebraicGeometry.Scheme.Modules.vectorBundlePushforwardExact
+      f).waldhausenExact n).comp
         (vectorBundleQSEquiv X n).toMonoidHom =
-      (vectorBundleQSEquiv Y n).toMonoidHom.comp (SchemeSheaf.schemeKPushforward f n) := by
+      (vectorBundleQSEquiv Y n).toMonoidHom.comp
+        (AlgebraicGeometry.Scheme.Modules.schemeKPushforward f n) := by
   apply MonoidHom.ext
   intro x
   apply (Waldhausen.QuillenComparison.comparisonKEquiv
-    (SchemeSheaf.vectorBundleExactStructure Y) n).injective
+    (AlgebraicGeometry.Scheme.Modules.vectorBundleExactStructure Y) n).injective
   have hs := DFunLike.congr_fun (smallVectorBundleKMap_finiteFlatPushforward f n) x
   have hq := DFunLike.congr_fun
     (Waldhausen.QuillenComparison.comparisonKEquiv_exactFunctor_naturality
-      (SchemeSheaf.vectorBundlePushforwardExact f) n) (vectorBundleQSEquiv X n x)
+      (AlgebraicGeometry.Scheme.Modules.vectorBundlePushforwardExact f) n) (vectorBundleQSEquiv X n
+        x)
   simp only [MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom] at hs hq ⊢
   simp only [vectorBundleQSEquiv, MulEquiv.trans_apply, MulEquiv.apply_symm_apply] at hq
   simpa only [vectorBundleQSEquiv, MulEquiv.trans_apply, MulEquiv.apply_symm_apply,
-    ← SchemeSheaf.smallVectorBundleKEquiv_coe, MonoidHom.coe_coe]
+    ← AlgebraicGeometry.Scheme.Modules.smallVectorBundleKEquiv_coe, MonoidHom.coe_coe]
       using hq.trans hs.symm
 
 /-- The original public vector-bundle-to-strict comparison is natural for
@@ -81,7 +86,8 @@ theorem vectorBundleToStrictKMap_finiteFlatPushforward {X Y : Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian Y]
     (f : X ⟶ Y) [AlgebraicGeometry.IsFinite f] [Flat f] (n : ℕ) :
     (strictKFiniteFlatPushforward f n).comp (vectorBundleToStrictKMap X n) =
-      (vectorBundleToStrictKMap Y n).comp (SchemeSheaf.schemeKPushforward f n) := by
+      (vectorBundleToStrictKMap Y n).comp (AlgebraicGeometry.Scheme.Modules.schemeKPushforward f n)
+        := by
   unfold vectorBundleToStrictKMap
   rw [← MonoidHom.comp_assoc, vectorBundleSComparison_finiteFlatPushforward,
     MonoidHom.comp_assoc, vectorBundleQSEquiv_finiteFlatPushforward, MonoidHom.comp_assoc]

@@ -25,9 +25,9 @@ is not substituted for that Bass cylinder, and no unit or seed premise is suppli
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Scheme.AffineOpenPair Quillen.FunctorIdentityAutomorphism
+open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.FunctorIdentityAutomorphism
 open Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
-open Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u v w
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

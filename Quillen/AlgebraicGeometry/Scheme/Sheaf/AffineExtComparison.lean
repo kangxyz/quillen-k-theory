@@ -31,6 +31,9 @@ is needed. The associated sheaf of a projective module is not assumed to be
 projective in all module sheaves.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -38,7 +41,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe w w' u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Abelian AlgebraicGeometry
-namespace Quillen.SchemeSheaf.AffineDerived
+namespace AlgebraicGeometry.Scheme.Modules.AffineDerived
 
 /-- Actual positive Ext classes from tilde of a projective module into a QC
 sheaf vanish, without ambient projectivity of that associated sheaf. -/
@@ -110,4 +113,4 @@ lemma tilde_mapExt_bijective {R : CommRingCat.{u}}
       (fun x₃ ↦ Ext.contravariant_sequence_exact₃ hS _ x₃ (by subsingleton) (add_comm 1 n))
       (fun y₃ ↦ Ext.contravariant_sequence_exact₃ (hS.map F) _ y₃ (by subsingleton) (add_comm 1 n))
 
-end Quillen.SchemeSheaf.AffineDerived
+end AlgebraicGeometry.Scheme.Modules.AffineDerived

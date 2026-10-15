@@ -6,31 +6,16 @@ Authors: kangxyz
 
 module
 
-public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Aglib.AlgebraicGeometry.Modules.Pushforward.Isomorphism
 
-/-! # Direct image along scheme isomorphisms
-
-The actual module-sheaf pushforward along an isomorphism agrees naturally
-with restriction along its inverse, including the structure-sheaf action.
--/
+/-! # Compatibility imports for the canonical Aglib interface -/
 @[expose] public section
 
+-- Transitional names share Aglib declarations and canonical instances.
 noncomputable section
-open CategoryTheory AlgebraicGeometry
-open Scheme.Modules
-universe u
 namespace Quillen.SchemeSheaf
-
-/-- Direct image along a scheme isomorphism is actual restriction along its
-inverse. This comparison includes the structure-sheaf module actions. -/
-def pushforwardIsoRestrict {Z X : Scheme.{u}} (e : Z ≅ X) :
-    pushforward e.hom ≅ restrictFunctor e.inv :=
-  (Functor.rightUnitor _).symm ≪≫
-    Functor.isoWhiskerLeft (pushforward e.hom) (restrictFunctorAdjCounitIso e.inv).symm ≪≫
-    (Functor.associator _ _ _).symm ≪≫
-    Functor.isoWhiskerRight
-      (pushforwardComp e.hom e.inv ≪≫ pushforwardCongr e.hom_inv_id ≪≫
-        pushforwardId Z) _ ≪≫
-    Functor.leftUnitor _
-
+export AlgebraicGeometry.Scheme.Modules
+  (pushforwardIsoRestrict)
 end Quillen.SchemeSheaf
+
+end

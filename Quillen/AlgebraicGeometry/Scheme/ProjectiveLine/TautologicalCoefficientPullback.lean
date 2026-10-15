@@ -18,15 +18,21 @@ The original chart columns construct the line comparison through the actual
 kernel presentation, retaining both original trivializations and inclusion.
 -/
 @[expose] public section
+
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.PolynomialBaseChange Quillen.CoherentScheme
+open AlgebraicGeometry.Scheme.Modules Quillen.PolynomialBaseChange
+  AlgebraicGeometry.Scheme.Modules.Coherent
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable {R S : CommRingCat.{u}} (f : R ⟶ S)
 
 /-- Actual positive pullback-chart trivialization. -/
@@ -119,10 +125,10 @@ lemma tautologicalCoefficientInclusion_minus :
     Category.assoc, tautologicalCoefficientMinusPullbackColumn]
   rfl
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.Coherent
 variable {R S : CommRingCat.{u}} (f : R ⟶ S)
 
 lemma tautologicalCoefficientInclusion_obstruction :
@@ -247,4 +253,4 @@ lemma tautologicalCoefficientIso_minus :
     tautologicalCoefficientInclusion_minus] at h
   simpa only [Category.assoc] using h
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

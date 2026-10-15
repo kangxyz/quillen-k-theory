@@ -39,7 +39,7 @@ variable {X : Scheme.{u}}
 /-- An epimorphism onto a vector bundle admits sections on actual open
 subschemes near every point. -/
 theorem exists_local_section {E P : X.Modules} (q : E ⟶ P) [Epi q]
-    [SchemeSheaf.IsFiniteLocallyFree X P] (x : X) :
+    [AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X P] (x : X) :
     ∃ (U : X.Opens), x ∈ U ∧
       ∃ s : (Scheme.Modules.restrictFunctor U.ι).obj P ⟶
           (Scheme.Modules.restrictFunctor U.ι).obj E,
@@ -47,9 +47,9 @@ theorem exists_local_section {E P : X.Modules} (q : E ⟶ P) [Epi q]
   have hs : (ShortComplex.kernelSequence q).ShortExact :=
     { exact := ShortComplex.kernelSequence_exact q
       epi_g := inferInstanceAs (Epi q) }
-  obtain ⟨U, hxU, ⟨s⟩⟩ := @SchemeSheaf.exists_local_splitting X
+  obtain ⟨U, hxU, ⟨s⟩⟩ := @AlgebraicGeometry.Scheme.Modules.exists_local_splitting X
     (ShortComplex.kernelSequence q) hs
-    (inferInstanceAs (SchemeSheaf.IsFiniteLocallyFree X P)) x
+    (inferInstanceAs (AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X P)) x
   let F := (Scheme.Modules.overEquiv U).functor
   let e := Scheme.Modules.overFunctorEquiv U
   let σ := e.inv.app P ≫ F.map s.s ≫ e.hom.app E
@@ -68,7 +68,7 @@ theorem exists_local_section {E P : X.Modules} (q : E ⟶ P) [Epi q]
 
 /-- A map from a vector bundle lifts locally through a surjection. -/
 theorem exists_local_lift {E N P : X.Modules} (p : E ⟶ N) [Epi p]
-    (f : P ⟶ N) [SchemeSheaf.IsFiniteLocallyFree X P] (x : X) :
+    (f : P ⟶ N) [AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X P] (x : X) :
     ∃ (U : X.Opens), x ∈ U ∧
       ∃ l : (Scheme.Modules.restrictFunctor U.ι).obj P ⟶
           (Scheme.Modules.restrictFunctor U.ι).obj E,
@@ -85,7 +85,7 @@ theorem exists_local_lift {E N P : X.Modules} (p : E ⟶ N) [Epi p]
 exact sequence locally factors through the first arrow. This is the local
 analogue of the lifting lemma used for globally projective objects. -/
 theorem exists_local_factor_of_exact {S : ShortComplex X.Modules} (hS : S.Exact)
-    {P : X.Modules} [SchemeSheaf.IsFiniteLocallyFree X P]
+    {P : X.Modules} [AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X P]
     (f : P ⟶ S.X₂) (hf : f ≫ S.g = 0) (x : X) :
     ∃ (U : X.Opens), x ∈ U ∧
       ∃ l : (Scheme.Modules.restrictFunctor U.ι).obj P ⟶

@@ -15,14 +15,16 @@ Spec R its canonical isomorphism with the existing twoChartLine R retains the
 projection and both original polynomial charts. No base flatness is assumed.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.Scheme.Bass
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Bass
 
 /-- Every native base arrow gives the genuine cartesian projective-line square. -/
 theorem nativeMap_isPullback {X Y : QuasiCompactSchemes.{u}} (f : X ⟶ Y) :
@@ -130,4 +132,4 @@ theorem nativeAffineIso_minus (R : CommRingCat.{u}) :
       Category.assoc, (nativeMinus_isPullback _).w, ← Category.assoc,
       polynomialSpecIso_hom_snd]
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

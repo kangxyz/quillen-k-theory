@@ -17,14 +17,16 @@ K-group map. Its underlying module-sheaf functor is literally pullback followed 
 checked kernel twist. No projective-bundle equivalence is asserted here.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 variable (R : CommRingCat.{u})
 
 /-- The canonical negative twist on actual finite locally free module sheaves. -/
@@ -63,4 +65,4 @@ lemma vectorBundleTwistedPullback_comp_forget :
 def twistedPullbackKMap (n : ℕ) : SchemeK (Spec R) n →* SchemeK (twoChartLine R) n :=
   (vectorBundleTwistedPullback R).smallKMap n
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

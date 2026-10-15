@@ -103,7 +103,7 @@ theorem perfectLocalizedPullback_unique {X Y : Scheme.{u}}
 
 /-- Original perfect spectra form an actual contravariant functor in the
 constructed homotopy/stable localization; no strict continuous inverse is asserted. -/
-def PerfectLocalizedSpectrumFunctor : Quillen.Scheme.QuasiCompactSchemes.{u}ᵒᵖ ⥤
+def PerfectLocalizedSpectrumFunctor : AlgebraicGeometry.Scheme.QuasiCompactSchemes.{u}ᵒᵖ ⥤
   StableLocalization.{u+1} where
   obj X := perfectLocalizedSpectrum X.unop.obj
   map f := perfectLocalizedPullback f.unop.hom
@@ -112,7 +112,7 @@ def PerfectLocalizedSpectrumFunctor : Quillen.Scheme.QuasiCompactSchemes.{u}ᵒ�
 
 /-- The literal bounded-flat inclusion is the forward component of an actual natural isomorphism. -/
 def boundedFlatPerfectSpectrumNatIso :
-    Quillen.Scheme.quasiCompactSchemesInclusion.op ⋙ BoundedFlatLocalizedSpectrumFunctor ≅
+    AlgebraicGeometry.Scheme.quasiCompactSchemesInclusion.op ⋙ BoundedFlatLocalizedSpectrumFunctor ≅
       PerfectLocalizedSpectrumFunctor :=
   NatIso.ofComponents (fun X ↦ boundedFlatPerfectSpectrumIso X.unop.obj)
     (fun f ↦ (perfectLocalizedPullback_representatives f.unop.hom).symm)

@@ -19,7 +19,7 @@ open Quillen
 /-- Use the actual standard ambient derived categories. -/
 local instance standard (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _
-open SchemeSheaf
+open AlgebraicGeometry.Scheme.Modules
 variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (f : U ⟶ X) (j : V ⟶ X)
   (h : IsPullback a b f j) [Flat j]
 include h in

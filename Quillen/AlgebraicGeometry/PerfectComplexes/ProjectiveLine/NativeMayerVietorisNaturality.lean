@@ -17,7 +17,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace Quillen.PerfectComplexes.ProjectiveLine.NativeMayerVietoris
-open Quillen.Scheme Quillen.Scheme.ProjectiveLine Waldhausen OpenFunctorNaturality
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine Waldhausen
+  OpenFunctorNaturality
 
 /-- Equality of the original geometric arrows preserves their original restriction K-map. -/
 theorem restrictK_congr {A B : Scheme.{u}} {i j : A ⟶ B}

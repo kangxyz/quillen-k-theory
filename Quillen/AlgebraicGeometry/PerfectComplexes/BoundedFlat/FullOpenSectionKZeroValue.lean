@@ -22,7 +22,7 @@ surjectivity, without any assertion that full-open restriction is surjective on 
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen Quillen.Waldhausen.AlgebraicGrothendieck
-open Quillen.Scheme.AffineOpenPair
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

@@ -21,6 +21,9 @@ so no induced perfect-to-G K-map is asserted here.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -35,9 +38,9 @@ def coherentHomologyFlatPullbackIso {X Y : Scheme.{u}}
     [IsLocallyNoetherian X] [IsLocallyNoetherian Y]
     (f : X ⟶ Y) [Flat f] (i : ℤ) :
     perfectFlatPullback f ⋙ coherentHomology X i ≅
-      coherentHomology Y i ⋙ CoherentScheme.coherentPullback f :=
+      coherentHomology Y i ⋙ AlgebraicGeometry.Scheme.Modules.Coherent.coherentPullback f :=
   NatIso.ofComponents
-    (fun K => (CoherentScheme.affineLocallyFiniteType X).isoMk
+    (fun K => (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineLocallyFiniteType X).isoMk
       ((K.obj.sc i).mapHomologyIso (Scheme.Modules.pullback f)))
     (fun s => by
       apply ObjectProperty.hom_ext

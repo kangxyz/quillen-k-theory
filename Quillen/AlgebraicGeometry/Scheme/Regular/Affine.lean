@@ -19,31 +19,38 @@ bound, finite-resolution hypothesis or K-equivalence is assumed.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Every actual coherent sheaf on a regular affine scheme has a genuine
 finite locally free admissible resolution, with an object-dependent length. -/
 theorem coherentResolutionHypothesis_of_regular (R : CommRingCat.{u}) [IsRegularRing R] :
-    (CoherentScheme.coherentExactStructure (Spec R)).ResolutionHypothesis
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec R)).ResolutionHypothesis
       (coherentVectorBundle (Spec R)) :=
   coherentResolutionHypothesis_of_finite_projectiveDimension R
-    (fun M => CoherentScheme.projectiveDimension_ne_top_of_regular R M.obj)
+    (fun M => AlgebraicGeometry.Scheme.Modules.Coherent.projectiveDimension_ne_top_of_regular R
+      M.obj)
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 /-- On the spectrum of any regular Noetherian ring, the original canonical
 inclusion-induced K-to-G map is bijective in every nonnegative degree. -/
 theorem KToG_regular_affine_bijective (R : CommRingCat.{u}) [IsRegularRing R] (n : ℕ) :
     Function.Bijective (KToG (Spec R) n) :=
-  SchemeSheaf.schemeKToG_bijective_of_finite_resolutions (Spec R)
-    (SchemeSheaf.coherentResolutionHypothesis_of_regular R) n
+  AlgebraicGeometry.Scheme.Modules.schemeKToG_bijective_of_finite_resolutions (Spec R)
+    (AlgebraicGeometry.Scheme.Modules.coherentResolutionHypothesis_of_regular R) n
 
 /-- The actual canonical regular-affine K-to-G equivalence. -/
 def KToGRegularAffineEquiv (R : CommRingCat.{u}) [IsRegularRing R] (n : ℕ) :
@@ -63,4 +70,4 @@ theorem KToGRegularAffineEquiv_restrict {R S : CommRingCat.{u}}
       KToGRegularAffineEquiv S n (restrictK j n x) :=
   KToG_restrict_apply j n x
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

@@ -15,13 +15,15 @@ zero. The positive comparison uses the original degreewise geometric unit, whose
 is retained. All statements concern literal bounded complexes over arbitrary base rings.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 /-- The standard derived category used for the actual bounded comparison. -/
 local instance boundedBundleStandard (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _
@@ -164,4 +166,4 @@ theorem derivedProjectionPullbackBoundedIso_hom (R : CommRingCat.{u})
           ((AlgebraicGeometry.Scheme.Modules.pullback
             (projection R)).mapCochainComplexPlus.obj K) :=
   rfl
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

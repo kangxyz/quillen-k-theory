@@ -69,10 +69,10 @@ theorem perfectScalarCofiberBoundaryKOneClass_restrict :
 /-- The genuine rank-one structure sheaf, as its original degree-zero perfect complex. -/
 def rankOnePerfect (X : Scheme.{u}) : Perfect X := by
   let M := SheafOfModules.unit X.ringCatSheaf
-  letI : Quillen.SchemeSheaf.IsFiniteLocallyFree X M := by
+  letI : AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X M := by
     let e : SheafOfModules.free (R := X.ringCatSheaf) (ULift.{u} Unit) ≅ M :=
       coproductUniqueIso _
-    exact Quillen.SchemeSheaf.finiteLocallyFree_of_iso e
+    exact AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_of_iso e
   exact ⟨(CochainComplex.singleFunctor X.Modules 0).obj M,
     locallyPerfect_of_strictPerfect (single_strictPerfect_int M 0)⟩
 
@@ -99,7 +99,7 @@ theorem perfectScalarCofiberBoundaryKOneClass_restrict_rankOne :
   rw [perfectScalarCofiberBoundaryKOneClass_eq_inv, map_inv,
     perfectScalarForwardKOneClass_restrict_rankOne]
 
-open Quillen.Scheme.PolynomialLaurent in
+open AlgebraicGeometry.Scheme.PolynomialLaurent in
 /-- The original forward polynomial coordinate gives the actual forward Laurent unit class. -/
 theorem polynomialScalarForwardKOneClass_restrict (R : CommRingCat.{u})
     (K : Perfect (Spec (.of (Polynomial R)))) :
@@ -111,7 +111,7 @@ theorem polynomialScalarForwardKOneClass_restrict (R : CommRingCat.{u})
         ((perfectRestrict (laurentPlus R)).obj K) :=
   perfectScalarForwardKOneClass_restrict _ _ _ _ _
 
-open Quillen.Scheme.PolynomialLaurent in
+open AlgebraicGeometry.Scheme.PolynomialLaurent in
 /-- The affine client keeps the rank-one structure object and the original T unit. -/
 theorem polynomialScalarForwardKOneClass_restrict_rankOne (R : CommRingCat.{u}) :
     perfectOpenKRestrict (laurentPlus R) 1

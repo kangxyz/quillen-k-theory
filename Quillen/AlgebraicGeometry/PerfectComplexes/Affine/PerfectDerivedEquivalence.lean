@@ -30,6 +30,9 @@ comparison.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -228,7 +231,7 @@ def perfectDerivedEquivalencePrincipalIso (R : CommRingCat.{u}) (r : R) :
     principalPerfectModuleLocalization R r ⋙
       (perfectDerivedEquivalence (CommRingCat.of (Localization.Away r))).functor ≅
     (perfectDerivedEquivalence R).functor ⋙
-      perfectDerivedRestrict (CoherentScheme.principalOpen R r) :=
+      perfectDerivedRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) :=
   NatIso.ofComponents (fun K => ObjectProperty.isoMk _ ((principalDerivedComparisonIso R r).app
     K.obj))
     (fun f => by

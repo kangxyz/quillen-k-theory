@@ -59,7 +59,8 @@ lemma associatedSections_preservesRightHomology {R : CommRingCat.{u}}
     (hqc : ∀ n, (I.homology n).IsQuasicoherent) (n : ℤ) :
     (moduleSpecΓFunctor ⋙ tilde.functor R).PreservesRightHomologyOf (I.sc n) := by
   let : moduleSpecΓFunctor.PreservesRightHomologyOf (I.sc n) :=
-    SchemeSheaf.AffineCech.globalSections_preservesRightHomology I a hbound hinj hqc n
+    AlgebraicGeometry.Scheme.Modules.AffineCech.globalSections_preservesRightHomology I a hbound
+      hinj hqc n
   let : PreservesColimit (parallelPair (I.sc n).f 0) moduleSpecΓFunctor :=
     ShortComplex.RightHomologyData.IsPreservedBy.hf (I.sc n).homologyData.right _
   let : (I.sc n).homologyData.right.IsPreservedBy (moduleSpecΓFunctor ⋙ tilde.functor R) :=

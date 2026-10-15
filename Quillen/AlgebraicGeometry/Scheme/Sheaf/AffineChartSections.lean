@@ -16,6 +16,9 @@ changes of the actual open arrow. No finiteness hypothesis is used.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 section
 
@@ -24,7 +27,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {R S : CommRingCat.{u}} (φ : R ⟶ S)
 
 /-- The affine global-sections functor acts by the original map on top sections. -/
@@ -37,7 +40,7 @@ theorem pushforwardGlobalSectionsIso_hom_apply (N : (Spec S).Modules)
     (x : moduleSpecΓFunctor.obj ((Scheme.Modules.pushforward (Spec.map φ)).obj N)) :
     (pushforwardGlobalSectionsIso φ).hom.app N x = x := rfl
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 end
 
 end
@@ -49,7 +52,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {R A : CommRingCat.{u}} {X : Scheme.{u}}
 variable (a : R ⟶ A) (j : Spec A ⟶ X) (p : X ⟶ Spec R) (h : j ≫ p = Spec.map a)
 
@@ -70,7 +73,7 @@ theorem chartPushforwardSectionsIso_hom_apply (N : (Spec A).Modules)
   change N.presheaf.map (eqToHom (by simp)).op x = x
   simp
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 end
 
 end
@@ -82,7 +85,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModuleCat Opposite
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {R A B : CommRingCat.{u}} {X : Scheme.{u}}
 variable (a : R ⟶ A) (φ : A ⟶ B) (c : R ⟶ B) (hc : c.hom = φ.hom.comp a.hom)
 variable (j : Spec A ⟶ X) (p : X ⟶ Spec R) (hj : j ≫ p = Spec.map a)
@@ -124,7 +127,7 @@ theorem original_nested_restriction (M : X.Modules) :
   rw [Scheme.Modules.restrict_map]
   erw [← ConcreteCategory.comp_apply, ← Functor.map_comp]
   rfl
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 end
 
 end
@@ -136,7 +139,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModuleCat
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {R A : CommRingCat.{u}} {X : Scheme.{u}} (a : R ⟶ A)
 variable {j k : Spec A ⟶ X} [IsOpenImmersion j] [IsOpenImmersion k]
 variable (p : X ⟶ Spec R) (h : j = k)
@@ -158,7 +161,7 @@ theorem chartPushforwardSections_congr (M : X.Modules) :
   simp only [ModuleCat.comp_apply]
   change _ = ((M.presheaf.map (eqToHom (by simp)).op)) _
   simp
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 end
 
 end

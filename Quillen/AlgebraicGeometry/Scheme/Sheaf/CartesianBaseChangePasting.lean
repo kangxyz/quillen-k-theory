@@ -9,12 +9,15 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianBaseChange
 /-! # Pasting of the original cartesian base-change mates -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 open Scheme.Modules
 variable {Z' Z W U V X : Scheme.{u}}
   (c : Z' ⟶ Z) (d : Z' ⟶ W) (g : Z ⟶ U)
@@ -69,4 +72,4 @@ theorem cartesianBaseChangeMap_paste (M : Z.Modules) :
   erw [cartesianPushforwardSquare_paste c d g a b f j hs h ((Scheme.Modules.pullback c).obj M)]
   simp only [Category.assoc]
   rfl
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

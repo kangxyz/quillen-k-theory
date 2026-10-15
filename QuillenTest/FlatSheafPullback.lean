@@ -25,15 +25,15 @@ namespace QuillenTest.FlatSheafPullback
 
 /-- Stalk exactness does not require a quasicoherent sheaf. -/
 theorem stalkShortExact {X : Scheme.{u}} (x : X) {S : ShortComplex X.Modules}
-    (h : S.ShortExact) : (S.map (Quillen.SchemeSheaf.moduleStalk X x)).ShortExact :=
+    (h : S.ShortExact) : (S.map (AlgebraicGeometry.Scheme.Modules.moduleStalk X x)).ShortExact :=
   h.map_of_exact _
 
 /-- The scalar-extension description is the actual geometric pullback stalk. -/
 def actualPullbackStalk {X Y : Scheme.{u}} (f : X ⟶ Y) (x : X) (M : Y.Modules) :
-    (Quillen.SchemeSheaf.moduleStalk X x).obj ((Scheme.Modules.pullback f).obj M) ≅
+    (AlgebraicGeometry.Scheme.Modules.moduleStalk X x).obj ((Scheme.Modules.pullback f).obj M) ≅
       (ModuleCat.extendScalars (f.stalkMap x).hom).obj
-        ((Quillen.SchemeSheaf.moduleStalk Y (f x)).obj M) :=
-  (Quillen.SchemeSheaf.pullbackModuleStalkIso f x).app M
+        ((AlgebraicGeometry.Scheme.Modules.moduleStalk Y (f x)).obj M) :=
+  (AlgebraicGeometry.Scheme.Modules.pullbackModuleStalkIso f x).app M
 
 /-- Flatness is sufficient for preservation of arbitrary sheaf monomorphisms. -/
 theorem arbitraryMono {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]

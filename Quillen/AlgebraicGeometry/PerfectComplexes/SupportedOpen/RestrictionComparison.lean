@@ -32,7 +32,7 @@ namespace Quillen.PerfectComplexes
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens)
 
 /-- The original support open, viewed as an actual open-pair object. -/
-def supportOpenPair : Quillen.Scheme.OpenPairs.{u} :=
+def supportOpenPair : AlgebraicGeometry.Scheme.OpenPairs.{u} :=
   ⟨Arrow.mk T.ι, (by change IsOpenImmersion T.ι; infer_instance)⟩
 
 /-- The literal inverse-image support square. -/
@@ -65,7 +65,7 @@ variable [CompactSpace X] [CompactSpace U]
 /-- The same original square in the existing qc open-pair category. -/
 def qcSupportRestrictionPair :
     (⟨supportOpenPair (j ⁻¹ᵁ T), (by change CompactSpace U; infer_instance)⟩ :
-      Quillen.Scheme.QuasiCompactOpenPairs.{u}) ⟶
+      AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}) ⟶
       ⟨supportOpenPair T, (by change CompactSpace X; infer_instance)⟩ :=
   ObjectProperty.homMk (supportRestrictionPair j T)
 

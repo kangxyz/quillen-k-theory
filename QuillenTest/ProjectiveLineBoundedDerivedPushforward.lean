@@ -15,7 +15,7 @@ finite bounds, and transport the proved property along an actual derived isomorp
 @[expose] public section
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 open Quillen.PerfectComplexes Quillen.PerfectComplexes.ProjectiveLine
 universe u
 namespace QuillenTest.ProjectiveLineBoundedDerivedPushforward

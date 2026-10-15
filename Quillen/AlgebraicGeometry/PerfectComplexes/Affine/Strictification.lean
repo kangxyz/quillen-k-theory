@@ -28,6 +28,9 @@ perfectness and finite-attachment arguments.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -45,12 +48,13 @@ lemma exists_principal_strict_model_near (R : CommRingCat.{u})
     {K : Complex (Spec R)} (hK : locallyPerfect (Spec R) K) (x : Spec R) :
     ∃ r : R, x ∈ PrimeSpectrum.basicOpen r ∧
       ∃ P : StrictPerfect (Spec (CommRingCat.of (Localization.Away r))),
-        Nonempty ((toDerived _).obj ((restrict (CoherentScheme.principalOpen R r)).obj K) ≅
+        Nonempty ((toDerived _).obj ((restrict
+          (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj K) ≅
           (toDerived _).obj P.obj) := by
   obtain ⟨U, hxU, P, ⟨eP⟩⟩ := hK x
   obtain ⟨_, ⟨r, rfl⟩, hxr, hrU⟩ :=
     PrimeSpectrum.isTopologicalBasis_basic_opens.exists_subset_of_mem_open hxU U.isOpen
-  let j := CoherentScheme.principalOpen R r
+  let j := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r
   have hjU : Set.range j ⊆ Set.range U.ι := by
     rw [Scheme.Opens.range_ι, ← Scheme.Hom.coe_opensRange, Scheme.Hom.opensRange_localizationAway r]
     exact hrU
@@ -68,11 +72,13 @@ lemma exists_finite_principal_strict_models (R : CommRingCat.{u})
     {K : Complex (Spec R)} (hK : locallyPerfect (Spec R) K) :
     ∃ s : Finset R, Ideal.span (s : Set R) = ⊤ ∧
       ∀ r : s, ∃ P : StrictPerfect (Spec (CommRingCat.of (Localization.Away r.val))),
-        Nonempty ((toDerived _).obj ((restrict (CoherentScheme.principalOpen R r.val)).obj K) ≅
+        Nonempty ((toDerived _).obj ((restrict
+          (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r.val)).obj K) ≅
           (toDerived _).obj P.obj) := by
   classical
   let S : Set R := {r | ∃ P : StrictPerfect (Spec (CommRingCat.of (Localization.Away r))),
-    Nonempty ((toDerived _).obj ((restrict (CoherentScheme.principalOpen R r)).obj K) ≅
+    Nonempty ((toDerived _).obj ((restrict
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj K) ≅
       (toDerived _).obj P.obj)}
   have hS : Ideal.span S = ⊤ := by
     rw [← PrimeSpectrum.iSup_basicOpen_eq_top_iff']

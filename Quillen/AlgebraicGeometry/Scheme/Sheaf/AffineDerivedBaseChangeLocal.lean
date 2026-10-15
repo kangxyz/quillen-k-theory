@@ -12,12 +12,15 @@ public import Mathlib.AlgebraicGeometry.Morphisms.Affine
 /-! # Affine-morphism derived base change on quasicoherent single sheaves -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard derived category of module sheaves. -/
 local instance affineTargetCoverStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -40,9 +43,9 @@ theorem isIso_derivedFlatBaseChangeMap_affineSource_single
   have : IsAffine (Z i) := IsAffine.of_isPullback ((hs i).paste_horiz h).flip
   exact isIso_derivedFlatBaseChangeMap_affine_single (c i ≫ a) (d i) f (k i ≫ j)
     ((hs i).paste_horiz h) M
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard derived category of module sheaves. -/
 local instance affineMorphismBaseChangeStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -89,4 +92,4 @@ theorem isIso_derivedFlatBaseChangeMap_affineHom_single
     (small.paste_horiz he) ((hs i).paste_horiz h)
     ((DerivedCategory.Plus.singleFunctor U.Modules 0).obj M)).mp
   exact largeIso
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

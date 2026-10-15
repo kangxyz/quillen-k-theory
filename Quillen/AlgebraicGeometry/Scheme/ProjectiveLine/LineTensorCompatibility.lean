@@ -21,6 +21,8 @@ ring. No abstract replacement of either line or additional gluing compatibility 
 -/
 
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -29,8 +31,8 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
   SheafOfModulesOfCommRing
 open CategoryTheory.MonoidalCategory
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 
 /-- The original left unitor sends each original pure-tensor generator to scalar multiplication. -/
 lemma tensorLeftUnit_section (X : Scheme.{u}) (M : X.Modules) (U : X.Opens)
@@ -492,4 +494,4 @@ def tautologicalLineTensorQuotientIso :
 lemma tautologicalLineTensorQuotientIso_hom :
     (tautologicalLineTensorQuotientIso R).hom = tautologicalLinePairing R := rfl
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

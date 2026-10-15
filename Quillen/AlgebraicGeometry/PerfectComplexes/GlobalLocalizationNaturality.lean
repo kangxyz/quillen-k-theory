@@ -34,7 +34,7 @@ namespace Quillen.PerfectComplexes
 /-- The actual target boundary is natural for every commutative square of
 qcqs open pairs, with no flatness or cartesianness assumption. -/
 theorem qcqsPerfectConnectingHom_pullback
-    {A B : Quillen.Scheme.QuasiCompactOpenPairs.{u}}
+    {A B : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}}
     [QuasiSeparatedSpace A.obj.obj.right] [QuasiSeparatedSpace B.obj.obj.right]
     [CompactSpace A.obj.obj.left] [CompactSpace B.obj.obj.left]
     (f : A ⟶ B) (n : ℕ) :
@@ -64,7 +64,7 @@ theorem qcqsPerfectConnectingHom_pullback
 
 /-- The actual inverse endpoint is natural under the same original pair maps. -/
 theorem qcqsPerfectOpenKEquiv_symm_pullback
-    {A B : Quillen.Scheme.QuasiCompactOpenPairs.{u}}
+    {A B : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}}
     [QuasiSeparatedSpace A.obj.obj.right] [QuasiSeparatedSpace B.obj.obj.right]
     [CompactSpace A.obj.obj.left] [CompactSpace B.obj.obj.left]
     (f : A ⟶ B) (n : ℕ) :
@@ -94,7 +94,7 @@ theorem qcqsPerfectOpenKEquiv_symm_pullback
 /-- All original arrows in the connective sequence commute with the same
 arbitrary open-pair pullback, including the supported degree-zero boundary. -/
 theorem qcqsPerfect_longExactSequence_pullback
-    {A B : Quillen.Scheme.QuasiCompactOpenPairs.{u}}
+    {A B : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}}
     [QuasiSeparatedSpace A.obj.obj.right] [QuasiSeparatedSpace B.obj.obj.right]
     [CompactSpace A.obj.obj.left] [CompactSpace B.obj.obj.left]
     (f : A ⟶ B) (n : ℕ) :

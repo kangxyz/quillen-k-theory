@@ -20,13 +20,16 @@ module sheaf is arbitrary, and the scheme morphism has no flatness hypothesis.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory AlgebraicGeometry Opposite
 open CategoryTheory.MonoidalCategory
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 open Scheme.Modules
 variable {X Y : Scheme.{u}} (f : X ⟶ Y)
 
@@ -373,10 +376,10 @@ lemma modulePullbackTensorMap_isIso_of_trivializingCover_right {ι : Type v}
   exact IsIso.of_isIso_comp_right _
     (moduleTensorSymmetry X ((pullback f).obj M) ((pullback f).obj L)).hom
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 variable (R : CommRingCat.{u}) {Z : Scheme.{u}} (f : Z ⟶ twoChartLine R)
 
 /-- The original tautological line charts prove invertibility for every other module sheaf. -/
@@ -411,5 +414,4 @@ lemma tautologicalPullbackTensorNatIso_hom_app (E : (twoChartLine R).Modules) :
     (tautologicalPullbackTensorNatIso R f).hom.app E =
       modulePullbackTensorMap f E (tautologicalLine R) := rfl
 
-end Quillen.Scheme.ProjectiveLine
-
+end AlgebraicGeometry.Scheme.ProjectiveLine

@@ -149,7 +149,7 @@ theorem perfectScalarCofiberBoundaryKOneClass_eq_inv :
   rw [← hi]
   exact (perfectOpenObjectLoopKOneNormalization j K).map_inv a
 
-open Quillen.Scheme.PolynomialLaurent in
+open AlgebraicGeometry.Scheme.PolynomialLaurent in
 /-- The actual polynomial-coordinate boundary has the same inverse orientation on the original
 Laurent open. This specializes the normalized coarse classes; it does not identify them with an
 independently prescribed Laurent automorphism class in the open perfect K-group. -/

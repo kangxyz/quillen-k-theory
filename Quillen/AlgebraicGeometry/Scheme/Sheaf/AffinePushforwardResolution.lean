@@ -13,12 +13,15 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AcyclicPushforwardResolutio
 The actual augmentation remains a quasi-isomorphism after direct image.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Affine direct image preserves the original augmentation of every quasicoherent resolution. -/
 theorem quasiIso_pushforward_injectiveResolution {Z X : Scheme.{u}}
@@ -36,4 +39,4 @@ theorem quasiIso_pushforward_injectiveResolution_int {Z X : Scheme.{u}}
   quasiIso_pushforward_injectiveResolution_int_of_quasiIso f M I
     (quasiIso_pushforward_injectiveResolution f M I)
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

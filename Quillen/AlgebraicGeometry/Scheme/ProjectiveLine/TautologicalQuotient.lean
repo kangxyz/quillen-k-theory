@@ -18,14 +18,19 @@ freeness. The original inclusion and projection form the displayed short exact s
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 variable (R : CommRingCat.{u})
 
 /-- The actual cokernel of the tautological subline in the original unit square. -/
@@ -111,7 +116,8 @@ lemma tautologicalQuotientLine_transition :
     (Scheme.Modules.restrictFunctor (pullback.fst (plusChart R) (minusChart R))).map
         (tautologicalQuotientPlusIso R).hom ≫
       (columnTransition (plusChart R) (minusChart R) (overlapCoordinateUnit R)⁻¹).hom =
-    (Quillen.CoherentScheme.overlapRestrictIso (plusChart R) (minusChart R)).hom.app
+    (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso (plusChart R) (minusChart
+      R)).hom.app
         (tautologicalQuotientLine R) ≫
       (Scheme.Modules.restrictFunctor (pullback.snd (plusChart R) (minusChart R))).map
         (tautologicalQuotientMinusIso R).hom := by
@@ -123,7 +129,8 @@ lemma tautologicalQuotientLine_transition :
   apply (cancel_epi ((Scheme.Modules.restrictFunctor
     (pullback.fst (plusChart R) (minusChart R))).map
       ((Scheme.Modules.restrictFunctor (plusChart R)).map (tautologicalQuotientMap R)))).mp
-  have hn := (Quillen.CoherentScheme.overlapRestrictIso (plusChart R) (minusChart R)).hom.naturality
+  have hn := (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso (plusChart R) (minusChart
+    R)).hom.naturality
     (tautologicalQuotientMap R)
   dsimp only [Functor.comp_map] at hn
   rw [← Category.assoc, ← Functor.map_comp, tautologicalQuotientMap_plus]
@@ -157,4 +164,4 @@ instance tautologicalQuotientLine_finiteLocallyFree :
     · exact finiteLocallyFree_of_iso (tautologicalQuotientMinusIso R).symm
     · exact finiteLocallyFree_of_iso (tautologicalQuotientPlusIso R).symm
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

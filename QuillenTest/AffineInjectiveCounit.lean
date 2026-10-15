@@ -25,7 +25,7 @@ set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
-open Quillen.SchemeSheaf.AffineCech
+open AlgebraicGeometry.Scheme.Modules.AffineCech
 namespace QuillenTest.AffineInjectiveCounit
 
 open Quillen
@@ -97,6 +97,6 @@ theorem original_open_injective_terms {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenIm
   · dsimp only [restrict]
     infer_instance
   · let := hI n
-    exact Quillen.SchemeSheaf.injective_restrict j (I.X n)
+    exact AlgebraicGeometry.Scheme.Modules.injective_restrict j (I.X n)
 
 end QuillenTest.AffineInjectiveCounit

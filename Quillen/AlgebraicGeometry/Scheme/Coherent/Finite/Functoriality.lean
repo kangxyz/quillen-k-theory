@@ -5,6 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.Finite.Functoriality
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Finite.GeneralPushforward
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Finite.AffineFunctoriality
 
@@ -17,29 +21,33 @@ agrees with the existing finite affine and closed-immersion direct images.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.CoherentScheme.Finite
+export AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite
+  (coherentPushforwardCompIso coherentPushforwardIdIso coherentPushforward_closed
+  coherentPushforward_specMap)
+end Quillen.CoherentScheme.Finite
+
+end
+
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.CoherentScheme.Finite
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite
 variable {X Y Z : Scheme.{u}}
   [IsLocallyNoetherian X] [IsLocallyNoetherian Y] [IsLocallyNoetherian Z]
-
-/-- Identity pushforward on actual coherent sheaves, from the original sheaf comparison. -/
-def coherentPushforwardIdIso (X : Scheme.{u}) :
-    coherentPushforward (𝟙 X) ≅ 𝟭 (FiniteTypeSheaves X) :=
-  Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules X)
-    (Functor.isoWhiskerLeft (finiteTypeSheavesToModules X) (Scheme.Modules.pushforwardId X) ≪≫
-      Functor.rightUnitor _)
-
-/-- Composition of the actual coherent direct images, retaining the original sheaf comparison. -/
-def coherentPushforwardCompIso (f : X ⟶ Y) (g : Y ⟶ Z)
-    [AlgebraicGeometry.IsFinite f] [AlgebraicGeometry.IsFinite g] :
-    coherentPushforward f ⋙ coherentPushforward g ≅ coherentPushforward (f ≫ g) :=
-  Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules Z)
-    (Functor.isoWhiskerLeft (finiteTypeSheavesToModules X) (Scheme.Modules.pushforwardComp f g))
 
 /-- The original finite G-map preserves identity. -/
 @[simp] theorem coherentPushforwardGMap_id (X : Scheme.{u}) [IsLocallyNoetherian X] (n : ℕ) :
@@ -79,28 +87,19 @@ def coherentPushforwardGEquiv (e : X ≅ Y) (n : ℕ) : G X n ≃* G Y n where
 @[simp] theorem coherentPushforwardGEquiv_coe (e : X ≅ Y) (n : ℕ) :
     (coherentPushforwardGEquiv e n : G X n →* G Y n) = coherentPushforwardGMap e.hom n := rfl
 
-/-- On an original coordinate map the coherent functor is the established
-finite affine direct image, with no replacement of its sheaf action. -/
-@[simp] theorem coherentPushforward_specMap {R S : CommRingCat.{u}} (φ : R ⟶ S)
-    [AlgebraicGeometry.IsFinite (Spec.map φ)] :
-    coherentPushforward (Spec.map φ) = FiniteAffine.coherentPushforward φ
-      ((AlgebraicGeometry.IsFinite.SpecMap_iff φ).mp inferInstance) := rfl
-
 /-- The canonical finite G-map agrees with the existing finite affine map. -/
 @[simp] theorem coherentPushforwardGMap_specMap {R S : CommRingCat.{u}}
     [IsNoetherianRing R] [IsNoetherianRing S] (φ : R ⟶ S)
     [AlgebraicGeometry.IsFinite (Spec.map φ)] (n : ℕ) :
-    coherentPushforwardGMap (Spec.map φ) n = FiniteAffine.pushforwardG φ
+    coherentPushforwardGMap (Spec.map φ) n =
+      AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.Affine.pushforwardG φ
       ((AlgebraicGeometry.IsFinite.SpecMap_iff φ).mp inferInstance) n := rfl
-
-omit [IsLocallyNoetherian X] [IsLocallyNoetherian Y] in
-/-- Finite direct image specializes to the unchanged closed-immersion functor. -/
-theorem coherentPushforward_closed (f : X ⟶ Y) [IsClosedImmersion f] :
-    coherentPushforward f = ClosedImmersion.General.coherentPushforward f := rfl
 
 /-- The actual canonical G-map specializes to the established closed map. -/
 theorem coherentPushforwardGMap_closed (f : X ⟶ Y) [IsClosedImmersion f] (n : ℕ) :
-    coherentPushforwardGMap f n = ClosedImmersion.General.coherentPushforwardGMap f n := rfl
+    coherentPushforwardGMap f n =
+      AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.coherentPushforwardGMap
+      f n := rfl
 
 /-- Original open base change commutes with the canonical finite G-maps. -/
 theorem coherentPushforwardGMap_openBaseChange (f : X ⟶ Y) [AlgebraicGeometry.IsFinite f]
@@ -116,4 +115,4 @@ theorem coherentPushforwardGMap_openBaseChange (f : X ⟶ Y) [AlgebraicGeometry.
   simpa only [CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, coherentPushforwardGMap,
     restrictionGMap] using h
 
-end Quillen.CoherentScheme.Finite
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite

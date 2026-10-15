@@ -23,6 +23,9 @@ direct image is not asserted exact; perfection of its result is not claimed.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -43,7 +46,7 @@ lemma spec_openPushforward_quasicoherent_homology {R : CommRingCat.{u}}
     (Scheme.Modules.restrictFunctor e.inv).map_isZero (hbound m hm)
   have hi (m : ℤ) : Injective (I'.X m) := by
     let := hinj m
-    exact SchemeSheaf.injective_restrict e.inv (I.X m)
+    exact AlgebraicGeometry.Scheme.Modules.injective_restrict e.inv (I.X m)
   have hq (m : ℤ) : (I'.homology m).IsQuasicoherent :=
     Affine.quasicoherent_homology_restrict e.inv I hqc m
   have hp := Affine.openPushforward_quasicoherent_homology j.opensRange
@@ -63,7 +66,7 @@ lemma openPushforward_quasicoherent_homology {U X : Scheme.{u}}
     (hinj : ∀ n, Injective (I.X n)) (hqc : ∀ n, (I.homology n).IsQuasicoherent) (n : ℤ) :
     (((pushforwardComplex j).obj I).homology n).IsQuasicoherent := by
   let J := (pushforwardComplex j).obj I
-  apply CoherentScheme.quasicoherent_of_affineCharts
+  apply AlgebraicGeometry.Scheme.Modules.QuasiCoherent.quasicoherent_of_affineCharts
   intro R k _
   let p := pullback.fst j k
   let q := pullback.snd j k
@@ -73,7 +76,7 @@ lemma openPushforward_quasicoherent_homology {U X : Scheme.{u}}
     (Scheme.Modules.restrictFunctor p).map_isZero (hbound m hm)
   have hi (m : ℤ) : Injective (I'.X m) := by
     let := hinj m
-    exact SchemeSheaf.injective_restrict p (I.X m)
+    exact AlgebraicGeometry.Scheme.Modules.injective_restrict p (I.X m)
   have hq (m : ℤ) : (I'.homology m).IsQuasicoherent :=
     Affine.quasicoherent_homology_restrict p I hqc m
   have hs := spec_openPushforward_quasicoherent_homology q I' a hb hi hq n

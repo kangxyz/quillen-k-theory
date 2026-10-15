@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.ClosedImmersion.PushforwardFunctoriality
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralPushforward
 
 /-!
@@ -19,29 +21,32 @@ closed-immersion maps; no general proper or nonexact direct image is introduced.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.CoherentScheme.ClosedImmersion.General
+export AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
+  (coherentPushforwardCompIso coherentPushforwardIdIso)
+end Quillen.CoherentScheme.ClosedImmersion.General
+
+end
+
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.CoherentScheme.ClosedImmersion.General
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 variable {X Y Z : Scheme.{u}}
   [IsLocallyNoetherian X] [IsLocallyNoetherian Y] [IsLocallyNoetherian Z]
-
-/-- Identity pushforward on actual coherent sheaves, from the original sheaf comparison. -/
-def coherentPushforwardIdIso (X : Scheme.{u}) :
-    coherentPushforward (𝟙 X) ≅ 𝟭 (FiniteTypeSheaves X) :=
-  Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules X)
-    (Functor.isoWhiskerLeft (finiteTypeSheavesToModules X) (Scheme.Modules.pushforwardId X) ≪≫
-      Functor.rightUnitor _)
-
-/-- Composition of the actual coherent direct images, retaining the original sheaf comparison. -/
-def coherentPushforwardCompIso (f : X ⟶ Y) (g : Y ⟶ Z)
-    [IsClosedImmersion f] [IsClosedImmersion g] :
-    coherentPushforward f ⋙ coherentPushforward g ≅ coherentPushforward (f ≫ g) :=
-  Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules Z)
-    (Functor.isoWhiskerLeft (finiteTypeSheavesToModules X) (Scheme.Modules.pushforwardComp f g))
 
 /-- The original closed-immersion G-map preserves identity. -/
 @[simp] theorem coherentPushforwardGMap_id (X : Scheme.{u}) [IsLocallyNoetherian X] (n : ℕ) :
@@ -81,4 +86,4 @@ def coherentPushforwardGEquiv (e : X ≅ Y) (n : ℕ) : G X n ≃* G Y n where
 @[simp] theorem coherentPushforwardGEquiv_toMonoidHom (e : X ≅ Y) (n : ℕ) :
     (coherentPushforwardGEquiv e n : G X n →* G Y n) = coherentPushforwardGMap e.hom n := rfl
 
-end Quillen.CoherentScheme.ClosedImmersion.General
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

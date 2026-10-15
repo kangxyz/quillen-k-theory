@@ -17,11 +17,13 @@ squares of scheme maps, not necessarily cartesian or flat. The qc full
 subcategory restricts the ambient scheme only; the open need not be qc.
 -/
 @[expose] public section
+open Quillen
+
 
 
 universe u
 open CategoryTheory AlgebraicGeometry
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 /-- The property that an object of the scheme arrow category is an open immersion. -/
 abbrev openPairProperty : ObjectProperty (Arrow AlgebraicGeometry.Scheme.{u}) :=
@@ -46,8 +48,8 @@ pair. -/
 abbrev quasiCompactOpenPairsInclusion : QuasiCompactOpenPairs.{u} ⥤ OpenPairs.{u} :=
   quasiCompactOpenPairProperty.{u}.ι
 
-end Quillen.Scheme
-namespace Quillen.Scheme
+end AlgebraicGeometry.Scheme
+namespace AlgebraicGeometry.Scheme
 
 /-- The functor sending a quasi-compact open pair to its ambient quasi-compact scheme and a pair
 square to its ambient scheme morphism. -/
@@ -55,4 +57,4 @@ def quasiCompactOpenPairsBase : QuasiCompactOpenPairs.{u} ⥤ QuasiCompactScheme
   obj X := ⟨X.obj.obj.right, inferInstance⟩
   map f := ObjectProperty.homMk f.hom.hom.right
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

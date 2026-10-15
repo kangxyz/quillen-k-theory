@@ -20,13 +20,19 @@ quotient-equivalence hypothesis occurs.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 /-- A coherent subobject on an arbitrary open of a noetherian affine
 scheme extends to a coherent subobject of its actual quasicoherent ambient. -/
@@ -74,4 +80,4 @@ theorem affineLocallyFiniteType_subobject_extension_affine
   rw [Functor.map_comp, he]
   rfl
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

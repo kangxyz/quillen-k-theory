@@ -18,7 +18,7 @@ track without reparameterization or an assumed seed compatibility.
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
-open Quillen.Scheme.AffineOpenPair Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

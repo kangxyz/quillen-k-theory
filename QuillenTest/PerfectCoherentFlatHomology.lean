@@ -10,6 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.CoherentHomologyFlatPul
 /-! # Naturality of actual coherent homology under flat perfect pullback -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 universe u
@@ -29,7 +32,7 @@ theorem actual_chain_naturality {K L : Perfect Y} (s : K ⟶ L) :
     (perfectFlatPullback f ⋙ coherentHomology X i).map s ≫
       (coherentHomologyFlatPullbackIso f i).hom.app L =
     (coherentHomologyFlatPullbackIso f i).hom.app K ≫
-      (coherentHomology Y i ⋙ CoherentScheme.coherentPullback f).map s :=
+      (coherentHomology Y i ⋙ AlgebraicGeometry.Scheme.Modules.Coherent.coherentPullback f).map s :=
   (coherentHomologyFlatPullbackIso f i).hom.naturality s
 
 /-- No alternate homology map is substituted for the ambient comparison. -/

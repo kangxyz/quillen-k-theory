@@ -18,7 +18,7 @@ No equivalence with the original Perf model is assumed.
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.SchemeSheaf
+open Quillen.PerfectComplexes AlgebraicGeometry.Scheme.Modules
 universe u
 namespace QuillenTest.BoundedFlatPerfectModel
 

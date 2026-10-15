@@ -39,9 +39,10 @@ def strictToDerivedPlus (X : Scheme.{u}) : StrictPerfect X ⥤ DerivedCategory.P
 /-- The actual affine derived unit on every strict-perfect complex is invertible. -/
 theorem isIso_derivedPushforwardPlusUnit_strict {Z X : Scheme.{u}}
     (f : Z ⟶ X) [IsAffineHom f] (K : StrictPerfect Z) :
-    IsIso ((SchemeSheaf.derivedPushforwardPlusUnit f).app ((strictToPlus Z).obj K)) := by
+    IsIso ((AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlusUnit f).app ((strictToPlus Z).obj
+      K)) := by
   obtain ⟨a, b, h⟩ := K.property.1
-  apply SchemeSheaf.isIso_derivedPushforwardPlusUnit_of_term_bounds f _ a b
+  apply AlgebraicGeometry.Scheme.Modules.isIso_derivedPushforwardPlusUnit_of_term_bounds f _ a b
     (fun i hi ↦ h i (Or.inl hi)) (fun i hi ↦ h i (Or.inr hi))
   intro n
   let := K.property.2 n
@@ -52,21 +53,24 @@ theorem isIso_derivedPushforwardPlusUnit_strict {Z X : Scheme.{u}}
 def strictFiniteFlatDerivedPushforwardIso {Z X : Scheme.{u}}
     (f : Z ⟶ X) [IsFinite f] [Flat f] [IsLocallyNoetherian X] :
     strictFiniteFlatPushforward f ⋙ strictToDerivedPlus X ≅
-      strictToDerivedPlus Z ⋙ SchemeSheaf.derivedPushforwardPlus f :=
+      strictToDerivedPlus Z ⋙ AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlus f :=
   NatIso.ofComponents (fun K ↦ by
     let := isIso_derivedPushforwardPlusUnit_strict f K
-    exact asIso ((SchemeSheaf.derivedPushforwardPlusUnit f).app ((strictToPlus Z).obj K)))
+    exact asIso ((AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlusUnit f).app ((strictToPlus
+      Z).obj K)))
     (by
       intro K L g
       change DerivedCategory.Plus.Q.map ((Scheme.Modules.pushforward f).mapCochainComplexPlus.map
           ((strictToPlus Z).map g)) ≫ _ = _ ≫ _
-      exact (SchemeSheaf.derivedPushforwardPlusUnit f).naturality ((strictToPlus Z).map g))
+      exact (AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlusUnit f).naturality
+        ((strictToPlus Z).map g))
 
 /-- The comparison's forward component is literally the original derived unit. -/
 @[simp]
 theorem strictFiniteFlatDerivedPushforwardIso_hom_app {Z X : Scheme.{u}}
     (f : Z ⟶ X) [IsFinite f] [Flat f] [IsLocallyNoetherian X] (K : StrictPerfect Z) :
     (strictFiniteFlatDerivedPushforwardIso f).hom.app K =
-      (SchemeSheaf.derivedPushforwardPlusUnit f).app ((strictToPlus Z).obj K) := rfl
+      (AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlusUnit f).app ((strictToPlus Z).obj K)
+        := rfl
 
 end Quillen.PerfectComplexes

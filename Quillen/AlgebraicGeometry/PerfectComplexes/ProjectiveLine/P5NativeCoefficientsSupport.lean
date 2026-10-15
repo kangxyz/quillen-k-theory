@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.AcyclicSupport
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativeCoefficientsOne
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportClosure
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianOpenBaseChangeMate
@@ -19,34 +22,35 @@ right tensor and original total augmentation preserve acyclicity on that same
 open before the signed shift.
 -/
 @[expose] public section
+open Quillen
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeCoefficients
+export AlgebraicGeometry.Scheme.Modules.Complex
+  (ordinaryOpenRestrictionIso ordinaryOpenRestrictionIso_hom_f restrict_isStrictlyGE)
+export AlgebraicGeometry.Scheme.Modules
+  (restrictModule_isFlasque)
+end Quillen.PerfectComplexes.ProjectiveLine.P5NativeCoefficients
+
+end
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.Scheme Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Modules
+  AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeCoefficients
 open FlasqueCoefficients
 
 local instance nativeSupportStandardDerived (Y : Scheme.{u}) :
     HasDerivedCategory.{u + 1} Y.Modules := HasDerivedCategory.standard _
-
-/-- Actual open restriction retains every original flasque section-surjectivity map. -/
-instance restrictModule_isFlasque {U P : Scheme.{u}} (j : U ⟶ P) [IsOpenImmersion j]
-    (M : P.Modules) [TopCat.Presheaf.IsFlasque M.presheaf] :
-    TopCat.Presheaf.IsFlasque (M.restrict j).presheaf where
-  epi {V W} k := by
-    change Epi (M.presheaf.map (j.opensFunctor.map k.unop).op)
-    infer_instance
-
-/-- The literal restricted complex retains its original strict bound. -/
-lemma restrict_isStrictlyGE {U P : Scheme.{u}} (j : U ⟶ P) [IsOpenImmersion j]
-    (K : Complex P) (a : ℤ) [K.IsStrictlyGE a] :
-    ((restrict j).obj K).IsStrictlyGE a := by
-  dsimp [restrict]
-  infer_instance
 
 /-- Open restriction preserves the full original flasque-perfect object predicate. -/
 lemma restrict_objects {U P : Scheme.{u}} (j : U ⟶ P) [IsOpenImmersion j]
@@ -91,47 +95,6 @@ lemma ordinaryPushforward_acyclic_of_flasque {U V : Scheme.{u}} (f : U ⟶ V)
     (fun i hi => CochainComplex.isZero_of_isStrictlyGE K.obj a i hi)
     hK K.property.2 (n - 1)
   simpa only [sub_add_cancel] using h
-
-/-- The original ordinary cartesian open mate, on the literal inverse-image square. -/
-def ordinaryOpenRestrictionIso {P Y : Scheme.{u}} (f : P ⟶ Y) (Z : Y.Opens) :
-    (Scheme.Modules.pushforward f).mapHomologicalComplex (.up ℤ) ⋙ restrict Z.ι ≅
-      restrict (f ⁻¹ᵁ Z).ι ⋙
-        (Scheme.Modules.pushforward (f ∣_ Z)).mapHomologicalComplex (.up ℤ) :=
-  Functor.mapHomologicalComplexCompIso
-    (cartesianOpenBaseChange (f ⁻¹ᵁ Z).ι (f ∣_ Z) f Z.ι
-      (isPullback_morphismRestrict f Z).flip) _
-
-/-- Every degree retains precisely the original ordinary cartesian open-base-change map. -/
-lemma ordinaryOpenRestrictionIso_hom_f {P Y : Scheme.{u}} (f : P ⟶ Y) (Z : Y.Opens)
-    (K : Complex P) (n : ℤ) :
-    ((ordinaryOpenRestrictionIso f Z).hom.app K).f n =
-      (cartesianOpenBaseChange (f ⁻¹ᵁ Z).ι (f ∣_ Z) f Z.ι
-        (isPullback_morphismRestrict f Z).flip).hom.app (K.X n) := rfl
-
-/-- Right tensor commutes with actual open restriction by the original tensor comparison. -/
-def rightTensorRestrictionIso {U P : Scheme.{u}} (j : U ⟶ P) [IsOpenImmersion j]
-    (L : P.Modules) :
-    tensorByLineRightComplex L ⋙ restrict j ≅
-      restrict j ⋙ tensorByLineRightComplex (L.restrict j) :=
-  Functor.isoWhiskerRight (tensorByLineComplexSymmetry L).symm (restrict j) ≪≫
-    (Functor.mapHomologicalComplexCompIso (tensorRestrictionNatIso j L) _).symm ≪≫
-    Functor.isoWhiskerLeft (restrict j) (tensorByLineComplexSymmetry (L.restrict j))
-
-/-- Exact right tensor by a finite locally free line preserves acyclicity. -/
-lemma rightTensor_acyclic {P : Scheme.{u}} (L : P.Modules) [IsFiniteLocallyFree P L]
-    (K : Complex P) (hK : K.Acyclic) :
-    ((tensorByLineRightComplex L).obj K).Acyclic := by
-  intro n
-  exact (hK n).map (moduleTensorByLineRight L)
-
-/-- Original right tensor preserves acyclicity on the specified actual open. -/
-lemma rightTensor_restrictAcyclic {U P : Scheme.{u}} (j : U ⟶ P) [IsOpenImmersion j]
-    (L : P.Modules) [IsFiniteLocallyFree P L] (K : Complex P)
-    (hK : ((restrict j).obj K).Acyclic) :
-    ((restrict j).obj ((tensorByLineRightComplex L).obj K)).Acyclic := by
-  have ht := rightTensor_acyclic (L.restrict j) ((restrict j).obj K) hK
-  intro n
-  exact (ht n).of_iso ((rightTensorRestrictionIso j L).app K).symm
 
 /-- The actual original total augmentation preserves acyclicity on that same open. -/
 lemma rightTensorTotal_restrictAcyclic (X : QuasiCompactSchemes.{u})

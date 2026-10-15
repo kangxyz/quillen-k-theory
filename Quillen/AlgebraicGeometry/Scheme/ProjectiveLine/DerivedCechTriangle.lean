@@ -19,6 +19,8 @@ coefficient-base-change or projective-bundle generation assertion is made.
 -/
 
 @[expose] public section
+open Quillen
+
 noncomputable section
 
 section
@@ -26,8 +28,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Pretriangulated AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.Scheme.PolynomialLaurent Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.PolynomialLaurent AlgebraicGeometry.Scheme.Modules
 /-- Use the standard derived category of actual module sheaves. -/
 local instance projectiveDerivedCechStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules :=
@@ -63,5 +65,5 @@ theorem derivedCechTriangle_distinguished :
     derivedCechTriangle R M ∈ distTriang (DerivedCategory.Plus (Spec R).Modules) :=
   TwoOpen.sheafDerivedCechTriangle_distinguished (laurentPlus R) (laurentMinus R)
     (plusChart R) (minusChart R) (chart_isPullback R) (charts_jointly_surjective R) (projection R) M
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 end

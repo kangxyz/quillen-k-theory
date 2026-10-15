@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Homology.CochainComplex.SingleShift
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalGenerationNaturality
 
 /-!
@@ -22,14 +23,27 @@ equivalence or a full coefficient extension.
 -/
 
 @[expose] public section
+open Quillen
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.DiagonalRoofObstruction
+export CochainComplex
+  (chainMap_single_zero_to_shift_one_eq_zero)
+end Quillen.DiagonalRoofObstruction
+
+end
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry DerivedCategory
   CategoryTheory.Pretriangulated
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 local instance lineRotationStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})
@@ -102,16 +116,8 @@ theorem diagonalLineRotatedTriangleMap_comp
       R)).rightDerivedFunctorPlus.mapTriangle.map_comp,
     (CategoryTheory.Pretriangulated.rotate _).map_comp]
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace Quillen.DiagonalRoofObstruction
 variable {C : Type u} [Category.{v} C] [Abelian C]
-
-/-- The literal chain representatives cannot detect an extension class from degree zero
-to a sheaf shifted by one. This applies in particular to O and O(-2). -/
-theorem chainMap_single_zero_to_shift_one_eq_zero (M N : C)
-    (f : (CochainComplex.singleFunctor C 0).obj M ⟶
-      ((CochainComplex.singleFunctor C 0).obj N)⟦(1 : ℤ)⟧) : f = 0 := by
-  apply HomologicalComplex.from_single_hom_ext
-  exact (HomologicalComplex.isZero_single_obj_X (.up ℤ) (0 : ℤ) N (1 : ℤ) (by decide)).eq_of_tgt _ _
 end Quillen.DiagonalRoofObstruction

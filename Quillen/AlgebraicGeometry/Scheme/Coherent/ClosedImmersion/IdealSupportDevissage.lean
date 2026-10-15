@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.IdealSupport
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.SupportDevissage
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.GlobalLocalization
@@ -21,6 +22,12 @@ factors annihilated by the entire ideal.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,7 +35,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme.ClosedImmersion.Ideal
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal
 open PrincipalSupportDevissage FiniteCentralDevissage
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (I : Ideal R)
 
@@ -101,7 +108,7 @@ theorem supportFiltrationHypothesis : Devissage.FiltrationHypothesis (supportKil
 
 /-- The dévissage equivalence on genuine compatible supported G-groups. -/
 def supportDevissageKEquiv (n : ℕ) :
-    (Devissage.subcategoryExactStructure (supportKilled R I)).K n ≃*
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure (supportKilled R I)).K n ≃*
       CoherentGlobalSupportedG (openMap R I) n :=
   Devissage.KEquiv (supportKilled R I) (supportFiltrationHypothesis R I) n
 
@@ -109,4 +116,4 @@ def supportDevissageKEquiv (n : ℕ) :
 @[simp] theorem supportDevissageKEquiv_coe (n : ℕ) :
     ↑(supportDevissageKEquiv R I n) = Devissage.KMap (supportKilled R I) n := rfl
 
-end Quillen.CoherentScheme.ClosedImmersion.Ideal
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal

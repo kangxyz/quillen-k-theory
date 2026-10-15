@@ -20,6 +20,12 @@ sheaf. All terms are actual finite locally free sheaves.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,44 +34,53 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped ZeroObject
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 variable (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X]
 
 /-- The actual vector-bundle condition on an object of the coherent category. -/
-def coherentVectorBundle : ObjectProperty (CoherentScheme.FiniteTypeSheaves X) :=
+def coherentVectorBundle : ObjectProperty
+  (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) :=
   fun M => IsFiniteLocallyFree X M.obj
 
 instance coherentVectorBundle_isoClosed : (coherentVectorBundle X).IsClosedUnderIsomorphisms where
   of_iso e h := (finiteLocallyFree X).prop_of_iso
-    ((CoherentScheme.finiteTypeSheavesToModules X).mapIso e) h
+    ((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesToModules X).mapIso e) h
 
 instance coherentVectorBundle_extensionClosed :
-    (CoherentScheme.coherentExactStructure X).IsExtensionClosed (coherentVectorBundle X) where
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).IsExtensionClosed
+      (coherentVectorBundle X) where
   prop_middle {S} hS h₁ h₃ := by
-    have : IsFiniteLocallyFree X (S.map (CoherentScheme.finiteTypeSheavesToModules X)).X₁ := h₁
-    have : IsFiniteLocallyFree X (S.map (CoherentScheme.finiteTypeSheavesToModules X)).X₃ := h₃
+    have : IsFiniteLocallyFree X (S.map
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesToModules X)).X₁ := h₁
+    have : IsFiniteLocallyFree X (S.map
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesToModules X)).X₃ := h₃
     exact finiteLocallyFree_of_shortExact
-      ((CoherentScheme.coherent_shortExact_iff X S).mp hS)
+      ((AlgebraicGeometry.Scheme.Modules.Coherent.coherent_shortExact_iff X S).mp hS)
 
 instance coherentVectorBundle_containsZero : (coherentVectorBundle X).ContainsZero where
   exists_zero := by
     refine ⟨0, isZero_zero _, ?_⟩
     exact finiteLocallyFree_of_isZero
-      ((CoherentScheme.finiteTypeSheavesToModules X).map_isZero (isZero_zero _))
+      ((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesToModules X).map_isZero
+        (isZero_zero _))
 
 instance coherentVectorBundle_closedUnderFiniteProducts :
     (coherentVectorBundle X).IsClosedUnderFiniteProducts :=
-  (CoherentScheme.coherentExactStructure X).extensionClosed_finiteProducts (coherentVectorBundle X)
+  (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
+    X).extensionClosed_finiteProducts (coherentVectorBundle X)
 
 variable (R : CommRingCat.{u}) [IsNoetherianRing R]
 
 /-- The actual affine coherent/module equivalence identifies vector bundles
 with finite projective modules, with no homological or K-theory assumption. -/
-theorem coherentVectorBundle_iff_projective (M : CoherentScheme.FiniteTypeSheaves (Spec R)) :
-    coherentVectorBundle (Spec R) M ↔ CoherentScheme.finiteProjective R
-      ((CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R).functor.obj M) := by
-  have h := (CoherentScheme.affineLocallyFiniteType_spec_iff R M.obj).mp M.property
+theorem coherentVectorBundle_iff_projective (M :
+  AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves (Spec R)) :
+    coherentVectorBundle (Spec R) M ↔ AlgebraicGeometry.Scheme.Modules.Coherent.finiteProjective R
+      ((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence
+        R).functor.obj M) := by
+  have h := (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineLocallyFiniteType_spec_iff R
+    M.obj).mp M.property
   have : M.obj.IsQuasicoherent := h.1
   have : Module.Finite R (moduleSpecΓFunctor.obj M.obj) := h.2
   have : IsIso M.obj.fromTildeΓ := Scheme.Modules.isIso_fromTildeΓ_of_isQuasicoherent M.obj
@@ -77,30 +92,32 @@ theorem coherentVectorBundle_iff_projective (M : CoherentScheme.FiniteTypeSheave
 /-- Kernels of epimorphisms between vector bundles are vector bundles on an
 actual affine noetherian scheme, by the projective-module characterization. -/
 instance coherentVectorBundle_kernelClosed_affine :
-    (CoherentScheme.coherentExactStructure (Spec R)).IsKernelClosed
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec R)).IsKernelClosed
       (coherentVectorBundle (Spec R)) where
   prop_kernel {S} hS h₂ h₃ := by
-    let E := CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R
+    let E := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence R
     let T := S.map E.functor
     have hT : T.ShortExact := hS.map_of_exact E.functor
-    have h₂' : CoherentScheme.finiteProjective R T.X₂ :=
+    have h₂' : AlgebraicGeometry.Scheme.Modules.Coherent.finiteProjective R T.X₂ :=
       (coherentVectorBundle_iff_projective R S.X₂).mp h₂
-    have h₃' : CoherentScheme.finiteProjective R T.X₃ :=
+    have h₃' : AlgebraicGeometry.Scheme.Modules.Coherent.finiteProjective R T.X₃ :=
       (coherentVectorBundle_iff_projective R S.X₃).mp h₃
     exact (coherentVectorBundle_iff_projective R S.X₁).mpr
       (CategoryTheory.ExactCategory.ExactStructure.IsKernelClosed.prop_kernel
-        (E := CoherentScheme.finiteModuleExactStructure R) hT h₂' h₃')
+        (E := ModuleCat.finiteModuleExactStructure R) hT h₂' h₃')
 
 /-- Associated sheaves of finite modules, landing in the genuine global
 coherent category and retaining actual short exact sequences. -/
 def finiteModuleTildeExact :
-    ExactFunctor (CoherentScheme.finiteModuleExactStructure.{u, u} R)
-      (CoherentScheme.coherentExactStructure (Spec R)) where
-  toFunctor := (CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R).inverse
+    ExactFunctor (ModuleCat.finiteModuleExactStructure.{u, u} R)
+      (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec R)) where
+  toFunctor :=
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence
+    R).inverse
   map_conflation _ h := h.map_of_exact _
 
 /-- Tilde carries finite free modules to actual coherent vector bundles. -/
-theorem finiteModuleTilde_finiteFree (M : CoherentScheme.FiniteModule.{u, u} R)
+theorem finiteModuleTilde_finiteFree (M : ModuleCat.FiniteModule.{u, u} R)
     (hM : Module.Free R M.obj) :
     coherentVectorBundle (Spec R) ((finiteModuleTildeExact R).toFunctor.obj M) := by
   change IsFiniteLocallyFree (Spec R) (tilde M.obj)
@@ -108,8 +125,8 @@ theorem finiteModuleTilde_finiteFree (M : CoherentScheme.FiniteModule.{u, u} R)
   exact finiteLocallyFree_tilde_of_finite_free R M.obj
 
 /-- Tilde carries finite projective modules to actual coherent vector bundles. -/
-theorem finiteModuleTilde_finiteProjective (M : CoherentScheme.FiniteModule.{u, u} R)
-    (hM : CoherentScheme.finiteProjective R M) :
+theorem finiteModuleTilde_finiteProjective (M : ModuleCat.FiniteModule.{u, u} R)
+    (hM : AlgebraicGeometry.Scheme.Modules.Coherent.finiteProjective R M) :
     coherentVectorBundle (Spec R) ((finiteModuleTildeExact R).toFunctor.obj M) := by
   change IsFiniteLocallyFree (Spec R) (tilde M.obj)
   have : Module.Projective R M.obj := hM
@@ -119,13 +136,16 @@ theorem finiteModuleTilde_finiteProjective (M : CoherentScheme.FiniteModule.{u, 
 global sections produces a genuine finite locally free resolution of that
 same sheaf, with that bound. -/
 theorem coherentResolution_length_le_of_projectiveDimensionLE (n : ℕ)
-    (M : CoherentScheme.FiniteTypeSheaves (Spec R))
+    (M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves (Spec R))
     [HasProjectiveDimensionLE
-      ((CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R).functor.obj M).obj n] :
-    ∃ T : (CoherentScheme.coherentExactStructure (Spec R)).FiniteResolution
+      ((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence
+        R).functor.obj M).obj n] :
+    ∃ T : (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec
+      R)).FiniteResolution
         (coherentVectorBundle (Spec R)) M, T.length ≤ n := by
-  let E := CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R
-  obtain ⟨T, hT⟩ := CoherentScheme.finiteProjectiveResolution_length_le R n (E.functor.obj M)
+  let E := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence R
+  obtain ⟨T, hT⟩ := AlgebraicGeometry.Scheme.Modules.Coherent.finiteProjectiveResolution_length_le R
+    n (E.functor.obj M)
   let T' := (finiteModuleTildeExact R).mapFiniteResolution
     (finiteModuleTilde_finiteProjective R) T
   let T'' := T'.ofIso (E.unitIso.app M).symm
@@ -135,11 +155,14 @@ theorem coherentResolution_length_le_of_projectiveDimensionLE (n : ℕ)
 /-- Every coherent sheaf on the spectrum of a PID has an actual admissible
 finite locally free resolution of length at most one. -/
 theorem coherentResolution_length_le_one_of_pid [IsDomain R] [IsPrincipalIdealRing R]
-    (M : CoherentScheme.FiniteTypeSheaves (Spec R)) :
-    ∃ T : (CoherentScheme.coherentExactStructure (Spec R)).FiniteResolution
+    (M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves (Spec R)) :
+    ∃ T : (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec
+      R)).FiniteResolution
         (coherentVectorBundle (Spec R)) M, T.length ≤ 1 := by
-  let E := CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R
-  obtain ⟨T, hT⟩ := CoherentScheme.finiteFreeResolution_length_le_one_of_pid R (E.functor.obj M)
+  let E := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence R
+  obtain ⟨T, hT⟩ :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.finiteFreeResolution_length_le_one_of_pid R
+    (E.functor.obj M)
   let T' := (finiteModuleTildeExact R).mapFiniteResolution
     (finiteModuleTilde_finiteFree R) T
   let T'' := T'.ofIso (E.unitIso.app M).symm
@@ -149,10 +172,10 @@ theorem coherentResolution_length_le_one_of_pid [IsDomain R] [IsPrincipalIdealRi
 /-- The genuine geometric finite-vector-bundle-resolution hypothesis is
 fully discharged for the spectrum of a principal ideal domain. -/
 theorem coherentResolutionHypothesis_of_pid [IsDomain R] [IsPrincipalIdealRing R] :
-    (CoherentScheme.coherentExactStructure (Spec R)).ResolutionHypothesis
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec R)).ResolutionHypothesis
       (coherentVectorBundle (Spec R)) := by
   intro M
   obtain ⟨T, _⟩ := coherentResolution_length_le_one_of_pid R M
   exact ⟨T⟩
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

@@ -11,13 +11,16 @@ public import Mathlib.AlgebraicGeometry.AffineScheme
 /-! # Derived base change on actual affine cartesian squares -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard derived category of module sheaves. -/
 local instance specCoordinateStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -60,9 +63,9 @@ theorem isQuasicoherent_isoSpec_pullback (M : U.Modules) [M.IsQuasicoherent] :
     ((Scheme.Modules.pullback U.isoSpec.inv).obj M).IsQuasicoherent := by
   exact (SheafOfModules.isQuasicoherent (Spec Γ(U, ⊤)).ringCatSheaf).prop_of_iso
     ((Scheme.Modules.restrictFunctorIsoPullback U.isoSpec.inv).app M) (by infer_instance)
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard derived category of module sheaves. -/
 local instance affineGeneralStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -101,4 +104,4 @@ theorem isIso_derivedFlatBaseChangeMap_affine_single
   apply (isIso_derivedFlatBaseChangeMap_specCoordinates_iff a b f j h M).mpr
   exact isIso_derivedFlatBaseChangeMap_spec_single a.appTop b.appTop f.appTop j.appTop
     (specCoordinatePullback a b f j h) ((Scheme.Modules.pullback U.isoSpec.inv).obj M)
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

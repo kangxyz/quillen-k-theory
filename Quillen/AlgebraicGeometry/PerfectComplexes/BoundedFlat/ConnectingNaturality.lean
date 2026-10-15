@@ -22,7 +22,7 @@ open Waldhausen Fibration
 
 /-- Flattening the actual relative-acyclic objects commutes with geometric pullback. -/
 theorem boundedFlatPerfectAcyclicSupportedKEquiv_pullback
-    {A B : Quillen.Scheme.OpenPairs.{u}} (f : A ⟶ B) (n : ℕ) :
+    {A B : AlgebraicGeometry.Scheme.OpenPairs.{u}} (f : A ⟶ B) (n : ℕ) :
     (boundedFlatPerfectSupportedKPullback f n).comp
       (boundedFlatPerfectAcyclicSupportedKEquiv B.obj.hom n).toMonoidHom =
     (boundedFlatPerfectAcyclicSupportedKEquiv A.obj.hom n).toMonoidHom.comp
@@ -36,7 +36,7 @@ theorem boundedFlatPerfectAcyclicSupportedKEquiv_pullback
 
 /-- The original supported boundary commutes with arbitrary open-pair pullback. -/
 theorem boundedFlatPerfectOpenConnectingHom_pullback
-    {A B : Quillen.Scheme.OpenPairs.{u}} (f : A ⟶ B) (n : ℕ) :
+    {A B : AlgebraicGeometry.Scheme.OpenPairs.{u}} (f : A ⟶ B) (n : ℕ) :
     (boundedFlatPerfectSupportedKPullback f n).comp (boundedFlatPerfectOpenConnectingHom B.obj.hom
       n) =
     (boundedFlatPerfectOpenConnectingHom A.obj.hom n).comp (boundedFlatPerfectOpenKPullback f (n+1))

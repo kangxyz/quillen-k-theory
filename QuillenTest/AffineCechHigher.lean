@@ -21,7 +21,7 @@ Geometric localization at the zero coordinate tests the empty principal chart.
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Opposite
-open PrimeSpectrum Quillen.SchemeSheaf.AffineCech
+open PrimeSpectrum AlgebraicGeometry.Scheme.Modules.AffineCech
 open QuillenTest.AffineCechSections
 
 namespace QuillenTest.AffineCechHigher

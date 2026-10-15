@@ -24,14 +24,16 @@ direct images or commutation of sections with arbitrary sheaf homology is assume
 All results hold over arbitrary commutative base rings, including the zero ring.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite TopologicalSpace
 universe u
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.SchemeSheaf.TwoOpen
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.TwoOpen
 variable {R S : CommRingCat.{u}} (f : R ⟶ S) [IsOpenImmersion (Spec.map f)]
 
 lemma projection_unit_resolution_on_open_exact (I : InjectiveResolution
@@ -52,9 +54,9 @@ lemma projection_unit_resolution_on_open_exact (I : InjectiveResolution
   rw [← coefficientMap_opensRange f]
   exact he.of_iso (restrictedSectionsComplexIso j I.cocomplex)
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable {R S : CommRingCat.{u}} (f : R ⟶ S) [IsOpenImmersion (Spec.map f)]
 
 private lemma gammaIsoTop_inv {X Y : Scheme.{u}} (j : X ⟶ Y) [IsOpenImmersion j] :
@@ -95,10 +97,10 @@ lemma projection_open_app_isIso : IsIso ((projection R).app (Spec.map f).opensRa
   exact IsIso.of_isIso_comp_right ((projection R).app (Spec.map f).opensRange)
     ((twoChartLine R).presheaf.map (homOfLE (coefficientMap_opensRange f).le).op)
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.SchemeSheaf.TwoOpen
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.TwoOpen
 variable (R : CommRingCat.{u})
 
 lemma projection_unit_resolution_exact_succ
@@ -113,7 +115,7 @@ lemma projection_unit_resolution_exact_succ
   let : PreservesFiniteLimits F := inferInstanceAs
     (PreservesFiniteLimits (SheafOfModules.toSheaf (Spec R).ringCatSheaf))
   have h : ((F.mapHomologicalComplex _).obj K).ExactAt (n + 1) := by
-    apply Quillen.SheafCohomology.exactAt_of_sections_on_basis _ _
+    apply TopCat.Sheaf.exactAt_of_sections_on_basis _ _
       PrimeSpectrum.isBasis_basic_opens
     rintro U ⟨r, rfl⟩
     change (((sectionsFunctor (twoChartLine R)
@@ -133,9 +135,9 @@ lemma isZero_rightDerived_projection_unit_succ (n : ℕ) :
   exact ((HomologicalComplex.exactAt_iff_isZero_homology _ _).mp h).of_iso
     (I.isoRightDerivedObj (Scheme.Modules.pushforward (projection R)) (n + 1))
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u})
 
 /-- The original canonical unit map into projection direct image. -/
@@ -180,4 +182,4 @@ def projectionUnitIso : SheafOfModules.unit (Spec R).ringCatSheaf ≅
     (Scheme.Modules.pushforward (projection R)).obj
       (SheafOfModules.unit (twoChartLine R).ringCatSheaf) := asIso (projectionUnitMap R)
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

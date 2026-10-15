@@ -19,6 +19,12 @@ regularity remains a separate commutative-algebra/geometric theorem.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -26,20 +32,23 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X]
 
 /-- Objectwise actual finite resolutions pass to the chosen small model;
 no uniform bound is introduced. -/
 theorem coherentSmallResolutionHypothesis
-    (h : (CoherentScheme.coherentExactStructure X).ResolutionHypothesis
+    (h : (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).ResolutionHypothesis
       (coherentVectorBundle X)) :
-    (CoherentScheme.coherentExactStructure X).smallModel.ResolutionHypothesis
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
+      X).smallModel.ResolutionHypothesis
       (coherentSmallVectorBundle X) := by
   intro M
-  let E := equivSmallModel.{u+1} (CoherentScheme.FiniteTypeSheaves X)
+  let E := equivSmallModel.{u+1} (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves
+    X)
   obtain ⟨T⟩ := h (E.inverse.obj M)
-  let T' := (CoherentScheme.coherentExactStructure X).originalToSmallModel.mapFiniteResolution
+  let T' := (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
+    X).originalToSmallModel.mapFiniteResolution
     (P' := coherentSmallVectorBundle X)
     (fun N hN => (coherentVectorBundle X).prop_of_iso (E.unitIso.app N) hN) T
   exact ⟨T'.ofIso (E.counitIso.app M)⟩
@@ -48,13 +57,15 @@ theorem coherentSmallResolutionHypothesis
 sheaves admit genuine finite vector-bundle resolutions. This theorem uses
 the proved Quillen theorem rather than accepting it as an input field. -/
 theorem schemeKToG_bijective_of_finite_resolutions
-    [(CoherentScheme.coherentExactStructure X).IsKernelClosed (coherentVectorBundle X)]
-    (h : (CoherentScheme.coherentExactStructure X).ResolutionHypothesis
+    [(AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).IsKernelClosed
+      (coherentVectorBundle X)]
+    (h : (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).ResolutionHypothesis
       (coherentVectorBundle X)) (n : ℕ) :
     Function.Bijective (schemeKToG X n) := by
   have h₁ := (vectorBundleSmallLiftExact X).KMap_bijective_of_mapQ_isEquivalence n
   have h₂ := Resolution.inclusionKMap_bijective
-    (CoherentScheme.coherentExactStructure X).smallModel (coherentSmallVectorBundle X)
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).smallModel
+      (coherentSmallVectorBundle X)
     (coherentSmallResolutionHypothesis X h) n
   change Function.Bijective ((vectorBundleToCoherentExact X).smallModel.KMap n)
   rw [← vectorBundleSmall_factor X, CategoryTheory.ExactCategory.ExactFunctor.KMap_comp]
@@ -65,15 +76,16 @@ affine finite-vector-bundle-resolution hypothesis. This is a homological
 intermediate statement, not a substituted regularity assumption. -/
 theorem coherentResolutionHypothesis_of_finite_projectiveDimension
     (R : CommRingCat.{u}) [IsNoetherianRing R]
-    (h : ∀ M : CoherentScheme.FiniteModule.{u, u} R,
+    (h : ∀ M : ModuleCat.FiniteModule.{u, u} R,
       projectiveDimension M.obj ≠ ⊤) :
-    (CoherentScheme.coherentExactStructure (Spec R)).ResolutionHypothesis
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec R)).ResolutionHypothesis
       (coherentVectorBundle (Spec R)) := by
   intro M
-  let N := (CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R).functor.obj M
+  let N := (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence
+    R).functor.obj M
   obtain ⟨n, hn⟩ := (projectiveDimension_ne_top_iff N.obj).mp (h N)
   have := hn
   obtain ⟨T, _⟩ := coherentResolution_length_le_of_projectiveDimensionLE R n M
   exact ⟨T⟩
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

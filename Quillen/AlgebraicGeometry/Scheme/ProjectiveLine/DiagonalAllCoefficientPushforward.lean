@@ -19,13 +19,15 @@ The existing vector-bundle isomorphism is recovered exactly.
 -/
 
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 
 local instance allCoefficientDiagonalClosed (R : CommRingCat.{u}) :
     IsClosedImmersion (relativeDiagonal R) := isClosedImmersion_relativeDiagonal R
@@ -64,4 +66,4 @@ theorem diagonalTensorPushforwardIso_all_eq (R : CommRingCat.{u})
   apply Iso.ext
   rfl
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

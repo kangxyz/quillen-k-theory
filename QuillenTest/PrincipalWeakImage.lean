@@ -10,6 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalWeakIma
 /-! # Original stabilized restriction-image consumers -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
@@ -23,7 +26,8 @@ open PerfectComplexes OpenWeakImage
 theorem original_stabilized_restriction_arrow (R : CommRingCat.{u}) (r : R)
     (P : StrictPerfect (Spec (.of (Localization.Away r)))) :
     ∃ (E : Perfect (Spec R))
-      (q : (perfectRestrict (CoherentScheme.principalOpen R r)).obj E ⟶
+      (q : (perfectRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
+        E ⟶
         shiftSum ((strictToPerfect _).obj P)), (perfectWaldhausen _).weq q :=
   principal_strict_shiftSum_mem R r P
 
@@ -33,7 +37,8 @@ theorem actual_target_stabilized_comparison (R : CommRingCat.{u}) (r : R)
     (P : StrictPerfect (Spec (.of (Localization.Away r))))
     (f : (strictToPerfect _).obj P ⟶ B) (hf : (perfectWaldhausen _).weq f) :
     ∃ (E : Perfect (Spec R))
-      (q : (perfectRestrict (CoherentScheme.principalOpen R r)).obj E ⟶ shiftSum B),
+      (q : (perfectRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
+        E ⟶ shiftSum B),
       (perfectWaldhausen _).weq q := principal_shiftSum_mem_of_strict_comparison R r B P f hf
 
 /-- The stabilization comparison retains its original first-component map exactly. -/

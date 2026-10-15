@@ -16,6 +16,9 @@ Consequently arbitrary geometric pullback preserves acyclic bounded-above
 flat complexes and quasi-isomorphisms between such complexes.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -24,7 +27,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Opposite
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 instance stalkwiseFlat_isClosedUnderIsomorphisms (X : Scheme.{u}) :
     (stalkwiseFlat X).IsClosedUnderIsomorphisms where
@@ -89,10 +92,10 @@ theorem quasiIso_pullback_of_boundedAbove_stalkwiseFlat {X Y : Scheme.{u}} (f : 
       IsZero ((CochainComplex.mappingCone s).X n) :=
     (CochainComplex.mappingCone.isZero_X_iff s n).mpr ⟨hb (n + 1) (by omega), hc n (by omega)⟩
   have ha := acyclic_pullback_of_boundedAbove_stalkwiseFlat f _ ht
-    (Quillen.HomologicalAlgebra.mappingCone_acyclic_of_quasiIso s) (max (b - 1) c) hu
-  apply HomologicalAlgebra.quasiIso_of_mappingCone_acyclic
+    (CochainComplex.mappingCone_acyclic_of_quasiIso s) (max (b - 1) c) hu
+  apply CochainComplex.quasiIso_of_mappingCone_acyclic
   intro n
   exact (ha n).of_iso
     (CochainComplex.mappingCone.mapHomologicalComplexIso s (Scheme.Modules.pullback f))
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

@@ -24,7 +24,7 @@ open scoped ChangeOfRings
 namespace QuillenTest.AffineSectionComparison
 
 open Quillen
-open Quillen.SchemeSheaf
+open AlgebraicGeometry.Scheme.Modules
 variable {R S : CommRingCat.{u}} (φ : R ⟶ S)
 
 /-- An original scalar-unit pure tensor maps to the original geometric pullback unit section. -/

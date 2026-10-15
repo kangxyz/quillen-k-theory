@@ -21,6 +21,12 @@ The resulting coherent adjunction is the restriction of the sheaf adjunction.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,7 +34,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme.ClosedImmersion.General
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 open Scheme.Modules
 
 /-- Coherent sheaves pull back along a closed immersion into an affine
@@ -83,7 +89,7 @@ theorem affineLocallyFiniteType_pullback {Z X : Scheme.{u}} [IsLocallyNoetherian
     affineLocallyFiniteType_pullback_affine (X.affineOpenCover.X j) (pullback.snd i a)
       (affineLocallyFiniteType_restrict a hM)
   exact (affineLocallyFiniteType (pullback i a)).prop_of_iso
-    ((Quillen.SchemeSheaf.pullbackOpenSquare (pullback.fst i a) (pullback.snd i a) i a
+    ((AlgebraicGeometry.Scheme.Modules.pullbackOpenSquare (pullback.fst i a) (pullback.snd i a) i a
       (pullback.condition (f := i) (g := a))).app M).symm h
 
 variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsLocallyNoetherian X]
@@ -107,7 +113,7 @@ def coherentPullbackOpenBaseChange {V : Scheme.{u}}
       finiteTypeSheavesRestriction a ⋙ coherentPullback (pullback.snd i a) :=
   Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules (pullback i a))
     (Functor.isoWhiskerLeft (finiteTypeSheavesToModules X)
-      (Quillen.SchemeSheaf.pullbackOpenSquare (pullback.fst i a) (pullback.snd i a) i a
+      (AlgebraicGeometry.Scheme.Modules.pullbackOpenSquare (pullback.fst i a) (pullback.snd i a) i a
         (pullback.condition (f := i) (g := a))))
 
 /-- The coherent adjunction is the restriction of the genuine sheaf
@@ -153,4 +159,4 @@ omit [IsLocallyNoetherian X] in
       (pullbackPushforwardAdjunction i).counit.app M.obj = _
   simp only [CategoryTheory.Functor.map_id, CategoryTheory.Category.id_comp]
 
-end Quillen.CoherentScheme.ClosedImmersion.General
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

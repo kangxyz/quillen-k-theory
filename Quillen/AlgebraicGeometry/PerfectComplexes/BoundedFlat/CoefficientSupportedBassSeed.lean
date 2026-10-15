@@ -26,7 +26,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
 open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
 open Quillen.KTheory.Bass Quillen.FunctorIdentityAutomorphism
-open Quillen.Scheme.PolynomialLaurent Quillen.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.PolynomialLaurent AlgebraicGeometry.Scheme.CoefficientBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)

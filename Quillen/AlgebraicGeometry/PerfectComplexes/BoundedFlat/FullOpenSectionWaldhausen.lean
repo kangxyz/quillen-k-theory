@@ -20,7 +20,7 @@ the full-open Waldhausen structure with that same chosen zero and the original g
 @[expose] public section
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.CategoryTheory.GrothendieckZeroSections Quillen.Scheme.AffineOpenPair
+open Quillen.CategoryTheory.GrothendieckZeroSections AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

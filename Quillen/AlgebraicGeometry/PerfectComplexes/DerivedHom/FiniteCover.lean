@@ -55,7 +55,7 @@ theorem derivedHomZeroOn_bot (n : ℤ) : DerivedHomZeroOn E L ⊥ n := by
     rw [IsZero.iff_id_eq_zero]
     ext i : 1
     have hz : IsZero (((restrict (⊥ : X.Opens).ι).obj E).X i) := by
-      rw [SchemeSheaf.isZero_iff_stalks]
+      rw [AlgebraicGeometry.Scheme.Modules.isZero_iff_stalks]
       intro x
       exact False.elim x.property
     exact hz.eq_of_src _ _

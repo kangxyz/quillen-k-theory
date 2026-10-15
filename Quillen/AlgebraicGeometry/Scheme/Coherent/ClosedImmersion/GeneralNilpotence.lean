@@ -19,13 +19,19 @@ supported coherent sheaf. No bound uniform in the sheaf is assumed.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-namespace Quillen.CoherentScheme.ClosedImmersion.General
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 open ReflectorDevissage
 
 variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsLocallyNoetherian X]
@@ -100,7 +106,7 @@ theorem kernelIterate_eventually_zero {Z X : Scheme.{u}}
   let N := s.sup n
   refine ⟨N, ?_⟩
   apply IsZero.of_full_of_faithful_of_isZero (finiteTypeSheavesToModules X) _
-  apply (SchemeSheaf.isZero_iff_stalks _).mpr
+  apply (AlgebraicGeometry.Scheme.Modules.isZero_iff_stalks _).mpr
   intro x
   have hx := hs (show x ∈ (Set.univ : Set X) from trivial)
   simp only [Set.mem_iUnion, Set.mem_range] at hx
@@ -110,7 +116,7 @@ theorem kernelIterate_eventually_zero {Z X : Scheme.{u}}
     (kernelIterate_isZero_of_le (coherentAdjunction (pullback.snd i (A.f k))).unit
       (Finset.le_sup hk) _ (hn k)).of_iso (kernelIterateOpenBaseChange i (A.f k) N M)
   have hz' := (finiteTypeSheavesToModules (Spec (A.X k))).map_isZero hz
-  have hstalk := (SchemeSheaf.stalkFunctor (Spec (A.X k)) y).map_isZero hz'
+  have hstalk := (AlgebraicGeometry.Scheme.Modules.stalkFunctor (Spec (A.X k)) y).map_isZero hz'
   have hstalk' := hstalk.of_iso
     ((Scheme.Modules.restrictStalkNatIso (A.f k) y).app
       (kernelIterate (coherentAdjunction i).unit N M).obj).symm
@@ -119,4 +125,4 @@ theorem kernelIterate_eventually_zero {Z X : Scheme.{u}}
     (kernelIterate (coherentAdjunction i).unit N M).obj)
   simpa only [hy] using hstalk'
 
-end Quillen.CoherentScheme.ClosedImmersion.General
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

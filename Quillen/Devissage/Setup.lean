@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.Abelian.Subcategory.Exact
 public import Quillen.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Devissage.Filtration
 public import Quillen.KTheory.Map.Basic
@@ -33,6 +34,21 @@ theorems. Algebraic Grothendieck-group injectivity is proved in the subsequent
 `Quillen.DevissageGrothendieck` module.
 -/
 @[expose] public section
+open Quillen
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.Devissage
+export CategoryTheory.ObjectProperty
+  (Subcategory containsZero_iff_nonempty exactInclusion inclusionFullyFaithful
+  inclusion_preservesFiniteColimits inclusion_preservesFiniteLimits subcategoryAbelian
+  subcategoryExactStructure)
+end Quillen.Devissage
+
+end
+
+
 
 
 noncomputable section
@@ -48,61 +64,8 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 
 variable {C : Type u} [Category.{v} C] [Abelian C] (P : ObjectProperty C)
 
-/-- Under subobject closure, the usual nonemptiness requirement is equivalent
-to containing a zero object. -/
-theorem containsZero_iff_nonempty [P.IsClosedUnderSubobjects] :
-    P.ContainsZero ↔ P.Nonempty := by
-  constructor
-  · intro h
-    let := h
-    infer_instance
-  · intro h
-    let := h
-    exact ⟨⟨0, isZero_zero C,
-      P.prop_of_mono (0 : (0 : C) ⟶ P.arbitrary) P.prop_arbitrary⟩⟩
-
 variable [P.ContainsZero] [P.IsClosedUnderSubobjects] [P.IsClosedUnderQuotients]
   [P.IsClosedUnderFiniteProducts]
-
-/-- The full subcategory of objects allowed as dévissage factors. -/
-abbrev Subcategory := P.FullSubcategory
-
-/-- The abelian structure is constructed from the closure hypotheses, rather
-than supplied as extra data. -/
-@[instance_reducible]
-def subcategoryAbelian : Abelian (Subcategory P) := inferInstance
-
-/-- The standard exact structure on the full abelian subcategory. -/
-def subcategoryExactStructure : ExactStructure (Subcategory P) :=
-  abelianExactStructure (Subcategory P)
-
-/-- The full-subcategory inclusion preserves finite limits because it creates
-kernels. -/
-theorem inclusion_preservesFiniteLimits : PreservesFiniteLimits P.ι := by
-  let : ∀ {X Y : P.FullSubcategory} (f : X ⟶ Y),
-      PreservesLimit (parallelPair f 0) P.ι := fun f => P.preservesKernels_ι f
-  exact Functor.preservesFiniteLimits_of_preservesKernels P.ι
-
-/-- The full-subcategory inclusion preserves finite colimits because it creates
-cokernels. -/
-theorem inclusion_preservesFiniteColimits : PreservesFiniteColimits P.ι := by
-  let : ∀ {X Y : P.FullSubcategory} (f : X ⟶ Y),
-      PreservesColimit (parallelPair f 0) P.ι := fun f => P.preservesCokernels_ι f
-  exact Functor.preservesFiniteColimits_of_preservesCokernels P.ι
-
-/-- The actual inclusion is exact for the standard abelian exact structures. -/
-def exactInclusion :
-    ExactFunctor (subcategoryExactStructure P) (abelianExactStructure C) where
-  toFunctor := P.ι
-  map_conflation S hS := by
-    let := inclusion_preservesFiniteLimits P
-    let := inclusion_preservesFiniteColimits P
-    exact hS.map_of_exact P.ι
-
-/-- The exact inclusion remains the ordinary fully faithful inclusion on its
-underlying category. This does not assert fullness of the induced Q-functor. -/
-def inclusionFullyFaithful : (exactInclusion P).toFunctor.FullyFaithful :=
-  P.fullyFaithfulι
 
 /-- The Q-functor induced by the exact inclusion in classical dévissage. -/
 def mapQ :

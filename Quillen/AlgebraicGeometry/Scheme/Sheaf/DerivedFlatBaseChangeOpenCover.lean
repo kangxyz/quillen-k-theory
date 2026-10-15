@@ -13,13 +13,16 @@ mates of its actual horizontally pasted squares. The local invertibility assumpt
 explicit; no general flat base-change invertibility is inferred. -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The original standard derived categories of module sheaves. -/
 local instance baseChangeOpenCoverStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -41,4 +44,4 @@ theorem isIso_derivedFlatBaseChangeMap_of_openCover
   intro i
   exact (isIso_derivedFlatBaseChangeMap_pullback_iff (c i) (d i) (k i) a b f j
     (hs i) h K).mpr (hK i)
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

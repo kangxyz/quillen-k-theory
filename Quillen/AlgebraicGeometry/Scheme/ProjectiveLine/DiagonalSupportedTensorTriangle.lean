@@ -20,13 +20,15 @@ image and projective-bundle generation require further comparison.
 -/
 
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry DerivedCategory CategoryTheory.Pretriangulated
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 
 /-- The standard derived category used for the original relative square. -/
 local instance diagonalSupportedTensorStandardDerived (R : CommRingCat.{u}) :
@@ -91,4 +93,4 @@ theorem diagonalSupportedTensorTriangle_mor₃ :
         (diagonalTensorPushforwardIso R E (tautologicalQuotientLine R)).inv ≫
         (diagonalBundleTensorTriangle R E).mor₃ := rfl
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

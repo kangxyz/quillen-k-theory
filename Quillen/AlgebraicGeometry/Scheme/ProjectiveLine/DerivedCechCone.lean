@@ -16,6 +16,8 @@ quasicoherent sheaf with its original signed sheaf Cech cone. Both ordinary vert
 fixed by identity maps, the original connecting square is retained, and the minus-one
 shift is explicit. No coefficient perfection is assumed. -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -23,8 +25,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated
 open AlgebraicGeometry HomologicalComplex
-open Quillen.SchemeSheaf Quillen.Scheme.PolynomialLaurent
-namespace Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 /-- The standard ambient derived category of original module sheaves. -/
 local instance derivedCechConeStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -85,4 +87,4 @@ def derivedCechConeIso :
       (Triangle.π₃.mapIso (derivedCechConeTriangleIso R M)) ≪≫
     ((DerivedCategory.Q.commShiftIso (-1 : ℤ)).app _).symm
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

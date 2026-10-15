@@ -19,6 +19,9 @@ ordinary single-complex isomorphism.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -27,7 +30,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Use the installed standard derived category of actual module sheaves. -/
 local instance affineCompositeDerivedStandard (X : Scheme.{u}) :
@@ -56,4 +59,4 @@ theorem isIso_derivedPushforwardPlusUnit_pushforward_single {X Y Z : Scheme.{u}}
   rw [Functor.rightDerivedFunctorPlusCompUnit_app] at this
   exact (isIso_comp_right_iff _ _).mp this
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

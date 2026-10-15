@@ -14,6 +14,9 @@ maps into and out of the ordered unit square.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 noncomputable section
 universe u v u' v'
@@ -22,7 +25,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {U V Y X : Scheme.{u}} (a : U ⟶ Y) (j : Y ⟶ X) (c : U ⟶ V) (b : V ⟶ X)
   (h : a ≫ j = c ≫ b)
 /-- The original pullback comparison for a genuinely commuting scheme square. -/
@@ -78,4 +81,4 @@ theorem pullbackSquareIso_map_from_unitSquare {M : X.Modules}
   dsimp only [Functor.comp_map] at hn
   rw [← Category.assoc, hn]
   simp only [Functor.map_comp, Category.assoc]
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

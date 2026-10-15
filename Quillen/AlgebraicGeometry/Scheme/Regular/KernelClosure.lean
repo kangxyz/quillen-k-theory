@@ -21,6 +21,12 @@ the sheaf category.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -29,12 +35,12 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Kernels of admissible epimorphisms between coherent vector bundles are
 actual finite locally free sheaves on any locally noetherian scheme. -/
 instance coherentVectorBundle_kernelClosed (X : Scheme.{u}) [IsLocallyNoetherian X] :
-    (CoherentScheme.coherentExactStructure X).IsKernelClosed
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).IsKernelClosed
       (coherentVectorBundle X) where
   prop_kernel {S} hS h₂ h₃ := by
     have : IsFiniteLocallyFree X S.X₂.obj := h₂
@@ -46,7 +52,7 @@ instance coherentVectorBundle_kernelClosed (X : Scheme.{u}) [IsLocallyNoetherian
     have : IsLocallyNoetherian (Spec (U.X i)) :=
       isLocallyNoetherian_of_isOpenImmersion (U.f i)
     have : IsNoetherianRing (U.X i) := isLocallyNoetherian_Spec.mp inferInstance
-    let F := CoherentScheme.finiteTypeSheavesRestriction (U.f i)
+    let F := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesRestriction (U.f i)
     let T := S.map F
     have hT : T.ShortExact := hS.map_of_exact F
     have h₂' : coherentVectorBundle (Spec (U.X i)) T.X₂ :=
@@ -54,6 +60,7 @@ instance coherentVectorBundle_kernelClosed (X : Scheme.{u}) [IsLocallyNoetherian
     have h₃' : coherentVectorBundle (Spec (U.X i)) T.X₃ :=
       finiteLocallyFree_restrict (U.f i) S.X₃.obj
     exact CategoryTheory.ExactCategory.ExactStructure.IsKernelClosed.prop_kernel
-      (E := CoherentScheme.coherentExactStructure (Spec (U.X i))) hT h₂' h₃'
+      (E := AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec (U.X i))) hT h₂'
+        h₃'
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

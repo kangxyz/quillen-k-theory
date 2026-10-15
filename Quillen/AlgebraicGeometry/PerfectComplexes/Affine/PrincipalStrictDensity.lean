@@ -19,6 +19,9 @@ restriction-to-target weak map, with the actual coproduct comparison.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -34,7 +37,8 @@ variable (R : CommRingCat.{u}) (r : R)
 /-- The original shifted complex is an actual coproduct complement in the witnessed strict image. -/
 theorem principal_image_complement (A : StrictPerfect (Spec (.of (Localization.Away r)))) :
     ∃ B : StrictPerfect (Spec (.of (Localization.Away r))),
-      ApproximationImage.objects (strictWaldhausen _) (strictRestrict (CoherentScheme.principalOpen
+      ApproximationImage.objects (strictWaldhausen _) (strictRestrict
+        (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
         R r)) (A ⨿ B) := by
   let B : StrictPerfect (Spec (.of (Localization.Away r))) := ⟨A.obj⟦(1 : ℤ)⟧, strictPerfect_shift
     A.property 1⟩
@@ -58,7 +62,8 @@ theorem principal_image_complement (A : StrictPerfect (Spec (.of (Localization.A
       · exact (congrArg (fun k ↦ k.hom) hn).trans (biprod.inr_desc _ _).symm
   let e : A ⨿ B ≅ T := (coprodIsCoprod A B).coconePointUniqueUpToIso ht
   obtain ⟨Q, ⟨q⟩⟩ := Affine.exists_principal_strict_extension_after_shift R r A
-  let p : (strictRestrict (CoherentScheme.principalOpen R r)).obj Q ⟶ T := ObjectProperty.homMk
+  let p : (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj Q
+    ⟶ T := ObjectProperty.homMk
     q.hom
   exact ⟨B, Q, p ≫ e.inv, (strictWaldhausen _).weq.comp_mem _ _ q.quasiIso_hom
     ((strictWaldhausen _).weq_iso _ inferInstance)⟩
@@ -66,14 +71,18 @@ theorem principal_image_complement (A : StrictPerfect (Spec (.of (Localization.A
 /-- Every density and cofiber condition is proved for the literal original strict restriction image.
 -/
 theorem principalDenseData : Cofinality.DenseCofiberData (strictWaldhausen _)
-    (ApproximationImage.objects (strictWaldhausen _) (strictRestrict (CoherentScheme.principalOpen R
+    (ApproximationImage.objects (strictWaldhausen _) (strictRestrict
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
       r))) where
-  zero := ApproximationImage.zero_mem (restriction_exact (CoherentScheme.principalOpen R r))
+  zero := ApproximationImage.zero_mem (restriction_exact
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r))
   weak f hf := Affine.principal_strict_image_iff_of_weak R r f hf
   extension hi h hA hQ := Affine.principal_strict_image_extension R r hi h hA hQ
   quotient hi h hA hB := ApproximationImage.pushout_mem (principal_approximationOnImage R r)
-    (restriction_exact (CoherentScheme.principalOpen R r)) hi h hA hB
-    (ApproximationImage.zero_mem (restriction_exact (CoherentScheme.principalOpen R r)))
+    (restriction_exact (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)) hi h hA
+      hB
+    (ApproximationImage.zero_mem (restriction_exact
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)))
   complement := principal_image_complement R r
 
 end Quillen.PerfectComplexes.StrictOpenWeakImage

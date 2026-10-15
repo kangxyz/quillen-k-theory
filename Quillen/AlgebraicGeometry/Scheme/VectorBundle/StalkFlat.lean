@@ -18,6 +18,9 @@ prove stalkwise flatness. Global projectivity and global splitting are not
 assumed, and no affine or quasicoherent replacement is substituted.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -25,7 +28,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- A vector bundle is a local retract of the genuine flat cover; stalk flatness
 therefore follows from actual local splitting, without assuming global projectivity. -/
@@ -54,4 +57,4 @@ theorem stalkwiseFlat_of_finiteLocallyFree {X : Scheme.{u}} (M : X.Modules)
     (Scheme.Modules.restrictFunctor V.ι).map (flatCoverπ M), hsV⟩ hflat
   exact stalk_flat_of_restrict V.ι ⟨x, hxV⟩ M (hM ⟨x, hxV⟩)
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

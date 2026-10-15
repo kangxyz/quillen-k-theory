@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.VectorBundleInclusion
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Restriction
 
@@ -17,6 +18,20 @@ implies preservation of quasi-isomorphisms. Strict boundedness and finite
 local freeness are preserved, giving genuine Waldhausen restriction maps.
 -/
 @[expose] public section
+open Quillen
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.PerfectComplexes
+export AlgebraicGeometry.Scheme.Modules.Complex
+  (restrict restrictFunctor_preservesHomology restrict_additive restrict_preservesFiniteColimits
+  restrict_preservesFiniteLimits restrict_quasiIso)
+end Quillen.PerfectComplexes
+
+end
+
+
 
 
 noncomputable section
@@ -34,39 +49,14 @@ namespace Quillen.PerfectComplexes
 
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
-/-- Actual termwise open restriction of cochain complexes. -/
-def restrict : Complex X ⥤ Complex U :=
-  (Scheme.Modules.restrictFunctor j).mapHomologicalComplex (ComplexShape.up ℤ)
-
-instance restrict_additive : (restrict j).Additive := by
-  unfold restrict
-  infer_instance
-
-instance restrict_preservesFiniteLimits : PreservesFiniteLimits (restrict j) := by
-  unfold restrict
-  infer_instance
-
-instance restrict_preservesFiniteColimits : PreservesFiniteColimits (restrict j) := by
-  unfold restrict
-  infer_instance
-
-instance restrictFunctor_preservesHomology : (Scheme.Modules.restrictFunctor j).PreservesHomology :=
-  Functor.preservesHomology_of_preservesMonos_and_cokernels _
-
-/-- Exact open restriction preserves actual quasi-isomorphisms. -/
-instance restrict_quasiIso {K L : Complex X} (f : K ⟶ L) [QuasiIso f] :
-    QuasiIso ((restrict j).map f) := by
-  unfold restrict
-  infer_instance
-
 /-- Strict perfectness survives actual geometric open restriction. -/
 theorem strictPerfect_restrict {K : Complex X} (hK : strictPerfect X K) :
     strictPerfect U ((restrict j).obj K) := by
   obtain ⟨⟨a, b, hb⟩, hv⟩ := hK
   refine ⟨⟨a, b, fun n hn ↦ (Scheme.Modules.restrictFunctor j).map_isZero (hb n hn)⟩, ?_⟩
   intro n
-  let : SchemeSheaf.IsFiniteLocallyFree X (K.X n) := hv n
-  exact SchemeSheaf.finiteLocallyFree_restrict j (K.X n)
+  let : AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X (K.X n) := hv n
+  exact AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_restrict j (K.X n)
 
 /-- The restriction functor on strict perfect complexes. -/
 def strictRestrict : StrictPerfect X ⥤ StrictPerfect U :=

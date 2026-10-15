@@ -17,12 +17,14 @@ Thus the original relative diagonal is a closed immersion and the original proje
 is separated over every base ring. No sheaf cokernel or projective-bundle formula is asserted.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent
 /-- Any actual chart-intersection model retains the original diagonal cartesian square. -/
 theorem chartIntersection_diagonal_isPullback (R : CommRingCat.{u})
@@ -94,4 +96,4 @@ theorem isClosedImmersion_relativeDiagonal (R : CommRingCat.{u}) :
 theorem isSeparated_projection (R : CommRingCat.{u}) : IsSeparated (projection R) := by
   apply (isSeparated_iff (projection R)).mpr
   exact isClosedImmersion_relativeDiagonal R
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

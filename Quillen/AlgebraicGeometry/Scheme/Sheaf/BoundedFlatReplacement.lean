@@ -19,6 +19,9 @@ No quasicoherence, affineness, flat morphism, or replacement existence hypothesi
 is used. No functorial choice or derived-localization descent is asserted here.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -26,7 +29,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite HomologicalComplex
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 attribute [local instance] Abelian.hasFiniteBiproducts
 
@@ -92,4 +95,4 @@ theorem exists_boundedAbove_flat_complex_replacement (X : Scheme.{u})
     intro n hn
     exact A.map_isZero (P₀.isZero_of_isStrictlyLE b n hn)
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

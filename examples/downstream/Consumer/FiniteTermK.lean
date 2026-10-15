@@ -59,6 +59,6 @@ end
 /-- No regularity, noetherianity, or resolution property is used for this
 isomorphism-weak finite strict-perfect stratum. -/
 def actual_scheme_finite_term_K (X : AlgebraicGeometry.Scheme.{u}) (a : ℤ) (m k : ℕ) :=
-  finiteTermKEquiv.{u, u+1} (SchemeSheaf.finiteLocallyFree X) a m k
+  finiteTermKEquiv.{u, u+1} (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree X) a m k
 
 end Consumer

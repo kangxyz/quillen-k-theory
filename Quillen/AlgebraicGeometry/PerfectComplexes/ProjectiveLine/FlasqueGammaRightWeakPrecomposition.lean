@@ -12,7 +12,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueG
 noncomputable section
 universe u
 open CategoryTheory AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueGammaEndpoints
 

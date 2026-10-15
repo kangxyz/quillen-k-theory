@@ -27,6 +27,11 @@ extra hypothesis: its first syzygy is free by the submodule theorem.
 -/
 @[expose] public section
 
+open ModuleCat
+open Quillen
+open Quillen.CoherentScheme
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -36,7 +41,7 @@ open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 variable (R : Type u) [CommRing R] [IsNoetherianRing R]
 
@@ -210,4 +215,4 @@ theorem finiteProjectiveResolutionHypothesis_of_pid [IsDomain R] [IsPrincipalIde
     have : Module.Free R N.obj := hN
     exact (show Module.Projective R N.obj from inferInstance))⟩
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

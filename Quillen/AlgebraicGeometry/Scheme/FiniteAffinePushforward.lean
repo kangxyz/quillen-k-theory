@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Finite.AffineFunctoriality
 public import Mathlib.CategoryTheory.Widesubcategory
 
@@ -13,13 +14,18 @@ public import Mathlib.CategoryTheory.Widesubcategory
   further construction. -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 /-- The genuine finite coordinate-ring homomorphisms. -/
 def finiteRingHom : MorphismProperty CommRingCat.{u} := fun _ _ φ => φ.hom.Finite
@@ -43,20 +49,23 @@ instance noetherianFiniteRings_noetherian (R : NoetherianFiniteRings.{u}) :
 
 /-- Actual finite affine G-pushforward, covariant on the represented affine schemes. -/
 def GFiniteAffinePushforwardFunctor (n : ℕ) : NoetherianFiniteRings.{u}ᵒᵖ ⥤ GrpCat.{u+1} where
-  obj R := GrpCat.of (CoherentScheme.G (Spec R.unop.obj.obj) n)
+  obj R := GrpCat.of (AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec R.unop.obj.obj) n)
   map f := GrpCat.ofHom
-    (CoherentScheme.FiniteAffine.pushforwardG f.unop.hom.hom f.unop.hom.property n)
+    (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.Affine.pushforwardG f.unop.hom.hom
+      f.unop.hom.property n)
   map_id R := by
     apply GrpCat.hom_ext
-    exact CoherentScheme.FiniteAffine.pushforwardG_id R.unop.obj.obj n
+    exact AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.Affine.pushforwardG_id
+      R.unop.obj.obj n
   map_comp f g := by
     apply GrpCat.hom_ext
-    exact CoherentScheme.FiniteAffine.pushforwardG_comp
+    exact AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.Affine.pushforwardG_comp
       g.unop.hom.hom g.unop.hom.property f.unop.hom.hom f.unop.hom.property n
 
 @[simp] theorem GFiniteAffinePushforwardFunctor_map {R S : NoetherianFiniteRings.{u}}
     (φ : R ⟶ S) (n : ℕ) :
     ((GFiniteAffinePushforwardFunctor n).map φ.op).hom =
-      CoherentScheme.FiniteAffine.pushforwardG φ.hom.hom φ.hom.property n := rfl
+      AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.Affine.pushforwardG φ.hom.hom
+        φ.hom.property n := rfl
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

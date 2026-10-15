@@ -81,7 +81,7 @@ theorem original_flat_spectrum_map {X Y : Scheme.{u}} [CompactSpace X] [CompactS
   perfectLocalizedPullback_eq_flat f
 
 /-- The natural model comparison has the original inclusion as its forward arrow. -/
-theorem actual_inclusion_component (X : Quillen.Scheme.QuasiCompactSchemes.{u}) :
+theorem actual_inclusion_component (X : AlgebraicGeometry.Scheme.QuasiCompactSchemes.{u}) :
     boundedFlatPerfectSpectrumNatIso.hom.app (Opposite.op X) =
       localizedSpectrumMap _ _ (boundedFlatPerfectInclusion_exact X.obj) := rfl
 

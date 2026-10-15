@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlatPullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalDescent
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.TensorDerivedPushforward
@@ -17,6 +18,9 @@ This proves preservation of the local perfect predicate, with no global strict
 representative and no derived tensor product of two arbitrary complexes.
 -/
 @[expose] public section
+open Quillen
+
+
 
 open CategoryTheory.ExactCategory
 
@@ -27,7 +31,7 @@ universe u v
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
-open Quillen.SchemeSheaf
+open AlgebraicGeometry.Scheme.Modules
 open CategoryTheory.MonoidalCategory
 
 /-- Local perfection descends along actual open-immersion covers. -/
@@ -56,10 +60,6 @@ instance moduleTensor_preservesFiniteColimits {X : Scheme.{u}} (L : X.Modules)
     [IsFiniteLocallyFree X L] : PreservesFiniteColimits (moduleTensorLeftFunctor X L) :=
   Functor.preservesFiniteColimits_of_preservesHomology _
 
-/-- Degreewise original sheafified tensor with the fixed line. -/
-def tensorByLineComplex {X : Scheme.{u}} (L : X.Modules) : Complex X ⥤ Complex X :=
-  (moduleTensorLeftFunctor X L).mapHomologicalComplex (ComplexShape.up ℤ)
-
 /-- The same original sheafified tensor with the fixed line written on the right. -/
 def moduleTensorByLineRight {X : Scheme.{u}} (L : X.Modules) : X.Modules ⥤ X.Modules :=
   SheafOfModulesOfCommRing.toPresheaf X.sheaf ⋙
@@ -78,34 +78,6 @@ def moduleTensorByLineSymmetry {X : Scheme.{u}} (L : X.Modules) :
 
 instance moduleTensorByLineRight_additive {X : Scheme.{u}} (L : X.Modules) :
     (moduleTensorByLineRight L).Additive := Functor.additive_of_iso (moduleTensorByLineSymmetry L)
-
-/-- Degreewise original tensor in the convention K tensor L. -/
-def tensorByLineRightComplex {X : Scheme.{u}} (L : X.Modules) : Complex X ⥤ Complex X :=
-  (moduleTensorByLineRight L).mapHomologicalComplex (ComplexShape.up ℤ)
-
-/-- The order comparison is a natural chain isomorphism, using the original tensor symmetry. -/
-def tensorByLineComplexSymmetry {X : Scheme.{u}} (L : X.Modules) :
-    tensorByLineComplex L ≅ tensorByLineRightComplex L :=
-  NatIso.mapHomologicalComplex (moduleTensorByLineSymmetry L) _
-
-instance tensorByLineComplex_additive {X : Scheme.{u}} (L : X.Modules) :
-    (tensorByLineComplex L).Additive := by unfold tensorByLineComplex; infer_instance
-
-instance tensorByLineComplex_preservesFiniteLimits {X : Scheme.{u}} (L : X.Modules)
-    [IsFiniteLocallyFree X L] : PreservesFiniteLimits (tensorByLineComplex L) := by
-  unfold tensorByLineComplex
-  infer_instance
-
-instance tensorByLineComplex_preservesFiniteColimits {X : Scheme.{u}} (L : X.Modules)
-    [IsFiniteLocallyFree X L] : PreservesFiniteColimits (tensorByLineComplex L) := by
-  unfold tensorByLineComplex
-  infer_instance
-
-instance tensorByLineComplex_quasiIso {X : Scheme.{u}} (L : X.Modules)
-    [IsFiniteLocallyFree X L] {K M : Complex X} (f : K ⟶ M) [QuasiIso f] :
-    QuasiIso ((tensorByLineComplex L).map f) := by
-  unfold tensorByLineComplex
-  infer_instance
 
 /-- An actual line trivialization supplies a natural chart tensor identification. -/
 def tensorByLineModuleChartIso {X Y : Scheme.{u}} (j : Y ⟶ X) [IsOpenImmersion j]

@@ -43,7 +43,7 @@ def perfectSupportedGrothendieckKZeroEquiv {U X : Scheme.{u}}
 
 /-- Actual supported derived pullback on the original algebraic groups. -/
 def perfectSupportedGrothendieckPullback
-    {A B : Quillen.Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B) :
+    {A B : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B) :
     Group (perfectSupportedWaldhausen B.obj.obj.hom) →+
       Group (perfectSupportedWaldhausen A.obj.obj.hom) :=
   ((perfectSupportedGrothendieckKZeroEquiv A.obj.obj.hom).symm.toMonoidHom.comp
@@ -52,7 +52,7 @@ def perfectSupportedGrothendieckPullback
 
 /-- The actual supported K-zero map is retained on every original algebraic class. -/
 theorem perfectSupportedGrothendieckPullback_comparison
-    {A B : Quillen.Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B)
+    {A B : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B)
     (x : Group (perfectSupportedWaldhausen B.obj.obj.hom)) :
     perfectSupportedGrothendieckKZeroEquiv A.obj.obj.hom
         (Multiplicative.ofAdd (perfectSupportedGrothendieckPullback f x)) =
@@ -62,7 +62,7 @@ theorem perfectSupportedGrothendieckPullback_comparison
 
 /-- Supported composition has the original contravariant order. -/
 theorem perfectSupportedGrothendieckPullback_comp
-    {A B C : Quillen.Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B) (g : B ⟶ C) :
+    {A B C : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B) (g : B ⟶ C) :
     perfectSupportedGrothendieckPullback (f ≫ g) =
       (perfectSupportedGrothendieckPullback f).comp (perfectSupportedGrothendieckPullback g) := by
   apply AddMonoidHom.ext
@@ -80,7 +80,7 @@ theorem perfectSupportedGrothendieckPullback_comp
 
 /-- Supported bounded-flat representatives retain their actual geometric pair pullback. -/
 theorem perfectSupportedGrothendieckPullback_boundedFlat_objectClass
-    {A B : Quillen.Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B)
+    {A B : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}} (f : A ⟶ B)
     (K : (boundedFlatPerfectSupported B.obj.obj.hom).FullSubcategory) :
     perfectSupportedGrothendieckPullback f
         (objectClass (perfectSupportedWaldhausen B.obj.obj.hom)

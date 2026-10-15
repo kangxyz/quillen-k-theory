@@ -24,7 +24,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe w w' u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Abelian AlgebraicGeometry
-open Quillen.SchemeSheaf.AffineDerived Quillen.PerfectComplexes.Affine
+open AlgebraicGeometry.Scheme.Modules.AffineDerived Quillen.PerfectComplexes.Affine
 open QuillenTest.AffineCechSections
 
 namespace QuillenTest.AffineExtComparison

@@ -15,13 +15,19 @@ induced maps concern genuine vector-bundle K-groups on the original schemes.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 variable {X Y Z : Scheme.{u}}
   [IsLocallyNoetherian X] [IsLocallyNoetherian Y] [IsLocallyNoetherian Z]
@@ -66,7 +72,8 @@ def vectorBundlePushforwardOpenBaseChange (f : X ⟶ Y)
     vectorBundlePushforward f ⋙ vectorBundleRestrict j ≅
       vectorBundleRestrict (pullback.fst f j) ⋙ vectorBundlePushforward (pullback.snd f j) :=
   Functor.fullyFaithfulCancelRight (finiteLocallyFree V).ι
-    (Functor.isoWhiskerLeft (finiteLocallyFree X).ι (CoherentScheme.openBaseChange f j))
+    (Functor.isoWhiskerLeft (finiteLocallyFree X).ι (AlgebraicGeometry.Scheme.Modules.openBaseChange
+      f j))
 
 /-- Original open restriction and finite flat K-pushforward commute by actual base change. -/
 theorem schemeKPushforward_openBaseChange (f : X ⟶ Y)
@@ -82,4 +89,4 @@ theorem schemeKPushforward_openBaseChange (f : X ⟶ Y)
   simpa only [CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, schemeKPushforward,
     schemeKRestrict] using h
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

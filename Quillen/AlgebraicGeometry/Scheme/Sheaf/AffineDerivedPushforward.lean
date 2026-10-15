@@ -15,12 +15,15 @@ that the actual right-derived unit is an isomorphism on single quasicoherent
 sheaves. No replacement of this unit or perfection conclusion is used.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard ambient derived category of module sheaves used by the actual unit. -/
 local instance affineDerivedPushforwardStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -32,4 +35,4 @@ theorem isIso_derivedPushforwardPlusUnit_single {Z X : Scheme.{u}}
   isIso_derivedPushforwardPlusUnit_single_of_resolution f M (injectiveResolution M)
     (quasiIso_pushforward_injectiveResolution_int f M (injectiveResolution M))
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

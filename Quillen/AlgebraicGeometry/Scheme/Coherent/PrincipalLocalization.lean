@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.PrincipalSupport
 public import Quillen.GTheory.SmallModelLocalization
 
@@ -23,6 +25,12 @@ realizations is needed, and no non-affine localization theorem is asserted.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -31,7 +39,7 @@ universe u w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 private theorem principal_exact_transport
     {A B C A' B' C' : Type w}
@@ -166,4 +174,4 @@ theorem global_principal_localization_GZero_tail :
     globalPrincipal_inclusion_range_eq_restriction_ker R r 0,
     globalPrincipal_GZero_surjective R r⟩
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

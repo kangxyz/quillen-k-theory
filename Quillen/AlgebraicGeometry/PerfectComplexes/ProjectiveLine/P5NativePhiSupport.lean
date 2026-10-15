@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.AcyclicSupport
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativePhiObjects
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportClosure
 
@@ -16,73 +18,30 @@ the original total augmentation preserve acyclicity on that same open. No
 compactness of the open, quasi-separatedness or source-term quasicoherence is used.
 -/
 @[expose] public section
+open Quillen
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativePhi
+export AlgebraicGeometry.Scheme.Modules.Complex
+  (coprod_acyclic)
+end Quillen.PerfectComplexes.ProjectiveLine.P5NativePhi
+
+end
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.Scheme Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Modules
+  AlgebraicGeometry.Scheme.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativePhi
-
-/-- Genuine flat pullback preserves acyclicity of the original cochain complex. -/
-lemma flatPullback_acyclic {P Y : Scheme.{u}} (f : P ⟶ Y) [Flat f]
-    (A : Complex Y) (hA : A.Acyclic) : ((pullbackComplex f).obj A).Acyclic := by
-  intro n
-  exact (hA n).map (Scheme.Modules.pullback f)
-
-/-- Actual flat pullback preserves support on exactly the inverse-image base open. -/
-lemma flatPullback_preservesSupport {P Y : Scheme.{u}} (f : P ⟶ Y) [Flat f]
-    (Z : Y.Opens) (A : Complex Y) (hA : ((restrict Z.ι).obj A).Acyclic) :
-    ((restrict (f ⁻¹ᵁ Z).ι).obj ((pullbackComplex f).obj A)).Acyclic := by
-  have ha := flatPullback_acyclic (f ∣_ Z) ((restrict Z.ι).obj A) hA
-  intro n
-  exact (ha n).of_iso ((pullbackComplexRestrictIso f Z).app A).symm
-
-/-- The original left tensor/restriction comparison, without changing the tensor order. -/
-def leftTensorRestrictionIso {U P : Scheme.{u}} (j : U ⟶ P) [IsOpenImmersion j]
-    (L : P.Modules) :
-    tensorByLineComplex L ⋙ restrict j ≅ restrict j ⋙ tensorByLineComplex (L.restrict j) :=
-  (Functor.mapHomologicalComplexCompIso (tensorRestrictionNatIso j L) _).symm
-
-/-- Exact left tensor by the actual finite locally free line preserves acyclicity. -/
-lemma leftTensor_acyclic {P : Scheme.{u}} (L : P.Modules) [IsFiniteLocallyFree P L]
-    (A : Complex P) (hA : A.Acyclic) : ((tensorByLineComplex L).obj A).Acyclic := by
-  intro n
-  exact (hA n).map (moduleTensorLeftFunctor P L)
-
-/-- Left tensor preserves acyclicity on that specified actual open. -/
-lemma leftTensor_preservesSupport {U P : Scheme.{u}} (j : U ⟶ P) [IsOpenImmersion j]
-    (L : P.Modules) [IsFiniteLocallyFree P L] (A : Complex P)
-    (hA : ((restrict j).obj A).Acyclic) :
-    ((restrict j).obj ((tensorByLineComplex L).obj A)).Acyclic := by
-  have ha := leftTensor_acyclic (L.restrict j) ((restrict j).obj A) hA
-  intro n
-  exact (ha n).of_iso ((leftTensorRestrictionIso j L).app A).symm
-
-/-- The actual ambient cochain coproduct of acyclic complexes is acyclic. -/
-lemma coprod_acyclic {P : Scheme.{u}} (A B : Complex P) (hA : A.Acyclic) (hB : B.Acyclic) :
-    (A ⨿ B).Acyclic := by
-  intro n
-  rw [exactAt_iff_isZero_homology]
-  let F := homologyFunctor P.Modules (.up ℤ) n
-  let : PreservesFiniteBiproducts F := inferInstance
-  let : PreservesBinaryBiproducts F := preservesBinaryBiproducts_of_preservesBiproducts F
-  let : PreservesColimitsOfShape (Discrete WalkingPair) F :=
-    preservesBinaryCoproducts_of_preservesBinaryBiproducts F
-  exact (coprod_isZero (A.homology n) (B.homology n)
-    (hA n).isZero_homology (hB n).isZero_homology).of_iso
-      (asIso (coprodComparison F A B)).symm
-
-/-- Actual restriction of the original selected cochain coproduct preserves acyclicity. -/
-lemma coprod_preservesSupport {U P : Scheme.{u}} (j : U ⟶ P) [IsOpenImmersion j]
-    (A B : Complex P) (hA : ((restrict j).obj A).Acyclic)
-    (hB : ((restrict j).obj B).Acyclic) : ((restrict j).obj (A ⨿ B)).Acyclic := by
-  have hab := coprod_acyclic ((restrict j).obj A) ((restrict j).obj B) hA hB
-  intro n
-  exact (hab n).of_iso (asIso (coprodComparison (restrict j) A B))
 
 /-- The original ambient two-summand formula preserves support on the literal inverse image. -/
 lemma rawBeforeTotal_preservesSupport (X : QuasiCompactSchemes.{u}) (Z : X.obj.Opens)

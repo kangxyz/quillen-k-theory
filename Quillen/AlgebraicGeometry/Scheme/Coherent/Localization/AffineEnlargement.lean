@@ -18,13 +18,19 @@ The ambient quasicoherent sheaf remains on the original scheme throughout.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 /-- A sheaf coherent on two opens is coherent on their union, with the
 actual restriction-composition identifications. -/
@@ -89,4 +95,4 @@ theorem affineLocallyFiniteType_affine_enlargement
   · exact affineLocallyFiniteType_restrict_sup N' W a.opensRange hN'W
       (affineLocallyFiniteType_restrict_opensRange a N' hN'a)
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

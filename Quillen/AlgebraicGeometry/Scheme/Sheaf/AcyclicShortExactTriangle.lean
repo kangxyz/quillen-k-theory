@@ -17,6 +17,9 @@ The comparison preserves the original derived connecting morphism.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 
 section
@@ -24,7 +27,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Pretriangulated AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- Use the standard derived category of actual module sheaves. -/
 local instance acyclicTriangleStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules :=
@@ -64,5 +67,5 @@ theorem acyclicShortExactTriangle_distinguished :
   isomorphic_distinguished _
     ((derivedPushforwardPlus f).map_distinguished _ hS.singleTrianglePlus_distinguished) _
     (acyclicShortExactTriangleIso f hS)
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 end

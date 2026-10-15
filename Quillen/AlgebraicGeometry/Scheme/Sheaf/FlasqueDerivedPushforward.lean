@@ -20,12 +20,15 @@ derived composition is made here.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard ambient derived category used by the installed unit. -/
 local instance flasqueDerivedPushforwardStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
@@ -49,4 +52,4 @@ theorem isIso_derivedPushforwardPlusUnit_of_flasque_term_bounds {X Y : Scheme.{u
   intro n
   let := hK n
   exact isIso_derivedPushforwardPlusUnit_single_of_flasque f (K.obj.X n)
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

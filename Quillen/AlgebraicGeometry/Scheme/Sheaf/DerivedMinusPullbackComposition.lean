@@ -18,6 +18,9 @@ Pentagon coherence, triangulatedness, and preservation of local perfectness are
 separate results, not asserted here.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -26,7 +29,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u w₁ w₂ w₃
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open Quillen.CochainComplex
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 variable {X Y Z : Scheme.{u}}
 
@@ -181,4 +184,4 @@ def derivedPullbackMinusCompIso :
     (derivedPullbackMinus (f ≫ g)) (derivedPullbackMinus g ⋙ derivedPullbackMinus f)
     (resolvedPullbackCompIso f g)
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

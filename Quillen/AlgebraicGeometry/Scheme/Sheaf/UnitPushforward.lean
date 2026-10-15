@@ -14,6 +14,9 @@ The original structure-module map intertwines multiplication by original global 
 A section in the actual ring-map kernel gives a zero composite of the actual sheaf maps.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 noncomputable section
 universe u
@@ -22,7 +25,7 @@ open Opposite
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The actual structure-module map intertwines original global scalar multiplication. -/
 theorem unitMul_unitToPushforward {X Y : Scheme.{u}} (f : X ⟶ Y) (s : Γ(Y, ⊤)) :
     unitMul Y s ≫ SheafOfModules.unitToPushforwardObjUnit f.toRingCatSheafHom =
@@ -54,4 +57,4 @@ theorem unitMul_unitToPushforward_zero {X Y : Scheme.{u}} (f : X ⟶ Y) (s : Γ(
     (hs : f.appTop.hom s = 0) :
     unitMul Y s ≫ SheafOfModules.unitToPushforwardObjUnit f.toRingCatSheafHom = 0 := by
   rw [unitMul_unitToPushforward, hs, unitMul_zero, Functor.map_zero, comp_zero]
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

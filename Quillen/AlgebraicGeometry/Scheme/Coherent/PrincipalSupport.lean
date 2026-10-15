@@ -19,6 +19,12 @@ universe as the public global `G` and `SupportedG` definitions.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -27,7 +33,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (r : R)
 
@@ -62,7 +68,7 @@ def coherentPrincipalSmallSupportEquivalence :
 hypothesis, using its Serre-class closure properties. -/
 instance instAbelianCoherentPrincipalSmallSupport :
     Abelian (coherentPrincipalSmallSupport R r).FullSubcategory :=
-  Devissage.subcategoryAbelian (coherentPrincipalSmallSupport R r)
+  CategoryTheory.ObjectProperty.subcategoryAbelian (coherentPrincipalSmallSupport R r)
 
 /-- The compatible supported K-term in the upper universe. -/
 abbrev CoherentPrincipalSupportedG (n : ℕ) : Type (u + 1) :=
@@ -118,4 +124,4 @@ def coherentPrincipalSupportedGEquiv (n : ℕ) :
     SupportedG (principalOpen R r) n ≃* CoherentPrincipalSupportedG R r n :=
   (coherentPrincipalSupportComparison R r).KEquivOfMapQIsEquivalence n
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

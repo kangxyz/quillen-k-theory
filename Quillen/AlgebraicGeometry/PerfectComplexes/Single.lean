@@ -20,7 +20,7 @@ namespace Quillen.PerfectComplexes
 
 /-- A vector bundle in any original integer degree is strict perfect. -/
 theorem single_strictPerfect_int {X : Scheme.{u}} (M : X.Modules)
-    [SchemeSheaf.IsFiniteLocallyFree X M] (a : ℤ) :
+    [AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X M] (a : ℤ) :
     strictPerfect X ((CochainComplex.singleFunctor X.Modules a).obj M) := by
   constructor
   · refine ⟨a, a, fun n hn => ?_⟩
@@ -29,8 +29,8 @@ theorem single_strictPerfect_int {X : Scheme.{u}} (M : X.Modules)
     by_cases hn : n = a
     · subst n
       simpa only [CochainComplex.singleFunctor, HomologicalComplex.single_obj_X_self] using
-        (inferInstance : SchemeSheaf.IsFiniteLocallyFree X M)
-    · exact SchemeSheaf.finiteLocallyFree_of_isZero
+        (inferInstance : AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X M)
+    · exact AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_of_isZero
         (HomologicalComplex.isZero_single_obj_X _ _ _ _ hn)
 
 end Quillen.PerfectComplexes

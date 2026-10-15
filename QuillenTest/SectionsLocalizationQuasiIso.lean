@@ -10,6 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionsLocaliza
 /-! Actual original-map consumers of localization on a principal chart. -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -23,7 +26,8 @@ open Quillen
 
 variable {R : CommRingCat.{u}} (r q : R) (I : Complex (Spec R)) (a : ℤ)
   (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
-  (hqc : ∀ n, (((restrict (CoherentScheme.principalOpen R q)).obj I).homology n).IsQuasicoherent)
+  (hqc : ∀ n, (((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R q)).obj
+    I).homology n).IsQuasicoherent)
 
 /- Every original homology map is an isomorphism, with no global QC assumption. -/
 include hbound hinj hqc in
@@ -62,7 +66,8 @@ lemma zero_localization :
 
 /- On locally QC sheaves the exact same original localization lift is an isomorphism. -/
 lemma original_degreewise_comparison (M : (Spec R).Modules)
-    [(M.restrict (CoherentScheme.principalOpen R q)).IsQuasicoherent] :
+    [(M.restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+      q)).IsQuasicoherent] :
     IsIso (sectionsLocalizationLift R r (PrimeSpectrum.basicOpen q) M) :=
   isIso_sectionsLocalizationLift_basicOpen r q M
 

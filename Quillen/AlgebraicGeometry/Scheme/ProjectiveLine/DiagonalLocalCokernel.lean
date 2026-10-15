@@ -16,6 +16,8 @@ restricted diagonal short complex with the literal principal-kernel presentation
 model hypothesis is an explicit equation of the original maps, used by the four-chart theorem.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 universe u
@@ -23,8 +25,8 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.Scheme.ProjectiveLine
-open PolynomialLaurent Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open PolynomialLaurent AlgebraicGeometry.Scheme.Modules
 variable (R : CommRingCat.{u})
     (j k : Spec (.of (Polynomial R)) ⟶ twoChartLine R)
     (hj : j ≫ projection R = polynomialProjection R)
@@ -104,4 +106,4 @@ def diagonalSpecSequenceCokernel
       (specRectangle R j k hj hk))).g :=
     (epi_comp_iff_of_isIso _ E.hom.τ₃).mp inferInstance
   exact hExact.gIsCokernel
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

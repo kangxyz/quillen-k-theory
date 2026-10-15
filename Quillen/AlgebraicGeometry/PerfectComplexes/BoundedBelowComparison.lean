@@ -5,6 +5,7 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Aglib.Algebra.Homology.Embedding.CochainComplex.TruncGE
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OppositeJointData
 public import Quillen.Waldhausen.Fibration.Rows.BaseFactorization
@@ -19,6 +20,9 @@ K-map in every degree. This module uses no Godement premise.
 -/
 
 @[expose] public section
+open Quillen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -112,17 +116,6 @@ def oppositeJointData (X : Scheme.{u}) :
     Waldhausen.Fibration.RowFactorization.JointData
       (Waldhausen.Fibration.NestedWeakEquivalences.refl (oppositeWaldhausen X)) :=
   Waldhausen.oppositeComplexJointData (objects X) (fun _ h => objects_shift h (-1))
-
-/-- A map into a strictly lower-bounded original target factors through good truncation. -/
-def fromGoodTruncation {K L : Complex X} (f : L ⟶ K) (a : ℤ)
-    [K.IsStrictlyGE a] : L.truncGE a ⟶ K :=
-  CochainComplex.truncGEMap f a ≫ inv (K.πTruncGE a)
-
-lemma fromGoodTruncation_fac {K L : Complex X} (f : L ⟶ K) (a : ℤ)
-    [K.IsStrictlyGE a] : L.πTruncGE a ≫ fromGoodTruncation f a = f := by
-  dsimp only [fromGoodTruncation]
-  rw [← Category.assoc, CochainComplex.πTruncGE_naturality,
-    Category.assoc, IsIso.hom_inv_id, Category.comp_id]
 
 /-- Actual App2 in the literal opposite categories; the original arrow is retained. -/
 theorem inclusion_op_approximation (X : Scheme.{u}) [CompactSpace X] :

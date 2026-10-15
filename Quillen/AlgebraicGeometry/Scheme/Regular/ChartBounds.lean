@@ -19,6 +19,12 @@ dimension of the scheme or bound uniform in all sheaves is assumed.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -26,13 +32,13 @@ set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory AlgebraicGeometry
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {X : AlgebraicGeometry.Scheme.{u}} [IsLocallyNoetherian X]
 
 /-- A bound on the projective dimensions of the actual module restrictions
 to each chart in a specified affine cover. -/
 def AffineCoverDimensionLE (U : X.AffineOpenCover.{v})
-    (M : CoherentScheme.FiniteTypeSheaves X) (n : ℕ) : Prop :=
+    (M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) (n : ℕ) : Prop :=
   ∀ i, HasProjectiveDimensionLE ((coherentChartModule (U.X i) (U.f i)).obj M) n
 
 omit [IsLocallyNoetherian X] in
@@ -40,7 +46,7 @@ omit [IsLocallyNoetherian X] in
 specified coherent sheaf. This is only a finite maximum, not a uniform
 regular-scheme dimension assertion. -/
 theorem exists_affineCoverDimensionLE_of_finite (U : X.AffineOpenCover.{v}) [Finite U.I₀]
-    (M : CoherentScheme.FiniteTypeSheaves X)
+    (M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X)
     (hM : ∀ i, projectiveDimension ((coherentChartModule (U.X i) (U.f i)).obj M) ≠ ⊤) :
     ∃ n, AffineCoverDimensionLE U M n := by
   classical
@@ -54,27 +60,28 @@ theorem exists_affineCoverDimensionLE_of_finite (U : X.AffineOpenCover.{v}) [Fin
   exact hasProjectiveDimensionLT_of_ge _ (d i + 1) (Finset.univ.sup d + 1)
     (Nat.add_le_add_right (Finset.le_sup (Finset.mem_univ i)) 1)
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {X : AlgebraicGeometry.Scheme.{u}}
 
 /-- On a finite affine cover of an actually regular scheme, every coherent
 sheaf has an object-dependent finite chart-module bound. -/
 theorem exists_affineCoverDimensionLE_of_regular [Scheme.IsRegular X]
-    (U : X.AffineOpenCover.{v}) [Finite U.I₀] (M : CoherentScheme.FiniteTypeSheaves X) :
+    (U : X.AffineOpenCover.{v}) [Finite U.I₀] (M :
+      AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) :
     ∃ n, AffineCoverDimensionLE U M n := by
   apply exists_affineCoverDimensionLE_of_finite U M
   intro i
   have := Scheme.regular_affineChart (U.X i) (U.f i)
-  exact CoherentScheme.projectiveDimension_ne_top_of_regular (U.X i)
+  exact AlgebraicGeometry.Scheme.Modules.Coherent.projectiveDimension_ne_top_of_regular (U.X i)
     ((coherentChartModule (U.X i) (U.f i)).obj M)
 
 /-- Quasi-compactness supplies the finite affine cover needed for the
 objectwise bound. -/
 theorem exists_finiteCoverDimensionLE_of_regular [Scheme.IsRegular X] [CompactSpace X]
-    (M : CoherentScheme.FiniteTypeSheaves X) :
+    (M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) :
     ∃ n, AffineCoverDimensionLE (Scheme.finiteAffineOpenCover X) M n :=
   exists_affineCoverDimensionLE_of_regular (Scheme.finiteAffineOpenCover X) M
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

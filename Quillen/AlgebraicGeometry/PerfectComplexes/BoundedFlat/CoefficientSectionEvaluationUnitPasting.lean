@@ -16,7 +16,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
-open Quillen.Scheme.CoefficientBaseChange Quillen.FunctorIdentityAutomorphism
+open AlgebraicGeometry.Scheme.CoefficientBaseChange Quillen.FunctorIdentityAutomorphism
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}
@@ -35,7 +35,7 @@ def boundedFlatCoefficientSectionEvaluationOldUnit {i k : Index R} (f : i ⟶ k)
 def boundedFlatCoefficientSectionEvaluationNewUnit {i k : Index R} (f : i ⟶ k)
     (r : (Γ(space k, ⊤))ˣ) :=
   Homotopy.precomp (boundedFlatCoefficientSectionEvaluationPrespectrumMap i)
-    (boundedFlatPerfectUnitHomotopy (Quillen.Scheme.CoefficientBaseChange.map f) r)
+    (boundedFlatPerfectUnitHomotopy (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f) r)
 
 /-- The categorical square compares the two original whole unit-track pastings. -/
 def boundedFlatCoefficientSectionEvaluationUnitPasting {i k : Index R} (f : i ⟶ k)
@@ -44,7 +44,7 @@ def boundedFlatCoefficientSectionEvaluationUnitPasting {i k : Index R} (f : i �
       (boundedFlatCoefficientSectionEvaluationHomotopy f)).RelHomotopy
     ((boundedFlatCoefficientSectionEvaluationHomotopy f).trans
       (boundedFlatCoefficientSectionEvaluationNewUnit f r)) := by
-  let h := boundedFlatPerfectPullback_exact (Quillen.Scheme.CoefficientBaseChange.map f)
+  let h := boundedFlatPerfectPullback_exact (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)
   let J := prespectrumTransformationIntertwiningHomotopy
     (boundedFlatCoefficientSectionModelMap f) (boundedFlatCoefficientOriginalModelMap f)
     (boundedFlatCoefficientSectionEvaluationModelMap i)
@@ -55,7 +55,8 @@ def boundedFlatCoefficientSectionEvaluationUnitPasting {i k : Index R} (f : i �
     (boundedFlatCoefficientSectionEvaluationIso f).hom
     (fun _ ↦ (boundedFlatCoefficientSectionWaldhausen k).weq_iso _ inferInstance)
     (fun X ↦ normalizedWeakTransformation_weak h h
-      (boundedFlatPerfectPullbackUnitIso (Quillen.Scheme.CoefficientBaseChange.map f) r).hom
+      (boundedFlatPerfectPullbackUnitIso (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)
+        r).hom
       (fun _ ↦ (boundedFlatPerfectWaldhausen (space k)).weq_iso _ inferInstance)
       (AsSmall.down.obj X))
     (fun _ ↦ (boundedFlatPerfectWaldhausen (space k)).smallModel.weq_iso _ inferInstance)

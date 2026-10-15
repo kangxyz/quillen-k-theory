@@ -9,12 +9,15 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GlobalUnit
 
 /-! Original global scalar multiplication commutes with geometric sheaf pullback. -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Pushforward retains multiplication by the original global scalar under restriction of scalars.
 -/
@@ -52,4 +55,4 @@ lemma pullback_map_globalScalar {X Y : Scheme.{u}} (f : X ⟶ Y)
   rw [← globalScalar_pushforward]
   exact ((globalScalar Y r).naturality _).symm
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

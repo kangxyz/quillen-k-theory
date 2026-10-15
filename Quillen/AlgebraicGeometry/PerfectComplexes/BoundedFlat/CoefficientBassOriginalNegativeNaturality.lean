@@ -24,7 +24,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite Quillen.LoopPrespectrum
 open Quillen.Waldhausen.IteratedS Quillen.KTheory.Bass Quillen.PolynomialBaseChange
-open Quillen.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.CoefficientBaseChange
 universe u w
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)
@@ -66,7 +66,7 @@ variable [CompactSpace P.left] [CompactSpace Q.left]
 /-- The original native scheme pullback, lifted to the actual quasi-compact opposite rows. -/
 def boundedFlatCoefficientQuasiCompactRowRestriction :
     boundedFlatCoefficientQuasiCompactRow Q ⟶ boundedFlatCoefficientQuasiCompactRow P where
-  app a := (Quillen.Scheme.quasiCompactSchemeProperty.homMk (schemeMap f a)).op
+  app a := (AlgebraicGeometry.Scheme.quasiCompactSchemeProperty.homMk (schemeMap f a)).op
   naturality {a b} g := by
     apply Quiver.Hom.unop_inj
     apply ObjectProperty.hom_ext
@@ -86,14 +86,15 @@ theorem boundedFlatCoefficientLaurentIso_schemeRestriction (a : Under R) :
         ((laurentUnderFunctor R).obj a) ≫
       (boundedFlatCoefficientLaurentIso P).hom.app a =
     (boundedFlatCoefficientLaurentIso Q).hom.app a ≫
-      Quillen.Scheme.Bass.laurentFunctor.op.map
+      AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.laurentFunctor.op.map
         ((boundedFlatCoefficientQuasiCompactRowRestriction f).app a) := by
   apply Quiver.Hom.unop_inj
   apply ObjectProperty.hom_ext
   change (laurentIso P a).inv ≫
       schemeMap f ((laurentUnderFunctor R).obj a) =
-    (Quillen.Scheme.Bass.baseProductFunctor
-      (Quillen.Scheme.PolynomialLaurent.laurentProjection Quillen.Scheme.Bass.integerRing)).map
+    (AlgebraicGeometry.Scheme.Products.baseProductFunctor
+      (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentProjection
+        AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.integerRing)).map
         (schemeMap f a) ≫ (laurentIso Q a).inv
   apply (cancel_mono (laurentIso Q a).hom).mp
   simp only [Category.assoc, Iso.inv_hom_id, Category.comp_id]
@@ -102,16 +103,18 @@ theorem boundedFlatCoefficientLaurentIso_schemeRestriction (a : Under R) :
 /-- Original chart transport retains the actual restriction between compact native schemes. -/
 @[reassoc]
 theorem boundedFlatCoefficientContractionTransportIso_schemeRestriction
-    (F : Quillen.Scheme.QuasiCompactSchemes.{u}ᵒᵖ ⥤ AddCommGrpCat.{w}) (a : Under R) :
+    (F : AlgebraicGeometry.Scheme.QuasiCompactSchemes.{u}ᵒᵖ ⥤ AddCommGrpCat.{w}) (a : Under R) :
     (Quillen.Bass.TwoChart.contractionMap (underToLaurent R) (underToLaurentInvert R)
       (Functor.whiskerRight (boundedFlatCoefficientQuasiCompactRowRestriction f) F)).app a ≫
         (boundedFlatCoefficientContractionTransportIso P F).hom.app a =
     (boundedFlatCoefficientContractionTransportIso Q F).hom.app a ≫
-      (Quillen.Bass.TwoChart.contraction (NatTrans.op Quillen.Scheme.Bass.plus)
-        (NatTrans.op Quillen.Scheme.Bass.minus) F).map
+      (Quillen.Bass.TwoChart.contraction (NatTrans.op
+        AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus)
+        (NatTrans.op AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus) F).map
           ((boundedFlatCoefficientQuasiCompactRowRestriction f).app a) :=
   Quillen.Bass.TwoChart.contractionTransportIso_map
-    (NatTrans.op Quillen.Scheme.Bass.plus) (NatTrans.op Quillen.Scheme.Bass.minus)
+    (NatTrans.op AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus) (NatTrans.op
+      AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus)
     (underToLaurent R) (underToLaurentInvert R)
     (boundedFlatCoefficientQuasiCompactRow Q) (boundedFlatCoefficientQuasiCompactRow P)
     (boundedFlatCoefficientPolynomialIso Q) (boundedFlatCoefficientLaurentIso Q)
@@ -126,9 +129,10 @@ theorem boundedFlatCoefficientContractionTransportIso_schemeRestriction
 /-- The inverse transport retains exactly the same original scheme restriction. -/
 @[reassoc]
 theorem boundedFlatCoefficientContractionTransportIso_schemeRestriction_inv
-    (F : Quillen.Scheme.QuasiCompactSchemes.{u}ᵒᵖ ⥤ AddCommGrpCat.{w}) (a : Under R) :
-    (Quillen.Bass.TwoChart.contraction (NatTrans.op Quillen.Scheme.Bass.plus)
-      (NatTrans.op Quillen.Scheme.Bass.minus) F).map
+    (F : AlgebraicGeometry.Scheme.QuasiCompactSchemes.{u}ᵒᵖ ⥤ AddCommGrpCat.{w}) (a : Under R) :
+    (Quillen.Bass.TwoChart.contraction (NatTrans.op
+      AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.plus)
+      (NatTrans.op AlgebraicGeometry.Scheme.PolynomialLaurent.Relative.minus) F).map
         ((boundedFlatCoefficientQuasiCompactRowRestriction f).app a) ≫
       (boundedFlatCoefficientContractionTransportIso P F).inv.app a =
     (boundedFlatCoefficientContractionTransportIso Q F).inv.app a ≫
@@ -261,7 +265,7 @@ theorem boundedFlatCoefficientAmbientNegativeKComparison_schemeRestriction (i : 
 theorem boundedFlatCoefficientAmbientNegativeKComparison_schemeRestriction_app
     (i : ℕ) (a : Under R) :
     (Bass.negativeKFunctor i).map
-        (Quillen.Scheme.quasiCompactSchemeProperty.homMk (schemeMap f a)).op ≫
+        (AlgebraicGeometry.Scheme.quasiCompactSchemeProperty.homMk (schemeMap f a)).op ≫
       (boundedFlatCoefficientAmbientNegativeKComparison P i).hom.app a =
     (boundedFlatCoefficientAmbientNegativeKComparison Q i).hom.app a ≫
       (stableHomotopyFunctor (-(i : ℤ))).map

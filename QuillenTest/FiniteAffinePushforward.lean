@@ -11,13 +11,19 @@ public import Quillen.AlgebraicGeometry.Scheme.FiniteAffinePushforward
   ring homomorphism. -/
 @[expose] public section
 
+open ModuleCat.FiniteRestrictionScalars
+
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen Quillen.CoherentScheme Quillen.CoherentScheme.FiniteAffine
+open Quillen AlgebraicGeometry.Scheme.Modules.Coherent
+  AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.Affine
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace QuillenTest.FiniteAffinePushforward
 variable {R S T : CommRingCat.{u}} [IsNoetherianRing R] [IsNoetherianRing S] [IsNoetherianRing T]
@@ -26,7 +32,7 @@ variable {R S T : CommRingCat.{u}} [IsNoetherianRing R] [IsNoetherianRing S] [Is
 omit [IsNoetherianRing R] [IsNoetherianRing S] in
 /-- The source sheaf and actual geometric direct image are unchanged. -/
 theorem original_sheaf (M : FiniteTypeSheaves (Spec S)) :
-    ((coherentPushforward φ hφ).obj M).obj =
+    ((finiteTypePushforwardSpec φ hφ).obj M).obj =
       (Scheme.Modules.pushforward (Spec.map φ)).obj M.obj := rfl
 
 /-- A genuine coherent short exact sequence remains exact under this actual direct image. -/
@@ -46,23 +52,25 @@ theorem original_composition (ψ : S ⟶ T) (hψ : ψ.hom.Finite) (n : ℕ) (a :
 
 /-- Existing closed pushforward is preserved in every connective degree. -/
 theorem original_closed_map [IsClosedImmersion (Spec.map φ)] (n : ℕ) (a : G (Spec S) n) :
-    pushforwardG φ hφ n a = ClosedImmersion.General.coherentPushforwardGMap (Spec.map φ) n a :=
+    pushforwardG φ hφ n a =
+      AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.coherentPushforwardGMap
+      (Spec.map φ) n a :=
   DFunLike.congr_fun (pushforwardG_eq_closed φ hφ n) a
 
 /-- The actual global-section comparison retains the upper-universe public G-group. -/
 theorem original_global_sections (n : ℕ) (a : G (Spec S) n) :
     CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1}
-      (ClosedImmersion.Ideal.globalSectionsExact R) n (pushforwardG φ hφ
+      (AlgebraicGeometry.Scheme.Modules.Coherent.globalSectionsExact R) n (pushforwardG φ hφ
       n a) =
       CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (moduleRestrictionExact φ hφ) n
         (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1}
-          (ClosedImmersion.Ideal.globalSectionsExact S) n a) :=
+          (AlgebraicGeometry.Scheme.Modules.Coherent.globalSectionsExact S) n a) :=
   DFunLike.congr_fun (pushforwardG_globalSections φ hφ n) a
 
 /-- Bundling does not change the original finite affine map. -/
-theorem original_bundled_map {A B : Quillen.Scheme.NoetherianFiniteRings.{u}}
+theorem original_bundled_map {A B : AlgebraicGeometry.Scheme.NoetherianFiniteRings.{u}}
     (f : A ⟶ B) (n : ℕ) :
-    ((Quillen.Scheme.GFiniteAffinePushforwardFunctor n).map f.op).hom =
+    ((AlgebraicGeometry.Scheme.GFiniteAffinePushforwardFunctor n).map f.op).hom =
       pushforwardG f.hom.hom f.hom.property n := rfl
 
 /-- The diagonal R to R×R is finite, so the construction includes nonclosed finite maps. -/

@@ -48,35 +48,35 @@ example {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
   DFunLike.congr_fun (strictToPerfectKMap_restrict j n) x
 
 example {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    (x : Quillen.Scheme.K X 0) :
+    (x : AlgebraicGeometry.Scheme.K X 0) :
     strictKRestrict j 0 (vectorBundleToStrictKMap X 0 x) =
-      vectorBundleToStrictKMap U 0 (Quillen.Scheme.restrictK j 0 x) :=
+      vectorBundleToStrictKMap U 0 (AlgebraicGeometry.Scheme.restrictK j 0 x) :=
   DFunLike.congr_fun (vectorBundleToStrictKMap_restrict j 0) x
 
 example {V U X : Scheme.{u}} (i : V ⟶ U) (j : U ⟶ X)
-    [IsOpenImmersion i] [IsOpenImmersion j] (x : Quillen.Scheme.K X 0) :
+    [IsOpenImmersion i] [IsOpenImmersion j] (x : AlgebraicGeometry.Scheme.K X 0) :
     perfectKRestrict (i ≫ j) 0 (vectorBundleToPerfectKMap X 0 x) =
       vectorBundleToPerfectKMap V 0
-        (Quillen.Scheme.restrictK i 0 (Quillen.Scheme.restrictK j 0 x)) := by
+        (AlgebraicGeometry.Scheme.restrictK i 0 (AlgebraicGeometry.Scheme.restrictK j 0 x)) := by
   have h := DFunLike.congr_fun (vectorBundleToPerfectKMap_restrict (i ≫ j) 0) x
-  simpa only [Quillen.Scheme.restrictK_comp, MonoidHom.comp_apply] using h
+  simpa only [AlgebraicGeometry.Scheme.restrictK_comp, MonoidHom.comp_apply] using h
 
 example {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    (x : Quillen.Scheme.K X 0) :
+    (x : AlgebraicGeometry.Scheme.K X 0) :
     perfectKRestrict j 0
       (strictToPerfectKMap X 0 (vectorBundleToStrictKMap X 0 x)) =
-      vectorBundleToPerfectKMap U 0 (Quillen.Scheme.restrictK j 0 x) := by
+      vectorBundleToPerfectKMap U 0 (AlgebraicGeometry.Scheme.restrictK j 0 x) := by
   change perfectKRestrict j 0 (vectorBundleToPerfectKMap X 0 x) = _
   exact DFunLike.congr_fun (vectorBundleToPerfectKMap_restrict j 0) x
 
 example {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
     (n : ℕ) (y : StrictK X n) :
     (vectorBundleToStrictKEquiv U n).symm (strictKRestrict j n y) =
-      Quillen.Scheme.restrictK j n ((vectorBundleToStrictKEquiv X n).symm y) := by
+      AlgebraicGeometry.Scheme.restrictK j n ((vectorBundleToStrictKEquiv X n).symm y) := by
   apply (vectorBundleToStrictKEquiv U n).injective
   rw [MulEquiv.apply_symm_apply]
   change strictKRestrict j n y = vectorBundleToStrictKMap U n
-    (Quillen.Scheme.restrictK j n ((vectorBundleToStrictKEquiv X n).symm y))
+    (AlgebraicGeometry.Scheme.restrictK j n ((vectorBundleToStrictKEquiv X n).symm y))
   have h := DFunLike.congr_fun (vectorBundleToStrictKMap_restrict j n)
     ((vectorBundleToStrictKEquiv X n).symm y)
   change strictKRestrict j n ((vectorBundleToStrictKEquiv X n)
@@ -86,11 +86,11 @@ example {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 example {V U X : Scheme.{u}} [IsLocallyNoetherian V]
     [IsLocallyNoetherian U] [IsLocallyNoetherian X]
     (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j]
-    (x : Quillen.Scheme.K X 0) :
-    Quillen.Scheme.restrictG i 0
-      (Quillen.Scheme.restrictG j 0 (Quillen.Scheme.KToG X 0 x)) =
-      Quillen.Scheme.KToG V 0 (Quillen.Scheme.restrictK (i ≫ j) 0 x) := by
-  change ((Quillen.Scheme.restrictG i 0).comp (Quillen.Scheme.restrictG j 0))
-    (Quillen.Scheme.KToG X 0 x) = _
-  rw [← Quillen.Scheme.restrictG_comp]
-  exact Quillen.Scheme.KToG_restrict_apply (i ≫ j) 0 x
+    (x : AlgebraicGeometry.Scheme.K X 0) :
+    AlgebraicGeometry.Scheme.restrictG i 0
+      (AlgebraicGeometry.Scheme.restrictG j 0 (AlgebraicGeometry.Scheme.KToG X 0 x)) =
+      AlgebraicGeometry.Scheme.KToG V 0 (AlgebraicGeometry.Scheme.restrictK (i ≫ j) 0 x) := by
+  change ((AlgebraicGeometry.Scheme.restrictG i 0).comp (AlgebraicGeometry.Scheme.restrictG j 0))
+    (AlgebraicGeometry.Scheme.KToG X 0 x) = _
+  rw [← AlgebraicGeometry.Scheme.restrictG_comp]
+  exact AlgebraicGeometry.Scheme.KToG_restrict_apply (i ≫ j) 0 x

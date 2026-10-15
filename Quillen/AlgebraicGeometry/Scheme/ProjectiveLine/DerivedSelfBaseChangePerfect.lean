@@ -17,13 +17,15 @@ on intrinsic perfect D+ inputs. No chosen natural strictification is asserted;
 the map and its inverse are the original natural mate and canonical inverse.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.PerfectComplexes
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules Quillen.PerfectComplexes
 local instance perfectBaseChangeStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})
@@ -46,7 +48,7 @@ theorem isIso_derivedProjectionBaseChange_bounded_qc
   let : (derivedFlatPullbackPlus a).IsTriangulated := by
     unfold derivedFlatPullbackPlus
     infer_instance
-  apply Quillen.DerivedCategoryPlus.isIso_app_of_term_bounds
+  apply DerivedCategory.Plus.isIso_app_of_term_bounds
     (derivedFlatBaseChangeMap a b (projection R) j h) K l r hl hu
   intro n
   let := hqc n
@@ -143,4 +145,4 @@ theorem derivedSelfBaseChangeMap_unit
     (projection R) (projection R)
     (IsPullback.of_hasPullback (projection R) (projection R)) K
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

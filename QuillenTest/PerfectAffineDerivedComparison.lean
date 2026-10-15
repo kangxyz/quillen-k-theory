@@ -11,6 +11,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
 /-! # Consumers of actual affine derived comparison and perfect homology -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -40,8 +43,10 @@ theorem affinePerfect_homology (R : CommRingCat.{u}) (K : Perfect (Spec R)) :
 /-- The homology comparison uses the unchanged perfect restriction functor. -/
 def principalPerfect_homology (R : CommRingCat.{u}) (r : R)
     (K : Perfect (Spec R)) (i : ℤ) :
-    ((perfectRestrict (CoherentScheme.principalOpen R r)).obj K).obj.homology i ≅
-      (Scheme.Modules.restrictFunctor (CoherentScheme.principalOpen R r)).obj (K.obj.homology i) :=
+    ((perfectRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
+      K).obj.homology i ≅
+      (Scheme.Modules.restrictFunctor (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
+        R r)).obj (K.obj.homology i) :=
   restrictHomologyIso _ K.obj i
 
 /-- The principal derived comparison commutes with arbitrary derived maps,
@@ -52,7 +57,8 @@ theorem principalDerived_comparison_natural (R : CommRingCat.{u}) (r : R)
         ((principalDerivedLocalization R r).map f) ≫
       (principalDerivedComparisonIso R r).hom.app L =
     (principalDerivedComparisonIso R r).hom.app K ≫
-      (derivedRestrict (CoherentScheme.principalOpen R r)).map ((associatedDerived R).map f) :=
+      (derivedRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map
+        ((associatedDerived R).map f) :=
   (principalDerivedComparisonIso R r).hom.naturality f
 
 /-- Conservativity is available directly on arbitrary derived objects. -/

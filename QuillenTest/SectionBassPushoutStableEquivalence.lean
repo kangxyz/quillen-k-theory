@@ -28,13 +28,13 @@ open Quillen
 def originalLaurentSquare (i : ℕ) (R : CommRingCat.{u}) :
     Arrow (Arrow LoopPrespectrum.{u + 1}) :=
   (boundedFlatAffineSectionBassDiagram i).mapArrow.mapArrow.obj
-    (PolynomialBaseChange.laurentSquareFunctor.obj R)
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R)
 
 /-- The actual coefficient map of the unchanged Laurent evaluation squares. -/
 def originalLaurentSquareMap (i : ℕ) {R S : CommRingCat.{u}} (f : R ⟶ S) :
     originalLaurentSquare i R ⟶ originalLaurentSquare i S :=
   (boundedFlatAffineSectionBassDiagram i).mapArrow.mapArrow.map
-    (PolynomialBaseChange.laurentSquareFunctor.map f)
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.map f)
 
 /-- The actual Laurent span map preserves stable equivalences from original stable sides. -/
 theorem actual_laurent_span_stable (i : ℕ) {R S : CommRingCat.{u}} (f : R ⟶ S)
@@ -43,12 +43,12 @@ theorem actual_laurent_span_stable (i : ℕ) {R S : CommRingCat.{u}} (f : R ⟶ 
     (hc : IsStableEquivalence (originalLaurentSquareMap i f).right.left) :
     IsStableEquivalence (StrictSquare.spanMap (originalLaurentSquareMap i f)) :=
   boundedFlatAffineSectionBass_pushoutMap_isStableEquivalence i i i i i i
-    (PolynomialBaseChange.laurentSquareFunctor.obj R).left.left
-    (PolynomialBaseChange.laurentSquareFunctor.obj R).left.right
-    (PolynomialBaseChange.laurentSquareFunctor.obj R).right.left
-    (PolynomialBaseChange.laurentSquareFunctor.obj S).left.left
-    (PolynomialBaseChange.laurentSquareFunctor.obj S).left.right
-    (PolynomialBaseChange.laurentSquareFunctor.obj S).right.left
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).left.left
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).left.right
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).right.left
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj S).left.left
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj S).left.right
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj S).right.left
     _ _ _ _ _ _ _ _ _ ha hb hc
 
 /-- The same original Laurent-span map is invertible in every negative stable degree. -/

@@ -24,13 +24,13 @@ theorem original_spectrum_equiv (R : CommRingCat.{u}) (n : ℕ) :
 
 /-- No chosen affine presentation is needed for a unique original public K₀ lift. -/
 theorem affine_public_unique_lift (X : Scheme.{u}) [IsAffine X] (x : PerfectK X 0) :
-    ∃! a : Quillen.Scheme.K X 0, vectorBundleToPerfectKMap X 0 a = x :=
+    ∃! a : AlgebraicGeometry.Scheme.K X 0, vectorBundleToPerfectKMap X 0 a = x :=
   (vectorBundleToPerfectKMap_bijective_of_isAffine X 0).existsUnique x
 
 /-- Inverse pullback compatibility holds on every actual affine morphism at K₀. -/
 theorem original_public_inverse_pullback {X Y : Scheme.{u}} [IsAffine X] [IsAffine Y]
     (f : X ⟶ Y) (x : PerfectK Y 0) :
-    Quillen.Scheme.pullbackK f 0 ((affineVectorBundleToPerfectKEquiv Y 0).symm x) =
+    AlgebraicGeometry.Scheme.pullbackK f 0 ((affineVectorBundleToPerfectKEquiv Y 0).symm x) =
       (affineVectorBundleToPerfectKEquiv X 0).symm (perfectKPullback f 0 x) :=
   (affineVectorBundleToPerfectKEquiv_symm_pullback f 0 x).symm
 

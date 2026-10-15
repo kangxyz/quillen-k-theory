@@ -24,7 +24,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange Quillen.Scheme.CoefficientBaseChange
+open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
@@ -33,8 +33,8 @@ variable {R : CommRingCat.{u}} (P : Over (Spec R))
 /-- The fixed coefficient fiber retains its original geometric identity. -/
 theorem boundedFlatCoefficientGeometricIdentity (a : Under R) :
     coefficientMap P (𝟙 a) = 𝟙 (space (op P, a)) := by
-  change Quillen.Scheme.CoefficientBaseChange.map (𝟙 (op P, a)) = _
-  exact Quillen.Scheme.CoefficientBaseChange.map_id (op P, a)
+  change AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (𝟙 (op P, a)) = _
+  exact AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_id (op P, a)
 
 /-- The original coefficient identity map has its actual geometric and normalization track. -/
 def boundedFlatCoefficientIdentityHomotopy (a : Under R) :

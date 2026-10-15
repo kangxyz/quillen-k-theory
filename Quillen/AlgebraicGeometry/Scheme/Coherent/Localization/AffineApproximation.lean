@@ -20,13 +20,19 @@ on actual sheaf restriction maps, using the natural localization comparison.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 /-- Global sections reflect isomorphisms between actual quasicoherent
 sheaves on an affine scheme. -/
@@ -174,4 +180,4 @@ theorem exists_coherent_subsheaf_restrict_isIso
     have : IsIso ((Scheme.Modules.restrictFunctor V.ι).map (tilde.map a)) := hi
     infer_instance
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

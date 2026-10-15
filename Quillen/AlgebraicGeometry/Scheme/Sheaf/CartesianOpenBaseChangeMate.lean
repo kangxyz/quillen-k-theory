@@ -9,12 +9,15 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianOpenBaseChange
 /-! # Comparison of original pullback and open-restriction base-change mates -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 open Scheme.Modules
 variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (f : U ⟶ X) (j : V ⟶ X)
   [IsOpenImmersion a] [IsOpenImmersion j] (h : IsPullback a b f j)
@@ -50,4 +53,4 @@ theorem isIso_cartesianBaseChangeMap_of_open : IsIso (cartesianBaseChangeMap a b
     rw [cartesianBaseChangeMap_restrict a b f j h M]
     infer_instance
   exact (isIso_comp_left_iff _ _).mp hc
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

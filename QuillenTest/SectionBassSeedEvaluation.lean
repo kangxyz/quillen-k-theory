@@ -11,7 +11,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassSeedE
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.PerfectComplexes Quillen.Scheme.PolynomialLaurent
+open Quillen.PerfectComplexes AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped unitInterval
 universe u
 namespace QuillenTest.SectionBassSeedEvaluation

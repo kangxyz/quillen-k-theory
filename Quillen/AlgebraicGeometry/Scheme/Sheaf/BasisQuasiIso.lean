@@ -18,6 +18,9 @@ For an affine scheme its actual principal basic opens form the needed basis.
 No termwise quasicoherence, injectivity or cohomological bound is required.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -25,7 +28,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 /-- Forget the module structure degreewise, retaining the underlying complex of sheaves. -/
@@ -35,7 +38,7 @@ abbrev underlyingSheafComplex (X : Scheme.{u}) :=
 /-- Take sections on the specified open, degreewise in the underlying sheaf complex. -/
 abbrev sectionsComplex (X : Scheme.{u}) (U : X.Opens) :=
   underlyingSheafComplex X ⋙
-    (SheafCohomology.sectionsFunctor U).mapHomologicalComplex (.up ℤ)
+    (TopCat.Sheaf.sectionsFunctor U).mapHomologicalComplex (.up ℤ)
 
 lemma quasiIso_of_sections_on_basis {X : Scheme.{u}}
     {K L : CochainComplex X.Modules ℤ} (f : K ⟶ L)
@@ -52,7 +55,7 @@ lemma quasiIso_of_sections_on_basis {X : Scheme.{u}}
     have : Epi f := F.epi_of_epi_map inferInstance
     exact isIso_of_mono_of_epi f⟩
   apply (HomologicalComplex.quasiIso_map_iff_of_preservesHomology f F).mp
-  exact SheafCohomology.quasiIso_of_sections_on_basis
+  exact TopCat.Sheaf.quasiIso_of_sections_on_basis
     ((underlyingSheafComplex X).map f) hB hf
 
 lemma quasiIso_of_sections_on_principals (R : CommRingCat.{u})
@@ -63,4 +66,4 @@ lemma quasiIso_of_sections_on_principals (R : CommRingCat.{u})
   rintro U ⟨r, rfl⟩
   exact hf r
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

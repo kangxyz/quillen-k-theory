@@ -15,12 +15,18 @@ direct image on the global obstruction.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 lemma subobjectObstruction_naturality {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
     {M N : X.Modules} {A B : U.Modules} (i : A ⟶ M.restrict j) (k : B ⟶ N.restrict j)
@@ -41,4 +47,4 @@ lemma subobjectObstruction_naturality {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenIm
   rw [hn, ← Category.assoc, subobjectObstruction_counit, cokernel.π_desc]
   exact sub_self _
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

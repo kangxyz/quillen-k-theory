@@ -22,13 +22,13 @@ theorem original_unit_detects_maps {Z X : Scheme.{u}} (f : Z ⟶ X) [IsAffineHom
     (M : Z.Modules) [M.IsQuasicoherent] {T : DerivedCategory.Plus X.Modules}
     (a b : T ⟶
       ((Scheme.Modules.pushforward f).mapCochainComplexPlus ⋙ DerivedCategory.Plus.Q).obj
-        (Quillen.SchemeSheaf.singleZeroPlus Z M))
-    (h : a ≫ (Quillen.SchemeSheaf.derivedPushforwardPlusUnit f).app
-        (Quillen.SchemeSheaf.singleZeroPlus Z M) =
-      b ≫ (Quillen.SchemeSheaf.derivedPushforwardPlusUnit f).app
-        (Quillen.SchemeSheaf.singleZeroPlus Z M)) : a = b := by
-  let := Quillen.SchemeSheaf.isIso_derivedPushforwardPlusUnit_single f M
-  exact (cancel_mono ((Quillen.SchemeSheaf.derivedPushforwardPlusUnit f).app
-    (Quillen.SchemeSheaf.singleZeroPlus Z M))).mp h
+        (AlgebraicGeometry.Scheme.Modules.singleZeroPlus Z M))
+    (h : a ≫ (AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlusUnit f).app
+        (AlgebraicGeometry.Scheme.Modules.singleZeroPlus Z M) =
+      b ≫ (AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlusUnit f).app
+        (AlgebraicGeometry.Scheme.Modules.singleZeroPlus Z M)) : a = b := by
+  let := AlgebraicGeometry.Scheme.Modules.isIso_derivedPushforwardPlusUnit_single f M
+  exact (cancel_mono ((AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlusUnit f).app
+    (AlgebraicGeometry.Scheme.Modules.singleZeroPlus Z M))).mp h
 
 end Consumer.AffineDerivedPushforward

@@ -21,7 +21,8 @@ seed action; no new unit is supplied at later Bass iterates.
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry AlgebraicGeometry.Scheme.PolynomialLaurent
+  Quillen.PolynomialBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 
@@ -58,7 +59,7 @@ theorem boundedFlatAffineSectionLaurentUnitIso_hom_terms {R S : CommRingCat.{u}}
     ((boundedFlatPerfect (Spec S)).ι.map
       ((boundedFlatAffineEvaluationAt (.of (LaurentPolynomial R)) (Under.mk h)).map
         ((boundedFlatAffineSectionLaurentUnitIso R).hom.app s))).f n =
-      (SchemeSheaf.globalScalar (Spec S)
+      (AlgebraicGeometry.Scheme.Modules.globalScalar (Spec S)
         ((Scheme.ΓSpecIso S).inv (h.hom (LaurentPolynomial.T 1)))).app
           (((boundedFlatAffineEvaluationAt (.of (LaurentPolynomial R))
             (Under.mk h)).obj s).obj.X n) := by
@@ -66,7 +67,7 @@ theorem boundedFlatAffineSectionLaurentUnitIso_hom_terms {R S : CommRingCat.{u}}
     boundedFlatAffineEvaluationAt_map_sectionUnitIso_hom]
   dsimp only [Under.mk, Under.right, Under.hom, StructuredArrow.mk]
   rw [boundedFlatPerfectGlobalUnitIso_hom_original, complexGlobalUnitIso_original_terms]
-  dsimp only [SchemeSheaf.globalUnitIso]
+  dsimp only [AlgebraicGeometry.Scheme.Modules.globalUnitIso]
   congr 2
   exact (ConcreteCategory.congr_hom (Scheme.ΓSpecIso S).hom_inv_id _).symm.trans
     (congrArg (fun x ↦ (Scheme.ΓSpecIso S).inv x) (laurentGlobalUnit_image h))
@@ -78,7 +79,7 @@ theorem boundedFlatAffineSectionLaurentUnitIso_inv_terms {R S : CommRingCat.{u}}
     ((boundedFlatPerfect (Spec S)).ι.map
       ((boundedFlatAffineEvaluationAt (.of (LaurentPolynomial R)) (Under.mk h)).map
         ((boundedFlatAffineSectionLaurentUnitIso R).inv.app s))).f n =
-      (SchemeSheaf.globalScalar (Spec S)
+      (AlgebraicGeometry.Scheme.Modules.globalScalar (Spec S)
         ((Scheme.ΓSpecIso S).inv (h.hom (LaurentPolynomial.T (-1))))).app
           (((boundedFlatAffineEvaluationAt (.of (LaurentPolynomial R))
             (Under.mk h)).obj s).obj.X n) := by

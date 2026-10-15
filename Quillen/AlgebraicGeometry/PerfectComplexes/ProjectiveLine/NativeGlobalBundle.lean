@@ -25,7 +25,7 @@ open CategoryTheory AlgebraicGeometry
 universe u
 
 namespace Quillen.PerfectComplexes.ProjectiveLine
-open Quillen.Scheme Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
 
 /-- The actual original native comparison holds on every qcqs scheme. -/
 theorem nativePhiBijective_of_qcqs (X : Scheme.{u}) [CompactSpace X]

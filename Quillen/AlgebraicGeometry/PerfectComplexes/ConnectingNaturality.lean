@@ -24,7 +24,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 namespace Quillen.PerfectComplexes
-variable {A B : Quillen.Scheme.QuasiCompactOpenPairs.{u}}
+variable {A B : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}}
 
 /-- The unchanged original relative-to-supported boundary is natural under
 arbitrary open-pair pullback between qc ambient schemes. -/
@@ -54,7 +54,7 @@ def perfectOpenConnectingNatTrans (n : ℕ) :
 
 @[simp]
 theorem perfectOpenConnectingNatTrans_app (n : ℕ)
-    (X : Quillen.Scheme.QuasiCompactOpenPairs.{u}ᵒᵖ) :
+    (X : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}ᵒᵖ) :
     ((perfectOpenConnectingNatTrans n).app X).hom =
       perfectOpenConnectingHom X.unop.obj.obj.hom n := rfl
 

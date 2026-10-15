@@ -61,14 +61,14 @@ theorem split_perfect_factorization {X : Scheme.{u}} {K L : Perfect X} (f : K �
       (splitPerfectWaldhausen X).cof i ∧ (splitPerfectWaldhausen X).weq p ∧ i ≫ p = f :=
   exists_splitPerfect_factorization f
 /-- Public scheme K and the actual vector-bundle Q-model share their realization universe. -/
-def scheme_vectorBundle_model (X : Scheme.{u}) (n : ℕ) : Quillen.Scheme.K X n ≃*
-    (Quillen.SchemeSheaf.vectorBundleExactStructure X).K n :=
-  Quillen.SchemeSheaf.smallVectorBundleKEquiv X n
+def scheme_vectorBundle_model (X : Scheme.{u}) (n : ℕ) : AlgebraicGeometry.Scheme.K X n ≃*
+    (AlgebraicGeometry.Scheme.Modules.vectorBundleExactStructure X).K n :=
+  AlgebraicGeometry.Scheme.Modules.smallVectorBundleKEquiv X n
 
 /-- The model equivalence retains the canonical normalized Q-functor map. -/
 theorem scheme_vectorBundle_model_forward (X : Scheme.{u}) (n : ℕ) :
     (scheme_vectorBundle_model X n).toMonoidHom =
-      Quillen.SchemeSheaf.smallVectorBundleKMap X n := rfl
+      AlgebraicGeometry.Scheme.Modules.smallVectorBundleKMap X n := rfl
 /-- The previously constructed locally-perfect map is the equivalence's exact forward map. -/
 def split_perfect_equivalence (X : Scheme.{u}) (n : ℕ) : SplitPerfectK X n ≃* PerfectK X n :=
   splitPerfectKEquiv X n
@@ -80,12 +80,13 @@ theorem split_perfect_equivalence_forward (X : Scheme.{u}) (n : ℕ) :
 def split_strict_equivalence (X : Scheme.{u}) (n : ℕ) : SplitStrictK X n ≃* StrictK X n :=
   splitStrictKEquiv X n
 /-- The public Q-defined scheme model is now canonically exact vector-bundle S-theory. -/
-def vector_bundle_qs (X : Scheme.{u}) (n : ℕ) : Quillen.Scheme.K X n ≃*
-    (Quillen.Waldhausen.ofExactCategory (Quillen.SchemeSheaf.vectorBundleExactStructure X)).K n :=
+def vector_bundle_qs (X : Scheme.{u}) (n : ℕ) : AlgebraicGeometry.Scheme.K X n ≃*
+    (Quillen.Waldhausen.ofExactCategory (AlgebraicGeometry.Scheme.Modules.vectorBundleExactStructure
+      X)).K n :=
   vectorBundleQSEquiv X n
 
 /-- The genuine Q-to-perfect comparison is constructed without claiming Gillet–Waldhausen. -/
-def scheme_to_perfect (X : Scheme.{u}) (n : ℕ) : Quillen.Scheme.K X n →* PerfectK X n :=
+def scheme_to_perfect (X : Scheme.{u}) (n : ℕ) : AlgebraicGeometry.Scheme.K X n →* PerfectK X n :=
   vectorBundleToPerfectKMap X n
 
 theorem scheme_to_perfect_factors_through_strict (X : Scheme.{u}) (n : ℕ) :

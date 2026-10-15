@@ -21,6 +21,12 @@ categorical dévissage, not an equivalence with all supported objects.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,7 +34,7 @@ universe u v w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme.ClosedImmersion
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 open FiniteModuleLocalization PrincipalSupportDevissage
 
 namespace ScalarRepresentation
@@ -148,7 +154,7 @@ theorem supportFiltrationHypothesis : Devissage.FiltrationHypothesis (supportKil
 /-- Genuine dévissage on the actual compatible support category, in the
 public upper universe. Its forward map is the canonical killed inclusion. -/
 def supportDevissageKEquiv (n : ℕ) :
-    (Devissage.subcategoryExactStructure (supportKilled R f)).K n ≃*
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure (supportKilled R f)).K n ≃*
       CoherentPrincipalSupportedG R f n :=
   Devissage.KEquiv (supportKilled R f) (supportFiltrationHypothesis R f) n
 
@@ -156,4 +162,4 @@ def supportDevissageKEquiv (n : ℕ) :
 @[simp] theorem supportDevissageKEquiv_coe (n : ℕ) :
     ↑(supportDevissageKEquiv R f n) = Devissage.KMap (supportKilled R f) n := rfl
 
-end Quillen.CoherentScheme.ClosedImmersion
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

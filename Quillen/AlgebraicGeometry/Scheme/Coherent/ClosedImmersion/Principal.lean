@@ -20,6 +20,12 @@ quotient-ring restriction of scalars.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -27,7 +33,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme.ClosedImmersion
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 open FiniteModuleLocalization
 
 variable (R : CommRingCat.{u}) (f : R)
@@ -48,14 +54,14 @@ theorem affineFiniteSheaf_pushforward {M : (Spec (principalRing R f)).Modules}
     (hM : affineFiniteSheaf (principalRing R f) M) :
     affineFiniteSheaf R ((Scheme.Modules.pushforward (principalMap R f)).obj M) := by
   have : M.IsQuasicoherent := hM.1
-  refine ⟨SchemeSheaf.isQuasicoherent_pushforward _ M, ?_⟩
+  refine ⟨AlgebraicGeometry.Scheme.Modules.isQuasicoherent_pushforward _ M, ?_⟩
   let N : FGModuleCat (ClosedRing f) := ⟨moduleSpecΓFunctor.obj M, hM.2⟩
   have : Module.Finite R ((moduleSpecΓFunctor ⋙
       ModuleCat.restrictScalars (CommRingCat.ofHom (Ideal.Quotient.mk (Ideal.span {f}))).hom).obj M)
         :=
     ((closedRestriction f).obj N).property
   exact Module.Finite.equiv
-    ((SchemeSheaf.pushforwardGlobalSectionsIso
+    ((AlgebraicGeometry.Scheme.Modules.pushforwardGlobalSectionsIso
       (CommRingCat.ofHom (Ideal.Quotient.mk (Ideal.span {f})))).app M).symm.toLinearEquiv
 
 /-- Actual principal closed pushforward preserves all-affine-chart coherence. -/
@@ -89,7 +95,7 @@ def coherentPushforwardSquare :
       (finiteTypeSheavesSpecModuleEquivalence (principalRing R f)).functor ⋙ closedRestriction f :=
   ((finiteModule R).fullyFaithfulι.whiskeringRight _).preimageIso
     (Functor.isoWhiskerLeft (finiteTypeSheavesToModules (Spec (principalRing R f)))
-      (SchemeSheaf.pushforwardGlobalSectionsIso
+      (AlgebraicGeometry.Scheme.Modules.pushforwardGlobalSectionsIso
         (CommRingCat.ofHom (Ideal.Quotient.mk (Ideal.span {f})))))
 
 instance coherentPushforward_full : (coherentPushforward R f).Full :=
@@ -125,4 +131,4 @@ def coherentPushforwardExact :
   toFunctor := coherentPushforward R f
   map_conflation _ h := h.map_of_exact _
 
-end Quillen.CoherentScheme.ClosedImmersion
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

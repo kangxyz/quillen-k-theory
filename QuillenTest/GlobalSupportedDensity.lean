@@ -121,7 +121,7 @@ theorem empty_support_original_retract {X : Scheme.{u}}
   rw [IsZero.iff_id_eq_zero]
   ext i : 1
   have hz : IsZero (((restrict (⊥ : U.toScheme.Opens).ι).obj E).X i) := by
-    rw [SchemeSheaf.isZero_iff_stalks]
+    rw [AlgebraicGeometry.Scheme.Modules.isZero_iff_stalks]
     intro x
     exact False.elim x.property
   exact hz.eq_of_src _ _
@@ -142,7 +142,7 @@ theorem empty_source_arbitrary_original_complex {X : Scheme.{u}}
   rw [IsZero.iff_id_eq_zero]
   ext i : 1
   have hz : IsZero (((restrict ((⊥ : X.Opens).ι ⁻¹ᵁ Z).ι).obj E).X i) := by
-    rw [SchemeSheaf.isZero_iff_stalks]
+    rw [AlgebraicGeometry.Scheme.Modules.isZero_iff_stalks]
     intro x
     exact False.elim x.val.property
   exact hz.eq_of_src _ _

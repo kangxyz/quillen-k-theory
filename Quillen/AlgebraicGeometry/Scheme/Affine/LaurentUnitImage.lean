@@ -18,6 +18,8 @@ identifies a replacement scalar with the Laurent coordinate.
 -/
 
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 
@@ -25,7 +27,7 @@ open CategoryTheory AlgebraicGeometry
 
 universe u
 
-namespace Quillen.Scheme.PolynomialLaurent
+namespace AlgebraicGeometry.Scheme.PolynomialLaurent
 
 /-- Pulling back the original Laurent unit gives the literal image of the coordinate. -/
 lemma laurentGlobalUnit_image {R S : CommRingCat.{u}}
@@ -61,4 +63,4 @@ lemma laurentGlobalUnit_image_inv {R S : CommRingCat.{u}}
   rw [hi] at hn
   exact hn
 
-end Quillen.Scheme.PolynomialLaurent
+end AlgebraicGeometry.Scheme.PolynomialLaurent

@@ -32,7 +32,7 @@ lemma boundedFlatPerfectPullback_map_globalUnit {X Y : Scheme.{u}} (f : X ⟶ Y)
   intro n
   change (Scheme.Modules.pullback f).map (((complexGlobalUnitIso Y r).hom.app K.obj).f n) = _
   rw [complexGlobalUnitIso_original_terms, complexGlobalUnitIso_original_terms]
-  exact SchemeSheaf.pullback_map_globalScalar f (↑r) (K.obj.X n)
+  exact AlgebraicGeometry.Scheme.Modules.pullback_map_globalScalar f (↑r) (K.obj.X n)
 
 /-- The actual geometric composition comparison intertwines the original pulled-back unit. -/
 lemma boundedFlatPerfectPullbackUnitIso_comp {X Y Z : Scheme.{u}}

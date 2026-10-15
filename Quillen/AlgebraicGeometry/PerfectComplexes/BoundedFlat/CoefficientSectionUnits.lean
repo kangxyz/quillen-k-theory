@@ -25,8 +25,8 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
-open Quillen.Scheme.CoefficientBaseChange Quillen.FunctorIdentityAutomorphism
-open Quillen.PolynomialBaseChange Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.CoefficientBaseChange Quillen.FunctorIdentityAutomorphism
+open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u v₁ v₂ v₃ w₁ w₂ w₃
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}
@@ -80,16 +80,17 @@ theorem boundedFlatCoefficientSectionsMap_unit_preserves {i k : Index R} (f : i 
     (r : (Γ(space i, ⊤))ˣ) :
     Preserves (boundedFlatCoefficientSectionsMap f) (boundedFlatCoefficientSectionUnitIso i r)
       (boundedFlatCoefficientSectionUnitIso k
-        (Units.map (Quillen.Scheme.CoefficientBaseChange.map f).appTop.hom.toMonoidHom r)) := by
+        (Units.map (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f).appTop.hom.toMonoidHom
+          r)) := by
   apply preserves_of_evaluation_iso (boundedFlatCoefficientSectionsMap f)
     (boundedFlatCoefficientOriginalEvaluation k)
     (boundedFlatCoefficientOriginalEvaluation i ⋙
-      boundedFlatPerfectPullback (Quillen.Scheme.CoefficientBaseChange.map f))
+      boundedFlatPerfectPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
     (boundedFlatCoefficientSectionReindexIso f) _ _
     (boundedFlatPerfectGlobalUnitIso (space k)
-      (Units.map (Quillen.Scheme.CoefficientBaseChange.map f).appTop.hom.toMonoidHom r))
+      (Units.map (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f).appTop.hom.toMonoidHom r))
   · intro S
-    change (boundedFlatPerfectPullback (Quillen.Scheme.CoefficientBaseChange.map f)).map
+    change (boundedFlatPerfectPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)).map
       ((boundedFlatCoefficientOriginalEvaluation i).map
         ((boundedFlatCoefficientSectionUnitIso i r).hom.app S)) = _
     rw [boundedFlatCoefficientSectionUnitIso_evaluation_hom,
@@ -105,7 +106,7 @@ def boundedFlatCoefficientUnit (i : Index R) (r : (Γ(Spec i.2.right, ⊤))ˣ) :
 /-- The original projection square preserves the exact coefficient-unit map. -/
 theorem boundedFlatCoefficientUnit_map {i k : Index R} (f : i ⟶ k)
     (r : (Γ(Spec i.2.right, ⊤))ˣ) :
-    Units.map (Quillen.Scheme.CoefficientBaseChange.map f).appTop.hom.toMonoidHom
+    Units.map (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f).appTop.hom.toMonoidHom
         (boundedFlatCoefficientUnit i r) =
       boundedFlatCoefficientUnit k
         (Units.map (Spec.map f.2.right).appTop.hom.toMonoidHom r) := by

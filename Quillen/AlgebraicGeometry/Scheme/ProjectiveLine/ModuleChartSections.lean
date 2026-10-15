@@ -18,6 +18,8 @@ Quasicoherence supplies the original overlap comparison; no chart freeness is as
 -/
 
 @[expose] public section
+open Quillen
+
 
 section
 
@@ -26,8 +28,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.Scheme.PolynomialLaurent
-namespace Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 
 /-- The polynomial module of sections on the original positive chart. -/
@@ -62,7 +64,7 @@ def chartModuleOverlapIso [M.IsQuasicoherent] :
     (affineRestrictGlobalSectionsIso (CommRingCat.ofHom (Polynomial.toLaurent (R := R)))
       (M.restrict (plusChart R))).symm
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 end
 
 end
@@ -74,8 +76,9 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ModuleCat
-open Quillen.SchemeSheaf Quillen.Scheme.PolynomialLaurent Quillen.LaurentProjector
-namespace Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.PolynomialLaurent
+  Quillen.LaurentProjector
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable (R : CommRingCat.{u}) (M : (twoChartLine R).Modules)
 
 /-- The positive scalar map is the original open chart overlap. -/
@@ -168,7 +171,7 @@ theorem chartSectionDifference_coordinates [M.IsQuasicoherent] :
   · exact congrArg ModuleCat.Hom.hom (plusSectionRestriction_coordinates R M)
   · exact congrArg ModuleCat.Hom.hom (minusSectionRestriction_coordinates R M)
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 end
 
 end

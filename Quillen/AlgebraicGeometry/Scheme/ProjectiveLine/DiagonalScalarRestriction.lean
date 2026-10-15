@@ -14,6 +14,8 @@ The original rectangle trivializations restrict through the actual affine model.
 source and target maps retain the literal ΓSpec coordinates of their original global scalars.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 universe u
@@ -21,8 +23,8 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.Scheme.ProjectiveLine
-open PolynomialLaurent Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open PolynomialLaurent AlgebraicGeometry.Scheme.Modules
 variable (R : CommRingCat.{u})
     (j k : Spec (.of (Polynomial R)) ⟶ twoChartLine R)
     (hj : j ≫ projection R = polynomialProjection R)
@@ -78,4 +80,4 @@ theorem specRectangleUnitIso_map {M N : (relativeSquare R).Modules} (f : M ⟶ N
     (rectangleMap R j k hj hk)).hom.naturality, Category.assoc]
   dsimp only [Functor.comp_map]
   rw [h₂, rectangle_scalar_section, Category.assoc]
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

@@ -19,6 +19,9 @@ invertible on the other chart.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 
 section
@@ -26,7 +29,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The original restriction followed by direct image along an open immersion. -/
 def openLocalization {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] :
     X.Modules ⥤ X.Modules := Scheme.Modules.restrictFunctor j ⋙ Scheme.Modules.pushforward j
@@ -70,7 +73,7 @@ theorem openLocalizationUnit_congr {U X : Scheme.{u}} {j k : U ⟶ X}
       (openLocalizationUnit k).app M := by
   subst h
   exact Category.comp_id _
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 end
 
 section
@@ -78,7 +81,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The original open-localization unit becomes invertible on its own open. -/
 theorem isIso_restrict_openLocalizationUnit {U X : Scheme.{u}} (j : U ⟶ X)
     [IsOpenImmersion j] (M : X.Modules) :
@@ -108,7 +111,7 @@ theorem isIso_restrict_openLocalizationMap {W U V X : Scheme.{u}}
   dsimp only [openLocalizationMap]
   rw [Functor.map_comp, Functor.map_comp]
   infer_instance
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 end
 
 section
@@ -116,7 +119,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The nested original restriction map is natural in every original sheaf morphism. -/
 theorem openLocalizationMap_naturality {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
     [IsOpenImmersion a] [IsOpenImmersion j] {M N : X.Modules} (φ : M ⟶ N) :
@@ -133,7 +136,7 @@ theorem openLocalizationMap_naturality {W U X : Scheme.{u}} (a : W ⟶ U) (j : U
   erw [(Scheme.Modules.restrictFunctorComp a j).inv.naturality φ]
   rw [Functor.map_comp]
   simp only [Category.assoc]
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 end
 
 section
@@ -141,7 +144,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The smaller original open has its actual inclusion into the larger localized open. -/
 theorem openLocalization_image_le {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
     [IsOpenImmersion a] [IsOpenImmersion j] (V : X.Opens) :
@@ -161,5 +164,5 @@ theorem openLocalizationMap_app {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
   erw [Category.id_comp]
   rw [← Functor.map_comp]
   rfl
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 end

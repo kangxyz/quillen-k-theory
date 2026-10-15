@@ -16,14 +16,16 @@ Arbitrary coefficient pullback of the original integer line identifies its
 native tautological pullback with the actual two-chart tautological line.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.Scheme.Bass
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Bass
 
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 
 /-- The actual native affine comparison retains the original tautological line. -/
 def nativeAffineTautologicalIso (R : CommRingCat.{u}) :
@@ -34,4 +36,4 @@ def nativeAffineTautologicalIso (R : CommRingCat.{u}) :
     (Scheme.Modules.pullbackCongr (nativeAffineIso_integerProjection R)).app _ ≪≫
     tautologicalCoefficientIso (integerMap R)
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

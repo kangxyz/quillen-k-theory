@@ -20,7 +20,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory AlgebraicGeometry CategoryTheory.Pretriangulated
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 namespace QuillenTest.DiagonalProjectedTensorTriangle
 
 open Quillen

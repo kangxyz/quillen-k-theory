@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.IdealSupport
 public import Quillen.GTheory.FiniteModules.IdealPowerFiltration
 public import Quillen.Devissage.FiltrationFunctor
@@ -19,6 +20,12 @@ factors are annihilated by I, and its endpoint is the original sheaf.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -26,7 +33,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme.ClosedImmersion.Ideal
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal
 open FiniteModuleLocalization.IdealClosedSupport
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (I : Ideal R)
 
@@ -55,4 +62,4 @@ theorem coherentIdealPowerFiltration (M : FiniteTypeSheaves (Spec R))
   let G := (associatedCoherentExact R).mapFiltration (associatedCoherent_killed R I) F
   exact ⟨G.ofIso ((finiteTypeSheavesSpecModuleEquivalence R).unitIso.app M).symm⟩
 
-end Quillen.CoherentScheme.ClosedImmersion.Ideal
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal

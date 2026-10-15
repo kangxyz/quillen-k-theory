@@ -36,7 +36,7 @@ variable {C : Type u} [Category.{u} C] [Abelian C]
 inclusion of the Serre class. -/
 def quotientInclusionZeroIso :
     Devissage.mapQ P ⋙ quotientMapQ P ≅
-      (Functor.const (Devissage.subcategoryExactStructure P).QCategory).obj
+      (Functor.const (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory).obj
         (quotientExactStructure P).qZero :=
   (quotientExactStructure P).qFunctorIsoConstZero _ (fun X =>
     (quotient_isZero_obj_iff P X.obj.of.obj).2 X.obj.of.property)
@@ -55,7 +55,7 @@ def quotientInclusionNullhomotopy :
 of the quotient. Proving it is a homotopy equivalence is the still-open
 homotopical localization theorem. -/
 def localizationFiberComparison :
-    C((Devissage.subcategoryExactStructure P).KSpace,
+    C((CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace,
       HomotopyFiber (classifyingSpaceMap (quotientMapQ P)).hom
         (quotientExactStructure P).kBasepoint) :=
   HomotopyFiber.lift _ _ (classifyingSpaceMap (Devissage.mapQ P)).hom

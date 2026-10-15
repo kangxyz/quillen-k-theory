@@ -20,7 +20,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v₁ v₂ u₁ u₂
 open CategoryTheory CategoryTheory.MonoidalCategory AlgebraicGeometry
-  SheafOfModulesOfCommRing Quillen.SchemeSheaf
+  SheafOfModulesOfCommRing AlgebraicGeometry.Scheme.Modules
 namespace QuillenTest.TensorRestriction
 
 open Quillen

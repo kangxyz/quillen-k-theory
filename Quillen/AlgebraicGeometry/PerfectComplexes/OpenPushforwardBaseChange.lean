@@ -32,7 +32,8 @@ def openPushforwardComplexBaseChangeIso {W U V X : Scheme.{u}}
     (h : a ≫ j = b ≫ k)
     (hcart : ∀ v : V, k v ∈ Set.range j → v ∈ Set.range b) :
     pushforwardComplex j ⋙ restrict k ≅ restrict a ⋙ pushforwardComplex b :=
-  Functor.mapHomologicalComplexCompIso (SchemeSheaf.openPushforwardBaseChangeIso a b j k h hcart) _
+  Functor.mapHomologicalComplexCompIso
+    (AlgebraicGeometry.Scheme.Modules.openPushforwardBaseChangeIso a b j k h hcart) _
     ≪≫
     (Functor.mapHomologicalComplexCompIso (Iso.refl _) _).symm
 

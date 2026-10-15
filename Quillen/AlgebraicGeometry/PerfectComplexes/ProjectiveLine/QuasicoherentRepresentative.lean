@@ -19,6 +19,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPerfect
 
 /-! # Bounded quasicoherent sources for original affine injective counits -/
 @[expose] public section
+
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -58,7 +61,7 @@ theorem affineBoundedQCSource_quasicoherent (R : CommRingCat.{u})
       (by rintro (_ | _) <;> exact hF _)
     exact Q.prop_of_iso (F.truncLEXIsoCycles b).symm hc
   · change ((F.truncLE b).X i).IsQuasicoherent
-    have := Quillen.SchemeSheaf.finiteLocallyFree_of_isZero
+    have := AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_of_isZero
       ((F.truncLE b).isZero_of_isStrictlyLE b i hi)
     infer_instance
 
@@ -104,7 +107,8 @@ theorem quasiIso_affinePushforward_of_boundedQC_injective
     QuasiIso (((Scheme.Modules.pushforward j).mapCochainComplexPlus.map f).hom) := by
   let F := Scheme.Modules.pushforward j
   have : IsIso (F.rightDerivedFunctorPlusUnit.app P) :=
-    SchemeSheaf.isIso_derivedPushforwardPlusUnit_of_term_bounds j P a b hl hu hqc
+    AlgebraicGeometry.Scheme.Modules.isIso_derivedPushforwardPlusUnit_of_term_bounds j P a b hl hu
+      hqc
   have : IsIso (F.rightDerivedFunctorPlusUnit.app I) :=
     F.isIso_rightDerivedFunctorPlusUnit_of_injective I hinj
   have : IsIso (DerivedCategory.Plus.Q.map f) := by
@@ -165,7 +169,7 @@ theorem liftToBoundedAffineCounit_fac (R : CommRingCat.{u}) {P I : Complex (Spec
     CochainComplex.ιTruncLE_naturality, Category.assoc,
     liftToAffineCounit_fac, IsIso.inv_hom_id_assoc]
 
-open Quillen.SchemeSheaf
+open AlgebraicGeometry.Scheme.Modules
 
 /-- The original open localization of a complex, with unchanged degreewise maps. -/
 def openLocalizationComplex {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
@@ -236,7 +240,7 @@ theorem openAffineQCSource_quasicoherent {X : Scheme.{u}} (R : CommRingCat.{u})
     (j : Spec R ⟶ X) [IsOpenImmersion j] [QuasiCompact j]
     (I : Complex X) (b i : ℤ) : ((openAffineQCSource R j I b).X i).IsQuasicoherent := by
   let := affineBoundedQCSource_quasicoherent R ((restrict j).obj I) b i
-  exact CoherentScheme.quasicoherent_pushforward_open j _
+  exact AlgebraicGeometry.Scheme.Modules.QuasiCoherent.quasicoherent_pushforward_open j _
 
 /-- The pushed source retains the actual finite term window. -/
 theorem openAffineQCSource_bounds {X : Scheme.{u}} (R : CommRingCat.{u})
@@ -411,7 +415,7 @@ theorem exists_bounded_qc_model_of_twoAffine_injective
       (shiftFunctor (Derived X) (-1)).mapIso eC ≪≫
       (shiftFunctorCompIsoId (Derived X) (1 : ℤ) (-1) (by omega)).app ((toDerived X).obj I)
 
-open Quillen.Scheme.ProjectiveLine Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.ProjectiveLine AlgebraicGeometry.Scheme.PolynomialLaurent
 
 /-- Every original complex on the actual two-chart line with bounded QC
 cohomology admits a constructed bounded termwise-QC model in the original

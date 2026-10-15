@@ -17,21 +17,29 @@ finite flat vector-bundle K-theory to the established finite G-pushforward.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.SchemeSheaf
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsLocallyNoetherian X]
   (f : Z ⟶ X) [AlgebraicGeometry.IsFinite f] [Flat f]
 
 /-- The original K-to-G comparison commutes with the actual finite flat direct image. -/
 theorem schemeKToG_pushforward (n : ℕ) :
-    (CoherentScheme.Finite.coherentPushforwardGMap f n).comp (schemeKToG Z n) =
+    (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.coherentPushforwardGMap f n).comp
+      (schemeKToG Z n) =
       (schemeKToG X n).comp (schemeKPushforward f n) := by
-  change ((CoherentScheme.Finite.coherentPushforwardExact f).smallKMap n).comp
+  change ((AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.coherentPushforwardExact
+    f).smallKMap n).comp
       ((vectorBundleToCoherentExact Z).smallKMap n) =
     ((vectorBundleToCoherentExact X).smallKMap n).comp
       ((vectorBundlePushforwardExact f).smallKMap n)
@@ -39,9 +47,9 @@ theorem schemeKToG_pushforward (n : ℕ) :
     CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp]
   exact CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso (Iso.refl _) n
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 /-- The actual K-to-G inclusions give a natural comparison of the covariant functors. -/
 def KToGFiniteFlatPushforward (n : ℕ) :
@@ -53,6 +61,7 @@ def KToGFiniteFlatPushforward (n : ℕ) :
       GFinitePushforwardFunctor, ObjectProperty.homMk, KToG, GrpCat.hom_comp, GrpCat.hom_ofHom]
     apply MonoidHom.ext
     intro x
-    exact DFunLike.congr_fun (SchemeSheaf.schemeKToG_pushforward f.hom.hom n).symm x
+    exact DFunLike.congr_fun (AlgebraicGeometry.Scheme.Modules.schemeKToG_pushforward f.hom.hom
+      n).symm x
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

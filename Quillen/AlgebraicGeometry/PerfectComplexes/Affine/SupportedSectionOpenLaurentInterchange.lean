@@ -22,8 +22,8 @@ the fixed-open pullback, and the original target Laurent unit remain explicit.
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen.IteratedS Quillen.Scheme.AffineOpenPair
-open Quillen.PolynomialBaseChange Quillen.Scheme.PolynomialLaurent
+open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair
+open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

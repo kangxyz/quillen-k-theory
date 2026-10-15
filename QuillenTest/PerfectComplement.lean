@@ -101,7 +101,7 @@ theorem original_complement_term_degree (R : CommRingCat.{u}) (W : (Spec R).Open
       n ≤ cutoff ∧
       let D := (restrict W.ι).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))
       let C := ((CochainComplex.singleFunctor W.toScheme.Modules n).obj (D.homology n))⟦(-1 : ℤ)⟧
-      Quillen.SchemeSheaf.IsFiniteLocallyFree W.toScheme (D.homology n) ∧
+      AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree W.toScheme (D.homology n) ∧
         ∀ i : ℤ, i ≠ n+1 → IsZero (C.X i) := by
   obtain ⟨K, P, n, hP, f, _, hn, hM, _, _, _, _⟩ :=
     locallyPerfect_exists_actual_perfect_complement R W hW E hE cutoff

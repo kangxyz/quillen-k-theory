@@ -17,13 +17,19 @@ essential image follows from the canonical adjunction-unit base-change square.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-namespace Quillen.CoherentScheme.ClosedImmersion.General
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsLocallyNoetherian X]
   (i : Z ⟶ X) [IsClosedImmersion i]
 
@@ -89,4 +95,4 @@ theorem coherentAnnihilatorEquivalence_comp_inclusion :
     (coherentAnnihilatorEquivalence i).functor ⋙ (annihilatedByClosedIdeal i).ι =
       coherentPushforward i := rfl
 
-end Quillen.CoherentScheme.ClosedImmersion.General
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

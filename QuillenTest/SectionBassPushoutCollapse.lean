@@ -28,25 +28,25 @@ open Quillen
 theorem actual_laurent_span_level_zero (i : ℕ) (R : CommRingCat.{u}) :
     IsWeakHomotopyEquivalence ((HomotopyPushout.rightConeCollapse
       ((boundedFlatAffineSectionBassDiagram i).map
-        (PolynomialBaseChange.laurentSquareFunctor.obj R).left.hom)
+        (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).left.hom)
       ((boundedFlatAffineSectionBassDiagram i).map
-        (PolynomialBaseChange.laurentSquareFunctor.obj R).hom.left)).map 0) :=
+        (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).hom.left)).map 0) :=
   boundedFlatAffineSectionBass_rightConeCollapse_level_isWeakHomotopyEquivalence
-    i i i (PolynomialBaseChange.laurentSquareFunctor.obj R).left.left
-    (PolynomialBaseChange.laurentSquareFunctor.obj R).left.right
-    (PolynomialBaseChange.laurentSquareFunctor.obj R).right.left _ _ 0
+    i i i (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).left.left
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).left.right
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).right.left _ _ 0
 
 /-- The actual original Laurent-span collapse is invertible on every negative stable group. -/
 theorem actual_laurent_span_negative_iso (i : ℕ) (R : CommRingCat.{u}) (k : ℕ) :
     IsIso ((stableHomotopyFunctor (-(Int.ofNat k + 1))).map (HomotopyPushout.rightConeCollapse
       ((boundedFlatAffineSectionBassDiagram i).map
-        (PolynomialBaseChange.laurentSquareFunctor.obj R).left.hom)
+        (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).left.hom)
       ((boundedFlatAffineSectionBassDiagram i).map
-        (PolynomialBaseChange.laurentSquareFunctor.obj R).hom.left))) :=
+        (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).hom.left))) :=
   boundedFlatAffineSectionBass_rightConeCollapse_isStableEquivalence
-    i i i (PolynomialBaseChange.laurentSquareFunctor.obj R).left.left
-    (PolynomialBaseChange.laurentSquareFunctor.obj R).left.right
-    (PolynomialBaseChange.laurentSquareFunctor.obj R).right.left _ _ _
+    i i i (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).left.left
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).left.right
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).right.left _ _ _
 
 variable {A B C : LoopPrespectrum.{u}} (f : A ⟶ B) (g : A ⟶ C)
 

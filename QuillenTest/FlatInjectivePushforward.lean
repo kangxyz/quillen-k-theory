@@ -24,7 +24,7 @@ theorem original_target {Z X : Scheme.{u}} (f : Z ⟶ X) [Flat f]
     (I : CochainComplex Z.Modules ℤ) (a : ℤ)
     (hb : ∀ n, n < a → IsZero (I.X n)) (hi : ∀ n, Injective (I.X n)) :
     ((PerfectComplexes.pushforwardComplex f).obj I).IsKInjective :=
-  SchemeSheaf.pushforward_isKInjective_of_flat f I a hb hi
+  AlgebraicGeometry.Scheme.Modules.pushforward_isKInjective_of_flat f I a hb hi
 
 /-- Transporting a genuine derived arrow and its inverse transport loses no information. -/
 theorem original_derived_roundtrip {Z X : Scheme.{u}} (f : Z ⟶ X) [Flat f]
@@ -32,8 +32,9 @@ theorem original_derived_roundtrip {Z X : Scheme.{u}} (f : Z ⟶ X) [Flat f]
     (hb : ∀ n, n < a → IsZero (I.X n)) (hi : ∀ n, Injective (I.X n))
     (α : DerivedCategory.Q.obj K ⟶
       DerivedCategory.Q.obj ((PerfectComplexes.pushforwardComplex f).obj I)) :
-    SchemeSheaf.flatPushforwardDerivedHomEquiv f K I a hb hi
-        ((SchemeSheaf.flatPushforwardDerivedHomEquiv f K I a hb hi).symm α) = α :=
-  (SchemeSheaf.flatPushforwardDerivedHomEquiv f K I a hb hi).apply_symm_apply α
+    AlgebraicGeometry.Scheme.Modules.flatPushforwardDerivedHomEquiv f K I a hb hi
+        ((AlgebraicGeometry.Scheme.Modules.flatPushforwardDerivedHomEquiv f K I a hb hi).symm α) = α
+          :=
+  (AlgebraicGeometry.Scheme.Modules.flatPushforwardDerivedHomEquiv f K I a hb hi).apply_symm_apply α
 
 end QuillenTest.FlatInjectivePushforward

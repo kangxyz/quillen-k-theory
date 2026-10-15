@@ -43,7 +43,7 @@ theorem boundedFlatAffineSectionBass_wholeTrackPushout_isStableEquivalence
     (ha : IsStableEquivalence a) (hb : IsStableEquivalence b) (hc : IsStableEquivalence c) :
     IsStableEquivalence (HomotopyPushout.mapOfHomotopies f g f' g' a b c Hf Hg) :=
   KTheory.Bass.modelDiagramIterate_pushoutMapOfHomotopies_isStableEquivalence
-    PolynomialBaseChange.laurentSquareFunctor i j
+    CommRingCat.PolynomialLaurent.laurentSquareFunctor i j
     boundedFlatAffineSectionModelFunctor boundedFlatAffineSectionModelFunctor
     R S T R' S' T' f g f' g' a b c Hf Hg ha hb hc
 

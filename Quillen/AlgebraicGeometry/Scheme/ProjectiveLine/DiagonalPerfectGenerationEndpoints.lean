@@ -14,14 +14,16 @@ invertibility on the actual perfect full subcategory uses only the ORIGINAL
 self-base-change mate; no natural chosen strict representative is involved.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits
   CategoryTheory.Pretriangulated AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.PerfectComplexes
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules Quillen.PerfectComplexes
 local instance perfectGenerationStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})
@@ -177,4 +179,4 @@ def diagonalPerfectGenerationSecondIso :
     intro K
     exact isIso_diagonalPerfectGenerationSecondMap R K.obj K.property
   exact asIso α
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

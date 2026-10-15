@@ -22,6 +22,8 @@ between their G-theories requires dévissage, not a categorical equivalence.
 -/
 @[expose] public section
 
+open ModuleCat
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -148,8 +150,8 @@ instance closedRestriction_preservesFiniteColimits : PreservesFiniteColimits (cl
 
 /-- The genuine principal closed pushforward on finite modules is exact. -/
 def closedRestrictionExact :
-    ExactFunctor (CoherentScheme.finiteModuleExactStructure.{u, u} (ClosedRing f))
-      (CoherentScheme.finiteModuleExactStructure.{u, u} R) where
+    ExactFunctor (ModuleCat.finiteModuleExactStructure.{u, u} (ClosedRing f))
+      (ModuleCat.finiteModuleExactStructure.{u, u} R) where
   toFunctor := closedRestriction f
   map_conflation _ h := h.map_of_exact _
 
@@ -163,7 +165,7 @@ instance instAbelianKilledBy : Abelian (killedBy f).FullSubcategory :=
 
 /-- The actual quotient equivalence is an exact functor for standard abelian structures. -/
 def closedToKilledExact :
-    ExactFunctor (CoherentScheme.finiteModuleExactStructure.{u, u} (ClosedRing f))
+    ExactFunctor (ModuleCat.finiteModuleExactStructure.{u, u} (ClosedRing f))
       (abelianExactStructure (killedBy f).FullSubcategory) where
   toFunctor := closedToKilled f
   map_conflation _ h := h.map_of_exact _
@@ -184,7 +186,7 @@ instance killedInclusion_preservesFiniteColimits : PreservesFiniteColimits (kill
 
 /-- The inclusion of the killed subcategory into finite R-modules is genuinely exact. -/
 def killedInclusionExact : ExactFunctor (abelianExactStructure (killedBy f).FullSubcategory)
-    (CoherentScheme.finiteModuleExactStructure.{u, u} R) where
+    (ModuleCat.finiteModuleExactStructure.{u, u} R) where
   toFunctor := (killedBy f).ι
   map_conflation _ h := h.map_of_exact _
 

@@ -23,7 +23,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory AlgebraicGeometry
 namespace Quillen.PerfectComplexes.ProjectiveLine.NativeMayerVietoris
-open Quillen.Scheme Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
 
 /-- Explicit rearrangement of the two original T-first local pairs into pairs of coefficients. -/
 def localPairShuffle (A : Type u) (B : Type v) [Group A] [Group B] :

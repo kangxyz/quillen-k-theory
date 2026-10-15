@@ -56,7 +56,7 @@ theorem exists_local_quasiIso_lift {X : Scheme.{u}} {P K L : Complex X}
       ∃ g : (@restrict Y X j hj).obj P ⟶ (@restrict Y X j hj).obj K,
         Nonempty (Homotopy ((@restrict Y X j hj).map f) (g ≫ (@restrict Y X j hj).map s)) := by
   obtain ⟨Y, j, hj, y, hy, ⟨h⟩⟩ := exists_local_nullHomotopy hP
-    (f ≫ mappingCone.inr s) (Quillen.HomologicalAlgebra.mappingCone_acyclic_of_quasiIso s) x
+    (f ≫ mappingCone.inr s) (CochainComplex.mappingCone_acyclic_of_quasiIso s) x
   let := hj
   let R := Scheme.Modules.restrictFunctor j
   let e := mappingCone.mapHomologicalComplexIso s R

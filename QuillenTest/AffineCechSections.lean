@@ -22,7 +22,7 @@ consumers require quasicoherence only of the kernel.
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Opposite
-open PrimeSpectrum Quillen.SchemeSheaf.AffineCech
+open PrimeSpectrum AlgebraicGeometry.Scheme.Modules.AffineCech
 
 namespace QuillenTest.AffineCechSections
 

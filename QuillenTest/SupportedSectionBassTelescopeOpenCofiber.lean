@@ -17,7 +17,7 @@ the original coarse relative-open telescope, without a classical negative-group 
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen Quillen.LoopPrespectrum Quillen.PerfectComplexes
-open Quillen.Scheme.AffineOpenPair
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.SupportedSectionBassTelescopeOpenCofiber
 

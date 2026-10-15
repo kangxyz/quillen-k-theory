@@ -31,7 +31,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits AlgebraicGeometry Opposite
 open Quillen.Waldhausen Quillen.Waldhausen.Fibration Quillen.Waldhausen.IteratedS
-open Quillen.Scheme.CoefficientBaseChange Quillen.LoopPrespectrum HomologicalComplex
+open AlgebraicGeometry.Scheme.CoefficientBaseChange Quillen.LoopPrespectrum HomologicalComplex
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)
@@ -52,7 +52,7 @@ def boundedFlatCoefficientSupportedModelMap {a b : Under R} (g : a ⟶ b) :
     boundedFlatCoefficientSupportedModel f a ⟶ boundedFlatCoefficientSupportedModel f b :=
   boundedFlatCoefficientSupportedSectionModelMap (schemeMap f a) (schemeMap f b)
     (i := (op Q, a)) (k := (op Q, b)) (𝟙 (op Q), g)
-    (Quillen.Scheme.CoefficientBaseChange.map
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
       (i := (op P, a)) (k := (op P, b)) (𝟙 (op P), g))
     (boundedFlatCoefficientOpenSquare f g)
 

@@ -11,12 +11,15 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatPullbackSingle
 /-! # Original base-open localization of the derived flat mate -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard derived category of module sheaves. -/
 local instance baseOpenStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -41,4 +44,4 @@ theorem isIso_derivedFlatBaseChangeMap_baseOpen_single_iff [Flat k] [IsOpenImmer
   rw [← derivedFlatBaseChangeMap_paste_horiz c d k a b f j hs h,
     derivedFlatBaseChangeHorizontalComposite_app]
   rw [isIso_comp_left_iff, isIso_comp_left_iff, isIso_comp_right_iff]
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

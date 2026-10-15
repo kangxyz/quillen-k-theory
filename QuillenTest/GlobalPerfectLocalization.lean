@@ -104,7 +104,7 @@ theorem empty_open_original_inverse (R : CommRingCat.{u}) (n : ℕ)
 
 /-- Naturality retains both original supported and ordinary perfect pullbacks. -/
 theorem original_boundary_pair_square
-    {A B : Quillen.Scheme.QuasiCompactOpenPairs.{u}}
+    {A B : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}}
     [QuasiSeparatedSpace A.obj.obj.right] [QuasiSeparatedSpace B.obj.obj.right]
     [CompactSpace A.obj.obj.left] [CompactSpace B.obj.obj.left]
     (f : A ⟶ B) (n : ℕ) (x : PerfectK B.obj.obj.left (n+1)) :

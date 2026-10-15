@@ -16,9 +16,9 @@ The nonreduced and zero-ring cases require only finite local freeness.
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry HomologicalComplex
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 open Quillen.PerfectComplexes Quillen.PerfectComplexes.ProjectiveLine
-open Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace QuillenTest.ProjectiveLineDerivedCoefficient
 

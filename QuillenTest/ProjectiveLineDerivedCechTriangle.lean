@@ -22,7 +22,8 @@ noncomputable section
 universe u
 
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
-open Quillen.Scheme.ProjectiveLine Quillen.Scheme.PolynomialLaurent Quillen.SchemeSheaf
+open AlgebraicGeometry.Scheme.ProjectiveLine AlgebraicGeometry.Scheme.PolynomialLaurent
+  AlgebraicGeometry.Scheme.Modules
 
 namespace QuillenTest.ProjectiveLineDerivedCechTriangle
 

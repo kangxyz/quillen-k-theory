@@ -20,7 +20,7 @@ maps, without choosing an inverse evaluation functor.
 @[expose] public section
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Scheme.AffineOpenPair
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 attribute [local irreducible] boundedFlatPerfectPseudofunctor

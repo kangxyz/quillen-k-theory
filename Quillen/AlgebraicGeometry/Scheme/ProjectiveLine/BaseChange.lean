@@ -15,12 +15,14 @@ The map is glued from the actual polynomial coefficient maps. The original polyn
 projection squares are cartesian by the original ring pushouts, over arbitrary commutative rings.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent Quillen.PolynomialBaseChange
 variable {R S : CommRingCat.{u}} (f : R ⟶ S)
 
@@ -78,4 +80,4 @@ lemma laurentMinus_isPullback :
     (polynomialProjection_isPullback f)
   simpa only [laurentMinus_projection] using laurentProjection_isPullback f
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

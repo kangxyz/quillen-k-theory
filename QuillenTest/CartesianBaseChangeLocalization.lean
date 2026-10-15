@@ -15,7 +15,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace QuillenTest.CartesianBaseChangeLocalization
 
 open Quillen
-open SchemeSheaf Scheme.Modules
+open AlgebraicGeometry.Scheme.Modules Scheme.Modules
 variable {W' W U V' V X : Scheme.{u}}
   (c : W' ⟶ W) (d : W' ⟶ V') (k : V' ⟶ V)
   (a : W ⟶ U) (b : W ⟶ V) (f : U ⟶ X) (j : V ⟶ X)

@@ -26,7 +26,7 @@ namespace QuillenTest.AffineBassStep
 
 open Quillen
 open Quillen.LoopPrespectrum Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS
-  Quillen.Scheme.PolynomialLaurent
+  AlgebraicGeometry.Scheme.PolynomialLaurent
 
 /-- All four based edges and the full transpose involution retain the original point. -/
 theorem transpose_edges {X : Type u} [TopologicalSpace X] (x : X)
@@ -57,20 +57,24 @@ theorem original_zero_track {E F : LoopPrespectrum.{u}}
 /-- Scalar multiplication is on the original section module, without a QC premise. -/
 theorem original_section_action (X : Scheme.{u}) (r : Γ(X, ⊤)) (M : X.Modules)
     (U : X.Opens) (m : M.val.obj (op U)) :
-    ((SchemeSheaf.globalScalar X r).app M).val.app (op U) m =
+    ((AlgebraicGeometry.Scheme.Modules.globalScalar X r).app M).val.app (op U) m =
       X.presheaf.map (homOfLE (show U ≤ ⊤ from le_top)).op r • m := rfl
 
 /-- The original scalar and inverse scalar compose to the literal identity. -/
 theorem original_unit_inverse (X : Scheme.{u}) (r : (Γ(X, ⊤))ˣ) (M : X.Modules) :
-    (SchemeSheaf.globalUnitIso X r).hom.app M ≫ (SchemeSheaf.globalUnitIso X r).inv.app M = 𝟙 M ∧
-      (SchemeSheaf.globalUnitIso X r).inv.app M ≫ (SchemeSheaf.globalUnitIso X r).hom.app M = 𝟙 M :=
-  ⟨(SchemeSheaf.globalUnitIso X r).hom_inv_id_app M, (SchemeSheaf.globalUnitIso X r).inv_hom_id_app
+    (AlgebraicGeometry.Scheme.Modules.globalUnitIso X r).hom.app M ≫
+      (AlgebraicGeometry.Scheme.Modules.globalUnitIso X r).inv.app M = 𝟙 M ∧
+      (AlgebraicGeometry.Scheme.Modules.globalUnitIso X r).inv.app M ≫
+        (AlgebraicGeometry.Scheme.Modules.globalUnitIso X r).hom.app M = 𝟙 M :=
+  ⟨(AlgebraicGeometry.Scheme.Modules.globalUnitIso X r).hom_inv_id_app M,
+    (AlgebraicGeometry.Scheme.Modules.globalUnitIso X r).inv_hom_id_app
     M⟩
 
 /-- The literal chain action has the original module-sheaf scalar in every degree. -/
 theorem original_chain_action (X : Scheme.{u}) (r : (Γ(X, ⊤))ˣ) (K : Complex X) (n : ℤ) :
     ((complexGlobalUnitIso X r).hom.app K).f n =
-      (SchemeSheaf.globalUnitIso X r).hom.app (K.X n) := complexGlobalUnitIso_original_terms X r K n
+      (AlgebraicGeometry.Scheme.Modules.globalUnitIso X r).hom.app (K.X n) :=
+        complexGlobalUnitIso_original_terms X r K n
 
 /-- The chosen global unit is the actual Laurent coordinate under the original affine ring iso. -/
 theorem original_T (R : CommRingCat.{u}) :

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Locality.Derived
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeProjectionPerfect
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeOpenNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeAffineTwoSummands
@@ -18,32 +19,31 @@ reduce the actual negative pullback complex to the accepted affine calculation.
 Open-cover reflection takes place in the original derived category, not on K-groups.
 -/
 @[expose] public section
+open Quillen
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeEntries
+export AlgebraicGeometry.Scheme.Modules
+  (isZero_of_derivedOpenCover)
+end Quillen.PerfectComplexes.ProjectiveLine.P5NativeEntries
+
+end
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.Scheme Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Modules
+  AlgebraicGeometry.Scheme.ProjectiveLine
 namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeEntries
 
 local instance nativeEntriesDerived (Y : Scheme.{u}) :
     HasDerivedCategory.{u + 1} Y.Modules := HasDerivedCategory.standard _
-
-/-- Actual derived open pullbacks detect zero objects on an open cover. -/
-theorem isZero_of_derivedOpenCover {X : Scheme.{u}} {ι : Type v}
-    (Y : ι → Scheme.{u}) (a : ∀ i, Y i ⟶ X) [∀ i, IsOpenImmersion (a i)]
-    (hc : ∀ x : X, ∃ i y, a i y = x) (K : DerivedCategory.Plus X.Modules)
-    (hK : ∀ i, IsZero ((derivedFlatPullbackPlus (a i)).obj K)) : IsZero K := by
-  have : IsIso (0 : K ⟶ K) := by
-    apply isIso_of_derivedOpenPullback_openCover Y a hc
-    intro i
-    let : (derivedFlatPullbackPlus (a i)).Additive := by
-      dsimp [derivedFlatPullbackPlus]
-      infer_instance
-    rw [Functor.map_zero]
-    exact (hK i).isIso (hK i) 0
-  exact (isIsoZero_iff_source_target_isZero K K).mp this |>.1
 
 /-- The original pullback followed by actual left tensor with the native negative line. -/
 def negativeModule (X : QuasiCompactSchemes.{u}) :

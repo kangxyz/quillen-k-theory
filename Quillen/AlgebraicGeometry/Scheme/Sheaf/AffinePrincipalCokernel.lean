@@ -17,6 +17,9 @@ original structure-module map. The proofs retain the original ΓSpec naturality 
 and sheaf maps over arbitrary commutative rings, without noetherianity assumptions.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 noncomputable section
 universe u
@@ -24,7 +27,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The literal affine section map sends the section of a ring-kernel element to zero. -/
 theorem spec_scalar_image_zero {R S : CommRingCat.{u}} (φ : R ⟶ S) (s : R)
     (hs : φ.hom s = 0) :
@@ -55,9 +58,9 @@ theorem spec_appTop_surjective {R S : CommRingCat.{u}} (φ : R ⟶ S)
   have hn := congrArg (fun f => CommRingCat.Hom.hom f y) (Scheme.ΓSpecIso_inv_naturality φ)
   simpa only [CommRingCat.hom_comp, RingHom.comp_apply, hy,
     CommRingCat.inv_hom_apply] using hn.symm
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The scalar and original structure-module map form the actual affine short complex. -/
 def affineUnitScalarSequence {R S : CommRingCat.{u}} (φ : R ⟶ S) (s : Γ(Spec R, ⊤))
     (hs : (Spec.map φ).appTop.hom s = 0) : ShortComplex (Spec R).Modules :=
@@ -125,9 +128,9 @@ def affineUnitScalarSequenceCokernel {R S : CommRingCat.{u}} (φ : R ⟶ S)
   have : Epi (affineUnitScalarSequence φ s hs).g :=
     epi_unitToPushforward_of_surjective_appTop φ hφ
   exact (affineUnitScalarSequence_exact φ s hs hex).gIsCokernel
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The literal scalar/structure-map short complex of an original ring-map kernel element. -/
 def affinePrincipalSequence {R S : CommRingCat.{u}} (φ : R ⟶ S) (s : R)
     (hs : φ.hom s = 0) : ShortComplex (Spec R).Modules :=
@@ -141,4 +144,4 @@ def affinePrincipalSequenceCokernel {R S : CommRingCat.{u}} (φ : R ⟶ S) (s : 
   affineUnitScalarSequenceCokernel φ ((Scheme.ΓSpecIso R).inv.hom s)
     (spec_scalar_image_zero φ s hs) (spec_scalar_kernel φ s hker)
     (spec_appTop_surjective φ hφ)
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

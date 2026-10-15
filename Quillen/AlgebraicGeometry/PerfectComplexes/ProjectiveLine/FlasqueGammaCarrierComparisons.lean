@@ -5,17 +5,21 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Carrier
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGammaThirdSpan
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OriginalLineGodementContractions
 
 /-! # Canonical proof-forgetting carriers of the actual Gamma contraction functors -/
 @[expose] public section
+open Quillen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueGammaEndpoints
@@ -94,38 +98,6 @@ def GammaCarrierIso (R : CommRingCat.{u}) :
     forgetComposeIso I (B ⋙ T) (𝟭 (Complex P)) (L ⋙ V) K J K eI eB ≪≫
     isoWhiskerLeft K (Functor.leftUnitor (L ⋙ V))
 
-/-- A Plus total carrier applied after a proved original input carrier comparison. -/
-def plusTotalCarrierIso {C : Type*} [Category C] (X : Scheme.{u})
-    (F : C ⥤ CochainComplex.Plus X.Modules) (I : C ⥤ Complex X)
-    (e : F ⋙ CochainComplex.Plus.ι X.Modules ≅ I) :
-    (F ⋙ godementTotalPlus X) ⋙ CochainComplex.Plus.ι X.Modules ≅ I ⋙ godementTotal X :=
-  associator F (godementTotalPlus X) (CochainComplex.Plus.ι X.Modules) ≪≫
-    isoWhiskerLeft F (FlasqueDiagonal.totalPlusUnderlyingIso X) ≪≫
-    (associator F (CochainComplex.Plus.ι X.Modules) (godementTotal X)).symm ≪≫
-    isoWhiskerRight e (godementTotal X)
-
-/-- The literal resolved Plus pair retains its four original cochain factors. -/
-def resolvedPlusCarrierIso (X : Scheme.{u}) (F : X.Modules ⥤ X.Modules) [F.Additive]
-    (E : X.Modules) :
-    godementContractionResolved X F E ⋙ CochainComplex.Plus.ι X.Modules ≅
-      CochainComplex.Plus.ι X.Modules ⋙
-        (F.mapHomologicalComplex (.up ℤ) ⋙ godementTotal X) ⋙
-          (tensorByLineComplex E ⋙ godementTotal X) := by
-  let Q := F.mapCochainComplexPlus
-  let L := (moduleTensorLeftFunctor X E).mapCochainComplexPlus
-  let T := godementTotalPlus X
-  let I := CochainComplex.Plus.ι X.Modules
-  let Qr := F.mapHomologicalComplex (.up ℤ)
-  let Lr := tensorByLineComplex E
-  let Tr := godementTotal X
-  let eQ := forgetComposeIso Q T Qr Tr I I I F.mapCochainComplexPlusCompι
-    (FlasqueDiagonal.totalPlusUnderlyingIso X)
-  let eL := forgetComposeIso L T Lr Tr I I I
-    (moduleTensorLeftFunctor X E).mapCochainComplexPlusCompι
-    (FlasqueDiagonal.totalPlusUnderlyingIso X)
-  exact isoWhiskerRight (associator (Q ⋙ T) L T) I ≪≫
-    forgetComposeIso (Q ⋙ T) (L ⋙ T) (Qr ⋙ Tr) (Lr ⋙ Tr) I I I eQ eL
-
 /-- The chosen actual bounded tensor followed by total and Gamma keeps the same four factors. -/
 def actualResolvedCarrierIso {C : Type*} [Category C] (R : CommRingCat.{u})
     (A : C ⥤ BoundedBelow.Obj (twoChartLine R)) (I : C ⥤ Complex (twoChartLine R))
@@ -143,22 +115,5 @@ def actualResolvedCarrierIso {C : Type*} [Category C] (R : CommRingCat.{u})
   let L := tensorByLineComplex (tautologicalLine R)
   let eA := forgetComposeIso A T F V I B K e (totalCarrierIso P)
   exact forgetComposeIso (A ⋙ T) (Gamma R) (F ⋙ V) (L ⋙ V) I K K eA (GammaCarrierIso R)
-
-/-- Original proof-forgetting of any precomposed resolved Plus input. -/
-def precomposedResolvedCarrierIso {C : Type*} [Category C] (X : Scheme.{u})
-    (A : C ⥤ CochainComplex.Plus X.Modules) (I : C ⥤ Complex X)
-    (e : A ⋙ CochainComplex.Plus.ι X.Modules ≅ I)
-    (F : X.Modules ⥤ X.Modules) [F.Additive] (E : X.Modules) :
-    (A ⋙ godementContractionResolved X F E) ⋙ CochainComplex.Plus.ι X.Modules ≅
-      I ⋙ (F.mapHomologicalComplex (.up ℤ) ⋙ godementTotal X) ⋙
-        (tensorByLineComplex E ⋙ godementTotal X) :=
-  associator A (godementContractionResolved X F E) (CochainComplex.Plus.ι X.Modules) ≪≫
-    isoWhiskerLeft A (resolvedPlusCarrierIso X F E) ≪≫
-    (associator A (CochainComplex.Plus.ι X.Modules)
-      ((F.mapHomologicalComplex (.up ℤ) ⋙ godementTotal X) ⋙
-        (tensorByLineComplex E ⋙ godementTotal X))).symm ≪≫
-    isoWhiskerRight e
-      ((F.mapHomologicalComplex (.up ℤ) ⋙ godementTotal X) ⋙
-        (tensorByLineComplex E ⋙ godementTotal X))
 
 end Quillen.PerfectComplexes.ProjectiveLine.FlasqueGammaEndpoints

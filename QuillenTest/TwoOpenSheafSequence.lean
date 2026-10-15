@@ -22,8 +22,9 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.SchemeSheaf.TwoOpen Quillen.Scheme.ProjectiveLine
-open Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.TwoOpen
+  AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 namespace QuillenTest.TwoOpenSheafSequence
 
 open Quillen

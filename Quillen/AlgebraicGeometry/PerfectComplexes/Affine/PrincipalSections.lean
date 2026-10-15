@@ -22,6 +22,9 @@ restriction-section isomorphisms, scalar actions, and counit maps are retained.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -32,7 +35,7 @@ namespace Quillen.PerfectComplexes.Affine
 
 local instance principalGlobalSections_additive (R : CommRingCat.{u}) (r : R) :
     (moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r))).Additive :=
-  Quillen.SchemeSheaf.moduleSpecΓFunctor_additive _
+  AlgebraicGeometry.Scheme.Modules.moduleSpecΓFunctor_additive _
 
 
 /-- Genuine affine global sections preserve a weak map from a quasicoherent-term complex
@@ -65,13 +68,16 @@ lemma quasicoherent_homology_restrict {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenIm
 by global sections of the restricted original affine counit. -/
 def principalSectionsComparison (R : CommRingCat.{u}) (r : R) :
     moduleSpecΓFunctor (R := R) ⋙ ModuleCat.localizedModuleFunctor (Submonoid.powers r) ⟶
-      Scheme.Modules.restrictFunctor (CoherentScheme.principalOpen R r) ⋙
+      Scheme.Modules.restrictFunctor (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+        r) ⋙
       moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r)) :=
-  Functor.whiskerLeft (moduleSpecΓFunctor (R := R)) (CoherentScheme.localizationRestrictionNatIso R
+  Functor.whiskerLeft (moduleSpecΓFunctor (R := R))
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.localizationRestrictionNatIso R
     r).hom ≫
     Functor.whiskerRight
       (Functor.whiskerRight Scheme.Modules.fromTildeΓNatTrans
-        (Scheme.Modules.restrictFunctor (CoherentScheme.principalOpen R r)))
+        (Scheme.Modules.restrictFunctor
+          (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)))
         (moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r)))
 
 /-- The literal principal-localized comparison on original complexes. -/
@@ -79,18 +85,20 @@ def principalSectionsComplexComparison (R : CommRingCat.{u}) (r : R) (I : Comple
     ((ModuleCat.localizedModuleFunctor (Submonoid.powers r)).mapHomologicalComplex (.up ℤ)).obj
       ((sectionsComplex R).obj I) ⟶
       (sectionsComplex (CommRingCat.of (Localization.Away r))).obj
-        ((restrict (CoherentScheme.principalOpen R r)).obj I) :=
+        ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj I) :=
   (NatTrans.mapHomologicalComplex (principalSectionsComparison R r) (.up ℤ)).app I
 
 /-- The comparison is the original localization/restriction isomorphism followed by the
 actual restricted counit, as a chain map. -/
 lemma principalSectionsComplexComparison_eq (R : CommRingCat.{u}) (r : R) (I : Complex (Spec R)) :
     principalSectionsComplexComparison R r I =
-      (NatIso.mapHomologicalComplex (CoherentScheme.localizationRestrictionNatIso R r) (.up
+      (NatIso.mapHomologicalComplex
+        (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.localizationRestrictionNatIso R r) (.up
         ℤ)).hom.app
         ((sectionsComplex R).obj I) ≫
       (sectionsComplex (CommRingCat.of (Localization.Away r))).map
-        ((restrict (CoherentScheme.principalOpen R r)).map (associatedSectionsCounit R I)) := rfl
+        ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map
+          (associatedSectionsCounit R I)) := rfl
 
 /-- Actual scalar-localized global sections compute sections on the principal open for
 lower-bounded injective complexes with quasicoherent homology. -/
@@ -100,11 +108,11 @@ lemma quasiIso_principalSectionsComplexComparison {R : CommRingCat.{u}} (r : R)
     (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent) :
     QuasiIso (principalSectionsComplexComparison R r I) := by
-  let j := CoherentScheme.principalOpen R r
+  let j := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r
   let := quasiIso_associatedSectionsCounit I a hbound hinj hqc
   have hI (n : ℤ) : Injective (((restrict j).obj I).X n) := by
     let := hinj n
-    exact SchemeSheaf.injective_restrict j (I.X n)
+    exact AlgebraicGeometry.Scheme.Modules.injective_restrict j (I.X n)
   have hK (n : ℤ) :
       (((restrict j).obj ((associatedComplex R).obj ((sectionsComplex R).obj I))).X
         n).IsQuasicoherent := by
@@ -126,7 +134,7 @@ namespace Quillen.PerfectComplexes.Affine
 
 local instance principalScalarGlobalSections_additive (R : CommRingCat.{u}) (r : R) :
     (moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r))).Additive :=
-  Quillen.SchemeSheaf.moduleSpecΓFunctor_additive _
+  AlgebraicGeometry.Scheme.Modules.moduleSpecΓFunctor_additive _
 
 
 /-- Actual sections on an open of the affine scheme, with their original R-module structure. -/
@@ -140,8 +148,10 @@ instance affineSectionsAt_additive (R : CommRingCat.{u}) (U : (Spec R).Opens) :
 
 /-- The original restriction-section identification is R-linear for every module sheaf. -/
 def principalRestrictionSectionsEquiv (R : CommRingCat.{u}) (r : R) (M : (Spec R).Modules) :
-    moduleSpecΓFunctor.obj (M.restrict (CoherentScheme.principalOpen R r)) ≃ₗ[R]
-      (affineSectionsAt R (CoherentScheme.principalOpen R r ''ᵁ ⊤)).obj M where
+    moduleSpecΓFunctor.obj (M.restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
+      R r)) ≃ₗ[R]
+      (affineSectionsAt R (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r ''ᵁ
+        ⊤)).obj M where
   __ := AddEquiv.refl _
   map_smul' a m := Scheme.Modules.restrictAppIso_smul_Spec
     (CommRingCat.ofHom (algebraMap R (Localization.Away r))) a m
@@ -149,17 +159,19 @@ def principalRestrictionSectionsEquiv (R : CommRingCat.{u}) (r : R) (M : (Spec R
 /-- The original restricted global-section functor, after forgetting localized scalars,
 is naturally the original R-module section functor on the open image. -/
 def principalRestrictionSectionsImageIso (R : CommRingCat.{u}) (r : R) :
-    (Scheme.Modules.restrictFunctor (CoherentScheme.principalOpen R r) ⋙
+    (Scheme.Modules.restrictFunctor (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+      r) ⋙
       moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r))) ⋙
         ModuleCat.restrictScalars (algebraMap R (Localization.Away r)) ≅
-    affineSectionsAt R (CoherentScheme.principalOpen R r ''ᵁ ⊤) :=
+    affineSectionsAt R (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r ''ᵁ ⊤) :=
   NatIso.ofComponents (fun M => (principalRestrictionSectionsEquiv R r M).toModuleIso) (by
     intro M N f
     ext x
     rfl)
 
 lemma principalOpen_imageTop (R : CommRingCat.{u}) (r : R) :
-    CoherentScheme.principalOpen R r ''ᵁ ⊤ = PrimeSpectrum.basicOpen r := by
+    AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r ''ᵁ ⊤ = PrimeSpectrum.basicOpen
+      r := by
   rw [Scheme.Hom.image_top_eq_opensRange]
   exact Scheme.Hom.opensRange_localizationAway r
 
@@ -172,7 +184,8 @@ def affineSectionsAtCongr (R : CommRingCat.{u}) {U V : (Spec R).Opens} (h : U = 
 
 /-- The same genuine scalar comparison with the literal principal basic open as target. -/
 def principalRestrictionSectionsIso (R : CommRingCat.{u}) (r : R) :
-    (Scheme.Modules.restrictFunctor (CoherentScheme.principalOpen R r) ⋙
+    (Scheme.Modules.restrictFunctor (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+      r) ⋙
       moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r))) ⋙
         ModuleCat.restrictScalars (algebraMap R (Localization.Away r)) ≅
     affineSectionsAt R (PrimeSpectrum.basicOpen r) :=
@@ -194,14 +207,18 @@ lemma principalSectionsComparison_mk (R : CommRingCat.{u}) (r : R)
       ((principalSectionsComparison R r).app M
         ((moduleSpecΓFunctor.obj M).localizedModuleMkLinearMap (Submonoid.powers r) x)) =
     ((modulesSpecToSheaf.obj M).obj.map
-      (homOfLE (show CoherentScheme.principalOpen R r ''ᵁ ⊤ ≤ ⊤ from le_top)).op) x := by
+      (homOfLE (show AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r ''ᵁ ⊤ ≤ ⊤ from
+        le_top)).op) x := by
   change (moduleSpecΓFunctor.map
-    ((Scheme.Modules.restrictFunctor (CoherentScheme.principalOpen R r)).map M.fromTildeΓ))
-      ((CoherentScheme.localizationRestrictionIso R r (moduleSpecΓFunctor.obj M)).hom
+    ((Scheme.Modules.restrictFunctor (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+      r)).map M.fromTildeΓ))
+      ((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.localizationRestrictionIso R r
+        (moduleSpecΓFunctor.obj M)).hom
         ((moduleSpecΓFunctor.obj M).localizedModuleMkLinearMap (Submonoid.powers r) x)) = _
-  rw [CoherentScheme.localizationRestrictionIso_hom_apply]
+  rw [AlgebraicGeometry.Scheme.Modules.QuasiCoherent.localizationRestrictionIso_hom_apply]
   exact ConcreteCategory.congr_hom
-    (Scheme.Modules.toOpen_fromTildeΓ_app M (CoherentScheme.principalOpen R r ''ᵁ ⊤)) x
+    (Scheme.Modules.toOpen_fromTildeΓ_app M
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r ''ᵁ ⊤)) x
 
 /-- The scalar-forgotten comparison retains the actual section restriction on every numerator. -/
 lemma principalSectionsScalarComparison_mk (R : CommRingCat.{u}) (r : R)

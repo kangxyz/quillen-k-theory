@@ -25,12 +25,13 @@ variable (R : CommRingCat.{u}) [IsNoetherianRing R] (I : Ideal R)
 
 /-- The public arbitrary-ideal closed/open interface uses genuine scheme G. -/
 theorem affine_closed_exact (n : ℕ) :
-    (Quillen.Scheme.AffineClosed.pushforwardG R I n).range =
-      (Quillen.Scheme.restrictG (Quillen.Scheme.AffineClosed.openMap R I) n).ker :=
-  Quillen.Scheme.AffineClosed.pushforward_range_eq_restrict_ker R I n
+    (AlgebraicGeometry.Scheme.AffineClosed.pushforwardG R I n).range =
+      (AlgebraicGeometry.Scheme.restrictG (AlgebraicGeometry.Scheme.AffineClosed.openMap R I) n).ker
+        :=
+  AlgebraicGeometry.Scheme.AffineClosed.pushforward_range_eq_restrict_ker R I n
 
 /-- The open complement need not be affine, and the G₀ tail is surjective. -/
 theorem affine_closed_tail : Function.Surjective
-    (Quillen.Scheme.restrictG (Quillen.Scheme.AffineClosed.openMap R I) 0) :=
-  Quillen.Scheme.AffineClosed.restrictG_zero_surjective R I
+    (AlgebraicGeometry.Scheme.restrictG (AlgebraicGeometry.Scheme.AffineClosed.openMap R I) 0) :=
+  AlgebraicGeometry.Scheme.AffineClosed.restrictG_zero_surjective R I
 end Consumer

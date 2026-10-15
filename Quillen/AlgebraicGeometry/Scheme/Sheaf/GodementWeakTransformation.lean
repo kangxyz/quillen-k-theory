@@ -5,32 +5,19 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementWeakComposition
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PlusQuasiIso
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Naturality
 
-/-! # Natural original weak-arrow composition before specialization -/
+/-! # Compatibility imports for the canonical Aglib interface -/
 @[expose] public section
+
+-- Transitional names share Aglib declarations and canonical instances.
 noncomputable section
-universe u v w
-open CategoryTheory AlgebraicGeometry
 namespace Quillen.SchemeSheaf
-variable {D : Type v} [Category.{w} D] {X : Scheme.{u}}
-    {F G H : D ⥤ CochainComplex.Plus X.Modules}
-
-lemma plus_nattrans_comp_quasiIso (a : F ⟶ G) (b : G ⟶ H)
-    (ha : ∀ K, QuasiIso (a.app K).hom) (hb : ∀ K, QuasiIso (b.app K).hom) (K : D) :
-    QuasiIso ((a ≫ b).app K).hom := by
-  let := ha K
-  let := hb K
-  exact plus_quasiIso_comp (a.app K) (b.app K)
-
-lemma plus_natIso_hom_quasiIso (e : F ≅ G) (K : D) : QuasiIso (e.hom.app K).hom :=
-  plus_iso_quasiIso (e.hom.app K)
-
-lemma plus_whiskerTotalImage_quasiIso {Y : Scheme.{u}} (p : X ⟶ Y)
-    (a : F ⟶ G) (ha : ∀ K, QuasiIso (a.app K).hom) (K : D) :
-    QuasiIso ((Functor.whiskerRight a
-      (godementTotalPlus X ⋙ (Scheme.Modules.pushforward p).mapCochainComplexPlus)).app K).hom := by
-  let := ha K
-  exact pushGodementPlus_map_quasiIso p (a.app K)
-
+export AlgebraicGeometry.Scheme.Modules.Plus
+  (plus_natIso_hom_quasiIso plus_nattrans_comp_quasiIso)
+export AlgebraicGeometry.Scheme.Modules.Godement
+  (plus_whiskerTotalImage_quasiIso)
 end Quillen.SchemeSheaf
+
+end

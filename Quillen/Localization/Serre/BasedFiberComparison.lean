@@ -30,7 +30,7 @@ variable {C : Type u} [Category.{u} C] [Abelian C]
 
 /-- The Q-functor induced by the exact inclusion of the Serre subcategory into `C`, normalized
 to send the chosen Q-zero object exactly to the ambient Q-zero object. -/
-abbrev inclusionNormalizedQ := (Devissage.exactInclusion P).normalizedQ
+abbrev inclusionNormalizedQ := (CategoryTheory.ObjectProperty.exactInclusion P).normalizedQ
 /-- The Q-functor induced by the exact Serre quotient functor, normalized to send the ambient
 chosen Q-zero object exactly to the quotient Q-zero object. -/
 abbrev quotientNormalizedQ := (quotientExactFunctor P).normalizedQ
@@ -38,25 +38,28 @@ abbrev quotientNormalizedQ := (quotientExactFunctor P).normalizedQ
 /-- The normalized quotient/inclusion composite is naturally isomorphic to zero. -/
 def normalizedQuotientInclusionZeroIso :
     inclusionNormalizedQ P ⋙ quotientNormalizedQ P ≅
-      (Functor.const (Devissage.subcategoryExactStructure P).QCategory).obj
+      (Functor.const (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory).obj
         (quotientExactStructure P).qZero :=
   (rebaseFunctorCompRightIso (Devissage.mapQ P) (quotientMapQ P)
-    (Devissage.subcategoryExactStructure P).qZero (abelianExactStructure C).qZero
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure P).qZero (abelianExactStructure
+      C).qZero
     (quotientExactStructure P).qZero
-    ((abelianExactStructure C).qIsoOfIso (Devissage.exactInclusion P).toFunctor.mapZeroObject)
+    ((abelianExactStructure C).qIsoOfIso (CategoryTheory.ObjectProperty.exactInclusion
+      P).toFunctor.mapZeroObject)
     ((quotientExactStructure P).qIsoOfIso (quotientExactFunctor P).toFunctor.mapZeroObject)).symm ≪≫
       quotientInclusionZeroIso P
 
 /-- The normalized composite sends the source zero exactly to the target zero. -/
 theorem normalizedComposite_obj_zero :
     (inclusionNormalizedQ P ⋙ quotientNormalizedQ P).obj
-      (Devissage.subcategoryExactStructure P).qZero = (quotientExactStructure P).qZero :=
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure P).qZero = (quotientExactStructure
+        P).qZero :=
   rebaseFunctor_comp_obj_base _ _ _ _ _ _ _
 
 /-- Its comparison at zero is the identity after the exact displayed equality. -/
 theorem normalizedZeroIso_hom_base :
     (normalizedQuotientInclusionZeroIso P).hom.app
-      (Devissage.subcategoryExactStructure P).qZero =
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure P).qZero =
         eqToHom (normalizedComposite_obj_zero P) :=
   ((quotientExactStructure P).qHom_subsingleton_of_isZero _ _
     (isZero_zero (Quotient P))).elim _ _
@@ -66,10 +69,10 @@ def normalizedQuotientInclusionHomotopy :
     ((classifyingSpaceMap (quotientNormalizedQ P)).hom.comp
       (classifyingSpaceMap (inclusionNormalizedQ P)).hom).HomotopyRel
       (ContinuousMap.const _ (quotientExactStructure P).kBasepoint)
-      {(Devissage.subcategoryExactStructure P).kBasepoint} :=
+      {(CategoryTheory.ObjectProperty.subcategoryExactStructure P).kBasepoint} :=
   (classifyingSpaceNaturalTransformationBasedHomotopy
     (normalizedQuotientInclusionZeroIso P).hom
-    (Devissage.subcategoryExactStructure P).qZero
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure P).qZero
     (normalizedComposite_obj_zero P) (normalizedZeroIso_hom_base P)).cast
       (by simp only [classifyingSpaceMap_comp, TopCat.hom_comp])
       (by rw [classifyingSpaceMap_const_direct]; rfl)
@@ -77,21 +80,21 @@ def normalizedQuotientInclusionHomotopy :
 /-- The nullhomotopy stays at the target's actual chosen basepoint. -/
 theorem normalizedQuotientInclusionHomotopy_based (t : I) :
     normalizedQuotientInclusionHomotopy P
-      (t, (Devissage.subcategoryExactStructure P).kBasepoint) =
+      (t, (CategoryTheory.ObjectProperty.subcategoryExactStructure P).kBasepoint) =
         (quotientExactStructure P).kBasepoint := by
   have hh := (normalizedQuotientInclusionHomotopy P).prop t
-    (Devissage.subcategoryExactStructure P).kBasepoint (Set.mem_singleton _)
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure P).kBasepoint (Set.mem_singleton _)
   exact hh.trans (by
     change classifyingSpaceMap (quotientNormalizedQ P)
       (classifyingSpaceMap (inclusionNormalizedQ P)
-        (Devissage.subcategoryExactStructure P).kBasepoint) = _
-    rw [(Devissage.exactInclusion P).normalizedQ_map_point,
+        (CategoryTheory.ObjectProperty.subcategoryExactStructure P).kBasepoint) = _
+    rw [(CategoryTheory.ObjectProperty.exactInclusion P).normalizedQ_map_point,
       (quotientExactFunctor P).normalizedQ_map_point])
 
 /-- The localization comparison into the fiber of precisely the normalized
 map that defines the quotient's K-group homomorphisms. -/
 def basedLocalizationFiberComparison :
-    C((Devissage.subcategoryExactStructure P).KSpace,
+    C((CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace,
       HomotopyFiber (classifyingSpaceMap (quotientNormalizedQ P)).hom
         (quotientExactStructure P).kBasepoint) :=
   HomotopyFiber.lift _ _ (classifyingSpaceMap (inclusionNormalizedQ P)).hom
@@ -99,13 +102,14 @@ def basedLocalizationFiberComparison :
 
 /-- The comparison preserves the chosen zero/constant-path basepoint. -/
 theorem basedLocalizationFiberComparison_basepoint :
-    basedLocalizationFiberComparison P (Devissage.subcategoryExactStructure P).kBasepoint =
+    basedLocalizationFiberComparison P (CategoryTheory.ObjectProperty.subcategoryExactStructure
+      P).kBasepoint =
       HomotopyFiber.basepoint (classifyingSpaceMap (quotientNormalizedQ P)).hom
         (quotientExactStructure P).kBasepoint (abelianExactStructure C).kBasepoint
         (quotientExactFunctor P).normalizedQ_map_point := by
   apply Subtype.ext
   apply Prod.ext
-  · exact (Devissage.exactInclusion P).normalizedQ_map_point
+  · exact (CategoryTheory.ObjectProperty.exactInclusion P).normalizedQ_map_point
   · apply ContinuousMap.ext
     intro t
     exact normalizedQuotientInclusionHomotopy_based P t
@@ -123,7 +127,7 @@ def normalizedFiberBasepoint : NormalizedLocalizationFiber P :=
 /-- The based comparison induces a genuine homomorphism into the fiber's
 homotopy groups. No assertion that it is an isomorphism is made. -/
 def localizationFiberComparisonHom (n : ℕ) :
-    (Devissage.subcategoryExactStructure P).K n →*
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure P).K n →*
       HomotopyGroup.Pi (n + 1) (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P) :=
   piMap n (basedLocalizationFiberComparison P) (basedLocalizationFiberComparison_basepoint P)
 
@@ -149,7 +153,8 @@ set_option backward.isDefEq.respectTransparency false in
 This follows from the actual based nullhomotopy, not the still-open fiber-equivalence theorem. -/
 theorem quotientKMap_comp_inclusion (n : ℕ) :
     (quotientKMap P n).comp (Devissage.KMap P n) = 1 := by
-  change ((quotientExactFunctor P).KMap n).comp ((Devissage.exactInclusion P).KMap n) = 1
+  change ((quotientExactFunctor P).KMap n).comp ((CategoryTheory.ObjectProperty.exactInclusion
+    P).KMap n) = 1
   rw [CategoryTheory.ExactCategory.ExactFunctor.KMap_eq_piMap,
     CategoryTheory.ExactCategory.ExactFunctor.KMap_eq_piMap,
     ← homotopyGroupMapHom_comp]

@@ -13,13 +13,15 @@ Both schemes are the original products over the integral terminal scheme. The co
 and unit come from their second projections; no affine replacement of the base is used. -/
 
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 
-namespace Quillen.Scheme.Bass
+namespace AlgebraicGeometry.Scheme.Bass
 
 /-- The genuine relative affine line over an arbitrary scheme. -/
 abbrev nativePolynomialScheme (X : AlgebraicGeometry.Scheme.{u}) :
@@ -77,10 +79,10 @@ theorem nativePolynomialCoordinate_laurentPlus (X : AlgebraicGeometry.Scheme.{u}
 theorem nativeLaurentPlus_eq_plus (X : QuasiCompactSchemes.{u}) :
     nativeLaurentPlus X.obj = (plus.app X).hom := rfl
 
-end Quillen.Scheme.Bass
+end AlgebraicGeometry.Scheme.Bass
 
 namespace Quillen.PerfectComplexes
-open Quillen.Scheme.Bass
+open AlgebraicGeometry.Scheme.Bass
 
 /-- Every perfect object over the true relative affine line has the original unit comparison. -/
 theorem nativeScalarForwardKOneClass_restrict (X : Scheme.{u})

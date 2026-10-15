@@ -18,6 +18,11 @@ syzygy is the genuine coherent kernel of this quotient.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -26,7 +31,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 variable (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X]
 
@@ -34,38 +39,44 @@ variable (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X]
 finite locally free sheaf. Both the object and epimorphism live in the actual
 coherent category with its ambient sheaf exact structure. -/
 class HasResolutionProperty : Prop where
-  exists_vectorBundle_epi (M : CoherentScheme.FiniteTypeSheaves X) :
-    ∃ P : CoherentScheme.FiniteTypeSheaves X, SchemeSheaf.coherentVectorBundle X P ∧
+  exists_vectorBundle_epi (M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) :
+    ∃ P : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X,
+      AlgebraicGeometry.Scheme.Modules.coherentVectorBundle X P ∧
       ∃ p : P ⟶ M, Epi p
 
 /-- The categorical formulation is exactly the ordinary sheaf quotient
 formulation: the source is an actual vector bundle and the underlying sheaf
 morphism is an epimorphism. -/
 theorem hasResolutionProperty_iff_sheaf_epi : HasResolutionProperty X ↔
-    ∀ M : CoherentScheme.FiniteTypeSheaves X, ∃ V : SchemeSheaf.FiniteLocallyFree X,
+    ∀ M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X, ∃ V :
+      AlgebraicGeometry.Scheme.Modules.FiniteLocallyFree X,
       ∃ p : V.obj ⟶ M.obj, Epi p := by
   constructor
   · intro h M
     obtain ⟨P, hP, p, hp⟩ := h.exists_vectorBundle_epi M
     have := hp
     exact ⟨⟨P.obj, hP⟩, p.hom,
-      inferInstanceAs (Epi ((CoherentScheme.finiteTypeSheavesToModules X).map p))⟩
+      inferInstanceAs (Epi
+        ((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesToModules X).map p))⟩
   · intro h
     constructor
     intro M
     obtain ⟨V, p, hp⟩ := h M
-    let P := (SchemeSheaf.vectorBundleToCoherent X).obj V
+    let P := (AlgebraicGeometry.Scheme.Modules.vectorBundleToCoherent X).obj V
     let q : P ⟶ M := ObjectProperty.homMk p
-    have : Epi ((CoherentScheme.finiteTypeSheavesToModules X).map q) := hp
+    have : Epi ((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesToModules X).map q)
+      := hp
     exact ⟨P, V.property, q,
-      Functor.epi_of_epi_map (CoherentScheme.finiteTypeSheavesToModules X) inferInstance⟩
+      Functor.epi_of_epi_map
+        (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesToModules X) inferInstance⟩
 
 /-- A vector-bundle cover has a genuine coherent syzygy and gives an actual
 short exact sequence. No splitting or global projectivity is used. -/
 theorem exists_vectorBundle_shortExact [HasResolutionProperty X]
-    (M : CoherentScheme.FiniteTypeSheaves X) :
-    ∃ (K P : CoherentScheme.FiniteTypeSheaves X) (i : K ⟶ P) (p : P ⟶ M)
-      (w : i ≫ p = 0), SchemeSheaf.coherentVectorBundle X P ∧
+    (M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) :
+    ∃ (K P : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) (i : K ⟶ P) (p : P
+      ⟶ M)
+      (w : i ≫ p = 0), AlgebraicGeometry.Scheme.Modules.coherentVectorBundle X P ∧
         (ShortComplex.mk i p w).ShortExact := by
   obtain ⟨P, hP, p, hp⟩ := HasResolutionProperty.exists_vectorBundle_epi M
   have := hp
@@ -77,12 +88,12 @@ by a finite free module cover and the actual tilde equivalence. -/
 instance hasResolutionProperty_spec (R : CommRingCat.{u}) [IsNoetherianRing R] :
     HasResolutionProperty (Spec R) where
   exists_vectorBundle_epi M := by
-    let E := CoherentScheme.finiteTypeSheavesSpecModuleEquivalence R
+    let E := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence R
     obtain ⟨K, P, i, p, w, hP, hS⟩ :=
-      CoherentScheme.exists_finiteFree_shortExact R (E.functor.obj M)
+      AlgebraicGeometry.Scheme.Modules.Coherent.exists_finiteFree_shortExact R (E.functor.obj M)
     have := hS.epi_g
-    refine ⟨E.inverse.obj P, SchemeSheaf.finiteModuleTilde_finiteFree R P hP,
+    refine ⟨E.inverse.obj P, AlgebraicGeometry.Scheme.Modules.finiteModuleTilde_finiteFree R P hP,
       E.inverse.map p ≫ (E.unitIso.app M).inv, ?_⟩
     infer_instance
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

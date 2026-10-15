@@ -13,7 +13,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PolynomialScalar
 noncomputable section
 open CategoryTheory AlgebraicGeometry Convexity unitInterval
 open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
-open Quillen.Waldhausen Quillen.Scheme.PolynomialLaurent
+open Quillen.Waldhausen AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped Simplicial Topology
 universe u v
 namespace QuillenTest.PolynomialScalarCompositionCube

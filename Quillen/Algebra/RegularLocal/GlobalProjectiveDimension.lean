@@ -20,6 +20,11 @@ without imposing a uniform dimension bound on the ring.
 -/
 @[expose] public section
 
+open ModuleCat
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,7 +33,7 @@ open CategoryTheory CategoryTheory.Limits
 open scoped ModuleCat.Algebra
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 variable (R : Type u) [CommRing R] [IsNoetherianRing R]
 
 /-- A selected actual finite-free presentation with its finite syzygy. -/
@@ -152,9 +157,9 @@ theorem projectiveDimension_ne_top_of_localized
       (fun p => (hmem n p).mp (hn (Set.mem_univ p)))
   exact (projectiveDimension_ne_top_iff M.obj).mpr ⟨n, hpd⟩
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 /-- Every finite module over an actual regular Noetherian ring has finite
 projective dimension. The ring need not have finite Krull dimension, and no
@@ -179,4 +184,4 @@ theorem finiteProjectiveResolutionHypothesis_of_regular (R : Type u) [CommRing R
   exact nonempty_finiteProjectiveResolution_of_projectiveDimension_ne_top R M
     (projectiveDimension_ne_top_of_regular R M.obj)
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

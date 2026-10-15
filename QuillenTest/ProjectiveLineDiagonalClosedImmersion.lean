@@ -13,8 +13,8 @@ public import Mathlib.Data.ZMod.Basic
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Polynomial
-open Quillen.PolynomialDiagonal Quillen.Scheme.ProjectiveLine
-open Quillen.Scheme.PolynomialLaurent
+open Quillen.PolynomialDiagonal AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 namespace QuillenTest.ProjectiveLineDiagonalClosedImmersion
 
 open Quillen

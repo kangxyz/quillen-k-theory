@@ -24,12 +24,12 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Quillen.LoopPrespectrum
-open Quillen.Waldhausen.IteratedS Quillen.Scheme.CoefficientBaseChange
+open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.CoefficientBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 
 /-- Original perfect K-zero computes degree zero of the original localized spectrum. -/
-def perfectKZeroLocalizedStableIso (X : Quillen.Scheme.QuasiCompactSchemes.{u}ᵒᵖ) :
+def perfectKZeroLocalizedStableIso (X : AlgebraicGeometry.Scheme.QuasiCompactSchemes.{u}ᵒᵖ) :
     Bass.perfectKZeroFunctor.obj X ≅
       (PerfectLocalizedSpectrumFunctor ⋙ localizedStableHomotopyFunctor 0).obj X :=
   (originalKStableEquiv (perfectWaldhausen X.unop.obj) 0).toAddCommGrpIso
@@ -37,7 +37,7 @@ def perfectKZeroLocalizedStableIso (X : Quillen.Scheme.QuasiCompactSchemes.{u}�
 /-- The comparison preserves every original derived-pullback K-zero map. -/
 @[reassoc]
 theorem perfectKZeroLocalizedStableIso_naturality
-    {X Y : Quillen.Scheme.QuasiCompactSchemes.{u}ᵒᵖ} (f : X ⟶ Y) :
+    {X Y : AlgebraicGeometry.Scheme.QuasiCompactSchemes.{u}ᵒᵖ} (f : X ⟶ Y) :
     Bass.perfectKZeroFunctor.map f ≫ (perfectKZeroLocalizedStableIso Y).hom =
       (perfectKZeroLocalizedStableIso X).hom ≫
         (PerfectLocalizedSpectrumFunctor ⋙ localizedStableHomotopyFunctor 0).map f := by

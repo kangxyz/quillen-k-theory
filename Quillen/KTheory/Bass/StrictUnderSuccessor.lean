@@ -26,20 +26,20 @@ namespace Quillen.KTheory.Bass
 /-- The exact finite restriction transports commute with the original right-successor map. -/
 theorem strictRingDiagramRestrictionIterateMap_successor (R : CommRingCat.{u}) (i : ℕ)
     (G : CommRingCat.{u} ⥤ LoopPrespectrum.{w}) :
-    strictDiagramSuccessorMap (PolynomialBaseChange.laurentUnderSquareFunctor R)
+    strictDiagramSuccessorMap (CommRingCat.PolynomialLaurent.laurentUnderSquareFunctor R)
         ((strictRingDiagramRestriction R).obj G) i ≫
-        (strictDiagramFunctor (PolynomialBaseChange.laurentUnderSquareFunctor R)).map
+        (strictDiagramFunctor (CommRingCat.PolynomialLaurent.laurentUnderSquareFunctor R)).map
           (strictRingDiagramRestrictionIterateMap R i G) =
       strictRingDiagramRestrictionIterateMap R (i + 1) G ≫
         Functor.whiskerLeft (Under.forget R)
-          (strictDiagramSuccessorMap PolynomialBaseChange.laurentSquareFunctor G i) := by
-  change strictDiagramSuccessorMap (PolynomialBaseChange.laurentUnderSquareFunctor R)
+          (strictDiagramSuccessorMap CommRingCat.PolynomialLaurent.laurentSquareFunctor G i) := by
+  change strictDiagramSuccessorMap (CommRingCat.PolynomialLaurent.laurentUnderSquareFunctor R)
         ((strictRingDiagramRestriction R).obj G) i ≫
-        (strictDiagramFunctor (PolynomialBaseChange.laurentUnderSquareFunctor R)).map
+        (strictDiagramFunctor (CommRingCat.PolynomialLaurent.laurentUnderSquareFunctor R)).map
           (strictRingDiagramRestrictionIterateMap R i G) =
       strictRingDiagramRestrictionIterateMap R (i + 1) G ≫
         (strictRingDiagramRestriction R).map
-          (strictDiagramSuccessorMap PolynomialBaseChange.laurentSquareFunctor G i)
+          (strictDiagramSuccessorMap CommRingCat.PolynomialLaurent.laurentSquareFunctor G i)
   simp only [strictDiagramSuccessorMap, strictRingDiagramRestrictionIterateMap,
     eqToHom_map, eqToHom_trans]
 
@@ -47,12 +47,12 @@ theorem strictRingDiagramRestrictionIterateMap_successor (R : CommRingCat.{u}) (
 theorem strictRingDiagramRestrictionIterateArrow_successor (R : CommRingCat.{u}) (i : ℕ)
     {F : Under R ⥤ LoopPrespectrum.{w}} {G : CommRingCat.{u} ⥤ LoopPrespectrum.{w}}
     (a : F ⟶ (strictRingDiagramRestriction R).obj G) :
-    strictDiagramSuccessorMap (PolynomialBaseChange.laurentUnderSquareFunctor R) F i ≫
-        (strictDiagramFunctor (PolynomialBaseChange.laurentUnderSquareFunctor R)).map
+    strictDiagramSuccessorMap (CommRingCat.PolynomialLaurent.laurentUnderSquareFunctor R) F i ≫
+        (strictDiagramFunctor (CommRingCat.PolynomialLaurent.laurentUnderSquareFunctor R)).map
           (strictRingDiagramRestrictionIterateArrow R i a) =
       strictRingDiagramRestrictionIterateArrow R (i + 1) a ≫
         Functor.whiskerLeft (Under.forget R)
-          (strictDiagramSuccessorMap PolynomialBaseChange.laurentSquareFunctor G i) := by
+          (strictDiagramSuccessorMap CommRingCat.PolynomialLaurent.laurentSquareFunctor G i) := by
   simp only [strictRingDiagramRestrictionIterateArrow, Functor.map_comp]
   rw [← Category.assoc, ← strictDiagramSuccessorMap_naturality,
     Category.assoc, strictRingDiagramRestrictionIterateMap_successor, Category.assoc]

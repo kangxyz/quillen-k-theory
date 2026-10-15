@@ -24,7 +24,7 @@ universe u
 open CategoryTheory AlgebraicGeometry
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.BassPositive
-open Quillen.Scheme Quillen.Scheme.ProjectiveLine FlasqueTwoSummands
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine FlasqueTwoSummands
 
 local instance (Y : Scheme.{u}) (n : ℕ) : CommGroup (PerfectK Y n) :=
   Waldhausen.Additivity.KCommGroup (perfectWaldhausen Y) n

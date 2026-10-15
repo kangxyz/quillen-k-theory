@@ -20,7 +20,7 @@ The identity-algebra object remains its actual pullback, rather than being ident
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.CategoryTheory.StrictSections Quillen.Waldhausen.IteratedS
-open Quillen.Scheme.AffineOpenPair
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

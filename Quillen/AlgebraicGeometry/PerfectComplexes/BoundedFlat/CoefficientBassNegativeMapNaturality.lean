@@ -73,8 +73,8 @@ theorem boundedFlatCoefficientAmbientBassNegativeMap_schemeRestriction (i : ℕ)
 theorem boundedFlatCoefficientAmbientBassNegativeMap_schemeRestriction_app
     (i : ℕ) (a : Under R) :
     (Bass.negativeKFunctor i).map
-        (Quillen.Scheme.quasiCompactSchemeProperty.homMk
-          (Quillen.Scheme.CoefficientBaseChange.schemeMap f a)).op ≫
+        (AlgebraicGeometry.Scheme.quasiCompactSchemeProperty.homMk
+          (AlgebraicGeometry.Scheme.BaseChange.Coefficients.schemeMap f a)).op ≫
       (boundedFlatCoefficientAmbientBassNegativeMap P i).app a =
     (boundedFlatCoefficientAmbientBassNegativeMap Q i).app a ≫
       (stableHomotopyFunctor (-(i : ℤ))).map

@@ -30,4 +30,4 @@ rev = "d13f23b723b8a846827a245b89c10fc7d3f11612"
 [[require]]
 name = "Aglib"
 git = "https://github.com/kangxyz/aglib.git"
-rev = "7760993163b3393592f78b4f20d537305534e818"
+rev = "2c9d8c0a535a02c7e47eda7a1796f39b0753d573"

@@ -18,6 +18,12 @@ complement. This checks the geometric meaning of its supported K-term.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -25,7 +31,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (r : R)
 
 /-- The actual principal-open restriction in the chosen small coherent models. -/
@@ -117,4 +123,4 @@ def principalSupportedGEquiv (n : ℕ) :
     SupportedAffineG R (principalOpen R r) n ≃* PrincipalSupportedG R r n :=
   (principalSupportComparison R r).KEquivOfMapQIsEquivalence n
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

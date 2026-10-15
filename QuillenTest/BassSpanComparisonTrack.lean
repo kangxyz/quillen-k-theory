@@ -13,7 +13,8 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PerfectComplexes
-open Quillen.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+  Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.BassSpanComparisonTrack
 

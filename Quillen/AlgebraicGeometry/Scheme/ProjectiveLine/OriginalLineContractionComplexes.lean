@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.ComplexContraction
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OriginalLineContraction
 
 /-! # The original line contractions on actual cochain complexes
@@ -14,57 +15,32 @@ The bounded-below lifts retain the original composition and identity comparisons
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.SchemeSheaf
+export AlgebraicGeometry.Scheme.Modules
+  (cochainContractionIso cochainContractionIso_hom_f plusContractionIso
+  plusContractionIso_hom_app plusContractionIso_hom_f)
+end Quillen.SchemeSheaf
+
+end
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
-/-- The termwise lift of an actual module-functor contraction. -/
-def cochainContractionIso {X : Scheme.{u}} (F G : X.Modules ⥤ X.Modules)
-    [F.Additive] [G.Additive] (e : F ⋙ G ≅ 𝟭 X.Modules) :
-    F.mapHomologicalComplex (.up ℤ) ⋙ G.mapHomologicalComplex (.up ℤ) ≅
-      𝟭 (CochainComplex X.Modules ℤ) :=
-  Functor.mapHomologicalComplexCompIso e (.up ℤ) ≪≫
-    Functor.mapHomologicalComplexIdIso X.Modules (.up ℤ)
+end AlgebraicGeometry.Scheme.Modules
 
-/-- Each degree is the same original contraction component. -/
-lemma cochainContractionIso_hom_f {X : Scheme.{u}} (F G : X.Modules ⥤ X.Modules)
-    [F.Additive] [G.Additive] (e : F ⋙ G ≅ 𝟭 X.Modules)
-    (K : CochainComplex X.Modules ℤ) (n : ℤ) :
-    ((cochainContractionIso F G e).hom.app K).f n = e.hom.app (K.X n) := by
-  simp [cochainContractionIso]
-
-/-- The bounded-below lift retains the original composition and identity units. -/
-def plusContractionIso {X : Scheme.{u}} (F G : X.Modules ⥤ X.Modules)
-    [F.Additive] [G.Additive] (e : F ⋙ G ≅ 𝟭 X.Modules) :
-    F.mapCochainComplexPlus ⋙ G.mapCochainComplexPlus ≅
-      𝟭 (CochainComplex.Plus X.Modules) :=
-  (Functor.mapCochainComplexPlusCompIso F G).symm ≪≫
-    NatIso.mapCochainComplexPlus e ≪≫ Functor.mapCochainComplexPlusIdIso X.Modules
-
-/-- The actual comparison maps appear in their original order. -/
-lemma plusContractionIso_hom_app {X : Scheme.{u}} (F G : X.Modules ⥤ X.Modules)
-    [F.Additive] [G.Additive] (e : F ⋙ G ≅ 𝟭 X.Modules)
-    (K : CochainComplex.Plus X.Modules) :
-    (plusContractionIso F G e).hom.app K =
-      (Functor.mapCochainComplexPlusCompIso F G).inv.app K ≫
-        (NatIso.mapCochainComplexPlus e).hom.app K ≫
-        (Functor.mapCochainComplexPlusIdIso X.Modules).hom.app K := rfl
-
-/-- Its complex map is the termwise original contraction. -/
-lemma plusContractionIso_hom_f {X : Scheme.{u}} (F G : X.Modules ⥤ X.Modules)
-    [F.Additive] [G.Additive] (e : F ⋙ G ≅ 𝟭 X.Modules)
-    (K : CochainComplex.Plus X.Modules) (n : ℤ) :
-    ((plusContractionIso F G e).hom.app K).hom.f n = e.hom.app (K.obj.X n) := by
-  simp [plusContractionIso, Functor.mapCochainComplexPlusCompIso,
-    NatIso.mapCochainComplexPlus, Functor.mapCochainComplexPlusIdIso]
-
-end Quillen.SchemeSheaf
-
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 variable (R : CommRingCat.{u})
 
 /-- Actual cochain contraction of L tensor (Q tensor K). -/
@@ -105,4 +81,4 @@ lemma originalRightLineContractionPlusIso_hom_f
         (originalLeftLineContractionIso R).hom.app (K.obj.X n) := by
   exact (plusContractionIso_hom_f _ _ (originalRightLineContractionIso R) K n).trans rfl
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

@@ -31,7 +31,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
-open Quillen.CategoryTheory.StrictSections Quillen.Scheme.CoefficientBaseChange
+open Quillen.CategoryTheory.StrictSections AlgebraicGeometry.Scheme.CoefficientBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}
@@ -45,10 +45,10 @@ def boundedFlatCoefficientSupportOpen (Q : Over (Spec R)) (T : Q.left.Opens) (a 
 /-- Arbitrary coefficient change retains the exact original support preimage. -/
 theorem boundedFlatCoefficientSupportOpen_preimage
     (Q : Over (Spec R)) (T : Q.left.Opens) {a b : Under R} (g : a ⟶ b) :
-    Quillen.Scheme.CoefficientBaseChange.map
+    AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
         (i := (op Q, a)) (k := (op Q, b)) (𝟙 (op Q), g) ⁻¹ᵁ
           boundedFlatCoefficientSupportOpen Q T a = boundedFlatCoefficientSupportOpen Q T b := by
-  change (Quillen.Scheme.CoefficientBaseChange.map
+  change (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
     (i := (op Q, a)) (k := (op Q, b)) (𝟙 (op Q), g) ≫ projection (op Q, a)) ⁻¹ᵁ T = _
   rw [map_projection]
   rfl
@@ -67,7 +67,7 @@ def boundedFlatCoefficientSupportPairMap
     (Q : Over (Spec R)) (T : Q.left.Opens) {a b : Under R} (g : a ⟶ b) :
     supportOpenPair (boundedFlatCoefficientSupportOpen Q T b) ⟶
       supportOpenPair (boundedFlatCoefficientSupportOpen Q T a) :=
-  let m := Quillen.Scheme.CoefficientBaseChange.map
+  let m := AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
     (i := (op Q, a)) (k := (op Q, b)) (𝟙 (op Q), g)
   let h := (boundedFlatCoefficientSupportOpen_preimage Q T g).symm.le
   ObjectProperty.homMk (Arrow.homMk
@@ -95,7 +95,7 @@ def boundedFlatCoefficientOpenSupportPairMap {a b : Under R} (g : a ⟶ b) :
       supportOpenPair (boundedFlatCoefficientOpenSupportOpen f T a) :=
   supportedPairTargetSquare (schemeMap f b) (schemeMap f a)
     (boundedFlatCoefficientSupportPairMap Q T g)
-    (Quillen.Scheme.CoefficientBaseChange.map
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
       (i := (op P, a)) (k := (op P, b)) (𝟙 (op P), g))
     (boundedFlatCoefficientOpenSquare f g).symm
 
@@ -110,7 +110,7 @@ def boundedFlatCoefficientFiberSupportPairMap {a b : Under R} (g : a ⟶ b) :
       supportOpenPair (boundedFlatCoefficientFiberSupportOpen f T a) :=
   supportedPairUnionSquare (schemeMap f b) (schemeMap f a)
     (boundedFlatCoefficientSupportPairMap Q T g)
-    (Quillen.Scheme.CoefficientBaseChange.map
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
       (i := (op P, a)) (k := (op P, b)) (𝟙 (op P), g))
     (boundedFlatCoefficientOpenSquare f g).symm
 
@@ -495,7 +495,7 @@ def boundedFlatCoefficientSupportedOpenRestrictionPrespectrumTransformation :
 omit [IsOpenImmersion f.left] in
 /-- The actual open-side support preimage is preserved by every coefficient map. -/
 theorem boundedFlatCoefficientOpenSupportOpen_preimage {a b : Under R} (g : a ⟶ b) :
-    Quillen.Scheme.CoefficientBaseChange.map
+    AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
         (i := (op P, a)) (k := (op P, b)) (𝟙 (op P), g) ⁻¹ᵁ
           boundedFlatCoefficientOpenSupportOpen f T a =
         boundedFlatCoefficientOpenSupportOpen f T b := by
@@ -582,23 +582,24 @@ private theorem restrictionWeak_iff {U X : Scheme.{u}}
 
 -- Factor the comparison over the original joint indices before specializing a native fiber.
 private theorem supportedSectionRestrictionWeak_iff {i k : Index R}
-    (η : i ⟶ k) [IsOpenImmersion (Quillen.Scheme.CoefficientBaseChange.map η)]
+    (η : i ⟶ k) [IsOpenImmersion (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map η)]
     (A : (space i).Opens) {S V : BoundedFlatCoefficientSupportedSections A.ι} (p : S ⟶ V) :
     (boundedFlatCoefficientSupportedSectionWaldhausen
-      (Quillen.Scheme.CoefficientBaseChange.map η ⁻¹ᵁ A).ι).weq
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map η ⁻¹ᵁ A).ι).weq
       ((boundedFlatCoefficientSupportedSectionsMap A.ι
-        (Quillen.Scheme.CoefficientBaseChange.map η ⁻¹ᵁ A).ι η
-        (supportRestrictionPair (Quillen.Scheme.CoefficientBaseChange.map η) A).hom.left
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map η ⁻¹ᵁ A).ι η
+        (supportRestrictionPair (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map η) A).hom.left
         (Arrow.w (supportRestrictionPair
-          (Quillen.Scheme.CoefficientBaseChange.map η) A).hom)).map p) ↔
+          (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map η) A).hom)).map p) ↔
       (boundedFlatPerfectSupportedOpenWaldhausen
-        (Quillen.Scheme.CoefficientBaseChange.map η) A).weq
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map η) A).weq
         ((boundedFlatCoefficientSupportedEvaluation A.ι).map p) :=
   (boundedFlatCoefficientSupportedSectionsMap_weq_iff A.ι
-    (Quillen.Scheme.CoefficientBaseChange.map η ⁻¹ᵁ A).ι η
-    (supportRestrictionPair (Quillen.Scheme.CoefficientBaseChange.map η) A).hom.left
-    (Arrow.w (supportRestrictionPair (Quillen.Scheme.CoefficientBaseChange.map η) A).hom) p).trans
-    (restrictionWeak_iff (Quillen.Scheme.CoefficientBaseChange.map η) A
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map η ⁻¹ᵁ A).ι η
+    (supportRestrictionPair (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map η) A).hom.left
+    (Arrow.w (supportRestrictionPair (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map η)
+      A).hom) p).trans
+    (restrictionWeak_iff (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map η) A
       ((boundedFlatCoefficientSupportedEvaluation A.ι).map p))
 /-- Coarse section weakness is exactly the original geometric supported relative-open weak class. -/
 theorem boundedFlatCoefficientSupportedOpenWaldhausen_weq_iff (a : Under R)
@@ -608,7 +609,7 @@ theorem boundedFlatCoefficientSupportedOpenWaldhausen_weq_iff (a : Under R)
         (boundedFlatCoefficientSupportOpen Q T a)).weq
         ((boundedFlatCoefficientSupportedEvaluation
           (i := (op Q, a)) (boundedFlatCoefficientSupportOpen Q T a).ι).map p) := by
-  let : IsOpenImmersion (Quillen.Scheme.CoefficientBaseChange.map
+  let : IsOpenImmersion (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
       (i := (op Q, a)) (k := (op P, a)) (f.op, 𝟙 a)) :=
     (show IsOpenImmersion (schemeMap f a) from inferInstance)
   exact (Structure.withInverseImageWeak_weq_iff

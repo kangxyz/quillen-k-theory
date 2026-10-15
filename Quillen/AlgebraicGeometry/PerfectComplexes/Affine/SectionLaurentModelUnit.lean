@@ -21,7 +21,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
 open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
-open Quillen.PolynomialBaseChange Quillen.Scheme.PolynomialLaurent
+open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 

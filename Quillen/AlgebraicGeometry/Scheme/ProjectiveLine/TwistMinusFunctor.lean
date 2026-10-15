@@ -18,14 +18,19 @@ locally free sheaves over every base ring.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.Coherent
 variable (R : CommRingCat.{u}) {M N P : (twoChartLine R).Modules}
 
 /-- The original positive-chart cokernel map induced by a module morphism. -/
@@ -155,10 +160,10 @@ lemma twistMinus_transition (M : (twoChartLine R).Modules) :
       (moduleSecondColumn (minusChart R) M (polynomialCoordinate R)))).mp (by
         simpa only [Category.assoc] using hn)
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 variable (R : CommRingCat.{u})
 
 lemma twistMinusFunctor_shortExact (S : ShortComplex (twoChartLine R).Modules)
@@ -184,4 +189,4 @@ instance twistMinus_finiteLocallyFree (M : (twoChartLine R).Modules)
     cases b
     · exact finiteLocallyFree_of_iso (twistMinusMinusIso R M).symm
     · exact finiteLocallyFree_of_iso (twistMinusPlusIso R M).symm
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

@@ -15,6 +15,8 @@ the literal inverse image of the compact base open. The supported functor
 still has exactly the original ambient two-summand complex and chain map.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -23,7 +25,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 
 instance nativeOpenBaseInclusion_isOpenImmersion (X : QuasiCompactSchemes.{u})
     (Z : X.obj.Opens) [CompactSpace Z.toScheme] :
@@ -37,10 +39,10 @@ instance nativeProjectionOpen_compactSpace (X : QuasiCompactSchemes.{u}) (Z : X.
     CompactSpace ((nativeProjection.app X).hom ⁻¹ᵁ Z).toScheme :=
   (AlgebraicGeometry.Scheme.homeoOfIso (nativeProjectionOpenIso X Z)).compactSpace
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace Quillen.PerfectComplexes.ProjectiveLine
-open Quillen.Scheme Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
 open Waldhausen Waldhausen.ExtensionCategory OpenFunctorNaturality
 
 variable (X : QuasiCompactSchemes.{u}) (Z : X.obj.Opens) [CompactSpace Z.toScheme]

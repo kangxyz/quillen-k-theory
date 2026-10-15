@@ -140,7 +140,7 @@ theorem perfectEvaluationInverse_naturality {a b : Under R} (g : a ⟶ b) :
     (boundedFlatCoefficientPerfectLocalizedSpectrumFunctor P).map g ≫
         (boundedFlatCoefficientSectionPerfectRowEvaluationLocalizedNatIso P).inv.app b =
       (boundedFlatCoefficientSectionPerfectRowEvaluationLocalizedNatIso P).inv.app a ≫
-        ((Quillen.Scheme.CoefficientBaseChange.row P) ⋙
+        ((AlgebraicGeometry.Scheme.BaseChange.Coefficients.row P) ⋙
           boundedFlatCoefficientSectionLocalizedSpectrumFunctor R).map g :=
   (boundedFlatCoefficientSectionPerfectRowEvaluationLocalizedNatIso P).inv.naturality g
 

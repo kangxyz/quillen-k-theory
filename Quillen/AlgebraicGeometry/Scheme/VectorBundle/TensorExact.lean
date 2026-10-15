@@ -17,6 +17,9 @@ is required from the caller, and the source scheme and morphism are arbitrary.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -26,7 +29,7 @@ universe u
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry SheafOfModulesOfCommRing
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 variable {X Y : Scheme.{u}}
 
@@ -39,4 +42,4 @@ theorem tensor_shortExact_pullback_affine_vectorBundle (R : CommRingCat.{u})
   let := hI
   exact tensor_shortExact_pullback_finiteFreeRetract f h S hS
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

@@ -18,6 +18,8 @@ projection to the original integer projective line. Restriction of the actual
 left tensor functor uses the original tensor restriction isomorphism.
 -/
 @[expose] public section
+open Quillen
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -26,8 +28,8 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.Scheme.Bass Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Bass AlgebraicGeometry.Scheme.Modules
 
 /-- Native base change retains the original projection to the integer line. -/
 @[reassoc (attr := simp)]
@@ -132,11 +134,11 @@ theorem nativeTautologicalLineOpenIso_inclusion {U X : QuasiCompactSchemes.{u}} 
         (tautologicalLineInclusion integerRing) :=
   (nativeIntegerPullbackOpenIso f).hom.naturality (tautologicalLineInclusion integerRing)
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace Quillen.PerfectComplexes.ProjectiveLine
-open Quillen.Scheme Quillen.Scheme.Bass Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf Quillen.Waldhausen
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Bass AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules Quillen.Waldhausen
 
 /-- The original chart naturality square keeps the actual original polynomial map. -/
 @[reassoc (attr := simp)]

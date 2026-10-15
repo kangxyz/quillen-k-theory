@@ -20,11 +20,11 @@ namespace Quillen.PerfectComplexes
 /-- Original multiplication by a global scalar in each degree of the unchanged complex. -/
 def complexGlobalScalar (X : Scheme.{u}) (r : Γ(X, ⊤)) : 𝟭 (Complex X) ⟶ 𝟭 (Complex X) where
   app K := {
-    f n := (SchemeSheaf.globalScalar X r).app (K.X n)
-    comm' i j _ := ((SchemeSheaf.globalScalar X r).naturality (K.d i j)).symm }
+    f n := (AlgebraicGeometry.Scheme.Modules.globalScalar X r).app (K.X n)
+    comm' i j _ := ((AlgebraicGeometry.Scheme.Modules.globalScalar X r).naturality (K.d i j)).symm }
   naturality K L f := by
     ext n : 1
-    exact (SchemeSheaf.globalScalar X r).naturality (f.f n)
+    exact (AlgebraicGeometry.Scheme.Modules.globalScalar X r).naturality (f.f n)
 
 /-- The same original scalar endomorphism in the full locally-perfect category. -/
 def perfectGlobalScalar (X : Scheme.{u}) (r : Γ(X, ⊤)) : 𝟭 (Perfect X) ⟶ 𝟭 (Perfect X) where
@@ -44,6 +44,6 @@ theorem restrict_map_complexGlobalScalar {U X : Scheme.{u}} (j : U ⟶ X)
     (restrict j).map ((complexGlobalScalar X r).app K) =
       (complexGlobalScalar U (j.appTop r)).app ((restrict j).obj K) := by
   ext n : 1
-  exact SchemeSheaf.restrict_map_globalScalar j r (K.X n)
+  exact AlgebraicGeometry.Scheme.Modules.restrict_map_globalScalar j r (K.X n)
 
 end Quillen.PerfectComplexes

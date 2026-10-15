@@ -179,7 +179,8 @@ theorem overKernel_mem {N : C} (X : Over N) (hX : P.isoModSerre X.hom) :
 /-- The actual kernel functor on Quillen's auxiliary category, landing in
 `Q(P)`. Arrow maps are lifted through the proved fully faithful Q-inclusion. -/
 def auxiliaryKernelFunctor (N : C) :
-    AuxiliaryKernel P N ⥤ (Devissage.subcategoryExactStructure P).QCategory where
+    AuxiliaryKernel P N ⥤ (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory
+      where
   obj X := Q.of _ _ ⟨(overKernel N).obj X.obj.obj.of, overKernel_mem P _ X.property⟩
   map f := (Devissage.mapQ P).preimage ((overKernelQ N).map f.hom)
   map_id X := by
@@ -224,7 +225,8 @@ def epiAuxiliaryInclusion (N : C) : EpiAuxiliaryKernel P N ⥤ AuxiliaryKernel P
 
 /-- The actual kernel Q-functor restricted to epimorphic Serre-isomorphisms. -/
 def epiAuxiliaryKernelFunctor (N : C) :
-    EpiAuxiliaryKernel P N ⥤ (Devissage.subcategoryExactStructure P).QCategory :=
+    EpiAuxiliaryKernel P N ⥤ (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory
+      :=
   epiAuxiliaryInclusion P N ⋙ auxiliaryKernelFunctor P N
 
 /-- The identity epimorphism, the distinguished object in the auxiliary category. -/
@@ -265,9 +267,9 @@ theorem map_epiAuxiliaryKernelFunctor {N : C} {X Y : EpiAuxiliaryKernel P N} (f 
 /-- The canonical base arrow induces a surjective arrow on kernels. -/
 theorem epiAuxiliaryBaseArrow_kernel_surjection {N : C} (X : EpiAuxiliaryKernel P N) :
     Q.IsSurjection ((epiAuxiliaryKernelFunctor P N).map (epiAuxiliaryBaseArrow P X)) := by
-  let : (Devissage.exactInclusion P).toFunctor.ReflectsIsomorphisms :=
+  let : (CategoryTheory.ObjectProperty.exactInclusion P).toFunctor.ReflectsIsomorphisms :=
     inferInstanceAs P.ι.ReflectsIsomorphisms
-  apply (Q.isSurjection_mapQ_iff (Devissage.exactInclusion P) _).1
+  apply (Q.isSurjection_mapQ_iff (CategoryTheory.ObjectProperty.exactInclusion P) _).1
   change Q.IsSurjection ((Devissage.mapQ P).map
     ((epiAuxiliaryKernelFunctor P N).map (epiAuxiliaryBaseArrow P X)))
   rw [map_epiAuxiliaryKernelFunctor]
@@ -288,7 +290,7 @@ theorem epiAuxiliaryBaseArrow_unique {N : C} {X : EpiAuxiliaryKernel P N}
     (f : epiAuxiliaryBase P N ⟶ X)
     (hf : Q.IsSurjection ((epiAuxiliaryKernelFunctor P N).map f)) :
     f = epiAuxiliaryBaseArrow P X := by
-  have h := hf.mapQ (Devissage.exactInclusion P)
+  have h := hf.mapQ (CategoryTheory.ObjectProperty.exactInclusion P)
   change Q.IsSurjection ((Devissage.mapQ P).map ((epiAuxiliaryKernelFunctor P N).map f)) at h
   rw [map_epiAuxiliaryKernelFunctor] at h
   obtain ⟨s, hs⟩ := Quotient.exists_rep f.hom
@@ -314,21 +316,25 @@ theorem epiAuxiliaryBaseArrow_unique {N : C} {X : EpiAuxiliaryKernel P N}
   · simp
 
 /-- The actual comma category of kernel Q-arrows into a fixed Serre object. -/
-abbrev EpiKernelComma (N : C) (T : (Devissage.subcategoryExactStructure P).QCategory) :=
+abbrev EpiKernelComma (N : C) (T : (CategoryTheory.ObjectProperty.subcategoryExactStructure
+  P).QCategory) :=
   CostructuredArrow (epiAuxiliaryKernelFunctor P N) T
 
 /-- Select those comma objects whose kernel arrow is a reversed epimorphism. -/
 @[implicit_reducible]
-def surjectiveKernelCommaProperty (N : C) (T : (Devissage.subcategoryExactStructure P).QCategory) :
+def surjectiveKernelCommaProperty (N : C) (T :
+  (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory) :
     ObjectProperty (EpiKernelComma P N T) := fun X => Q.IsSurjection X.hom
 
 /-- The full subcategory of the kernel comma category over `T` whose structure Q-arrow is
 represented by a reversed epimorphism. -/
-abbrev SurjectiveKernelComma (N : C) (T : (Devissage.subcategoryExactStructure P).QCategory) :=
+abbrev SurjectiveKernelComma (N : C) (T : (CategoryTheory.ObjectProperty.subcategoryExactStructure
+  P).QCategory) :=
   (surjectiveKernelCommaProperty P N T).FullSubcategory
 
 /-- The reversed zero epimorphism from `T` to the kernel of the identity. -/
-def initialKernelArrow (N : C) (T : (Devissage.subcategoryExactStructure P).QCategory) :
+def initialKernelArrow (N : C) (T : (CategoryTheory.ObjectProperty.subcategoryExactStructure
+  P).QCategory) :
     (epiAuxiliaryKernelFunctor P N).obj (epiAuxiliaryBase P N) ⟶ T := by
   let : Epi (0 : T.obj.of ⟶
       ((epiAuxiliaryKernelFunctor P N).obj (epiAuxiliaryBase P N)).obj.of) :=
@@ -336,7 +342,8 @@ def initialKernelArrow (N : C) (T : (Devissage.subcategoryExactStructure P).QCat
   exact Q.surjectionArrow (0 : T.obj.of ⟶
     ((epiAuxiliaryKernelFunctor P N).obj (epiAuxiliaryBase P N)).obj.of)
 
-lemma initialKernelArrow_surjection (N : C) (T : (Devissage.subcategoryExactStructure P).QCategory)
+lemma initialKernelArrow_surjection (N : C) (T :
+  (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory)
   :
     Q.IsSurjection (initialKernelArrow P N T) := by
   let : Epi (0 : T.obj.of ⟶
@@ -345,14 +352,16 @@ lemma initialKernelArrow_surjection (N : C) (T : (Devissage.subcategoryExactStru
   exact Q.isSurjection_surjectionArrow _
 
 /-- The candidate initial object is the identity epimorphism over `N`. -/
-def surjectiveKernelCommaInitial (N : C) (T : (Devissage.subcategoryExactStructure P).QCategory) :
+def surjectiveKernelCommaInitial (N : C) (T :
+  (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory) :
     SurjectiveKernelComma P N T :=
   ⟨CostructuredArrow.mk (Y := epiAuxiliaryBase P N) (initialKernelArrow P N T),
     initialKernelArrow_surjection P N T⟩
 
 /-- The canonical arrow to each surjective-kernel object satisfies the comma
 triangle because zero-source Q-arrows with the same upper endpoint agree. -/
-def surjectiveKernelCommaInitialTo {N : C} {T : (Devissage.subcategoryExactStructure P).QCategory}
+def surjectiveKernelCommaInitialTo {N : C} {T :
+  (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory}
     (X : SurjectiveKernelComma P N T) : surjectiveKernelCommaInitial P N T ⟶ X :=
   ObjectProperty.homMk (CostructuredArrow.homMk (epiAuxiliaryBaseArrow P X.obj.left) (by
     apply Q.arrowUpper_injective_of_isZero (epiAuxiliaryBase_kernel_isZero P N)
@@ -362,7 +371,7 @@ def surjectiveKernelCommaInitialTo {N : C} {T : (Devissage.subcategoryExactStruc
 /-- This is a genuine initial object: a competing comma arrow must induce a
 surjective kernel map, and is therefore the unique reversed structure epi. -/
 def surjectiveKernelCommaInitialIsInitial (N : C)
-    (T : (Devissage.subcategoryExactStructure P).QCategory) :
+    (T : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory) :
     IsInitial (surjectiveKernelCommaInitial P N T) :=
   IsInitial.ofUniqueHom (surjectiveKernelCommaInitialTo P) (by
     intro X f
@@ -376,7 +385,7 @@ def surjectiveKernelCommaInitialIsInitial (N : C)
 
 /-- The surjective-kernel subcategory has an actual classifying-space contraction. -/
 theorem surjectiveKernelComma_contractible (N : C)
-    (T : (Devissage.subcategoryExactStructure P).QCategory) :
+    (T : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory) :
     ContractibleSpace (ClassifyingSpace (SurjectiveKernelComma P N T)) :=
   classifyingSpace_contractible_of_isInitial (surjectiveKernelCommaInitialIsInitial P N T)
 

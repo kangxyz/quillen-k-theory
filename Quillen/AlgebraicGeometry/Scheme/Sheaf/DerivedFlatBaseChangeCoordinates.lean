@@ -12,13 +12,16 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedSingleAcyclicity
 /-! # Coordinate transport of the original derived flat base-change mate -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The original standard module-sheaf derived categories. -/
 local instance coordinateStandard (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _
@@ -58,9 +61,9 @@ theorem isIso_derivedFlatBaseChangeMap_sourceIso_single_iff (M : U.Modules) :
       (asIso ((Scheme.Modules.pullbackPushforwardAdjunction g).unit.app M)).symm
   exact (NatTrans.isIso_app_iff_of_iso (derivedFlatBaseChangeMap a b f j h) e).symm.trans
     (isIso_derivedFlatBaseChangeMap_sourceIso_iff c d g a b f j hs h _)
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 attribute [local instance] coordinateStandard
 variable {W' W U V' V X : Scheme.{u}}
   (c : W' ⟶ W) (d : W' ⟶ V') (k : V' ⟶ V)
@@ -92,9 +95,9 @@ theorem isIso_derivedFlatBaseChangeMap_baseIso_iff [Flat k] [IsIso j]
   rw [← derivedFlatBaseChangeMap_paste_horiz c d k a b f j hs h,
     derivedFlatBaseChangeHorizontalComposite_app]
   rw [isIso_comp_left_iff, isIso_comp_left_iff, isIso_comp_right_iff]
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard derived category of module sheaves. -/
 local instance affineCoordinateStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -168,9 +171,9 @@ theorem isIso_derivedFlatBaseChangeMap_cornerCoordinates_iff {W' : Scheme.{u}}
     (ei.app K)).symm.trans
     (isIso_derivedFlatBaseChangeMap_sourceIso_iff (e.hom ≫ a) e.hom (𝟙 U)
       a b f j (cornerCoordinateSquare a e) h K)
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard derived category of module sheaves. -/
 local instance normalizationStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -226,4 +229,4 @@ theorem isIso_derivedFlatBaseChangeMap_coordinates_iff [Flat j] (M : U.Modules) 
   exact derivedFlatBaseChangeMap_congr_iff
     (by simp) (by simp) (by simp [Category.assoc]) (by simp [Category.assoc])
     _ (coordinatePullback a b f j h eW eU eV eX) K
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

@@ -23,6 +23,9 @@ with quasicoherent cohomology remain separate geometric theorems.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -188,9 +191,9 @@ def principalDerivedComparisonFactors (R : CommRingCat.{u}) (r : R) :
     DerivedCategory.Q ⋙ (principalDerivedLocalization R r ⋙
       associatedDerived (CommRingCat.of (Localization.Away r))) ≅
     DerivedCategory.Q ⋙ (associatedDerived R ⋙
-      derivedRestrict (CoherentScheme.principalOpen R r)) := by
+      derivedRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)) := by
   let S := CommRingCat.of (Localization.Away r)
-  let j := CoherentScheme.principalOpen R r
+  let j := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r
   let F := ModuleCat.localizedModuleFunctor (Submonoid.powers r)
   let e₁ : DerivedCategory.Q ⋙ (principalDerivedLocalization R r ⋙ associatedDerived S) ≅
       Quillen.ModuleComplex.PrincipalLocalization.localize r (ComplexShape.up ℤ) ⋙
@@ -214,7 +217,8 @@ def principalDerivedComparisonFactors (R : CommRingCat.{u}) (r : R) :
 def principalDerivedComparisonIso (R : CommRingCat.{u}) (r : R) :
     principalDerivedLocalization R r ⋙
       associatedDerived (CommRingCat.of (Localization.Away r)) ≅
-    associatedDerived R ⋙ derivedRestrict (CoherentScheme.principalOpen R r) :=
+    associatedDerived R ⋙ derivedRestrict
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) :=
   Localization.liftNatIso DerivedCategory.Q
     (HomologicalComplex.quasiIso (ModuleCat.{u} R) (ComplexShape.up ℤ))
     _ _ _ _ (principalDerivedComparisonFactors R r)

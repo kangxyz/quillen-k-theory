@@ -18,6 +18,11 @@ stalk isomorphisms and the spectrum stalk/localization isomorphism.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -25,7 +30,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
 
-namespace Quillen.Scheme
+namespace AlgebraicGeometry.Scheme
 
 /-- The usual local-ring definition of a regular scheme. -/
 class IsRegular (X : AlgebraicGeometry.Scheme.{u}) : Prop extends IsLocallyNoetherian X where
@@ -43,7 +48,7 @@ theorem isRegular_of_isOpenImmersion {U X : AlgebraicGeometry.Scheme.{u}}
 /-- Every affine chart of a regular scheme has an actually regular ring. -/
 theorem regular_affineChart {X : AlgebraicGeometry.Scheme.{u}} [IsRegular X]
     (R : CommRingCat.{u}) (j : Spec R ⟶ X) [IsOpenImmersion j] : IsRegularRing R := by
-  have : IsNoetherianRing R := CoherentScheme.noetherian_affineChart R j
+  have : IsNoetherianRing R := AlgebraicGeometry.Scheme.Modules.Coherent.noetherian_affineChart R j
   have : IsRegular (Spec R) := isRegular_of_isOpenImmersion j
   apply isRegularRing_iff.mpr
   intro p hp
@@ -92,4 +97,4 @@ theorem isRegular_iff_affineCharts (X : AlgebraicGeometry.Scheme.{u}) :
     subst x
     exact H
 
-end Quillen.Scheme
+end AlgebraicGeometry.Scheme

@@ -65,7 +65,7 @@ theorem boundedFlatPerfectOpenKRestrict_comparison (n : ℕ) :
   rw [Waldhausen.KMap_comp_KMap, Waldhausen.KMap_comp_KMap]
   exact Waldhausen.KMap_eq_of_iso _ _ (boundedFlatPerfectOriginalRestrictionIso j) n
 
-variable {A B : Quillen.Scheme.OpenPairs.{u}}
+variable {A B : AlgebraicGeometry.Scheme.OpenPairs.{u}}
 
 /-- The natural isomorphism comparing the two composites of bounded-flat pullback around the
 commutative open-pair square `f : A ⟶ B`. -/
@@ -85,7 +85,7 @@ theorem boundedFlatPerfectOpenKRestrict_pullback (f : A ⟶ B) (n : ℕ) :
 
 /-- The original relative-open restriction is natural for arbitrary open-pair
 squares when both opens and both ambient schemes are qc. -/
-theorem perfectOpenKRestrict_pullback {A B : Quillen.Scheme.QuasiCompactOpenPairs.{u}}
+theorem perfectOpenKRestrict_pullback {A B : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}}
     [CompactSpace A.obj.obj.left] [CompactSpace B.obj.obj.left] (f : A ⟶ B) (n : ℕ) :
     (perfectKPullback f.hom.hom.left n).comp (perfectOpenKRestrict B.obj.obj.hom n) =
       (perfectOpenKRestrict A.obj.obj.hom n).comp (perfectOpenKPullback f n) := by
@@ -104,7 +104,7 @@ theorem perfectOpenKRestrict_pullback {A B : Quillen.Scheme.QuasiCompactOpenPair
   exact congrArg (boundedFlatPerfectToPerfectKMap A.obj.obj.left n) h₅
 
 /-- Actual ordinary restriction commutes with arbitrary open-pair pullback as well. -/
-theorem perfectKRestrict_pairPullback {A B : Quillen.Scheme.QuasiCompactOpenPairs.{u}}
+theorem perfectKRestrict_pairPullback {A B : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}}
     [CompactSpace A.obj.obj.left] [CompactSpace B.obj.obj.left] (f : A ⟶ B) (n : ℕ) :
     (perfectKPullback f.hom.hom.left n).comp (perfectKRestrict B.obj.obj.hom n) =
       (perfectKRestrict A.obj.obj.hom n).comp (perfectKPullback f.hom.hom.right n) := by

@@ -21,7 +21,7 @@ No coefficient action, restriction comparison or inherited-seed compatibility is
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
-open Quillen.Scheme.AffineOpenPair
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

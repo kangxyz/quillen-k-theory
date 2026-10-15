@@ -19,6 +19,12 @@ In particular the ambient sheaf need not be coherent or even quasicoherent.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -26,7 +32,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 /-- Coherence along an open immersion is equivalent to coherence on its
 actual open range. -/
@@ -102,4 +108,4 @@ theorem exists_coherent_glued_subobject
     ((affineLocallyFiniteType V.toScheme).prop_of_iso eV.symm B.property)
   exact ⟨⟨N, hN⟩, s, hs, eW, eV, hW, hV⟩
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

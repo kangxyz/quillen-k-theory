@@ -28,7 +28,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
 namespace Quillen.PerfectComplexes
-variable {A B C : Quillen.Scheme.QuasiCompactOpenPairs.{u}}
+variable {A B C : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}}
 
 /-- Original supported K-pullback through the proved literal bounded-flat inclusion. -/
 def perfectSupportedKPullback (f : A ⟶ B) (n : ℕ) :
@@ -61,7 +61,8 @@ theorem perfectSupportedKPullback_unique (f : A ⟶ B) (n : ℕ)
     n).surjective x
   exact DFunLike.congr_fun (hk.trans (perfectSupportedKPullback_comp_boundedFlat f n).symm) y
 
-@[simp] theorem perfectSupportedKPullback_id (A : Quillen.Scheme.QuasiCompactOpenPairs.{u}) (n : ℕ)
+@[simp] theorem perfectSupportedKPullback_id (A :
+  AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}) (n : ℕ)
   :
     perfectSupportedKPullback (𝟙 A) n = MonoidHom.id _ := by
   symm
@@ -84,7 +85,8 @@ theorem perfectSupportedKPullback_unique (f : A ⟶ B) (n : ℕ)
 
 /-- The contravariant degree-`n` supported perfect K-functor on open pairs with quasi-compact
 ambient scheme, using bounded-flat models for pullback. -/
-def PerfectSupportedKFunctor (n : ℕ) : Quillen.Scheme.QuasiCompactOpenPairs.{u}ᵒᵖ ⥤ GrpCat.{u + 1}
+def PerfectSupportedKFunctor (n : ℕ) : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}ᵒᵖ ⥤
+  GrpCat.{u + 1}
   where
   obj X := GrpCat.of (PerfectSupportedK X.unop.obj.obj.hom n)
   map f := GrpCat.ofHom (perfectSupportedKPullback f.unop n)
@@ -120,7 +122,8 @@ theorem perfectOpenKPullback_unique (f : A ⟶ B) (n : ℕ)
     x
   exact DFunLike.congr_fun (hk.trans (perfectOpenKPullback_comp_boundedFlat f n).symm) y
 
-@[simp] theorem perfectOpenKPullback_id (A : Quillen.Scheme.QuasiCompactOpenPairs.{u}) (n : ℕ) :
+@[simp] theorem perfectOpenKPullback_id (A : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}) (n
+  : ℕ) :
     perfectOpenKPullback (𝟙 A) n = MonoidHom.id _ := by
   symm
   apply perfectOpenKPullback_unique
@@ -142,7 +145,8 @@ theorem perfectOpenKPullback_unique (f : A ⟶ B) (n : ℕ)
 
 /-- The contravariant degree-`n` relative-open perfect K-functor on open pairs with quasi-compact
 ambient scheme, using bounded-flat models for pullback. -/
-def PerfectOpenKFunctor (n : ℕ) : Quillen.Scheme.QuasiCompactOpenPairs.{u}ᵒᵖ ⥤ GrpCat.{u + 1} where
+def PerfectOpenKFunctor (n : ℕ) : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}ᵒᵖ ⥤ GrpCat.{u +
+  1} where
   obj X := GrpCat.of (PerfectOpenK X.unop.obj.obj.hom n)
   map f := GrpCat.ofHom (perfectOpenKPullback f.unop n)
   map_id X := by apply GrpCat.hom_ext; exact perfectOpenKPullback_id X.unop n
@@ -189,7 +193,8 @@ theorem perfectOpenKMap_pullback (f : A ⟶ B) (n : ℕ) :
 /-- The natural transformation forgetting support from the supported perfect K-functor to perfect
 K-theory of the ambient scheme in an open pair. -/
 def perfectSupportedNatTrans (n : ℕ) :
-    PerfectSupportedKFunctor.{u} n ⟶ Quillen.Scheme.quasiCompactOpenPairsBase.op ⋙ PerfectKFunctor n
+    PerfectSupportedKFunctor.{u} n ⟶ AlgebraicGeometry.Scheme.quasiCompactOpenPairsBase.op ⋙
+      PerfectKFunctor n
       where
   app X := GrpCat.ofHom (perfectSupportedKMap X.unop.obj.obj.hom n)
   naturality {X Y} f := by
@@ -199,7 +204,8 @@ def perfectSupportedNatTrans (n : ℕ) :
 /-- The natural transformation from perfect K-theory of an open pair's ambient scheme to its
 relative-open K-theory, given by enlarging the weak class. -/
 def perfectOpenNatTrans (n : ℕ) :
-    Quillen.Scheme.quasiCompactOpenPairsBase.op ⋙ PerfectKFunctor n ⟶ PerfectOpenKFunctor.{u} n
+    AlgebraicGeometry.Scheme.quasiCompactOpenPairsBase.op ⋙ PerfectKFunctor n ⟶
+      PerfectOpenKFunctor.{u} n
       where
   app X := GrpCat.ofHom (perfectOpenKMap X.unop.obj.obj.hom n)
   naturality {X Y} f := by
@@ -208,7 +214,8 @@ def perfectOpenNatTrans (n : ℕ) :
 
 /-- The literal original supported inclusion comparison is naturally invertible. -/
 def boundedFlatPerfectSupportedNatIso (n : ℕ) :
-    Quillen.Scheme.quasiCompactOpenPairsInclusion.op ⋙ BoundedFlatPerfectSupportedKFunctor.{u} n ≅
+    AlgebraicGeometry.Scheme.quasiCompactOpenPairsInclusion.op ⋙
+      BoundedFlatPerfectSupportedKFunctor.{u} n ≅
       PerfectSupportedKFunctor n :=
   NatIso.ofComponents (fun X => (boundedFlatPerfectSupportedKEquiv X.unop.obj.obj.hom n).toGrpIso)
     (fun f => by
@@ -216,13 +223,14 @@ def boundedFlatPerfectSupportedNatIso (n : ℕ) :
       exact (perfectSupportedKPullback_comp_boundedFlat f.unop n).symm)
 
 @[simp] theorem boundedFlatPerfectSupportedNatIso_hom_app (n : ℕ)
-    (X : Quillen.Scheme.QuasiCompactOpenPairs.{u}ᵒᵖ) :
+    (X : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}ᵒᵖ) :
     ((boundedFlatPerfectSupportedNatIso n).hom.app X).hom =
       boundedFlatPerfectSupportedToPerfectSupportedKMap X.unop.obj.obj.hom n := rfl
 
 /-- The literal original open inclusion comparison is naturally invertible. -/
 def boundedFlatPerfectOpenNatIso (n : ℕ) :
-    Quillen.Scheme.quasiCompactOpenPairsInclusion.op ⋙ BoundedFlatPerfectOpenKFunctor.{u} n ≅
+    AlgebraicGeometry.Scheme.quasiCompactOpenPairsInclusion.op ⋙ BoundedFlatPerfectOpenKFunctor.{u}
+      n ≅
       PerfectOpenKFunctor n :=
   NatIso.ofComponents (fun X => (boundedFlatPerfectOpenKEquiv X.unop.obj.obj.hom n).toGrpIso)
     (fun f => by
@@ -230,7 +238,7 @@ def boundedFlatPerfectOpenNatIso (n : ℕ) :
       exact (perfectOpenKPullback_comp_boundedFlat f.unop n).symm)
 
 @[simp] theorem boundedFlatPerfectOpenNatIso_hom_app (n : ℕ)
-    (X : Quillen.Scheme.QuasiCompactOpenPairs.{u}ᵒᵖ) :
+    (X : AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}ᵒᵖ) :
     ((boundedFlatPerfectOpenNatIso n).hom.app X).hom = boundedFlatPerfectOpenToPerfectOpenKMap
       X.unop.obj.obj.hom n := rfl
 

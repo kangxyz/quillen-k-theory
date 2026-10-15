@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Homology.DerivedCategory.Plus.SingleTriangleNaturality
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.SingleComparison
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalGenerationEndpoints
 
 /-!
@@ -19,6 +21,20 @@ equivalence or a full coefficient extension.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.SchemeSheaf
+export AlgebraicGeometry.Scheme.Modules
+  (rightDerivedSingleComparison)
+end Quillen.SchemeSheaf
+
+end
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -29,72 +45,15 @@ open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits AlgebraicGeomet
 namespace CategoryTheory.ShortComplex.ShortExact
 variable {C : Type u} [Category.{v} C] [Abelian C] [HasDerivedCategory C]
   {S₁ S₂ : ShortComplex C} (h₁ : S₁.ShortExact) (h₂ : S₂.ShortExact) (f : S₁ ⟶ S₂)
-
-/-- The bounded-below single triangle carries the actual map of short exact sequences. -/
-def singleTrianglePlusMap : h₁.singleTrianglePlus ⟶ h₂.singleTrianglePlus :=
-  DerivedCategory.Plus.ι.mapTriangle.preimage
-    (h₁.singleTrianglePlusιIso.hom ≫ singleTriangle.map h₁ h₂ f ≫
-      h₂.singleTrianglePlusιIso.inv)
-
-@[simp] theorem singleTrianglePlusMap_hom₁ :
-    (singleTrianglePlusMap h₁ h₂ f).hom₁ =
-      (DerivedCategory.Plus.singleFunctor C 0).map f.τ₁ := by
-  apply DerivedCategory.Plus.ι.map_injective
-  have h := congrArg TriangleMorphism.hom₁
-    (DerivedCategory.Plus.ι.mapTriangle.map_preimage
-      (h₁.singleTrianglePlusιIso.hom ≫ singleTriangle.map h₁ h₂ f ≫
-        h₂.singleTrianglePlusιIso.inv))
-  refine h.trans ?_
-  dsimp [singleTrianglePlusιIso]
-  simp only [Category.id_comp]
-  change (singleFunctor C 0).map f.τ₁ ≫ 𝟙 _ = (singleFunctor C 0).map f.τ₁
-  exact Category.comp_id _
-
-@[simp] theorem singleTrianglePlusMap_hom₂ :
-    (singleTrianglePlusMap h₁ h₂ f).hom₂ =
-      (DerivedCategory.Plus.singleFunctor C 0).map f.τ₂ := by
-  apply DerivedCategory.Plus.ι.map_injective
-  have h := congrArg TriangleMorphism.hom₂
-    (DerivedCategory.Plus.ι.mapTriangle.map_preimage
-      (h₁.singleTrianglePlusιIso.hom ≫ singleTriangle.map h₁ h₂ f ≫
-        h₂.singleTrianglePlusιIso.inv))
-  refine h.trans ?_
-  dsimp [singleTrianglePlusιIso]
-  simp only [Category.id_comp]
-  change (singleFunctor C 0).map f.τ₂ ≫ 𝟙 _ = (singleFunctor C 0).map f.τ₂
-  exact Category.comp_id _
-
-@[simp] theorem singleTrianglePlusMap_hom₃ :
-    (singleTrianglePlusMap h₁ h₂ f).hom₃ =
-      (DerivedCategory.Plus.singleFunctor C 0).map f.τ₃ := by
-  apply DerivedCategory.Plus.ι.map_injective
-  have h := congrArg TriangleMorphism.hom₃
-    (DerivedCategory.Plus.ι.mapTriangle.map_preimage
-      (h₁.singleTrianglePlusιIso.hom ≫ singleTriangle.map h₁ h₂ f ≫
-        h₂.singleTrianglePlusιIso.inv))
-  refine h.trans ?_
-  dsimp [singleTrianglePlusιIso]
-  simp only [Category.id_comp]
-  change (singleFunctor C 0).map f.τ₃ ≫ 𝟙 _ = (singleFunctor C 0).map f.τ₃
-  exact Category.comp_id _
 end CategoryTheory.ShortComplex.ShortExact
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 local instance naturalityStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
+end AlgebraicGeometry.Scheme.Modules
 
-/-- For any additive sheaf functor, its canonical single comparison is a natural
-transformation, whether or not the derived unit is invertible. -/
-def rightDerivedSingleComparison {X Y : Scheme.{u}} (F : X.Modules ⥤ Y.Modules)
-    [F.Additive] :
-    F ⋙ DerivedCategory.Plus.singleFunctor Y.Modules 0 ⟶
-      DerivedCategory.Plus.singleFunctor X.Modules 0 ⋙ F.rightDerivedFunctorPlus :=
-  (isoWhiskerRight (exactSingleComplexNatIso F) DerivedCategory.Plus.Q).inv ≫
-    whiskerLeft (CochainComplex.singleFunctorPlus X.Modules 0) F.rightDerivedFunctorPlusUnit
-end Quillen.SchemeSheaf
-
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 local instance naturalityStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})
@@ -345,4 +304,4 @@ theorem diagonalGenerationTriangleMap_comp
       diagonalGenerationTriangleMap R f ≫ diagonalGenerationTriangleMap R g := by
   ext : 1 <;> simp [diagonalGenerationFirstMap, diagonalGenerationSecondMap]
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

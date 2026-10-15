@@ -16,6 +16,9 @@ column under an actual commuting square of open immersions. Both projection equa
 preserved.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -23,7 +26,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {U V Y X : Scheme.{u}} (a : U ⟶ Y) (j : Y ⟶ X) (c : U ⟶ V) (b : V ⟶ X)
   [IsOpenImmersion a] [IsOpenImmersion j] [IsOpenImmersion c] [IsOpenImmersion b]
   (h : a ≫ j = c ≫ b) (M : X.Modules)
@@ -123,4 +126,4 @@ lemma restrictionSquare_secondColumn
     rw [hf]
     rfl
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

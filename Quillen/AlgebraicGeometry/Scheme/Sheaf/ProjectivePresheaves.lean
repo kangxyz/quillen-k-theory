@@ -17,6 +17,9 @@ these projectives to genuinely stalkwise-flat module sheaves. This provides a
 second concrete route to replacing bounded-above complexes before pullback.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -24,7 +27,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The actual free presheaf on an open representable is projective. -/
 instance freeYoneda_projective (X : Scheme.{u}) (U : X.Opens) :
@@ -68,4 +71,4 @@ theorem stalkwiseFlat_sheafify_projective (X : Scheme.{u})
     (r.map (PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)))
     (stalkwiseFlat_sheafify_freeYonedaCoproduct X P)
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

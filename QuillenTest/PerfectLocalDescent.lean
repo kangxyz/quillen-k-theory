@@ -32,7 +32,7 @@ theorem binary_models_perfect {X : Scheme.{u}} {K : Complex X} (U V : X.Opens)
 theorem actual_sheaf_map_zero {X : Scheme.{u}} {ι : Type w} (U : ι → X.Opens)
     (hU : ∀ x : X, ∃ i, x ∈ U i) (M N : X.Modules)
     (hN : ∀ i, IsZero ((Scheme.Modules.restrictFunctor (U i).ι).obj N)) (f : M ⟶ N) : f = 0 :=
-  (SchemeSheaf.isZero_of_openCover N U hU hN).eq_of_tgt _ _
+  (AlgebraicGeometry.Scheme.Modules.isZero_of_openCover N U hU hN).eq_of_tgt _ _
 
 /-- Local acyclicity forces actual global homology to vanish in every degree. -/
 theorem actual_homology_zero {X : Scheme.{u}} {ι : Type w} (U : ι → X.Opens)

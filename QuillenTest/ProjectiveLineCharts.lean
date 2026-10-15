@@ -17,7 +17,7 @@ isomorphism and coefficient inverse, and the zero-ring boundary. -/
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.Scheme.PolynomialLaurent Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.PolynomialLaurent AlgebraicGeometry.Scheme.ProjectiveLine
 universe u
 namespace QuillenTest.ProjectiveLineCharts
 

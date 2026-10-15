@@ -10,12 +10,15 @@ public import Quillen.CategoryTheory.Adjunction.MateHomEquiv
 /-! # Horizontal pasting of the original geometric base-change mate -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 open Scheme.Modules
 /-- The original geometric composite adjunction unit retains the pullback comparison. -/
 theorem pullbackAdjunctionUnit_comp {Y Z T : Scheme.{u}} (c : T ⟶ Y) (a : Y ⟶ Z)
@@ -145,4 +148,4 @@ theorem cartesianBaseChangeMap_paste_horiz (M : U.Modules) :
     erw [cartesianBaseChangeMap_homEquiv a b f j h M]
     exact cartesianBaseChangeMap_paste_horiz_aux c d k a b f j hs h M
   rw [he, Iso.hom_inv_id_app_assoc]
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.Finite.AffineFunctoriality
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Finite.AffinePushforward
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.PushforwardFunctoriality
 
@@ -13,6 +16,25 @@ public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.Pushforw
   square are retained. -/
 @[expose] public section
 
+open ModuleCat.FiniteRestrictionScalars
+
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.CoherentScheme.FiniteAffine
+export AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.Affine
+  (coherentPushforwardClosedIso coherentPushforwardCompIso coherentPushforwardIdIso)
+end Quillen.CoherentScheme.FiniteAffine
+
+end
+
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -20,29 +42,9 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
-namespace Quillen.CoherentScheme.FiniteAffine
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.Affine
 variable {R S T : CommRingCat.{u}}
   [IsNoetherianRing R] [IsNoetherianRing S] [IsNoetherianRing T]
-
-/-- The actual finite direct image retains the original sheaf identity comparison. -/
-def coherentPushforwardIdIso (R : CommRingCat.{u}) :
-    coherentPushforward (𝟙 R) (RingHom.Finite.id R) ≅ 𝟭 (FiniteTypeSheaves (Spec R)) :=
-  Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules (Spec R))
-    (Functor.isoWhiskerLeft (finiteTypeSheavesToModules (Spec R))
-      (show Scheme.Modules.pushforward (Spec.map (𝟙 R)) ≅ 𝟭 (Spec R).Modules by
-        simpa only [Spec.map_id] using Scheme.Modules.pushforwardId (Spec R)) ≪≫
-      Functor.rightUnitor _)
-
-/-- The original finite affine direct images compose with the genuine sheaf comparison. -/
-def coherentPushforwardCompIso (φ : R ⟶ S) (hφ : φ.hom.Finite)
-    (ψ : S ⟶ T) (hψ : ψ.hom.Finite) :
-    coherentPushforward ψ hψ ⋙ coherentPushforward φ hφ ≅
-      coherentPushforward (φ ≫ ψ) (hψ.comp hφ) :=
-  Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules (Spec R))
-    (Functor.isoWhiskerLeft (finiteTypeSheavesToModules (Spec T))
-      (show Scheme.Modules.pushforward (Spec.map ψ) ⋙ Scheme.Modules.pushforward (Spec.map φ) ≅
-        Scheme.Modules.pushforward (Spec.map (φ ≫ ψ)) by
-        simpa only [Spec.map_comp] using Scheme.Modules.pushforwardComp (Spec.map ψ) (Spec.map φ)))
 
 @[simp] theorem pushforwardG_id (R : CommRingCat.{u}) [IsNoetherianRing R] (n : ℕ) :
     pushforwardG (𝟙 R) (RingHom.Finite.id R) n = MonoidHom.id (G (Spec R) n) := by
@@ -62,35 +64,34 @@ def coherentPushforwardCompIso (φ : R ⟶ S) (hφ : φ.hom.Finite)
     (coherentPushforwardCompIso φ hφ ψ hψ).symm n).trans
       (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp _ _ n)
 
-/-- The established closed-immersion comparison is unchanged whenever this finite affine map is
-  closed. -/
-def coherentPushforwardClosedIso (φ : R ⟶ S) (hφ : φ.hom.Finite)
-    [IsClosedImmersion (Spec.map φ)] :
-    coherentPushforward φ hφ ≅ ClosedImmersion.General.coherentPushforward (Spec.map φ) :=
-  Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules (Spec R)) (Iso.refl _)
-
 /-- New finite affine G-pushforward agrees with the existing public closed pushforward. -/
 theorem pushforwardG_eq_closed (φ : R ⟶ S) (hφ : φ.hom.Finite)
     [IsClosedImmersion (Spec.map φ)] (n : ℕ) :
-    pushforwardG φ hφ n = ClosedImmersion.General.coherentPushforwardGMap (Spec.map φ) n :=
+    pushforwardG φ hφ n =
+      AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.coherentPushforwardGMap
+      (Spec.map φ) n :=
   CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u+1}
     (F := coherentPushforwardExact φ hφ)
-    (G := ClosedImmersion.General.coherentPushforwardExact (Spec.map φ))
+    (G :=
+      AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.coherentPushforwardExact
+      (Spec.map φ))
     (coherentPushforwardClosedIso φ hφ) n
 
 /-- Actual global sections commute with the new upper-universe public G-map. -/
 theorem pushforwardG_globalSections (φ : R ⟶ S) (hφ : φ.hom.Finite) (n : ℕ) :
     (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1}
-      (ClosedImmersion.Ideal.globalSectionsExact R) n).comp
+      (AlgebraicGeometry.Scheme.Modules.Coherent.globalSectionsExact R) n).comp
       (pushforwardG φ hφ n) =
       (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (moduleRestrictionExact φ hφ)
         n).comp
         (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1}
-          (ClosedImmersion.Ideal.globalSectionsExact S) n) := by
+          (AlgebraicGeometry.Scheme.Modules.Coherent.globalSectionsExact S) n) := by
   have h := CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u+1}
-    (F := (coherentPushforwardExact φ hφ).comp (ClosedImmersion.Ideal.globalSectionsExact R))
-    (G := (ClosedImmersion.Ideal.globalSectionsExact S).comp (moduleRestrictionExact φ hφ))
+    (F := (coherentPushforwardExact φ hφ).comp
+      (AlgebraicGeometry.Scheme.Modules.Coherent.globalSectionsExact R))
+    (G := (AlgebraicGeometry.Scheme.Modules.Coherent.globalSectionsExact S).comp
+      (moduleRestrictionExact φ hφ))
     (coherentPushforwardSquare φ hφ) n
   simpa only [CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, pushforwardG] using h
 
-end Quillen.CoherentScheme.FiniteAffine
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.Affine

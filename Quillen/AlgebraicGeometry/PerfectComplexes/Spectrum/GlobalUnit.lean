@@ -32,7 +32,7 @@ open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
 def complexGlobalUnitIso (X : Scheme.{u}) (r : (Γ(X, ⊤))ˣ) :
     𝟭 (Complex X) ≅ 𝟭 (Complex X) :=
   (Functor.mapHomologicalComplexIdIso _ _).symm ≪≫
-    NatIso.mapHomologicalComplex (Quillen.SchemeSheaf.globalUnitIso X r) (.up ℤ) ≪≫
+    NatIso.mapHomologicalComplex (AlgebraicGeometry.Scheme.Modules.globalUnitIso X r) (.up ℤ) ≪≫
       Functor.mapHomologicalComplexIdIso _ _
 
 /-- The same actual scalar automorphism on the original locally-perfect category. -/
@@ -51,7 +51,7 @@ def perfectFlatPullbackUnitIso {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
 lemma complexGlobalUnitIso_original_terms (X : Scheme.{u}) (r : (Γ(X, ⊤))ˣ)
     (K : Complex X) (n : ℤ) :
     ((complexGlobalUnitIso X r).hom.app K).f n =
-      (SchemeSheaf.globalUnitIso X r).hom.app (K.X n) := by
+      (AlgebraicGeometry.Scheme.Modules.globalUnitIso X r).hom.app (K.X n) := by
   apply SheafOfModules.hom_ext
   apply PresheafOfModules.hom_ext
   intro U

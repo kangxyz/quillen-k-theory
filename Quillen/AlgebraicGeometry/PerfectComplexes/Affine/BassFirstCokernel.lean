@@ -20,7 +20,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.Waldhausen.IteratedS Quillen.Scheme.PolynomialLaurent
+open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 

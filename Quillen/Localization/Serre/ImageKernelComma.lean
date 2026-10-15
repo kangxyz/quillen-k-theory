@@ -22,7 +22,7 @@ namespace Quillen.SerreLocalization
 attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
 variable (P : ObjectProperty C) [P.IsSerreClass]
-variable (N : C) (T : (Devissage.subcategoryExactStructure P).QCategory)
+variable (N : C) (T : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory)
   (I : AuxiliaryImagePoset P N)
 
 /-- The image-index comma in which all images contain the specified subobject. -/
@@ -169,7 +169,7 @@ theorem auxiliaryKernelComma_contractible :
 is a classifying-space homotopy equivalence. -/
 def auxiliaryKernelClassifyingHomotopyEquiv :
     ContinuousMap.HomotopyEquiv (ClassifyingSpace (AuxiliaryKernel P N))
-      (ClassifyingSpace (Devissage.subcategoryExactStructure P).QCategory) :=
+      (ClassifyingSpace (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory) :=
   TheoremA.contractibleCommaClassifyingHomotopyEquiv (auxiliaryKernelFunctor P N)
     (auxiliaryKernelComma_contractible P N)
 

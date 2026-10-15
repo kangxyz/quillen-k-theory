@@ -89,18 +89,22 @@ def negativeKQuotientIso (R : CommRingCat.{u}) (n : ℕ) :
 lemma negativeKMap_plus_zero (R : CommRingCat.{u})
     (a : PerfectK (Spec (.of (Polynomial R))) 0) :
     negativeKMap (plus.app R) 0 (Additive.ofMul a) =
-      Additive.ofMul (perfectKFlatPullback (Quillen.Scheme.PolynomialLaurent.laurentPlus R) 0 a) :=
+      Additive.ofMul (perfectKFlatPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentPlus
+        R) 0 a) :=
 by
-  let : Flat (Spec.map (plus.app R)) := Quillen.Scheme.PolynomialLaurent.instFlatLaurentPlus R
+  let : Flat (Spec.map (plus.app R)) :=
+    AlgebraicGeometry.Scheme.PolynomialLaurent.instFlatLaurentPlus R
   exact affineKZeroFunctor_map_flat (plus.app R) a
 
 /-- The initial inverse chart arrow is exactly the old flat geometric K0 pullback. -/
 lemma negativeKMap_minus_zero (R : CommRingCat.{u})
     (a : PerfectK (Spec (.of (Polynomial R))) 0) :
     negativeKMap (minus.app R) 0 (Additive.ofMul a) =
-      Additive.ofMul (perfectKFlatPullback (Quillen.Scheme.PolynomialLaurent.laurentMinus R) 0 a) :=
+      Additive.ofMul (perfectKFlatPullback (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentMinus
+        R) 0 a) :=
 by
-  let : Flat (Spec.map (minus.app R)) := Quillen.Scheme.PolynomialLaurent.instFlatLaurentMinus R
+  let : Flat (Spec.map (minus.app R)) :=
+    AlgebraicGeometry.Scheme.PolynomialLaurent.instFlatLaurentMinus R
   exact affineKZeroFunctor_map_flat (minus.app R) a
 
 /-- Every negative Bass class is represented by a Laurent class in the preceding degree. -/

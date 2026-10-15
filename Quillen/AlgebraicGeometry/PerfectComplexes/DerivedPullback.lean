@@ -101,7 +101,7 @@ theorem strictToPerfectKMap_pullback {X Y : Scheme.{u}}
 theorem vectorBundleToPerfectKMap_pullback {X Y : Scheme.{u}}
     [CompactSpace X] [CompactSpace Y] (f : X ⟶ Y) (n : ℕ) :
     (perfectKPullback f n).comp (vectorBundleToPerfectKMap Y n) =
-      (vectorBundleToPerfectKMap X n).comp (Quillen.Scheme.pullbackK f n) := by
+      (vectorBundleToPerfectKMap X n).comp (AlgebraicGeometry.Scheme.pullbackK f n) := by
   rw [← strictToPerfect_comp_vectorBundleToStrictKMap Y,
     ← MonoidHom.comp_assoc, strictToPerfectKMap_pullback,
     MonoidHom.comp_assoc, vectorBundleToStrictKMap_pullback,

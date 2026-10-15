@@ -16,13 +16,15 @@ section of the existing polynomial functor, without replacing its pullbacks.
 The projection triangle is an equality of the original morphisms.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 
-namespace Quillen.Scheme.PolynomialLaurent
+namespace AlgebraicGeometry.Scheme.PolynomialLaurent
 
 /-- The actual affine zero section induced by polynomial evaluation at zero. -/
 def polynomialZero (R : CommRingCat.{u}) : Spec R ⟶ Spec (.of (Polynomial R)) :=
@@ -41,9 +43,9 @@ theorem polynomialZero_projection (R : CommRingCat.{u}) :
     simp
   rw [h, Spec.map_id]
 
-end Quillen.Scheme.PolynomialLaurent
+end AlgebraicGeometry.Scheme.PolynomialLaurent
 
-namespace Quillen.Scheme.Bass
+namespace AlgebraicGeometry.Scheme.Bass
 
 /-- Zero evaluation on the same native polynomial product over an arbitrary scheme. -/
 def nativePolynomialZero (X : AlgebraicGeometry.Scheme.{u}) :
@@ -82,4 +84,4 @@ theorem polynomialZero_comp_projection : polynomialZero ≫ polynomialProjection
   ext X
   exact congrArg (fun f => f.hom) (polynomialZero_projection X)
 
-end Quillen.Scheme.Bass
+end AlgebraicGeometry.Scheme.Bass

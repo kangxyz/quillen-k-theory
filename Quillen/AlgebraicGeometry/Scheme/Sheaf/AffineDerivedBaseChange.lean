@@ -11,12 +11,15 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineDerivedPushforward
 /-! # Affine quasicoherent single-sheaf derived base change -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- Use the original standard derived categories of actual module sheaves. -/
 local instance affineDerivedBaseChangeStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -90,4 +93,4 @@ theorem isIso_derivedFlatBaseChangeMap_single
     rw [derivedFlatBaseChangeMap_unit]
     infer_instance
   exact (isIso_comp_left_iff _ _).mp hc
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

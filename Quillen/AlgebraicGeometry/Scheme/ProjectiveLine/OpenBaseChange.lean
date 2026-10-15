@@ -13,12 +13,14 @@ When the original affine base map is an open immersion, so is its genuine two-ch
 coefficient change. Its image is exactly the inverse image of the original base open.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite TopologicalSpace
 universe u
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable {R S : CommRingCat.{u}} (f : R ⟶ S) [IsOpenImmersion (Spec.map f)]
 
 instance coefficientMap_open : IsOpenImmersion (coefficientMap f) :=
@@ -32,4 +34,4 @@ lemma coefficientMap_opensRange :
       (pullback.fst (projection R) (Spec.map f))).trans
       (Scheme.Hom.opensRange_pullbackFst (Spec.map f) (projection R)))
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

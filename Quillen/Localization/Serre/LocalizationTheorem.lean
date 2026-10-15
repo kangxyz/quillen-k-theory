@@ -56,13 +56,14 @@ theorem localizationFiberComparisonHom_bijective (n : ℕ) :
 /-- The canonical comparison, promoted to a group isomorphism without
 changing its forward homomorphism. -/
 def localizationFiberEquiv (n : ℕ) :
-    (Devissage.subcategoryExactStructure P).K n ≃*
+    (CategoryTheory.ObjectProperty.subcategoryExactStructure P).K n ≃*
       HomotopyGroup.Pi (n + 1) (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P) :=
   localizationFiberEquivOfBijective P n (localizationFiberComparisonHom_bijective P n)
 
 /-- The underlying monoid homomorphism of this K-equivalence. -/
 @[simp] theorem localizationFiberEquiv_coe (n : ℕ) :
-    (↑(localizationFiberEquiv P n) : (Devissage.subcategoryExactStructure P).K n →*
+    (↑(localizationFiberEquiv P n) : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).K n
+      →*
         HomotopyGroup.Pi (n + 1) (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P)) =
         localizationFiberComparisonHom P n := rfl
 
@@ -70,7 +71,8 @@ def localizationFiberEquiv (n : ℕ) :
 /-- The localization boundary Kₙ₊₁(C/P) → Kₙ(P), obtained from the actual
 path-space connecting homomorphism and the canonical comparison inverse. -/
 def connectingHom (n : ℕ) :
-    (quotientExactStructure P).K (n + 1) →* (Devissage.subcategoryExactStructure P).K n :=
+    (quotientExactStructure P).K (n + 1) →* (CategoryTheory.ObjectProperty.subcategoryExactStructure
+      P).K n :=
   connectingHomOfComparison P n (localizationFiberEquiv P n)
 
 /-- The boundary is identified with the genuine path-space boundary by

@@ -10,6 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedHomVanish
 /-! # Original affine vanishing consumers, including torsion targets and degenerate localization -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -35,7 +38,8 @@ theorem original_zero_localization (R : CommRingCat.{u}) (P : ModuleComplex R)
     (M : (Spec (CommRingCat.of (Localization.Away (0 : R)))).Modules) [M.IsQuasicoherent]
     (b : ℤ) (hbound : ∀ i, i < b → IsZero (P.X i))
     (φ : (toDerived (Spec (.of (Localization.Away (0 : R))))).obj
-        ((restrict (CoherentScheme.principalOpen R 0)).obj ((associatedComplex R).obj P)) ⟶
+        ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R 0)).obj
+          ((associatedComplex R).obj P)) ⟶
       (toDerived (Spec (.of (Localization.Away (0 : R))))).obj
         ((_root_.CochainComplex.singleFunctor (Spec (.of (Localization.Away (0 : R)))).Modules
           (b-1)).obj M)) :

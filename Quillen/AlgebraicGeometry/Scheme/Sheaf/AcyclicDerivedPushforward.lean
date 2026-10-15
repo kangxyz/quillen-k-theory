@@ -14,12 +14,15 @@ The original right-derived unit is invertible when the actual integer-indexed
 injective augmentation remains a quasi-isomorphism after direct image.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The standard ambient derived category of module sheaves used by the actual unit. -/
 local instance acyclicDerivedPushforwardStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
@@ -84,4 +87,4 @@ def pushforwardSingleZeroPlusIso {Z X : Scheme.{u}} (f : Z ⟶ X) (M : Z.Modules
     ((HomologicalComplex.singleMapHomologicalComplex
       (Scheme.Modules.pushforward f) (.up ℤ) 0).app M)
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

@@ -21,6 +21,8 @@ Combined with the higher-degree theorem, this gives vanishing in every positive
 degree over an arbitrary commutative ring, including nonreduced and zero rings.
 -/
 @[expose] public section
+open Quillen
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 noncomputable section
@@ -28,7 +30,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open Opposite
-namespace Quillen.Scheme.ProjectiveLine
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
 private lemma gammaIsoTop_inv {X Y : Scheme.{u}} (f : X ⟶ Y) [IsOpenImmersion f] :
     (IsOpenImmersion.ΓIsoTop f).inv = f.appLE f.opensRange ⊤ (by simp) := by
   simp only [IsOpenImmersion.ΓIsoTop, Iso.trans_inv, Functor.mapIso_inv,
@@ -77,7 +79,7 @@ lemma minus_restriction_overlap :
   simp only [overlap_equation]
   rfl
 
-open Quillen.SchemeSheaf.TwoOpen
+open AlgebraicGeometry.Scheme.Modules.TwoOpen
 /-- The canonical section identifications intertwine the literal signed differences. -/
 lemma structureSheaf_difference_coordinates
     (a : Γ(SheafOfModules.unit (twoChartLine R).ringCatSheaf, (plusChart R).opensRange))
@@ -116,7 +118,7 @@ theorem isZero_rightDerived_structureSheaf_one :
       (SheafOfModules.unit (twoChartLine R).ringCatSheaf)) := by
   have : (SheafOfModules.unit (twoChartLine R).ringCatSheaf).IsQuasicoherent :=
     isQuasicoherent_unit _
-  exact Quillen.SchemeSheaf.twoAffine_isZero_rightDerived_one_of_difference_surjective
+  exact AlgebraicGeometry.Scheme.Modules.twoAffine_isZero_rightDerived_one_of_difference_surjective
     _ (plusChart R) (minusChart R) (chart_ranges_cover R)
     (structureSheaf_difference_surjective R)
 
@@ -131,4 +133,4 @@ theorem isZero_rightDerived_structureSheaf_succ (n : ℕ) :
       isQuasicoherent_unit _
     exact isZero_rightDerived_globalSections_add_two R _ n
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

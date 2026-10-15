@@ -29,7 +29,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
-open Quillen.CategoryTheory.StrictSections Quillen.Scheme.CoefficientBaseChange
+open Quillen.CategoryTheory.StrictSections AlgebraicGeometry.Scheme.CoefficientBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)
@@ -37,30 +37,36 @@ variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)
 attribute [local irreducible] boundedFlatCoefficientOriginalEvaluation
 
 /-- The specified native open pair at the actual coefficient algebra. -/
-def boundedFlatCoefficientOpenPair (a : Under R) : Quillen.Scheme.OpenPairs.{u} :=
+def boundedFlatCoefficientOpenPair (a : Under R) : AlgebraicGeometry.Scheme.OpenPairs.{u} :=
   ⟨Arrow.mk (schemeMap f a), (show IsOpenImmersion (schemeMap f a) from inferInstance)⟩
 
 omit [IsOpenImmersion f.left] in
 /-- Original coefficient maps commute with the actual native open inclusion. -/
 theorem boundedFlatCoefficientOpenSquare {a b : Under R} (g : a ⟶ b) :
-    Quillen.Scheme.CoefficientBaseChange.map
+    AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
         (i := (op P, a)) (k := (op P, b)) (𝟙 (op P), g) ≫ schemeMap f a =
-      schemeMap f b ≫ Quillen.Scheme.CoefficientBaseChange.map
+      schemeMap f b ≫ AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
         (i := (op Q, a)) (k := (op Q, b)) (𝟙 (op Q), g) := by
-  change Quillen.Scheme.CoefficientBaseChange.map (i := (op P, a)) (k := (op P, b)) (𝟙 (op P), g) ≫
-      Quillen.Scheme.CoefficientBaseChange.map (i := (op Q, a)) (k := (op P, a)) (f.op, 𝟙 a) =
-    Quillen.Scheme.CoefficientBaseChange.map (i := (op Q, b)) (k := (op P, b)) (f.op, 𝟙 b) ≫
-      Quillen.Scheme.CoefficientBaseChange.map (i := (op Q, a)) (k := (op Q, b)) (𝟙 (op Q), g)
-  rw [← Quillen.Scheme.CoefficientBaseChange.map_comp,
-    ← Quillen.Scheme.CoefficientBaseChange.map_comp]
+  change AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (i := (op P, a)) (k := (op P, b)) (𝟙
+    (op P), g) ≫
+      AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (i := (op Q, a)) (k := (op P, a)) (f.op,
+        𝟙 a) =
+    AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (i := (op Q, b)) (k := (op P, b)) (f.op, 𝟙
+      b) ≫
+      AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (i := (op Q, a)) (k := (op Q, b)) (𝟙 (op
+        Q), g)
+  rw [← AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_comp,
+    ← AlgebraicGeometry.Scheme.BaseChange.Coefficients.map_comp]
   congr 1
 
 /-- The genuine coefficient square between the same native open pairs. -/
 def boundedFlatCoefficientOpenPairMap {a b : Under R} (g : a ⟶ b) :
     boundedFlatCoefficientOpenPair f b ⟶ boundedFlatCoefficientOpenPair f a :=
   ObjectProperty.homMk (Arrow.homMk
-    (Quillen.Scheme.CoefficientBaseChange.map (i := (op P, a)) (k := (op P, b)) (𝟙 (op P), g))
-    (Quillen.Scheme.CoefficientBaseChange.map (i := (op Q, a)) (k := (op Q, b)) (𝟙 (op Q), g))
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (i := (op P, a)) (k := (op P, b)) (𝟙 (op
+      P), g))
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map (i := (op Q, a)) (k := (op Q, b)) (𝟙 (op
+      Q), g))
     (boundedFlatCoefficientOpenSquare f g))
 
 /-- Fine original evaluation is exact into the actual relative-open fiber. -/

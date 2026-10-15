@@ -35,12 +35,12 @@ theorem quasiIso_of_openImmersionCover {X : Scheme.{u}} {K L : Complex X} (f : K
     {ι : Type v} (Y : ι → Scheme.{u}) (j : ∀ i, Y i ⟶ X)
     [∀ i, IsOpenImmersion (j i)] (hj : ∀ x : X, ∃ i, ∃ y : Y i, j i y = x)
     (hf : ∀ i, QuasiIso ((restrict (j i)).map f)) : QuasiIso f := by
-  apply HomologicalAlgebra.quasiIso_of_mappingCone_acyclic
+  apply CochainComplex.quasiIso_of_mappingCone_acyclic
   intro n
   apply exactAt_of_openImmersionCover _ Y j hj n
   intro i
   let := hf i
-  exact (Quillen.HomologicalAlgebra.mappingCone_acyclic_of_quasiIso
+  exact (CochainComplex.mappingCone_acyclic_of_quasiIso
     ((restrict (j i)).map f) n).of_iso
     (CochainComplex.mappingCone.mapHomologicalComplexIso f (Scheme.Modules.restrictFunctor (j
       i))).symm

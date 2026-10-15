@@ -22,7 +22,7 @@ with the Bass square comparison or its transition requires further higher cohere
 noncomputable section
 
 open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.LoopPrespectrum
-open Quillen.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
 open Quillen.Waldhausen.IteratedS
 
 universe u

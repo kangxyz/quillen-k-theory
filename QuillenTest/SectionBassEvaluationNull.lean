@@ -12,7 +12,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassEvalu
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.PerfectComplexes Quillen.PerfectComplexes.SectionBassEvaluationNull
-open Quillen.PolynomialBaseChange Quillen.Scheme.PolynomialLaurent
+open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped unitInterval
 universe u
 namespace QuillenTest.SectionBassEvaluationNull

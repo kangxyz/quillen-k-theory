@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.Devissage
 
 /-!
@@ -18,6 +20,12 @@ finite-image dévissage. All groups are the public upper-universe G-groups.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -25,7 +33,7 @@ universe u w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.CoherentScheme.ClosedImmersion
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 
 private theorem exact_transport
     {A B C A' B' C' : Type w}
@@ -68,7 +76,8 @@ local instance : (coherentRestrictionExact (principalOpen R f)).toFunctor.IsLoca
 /-- Actual closed-scheme G-theory agrees with the public supported G-group,
 by the proved geometric dévissage and exact small-presentation comparisons. -/
 def closedSupportedGEquiv (n : ℕ) :
-    CoherentScheme.G (Spec (principalRing R f)) n ≃* SupportedG (principalOpen R f) n :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec (principalRing R f)) n ≃* SupportedG
+      (principalOpen R f) n :=
   (closedSupportGEquiv R f n).trans (coherentPrincipalSupportedGEquiv R f n).symm
 
 /-- The public supported comparison retains the original actual closed
@@ -86,8 +95,9 @@ theorem closedSupportedGEquiv_pushforward (n : ℕ) :
 
 /-- The boundary into G-theory of the actual principal closed subscheme. -/
 def closedConnectingHom (n : ℕ) :
-    CoherentScheme.G (Spec (CommRingCat.of (Localization.Away f))) (n + 1) →*
-      CoherentScheme.G (Spec (principalRing R f)) n :=
+    AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec (CommRingCat.of (Localization.Away f))) (n +
+      1) →*
+      AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec (principalRing R f)) n :=
   (closedSupportedGEquiv R f n).symm.toMonoidHom.comp (globalPrincipalConnectingHom R f n)
 
 /-- Exactness at G_n(Spec R), with canonical actual i_* and j*. -/
@@ -150,4 +160,4 @@ theorem principal_closed_open_GZero_tail :
     pushforward_range_eq_restriction_ker R f 0,
     globalPrincipal_GZero_surjective R f⟩
 
-end Quillen.CoherentScheme.ClosedImmersion
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion

@@ -28,13 +28,13 @@ open Quillen
 def originalLaurentSquare (i : ℕ) (R : CommRingCat.{u}) :
     Arrow (Arrow LoopPrespectrum.{u + 1}) :=
   (boundedFlatAffineSectionBassDiagram i).mapArrow.mapArrow.obj
-    (PolynomialBaseChange.laurentSquareFunctor.obj R)
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R)
 
 /-- The unchanged map induced by the original coefficient arrow. -/
 def originalLaurentSquareMap (i : ℕ) {R S : CommRingCat.{u}} (f : R ⟶ S) :
     originalLaurentSquare i R ⟶ originalLaurentSquare i S :=
   (boundedFlatAffineSectionBassDiagram i).mapArrow.mapArrow.map
-    (PolynomialBaseChange.laurentSquareFunctor.map f)
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.map f)
 
 /-- Actual coefficient maps after Bass are stable from the four original stable coefficients. -/
 theorem actual_bass_coefficient_stable (i : ℕ) {R S : CommRingCat.{u}} (f : R ⟶ S)

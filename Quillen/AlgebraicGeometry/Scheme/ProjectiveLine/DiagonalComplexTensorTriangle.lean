@@ -19,14 +19,16 @@ invert every quasi-isomorphism and descend through the genuine D+ localization.
 -/
 
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated
   AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 
 local instance diagonalComplexStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
@@ -274,4 +276,4 @@ theorem diagonalDerivedComplexTriangle_distinguished
     (DerivedCategory.Plus.Q.objObjPreimageIso K)
   exact isomorphic_distinguished _ (diagonalComplexTensorTriangle_distinguished R L) _
     (e.symm ≪≫ (diagonalDerivedComplexTriangleFactors R).app L)
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

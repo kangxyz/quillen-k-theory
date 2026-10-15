@@ -13,14 +13,16 @@ specified ORIGINAL first/second endpoint maps. Original incidence, quotient,
 connecting arrows and derived roofs remain under the displayed natural iso.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits
   CategoryTheory.Pretriangulated AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 local instance fullGenerationStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})
@@ -156,4 +158,4 @@ theorem diagonalPerfectGenerationTriangle_connecting_naturality
         (tautologicalQuotientLine R)).rightDerivedFunctorPlus.map f.hom ≫
         (diagonalPerfectGenerationTriangle R L).mor₃ :=
   ((diagonalPerfectGenerationTriangleFunctor R).map f).comm₃
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

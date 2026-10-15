@@ -20,6 +20,9 @@ No arbitrary locally-perfect strictification or all-perfect App2 is assumed.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -36,15 +39,19 @@ theorem exists_principal_geometric_map_factorization (R : CommRingCat.{u}) (r : 
     (A E : StrictPerfect (Spec R))
     {B : Complex (Spec (.of (Localization.Away r)))}
     (hB : ∀ i, (B.X i).IsQuasicoherent)
-    (q : (restrict (CoherentScheme.principalOpen R r)).obj E.obj ⟶ B) [QuasiIso q]
-    (f : (restrict (CoherentScheme.principalOpen R r)).obj A.obj ⟶ B) :
+    (q : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj E.obj ⟶
+      B) [QuasiIso q]
+    (f : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj A.obj ⟶
+      B) :
     ∃ (M : StrictPerfect (Spec R)) (a : A.obj ⟶ M.obj)
-      (p : (restrict (CoherentScheme.principalOpen R r)).obj M.obj ⟶ B),
-      QuasiIso p ∧ (restrict (CoherentScheme.principalOpen R r)).map a ≫ p = f := by
+      (p : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj M.obj ⟶
+        B),
+      QuasiIso p ∧ (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map
+        a ≫ p = f := by
   let S := CommRingCat.of (Localization.Away r)
   let L := localize r (.up ℤ)
   let G := associatedComplex S
-  let J := restrict (CoherentScheme.principalOpen R r)
+  let J := restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
   let K := (sectionsComplex R).obj A.obj
   let N := (sectionsComplex R).obj E.obj
   let T := (sectionsComplex S).obj B
@@ -82,14 +89,18 @@ with the literal principal restriction and original Waldhausen weak predicates. 
 theorem exists_principal_strict_map_factorization (R : CommRingCat.{u}) (r : R)
     {A : StrictPerfect (Spec R)}
     {B : StrictPerfect (Spec (.of (Localization.Away r)))}
-    (f : (strictRestrict (CoherentScheme.principalOpen R r)).obj A ⟶ B)
+    (f : (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj A ⟶
+      B)
     (E : StrictPerfect (Spec R))
-    (q : (strictRestrict (CoherentScheme.principalOpen R r)).obj E ⟶ B)
+    (q : (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj E ⟶
+      B)
     (hq : (strictWaldhausen _).weq q) :
     ∃ (M : StrictPerfect (Spec R)) (a : A ⟶ M)
-      (p : (strictRestrict (CoherentScheme.principalOpen R r)).obj M ⟶ B),
+      (p : (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj M
+        ⟶ B),
       (strictWaldhausen _).weq p ∧
-        (strictRestrict (CoherentScheme.principalOpen R r)).map a ≫ p = f := by
+        (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).map a ≫
+          p = f := by
   have : QuasiIso q.hom := hq
   have hB (i : ℤ) : (B.obj.X i).IsQuasicoherent := by
     let := B.property.2 i

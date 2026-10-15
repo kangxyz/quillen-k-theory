@@ -20,7 +20,7 @@ with this specified fiber loop remains a separate comparison.
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen Quillen.Waldhausen.Fibration
-open Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes.Affine
 

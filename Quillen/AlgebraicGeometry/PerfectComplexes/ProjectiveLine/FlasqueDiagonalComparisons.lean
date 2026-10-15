@@ -5,16 +5,20 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Carrier
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueDiagonalSequence
 
 /-! # Actual original diagonal model data and canonical natural endpoint comparisons -/
 @[expose] public section
+open Quillen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.SchemeSheaf Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueDiagonal
 
@@ -64,17 +68,6 @@ def liftUnderlyingIso {C D : Type*} [Category C] [Category D]
 def toPlusUnderlyingIso (X : Scheme.{u}) :
     FlasqueCoefficients.toPlus X ⋙ CochainComplex.Plus.ι X.Modules ≅
       (FlasqueBoundedBelow.objects X).ι := Iso.refl _
-
-/-- The original total's lower-bound proof forgets to the same literal total. -/
-def totalPlusUnderlyingIso (X : Scheme.{u}) :
-    godementTotalPlus X ⋙ CochainComplex.Plus.ι X.Modules ≅
-      CochainComplex.Plus.ι X.Modules ⋙ godementTotal X :=
-  liftUnderlyingIso (CochainComplex.plus X.Modules)
-    (CochainComplex.Plus.ι X.Modules ⋙ godementTotal X) (fun K => by
-      obtain ⟨a, ha⟩ := K.property
-      let := ha
-      exact ⟨a, godementTotal_isStrictlyGE K.obj a
-        (fun n hn => CochainComplex.isZero_of_isStrictlyGE K.obj a n hn)⟩)
 
 /-- The output underlying comparison uses the original three termwise/total forgetful factors. -/
 def rawPlusUnderlyingIso (R : CommRingCat.{u}) (v : Vertex) :

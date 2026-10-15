@@ -16,7 +16,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace Quillen.PerfectComplexes.ProjectiveLine.NativeMayerVietoris
-open Quillen.Scheme Quillen.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
 
 variable {V X : QuasiCompactSchemes.{u}} (f : V ⟶ X) [IsOpenImmersion f.hom]
   [QuasiSeparatedSpace X.obj] (T : X.obj.Opens) [CompactSpace T.toScheme]

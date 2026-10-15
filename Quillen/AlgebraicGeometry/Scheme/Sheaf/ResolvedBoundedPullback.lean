@@ -17,6 +17,9 @@ lands in `DerivedCategory.Minus`, agrees with termwise pullback on genuinely
 flat inputs, and has the actual augmentation comparison for identity maps.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -25,7 +28,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open Quillen.CochainComplex
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 variable {X Y : Scheme.{u}}
 
@@ -142,4 +145,4 @@ def resolvedPullbackIdIso (X : Scheme.{u}) [HasDerivedCategory.{w} X.Modules] :
         ((flatModelMapHomotopy s).compLeft
           ((Quillen.PerfectComplexes.pullbackComplexIdIso X).hom.app (flatModel X K))))
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

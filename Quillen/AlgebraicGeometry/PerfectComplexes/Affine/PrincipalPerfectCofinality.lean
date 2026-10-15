@@ -28,6 +28,9 @@ and localization at zero are included.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -39,12 +42,16 @@ variable (R : CommRingCat.{u}) (r : R)
 /-- Original principal-open perfect restriction is bijective in every
 positive degree over arbitrary rings, including localization at zero. -/
 lemma principal_perfectOpenKRestrict_succ_bijective (n : ℕ) :
-    Function.Bijective (perfectOpenKRestrict (CoherentScheme.principalOpen R r) (n+1)) := by
-  apply ((strictToPerfectOpenKMap_bijective R (CoherentScheme.principalOpen R r)
+    Function.Bijective (perfectOpenKRestrict
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (n+1)) := by
+  apply ((strictToPerfectOpenKMap_bijective R
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
     (n+1)).of_comp_iff _).mp
   change Function.Bijective
-    ((perfectOpenKRestrict (CoherentScheme.principalOpen R r) (n+1)).comp
-      (strictToPerfectOpenKMap (CoherentScheme.principalOpen R r) (n+1)))
+    ((perfectOpenKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+      (n+1)).comp
+      (strictToPerfectOpenKMap (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
+        (n+1)))
   rw [perfectOpenKRestrict_comp_strictToPerfectOpenKMap]
   exact (strictToPerfectKMap_bijective (.of (Localization.Away r)) (n+1)).comp
     (StrictOpenWeakImage.principal_relativeKRestrict_succ_bijective R r n)
@@ -52,47 +59,58 @@ lemma principal_perfectOpenKRestrict_succ_bijective (n : ℕ) :
 /-- The original degree-zero principal perfect endpoint is injective.
 Its honest target is the original restriction image, not all target K₀. -/
 lemma principal_perfectOpenKRestrict_zero_injective :
-    Function.Injective (perfectOpenKRestrict (CoherentScheme.principalOpen R r) 0) := by
+    Function.Injective (perfectOpenKRestrict
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) 0) := by
   intro x y hxy
-  obtain ⟨a, rfl⟩ := (strictToPerfectOpenKMap_bijective R (CoherentScheme.principalOpen R r)
+  obtain ⟨a, rfl⟩ := (strictToPerfectOpenKMap_bijective R
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
     0).surjective x
-  obtain ⟨b, rfl⟩ := (strictToPerfectOpenKMap_bijective R (CoherentScheme.principalOpen R r)
+  obtain ⟨b, rfl⟩ := (strictToPerfectOpenKMap_bijective R
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)
     0).surjective y
-  apply congrArg (strictToPerfectOpenKMap (CoherentScheme.principalOpen R r) 0)
+  apply congrArg (strictToPerfectOpenKMap
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) 0)
   apply StrictOpenWeakImage.principal_relativeKRestrict_zero_injective R r
   apply (strictToPerfectKMap_bijective (.of (Localization.Away r)) 0).injective
   change ((strictToPerfectKMap (Spec (.of (Localization.Away r))) 0).comp
-    (StrictOpenWeakImage.relativeKRestrict (CoherentScheme.principalOpen R r) 0)) a =
+    (StrictOpenWeakImage.relativeKRestrict
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) 0)) a =
     ((strictToPerfectKMap (Spec (.of (Localization.Away r))) 0).comp
-    (StrictOpenWeakImage.relativeKRestrict (CoherentScheme.principalOpen R r) 0)) b
+    (StrictOpenWeakImage.relativeKRestrict
+      (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) 0)) b
   rw [← perfectOpenKRestrict_comp_strictToPerfectOpenKMap]
   exact hxy
 
 /-- Positive relative perfect K-theory agrees with target perfect K-theory
 through the original relative restriction homomorphism. -/
 def principalPerfectOpenKEquiv (n : ℕ) :
-    PerfectOpenK (CoherentScheme.principalOpen R r) (n+1) ≃*
+    PerfectOpenK (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (n+1) ≃*
       PerfectK (Spec (.of (Localization.Away r))) (n+1) :=
-  MulEquiv.ofBijective (perfectOpenKRestrict (CoherentScheme.principalOpen R r) (n+1))
+  MulEquiv.ofBijective (perfectOpenKRestrict
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (n+1))
     (principal_perfectOpenKRestrict_succ_bijective R r n)
 
 /-- The monoid-hom coercion is the canonical forward map. -/
 @[simp] lemma principalPerfectOpenKEquiv_coe (n : ℕ) :
     ↑(principalPerfectOpenKEquiv R r n) =
-      perfectOpenKRestrict (CoherentScheme.principalOpen R r) (n+1) := rfl
+      perfectOpenKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) (n+1)
+        := rfl
 
 /-- The degree-zero relative endpoint identifies with exactly the actual
 image of original perfect restriction, without a target-surjectivity premise. -/
 def principalPerfectOpenKZeroImageEquiv :
-    PerfectOpenK (CoherentScheme.principalOpen R r) 0 ≃*
-      PerfectOpenKZeroImage (CoherentScheme.principalOpen R r) :=
-  MulEquiv.ofBijective (perfectOpenKZeroToImage (CoherentScheme.principalOpen R r))
+    PerfectOpenK (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) 0 ≃*
+      PerfectOpenKZeroImage (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) :=
+  MulEquiv.ofBijective (perfectOpenKZeroToImage
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r))
     ⟨fun _ _ h => principal_perfectOpenKRestrict_zero_injective R r (congrArg Subtype.val h),
-      perfectOpenKZeroToImage_surjective (CoherentScheme.principalOpen R r)⟩
+      perfectOpenKZeroToImage_surjective
+        (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)⟩
 
 @[simp] lemma principalPerfectOpenKZeroImageEquiv_coe
-    (a : PerfectOpenK (CoherentScheme.principalOpen R r) 0) :
+    (a : PerfectOpenK (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) 0) :
     (principalPerfectOpenKZeroImageEquiv R r a : PerfectK (Spec (.of (Localization.Away r))) 0) =
-      perfectOpenKRestrict (CoherentScheme.principalOpen R r) 0 a := rfl
+      perfectOpenKRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) 0 a :=
+        rfl
 
 end Quillen.PerfectComplexes.Affine

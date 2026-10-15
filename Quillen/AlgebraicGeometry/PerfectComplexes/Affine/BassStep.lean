@@ -27,7 +27,7 @@ universe u
 namespace Quillen.PerfectComplexes
 open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
 
-open Quillen.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 
 /-- The genuine Laurent-unit self-homotopy of the original flat geometric spectrum map. -/
 def laurentUnitHomotopy (R : CommRingCat.{u}) :

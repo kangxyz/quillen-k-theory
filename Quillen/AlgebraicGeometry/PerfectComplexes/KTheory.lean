@@ -59,7 +59,8 @@ def strictToPerfectKMap (X : Scheme.{u}) (n : ℕ) : StrictK X n →* PerfectK X
 locally perfect K-theory. Comparing its source to Quillen Scheme.K still
 requires the separate Q/S comparison theorem. -/
 def vectorBundleToPerfectSMap (X : Scheme.{u}) (n : ℕ) :
-    (Waldhausen.ofExactCategory (SchemeSheaf.vectorBundleExactStructure X)).K n →* PerfectK X n :=
+    (Waldhausen.ofExactCategory (AlgebraicGeometry.Scheme.Modules.vectorBundleExactStructure X)).K n
+      →* PerfectK X n :=
   (strictToPerfectKMap X n).comp (vectorBundleSComparison X n)
 
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]

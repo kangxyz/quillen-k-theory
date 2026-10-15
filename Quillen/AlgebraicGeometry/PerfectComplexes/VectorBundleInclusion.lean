@@ -48,11 +48,12 @@ instance vectorBundleInclusion_additive : (vectorBundleInclusion X).Additive := 
 /-- Placing vector bundles in degree zero preserves every ambient conflation,
 including sequences which split only locally. -/
 def vectorBundleExactInclusion :
-    CategoryTheory.ExactCategory.ExactFunctor (SchemeSheaf.vectorBundleExactStructure X)
+    CategoryTheory.ExactCategory.ExactFunctor
+      (AlgebraicGeometry.Scheme.Modules.vectorBundleExactStructure X)
       (strictExactStructure X) where
   toFunctor := vectorBundleInclusion X
   map_conflation S hS := by
-    have hs : (S.map (SchemeSheaf.finiteLocallyFree X).ι).ShortExact := hS
+    have hs : (S.map (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree X).ι).ShortExact := hS
     let := hs.mono_f
     let := hs.epi_g
     exact hs.map (HomologicalComplex.single X.Modules (ComplexShape.up ℤ) 0)
@@ -62,8 +63,10 @@ vector-bundle isomorphisms map to quasi-isomorphisms, and cofibration pushouts
 are preserved. -/
 theorem vectorBundleInclusion_waldhausenExact :
     Waldhausen.IsExact
-      (Waldhausen.ofExactCategory (SchemeSheaf.vectorBundleExactStructure X)).cof
-      (Waldhausen.ofExactCategory (SchemeSheaf.vectorBundleExactStructure X)).weq
+      (Waldhausen.ofExactCategory (AlgebraicGeometry.Scheme.Modules.vectorBundleExactStructure
+        X)).cof
+      (Waldhausen.ofExactCategory (AlgebraicGeometry.Scheme.Modules.vectorBundleExactStructure
+        X)).weq
       (strictWaldhausen X).cof (strictWaldhausen X).weq (vectorBundleInclusion X) where
   zero h := (vectorBundleInclusion X).map_isZero h
   cofibration f hf := (vectorBundleExactInclusion X).map_inflation f hf
@@ -73,15 +76,17 @@ theorem vectorBundleInclusion_waldhausenExact :
     infer_instance
   pushout hi h := by
     apply IsPushout.of_map_of_faithful (strictPerfect X).ι
-    exact (Waldhausen.fullSubcategory_map_pushout (SchemeSheaf.sheafExactStructure X)
-      (SchemeSheaf.finiteLocallyFree X) hi h).map
+    exact (Waldhausen.fullSubcategory_map_pushout
+      (AlgebraicGeometry.Scheme.Modules.sheafExactStructure X)
+      (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree X) hi h).map
       (HomologicalComplex.single X.Modules (ComplexShape.up ℤ) 0)
 
 /-- The genuine degree-zero S-construction comparison map. Proving that it
 is an isomorphism is Gillet–Waldhausen; comparing its source with `SchemeK`
 additionally needs the Quillen Q/S comparison. -/
 def vectorBundleSComparison (n : ℕ) :
-    (Waldhausen.ofExactCategory (SchemeSheaf.vectorBundleExactStructure X)).K n →*
+    (Waldhausen.ofExactCategory (AlgebraicGeometry.Scheme.Modules.vectorBundleExactStructure X)).K n
+      →*
       StrictK X n :=
   Waldhausen.KMap (vectorBundleInclusion_waldhausenExact X) n
 

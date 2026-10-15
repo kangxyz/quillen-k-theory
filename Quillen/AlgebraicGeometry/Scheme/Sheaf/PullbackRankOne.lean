@@ -16,6 +16,9 @@ scalar multiplication gives the original pullback section, preserving all signed
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 noncomputable section
 universe u v u' v'
@@ -24,7 +27,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- The restriction adjunction sends the unit trivialization to the original structure map. -/
 theorem restrictUnitIso_homEquiv {X Y : Scheme.{u}} (f : X ⟶ Y) [IsOpenImmersion f] :
     (AlgebraicGeometry.Scheme.Modules.restrictAdjunction f).homEquiv _ _
@@ -68,9 +71,9 @@ theorem restrictFunctorIsoPullback_unitSquare {X Y : Scheme.{u}}
       ← Category.assoc,
       ← (AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback f).hom.naturality
         Limits.prod.snd, Category.assoc, restrictFunctorIsoPullback_unit]
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- Pullback of scalar multiplication retains the actual pulled-back section. -/
 theorem unitMul_pullback {X Y : Scheme.{u}} (f : X ⟶ Y) (s : Γ(Y, ⊤)) :
     (AlgebraicGeometry.Scheme.Modules.pullback f).map (unitMul Y s) ≫ (pullbackUnitIso f).hom =
@@ -92,9 +95,9 @@ theorem unitMul_pullback {X Y : Scheme.{u}} (f : X ⟶ Y) (s : Γ(Y, ⊤)) :
       AlgebraicGeometry.Scheme.Hom.map_appLE, AlgebraicGeometry.Scheme.Hom.app_eq_appLE,
       AlgebraicGeometry.Scheme.Hom.appLE_map]
   exact congrArg (fun k => CommRingCat.Hom.hom k s) h
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 variable {X Y : Scheme.{u}} (f : X ⟶ Y) (s : Γ(Y, ⊤))
 /-- Pullback of the original graph column retains its two ordered coordinates. -/
 theorem graphColumn_pullback :
@@ -161,4 +164,4 @@ theorem cographColumn_graphRow_unitMul (Z : Scheme.{u}) (s t : Γ(Z, ⊤)) :
 theorem cographColumn_cographRow_unitMul (Z : Scheme.{u}) (s t : Γ(Z, ⊤)) :
     cographColumn (unitMul Z s) ≫ cographRow (unitMul Z t) = unitMul Z (t - s) := by
   simp [cographColumn, cographRow, Preadditive.comp_sub, unitMul_sub]
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

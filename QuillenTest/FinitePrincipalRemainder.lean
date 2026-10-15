@@ -11,6 +11,9 @@ public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.StalkFlat
 /-! # Original residual homology and genuine cover consumers -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -35,7 +38,7 @@ variable (R : CommRingCat.{u}) {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmers
   (C : ModuleComplex R) (a : ℤ) (s : Finset R)
   (k : ∀ r : s, Spec (.of (Localization.Away r.val)) ⟶ U)
   [∀ r : s, IsOpenImmersion (k r)]
-  (hk : ∀ r : s, k r ≫ j = Quillen.CoherentScheme.principalOpen R r.val)
+  (hk : ∀ r : s, k r ≫ j = AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r.val)
   (hcover : ∀ x : U, ∃ r : s, ∃ y, k r y = x)
   (hlocal : ∀ r : s,
     let L : ModuleComplex (.of (Localization.Away r.val)) := (localize r.val (.up ℤ)).obj C
@@ -45,10 +48,10 @@ variable (R : CommRingCat.{u}) {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmers
 include hk hcover hlocal in
 /-- Local projectivity gives flat stalks of the original restricted homology sheaf. -/
 theorem original_remainder_homology_stalkwiseFlat :
-    Quillen.SchemeSheaf.stalkwiseFlat U
+    AlgebraicGeometry.Scheme.Modules.stalkwiseFlat U
       (((restrict j).obj ((associatedComplex R).obj C)).homology a) := by
   have hvb := (vectorBundle_single_of_principal_concentration R j C a s k hk hcover hlocal).1
-  exact Quillen.SchemeSheaf.stalkwiseFlat_of_finiteLocallyFree _
+  exact AlgebraicGeometry.Scheme.Modules.stalkwiseFlat_of_finiteLocallyFree _
 
 include hk hcover hlocal in
 /-- The same covered original remainder is concentrated in exactly the displayed degree. -/
@@ -66,7 +69,7 @@ theorem original_remainder_other_homology_zero (n : ℤ) (hn : n ≠ a) :
 without requiring the empty principal family to span the ambient unit ideal. -/
 theorem empty_family_actual_approximation [IsEmpty U] (K : ModuleComplex R) (a b : ℤ) :
     ∃ (P : ModuleComplex R) (_ : moduleStrictPerfect R P) (f : P ⟶ K),
-      Quillen.SchemeSheaf.IsFiniteLocallyFree U
+      AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree U
         (((restrict j).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))).homology a)
           := by
   let k : ∀ r : (∅ : Finset R), Spec (.of (Localization.Away r.val)) ⟶ U :=

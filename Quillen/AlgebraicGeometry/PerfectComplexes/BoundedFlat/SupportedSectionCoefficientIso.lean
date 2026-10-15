@@ -28,7 +28,8 @@ attribute [local irreducible] boundedFlatAffineOriginalEvaluation boundedFlatAff
 
 /-- The original specified affine open square, with its unchanged coefficient and open maps. -/
 def boundedFlatAffineSupportedPairSquare :
-    (⟨Arrow.mk j', (show IsOpenImmersion j' from inferInstance)⟩ : Quillen.Scheme.OpenPairs) ⟶
+    (⟨Arrow.mk j', (show IsOpenImmersion j' from inferInstance)⟩ :
+      AlgebraicGeometry.Scheme.OpenPairs) ⟶
       ⟨Arrow.mk j, (show IsOpenImmersion j from inferInstance)⟩ :=
   ObjectProperty.homMk (Arrow.homMk l (Spec.map f) h)
 

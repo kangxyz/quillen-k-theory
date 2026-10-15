@@ -17,8 +17,8 @@ noncomputable section
 
 universe u
 
-open CategoryTheory AlgebraicGeometry Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+open CategoryTheory AlgebraicGeometry AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 
 namespace QuillenTest.ProjectiveLineChartAcyclicity
 

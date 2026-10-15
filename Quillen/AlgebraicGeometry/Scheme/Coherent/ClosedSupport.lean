@@ -19,19 +19,25 @@ condition, without a global finiteness or separatedness hypothesis.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 /-- The ordinary stalk support of a sheaf satisfying the actual affine-local
 finite quasicoherent condition is closed. -/
 theorem isClosed_support_of_coherent {X : Scheme.{u}} {M : X.Modules} (hM : affineLocallyFiniteType
   X M) :
-    IsClosed (SchemeSheaf.support M) := by
+    IsClosed (AlgebraicGeometry.Scheme.Modules.support M) := by
   rw [← isOpen_compl_iff]
   apply isOpen_iff_mem_nhds.mpr
   intro x hx
@@ -42,14 +48,14 @@ theorem isClosed_support_of_coherent {X : Scheme.{u}} {M : X.Modules} (hM : affi
   have : ((Scheme.Modules.restrictFunctor j).obj M).IsQuasicoherent := hC.1
   have : Module.Finite (X.affineOpenCover.X i)
       (moduleSpecΓFunctor.obj ((Scheme.Modules.restrictFunctor j).obj M)) := hC.2
-  have hc : IsClosed (j ⁻¹' SchemeSheaf.support M) := by
-    rw [← SchemeSheaf.support_restrict j M]
-    exact SchemeSheaf.isClosed_support_of_finite_globalSections _
-  have ho : IsOpen (j '' (j ⁻¹' SchemeSheaf.support M)ᶜ) :=
+  have hc : IsClosed (j ⁻¹' AlgebraicGeometry.Scheme.Modules.support M) := by
+    rw [← AlgebraicGeometry.Scheme.Modules.support_restrict j M]
+    exact AlgebraicGeometry.Scheme.Modules.isClosed_support_of_finite_globalSections _
+  have ho : IsOpen (j '' (j ⁻¹' AlgebraicGeometry.Scheme.Modules.support M)ᶜ) :=
     j.isOpenEmbedding.isOpenMap _ hc.isOpen_compl
   apply Filter.mem_of_superset (ho.mem_nhds ?_) ?_
   · refine ⟨y, ?_, hy⟩
-    change j y ∉ SchemeSheaf.support M
+    change j y ∉ AlgebraicGeometry.Scheme.Modules.support M
     rw [show j y = x from hy]
     exact hx
   · rintro z ⟨w, hw, rfl⟩
@@ -59,6 +65,7 @@ theorem isClosed_support_of_coherent {X : Scheme.{u}} {M : X.Modules} (hM : affi
 no noetherian hypothesis is needed for this support statement. -/
 theorem coherent_support_isClosed {X : Scheme.{u}} (M : FiniteTypeSheaves X)
   :
-    IsClosed (SchemeSheaf.support M.obj) := isClosed_support_of_coherent M.property
+    IsClosed (AlgebraicGeometry.Scheme.Modules.support M.obj) := isClosed_support_of_coherent
+      M.property
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

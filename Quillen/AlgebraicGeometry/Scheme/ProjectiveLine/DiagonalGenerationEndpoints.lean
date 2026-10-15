@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PullbackSingleNaturality
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.SingleComparison
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Symmetry
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalProjectedTensorTriangle
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DerivedFlatBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.PullbackTensorCompatibility
@@ -24,6 +27,25 @@ equivalence or a full coefficient extension.
 -/
 
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
+
+-- Transitional names share Aglib declarations and canonical instances.
+noncomputable section
+namespace Quillen.Scheme.ProjectiveLine
+export AlgebraicGeometry.Scheme.Modules
+  (derivedFlatPullbackPlusSingleIso_naturality moduleTensorSymmetryNatIso)
+end Quillen.Scheme.ProjectiveLine
+
+namespace Quillen.SchemeSheaf
+export AlgebraicGeometry.Scheme.Modules
+  (exactDerivedSingleNatIso exactSingleComplexNatIso)
+end Quillen.SchemeSheaf
+
+end
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -31,61 +53,16 @@ universe u v u' v'
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits AlgebraicGeometry DerivedCategory
   CategoryTheory.Pretriangulated
 
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 local instance generationStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 
-/-- The literal termwise single comparison, naturally in the sheaf. -/
-def exactSingleComplexNatIso {X Y : Scheme.{u}} (F : X.Modules ⥤ Y.Modules) [F.Additive] :
-    CochainComplex.singleFunctorPlus X.Modules 0 ⋙ F.mapCochainComplexPlus ≅
-      F ⋙ CochainComplex.singleFunctorPlus Y.Modules 0 :=
-  NatIso.ofComponents (fun M => (CochainComplex.plus Y.Modules).isoMk
-    ((HomologicalComplex.singleMapHomologicalComplex F (.up ℤ) 0).app M)) (by
-      intro M N f
-      apply ObjectProperty.hom_ext
-      exact (HomologicalComplex.singleMapHomologicalComplex F (.up ℤ) 0).hom.naturality f)
+end AlgebraicGeometry.Scheme.Modules
 
-/-- The exact-derived single comparison is natural and uses the installed derived unit. -/
-def exactDerivedSingleNatIso {X Y : Scheme.{u}} (F : X.Modules ⥤ Y.Modules)
-    [F.Additive] [F.PreservesHomology] :
-    DerivedCategory.Plus.singleFunctor X.Modules 0 ⋙ F.rightDerivedFunctorPlus ≅
-      F ⋙ DerivedCategory.Plus.singleFunctor Y.Modules 0 := by
-  have := F.isIso_rightDerivedFunctorPlusUnit_of_preservesHomology
-  exact (isoWhiskerLeft (CochainComplex.singleFunctorPlus X.Modules 0)
-      (asIso F.rightDerivedFunctorPlusUnit).symm) ≪≫
-    isoWhiskerRight (exactSingleComplexNatIso F) DerivedCategory.Plus.Q
-
-end Quillen.SchemeSheaf
-
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf CategoryTheory.MonoidalCategory CategoryTheory.BraidedCategory
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules CategoryTheory.MonoidalCategory CategoryTheory.BraidedCategory
 local instance generationStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
-
-/-- The original sheafified braiding, naturally in the varying first factor. -/
-def moduleTensorSymmetryNatIso (X : Scheme.{u}) (M : X.Modules) :
-    moduleTensorRightFunctor X M ≅ moduleTensorLeftFunctor X M :=
-  NatIso.ofComponents (fun N => moduleTensorSymmetry X N M) (by
-    intro N P f
-    change (SheafOfModulesOfCommRing.associatedSheaf X.sheaf).map _ ≫
-      (SheafOfModulesOfCommRing.associatedSheaf X.sheaf).map _ =
-      (SheafOfModulesOfCommRing.associatedSheaf X.sheaf).map _ ≫
-        (SheafOfModulesOfCommRing.associatedSheaf X.sheaf).map _
-    rw [← Functor.map_comp, ← Functor.map_comp]
-    congr 1
-    exact braiding_naturality _ _)
-
-/-- The original pullback-single comparison respects every sheaf arrow. -/
-theorem derivedFlatPullbackPlusSingleIso_naturality {X Y : Scheme.{u}}
-    (f : X ⟶ Y) [Flat f] {M N : Y.Modules} (g : M ⟶ N) :
-    (derivedFlatPullbackPlus f).map ((DerivedCategory.Plus.singleFunctor Y.Modules 0).map g) ≫
-      (derivedFlatPullbackPlusSingleIso f N).hom =
-    (derivedFlatPullbackPlusSingleIso f M).hom ≫
-      (DerivedCategory.Plus.singleFunctor X.Modules 0).map ((Scheme.Modules.pullback f).map g) := by
-  simpa [exactDerivedSingleNatIso, exactSingleComplexNatIso,
-    derivedFlatPullbackPlusSingleIso, pullbackSingleZeroPlusIso, derivedFlatPullbackPlus,
-      flatExactPullback] using
-      (exactDerivedSingleNatIso (Scheme.Modules.pullback f)).hom.naturality g
 
 /-- The self-base-change identification is natural in the original QC sheaf maps. -/
 theorem derivedSelfBaseChangeSingleIso_naturality (R : CommRingCat.{u})
@@ -277,4 +254,4 @@ theorem diagonalGenerationTriangle_distinguished :
   isomorphic_distinguished _ (diagonalCoefficientTensorTriangle_distinguished R E) _
     (diagonalGenerationTriangleIso R E)
 
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

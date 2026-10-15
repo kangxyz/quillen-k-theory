@@ -26,7 +26,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
 open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
 open Quillen.KTheory.Bass Quillen.FunctorIdentityAutomorphism
-open Quillen.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.CoefficientBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}
@@ -51,7 +51,8 @@ theorem boundedFlatCoefficientSupportSectionUnitIso_hom {i : Index R} {U : Schem
 
 private theorem supportMap_preserves_lift {i k : Index R} {U V : Scheme.{u}}
     (j : U ⟶ space i) (j' : V ⟶ space k) [IsOpenImmersion j] [IsOpenImmersion j']
-    (η : i ⟶ k) (l : V ⟶ U) (h : l ≫ j = j' ≫ Quillen.Scheme.CoefficientBaseChange.map η)
+    (η : i ⟶ k) (l : V ⟶ U) (h : l ≫ j = j' ≫ AlgebraicGeometry.Scheme.BaseChange.Coefficients.map
+      η)
     (α : 𝟭 (BoundedFlatCoefficientSections i) ≅ 𝟭 (BoundedFlatCoefficientSections i))
     (β : 𝟭 (BoundedFlatCoefficientSections k) ≅ 𝟭 (BoundedFlatCoefficientSections k))
     (hαβ : Preserves (boundedFlatCoefficientSectionsMap η) α β) :

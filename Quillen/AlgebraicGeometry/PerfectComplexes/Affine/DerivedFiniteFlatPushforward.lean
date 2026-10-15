@@ -42,10 +42,11 @@ theorem perfectDerivedObjects_derivedPushforwardPlus {R : CommRingCat.{u}} {X : 
     (K : DerivedCategory.Plus (Spec R).Modules)
     (hK : perfectDerivedObjects (Spec R) (DerivedCategory.Plus.ι.obj K)) :
     perfectDerivedObjects X
-      (DerivedCategory.Plus.ι.obj ((SchemeSheaf.derivedPushforwardPlus f).obj K)) := by
+      (DerivedCategory.Plus.ι.obj ((AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlus f).obj
+        K)) := by
   obtain ⟨P, ⟨eP⟩⟩ := exists_strictToDerivedPlus_iso R K hK
   let e := (strictFiniteFlatDerivedPushforwardIso f).app P ≪≫
-    (SchemeSheaf.derivedPushforwardPlus f).mapIso eP
+    (AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlus f).mapIso eP
   apply (perfectDerivedObjects X).prop_of_iso (DerivedCategory.Plus.ι.mapIso e)
   exact (perfectDerivedObjects_toDerived_iff X _).mpr
     (locallyPerfect_of_strictPerfect ((strictFiniteFlatPushforward f).obj P).property)

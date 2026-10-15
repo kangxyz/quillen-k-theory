@@ -10,11 +10,14 @@ public import Mathlib.Data.ZMod.Basic
 
 /-! Original quotient rows, cokernel factorization, inverse transition and zero-ring consumers. -/
 @[expose] public section
+
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.SchemeSheaf
-open Quillen.Scheme.ProjectiveLine
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicGeometry.Scheme.Modules
+open AlgebraicGeometry.Scheme.ProjectiveLine
 universe u
 namespace QuillenTest.ProjectiveLineTautologicalQuotient
 
@@ -67,7 +70,8 @@ theorem original_transition_scalar :
         (tautologicalQuotientPlusIso R).hom ≫
       (Scheme.Modules.restrictUnitIso (pullback.fst (plusChart R) (minusChart R))).hom ≫
       unitMul _ (↑(overlapCoordinateUnit R)⁻¹) =
-    (Quillen.CoherentScheme.overlapRestrictIso (plusChart R) (minusChart R)).hom.app
+    (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso (plusChart R) (minusChart
+      R)).hom.app
         (tautologicalQuotientLine R) ≫
       (Scheme.Modules.restrictFunctor (pullback.snd (plusChart R) (minusChart R))).map
         (tautologicalQuotientMinusIso R).hom ≫

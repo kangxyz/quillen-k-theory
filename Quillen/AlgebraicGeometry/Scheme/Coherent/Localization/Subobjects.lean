@@ -18,13 +18,19 @@ coherent.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-namespace Quillen.CoherentScheme
+namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 /-- On a noetherian affine, a quasicoherent sheaf embedded in a coherent
 sheaf is finite. Global sections preserve the monomorphism, and a submodule
@@ -48,4 +54,4 @@ theorem affineLocallyFiniteType_of_quasicoherent_mono {X : Scheme.{u}} [IsLocall
   let : IsNoetherianRing R := noetherian_affineChart R j
   exact affineFiniteSheaf_of_mono R ((Scheme.Modules.restrictFunctor j).map f) (hN R j)
 
-end Quillen.CoherentScheme
+end AlgebraicGeometry.Scheme.Modules.Coherent

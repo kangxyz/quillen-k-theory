@@ -20,6 +20,9 @@ the original commuting triangle and explicit upper bounds. The forgetful
 functor to presheaves is not assumed exact.
 -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 
 noncomputable section
@@ -28,7 +31,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite HomologicalComplex
 open Quillen.CochainComplex
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Actual relative flat replacement for a map between bounded-above complexes.
 The first map is an original short exact inclusion with flat quotient; the
@@ -113,4 +116,4 @@ theorem exists_boundedAbove_relative_flat_factorization (X : Scheme.{u})
     intro n hn
     exact A.map_isZero (Q₀.isZero_of_isStrictlyLE (b + 1) n hn)
 
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

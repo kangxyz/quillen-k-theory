@@ -13,14 +13,16 @@ rotate once with the original negative shifted incidence, and contract its
 specified nested lines through original determinant, associator, unit and braiding maps.
 -/
 @[expose] public section
+open Quillen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits
   CategoryTheory.Pretriangulated AlgebraicGeometry
-namespace Quillen.Scheme.ProjectiveLine
-open Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 local instance perfectRotationStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})
@@ -157,4 +159,4 @@ theorem diagonalRotatedGenerationTriangle_connecting_naturality
     (diagonalRotatedGenerationThird R).map f ≫
       (diagonalRotatedGenerationTriangle R L).mor₃ :=
   ((diagonalRotatedGenerationTriangleFunctor R).map f).comm₃
-end Quillen.Scheme.ProjectiveLine
+end AlgebraicGeometry.Scheme.ProjectiveLine

@@ -15,6 +15,8 @@ pair squares. The vanishing open is a genuine inverse image, only the ambient sc
 and shrinking the open gives the original identity-base pair map.
 -/
 @[expose] public section
+open Quillen
+
 
 
 noncomputable section
@@ -22,7 +24,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
-namespace Quillen.Scheme.Bass
+namespace AlgebraicGeometry.Scheme.Bass
 
 /-- Base product preserves the original map by an actual pullback square. -/
 lemma baseProductFunctor_map_isPullback {S : AlgebraicGeometry.Scheme.{u}}
@@ -129,6 +131,6 @@ def openSupportPairMap (X : QuasiCompactSchemes.{u}) {U V : X.obj.Opens} (h : U 
   :
     quasiCompactOpenPairsBase.map (openSupportPairMap X h) = 𝟙 X := rfl
 
-end Quillen.Scheme.Bass
+end AlgebraicGeometry.Scheme.Bass
 
 end

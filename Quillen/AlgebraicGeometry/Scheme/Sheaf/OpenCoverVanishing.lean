@@ -9,13 +9,16 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.Support
 
 /-! # Vanishing detected on arbitrary actual open covers -/
 @[expose] public section
+open Quillen
+open Quillen.SchemeSheaf
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u w
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-namespace Quillen.SchemeSheaf
+namespace AlgebraicGeometry.Scheme.Modules
 /-- Actual module sheaves vanish if their restrictions to any open cover vanish. -/
 theorem isZero_of_openCover {X : Scheme.{u}} (M : X.Modules) {ι : Type w}
     (U : ι → X.Opens) (hU : ∀ x : X, ∃ i, x ∈ U i)
@@ -25,4 +28,4 @@ theorem isZero_of_openCover {X : Scheme.{u}} (M : X.Modules) {ι : Type w}
   obtain ⟨i,hi⟩ := hU x
   exact ((stalkFunctor (U i).toScheme ⟨x,hi⟩).map_isZero (hM i)).of_iso
     ((Scheme.Modules.restrictStalkNatIso (U i).ι ⟨x,hi⟩).app M).symm
-end Quillen.SchemeSheaf
+end AlgebraicGeometry.Scheme.Modules

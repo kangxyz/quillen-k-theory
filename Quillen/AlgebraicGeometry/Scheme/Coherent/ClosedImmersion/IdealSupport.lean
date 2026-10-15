@@ -21,13 +21,19 @@ an assumed localization or dévissage equivalence.
 -/
 @[expose] public section
 
+open ModuleCat
+open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open Quillen
+open Quillen.CoherentScheme
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
-namespace Quillen.CoherentScheme.ClosedImmersion.Ideal
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal
 open FiniteModuleLocalization.IdealClosedSupport
 
 variable (R : CommRingCat.{u}) (I : Ideal R)
@@ -67,7 +73,7 @@ theorem finiteTypeSheavesSupportedAway_iff_le_radical_annihilator (M : FiniteTyp
   have : M.obj.IsQuasicoherent := hM.1
   have : Module.Finite R (moduleSpecΓFunctor.obj M.obj) := hM.2
   rw [finiteTypeSheavesSupportedAway_iff_support_subset, openMap_range_compl,
-    SchemeSheaf.support_eq_support_globalSections, Module.support_eq_zeroLocus,
+    AlgebraicGeometry.Scheme.Modules.support_eq_support_globalSections, Module.support_eq_zeroLocus,
     PrimeSpectrum.zeroLocus_subset_zeroLocus_iff]
   rfl
 
@@ -119,4 +125,4 @@ theorem coherentPushforward_supported (M : FiniteTypeSheaves (Spec (closedRing R
     finiteTypeSheavesSupportedAway (openMap R I) ((coherentPushforward R I).obj M) :=
   finiteTypeSheavesKilledBy_le_supportedAway R I _ (coherentPushforward_killed R I M)
 
-end Quillen.CoherentScheme.ClosedImmersion.Ideal
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal

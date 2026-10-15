@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.Limits.Shapes.CokernelPushout
 public import Quillen.Waldhausen.QuillenComparison.ExactRectangles
 
 /-! # Quotient calculus used to complete admissible flags
@@ -15,6 +16,9 @@ universal properties. No ambient abelian category or global choice of
 quotients compatible with simplicial operators is required.
 -/
 @[expose] public section
+open Quillen
+
+
 
 
 noncomputable section
@@ -26,26 +30,6 @@ universe v u
 namespace Quillen.Waldhausen.QuillenComparison
 
 variable {C : Type u} [Category.{v} C] [Preadditive C]
-
-/-- A cokernel square with an arbitrary zero lower-left vertex is a pushout. -/
-theorem isPushoutOfZeroCokernel {A B D Z : C} {i : A ⟶ B} {p : B ⟶ D}
-    (w : i ≫ p = 0) (hp : IsColimit (CokernelCofork.ofπ p w))
-    (hZ : IsZero Z) (z : A ⟶ Z) (q : Z ⟶ D) : IsPushout i z p q := by
-  have hsq : i ≫ p = z ≫ q := by rw [w, hZ.eq_of_src q 0, comp_zero]
-  apply IsPushout.of_isColimit (c := PushoutCocone.mk p q hsq)
-  refine PushoutCocone.IsColimit.mk hsq
-    (fun s ↦ hp.desc (CokernelCofork.ofπ s.inl (by
-      rw [s.condition, hZ.eq_of_src s.inr 0, comp_zero]))) ?_ ?_ ?_
-  · intro s
-    exact hp.fac _ WalkingParallelPair.one
-  · intro s
-    exact hZ.eq_of_src _ _
-  · intro s m hm _
-    apply Cofork.IsColimit.hom_ext hp
-    change p ≫ m = p ≫ _
-    rw [hm]
-    symm
-    exact hp.fac _ WalkingParallelPair.one
 
 variable {A B D : C} (f : A ⟶ B) (g : B ⟶ D) (h : A ⟶ D) (w : f ≫ g = h)
 variable [HasCokernel f] [HasCokernel g] [HasCokernel h]

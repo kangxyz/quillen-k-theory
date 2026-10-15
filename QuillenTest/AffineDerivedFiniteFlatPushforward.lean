@@ -14,7 +14,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine Quillen.SchemeSheaf
+open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine AlgebraicGeometry.Scheme.Modules
 universe u
 namespace QuillenTest.AffineDerivedFiniteFlatPushforward
 
