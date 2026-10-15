@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionBaseChange
 public import Quillen.CategoryTheory.ExactCategory.KernelComposition
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionCokernelComparison
@@ -12,6 +13,9 @@ public import Quillen.CategoryTheory.QConstruction.SpanIsoNaturality
 
 /-! # Actual extension lifts of the original admissible Q-spans -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

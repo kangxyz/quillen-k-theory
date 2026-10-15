@@ -9,6 +9,9 @@ public import Quillen.Topology.PlusConstruction.RealizationComparisonExistence
 
 /-! # Fresh tests of restricted actual comparison construction -/
 @[expose] public section
+
+open Quillen.DoubleCylinder
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory
 open scoped Simplicial Topology unitInterval

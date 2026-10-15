@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalRestriction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.OpenUnion
@@ -20,6 +21,9 @@ principal family whose literal union is the chosen open detects weakness.
 The family need not cover Spec R; arbitrary rings and empty opens are allowed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

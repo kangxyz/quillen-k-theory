@@ -18,6 +18,10 @@ Weakness of the literal base-changed bridge end remains an explicit input.
 -/
 @[expose] public section
 
+open Quillen.CubicalSubdivision
+open Quillen.FiberwiseMappingPath
+
+
 noncomputable section
 open CategoryTheory MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval

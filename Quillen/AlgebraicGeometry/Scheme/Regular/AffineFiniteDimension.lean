@@ -24,7 +24,6 @@ resolution theorem. No K-equivalence or resolution theorem is assumed.
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

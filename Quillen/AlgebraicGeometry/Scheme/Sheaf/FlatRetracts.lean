@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatGenerators
+public import Aglib.AlgebraicGeometry.Modules.Stalk.Basic
+public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
 public import Mathlib.CategoryTheory.Idempotents.Karoubi
 
 /-!
@@ -16,8 +17,9 @@ passes to retracts, and the full category of stalkwise-flat module sheaves is
 idempotent complete. No quasicoherence or affineness is required.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 

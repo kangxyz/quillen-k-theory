@@ -9,8 +9,6 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GlobalScalarPullback
 
 /-! Original restriction maps preserve the actual global scalar action. -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

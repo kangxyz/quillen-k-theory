@@ -6,10 +6,11 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Support
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeSupport
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.GTheory
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineSupport
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Support
 
 /-!
 # Actual supported coherent sheaves on a noetherian affine scheme
@@ -21,25 +22,14 @@ support, and vanishing on the open is equivalent to support in its complement.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.CoherentScheme
-export AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-  (SupportedAffineFiniteType affineSupportedAway affineSupportedAway_iff
-  affineSupportedAway_iff_support_disjoint affineSupportedAway_iff_support_subset
-  isClosed_support)
-export AlgebraicGeometry.Scheme.Modules.Coherent
-  (affineSupportedAway_isSerreClass instAbelianSupportedAffineCoherent
-  supportedAffineCoherentExactStructure supportedAffineCoherent_essentiallySmall)
-end Quillen.CoherentScheme
-
-end
 
 
 

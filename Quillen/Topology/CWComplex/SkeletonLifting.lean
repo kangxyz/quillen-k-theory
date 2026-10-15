@@ -17,8 +17,10 @@ skeleton pointwise. Dimension induction starts with the literal empty skeleton;
 no nonempty-space assumption or supplied global lifting certificate is used.
 -/
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Topology
+open Set
 universe u v w
 namespace Quillen.ClassicalCW
 variable {X : Type u} [TopologicalSpace X] [T2Space X]

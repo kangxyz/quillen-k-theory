@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.GrothendieckComparison.ContinuousLoopLabels
 public import Quillen.Topology.HomotopyGroups.Loop.NormalizedComponentProduct
 
@@ -20,6 +22,9 @@ not identify the neutral component with any plus construction.
 -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

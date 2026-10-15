@@ -14,6 +14,9 @@ The consumers retain both original arrows, their universal properties, the signe
 kernel and opposite Laurent coordinates, over nonreduced and zero-ring bases as well.
 -/
 @[expose] public section
+
+open Quillen.PolynomialDiagonal
+
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Polynomial

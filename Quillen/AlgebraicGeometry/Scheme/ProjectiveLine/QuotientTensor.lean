@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Algebra.Category.ModuleCat.Sheaf.TensorRightUnit
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TensorRestriction
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalQuotient
 
 /-!

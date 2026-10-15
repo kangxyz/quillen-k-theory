@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Roofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRestrictionIso
 
@@ -16,6 +17,9 @@ roof condition through an isomorphic source scheme while retaining both global
 chain arrows and the original local derived square.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

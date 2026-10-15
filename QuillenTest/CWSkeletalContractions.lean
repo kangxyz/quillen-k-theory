@@ -10,8 +10,10 @@ public import Quillen.Topology.CWComplex.SkeletalNeighborhoodContractions
 /-! # Same-time skeletal contraction regressions -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Topology Quillen Quillen.ClassicalCW
+open Set Quillen Quillen.ClassicalCW
 open scoped unitInterval
 universe u
 namespace QuillenTest.CWSkeletalContractions

@@ -10,6 +10,9 @@ public import Quillen.CategoryTheory.GroupCompletion.TelescopeIteration
 /-! # The original completed telescope, exposing its actual iterated lineators -/
 
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 open CategoryTheory MonoidalCategory
 universe u v
 namespace Quillen.TranslationTelescope

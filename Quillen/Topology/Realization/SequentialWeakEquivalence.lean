@@ -18,9 +18,11 @@ Only stagewise weakness, T1 separation and closed embeddings are assumed.
 -/
 @[expose] public section
 
+open Topology
+
 
 noncomputable section
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 open scoped Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false

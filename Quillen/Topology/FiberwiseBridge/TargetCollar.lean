@@ -19,6 +19,9 @@ No equivalence or lifting property of either attaching map is required.
 -/
 @[expose] public section
 
+open Quillen.TheoremB
+
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval

@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5PositiveUnitOpen
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenCoverQuasiIso
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.PullbackPushforward
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.OpenBaseChange
+public import Aglib.AlgebraicGeometry.Cohomology.Locality.QuasiIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5PositiveUnitModel
 
 /-! # The canonical native positive unit and its actual weak model transformation
@@ -16,6 +17,9 @@ then lifted by literal underlying maps into the original flasque-perfect model,
 where the natural weak unit gives the original positive coefficient K-map.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -30,12 +34,13 @@ namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativePositiveUnit
 /-- The native affine projection has the same actual canonical cochain unit. -/
 theorem positivePlusUnit_nativeAffine_quasiIso (R : CommRingCat.{u})
     (K : CochainComplex.Plus (Spec R).Modules) (hK : locallyPerfect (Spec R) K.obj) :
-    QuasiIso ((positivePlusUnit
+    QuasiIso ((AlgebraicGeometry.Scheme.Modules.Godement.pullbackPushforwardPlusUnit
       (nativeProjection.app ⟨Spec R, inferInstance⟩).hom).app K).hom := by
   apply quasiIso_of_restrict_openCover (fun _ : Unit => Spec R) (fun _ => 𝟙 (Spec R))
     (fun x => ⟨(), x, rfl⟩)
   intro i
-  exact positivePlusUnit_restrict_quasiIso (nativeAffineIso R).hom (projection R)
+  exact AlgebraicGeometry.Scheme.Modules.Godement.pullbackPushforwardPlusUnit_restrict_quasiIso
+    (nativeAffineIso R).hom (projection R)
     (nativeProjection.app ⟨Spec R, inferInstance⟩).hom (𝟙 (Spec R))
     (nativeAffineProjection_isPullback R) K
     (positivePlusUnit_affine_quasiIso R _ (locallyPerfect_restrict (𝟙 (Spec R)) hK))
@@ -43,14 +48,16 @@ theorem positivePlusUnit_nativeAffine_quasiIso (R : CommRingCat.{u})
 /-- Every native QC base has the same original canonical QI, with no term-QC premise. -/
 theorem positivePlusUnit_native_quasiIso (X : QuasiCompactSchemes.{u})
     (K : CochainComplex.Plus X.obj.Modules) (hK : locallyPerfect X.obj K.obj) :
-    QuasiIso ((positivePlusUnit (nativeProjection.app X).hom).app K).hom := by
+    QuasiIso ((AlgebraicGeometry.Scheme.Modules.Godement.pullbackPushforwardPlusUnit
+      (nativeProjection.app X).hom).app K).hom := by
   apply quasiIso_of_restrict_openCover
     (fun i => Spec (X.obj.affineOpenCover.X i)) X.obj.affineOpenCover.f
     (fun x => ⟨_, X.obj.affineOpenCover.covers x⟩)
   intro i
   let U : QuasiCompactSchemes.{u} := ⟨Spec (X.obj.affineOpenCover.X i), inferInstance⟩
   let j : U ⟶ X := ⟨X.obj.affineOpenCover.f i⟩
-  exact positivePlusUnit_restrict_quasiIso (nativeLineFunctor.map j).hom
+  exact AlgebraicGeometry.Scheme.Modules.Godement.pullbackPushforwardPlusUnit_restrict_quasiIso
+    (nativeLineFunctor.map j).hom
     (nativeProjection.app U).hom (nativeProjection.app X).hom j.hom
     (nativeMap_isPullback j) K
     (positivePlusUnit_nativeAffine_quasiIso (X.obj.affineOpenCover.X i) _

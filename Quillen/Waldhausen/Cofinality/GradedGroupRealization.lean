@@ -17,6 +17,9 @@ neither tuple realizability nor K-zero identification is a premise.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.QuotientRows
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial

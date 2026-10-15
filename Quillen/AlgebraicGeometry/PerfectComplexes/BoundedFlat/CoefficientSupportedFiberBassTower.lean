@@ -5,10 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedFiberBassSeed
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenBassTower
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedFiberBassSeed
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenBassTower
 
 /-!
 # Original intersection-support inclusion and localization at every Bass stage
@@ -21,8 +20,11 @@ Native initial cone stability and genuine finite Model excision pass to each
 same original finite cone, without any stabilization or localization premise.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes

@@ -17,10 +17,13 @@ check the literal coordinate swap and its proved sign on arbitrary double-loop c
 They do not identify the normalized class of the original Laurent unit.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open scoped Topology unitInterval
 open AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.Fibration
 universe u v
 namespace QuillenTest.ScalarConnectingNormalization
 

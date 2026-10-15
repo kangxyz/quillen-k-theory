@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
+public import Aglib.Algebra.Polynomial.Laurent.Square
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassEvaluationSourceLeg
 public import Quillen.Topology.Prespectrum.RelativeHomotopyWhiskering
 
@@ -15,11 +17,14 @@ The proved positive-chart pasting and actual source-leg cone square compare the 
 strict and raw Laurent nullhomotopies, preserving every original cylinder parameter.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes.SectionBassEvaluationNull
 variable (R : CommRingCat.{u})

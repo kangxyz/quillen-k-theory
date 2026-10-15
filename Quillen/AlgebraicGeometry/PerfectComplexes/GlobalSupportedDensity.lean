@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.SupportedAffineExtension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalDensity
 
@@ -25,6 +26,9 @@ many affine charts. No global affine-diagonal or fixed stabilization
 multiplicity is assumed. Global morphism roofs are a separate theorem.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

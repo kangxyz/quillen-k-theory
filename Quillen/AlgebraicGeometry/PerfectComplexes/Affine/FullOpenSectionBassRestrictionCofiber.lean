@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassRestrictionTelescope
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassGradingTelescope
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionGradingNullBassSeed
@@ -23,8 +24,11 @@ is stable in every integer degree. Compactness of the original open is the only 
 geometric premise; no classical stabilization or identification is supplied.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes

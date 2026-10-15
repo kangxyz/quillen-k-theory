@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionOpenSeedNull
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionBassOpenCofiber
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassOpenTower
@@ -19,8 +20,11 @@ isomorphism changes no null value, so this is the same original finite support/o
 There is no supplied seed or eventual transition compatibility hypothesis.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes

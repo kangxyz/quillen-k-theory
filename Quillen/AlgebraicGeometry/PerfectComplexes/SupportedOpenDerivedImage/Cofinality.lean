@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpenDerivedImage.Structure
 public import Quillen.CategoryTheory.Abelian.ZeroPushout
 public import Quillen.Waldhausen.Cofinality.GeneralDense
@@ -22,6 +23,12 @@ corestriction retains precisely perfectSupportedOpenKRestrict. Structural
 lemmas retain their explicit genuine roof, density and joint inputs.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

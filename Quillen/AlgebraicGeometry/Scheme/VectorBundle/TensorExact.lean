@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TensorExact
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.AffineRetract
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Basic
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Affine.Retract
 
 /-!
 # Exact tensor with pulled-back affine vector bundles
@@ -17,8 +18,9 @@ is required from the caller, and the source scheme and morphism are arbitrary.
 -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 noncomputable section

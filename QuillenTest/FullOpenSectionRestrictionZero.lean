@@ -9,13 +9,15 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSec
 
 /-! Original-map consumers of literal full-open section-zero preservation. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 universe u
 namespace QuillenTest.FullOpenSectionRestrictionZero
 
 open Quillen
-open Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]
 
 /-- The unchanged original restriction sends the entire actual zero section to its target. -/

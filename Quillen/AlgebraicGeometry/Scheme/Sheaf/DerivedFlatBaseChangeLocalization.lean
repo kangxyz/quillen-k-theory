@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
+public import Aglib.AlgebraicGeometry.Cohomology.BaseChange.Flat
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChangeHorizontal
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChangeOpen
 /-! # Target-open localization of the original derived flat base-change map
@@ -14,8 +15,9 @@ second base leg is required to be open; the first remains flat.
 -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -18,6 +18,9 @@ identity is proved for the actual twisted differential, in every degree.
 
 @[expose] public section
 
+open Quillen.BarycentricSubdivision
+
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false

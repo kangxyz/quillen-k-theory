@@ -1,11 +1,12 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+Authors: kangxyz
 -/
 module
-public import Quillen.Algebra.Homology.DerivedCategory.PlusBoundedComparison
+public import Aglib.Algebra.Homology.DerivedCategory.Plus.BoundedComparison
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DerivedFlatBaseChange
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedPushforwardSection
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PushforwardSection
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.IntrinsicPerfectPushforward
 
 /-! # Original projective-line base-change mate on intrinsic perfect D+
@@ -17,6 +18,9 @@ on intrinsic perfect D+ inputs. No chosen natural strictification is asserted;
 the map and its inverse are the original natural mate and canonical inverse.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 open Quillen
 
 noncomputable section
@@ -25,7 +29,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
-open AlgebraicGeometry.Scheme.Modules Quillen.PerfectComplexes
+open AlgebraicGeometry.Scheme.Modules
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance perfectBaseChangeStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})

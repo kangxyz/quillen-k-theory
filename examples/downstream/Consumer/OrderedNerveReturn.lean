@@ -8,6 +8,9 @@ public import Quillen.Topology.Realization.OrderedNerveRealizationMap
 
 /-! An independent consumer constructs the global return map from geometry alone. -/
 @[expose] public section
+
+open Quillen.NumerableConnectorCover
+
 noncomputable section
 open Convexity CategoryTheory Opposite
 open scoped Topology Simplicial

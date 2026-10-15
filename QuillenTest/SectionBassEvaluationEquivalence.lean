@@ -17,9 +17,12 @@ cone inclusion and loop time, plus composition with the unchanged original perfe
 No compatibility with the original seed transition is inferred here.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open Quillen Quillen.LoopPrespectrum
 open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped unitInterval
 universe u

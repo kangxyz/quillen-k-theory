@@ -18,9 +18,12 @@ for every specified affine open-pair square. Their identity and composition laws
 actual coefficient and open-side maps. This construction does not strictify geometric evaluation.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
 variable {R S T : CommRingCat.{u}} {U V W : Scheme.{u}}

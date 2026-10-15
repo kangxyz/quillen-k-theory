@@ -18,6 +18,9 @@ surjectivity below makes no surjectivity claim for open restriction.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u

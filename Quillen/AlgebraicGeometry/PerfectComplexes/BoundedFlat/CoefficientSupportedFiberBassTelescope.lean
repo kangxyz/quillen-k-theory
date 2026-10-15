@@ -5,10 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedFiberBassTower
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenBassTelescope
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedFiberBassTower
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenBassTelescope
 
 /-!
 # Original auxiliary intersection-support telescope cone and coarse completion
@@ -20,8 +19,11 @@ Model excision and cone stability pass to this original telescope cone. Null
 time and telescope height remain independent on every original cylinder.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes

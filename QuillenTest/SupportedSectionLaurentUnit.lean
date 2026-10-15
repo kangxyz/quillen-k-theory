@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionLaurentUnit
 
 /-!
@@ -16,9 +17,13 @@ structure parameter. The Laurent open-pair square is supplied as genuine geometr
 an assumed homotopy or compatibility conclusion.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange
+open Quillen.Waldhausen.IteratedS
 open AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped unitInterval
 universe u

@@ -16,17 +16,12 @@ isomorphism, whose inverse is the original target section. Its naturality
 is the existing cylinder naturality, not an assumed normalization.
 -/
 @[expose] public section
+
+open CochainComplex
+
 open Quillen
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.Waldhausen.SplitFactorization
-export CochainComplex
-  (identityCone_isZero)
-end Quillen.Waldhausen.SplitFactorization
-
-end
 
 
 

@@ -15,6 +15,9 @@ open scoped Simplicial Topology unitInterval
 universe u v
 namespace Path.Homotopy
 
+/-- The path homotopy obtained by composing `J` with `φ`, with its boundary paths identified with
+`p′` and `q′` by the supplied pointwise equalities.
+-/
 def mapOfPaths {Z : Type u} {Z' : Type v} [TopologicalSpace Z] [TopologicalSpace Z']
     {a b : Z} {a' b' : Z'} {p q : Path a b} (φ : C(Z, Z')) (J : p.Homotopy q)
     (p' q' : Path a' b') (hp : ∀ t, φ (p t) = p' t) (hq : ∀ t, φ (q t) = q' t) :
@@ -41,10 +44,13 @@ theorem map_trans_values {Z : Type u} {Z' : Type v} [TopologicalSpace Z]
   · exact hp _
   · exact hq _
 
+/-- The continuous map of geometric simplices induced by the simplex morphism `α`. -/
 def embed {k l : ℕ} (α : ⦋l⦌ ⟶ ⦋k⦌) :
     C(StdSimplex ℝ (Fin (l + 1)), StdSimplex ℝ (Fin (k + 1))) :=
   ⟨StdSimplex.map α.toOrderHom, by fun_prop⟩
 
+/-- The path from vertex `i` to vertex `m` obtained by concatenating the edges through vertex `j`.
+-/
 def binaryPath {k : ℕ} (i j m : Fin (k + 1)) :
     Path (StdSimplex.single i : StdSimplex ℝ (Fin (k + 1))) (StdSimplex.single m) :=
   (edge i j).trans (edge j m)

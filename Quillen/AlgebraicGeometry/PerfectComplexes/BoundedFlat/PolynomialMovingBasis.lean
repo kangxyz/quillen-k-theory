@@ -4,16 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.H1EightEdges
 
 /-! The unchanged original polynomial composition diagram and its native boundary tracks. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite Convexity
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
 open scoped Topology unitInterval
 universe u
@@ -21,17 +26,31 @@ namespace Quillen.PerfectComplexes.BassMComponents
 variable {R : CommRingCat.{u}} (P : Over (Spec R))
 variable {a b c : Under R} (u : a ⟶ b) (v : b ⟶ c)
 
+/--
+The normalized triple source for polynomial projection at `c` followed by the coefficient maps
+of `v` and `u`.
+-/
 abbrev polynomialSource := NormalizedTripleSimplex.sourceMap
   (polynomialProjection P c) (coefficientMap P v) (coefficientMap P u)
 
+/--
+The merged nodes of the polynomial coefficient-naturality rectangle for `u` and `v`, with their
+source references.
+-/
 abbrev polynomialNodes := DoubleSquareMergedSimplex.nodes
   (coefficientMap P u) (coefficientMap P v)
   (coefficientMap P ((polynomialUnderFunctor R).map u))
   (coefficientMap P ((polynomialUnderFunctor R).map v))
   (polynomialProjection P a) (polynomialProjection P b) (polynomialProjection P c)
-  (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u).symm
-  (coefficientTransformation_naturality P (polynomialUnderCoefficient R) v).symm
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (polynomialUnderCoefficient R) u).symm
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (polynomialUnderCoefficient R) v).symm
 
+/--
+The model simplex assembled from the polynomial rectangle nodes and their common-source
+isomorphisms.
+-/
 def polynomialSimplex := ModelSimplex.ofIsos (polynomialSource P u v)
   (fun i ↦ (polynomialNodes P u v i).1) (fun i ↦ (polynomialNodes P u v i).2)
 

@@ -17,6 +17,9 @@ boundary and the comparison with mathlib's ordinary singular chains.
 
 @[expose] public section
 
+open Quillen.LocalCoefficients
+
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false

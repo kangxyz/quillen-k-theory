@@ -4,16 +4,25 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MVertexMergeIndex
 
 /-! One actual 44-simplex containing all three whole original M vertex-stage diagrams. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassMComponents
+open Quillen.PerfectComplexes.BassMReferences
+open Quillen.PerfectComplexes.BassMVertexOrder
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassMVertex

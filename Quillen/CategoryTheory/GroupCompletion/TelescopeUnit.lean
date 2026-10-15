@@ -12,6 +12,9 @@ public import Quillen.CategoryTheory.Monoidal.TranslationTelescopeFactorization
 /-! # The original unit in the completed telescope model -/
 
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 open CategoryTheory MonoidalCategory
 universe u v
 namespace Quillen.TranslationTelescope

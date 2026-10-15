@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.WeakEquivalenceCofiber
 public import Quillen.Waldhausen.ComplexSubcategory
 public import Quillen.Algebra.Homology.QuasiIsoExtension

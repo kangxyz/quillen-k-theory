@@ -8,6 +8,10 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MVertexWhol
 
 /-! Full reference-row transport for the actual outer M joins. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

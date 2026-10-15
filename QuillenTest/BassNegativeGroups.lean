@@ -16,11 +16,14 @@ iterated naturality, and zero-ring/constant-group cases.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.Bass Quillen.PerfectComplexes
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.Bass
 universe u v
 namespace BassNegativeGroupsConsumers
 

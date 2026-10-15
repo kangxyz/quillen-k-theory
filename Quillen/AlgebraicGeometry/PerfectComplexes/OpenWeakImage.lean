@@ -22,6 +22,9 @@ its precise degree-zero image. Density of the inclusion remains separate.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 universe u

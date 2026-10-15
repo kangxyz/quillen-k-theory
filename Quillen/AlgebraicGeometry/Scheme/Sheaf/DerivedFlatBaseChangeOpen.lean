@@ -4,15 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Cartesian
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianOpenBaseChangeMate
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChange
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.InjectiveRestriction
+public import Aglib.AlgebraicGeometry.Cohomology.BaseChange.Flat
+public import Aglib.AlgebraicGeometry.Cohomology.Injective.Restriction
 
 /-! # The original derived flat base-change mate on open immersions -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

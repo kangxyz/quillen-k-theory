@@ -22,8 +22,13 @@ This leaf states the common-universe result. Transport of the stable coefficient
 universe certificate is a separate adapter; no coefficient resizing is implicit.
 -/
 @[expose] public section
+
+open Topology
+
+open Quillen.DoubleCylinder
+
 noncomputable section
-open CategoryTheory Limits MonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory
 open scoped unitInterval
 universe u
 namespace Quillen.IsPlusConstruction

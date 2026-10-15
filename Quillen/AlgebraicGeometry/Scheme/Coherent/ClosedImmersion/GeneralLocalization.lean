@@ -6,12 +6,13 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralDevissage
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralAnnihilator
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.AffineIdealKernel
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.NoetherianSource
+public import Aglib.AlgebraicGeometry.Morphisms.ClosedImmersion.Noetherian
 
 /-!
 # Geometric closed–open localization for public scheme G-theory
@@ -24,10 +25,12 @@ ideal-kernel dévissage. All groups are the public upper-universe G-groups.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

@@ -15,10 +15,13 @@ These consumers use genuine bounded-flat sections and their original pullback ev
 components. The original geometric pseudofunctor comparison is retained explicitly.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry
 open Quillen.CategoryTheory.GrothendieckSections
 universe u
 namespace QuillenTest.BoundedFlatSectionComposition

@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Topology.FilteredRealization.HomotopyEquivalence
 public import Quillen.Localization.Serre.FilteredComparisonAssembly
 
@@ -19,6 +20,9 @@ mono/epi base-change squares and quotient-span lifting then discharge all
 raw structured transitions without any added quotient hypotheses.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

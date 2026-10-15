@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.Limits.Shapes.ZeroObjects
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativePhi
 
@@ -15,17 +17,17 @@ with the ambient cochain coproduct is the actual categorical coproduct compariso
 Godement total maps that comparison without changing the original Phi functor.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+
+
+open CategoryTheory.Limits
+
 open Quillen
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativePhi
-export CategoryTheory.Limits
-  (coprod_isZero)
-end Quillen.PerfectComplexes.ProjectiveLine.P5NativePhi
-
-end
 
 
 
@@ -53,10 +55,10 @@ def rawBeforeTotal (X : QuasiCompactSchemes.{u}) :
       Complex (nativeLineFunctor.obj X).obj :=
   Waldhausen.Additivity.sumFunctor
     (CategoryTheory.Prod.fst _ _ ⋙ (FlasqueBoundedBelow.objects X.obj).ι ⋙
-      pullbackComplex (nativeProjection.app X).hom)
+      AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeProjection.app X).hom)
     (CategoryTheory.Prod.snd _ _ ⋙ (FlasqueBoundedBelow.objects X.obj).ι ⋙
-      pullbackComplex (nativeProjection.app X).hom ⋙
-      tensorByLineComplex (nativeTautologicalLine X))
+      AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeProjection.app X).hom ⋙
+      AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (nativeTautologicalLine X))
 
 /-- The original cochain/full-subcategory categorical coproduct comparison. -/
 def boundedComplexSumIso {C : Type v} [Category C] (P : Scheme.{u})
@@ -108,9 +110,11 @@ def PhiComplexIso (X : QuasiCompactSchemes.{u})
     (K : FlasqueBoundedBelow.Obj X.obj × FlasqueBoundedBelow.Obj X.obj) :
     ((Phi X).obj K).obj ≅
       (godementTotal (nativeLineFunctor.obj X).obj).obj
-        (((pullbackComplex (nativeProjection.app X).hom).obj K.1.obj) ⨿
-          ((tensorByLineComplex (nativeTautologicalLine X)).obj
-            ((pullbackComplex (nativeProjection.app X).hom).obj K.2.obj))) :=
+        (((AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeProjection.app X).hom).obj
+          K.1.obj) ⨿
+          ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (nativeTautologicalLine X)).obj
+            ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeProjection.app X).hom).obj
+              K.2.obj))) :=
   (godementTotal (nativeLineFunctor.obj X).obj).mapIso ((beforeTotalComplexIso X).app K)
 
 /-- Both original summands retain a given common strict lower bound. -/
@@ -118,12 +122,15 @@ lemma rawBeforeTotal_isStrictlyGE (X : QuasiCompactSchemes.{u})
     (K : FlasqueBoundedBelow.Obj X.obj × FlasqueBoundedBelow.Obj X.obj) (a : ℤ)
     [K.1.obj.IsStrictlyGE a] [K.2.obj.IsStrictlyGE a] :
     ((rawBeforeTotal X).obj K).IsStrictlyGE a := by
-  let A := (pullbackComplex (nativeProjection.app X).hom).obj K.1.obj
-  let B := (tensorByLineComplex (nativeTautologicalLine X)).obj
-    ((pullbackComplex (nativeProjection.app X).hom).obj K.2.obj)
-  have hA : A.IsStrictlyGE a := by dsimp [A, pullbackComplex]; infer_instance
+  let A := (AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeProjection.app X).hom).obj
+    K.1.obj
+  let B := (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (nativeTautologicalLine X)).obj
+    ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeProjection.app X).hom).obj K.2.obj)
+  have hA : A.IsStrictlyGE a := by
+    dsimp [A, AlgebraicGeometry.Scheme.Modules.Complex.pullback]; infer_instance
   have hB : B.IsStrictlyGE a := by
-    dsimp [B, tensorByLineComplex, pullbackComplex]
+    dsimp [B, AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft,
+      AlgebraicGeometry.Scheme.Modules.Complex.pullback]
     infer_instance
   let := hA
   let := hB

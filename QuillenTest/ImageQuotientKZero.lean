@@ -16,8 +16,11 @@ naturality. They do not assume a coarse presentation or a deficit contraction.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
-open CategoryTheory Quillen.Waldhausen
+open CategoryTheory
 open Quillen.Waldhausen.AlgebraicGrothendieck
 universe u v
 namespace QuillenTest.ImageQuotientKZero

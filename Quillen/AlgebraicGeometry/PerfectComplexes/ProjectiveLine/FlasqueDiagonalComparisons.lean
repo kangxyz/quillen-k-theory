@@ -10,6 +10,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueD
 
 /-! # Actual original diagonal model data and canonical natural endpoint comparisons -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
 open Quillen
 
 
@@ -22,6 +24,7 @@ open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueDiagonal
 
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance comparisonStandardDerived (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 
@@ -86,7 +89,8 @@ def rawPlusUnderlyingIso (R : CommRingCat.{u}) (v : Vertex) :
   let eC : (C ⋙ D) ⋙ I ≅ J ⋙ T ⋙ P :=
     Functor.associator C D I ≪≫ Functor.isoWhiskerLeft C eD ≪≫
       (Functor.associator C J P).symm ≪≫
-      Functor.isoWhiskerRight (totalPlusUnderlyingIso (relativeSquare R)) P ≪≫
+      Functor.isoWhiskerRight (AlgebraicGeometry.Scheme.Modules.Godement.totalPlusCompιIso
+        (relativeSquare R)) P ≪≫
       Functor.associator J T P
   let eB : (B ⋙ C ⋙ D) ⋙ I ≅ CochainComplex.Plus.ι (twoChartLine R).Modules ⋙ F ⋙ T ⋙ P :=
     Functor.associator B (C ⋙ D) I ≪≫ Functor.isoWhiskerLeft B eC ≪≫

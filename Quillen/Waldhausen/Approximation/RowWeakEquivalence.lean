@@ -17,6 +17,9 @@ is the existing weak-row postcomposition, so the bisimplicial map is unchanged.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.QuotientRows
+
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial

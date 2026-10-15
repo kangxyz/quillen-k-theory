@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionGradingNullSeed
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassSeed
 public import Quillen.KTheory.Bass.StrictDiagramHomotopy
@@ -18,9 +19,12 @@ interchange identity. The seed retains its prescribed concatenated track; locali
 time and the resulting output-loop coordinate remain independent in the seed equation.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.KTheory.Bass Quillen.PolynomialBaseChange
+open Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R)

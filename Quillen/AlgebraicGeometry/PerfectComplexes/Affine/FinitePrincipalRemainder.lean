@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.HomologyCover
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FinitePrincipalApproximation
 
@@ -16,6 +17,9 @@ then gives its original derived single model. Neither global projectivity of
 the ambient module nor splitting of the approximation triangle is asserted.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

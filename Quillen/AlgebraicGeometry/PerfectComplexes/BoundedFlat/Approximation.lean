@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Cylinder
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RelativeFlatFactorization
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Replacement
@@ -22,6 +23,9 @@ uniform cohomology bound; no approximation or K-equivalence is assumed.
 -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
 open CategoryTheory.ExactCategory
 
 
@@ -30,7 +34,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.CochainComplex AlgebraicGeometry.Scheme.Modules
+open AlgebraicGeometry.Scheme.Modules
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
 

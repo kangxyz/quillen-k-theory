@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionOpenBassDiagram
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionBassForgetTower
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionOpenConeDiagram
@@ -21,8 +22,11 @@ no caller topology, connectivity or stability premise. The target remains the ac
 relative-open section Model. Original seed-relative and telescope compatibility remain separate.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes

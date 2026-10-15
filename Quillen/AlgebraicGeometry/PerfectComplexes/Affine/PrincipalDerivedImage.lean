@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.ModulePerfectClosure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedComparison
 public import Quillen.Waldhausen.Approximation.WeakImage
@@ -25,6 +26,9 @@ No extension of every localized strict object or removal of the K0 image
 obstruction is asserted.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

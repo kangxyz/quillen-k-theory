@@ -20,6 +20,9 @@ all coefficient transports between successive new first vertices.
 
 @[expose] public section
 
+open Quillen.BarycentricSubdivision
+
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false

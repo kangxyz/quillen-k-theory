@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ComplexPushforward
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatPullback
+public import Aglib.AlgebraicGeometry.Modules.Pullback.FlatMorphism
 public import Quillen.Algebra.Homology.Adjunction
 public import Mathlib.CategoryTheory.Abelian.GrothendieckCategory.EnoughInjectives
 
@@ -18,7 +18,6 @@ of perfect objects or acyclicity of quasicoherent coefficients is assumed.
 -/
 @[expose] public section
 open Quillen
-open Quillen.SchemeSheaf
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry

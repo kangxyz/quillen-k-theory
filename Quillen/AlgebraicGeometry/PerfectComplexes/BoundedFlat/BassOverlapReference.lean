@@ -4,17 +4,22 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceWhiskering
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassChartScalarFaces
 
 /-! The two whole chart diagrams on the actual polynomial overlap have one geometric reference. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassOverlap
@@ -54,8 +59,10 @@ theorem chart_total
       coefficientMap P ((polynomialUnderFunctor R).map v) ≫
       coefficientMap P ((polynomialUnderFunctor R).map u)) ≫ polynomialProjection P a =
       laurentProjection P c ≫ coefficientMap P v ≫ coefficientMap P u := by
-  have hu := coefficientTransformation_naturality P (polynomialUnderCoefficient R) u
-  have hv := coefficientTransformation_naturality P (polynomialUnderCoefficient R) v
+  have hu := AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (polynomialUnderCoefficient R) u
+  have hv := AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (polynomialUnderCoefficient R) v
   change coefficientMap P ((polynomialUnderFunctor R).map u) ≫ polynomialProjection P a =
     polynomialProjection P b ≫ coefficientMap P u at hu
   change coefficientMap P ((polynomialUnderFunctor R).map v) ≫ polynomialProjection P b =

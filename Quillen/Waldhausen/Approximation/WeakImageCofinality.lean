@@ -17,6 +17,10 @@ K-zero injectivity for the original exact functor, with the true exact image.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.Cofinality
+open Quillen.Waldhausen.Fibration
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

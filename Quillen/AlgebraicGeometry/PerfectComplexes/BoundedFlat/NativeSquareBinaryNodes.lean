@@ -8,6 +8,10 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.PostReferen
 
 /-! Both original binary rows inside the actual five-node square, with full references. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.NativeSquareFiveSimplex
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

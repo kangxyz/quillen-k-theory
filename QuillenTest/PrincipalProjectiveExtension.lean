@@ -5,12 +5,20 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalProjectiveExtension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Closure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedModuleReplacement
 
 /-! Semantic consumers of actual projective stabilization and principal extension. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
@@ -21,7 +29,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.ModuleComplex Quillen.ModuleComplex.PrincipalLocalization Quillen.PerfectComplexes
+open Quillen.ModuleComplex Quillen.ModuleComplex.PrincipalLocalization
 open Quillen.PerfectComplexes.Affine
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace QuillenTest.PrincipalProjectiveExtension
@@ -70,7 +78,8 @@ theorem actual_strict_restriction_weak_image (R : CommRingCat.{u}) (r : R)
       T.obj = (P.obj ⊞ P.obj⟦(1 : ℤ)⟧) ∧ (strictWaldhausen _).weq f := by
   obtain ⟨Q, ⟨e⟩⟩ := exists_principal_strict_extension_after_shift R r P
   have hT : strictPerfect _ (P.obj ⊞ P.obj⟦(1 : ℤ)⟧) :=
-    (Quillen.abelianExactStructure _).prop_biprod _ P.property (strictPerfect_shift P.property 1)
+    (CategoryTheory.ExactCategory.abelianExactStructure _).prop_biprod _ P.property
+      (strictPerfect_shift P.property 1)
   exact ⟨Q, ⟨_, hT⟩, ObjectProperty.homMk e.hom, rfl, e.quasiIso_hom⟩
 
 /-- The actual ambient derived retract yields a genuine split idempotent

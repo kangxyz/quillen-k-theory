@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlatPullbackFunctor
 
 /-!
@@ -15,29 +16,34 @@ then identity/composition/open squares and the original public comparisons.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes
 universe u
 namespace QuillenTest.PerfectFlatPullback
 
 /-- Quasi-isomorphism preservation is ambient, with no perfectness or QC premise. -/
 theorem arbitraryQuasiIso {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
-    {K L : Complex Y} (s : K ⟶ L) [QuasiIso s] : QuasiIso ((pullbackComplex f).map s) :=
+    {K L : Complex Y} (s : K ⟶ L) [QuasiIso s] : QuasiIso
+      ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map s) :=
   inferInstance
 
 /-- An actual derived local model pulls back using genuine flatness alone. -/
 def actualDerivedIso {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
     {K L : Complex Y} (e : (toDerived Y).obj K ≅ (toDerived Y).obj L) :
-    (toDerived X).obj ((pullbackComplex f).obj K) ≅
-      (toDerived X).obj ((pullbackComplex f).obj L) := flatPullbackDerivedIso f e
+    (toDerived X).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K) ≅
+      (toDerived X).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj L) :=
+        flatPullbackDerivedIso f e
 
 /-- The input is a genuinely locally-perfect complex, with no global strict model. -/
 theorem localPerfectness {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
-    (K : Perfect Y) : locallyPerfect X ((pullbackComplex f).obj K.obj) :=
+    (K : Perfect Y) : locallyPerfect X ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj
+      K.obj) :=
   locallyPerfect_flatPullback f K.property
 
 /-- The K-map is directly induced by the geometric Waldhausen-exact functor. -/

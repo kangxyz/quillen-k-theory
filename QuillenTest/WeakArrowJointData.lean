@@ -10,6 +10,9 @@ public import Quillen.Waldhausen.WeakArrow.JointData
 /-! Behavioral consumers of genuine opposite weak-arrow colimit reflection. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 universe u v u' v'

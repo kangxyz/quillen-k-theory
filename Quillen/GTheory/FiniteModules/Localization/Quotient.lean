@@ -6,10 +6,14 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Category.ModuleCat.FiniteLocalization
 public import Quillen.GTheory.FiniteModules.Localization.EssentialSurjectivity
 
 /-! The genuine Serre quotient description of finite-module localization. -/
 @[expose] public section
+
+open ModuleCat.FiniteLocalization
+
 
 noncomputable section
 universe u

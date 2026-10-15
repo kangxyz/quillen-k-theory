@@ -8,6 +8,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ReferenceWh
 
 /-! The original source and target projection binary rows, retaining their actual references. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -42,6 +45,10 @@ theorem native_source_column (i : Fin 3) :
   exact he.symm.trans (projection_left_column p q p' q' a b c hp hq r hr
     (ProjectionReference.reference c r) rfl i)
 
+/--
+The reference from the projection anchor to the last normalized triple, induced by the total
+commuting-square equality.
+-/
 def nativeLastReference : (ProjectionReference.reference c r).functor ≅
     (NormalizedTripleSimplex.sourceMap q' p' a).functor :=
   eqToIso (ProjectionReference.anchor p q c r hr) ≪≫

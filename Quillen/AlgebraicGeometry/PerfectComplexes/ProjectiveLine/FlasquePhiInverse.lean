@@ -18,6 +18,12 @@ additivity identify PhiG on the original model groups. The existing native
 affine two-summand map is transported through the original model inclusions.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueGammaEndpoints
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTensorAdditivity
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

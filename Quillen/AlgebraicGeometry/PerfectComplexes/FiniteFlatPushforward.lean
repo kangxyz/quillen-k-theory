@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ComplexPushforward
 public import Quillen.AlgebraicGeometry.PerfectComplexes.VectorBundleInclusion
 public import Quillen.Waldhausen.ExactFunctor
@@ -20,6 +21,9 @@ commutes with this actual functor. No direct image of arbitrary locally perfect
 representatives is asserted.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

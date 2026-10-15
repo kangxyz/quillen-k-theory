@@ -14,6 +14,9 @@ The specified coefficient and open-side maps, original section functor, inherite
 cofibrations, relative weak maps, pushouts and structure time all remain explicit.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair

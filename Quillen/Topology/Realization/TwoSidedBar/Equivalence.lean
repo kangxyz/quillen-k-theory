@@ -16,6 +16,9 @@ The two-sided bar augmentations provide the stated classifying-space comparison 
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

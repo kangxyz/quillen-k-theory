@@ -9,8 +9,14 @@ public import Quillen.Topology.PlusConstruction.ClassicalCWUniquenessUniverseLif
 
 /-! # Independent original successor-certificate and arbitrary-target consumers -/
 @[expose] public section
+
+open Topology
+
+open Quillen.DoubleCylinder
+open Quillen.IsPlusConstruction
+
 noncomputable section
-open CategoryTheory Limits MonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory
 open scoped unitInterval
 universe u w
 namespace Quillen.Consumer.ClassicalCWPlusMixedUniverse

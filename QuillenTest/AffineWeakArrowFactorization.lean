@@ -17,6 +17,10 @@ and the non-domain and empty-spectrum cases.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.Affine
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

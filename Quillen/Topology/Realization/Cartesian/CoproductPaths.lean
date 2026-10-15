@@ -18,8 +18,10 @@ assumed discrete and no map is assumed to be a fibration.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 open scoped Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false

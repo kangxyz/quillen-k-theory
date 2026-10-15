@@ -19,10 +19,12 @@ are unchanged.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Set Topology
+open CategoryTheory Set
 open scoped unitInterval
 open unitInterval
 universe u

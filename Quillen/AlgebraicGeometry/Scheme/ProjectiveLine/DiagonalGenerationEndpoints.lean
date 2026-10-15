@@ -5,6 +5,12 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.BaseChange.Flat
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Locality
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Basic
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Restriction
 public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PullbackSingleNaturality
 public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.SingleComparison
 public import Aglib.AlgebraicGeometry.Modules.Tensor.Symmetry
@@ -12,7 +18,7 @@ public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalProjectedT
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DerivedFlatBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.PullbackTensorCompatibility
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.LineTensorCompatibility
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.DerivedProjectionFormula
+public import Aglib.AlgebraicGeometry.Cohomology.ProjectionFormula.Basic
 
 /-!
 # Natural endpoints of the actual diagonal generation triangle
@@ -27,23 +33,15 @@ equivalence or a full coefficient extension.
 -/
 
 @[expose] public section
+
+open CategoryTheory.Pretriangulated
+
+
+open AlgebraicGeometry.Scheme.Modules
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.Scheme.ProjectiveLine
-export AlgebraicGeometry.Scheme.Modules
-  (derivedFlatPullbackPlusSingleIso_naturality moduleTensorSymmetryNatIso)
-end Quillen.Scheme.ProjectiveLine
-
-namespace Quillen.SchemeSheaf
-export AlgebraicGeometry.Scheme.Modules
-  (exactDerivedSingleNatIso exactSingleComplexNatIso)
-end Quillen.SchemeSheaf
-
-end
 
 
 noncomputable section
@@ -54,6 +52,7 @@ open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits AlgebraicGeomet
   CategoryTheory.Pretriangulated
 
 namespace AlgebraicGeometry.Scheme.Modules
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance generationStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 
@@ -61,6 +60,7 @@ end AlgebraicGeometry.Scheme.Modules
 
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open AlgebraicGeometry.Scheme.Modules CategoryTheory.MonoidalCategory CategoryTheory.BraidedCategory
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance generationStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 

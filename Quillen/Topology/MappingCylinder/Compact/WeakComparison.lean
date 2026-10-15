@@ -17,6 +17,9 @@ Weak equivalences on the specified fibers give endpoint boundary lifting for the
 -/
 @[expose] public section
 
+open Quillen.CubicalTests
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -6,6 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Limits
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Localization.AffineSectionsGlobal
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.Fullness
 
 /-!
@@ -20,7 +23,6 @@ a quasicoherent subsheaf. Finite approximation is a subsequent step.
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

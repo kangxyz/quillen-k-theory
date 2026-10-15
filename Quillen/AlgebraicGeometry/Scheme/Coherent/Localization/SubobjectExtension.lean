@@ -6,7 +6,9 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.QuasicoherentClosure
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Limits
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.Subobjects
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.GraphFractions
 
@@ -26,7 +28,6 @@ input, not a quotient-equivalence assumption or an asserted instance.
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

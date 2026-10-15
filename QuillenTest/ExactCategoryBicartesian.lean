@@ -3,7 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
+import Aglib.CategoryTheory.ExactCategory.Basic
 import Quillen.CategoryTheory.ExactCategory.Bicartesian
+
+open CategoryTheory.ExactCategory
+
 
 /-!
 # Consumers of bicartesian admissible pushouts
@@ -13,7 +17,6 @@ lifting problem using an arbitrary original pushout square.
 -/
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
-open Quillen
 universe v u
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C) {A B A' B' : C}

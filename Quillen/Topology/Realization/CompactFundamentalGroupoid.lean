@@ -18,10 +18,12 @@ actual colimit.
 -/
 @[expose] public section
 
+open Topology
+
 
 noncomputable section
 
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 
 universe u
 

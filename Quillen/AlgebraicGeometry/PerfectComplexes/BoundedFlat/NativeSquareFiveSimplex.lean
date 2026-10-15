@@ -20,6 +20,7 @@ namespace Quillen.PerfectComplexes.NativeSquareFiveSimplex
 variable {X Y Z T : Scheme.{u}} (p : X ⟶ Y) (v : Y ⟶ Z) (q : X ⟶ T) (w : T ⟶ Z)
   (h : p ≫ v = q ≫ w)
 
+/-- The binary normalization source for the route `p ≫ v` through the commuting square. -/
 abbrev source := BinaryNormalizationSimplex.sourceMap p v
 
 include h in
@@ -27,8 +28,13 @@ include h in
 theorem source_eq : (source p v).functor = (BinaryNormalizationSimplex.sourceMap q w).functor :=
   congrArg (fun F ↦ AsSmall.down ⋙ F ⋙ AsSmall.up) (congrArg boundedFlatNormalizedPullback h)
 
+/--
+The isomorphism from the `p, v` binary source to the `q, w` binary source induced by the square
+equality `h`.
+-/
 def sourceIso := eqToIso (source_eq p v q w h)
 
+/-- A model morphism equipped with a natural isomorphism from the fixed `p, v` source functor. -/
 abbrev Node := Σ F : modelOf (boundedFlatPerfectWaldhausen Z) ⟶
     modelOf (boundedFlatPerfectWaldhausen X), (source p v).functor ≅ F.functor
 
@@ -42,13 +48,19 @@ def nodes : Fin 5 → Node p v :=
     ⟨BinaryNormalizationSimplex.targetMap q w,
       sourceIso p v q w h ≪≫ BinaryNormalizationSimplex.total q w⟩]
 
+/--
+The four-dimensional model simplex joining both binary normalization triangles at their common
+source.
+-/
 def simplex : ModelSimplex (modelOf (boundedFlatPerfectWaldhausen Z))
     (modelOf (boundedFlatPerfectWaldhausen X)) 4 :=
   ModelSimplex.ofIsos (source p v) (fun i ↦ (nodes p v q w h i).1)
     (fun i ↦ (nodes p v q w h i).2)
 
+/-- The face selecting vertices `0, 1, 2`, which carry the `p, v` binary normalization triangle. -/
 def firstFace : ⦋2⦌ ⟶ ⦋4⦌ := SimplexCategory.Hom.mk ⟨![0, 1, 2], by
   intro i j hij; fin_cases i <;> fin_cases j <;> simp_all⟩
+/-- The face selecting vertices `0, 3, 4`, which carry the `q, w` binary normalization triangle. -/
 def secondFace : ⦋2⦌ ⟶ ⦋4⦌ := SimplexCategory.Hom.mk ⟨![0, 3, 4], by
   intro i j hij; fin_cases i <;> fin_cases j <;> simp_all⟩
 
@@ -63,16 +75,25 @@ theorem first_face : (simplex p v q w h).face firstFace =
   · intro i j f
     fin_cases i <;> fin_cases j <;> rfl
 
+/-- The source, raw intermediate, and normalized target maps for the second route `q ≫ w`. -/
 def secondVertices : Fin 3 → (modelOf (boundedFlatPerfectWaldhausen Z) ⟶
     modelOf (boundedFlatPerfectWaldhausen X)) :=
   ![BinaryNormalizationSimplex.sourceMap q w,
     BinaryNormalizationSimplex.intermediateMap q w, BinaryNormalizationSimplex.targetMap q w]
 
+/--
+The identity, first normalization, and total normalization references for the three second-route
+vertices.
+-/
 def secondReferences : ∀ i,
     (BinaryNormalizationSimplex.sourceMap q w).functor ≅ (secondVertices q w i).functor :=
   Fin.cases (Iso.refl _) (Fin.cases (BinaryNormalizationSimplex.first q w)
     (Fin.cases (BinaryNormalizationSimplex.total q w) (fun i ↦ Fin.elim0 i)))
 
+/--
+The second-route vertices referenced to the fixed first-route source through the square-induced
+isomorphism.
+-/
 def secondNodes (i : Fin 3) : Node p v :=
   ⟨secondVertices q w i, sourceIso p v q w h ≪≫ secondReferences q w i⟩
 

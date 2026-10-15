@@ -4,16 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSourceReferences
 
 /-! Propagation of the two source reference equalities along their original transformations. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u v
 namespace Quillen.PerfectComplexes.BassReferenceMerge
@@ -31,12 +35,16 @@ private theorem pair_row_step {C D E : Type u}
 variable {R : CommRingCat.{u}} (P : Over (Spec R))
 variable {a b c : Under R} (u : a ⟶ b) (v : b ⟶ c)
 
+/-- The first Laurent normalization step whiskered by the projection triangle's target functor
+for `g`. -/
 abbrev firstStep (g : (space (op P, (laurentUnderFunctor R).obj a)) ⟶
     space (op P, (polynomialUnderFunctor R).obj a)) :=
   isoWhiskerLeft (BinaryNormalizationSimplex.targetMap g (polynomialProjection P a)).functor
     (BinaryNormalizationSimplex.first
       (BassLaurentBottomFace.firstMap P v) (BassLaurentBottomFace.secondMap P u))
 
+/-- The total Laurent normalization comparison whiskered by the projection triangle's target
+functor for `g`. -/
 abbrev totalStep (g : (space (op P, (laurentUnderFunctor R).obj a)) ⟶
     space (op P, (polynomialUnderFunctor R).obj a)) :=
   isoWhiskerLeft (BinaryNormalizationSimplex.targetMap g (polynomialProjection P a)).functor

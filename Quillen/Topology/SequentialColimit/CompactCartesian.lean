@@ -22,8 +22,10 @@ it does not assert a global homotopy equivalence.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 open scoped unitInterval
 
 universe u v

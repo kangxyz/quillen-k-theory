@@ -5,9 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.CounitCriterion
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenSectionsLocalization
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.AffineSectionsPushforward
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Localization.AffineSectionsPushforward
 
 /-!
 # The actual qc-open derived pushforward counit on an affine scheme
@@ -26,6 +27,9 @@ exactness then detects the literal counit. It does not assume exactness of
 ordinary direct image or quasicoherence of its terms.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

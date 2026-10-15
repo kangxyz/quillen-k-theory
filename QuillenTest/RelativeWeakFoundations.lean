@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.InverseImageWeak
 public import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
 
@@ -12,9 +13,15 @@ public import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
 quasi-isomorphism-fine relative complex cylinder. All universes are independent. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
+open CategoryTheory.ExactCategory
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CochainComplex
-open Quillen Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open Quillen Quillen.Waldhausen.Fibration
 universe u v u' v'
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

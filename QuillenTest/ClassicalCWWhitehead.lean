@@ -8,8 +8,13 @@ public import Quillen.Topology.CWComplex.Whitehead
 
 /-! # QuillenTest of original-map classical CW Whitehead -/
 @[expose] public section
+
+open Topology
+
+open Quillen.ClassicalCW
+
 noncomputable section
-open Set Topology
+open Set
 open scoped unitInterval
 universe u
 namespace QuillenTest.ClassicalCWWhitehead

@@ -6,8 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineSupport
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Support
 
 /-!
 # Closed stalk support of actual global coherent sheaves
@@ -22,7 +23,6 @@ condition, without a global finiteness or separatedness hypothesis.
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

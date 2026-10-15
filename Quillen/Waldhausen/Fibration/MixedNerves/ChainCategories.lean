@@ -18,6 +18,9 @@ fine-weak chains and pointwise coarse (or coarse-cofibration) maps.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.Fibration.RelativeRows
+
+
 noncomputable section
 open CategoryTheory Opposite
 universe u v

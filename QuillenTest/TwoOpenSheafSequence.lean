@@ -17,6 +17,9 @@ of the projective line over arbitrary, nonreduced, and zero base rings.
 -/
 
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -27,7 +30,6 @@ open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.TwoOpen
 open AlgebraicGeometry.Scheme.PolynomialLaurent
 namespace QuillenTest.TwoOpenSheafSequence
 
-open Quillen
 variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
   [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]
   (h : IsPullback a b j k) (M : X.Modules)

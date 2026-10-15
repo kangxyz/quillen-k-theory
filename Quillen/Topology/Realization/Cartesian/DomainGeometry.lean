@@ -20,6 +20,9 @@ input to the pushout or cofibration statements.
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 noncomputable section
 
 open CategoryTheory Limits Opposite MonoidalCategory

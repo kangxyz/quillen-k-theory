@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatExtensions
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatCochainResolution
 public import Quillen.AlgebraicGeometry.PerfectComplexes.KTheory
@@ -21,6 +22,12 @@ no equivalence with that larger category is assumed here.
 -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
+open CategoryTheory.ExactCategory
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -28,7 +35,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped ZeroObject
-open AlgebraicGeometry.Scheme.Modules Quillen.CochainComplex
+open AlgebraicGeometry.Scheme.Modules
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
 

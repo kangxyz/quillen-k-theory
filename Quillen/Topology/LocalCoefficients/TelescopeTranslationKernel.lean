@@ -12,6 +12,10 @@ public import Quillen.Topology.LocalCoefficients.TelescopeHomologyElements
 /-! # Original finite-stage kernel representatives for telescope translations -/
 
 @[expose] public section
+
+open Quillen.GrothendieckTelescope
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u v

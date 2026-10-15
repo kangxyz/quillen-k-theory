@@ -5,10 +5,14 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.Basic
 
 /-! # Actual perfect-complex gluing on a binary open cover -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

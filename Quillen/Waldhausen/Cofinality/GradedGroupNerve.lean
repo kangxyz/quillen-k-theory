@@ -17,6 +17,9 @@ The isomorphism retains the original interval values as original nerve arrows.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.QuotientRows
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial

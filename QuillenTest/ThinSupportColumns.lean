@@ -18,6 +18,9 @@ consumer retains every map in its pushout square and expresses the finite range 
 
 @[expose] public section
 
+open Quillen.CubicalSubdivision
+
+
 noncomputable section
 
 open CategoryTheory Limits MonoidalCategory

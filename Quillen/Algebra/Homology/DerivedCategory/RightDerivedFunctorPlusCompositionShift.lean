@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 public import Quillen.Algebra.Homology.CochainComplexPlusShift
-public import Quillen.Algebra.Homology.DerivedCategory.RightDerivedFunctorPlusComposition
+public import Aglib.Algebra.Homology.DerivedCategory.RightDerivedFunctorPlus.Composition
 
 /-! # Shift compatibility of the original composite derived unit -/
 

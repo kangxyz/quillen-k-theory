@@ -11,8 +11,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BassConeComparis
 homotopy extension at the unchanged perfect Bass cone point, and actual reverse-track cancellation
 on every signed stable group. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen Quillen.LoopPrespectrum Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry Quillen Quillen.LoopPrespectrum
 open AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped Topology unitInterval
 universe u

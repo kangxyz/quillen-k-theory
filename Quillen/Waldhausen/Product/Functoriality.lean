@@ -11,6 +11,9 @@ public import Quillen.Waldhausen.Product.KEquivalence
 /-! # Original K-maps into an actual product category -/
 @[expose] public section
 
+open Quillen.Waldhausen.ExtensionCategory
+
+
 
 noncomputable section
 open CategoryTheory

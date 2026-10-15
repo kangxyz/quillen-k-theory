@@ -5,15 +5,24 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BassSpanComparisonTrack
 
 /-! # Literal composite-map and full-cylinder consumers of Bass coefficient naturality -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.PolynomialBaseChange
+open Quillen.Waldhausen.IteratedS
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PerfectComplexes
-open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent
   Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.BassSpanComparisonTrack

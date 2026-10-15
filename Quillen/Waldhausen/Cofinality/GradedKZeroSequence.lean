@@ -16,6 +16,9 @@ Its kernel and surjectivity follow from the genuine original fibration.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.Fibration
+
+
 noncomputable section
 open CategoryTheory
 universe u

@@ -10,8 +10,11 @@ public import Quillen.Waldhausen.SConstruction.Iterated.TriangleRealization
 /-! The actual Δ[2]/interval swap and original iterated-stage structure map. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
-open CategoryTheory MonoidalCategory Quillen Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open CategoryTheory MonoidalCategory Quillen Quillen.Waldhausen.IteratedS
 open scoped Simplicial Topology unitInterval
 universe u
 

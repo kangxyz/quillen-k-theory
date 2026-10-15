@@ -6,10 +6,13 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeProperty
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.FiniteApproximation
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.LocalIsomorphisms
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Restriction
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Comparison
+public import Aglib.AlgebraicGeometry.Modules.Locality.Isomorphisms
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeRestriction
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Comparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
 
 /-!
 # Finite coherent approximation on a compact affine open
@@ -20,10 +23,11 @@ on actual sheaf restriction maps, using the natural localization comparison.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

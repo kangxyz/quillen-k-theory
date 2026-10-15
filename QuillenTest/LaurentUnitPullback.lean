@@ -5,14 +5,19 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalUnitPullback
-public import Quillen.AlgebraicGeometry.Scheme.Affine.LaurentUnitNaturality
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Units
 
 /-! Actual scalar and geometric-comparison consumers under arbitrary Laurent coefficient change. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
-open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace QuillenTest.LaurentUnitPullback
 

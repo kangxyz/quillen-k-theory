@@ -5,13 +5,18 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassEvaluation
 
 /-! Actual Bass evaluation preserves original corners, complete cylinders and independent times. -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.PolynomialLaurent
+open CommRingCat.PolynomialLaurent
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
-open Quillen.PerfectComplexes Quillen.PolynomialBaseChange
   AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped unitInterval
 universe u

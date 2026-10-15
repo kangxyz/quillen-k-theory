@@ -14,11 +14,14 @@ These consumers retain the two geometric chart maps, the original signed cone bo
 unchanged negative-degree fiber representatives. All topology and excision inputs are discharged.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
+open Quillen Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
 open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace QuillenTest.BoundedFlatBassSpanStableGroups

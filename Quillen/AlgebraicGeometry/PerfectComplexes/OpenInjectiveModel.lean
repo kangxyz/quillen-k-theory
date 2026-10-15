@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ComplexPushforward
 public import Mathlib.CategoryTheory.Abelian.GrothendieckCategory.EnoughInjectives
@@ -23,6 +24,9 @@ or ambient perfection is asserted. The derived counit alone does not prove
 these additional properties.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

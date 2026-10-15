@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Regular.ResolutionProperty
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Restriction
@@ -19,10 +21,12 @@ vector bundle to an affine chart is used as a projective object.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 

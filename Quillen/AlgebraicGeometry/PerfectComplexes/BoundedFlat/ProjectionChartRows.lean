@@ -9,6 +9,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ProjectionP
 
 /-! Original precomposed chart rows inside a projection rectangle and a five-node square. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -48,6 +51,10 @@ variable {A B C A' B' C' : Scheme.{u}}
   (hp : b ≫ p = p' ≫ a) (hq : c ≫ q = q' ≫ b)
   (r : C ⟶ A) (hr : q ≫ p = r)
 
+/--
+The reference from the projection source to the first triple `c, q, p`, induced by the
+projection equation `hr`.
+-/
 def nativeFirstReference : (ProjectionReference.reference c r).functor ≅
     (NormalizedTripleSimplex.sourceMap c q p).functor :=
   eqToIso (ProjectionReference.anchor p q c r hr)

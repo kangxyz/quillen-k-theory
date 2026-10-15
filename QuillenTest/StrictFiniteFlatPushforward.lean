@@ -9,9 +9,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.FiniteFlatPushforwardNa
 
 /-! Consumers of actual strict-perfect finite flat direct image and its K-comparison. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes
 attribute [local instance] Abelian.hasFiniteBiproducts
 universe u
 namespace QuillenTest.StrictFiniteFlatPushforward

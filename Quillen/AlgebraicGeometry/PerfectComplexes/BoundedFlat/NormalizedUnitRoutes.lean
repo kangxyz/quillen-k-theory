@@ -5,6 +5,7 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.TripleTrack
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NormalizedUnitTrack
 public import Quillen.Topology.Prespectrum.RelativeHomotopyPasting
 
@@ -50,24 +51,6 @@ private theorem homotopy_level_transport {X Y : Quillen.LoopPrespectrum}
     (p.mp H).level n = H.level n := by
   subst g'
   rfl
-
-/-- Whole values of the normalized composition track before its endpoint-arrow transport. -/
-theorem boundedFlatNormalizedCompTrack_level {X Y Z : Scheme.{u}}
-    (f : X ⟶ Y) (g : Y ⟶ Z) (n : ℕ) :
-    (boundedFlatNormalizedCompTrack f g).level n =
-      (originalPrespectrumTransformationHomotopy (boundedFlatPerfectWaldhausen Z)
-        (boundedFlatPerfectWaldhausen X) (boundedFlatNormalizedPullback_exact (f ≫ g))
-        ((boundedFlatNormalizedPullback_exact g).comp (boundedFlatNormalizedPullback_exact f))
-        (boundedFlatNormalizedPullback_obj_zero _)
-        ((congrArg (boundedFlatNormalizedPullback f).obj
-          (boundedFlatNormalizedPullback_obj_zero g)).trans
-          (boundedFlatNormalizedPullback_obj_zero f))
-        (boundedFlatNormalizedPullbackCompIso f g).hom
-        (fun _ ↦ (boundedFlatPerfectWaldhausen X).weq_iso _ inferInstance)).level n := by
-  unfold boundedFlatNormalizedCompTrack
-  apply homotopy_level_transport (originalPrespectrumMap_comp _ _ _
-    (boundedFlatNormalizedPullback_exact g) (boundedFlatNormalizedPullback_exact f)
-    (boundedFlatNormalizedPullback_obj_zero g) (boundedFlatNormalizedPullback_obj_zero f))
 
 /-- The right unit route keeps the original composition time and unit time. -/
 def boundedFlatNormalizedRightUnitRoute {X Y : Scheme.{u}} (f : X ⟶ Y) :

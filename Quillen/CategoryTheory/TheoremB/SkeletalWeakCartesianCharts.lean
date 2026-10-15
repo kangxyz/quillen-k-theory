@@ -17,6 +17,9 @@ characteristic charts and restriction inclusions, with their naturality squares.
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval

@@ -17,6 +17,9 @@ consumer retains its cylinder map and source point, and tests the asymmetric zer
 
 @[expose] public section
 
+open Quillen.CubicalSubdivision
+
+
 noncomputable section
 
 open CategoryTheory Limits MonoidalCategory

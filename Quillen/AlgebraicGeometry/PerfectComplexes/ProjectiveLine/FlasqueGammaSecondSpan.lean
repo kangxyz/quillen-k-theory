@@ -10,6 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SecondEn
 
 /-! # Actual Gamma of the original second model weak span -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTensorAdditivity
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -21,8 +24,14 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueGammaEndpoints
 open FlasqueTensorAdditivity
 
+/-- The source of the second endpoint span followed by left tensor with the negative line and
+Godement totalization.
+-/
 def secondGammaSource (R : CommRingCat.{u}) := SecondEndpoint.source R ⋙ Gamma R
 
+/-- The common center of the second endpoint span followed by left tensor with the negative line and
+Godement totalization.
+-/
 def secondGammaCenter (R : CommRingCat.{u}) := SecondEndpoint.center R ⋙ Gamma R
 
 /-- The literal original alpha/Q/beta chain is acted on by the actual exact Gamma. -/

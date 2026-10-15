@@ -15,9 +15,12 @@ Stable equivalence uses only original stable sides, with every row-excision inpu
 The parameter-loop consumer keeps independent homotopy, structure and loop times visible.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open Quillen Quillen.LoopPrespectrum
 open scoped unitInterval
 universe u
 namespace QuillenTest.SectionBassWholeTrackCone

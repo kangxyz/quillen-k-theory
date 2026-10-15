@@ -4,17 +4,26 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ProjectionFirstNormalNode
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.H1ProductPolynomialRows
 
 /-! Full central reference identity on both product/middle H1 joins. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH1References
+open Quillen.PerfectComplexes.BassReferenceMerge
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH1Join
@@ -24,6 +33,10 @@ variable {a b c : Under R} (u : a ⟶ b) (v : b ⟶ c)
 variable (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
   (hb : coefficientMap P (α.app b) ≫ polynomialProjection P b = laurentProjection P b)
 
+/--
+The middle-component chart center, normalized through the polynomial projection at `b` and
+precomposed by the coefficient map along `u`.
+-/
 def middleChartCenter : BassOverlap.Node P u v :=
   BassH0Merge.preReferenceNode (BassOverlap.commonReference P u v)
     (BassH1Components.coefficientMapModel P u) (middleIso P u v)
@@ -34,6 +47,10 @@ def middleChartCenter : BassOverlap.Node P u v :=
         (coefficientMap P ((laurentUnderFunctor R).map v) ≫ coefficientMap P (α.app b))
         (polynomialProjection P b)⟩ : BassH0Diagram.Node P v)
 
+/--
+The product-row center formed from the final polynomial-square node and the chart source, with
+their common reference.
+-/
 def productChartCenter : BassOverlap.Node P u v :=
   ⟨(CoefficientSquareFamilies.polynomialNodes P u 4).1 ≫
     CoefficientSquareFamilies.chartSource P v α,
@@ -86,7 +103,8 @@ theorem chart_center_reference : (middleChartCenter P u v α hb).2 =
     rfl
   have hp : (CoefficientSquareFamilies.polynomialNodes P u 4).2 =
     smallIso (eqToIso (congrArg boundedFlatNormalizedPullback
-      (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u)) ≪≫
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (polynomialUnderCoefficient R) u)) ≪≫
       boundedFlatNormalizedPullbackCompIso (polynomialProjection P b) (coefficientMap P u)) := by
     rw [smallIso_trans, smallIso_eqToIso]
     rfl
@@ -111,7 +129,8 @@ theorem chart_center_reference : (middleChartCenter P u v α hb).2 =
         (coefficientMap P ((laurentUnderFunctor R).map v) ≫ coefficientMap P (α.app b))
         (coefficientMap P ((polynomialUnderFunctor R).map u) ≫ polynomialProjection P a)) ≪≫
     isoWhiskerRight (smallIso (eqToIso (congrArg boundedFlatNormalizedPullback
-      (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u)) ≪≫
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (polynomialUnderCoefficient R) u)) ≪≫
       boundedFlatNormalizedPullbackCompIso (polynomialProjection P b) (coefficientMap P u)))
       (AsSmall.down ⋙ boundedFlatNormalizedPullback
         (coefficientMap P ((laurentUnderFunctor R).map v) ≫ coefficientMap P (α.app b)) ⋙
@@ -126,7 +145,8 @@ theorem chart_center_reference : (middleChartCenter P u v α hb).2 =
       (coefficientMap P ((polynomialUnderFunctor R).map u) ≫ polynomialProjection P a)
       (laurentProjection P c ≫ coefficientMap P v ≫ coefficientMap P u)
       (chartFirstGeom P v α hb)
-      (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (polynomialUnderCoefficient R) u)
       (middle_total P u v).symm (chart_total P u v α hb).symm)
 
 /-- Both original full central nodes agree, with every normalization and equality iso retained. -/

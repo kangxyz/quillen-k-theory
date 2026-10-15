@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.Square
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionDiagram
-public import Quillen.Algebra.Polynomial.LaurentUnderSquare
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 
 /-!
 # Original fixed-open coefficient diagram consumers
@@ -16,10 +17,15 @@ literal lift projections, the actual identity-base-change isomorphism, the uncha
 supported map and the positive/inverse Laurent legs over the fixed base ring.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair
-open Quillen.PolynomialBaseChange
 universe u
 namespace QuillenTest.SupportedSectionDiagram
 

@@ -8,8 +8,13 @@ public import Quillen.Topology.CWComplex.SkeletonExtension
 
 /-! # Named tests of actual classical-CW skeleton attachment -/
 @[expose] public section
+
+open Topology
+
+open Quillen.ClassicalCW
+
 noncomputable section
-open Set Metric Topology
+open Set Metric
 universe u v
 namespace QuillenTest.CWSkeletonAttachment
 

@@ -15,11 +15,14 @@ The original inclusion, actual evaluation inverse, original Laurent seed, negati
 two coefficient arrows and unchanged perfect K0 law are retained by these consumers.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
+open Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.SectionBassLocalizedSpectrum
 

@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.KTheory.GrothendieckComparison.Cocycle
 public import Quillen.KTheory.GrothendieckComparison.Naturality
 public import Mathlib.CategoryTheory.Localization.Predicate
@@ -19,6 +20,9 @@ This is the algebraic edge-path presentation; identifying it with all continuous
 loops in the realization is a separate topological theorem.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section
@@ -96,7 +100,7 @@ theorem qGroupoidGenerated_eq_top : E.qGroupoidGenerated = ⊤ := by
 
 /-- At zero, the canonical zero-apex arrow is the identity. -/
 @[simp] lemma fromZero_self : E.fromZero E.qZero = 𝟙 E.qZero := by
-  apply Quotient.sound
+  apply _root_.Quotient.sound
   refine ⟨Span.mkIso (Iso.refl _) ?_ ?_⟩ <;> simp [Q.of]
 
 @[simp] lemma qGroupoidZeroArrow_zero :

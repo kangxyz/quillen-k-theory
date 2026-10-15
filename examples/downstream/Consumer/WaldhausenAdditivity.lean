@@ -6,6 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.Additivity.BasedAdditivity
 public import Quillen.Waldhausen.QuillenComparison.ExactNaturality
 public import Quillen.Waldhausen.GilletWaldhausen.AdjacentTruncation
@@ -15,9 +18,16 @@ public import Quillen.Waldhausen.ExtensionCategory.KEquivalence
 /-! Downstream contracts for the actual additivity and acyclic-filtration interfaces. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+open Quillen.Waldhausen.GilletWaldhausen
+
+
+open CategoryTheory.ExactCategory
+
+
 noncomputable section
-open CategoryTheory CategoryTheory.Limits Quillen Quillen.Waldhausen
-open Quillen.Waldhausen.Additivity Quillen.Waldhausen.GilletWaldhausen
+open CategoryTheory CategoryTheory.Limits Quillen
+open Quillen.Waldhausen.Additivity
 universe u v
 namespace Consumer
 

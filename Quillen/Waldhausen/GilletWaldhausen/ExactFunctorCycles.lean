@@ -16,6 +16,9 @@ exact sequence. The functor need not be exact on the ambient category.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.GilletWaldhausen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffinePushforwardAcyclicity
+public import Aglib.AlgebraicGeometry.Cohomology.Affine.PushforwardAcyclicity
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AcyclicPushforwardResolution
 
 /-! # The original affine direct image of a quasicoherent injective resolution
@@ -13,8 +13,9 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AcyclicPushforwardResolutio
 The actual augmentation remains a quasi-isomorphism after direct image.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

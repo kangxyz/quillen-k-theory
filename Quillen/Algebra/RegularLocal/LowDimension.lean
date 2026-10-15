@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Algebra.RegularLocal.DimensionZero
+public import Aglib.RingTheory.RegularLocalRing.DimensionZero
 public import Quillen.Algebra.RegularLocal.PrincipalDomain
 
 /-! # Regular local rings of dimension at most one
@@ -17,6 +17,9 @@ the domain property in positive dimension, and then every ideal is principal.
 No projective-dimension or resolution hypothesis is imposed.
 -/
 @[expose] public section
+
+open IsRegularLocalRing
+
 
 noncomputable section
 universe u

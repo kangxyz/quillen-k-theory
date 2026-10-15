@@ -13,6 +13,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalCofinality
 /-! # Original K-zero image reflection on a genuine covering pair -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

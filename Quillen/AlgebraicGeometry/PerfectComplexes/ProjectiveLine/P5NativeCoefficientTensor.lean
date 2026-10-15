@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativeCoefficientsZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientOperations
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeTwoSummands
@@ -16,6 +19,13 @@ Right tensor retains its actual order, maps and lower bound; its output is not
 asserted flasque before Godement totalization.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Products
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 
 open CategoryTheory.ExactCategory
 
@@ -29,15 +39,17 @@ open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Modules
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeCoefficients
-open FlasqueCoefficients AlgebraicGeometry.Scheme.Bass
+open FlasqueCoefficients
 
 /-- Original K tensor L remains locally perfect by the actual tensor symmetry. -/
 lemma rightTensor_locallyPerfect (X : QuasiCompactSchemes.{u}) {K : Complex
     (nativeLineFunctor.obj X).obj}
     (hK : locallyPerfect (nativeLineFunctor.obj X).obj K) :
-    locallyPerfect (nativeLineFunctor.obj X).obj ((tensorByLineRightComplex
+    locallyPerfect (nativeLineFunctor.obj X).obj
+      ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight
       (nativeTautologicalLine X)).obj K) :=
-  locallyPerfect_of_iso ((tensorByLineComplexSymmetry (nativeTautologicalLine X)).app K)
+  locallyPerfect_of_iso ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeftRightIso
+    (nativeTautologicalLine X)).app K)
     (locallyPerfect_tensorByLine (nativeTautologicalLine X)
       (fun _ : Bool => (polynomialFunctor.obj X).obj)
       (nativeChart X) (nativeChart_cover X) (nativeLineChartIso X) hK)
@@ -46,7 +58,8 @@ lemma rightTensor_locallyPerfect (X : QuasiCompactSchemes.{u}) {K : Complex
 lemma rightTensor_isStrictlyGE (X : QuasiCompactSchemes.{u}) (K : Complex (nativeLineFunctor.obj
     X).obj)
     (a : ℤ) [K.IsStrictlyGE a] :
-    ((tensorByLineRightComplex (nativeTautologicalLine X)).obj K).IsStrictlyGE a := by
+    ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X)).obj
+      K).IsStrictlyGE a := by
   apply (CochainComplex.isStrictlyGE_iff _ a).mpr
   intro n hn
   exact (moduleTensorByLineRight (nativeTautologicalLine X)).map_isZero
@@ -56,7 +69,8 @@ lemma rightTensor_isStrictlyGE (X : QuasiCompactSchemes.{u}) (K : Complex (nativ
 lemma rightTensor_objects (X : QuasiCompactSchemes.{u})
     (K : FlasqueBoundedBelow.Obj (nativeLineFunctor.obj X).obj) :
     BoundedBelow.objects (nativeLineFunctor.obj X).obj
-      ((tensorByLineRightComplex (nativeTautologicalLine X)).obj K.obj) := by
+      ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X)).obj K.obj)
+        := by
   obtain ⟨a, ha⟩ := K.property.1.2
   let := ha
   exact ⟨rightTensor_locallyPerfect X K.property.1.1, a,
@@ -67,15 +81,17 @@ def rightTensor (X : QuasiCompactSchemes.{u}) :
     FlasqueBoundedBelow.Obj (nativeLineFunctor.obj X).obj ⥤ BoundedBelow.Obj
       (nativeLineFunctor.obj X).obj :=
   ObjectProperty.lift _ ((FlasqueBoundedBelow.objects (nativeLineFunctor.obj X).obj).ι ⋙
-    tensorByLineRightComplex (nativeTautologicalLine X)) (rightTensor_objects X)
+    AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X))
+      (rightTensor_objects X)
 
 instance rightTensor_additive (X : QuasiCompactSchemes.{u}) : (rightTensor X).Additive where
   map_add := by
     intro K L f g
     apply ObjectProperty.hom_ext
-    change (tensorByLineRightComplex (nativeTautologicalLine X)).map (f.hom + g.hom) =
-      (tensorByLineRightComplex (nativeTautologicalLine X)).map f.hom +
-        (tensorByLineRightComplex (nativeTautologicalLine X)).map g.hom
+    change (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X)).map
+      (f.hom + g.hom) =
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X)).map f.hom +
+        (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X)).map g.hom
     exact CategoryTheory.Functor.map_add _
 
 /-- Right tensor preserves the actual inherited short exact sequences. -/
@@ -88,7 +104,7 @@ def rightTensorExactFunctor (X : QuasiCompactSchemes.{u}) : ExactFunctor
   map_conflation S hS := by
     change (S.map (FlasqueBoundedBelow.objects (nativeLineFunctor.obj X).obj).ι).ShortExact at hS
     change ((S.map (FlasqueBoundedBelow.objects (nativeLineFunctor.obj X).obj).ι).map
-      (tensorByLineRightComplex (nativeTautologicalLine X))).ShortExact
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X))).ShortExact
     exact hS.map_of_exact _
 
 lemma rightTensor_exact (X : QuasiCompactSchemes.{u}) : Waldhausen.IsExact
@@ -101,7 +117,8 @@ lemma rightTensor_exact (X : QuasiCompactSchemes.{u}) : Waldhausen.IsExact
   weak f hf := by
     change QuasiIso f.hom at hf
     let := hf
-    exact rightLineComplex_quasiIso (nativeTautologicalLine X) f.hom
+    exact AlgebraicGeometry.Scheme.Modules.Complex.tensorRight_quasiIso (nativeTautologicalLine X)
+      f.hom
   pushout hi h := (rightTensorExactFunctor X).map_isPushout hi h
 
 

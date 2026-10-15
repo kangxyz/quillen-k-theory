@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.ApproximationTriangle
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedDenominators
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.ScalarNilpotence
@@ -19,6 +20,9 @@ principal acyclicity conditions. No scalar exponent or support extension
 is supplied to the finite-family endpoint.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

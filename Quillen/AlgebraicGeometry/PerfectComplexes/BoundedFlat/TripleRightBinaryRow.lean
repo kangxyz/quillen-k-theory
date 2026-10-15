@@ -8,6 +8,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BinaryRowEn
 
 /-! The actual split-triple right row retains the original precomposed binary nodes. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassReferenceMerge
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -22,14 +25,19 @@ variable {X Y Z T : Scheme.{u}}
   (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ T)
   (ρ : F.functor ≅ (NormalizedTripleSimplex.sourceMap f g h).functor)
 
+/-- The vertex indices `5, 6, 7` selecting the right binary row of the split triple simplex. -/
 def rightIndex : Fin 3 → Fin 8 := ![5, 6, 7]
 
+/-- The selected right-row vertex together with its comparison from the reference functor `F`. -/
 def tripleRightNode (i : Fin 3) :
     Σ G : modelOf (boundedFlatPerfectWaldhausen T) ⟶ modelOf (boundedFlatPerfectWaldhausen X),
       F.functor ≅ G.functor :=
   ⟨SplitTripleSimplex.vertices f g h (rightIndex i),
     ρ ≪≫ SplitTripleSimplex.references f g h (rightIndex i)⟩
 
+/-- The comparison from `F` to the binary source for `f` and `g` precomposed with normalized
+pullback along `h`.
+-/
 def rightRowReference : F.functor ≅
     (normalizedMap h ≫ BinaryNormalizationSimplex.sourceMap f g).functor :=
   ρ ≪≫ NormalizedTripleSimplex.rightFirst f g h

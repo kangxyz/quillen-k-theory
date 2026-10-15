@@ -5,11 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.KTheory.Bass.ModelDiagramTwoChartStableSequence
-public import Quillen.AlgebraicGeometry.Scheme.CoefficientPolynomialLaurent
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.PolynomialLaurent
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedBassTower
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenBassTower
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenBassTower
 
 /-!
 # The realized spectral Bass row for the original native coefficient families
@@ -24,10 +24,16 @@ No chart middle exactness, classical fundamental row, seed preservation, or fini
 equivalence is asserted here. Each family retains the hypotheses of its original Model constructor.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
-open Quillen.KTheory.Bass Quillen.PolynomialBaseChange
-  AlgebraicGeometry.Scheme.CoefficientBaseChange
+open Quillen.KTheory.Bass
+  AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Bass.TwoChartStable
 universe u
 namespace Quillen.PerfectComplexes

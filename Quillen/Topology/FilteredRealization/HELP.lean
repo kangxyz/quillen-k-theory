@@ -18,8 +18,10 @@ the finite-stage input for homotopy extension and lifting arguments.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 open scoped Simplicial unitInterval
 universe u v w
 set_option backward.isDefEq.respectTransparency false

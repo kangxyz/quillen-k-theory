@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.CategoryTheory.ExactCategory.Subcategory
 public import Quillen.Devissage.Filtration
 
@@ -22,6 +24,9 @@ Reference: Weibel, *The K-book*, V.3.1, pp. 20–21 of chapter V,
 https://sites.math.rutgers.edu/~weibel/Kbook/Kbook.V.pdf.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

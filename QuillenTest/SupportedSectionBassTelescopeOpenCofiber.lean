@@ -15,8 +15,11 @@ negative signed groups and the unchanged single-boundary map are retained. The t
 the original coarse relative-open telescope, without a classical negative-group identification.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen Quillen.LoopPrespectrum Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry Quillen Quillen.LoopPrespectrum
 open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.SupportedSectionBassTelescopeOpenCofiber

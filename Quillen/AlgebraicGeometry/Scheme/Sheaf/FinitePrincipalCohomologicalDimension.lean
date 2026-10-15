@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.Sites.MayerVietorisSections
+public import Aglib.Topology.Sheaves.MayerVietorisSections
 public import Mathlib.Algebra.Category.Ring.Basic
 public import Mathlib.RingTheory.Spectrum.Prime.Topology
 
@@ -27,6 +27,9 @@ geometric step. The family need not cover the whole spectrum, and no domain,
 noetherianity, or nontrivial-ring assumption is imposed.
 -/
 @[expose] public section
+
+open TopCat.Sheaf
+
 
 
 noncomputable section

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SourceSupportDenominators
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenDerivedRoofs
 
@@ -17,6 +18,12 @@ lower-bounded module complex. Every extra principal acyclicity condition on
 the source passes to the constructed finite-projective denominator.
 -/
 @[expose] public section
+
+open HomologicalComplex
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

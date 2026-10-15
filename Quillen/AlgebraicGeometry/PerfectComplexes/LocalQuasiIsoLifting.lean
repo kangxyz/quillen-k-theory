@@ -6,8 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalNullHomotopy
-public import Quillen.Algebra.Homology.MappingConeAcyclicity
+public import Aglib.Algebra.Homology.MappingCone.Acyclicity
 
 /-!
 # Local lifting through quasi-isomorphisms
@@ -18,6 +19,9 @@ mapping cone, the proved local nullhomotopy theorem, and exactness of the
 mapping-cone triangle in the homotopy category.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

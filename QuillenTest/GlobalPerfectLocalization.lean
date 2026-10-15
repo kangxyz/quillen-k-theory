@@ -17,6 +17,10 @@ affine boundary, empty-open inverse laws, and arbitrary original pair squares.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.OpenDerivedImage
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

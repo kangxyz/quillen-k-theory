@@ -19,6 +19,9 @@ current parameter, rather than attempting a vertical correction.
 -/
 @[expose] public section
 
+open Quillen.CubicalSubdivision
+
+
 noncomputable section
 open scoped Topology unitInterval
 namespace Quillen.PathSubdivision

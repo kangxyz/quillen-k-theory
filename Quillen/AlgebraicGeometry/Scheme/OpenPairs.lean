@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.QuasiCompact
+public import Aglib.AlgebraicGeometry.Properties.QuasiCompactCategory
 public import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
 public import Mathlib.CategoryTheory.Comma.Arrow
 
@@ -17,7 +17,6 @@ squares of scheme maps, not necessarily cartesian or flat. The qc full
 subcategory restricts the ambient scheme only; the open need not be qc.
 -/
 @[expose] public section
-open Quillen
 
 
 

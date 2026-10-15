@@ -20,6 +20,9 @@ equivalence because both of its source projections are proved equivalences.
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval

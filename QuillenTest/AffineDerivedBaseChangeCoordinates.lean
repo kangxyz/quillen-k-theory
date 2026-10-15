@@ -17,7 +17,6 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicGeometry.Scheme.Modules
 namespace QuillenTest.AffineDerivedBaseChangeCoordinates
 
-open Quillen
 attribute [local instance] Abelian.hasFiniteBiproducts
 /-- The actual standard derived categories of module sheaves. -/
 local instance standard (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=

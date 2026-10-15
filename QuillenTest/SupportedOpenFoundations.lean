@@ -5,10 +5,15 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpenDerivedImage.Structure
 
 /-! # Original-map consumers of supported restriction and image foundations -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+open Quillen.PerfectComplexes
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianOpenBaseChange
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.OpenImmersion.Cartesian
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalScalarRestriction
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffinePrincipalCokernel
 

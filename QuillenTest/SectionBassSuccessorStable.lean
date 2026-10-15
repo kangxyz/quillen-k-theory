@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.Square
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassSuccessorStable
 
 /-!
@@ -14,11 +15,17 @@ The actual loop parameter, negative-degree tail, original Laurent inclusion and 
 coefficient action remain visible through the genuine natural successor isomorphism.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open Quillen Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.SectionBassSuccessorStable
 

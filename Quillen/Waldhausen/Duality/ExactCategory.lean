@@ -5,9 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ZeroSquare
 public import Quillen.Waldhausen.Duality.Basic
-public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
+public import Aglib.CategoryTheory.ExactCategory.Isomorphisms
 
 /-! # Opposite Waldhausen structures from genuine exact-category fibrations
 
@@ -16,6 +17,9 @@ axioms follow from the exact structure; a genuine pullback gluing theorem for
 the selected original weak maps gives the remaining Waldhausen axiom.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite

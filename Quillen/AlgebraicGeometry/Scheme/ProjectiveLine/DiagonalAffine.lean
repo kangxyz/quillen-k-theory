@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalCoordinates
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.BaseChange
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineMonomorphisms
@@ -20,6 +21,12 @@ of the original diagonal along a rectangle is the actual intersection of its two
 Local cokernel identifications and global short exactness are not asserted here.
 -/
 @[expose] public section
+
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
 open Quillen
 
 
@@ -30,7 +37,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
-open PolynomialLaurent Quillen.PolynomialBaseChange
+open PolynomialLaurent
 /-- The actual rectangle is the spectrum of the iterated polynomial ring. -/
 def polynomialSquareIso (R : CommRingCat.{u}) :
     Spec (.of (Polynomial (Polynomial R))) ≅ polynomialSquare R :=

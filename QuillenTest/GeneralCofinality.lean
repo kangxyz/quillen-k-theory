@@ -10,6 +10,9 @@ public import Quillen.Waldhausen.Approximation.WeakImageCofinality
 /-! # Original cofinality maps with genuinely independent category universes -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

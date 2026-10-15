@@ -11,7 +11,6 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedOpenBaseChange
 @[expose] public section
 
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -19,7 +18,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicGeometry.Sc
 universe u
 namespace QuillenTest.DerivedOpenBaseChange
 
-open Quillen
 local instance standardDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _
 

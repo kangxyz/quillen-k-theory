@@ -20,6 +20,8 @@ fibers. Compactness excludes the resulting infinite closed discrete subset.
 -/
 @[expose] public section
 
+
+
 open Set Topology
 
 namespace Quillen.Topology

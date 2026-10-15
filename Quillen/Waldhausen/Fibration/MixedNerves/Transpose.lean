@@ -16,6 +16,9 @@ only its proved weak/cofibration predicate is repackaged.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.Fibration.RelativeRows
+
+
 noncomputable section
 open CategoryTheory Opposite
 universe u v

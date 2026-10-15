@@ -11,8 +11,10 @@ public import Quillen.Topology.Realization.Cartesian.CoproductPaths
 /-! # Varying-target cartesian coproduct and actual cofan assembly -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 open scoped Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false

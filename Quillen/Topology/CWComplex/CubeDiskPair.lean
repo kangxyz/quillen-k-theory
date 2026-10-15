@@ -23,8 +23,13 @@ pointwise; no replacement of the boundary map or characteristic map is made.
 -/
 
 @[expose] public section
+
+open Topology
+
+open Quillen.ClassicalCW
+
 noncomputable section
-open Set Metric Topology
+open Set Metric
 open scoped unitInterval
 universe u v
 namespace Quillen.ClassicalCW

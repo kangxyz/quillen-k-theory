@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StabilizedExtensionTransport
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.ImmersionDerivedRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Roofs
@@ -18,6 +20,10 @@ original derived-target gluing. The resulting global map retains its prescribed
 local target morphism; a stabilization provides an explicit local summand.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.Waldhausen.Approximation.Dual
 public import Quillen.Waldhausen.Duality.ExactCategory
 public import Quillen.Waldhausen.WeakArrow.DualStructure
@@ -12,6 +13,12 @@ public import Quillen.Waldhausen.WeakArrow.KEquivalence
 
 /-! Behavioral consumers of actual dual squares, original diagrams and original K-maps. -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite

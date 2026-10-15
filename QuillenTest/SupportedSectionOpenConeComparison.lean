@@ -15,6 +15,12 @@ structure time, unchanged target face and signed boundary. The endpoint is the o
 relative-open coarse section model.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+open Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.IteratedS
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u

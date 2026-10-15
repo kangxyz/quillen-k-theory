@@ -6,9 +6,11 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Coherent
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Coherent
 public import Quillen.AlgebraicGeometry.Scheme.KTheory
 public import Quillen.AlgebraicGeometry.Scheme.GTheory
 public import Quillen.CategoryTheory.SmallModel.Functoriality
@@ -24,10 +26,12 @@ The comparison commutes with actual geometric open restriction.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 

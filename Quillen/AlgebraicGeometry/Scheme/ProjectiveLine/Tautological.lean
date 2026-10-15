@@ -7,7 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneGluing
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Charts
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Locality
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Locality
 
 /-!
 # The tautological line on the original two-chart projective line
@@ -24,8 +24,6 @@ Proj or computation of its derived global sections is asserted here.
 @[expose] public section
 
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-open Quillen
 
 
 noncomputable section

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Polynomial.LaurentBaseChange
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Mathlib.RingTheory.RingHom.Flat
 
 /-! # Flatness of the original polynomial and Laurent coefficient maps
@@ -13,6 +13,9 @@ public import Mathlib.RingTheory.RingHom.Flat
 Both maps are actual cobase changes of the given ring map, using the original coefficient pushouts.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 
 open CategoryTheory
 

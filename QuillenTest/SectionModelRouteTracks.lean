@@ -10,11 +10,15 @@ public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumTransformatio
 
 /-! The original route tracks retain degree-zero loops and independent structure time. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open Quillen.Waldhausen.IteratedS
 open scoped unitInterval
 universe u
 namespace QuillenTest.SectionModelRouteTracks

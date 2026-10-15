@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Pushforward
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TwoOpenSheafSequence
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineCompositeDerivedPushforward
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AcyclicShortExactTriangle
@@ -20,8 +21,9 @@ derived direct image, and the connecting morphism is explicitly preserved.
 -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 

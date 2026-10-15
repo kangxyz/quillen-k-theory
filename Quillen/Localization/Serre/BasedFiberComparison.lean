@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.FiberComparison
 public import Quillen.KTheory.Map.Functoriality
 
@@ -16,6 +17,9 @@ maps. The comparison fixes the original chosen zero basepoints. The assertion
 that this comparison is a homotopy equivalence remains the localization theorem.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

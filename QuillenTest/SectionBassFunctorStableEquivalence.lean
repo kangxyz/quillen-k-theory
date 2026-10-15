@@ -15,9 +15,12 @@ negative signed groups, the original parameter-loop map with its independent loo
 strict natural transformations of the genuine finite-stage diagrams.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open Quillen Quillen.LoopPrespectrum
 open scoped unitInterval
 universe u
 namespace QuillenTest.SectionBassFunctorStableEquivalence

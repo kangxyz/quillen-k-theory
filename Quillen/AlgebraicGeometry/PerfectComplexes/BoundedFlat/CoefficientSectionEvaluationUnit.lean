@@ -19,12 +19,15 @@ commutes along the unchanged E1 evaluation comparison. These equations do not su
 the two-chart Bass boundary, cone null comparison, iterates or telescope.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
-open AlgebraicGeometry.Scheme.CoefficientBaseChange Quillen.FunctorIdentityAutomorphism
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients Quillen.FunctorIdentityAutomorphism
 universe u u₁ v₁
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}

@@ -5,13 +5,20 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerAdditivity
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerMiddle
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlasqueShift
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.LineTensorAssociator
+public import Aglib.AlgebraicGeometry.Modules.Invertible.TensorFunctorAssociator
 
 /-! # The original Euler O(-2)[1] coefficient identity on every connective K-group -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -26,8 +33,9 @@ variable (R : CommRingCat.{u})
 
 /-- Two actual line factors use the native original sheafification units and associator. -/
 def twoLineAssociator :
-    tensorByLineComplex (tautologicalLine R) ⋙ tensorByLineComplex (tautologicalLine R) ≅
-      tensorByLineComplex (sequence R).X₁ :=
+    AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R) ⋙
+      AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R) ≅
+      AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (sequence R).X₁ :=
   Functor.mapHomologicalComplexCompIso
     (moduleLineTensorAssociator (tautologicalLine R) (tautologicalLine R)
       (fun _ : Bool => Spec (CommRingCat.of (Polynomial R)))
@@ -35,11 +43,15 @@ def twoLineAssociator :
 
 /-- Original (L tensor p*A) tensor L uses the actual symmetry and two-line associator. -/
 def originalRightTensorIso :
-    endpointComplex R (tautologicalLine R) ⋙ tensorByLineRightComplex (tautologicalLine R) ≅
+    endpointComplex R (tautologicalLine R) ⋙ AlgebraicGeometry.Scheme.Modules.Complex.tensorRight
+      (tautologicalLine R) ≅
       endpointComplex R (sequence R).X₁ :=
-  Functor.isoWhiskerLeft ((strictPerfect (Spec R)).ι ⋙ pullbackComplex (projection R))
-    (Functor.isoWhiskerLeft (tensorByLineComplex (tautologicalLine R))
-      (tensorByLineComplexSymmetry (tautologicalLine R)).symm ≪≫ twoLineAssociator R)
+  Functor.isoWhiskerLeft ((strictPerfect (Spec R)).ι ⋙
+    AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R))
+    (Functor.isoWhiskerLeft (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine
+      R))
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeftRightIso (tautologicalLine R)).symm ≪≫
+        twoLineAssociator R)
 
 /-- Euler additivity and the canonical weak-zero middle give the literal inverse coefficient. -/
 lemma KMap_E2_inv_eq_E0 (n : ℕ) (x : (strictWaldhausen (Spec R)).K n) :
@@ -71,18 +83,20 @@ lemma projectedEndpoint_isStrictlyGE (M : (twoChartLine R).Modules)
 lemma E2_obj_underlying (A : StrictPerfect (Spec R)) : ((E2 R).obj A).obj =
     ((Scheme.Modules.pushforward (projection R)).mapHomologicalComplex (.up ℤ)).obj
       ((godementTotal (twoChartLine R)).obj
-        ((tensorByLineComplex ((moduleTensorLeftFunctor (twoChartLine R)
+        ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft ((moduleTensorLeftFunctor
+          (twoChartLine R)
           (tautologicalLine R)).obj (tautologicalLine R))).obj
-          ((pullbackComplex (projection R)).obj A.obj))) := rfl
+          ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).obj A.obj))) := rfl
 
 /-- Every original coefficient arrow retains the original tensor, total, and projection maps. -/
 lemma E2_map_underlying {A B : StrictPerfect (Spec R)} (f : A ⟶ B) :
     ((E2 R).map f).hom =
       ((Scheme.Modules.pushforward (projection R)).mapHomologicalComplex (.up ℤ)).map
         ((godementTotal (twoChartLine R)).map
-          ((tensorByLineComplex ((moduleTensorLeftFunctor (twoChartLine R)
+          ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft ((moduleTensorLeftFunctor
+            (twoChartLine R)
             (tautologicalLine R)).obj (tautologicalLine R))).map
-            ((pullbackComplex (projection R)).map f.hom))) := rfl
+            ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).map f.hom))) := rfl
 
 /-- The actual original signed shift of the projected Euler square coefficient. -/
 def E2Shift := E2 R ⋙ modelShift (Spec R) 1

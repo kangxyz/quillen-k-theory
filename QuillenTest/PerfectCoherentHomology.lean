@@ -10,6 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.CoherentHomology
 /-! # Actual coherent homology consumers for locally perfect complexes -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 

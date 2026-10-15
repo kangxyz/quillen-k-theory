@@ -17,6 +17,9 @@ with its original spatial arrows. No injectivity of the stage maps is assumed.
 
 @[expose] public section
 
+open Quillen.LocalCoefficients
+
+
 noncomputable section
 
 open CategoryTheory Limits

@@ -18,8 +18,6 @@ subobjects of quasicoherent sheaves are quasicoherent.
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-open Quillen
-open Quillen.SchemeSheaf
 
 
 

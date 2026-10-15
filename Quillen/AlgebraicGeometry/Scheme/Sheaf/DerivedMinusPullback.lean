@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
 public import Quillen.Algebra.Homology.BoundedDerivedLocalization
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ResolvedBoundedPullback
 
@@ -18,8 +20,13 @@ natural identity comparison. No flat-map, quasicoherence, replacement-existence,
 or derived-equivalence hypothesis is assumed.
 -/
 @[expose] public section
+
+open Quillen.CochainComplex
+
+
+open AlgebraicGeometry.Scheme.Modules
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
 
@@ -28,7 +35,6 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u w₁ w₂
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.CochainComplex
 namespace AlgebraicGeometry.Scheme.Modules
 
 variable {X Y : Scheme.{u}} (f : X ⟶ Y)
@@ -64,7 +70,8 @@ instance instLiftingDerivedPullbackMinus :
 /-- Every actual bounded-above representative has the computed derived pullback object. -/
 def derivedPullbackMinusObjectIso (K : BoundedAboveComplex Y.Modules) :
     ((derivedPullbackMinus f).obj ((boundedAboveQMinus Y.Modules).obj K)).obj ≅
-      DerivedCategory.Q.obj ((Quillen.PerfectComplexes.pullbackComplex f).obj (flatModel Y K)) :=
+      DerivedCategory.Q.obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj (flatModel Y
+        K)) :=
   (DerivedCategory.Minus.ι).mapIso ((derivedPullbackMinusFactors f).app K) ≪≫
     resolvedPullbackObjectIso f K
 
@@ -73,7 +80,7 @@ def derivedPullbackMinusObjectIso (K : BoundedAboveComplex Y.Modules) :
 def derivedPullbackMinusFlatObjectIso (K : BoundedAboveComplex Y.Modules)
     (hK : ∀ n, stalkwiseFlat Y (K.obj.X n)) :
     ((derivedPullbackMinus f).obj ((boundedAboveQMinus Y.Modules).obj K)).obj ≅
-      DerivedCategory.Q.obj ((Quillen.PerfectComplexes.pullbackComplex f).obj K.obj) :=
+      DerivedCategory.Q.obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K.obj) :=
   (DerivedCategory.Minus.ι).mapIso ((derivedPullbackMinusFactors f).app K) ≪≫
     resolvedPullbackFlatObjectIso f K hK
 

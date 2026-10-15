@@ -4,17 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.H1ProductOuterRows
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.H1OuterScalarWords
 
 /-! Full original outer H1 edge nodes in the fixed H0/chart/bottom62 family. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH1Join

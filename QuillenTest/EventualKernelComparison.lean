@@ -9,8 +9,11 @@ public import Quillen.Algebra.Homology.EventualKernelComparison
 
 /-! # Consumers of actual eventual kernel annihilation -/
 @[expose] public section
+
+open Quillen.HomologicalAlgebra
+
 noncomputable section
-open CategoryTheory Quillen.HomologicalAlgebra
+open CategoryTheory
 universe u
 
 example {K L : ChainComplex (ModuleCat.{u} ℤ) ℕ} (f : K ⟶ L)

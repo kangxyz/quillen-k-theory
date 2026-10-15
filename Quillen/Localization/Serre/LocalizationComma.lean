@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.Localization.Serre.FiberComparison
 public import Quillen.Localization.Serre.AuxiliaryLift
 public import Quillen.Devissage.CommaLayers
@@ -36,6 +38,9 @@ These supply zero-comma identifications in localization. They do not assert
 Theorem B's transition hypothesis or the localization theorem.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

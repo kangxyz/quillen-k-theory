@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.Waldhausen.SplitComplexes.Subcategory
 public import Quillen.AlgebraicGeometry.PerfectComplexes.KTheory
 
@@ -26,6 +27,9 @@ Ordinary vector-bundle short exact sequences may fail to split globally,
 so their degree-zero inclusion is not asserted to be exact for this model.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

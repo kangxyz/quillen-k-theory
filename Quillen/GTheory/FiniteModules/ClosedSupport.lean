@@ -6,6 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Category.ModuleCat.FiniteLocalization
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.GTheory.FiniteModules.SmallModelLocalization
 public import Mathlib.Algebra.Module.Torsion.Basic
 public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
@@ -21,6 +24,10 @@ subcategory is smaller than the f-power-torsion support category; the comparison
 between their G-theories requires dévissage, not a categorical equivalence.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+open ModuleCat.FiniteLocalization
+
 
 open ModuleCat
 

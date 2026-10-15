@@ -11,6 +11,9 @@ public import Quillen.Topology.Realization.NumerableConnectorCover
 /-! Independent clients construct actual extension and relative homotopy data.
 They do not claim completion of the ordered-nerve domination argument. -/
 @[expose] public section
+
+open Quillen.NumerableConnectorCover
+
 noncomputable section
 open Convexity
 open scoped Topology unitInterval

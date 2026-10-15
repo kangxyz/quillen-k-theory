@@ -5,16 +5,23 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatLaurentUnitTrack
 public import Quillen.Topology.Prespectrum.HomotopySquareOfPasting
 
 /-! The actual moving Laurent-unit square under arbitrary coefficient change. -/
 @[expose] public section
+
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
-open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 variable {R S : CommRingCat.{u}} (f : R ⟶ S)

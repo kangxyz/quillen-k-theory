@@ -19,6 +19,10 @@ No continuous inverse or lifting property of a whole path space is assumed.
 -/
 @[expose] public section
 
+open Quillen.CubicalSubdivision
+open Quillen.CubicalTests
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

@@ -11,6 +11,10 @@ public import Quillen.Topology.HomotopyCofiber.ReducedMappingConeFiberReduction
 /-! # Positive homology vanishing for the literal unreduced cone of an original chain
 quasi-isomorphism -/
 @[expose] public section
+
+open Quillen.DoubleCylinder
+open Quillen.LocalCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

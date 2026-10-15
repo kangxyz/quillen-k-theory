@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlasquePushforwardAcyclicity
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Pushforward
+public import Aglib.AlgebraicGeometry.Cohomology.Flasque.Pushforward
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AcyclicDerivedPushforward
 public import Quillen.Algebra.Homology.DerivedCategory.BoundedRightDerivedUnit
 
@@ -20,8 +21,9 @@ derived composition is made here.
 -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

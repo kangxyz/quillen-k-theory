@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.GilletWaldhausen.IdentityDisk
 public import Quillen.Waldhausen.GilletWaldhausen.QuotientExact
 
@@ -17,6 +19,9 @@ truncLE n. Its natural identification with the identity disk on the actual
 boundary-cycle isomorphism. All maps are actual chain maps.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

@@ -22,19 +22,17 @@ right tensor and original total augmentation preserve acyclicity on that same
 open before the signed shift.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
+
+open AlgebraicGeometry.Scheme.Modules
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeCoefficients
-export AlgebraicGeometry.Scheme.Modules.Complex
-  (ordinaryOpenRestrictionIso ordinaryOpenRestrictionIso_hom_f restrict_isStrictlyGE)
-export AlgebraicGeometry.Scheme.Modules
-  (restrictModule_isFlasque)
-end Quillen.PerfectComplexes.ProjectiveLine.P5NativeCoefficients
-
-end
 
 
 
@@ -49,6 +47,7 @@ open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Modules
 namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeCoefficients
 open FlasqueCoefficients
 
+/-- The standard derived-category instance for sheaves of modules on `Y`. -/
 local instance nativeSupportStandardDerived (Y : Scheme.{u}) :
     HasDerivedCategory.{u + 1} Y.Modules := HasDerivedCategory.standard _
 
@@ -102,7 +101,8 @@ lemma rightTensorTotal_restrictAcyclic (X : QuasiCompactSchemes.{u})
     (K : FlasqueBoundedBelow.Obj (nativeLineFunctor.obj X).obj)
     (hK : ((restrict j).obj K.obj).Acyclic) :
     ((restrict j).obj ((rightTensorTotal X).obj K).obj).Acyclic := by
-  have ht := rightTensor_restrictAcyclic j (nativeTautologicalLine X) K.obj hK
+  have ht := AlgebraicGeometry.Scheme.Modules.Complex.tensorRight_restrict_acyclic j
+    (nativeTautologicalLine X) K.obj hK
   exact (restrictAcyclic_iff_of_quasiIso j ((tensorTotalUnit X).app K).hom).mp ht
 
 /-- G0 carries actual inverse-image support to support away from the original base open. -/

@@ -5,6 +5,7 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SquareTrackCompatibility
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NormalizedUnitRoutes
 public import Quillen.Topology.Prespectrum.RelativeHomotopyWhiskering
 public import Quillen.Topology.Prespectrum.HomotopySquareOfPasting
@@ -60,24 +61,6 @@ def boundedFlatOriginalUnitRoutesComparison {X Y : Scheme.{u}} (f : X ⟶ Y) :
   (boundedFlatNormalizedRightUnitRouteComparison f).symm.trans
     ((boundedFlatNormalizedUnitRoutesComparison f).trans
       (boundedFlatNormalizedLeftUnitRouteComparison f))
-
-/-- The original square is exactly the two composition tracks, with only endpoint transport. -/
-theorem boundedFlatPerfectPrespectrumSquareHomotopy_level {X Y Z T : Scheme.{u}}
-    (p : X ⟶ Y) (v : Y ⟶ Z) (q : X ⟶ T) (w : T ⟶ Z)
-    (h : p ≫ v = q ≫ w) (n : ℕ) :
-    (boundedFlatPerfectPrespectrumSquareHomotopy p v q w h).level n =
-      ((boundedFlatPerfectPrespectrumCompHomotopy p v).symm.trans
-        ((boundedFlatPerfectPrespectrumCompHomotopy q w).cast
-          (congrArg boundedFlatPerfectPrespectrumMap h).symm rfl)).level n := by
-  have transport_level {E F : Quillen.LoopPrespectrum} {f f' g : E ⟶ F} (e : f = f')
-      (p : Homotopy f g = Homotopy f' g) (H : Homotopy f g) :
-      (p.mp H).level n = H.level n := by
-    subst f'
-    rfl
-  unfold boundedFlatPerfectPrespectrumSquareHomotopy
-  apply Homotopy.trans_level_congr
-  · rfl
-  · apply transport_level (congrArg boundedFlatPerfectPrespectrumMap h).symm
 
 /-- The original geometric identity square, with the complete geometric and normalization sides. -/
 def boundedFlatPerfectPrespectrumUnitSquare {X Y : Scheme.{u}} (f : X ⟶ Y) :

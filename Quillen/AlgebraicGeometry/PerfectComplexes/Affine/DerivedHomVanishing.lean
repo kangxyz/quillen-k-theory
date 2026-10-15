@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.Algebra.Homology.DerivedHomVanishing
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedDerivedComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedModuleReplacement
@@ -27,6 +28,9 @@ source, without restricting the original source terms or assuming a new
 replacement theorem.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

@@ -30,8 +30,10 @@ This module does not construct the global union or descend its homotopy.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Topology
+open Set
 open scoped unitInterval
 universe u
 namespace Quillen.ClassicalCW

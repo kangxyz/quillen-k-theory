@@ -6,8 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Regular.AffineResolution
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Locality
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Locality
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 
 /-!
@@ -21,10 +23,12 @@ the sheaf category.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 

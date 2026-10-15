@@ -20,6 +20,11 @@ proves the complete weak property of its original constant-path inclusion.
 -/
 @[expose] public section
 
+open Quillen.CubicalSubdivision
+open Quillen.CubicalTests
+open Quillen.HomotopyPullback
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

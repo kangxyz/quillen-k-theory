@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationFixedBounds
 public import Quillen.Waldhausen.Functoriality.KMap
 
@@ -18,6 +19,9 @@ isomorphisms and the original public KMap API. Only isomorphism weak models
 are used, and no uniform bound on the whole bounded-complex category is chosen.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

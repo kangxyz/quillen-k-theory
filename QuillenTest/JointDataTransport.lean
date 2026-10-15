@@ -11,6 +11,11 @@ public import Quillen.Waldhausen.ExtensionCategory.HeterogeneousDetection
 /-! # Actual endpoint and universal-property consumers of joint-data transport -/
 @[expose] public section
 
+open Quillen.Waldhausen
+open Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.Fibration.RowFactorization
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v' u'' v''

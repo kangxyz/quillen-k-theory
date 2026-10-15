@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleBounds
 public import Quillen.Waldhausen.GilletWaldhausen.AdjacentTruncation
 
@@ -17,6 +19,9 @@ genuine cofibration sequences in the isomorphism weak model. The lower
 endpoint is zero by actual acyclicity, and the upper endpoint is the identity.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

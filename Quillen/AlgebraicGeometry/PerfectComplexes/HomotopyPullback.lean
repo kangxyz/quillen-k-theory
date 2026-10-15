@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Algebra.Homology.HomotopyPullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFibration
 
@@ -18,13 +19,18 @@ hypotheses.
 -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
+open CategoryTheory.ExactCategory
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.CochainComplex
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
 

@@ -6,7 +6,12 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.FinitePresentation
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeProperty
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.Coherent.FinitePresentation
+public import Aglib.AlgebraicGeometry.Modules.FinitePresentation.AffineTransport
+public import Aglib.AlgebraicGeometry.Modules.FinitePresentation.Noetherian
 
 /-!
 # Quasicoherent subobjects of actual coherent sheaves
@@ -18,10 +23,11 @@ coherent.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

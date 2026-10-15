@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionTotal
 public import Quillen.Topology.ClassifyingSpace.Subdivision
 
@@ -18,6 +19,9 @@ requires its own proof.
 -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 

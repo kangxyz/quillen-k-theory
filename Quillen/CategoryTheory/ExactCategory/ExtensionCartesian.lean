@@ -5,11 +5,15 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionCartesianComparison
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionFunctor
 
 /-! # Cartesian universal properties for actual extension arrows -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

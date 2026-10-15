@@ -17,6 +17,9 @@ category. Its restriction to the finite-matrix telescope retains the actual
 stable quotient projection, with its original stabilization arrows.
 -/
 @[expose] public section
+
+open Quillen.GroupCompletion.Localization
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

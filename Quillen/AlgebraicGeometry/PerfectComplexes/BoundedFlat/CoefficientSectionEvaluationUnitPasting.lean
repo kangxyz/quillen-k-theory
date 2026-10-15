@@ -11,12 +11,15 @@ public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumIntertwiningH
 
 /-! The same original joint unit square as a whole relative comparison of actual tracks. -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
-open AlgebraicGeometry.Scheme.CoefficientBaseChange Quillen.FunctorIdentityAutomorphism
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients Quillen.FunctorIdentityAutomorphism
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}

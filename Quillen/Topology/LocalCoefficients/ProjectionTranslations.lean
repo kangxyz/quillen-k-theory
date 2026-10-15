@@ -12,6 +12,9 @@ public import Quillen.Topology.LocalCoefficients.Abelian
 /-! # Abelian local homology of the original first-projection comma transitions -/
 
 @[expose] public section
+
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u v

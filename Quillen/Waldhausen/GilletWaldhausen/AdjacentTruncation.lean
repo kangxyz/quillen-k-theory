@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.TruncationCoherence
 public import Quillen.Waldhausen.GilletWaldhausen.TruncationLayer
 public import Quillen.Waldhausen.GilletWaldhausen.TruncationCofibrationSequence
@@ -19,6 +20,9 @@ All three functors are genuinely exact, and the relative-cofibration
 condition is proved by the generic exact-functor sequence theorem.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

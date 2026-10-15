@@ -9,9 +9,12 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSec
 
 /-! Consumers retain the original image quotient and the inherited section zero. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes AlgebraicGeometry.Scheme.AffineOpenPair
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.FullOpenSectionGrading
 

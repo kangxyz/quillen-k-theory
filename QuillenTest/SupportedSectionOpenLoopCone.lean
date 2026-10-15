@@ -15,9 +15,12 @@ signed boundary remain visible in these clients. The stable assertion supplies e
 degree without a topology, excision, or stabilization hypothesis from the caller.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.LoopPrespectrum Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS
+open Quillen Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.SupportedSectionOpenLoopCone
 

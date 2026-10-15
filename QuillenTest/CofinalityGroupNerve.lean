@@ -10,6 +10,9 @@ public import Quillen.Waldhausen.Cofinality.GradedGroupRealization
 /-! # Actual range, finite realization, and original group-grading map consumers -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial

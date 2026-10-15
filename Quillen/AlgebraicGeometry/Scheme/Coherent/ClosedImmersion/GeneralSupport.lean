@@ -6,6 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.OpenImmersion
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralReflection
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.IdealSupport
 public import Mathlib.AlgebraicGeometry.PullbackCarrier
@@ -13,10 +17,12 @@ public import Mathlib.AlgebraicGeometry.PullbackCarrier
 /-! # Genuine closed support and its affine/open base-change identifications -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section
@@ -76,8 +82,8 @@ variable [IsLocallyNoetherian Z]
 omit [IsLocallyNoetherian X] [IsLocallyNoetherian Z] in
 /-- The actual closed pushforward is supported on the genuine closed image. -/
 theorem coherentPushforward_supported (M : FiniteTypeSheaves Z) :
-    finiteTypeSheavesSupportedAway (openMap i) ((coherentPushforward i).obj M) := by
-  have : IsEmpty (pullback i (openMap i) : Scheme) :=
+    finiteTypeSheavesSupportedAway (openMap i) ((finiteTypePushforward i).obj M) := by
+  have : IsEmpty (CategoryTheory.Limits.pullback i (openMap i) : Scheme) :=
     Scheme.isEmpty_pullback i (openMap i) (by rw [openMap_range]; exact disjoint_compl_right)
   have hz : IsZero ((Scheme.Modules.restrictFunctor (pullback.fst i (openMap i))).obj M.obj) := by
     apply (AlgebraicGeometry.Scheme.Modules.isZero_iff_stalks _).mpr

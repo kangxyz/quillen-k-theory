@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OppositeJointData
 
 /-!
@@ -12,13 +13,16 @@ Semantic consumers of coherent original opposite-complex cylinders.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits Opposite AlgebraicGeometry HomologicalComplex
-open Quillen.PerfectComplexes Quillen.Waldhausen
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace QuillenTest.PerfectOppositeJointData
 
@@ -28,7 +32,8 @@ open Quillen
 without replacing it by degreewise split epis. -/
 theorem actual_strict_fibration_class (X : Scheme.{u}) {A B : StrictPerfect X} (f : A ⟶ B) :
     (strictOppositeWaldhausen X).cof f.op ↔
-      (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure (Quillen.abelianExactStructure
+      (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
+        (CategoryTheory.ExactCategory.abelianExactStructure
         (Complex X))
         (strictPerfect X)).deflation f := Iff.rfl
 

@@ -9,8 +9,13 @@ public import Quillen.Topology.DoubleMappingCylinder.CWLifting
 
 /-! # Regression tests for the actual CW double-cylinder lift -/
 @[expose] public section
+
+open Topology
+
+open Quillen.DoubleCylinder
+
 noncomputable section
-open CategoryTheory Limits MonoidalCategory Set Topology
+open CategoryTheory Limits MonoidalCategory Set
 open scoped unitInterval
 universe u
 namespace QuillenTest.CWDoubleCylinder

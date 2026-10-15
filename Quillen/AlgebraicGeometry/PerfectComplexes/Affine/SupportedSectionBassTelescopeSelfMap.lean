@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionBassTower
 public import Quillen.KTheory.Bass.StrictDiagramSelfMap
 public import Quillen.KTheory.Bass.ModelDiagramConnectivity
@@ -17,10 +18,13 @@ The single original supported Laurent seed gives the map. Original iterated-S se
 actual Bass closure discharge all topology assumptions, without finite-stage stabilization.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

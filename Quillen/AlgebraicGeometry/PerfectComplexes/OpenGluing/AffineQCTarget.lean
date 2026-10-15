@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenQCTargetRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.ImmersionDerivedTarget
 
@@ -15,6 +17,10 @@ chosen affine model. The output map is a literal global chain map to the
 unchanged all-sheaf target. The original local derived morphism is recovered.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

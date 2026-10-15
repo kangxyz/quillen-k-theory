@@ -15,6 +15,10 @@ both original maps, the chosen point, independent structure time and the actual 
 No stability or full-open endpoint hypothesis enters these consumers.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen.IteratedS
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u

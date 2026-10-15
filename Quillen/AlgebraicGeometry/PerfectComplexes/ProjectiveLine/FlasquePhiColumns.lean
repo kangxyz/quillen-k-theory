@@ -17,6 +17,10 @@ column K-maps. The actual signed base shift converts G1 into the inverse of
 the unshifted coefficient map. These formulas do not assert PhiG is the identity.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,6 +32,9 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasquePhiColumns
 open FlasqueTwoSummands FlasqueCoefficients
 
+/-- The positive column, obtained by pullback from the flasque base model followed by Godement
+totalization.
+-/
 def positive (R : CommRingCat.{u}) := first R ⋙ FlasqueBoundedBelow.total (twoChartLine R)
 
 lemma positive_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
@@ -36,6 +43,9 @@ lemma positive_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
     (FlasqueBoundedBelow.waldhausen (twoChartLine R)).weq (positive R) :=
   (first_exact R).comp (FlasqueBoundedBelow.total_exact (twoChartLine R))
 
+/-- The negative column, obtained by pullback, left tensor with the tautological line, and Godement
+totalization.
+-/
 def negative (R : CommRingCat.{u}) := second R ⋙ FlasqueBoundedBelow.total (twoChartLine R)
 
 lemma negative_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
@@ -44,6 +54,9 @@ lemma negative_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
     (FlasqueBoundedBelow.waldhausen (twoChartLine R)).weq (negative R) :=
   (second_exact R).comp (FlasqueBoundedBelow.total_exact (twoChartLine R))
 
+/-- The coefficient functor obtained by right tensor with the tautological line, totalization, and
+`G0`, before the shift in `G1`.
+-/
 def unshiftedCoefficient (R : CommRingCat.{u}) := rightTensorTotal R ⋙ G0 R
 
 lemma unshiftedCoefficient_exact (R : CommRingCat.{u}) : Waldhausen.IsExact

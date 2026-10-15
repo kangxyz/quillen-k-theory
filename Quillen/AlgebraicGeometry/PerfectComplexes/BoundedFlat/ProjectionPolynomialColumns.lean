@@ -8,6 +8,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.PostReferen
 
 /-! The actual two polynomial columns in a projection rectangle with full reference transports. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -39,6 +42,10 @@ variable {A B C A' B' C' : Scheme.{u}}
   (hp : b ≫ p = p' ≫ a) (hq : c ≫ q = q' ≫ b)
   (r : C ⟶ A) (hr : q ≫ p = r)
 
+/--
+The reference from the projection source to the middle triple `q', b, p`, combining the
+projection and middle-square transports.
+-/
 def nativeMiddleReference : (ProjectionReference.reference c r).functor ≅
     (NormalizedTripleSimplex.sourceMap q' b p).functor :=
   eqToIso (ProjectionReference.anchor p q c r hr) ≪≫

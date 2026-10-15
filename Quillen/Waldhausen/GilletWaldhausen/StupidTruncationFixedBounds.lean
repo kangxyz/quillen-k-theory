@@ -6,6 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Homology.Embedding.StupidTrunc.Maps
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationExact
 public import Quillen.Waldhausen.GilletWaldhausen.FixedBounds
 
@@ -17,6 +20,9 @@ the upper bound and is the original inclusion below the lower bound. No
 acyclicity, kernel closure, projectivity, or globally uniform bound is assumed.
 -/
 @[expose] public section
+
+open CochainComplex
+
 
 open CategoryTheory.ExactCategory
 

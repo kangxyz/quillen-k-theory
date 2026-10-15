@@ -6,6 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.AffineKernel
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralSupport
 public import Quillen.Devissage.KernelIteration
@@ -19,10 +22,15 @@ supported coherent sheaf. No bound uniform in the sheaf is assumed.
 -/
 @[expose] public section
 
+open Quillen.ReflectorDevissage
+
+
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

@@ -15,8 +15,11 @@ The actual geometric pseudofunctor and actual cocartesian section transitions sa
 coefficient routes, with original source transports and all functor associators retained.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
 open Quillen.CategoryTheory.StrictSections Quillen.CategoryTheory.GrothendieckSections
 universe u
 namespace QuillenTest.BoundedFlatEvaluationCoherence

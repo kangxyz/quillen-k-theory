@@ -11,6 +11,10 @@ public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianStageExtraction
 /-! Simultaneous characteristic-chart and finite replacement-stage induction. -/
 @[expose] public section
 
+open Quillen.TheoremA
+open Quillen.TheoremB
+
+
 noncomputable section
 universe u
 open CategoryTheory Limits Opposite

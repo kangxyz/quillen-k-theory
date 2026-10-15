@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Mathlib.GroupTheory.FreeAbelianGroup
 public import Mathlib.GroupTheory.QuotientGroup.Defs
 
@@ -24,6 +24,9 @@ That comparison requires a separate theorem about the Q-construction.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
+
 
 noncomputable section
 
@@ -32,7 +35,6 @@ universe v u w
 open CategoryTheory CategoryTheory.Limits
 
 namespace CategoryTheory.ExactCategory.ExactStructure
-open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)

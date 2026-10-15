@@ -10,8 +10,10 @@ public import Quillen.CategoryTheory.TheoremB.SequentialWeakCartesian
 /-! # Weak finite-stage input, full-boundary HELP and actual sequential comparisons -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
-open CategoryTheory Limits Topology Quillen Quillen.CartesianRealization.Sequential
+open CategoryTheory Limits Quillen Quillen.CartesianRealization.Sequential
 open scoped Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false

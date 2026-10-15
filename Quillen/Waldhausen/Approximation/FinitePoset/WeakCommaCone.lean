@@ -18,11 +18,14 @@ App1 and App2 supply finite-poset weak comma cones and the stated nullhomotopies
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 open Quillen.FinitePosetLatching Quillen.FinitePosetInsertion
 universe w w' z u v u' v'
 

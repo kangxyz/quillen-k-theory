@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedMorphisms
 
 /-!
@@ -17,6 +18,9 @@ used with mathlib's triangulated derived restriction, not only the directly
 constructed Gabriel–Zisman lift.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

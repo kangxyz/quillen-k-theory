@@ -9,9 +9,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.FiniteFlatPushforwardNa
 
 /-! An independent client of the original finite flat Kvb-to-strict comparison. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.PerfectComplexes
 universe u
 namespace Consumer.StrictFiniteFlatPushforward
 

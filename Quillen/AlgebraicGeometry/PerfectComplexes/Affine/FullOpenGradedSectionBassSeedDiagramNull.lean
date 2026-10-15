@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassSeedNullNaturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassSeedNullNaturality
 public import Quillen.Topology.Prespectrum.DiagramNullHomotopy
 
 /-!
@@ -18,8 +18,11 @@ value remains the original prescribed loop-valued homotopy. No substitute null o
 null is supplied as a hypothesis.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R)

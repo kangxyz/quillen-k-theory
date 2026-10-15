@@ -6,7 +6,8 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedPushforwardComposition
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Pushforward
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PushforwardComposition
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineDerivedPushforward
 
 /-!
@@ -19,8 +20,9 @@ ordinary single-complex isomorphism.
 -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 noncomputable section

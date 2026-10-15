@@ -19,6 +19,9 @@ retaining the realized inclusion, coefficient map, and entire constant path.
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval

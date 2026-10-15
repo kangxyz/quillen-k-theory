@@ -23,12 +23,15 @@ inclusion and arbitrary derived pullback on a quasi-compact row; no flatness is 
 These connective comparisons do not assert Laurent-seed or telescope compatibility.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
-open AlgebraicGeometry.Scheme.CoefficientBaseChange
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}

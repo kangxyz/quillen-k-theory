@@ -24,12 +24,15 @@ restriction square. No compactness, flatness or affine-scheme hypothesis is
 needed for these Models or their prespectra.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
-open Quillen.CategoryTheory.StrictSections AlgebraicGeometry.Scheme.CoefficientBaseChange
+open Quillen.Waldhausen.IteratedS
+open Quillen.CategoryTheory.StrictSections AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.Rows.OppositeComplexJoint
 public import Quillen.Waldhausen.SubcategoryInclusion
 
@@ -20,6 +21,12 @@ joint-arrow natural isomorphism.
 -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
+open CategoryTheory.ExactCategory
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -28,7 +35,6 @@ universe u v
 open CategoryTheory CategoryTheory.Limits Opposite HomologicalComplex
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.Waldhausen
-open Quillen.CochainComplex
 variable {C : Type u} [Category.{v} C] [Abelian C]
 variable (P Q : ObjectProperty (CochainComplex C ℤ))
   [P.ContainsZero] [P.IsClosedUnderIsomorphisms]

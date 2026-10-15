@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalSupportedDensity
 
 /-!
@@ -15,6 +16,10 @@ homology maps, finite-family induction without compact ambient base, arbitrary
 further restrictions, empty source and support, and chain-level naturality.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+open Quillen.PerfectComplexes
+
 
 
 noncomputable section

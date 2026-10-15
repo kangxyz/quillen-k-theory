@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.Algebra.ModuleComplex.PrincipalFreeDescent
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StrictModuleModel
 
@@ -19,6 +20,9 @@ restriction. Extension of arbitrary projective targets, stabilization and
 full Thomason–Trobaugh cofinality remain separate.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

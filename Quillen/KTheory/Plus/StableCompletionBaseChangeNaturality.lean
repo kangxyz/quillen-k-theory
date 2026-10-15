@@ -20,6 +20,10 @@ construction, including its stabilization and its rank-zero unit comparison.
 -/
 
 @[expose] public section
+
+open Quillen.GroupCompletion
+open Quillen.GroupCompletion.ActionLocalization
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

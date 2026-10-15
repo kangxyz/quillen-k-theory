@@ -19,9 +19,12 @@ the original raw-perfect quotient. Surjectivity follows from target evaluation a
 surjectivity, without any assertion that full-open restriction is surjective on K-zero.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.AlgebraicGrothendieck
+open Quillen.Waldhausen.AlgebraicGrothendieck
 open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes

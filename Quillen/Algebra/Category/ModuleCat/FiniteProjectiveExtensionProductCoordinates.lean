@@ -10,6 +10,9 @@ public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveExtensionMultip
 
 /-! # Section and retraction coordinates of the genuine pullback multiplication -/
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

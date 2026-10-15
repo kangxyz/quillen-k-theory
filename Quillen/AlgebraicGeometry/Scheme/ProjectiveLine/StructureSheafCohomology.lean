@@ -7,8 +7,9 @@ module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Cohomology
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.CechDifference
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TwoOpenFirstCohomology
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Basic
+public import Aglib.AlgebraicGeometry.Cohomology.MayerVietoris.FirstCohomology
+public import Aglib.AlgebraicGeometry.Modules.FinitePresentation.Basic
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
 /-!
 # Structure-sheaf cohomology of the original projective line
 

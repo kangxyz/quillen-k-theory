@@ -17,6 +17,9 @@ system, including after any cofinal change of indexing category.
 
 @[expose] public section
 
+open Quillen.LocalCoefficients
+
+
 noncomputable section
 
 open CategoryTheory Limits

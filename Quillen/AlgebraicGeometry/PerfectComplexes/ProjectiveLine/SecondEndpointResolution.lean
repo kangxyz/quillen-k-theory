@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementProjectionFormula
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.WeakFunctorTransport
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.ProjectionFormula
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.NatTransQuasiIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueDiagonalExact
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SelfBaseChangeModel
 
@@ -20,6 +20,11 @@ second image preserve this map between the actual flasque totals.
 -/
 
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -29,6 +34,7 @@ open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 namespace Quillen.PerfectComplexes.ProjectiveLine.SecondEndpoint
 open FlasqueCoefficients
 
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance standardDerived (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 

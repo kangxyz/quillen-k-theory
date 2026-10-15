@@ -10,8 +10,11 @@ public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumTransformatio
 
 /-! Original Model pasting keeps both full tracks and the independent structure coordinate. -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
-open CategoryTheory Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open CategoryTheory Quillen.Waldhausen.IteratedS
 open scoped unitInterval
 universe u
 namespace QuillenTest.ModelPrespectrumPasting

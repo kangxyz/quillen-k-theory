@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChange
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedPushforwardComposition
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Cartesian
+public import Aglib.AlgebraicGeometry.Modules.Pullback.FlatMorphism
+public import Aglib.AlgebraicGeometry.Cohomology.BaseChange.Flat
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PushforwardComposition
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianBaseChangePasting
 /-! # Vertical pasting of the original derived flat base-change maps
 
@@ -16,8 +19,9 @@ ordinary mate equation and installed composite units on all bounded-below comple
 -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

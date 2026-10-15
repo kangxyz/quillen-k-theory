@@ -19,10 +19,12 @@ or asserted here.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open Convexity Topology
+open Convexity
 open scoped Topology unitInterval
 universe u
 

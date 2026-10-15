@@ -7,7 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TwistMinus
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.SubobjectObstructionNaturality
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenCoverExactness
+public import Aglib.AlgebraicGeometry.Modules.Locality.Exactness
 
 /-!
 # Functoriality and exactness of the negative twist
@@ -19,7 +19,6 @@ locally free sheaves over every base ring.
 @[expose] public section
 
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
 
 

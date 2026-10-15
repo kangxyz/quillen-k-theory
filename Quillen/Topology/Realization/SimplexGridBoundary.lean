@@ -15,13 +15,18 @@ open scoped Simplicial Topology
 universe u
 namespace Quillen.SimplexGrid
 
+/-- The simplex map sending every vertex of the source simplex to vertex `i`. -/
 def constantFace {p q : ℕ} (i : Fin (p + 1)) : ⦋q⦌ ⟶ ⦋p⦌ :=
   SimplexCategory.Hom.mk ⟨fun _ ↦ i, fun _ _ _ ↦ le_rfl⟩
 
+/-- The simplex map selecting grid vertices `(i, j)` with first coordinate fixed to `i`. -/
 def rowFace (p q : ℕ) (i : Fin (p + 1)) : ⦋q⦌ ⟶ ⦋dimension p q⦌ :=
   SimplexCategory.Hom.mk ⟨fun j ↦ index p q (i, j),
     fun _ _ h ↦ (index p q).monotone ⟨le_rfl, h⟩⟩
 
+/-- The simplicial inclusion of the row with first coordinate equal to vertex `i` and second
+coordinate varying in `Δ[q]`.
+-/
 def row (p q : ℕ) (i : Fin (p + 1)) : (Δ[q] : SSet.{u}) ⟶ Δ[p] ⊗ Δ[q] :=
   lift (SSet.stdSimplex.map (constantFace i)) (𝟙 _)
 

@@ -33,6 +33,8 @@ def boundedFlatNormalizedCompTrack {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶
   rw [originalPrespectrumMap_comp] at H
   exact H
 
+/-- Transport a relative homotopy to homotopies with equal level maps, retaining its level
+functions. -/
 def boundedFlatComparisonOfLevels {E F : Quillen.LoopPrespectrum}
     {f g f' g' : E ⟶ F} {H K : Quillen.LoopPrespectrum.Homotopy f g}
     (J : H.RelHomotopy K) (H' K' : Quillen.LoopPrespectrum.Homotopy f' g')

@@ -6,6 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Coherent.AffineDetection
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralReflection
 
 /-!
@@ -17,10 +20,12 @@ essential image follows from the canonical adjunction-unit base-change square.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section
@@ -38,7 +43,7 @@ The ideals here occur in genuine quotient presentations of the actual
 base-changed closed immersion, rather than being chosen unrelated ideals. -/
 def annihilatedByClosedIdeal : ObjectProperty (FiniteTypeSheaves X) := fun M ↦
   ∀ (R : CommRingCat.{u}) [IsNoetherianRing R] (a : Spec R ⟶ X) [IsOpenImmersion a]
-    (I : Ideal R) (e : pullback i a ≅ Spec (Ideal.closedRing R I)),
+    (I : Ideal R) (e : CategoryTheory.Limits.pullback i a ≅ Spec (Ideal.closedRing R I)),
     pullback.snd i a = e.hom ≫ Ideal.closedMap R I →
       Ideal.finiteTypeSheavesKilledBy R I ((finiteTypeSheavesRestriction a).obj M)
 

@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Cylinder.AmbientRelative
 public import Quillen.Waldhausen.Cylinder.SubcategoryPreservation
 public import Quillen.Waldhausen.ExtensionCategory.Embeddings
@@ -19,6 +20,9 @@ cofibration preservation is derived from the actual cylinder quotient, rather
 than included as an input cylinder axiom.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

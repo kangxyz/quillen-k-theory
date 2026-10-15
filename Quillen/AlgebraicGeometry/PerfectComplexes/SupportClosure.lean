@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFibration
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PerfectSupport
 public import Quillen.AlgebraicGeometry.PerfectComplexes.KernelClosure
@@ -19,6 +20,12 @@ proves support of the literal kernel. Strict/local perfection is supplied by
 the separately proved geometric kernel theorems on every scheme.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

@@ -19,9 +19,12 @@ its actual graded-coarse target vanish in every other signed degree. This is an 
 stable equivalence; no coefficient-natural or inherited Laurent seed square is asserted.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.Waldhausen.AlgebraicGrothendieck
+open Quillen.Waldhausen.IteratedS Quillen.Waldhausen.AlgebraicGrothendieck
 universe u
 namespace Quillen.PerfectComplexes
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]

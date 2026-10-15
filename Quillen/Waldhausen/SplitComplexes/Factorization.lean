@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Homology.CochainComplex.DegreewiseSplitMono
 public import Quillen.Waldhausen.SplitComplexes.Basic
 public import Mathlib.Algebra.Homology.HomotopyCategory.MappingCone
 
@@ -19,6 +20,9 @@ contracting homotopy of the identity cone. This is an ambient factorization;
 closure of a chosen full subcategory and its quotient is a separate issue.
 -/
 @[expose] public section
+
+open CochainComplex
+
 
 
 noncomputable section

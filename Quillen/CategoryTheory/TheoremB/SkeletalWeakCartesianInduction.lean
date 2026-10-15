@@ -12,6 +12,10 @@ public import Quillen.CategoryTheory.TheoremB.SequentialWeakCartesian
 /-! # General weak-cartesian replacement skeleton induction -/
 @[expose] public section
 
+open Quillen.TheoremA
+open Quillen.TheoremB
+
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval

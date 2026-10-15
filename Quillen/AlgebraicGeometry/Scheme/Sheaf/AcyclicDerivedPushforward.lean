@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedPushforwardPlus
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Pushforward
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AcyclicPushforwardResolution
 
 /-! # The actual bounded-below derived unit on acyclic single sheaves
@@ -14,8 +14,9 @@ The original right-derived unit is invertible when the actual integer-indexed
 injective augmentation remains a quasi-isomorphism after direct image.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

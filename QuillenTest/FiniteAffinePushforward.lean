@@ -5,11 +5,15 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
 public import Quillen.AlgebraicGeometry.Scheme.FiniteAffinePushforward
 
 /-! # Original-map finite affine pushforward consumers, including a genuinely nonsurjective finite
   ring homomorphism. -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.Affine
+
 
 open ModuleCat.FiniteRestrictionScalars
 

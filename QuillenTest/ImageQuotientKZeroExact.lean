@@ -10,8 +10,11 @@ public import Quillen.Waldhausen.GrothendieckComparison.ImageQuotientExact
 /-! # Original-map consumers of image-quotient K-zero exactness -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
-open CategoryTheory Quillen.Waldhausen
+open CategoryTheory
 open Quillen.Waldhausen.AlgebraicGrothendieck
 universe u v
 namespace QuillenTest.ImageQuotientKZeroExact

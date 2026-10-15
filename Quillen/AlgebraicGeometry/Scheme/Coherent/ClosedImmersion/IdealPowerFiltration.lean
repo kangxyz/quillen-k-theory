@@ -6,6 +6,13 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Category.ModuleCat.Finite
+public import Aglib.Algebra.Category.ModuleCat.IdealClosedSupport
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Exact
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.IdealSupport
 public import Quillen.GTheory.FiniteModules.IdealPowerFiltration
@@ -20,10 +27,17 @@ factors are annihilated by I, and its endpoint is the original sheaf.
 -/
 @[expose] public section
 
+open ModuleCat.FiniteLocalization.IdealClosedSupport
+open Quillen.FiniteModuleLocalization.IdealClosedSupport
+
+
+open AlgebraicGeometry.Scheme.Modules.Coherent
+open CategoryTheory.ExactCategory
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

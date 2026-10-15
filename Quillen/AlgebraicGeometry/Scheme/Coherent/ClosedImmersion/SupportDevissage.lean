@@ -6,6 +6,13 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.ClosedImmersion.IdealPushforward
+public import Aglib.Algebra.Category.ModuleCat.FiniteLocalization
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeRestriction
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.Killed
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.PrincipalLocalization
 public import Quillen.Devissage.CentralEndomorphism
@@ -21,10 +28,14 @@ categorical dévissage, not an equivalence with all supported objects.
 -/
 @[expose] public section
 
+open ModuleCat.FiniteLocalization
+open Quillen.FiniteModuleLocalization
+open Quillen.PrincipalSupportDevissage
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section
@@ -34,7 +45,7 @@ universe u v w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Principal
 open FiniteModuleLocalization PrincipalSupportDevissage
 
 namespace ScalarRepresentation
@@ -64,7 +75,7 @@ theorem map_power_apply (f : A) (X : C) (n : ℕ) (m : F.obj X) :
   | succ n ih =>
     simp only [power_succ, Functor.map_comp, map_scalar]
     change (F.map (power (scalar F f) X n)).hom.hom (f • m) = f ^ (n + 1) • m
-    rw [map_smul, ih, smul_smul, pow_succ']
+    rw [_root_.map_smul, ih, smul_smul, pow_succ']
 
 variable [F.Additive]
 
@@ -162,4 +173,4 @@ def supportDevissageKEquiv (n : ℕ) :
 @[simp] theorem supportDevissageKEquiv_coe (n : ℕ) :
     ↑(supportDevissageKEquiv R f n) = Devissage.KMap (supportKilled R f) n := rfl
 
-end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Principal

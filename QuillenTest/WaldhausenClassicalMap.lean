@@ -12,8 +12,11 @@ object classes and displayed cofibers. Arbitrary-class statements distinguish
 the proved splitting from the remaining generation of all fine K₀ classes. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 universe u
 namespace QuillenTest.WaldhausenClassicalMap
 

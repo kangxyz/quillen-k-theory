@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ExtensionByZeroBaseChange
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatGenerators
+public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
 
 /-! Semantic consumers of actual extension by zero and open base change. -/
 @[expose] public section
@@ -21,7 +21,6 @@ open AlgebraicGeometry.Scheme.Modules
 
 namespace QuillenTest.SheafExtensionByZero
 
-open Quillen
 
 /-- The original arbitrary short exact sequence survives the genuine left extension. -/
 theorem original_short_exact {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]

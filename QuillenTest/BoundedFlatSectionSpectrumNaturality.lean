@@ -14,8 +14,11 @@ The whole evaluation track retains both actual coefficient composites and indepe
 time. Its zeroth level is the original based-loop map.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry
 open scoped unitInterval
 universe u
 namespace QuillenTest.BoundedFlatSectionSpectrumNaturality

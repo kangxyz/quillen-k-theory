@@ -6,12 +6,17 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Resolution.Closure
 public import Quillen.KTheory.GrothendieckComparison.Edges
 public import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
 
 /-! # Exact-category Q-arrow calculations used by resolution -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

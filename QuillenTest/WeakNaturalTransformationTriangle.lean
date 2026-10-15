@@ -10,9 +10,12 @@ public import Quillen.Waldhausen.SConstruction.WeakNaturalTransformationTriangle
 /-! Consumers of the actual exact-functor triangle and its entire chosen-zero restriction. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor Opposite MonoidalCategory
-open Quillen Quillen.Waldhausen
+open Quillen
 open scoped Simplicial
 universe v u
 

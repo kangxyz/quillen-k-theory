@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Restriction
 
 /-!

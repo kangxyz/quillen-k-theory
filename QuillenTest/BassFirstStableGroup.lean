@@ -12,11 +12,13 @@ Original perfect-complex Laurent representatives, literal chart signs, arbitrary
 classes and the actual strict/raw evaluation map are retained by the degree-minus-one comparison.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.PerfectComplexes
 universe u
 namespace QuillenTest.BassFirstStableGroup
 

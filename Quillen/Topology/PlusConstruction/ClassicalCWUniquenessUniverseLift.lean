@@ -19,11 +19,17 @@ ULift and whole-space subtype homeomorphisms; the comparison and its ordinary
 uniqueness are then returned to the original spaces.
 -/
 @[expose] public section
+
+open Topology
+
+open Quillen.LocalCoefficients
+open Quillen.PlusConstruction
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Topology
+open CategoryTheory
 universe u v w z
 namespace Quillen.IsPlusConstruction
 open LocalCoefficients PlusConstruction

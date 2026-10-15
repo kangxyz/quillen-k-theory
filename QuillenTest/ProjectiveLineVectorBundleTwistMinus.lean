@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.VectorBundleTwistMinus
 
 /-! # Original-map consumers of exact negative-twisted pullback -/

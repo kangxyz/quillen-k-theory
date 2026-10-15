@@ -3,7 +3,11 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
+import Aglib.CategoryTheory.ExactCategory.Basic
 import Quillen.CategoryTheory.ExactCategory.BaseChangeSquare
+
+open CategoryTheory.ExactCategory
+
 
 /-!
 # Constructing admissible kernels in given pullback squares

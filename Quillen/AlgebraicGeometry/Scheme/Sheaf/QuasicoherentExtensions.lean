@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineGlobalSections
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.QuasicoherentClosure
+public import Aglib.AlgebraicGeometry.Cohomology.Affine.GlobalSectionsExactness
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Limits
 public import Mathlib.CategoryTheory.ObjectProperty.Extensions
 
 
@@ -29,8 +29,6 @@ separatedness, or quasicoherence of the middle sheaf is assumed.
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-open Quillen
-open Quillen.SchemeSheaf
 
 
 
@@ -48,7 +46,8 @@ lemma isIso_fromTildeΓ_of_shortExact (R : CommRingCat.{u})
     [S.X₁.IsQuasicoherent] [S.X₃.IsQuasicoherent] : IsIso S.X₂.fromTildeΓ := by
   let T := (S.map moduleSpecΓFunctor).map (tilde.functor R)
   have hT : T.ShortExact :=
-    (AffineCech.shortExact_globalSections_of_quasicoherent_kernel hS).map_of_exact (tilde.functor R)
+    (AlgebraicGeometry.Scheme.Modules.AffineCech.shortExact_globalSections_of_quasicoherent_kernel
+      hS).map_of_exact (tilde.functor R)
   let φ : T ⟶ S :=
     { τ₁ := S.X₁.fromTildeΓ
       τ₂ := S.X₂.fromTildeΓ

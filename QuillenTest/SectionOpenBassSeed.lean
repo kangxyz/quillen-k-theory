@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionOpenBassSeedChangeWeak
 
 /-!
@@ -15,9 +16,16 @@ strict fine-to-coarse seed square remain explicit. No stable-equivalence claim i
 seed or for the change of weaknesses.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.AffineOpenPair
+open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange
+open Quillen.Waldhausen.IteratedS
   AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.SectionOpenBassSeed

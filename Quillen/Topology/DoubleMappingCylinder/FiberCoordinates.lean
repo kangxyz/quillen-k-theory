@@ -15,8 +15,10 @@ use the proved open product chart. No fiber/pushout interchange is assumed.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false

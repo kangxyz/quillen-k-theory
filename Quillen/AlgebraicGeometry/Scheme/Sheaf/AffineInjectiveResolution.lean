@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineCohomology
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Exact
+public import Aglib.AlgebraicGeometry.Cohomology.Affine.Vanishing
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Exact
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Exact
 public import Mathlib.CategoryTheory.Preadditive.Injective.Preserves
 
 /-!
@@ -24,8 +25,6 @@ Degree-zero exactness uses preservation of the actual augmentation kernel.
 No resolution term or successive kernel is assumed quasicoherent.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
 
 
 

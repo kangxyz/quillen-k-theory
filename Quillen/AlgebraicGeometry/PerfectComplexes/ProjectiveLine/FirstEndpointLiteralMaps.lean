@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FirstEndpointBeta
 
 /-! # Actual original first coefficient and beta component maps -/
@@ -35,7 +36,8 @@ lemma coefficientActualRawMap_app (K : FlasqueBoundedBelow.Obj (twoChartLine R))
   dsimp only [Functor.comp_obj, FlasqueCoefficients.toPlus, CochainComplex.Plus.ι,
     ObjectProperty.lift, Functor.mapCochainComplexPlus, ObjectProperty.ι_obj]
   rw [((FlasqueDiagonal.coefficient R .first).mapHomologicalComplex (.up ℤ)).map_id K.obj]
-  rw [(pullbackComplex (relativeFirst R)).map_id ((resolved R).obj K).obj]
+  rw [(AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst R)).map_id ((resolved R).obj
+    K).obj]
   simp only [Category.id_comp, Category.comp_id]
   rfl
 

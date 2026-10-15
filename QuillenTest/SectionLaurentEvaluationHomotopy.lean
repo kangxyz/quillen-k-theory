@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionLaurentEvaluationHomotopy
 
 /-!
@@ -14,10 +15,13 @@ Both unit actions and the original coefficient track remain literal on all four 
 The zeroth-level loop coordinate and the independent prespectrum structure time are retained.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
-open Quillen.PolynomialBaseChange
+open Quillen Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.SectionLaurentEvaluationHomotopy
 

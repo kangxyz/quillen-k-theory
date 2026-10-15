@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OpenBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Tautological
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneRestriction
@@ -20,8 +21,13 @@ preserves the original inclusion into the unit square.
 -/
 @[expose] public section
 
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
+
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
 
 
@@ -31,7 +37,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.Modules
+open AlgebraicGeometry.Scheme.Modules
 variable {R S : CommRingCat.{u}} (f : R ⟶ S)
 
 lemma polynomialMap_coordinate :

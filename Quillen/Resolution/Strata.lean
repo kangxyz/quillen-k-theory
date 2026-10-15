@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.Resolution.Presentation
 public import Quillen.Resolution.Transport
 
@@ -17,6 +18,9 @@ composite admissible epimorphisms. No projectivity or lifting of comparison
 maps is assumed. Global finite resolutions supply the required covers.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

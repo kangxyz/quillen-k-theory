@@ -9,9 +9,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionOpen
 
 /-! The actual relative-open comparison lifts original classes before full-open restriction. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.PerfectComplexes
 universe u
 namespace QuillenTest.SectionOpenKComparison
 

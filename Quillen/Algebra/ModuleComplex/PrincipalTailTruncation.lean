@@ -22,6 +22,9 @@ required, and the generating principal family need not be explicitly finite.
 -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -29,7 +32,6 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits HomologicalComplex
 namespace Quillen.ModuleComplex.PrincipalLocalization
-open Quillen.CochainComplex
 variable {R : Type u} [CommRing R]
 
 /-- Actual module localization on a principal cover detects zero objects,

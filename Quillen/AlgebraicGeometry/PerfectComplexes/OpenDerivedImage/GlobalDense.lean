@@ -19,6 +19,9 @@ unchanged perfect-complex category. The complement itself uses no roof premise.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -18,6 +18,9 @@ isomorphism retains every original spatial arrow.
 
 @[expose] public section
 
+open Quillen.LocalCoefficients
+
+
 open CategoryTheory Limits
 noncomputable section
 universe u

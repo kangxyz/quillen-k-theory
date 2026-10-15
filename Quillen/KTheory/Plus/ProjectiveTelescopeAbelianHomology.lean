@@ -13,6 +13,9 @@ public import Quillen.Topology.LocalCoefficients.AbelianHomotopySplitting
 /-! # Abelian local homology of original projective telescope translations -/
 
 @[expose] public section
+
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u

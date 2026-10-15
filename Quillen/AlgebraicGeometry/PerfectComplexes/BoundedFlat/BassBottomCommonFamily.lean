@@ -4,17 +4,22 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassBottomSharedScalarPaths
 
 /-! Three complete original Bass cylinder faces in one actual geometric reference family.
 Repeated boundary slots are retained; their dependent-node identifications remain an obligation. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite Convexity
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 open scoped Simplicial Topology unitInterval
 universe u
@@ -27,8 +32,10 @@ theorem bottom_total :
     (BassLaurentBottomFace.firstMap P v ≫ BassLaurentBottomFace.secondMap P u) ≫
       (laurentPlus P a ≫ polynomialProjection P a) =
         laurentProjection P c ≫ coefficientMap P v ≫ coefficientMap P u := by
-  have hu := coefficientTransformation_naturality P (laurentUnderCoefficient R) u
-  have hv := coefficientTransformation_naturality P (laurentUnderCoefficient R) v
+  have hu := AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (laurentUnderCoefficient R) u
+  have hv := AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (laurentUnderCoefficient R) v
   change BassLaurentBottomFace.secondMap P u ≫ laurentProjection P a =
     laurentProjection P b ≫ coefficientMap P u at hu
   change BassLaurentBottomFace.firstMap P v ≫ laurentProjection P b =
@@ -67,6 +74,8 @@ def nodes : Fin 51 → BassOverlap.Node P u v :=
   Fin.addCases (m := 36) (n := 15) (motive := fun _ ↦ BassOverlap.Node P u v)
     (BassOverlap.nodes P u v) (bottomNodes P u v)
 
+/-- The 50-simplex combining both chart diagrams and the bottom diagram over their common
+reference. -/
 def simplex : ModelSimplex
     (modelOf (boundedFlatPerfectWaldhausen (space (op P, a))))
     (modelOf (boundedFlatPerfectWaldhausen
@@ -74,9 +83,11 @@ def simplex : ModelSimplex
   ModelSimplex.ofIsos (BassOverlap.commonReference P u v)
     (fun i ↦ (nodes P u v i).1) (fun i ↦ (nodes P u v i).2)
 
+/-- The face inclusion selecting the first 36 vertices, which carry the two chart diagrams. -/
 def chartFace : ⦋35⦌ ⟶ ⦋50⦌ :=
   SimplexCategory.Hom.mk ⟨Fin.castAdd 15, fun _ _ h ↦ h⟩
 
+/-- The face inclusion selecting the final 15 vertices, which carry the bottom diagram. -/
 def bottomFace : ⦋14⦌ ⟶ ⦋50⦌ :=
   SimplexCategory.Hom.mk ⟨Fin.natAdd 36, fun _ _ h ↦ Nat.add_le_add_left h 36⟩
 

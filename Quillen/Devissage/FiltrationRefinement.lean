@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Devissage.Grothendieck
 
 /-!
@@ -15,6 +16,9 @@ Actual pullbacks splice two finite filtrations across a short exact sequence.
 Consequently a finite filtration can be refined by filtrations of its factors.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

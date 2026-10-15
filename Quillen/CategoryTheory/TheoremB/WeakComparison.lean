@@ -18,6 +18,9 @@ is proved by simultaneous skeletal induction, rather than assumed.
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 noncomputable section
 universe u
 open CategoryTheory Limits

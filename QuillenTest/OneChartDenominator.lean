@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.OneChartDenominator
 
 /-!
@@ -18,13 +19,18 @@ chart when the target is derived-zero on the first open.
 
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
 namespace QuillenTest.OneChartDenominator
-open Quillen.PerfectComplexes
 attribute [local instance] Affine.standardDerivedSheaves
 
 /-- An actual original chain map is annihilated by a genuine chain homotopy

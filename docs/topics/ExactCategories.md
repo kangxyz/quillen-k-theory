@@ -12,22 +12,26 @@ directions.
 
 Use `import Quillen.KTheory.API` for exact-category K-groups, canonical maps,
 equivalences, bundled small categories, and small-model functoriality.
-The classical K₀ comparison has its own imports.
+The classical K₀ comparison has its own imports. General exact structures and
+exact functors come from `Aglib.CategoryTheory.ExactCategory`; their declaration
+namespace is `CategoryTheory.ExactCategory`. Quillen supplies the Q-construction
+and K-map extensions in that native namespace. `Quillen.SmallExactCategory` is the
+bundled application category.
 
-| Import after `Quillen.` | Focused public names, relative to `Quillen` |
+| Full import | Focused public names |
 | --- | --- |
-| [`CategoryTheory.ExactCategory.Basic`](../../Quillen/CategoryTheory/ExactCategory/Basic.lean) | `ExactStructure`, `ExactStructure.inflation`, `ExactStructure.deflation` |
-| [`CategoryTheory.ExactCategory.Functor`](../../Quillen/CategoryTheory/ExactCategory/Functor.lean) | `ExactFunctor`, `ExactFunctor.mapQ` |
-| [`KTheory.API`](../../Quillen/KTheory/API.lean) | `ExactFunctor.KMap`, `SmallExactCategory.ofExactStructure`, `SmallExactCategory.KFunctor` |
-| [`CategoryTheory.SmallModel.Exact`](../../Quillen/CategoryTheory/SmallModel/Exact.lean) | `ExactStructure.SmallK`, `ExactFunctor.smallKMap`, `ExactStructure.presentationKEquiv` |
-| [`KTheory.GrothendieckGroup.Basic`](../../Quillen/KTheory/GrothendieckGroup/Basic.lean) | `ExactStructure.GrothendieckGroup`, `ExactStructure.grothendieck_universal` |
-| [`KTheory.GrothendieckComparison.Equivalence`](../../Quillen/KTheory/GrothendieckComparison/Equivalence.lean) | `ExactStructure.grothendieckKZeroEquiv` |
-| [`KTheory.GrothendieckComparison.Functor`](../../Quillen/KTheory/GrothendieckComparison/Functor.lean) | `SmallExactCategory.grothendieckFunctor`, `SmallExactCategory.grothendieckKZeroIso` |
+| [Aglib.CategoryTheory.ExactCategory.Basic](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/CategoryTheory/ExactCategory/Basic.lean) | `ExactStructure`, `ExactStructure.inflation`, `ExactStructure.deflation` |
+| [`Quillen.CategoryTheory.ExactCategory.Functor`](../../Quillen/CategoryTheory/ExactCategory/Functor.lean) | `ExactFunctor`, `ExactFunctor.mapQ` |
+| [`Quillen.KTheory.API`](../../Quillen/KTheory/API.lean) | `ExactFunctor.KMap`, `SmallExactCategory.ofExactStructure`, `SmallExactCategory.KFunctor` |
+| [`Quillen.CategoryTheory.SmallModel.Exact`](../../Quillen/CategoryTheory/SmallModel/Exact.lean) | `ExactStructure.SmallK`, `ExactFunctor.smallKMap`, `ExactStructure.presentationKEquiv` |
+| [`Quillen.KTheory.GrothendieckGroup.Basic`](../../Quillen/KTheory/GrothendieckGroup/Basic.lean) | `ExactStructure.GrothendieckGroup`, `ExactStructure.grothendieck_universal` |
+| [`Quillen.KTheory.GrothendieckComparison.Equivalence`](../../Quillen/KTheory/GrothendieckComparison/Equivalence.lean) | `ExactStructure.grothendieckKZeroEquiv` |
+| [`Quillen.KTheory.GrothendieckComparison.Functor`](../../Quillen/KTheory/GrothendieckComparison/Functor.lean) | `SmallExactCategory.grothendieckFunctor`, `SmallExactCategory.grothendieckKZeroIso` |
 
 ## Exact structure and the Q-category
 
 Let `C : Type u` have `[Category.{v} C]`, `[Preadditive C]`, and
-`[HasFiniteBiproducts C]`. An `E : Quillen.ExactStructure C` contains a predicate
+`[HasFiniteBiproducts C]`. An `E : CategoryTheory.ExactCategory.ExactStructure C` contains a predicate
 `E.conflation` on `ShortComplex C`. Every selected short complex has the
 actual kernel and cokernel universal properties. The other fields give
 isomorphism closure, identity and composition for admissible maps, pushouts
@@ -56,7 +60,7 @@ category. The specialization is `E.QCategory`.
 
 ## BQ and the degree convention
 
-[`KTheory.Basic`](../../Quillen/KTheory/Basic.lean) defines `E.KSpace` as
+[`Quillen.KTheory.Basic`](../../Quillen/KTheory/Basic.lean) defines `E.KSpace` as
 `Quillen.ClassifyingSpace E.QCategory`, the realization of the Q-category's
 nerve. Its point `E.kBasepoint` is the vertex of the original additive
 category's zero object. This definition does not make that vertex a zero
@@ -70,7 +74,7 @@ K₀ and identification with the classical presentation are separate theorems.
 
 ## Exact functors and their canonical maps
 
-For exact structures `E` and `E'`, `Quillen.ExactFunctor E E'` consists of an
+For exact structures `E` and `E'`, `CategoryTheory.ExactCategory.ExactFunctor E E'` consists of an
 underlying additive functor `F.toFunctor` and preservation of conflations.
 Preservation of inflations, deflations, and the pullbacks used by Q-composition
 is proved from that data in
@@ -95,7 +99,7 @@ The pointwise forms `KMap_id_apply` and `KMap_comp_apply` are in `KTheory.API`.
 
 For a category with matching object and morphism universe `u`,
 `SmallExactCategory.ofExactStructure E` packages the existing structure.
-[`KTheory.Functor`](../../Quillen/KTheory/Functor.lean) defines
+[`Quillen.KTheory.Functor`](../../Quillen/KTheory/Functor.lean) defines
 `Quillen.SmallExactCategory.KFunctor n : SmallExactCategory.{u} ⥤ GrpCat.{u}`.
 Its arrows are actual exact functors, and its maps are precisely their `KMap n`.
 
@@ -107,7 +111,7 @@ object universe need not equal the shared morphism universe. The algebraic
 definition of an exact functor itself allows independent source and target
 universes; that broader definition does not enlarge these realization APIs.
 
-[`KTheory.Equivalence`](../../Quillen/KTheory/Equivalence.lean) proves that an
+[`Quillen.KTheory.Equivalence`](../../Quillen/KTheory/Equivalence.lean) proves that an
 underlying categorical equivalence which reflects both inflations and
 deflations induces an equivalence of Q-categories. Given
 `[F.mapQ.IsEquivalence]`, `F.KEquivOfMapQIsEquivalence n` is an equivalence of

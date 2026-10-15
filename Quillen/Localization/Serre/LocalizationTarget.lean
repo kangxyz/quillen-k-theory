@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Localization.Serre.LocalizationTheorem
 public import Quillen.KTheory.Equivalence
 public import Quillen.KTheory.Map.Functoriality
@@ -22,6 +24,9 @@ on K-theory. Transporting the canonical path-space boundary then gives all
 three exactness positions and the surjective connective K₀ endpoint.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

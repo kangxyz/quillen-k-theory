@@ -10,9 +10,12 @@ public import Quillen.Waldhausen.SConstruction.WeakGridTriangle
 /-! Consumers of the actual Δ[2] family, retaining original components and zero grids. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor Opposite MonoidalCategory
-open Quillen Quillen.Waldhausen
+open Quillen
 open scoped Simplicial
 universe v u
 

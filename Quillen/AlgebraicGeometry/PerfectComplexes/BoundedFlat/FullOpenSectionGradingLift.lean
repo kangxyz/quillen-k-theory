@@ -16,9 +16,12 @@ across the independent section and raw-perfect hom universes. No connective K-th
 or replacement of the grading is used.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.AlgebraicGrothendieck
+open Quillen.Waldhausen.AlgebraicGrothendieck
 open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes

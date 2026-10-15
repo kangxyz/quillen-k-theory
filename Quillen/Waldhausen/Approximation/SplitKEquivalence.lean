@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Approximation.SplitDeloopingEquivalence
 public import Quillen.Topology.HomotopyGroups.Equivalence
 
@@ -17,6 +18,9 @@ including its canonical zero-object rebasing. Its bijectivity follows from
 the constructed equivalence of the actual S-construction realizations.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

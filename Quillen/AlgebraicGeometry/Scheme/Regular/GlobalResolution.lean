@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.Regular.ChartBounds
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Locality
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Locality
 
 /-!
 # Actual global resolutions on regular schemes with the resolution property
@@ -21,10 +21,12 @@ affine cover. Vector bundles are never asserted globally projective.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 

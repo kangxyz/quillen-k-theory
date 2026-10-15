@@ -14,11 +14,14 @@ These consumers retain the original Laurent seed face, arbitrary coefficient map
 independent cylinder and loop times, original signed stable inclusions and negative degrees.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open Quillen Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.SectionBassTelescopeLooping
 

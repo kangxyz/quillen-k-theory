@@ -1,16 +1,22 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
+public import Aglib.AlgebraicGeometry.Modules.ProjectionFormula.Basic
+public import Aglib.AlgebraicGeometry.Modules.Pullback.Unit
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Basic
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Tensor.Exact
 public import Aglib.AlgebraicGeometry.Modules.Tensor.Symmetry
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalAllCoefficientTensor
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalAllCoefficientPushforward
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatPullback
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ClosedPushforwardExactness
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.TensorDerivedPushforward
+public import Aglib.AlgebraicGeometry.Modules.Pullback.FlatMorphism
+public import Aglib.AlgebraicGeometry.Modules.Pushforward.ClosedImmersion
+public import Aglib.AlgebraicGeometry.Modules.Stalk.Reflection
+public import Aglib.AlgebraicGeometry.Cohomology.ProjectionFormula.TensorPushforward
 
 /-! # Exact original diagonal coefficient functors
 
@@ -20,18 +26,14 @@ flatness or perfect representative is assumed.
 -/
 
 @[expose] public section
+
+open AlgebraicGeometry
+open CategoryTheory.BraidedCategory
+open CategoryTheory.MonoidalCategory
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.SchemeSheaf
-export AlgebraicGeometry.Scheme.Modules
-  (moduleTensorRightLeftIso moduleTensorRight_preservesHomology)
-end Quillen.SchemeSheaf
-
-end
 
 
 noncomputable section
@@ -84,7 +86,7 @@ def diagonalCoefficientThirdIso :
   let e := sectionPullbackIso (relativeDiagonal R) (relativeFirst R)
     (relativeDiagonal_first R)
   exact NatIso.ofComponents
-    (fun E => diagonalTensorPushforwardIso_all R E (tautologicalQuotientLine R))
+    (fun E => diagonalTensorPushforwardIsoAll R E (tautologicalQuotientLine R))
     (fun {E E'} f => by
       have hp : (moduleTensorRightFunctor (relativeSquare R)
           (J.obj (tautologicalQuotientLine R))).map (P.map f) ≫

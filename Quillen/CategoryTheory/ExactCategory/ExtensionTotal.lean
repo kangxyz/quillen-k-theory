@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.Subdivision
 public import Mathlib.CategoryTheory.Widesubcategory
 
@@ -18,6 +18,9 @@ constructs the category and its middle-object projection; the quotient-object
 projection to the original Q category requires a separate construction.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 universe v u
 open CategoryTheory CategoryTheory.Limits

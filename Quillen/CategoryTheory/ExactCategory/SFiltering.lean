@@ -6,8 +6,8 @@ Authors: kangxyz
 
 module
 
-public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
-public import Quillen.CategoryTheory.ExactCategory.BaseChange
+public import Aglib.CategoryTheory.ExactCategory.Isomorphisms
+public import Aglib.CategoryTheory.ExactCategory.BaseChange
 public import Mathlib.CategoryTheory.Localization.CalculusOfFractions
 public import Mathlib.CategoryTheory.ObjectProperty.ClosedUnderIsomorphisms
 public import Mathlib.CategoryTheory.MorphismProperty.IsInvertedBy
@@ -32,7 +32,6 @@ open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 
 namespace CategoryTheory.ExactCategory.ExactStructure
-open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : CategoryTheory.ExactCategory.ExactStructure C) (A : ObjectProperty C)

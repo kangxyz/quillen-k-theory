@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.Algebra.Polynomial.LaurentDiagonal
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalEvaluation
 
@@ -15,6 +16,12 @@ Its surjectivity proves closedness, and the actual overlap is the base change of
 original relative diagonal along the positive-negative rectangle.
 -/
 @[expose] public section
+
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
 open Quillen
 
 noncomputable section
@@ -23,7 +30,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
-open PolynomialLaurent Quillen.PolynomialBaseChange Quillen.PolynomialDiagonal
+open PolynomialLaurent Quillen.PolynomialDiagonal
 /-- The original mixed affine diagonal induced by T and its inverse. -/
 def mixedPolynomialDiagonal (R : CommRingCat.{u}) :
     Spec (.of (LaurentPolynomial R)) ⟶ polynomialSquare R :=

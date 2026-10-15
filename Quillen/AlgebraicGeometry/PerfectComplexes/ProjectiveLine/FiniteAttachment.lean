@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Single
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
@@ -21,6 +22,9 @@ the upper cohomological bound. The existence of a global finite locally free
 attachment is a separate geometric step.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

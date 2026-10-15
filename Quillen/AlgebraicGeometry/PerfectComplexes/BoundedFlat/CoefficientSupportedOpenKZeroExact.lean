@@ -23,12 +23,15 @@ identity. Only the combined injective exact tail uses quasi-separated Q and a
 compact auxiliary support complement T, through supported cofinality.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
-open Quillen.Waldhausen Quillen.Waldhausen.AlgebraicGrothendieck
-open AlgebraicGeometry.Scheme.CoefficientBaseChange
+open Quillen.Waldhausen.AlgebraicGrothendieck
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u
 namespace Quillen.PerfectComplexes
 

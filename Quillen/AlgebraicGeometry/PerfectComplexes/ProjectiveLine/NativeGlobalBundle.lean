@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeBinaryUnion
-public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeFiniteCoverInduction
+public import Aglib.AlgebraicGeometry.Properties.AffineInduction
 
 /-! # The original native projective-line K-map on qcqs schemes
 
@@ -30,7 +30,7 @@ open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
 /-- The actual original native comparison holds on every qcqs scheme. -/
 theorem nativePhiBijective_of_qcqs (X : Scheme.{u}) [CompactSpace X]
     [QuasiSeparatedSpace X] : NativePhiBijective X :=
-  NativeFiniteCoverInduction.of_qcqs NativePhiBijective
+  AlgebraicGeometry.Scheme.AffineInduction.of_qcqs NativePhiBijective
     nativePhiBijective_of_iso nativePhiBijective_of_isAffine
     (fun {Y} _ => nativePhiBijective_union Y) X
 

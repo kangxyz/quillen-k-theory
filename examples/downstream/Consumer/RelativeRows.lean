@@ -17,10 +17,13 @@ public import Quillen.Topology.HELP.FiberwiseWeakEquivalence
 /-! Consumers of the original degreewise relative-row maps. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Opposite MonoidalCategory Quillen Quillen.Waldhausen
+open CategoryTheory Opposite MonoidalCategory Quillen
 open Quillen.Waldhausen.Fibration Quillen.Waldhausen.Fibration.RelativeRows
 open scoped Simplicial Topology
 universe u

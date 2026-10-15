@@ -6,11 +6,15 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.Waldhausen.QuillenComparison.FlagPullback
 public import Quillen.CategoryTheory.ComposableArrows.Append
 
 /-! # Extending admissible flags by a zero and an ambient target -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

@@ -17,7 +17,6 @@ we retain the existing projection isomorphism, rather than identifying its sourc
 original open. No quasi-compactness assumption is used.
 -/
 @[expose] public section
-open Quillen
 
 noncomputable section
 open CategoryTheory AlgebraicGeometry Opposite

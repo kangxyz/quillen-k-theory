@@ -9,9 +9,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDeficitGradingStabl
 
 /-! Consumers retain the actual unshifted cone map and original face in signed degrees. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.PerfectComplexes
 universe u
 namespace QuillenTest.OpenDeficitGradingStable
 

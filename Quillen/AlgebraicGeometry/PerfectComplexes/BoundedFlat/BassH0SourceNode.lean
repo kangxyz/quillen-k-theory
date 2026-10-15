@@ -4,16 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassH0CommonReference
 
 /-! The first actual full dependent node shared by H0 and the original bottom family. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassReferenceMerge
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH0Merge
@@ -52,8 +60,10 @@ theorem source_node_canonical : nodes P u v 2 =
     (polynomialProjection P c) (laurentPlus P c)
     (coefficientMap P (u ≫ v)) (coefficientMap P ((polynomialUnderFunctor R).map (u ≫ v)))
     (coefficientMap P ((laurentUnderFunctor R).map (u ≫ v)))
-    (coefficientTransformation_naturality P (polynomialUnderCoefficient R) (u ≫ v))
-    (coefficientTransformation_naturality P (underToLaurent R) (u ≫ v))
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+      (polynomialUnderCoefficient R) (u ≫ v))
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P (underToLaurent R)
+      (u ≫ v))
     (laurentProjection P a) (laurentProjection P c)
     (laurentPlus_projection P a) (laurentPlus_projection P c)
   exact congrArg (fun N : ProjectionReference.Node

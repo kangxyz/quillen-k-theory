@@ -18,6 +18,9 @@ source row factorization.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.QuotientRows
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'

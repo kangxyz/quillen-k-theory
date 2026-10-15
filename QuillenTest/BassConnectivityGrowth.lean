@@ -15,6 +15,9 @@ iterated Laurent seed transitions retain their literal points and paths. The sma
 high-level cutoff and every finite offset are tested without assuming later-stage growth.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory AlgebraicGeometry
 universe u

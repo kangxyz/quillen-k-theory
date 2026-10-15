@@ -15,11 +15,14 @@ The Model coefficient comparison retains the actual normalized geometric compari
 original spectrum construction and the scheme coefficient-composition equality.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.IteratedS
 universe u v₀ u₀
 namespace Quillen.PerfectComplexes
 

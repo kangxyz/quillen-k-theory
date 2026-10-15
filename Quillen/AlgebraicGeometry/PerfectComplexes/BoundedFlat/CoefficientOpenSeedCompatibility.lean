@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientOpenBassSeed
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientOpenNull
 public import Quillen.Waldhausen.SConstruction.Iterated.DiagramNullIdentityAction
@@ -21,11 +22,14 @@ coefficient naturality retain independent scalar and null times. Each of its act
 slices preserves the seed, including its prescribed concatenation and output-loop coordinate.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
-open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass Quillen.FunctorIdentityAutomorphism
 open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u

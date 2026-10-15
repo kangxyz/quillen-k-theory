@@ -5,8 +5,12 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 import Quillen.Topology.ClassifyingSpace.ExtensionTotal
 import Quillen.Algebra.Category.ModuleCat.FiniteProjective
+
+open CategoryTheory.ExactCategory
+
 
 /-! Consumers retaining the exact total category and the specified contraction vertex. -/
 

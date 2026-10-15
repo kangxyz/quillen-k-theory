@@ -9,6 +9,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassPrimiti
 /-! Kernel-checked scalar indexing for the thirteen actually supported faces.
 No equality of coefficient reference nodes is asserted by this finite indexing result. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassPrimitiveSupport
+
 noncomputable section
 set_option autoImplicit false
 open CategoryTheory Convexity Quillen.SimplexParameters
@@ -40,6 +43,7 @@ theorem oldPlus_monotone (i : Fin 3) :
       (rectangleFace i ≫ (BassOverlap.plusFace ≫ BassReferenceMerge.chartFace)).toOrderHom) := by
   fin_cases i <;> decide
 
+/-- The `i`th original positive-chart 7-face reindexed into the 63 scalar slots. -/
 def oldPlusFace (i : Fin 3) : ⦋7⦌ ⟶ ⦋62⦌ :=
   SimplexCategory.Hom.mk ⟨oldIndex ∘ (rectangleFace i ≫
     (BassOverlap.plusFace ≫ BassReferenceMerge.chartFace)).toOrderHom, oldPlus_monotone i⟩
@@ -50,6 +54,7 @@ theorem oldMinus_monotone (i : Fin 3) :
       (rectangleFace i ≫ (BassOverlap.minusFace ≫ BassReferenceMerge.chartFace)).toOrderHom) := by
   fin_cases i <;> decide
 
+/-- The `i`th original inverse-coordinate-chart 7-face reindexed into the 63 scalar slots. -/
 def oldMinusFace (i : Fin 3) : ⦋7⦌ ⟶ ⦋62⦌ :=
   SimplexCategory.Hom.mk ⟨oldIndex ∘ (rectangleFace i ≫
     (BassOverlap.minusFace ≫ BassReferenceMerge.chartFace)).toOrderHom, oldMinus_monotone i⟩
@@ -59,6 +64,7 @@ theorem h0Plus_monotone (i : Fin 3) :
     Monotone (h0Index ∘ (rectangleFace i ≫ (BassH0Diagram.plusFace)).toOrderHom) := by
   fin_cases i <;> decide
 
+/-- The `i`th H0 positive-chart 7-face reindexed into the 63 scalar slots. -/
 def h0PlusFace (i : Fin 3) : ⦋7⦌ ⟶ ⦋62⦌ :=
   SimplexCategory.Hom.mk ⟨h0Index ∘ (rectangleFace i ≫
     (BassH0Diagram.plusFace)).toOrderHom, h0Plus_monotone i⟩
@@ -68,6 +74,7 @@ theorem h0Minus_monotone (i : Fin 3) :
     Monotone (h0Index ∘ (rectangleFace i ≫ (BassH0Diagram.minusFace)).toOrderHom) := by
   fin_cases i <;> decide
 
+/-- The `i`th H0 inverse-coordinate-chart 7-face reindexed into the 63 scalar slots. -/
 def h0MinusFace (i : Fin 3) : ⦋7⦌ ⟶ ⦋62⦌ :=
   SimplexCategory.Hom.mk ⟨h0Index ∘ (rectangleFace i ≫
     (BassH0Diagram.minusFace)).toOrderHom, h0Minus_monotone i⟩
@@ -76,6 +83,7 @@ def h0MinusFace (i : Fin 3) : ⦋7⦌ ⟶ ⦋62⦌ :=
 theorem bottom_monotone : Monotone (oldIndex ∘ BassReferenceMerge.bottomFace.toOrderHom) := by
   decide
 
+/-- The complete bottom 14-face reindexed into the 63 scalar slots with its original order. -/
 def bottomFace : ⦋14⦌ ⟶ ⦋62⦌ :=
   SimplexCategory.Hom.mk ⟨oldIndex ∘ BassReferenceMerge.bottomFace.toOrderHom, bottom_monotone⟩
 

@@ -14,7 +14,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 namespace QuillenTest.AffineDerivedPushforward
 
-open Quillen
 /-- The standard ambient derived category used by the actual derived unit. -/
 local instance standardDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _

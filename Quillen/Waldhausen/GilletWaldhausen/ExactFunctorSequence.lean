@@ -6,6 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.Limits.Shapes.CokernelPushout
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.Additivity.CofibrationSequence
 public import Quillen.Waldhausen.ExactFunctor
 public import Quillen.Waldhausen.QuillenComparison.PullbackQuotients
@@ -20,6 +23,9 @@ inclusion along an admissible epimorphism. No additivity conclusion occurs
 among the hypotheses.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section
@@ -103,7 +109,7 @@ theorem exactFunctorSequence_isCofibrationSequence
     intro X Y f hf
     rw [← hH]
     exact EH.map_inflation f hf)
-  cofiber X := QuillenComparison.isPushoutOfZeroCokernel _ (E'.cokernel _ (hc X))
+  cofiber X := CategoryTheory.Limits.isPushout_of_isColimit_cokernel _ (E'.cokernel _ (hc X))
     (ofExactCategory E').isZero _ _
 
 end Quillen.Waldhausen.GilletWaldhausen

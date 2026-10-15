@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.Map.NaturalIso
 
 /-! # Actual zero normalization of exact functors for Q/S naturality
@@ -15,6 +17,9 @@ For strictly zero-preserving functors, the already-defined Quillen K-map is
 exactly the map of the unmodified Q-functor. No commutative K-square is assumed.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

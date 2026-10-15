@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.CategoryTheory.Iso.ReverseTransport
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionLaurentPullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionSpectrumNaturality
@@ -16,12 +17,16 @@ The actual strict section action and geometric Laurent scalar intertwine through
 coefficient comparison. This owner retains the categorical square used for its whole-track lift.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 

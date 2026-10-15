@@ -13,9 +13,13 @@ in every degree. The comparison chooses witnesses through the actual evaluation 
 and does not assume either restriction map is surjective.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.PerfectComplexes AlgebraicGeometry.Scheme.AffineOpenPair Quillen.Waldhausen
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.FullOpenSectionRestrictionKComparison
 

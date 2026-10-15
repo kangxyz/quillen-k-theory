@@ -16,6 +16,9 @@ injectivity of the original relative restriction.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 universe u

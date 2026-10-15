@@ -11,6 +11,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
 /-! # Consumers of actual affine derived comparison and perfect homology -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 
@@ -20,7 +23,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 
 namespace QuillenTest.PerfectAffineDerivedComparison
 

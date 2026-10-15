@@ -8,6 +8,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.H1Reindexed
 
 /-! Literal complete scalar seams of the original H1 cells in the actual common coordinates. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH1Join
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

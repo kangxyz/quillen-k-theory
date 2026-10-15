@@ -17,9 +17,12 @@ and every signed degree. All finite connectivity and point HEP assumptions are d
 the actual original S-models; no cone exactness or replacement-map premise is supplied.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open Quillen Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
 open scoped unitInterval
 universe u
 namespace QuillenTest.OriginalConeFiberExcision

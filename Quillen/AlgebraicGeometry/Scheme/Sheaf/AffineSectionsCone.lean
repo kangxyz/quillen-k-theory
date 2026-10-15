@@ -18,7 +18,6 @@ module cone with the original sheaf cone. The arrow square is counit naturality.
 
 @[expose] public section
 open Quillen
-open Quillen.SchemeSheaf
 
 
 section

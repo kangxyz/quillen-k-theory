@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenQCTargetRoofs
 
 /-!
@@ -17,13 +18,18 @@ isomorphism, two specified source-support conditions, and the empty-open case.
 
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
 namespace QuillenTest.OpenQCTargetRoofs
-open Quillen.PerfectComplexes
 attribute [local instance] Affine.standardDerivedSheaves
 
 /-- A prescribed original derived isomorphism makes both actual restricted

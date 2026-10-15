@@ -20,6 +20,9 @@ Arbitrary locally-perfect/all-sheaf comparison is a separate step.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 

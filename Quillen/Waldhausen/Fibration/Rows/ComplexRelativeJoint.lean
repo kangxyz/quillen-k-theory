@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.Rows.SecondEndpoint
 
 /-!
@@ -17,6 +18,12 @@ inclusion of the fine weak class. The original second endpoint is a section
 of that projection. No approximation or localization conclusion is assumed.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen.SplitFactorization
+
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CochainComplex

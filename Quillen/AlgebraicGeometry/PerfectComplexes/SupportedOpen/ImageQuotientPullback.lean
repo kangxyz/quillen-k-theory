@@ -18,9 +18,12 @@ pullback class supplies each image-preservation witness; no density,
 surjectivity, or raw-perfect exact pullback premise is used.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.AlgebraicGrothendieck
+open Quillen.Waldhausen.AlgebraicGrothendieck
 universe u
 namespace Quillen.PerfectComplexes
 

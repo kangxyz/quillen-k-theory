@@ -9,8 +9,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Sections
 
 /-! Original-map consumers of bounded-flat affine cocartesian sections. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry
 universe u
 namespace QuillenTest.BoundedFlatSections
 

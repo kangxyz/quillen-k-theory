@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.CategoryTheory.QConstruction.Abelian.Surjections
 public import Mathlib.CategoryTheory.Comma.Over.Pullback
 public import Mathlib.CategoryTheory.Limits.Constructions.Over.Connected
@@ -20,6 +21,9 @@ on the underlying ambient maps. Kernel is realized by pullback along zero,
 so its functoriality is inherited from the slice pullback functor.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleIncidence
 
 /-! # Injectivity of the original finite acyclic inclusion K-map
@@ -16,6 +17,9 @@ original class. These are genuine original isomorphism-model KMaps, including
 K₀ and empty term intervals, without any fibration assumption.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

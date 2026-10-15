@@ -17,7 +17,6 @@ For each module sheaf, the kernel of the paired chart obstructions glues the act
 @[expose] public section
 
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
 
 

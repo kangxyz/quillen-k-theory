@@ -10,10 +10,14 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.NativeLaurentClassCompa
 /-! Public native consumers of the canonical Laurent-class comparison. -/
 
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes AlgebraicGeometry.Scheme.Bass
+open CategoryTheory AlgebraicGeometry AlgebraicGeometry.Scheme.Bass
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
 universe u
 
 namespace Consumer.NativeLaurentKOne

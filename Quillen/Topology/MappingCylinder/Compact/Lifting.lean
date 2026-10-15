@@ -23,6 +23,8 @@ Time functions and compact parameter quotients construct continuous lifts on the
 -/
 @[expose] public section
 
+open Topology
+
 
 noncomputable section
 open scoped Topology unitInterval
@@ -77,7 +79,7 @@ end
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval
 universe u
 namespace Quillen.MappingCylinder.Compact
@@ -149,7 +151,7 @@ end
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval
 open unitInterval
 universe u
@@ -268,7 +270,7 @@ end
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval
 universe u
 namespace Quillen.MappingCylinder.Compact
@@ -381,7 +383,7 @@ end
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval Simplicial
 universe u
 namespace Quillen.MappingCylinder.Compact

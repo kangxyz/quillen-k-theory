@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedSections
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientOpenSections
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedOpenNaturality
@@ -26,12 +27,18 @@ restriction. No supported quotient grading, cofinality, seed or telescope
 statement is asserted by these Model constructions.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
-open Quillen.CategoryTheory.StrictSections AlgebraicGeometry.Scheme.CoefficientBaseChange
+open Quillen.Waldhausen.IteratedS
+open Quillen.CategoryTheory.StrictSections AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}

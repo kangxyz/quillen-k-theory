@@ -4,16 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MInternalBoundaryRows
 
 /-! Actual common diagrams and complete scalar edges on the two first-stage M seams. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassMComponents
+open Quillen.PerfectComplexes.BassMReferences
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Convexity
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters Quillen.NativePathCells
 open scoped Simplicial Topology unitInterval
 universe u

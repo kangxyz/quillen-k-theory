@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChange
+public import Aglib.AlgebraicGeometry.Cohomology.BaseChange.Flat
 /-! # Composition of the original bounded-below flat pullbacks
 
 The comparison is induced by the geometric `pullbackComp` isomorphism. Both directions retain
@@ -12,8 +12,9 @@ its literal map and the installed right-derived composite units.
 -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

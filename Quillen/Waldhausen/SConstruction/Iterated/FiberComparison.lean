@@ -20,6 +20,12 @@ the original source coordinate and every point of the complete fiber path.
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+open Quillen.TwoSidedBar
+open Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.Fibration.RelativeRows
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

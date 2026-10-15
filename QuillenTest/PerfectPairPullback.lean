@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PairPullback
 
 /-! # Consumers of actual arbitrary open-pair K-pullback
@@ -14,9 +15,11 @@ are qc for maps on the original models; opens may be non-qc.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.PerfectComplexes
 universe u
 namespace QuillenTest.PerfectPairPullback
 
@@ -26,7 +29,7 @@ open Quillen
 theorem original_chain_map {A B : AlgebraicGeometry.Scheme.OpenPairs.{u}} (f : A ⟶ B)
     {K L : (boundedFlatPerfectSupported B.obj.hom).FullSubcategory} (s : K ⟶ L) :
     ((boundedFlatPerfectSupportedPullback f).map s).hom =
-      (pullbackComplex f.hom.right).map s.hom := rfl
+      (AlgebraicGeometry.Scheme.Modules.Complex.pullback f.hom.right).map s.hom := rfl
 
 /-- Relative weakness is preserved without any flatness or cartesian assumption. -/
 theorem original_relative_weak {A B : AlgebraicGeometry.Scheme.OpenPairs.{u}} (f : A ⟶ B)

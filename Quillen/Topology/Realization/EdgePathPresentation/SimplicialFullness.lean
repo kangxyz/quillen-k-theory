@@ -16,11 +16,13 @@ and graph subdivision, rather than an assumed edge approximation principle.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits Convexity Topology
+open CategoryTheory CategoryTheory.Limits Convexity
 open scoped Simplicial Topology unitInterval
 universe u v w
 namespace Quillen.SimplicialGraph

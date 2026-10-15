@@ -12,6 +12,9 @@ public import Quillen.CategoryTheory.GroupCompletion.UnitEntry
 /-! # Original completed-stage maps into localization of the telescope -/
 
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u v

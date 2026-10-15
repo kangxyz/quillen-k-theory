@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Approximation.Basic
 public import Quillen.Waldhausen.SplitComplexes.FactorizationSubcategory
 
@@ -16,6 +17,9 @@ Ambient and split complex weak equivalences satisfy two-out-of-three saturation.
     comparison on a cone-closed complex subcategory has the two approximation properties.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

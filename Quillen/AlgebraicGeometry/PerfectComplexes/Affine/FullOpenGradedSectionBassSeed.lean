@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionDiagramLaurent
 public import Quillen.Topology.Prespectrum.StrictSquareNull
 public import Quillen.Topology.Prespectrum.NullLoopNaturality
@@ -22,8 +23,11 @@ This construction does not assert compatibility with ambient restriction, the no
 localization null, or any global quasi-compact quasi-separated localization theorem.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R)

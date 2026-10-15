@@ -6,8 +6,12 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GluingSubobjects
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.GluingLocality
+public import Aglib.AlgebraicGeometry.Modules.Coherent.FinitePresentation
+public import Aglib.AlgebraicGeometry.Modules.FinitePresentation.Locality
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.FinitePresentation
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 
 /-!
@@ -19,10 +23,12 @@ In particular the ambient sheaf need not be coherent or even quasicoherent.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 

@@ -23,6 +23,9 @@ an isomorphism of the original finite-projective target category.
 
 @[expose] public section
 
+open Quillen.RightScalarExtension
+
+
 noncomputable section
 
 universe u v

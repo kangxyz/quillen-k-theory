@@ -6,10 +6,14 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.AuxiliaryIsoComma
 
 /-! # Actual auxiliary squares for structured Q-transitions -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

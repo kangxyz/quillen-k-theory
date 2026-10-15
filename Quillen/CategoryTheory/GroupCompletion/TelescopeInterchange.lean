@@ -15,6 +15,9 @@ asserts neither full faithfulness nor a topological group-completion theorem.
 -/
 
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 open CategoryTheory MonoidalCategory
 universe u v
 namespace Quillen.TranslationTelescope

@@ -5,6 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
+public import Aglib.AlgebraicGeometry.Modules.ProjectionFormula.Basic
+public import Aglib.AlgebraicGeometry.Modules.Pullback.Unit
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Basic
 public import Aglib.Algebra.Homology.DerivedCategory.Plus.SingleTriangleNaturality
 public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.SingleComparison
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalGenerationEndpoints
@@ -21,18 +26,12 @@ equivalence or a full coefficient extension.
 -/
 
 @[expose] public section
+
+open CategoryTheory.Pretriangulated
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.SchemeSheaf
-export AlgebraicGeometry.Scheme.Modules
-  (rightDerivedSingleComparison)
-end Quillen.SchemeSheaf
-
-end
 
 
 noncomputable section
@@ -48,12 +47,14 @@ variable {C : Type u} [Category.{v} C] [Abelian C] [HasDerivedCategory C]
 end CategoryTheory.ShortComplex.ShortExact
 
 namespace AlgebraicGeometry.Scheme.Modules
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance naturalityStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 end AlgebraicGeometry.Scheme.Modules
 
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open AlgebraicGeometry.Scheme.Modules
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance naturalityStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})

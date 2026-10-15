@@ -16,6 +16,9 @@ independent structure/homotopy times. All source components, level zero and nega
 are tested without new connectivity or comparison assumptions.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen.IteratedS

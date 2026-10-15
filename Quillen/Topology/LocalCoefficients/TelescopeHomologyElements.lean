@@ -21,6 +21,9 @@ Grothendieck model.
 
 @[expose] public section
 
+open Quillen.LocalCoefficients
+
+
 noncomputable section
 open CategoryTheory Limits
 universe u

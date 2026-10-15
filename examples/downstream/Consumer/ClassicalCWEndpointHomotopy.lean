@@ -17,9 +17,11 @@ assuming a CW structure on a product or converting between CW notions.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
 open Quillen Quillen.HomotopyPullback
-open Set Topology
+open Set
 open scoped unitInterval
 universe u v
 namespace Consumer.ClassicalCWEndpointHomotopy

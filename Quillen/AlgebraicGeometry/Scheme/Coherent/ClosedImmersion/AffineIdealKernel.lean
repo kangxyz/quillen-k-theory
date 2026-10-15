@@ -6,6 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Category.ModuleCat.IdealClosedSupport
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.AffineKernel
 
 /-!
@@ -17,10 +20,13 @@ Thus the unit-kernel filtration is locally the actual ideal-power filtration.
 -/
 @[expose] public section
 
+open ModuleCat.FiniteLocalization.IdealClosedSupport
+open Quillen.FiniteModuleLocalization.IdealClosedSupport
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

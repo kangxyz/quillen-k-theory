@@ -6,7 +6,9 @@ Authors: kangxyz
 
 module
 
-public import Quillen.CategoryTheory.ExactCategory.Equivalence
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
+public import Aglib.CategoryTheory.ExactCategory.Equivalence
 public import Quillen.KTheory.Map.HomotopyEquivalence
 public import Quillen.Topology.ClassifyingSpace.Equivalence
 
@@ -18,6 +20,9 @@ lifting actual admissible spans. Rebasing at zero preserves the categorical
 equivalence, so its canonical K-map is the forward map of the K equivalence.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

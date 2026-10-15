@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.GeneralComparison
 public import Quillen.Waldhausen.GilletWaldhausen.FibrationQuotient
 public import Quillen.Waldhausen.Fibration.ComplexExtension
@@ -20,6 +21,9 @@ under isomorphisms, extensions and kernels. The precise abelian ambient
 category and all actual maps remain unchanged.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen.Fibration
+
 
 open CategoryTheory.ExactCategory
 

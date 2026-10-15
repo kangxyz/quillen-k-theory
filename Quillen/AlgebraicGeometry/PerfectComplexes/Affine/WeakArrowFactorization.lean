@@ -28,13 +28,15 @@ dual K-comparison steps are not assumed or inferred here.
 -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.CochainComplex
 namespace Quillen.PerfectComplexes.Affine
 attribute [local instance] standardDerivedModules standardDerivedSheaves
 

@@ -11,6 +11,9 @@ public import Quillen.Topology.HomotopyFiber.WeakBaseProjection
 
 /-! # Empty-aware canonical comma comparisons and contracted bases -/
 @[expose] public section
+
+open Quillen.TheoremA
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

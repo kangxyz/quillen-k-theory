@@ -14,11 +14,14 @@ The original coefficient isomorphisms satisfy the actual two-route equation afte
 common-universe lifting. All original evaluator and normalization maps are retained.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.IteratedS
 open Quillen.CategoryTheory.GrothendieckSections
 universe u
 namespace Quillen.PerfectComplexes

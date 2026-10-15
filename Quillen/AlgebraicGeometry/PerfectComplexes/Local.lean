@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Restriction
 public import Mathlib.CategoryTheory.Localization.Predicate
 
@@ -23,6 +24,9 @@ and the inclusion of strict perfect complexes. Extension closure and the
 all-perfect Waldhausen instance require additional proofs.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

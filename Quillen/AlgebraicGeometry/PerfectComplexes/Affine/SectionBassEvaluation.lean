@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassEvaluationBoundary
 public import Quillen.Topology.Prespectrum.HomotopySquareOfPasting
 public import Quillen.Topology.Prespectrum.PushoutHomotopySquare
@@ -20,11 +21,14 @@ to their original cones. Compatibility with the original Laurent-unit seed requi
 additional unit/null comparison and is not asserted here.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 variable (R : CommRingCat.{u})

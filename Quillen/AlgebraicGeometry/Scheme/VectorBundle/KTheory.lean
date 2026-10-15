@@ -6,7 +6,11 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Exact
+public import Aglib.AlgebraicGeometry.Modules.Exact
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Exact
 public import Quillen.CategoryTheory.SmallModel.Exact
 
 /-!
@@ -24,8 +28,11 @@ of exact presentations within the chosen universe is provided by
 `CategoryTheory.ExactCategory.ExactStructure.presentationKEquiv`.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules
+open CategoryTheory.ExactCategory
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section

@@ -6,14 +6,17 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Spectrum.ConeHomotopyComparison
-public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurent
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Basic
 
 /-! Consumers check the actual polynomial/Laurent cone comparisons, the unchanged square-track
 midpoint, and cancellation of a whole arrow homotopy on the original signed stable groups. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 
-open CategoryTheory AlgebraicGeometry Quillen Quillen.LoopPrespectrum Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry Quillen Quillen.LoopPrespectrum
 open AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped unitInterval
 universe u

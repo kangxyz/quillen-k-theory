@@ -18,6 +18,9 @@ weak-equivalence transformations, not only for diagram isomorphisms.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.QuillenComparison
+
+
 
 noncomputable section
 

@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedLaurentContraction
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedLaurentContraction
 public import Quillen.Waldhausen.SConstruction.Iterated.EndotransformationContractionNaturality
 
 /-!
@@ -18,8 +18,11 @@ coordinates and all equality transports are retained. The actual endpoint-grade 
 witnesses are proved, rather than supplied as additional geometric hypotheses.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes

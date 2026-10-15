@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.CategoryTheory.SmallModel.Functoriality
 public import Quillen.KTheory.Map.CommonAmbient
 public import Quillen.CategoryTheory.QConstruction.ZeroEndomorphisms
@@ -19,6 +22,9 @@ This proves naturality of the existing mixed-universe comparison map, without
 redefining it by transport.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

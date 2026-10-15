@@ -5,10 +5,14 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlatPullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalDescent
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.TensorDerivedPushforward
+public import Aglib.AlgebraicGeometry.Cohomology.ProjectionFormula.TensorPushforward
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Tensor.Exact
 
 /-! # Exact tensor with an actually trivialized line on locally perfect complexes
 
@@ -18,6 +22,9 @@ This proves preservation of the local perfect predicate, with no global strict
 representative and no derived tensor product of two arbitrary complexes.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen
 
 
@@ -93,7 +100,7 @@ def tensorByLineModuleChartIso {X Y : Scheme.{u}} (j : Y ⟶ X) [IsOpenImmersion
 /-- The degreewise tensor comparison retains the original restriction functor. -/
 def tensorByLineComplexChartIso {X Y : Scheme.{u}} (j : Y ⟶ X) [IsOpenImmersion j]
     (L : X.Modules) (e : L.restrict j ≅ SheafOfModules.unit Y.ringCatSheaf) :
-    tensorByLineComplex L ⋙ restrict j ≅ restrict j :=
+    AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft L ⋙ restrict j ≅ restrict j :=
   Functor.mapHomologicalComplexCompIso (tensorByLineModuleChartIso j L e) _
 
 variable {X : Scheme.{u}} (L : X.Modules) {ι : Type v}
@@ -105,7 +112,7 @@ include hc e
 
 /-- Actual chartwise trivial tensor preserves arbitrary locally perfect input. -/
 theorem locallyPerfect_tensorByLine {K : Complex X} (hK : locallyPerfect X K) :
-    locallyPerfect X ((tensorByLineComplex L).obj K) := by
+    locallyPerfect X ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft L).obj K) := by
   apply locallyPerfect_of_openImmersionCover Y j hc
   intro i
   exact locallyPerfect_of_iso ((tensorByLineComplexChartIso (j i) L (e i)).app K).symm
@@ -113,7 +120,8 @@ theorem locallyPerfect_tensorByLine {K : Complex X} (hK : locallyPerfect X K) :
 
 /-- Original degreewise line tensor on the full locally-perfect category. -/
 def perfectTensorByLine : Perfect X ⥤ Perfect X :=
-  (locallyPerfect X).lift ((locallyPerfect X).ι ⋙ tensorByLineComplex L)
+  (locallyPerfect X).lift ((locallyPerfect X).ι ⋙
+    AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft L)
     (fun K => locallyPerfect_tensorByLine L Y j hc e K.property)
 
 instance perfectTensorByLine_additive : (perfectTensorByLine L Y j hc e).Additive := by
@@ -136,7 +144,8 @@ def perfectExactTensorByLine :
       (ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (locallyPerfect X)) where
   toFunctor := perfectTensorByLine L Y j hc e
   map_conflation S hS := by
-    change ((S.map (locallyPerfect X).ι).map (tensorByLineComplex L)).ShortExact
+    change ((S.map (locallyPerfect X).ι).map (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft
+      L)).ShortExact
     exact hS.map_of_exact _
 
 /-- The original perfect Waldhausen structure sees actual line tensor as exact. -/
@@ -147,10 +156,10 @@ theorem perfectTensorByLine_waldhausenExact :
   cofibration s hs := (perfectExactTensorByLine L Y j hc e).map_inflation s hs
   weak s hs := by
     let : QuasiIso s.hom := hs
-    exact tensorByLineComplex_quasiIso L s.hom
+    exact AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft_quasiIso L s.hom
   pushout hi h := by
     apply IsPushout.of_map_of_faithful (locallyPerfect X).ι
     exact (Waldhausen.fullSubcategory_map_pushout (abelianExactStructure (Complex X))
-      (locallyPerfect X) hi h).map (tensorByLineComplex L)
+      (locallyPerfect X) hi h).map (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft L)
 
 end Quillen.PerfectComplexes

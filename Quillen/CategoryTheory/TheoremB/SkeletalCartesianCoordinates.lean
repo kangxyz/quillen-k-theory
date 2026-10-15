@@ -17,6 +17,10 @@ by a canonical enriched map with an invertible coefficient transition.
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+open Quillen.TheoremB
+
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval

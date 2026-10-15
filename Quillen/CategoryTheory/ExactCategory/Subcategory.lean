@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Aglib.CategoryTheory.ExactCategory.Subcategory
 public import Quillen.KTheory.Map.Basic
 
@@ -16,6 +17,9 @@ Aglib supplies the inherited exact structure and exact inclusion. This module
 retains their Q-construction and K-group applications.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 universe v u

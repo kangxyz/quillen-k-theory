@@ -14,11 +14,14 @@ These tests retain the original seed, degree-zero chosen point, all negative sta
 stage representatives and two independent coefficient changes without extra topology premises.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.SectionBassStableColimit
 

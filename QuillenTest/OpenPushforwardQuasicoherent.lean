@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenPushforwardQuasicoherent
 
 /-!
@@ -18,9 +19,14 @@ the compact-source corollary and an isomorphic-source comparison.
 
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
-open Quillen.PerfectComplexes
 universe u
 namespace QuillenTest.OpenPushforwardQuasicoherent
 

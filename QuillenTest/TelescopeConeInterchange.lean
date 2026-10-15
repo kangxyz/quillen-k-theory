@@ -14,6 +14,9 @@ Both independent times, the actual target inclusion, unchanged Bass coefficients
 stable degree and original finite-stage representative maps remain visible.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.LoopPrespectrum
 open scoped Topology unitInterval

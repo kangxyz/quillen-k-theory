@@ -15,11 +15,14 @@ The four actual Model arrows and their original evaluation comparison isomorphis
 strict source composition transport and the total normalized geometric target comparison.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
 

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TwoAffineCohomology
+public import Aglib.AlgebraicGeometry.Cohomology.MayerVietoris.AffineComparison
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Charts
 
 /-! # Higher quasicoherent cohomology of the original projective line
@@ -19,7 +19,6 @@ No degree-one vanishing, twisting-sheaf computation, pushforward perfection,
 or projective bundle formula is asserted.
 -/
 @[expose] public section
-open Quillen
 
 
 noncomputable section

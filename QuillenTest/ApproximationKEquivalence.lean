@@ -10,11 +10,14 @@ public import Quillen.Waldhausen.Approximation.KEquivalence
 /-! Behavioral consumers of approximation for the unchanged S/K maps. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory
 universe u
 namespace ApproximationKConsumers
-open Quillen Quillen.Waldhausen
+open Quillen
 variable {C D E : Type u} [SmallCategory C] [SmallCategory D] [SmallCategory E]
   {W : Structure C} {V : Structure D} {U : Structure E} {F : C ⥤ D} {G : D ⥤ E}
   (h : HasApproximationProperty W V F)

@@ -19,7 +19,6 @@ open AlgebraicGeometry.Scheme.PolynomialLaurent
 
 namespace QuillenTest.ProjectiveLineChartAffineness
 
-open Quillen
 
 /-- The original overlap-to-line morphism is affine, with its literal factorization. -/
 theorem original_overlap_affine (R : CommRingCat.{u}) :

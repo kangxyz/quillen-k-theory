@@ -11,68 +11,86 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MGridProduc
 
 /-! Fixed finite quotient order for the actual 176 H1/M input slots. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.BassMOuterJoin
+
 set_option autoImplicit false
 open CategoryTheory
-open Quillen.PerfectComplexes
 namespace Quillen.PerfectComplexes.BassMWholeOrder
 
+/-- Common-order labels for original input slots 0 through 9, used by `oldIndex`. -/
 def oldChunk0 : Fin 10 → Fin 140 :=
 ![
   0, 1, 2, 3, 60, 4, 5, 6, 102, 7
 ]
+/-- Common-order labels for original input slots 10 through 19, used by `oldIndex`. -/
 def oldChunk1 : Fin 10 → Fin 140 :=
 ![
   8, 9, 10, 11, 12, 13, 14, 15, 16, 17
 ]
+/-- Common-order labels for original input slots 20 through 29, used by `oldIndex`. -/
 def oldChunk2 : Fin 10 → Fin 140 :=
 ![
   18, 19, 61, 62, 63, 64, 65, 66, 20, 21
 ]
+/-- Common-order labels for original input slots 30 through 39, used by `oldIndex`. -/
 def oldChunk3 : Fin 10 → Fin 140 :=
 ![
   22, 23, 24, 25, 26, 87, 88, 89, 27, 125
 ]
+/-- Common-order labels for original input slots 40 through 49, used by `oldIndex`. -/
 def oldChunk4 : Fin 10 → Fin 140 :=
 ![
   126, 127, 128, 129, 130, 131, 132, 133, 28, 29
 ]
+/-- Common-order labels for original input slots 50 through 59, used by `oldIndex`. -/
 def oldChunk5 : Fin 10 → Fin 140 :=
 ![
   30, 31, 57, 32, 33, 34, 35, 67, 68, 69
 ]
+/-- Common-order labels for original input slots 60 through 69, used by `oldIndex`. -/
 def oldChunk6 : Fin 10 → Fin 140 :=
 ![
   70, 71, 72, 73, 74, 75, 103, 104, 105, 106
 ]
+/-- Common-order labels for original input slots 70 through 79, used by `oldIndex`. -/
 def oldChunk7 : Fin 10 → Fin 140 :=
 ![
   107, 108, 76, 77, 58, 78, 79, 80, 59, 81
 ]
+/-- Common-order labels for original input slots 80 through 89, used by `oldIndex`. -/
 def oldChunk8 : Fin 10 → Fin 140 :=
 ![
   82, 36, 37, 38, 83, 84, 39, 40, 41, 42
 ]
+/-- Common-order labels for original input slots 90 through 99, used by `oldIndex`. -/
 def oldChunk9 : Fin 10 → Fin 140 :=
 ![
   99, 43, 44, 45, 85, 109, 110, 111, 112, 113
 ]
+/-- Common-order labels for original input slots 100 through 109, used by `oldIndex`. -/
 def oldChunk10 : Fin 10 → Fin 140 :=
 ![
   114, 115, 116, 100, 117, 118, 119, 101, 120, 121
 ]
+/-- Common-order labels for original input slots 110 through 119, used by `oldIndex`. -/
 def oldChunk11 : Fin 10 → Fin 140 :=
 ![
   46, 47, 48, 49, 50, 51, 52, 90, 91, 92
 ]
+/-- Common-order labels for original input slots 120 through 129, used by `oldIndex`. -/
 def oldChunk12 : Fin 10 → Fin 140 :=
 ![
   93, 94, 95, 134, 122, 135, 136, 137, 123, 138
 ]
+/-- The common-order label for the final original input slot, numbered 130. -/
 def oldChunk13 : Fin 1 → Fin 140 :=
 ![
   139
 ]
 
+/-- The map from the 131 original H1 input slots to their labels in the 140-label common order. -/
 def oldIndex (i : Fin 131) : Fin 140 :=
   if h : i.val < 10 then oldChunk0 ⟨i.val, by omega⟩
   else if h : i.val < 20 then oldChunk1 ⟨i.val - 10, by omega⟩
@@ -89,6 +107,7 @@ def oldIndex (i : Fin 131) : Fin 140 :=
   else if h : i.val < 130 then oldChunk12 ⟨i.val - 120, by omega⟩
   else oldChunk13 ⟨i.val - 130, by omega⟩
 
+/-- The map from the 45 merged M vertices to their labels in the 140-label common order. -/
 def vertexIndex : Fin 45 → Fin 140 :=
 ![
   3, 4, 9, 10, 11, 12, 6, 7, 13, 53, 54, 55, 56, 57, 84,
@@ -96,6 +115,9 @@ def vertexIndex : Fin 45 → Fin 140 :=
   132, 98, 99, 123, 101, 124, 125, 127, 133, 126, 139, 102, 106, 107, 121
 ]
 
+/--
+The representative among the 176 original H1/M input slots chosen for each common-order label.
+-/
 def select : Fin 140 → Fin 176 :=
 ![
   0, 1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16,

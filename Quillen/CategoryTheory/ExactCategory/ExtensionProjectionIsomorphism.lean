@@ -5,11 +5,15 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionGeometry
 public import Quillen.KTheory.Map.CoherenceData
 
 /-! # Recognizing extension projection arrows induced by quotient isomorphisms -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

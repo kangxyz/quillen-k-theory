@@ -23,6 +23,9 @@ No full-target K0 surjectivity is inferred.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes.SupportedOpenDerivedImage
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

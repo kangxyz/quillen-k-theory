@@ -23,8 +23,10 @@ construction of Hatcher, *Algebraic Topology*, Appendix, Proposition A.4.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Metric Topology
+open Set Metric
 open scoped unitInterval
 namespace Quillen.ClassicalCW
 

@@ -5,18 +5,20 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.Affine.QuasiCompactPerfectLocalizationNaturality
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.QuasiCompactPerfectLocalizationNaturality
 public import Mathlib.Data.ZMod.Basic
 
 /-! # Original quasi-compact affine-open localization sequence consumers -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 universe u
 namespace QuillenTest.QuasiCompactPerfectLocalization
 variable (R : CommRingCat.{u}) (W : (Spec R).Opens)

@@ -11,6 +11,9 @@ public import Quillen.Topology.Realization.NumerableConnectorCover
 
 /-! Independent clients construct actual finite simplex maps from geometric data only. -/
 @[expose] public section
+
+open Quillen.NumerableConnectorCover
+
 noncomputable section
 open Convexity CategoryTheory Opposite
 open scoped Topology unitInterval Simplicial

@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.Map.Basic
 
 /-!
@@ -16,6 +18,9 @@ They do not assert equality of K-group maps without a realization theorem
 for homotopies that fix the basepoint.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

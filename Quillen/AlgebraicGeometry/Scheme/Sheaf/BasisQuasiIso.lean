@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.Sites.BasisExactness
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.SheafEpi
+public import Aglib.Topology.Sheaves.BasisExactness
+public import Aglib.AlgebraicGeometry.Modules.Epimorphisms
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Limits
 
 /-!
@@ -18,8 +18,6 @@ For an affine scheme its actual principal basic opens form the needed basis.
 No termwise quasicoherence, injectivity or cohomological bound is required.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
 
 
 

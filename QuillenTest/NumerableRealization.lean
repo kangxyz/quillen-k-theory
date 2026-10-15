@@ -8,6 +8,9 @@ public import Quillen.Topology.Realization.MetricRealizationDomination
 
 /-! Named regressions for the actual classifier, both maps and composite homotopy. -/
 @[expose] public section
+
+open Quillen.NumerableConnectorCover
+
 noncomputable section
 open Convexity CategoryTheory Opposite
 open scoped Topology Simplicial

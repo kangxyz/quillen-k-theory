@@ -11,6 +11,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Restricti
 /-! # Original supported restriction intertwines the actual common cocylinders -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

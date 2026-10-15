@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Algebra.Category.ModuleCat.FiniteMatrixBaseChange
-public import Quillen.Algebra.Category.ModuleCat.ScalarExtensionUnit
+public import Aglib.Algebra.Category.ModuleCat.ScalarExtensionUnit
 public import Quillen.Algebra.Polynomial.LaurentProjectorCech
 
 /-! # Original Laurent module Cech maps and their projector coordinates

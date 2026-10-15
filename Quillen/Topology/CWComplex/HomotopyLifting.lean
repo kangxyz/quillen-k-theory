@@ -18,8 +18,13 @@ the entire prescribed base homotopy are retained; continuity is joint in time
 and the original CW parameter. No CW structure on a product is assumed.
 -/
 @[expose] public section
+
+open Topology
+
+open Quillen.HomotopyPullback
+
 noncomputable section
-open Set Topology
+open Set
 open scoped unitInterval
 universe u v
 namespace Quillen.ClassicalCW

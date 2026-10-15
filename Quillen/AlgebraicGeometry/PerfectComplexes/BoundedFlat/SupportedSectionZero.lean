@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSections
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionZero
 
@@ -16,6 +17,9 @@ same chosen section under every original supported coefficient map. These are th
 objects required by a supported iterated-S model and its strict coefficient functors.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u

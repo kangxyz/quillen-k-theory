@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.FiniteTermFiltration
 public import Quillen.Waldhausen.Additivity.GroupFormula
 public import Mathlib.Algebra.BigOperators.Fin
@@ -18,6 +19,9 @@ literal existing group multiplication, including degree zero. No categorywide
 bound, arithmetic-additivity hypothesis, or quasi-isomorphism truncation is used.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

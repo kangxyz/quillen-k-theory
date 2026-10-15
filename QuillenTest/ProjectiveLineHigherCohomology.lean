@@ -22,7 +22,6 @@ open AlgebraicGeometry.Scheme.Modules.TwoOpen AlgebraicGeometry.Scheme.Projectiv
 universe u
 namespace QuillenTest.ProjectiveLineHigherCohomology
 
-open Quillen
 
 lemma degree_two_cocycle_is_boundary (R : CommRingCat.{u})
     (M : (twoChartLine R).Modules) [M.IsQuasicoherent] (I : InjectiveResolution M)

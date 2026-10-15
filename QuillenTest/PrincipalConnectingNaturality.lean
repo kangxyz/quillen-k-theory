@@ -10,6 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalConnect
 /-! # Original principal localization naturality consumers -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 
@@ -17,7 +20,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 universe u
 namespace QuillenTest.PrincipalConnectingNaturality
 variable {R S : CommRingCat.{u}} {r : R} {s : S}

@@ -5,6 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlasqueBoundedBelowComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeTwoSummands
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.NativeBaseChange
@@ -33,7 +37,8 @@ namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
 /-- Literal flat geometric pullback on original lower-bounded perfect complexes. -/
 def boundedPullback {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
     BoundedBelow.Obj Y ⥤ BoundedBelow.Obj X :=
-  ObjectProperty.lift _ ((BoundedBelow.objects Y).ι ⋙ pullbackComplex f) (fun K => by
+  ObjectProperty.lift _ ((BoundedBelow.objects Y).ι ⋙
+    AlgebraicGeometry.Scheme.Modules.Complex.pullback f) (fun K => by
     obtain ⟨hp, a, ha⟩ := K.property
     let := ha
     refine ⟨locallyPerfect_flatPullback f hp, a, ?_⟩
@@ -56,7 +61,8 @@ def boundedPullbackExactFunctor {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] : Exac
   toFunctor := boundedPullback f
   map_conflation S hs := by
     change (S.map (BoundedBelow.objects Y).ι).ShortExact at hs
-    change ((S.map (BoundedBelow.objects Y).ι).map (pullbackComplex f)).ShortExact
+    change ((S.map (BoundedBelow.objects Y).ι).map
+      (AlgebraicGeometry.Scheme.Modules.Complex.pullback f)).ShortExact
     exact hs.map_of_exact _
 
 lemma boundedPullback_exact {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] : Waldhausen.IsExact
@@ -67,7 +73,7 @@ lemma boundedPullback_exact {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] : Waldhaus
   weak s hs := by
     change QuasiIso s.hom at hs
     let := hs
-    exact pullbackComplex_quasiIso f s.hom
+    exact AlgebraicGeometry.Scheme.Modules.Complex.pullback_quasiIso f s.hom
   pushout hi h := (boundedPullbackExactFunctor f).map_isPushout hi h
 
 /-- Original tautological chart trivializations, retaining the original Boolean chart order. -/
@@ -82,7 +88,7 @@ def lineChartIso (R : CommRingCat.{u}) (b : Bool) :
 def boundedNegativeTwist (R : CommRingCat.{u}) :
     BoundedBelow.Obj (twoChartLine R) ⥤ BoundedBelow.Obj (twoChartLine R) :=
   ObjectProperty.lift _ ((BoundedBelow.objects (twoChartLine R)).ι ⋙
-    tensorByLineComplex (tautologicalLine R)) (fun K => by
+    AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R)) (fun K => by
       obtain ⟨hp, a, ha⟩ := K.property
       let := ha
       refine ⟨locallyPerfect_tensorByLine (tautologicalLine R)
@@ -98,6 +104,9 @@ instance boundedNegativeTwist_additive (R : CommRingCat.{u}) :
   unfold boundedNegativeTwist
   infer_instance
 
+/-- Left tensor by the tautological line on bounded-below perfect complexes, bundled with
+preservation of degreewise short exact sequences.
+-/
 def boundedNegativeTwistExactFunctor (R : CommRingCat.{u}) : ExactFunctor
     (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
       (BoundedBelow.objects (twoChartLine R)))
@@ -107,7 +116,7 @@ def boundedNegativeTwistExactFunctor (R : CommRingCat.{u}) : ExactFunctor
   map_conflation S hs := by
     change (S.map (BoundedBelow.objects (twoChartLine R)).ι).ShortExact at hs
     change ((S.map (BoundedBelow.objects (twoChartLine R)).ι).map
-      (tensorByLineComplex (tautologicalLine R))).ShortExact
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R))).ShortExact
     exact hs.map_of_exact _
 
 lemma boundedNegativeTwist_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
@@ -119,7 +128,7 @@ lemma boundedNegativeTwist_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
   weak s hs := by
     change QuasiIso s.hom at hs
     let := hs
-    exact tensorByLineComplex_quasiIso (tautologicalLine R) s.hom
+    exact AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft_quasiIso (tautologicalLine R) s.hom
   pushout hi h := (boundedNegativeTwistExactFunctor R).map_isPushout hi h
 
 /-- The literal structure summand from the original flasque input model. -/
@@ -135,9 +144,9 @@ def second (R : CommRingCat.{u}) :
 /-- This component is the actual native symmetry to prescribed pullback tensor L order. -/
 def secondTensorOrderIso (R : CommRingCat.{u}) (K : FlasqueBoundedBelow.Obj (Spec R)) :
     ((second R).obj K).obj ≅
-      (tensorByLineRightComplex (tautologicalLine R)).obj
-        ((pullbackComplex (projection R)).obj K.obj) :=
-  (tensorByLineComplexSymmetry (tautologicalLine R)).app _
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)).obj
+        ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).obj K.obj) :=
+  (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeftRightIso (tautologicalLine R)).app _
 
 lemma first_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
     (FlasqueBoundedBelow.waldhausen (Spec R)).cof (FlasqueBoundedBelow.waldhausen (Spec R)).weq

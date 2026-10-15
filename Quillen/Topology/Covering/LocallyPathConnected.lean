@@ -17,8 +17,10 @@ then give neighborhoods in the original total topology.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Topology
+open Set
 universe u v
 namespace Quillen.Covering
 

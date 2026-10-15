@@ -6,10 +6,12 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Resolution.LengthOne
-public import Quillen.CategoryTheory.ExactCategory.Equivalence
+public import Aglib.CategoryTheory.ExactCategory.Equivalence
 public import Quillen.KTheory.Equivalence
-public import Quillen.CategoryTheory.SmallModel.Abelian
+public import Aglib.CategoryTheory.SmallModel.Abelian
 
 /-!
 # Canonical comparisons for nested inherited exact subcategories

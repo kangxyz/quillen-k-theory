@@ -16,8 +16,10 @@ sphere is empty. This boundary owner does not require cubical lifting machinery.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Metric Topology
+open Set Metric
 namespace Quillen.ClassicalCW
 
 /-- The literal sphere boundary of the sup-norm characteristic disk. -/

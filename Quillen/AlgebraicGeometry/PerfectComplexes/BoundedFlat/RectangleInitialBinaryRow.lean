@@ -24,8 +24,13 @@ variable {V : Model.{u + 1}} {A B C A' B' C' : Scheme.{u}}
   (P : V ⟶ modelOf (boundedFlatPerfectWaldhausen A))
   (ρ : F.functor ≅ (P ≫ NormalizedTripleSimplex.sourceMap c q p).functor)
 
+/-- The rectangle labels `0, 1, 2` selecting the initial binary normalization row. -/
 def initialIndex : Fin 3 → Fin 18 := ![0, 1, 2]
 
+/--
+The supplied triple reference `ρ`, viewed as the binary source reference for `c` and `q ≫ p`
+after precomposition by `P`.
+-/
 def rectangleInitialReference : F.functor ≅
     (P ≫ BinaryNormalizationSimplex.sourceMap c (q ≫ p)).functor := ρ
 

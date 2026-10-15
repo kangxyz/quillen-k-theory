@@ -20,6 +20,9 @@ The drop and evaluation augmentations have the stated weak-equivalence propertie
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 
 noncomputable section
 open CategoryTheory Limits Opposite MonoidalCategory CartesianMonoidalCategory

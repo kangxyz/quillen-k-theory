@@ -5,10 +5,14 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.KTheory.Map.CoherenceData
 
 /-! # Compatible endpoint and apex isomorphisms give actual Q naturality -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

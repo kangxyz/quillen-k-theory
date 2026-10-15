@@ -9,9 +9,12 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSec
 
 /-! Original joint arrows and the unchanged positive graded K-groups remain directly usable. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.PerfectComplexes AlgebraicGeometry.Scheme.AffineOpenPair
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.FullOpenSectionJointData
 

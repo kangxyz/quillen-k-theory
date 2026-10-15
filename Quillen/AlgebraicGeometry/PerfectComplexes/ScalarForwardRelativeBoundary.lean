@@ -16,11 +16,15 @@ coordinate-transpose sign cancel. The actual original connecting homomorphism
 therefore sends the forward scalar loop to its original supported cofiber class.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration Quillen.PerfectComplexes
+open Quillen.Waldhausen.Fibration
 open scoped Topology
 universe u
 namespace Quillen.BassLaurentUnitBoundary

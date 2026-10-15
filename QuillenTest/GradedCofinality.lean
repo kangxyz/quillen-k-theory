@@ -10,6 +10,9 @@ public import Quillen.Waldhausen.Cofinality.ZeroGrade
 /-! # Original zero-grade inclusion and genuine K-zero endpoint consumers -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v w

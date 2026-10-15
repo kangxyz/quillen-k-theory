@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenWeakImage
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalProjectiveExtension
 
@@ -18,6 +19,9 @@ No App2, affine strictification, unstabilized extension or K-zero surjectivity
 is assumed or asserted.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

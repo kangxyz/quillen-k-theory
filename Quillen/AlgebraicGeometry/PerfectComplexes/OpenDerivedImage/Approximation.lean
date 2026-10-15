@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Structure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.DualFactorization
 public import Quillen.Waldhausen.WeakArrow.JointData
@@ -19,6 +20,9 @@ constructed from geometric roofs. Genuine joint data remains an explicit
 structural input until the cross-category cocylinder comparison is supplied.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 
 open CategoryTheory.ExactCategory
 

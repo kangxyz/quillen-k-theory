@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.GilletWaldhausen.TruncationExact
 
 /-!
@@ -17,6 +19,9 @@ identification is proved natural, so exactness follows from actual cycles
 at the boundary, original terms above it, and zero terms below it.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

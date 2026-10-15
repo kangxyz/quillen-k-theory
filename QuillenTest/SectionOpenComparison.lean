@@ -14,6 +14,10 @@ The original functor, coarse inverse, chosen zero, literal fine/coarse square, e
 tracks and actual negative stable-class lift are retained. The endpoint is the relative model.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen.IteratedS
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u

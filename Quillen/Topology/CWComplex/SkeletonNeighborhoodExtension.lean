@@ -17,8 +17,10 @@ from the actual characteristic maps; it is not an additional input.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Metric Topology
+open Set Metric
 universe u v
 namespace Quillen.ClassicalCW
 variable {X : Type u} [TopologicalSpace X] [T2Space X]

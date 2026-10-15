@@ -18,6 +18,9 @@ coverage, so empty-space and degree-zero cases do not silently gain higher conne
 
 @[expose] public section
 
+open Quillen.CubicalTests
+
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false

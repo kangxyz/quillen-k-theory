@@ -18,11 +18,14 @@ the unchanged localization map. This supplies prescribed geometric data for the 
 calculation; it does not assert the Laurent-unit boundary identity.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Convexity
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.Fibration
 open scoped Simplicial Topology
 universe u
 namespace Quillen.PerfectComplexes

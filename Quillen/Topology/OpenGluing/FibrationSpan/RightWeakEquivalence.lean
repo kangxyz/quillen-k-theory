@@ -18,6 +18,10 @@ base changes; actual right bridge-end weakness remains explicit.
 -/
 @[expose] public section
 
+open Quillen.FiberwiseMappingPath
+open Quillen.TheoremB
+
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval

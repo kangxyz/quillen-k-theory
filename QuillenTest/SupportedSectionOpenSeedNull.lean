@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionOpenSeedNull
 
 /-!
@@ -15,9 +16,15 @@ retains its independent null and output-loop coordinates. Time slices are the or
 reversed null values, including their actual zero-map endpoint.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.SupportedSectionOpenSeedNull
 

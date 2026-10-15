@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.PullbackUnit
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.UnitSections
+public import Aglib.AlgebraicGeometry.Modules.Pullback.Free
+public import Aglib.AlgebraicGeometry.Modules.Pullback.Unit
+public import Aglib.AlgebraicGeometry.Modules.StructureSheaf.Sections
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneQuotient
 
 /-! # Pullback of actual scalar columns and quotient rows
@@ -16,8 +17,10 @@ scalar multiplication gives the original pullback section, preserving all signed
 -/
 
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section

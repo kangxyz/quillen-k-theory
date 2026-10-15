@@ -11,9 +11,12 @@ public import Quillen.Waldhausen.SConstruction.Iterated.VertexHEP
 /-! Consumers retain every original positive inclusion level, its actual path-component coverage,
 and extension of arbitrary specified homotopies at the unchanged chosen S-vertex. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 
-open CategoryTheory AlgebraicGeometry Quillen Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS
+open CategoryTheory AlgebraicGeometry Quillen Quillen.Waldhausen.IteratedS
 open scoped Topology unitInterval
 universe u v
 namespace QuillenTest.StableOmegaDetection

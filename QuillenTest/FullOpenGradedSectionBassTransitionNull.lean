@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassTransitionNull
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassTransitionNull
 
 /-!
 # Consumers of the original graded transition null
@@ -16,9 +16,15 @@ transition vanishes also in negative signed degrees, and null and structure coor
 independent at every stage. No localization-null or connectivity premise is introduced.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
-open Quillen.KTheory.Bass Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open Quillen.KTheory.Bass
 universe u
 namespace QuillenTest.FullOpenGradedSectionBassTransitionNull
 

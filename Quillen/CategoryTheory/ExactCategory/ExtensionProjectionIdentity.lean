@@ -5,11 +5,15 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjection
 public import Quillen.CategoryTheory.ExactCategory.ExtensionQuotientSpanCharacterization
 
 /-! # Identity law for the actual extension quotient assignment -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

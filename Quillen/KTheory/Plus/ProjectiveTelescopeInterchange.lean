@@ -18,6 +18,9 @@ itself with the completed category.
 -/
 
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u

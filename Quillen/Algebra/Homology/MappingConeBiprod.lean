@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Aglib.Algebra.Homology.MappingCone.Identity
+public import Aglib.Algebra.Homology.MappingCone.Map
 public import Mathlib.Algebra.Homology.HomotopyCategory.Pretriangulated
 public import Mathlib.CategoryTheory.Preadditive.Biproducts
 
@@ -19,7 +19,6 @@ inclusion commutes with this isomorphism. Only an additive category with
 binary biproducts is required.
 -/
 @[expose] public section
-open Quillen
 
 
 
@@ -51,7 +50,7 @@ def mappingConeBiprodIso {K₁ L₁ K₂ L₂ : CochainComplex C ℤ}
     (mappingCone.map g (biprod.map f g) biprod.inr biprod.inr (by simp))
   hom_inv_id := by
     rw [biprod.lift_desc, ← mappingCone.map_comp, ← mappingCone.map_comp,
-      ← mappingCone_map_add]
+      ← _root_.CochainComplex.mappingCone.map_add]
     simp only [biprod.total, mappingCone.map_id]
   inv_hom_id := by
     apply biprod.hom_ext' <;> apply biprod.hom_ext <;>

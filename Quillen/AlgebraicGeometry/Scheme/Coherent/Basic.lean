@@ -6,12 +6,14 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Basic
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Exact
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Property
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.Exact
-public import Quillen.CategoryTheory.SmallModel.Abelian
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Property
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeProperty
+public import Aglib.AlgebraicGeometry.Modules.Exact
+public import Aglib.CategoryTheory.SmallModel.Abelian
 public import Mathlib.AlgebraicGeometry.Noetherian
 
 /-!
@@ -31,26 +33,14 @@ with the earlier affine small model are separate results.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.CoherentScheme
-export AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-  (FiniteTypeSheaves affineLocallyFiniteType affineLocallyFiniteType_isoClosed
-  finiteTypeSheavesToModules finiteTypeSheaves_essentiallySmall)
-export AlgebraicGeometry.Scheme.Modules.Coherent
-  (affineLocallyFiniteType_cokernels affineLocallyFiniteType_containsZero
-  affineLocallyFiniteType_finiteColimits affineLocallyFiniteType_finiteLimits
-  affineLocallyFiniteType_kernels coherentExactStructure coherentInclusion
-  coherent_shortExact_iff instAbelianCoherent noetherian_affineChart)
-end Quillen.CoherentScheme
-
-end
 
 
 

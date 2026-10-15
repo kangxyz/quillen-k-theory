@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedExtensionByZero
 
 /-!
@@ -18,6 +19,9 @@ derived restriction. Both arbitrary derived arrows and the endpoint-normalized
 original chain-derived arrows retain zero reflection, including shifted sources.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

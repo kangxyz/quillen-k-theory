@@ -14,6 +14,9 @@ The same original evaluated complexes and chain maps, supported cofibrations, ac
 squares and unchanged pointwise zero are retained by the proved genuine evaluation equivalence.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u

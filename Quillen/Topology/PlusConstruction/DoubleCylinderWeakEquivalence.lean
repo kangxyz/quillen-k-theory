@@ -16,6 +16,10 @@ local-system hypotheses are derived from the actual cylinder. No comparison
 map, leg equivalence or desired homology certificate is assumed.
 -/
 @[expose] public section
+
+open Quillen.DoubleCylinder
+open Quillen.LocalCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

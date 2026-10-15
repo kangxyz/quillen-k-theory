@@ -13,6 +13,9 @@ public import Quillen.Waldhausen.QuillenComparison.RowDiagonal
 /-! # The original weak-equivalence grid is the diagonal of the actual row nerve -/
 @[expose] public section
 
+open Quillen.Waldhausen.QuillenComparison
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

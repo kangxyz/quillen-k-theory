@@ -15,6 +15,9 @@ actual quotient telescope retains the independent null and cylinder coordinates,
 specified endpoint maps, and the unchanged coefficient maps.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u

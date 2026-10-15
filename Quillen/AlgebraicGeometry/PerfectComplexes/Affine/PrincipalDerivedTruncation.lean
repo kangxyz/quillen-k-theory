@@ -22,13 +22,16 @@ local perfection remains a separate theorem.
 -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.ModuleComplex.PrincipalLocalization Quillen.CochainComplex
+open Quillen.ModuleComplex.PrincipalLocalization
 attribute [local instance] HasDerivedCategory.standard
 namespace Quillen.PerfectComplexes.Affine
 

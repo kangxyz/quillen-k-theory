@@ -15,6 +15,7 @@ open CategoryTheory Convexity
 open scoped Simplicial Topology unitInterval
 namespace Quillen.PerfectComplexes.BassH1Order
 
+/-- Reindexes the old 63-node family in the common 131-slot family. -/
 def oldIndex : Fin 63 → Fin 131 := ![
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
   15, 16, 17, 20, 21, 22, 23, 24, 25, 26, 27, 57, 58, 59, 60,
@@ -22,20 +23,24 @@ def oldIndex : Fin 63 → Fin 131 := ![
   69, 70, 71, 95, 96, 97, 98, 104, 108, 109, 105, 106, 99, 72, 73,
   100, 101, 102]
 
+/-- Reindexes the first 31-node H1 component in the common 131-slot family. -/
 def firstIndex : Fin 31 → Fin 131 := ![
   18, 19, 20, 29, 30, 50, 55, 83, 56, 57, 59, 64, 58, 77, 73,
   31, 88, 93, 112, 94, 95, 97, 102, 96, 106, 113, 114, 115, 120, 116,
   127]
 
+/-- Reindexes the middle 31-node H1 component in the common 131-slot family. -/
 def middleIndex : Fin 31 → Fin 131 := ![
   32, 33, 114, 115, 34, 35, 36, 37, 117, 118, 119, 120, 121, 122, 116,
   38, 39, 40, 41, 123, 125, 126, 127, 129, 130, 42, 43, 44, 45, 46,
   47]
 
+/-- Reindexes the 25 positive product-grid nodes in the common 131-slot family. -/
 def plusProductIndex : Fin 25 → Fin 131 := ![
   48, 49, 50, 51, 52, 53, 54, 55, 74, 78, 75, 76, 77, 79, 80,
   81, 82, 83, 84, 85, 118, 119, 120, 121, 122]
 
+/-- Reindexes the 25 inverse product-grid nodes in the common 131-slot family. -/
 def minusProductIndex : Fin 25 → Fin 131 := ![
   86, 87, 88, 89, 90, 91, 92, 93, 103, 107, 104, 105, 106, 108, 109,
   110, 111, 112, 124, 128, 125, 126, 127, 129, 130]

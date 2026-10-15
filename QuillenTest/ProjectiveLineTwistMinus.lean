@@ -13,7 +13,6 @@ public import Mathlib.Data.ZMod.Basic
 @[expose] public section
 
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine

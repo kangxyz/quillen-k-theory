@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenPushforwardCounit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenSectionsBounds
 
@@ -33,6 +34,9 @@ Arbitrary rings, empty opens and independent derived-category universes are
 allowed. Compactness of W is explicit.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

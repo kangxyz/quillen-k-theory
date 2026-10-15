@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionQuotientSpan
 
 /-!
@@ -14,6 +15,9 @@ The middle object is the actual cokernel of the smaller subobject. Its two
 span legs are characterized by their composites with that cokernel map.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

@@ -6,8 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Limits
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GluingSubobjects
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.AffineSectionsGlobal
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Localization.AffineSectionsGlobal
 
 /-!
 # Quasicoherent gluing inside a fixed ambient sheaf
@@ -20,8 +21,6 @@ global quasicoherent subobject throughout the construction.
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-open Quillen
-open Quillen.CoherentScheme
 
 
 

@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Exact
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.Finite.AffineFunctoriality
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
@@ -16,22 +18,16 @@ public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.Pushforw
   square are retained. -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat.FiniteRestrictionScalars
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.CoherentScheme.FiniteAffine
-export AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.Affine
-  (coherentPushforwardClosedIso coherentPushforwardCompIso coherentPushforwardIdIso)
-end Quillen.CoherentScheme.FiniteAffine
-
-end
 
 
 

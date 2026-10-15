@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedStrata
 
 /-! # Actual finite S-grids lift into bounded exact strata
@@ -16,6 +17,9 @@ term-bound stratum. The weak-equivalence class is retained by inverse image,
 so the construction applies to both original isomorphisms and quasi-isomorphisms.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

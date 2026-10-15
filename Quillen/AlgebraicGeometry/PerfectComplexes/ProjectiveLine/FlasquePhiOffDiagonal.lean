@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasquePhiFirstEntry
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePerfectGeneration
 
@@ -16,6 +17,13 @@ as quasi-isomorphisms. Original Godement augmentation and exact line tensor
 comparisons retain the actual flasque outputs and the original G1 shift.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
+open Quillen.PerfectComplexes.ProjectiveLine.StrictPositiveRetraction
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -27,6 +35,7 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasquePhiEntries
 open StrictPositiveRetraction FlasqueTwoSummands FlasqueCoefficients
 
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance matrixDerivedStandard (X : Scheme.{u}) : HasDerivedCategory.{u + 1} X.Modules :=
   HasDerivedCategory.standard _
 
@@ -92,7 +101,7 @@ def firstRightTensorUnit (R : CommRingCat.{u}) (K : FlasqueBoundedBelow.Obj (Spe
         ((boundedToPlus (twoChartLine R)).obj ((first R).obj K)) ⟶
       (rightTensorPlus R).obj ((firstTotal R).obj K) :=
   ObjectProperty.homMk
-    ((tensorByLineRightComplex (tautologicalLine R)).map
+    ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)).map
       ((godementTotalUnit (twoChartLine R)).app
         ((boundedToPlus (twoChartLine R)).obj ((first R).obj K)).obj))
 
@@ -102,7 +111,7 @@ lemma firstRightTensorUnit_quasiIso (R : CommRingCat.{u})
   let C := (boundedToPlus (twoChartLine R)).obj ((first R).obj K)
   let : QuasiIso ((godementTotalPlusUnit (twoChartLine R)).app C).hom :=
     godementTotalPlusUnit_quasiIso (twoChartLine R) C
-  change QuasiIso ((tensorByLineRightComplex (tautologicalLine R)).map
+  change QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)).map
     ((godementTotalPlusUnit (twoChartLine R)).app C).hom)
   infer_instance
 
@@ -115,7 +124,7 @@ lemma rightTensor_firstTotal_derivedZero (R : CommRingCat.{u})
   let N := (boundedToPlus (twoChartLine R)).obj ((second R).obj K)
   let M := (moduleTensorByLineRight (tautologicalLine R)).mapCochainComplexPlus.obj C
   let e : N ≅ M := (CochainComplex.plus (twoChartLine R).Modules).isoMk
-    ((tensorByLineComplexSymmetry (tautologicalLine R)).app C.obj)
+    ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeftRightIso (tautologicalLine R)).app C.obj)
   have hm := (negativePullback_derivedZero R K).of_iso
     ((derivedPushforwardPlus (projection R)).mapIso (DerivedCategory.Plus.Q.mapIso e.symm))
   have : IsIso (DerivedCategory.Plus.Q.map (firstRightTensorUnit R K)) :=

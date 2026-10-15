@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PairPullback
 
 /-!
@@ -17,6 +18,9 @@ and both opens are qc, retaining precisely their existing public K-maps.
 This proves the endpoint square, not connecting-map naturality or TT density.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section
@@ -39,8 +43,9 @@ theorem boundedFlatPerfectOpenRestriction_exact :
   weak {K L} p hp := by
     let : QuasiIso ((restrict j).map p.hom) := hp
     let e := restrictIsoPullbackComplex j
-    change QuasiIso ((pullbackComplex j).map p.hom)
-    exact quasiIso_of_arrow_mk_iso ((restrict j).map p.hom) ((pullbackComplex j).map p.hom)
+    change QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.pullback j).map p.hom)
+    exact quasiIso_of_arrow_mk_iso ((restrict j).map p.hom)
+      ((AlgebraicGeometry.Scheme.Modules.Complex.pullback j).map p.hom)
       (Arrow.isoMk (e.app K.obj) (e.app L.obj) (e.hom.naturality p.hom).symm)
 
 /-- The degree-`n` K-map from the bounded-flat relative-open model for `j : U ⟶ X` to bounded-flat

@@ -7,8 +7,13 @@ module
 public import Quillen.Topology.PlusConstruction.ClassicalCWComparison
 /-! # Fresh tests of actual CW comparison with constructed covering lifts -/
 @[expose] public section
+
+open Topology
+
+open Quillen.DoubleCylinder
+
 noncomputable section
-open CategoryTheory Limits MonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory
 open scoped Simplicial Topology unitInterval
 universe u
 namespace QuillenTest.ClassicalCWComparison

@@ -56,9 +56,13 @@ end Homotopy
 
 variable (F G : C(unitInterval × unitInterval, X))
 
+/-- The continuous slice of `F` obtained by fixing its first coordinate to `s`. -/
 def row (s : unitInterval) : C(unitInterval, X) :=
   ⟨fun t ↦ F (s, t), by fun_prop⟩
 
+/-- The homotopy between the first and last slices of `F`, with its first coordinate as homotopy
+time.
+-/
 def rowHomotopy : ContinuousMap.Homotopy (row F 0) (row F 1) where
   toContinuousMap := F
   map_zero_left _ := rfl
@@ -89,6 +93,7 @@ theorem concatFirst_one (t : unitInterval) : concatFirst F G h (1, t) = G (1, t)
   ((rowHomotopy F).trans ((rowHomotopy G).cast
     (ContinuousMap.ext (fun t ↦ (h t).symm)) rfl)).map_one_left t
 
+/-- The continuous square map obtained by interchanging the two coordinates of `F`. -/
 def swap : C(unitInterval × unitInterval, X) := ⟨fun z ↦ F (z.2, z.1), by fun_prop⟩
 
 /-- The same continuous native concatenation in the independent second coordinate. -/

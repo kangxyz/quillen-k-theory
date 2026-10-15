@@ -5,14 +5,15 @@ Authors: kangxyz
 -/
 module
 public import Quillen.CategoryTheory.Adjunction.IsomorphismMates
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.IsomorphismFunctors
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianBaseChange
+public import Aglib.AlgebraicGeometry.Modules.IsomorphismFunctors
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Cartesian
 
 /-! # The original cartesian mate for an isomorphism -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

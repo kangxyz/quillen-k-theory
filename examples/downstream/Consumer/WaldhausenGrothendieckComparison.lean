@@ -11,8 +11,11 @@ public import Quillen.Waldhausen.GrothendieckComparison.Functor
 map on genuine Waldhausen K₀ from precisely its original classical map. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
-open CategoryTheory Quillen.Waldhausen
+open CategoryTheory
 universe u
 namespace Consumer.WaldhausenGrothendieckComparison
 open AlgebraicGrothendieck

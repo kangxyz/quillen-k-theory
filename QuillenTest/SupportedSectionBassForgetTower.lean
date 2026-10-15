@@ -15,10 +15,13 @@ coefficient arrows, quotient cylinders and independent structure times. No equiv
 of support inclusion or negative localization endpoint is assumed.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.SupportedSectionBassForgetTower
 

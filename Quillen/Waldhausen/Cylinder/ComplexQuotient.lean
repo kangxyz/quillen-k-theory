@@ -6,11 +6,15 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Homology.CochainComplex.DegreewiseSplitMono
 public import Quillen.Waldhausen.Cylinder.RelativeQuotient
 public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
 
 /-! # The actual shifted-source quotient of the relative complex cylinder -/
 @[expose] public section
+
+open CochainComplex
+
 
 
 noncomputable section

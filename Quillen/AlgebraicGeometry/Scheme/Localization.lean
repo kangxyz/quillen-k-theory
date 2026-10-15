@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.GTheory
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.GlobalLocalization

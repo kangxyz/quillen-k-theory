@@ -19,6 +19,9 @@ change-of-weak-equivalences square, and a relative approximation factorization.
 
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

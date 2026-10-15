@@ -5,7 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatObjectsPullback
+public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
+public import Aglib.AlgebraicGeometry.Modules.Stalk.Basic
+public import Aglib.AlgebraicGeometry.Modules.Flat.Pullback
 
 /-!
 # Genuine flat module-sheaf extensions
@@ -16,8 +18,9 @@ module sheaves. This supplies the extension property needed for inherited exact
 and Waldhausen structures on flat-complex models; no splitting is assumed.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 

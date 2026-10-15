@@ -5,12 +5,17 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.Limits.Shapes.CokernelPushout
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativeEulerFunctors
 public import Quillen.Waldhausen.Additivity.GroupFormula
 public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 
 /-! # Original native Euler conflations and their actual Waldhausen additivity -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+
 
 open CategoryTheory.ExactCategory
 
@@ -120,7 +125,7 @@ lemma flasqueTargetSequence_isCofibrationSequence {C : Type (u + 1)} [Category.{
           (fun K => E.inflation_of_conflation (hc K)) f
       exact Waldhausen.GilletWaldhausen.relativePushout_inflation E φ
         (hc K) (hc L) (hH.cofibration f hf) }
-  cofiber K := Waldhausen.QuillenComparison.isPushoutOfZeroCokernel _
+  cofiber K := CategoryTheory.Limits.isPushout_of_isColimit_cokernel _
     ((ExactSubcategory.exactStructure (abelianExactStructure (Complex Y))
       (FlasqueBoundedBelow.objects Y)).cokernel _ (hc K))
     (FlasqueBoundedBelow.waldhausen Y).isZero _ _

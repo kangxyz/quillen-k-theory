@@ -22,6 +22,9 @@ augmentation. Both incoming faces still have to be proved by chart induction.
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval

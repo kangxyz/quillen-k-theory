@@ -17,9 +17,12 @@ original mapping cones, signed degree shifts and exact original square maps. The
 kernel lifting, the transported boundary, its naturality and genuine stable cone invariance.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open Quillen Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.OriginalStableConeSequence
 

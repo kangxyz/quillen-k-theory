@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.Limits.Shapes.CokernelPushout
 public import Quillen.Waldhausen.QuillenComparison.RowGroupoid
 public import Quillen.Waldhausen.QuillenComparison.QuotientCalculus
 
@@ -121,7 +122,8 @@ theorem quotientDiagram_pushout (i j k : Fin (n.len + 1)) (hij : i ≤ j) (hjk :
     hasCokernel_of_inflation E (A.map f) (hA f)
   have hh := quotientIsCokernel (A.map (homOfLE hij)) (A.map (homOfLE hjk))
     (A.map (homOfLE (hij.trans hjk))) (by rw [← A.map_comp]; rfl)
-  have hs := isPushoutOfZeroCokernel _ hh (quotientDiagram_zero E A hA j)
+  have hs := CategoryTheory.Limits.isPushout_of_isColimit_cokernel _ hh (quotientDiagram_zero E A hA
+    j)
     ((quotientDiagram E A hA).map (homOfLE (show interval i j hij ≤ interval j j le_rfl from
       ⟨hij, le_rfl⟩)))
     ((quotientDiagram E A hA).map (homOfLE (show interval j j le_rfl ≤ interval j k hjk from

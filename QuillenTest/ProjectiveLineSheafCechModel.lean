@@ -17,6 +17,11 @@ retained. The base ring may be nonreduced or the zero ring.
 
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.PolynomialLaurent
+open Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.ProjectiveLine
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -25,7 +30,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open CochainComplex.HomComplex
 open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
   AlgebraicGeometry.Scheme.PolynomialLaurent
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.ProjectiveLine
 namespace QuillenTest.ProjectiveLineSheafCechModel
 
 open Quillen

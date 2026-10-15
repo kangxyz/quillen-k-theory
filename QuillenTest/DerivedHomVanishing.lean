@@ -10,6 +10,9 @@ public import Quillen.Algebra.Homology.DerivedHomVanishing
 /-! # Original derived-map consumers for source bounds and cone null-detection -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -17,7 +20,6 @@ open CategoryTheory CategoryTheory.Limits HomologicalComplex
 universe u v w
 namespace QuillenTest.DerivedHomVanishing
 variable {C : Type u} [Category.{v} C] [Abelian C] [HasDerivedCategory.{w} C]
-open Quillen.CochainComplex
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 /-- Every actual derived map in disjoint term supports is uniquely zero. -/

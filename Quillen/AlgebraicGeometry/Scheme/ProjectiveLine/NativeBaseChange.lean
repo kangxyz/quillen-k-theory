@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Native
-public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurentBaseChange
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.BaseChange
 
 /-! # Actual native overlap and affine projective-line comparison
 
@@ -15,6 +15,9 @@ Spec R its canonical isomorphism with the existing twoChartLine R retains the
 projection and both original polynomial charts. No base flatness is assumed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Products
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
 open Quillen
 
 
@@ -24,8 +27,6 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
-open AlgebraicGeometry.Scheme.Bass
-
 /-- Every native base arrow gives the genuine cartesian projective-line square. -/
 theorem nativeMap_isPullback {X Y : QuasiCompactSchemes.{u}} (f : X ⟶ Y) :
     IsPullback (nativeLineFunctor.map f).hom (nativeProjection.app X).hom
@@ -51,21 +52,22 @@ instance nativeMinus_isAffineHom (X : QuasiCompactSchemes.{u}) :
 
 /-- The intersection of the two native charts is the original native Laurent scheme. -/
 theorem native_chart_isPullback (X : QuasiCompactSchemes.{u}) :
-    IsPullback (Bass.plus.app X).hom (Bass.minus.app X).hom
+    IsPullback (PolynomialLaurent.Relative.plus.app X).hom (PolynomialLaurent.Relative.minus.app
+      X).hom
       (nativePlus.app X).hom (nativeMinus.app X).hom := by
-  have hm : IsPullback (Bass.minus.app X).hom
+  have hm : IsPullback (PolynomialLaurent.Relative.minus.app X).hom
       (pullback.snd (toIntegerBase X.obj) (PolynomialLaurent.laurentProjection integerRing))
       (pullback.snd (toIntegerBase X.obj) (PolynomialLaurent.polynomialProjection integerRing))
       (PolynomialLaurent.laurentMinus integerRing) :=
     baseProductTransformation_isPullback _ _ _
       (PolynomialLaurent.laurentMinus_projection integerRing) X.obj
-  have hp : (Bass.plus.app X).hom ≫
+  have hp : (PolynomialLaurent.Relative.plus.app X).hom ≫
       pullback.snd (toIntegerBase X.obj) (PolynomialLaurent.polynomialProjection integerRing) =
       pullback.snd (toIntegerBase X.obj) (PolynomialLaurent.laurentProjection integerRing) ≫
         PolynomialLaurent.laurentPlus integerRing := by
-    simp [Bass.plus, qcBaseProductTransformation, baseProductTransformation]
-  have hout : IsPullback (Bass.minus.app X).hom
-      ((Bass.plus.app X).hom ≫ pullback.snd (toIntegerBase X.obj)
+    simp [PolynomialLaurent.Relative.plus, qcBaseProductTransformation, baseProductTransformation]
+  have hout : IsPullback (PolynomialLaurent.Relative.minus.app X).hom
+      ((PolynomialLaurent.Relative.plus.app X).hom ≫ pullback.snd (toIntegerBase X.obj)
         (PolynomialLaurent.polynomialProjection integerRing))
       ((nativeMinus.app X).hom ≫ nativeIntegerProjection X) (plusChart integerRing) := by
     rw [hp, (nativeMinus_isPullback X).w]

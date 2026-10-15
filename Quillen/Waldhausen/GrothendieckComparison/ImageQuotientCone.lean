@@ -19,6 +19,9 @@ weak equivalences. The resulting cone descent is unshifted and retains both its 
 face and its whole cylinder. No stable equivalence or seed compatibility is assumed here.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen.IteratedS
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

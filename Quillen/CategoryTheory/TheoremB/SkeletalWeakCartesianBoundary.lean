@@ -13,6 +13,9 @@ public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianBoundary
 /-! # Finite-face assembly for arbitrary coefficient transformations -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval

@@ -6,8 +6,14 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Coherent
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Exact
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.Scheme.Comparison.KToG
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Comparison
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Comparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
 public import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
 
 /-!
@@ -20,10 +26,13 @@ and the induced canonical comparison is an isomorphism in every degree.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+open CategoryTheory.ExactCategory
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section

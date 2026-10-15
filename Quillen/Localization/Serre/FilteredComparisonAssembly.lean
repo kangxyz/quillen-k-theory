@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.AuxiliaryColimit
 public import Quillen.Localization.Serre.StructuredTransitionAssembly
 
@@ -17,6 +18,9 @@ invariance of the filtered realization must supply the displayed stage
 homotopy equivalences; finite-homotopy bijectivity is not substituted for them.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassTower
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassSeedChangeWeak
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassTelescope
@@ -18,8 +19,11 @@ makes the actual fine and graded transitions commute with these same finite maps
 enters only through the original coefficient-natural grading diagram and its seed equation.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes

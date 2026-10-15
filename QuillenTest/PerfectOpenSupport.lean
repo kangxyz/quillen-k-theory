@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenLongExactSequence
 
 /-!
@@ -18,9 +19,16 @@ hypothesis, and they make no replacement of the coarse model by `Perfect U`.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open Quillen Quillen.Waldhausen.Fibration
 universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

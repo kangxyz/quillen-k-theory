@@ -17,7 +17,6 @@ sheaf by an isomorphism preserving its actual inclusion into the structure-modul
 @[expose] public section
 
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
 
 

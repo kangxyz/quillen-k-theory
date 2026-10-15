@@ -45,6 +45,9 @@ lemma nativeInverse_KMap_bijective (R : CommRingCat.{u}) (n : ℕ) :
   · intro y
     exact ⟨g y, DFunLike.congr_fun hfg y⟩
 
+/-- The map from a pair of flasque-model K-classes to perfect K-classes, applying the
+perfect-inclusion K-map to each component.
+-/
 def modelPairToPerfectPair (R : CommRingCat.{u}) (n : ℕ)
     (a : (FlasqueBoundedBelow.waldhausen (Spec R)).K n ×
       (FlasqueBoundedBelow.waldhausen (Spec R)).K n) :

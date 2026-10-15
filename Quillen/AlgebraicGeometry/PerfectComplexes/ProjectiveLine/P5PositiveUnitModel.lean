@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.PullbackPushforward
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PullbackPushforward
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5PositiveUnitAffine
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativeCoefficientsZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativePhi
@@ -16,6 +19,11 @@ total and ordinary direct image. The original geometric unit and augmentation
 are lifted by their literal underlying maps to the full flasque-perfect model.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -53,21 +61,25 @@ lemma positive_exact (X : QuasiCompactSchemes.{u}) : Waldhausen.IsExact
 def positiveUnit (X : QuasiCompactSchemes.{u}) :
     𝟭 (FlasqueBoundedBelow.Obj X.obj) ⟶ positive X where
   app K := ObjectProperty.homMk
-    (((positivePlusUnit (nativeProjection.app X).hom).app
+    (((AlgebraicGeometry.Scheme.Modules.Godement.pullbackPushforwardPlusUnit (nativeProjection.app
+      X).hom).app
       ((FlasqueCoefficients.toPlus X.obj).obj K)).hom)
   naturality {_ _} f := by
     apply ObjectProperty.hom_ext
     exact congrArg (fun g => g.hom)
-      ((positivePlusUnit (nativeProjection.app X).hom).naturality
+      ((AlgebraicGeometry.Scheme.Modules.Godement.pullbackPushforwardPlusUnit (nativeProjection.app
+        X).hom).naturality
         ((FlasqueCoefficients.toPlus X.obj).map f))
 
 /-- The degreewise geometric unit and pushed original augmentation are retained literally. -/
 lemma positiveUnit_hom (X : QuasiCompactSchemes.{u}) (A : FlasqueBoundedBelow.Obj X.obj) :
     ((positiveUnit X).app A).hom =
-      ((geometricPlusUnit (nativeProjection.app X).hom).app
+      ((AlgebraicGeometry.Scheme.Modules.Plus.pullbackPushforwardUnit (nativeProjection.app
+        X).hom).app
         ((FlasqueCoefficients.toPlus X.obj).obj A)).hom ≫
       ((Scheme.Modules.pushforward (nativeProjection.app X).hom).mapHomologicalComplex
         (.up ℤ)).map ((godementTotalUnit (nativeLineFunctor.obj X).obj).app
-          ((pullbackComplex (nativeProjection.app X).hom).obj A.obj)) := rfl
+          ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeProjection.app X).hom).obj
+            A.obj)) := rfl
 
 end Quillen.PerfectComplexes.ProjectiveLine.P5NativePositiveUnit

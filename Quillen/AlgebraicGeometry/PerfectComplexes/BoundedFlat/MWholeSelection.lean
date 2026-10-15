@@ -12,45 +12,59 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MWholeOrder
 set_option autoImplicit false
 namespace Quillen.PerfectComplexes.BassMWholeOrder
 
+/-- Representative input slots for common-order labels 0 through 9, used by `selection`. -/
 def selectionChunk0 : Fin 10 → Fin 176 :=
   ![0, 1, 2, 3, 5, 6, 7, 9, 10, 11]
 
+/-- Representative input slots for common-order labels 10 through 19, used by `selection`. -/
 def selectionChunk1 : Fin 10 → Fin 176 :=
   ![12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
 
+/-- Representative input slots for common-order labels 20 through 29, used by `selection`. -/
 def selectionChunk2 : Fin 10 → Fin 176 :=
   ![28, 29, 30, 31, 32, 33, 34, 38, 48, 49]
 
+/-- Representative input slots for common-order labels 30 through 39, used by `selection`. -/
 def selectionChunk3 : Fin 10 → Fin 176 :=
   ![50, 51, 53, 54, 55, 56, 81, 82, 83, 86]
 
+/-- Representative input slots for common-order labels 40 through 49, used by `selection`. -/
 def selectionChunk4 : Fin 10 → Fin 176 :=
   ![87, 88, 89, 91, 92, 93, 110, 111, 112, 113]
 
+/-- Representative input slots for common-order labels 50 through 59, used by `selection`. -/
 def selectionChunk5 : Fin 10 → Fin 176 :=
   ![114, 115, 116, 140, 141, 142, 143, 52, 74, 78]
 
+/-- Representative input slots for common-order labels 60 through 69, used by `selection`. -/
 def selectionChunk6 : Fin 10 → Fin 176 :=
   ![4, 22, 23, 24, 25, 26, 27, 57, 58, 59]
 
+/-- Representative input slots for common-order labels 70 through 79, used by `selection`. -/
 def selectionChunk7 : Fin 10 → Fin 176 :=
   ![60, 61, 62, 63, 64, 65, 72, 73, 75, 76]
 
+/-- Representative input slots for common-order labels 80 through 89, used by `selection`. -/
 def selectionChunk8 : Fin 10 → Fin 176 :=
   ![77, 79, 80, 84, 85, 94, 147, 35, 36, 37]
 
+/-- Representative input slots for common-order labels 90 through 99, used by `selection`. -/
 def selectionChunk9 : Fin 10 → Fin 176 :=
   ![117, 118, 119, 120, 121, 122, 150, 151, 162, 90]
 
+/-- Representative input slots for common-order labels 100 through 109, used by `selection`. -/
 def selectionChunk10 : Fin 10 → Fin 176 :=
   ![103, 107, 8, 66, 67, 68, 69, 70, 71, 95]
 
+/-- Representative input slots for common-order labels 110 through 119, used by `selection`. -/
 def selectionChunk11 : Fin 10 → Fin 176 :=
   ![96, 97, 98, 99, 100, 101, 102, 104, 105, 106]
 
+/-- Representative input slots for common-order labels 120 through 129, used by `selection`. -/
 def selectionChunk12 : Fin 10 → Fin 176 :=
   ![108, 109, 124, 128, 166, 39, 40, 41, 42, 43]
 
+/-- Representative input slots for common-order labels 130 through 139, used by `selection`. -/
 def selectionChunk13 : Fin 10 → Fin 176 :=
   ![44, 45, 46, 47, 123, 125, 126, 127, 129, 130]
 
@@ -75,18 +89,31 @@ def selection (i : Fin 140) : Fin 176 :=
 theorem selection_old (i : Fin 131) : selection (oldIndex i) = Fin.castAdd 45 i := by
   fin_cases i <;> rfl
 
+/--
+Representative input slots for merged M vertices 0 through 9, used by `vertexRepresentative`.
+-/
 def vertexRepChunk0 : Fin 10 → Fin 176 :=
   ![3, 5, 11, 12, 13, 14, 7, 9, 15, 140]
 
+/--
+Representative input slots for merged M vertices 10 through 19, used by `vertexRepresentative`.
+-/
 def vertexRepChunk1 : Fin 10 → Fin 176 :=
   ![141, 142, 143, 52, 85, 78, 147, 35, 37, 150]
 
+/--
+Representative input slots for merged M vertices 20 through 29, used by `vertexRepresentative`.
+-/
 def vertexRepChunk2 : Fin 10 → Fin 176 :=
   ![151, 43, 44, 45, 36, 122, 4, 25, 26, 80]
 
+/--
+Representative input slots for merged M vertices 30 through 39, used by `vertexRepresentative`.
+-/
 def vertexRepChunk3 : Fin 10 → Fin 176 :=
   ![46, 162, 90, 128, 107, 166, 39, 41, 47, 40]
 
+/-- Representative input slots for the final five merged M vertices, numbered 40 through 44. -/
 def vertexRepChunk4 : Fin 5 → Fin 176 :=
   ![130, 8, 69, 70, 109]
 

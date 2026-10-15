@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Pullback
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Pullback
 public import Quillen.AlgebraicGeometry.Scheme.KTheory
 public import Quillen.CategoryTheory.SmallModel.Functoriality
 

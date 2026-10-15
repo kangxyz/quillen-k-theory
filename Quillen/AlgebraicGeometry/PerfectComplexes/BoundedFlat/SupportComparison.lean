@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.OpenComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenSupport
 
@@ -18,6 +20,9 @@ induces the original K-equivalence, including K0. The actual support-forgetting
 maps commute with the bounded-flat comparison square.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open CategoryTheory.ExactCategory
 

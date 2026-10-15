@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Devissage.Layers
 public import Quillen.Topology.ClassifyingSpace.Equivalence
 
@@ -16,6 +17,9 @@ Intersection gives the one-step homotopy equivalence in Quillen's proof.
 Induction over an actual finite filtration then contracts the layer category.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

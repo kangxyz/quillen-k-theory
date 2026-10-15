@@ -5,11 +5,15 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.MayerVietoris
 public import Quillen.AlgebraicGeometry.PerfectComplexes.HomologyCover
 
 /-! # Derived Hom on original open unions -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

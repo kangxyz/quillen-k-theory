@@ -10,8 +10,10 @@ public import Quillen.Topology.CWComplex.SimplyConnectedCover
 /-! # Actual classical CW cover regressions -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Topology Quillen Quillen.ClassicalCW
+open Set Quillen Quillen.ClassicalCW
 universe u
 namespace QuillenTest.CWSimplyConnectedCover
 variable {X : Type u} [TopologicalSpace X] [T2Space X]

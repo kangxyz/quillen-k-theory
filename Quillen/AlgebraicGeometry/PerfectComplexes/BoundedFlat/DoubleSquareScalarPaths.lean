@@ -17,17 +17,29 @@ open scoped Topology unitInterval
 universe u
 namespace Quillen.PerfectComplexes.DoubleSquareScalarPaths
 
+/-- The binary scalar route `0 → 1 → 2` for the source total normalization. -/
 abbrev sourceTotal := binaryPath (k := 17) 0 1 2
+/-- The binary scalar route `2 → 3 → 11` for the source chart normalization. -/
 abbrev sourceChart := binaryPath (k := 17) 2 3 11
+/-- The binary scalar route `0 → 8 → 9` to the first intermediate vertex. -/
 abbrev firstIntermediate := binaryPath (k := 17) 0 8 9
+/-- The binary scalar route `9 → 10 → 11` for the first restriction. -/
 abbrev firstRestriction := binaryPath (k := 17) 9 10 11
+/-- The binary scalar route `0 → 4 → 5` for the middle total normalization. -/
 abbrev middleTotal := binaryPath (k := 17) 0 4 5
+/-- The binary scalar route `5 → 6 → 13` for the middle chart normalization. -/
 abbrev middleChart := binaryPath (k := 17) 5 6 13
+/-- The binary scalar route `9 → 12 → 13` for the second restriction. -/
 abbrev secondRestriction := binaryPath (k := 17) 9 12 13
+/-- The binary scalar route `0 → 14 → 15` for the target total normalization. -/
 abbrev targetTotal := binaryPath (k := 17) 0 14 15
+/-- The binary scalar route `15 → 16 → 17` for the target chart normalization. -/
 abbrev targetChart := binaryPath (k := 17) 15 16 17
+/-- The binary scalar route `5 → 7 → 17` for the last restriction. -/
 abbrev lastRestriction := binaryPath (k := 17) 5 7 17
 
+/-- The split-triple homotopy comparing the source total/chart route with the first
+intermediate/restriction route. -/
 def firstComparison : (sourceTotal.trans sourceChart).Homotopy
     (firstIntermediate.trans firstRestriction) :=
   Path.Homotopy.mapOfPaths (embed DoubleSquareMergedSimplex.firstFace)
@@ -35,6 +47,8 @@ def firstComparison : (sourceTotal.trans sourceChart).Homotopy
     (map_splitLeft DoubleSquareMergedSimplex.firstFace)
     (map_splitRight DoubleSquareMergedSimplex.firstFace)
 
+/-- The split-triple homotopy comparing the middle total/chart route with the
+first-intermediate/second-restriction route. -/
 def middleComparison : (middleTotal.trans middleChart).Homotopy
     (firstIntermediate.trans secondRestriction) :=
   Path.Homotopy.mapOfPaths (embed DoubleSquareMergedSimplex.middleFace)
@@ -42,6 +56,8 @@ def middleComparison : (middleTotal.trans middleChart).Homotopy
     (map_splitLeft DoubleSquareMergedSimplex.middleFace)
     (map_splitRight DoubleSquareMergedSimplex.middleFace)
 
+/-- The split-triple homotopy comparing the middle-total/last-restriction route with the target
+total/chart route. -/
 def lastComparison : (middleTotal.trans lastRestriction).Homotopy
     (targetTotal.trans targetChart) :=
   Path.Homotopy.mapOfPaths (embed DoubleSquareMergedSimplex.lastFace)

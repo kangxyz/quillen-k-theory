@@ -1,11 +1,12 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.LineTensorAssociator
+public import Aglib.AlgebraicGeometry.Modules.Invertible.TensorFunctorAssociator
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalGenerationEndpoints
-public import Quillen.Algebra.Homology.DerivedCategory.ExactDerivedContraction
+public import Aglib.Algebra.Homology.DerivedCategory.Plus.ExactDerivedContraction
 
 /-! # Actual nested original line contraction
 
@@ -14,6 +15,10 @@ original braiding and original units contract L tensor (Q tensor E), or
 L tensor (E tensor Q), naturally in arbitrary module sheaves and genuine D+ roofs.
 -/
 @[expose] public section
+
+open AlgebraicGeometry
+open CategoryTheory.MonoidalCategory
+
 open Quillen
 
 noncomputable section
@@ -24,6 +29,7 @@ open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits
   CategoryTheory.MonoidalCategory AlgebraicGeometry SheafOfModulesOfCommRing
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open AlgebraicGeometry.Scheme.Modules
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance originalContractionStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})

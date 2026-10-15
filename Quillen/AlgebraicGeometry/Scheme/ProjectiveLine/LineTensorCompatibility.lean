@@ -6,8 +6,8 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalQuotient
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TensorSections
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.TensorLocalExactness
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Sections
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Tensor.Exact
 
 /-!
 # The original tautological line pairs with its original quotient
@@ -336,7 +336,7 @@ private lemma tensorPairingTrivialization_section {X Y : Scheme.{u}}
         (moduleTensorSection Y (M.restrict j) (N.restrict j) U m n))) = _
   rw [moduleTensorCoefficientMap_section eM.hom (N.restrict j) U m n]
   erw [tensorLeftUnit_section Y (N.restrict j) U (eM.hom.val.app (op U) m) n]
-  rw [map_smul]
+  rw [_root_.map_smul]
   rfl
 
 /-- The global pairing has sign +1 in the two original positive-chart trivializations. -/

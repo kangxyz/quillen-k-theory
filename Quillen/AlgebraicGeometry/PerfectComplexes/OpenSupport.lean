@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFibration
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PerfectSupport
 public import Quillen.Waldhausen.Functoriality.ExactEquivalence
@@ -18,6 +20,12 @@ cofibration comparison uses the long exact homology sequence after restriction.
 The K-equivalence retains the existing supported inclusion homomorphism.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open CategoryTheory.ExactCategory
 

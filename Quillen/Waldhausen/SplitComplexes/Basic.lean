@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Algebra.Homology.DegreewiseSplitMono
+public import Aglib.Algebra.Homology.CochainComplex.DegreewiseSplitMono
 public import Quillen.Waldhausen.Complexes
 public import Quillen.Waldhausen.PointedFunctor
 
@@ -21,6 +21,9 @@ and the identity gives an exact comparison to the ambient-monomorphism
 model. No comparison equivalence is asserted.
 -/
 @[expose] public section
+
+open CochainComplex
+
 
 
 noncomputable section

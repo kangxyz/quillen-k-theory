@@ -15,6 +15,11 @@ Euler entries. The resulting law retains the original product K-equivalence
 and the actual native coefficient and two-summand functors in every degree.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+open Quillen.Waldhausen
+open Quillen.Waldhausen.ExtensionCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

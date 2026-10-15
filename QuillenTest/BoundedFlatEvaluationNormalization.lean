@@ -14,8 +14,11 @@ The original geometric pullback comparisons, coefficient transitions and chosen-
 normalizations satisfy the actual two-route equation with scheme and source transports retained.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
 open Quillen.CategoryTheory.StrictSections Quillen.CategoryTheory.GrothendieckSections
 universe u
 namespace QuillenTest.BoundedFlatEvaluationNormalization

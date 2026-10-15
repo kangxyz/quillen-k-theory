@@ -14,9 +14,13 @@ The smaller coefficient construction is the original Model isomorphism, hence re
 level of the original homotopy, including its loop level and independent structure coordinate.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open CategoryTheory AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.BoundedFlatModelCoefficient
 

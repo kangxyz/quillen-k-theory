@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.AffineRetract
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Pullback
-public import Quillen.Algebra.Homology.CochainComplexPlusSingle
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
+public import Aglib.AlgebraicGeometry.Modules.Pullback.Free
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Affine.Retract
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Pullback
+public import Aglib.Algebra.Homology.CochainComplexPlus.Single
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DerivedDirectImage
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TwistMinusUnit
 
@@ -19,7 +22,6 @@ hold over arbitrary commutative rings, by literal finite-free retracts and natur
 -/
 @[expose] public section
 open Quillen
-open Quillen.SchemeSheaf
 
 noncomputable section
 universe u

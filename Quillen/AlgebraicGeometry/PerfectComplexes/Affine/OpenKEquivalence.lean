@@ -18,12 +18,14 @@ factorizations supply the relative comparison via inverse-image duality.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.Waldhausen
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.Affine
 

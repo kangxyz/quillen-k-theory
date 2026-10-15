@@ -24,6 +24,9 @@ chosen component. No Omega-spectrum or complete structure-map weakness is conclu
 
 @[expose] public section
 
+open Quillen.Topology
+
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false

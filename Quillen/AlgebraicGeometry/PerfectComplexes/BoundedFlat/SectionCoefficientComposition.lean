@@ -17,11 +17,14 @@ The unchanged evaluation homotopies satisfy the two-route composition comparison
 original split geometric composition homotopy. All endpoint transports remain explicit.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 

@@ -9,6 +9,10 @@ public import Quillen.Topology.LocalCoefficients.DoubleCylinderTwistedHomology
 
 /-! # Fresh arbitrary-system and unreduced-degree regressions -/
 @[expose] public section
+
+open Quillen.DoubleCylinder
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory
 open scoped Topology unitInterval

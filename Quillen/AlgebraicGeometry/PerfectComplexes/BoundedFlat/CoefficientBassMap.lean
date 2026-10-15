@@ -5,6 +5,7 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationSourceLeg
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SquareTrackProjection
@@ -30,6 +31,9 @@ owners. Coefficient identity/composition, full null/seed/evaluation naturality a
 raw iteration remain separate obligations.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 open Quillen
 
 
@@ -38,7 +42,7 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
@@ -52,7 +56,8 @@ def boundedFlatCoefficientPolynomialSquareHomotopy : Homotopy
       boundedFlatPerfectPrespectrumMap (coefficientMap P ((polynomialUnderFunctor R).map u)))
     (boundedFlatPerfectPrespectrumMap (coefficientMap P u) ≫
       boundedFlatPerfectPrespectrumMap (polynomialProjection P b)) :=
-  boundedFlatPerfectPrespectrumSquareHomotopy _ _ _ _ (coefficientTransformation_naturality P
+  boundedFlatPerfectPrespectrumSquareHomotopy _ _ _ _
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
     (polynomialUnderCoefficient R) u)
 
 /-- Arbitrary coefficient change supplies an actual map of the two polynomial-chart pushouts. -/
@@ -103,7 +108,8 @@ def boundedFlatCoefficientPlusSquareHomotopy : Homotopy
       boundedFlatPerfectPrespectrumMap (coefficientMap P ((laurentUnderFunctor R).map u)))
     (boundedFlatPerfectPrespectrumMap (coefficientMap P ((polynomialUnderFunctor R).map u)) ≫
       boundedFlatPerfectPrespectrumMap (laurentPlus P b)) :=
-  boundedFlatPerfectPrespectrumSquareHomotopy _ _ _ _ (coefficientTransformation_naturality P
+  boundedFlatPerfectPrespectrumSquareHomotopy _ _ _ _
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
     (underToLaurent R) u)
 
 /-- The inverse-coordinate Laurent chart retains its actual geometric square. -/
@@ -112,7 +118,8 @@ def boundedFlatCoefficientMinusSquareHomotopy : Homotopy
       boundedFlatPerfectPrespectrumMap (coefficientMap P ((laurentUnderFunctor R).map u)))
     (boundedFlatPerfectPrespectrumMap (coefficientMap P ((polynomialUnderFunctor R).map u)) ≫
       boundedFlatPerfectPrespectrumMap (laurentMinus P b)) :=
-  boundedFlatPerfectPrespectrumSquareHomotopy _ _ _ _ (coefficientTransformation_naturality P
+  boundedFlatPerfectPrespectrumSquareHomotopy _ _ _ _
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
     (underToLaurentInvert R) u)
 
 
@@ -121,7 +128,8 @@ def boundedFlatCoefficientMinusSquareHomotopy : Homotopy
 def boundedFlatCoefficientLaurentSquareHomotopy :=
   boundedFlatPerfectPrespectrumSquareHomotopy (coefficientMap P ((laurentUnderFunctor R).map u))
     (laurentProjection P a) (laurentProjection P b) (coefficientMap P u)
-      (coefficientTransformation_naturality P (laurentUnderCoefficient R) u)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (laurentUnderCoefficient R) u)
 
 /-- Paste the original plus Laurent square and the original polynomial square. -/
 def boundedFlatCoefficientPlusLeftTrack :=
@@ -148,8 +156,10 @@ def boundedFlatCoefficientPlusPasting :
     (polynomialProjection P b) (laurentPlus P b) (coefficientMap P u)
     (coefficientMap P ((polynomialUnderFunctor R).map u)) (coefficientMap P ((laurentUnderFunctor
       R).map u))
-    (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u)
-      (coefficientTransformation_naturality P (underToLaurent R) u)
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+      (polynomialUnderCoefficient R) u)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P (underToLaurent
+        R) u)
     (laurentProjection P a) (laurentProjection P b)
     (laurentPlus_projection P a) (laurentPlus_projection P b)
 
@@ -178,8 +188,10 @@ def boundedFlatCoefficientMinusPasting :
     (polynomialProjection P b) (laurentMinus P b) (coefficientMap P u)
     (coefficientMap P ((polynomialUnderFunctor R).map u)) (coefficientMap P ((laurentUnderFunctor
       R).map u))
-    (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u)
-      (coefficientTransformation_naturality P (underToLaurentInvert R) u)
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+      (polynomialUnderCoefficient R) u)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (underToLaurentInvert R) u)
     (laurentProjection P a) (laurentProjection P b)
     (laurentMinus_projection P a) (laurentMinus_projection P b)
 

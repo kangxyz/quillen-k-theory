@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalAffine
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenCoverMonomorphisms
+public import Aglib.AlgebraicGeometry.Modules.Locality.Monomorphisms
 public import Mathlib.AlgebraicGeometry.PullbackCarrier
 
 /-! # Monicity of the original relative diagonal incidence

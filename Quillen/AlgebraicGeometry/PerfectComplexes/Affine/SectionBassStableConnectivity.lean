@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassPushoutCollapse
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassConeExcision
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassPushoutExcision
 public import Quillen.Topology.Prespectrum.StableVanishing
@@ -20,10 +22,13 @@ all-point finite growth and literal point HEP discharge every excision and colla
 no assertion about later transition stabilization or the telescope is used.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 
@@ -39,20 +44,6 @@ theorem boundedFlatAffineSectionBassDiagram_stable_subsingleton_of_lt
   exact inferInstanceAs (Subsingleton (Additive (HomotopyGroup.Pi (d.toNat + n + 2)
     (((boundedFlatAffineSectionBassDiagram i).obj R).space ((-d).toNat + n + 2))
       (((boundedFlatAffineSectionBassDiagram i).obj R).point ((-d).toNat + n + 2)))))
-
-/-- The unchanged right-cone collapse of every actual finite-stage span is stable. -/
-theorem boundedFlatAffineSectionBass_rightConeCollapse_isStableEquivalence
-    (i j k : ℕ) (R S T : CommRingCat.{u})
-    (f : (boundedFlatAffineSectionBassDiagram i).obj R ⟶
-      (boundedFlatAffineSectionBassDiagram j).obj S)
-    (g : (boundedFlatAffineSectionBassDiagram i).obj R ⟶
-      (boundedFlatAffineSectionBassDiagram k).obj T) :
-    IsStableEquivalence (HomotopyPushout.rightConeCollapse f g) :=
-  isStableEquivalence_of_positiveLevel _ (fun n =>
-    HomotopyPushout.rightConeCollapse_level_isWeakHomotopyEquivalence f g (n + 1)
-      (boundedFlatAffineSectionBassDiagram_point_homotopyExtensionProperty i R (n + 1))
-      (boundedFlatAffineSectionBassDiagram_point_homotopyExtensionProperty j S (n + 1))
-      (boundedFlatAffineSectionBassDiagram_point_homotopyExtensionProperty k T (n + 1)))
 
 /-- At the stage-i bottom degree, the original two polynomial inclusions generate the span. -/
 theorem boundedFlatAffineSectionBassSpan_bottom_generate

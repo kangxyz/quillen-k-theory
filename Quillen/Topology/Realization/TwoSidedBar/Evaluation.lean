@@ -16,6 +16,9 @@ Evaluation gives the augmentation maps and their naturality for the two-sided ba
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

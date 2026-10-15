@@ -11,6 +11,9 @@ public import Quillen.Topology.Realization.Cartesian.WeakProducts
 /-! # Degenerate characteristic charts for arbitrary coefficient transformations -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval

@@ -21,6 +21,9 @@ original bridge target inclusion, retaining every new parameter coordinate.
 -/
 @[expose] public section
 
+open Quillen.FiberwiseMappingPath
+
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval

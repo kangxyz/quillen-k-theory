@@ -5,8 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SecondEndpointUnderlying
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.WeakFunctorOpaque
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.NatTransQuasiIso
 
 /-!
 # Actual exact model functors for the literal second endpoint span
@@ -17,6 +20,8 @@ from Q tensor U and the original base-change target perfection theorem.
 -/
 
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
 
 open CategoryTheory.ExactCategory
 noncomputable section
@@ -37,7 +42,7 @@ local instance firstFlat : Flat (relativeFirst R) := by
 def quotientLeftBounded : BoundedBelow.Obj (twoChartLine R) ⥤
     BoundedBelow.Obj (twoChartLine R) :=
   ObjectProperty.lift _ ((BoundedBelow.objects (twoChartLine R)).ι ⋙
-    tensorByLineComplex (tautologicalQuotientLine R)) (fun K => by
+    AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalQuotientLine R)) (fun K => by
       obtain ⟨hp, a, ha⟩ := K.property
       let := ha
       refine ⟨FlasqueDiagonal.quotientLeft_locallyPerfect R K.obj hp, a, ?_⟩
@@ -68,7 +73,7 @@ def quotientLeftBoundedExactFunctor : ExactFunctor
   map_conflation S hs := by
     change (S.map (BoundedBelow.objects (twoChartLine R)).ι).ShortExact at hs
     change ((S.map (BoundedBelow.objects (twoChartLine R)).ι).map
-      (tensorByLineComplex (tautologicalQuotientLine R))).ShortExact
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalQuotientLine R))).ShortExact
     exact hs.map_of_exact _
 
 lemma quotientLeftBounded_exact : Waldhausen.IsExact
@@ -81,8 +86,9 @@ lemma quotientLeftBounded_exact : Waldhausen.IsExact
   weak a ha := by
     change QuasiIso a.hom at ha
     let := ha
-    change QuasiIso ((tensorByLineComplex (tautologicalQuotientLine R)).map a.hom)
-    unfold tensorByLineComplex
+    change QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalQuotientLine
+      R)).map a.hom)
+    unfold AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft
     infer_instance
   pushout hi h := (quotientLeftBoundedExactFunctor R).map_isPushout hi h
 
@@ -121,7 +127,8 @@ lemma source_isStrictlyGE (K : FlasqueBoundedBelow.Obj (twoChartLine R))
 
 /-- Literal original left Q tensor of U before total, used for V perfection. -/
 def tensorURaw : FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ Complex (twoChartLine R) :=
-  SelfBaseChange.targetRaw R ⋙ tensorByLineComplex (tautologicalQuotientLine R)
+  SelfBaseChange.targetRaw R ⋙ AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft
+    (tautologicalQuotientLine R)
 
 lemma tensorURaw_locallyPerfect (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     locallyPerfect (twoChartLine R) ((tensorURaw R).obj K) :=
@@ -185,6 +192,9 @@ lemma VRaw_shortExact (S : ShortComplex (FlasqueBoundedBelow.Obj (twoChartLine R
     simpa only [VNative, ShortComplex.map_comp] using hpush
   exact ShortComplex.shortExact_of_iso (S.mapNatIso (VUnderlyingIso R).symm) hn
 
+/-- The second endpoint model `V R` bundled as an exact functor for the inherited degreewise
+short-exact structures on flasque bounded-below perfect complexes.
+-/
 def VExactFunctor : ExactFunctor
     (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
       (FlasqueBoundedBelow.objects (twoChartLine R)))

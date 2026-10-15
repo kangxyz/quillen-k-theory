@@ -19,10 +19,14 @@ identity-cofiber triangle or the existing standard suffix. These class equalitie
 identify either class with a separate prespectrum Laurent-unit construction.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open Quillen.PerfectComplexes.Affine
+open Quillen.Waldhausen.Fibration
 open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace QuillenTest.PolynomialScalarComponentNormalization

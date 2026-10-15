@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.CoefficientPolynomialLaurentNaturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.PolynomialLaurentNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationNaturality
 public import Quillen.KTheory.Bass.DiagramTransport
 
@@ -24,12 +25,16 @@ It does not claim supported-group comparisons, assembled scheme-restriction
 naturality, seed invertibility, stabilization, telescope or TT identification.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme
-  AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme
+  AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u w
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} (P : Over (Spec R)) [CompactSpace P.left]

@@ -10,6 +10,9 @@ public import Quillen.CategoryTheory.TheoremB.StructuredWeakTransport
 
 /-! # Canonical Theorem B comparisons under weak transition equivalences -/
 @[expose] public section
+
+open Quillen.TheoremA
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

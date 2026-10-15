@@ -19,8 +19,10 @@ data. Both boundary and characteristic maps use the original characteristic
 coordinates. The zero-dimensional case is included.
 -/
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Metric Topology
+open Set Metric
 universe u
 namespace Quillen.ClassicalCW
 variable {X : Type u} [TopologicalSpace X] [T2Space X]

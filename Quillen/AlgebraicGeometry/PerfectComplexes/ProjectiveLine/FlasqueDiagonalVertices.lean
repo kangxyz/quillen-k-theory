@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlatPullback
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OriginalPerfectGeneration
@@ -18,6 +19,11 @@ through the actual total derived comparison and the accepted P3 endpoint maps.
 No arbitrary-base perfect-pushforward theorem or chosen coefficient model is used.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -29,6 +35,7 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueDiagonal
 open FlasqueCoefficients
 
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance standardDerived (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 
@@ -218,7 +225,8 @@ lemma perfect_exactDerived {X Y : Scheme.{u}} (F : X.Modules ⥤ Y.Modules)
 lemma quotientLeft_locallyPerfect (R : CommRingCat.{u})
     (K : Complex (twoChartLine R)) (hK : locallyPerfect (twoChartLine R) K) :
     locallyPerfect (twoChartLine R)
-      ((tensorByLineComplex (tautologicalQuotientLine R)).obj K) := by
+      ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalQuotientLine R)).obj K) :=
+        by
   let e : ∀ b : Bool, (tautologicalQuotientLine R).restrict (polynomialChart R b) ≅
       SheafOfModules.unit (Spec (.of (Polynomial R))).ringCatSheaf := by
     intro b
@@ -254,7 +262,8 @@ lemma endpoint_perfect (R : CommRingCat.{u}) (v : Vertex)
   · exact perfect_exactDerived
       (moduleTensorRightFunctor (twoChartLine R) (tautologicalQuotientLine R))
       (fun C hC => locallyPerfect_of_iso
-        ((tensorByLineComplexSymmetry (tautologicalQuotientLine R)).app C)
+        ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeftRightIso (tautologicalQuotientLine
+          R)).app C)
         (quotientLeft_locallyPerfect R C hC)) K.obj K.property
 
 /-- The first original raw complex has the specified natural intended endpoint iso. -/

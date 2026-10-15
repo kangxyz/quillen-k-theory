@@ -12,8 +12,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.PullbackCoh
 Binary normalization of composites of spectrum maps remains a separate obligation. -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.BoundedFlatPullbackCoherence
 

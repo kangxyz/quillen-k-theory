@@ -52,29 +52,37 @@ theorem composite_hom : (geometricIso f g).hom ≫ (normalizationIso f g).hom =
     (boundedFlatNormalizedPullbackCompIso f g).hom :=
   (boundedFlatNormalizedPullbackCompIso_hom f g).symm
 
+/-- The model map induced by normalized pullback along the composite scheme map `f ≫ g`. -/
 def sourceMap : modelOf (boundedFlatPerfectWaldhausen Z) ⟶
     modelOf (boundedFlatPerfectWaldhausen X) :=
   modelMap _ _ (boundedFlatNormalizedPullback_exact (f ≫ g))
     (boundedFlatNormalizedPullback_obj_zero _)
 
+/-- The model map induced by rebasing the composite of the two unnormalized pullback functors. -/
 def intermediateMap : modelOf (boundedFlatPerfectWaldhausen Z) ⟶
     modelOf (boundedFlatPerfectWaldhausen X) :=
   modelMap _ _ ((boundedFlatPerfectPullback_exact g).comp
     (boundedFlatPerfectPullback_exact f)).rebase
     (Quillen.rebaseFunctor_obj_base _ _ _ _)
 
+/-- The model map induced by composing normalized pullback along `g` with normalized pullback
+along `f`. -/
 def targetMap : modelOf (boundedFlatPerfectWaldhausen Z) ⟶
     modelOf (boundedFlatPerfectWaldhausen X) :=
   modelMap _ _ ((boundedFlatNormalizedPullback_exact g).comp
     (boundedFlatNormalizedPullback_exact f))
     (by simp only [comp_obj, boundedFlatNormalizedPullback_obj_zero])
 
+/-- The geometric comparison from the composite-map model functor to its rebased intermediate. -/
 def first : (sourceMap f g).functor ≅ (intermediateMap f g).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight (geometricIso f g) AsSmall.up)
 
+/-- The normalization comparison from the rebased intermediate to the composite normalized model
+functor. -/
 def second : (intermediateMap f g).functor ≅ (targetMap f g).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight (normalizationIso f g) AsSmall.up)
 
+/-- The total normalized pullback composition isomorphism transported to the model functors. -/
 def total : (sourceMap f g).functor ≅ (targetMap f g).functor :=
   isoWhiskerLeft AsSmall.down
     (isoWhiskerRight (boundedFlatNormalizedPullbackCompIso f g) AsSmall.up)

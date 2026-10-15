@@ -13,8 +13,11 @@ These clients keep the original weak cofibration, its actual quotient square, th
 specified weak-arrow faces and the literal chosen-zero quotient of the identity row.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
-open CategoryTheory CategoryTheory.Limits Opposite Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits Opposite
 open Quillen.Waldhausen.QuotientRows
 open scoped Simplicial
 universe u v

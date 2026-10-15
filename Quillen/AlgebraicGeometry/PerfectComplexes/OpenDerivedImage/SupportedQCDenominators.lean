@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenUnitConeConstruction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Models
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.SupportedCocone
@@ -22,6 +23,9 @@ These are conditional reduction theorems. No geometric factorization, roof,
 K-theory equivalence or localization conclusion is assumed as an axiom.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

@@ -15,6 +15,9 @@ the original parameter-correct looping without connectivity assumptions.
 -/
 @[expose] public section
 
+open Quillen.LoopPrespectrum
+
+
 noncomputable section
 open CategoryTheory Quillen
 universe u

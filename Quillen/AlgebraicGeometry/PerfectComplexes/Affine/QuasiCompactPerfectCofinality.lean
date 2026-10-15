@@ -18,6 +18,10 @@ restriction image. The actual source and all canonical maps are retained.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes.OpenDerivedImage
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

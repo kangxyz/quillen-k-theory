@@ -17,8 +17,10 @@ product-subspace pullbacks. No claim is made for general quotient pushouts.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 open scoped Topology
 universe u
 set_option backward.isDefEq.respectTransparency false

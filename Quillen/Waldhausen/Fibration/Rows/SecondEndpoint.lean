@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.Rows.ComplexFactorization
 
 /-! # The actual second cylinder endpoint on genuine quotient rows

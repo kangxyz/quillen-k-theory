@@ -17,6 +17,9 @@ zero-divisor consumers. Original sheaf-complex terms need not be QC.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 
@@ -26,7 +29,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 namespace QuillenTest.AffineBoundedDerivedComparison
 
 open Quillen

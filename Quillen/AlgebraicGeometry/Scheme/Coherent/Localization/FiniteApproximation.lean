@@ -19,9 +19,6 @@ submodule. These statements need no noetherianity hypothesis.
 -/
 @[expose] public section
 
-open ModuleCat
-open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

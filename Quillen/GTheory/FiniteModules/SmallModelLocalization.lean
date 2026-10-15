@@ -6,9 +6,13 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.Algebra.Category.ModuleCat.FiniteLocalization
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.GTheory.FiniteModules.Localization.Quotient
-public import Quillen.Algebra.Category.ModuleCat.Finite
-public import Quillen.CategoryTheory.SmallModel.Abelian
+public import Aglib.Algebra.Category.ModuleCat.Finite
+public import Aglib.CategoryTheory.SmallModel.Abelian
 public import Mathlib.CategoryTheory.Localization.Equivalence
 
 /-!
@@ -19,6 +23,10 @@ its genuine Serre quotient theorem to the chosen small module categories.
 The comparison with principal-open sheaf restriction is a separate theorem.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+open ModuleCat.FiniteLocalization
+
 
 open ModuleCat
 

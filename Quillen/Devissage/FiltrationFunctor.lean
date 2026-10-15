@@ -6,10 +6,15 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Devissage.Filtration
 
 /-! # Exact functors carry actual finite filtrations to actual finite filtrations -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 universe v u v' u'

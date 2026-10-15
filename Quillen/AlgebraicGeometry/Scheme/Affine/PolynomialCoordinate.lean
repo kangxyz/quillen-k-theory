@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurent
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Basic
 
 /-!
 # The original polynomial coordinate on the Laurent open
@@ -14,7 +14,6 @@ The actual polynomial global section X restricts to the existing Laurent global 
 No invertibility of X on the whole polynomial spectrum is asserted.
 -/
 @[expose] public section
-open Quillen
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

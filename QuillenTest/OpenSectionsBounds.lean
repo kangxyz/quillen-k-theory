@@ -5,10 +5,17 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenSectionsBounds
 
 /-! Original-map and endpoint consumers of geometric finite-open section bounds. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
@@ -20,7 +27,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex TopologicalSpace
   Opposite
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 namespace QuillenTest.OpenSectionsBounds
 
 open Quillen

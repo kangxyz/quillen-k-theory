@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.ExactCategory.Composition
-public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Composition
+public import Aglib.CategoryTheory.ExactCategory.Isomorphisms
 public import Quillen.CategoryTheory.QConstruction.Basic
 
 /-!
@@ -17,6 +18,9 @@ Both admissibility assertions are derived by pushout and cokernel universal
 properties in the original exact category.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

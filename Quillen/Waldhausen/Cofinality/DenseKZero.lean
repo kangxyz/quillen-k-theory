@@ -17,6 +17,9 @@ original K-zero homomorphism, which is genuinely surjective onto these classes.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.Fibration
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u

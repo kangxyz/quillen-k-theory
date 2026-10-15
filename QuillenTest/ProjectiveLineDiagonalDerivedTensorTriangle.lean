@@ -17,6 +17,9 @@ morphism. Nonreduced and zero rings retain the same original construction.
 -/
 
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

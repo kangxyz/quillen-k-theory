@@ -16,6 +16,9 @@ boundary. The resulting relations hold in the genuine fundamental groupoid.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.QuotientRows
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

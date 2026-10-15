@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.Quotient.Kernels
 public import Quillen.CategoryTheory.ExactCategory.Quotient.Cokernels
 
@@ -19,6 +20,9 @@ hypotheses. The remaining exact axioms and the other universal property for
 one-sided s-filtering are not assumed.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

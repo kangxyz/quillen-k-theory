@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.Square
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassSuccessor
 public import Quillen.Topology.Prespectrum.StableShift
 public import Mathlib.CategoryTheory.Whiskering
@@ -18,10 +19,13 @@ original coefficient cone maps. The stage formula displays the alternating sign 
 actual signed-system tail; the bottom-degree specialization includes its integer transport.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 

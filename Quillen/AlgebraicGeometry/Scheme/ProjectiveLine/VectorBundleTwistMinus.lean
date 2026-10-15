@@ -5,8 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.KTheory
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TwistMinusFunctor
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Pullback
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Pullback
 
 /-!
 # Negative-twisted pullback on genuine vector bundles
@@ -17,6 +20,9 @@ K-group map. Its underlying module-sheaf functor is literally pullback followed 
 checked kernel twist. No projective-bundle equivalence is asserted here.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 open Quillen
 
 noncomputable section

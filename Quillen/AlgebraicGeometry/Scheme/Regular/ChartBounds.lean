@@ -22,7 +22,6 @@ dimension of the scheme or bound uniform in all sheaves is assumed.
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 

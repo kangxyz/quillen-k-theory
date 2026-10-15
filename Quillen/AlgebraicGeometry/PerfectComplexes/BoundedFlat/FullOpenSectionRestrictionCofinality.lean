@@ -5,8 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionRestrictionKComparison
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionRestrictionKComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalCofinality
 
 /-!
@@ -18,9 +17,12 @@ through the original section K-equivalences. Compactness of the initial open is 
 no degree-zero surjectivity, literal Model-zero equality, or stable-equivalence input is used.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen AlgebraicGeometry.Scheme.AffineOpenPair
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R)

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.GlobalLocalization
 public import Quillen.Waldhausen.Fibration.ConnectingNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.RestrictionComparison
@@ -25,6 +26,12 @@ endpoint are natural under the same original inclusions. The theorem concerns
 variation of auxiliary support on a fixed base and localization open.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenLocalization
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenCoverExactness
+public import Aglib.AlgebraicGeometry.Modules.Locality.Exactness
 public import Quillen.Algebra.Homology.ShortComplex.ProductSequence
 
 /-!
@@ -21,8 +21,9 @@ noetherian hypothesis is imposed on the sheaf. Derived base change is separate.
 -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 open CategoryTheory.ShortComplex

@@ -10,8 +10,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Spectrum.DerivedPullbac
 
 /-! Raw arbitrary-map pullbacks retain the existing localized morphism and original K-map. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry
 open Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.BoundedFlatPrespectrumPullback

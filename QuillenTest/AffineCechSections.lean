@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineGlobalSections
+public import Aglib.AlgebraicGeometry.Cohomology.Affine.GlobalSectionsExactness
 public import Mathlib.Data.ZMod.Basic
 
 /-!
@@ -26,7 +26,6 @@ open PrimeSpectrum AlgebraicGeometry.Scheme.Modules.AffineCech
 
 namespace QuillenTest.AffineCechSections
 
-open Quillen
 
 abbrev torsionRing : CommRingCat := CommRingCat.of (ZMod 6)
 

@@ -20,6 +20,9 @@ cofinal bound on chosen-point representatives.
 
 @[expose] public section
 
+open Quillen.Topology
+
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false

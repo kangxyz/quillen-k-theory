@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionWaldhausen
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionOpenStructure
 
@@ -17,6 +18,12 @@ model. The original support predicate makes the unique zero-to-section transform
 weak after restriction, without any assumption about the full open K₀ endpoint.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

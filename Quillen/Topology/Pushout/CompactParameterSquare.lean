@@ -20,10 +20,12 @@ and noninjective attaching maps.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Limits Topology MonoidalCategory
+open CategoryTheory Limits MonoidalCategory
 open scoped Topology Simplicial
 universe u
 namespace Quillen.CompactParameterPushout

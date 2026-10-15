@@ -10,13 +10,17 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.KTheor
 /-! # Literal image maps, incoming triangles and the sharp K-zero endpoint -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 namespace QuillenTest.OpenDerivedImageKTheory
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.OpenDerivedImage Quillen.Waldhausen
+open Quillen.PerfectComplexes.OpenDerivedImage
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] [Fact (HasDerivedRoofs j)]
 
 /-- The actual weak-arrow incoming triangle uses the original target projection. -/

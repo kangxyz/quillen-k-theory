@@ -28,8 +28,10 @@ hypothesis is imposed, and the open neighborhood is not given a CW structure.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Topology
+open Set
 open scoped unitInterval
 universe u
 namespace Quillen.ClassicalCW

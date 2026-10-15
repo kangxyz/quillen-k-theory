@@ -5,10 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionOpenBassTower
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassTower
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionRestrictionDiagram
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionRestrictionDiagram
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassGradingTower
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionGradingNull
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionConeStable
@@ -26,8 +26,11 @@ The same canonical whole null is iterated unchanged, and its original cone desce
 quotient-graded stage is stable in every signed degree. Whole-null transition coherence is separate.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes

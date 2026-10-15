@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalUnit
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GlobalScalarPullback
 
@@ -24,7 +25,7 @@ lemma boundedFlatPerfectPullback_map_globalUnit {X Y : Scheme.{u}} (f : X ⟶ Y)
       (boundedFlatPerfectGlobalUnitIso X
         (Units.map f.appTop.hom.toMonoidHom r)).hom.app ((boundedFlatPerfectPullback f).obj K) := by
   apply (boundedFlatPerfect X).ι.map_injective
-  change (pullbackComplex f).map
+  change (AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map
     ((boundedFlatPerfect Y).ι.map ((boundedFlatPerfectGlobalUnitIso Y r).hom.app K)) = _
   rw [boundedFlatPerfectGlobalUnitIso_hom_original,
     boundedFlatPerfectGlobalUnitIso_hom_original]

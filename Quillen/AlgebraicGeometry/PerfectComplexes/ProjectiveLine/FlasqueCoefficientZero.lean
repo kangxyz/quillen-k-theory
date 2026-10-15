@@ -5,10 +5,12 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlasqueBoundedBelow
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.IntrinsicPerfectPushforward
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlasquePushforwardExact
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementTotalDerivedComparison
+public import Aglib.AlgebraicGeometry.Cohomology.Flasque.PushforwardExactness
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.DerivedPushforward.Total
 public import Quillen.Waldhausen.ExactFunctor
 
 /-!
@@ -32,6 +34,7 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
 
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance standardDerived (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 

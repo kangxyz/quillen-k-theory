@@ -1,6 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+Authors: kangxyz
 -/
 module
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalGenerationPerfectCoefficients
@@ -14,6 +15,9 @@ proves generation by the original flat pullback and its original left-L tensor.
 No equivalence with two summands and no K-theory inverse is inferred.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 open Quillen
 
 noncomputable section
@@ -22,7 +26,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
-open AlgebraicGeometry.Scheme.Modules Quillen.PerfectComplexes
+open AlgebraicGeometry.Scheme.Modules
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance originalGenerationStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})

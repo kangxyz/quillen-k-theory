@@ -25,13 +25,25 @@ variable {A B C A' B' C' : Scheme.{u}}
   (F : modelOf (boundedFlatPerfectWaldhausen A) ⟶ modelOf (boundedFlatPerfectWaldhausen C'))
   (e : F.functor = (ProjectionReference.reference c r).functor)
 
+/--
+An original projection-rectangle node reanchored from the projection reference to `F` through
+the equality `e`.
+-/
 def projectionNativeNode (i : Fin 18) :=
   ModelSimplex.reanchorNodes (F₀ := F) (F₁ := ProjectionReference.reference c r) (eqToIso e)
     (ProjectionReference.nodes p q p' q' a b c hp hq r hr) i
 
+/--
+The reference from `F` to the first triple `c, q, p`, combining `e` with the projection equation
+`hr`.
+-/
 def projectionFirstReference : F.functor ≅ (NormalizedTripleSimplex.sourceMap c q p).functor :=
   eqToIso e ≪≫ eqToIso (ProjectionReference.anchor p q c r hr)
 
+/--
+The reference from `F` to the middle triple `q', b, p`, extending the first-triple reference by
+the middle-square isomorphism.
+-/
 def projectionMiddleReference : F.functor ≅ (NormalizedTripleSimplex.sourceMap q' b p).functor :=
   projectionFirstReference p q c r hr F e ≪≫ DoubleSquareCommonSimplex.middleSourceIso p q q' b c hq
 

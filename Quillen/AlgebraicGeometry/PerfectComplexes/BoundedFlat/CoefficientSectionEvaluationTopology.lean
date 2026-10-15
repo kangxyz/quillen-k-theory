@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationSourceLeg
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationBassSeed
 public import Quillen.Waldhausen.SConstruction.Iterated.ExactModelEquivalence
@@ -28,10 +29,16 @@ No compactness, flatness or open-immersion condition is needed for these bounded
 Cone descent and comparison of the original source nulls remain separate obligations.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Opposite Quillen.LoopPrespectrum
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange
-open AlgebraicGeometry.Scheme.CoefficientBaseChange
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}

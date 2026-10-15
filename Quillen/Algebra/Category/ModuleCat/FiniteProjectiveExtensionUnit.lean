@@ -9,6 +9,9 @@ public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveExtensionDiagon
 
 /-! # Actual unit isomorphisms for fixed-quotient extension multiplication -/
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

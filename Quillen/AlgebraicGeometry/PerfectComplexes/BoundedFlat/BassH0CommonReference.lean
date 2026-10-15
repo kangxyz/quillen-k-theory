@@ -4,16 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassPrimitiveSupport
 
 /-! Canonical common-reference transport of the complete original H0 diagram. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH0Merge
@@ -35,7 +40,8 @@ theorem polynomial_composite : coefficientMap P ((polynomialUnderFunctor R).map 
 theorem total : coefficientMap P ((laurentUnderFunctor R).map (u ≫ v)) ≫
     laurentProjection P a =
       laurentProjection P c ≫ coefficientMap P v ≫ coefficientMap P u := by
-  have h := coefficientTransformation_naturality P (laurentUnderCoefficient R) (u ≫ v)
+  have h := AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (laurentUnderCoefficient R) (u ≫ v)
   change coefficientMap P ((laurentUnderFunctor R).map (u ≫ v)) ≫ laurentProjection P a =
     laurentProjection P c ≫ coefficientMap P (u ≫ v) at h
   rw [coefficientMap_comp] at h
@@ -53,6 +59,7 @@ def nodes : Fin 31 → BassOverlap.Node P u v :=
     (F₁ := BassH0Diagram.reference P (u ≫ v)) (eqToIso (reference_eq P u v))
     (BassH0Diagram.nodes P (u ≫ v))
 
+/-- The original H0 simplex reanchored at the common Laurent reference via `reference_eq`. -/
 def simplex := ModelSimplex.reanchorSimplex
   (F₀ := BassOverlap.commonReference P u v) (F₁ := BassH0Diagram.reference P (u ≫ v))
   (eqToIso (reference_eq P u v)) (BassH0Diagram.nodes P (u ≫ v))

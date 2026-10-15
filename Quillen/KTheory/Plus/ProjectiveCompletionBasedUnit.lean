@@ -10,6 +10,9 @@ public import Mathlib.CategoryTheory.Monoidal.CoherenceLemmas
 
 /-! # Exact original-basepoint track of the completed-model comparison -/
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u

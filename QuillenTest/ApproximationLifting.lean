@@ -17,10 +17,13 @@ map of finite flags while retaining the source zero.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 
 noncomputable section
 
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 
 universe v u v' u'
 

@@ -18,9 +18,12 @@ coarse structure keeps the same section category, cofibrations and inherited glo
 No coefficient action, restriction comparison or inherited-seed compatibility is assumed.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.IteratedS
 open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes

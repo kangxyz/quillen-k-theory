@@ -9,8 +9,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.PullbackHom
 
 /-! Both original geometric routes survive the normalized relative comparison for arbitrary maps. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.BoundedFlatTriplePullback
 

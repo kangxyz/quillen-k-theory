@@ -6,19 +6,23 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.GlobalEulerReduction
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.KernelClosure
 
 /-! Original-map finite and global fine-model K-class reductions. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+open Quillen.Waldhausen.GilletWaldhausen
+
+
 open CategoryTheory.ExactCategory
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits Quillen Quillen.Waldhausen
-open Quillen.Waldhausen.GilletWaldhausen
+open CategoryTheory CategoryTheory.Limits Quillen
 universe u v
 namespace Consumer
 attribute [local instance] Abelian.hasFiniteBiproducts

@@ -10,11 +10,13 @@ public import Quillen.Algebra.Homology.HomotopyPushoutMap
 /-! # Actual homotopy-pushout and local weak-gluing consumers -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits HomologicalComplex
-open Quillen.CochainComplex
 universe u v u' v'
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace QuillenTest.HomotopyPushout

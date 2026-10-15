@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffinePushforwardAcyclicity
+public import Aglib.AlgebraicGeometry.Cohomology.Affine.PushforwardAcyclicity
 
 /-! Original injective-resolution and higher-direct-image consumers for affine morphisms. -/
 @[expose] public section
@@ -14,7 +14,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 namespace QuillenTest.AffinePushforwardAcyclicity
 
-open Quillen
 
 /-- Every chosen ambient injective resolution gives the same positive-degree exactness. -/
 theorem original_resolution {Z X : Scheme.{u}} (f : Z ⟶ X) [IsAffineHom f]

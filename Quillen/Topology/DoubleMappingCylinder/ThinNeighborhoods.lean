@@ -18,11 +18,13 @@ ambient-thin structures on its ends transfer through their actual collar SDRs.
 No injectivity of either attachment and no local-topology transfer by HE is used.
 -/
 @[expose] public section
+
+open Topology
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory Topology Set
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory Set
 open scoped Topology unitInterval
 universe u
 namespace Quillen.DoubleCylinder

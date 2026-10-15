@@ -21,6 +21,9 @@ assumed.
 -/
 
 @[expose] public section
+
+open Quillen.StableGeneralLinear.GrothendieckModel
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

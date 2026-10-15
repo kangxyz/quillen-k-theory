@@ -13,10 +13,13 @@ public import Quillen.Topology.Prespectrum.FiberOmega
 acyclic spectrum nullhomotopies with independent category universes. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 
 noncomputable section
 open CategoryTheory
-open Quillen Quillen.LoopPrespectrum Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
 open Quillen.Waldhausen.Fibration
 universe u v
 namespace QuillenTest.CoherentAcyclicSpectrum

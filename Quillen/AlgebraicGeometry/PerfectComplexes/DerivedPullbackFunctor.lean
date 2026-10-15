@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPullback
-public import Quillen.AlgebraicGeometry.Scheme.QuasiCompact
+public import Aglib.AlgebraicGeometry.Properties.QuasiCompactCategory
 
 /-!
 # Original perfect K-theory on quasi-compact schemes

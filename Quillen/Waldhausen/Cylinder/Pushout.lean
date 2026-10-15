@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Aglib.Algebra.Homology.MappingCone.Identity
-public import Quillen.CategoryTheory.Limits.BiproductPushout
+public import Aglib.CategoryTheory.Limits.BiproductPushout
 public import Quillen.Waldhausen.SplitComplexes.FactorizationFunctor
 public import Mathlib.Algebra.Homology.HomologicalComplexLimits
 public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Pullbacks
@@ -19,18 +19,12 @@ This gives preservation of every displayed pushout, and then the original
 middle functor preserves every componentwise pushout square of arrows.
 -/
 @[expose] public section
+
+open CochainComplex
+
 open Quillen
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.Waldhausen.SplitFactorization
-export CochainComplex
-  (identityConeFunctor_map_isPushout identityConeTermIso identityConeTermIso_naturality
-  isPushout_of_degreewise)
-end Quillen.Waldhausen.SplitFactorization
-
-end
 
 
 

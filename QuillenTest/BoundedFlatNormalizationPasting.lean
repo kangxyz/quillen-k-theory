@@ -10,8 +10,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Functor
 
 /-! Actual geometric inputs to the two binary normalization pastings used in Bass coherence. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.BoundedFlatNormalizationPasting
 

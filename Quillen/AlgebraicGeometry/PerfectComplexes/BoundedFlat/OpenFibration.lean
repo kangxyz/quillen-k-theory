@@ -11,6 +11,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenLongExactSequence
 /-! # The actual relative-open bounded-flat fibration and its supported boundary -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

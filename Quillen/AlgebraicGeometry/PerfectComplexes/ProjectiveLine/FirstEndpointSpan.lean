@@ -15,6 +15,11 @@ literal original Efirst. Both map naturally and weakly into literal T_P(U(M)),
 using original alpha_M and original beta followed by the actual forward unit.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

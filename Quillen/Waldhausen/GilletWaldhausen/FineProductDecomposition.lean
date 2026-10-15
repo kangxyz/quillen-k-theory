@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.SingleQuasiComparison
 public import Quillen.Waldhausen.Fibration.CanonicalFiberMap
 

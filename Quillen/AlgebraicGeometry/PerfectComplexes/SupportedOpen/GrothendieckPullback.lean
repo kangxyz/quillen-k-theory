@@ -19,11 +19,14 @@ relative restriction square follows from the same actual bounded-flat square.
 No exact raw-perfect pullback, density, or extension premise is asserted.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.AlgebraicGrothendieck
+open Quillen.Waldhausen.AlgebraicGrothendieck
 universe u
 namespace Quillen.PerfectComplexes
 

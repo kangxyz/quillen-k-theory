@@ -14,9 +14,12 @@ These checks retain the actual derived pullback, original relative-open quotient
 and original full-open section reindexing on arbitrary coefficient arrows.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.Waldhausen.AlgebraicGrothendieck
+open Quillen.Waldhausen.AlgebraicGrothendieck
 open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.FullOpenSectionImageMap

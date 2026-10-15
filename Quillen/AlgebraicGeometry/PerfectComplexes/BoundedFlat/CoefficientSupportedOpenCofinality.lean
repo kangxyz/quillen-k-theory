@@ -20,11 +20,14 @@ ambient endpoint is quasi-separated, and the auxiliary support complement is
 compact. No density, image, flatness or localization premise is supplied.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
-open Quillen.Waldhausen AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}

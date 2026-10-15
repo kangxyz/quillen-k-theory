@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.GilletWaldhausen.FiniteEulerReduction
 public import Quillen.Waldhausen.GilletWaldhausen.AcyclicInclusionInjective
 

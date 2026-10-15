@@ -6,13 +6,15 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.ClosedImmersion.GeneralPushforward
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.IdealPushforward
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenBaseChange
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.AffineDetection
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.PushforwardIso
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.OpenImmersion
+public import Aglib.AlgebraicGeometry.Modules.Coherent.AffineDetection
+public import Aglib.AlgebraicGeometry.Modules.Pushforward.Isomorphism
 
 /-!
 # Actual coherent pushforward along arbitrary closed immersions
@@ -24,23 +26,14 @@ is used in this construction.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.CoherentScheme.ClosedImmersion.General
-export AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
-  (affineLocallyFiniteType_pushforward affineLocallyFiniteType_pushforward_affine
-  affineLocallyFiniteType_pushforward_iso affinePresentationComparison coherentOpenBaseChange
-  coherentPushforward coherentPushforwardExact coherentPushforward_comp_inclusion
-  coherentPushforward_faithful coherentPushforward_quotient pushforwardFaithful)
-end Quillen.CoherentScheme.ClosedImmersion.General
-
-end
 
 
 

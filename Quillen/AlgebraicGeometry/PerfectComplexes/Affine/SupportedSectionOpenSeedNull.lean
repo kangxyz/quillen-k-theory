@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionOpenLaurentInterchange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionBassSeed
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionOpenBassSeed
@@ -21,9 +22,12 @@ with the original reversed null parameter and output-loop coordinate retained. N
 compatibility is supplied, and no relative-open endpoint is replaced by a full-open spectrum.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.KTheory.Bass Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.AffineOpenPair
+open Quillen.KTheory.Bass AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

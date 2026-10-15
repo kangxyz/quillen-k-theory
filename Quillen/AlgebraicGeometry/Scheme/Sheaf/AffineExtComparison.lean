@@ -31,8 +31,6 @@ is needed. The associated sheaf of a projective module is not assumed to be
 projective in all module sheaves.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
 
 
 

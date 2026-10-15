@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Devissage.Homotopical
 public import Quillen.GTheory.FiniteModules.LocalizationSequence
 
@@ -18,6 +19,9 @@ This construction will be applied to multiplication by an element on the
 category of finite modules supported on its principal closed subset.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

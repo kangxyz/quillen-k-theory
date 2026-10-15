@@ -5,10 +5,17 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.InjectivePushforwardComparison
 
 /-! # Actual injective-model change consumers -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -45,7 +52,6 @@ theorem original_generic_inverses
   · rw [← Quillen.CochainComplex.mapDerivedHomOfKInjective_comp, e.inv_hom_id,
       Quillen.CochainComplex.mapDerivedHomOfKInjective_id]
 
-open Quillen.PerfectComplexes
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 /-- Zero reflection keeps the actual conjugated restriction, and imposes no condition on the source.

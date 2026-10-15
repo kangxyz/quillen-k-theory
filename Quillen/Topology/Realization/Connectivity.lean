@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.Topology.Realization.Homotopy
 public import Quillen.CategoryTheory.QConstruction.Connected
 public import Mathlib.CategoryTheory.Limits.ConcreteCategory.Basic
@@ -24,6 +25,9 @@ category's Q-construction, this supplies path-connectedness of its Quillen
 space and paths from the distinguished basepoint to every point.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

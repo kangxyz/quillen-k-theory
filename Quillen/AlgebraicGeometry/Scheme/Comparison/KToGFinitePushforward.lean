@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Coherent
 public import Quillen.AlgebraicGeometry.Scheme.FiniteFlatPushforward
 public import Quillen.AlgebraicGeometry.Scheme.Comparison.KToG
 
@@ -17,10 +19,12 @@ finite flat vector-bundle K-theory to the established finite G-pushforward.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section

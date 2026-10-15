@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.Abelian.Subcategory.Exact
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Devissage.Setup
 public import Mathlib.CategoryTheory.Abelian.CommSq
 public import Mathlib.CategoryTheory.Abelian.ShortExact
@@ -26,6 +28,10 @@ No extension closure or finite-length hypothesis is used. This is the algebraic
 theorem, not a comparison with homotopical Quillen `K₀` or higher dévissage.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+open CategoryTheory.ObjectProperty
+
 
 
 noncomputable section

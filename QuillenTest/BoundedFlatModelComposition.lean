@@ -14,9 +14,13 @@ The unchanged coefficient components satisfy their actual source-transport equat
 binary comparison still evaluates to the original geometric normalization and `Spec` transport.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open CategoryTheory AlgebraicGeometry
+open Quillen.Waldhausen.IteratedS
 open Quillen.CategoryTheory.GrothendieckSections
 universe u
 namespace QuillenTest.BoundedFlatModelComposition

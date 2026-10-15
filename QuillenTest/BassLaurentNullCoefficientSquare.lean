@@ -9,8 +9,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassN
 
 /-! Original Laurent nullhomotopies, the actual coefficient endpoint track and fixed zero. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.BassLaurentNullCoefficientSquare

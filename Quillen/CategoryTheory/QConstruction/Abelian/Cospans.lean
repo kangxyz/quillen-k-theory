@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.CategoryTheory.QConstruction.Abelian.Surjections
 
 /-!
@@ -16,6 +17,9 @@ isomorphism. This is obtained from the pushout universal property of its
 pullback square, rather than from an additional quotient relation.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

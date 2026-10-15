@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Basic
 public import Quillen.Algebra.Homology.DerivedEqualityDenominators
 
@@ -14,6 +15,9 @@ The sole geometric input is the exact locally weak global-model roof property.
 All-sheaf target homotopies follow from actual localization denominators.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

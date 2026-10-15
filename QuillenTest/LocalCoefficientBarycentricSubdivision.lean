@@ -19,6 +19,9 @@ chain module. A concrete two-vertex calculation checks recursive orientations.
 
 @[expose] public section
 
+open Quillen.LocalCoefficients
+
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false

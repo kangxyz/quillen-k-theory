@@ -10,6 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalWeakIma
 /-! # Original stabilized restriction-image consumers -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 

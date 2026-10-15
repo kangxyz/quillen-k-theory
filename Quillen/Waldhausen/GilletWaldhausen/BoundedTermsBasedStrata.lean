@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsSSetColimit
 public import Quillen.Waldhausen.Functoriality.KMap
 
@@ -18,6 +19,9 @@ these models to the original inherited isomorphism models; no comparison
 or universe-change equivalence is assumed.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

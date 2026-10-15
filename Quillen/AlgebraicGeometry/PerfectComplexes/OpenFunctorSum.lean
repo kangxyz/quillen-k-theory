@@ -16,6 +16,10 @@ its support proof and exactness through the canonical coproduct comparison.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+open Quillen.Waldhausen.ExtensionCategory
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

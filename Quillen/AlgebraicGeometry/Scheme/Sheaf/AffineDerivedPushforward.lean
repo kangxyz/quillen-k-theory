@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Pushforward
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AcyclicDerivedPushforward
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffinePushforwardResolution
 
@@ -15,8 +16,9 @@ that the actual right-derived unit is an isomorphism on single quasicoherent
 sheaves. No replacement of this unit or perfection conclusion is used.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -20,6 +20,9 @@ realized. Surjectivity onto the actual value subgroup is already constructed.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.QuotientRows
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u

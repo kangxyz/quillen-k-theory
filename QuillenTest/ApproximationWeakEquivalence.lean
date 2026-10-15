@@ -15,8 +15,11 @@ all homotopy degrees, component surjectivity and empty-source obstruction.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
-open CategoryTheory Quillen.Waldhausen
+open CategoryTheory
 open Quillen.Waldhausen.HasApproximationProperty
 open scoped Topology
 universe u v

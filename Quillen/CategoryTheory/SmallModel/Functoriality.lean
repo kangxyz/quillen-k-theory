@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Aglib.CategoryTheory.SmallModel.Functoriality
 public import Quillen.CategoryTheory.SmallModel.Exact
 public import Quillen.KTheory.Map.NaturalIso
@@ -19,6 +21,9 @@ turns these comparisons into strict identity and composition laws on SmallK.
 No comparison with an out-of-universe realization is required.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

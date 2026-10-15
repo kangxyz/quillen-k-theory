@@ -17,6 +17,9 @@ followed by the loop of the unchanged original cone descent. Genuine model excis
 stability, retaining the coarse relative-open section endpoint and original signed boundary.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen.IteratedS
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u

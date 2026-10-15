@@ -15,9 +15,11 @@ The final null face and whole basepoint line are fixed. Null time, output-loop t
 prespectrum structure time remain independent, without any localization-null comparison.
 -/
 @[expose] public section
-noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+
 open Quillen.PerfectComplexes
+
+noncomputable section
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.FullOpenGradedSectionBassSeedNull
 

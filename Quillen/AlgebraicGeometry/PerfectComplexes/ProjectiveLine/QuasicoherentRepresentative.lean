@@ -5,20 +5,24 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.InjectiveCounit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineBoundedDerivedPushforward
-public import Quillen.Algebra.Homology.DerivedCategory.RightDerivedFunctorPlusComposition
+public import Aglib.Algebra.Homology.DerivedCategory.RightDerivedFunctorPlus.Composition
 public import Quillen.AlgebraicGeometry.PerfectComplexes.InjectivePushforwardAdjunction
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TwoOpenSheafSequence
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.InjectiveRestriction
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.AffineSectionsGlobal
+public import Aglib.AlgebraicGeometry.Cohomology.Injective.Restriction
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Localization.AffineSectionsGlobal
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.ChartAffineness
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedStructure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPerfect
 
 /-! # Bounded quasicoherent sources for original affine injective counits -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
@@ -247,7 +251,9 @@ theorem openAffineQCSource_bounds {X : Scheme.{u}} (R : CommRingCat.{u})
     (j : Spec R ⟶ X) [IsOpenImmersion j]
     (I : Complex X) (a b : ℤ) (hab : a ≤ b) [I.IsStrictlyGE a] :
     ∀ i, i < a ∨ b < i → IsZero ((openAffineQCSource R j I b).X i) := by
-  have : ((restrict j).obj I).IsStrictlyGE a := by dsimp [restrict]; infer_instance
+  have : ((restrict j).obj I).IsStrictlyGE a := by
+    dsimp [AlgebraicGeometry.Scheme.Modules.Complex.restrict]
+    infer_instance
   intro i hi
   exact (Scheme.Modules.pushforward j).map_isZero
     (affineBoundedQCSource_bounds R ((restrict j).obj I) a b hab i hi)
@@ -260,7 +266,9 @@ theorem openAffineQCCounit_quasiIso {X : Scheme.{u}} (R : CommRingCat.{u})
     (hinj : ∀ i, Injective (I.X i)) (hqc : ∀ i, (I.homology i).IsQuasicoherent) :
     QuasiIso (openAffineQCCounit R j I b) := by
   let J := (restrict j).obj I
-  have hJl : J.IsStrictlyGE a := by dsimp [J, restrict]; infer_instance
+  have hJl : J.IsStrictlyGE a := by
+    dsimp [J, AlgebraicGeometry.Scheme.Modules.Complex.restrict]
+    infer_instance
   have hJu : J.IsLE b := by
     rw [CochainComplex.isLE_iff]
     intro i hi
@@ -292,7 +300,9 @@ def liftToOpenAffineQCCounit {X : Scheme.{u}} (R : CommRingCat.{u})
     (j : Spec R ⟶ X) [IsOpenImmersion j] {P I : Complex X} (b : ℤ) [P.IsStrictlyLE b]
     (hP : ∀ i, (P.X i).IsQuasicoherent) (f : P ⟶ openLocalizationComplex j I) :
     P ⟶ openAffineQCSource R j I b := by
-  have : ((restrict j).obj P).IsStrictlyLE b := by dsimp [restrict]; infer_instance
+  have : ((restrict j).obj P).IsStrictlyLE b := by
+    dsimp [AlgebraicGeometry.Scheme.Modules.Complex.restrict]
+    infer_instance
   exact (restrictPushforwardComplexAdjunction j).homEquiv P _
     (liftToBoundedAffineCounit R b (fun i => by
       let := hP i

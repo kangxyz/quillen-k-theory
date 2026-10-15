@@ -11,6 +11,9 @@ public import Quillen.Topology.LocalCoefficients.HomologicalWhiteheadSimplyConne
 actual original homotopy-group map, starting only from ordinary integral homology. -/
 
 @[expose] public section
+
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory
 universe u

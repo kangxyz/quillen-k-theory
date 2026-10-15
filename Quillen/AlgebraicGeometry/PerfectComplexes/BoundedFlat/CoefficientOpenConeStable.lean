@@ -26,11 +26,14 @@ C/F/G family. The original inclusion face and every cylinder time are retained.
 No Laurent seed, completion or classical K-theory comparison is asserted.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)

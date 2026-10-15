@@ -18,10 +18,12 @@ boundary, hence an actual pushout and a genuine horn inclusion HEP.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 open scoped Topology unitInterval
 universe u
 namespace Quillen.CubicalTests

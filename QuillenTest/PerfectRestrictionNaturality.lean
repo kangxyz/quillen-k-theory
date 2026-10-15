@@ -19,8 +19,11 @@ Coherent G-theory retains its locally noetherian hypotheses.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry
 universe u
 
 example (X : Scheme.{u}) (n : ℕ) (x : StrictK X n) :

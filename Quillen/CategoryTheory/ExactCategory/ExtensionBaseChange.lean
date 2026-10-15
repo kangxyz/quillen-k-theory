@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionFiber
 public import Quillen.CategoryTheory.QConstruction.Basic
 
@@ -17,6 +18,9 @@ extensions by pullback along its inflation followed by composition with its
 deflation. Descent and compositional coherence remain separate obligations.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

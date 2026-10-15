@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.Map.Functoriality
 public import Quillen.Topology.HomotopyGroups.Equivalence
 
@@ -17,6 +19,9 @@ basepoints. An unbased homotopy equivalence with that forward map therefore
 suffices to prove its original K-map bijective in every nonnegative degree.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

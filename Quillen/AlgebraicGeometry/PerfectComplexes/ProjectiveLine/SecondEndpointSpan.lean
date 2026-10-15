@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SecondEndpointAlignment
 public import Quillen.Waldhausen.Functoriality.KMap
 
@@ -16,6 +17,8 @@ The literal right map is original coefficient resolution followed by the forward
 The native chosen-zero weak-transformation theorem compares the two original K-maps.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -37,7 +40,7 @@ def tensorAlpha : sourceBounded R ⟶ tensorTargetBounded R :=
 
 lemma tensorAlpha_hom_app (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     ((tensorAlpha R).app K).hom =
-      (tensorByLineComplex (tautologicalQuotientLine R)).map
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalQuotientLine R)).map
         ((SelfBaseChange.alpha R).app K).hom := rfl
 
 lemma tensorAlpha_weak (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
@@ -66,7 +69,7 @@ def preLeftMap : sourceBounded R ⟶
 
 lemma preLeftMap_hom_app (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     ((preLeftMap R).app K).hom =
-      (tensorByLineComplex (tautologicalQuotientLine R)).map
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalQuotientLine R)).map
         ((SelfBaseChange.alpha R).app K).hom ≫
       (tensorUUnderlyingIso R).inv.app K ≫ ((beta R).app K).hom := rfl
 
@@ -139,7 +142,7 @@ lemma spanRightMap_naturality {K L : FlasqueBoundedBelow.Obj (twoChartLine R)} (
 
 lemma source_map_hom {K L : FlasqueBoundedBelow.Obj (twoChartLine R)} (a : K ⟶ L) :
     ((source R).map a).hom = (godementTotal (twoChartLine R)).map
-      ((tensorByLineComplex (tautologicalQuotientLine R)).map
+      ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalQuotientLine R)).map
         ((SelfBaseChange.source R).map a).hom) := rfl
 
 lemma center_map_hom {K L : FlasqueBoundedBelow.Obj (twoChartLine R)} (a : K ⟶ L) :

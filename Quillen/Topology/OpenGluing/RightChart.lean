@@ -18,6 +18,9 @@ its actual base changes then transfer to the unchanged original right end.
 -/
 @[expose] public section
 
+open Quillen.FiberwiseMappingPath
+
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval

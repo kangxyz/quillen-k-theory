@@ -4,17 +4,26 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.H1FirstOuterRows
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NativeMergedRightRows
 
 /-! Whole product-cell outer rows matched to the original composition chart by full endpoints. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1References
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH1Join
@@ -26,9 +35,11 @@ variable (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
   (hb : coefficientMap P (α.app b) ≫ polynomialProjection P b = laurentProjection P b)
   (hc : coefficientMap P (α.app c) ≫ polynomialProjection P c = laurentProjection P c)
 
+/-- The projection at `a` followed by the normalized polynomial coefficient map along `u`. -/
 abbrev outerProductPre := BassOverlap.projectionMap P (a := a) ≫
   normalizedMap (coefficientMap P ((polynomialUnderFunctor R).map u))
 
+/-- The reference for the product's outer chart row at polynomial normalization node 2. -/
 def outerProductReference := chartIso P u v α hb ≪≫
   isoWhiskerRight (CoefficientSquareFamilies.polynomialNodes P u 2).2
     (CoefficientSquareFamilies.chartSource P v α).functor
@@ -57,7 +68,7 @@ theorem product_outer_first_representation : ∃ ρ, ∀ i : Fin 3,
   exact (product_outer_row P u v α hb _).trans (pre_square_first_nodes
     (coefficientMap P ((laurentUnderFunctor R).map v)) (coefficientMap P (α.app b))
     (coefficientMap P (α.app c)) (coefficientMap P ((polynomialUnderFunctor R).map v))
-    (coefficientTransformation_naturality P α v)
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v)
     (BassOverlap.commonReference P u v) (outerProductPre P u) _ i)
 
 /-- The other product binary row retains its actual chart source equality. -/
@@ -71,11 +82,12 @@ theorem product_outer_second_representation : ∃ ρ, ∀ i : Fin 3,
     (NativeSquareFiveSimplex.sourceIso
       (coefficientMap P ((laurentUnderFunctor R).map v)) (coefficientMap P (α.app b))
       (coefficientMap P (α.app c)) (coefficientMap P ((polynomialUnderFunctor R).map v))
-      (coefficientTransformation_naturality P α v)), fun i ↦ ?_⟩
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v)), fun i ↦
+        ?_⟩
   exact (product_outer_row P u v α hb _).trans (pre_square_second_nodes
     (coefficientMap P ((laurentUnderFunctor R).map v)) (coefficientMap P (α.app b))
     (coefficientMap P (α.app c)) (coefficientMap P ((polynomialUnderFunctor R).map v))
-    (coefficientTransformation_naturality P α v)
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v)
     (BassOverlap.commonReference P u v) (outerProductPre P u) _ i)
 
 /-- The old middle-right row retains its original reference under both fixed precompositions. -/
@@ -99,8 +111,8 @@ theorem old_product_middle_representation : ∃ ρ, ∀ i : Fin 3,
       (coefficientMap P ((laurentUnderFunctor R).map u))
       (coefficientMap P ((laurentUnderFunctor R).map v))
       (coefficientMap P (α.app a)) (coefficientMap P (α.app b)) (coefficientMap P (α.app c))
-      (coefficientTransformation_naturality P α u).symm
-      (coefficientTransformation_naturality P α v).symm i)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u).symm
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm i)
   exact hn.trans (pre_pre_node (BassOverlap.commonReference P u v)
     (BassOverlap.projectionMap P (a := a))
     (normalizedMap (coefficientMap P ((polynomialUnderFunctor R).map u)))
@@ -127,8 +139,8 @@ theorem old_product_first_representation : ∃ ρ, ∀ i : Fin 3,
       (coefficientMap P ((laurentUnderFunctor R).map u))
       (coefficientMap P ((laurentUnderFunctor R).map v))
       (coefficientMap P (α.app a)) (coefficientMap P (α.app b)) (coefficientMap P (α.app c))
-      (coefficientTransformation_naturality P α u).symm
-      (coefficientTransformation_naturality P α v).symm i)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u).symm
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm i)
   exact hn.trans (pre_pre_node (BassOverlap.commonReference P u v)
     (BassOverlap.projectionMap P (a := a))
     (normalizedMap (coefficientMap P ((polynomialUnderFunctor R).map u)))

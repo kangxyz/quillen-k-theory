@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportRestriction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOppositeJointData
 public import Quillen.AlgebraicGeometry.PerfectComplexes.RestrictionFunctoriality
@@ -21,6 +23,12 @@ commutes with the original support-forgetting and ordinary restriction maps.
 No compactness or separation assumption is used for these constructions.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open CategoryTheory.ExactCategory
 

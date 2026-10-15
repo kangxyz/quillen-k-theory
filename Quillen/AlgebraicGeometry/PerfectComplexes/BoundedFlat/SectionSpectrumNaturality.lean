@@ -17,11 +17,14 @@ The actual cocartesian section transition compares strict coefficient restrictio
 geometric pullback. Its original normalization comparison supplies the whole prespectrum track.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
 

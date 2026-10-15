@@ -19,6 +19,9 @@ stage homology map commutes with the original map to infinite-model homology.
 
 @[expose] public section
 
+open Quillen.LocalCoefficients
+
+
 open CategoryTheory
 noncomputable section
 universe u

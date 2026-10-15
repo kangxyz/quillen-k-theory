@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedAcyclicBasedStrata
 public import Quillen.Topology.FilteredRealization.BasedGroups
 
@@ -18,6 +19,9 @@ original inherited isomorphism models. No categorywide uniform bound,
 transition equivalence, or injectivity of realization maps is assumed.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

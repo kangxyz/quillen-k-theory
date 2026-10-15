@@ -11,6 +11,9 @@ public import Mathlib.Data.ZMod.Basic
 /-! # Original principal localization sequence consumers -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 
@@ -18,7 +21,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 universe u
 namespace QuillenTest.PrincipalPerfectLocalization
 variable (R : CommRingCat.{u}) (r : R)

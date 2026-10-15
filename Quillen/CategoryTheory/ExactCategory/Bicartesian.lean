@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.ExactCategory.BaseChange
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.BaseChange
 
 /-!
 # Pushouts of admissible monomorphisms are bicartesian
@@ -16,13 +17,15 @@ exact-category axioms: the pushed-out inflation retains the original cokernel.
 No ambient abelian category or arbitrary limits are needed.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
 namespace CategoryTheory.ExactCategory.ExactStructure
-open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 

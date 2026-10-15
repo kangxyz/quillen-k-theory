@@ -23,4 +23,3 @@ public import Quillen.AlgebraicGeometry.Scheme.GTheory
 public import Quillen.AlgebraicGeometry.Scheme.AffineGTheory
 /-! Public geometric K/G-theory interfaces with explicit universe boundaries. -/
 @[expose] public section
-

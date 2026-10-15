@@ -15,6 +15,11 @@ both original chosen-zero embedding formulas. The unchanged product KEquiv
 and original group law then assemble GPhi, including degree zero.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
+open Quillen.PerfectComplexes.ProjectiveLine.StrictPositiveRetraction
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

@@ -18,12 +18,14 @@ square, rather than being used to define the pullback map.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes
 universe u
 attribute [local instance] Abelian.hasFiniteBiproducts
 

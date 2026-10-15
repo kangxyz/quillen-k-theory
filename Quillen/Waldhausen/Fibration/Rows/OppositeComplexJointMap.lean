@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Cylinder.AdditiveMap
 public import Quillen.Waldhausen.Fibration.Rows.OppositeComplexJoint
 
@@ -23,6 +24,12 @@ no cocylinder compatibility is assumed.
 -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
+open CategoryTheory.ExactCategory
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -31,7 +38,6 @@ open CategoryTheory CategoryTheory.Limits Opposite HomologicalComplex
 attribute [local instance] Abelian.hasFiniteBiproducts
 attribute [local instance] preservesBinaryBiproducts_of_preservesBiproducts
 namespace Quillen.Waldhausen
-open Quillen.CochainComplex
 variable {C : Type u} [Category.{v} C] [Abelian C]
   {D : Type u'} [Category.{v'} D] [Abelian D] (F : C ⥤ D) [F.Additive]
   (P : ObjectProperty (CochainComplex C ℤ)) (Q : ObjectProperty (CochainComplex D ℤ))

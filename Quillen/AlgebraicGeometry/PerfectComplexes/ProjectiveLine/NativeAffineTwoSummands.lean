@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueTwoSummandComparison
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.NativeAffineTautological
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.PullbackTensorCompatibility
@@ -16,13 +18,17 @@ The actual affine geometry and tautological-line identification compare the
 existing native O/O(-1) summands with the actual original two-chart summands.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Products
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
-  AlgebraicGeometry.Scheme.Bass
+
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
@@ -93,9 +99,10 @@ def nativeTwistTransportModuleIso (R : CommRingCat.{u}) :
 
 /-- The actual sheaf tensor transport gives a natural original chain isomorphism. -/
 def nativeTwistTransportComplexIso (R : CommRingCat.{u}) :
-    tensorByLineComplex (nativeTautologicalLine (affineBase R)) ⋙
-        pullbackComplex (nativeAffineIso R).hom ≅
-      pullbackComplex (nativeAffineIso R).hom ⋙ tensorByLineComplex (tautologicalLine R) :=
+    AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (nativeTautologicalLine (affineBase R)) ⋙
+        AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeAffineIso R).hom ≅
+      AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeAffineIso R).hom ⋙
+        AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R) :=
   Functor.mapHomologicalComplexCompIso (nativeTwistTransportModuleIso R) (.up ℤ)
 
 /-- The transported native negative twist is the actual local negative twist. -/

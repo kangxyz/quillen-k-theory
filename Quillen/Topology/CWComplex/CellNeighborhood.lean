@@ -23,8 +23,10 @@ local-finiteness hypothesis is introduced.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Metric Topology
+open Set Metric
 open scoped unitInterval
 universe u
 namespace Quillen.ClassicalCW

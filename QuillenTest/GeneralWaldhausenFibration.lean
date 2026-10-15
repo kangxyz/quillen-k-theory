@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.GeneralComparison
 
 /-! Genuine mixed-universe consumers of the unchanged original maps. -/

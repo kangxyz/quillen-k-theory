@@ -4,8 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.CategoryTheory.ExactCategory.ExtensionFunctorProjection
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeExact
+
+open CategoryTheory.ExactCategory
+
 
 /-! # Actual exact-functor extension and quotient consumers -/
 noncomputable section

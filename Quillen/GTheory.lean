@@ -8,13 +8,10 @@ Authors: kangxyz
 module
 
 public import Quillen.GTheory.FiniteModules.ClosedSupport
-public import Quillen.GTheory.FiniteModules.IdealClosedSupport
 public import Quillen.GTheory.FiniteModules.IdealPowerFiltration
-public import Quillen.GTheory.FiniteModules.Localization.Basic
 public import Quillen.GTheory.FiniteModules.Localization.EssentialSurjectivity
 public import Quillen.GTheory.FiniteModules.Localization.Quotient
 public import Quillen.GTheory.FiniteModules.LocalizationSequence
-public import Quillen.GTheory.FiniteModules.RestrictionScalars
 public import Quillen.GTheory.FiniteModules.SmallModelLocalization
 public import Quillen.GTheory.SmallModelLocalization
 

@@ -15,6 +15,10 @@ two-time structure equation and original Laurent/nullhomotopy-conjugated transit
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.PolynomialLaurent
+open Quillen.PerfectComplexes
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -25,7 +29,7 @@ universe u
 namespace QuillenTest.AffineBassStep
 
 open Quillen
-open Quillen.LoopPrespectrum Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS
+open Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
   AlgebraicGeometry.Scheme.PolynomialLaurent
 
 /-- All four based edges and the full transpose involution retain the original point. -/

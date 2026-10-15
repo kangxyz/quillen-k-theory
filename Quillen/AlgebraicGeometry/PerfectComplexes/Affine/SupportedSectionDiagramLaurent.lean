@@ -7,7 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionDiagram
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionLaurentUnit
-public import Quillen.Algebra.Polynomial.LaurentUnderSquare
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.CategoryTheory.Functor.IdentityAutomorphismSquare
 
 /-!
@@ -19,12 +19,15 @@ Realization therefore gives literal naturality at every original homotopy time, 
 level zero. No homotopy naturality or seed compatibility is assumed.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair
-open Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.CategoryTheory.TheoremB.StructuredTransitionCalculus
 public import Quillen.CategoryTheory.QConstruction.Abelian.SpanFactorization
 public import Quillen.Localization.Serre.AuxiliaryLift
@@ -16,6 +17,9 @@ The proof uses actual quotient-arrow lifts and the genuine epi–mono span
 factorization. It does not assume ordinary fixed-source fraction lifting.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

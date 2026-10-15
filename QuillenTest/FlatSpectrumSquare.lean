@@ -12,9 +12,12 @@ public import Quillen.Topology.Prespectrum.StableHomotopy
 and independent homotopy/structure time. -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
 
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.Waldhausen.IteratedS
 open scoped Topology unitInterval
 

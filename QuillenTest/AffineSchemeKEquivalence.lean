@@ -10,6 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SchemeKEquivalen
 /-! # Presentation-independent affine comparisons and inverse functoriality -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 universe u

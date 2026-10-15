@@ -12,6 +12,9 @@ public import Quillen.Topology.LocalCoefficients.HomotopyCorrection
 /-! # The original two projective factorization tracks and finite abelian correction -/
 
 @[expose] public section
+
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u

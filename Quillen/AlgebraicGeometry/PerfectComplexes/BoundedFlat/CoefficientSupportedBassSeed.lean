@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportLocalizationModels
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportLocalizationModels
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientOpenBassSeed
 public import Quillen.Waldhausen.SConstruction.Iterated.DiagramNullIdentityAction
 
@@ -20,13 +20,16 @@ zero-to-inclusion null interchanges with these units at independent scalar and n
 parameters, so every original null time slice satisfies the same strict seed square.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
-open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass Quillen.FunctorIdentityAutomorphism
-open AlgebraicGeometry.Scheme.PolynomialLaurent AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.PolynomialLaurent AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)

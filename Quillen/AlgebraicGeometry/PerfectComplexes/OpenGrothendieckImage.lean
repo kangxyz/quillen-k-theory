@@ -20,9 +20,12 @@ original relative-open image quotient; it does not replace that grading.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.AlgebraicGrothendieck
+open Quillen.Waldhausen.AlgebraicGrothendieck
 universe u v
 namespace Quillen.PerfectComplexes
 

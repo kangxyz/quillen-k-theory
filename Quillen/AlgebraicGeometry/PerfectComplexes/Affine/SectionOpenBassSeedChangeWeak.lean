@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionOpenLaurentChangeWeak
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionOpenBassSeed
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionForgetSeed
@@ -18,10 +19,13 @@ the two genuinely constructed seeds. The source is the already constructed ambie
 restricted along Under.forget. No seed square, localization or full-open equivalence is assumed.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes

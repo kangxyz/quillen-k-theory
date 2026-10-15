@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Pullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.QuillenComparison
 public import Quillen.AlgebraicGeometry.Scheme.Pullback
@@ -57,7 +58,8 @@ theorem smallVectorBundleKMap_pullback {X Y : Scheme.{u}} (f : X ⟶ Y) (n : ℕ
       (AlgebraicGeometry.Scheme.pullbackK f n) =
       ((AlgebraicGeometry.Scheme.Modules.vectorBundleExactPullback f).KMap n).comp
         (AlgebraicGeometry.Scheme.Modules.smallVectorBundleKMap Y n) :=
-  ExactFunctor.smallModelToOriginal_commonAmbientKMap_naturality.{u + 1, u}
+  CategoryTheory.ExactCategory.ExactFunctor.smallModelToOriginal_commonAmbientKMap_naturality.{u +
+    1, u}
     (AlgebraicGeometry.Scheme.Modules.vectorBundleExactPullback f) n
 
 /-- The original public small-model/Q/S equivalence is natural on all schemes. -/

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.ScalarSupportExtension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedProjectorExtension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StabilizedExtensionTransport
@@ -20,6 +21,9 @@ support; the support-preserving projector roof retains it during stabilization.
 No exponent, supported extension, or global weak denominator is assumed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

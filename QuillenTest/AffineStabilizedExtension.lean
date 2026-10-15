@@ -5,11 +5,18 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StabilizedExtension
 public import Mathlib.Data.ZMod.Basic
 
 /-! Original cones, inclusions, shifts and empty-open consumers for stabilized extension. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -55,7 +62,7 @@ lemma original_E_summand_is_retained (C E : CochainComplex A ℤ) :
   simp
 end Algebra
 
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 attribute [local instance] Affine.standardDerivedModules Affine.standardDerivedSheaves
 attribute [local instance] Abelian.hasFiniteBiproducts
 

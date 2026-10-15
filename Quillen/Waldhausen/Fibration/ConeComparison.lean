@@ -18,6 +18,9 @@ Waldhausen fiber theorem make this same map a stable equivalence. Its original s
 boundary, entire cylinder and target inclusion remain specified.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen.IteratedS
+
 noncomputable section
 open CategoryTheory Quillen.LoopPrespectrum
 universe u v

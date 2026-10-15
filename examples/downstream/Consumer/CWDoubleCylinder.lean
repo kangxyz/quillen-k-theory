@@ -9,8 +9,13 @@ public import Quillen.Topology.DoubleMappingCylinder.CWLifting
 
 /-! # Independent clients of the actual double-cylinder lift -/
 @[expose] public section
+
+open Topology
+
+open Quillen.DoubleCylinder
+
 noncomputable section
-open CategoryTheory Limits MonoidalCategory Set Topology
+open CategoryTheory Limits MonoidalCategory Set
 open scoped unitInterval
 universe u
 namespace Quillen.Consumer.CWDoubleCylinder

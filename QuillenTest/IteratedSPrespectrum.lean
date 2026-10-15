@@ -10,12 +10,15 @@ public import Quillen.Waldhausen.SConstruction.Iterated.Prespectrum
 /-! # Consumers of the actual sequential S-prespectrum and original K-map -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits Opposite MonoidalCategory
 open scoped Simplicial Topology unitInterval
-open Quillen Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen Quillen.Waldhausen.IteratedS
 universe u v
 namespace QuillenTest.IteratedSPrespectrum
 

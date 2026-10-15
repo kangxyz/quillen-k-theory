@@ -4,16 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSquareFamilies
 
 /-! The four whole original component families of the prescribed H1 cylinder face. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite Convexity
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters Quillen.LoopPrespectrum
 open scoped Simplicial Topology unitInterval
 universe u
@@ -37,12 +41,17 @@ theorem postcompose_reference {V W T : Model.{u}} {k : ℕ}
 variable {R : CommRingCat.{u}} (P : Over (Spec R))
 variable {a b c : Under R} (u : a ⟶ b) (v : b ⟶ c)
 
+/-- The normalized model map induced by the Laurent coefficient map of `v`. -/
 abbrev laurentMap := BassH0Merge.normalizedMap
   (coefficientMap P ((laurentUnderFunctor R).map v))
+/-- The normalized model map induced by the coefficient scheme map of `u`. -/
 abbrev coefficientMapModel := BassH0Merge.normalizedMap (coefficientMap P u)
 
+/-- The H0 reference for `u` followed by the Laurent coefficient model map for `v`. -/
 abbrev firstSource := BassH0Diagram.reference P u ≫ laurentMap P v
 
+/-- The H0 nodes for `u` postcomposed with the Laurent coefficient map for `v`, including their
+references. -/
 def firstNodes (i : Fin 31) :
     Σ F : modelOf (boundedFlatPerfectWaldhausen (space (op P, a))) ⟶
       modelOf (boundedFlatPerfectWaldhausen (space (op P, (laurentUnderFunctor R).obj c))),
@@ -50,6 +59,7 @@ def firstNodes (i : Fin 31) :
   ⟨(BassH0Diagram.nodes P u i).1 ≫ laurentMap P v,
     isoWhiskerRight (BassH0Diagram.nodes P u i).2 (laurentMap P v).functor⟩
 
+/-- The first H1 component simplex, obtained by postcomposing the H0 simplex for `u`. -/
 def firstSimplex := ModelSimplex.ofIsos (firstSource P u v)
   (fun i ↦ (firstNodes P u v i).1) (fun i ↦ (firstNodes P u v i).2)
 
@@ -70,8 +80,11 @@ theorem first_native (n : ℕ) (s t : unitInterval)
   rw [first_simplex_original, prespectrumSimplexFamily_postcomp, BassH0Diagram.native]
   rfl
 
+/-- The coefficient model map for `u` followed by the H0 reference for `v`. -/
 abbrev middleSource := coefficientMapModel P u ≫ BassH0Diagram.reference P v
 
+/-- The H0 nodes for `v` precomposed with the coefficient map for `u`, including their
+references. -/
 def middleNodes (i : Fin 31) :
     Σ F : modelOf (boundedFlatPerfectWaldhausen (space (op P, a))) ⟶
       modelOf (boundedFlatPerfectWaldhausen (space (op P, (laurentUnderFunctor R).obj c))),
@@ -79,6 +92,7 @@ def middleNodes (i : Fin 31) :
   ⟨coefficientMapModel P u ≫ (BassH0Diagram.nodes P v i).1,
     isoWhiskerLeft (coefficientMapModel P u).functor (BassH0Diagram.nodes P v i).2⟩
 
+/-- The middle H1 component simplex, obtained by precomposing the H0 simplex for `v`. -/
 def middleSimplex := ModelSimplex.ofIsos (middleSource P u v)
   (fun i ↦ (middleNodes P u v i).1) (fun i ↦ (middleNodes P u v i).2)
 

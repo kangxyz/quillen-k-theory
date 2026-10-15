@@ -15,11 +15,17 @@ universe u
 namespace Quillen.Waldhausen.IteratedS.ModelSimplex
 variable {V W : Model.{u}} {k : ℕ} {F₀ F₁ : V ⟶ W}
 
+/-- The same model nodes with their reference comparisons transported from `F₁` to `F₀` by
+composition with `e`.
+-/
 def reanchorNodes (e : F₀.functor ≅ F₁.functor)
     (N : Fin (k + 1) → Σ F : V ⟶ W, F₁.functor ≅ F.functor)
     (i : Fin (k + 1)) : Σ F : V ⟶ W, F₀.functor ≅ F.functor :=
   ⟨(N i).1, e ≪≫ (N i).2⟩
 
+/-- The model simplex constructed from the given nodes using `F₀` as reference and the comparisons
+transported along `e`.
+-/
 def reanchorSimplex (e : F₀.functor ≅ F₁.functor)
     (N : Fin (k + 1) → Σ F : V ⟶ W, F₁.functor ≅ F.functor) : ModelSimplex V W k :=
   ofIsos F₀ (fun i ↦ (reanchorNodes e N i).1) (fun i ↦ (reanchorNodes e N i).2)

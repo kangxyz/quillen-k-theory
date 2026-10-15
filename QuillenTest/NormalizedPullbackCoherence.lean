@@ -10,8 +10,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Spectrum.BoundedFlatPul
 
 /-! Consumers retain the original raw spectrum map and the entire geometric comparison line. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.NormalizedPullbackCoherence
 

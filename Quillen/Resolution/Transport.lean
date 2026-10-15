@@ -6,10 +6,14 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.Resolution.Finite
 
 /-! # Transporting actual finite admissible resolutions along isomorphisms -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 universe v u

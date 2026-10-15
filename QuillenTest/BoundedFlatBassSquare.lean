@@ -9,8 +9,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassS
 
 /-! The raw Bass comparison retains both actual Laurent endpoint maps and its entire cylinder. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace QuillenTest.BoundedFlatBassSquare

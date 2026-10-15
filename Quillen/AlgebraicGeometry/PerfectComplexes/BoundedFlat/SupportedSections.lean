@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionEvaluation
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.PairPullback
 
@@ -17,6 +18,9 @@ preserves this support along every commuting affine open-pair square. The underl
 coefficient functor and chain maps are unchanged. No negative localization is assumed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 universe u

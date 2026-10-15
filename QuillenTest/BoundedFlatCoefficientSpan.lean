@@ -5,16 +5,24 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassSpanMap
 
 /-! Original bounded-flat polynomial-span endpoints and Laurent tracks for arbitrary
 coefficients. -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
+
 noncomputable section
 
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.LoopPrespectrum
-open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 open Quillen.Waldhausen.IteratedS
 open scoped Topology unitInterval
 

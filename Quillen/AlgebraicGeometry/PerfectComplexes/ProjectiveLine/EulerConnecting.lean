@@ -5,11 +5,15 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerInverse
-public import Quillen.Algebra.Homology.DerivedCategory.PlusComplexTriangle
+public import Aglib.Algebra.Homology.DerivedCategory.Plus.ShortExact
 
 /-! # The actual natural Euler connecting isomorphism in D+ -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -22,6 +26,7 @@ namespace Quillen.PerfectComplexes.ProjectiveLine.Euler
 open FlasqueCoefficients
 variable (R : CommRingCat.{u})
 
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance eulerConnectingStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 
@@ -32,7 +37,7 @@ local instance toPlus_additive (X : Scheme.{u}) : (toPlus X).Additive := by
 lemma flasqueSequencePlus_shortExact {X : Scheme.{u}}
     (S : ShortComplex (FlasqueBoundedBelow.Obj X))
     (hS : (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-      (Quillen.abelianExactStructure (Complex X))
+      (CategoryTheory.ExactCategory.abelianExactStructure (Complex X))
       (FlasqueBoundedBelow.objects X)).conflation S) :
     ((S.map (toPlus X)).map (CochainComplex.Plus.ι X.Modules)).ShortExact := hS
 

@@ -5,12 +5,24 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativeEulerAdditivity
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativePhiComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlasqueShift
 
 /-! # Original native Euler zero, signed shift and actual coefficient entries -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+open Quillen.Waldhausen
+open Quillen.Waldhausen.ExtensionCategory
+
 
 open CategoryTheory.ExactCategory
 
@@ -28,6 +40,7 @@ namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeEuler
 open FlasqueCoefficients
 variable (X : QuasiCompactSchemes.{u})
 
+/-- The standard derived-category instance for sheaves of modules on `Y`. -/
 local instance nativeMiddleDerived (Y : Scheme.{u}) :
     HasDerivedCategory.{u + 1} Y.Modules := HasDerivedCategory.standard _
 
@@ -51,19 +64,22 @@ def coefficientTensorFunctor (K : FlasqueBoundedBelow.Obj X.obj) :
     exact ⟨a, endpointComplex_isStrictlyGE X M K a⟩⟩
   map f := ObjectProperty.homMk
     (((moduleTensorCoefficientMap (nativeLineFunctor.obj X).obj f).mapHomologicalComplex
-      (.up ℤ)).app ((pullbackComplex (nativeProjection.app X).hom).obj K.obj))
+      (.up ℤ)).app ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeProjection.app
+        X).hom).obj K.obj))
   map_id M := by
     apply ObjectProperty.hom_ext
     apply HomologicalComplex.Hom.ext
     funext n
     exact (moduleTensorByLineRight
-      (((pullbackComplex (nativeProjection.app X).hom).obj K.obj).X n)).map_id M
+      (((AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeProjection.app X).hom).obj
+        K.obj).X n)).map_id M
   map_comp f g := by
     apply ObjectProperty.hom_ext
     apply HomologicalComplex.Hom.ext
     funext n
     exact (moduleTensorByLineRight
-      (((pullbackComplex (nativeProjection.app X).hom).obj K.obj).X n)).map_comp f g
+      (((AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeProjection.app X).hom).obj
+        K.obj).X n)).map_comp f g
 
 instance coefficientTensorFunctor_additive (K : FlasqueBoundedBelow.Obj X.obj) :
     (coefficientTensorFunctor X K).Additive where
@@ -73,7 +89,8 @@ instance coefficientTensorFunctor_additive (K : FlasqueBoundedBelow.Obj X.obj) :
     apply HomologicalComplex.Hom.ext
     funext n
     exact Functor.map_add (moduleTensorByLineRight
-      (((pullbackComplex (nativeProjection.app X).hom).obj K.obj).X n))
+      (((AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeProjection.app X).hom).obj
+        K.obj).X n))
 
 /-- The installed derived projection of the original bounded coefficient tensor. -/
 def coefficientDerivedProjection (K : FlasqueBoundedBelow.Obj X.obj) :=
@@ -168,7 +185,7 @@ variable (X : QuasiCompactSchemes.{u})
 def boundedRightTensor : BoundedBelow.Obj (nativeLineFunctor.obj X).obj ⥤
     BoundedBelow.Obj (nativeLineFunctor.obj X).obj :=
   ObjectProperty.lift _ ((BoundedBelow.objects (nativeLineFunctor.obj X).obj).ι ⋙
-    tensorByLineRightComplex (nativeTautologicalLine X)) (fun K => by
+    AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X)) (fun K => by
       obtain ⟨hp, a, ha⟩ := K.property
       let := ha
       exact ⟨P5NativeCoefficients.rightTensor_locallyPerfect X hp, a,
@@ -178,6 +195,9 @@ instance boundedRightTensor_additive : (boundedRightTensor X).Additive := by
   unfold boundedRightTensor
   infer_instance
 
+/-- Right tensor by the native tautological line on bounded-below perfect complexes, bundled with
+preservation of degreewise short exact sequences.
+-/
 def boundedRightTensorExactFunctor : ExactFunctor
     (ExactSubcategory.exactStructure (abelianExactStructure
       (Complex (nativeLineFunctor.obj X).obj)) (BoundedBelow.objects
@@ -188,7 +208,8 @@ def boundedRightTensorExactFunctor : ExactFunctor
   toFunctor := boundedRightTensor X
   map_conflation S hS := by
     change (S.map (BoundedBelow.objects (nativeLineFunctor.obj X).obj).ι).ShortExact at hS
-    exact hS.map_of_exact (tensorByLineRightComplex (nativeTautologicalLine X))
+    exact hS.map_of_exact (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight
+      (nativeTautologicalLine X))
 
 lemma boundedRightTensor_exact : Waldhausen.IsExact
     (BoundedBelow.waldhausen (nativeLineFunctor.obj X).obj).cof
@@ -200,7 +221,8 @@ lemma boundedRightTensor_exact : Waldhausen.IsExact
   weak f hf := by
     change QuasiIso f.hom at hf
     let := hf
-    exact rightLineComplex_quasiIso (nativeTautologicalLine X) f.hom
+    exact AlgebraicGeometry.Scheme.Modules.Complex.tensorRight_quasiIso (nativeTautologicalLine X)
+      f.hom
   pushout hi h := (boundedRightTensorExactFunctor X).map_isPushout hi h
 
 /-- Identity chain maps reconcile only the two membership witnesses for original right tensor. -/
@@ -208,11 +230,14 @@ def rightTensorInclusionIso :
     FlasqueBoundedBelow.inclusion (nativeLineFunctor.obj X).obj ⋙ boundedRightTensor X ≅
       P5NativeCoefficients.rightTensor X :=
   NatIso.ofComponents (fun K => ObjectProperty.isoMk _
-    (Iso.refl ((tensorByLineRightComplex (nativeTautologicalLine X)).obj K.obj))) (by
+    (Iso.refl ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X)).obj
+      K.obj))) (by
       intro K L f
       apply ObjectProperty.hom_ext
-      change (tensorByLineRightComplex (nativeTautologicalLine X)).map f.hom ≫ 𝟙 _ =
-        𝟙 _ ≫ (tensorByLineRightComplex (nativeTautologicalLine X)).map f.hom
+      change (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X)).map
+        f.hom ≫ 𝟙 _ =
+        𝟙 _ ≫ (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X)).map
+          f.hom
       simp)
 
 /-- The original right tensor and two-line associator identify the actual Euler square endpoint. -/
@@ -285,6 +310,9 @@ def rightProjectedShiftIso : P5NativeCoefficients.rightTensor X ⋙ projectedShi
     (FlasqueBoundedBelow.total (nativeLineFunctor.obj X).obj)
     (P5NativeCoefficients.G0 X ⋙ modelShift X.obj 1)).symm
 
+/-- The associativity identification of right tensor followed by shifted projection with `G1`, after
+the totalized negative column.
+-/
 def negativeRightProjectedIso :
     (secondTotal X ⋙ P5NativeCoefficients.rightTensor X) ⋙ projectedShift X ≅
       secondTotal X ⋙ P5NativeCoefficients.G1 X :=
@@ -296,6 +324,9 @@ def EulerShiftProjectionIso : P5NativeEuler.E2Shift X ≅
       (P5NativeEuler.squareEndpoint_locallyPerfect X) ⋙ projectedShift X :=
   Functor.associator _ _ _ ≪≫ Functor.isoWhiskerLeft _ (Functor.associator _ _ _)
 
+/-- The negative column followed by right tensor, Godement totalization, pushforward, and shift by
+one.
+-/
 def rawRightProjected := (P5NativePhi.second X ⋙ boundedRightTensor X) ⋙ projectedShift X
 
 lemma rawRightProjected_exact : Waldhausen.IsExact
@@ -304,6 +335,9 @@ lemma rawRightProjected_exact : Waldhausen.IsExact
     (rawRightProjected X) :=
   ((P5NativePhi.second_exact X).comp (boundedRightTensor_exact X)).comp (projectedShift_exact X)
 
+/-- The totalized negative column followed by right tensor, Godement totalization, pushforward, and
+shift by one.
+-/
 def totalRightProjected :=
   (secondTotal X ⋙ P5NativeCoefficients.rightTensor X) ⋙ projectedShift X
 

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassKZeroComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientPolynomialLaurentTransport
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassBottomComparison
@@ -21,11 +22,14 @@ assembled induction are outside this interface. No seed invertibility, transitio
 stability, telescope identification or classical TT identification is asserted.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} (P : Over (Spec R)) [CompactSpace P.left]

@@ -9,8 +9,6 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GlobalUnit
 
 /-! Original global scalar multiplication commutes with geometric sheaf pullback. -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

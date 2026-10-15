@@ -9,7 +9,7 @@ module
 public import Quillen.Waldhausen.Complexes
 public import Quillen.Waldhausen.ExactCategory
 public import Quillen.Waldhausen.Functor
-public import Quillen.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.CategoryTheory.ExactCategory.Subcategory
 
 /-!

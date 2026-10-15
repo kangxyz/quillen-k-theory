@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalOpenBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalPullback
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.PullbackSquare
@@ -19,8 +20,13 @@ kernel presentation, retaining both original trivializations and inclusion.
 -/
 @[expose] public section
 
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
+
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
 
 noncomputable section
@@ -28,7 +34,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open AlgebraicGeometry.Scheme.Modules Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.Modules
   AlgebraicGeometry.Scheme.Modules.Coherent
 attribute [local instance] Abelian.hasFiniteBiproducts
 

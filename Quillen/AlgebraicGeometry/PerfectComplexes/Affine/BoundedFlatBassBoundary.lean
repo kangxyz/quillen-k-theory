@@ -5,13 +5,20 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassPasting
 
 /-! The genuine coefficient Bass boundary, with original maps and prescribed associations. -/
 @[expose] public section
+
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 variable {R S : CommRingCat.{u}} (f : R ⟶ S)

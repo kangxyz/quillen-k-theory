@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.PolynomialLaurent
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Relative
 public import Quillen.KTheory.Bass.TwoChart
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPullbackFunctor
 public import Quillen.Waldhausen.Additivity.GroupFormula

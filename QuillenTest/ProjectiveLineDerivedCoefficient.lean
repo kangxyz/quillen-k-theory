@@ -14,10 +14,13 @@ the original connecting arrow, the explicit cone shift and the actual model map.
 The nonreduced and zero-ring cases require only finite local freeness.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.ProjectiveLine
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry HomologicalComplex
 open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.ProjectiveLine
 open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace QuillenTest.ProjectiveLineDerivedCoefficient

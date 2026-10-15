@@ -12,6 +12,9 @@ public import Quillen.Topology.DoubleMappingCylinder.WeakCartesian
 retain their actual source points and constant paths, including degree zero. -/
 @[expose] public section
 
+open Quillen.DoubleCylinder
+
+
 
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory Quillen

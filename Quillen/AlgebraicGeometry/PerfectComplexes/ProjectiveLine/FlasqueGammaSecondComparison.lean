@@ -5,12 +5,19 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Carrier
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGammaCarrierComparisons
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGammaSecondSpan
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasquePositiveSourceAssociation
 
 /-! # Actual Gamma-second positivity through the original left-pair contraction -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTensorAdditivity
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -26,10 +33,13 @@ open FlasqueTensorAdditivity
 def leftQTotalGamma (R : CommRingCat.{u}) :=
   (SecondEndpoint.quotientLeftBounded R ⋙ FlasqueBoundedBelow.total (twoChartLine R)) ⋙ Gamma R
 
+/-- The natural identification of the underlying quotient-line twist with left tensor by the
+tautological quotient line.
+-/
 def quotientLeftCarrierIso (R : CommRingCat.{u}) :
     SecondEndpoint.quotientLeftBounded R ⋙ (BoundedBelow.objects (twoChartLine R)).ι ≅
       (BoundedBelow.objects (twoChartLine R)).ι ⋙
-        tensorByLineComplex (tautologicalQuotientLine R) := by
+        AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalQuotientLine R) := by
   unfold SecondEndpoint.quotientLeftBounded
   exact ObjectProperty.liftCompιIso _ _ _
 
@@ -40,7 +50,8 @@ def boundedTotalUnderlyingIso (R : CommRingCat.{u}) :
       (boundedToPlus (twoChartLine R) ⋙ godementTotalPlus (twoChartLine R)) ⋙
         CochainComplex.Plus.ι (twoChartLine R).Modules :=
   totalCarrierIso (twoChartLine R) ≪≫
-    (plusTotalCarrierIso (twoChartLine R) (boundedToPlus (twoChartLine R))
+    (AlgebraicGeometry.Scheme.Modules.Godement.compTotalPlusCarrierIso (twoChartLine R)
+      (boundedToPlus (twoChartLine R))
       (BoundedBelow.objects (twoChartLine R)).ι (boundedToPlusCarrierIso (twoChartLine R))).symm
 
 /-- The actual Gamma-left-Q target aligned through the original proof-forgetting carriers. -/
@@ -50,8 +61,10 @@ def leftQTotalGammaUnderlyingIso (R : CommRingCat.{u}) :
         CochainComplex.Plus.ι (twoChartLine R).Modules :=
   actualResolvedCarrierIso R (SecondEndpoint.quotientLeftBounded R)
     (BoundedBelow.objects (twoChartLine R)).ι
-    (tensorByLineComplex (tautologicalQuotientLine R)) (quotientLeftCarrierIso R) ≪≫
-    (precomposedResolvedCarrierIso (twoChartLine R) (boundedToPlus (twoChartLine R))
+    (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalQuotientLine R))
+      (quotientLeftCarrierIso R) ≪≫
+    (AlgebraicGeometry.Scheme.Modules.Godement.precompResolvedContractionCompιIso (twoChartLine R)
+      (boundedToPlus (twoChartLine R))
       (BoundedBelow.objects (twoChartLine R)).ι (boundedToPlusCarrierIso (twoChartLine R))
       (moduleTensorLeftFunctor (twoChartLine R) (tautologicalQuotientLine R))
       (tautologicalLine R)).symm

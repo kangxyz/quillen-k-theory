@@ -25,12 +25,15 @@ suffices for image equals kernel. Quasi-separatedness is used only to combine
 these facts with the separate global injectivity of r.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
-open Quillen.Waldhausen Quillen.Waldhausen.AlgebraicGrothendieck
-open AlgebraicGeometry.Scheme.CoefficientBaseChange
+open Quillen.Waldhausen.AlgebraicGrothendieck
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u
 namespace Quillen.PerfectComplexes
 

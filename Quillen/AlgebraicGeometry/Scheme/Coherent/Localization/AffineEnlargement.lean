@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.AffineExtension
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.Gluing
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.GluingQuasicoherent
@@ -21,7 +23,6 @@ The ambient quasicoherent sheaf remains on the original scheme throughout.
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section
@@ -72,7 +73,8 @@ theorem affineLocallyFiniteType_affine_enlargement
   let p := pullback.fst W.ι a
   let q := pullback.snd W.ι a
   let A : FiniteTypeSheaves W.toScheme := ⟨N.restrict W.ι, hW⟩
-  let Ap : FiniteTypeSheaves (pullback W.ι a) := (finiteTypeSheavesRestriction p).obj A
+  let Ap : FiniteTypeSheaves (CategoryTheory.Limits.pullback W.ι a) := (finiteTypeSheavesRestriction
+    p).obj A
   let E := overlapRestrictIso W.ι a
   let i : Ap.obj ⟶ (N.restrict a).restrict q := (E.app N).hom
   have : Mono i := by dsimp only [i]; infer_instance

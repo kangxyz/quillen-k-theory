@@ -18,17 +18,22 @@ universe u
 namespace Quillen.PerfectComplexes.BassH1Support
 open Quillen.SimplexGrid
 
+/-- The initial vertices of the four square-path edges, ordered as `0, 1, 0, 3`. -/
 def edgeStart : Fin 4 → Fin 5 := ![0, 1, 0, 3]
+/-- The terminal vertices of the four square-path edges, ordered as `1, 2, 3, 4`. -/
 def edgeEnd : Fin 4 → Fin 5 := ![1, 2, 3, 4]
 
+/-- The simplex map selecting the initial and terminal vertices of square-path edge `i`. -/
 def edgeFace (i : Fin 4) : ⦋1⦌ ⟶ ⦋4⦌ :=
   SimplexCategory.Hom.mk ⟨![edgeStart i, edgeEnd i],
     (by decide : ∀ i : Fin 4, Monotone (![edgeStart i, edgeEnd i] : Fin 2 → Fin 5)) i⟩
 
+/-- The four grid vertices of the product of edges `i` and `j`, in lexicographic order. -/
 def edgePairIndex (i j : Fin 4) : Fin 4 → Fin 25 :=
   ![index 4 4 (edgeStart i, edgeStart j), index 4 4 (edgeStart i, edgeEnd j),
     index 4 4 (edgeEnd i, edgeStart j), index 4 4 (edgeEnd i, edgeEnd j)]
 
+/-- The simplex map selecting the four grid vertices of the product of edges `i` and `j`. -/
 def edgePairFace (i j : Fin 4) : ⦋3⦌ ⟶ ⦋24⦌ :=
   SimplexCategory.Hom.mk ⟨edgePairIndex i j,
     (by decide : ∀ i j : Fin 4, Monotone (edgePairIndex i j)) i j⟩

@@ -19,13 +19,16 @@ exactly through target good truncation. No global strict model is asserted.
 -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.CochainComplex AlgebraicGeometry.Scheme.Modules
+open AlgebraicGeometry.Scheme.Modules
 namespace Quillen.PerfectComplexes
 
 /-- Cohomologically bounded-above locally perfect complexes admit genuine

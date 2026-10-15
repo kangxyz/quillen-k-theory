@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.Localization
 
 /-!
@@ -15,6 +16,9 @@ This file proves exactness for the algebraic group presented by objects and
 short exact sequences. It does not identify this group with homotopical K₀.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

@@ -9,9 +9,12 @@ public import Quillen.Waldhausen.Fibration.CofiberPrismFiber
 
 /-! # Actual cofiber-prism faces and reversed quotient-fiber consumers -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Convexity unitInterval
-open Quillen.Waldhausen Quillen.Waldhausen.QuotientRows Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.QuotientRows Quillen.Waldhausen.Fibration
 open scoped Simplicial Topology
 universe u v
 namespace QuillenTest.CofiberPrismComposition

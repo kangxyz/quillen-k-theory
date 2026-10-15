@@ -6,6 +6,11 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Category.ModuleCat.IdealClosedSupport
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralPullback
 public import Quillen.Devissage.ReflectorFiltration
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.IdealPowerFiltration
@@ -19,10 +24,12 @@ annihilated objects, rather than all sheaves with the same closed support.
 -/
 @[expose] public section
 
+open ModuleCat.FiniteLocalization.IdealClosedSupport
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section
@@ -80,21 +87,39 @@ actual quotient presentation of the closed immersion. -/
 theorem coherentPushforward_essImage_iff (I : Ideal R)
     (e : Z ≅ Spec (Ideal.closedRing R I)) (hi : i = e.hom ≫ Ideal.closedMap R I)
     (M : FiniteTypeSheaves (Spec R)) :
-    (coherentPushforward i).essImage M ↔ Ideal.finiteTypeSheavesKilledBy R I M := by
+    (finiteTypePushforward i).essImage M ↔ Ideal.finiteTypeSheavesKilledBy R I M := by
+  let ER := finiteTypeSheavesSpecModuleEquivalence R
+  let ES := finiteTypeSheavesSpecModuleEquivalence (Ideal.closedRing R I)
+  let F := coherentIsoEquivalence e
+  let q : R ⟶ Ideal.closedRing R I := CommRingCat.ofHom (Ideal.Quotient.mk I)
+  have hq : q.hom.Finite := by
+    apply (AlgebraicGeometry.IsFinite.SpecMap_iff q).mp
+    change AlgebraicGeometry.IsFinite (Ideal.closedMap R I)
+    infer_instance
+  let c : finiteTypePushforward i ≅
+      F.functor ⋙ finiteTypePushforward (Ideal.closedMap R I) :=
+    finiteTypePushforwardAffinePresentationComparison R (Ideal.closedRing R I) i q hq e hi
+  let sq : finiteTypePushforward (Ideal.closedMap R I) ⋙ ER.functor ≅
+      ES.functor ⋙ closedRestriction I :=
+    finiteTypePushforwardSpecSquare q hq
+  change (finiteTypePushforward i).essImage M ↔ killedBy I (ER.functor.obj M)
   constructor
   · rintro ⟨N, ⟨f⟩⟩
-    exact (Ideal.finiteTypeSheavesKilledBy R I).prop_of_iso
-      (((affinePresentationComparison R i I e hi).app N).symm ≪≫ f)
-        (Ideal.coherentPushforward_killed R I _)
+    exact (killedBy I).prop_of_iso
+      ((sq.app (F.functor.obj N)).symm ≪≫
+        ER.functor.mapIso ((c.app N).symm ≪≫ f))
+      (closedRestriction_killed I _)
   · intro hM
-    let Q : (Ideal.finiteTypeSheavesKilledBy R I).FullSubcategory := ⟨M, hM⟩
-    let N := (Ideal.coherentClosedEquivalence R I).inverse.obj Q
-    let F := coherentIsoEquivalence e
-    refine ⟨F.inverse.obj N, ⟨?_⟩⟩
-    exact (affinePresentationComparison R i I e hi).app (F.inverse.obj N) ≪≫
-      (Ideal.coherentPushforward R I).mapIso (F.counitIso.app N) ≪≫
-      (Ideal.finiteTypeSheavesKilledBy R I).ι.mapIso
-        ((Ideal.coherentClosedEquivalence R I).counitIso.app Q)
+    let Q : (killedBy I).FullSubcategory := ⟨ER.functor.obj M, hM⟩
+    let P := (closedEquivalence I).inverse.obj Q
+    let L := ES.inverse.obj P
+    refine ⟨F.inverse.obj L, ⟨?_⟩⟩
+    exact c.app (F.inverse.obj L) ≪≫
+      (finiteTypePushforward (Ideal.closedMap R I)).mapIso (F.counitIso.app L) ≪≫
+      ER.fullyFaithfulFunctor.preimageIso
+        (sq.app L ≪≫
+          (closedRestriction I).mapIso (ES.counitIso.app P) ≪≫
+          (killedBy I).ι.mapIso ((closedEquivalence I).counitIso.app Q))
 
 /-- The actual affine closed essential image is closed under quotients. -/
 instance coherentPushforward_affine_essImage_quotients :

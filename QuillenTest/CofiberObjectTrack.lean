@@ -9,10 +9,13 @@ public import Quillen.Waldhausen.GrothendieckComparison.CofiberObjectTrack
 
 /-! # Original cofiber-simplex and full object-loop track consumers -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial Topology
 universe u v
 namespace QuillenTest.CofiberObjectTrack

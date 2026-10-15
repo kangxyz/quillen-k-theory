@@ -19,8 +19,10 @@ retained. No discrete summand topology or homotopy inverse is imposed.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 open scoped Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false

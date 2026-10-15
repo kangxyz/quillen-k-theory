@@ -20,6 +20,10 @@ All exactness and acyclicity witnesses are proved for those original functors.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.Fibration.RelativeRows
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

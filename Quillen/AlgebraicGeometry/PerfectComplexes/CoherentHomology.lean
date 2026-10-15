@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Homology
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Homology
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 
 /-!

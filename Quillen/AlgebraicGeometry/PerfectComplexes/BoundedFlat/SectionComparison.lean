@@ -17,9 +17,12 @@ universe comparison. Its exact functors produce the genuine original all-degree 
 The prespectrum comparison is the original zero-preserving model map of this same functor.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
 

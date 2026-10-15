@@ -24,9 +24,11 @@ than global instances, so clients explicitly choose the universe lift.
 
 @[expose] public section
 
+open Topology
+
 noncomputable section
 
-open Set Metric Topology
+open Set Metric
 
 universe u v w
 

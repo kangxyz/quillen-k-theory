@@ -5,11 +5,12 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.PolynomialLaurent
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Relative
+public import Aglib.AlgebraicGeometry.Products.IntegerBase
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.BaseChangeGluing
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.ChartAffineness
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Tautological
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Pullback
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Pullback
 public import Mathlib.AlgebraicGeometry.PullbackCarrier
 
 /-! # The original projective line over an arbitrary quasi-compact scheme
@@ -29,7 +30,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
-open AlgebraicGeometry.Scheme.Bass
+open AlgebraicGeometry.Scheme.Products
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
 open AlgebraicGeometry.Scheme.Modules
 
 instance integerProjection_quasiCompact : QuasiCompact (projection integerRing.{u}) := by
@@ -81,25 +83,30 @@ instance nativeLine_quasiSeparated (X : QuasiCompactSchemes.{u}) [QuasiSeparated
 /-- The positive chart retains the native polynomial structural map. -/
 @[reassoc (attr := simp)]
 theorem nativePlus_projection (X : QuasiCompactSchemes.{u}) :
-    nativePlus.app X ≫ nativeProjection.app X = polynomialProjection.app X := by
+    nativePlus.app X ≫ nativeProjection.app X =
+      PolynomialLaurent.Relative.polynomialProjection.app X := by
   apply ObjectProperty.hom_ext
   exact baseProductTransformation_projection _ _ _ (plusChart_projection integerRing) X.obj
 
 /-- The negative chart retains the native polynomial structural map. -/
 @[reassoc (attr := simp)]
 theorem nativeMinus_projection (X : QuasiCompactSchemes.{u}) :
-    nativeMinus.app X ≫ nativeProjection.app X = polynomialProjection.app X := by
+    nativeMinus.app X ≫ nativeProjection.app X =
+      PolynomialLaurent.Relative.polynomialProjection.app X := by
   apply ObjectProperty.hom_ext
   exact baseProductTransformation_projection _ _ _ (minusChart_projection integerRing) X.obj
 
 /-- The overlap equation uses the original forward and inverse Laurent maps. -/
 theorem native_overlap (X : QuasiCompactSchemes.{u}) :
-    Bass.plus.app X ≫ nativePlus.app X = Bass.minus.app X ≫ nativeMinus.app X := by
+    PolynomialLaurent.Relative.plus.app X ≫ nativePlus.app X =
+      PolynomialLaurent.Relative.minus.app X ≫ nativeMinus.app X := by
   apply ObjectProperty.hom_ext
   apply pullback.hom_ext
-  · simp [Bass.plus, Bass.minus, nativePlus, nativeMinus,
+  · simp [PolynomialLaurent.Relative.plus, PolynomialLaurent.Relative.minus,
+      nativePlus, nativeMinus,
       qcBaseProductTransformation, baseProductTransformation]
-  · simp [Bass.plus, Bass.minus, nativePlus, nativeMinus,
+  · simp [PolynomialLaurent.Relative.plus, PolynomialLaurent.Relative.minus,
+      nativePlus, nativeMinus,
       qcBaseProductTransformation, baseProductTransformation, pullback.map,
       Category.assoc, overlap_equation]
 

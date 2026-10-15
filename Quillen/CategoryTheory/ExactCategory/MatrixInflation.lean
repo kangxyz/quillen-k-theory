@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.CategoryTheory.ExactCategory.MatrixDeflation
+public import Aglib.CategoryTheory.ExactCategory.MatrixDeflation
 
 /-! # Admissible monomorphisms with an extra matrix entry
 
@@ -24,7 +24,6 @@ universe v u
 attribute [local instance] hasBinaryBiproducts_of_finite_biproducts
 
 namespace CategoryTheory.ExactCategory.ExactStructure
-open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 
 /-- Adding an unchanged summand is a genuine cobase change. -/

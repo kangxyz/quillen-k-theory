@@ -17,6 +17,9 @@ is definitionally the pair of the original canonical Waldhausen K-maps.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.ExtensionCategory
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

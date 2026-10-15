@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.InjectivePushforwardAdjunction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenPushforwardCounit
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineInjectiveResolution
@@ -23,6 +24,9 @@ They do not assert exactness of ordinary direct image on arbitrary sheaf
 complexes or a module model for an arbitrary non-quasicoherent target.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

@@ -9,6 +9,9 @@ public import Quillen.Topology.PlusConstruction.RealizationComparisonUniqueness
 
 /-! # Fresh actual descent, self-fold and ordinary uniqueness regressions -/
 @[expose] public section
+
+open Quillen.DoubleCylinder
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory
 open scoped Simplicial Topology unitInterval

@@ -17,6 +17,9 @@ into avoidance when the required coordinate count exceeds the face dimension.
 
 @[expose] public section
 
+open Quillen.CubicalSubdivision
+
+
 noncomputable section
 
 open scoped Topology unitInterval

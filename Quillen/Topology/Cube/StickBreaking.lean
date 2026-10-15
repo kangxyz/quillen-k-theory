@@ -19,10 +19,12 @@ without assigning an orientation to an existentially chosen homeomorphism.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open Convexity Topology
+open Convexity
 open scoped BigOperators Topology unitInterval
 
 namespace Quillen.Cube

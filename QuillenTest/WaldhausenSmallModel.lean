@@ -11,8 +11,11 @@ public import Quillen.Waldhausen.SmallModel.Joint
 /-! # Two-universe original-model regression consumers -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
-open CategoryTheory Limits Quillen Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open CategoryTheory Limits Quillen Quillen.Waldhausen.Fibration
 open scoped Simplicial Topology
 universe u v
 set_option backward.isDefEq.respectTransparency false

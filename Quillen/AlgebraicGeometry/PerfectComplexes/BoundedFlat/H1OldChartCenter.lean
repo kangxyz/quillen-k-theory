@@ -4,16 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.OldChartMiddleNormal
 
 /-! Full original first-component/chart centers in their actual shared reference. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH1References
+open Quillen.PerfectComplexes.BassReferenceMerge
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH1Join
@@ -24,6 +32,10 @@ variable (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
   (ha : coefficientMap P (α.app a) ≫ polynomialProjection P a = laurentProjection P a)
   (hc : coefficientMap P (α.app c) ≫ polynomialProjection P c = laurentProjection P c)
 
+/--
+The first-component outer chart center, normalized at the polynomial projection and postcomposed
+by the Laurent map along `v`.
+-/
 def firstOuterCenter : BassOverlap.Node P u v :=
   postReferenceNode (BassOverlap.commonReference P u v) (BassH1Components.laurentMap P v)
     (firstIso P u v)
@@ -34,6 +46,10 @@ def firstOuterCenter : BassOverlap.Node P u v :=
         (coefficientMap P (α.app b) ≫ coefficientMap P ((polynomialUnderFunctor R).map u))
         (polynomialProjection P a)⟩ : BassH0Diagram.Node P u)
 
+/--
+The old outer chart center, normalized at the Laurent map along `v` and precomposed by the
+projection at `a`.
+-/
 def oldOuterCenter : BassOverlap.Node P u v :=
   BassH0Merge.preReferenceNode (BassOverlap.commonReference P u v)
     (BassOverlap.projectionMap P (a := a)) (BassOverlap.commonToChartReference P u v α hc)

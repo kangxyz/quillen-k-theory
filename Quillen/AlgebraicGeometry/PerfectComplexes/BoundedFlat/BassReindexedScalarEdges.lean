@@ -50,12 +50,16 @@ theorem two_binary_congr {k : ℕ} {i j m n p i' j' m' n' p' : Fin (k + 1)}
   subst p'
   rfl
 
+/-- The positive chart parameter relabeled by `oldIndex` into the 63 scalar slots. -/
 def plusParameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 63)) :=
   ⟨fun z ↦ StdSimplex.map oldIndex (BassReferenceMerge.plusParameter z), by fun_prop⟩
+/-- The inverse-coordinate chart parameter relabeled by `oldIndex` into the 63 scalar slots. -/
 def minusParameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 63)) :=
   ⟨fun z ↦ StdSimplex.map oldIndex (BassReferenceMerge.minusParameter z), by fun_prop⟩
+/-- The bottom grid parameter relabeled by `oldIndex` into the 63 scalar slots. -/
 def bottomParameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 63)) :=
   ⟨fun z ↦ StdSimplex.map oldIndex (BassReferenceMerge.bottomParameter.{u} z), by fun_prop⟩
+/-- The H0 parameter relabeled by `h0Index` into the 63 scalar slots. -/
 def h0Parameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 63)) :=
   ⟨fun z ↦ StdSimplex.map h0Index (BassH0Diagram.parameter z), by fun_prop⟩
 

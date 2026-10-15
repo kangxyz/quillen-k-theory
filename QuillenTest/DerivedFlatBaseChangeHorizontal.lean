@@ -17,7 +17,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicGeometry.Sc
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace QuillenTest.DerivedFlatBaseChangeHorizontal
 
-open Quillen
 /-- The actual standard ambient module-sheaf derived categories. -/
 local instance standard (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _

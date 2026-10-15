@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.RelativeRows.ChainReplacement
 public import Quillen.Waldhausen.Fibration.Rows.ComplexFactorization
 public import Quillen.Waldhausen.SplitComplexes.Approximation
@@ -18,6 +19,9 @@ Every projection component is a genuine quasi-isomorphism. Cone and shift
 closure are precisely the hypotheses of that proved joint-cylinder input.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CochainComplex

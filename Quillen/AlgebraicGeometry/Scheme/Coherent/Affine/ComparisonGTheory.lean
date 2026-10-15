@@ -6,7 +6,14 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Comparison
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Exact
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeCategory
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.SmallModel.Abelian
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Comparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.GTheory
 
 /-!
@@ -23,10 +30,13 @@ upper universe. No cross-universe realization comparison is asserted here.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+open CategoryTheory.ExactCategory
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.GlobalComparison
 public import Quillen.Waldhausen.GilletWaldhausen.FibrationQuotient
 public import Quillen.Waldhausen.Fibration.ComplexExtension
@@ -20,6 +21,9 @@ extensions and kernels. Smallness is explicit; this module does not infer
 cross-universe or scheme comparison from a chosen small presentation.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen.Fibration
+
 
 open CategoryTheory.ExactCategory
 

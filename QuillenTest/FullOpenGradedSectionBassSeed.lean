@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassSeedChangeWeak
 
 /-!
@@ -15,9 +16,14 @@ forward-T action and inherited cone null at independent times, and the original 
 holds on the specified identity algebra without identifying independently chosen open fibers.
 -/
 @[expose] public section
-noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+
 open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
+noncomputable section
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.FullOpenGradedSectionBassSeed
 

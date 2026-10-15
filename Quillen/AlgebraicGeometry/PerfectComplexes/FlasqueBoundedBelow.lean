@@ -5,10 +5,12 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedBelowComparison
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlasqueExtensions
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementTotalExact
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementTotalQuasiIso
+public import Aglib.AlgebraicGeometry.Cohomology.Flasque.Extensions
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Exactness
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.QuasiIso
 
 /-!
 # The original lower-bounded flasque perfect model
@@ -28,6 +30,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open AlgebraicGeometry.Scheme.Modules
+open AlgebraicGeometry.Scheme.Modules.Godement
 open scoped ZeroObject
 attribute [local instance] Abelian.hasFiniteBiproducts
 

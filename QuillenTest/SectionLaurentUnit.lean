@@ -12,8 +12,12 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionZero
 Actual section transitions, arbitrary Laurent coefficient images and the original chosen zero.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.PolynomialLaurent
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry
   AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace QuillenTest.SectionLaurentUnit

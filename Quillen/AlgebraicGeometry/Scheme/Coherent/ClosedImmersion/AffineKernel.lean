@@ -6,6 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.AffineReflection
 
 /-!
@@ -18,10 +21,12 @@ the geometric unit by an unrelated quotient map.
 -/
 @[expose] public section
 
+open Quillen.FiniteModuleLocalization.IdealClosedSupport
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section
@@ -43,12 +48,12 @@ omit [IsNoetherianRing R] in
 /-- Maps into the actual closed essential image factor through the genuine
 closed pullback unit, by its adjunction. -/
 theorem factor_through_unit (M : FiniteTypeSheaves (Spec R)) {Q : FiniteTypeSheaves (Spec R)}
-    (hQ : (coherentPushforward i).essImage Q) (p : M ⟶ Q) :
-    ∃ q : (coherentPushforward i).obj ((coherentPullback i).obj M) ⟶ Q,
+    (hQ : (finiteTypePushforward i).essImage Q) (p : M ⟶ Q) :
+    ∃ q : (finiteTypePushforward i).obj ((coherentPullback i).obj M) ⟶ Q,
       (coherentAdjunction i).unit.app M ≫ q = p := by
   obtain ⟨N, ⟨d⟩⟩ := hQ
   let f := ((coherentAdjunction i).homEquiv M N).symm (p ≫ d.inv)
-  refine ⟨(coherentPushforward i).map f ≫ d.hom, ?_⟩
+  refine ⟨(finiteTypePushforward i).map f ≫ d.hom, ?_⟩
   rw [← Category.assoc]
   change ((coherentAdjunction i).homEquiv M N f) ≫ d.hom = p
   rw [Equiv.apply_symm_apply]

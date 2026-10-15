@@ -16,6 +16,9 @@ abelian-group-valued ring functor. Flat maps retain the original exact flat-pull
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -23,7 +26,6 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
 universe u
 namespace Quillen.Bass
-open Quillen.PerfectComplexes
 
 /-- Only commutativity is added: all original perfect K0 group operations are retained. -/
 local instance affineKZeroCommGroup (R : CommRingCat.{u}) : CommGroup (PerfectK (Spec R) 0) :=

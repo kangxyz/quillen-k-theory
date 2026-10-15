@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.Square
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionBassTelescopeOpenNull
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionBassOpenBoundary
 public import Quillen.Topology.Prespectrum.TelescopeConeDescentStable
@@ -19,8 +21,11 @@ Finite original excision also supplies the original signed telescope boundary. N
 telescope connectivity, seed stabilization or replacement by the full-open endpoint is assumed.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes

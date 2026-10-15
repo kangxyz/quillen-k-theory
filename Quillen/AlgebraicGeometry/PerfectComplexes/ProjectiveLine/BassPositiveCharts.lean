@@ -17,17 +17,18 @@ legs. Actual polynomial evaluation retracts the coefficient map on the
 original perfect K-groups, in every natural degree and over every base ring.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Products
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
+
+
+open AlgebraicGeometry.Scheme.PolynomialLaurent
+
 open Quillen
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.PerfectComplexes.ProjectiveLine.BassPositive
-export AlgebraicGeometry.Scheme.PolynomialLaurent
-  (polynomialZeroSection polynomialZeroSection_projection)
-end Quillen.PerfectComplexes.ProjectiveLine.BassPositive
-
-end
 
 
 
@@ -38,7 +39,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.BassPositive
-open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine AlgebraicGeometry.Scheme.Bass
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
 open FlasqueTwoSummands
 
 variable (R : CommRingCat.{u})
@@ -175,10 +176,11 @@ theorem polynomialCoefficientKMap_injective (n : ℕ) :
 /-- The canonical affine chart comparison retains literal polynomial coefficient pullback. -/
 theorem polynomialCoefficientKMap_transport (n : ℕ) :
     (perfectKRestrict (polynomialSpecIso R).hom n).comp
-        (perfectKFlatPullback (polynomialProjection.app (affineBase R)).hom n) =
+        (perfectKFlatPullback (PolynomialLaurent.Relative.polynomialProjection.app (affineBase
+          R)).hom n) =
       polynomialCoefficientKMap R n := by
   have hgeom : (polynomialSpecIso R).hom ≫
-      (polynomialProjection.app (affineBase R)).hom =
+      (PolynomialLaurent.Relative.polynomialProjection.app (affineBase R)).hom =
       PolynomialLaurent.polynomialProjection R := polynomialSpecIso_hom_fst R
   rw [← perfectKFlatPullback_eq_restrict (polynomialSpecIso R).hom n,
     ← perfectKFlatPullback_comp]
@@ -196,8 +198,10 @@ theorem affineNativeChart_Phi (b : Bool) (n : ℕ) (a c : PerfectK (Spec R) n) :
   rw [hcomp, MonoidHom.comp_apply]
   calc
     _ = perfectKRestrict (polynomialSpecIso R).hom n
-        (perfectKFlatPullback (polynomialProjection.app (affineBase R)).hom n a *
-          perfectKFlatPullback (polynomialProjection.app (affineBase R)).hom n c) :=
+        (perfectKFlatPullback (PolynomialLaurent.Relative.polynomialProjection.app (affineBase
+          R)).hom n a *
+          perfectKFlatPullback (PolynomialLaurent.Relative.polynomialProjection.app (affineBase
+            R)).hom n c) :=
       congrArg (perfectKRestrict (polynomialSpecIso R).hom n)
         (nativeTwoSummandKMap_chart (affineBase R) b n a c)
     _ = polynomialCoefficientKMap R n a * polynomialCoefficientKMap R n c := by

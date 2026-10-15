@@ -15,7 +15,15 @@ open scoped Simplicial Topology unitInterval
 universe u
 namespace Quillen.PerfectComplexes.BassH1Join
 
+/--
+The five-vertex word for the first half of the old outer chart endpoint, in its reversed binary-
+path order.
+-/
 def outerFirstWordIndex : Fin 5 → Fin 18 := ![5, 7, 17, 6, 13]
+/--
+The five-vertex word for the second half of the old outer chart endpoint, in its original scalar
+path order.
+-/
 def outerProductWordIndex : Fin 5 → Fin 18 := ![9, 12, 13, 10, 11]
 
 /-- The original terminal pause leaves the whole target chart path literally unchanged. -/

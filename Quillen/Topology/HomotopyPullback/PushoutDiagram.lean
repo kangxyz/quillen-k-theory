@@ -13,6 +13,9 @@ public import Quillen.Topology.DoubleMappingCylinder.Collapse
 fixed-target homotopy-cartesian pushout descent. -/
 @[expose] public section
 
+open Quillen.HomotopyPullbackDoubleCylinder
+
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval

@@ -20,6 +20,11 @@ cone descent. Its target is the relative-open coarse section model; the full-ope
 endpoint remains separate. The signed boundary retains the specified original fiber lift.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+open Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.IteratedS
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u

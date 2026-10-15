@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.KTheory.GrothendieckComparison.EdgeCocycle
 public import Quillen.Topology.ClassifyingSpace.CompletionNaturality
 public import Quillen.Topology.ClassifyingSpace.PathPotential
@@ -18,6 +19,9 @@ continuous path between original source vertices.
 -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

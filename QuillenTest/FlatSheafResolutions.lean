@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatCochainResolution
 
 /-! Semantic consumers of actual open-free flat resolutions and arbitrary pullback. -/
@@ -37,7 +38,7 @@ theorem actual_flat_replacement (X : Scheme.{u}) (M : X.Modules) :
 /-- Actual comparison maps between constructed flat replacements survive arbitrary pullback. -/
 theorem pullback_flat_resolution_comparison {X Y : Scheme.{u}} (f : X ⟶ Y)
     (M N : Y.Modules) (s : (flatCochainResolution Y).obj M ⟶ (flatCochainResolution Y).obj N)
-    [QuasiIso s] : QuasiIso ((Quillen.PerfectComplexes.pullbackComplex f).map s) :=
+    [QuasiIso s] : QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map s) :=
   quasiIso_pullback_of_boundedAbove_stalkwiseFlat f
     (flatCochainResolution_term_flat Y M) (flatCochainResolution_term_flat Y N) 0 0
     (flatCochainResolution_isZero_above Y M) (flatCochainResolution_isZero_above Y N) s
@@ -45,7 +46,8 @@ theorem pullback_flat_resolution_comparison {X Y : Scheme.{u}} (f : X ⟶ Y)
 /-- A flat original module needs no flatness assumption on the scheme morphism. -/
 theorem pullback_flat_resolution_augmentation {X Y : Scheme.{u}} (f : X ⟶ Y)
     (M : Y.Modules) (hM : stalkwiseFlat Y M) :
-    QuasiIso ((Quillen.PerfectComplexes.pullbackComplex f).map (flatCochainResolutionπ Y M)) :=
+    QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map (flatCochainResolutionπ Y
+      M)) :=
   quasiIso_pullback_flatCochainResolutionπ f M hM
 
 /-- The flat cover source stays flat under an arbitrary change of scheme. -/

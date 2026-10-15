@@ -5,16 +5,19 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.ExactCategory.MatrixDeflation
-public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.MatrixDeflation
+public import Aglib.CategoryTheory.ExactCategory.Isomorphisms
 
 /-! # Admissible epimorphisms from binary coproducts -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 universe v u
 open CategoryTheory CategoryTheory.Limits
 namespace CategoryTheory.ExactCategory.ExactStructure
-open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 

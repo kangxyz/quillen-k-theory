@@ -11,12 +11,15 @@ public import Quillen.Waldhausen.Cofinality.ImageReflection
 /-! # Cofinality and K-zero naturality consumers -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
 namespace QuillenTest.GradedKZeroNaturality
-open Quillen.Waldhausen Quillen.Waldhausen.Cofinality
+open Quillen.Waldhausen.Cofinality
 
 section Small
 variable {C D : Type u} [SmallCategory C] [SmallCategory D]

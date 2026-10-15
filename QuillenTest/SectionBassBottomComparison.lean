@@ -9,10 +9,13 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassBotto
 
 /-! Consumers of the original finite-stage bottom groups, coefficient maps and Laurent quotient. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits Quillen.LoopPrespectrum Quillen.PerfectComplexes
+open CategoryTheory CategoryTheory.Limits Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.SectionBassBottomComparison
 

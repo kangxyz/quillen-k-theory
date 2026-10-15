@@ -19,6 +19,10 @@ namespace Quillen.PerfectComplexes.BassReferenceMerge
 section Small
 variable {C D E : Type u} [Category.{v} C] [Category.{v} D] [Category.{v} E]
 
+/--
+Transport a natural isomorphism to the `AsSmall` functors by whiskering with `AsSmall.down` and
+`AsSmall.up`.
+-/
 def smallIso {F G : C ⥤ D} (e : F ≅ G) :
     (AsSmall.down ⋙ F ⋙ AsSmall.up) ≅ (AsSmall.down ⋙ G ⋙ AsSmall.up) :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight e AsSmall.up)

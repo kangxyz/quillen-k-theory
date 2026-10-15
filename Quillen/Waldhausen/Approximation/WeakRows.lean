@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.Limits.Shapes.CokernelPushout
 public import Quillen.Waldhausen.Approximation.WeakFlags
 public import Quillen.Waldhausen.QuillenComparison.FlagPresentation
 
@@ -18,6 +19,9 @@ Canonical cokernel completion is defined on the actual weak-map flag
 category, with weak-equivalence preservation proved using Waldhausen gluing.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen.QuillenComparison
+
 
 
 noncomputable section
@@ -95,10 +99,10 @@ theorem quotientNatTrans_weak {A B : Fin (n.len + 1) ⥤ C}
     (α : A ⟶ B) (hα : ∀ i, V.weq (α.app i)) (p : Interval n) :
     V.weq ((quotientNatTrans E hA hB α).app p) := by
   let q := (quotientNatTrans E hA hB α).app p
-  have hP := isPushoutOfZeroCokernel (flagQuotient_zero E hA p)
+  have hP := CategoryTheory.Limits.isPushout_of_isColimit_cokernel (flagQuotient_zero E hA p)
     (flagQuotientIsCokernel E hA p) V.isZero
     (0 : A.obj p.1.1 ⟶ V.zero) (0 : V.zero ⟶ _)
-  have hP' := isPushoutOfZeroCokernel (flagQuotient_zero E hB p)
+  have hP' := CategoryTheory.Limits.isPushout_of_isColimit_cokernel (flagQuotient_zero E hB p)
     (flagQuotientIsCokernel E hB p) V.isZero
     (0 : B.obj p.1.1 ⟶ V.zero) (0 : V.zero ⟶ _)
   exact V.gluing (α.app p.1.1) (α.app p.1.2) (𝟙 V.zero) q

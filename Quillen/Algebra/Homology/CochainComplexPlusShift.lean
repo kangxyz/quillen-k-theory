@@ -4,8 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.Algebra.Homology.CochainComplexPlusNatTrans
-public import Quillen.Algebra.Homology.CochainComplexPlusFunctoriality
+public import Aglib.Algebra.Homology.CochainComplexPlus.NatTrans
+public import Aglib.Algebra.Homology.CochainComplexPlus.Functoriality
 public import Mathlib.Algebra.Homology.HomotopyCategory.ShiftSequence
 
 /-! # Original bounded-below complex maps and quasi-isomorphisms under shifts -/

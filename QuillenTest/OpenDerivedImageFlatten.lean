@@ -19,6 +19,11 @@ statements retain the degree-zero range and inverse inclusion equation.
 
 @[expose] public section
 
+open Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.OpenDerivedImage
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

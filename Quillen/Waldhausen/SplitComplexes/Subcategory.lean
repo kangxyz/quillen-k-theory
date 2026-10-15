@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.Algebra.Homology.CochainComplex.DegreewiseSplitMono
 public import Quillen.Waldhausen.SplitComplexes.Basic
 public import Quillen.Waldhausen.SubcategoryInclusion
 
@@ -20,6 +22,10 @@ The identity comparison to the ambient-monomorphism convention and
 inclusions between such subcategories are actual exact functors.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+open CochainComplex
+
 
 
 noncomputable section
@@ -44,7 +50,7 @@ variable {A : Type u} [Category.{v} A] [Abelian A]
 /-- Inherited cofibrations with termwise splittings. The inherited condition
 requires that the actual quotient belong to the full subcategory. -/
 def splitSubcategoryCofibrations : MorphismProperty P.FullSubcategory :=
-  subcategoryCofibrations P ⊓ degreewiseSplitMono.inverseImage P.ι
+  subcategoryCofibrations P ⊓ CochainComplex.degreewiseSplitMono.inverseImage P.ι
 
 /-- The degreewise split, quasi-isomorphism Waldhausen structure on an actual
 extension-closed full subcategory of complexes. -/

@@ -22,6 +22,9 @@ namespace Quillen.SimplexParameters
 variable {k : ℕ}
   {a b c d : StdSimplex ℝ (Fin (k + 1))}
 
+/-- The homotopy from the constant path at `b` to the reverse of `p` followed by `p`, with endpoints
+fixed.
+-/
 def reverseCancellation (p : Path a b) :
     (Path.refl b).Homotopy (p.symm.trans p) :=
   (Path.Homotopy.reflTransSymm p.symm).cast rfl

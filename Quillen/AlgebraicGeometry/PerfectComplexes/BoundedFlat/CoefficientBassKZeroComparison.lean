@@ -24,7 +24,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Quillen.LoopPrespectrum
-open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.CoefficientBaseChange
+open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u
 namespace Quillen.PerfectComplexes
 

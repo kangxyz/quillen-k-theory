@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
 public import Quillen.Algebra.Homology.BoundedProjectiveHomotopy
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.BoundedFlatReplacement
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.BoundedFlatPullback
@@ -19,8 +21,13 @@ of the flat models, and these remain quasi-isomorphisms after arbitrary pullback
 The forgetful functor to presheaves is never assumed exact.
 -/
 @[expose] public section
+
+open Quillen.CochainComplex
+
+
+open AlgebraicGeometry.Scheme.Modules
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
 
@@ -29,13 +36,12 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.CochainComplex
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Forgetting to the actual module presheaf preserves strict upper support. -/
 def underlyingPresheafBoundedFunctor (X : Scheme.{u}) :
     BoundedAboveComplex X.Modules ⥤
-      BoundedAboveComplex (PresheafOfModules.{u} X.ringCatSheaf.obj) where
+      BoundedAboveComplex (_root_.PresheafOfModules.{u} X.ringCatSheaf.obj) where
   obj K :=
     { obj := ((SheafOfModules.forget X.ringCatSheaf ⋙
         PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)).mapHomologicalComplex
@@ -147,7 +153,7 @@ variable {X Y : Scheme.{u}}
 -/
 theorem pullback_flatModelMap_quasiIso (f : X ⟶ Y) {K L : BoundedAboveComplex Y.Modules}
     (s : K ⟶ L) [QuasiIso s.hom] :
-    QuasiIso ((Quillen.PerfectComplexes.pullbackComplex f).map (flatModelMap s)) := by
+    QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map (flatModelMap s)) := by
   let : QuasiIso (flatModelMap s) := flatModelMap_quasiIso s
   exact quasiIso_pullback_of_boundedAbove_stalkwiseFlat f (flatModel_flat Y K) (flatModel_flat Y L)
     (chosenUpperBound ((underlyingPresheafBoundedFunctor Y).obj K))

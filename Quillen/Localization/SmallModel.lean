@@ -6,7 +6,11 @@ Authors: kangxyz
 
 module
 
-public import Quillen.CategoryTheory.SmallModel.Abelian
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
+public import Aglib.CategoryTheory.SmallModel.Abelian
 public import Mathlib.CategoryTheory.Abelian.SerreClass.Bousfield
 public import Mathlib.CategoryTheory.Localization.Equivalence
 
@@ -20,6 +24,9 @@ functor used by `CategoryTheory.ExactCategory.ExactFunctor.smallModel`, so its c
   retained.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

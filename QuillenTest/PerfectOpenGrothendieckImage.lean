@@ -10,8 +10,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGrothendieckImage
 /-! # Consumers retaining the original relative-open image quotient -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen.AlgebraicGrothendieck
 universe u
 namespace QuillenTest.PerfectOpenGrothendieckImage

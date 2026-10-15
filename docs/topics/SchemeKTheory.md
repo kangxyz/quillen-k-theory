@@ -21,21 +21,21 @@ and the sheaf geometry can be imported through their individual owners:
 
 | Import after `Quillen.AlgebraicGeometry.` | Principal declarations |
 | --- | --- |
-| [`Scheme.KTheory`](../../Quillen/AlgebraicGeometry/Scheme/KTheory.lean), [`Scheme.GTheory`](../../Quillen/AlgebraicGeometry/Scheme/GTheory.lean) | `Quillen.Scheme.K`, `G`, `restrictK`, `restrictG` |
-| [`Scheme.Comparison.KToG`](../../Quillen/AlgebraicGeometry/Scheme/Comparison/KToG.lean) | `Quillen.Scheme.KToG`, `KToG_restrict` |
-| [`Scheme.Pullback`](../../Quillen/AlgebraicGeometry/Scheme/Pullback.lean), [`Scheme.FlatPullback`](../../Quillen/AlgebraicGeometry/Scheme/FlatPullback.lean) | `Quillen.Scheme.pullbackK`, `KFunctor`, `pullbackG`, `GFlatFunctor`, `KToG_pullback` |
-| [`Scheme.Regular`](../../Quillen/AlgebraicGeometry/Scheme/Regular.lean) | `Quillen.Scheme.KToGRegularAffineEquiv`, `KToGRegularEquiv` |
-| [`Scheme.Localization`](../../Quillen/AlgebraicGeometry/Scheme/Localization.lean), [`Scheme.ClosedGTheory`](../../Quillen/AlgebraicGeometry/Scheme/ClosedGTheory.lean) | `Quillen.Scheme.localization_longExact`, `Quillen.Scheme.Closed.supportedGEquiv`, `localization_longExact` |
-| [`Scheme.FinitePushforward`](../../Quillen/AlgebraicGeometry/Scheme/FinitePushforward.lean), [`Scheme.FiniteFlatPushforward`](../../Quillen/AlgebraicGeometry/Scheme/FiniteFlatPushforward.lean) | `Quillen.Scheme.GFinitePushforwardFunctor`, `KFiniteFlatPushforwardFunctor` |
-| [`Scheme.Comparison.KToGFinitePushforward`](../../Quillen/AlgebraicGeometry/Scheme/Comparison/KToGFinitePushforward.lean) | `Quillen.Scheme.KToGFiniteFlatPushforward` |
-| [`Scheme.Sheaf.DerivedPushforwardComposition`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/DerivedPushforwardComposition.lean) | `Quillen.SchemeSheaf.derivedPushforwardPlusCompIso` |
-| [`Scheme.VectorBundle.DerivedProjectionFormula`](../../Quillen/AlgebraicGeometry/Scheme/VectorBundle/DerivedProjectionFormula.lean) | `Quillen.SchemeSheaf.derivedProjectionFormulaIso` |
-| [`Scheme.Sheaf.DerivedFlatBaseChange`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/DerivedFlatBaseChange.lean) | `Quillen.SchemeSheaf.derivedFlatBaseChangeMap` |
-| [`Scheme.ProjectiveLine.DerivedCechTriangle`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DerivedCechTriangle.lean) | `Quillen.Scheme.ProjectiveLine.derivedCechTriangle` |
-| [`Scheme.ProjectiveLine.VectorBundleCech`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/VectorBundleCech.lean) | `Quillen.Scheme.ProjectiveLine.exists_original_vectorBundle_cech_model` |
-| [`Scheme.ProjectiveLine.DerivedCechCone`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DerivedCechCone.lean) | `Quillen.Scheme.ProjectiveLine.derivedCechConeIso` |
-| [`Scheme.ProjectiveLine.DiagonalProjectedTensorTriangle`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DiagonalProjectedTensorTriangle.lean) | `Quillen.Scheme.ProjectiveLine.diagonalCoefficientTensorTriangle` |
-| [`Scheme.ProjectiveLine.DiagonalComplexProjectedTriangle`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DiagonalComplexProjectedTriangle.lean) | `Quillen.Scheme.ProjectiveLine.diagonalDerivedComplexCoefficientTriangleFunctor` |
+| [`Scheme.KTheory`](../../Quillen/AlgebraicGeometry/Scheme/KTheory.lean), [`Scheme.GTheory`](../../Quillen/AlgebraicGeometry/Scheme/GTheory.lean) | `AlgebraicGeometry.Scheme.K`, `G`, `restrictK`, `restrictG` |
+| [`Scheme.Comparison.KToG`](../../Quillen/AlgebraicGeometry/Scheme/Comparison/KToG.lean) | `AlgebraicGeometry.Scheme.KToG`, `KToG_restrict` |
+| [`Scheme.Pullback`](../../Quillen/AlgebraicGeometry/Scheme/Pullback.lean), [`Scheme.FlatPullback`](../../Quillen/AlgebraicGeometry/Scheme/FlatPullback.lean) | `AlgebraicGeometry.Scheme.pullbackK`, `KFunctor`, `pullbackG`, `GFlatFunctor`, `KToG_pullback` |
+| [`Scheme.Regular`](../../Quillen/AlgebraicGeometry/Scheme/Regular.lean) | `AlgebraicGeometry.Scheme.KToGRegularAffineEquiv`, `KToGRegularEquiv` |
+| [`Scheme.Localization`](../../Quillen/AlgebraicGeometry/Scheme/Localization.lean), [`Scheme.ClosedGTheory`](../../Quillen/AlgebraicGeometry/Scheme/ClosedGTheory.lean) | `AlgebraicGeometry.Scheme.localization_longExact`, `AlgebraicGeometry.Scheme.Closed.supportedGEquiv`, `localization_longExact` |
+| [`Scheme.FinitePushforward`](../../Quillen/AlgebraicGeometry/Scheme/FinitePushforward.lean), [`Scheme.FiniteFlatPushforward`](../../Quillen/AlgebraicGeometry/Scheme/FiniteFlatPushforward.lean) | `AlgebraicGeometry.Scheme.GFinitePushforwardFunctor`, `KFiniteFlatPushforwardFunctor` |
+| [`Scheme.Comparison.KToGFinitePushforward`](../../Quillen/AlgebraicGeometry/Scheme/Comparison/KToGFinitePushforward.lean) | `AlgebraicGeometry.Scheme.KToGFiniteFlatPushforward` |
+| [Aglib.AlgebraicGeometry.Cohomology.Functoriality.PushforwardComposition](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/Functoriality/PushforwardComposition.lean) | `AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlusCompIso` |
+| [Aglib.AlgebraicGeometry.Cohomology.ProjectionFormula.Basic](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/ProjectionFormula/Basic.lean) | `AlgebraicGeometry.Scheme.Modules.derivedProjectionFormulaIso` |
+| [Aglib.AlgebraicGeometry.Cohomology.BaseChange.Flat](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/BaseChange/Flat.lean) | `AlgebraicGeometry.Scheme.Modules.derivedFlatBaseChangeMap` |
+| [`Scheme.ProjectiveLine.DerivedCechTriangle`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DerivedCechTriangle.lean) | `AlgebraicGeometry.Scheme.ProjectiveLine.derivedCechTriangle` |
+| [`Scheme.ProjectiveLine.VectorBundleCech`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/VectorBundleCech.lean) | `AlgebraicGeometry.Scheme.ProjectiveLine.exists_original_vectorBundle_cech_model` |
+| [`Scheme.ProjectiveLine.DerivedCechCone`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DerivedCechCone.lean) | `AlgebraicGeometry.Scheme.ProjectiveLine.derivedCechConeIso` |
+| [`Scheme.ProjectiveLine.DiagonalProjectedTensorTriangle`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DiagonalProjectedTensorTriangle.lean) | `AlgebraicGeometry.Scheme.ProjectiveLine.diagonalCoefficientTensorTriangle` |
+| [`Scheme.ProjectiveLine.DiagonalComplexProjectedTriangle`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/DiagonalComplexProjectedTriangle.lean) | `AlgebraicGeometry.Scheme.ProjectiveLine.diagonalDerivedComplexCoefficientTriangleFunctor` |
 
 Unqualified declaration names continue in the preceding displayed namespace.
 Below, geometric module paths abbreviated as `Scheme.…` have prefix
@@ -43,25 +43,25 @@ Below, geometric module paths abbreviated as `Scheme.…` have prefix
 
 ## Sheaf categories, universes, and degrees
 
-For `X : AlgebraicGeometry.Scheme.{u}`, `Quillen.SchemeSheaf.FiniteLocallyFree X`
+For `X : AlgebraicGeometry.Scheme.{u}`, `AlgebraicGeometry.Scheme.Modules.FiniteLocallyFree X`
 is the full category of module sheaves with finite local bases. Its conflations
 are actual sheaf short exact sequences, giving `vectorBundleExactStructure X`.
-`Quillen.Scheme.K X n` is the K-group of its chosen `u + 1` small model.
+`AlgebraicGeometry.Scheme.K X n` is the K-group of its chosen `u + 1` small model.
 This definition is available on every scheme.
 
-`Quillen.CoherentScheme.affineLocallyFiniteType X` tests quasicoherence and
+`AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineLocallyFiniteType X` tests quasicoherence and
 finite type on **every** actual affine open chart. `FiniteTypeSheaves X` is
 defined over every scheme, as is `AffineFiniteType R` over any affine ring.
 On locally noetherian schemes the global category is abelian, with exact
 structure `coherentExactStructure X`; its exact sequences are precisely the
 ambient sheaf short exact sequences. The
-[`finite-presentation comparison`](../../Quillen/AlgebraicGeometry/Scheme/Coherent/FinitePresentation.lean)
+[Aglib.AlgebraicGeometry.Modules.Coherent.FinitePresentation](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Modules/Coherent/FinitePresentation.lean), [Aglib.AlgebraicGeometry.Modules.FinitePresentation.AffineTransport](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Modules/FinitePresentation/AffineTransport.lean), [Aglib.AlgebraicGeometry.Modules.FinitePresentation.Noetherian](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Modules/FinitePresentation/Noetherian.lean)
 proves that these sheaves are locally finitely presented under the same
 noetherian hypothesis. Generic finite-type definitions alone do not install
 these abelian or exact structures.
 
-`Quillen.Scheme.K X n` and `G X n` lie in `Type (u + 1)`, whereas the separately
-named `Quillen.Scheme.Affine.G R n` lies in `Type u` for a noetherian
+`AlgebraicGeometry.Scheme.K X n` and `G X n` lie in `Type (u + 1)`, whereas the separately
+named `AlgebraicGeometry.Scheme.Affine.G R n` lies in `Type u` for a noetherian
 `R : CommRingCat.{u}`. `Affine.moduleEquiv` identifies the latter with finite-module
 G-theory through actual affine global sections. These presentations retain
 their universe bounds; the global group is not definitionally replaced by
@@ -108,7 +108,7 @@ vector-bundle resolutions from objectwise finite projective dimension.
 There is no finite Krull-dimension restriction or common resolution bound.
 PID and dimension-at-most-one specializations remain in `Scheme.Regular`.
 
-`Quillen.Scheme.IsRegular X` is local noetherianity with regular local stalks.
+`AlgebraicGeometry.Scheme.IsRegular X` is local noetherianity with regular local stalks.
 For a nonaffine scheme, `KToGRegularEquiv X n` requires this regularity,
 `[CompactSpace X]` (quasi-compactness), and `[HasResolutionProperty X]`.
 The resolution property says that every coherent sheaf is an actual quotient
@@ -120,7 +120,7 @@ Regularity alone does not supply the resolution property.
 `KToGRegularEquiv_coe` retains the canonical comparison, and
 `KToGRegularEquiv_spec` identifies its affine specialization with the
 independently constructed regular-affine equivalence. The more general
-`SchemeSheaf.schemeKToG_bijective_of_finite_resolutions` retains its admissible
+`AlgebraicGeometry.Scheme.Modules.schemeKToG_bijective_of_finite_resolutions` retains its admissible
 kernel-closure and actual finite-resolution premises.
 
 ## Coherent open and closed localization
@@ -128,12 +128,12 @@ kernel-closure and actual finite-resolution premises.
 For an open immersion `j : U ⟶ X`, `SupportedG j n` uses the Serre category of
 coherent sheaves whose actual restriction to `U` vanishes. On a noetherian
 ambient scheme, with the stated local noetherianity of `U`,
-`Quillen.Scheme.localization_longExact j` has maps `inclusionG`, `restrictG`,
+`AlgebraicGeometry.Scheme.localization_longExact j` has maps `inclusionG`, `restrictG`,
 and `boundaryG`. It proves all recurring connective exactness positions and
 `restrictG_zero_surjective`, including arbitrary opens of `X`.
 
 For a closed immersion `i : Z ⟶ X` with `[IsNoetherian X]`, the
-`Quillen.Scheme.Closed` interface constructs the actual open complement and
+`AlgebraicGeometry.Scheme.Closed` interface constructs the actual open complement and
 derives noetherianity of `Z`. `supportedGEquiv i n` identifies G of that
 original closed scheme with the supported term by dévissage. Its composite
 with supported inclusion is exactly `pushforwardG i n`, the actual coherent
@@ -150,17 +150,19 @@ finite-module applications underlying these geometric sequences.
 
 ## Finite direct image
 
-For an actual finite map `f : Z ⟶ X`,
-[`Scheme.Coherent.Finite.GeneralPushforward`](../../Quillen/AlgebraicGeometry/Scheme/Coherent/Finite/GeneralPushforward.lean)
-proves preservation of affine-local finite-type quasicoherent sheaves without
-noetherian assumptions. On locally noetherian source and target, it proves
-exactness and constructs `CoherentScheme.Finite.coherentPushforwardGMap`.
+For an actual finite map `f : Z ⟶ X`, Aglib's
+[finite-type quasicoherent pushforward](https://github.com/kangxyz/aglib/blob/main/Aglib/AlgebraicGeometry/Modules/QuasiCoherent/FiniteType/Pushforward.lean)
+preserves affine-local finite-type quasicoherent sheaves without noetherian
+assumptions. On locally noetherian source and target, the
+[Quillen G-map construction](../../Quillen/AlgebraicGeometry/Scheme/Coherent/Finite/GeneralPushforward.lean)
+uses the native exact functor and constructs
+`AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.coherentPushforwardGMap`.
 `GFinitePushforwardFunctor` has identity and composition laws; scheme-isomorphism,
 open-base-change, finite-affine, and closed-immersion formulas retain the
 original functors and G-maps.
 
 Finite **flat** maps of locally noetherian schemes preserve vector bundles and
-give `SchemeSheaf.schemeKPushforward` and `KFiniteFlatPushforwardFunctor`.
+give `AlgebraicGeometry.Scheme.Modules.schemeKPushforward` and `KFiniteFlatPushforwardFunctor`.
 Target noetherianity is used to make the affine finite flat modules finite
 projective; exactness is transported through coherent inclusion.
 `KToGFiniteFlatPushforward` is the natural transformation with the original
@@ -180,21 +182,21 @@ a locally noetherian target; general-source preservation is separate.
 
 ## Derived direct image, tensor, and projection formulas
 
-`Quillen.SchemeSheaf.derivedPushforwardPlus f` is the installed right-derived
+`AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlus f` is the installed right-derived
 direct-image functor on D+. `derivedPushforwardPlusUnit f` compares actual
 termwise direct image with it. The following proofs identify when that unit
 is invertible, while retaining the original augmentations and units:
 
 | Module under `Scheme.Sheaf` | Conditions and conclusion |
 | --- | --- |
-| [`AffinePushforwardAcyclicity`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/AffinePushforwardAcyclicity.lean), `AffineDerivedPushforward` | Every quasicoherent sheaf is acyclic for an affine morphism; the unit on its degree-zero single is invertible |
+| [Aglib.AlgebraicGeometry.Cohomology.Affine.PushforwardAcyclicity](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/Affine/PushforwardAcyclicity.lean), `AffineDerivedPushforward` | Every quasicoherent sheaf is acyclic for an affine morphism; the unit on its degree-zero single is invertible |
 | [`AffineBoundedDerivedPushforward`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/AffineBoundedDerivedPushforward.lean) | Explicit lower and upper term bounds and degreewise quasicoherence give the same installed-unit comparison |
-| [`FlasquePushforwardAcyclicity`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/FlasquePushforwardAcyclicity.lean), `FlasqueDerivedPushforward`, `FlasqueComplex`, `FlasqueComplexDerivedPushforward` | For every scheme map, flasque sheaves are acyclic and the unit is invertible on bounded-below flasque-term complexes, with no upper bound |
-| [`GodementFirst`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/GodementFirst.lean) | On every scheme and all module sheaves, the actual product of stalk skyscrapers is an exact flasque-valued functor with a natural monic germ unit |
-| [`GodementResolution`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/GodementResolution.lean) | Actual natural augmented flasque sheaf resolution from the exact cokernel iteration, with the original germ augmentation quasi-isomorphism and preservation of short exact sequences |
-| [`GodementComplex`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/GodementComplex.lean), `GodementTotalExact` | Actual natural totalization retains the lower bound and has flasque terms, preserving short exact sequences and degreewise monomorphisms |
-| [`FlasqueExtensions`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/FlasqueExtensions.lean), `FlasquePushforwardExact` | Actual flasque extension closure and direct-image short-exact preservation with flasque first terms; the complex direct-image statement requires no bound |
-| [`GodementTotalQuasiIso`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/GodementTotalQuasiIso.lean), `GodementTotalDerivedComparison` | Original total augmentation is a quasi-isomorphism for every Plus input; genuine weak maps are preserved, and Q(f_*T(K))≅Rf_*(Q(K)) is natural for every scheme map |
+| [Aglib.AlgebraicGeometry.Cohomology.Flasque.Pushforward](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/Flasque/Pushforward.lean), `FlasqueDerivedPushforward`, `FlasqueComplex`, `FlasqueComplexDerivedPushforward` | For every scheme map, flasque sheaves are acyclic and the unit is invertible on bounded-below flasque-term complexes, with no upper bound |
+| [Aglib.AlgebraicGeometry.Cohomology.Godement.First](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/Godement/First.lean) | On every scheme and all module sheaves, the actual product of stalk skyscrapers is an exact flasque-valued functor with a natural monic germ unit |
+| [Aglib.AlgebraicGeometry.Cohomology.Godement.Resolution](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/Godement/Resolution.lean) | Actual natural augmented flasque sheaf resolution from the exact cokernel iteration, with the original germ augmentation quasi-isomorphism and preservation of short exact sequences |
+| [Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Basic](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/Godement/TotalComplex/Basic.lean), `GodementTotalExact` | Actual natural totalization retains the lower bound and has flasque terms, preserving short exact sequences and degreewise monomorphisms |
+| [Aglib.AlgebraicGeometry.Cohomology.Flasque.Extensions](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/Flasque/Extensions.lean), `FlasquePushforwardExact` | Actual flasque extension closure and direct-image short-exact preservation with flasque first terms; the complex direct-image statement requires no bound |
+| [Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.QuasiIso](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/Godement/TotalComplex/QuasiIso.lean), `GodementTotalDerivedComparison` | Original total augmentation is a quasi-isomorphism for every Plus input; genuine weak maps are preserved, and Q(f_*T(K))≅Rf_*(Q(K)) is natural for every scheme map |
 | [`FlatInjectivePushforward`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/FlatInjectivePushforward.lean) | Flat direct image preserves injectives; the derived-Hom adjunction retains a bounded-below injective target complex |
 | [`AffineCompositeDerivedPushforward`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/AffineCompositeDerivedPushforward.lean) | The unit on `j_*M` is invertible when `j` and `j ≫ f` are affine and `M` is quasicoherent |
 
@@ -234,26 +236,26 @@ totalization and the perfect/flasque Waldhausen roof K model remain
 separate.
 
 The sheafified tensor bifunctor, its left unit, and finite-free retract exactness
-live in [`Quillen.Algebra.Category.ModuleCat.Sheaf.Tensor`](../../Quillen/Algebra/Category/ModuleCat/Sheaf/Tensor.lean)
+live in [Aglib.Algebra.Category.ModuleCat.Sheaf.Tensor.Basic](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/Algebra/Category/ModuleCat/Sheaf/Tensor/Basic.lean)
 and `TensorExact`, with their site and universe hypotheses.
 `Scheme.Sheaf.TensorRestriction` gives actual open restriction;
 `Scheme.VectorBundle.TensorLocalExactness` proves short exactness for finite
 locally free coefficients using affine finite-free retractions, including the
 empty finite-free case. These constructions do not supply full monoidal coherence.
 
-[`PushforwardModuleStalk`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/PushforwardModuleStalk.lean)
+[Aglib.AlgebraicGeometry.Modules.Pushforward.Stalk](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Modules/Pushforward/Stalk.lean)
 uses the actual pushforward germ map as a natural module-stalk isomorphism on
 an inducing image and proves zero stalks off a closed image.
-[`ClosedPushforwardExactness`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/ClosedPushforwardExactness.lean)
+[Aglib.AlgebraicGeometry.Modules.Pushforward.ClosedImmersion](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Modules/Pushforward/ClosedImmersion.lean), [Aglib.AlgebraicGeometry.Modules.Stalk.Reflection](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Modules/Stalk/Reflection.lean)
 therefore proves exact closed-immersion pushforward for arbitrary module sheaves,
 without quasicoherence, finite generation or noetherian assumptions.
-[`SectionPushforwardModuleStalk`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/SectionPushforwardModuleStalk.lean)
+[Aglib.AlgebraicGeometry.Modules.Pushforward.SectionStalk](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Modules/Pushforward/SectionStalk.lean)
 retains the original stalk ring retraction when the immersion is a section.
 
-[`TensorStalkIso`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/TensorStalkIso.lean)
+[Aglib.AlgebraicGeometry.Modules.Tensor.Stalk.Basic](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Modules/Tensor/Stalk/Basic.lean)
 identifies the literal sheaf tensor stalk with the tensor of the two module
 stalks, using the original pure-section germs in both directions.
-[`TensorStalkNaturality`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/TensorStalkNaturality.lean)
+[Aglib.AlgebraicGeometry.Modules.Tensor.Stalk.Naturality](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Modules/Tensor/Stalk/Naturality.lean)
 preserves both original sheaf-variable maps. Neither coefficient requires
 flatness or quasicoherence.
 
@@ -266,7 +268,7 @@ naturality and the installed-unit equations; there is no upper bound or extra
 global flasqueness hypothesis.
 
 For a closed immersion and arbitrary coefficient/source module sheaves,
-[`ClosedImmersionProjectionFormula`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/ClosedImmersionProjectionFormula.lean)
+[Aglib.AlgebraicGeometry.Modules.ProjectionFormula.ClosedImmersion](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Modules/ProjectionFormula/ClosedImmersion.lean), [Aglib.AlgebraicGeometry.Modules.Stalk.Reflection](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Modules/Stalk/Reflection.lean)
 proves the original `projectionFormulaMap` invertible, with both-variable
 naturality. `PullbackStalkUnit` and `ProjectionFormulaStalk` retain its actual
 adjunction-unit germ and scalar-extension tensor formula on image stalks;
@@ -308,7 +310,7 @@ results.
 
 ## The actual two-chart line
 
-For `R : CommRingCat.{u}`, `Quillen.Scheme.ProjectiveLine.twoChartLine R`
+For `R : CommRingCat.{u}`, `AlgebraicGeometry.Scheme.ProjectiveLine.twoChartLine R`
 glues two polynomial spectra along their Laurent overlap. `Charts`,
 `AffineCechCover`, and `ChartAffineness` retain the original affine open maps
 and intersection. The line is qcqs; its projection `p` is flat and separated.
@@ -316,7 +318,7 @@ and intersection. The line is qcqs; its projection `p` is flat and separated.
 map. `coefficientMap_isPullback` in `BaseChangeGluing` proves cartesian coefficient
 change for every ring map, without flatness or noetherianity. Here all module
 paths have prefix `Quillen.AlgebraicGeometry.Scheme.ProjectiveLine`, while
-declarations have prefix `Quillen.Scheme.ProjectiveLine`.
+declarations have prefix `AlgebraicGeometry.Scheme.ProjectiveLine`.
 
 `Tautological` constructs a line subbundle `L` of the structure-module square
 with columns `(1,t)` and `(s,1)` and Laurent transition `T`, inverse `T⁻¹`.

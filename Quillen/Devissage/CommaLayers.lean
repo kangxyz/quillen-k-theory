@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.Abelian.Subcategory.Exact
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Devissage.SpanLayers
 public import Quillen.Devissage.FullyFaithful
 public import Quillen.CategoryTheory.QConstruction.Abelian.Cancellation
@@ -22,6 +24,10 @@ upper endpoint. Every comma object is represented by its span image and kernel,
 yielding the explicit categorical equivalence `layerCommaEquivalence`.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+open CategoryTheory.ObjectProperty
+
 
 
 noncomputable section

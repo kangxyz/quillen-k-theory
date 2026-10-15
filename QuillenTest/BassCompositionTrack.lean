@@ -6,12 +6,16 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CompositionTrack
-public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurent
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Basic
 
 /-! The actual positive and inverse-coordinate Laurent legs retain their original binary tracks. -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.PolynomialLaurent
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry
   AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace QuillenTest.BassCompositionTrack

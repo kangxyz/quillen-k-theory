@@ -12,11 +12,14 @@ Whole-transformation transport identifies the original Model routes with their a
 common-universe constructions. Explicit functor equalities avoid expanding geometric components.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
 private theorem transformation_hext {A B : Type*} [Category A] [Category B]

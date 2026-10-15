@@ -9,10 +9,13 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassNegat
 
 /-! Original coefficients and Laurent representatives for the actual negative-class map. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Quillen.LoopPrespectrum Quillen.PerfectComplexes
+open CategoryTheory Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.SectionBassNegativeMap
 

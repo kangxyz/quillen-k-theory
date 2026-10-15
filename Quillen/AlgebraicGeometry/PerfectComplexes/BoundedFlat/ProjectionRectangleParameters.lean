@@ -9,6 +9,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassH0Diagr
 
 /-! Exact face embeddings of the original rectangle's scalar source and target words. -/
 @[expose] public section
+
+
 noncomputable section
 set_option autoImplicit false
 open CategoryTheory Convexity Quillen.SimplexParameters
@@ -16,12 +18,20 @@ open scoped Simplicial Topology unitInterval
 namespace Quillen.PerfectComplexes.ProjectionRectangleParameters
 variable {k : ℕ} (α : ⦋17⦌ ⟶ ⦋k⦌)
 
+/-- The source-chart binary path through rectangle vertices `2, 3, 11`, relabeled by `α`. -/
 abbrev D := binaryPath (α.toOrderHom 2) (α.toOrderHom 3) (α.toOrderHom 11)
+/--
+The reversed source-total path followed by the target-total path, with vertex word `2, 1, 0, 14,
+15` relabeled by `α`.
+-/
 abbrev T := (binaryPath (α.toOrderHom 0) (α.toOrderHom 1) (α.toOrderHom 2)).symm.trans
   (binaryPath (α.toOrderHom 0) (α.toOrderHom 14) (α.toOrderHom 15))
+/-- The target-chart binary path through rectangle vertices `15, 16, 17`, relabeled by `α`. -/
 abbrev K := binaryPath (α.toOrderHom 15) (α.toOrderHom 16) (α.toOrderHom 17)
+/-- The first square comparison with vertex word `11, 10, 9, 12, 13`, relabeled by `α`. -/
 abbrev L := (binaryPath (α.toOrderHom 9) (α.toOrderHom 10) (α.toOrderHom 11)).symm.trans
   (binaryPath (α.toOrderHom 9) (α.toOrderHom 12) (α.toOrderHom 13))
+/-- The second square comparison with vertex word `13, 6, 5, 7, 17`, relabeled by `α`. -/
 abbrev Ppath := (binaryPath (α.toOrderHom 5) (α.toOrderHom 6) (α.toOrderHom 13)).symm.trans
   (binaryPath (α.toOrderHom 5) (α.toOrderHom 7) (α.toOrderHom 17))
 

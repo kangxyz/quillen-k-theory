@@ -10,6 +10,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueT
 /-! # Retained original lower bounds and chain maps of the third endpoint span -/
 
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionBassTelescopeSelfMapForget
 
 /-!
@@ -14,11 +15,17 @@ The four actual maps, unchanged finite support inclusions, every cylinder and lo
 original initial supported face, all signed groups and honest Under coefficient maps are kept.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.LoopPrespectrum Quillen.PerfectComplexes Quillen.PolynomialBaseChange
+open Quillen Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.SupportedBassTelescopeSelfMapForget
 

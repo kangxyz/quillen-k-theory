@@ -6,8 +6,9 @@ Authors: kangxyz
 
 module
 
-public import Quillen.CategoryTheory.ExactCategory.Composition
-public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Composition
+public import Aglib.CategoryTheory.ExactCategory.Isomorphisms
 
 /-!
 # The obscure axiom, with its necessary kernel hypothesis
@@ -19,6 +20,9 @@ no weak idempotent completeness or unconditional cancellation is assumed.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
+
 
 noncomputable section
 universe v u
@@ -26,7 +30,6 @@ open CategoryTheory CategoryTheory.Limits
 attribute [local instance] hasBinaryBiproducts_of_finite_biproducts
 
 namespace CategoryTheory.ExactCategory.ExactStructure
-open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)

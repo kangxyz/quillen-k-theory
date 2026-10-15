@@ -9,8 +9,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassTeles
 
 /-! The original initial inclusion, actual seed gluing and full telescope coefficient cylinders. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.SectionBassTelescope
 

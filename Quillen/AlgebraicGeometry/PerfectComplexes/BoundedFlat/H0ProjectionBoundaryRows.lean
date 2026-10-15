@@ -4,16 +4,25 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NativeProjectionBinaryRows
 
 /-! Source and target binary rows of each original coefficient H0 projection diagram. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH1H0Boundary
@@ -22,18 +31,25 @@ variable {R : CommRingCat.{u}} (P : Over (Spec R)) {a b : Under R} (w : a ⟶ b)
 variable (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
   (ha : coefficientMap P (α.app a) ≫ polynomialProjection P a = laurentProjection P a)
 
+/-- The functor equality identifying the H0 reference with the chart's source triple. -/
 abbrev sourceAnchor := ProjectionReference.anchor (polynomialProjection P a)
   (coefficientMap P (α.app a)) (coefficientMap P ((laurentUnderFunctor R).map w))
   (laurentProjection P a) ha
 
+/-- The reference from the H0 source to the last triple, using the projection anchor and both
+naturality squares. -/
 abbrev lastReference := nativeLastReference
   (polynomialProjection P a) (coefficientMap P (α.app a))
   (polynomialProjection P b) (coefficientMap P (α.app b))
   (coefficientMap P w) (coefficientMap P ((polynomialUnderFunctor R).map w))
   (coefficientMap P ((laurentUnderFunctor R).map w))
-  (coefficientTransformation_naturality P (polynomialUnderCoefficient R) w)
-  (coefficientTransformation_naturality P α w) (laurentProjection P a) ha
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (polynomialUnderCoefficient R) w)
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α w)
+    (laurentProjection P a) ha
 
+/-- The reference from the H0 source to the target binary row precomposed by the coefficient map
+of `w`. -/
 abbrev targetRowReference := rightRowReference (BassH0Diagram.reference P w)
   (coefficientMap P (α.app b)) (polynomialProjection P b) (coefficientMap P w)
   (lastReference P w α ha)
@@ -48,8 +64,10 @@ theorem chart_source_column (i : Fin 3) :
     (polynomialProjection P b) (coefficientMap P (α.app b))
     (coefficientMap P w) (coefficientMap P ((polynomialUnderFunctor R).map w))
     (coefficientMap P ((laurentUnderFunctor R).map w))
-    (coefficientTransformation_naturality P (polynomialUnderCoefficient R) w)
-    (coefficientTransformation_naturality P α w) (laurentProjection P a) ha i
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+      (polynomialUnderCoefficient R) w)
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α w)
+      (laurentProjection P a) ha i
 
 theorem chart_target_row (i : Fin 3) :
     BassH0Diagram.chartNodes P w α ha
@@ -62,8 +80,10 @@ theorem chart_target_row (i : Fin 3) :
     (polynomialProjection P b) (coefficientMap P (α.app b))
     (coefficientMap P w) (coefficientMap P ((polynomialUnderFunctor R).map w))
     (coefficientMap P ((laurentUnderFunctor R).map w))
-    (coefficientTransformation_naturality P (polynomialUnderCoefficient R) w)
-    (coefficientTransformation_naturality P α w) (laurentProjection P a) ha i
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+      (polynomialUnderCoefficient R) w)
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α w)
+      (laurentProjection P a) ha i
 
 /-- The full original plus source binary row retains its actual references. -/
 theorem plus_source (i : Fin 3) :

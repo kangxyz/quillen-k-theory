@@ -25,11 +25,14 @@ degree zero. The cone uses its original face and the supplied cylinder; restrict
 assumed surjective on K-zero. Constructing a coefficient-natural localization null is separate.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair
+open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R)

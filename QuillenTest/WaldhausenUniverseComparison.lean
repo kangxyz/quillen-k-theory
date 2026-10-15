@@ -11,8 +11,11 @@ public import Quillen.Waldhausen.GrothendieckComparison.SmallModel
 original algebraic presentation and homotopical K₀ at both endpoints. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
-open CategoryTheory Quillen.Waldhausen
+open CategoryTheory
 universe u v
 namespace QuillenTest.WaldhausenUniverseComparison
 

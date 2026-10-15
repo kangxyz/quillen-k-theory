@@ -16,9 +16,13 @@ remain in the actual comparison; the whole track retains its endpoints, point an
 structure parameter, including the original level zero.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.IteratedS
 open scoped unitInterval
 universe u
 namespace QuillenTest.SupportedSectionModelNaturality

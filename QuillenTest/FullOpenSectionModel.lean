@@ -9,9 +9,12 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSec
 
 /-! Original inherited-zero, coefficient-square and structure-time consumers of full-open models. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes AlgebraicGeometry.Scheme.AffineOpenPair Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.Waldhausen.IteratedS
 open scoped unitInterval
 universe u
 namespace QuillenTest.FullOpenSectionModel

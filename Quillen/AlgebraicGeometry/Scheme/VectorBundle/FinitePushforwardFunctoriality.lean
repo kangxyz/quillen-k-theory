@@ -6,7 +6,11 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Exact
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.FinitePushforward
+public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Restriction
 
 /-! # Identity, composition and open base change for finite flat K-pushforward
 
@@ -15,10 +19,12 @@ induced maps concern genuine vector-bundle K-groups on the original schemes.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section

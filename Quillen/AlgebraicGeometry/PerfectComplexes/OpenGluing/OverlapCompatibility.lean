@@ -5,10 +5,17 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.BinaryDescent
 
 /-! # The original overlap homotopy of the constructed local models -/
 @[expose] public section
+
+open Quillen.CochainComplex
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -27,7 +34,6 @@ def extensionByZeroMapHomotopyReflect {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenIm
       (Homotopy.ofEq (extensionByZeroMap_restrict j g)))
 
 namespace OpenHomotopyGluing
-open Quillen.CochainComplex
 variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
   [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]
   (h : a ≫ j = b ≫ k)

@@ -6,7 +6,11 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Algebra.Homology.StupidTruncation.Layer
+public import Aglib.Algebra.Homology.Embedding.StupidTrunc.Maps
+public import Aglib.Algebra.Homology.Embedding.StupidTrunc.Transition
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
+public import Aglib.Algebra.Homology.Embedding.StupidTrunc.Layer
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedTerms
 public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 
@@ -18,6 +22,10 @@ cofibration sequence of exact functors for isomorphism weak equivalences.
 No kernel closure is needed, and no preservation of quasi-isomorphisms is asserted.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+open CochainComplex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

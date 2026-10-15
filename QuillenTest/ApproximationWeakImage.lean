@@ -10,6 +10,10 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenWeakImage
 /-! # Actual weak-image and original relative-open comparison consumers -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u v u' v'

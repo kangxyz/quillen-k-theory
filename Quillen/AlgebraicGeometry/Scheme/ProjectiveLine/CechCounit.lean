@@ -8,7 +8,7 @@ module
 
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineChartCounit
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.CechSections
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TildeExact
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.TildeExact
 public import Quillen.CategoryTheory.Limits.NatTransProduct
 
 /-! # Original counits on the two projective-line Cech terms

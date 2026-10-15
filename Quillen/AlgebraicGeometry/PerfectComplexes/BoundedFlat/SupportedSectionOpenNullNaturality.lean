@@ -16,6 +16,11 @@ zero-to-section transformation. Its reversed homotopy agrees at every parameter 
 original geometric acyclic null track. No endpoint-only replacement or time change is used.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+open Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.IteratedS
+
 noncomputable section
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
 universe u

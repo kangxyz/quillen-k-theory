@@ -6,8 +6,8 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenBaseChange
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.Exact
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.OpenImmersion
+public import Aglib.AlgebraicGeometry.Modules.Exact
 public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
 
 /-!
@@ -19,10 +19,10 @@ kernel universal properties, rather than from assumed descent data.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-open Quillen
-open Quillen.CoherentScheme
 
 
 

@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Exact
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.Scheme.KTheory
 public import Quillen.KTheory.Map.CommonAmbient
 
@@ -18,8 +20,11 @@ The genuine exact small-model equivalence therefore induces an actual
 based K-group equivalence. No cross-universe realization assertion is used.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules
+open CategoryTheory.ExactCategory
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section

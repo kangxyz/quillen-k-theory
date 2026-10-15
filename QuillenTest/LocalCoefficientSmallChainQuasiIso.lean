@@ -18,6 +18,9 @@ singular simplex. The comparison is always the original small-chain inclusion.
 
 @[expose] public section
 
+open Quillen.LocalCoefficients
+
+
 noncomputable section
 
 open CategoryTheory

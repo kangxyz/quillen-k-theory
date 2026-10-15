@@ -8,8 +8,13 @@ public import Quillen.Topology.CWComplex.Whitehead
 
 /-! # Independent clients of actual classical-CW Whitehead -/
 @[expose] public section
+
+open Topology
+
+open Quillen.ClassicalCW
+
 noncomputable section
-open Set Topology
+open Set
 universe u
 namespace Quillen.Consumer.ClassicalCWWhitehead
 open ClassicalCW

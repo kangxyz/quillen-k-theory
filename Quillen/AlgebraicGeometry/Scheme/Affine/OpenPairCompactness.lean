@@ -16,7 +16,6 @@ Base change therefore gives compactness of each actual fixed pullback open.
 No flatness hypothesis is imposed on the coefficient arrow.
 -/
 @[expose] public section
-open Quillen
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry

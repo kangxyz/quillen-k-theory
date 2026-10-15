@@ -12,6 +12,9 @@ public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianCoordinates
 /-! # Actual finite-face assembly of replacement boundary charts -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval

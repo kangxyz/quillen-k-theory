@@ -22,6 +22,9 @@ stage and the homotopy-group colimit comparison are separate assertions.
 -/
 @[expose] public section
 
+open Quillen.Topology
+
+
 open CategoryTheory Set Topology
 open scoped unitInterval
 open unitInterval

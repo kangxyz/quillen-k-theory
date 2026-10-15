@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineScalarAdjunction
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianBaseChange
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ScalarAdjunction
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Cartesian
 public import Quillen.Algebra.Category.ModuleCat.CartesianBaseChange
 public import Mathlib.Algebra.Category.Ring.Constructions
 
@@ -17,8 +18,9 @@ geometric square. Reflection through the fully faithful spectrum functor supplie
 the coordinate-ring pushout from the genuine cartesian square.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

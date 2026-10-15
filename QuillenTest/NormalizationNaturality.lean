@@ -9,8 +9,11 @@ public import Quillen.Waldhausen.SConstruction.Iterated.NormalizationNaturality
 
 /-! Consumers of the original binary normalization's two distinct naturality squares. -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
-open CategoryTheory CategoryTheory.Functor Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open CategoryTheory CategoryTheory.Functor Quillen.Waldhausen.IteratedS
 universe u v
 namespace QuillenTest.NormalizationNaturality
 

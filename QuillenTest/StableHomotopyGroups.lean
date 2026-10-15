@@ -10,6 +10,9 @@ public import Quillen.Waldhausen.SConstruction.Iterated.StableHomotopy
 /-! Semantic consumers of the original stable transition, colimit and K-map normalizations. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -63,7 +66,7 @@ theorem zero_stage_inverse (E : LoopPrespectrum.{u}) (hE : E.IsOmega) :
     (stableHomotopyStageZeroIso E hE 0).inv = stableHomotopyι E 0 0 :=
   stableHomotopyStageZeroIso_inv E hE 0
 
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.IteratedS
 
 /-- Original K-zero is identified as a group, retaining its actual multiplication. -/
 theorem original_Kzero_group {C : Type u} [Category.{v} C] (W : Structure C) (a b : W.K 0) :

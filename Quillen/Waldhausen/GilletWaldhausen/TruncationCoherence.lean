@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.TruncationExact
 
 /-! # Genuine nested-truncation coherence
@@ -16,6 +17,9 @@ truncLE n (truncLE m K) → truncLE n K. This is natural on every chain map
 and compatible with the original inclusions. No acyclicity is needed.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

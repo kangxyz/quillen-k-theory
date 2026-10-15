@@ -8,12 +8,15 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassBottomP
 
 /-! The original inverse source column, with its positive-to-inverse projection transport. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassReferenceMerge
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH0Merge

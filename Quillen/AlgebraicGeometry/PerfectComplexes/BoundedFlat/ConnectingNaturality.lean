@@ -12,6 +12,9 @@ public import Quillen.Waldhausen.Fibration.ConnectingNaturality
 /-! # Naturality of the actual bounded-flat supported connecting homomorphism -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.AuxiliaryIsoComma
 
 /-!
@@ -16,6 +17,9 @@ representative over one ordinary Serre-isomorphic base. Both endpoints
 and the arrow lift together, using the ordinary pushout of a span.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

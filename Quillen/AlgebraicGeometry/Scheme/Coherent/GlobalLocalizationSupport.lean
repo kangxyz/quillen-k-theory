@@ -6,6 +6,13 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Exact
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Restriction
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
+public import Aglib.CategoryTheory.SmallModel.Abelian
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 public import Quillen.Localization.SmallModel
 public import Quillen.Devissage.Setup
@@ -20,10 +27,13 @@ universe as the public global `G` and `SupportedG` definitions.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+open CategoryTheory.ExactCategory
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 

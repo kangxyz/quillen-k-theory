@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.UnitSections
+public import Aglib.AlgebraicGeometry.Modules.StructureSheaf.Sections
 
 /-! # Scalar presentations under original open restriction
 
@@ -13,8 +13,9 @@ Pullback trivializations pass to actual open restriction through the original co
 Further restriction retains the literal scalar section pulled back by the scheme map.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 noncomputable section

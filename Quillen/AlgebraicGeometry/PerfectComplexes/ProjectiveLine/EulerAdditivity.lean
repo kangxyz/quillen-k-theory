@@ -5,12 +5,17 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Aglib.CategoryTheory.Limits.Shapes.CokernelPushout
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerFunctors
 public import Quillen.Waldhausen.Additivity.GroupFormula
 public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 
 /-! # Original Waldhausen additivity for the natural Euler short exact sequence -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -72,7 +77,7 @@ def boundedModelSequence (A : StrictPerfect (Spec R)) :
 
 lemma boundedModelSequence_conflation (A : StrictPerfect (Spec R)) :
     (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-      (Quillen.abelianExactStructure (Complex (twoChartLine R)))
+      (CategoryTheory.ExactCategory.abelianExactStructure (Complex (twoChartLine R)))
       (BoundedBelow.objects (twoChartLine R))).conflation (boundedModelSequence R A) :=
   coefficientSequence_shortExact R A
 
@@ -82,7 +87,8 @@ def projectedModelSequence (A : StrictPerfect (Spec R)) :
   (boundedModelSequence R A).map (FlasqueBoundedBelow.total (twoChartLine R) ⋙ G0 R)
 
 lemma projectedModelSequence_conflation (A : StrictPerfect (Spec R)) :
-    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure (Quillen.abelianExactStructure
+    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
+      (CategoryTheory.ExactCategory.abelianExactStructure
       (Complex (Spec R)))
       (FlasqueBoundedBelow.objects (Spec R))).conflation (projectedModelSequence R A) :=
   ((FlasqueBoundedBelow.totalExactFunctor (twoChartLine R)).comp (G0ExactFunctor R)).map_conflation
@@ -90,7 +96,8 @@ lemma projectedModelSequence_conflation (A : StrictPerfect (Spec R)) :
 
 /-- Its actual quotient functor preserves inherited conflations. -/
 def E0ExactFunctor : CategoryTheory.ExactCategory.ExactFunctor (strictExactStructure (Spec R))
-    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure (Quillen.abelianExactStructure
+    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
+      (CategoryTheory.ExactCategory.abelianExactStructure
       (Complex (Spec R)))
       (FlasqueBoundedBelow.objects (Spec R))) :=
   (endpointBoundedExactFunctor R (sequence R).X₃ (unitEndpoint_strictPerfect R)).comp
@@ -107,7 +114,8 @@ lemma strictFlasqueSequence_isCofibrationSequence {X Y : Scheme.{u}}
     (hH : Waldhausen.IsExact (strictWaldhausen X).cof (strictWaldhausen X).weq
       (FlasqueBoundedBelow.waldhausen Y).cof (FlasqueBoundedBelow.waldhausen Y).weq H)
     (hc : ∀ A, (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-      (Quillen.abelianExactStructure (Complex Y)) (FlasqueBoundedBelow.objects Y)).conflation
+      (CategoryTheory.ExactCategory.abelianExactStructure (Complex Y)) (FlasqueBoundedBelow.objects
+        Y)).conflation
       (ShortComplex.mk (a.app A) (b.app A) (NatTrans.congr_app w A))) :
     Waldhausen.Additivity.IsCofibrationSequence (strictWaldhausen X)
       (FlasqueBoundedBelow.waldhausen Y) a b where
@@ -116,19 +124,21 @@ lemma strictFlasqueSequence_isCofibrationSequence {X Y : Scheme.{u}}
   exactH := hH
   cofibration := {
     app_cof A := (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-      (Quillen.abelianExactStructure (Complex Y))
+      (CategoryTheory.ExactCategory.abelianExactStructure (Complex Y))
       (FlasqueBoundedBelow.objects Y)).inflation_of_conflation (hc A)
     relative_cof {A B} f hf := by
       let E := CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-        (Quillen.abelianExactStructure (Complex Y)) (FlasqueBoundedBelow.objects Y)
+        (CategoryTheory.ExactCategory.abelianExactStructure (Complex Y))
+          (FlasqueBoundedBelow.objects Y)
       let φ := Waldhausen.GilletWaldhausen.exactFunctorSequenceMap a b w f
       let : HasPushout (Waldhausen.GilletWaldhausen.exactFunctorSequenceAt a b w A).f φ.τ₁ :=
         Waldhausen.Additivity.hasPushout (FlasqueBoundedBelow.waldhausen Y) a
           (fun A => E.inflation_of_conflation (hc A)) f
       exact Waldhausen.GilletWaldhausen.relativePushout_inflation E φ
         (hc A) (hc B) (hH.cofibration f hf) }
-  cofiber A := Waldhausen.QuillenComparison.isPushoutOfZeroCokernel _
-    ((CategoryTheory.ExactCategory.ExactSubcategory.exactStructure (Quillen.abelianExactStructure
+  cofiber A := CategoryTheory.Limits.isPushout_of_isColimit_cokernel _
+    ((CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
+      (CategoryTheory.ExactCategory.abelianExactStructure
       (Complex Y))
       (FlasqueBoundedBelow.objects Y)).cokernel _ (hc A))
     (FlasqueBoundedBelow.waldhausen Y).isZero _ _

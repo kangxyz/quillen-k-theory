@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.UnitSections
+public import Aglib.AlgebraicGeometry.Modules.StructureSheaf.Sections
 
 /-!
 # Scalar multiplication on actual module sheaves
@@ -14,8 +14,9 @@ Global ring sections act naturally on every module sheaf. The action commutes wi
 restriction and specializes to the structure-module action.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 noncomputable section

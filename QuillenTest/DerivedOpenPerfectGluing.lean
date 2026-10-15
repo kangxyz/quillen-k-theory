@@ -5,10 +5,17 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.Derived
 
 /-! # Semantic original-derived-overlap consumers -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -44,7 +51,7 @@ theorem original_iso_as_actual_fraction {A B T : CochainComplex C ℤ}
   rw [← hfac, IsIso.inv_hom_id_assoc]
 end Denominator
 
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.OpenHomotopyGluing
+open Quillen.PerfectComplexes.OpenHomotopyGluing
 section Geometric
 variable {X : Scheme.{u}} (U V : X.Opens)
   {A : Complex U.toScheme} {B : Complex V.toScheme} {L : Complex X}

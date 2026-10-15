@@ -8,6 +8,9 @@ public import Quillen.Topology.Realization.MetricRealizationDomination
 
 /-! Independent consumers require only original local convex geometry. -/
 @[expose] public section
+
+open Quillen.NumerableConnectorCover
+
 noncomputable section
 open Convexity
 open scoped Topology Simplicial

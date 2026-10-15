@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.KTheory.GrothendieckComparison.Basic
 
 /-!
@@ -17,6 +18,9 @@ are statements about actual arrow paths and do not assume arbitrary continuous
 loops are edge paths.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

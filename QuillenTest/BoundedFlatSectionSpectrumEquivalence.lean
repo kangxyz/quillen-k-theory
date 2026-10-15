@@ -14,8 +14,11 @@ All levels retain the unchanged comparison map. The whole inverse homotopy retai
 comparison time and structure-map loop time, including the original degree-zero level.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
 open scoped unitInterval
 universe u
 namespace QuillenTest.BoundedFlatSectionSpectrumEquivalence

@@ -1,6 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+Authors: kangxyz
 -/
 module
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalPerfectGenerationRotation
@@ -14,6 +15,11 @@ Every comparison below is a composition of specified original triangle
 isomorphisms, not an arbitrary completion of a triangle or a chosen strict model.
 -/
 @[expose] public section
+
+open AlgebraicGeometry
+open CategoryTheory.Pretriangulated
+open Quillen.PerfectComplexes
+
 open Quillen
 
 noncomputable section
@@ -23,7 +29,8 @@ universe u
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits
   CategoryTheory.Pretriangulated AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
-open AlgebraicGeometry.Scheme.Modules Quillen.PerfectComplexes
+open AlgebraicGeometry.Scheme.Modules
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance generationSingleStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u}) (E : (twoChartLine R).Modules)

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassBoundary
 public import Quillen.Topology.Prespectrum.HomotopySquareOfPasting
 public import Quillen.Topology.Prespectrum.PushoutMovingHomotopy
@@ -15,11 +16,18 @@ The proved geometric boundary filler descends to the original double-cylinder co
 Both original coefficient composites and the entire cylinder track are retained.
 -/
 @[expose] public section
+
+open Quillen.PolynomialBaseChange
+open Quillen.Waldhausen.IteratedS
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.PolynomialLaurent
   Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes

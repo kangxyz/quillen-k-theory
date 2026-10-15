@@ -4,16 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Cartesian
+public import Aglib.AlgebraicGeometry.Modules.IsomorphismFunctors
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianIsomorphismBaseChange
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChange
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedPushforwardSection
+public import Aglib.AlgebraicGeometry.Cohomology.BaseChange.Flat
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PushforwardSection
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatPullbackComposition
 
 /-! # Derived functors and base change for scheme isomorphisms -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

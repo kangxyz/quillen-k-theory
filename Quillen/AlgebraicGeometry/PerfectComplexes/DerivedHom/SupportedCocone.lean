@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFibration
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
 
@@ -16,6 +17,9 @@ Perfection, quasicoherent homology and derived support retain their actual
 complexes under the displayed cone and shift operations.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionUnits
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenGrading
 public import Quillen.KTheory.Bass.StrictLaurentSeedContraction
@@ -20,13 +21,16 @@ the actual graded zero endomorphism weak and construct the complete graded
 seed contraction. Only the G_Z coefficient diagram requires compact P and Q.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
-open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass Quillen.FunctorIdentityAutomorphism
-open AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}

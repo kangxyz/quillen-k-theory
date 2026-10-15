@@ -6,11 +6,12 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.GlobalSections
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.ClosedImmersion.IdealPushforward
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffinePushforward
-public import Quillen.GTheory.FiniteModules.IdealClosedSupport
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Pushforward
+public import Aglib.Algebra.Category.ModuleCat.IdealClosedSupport
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.ComparisonGTheory
 public import Quillen.CategoryTheory.SmallModel.Functoriality
 public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
@@ -25,34 +26,14 @@ G-maps commute with quotient-ring restriction under affine comparison.
 -/
 @[expose] public section
 
+open ModuleCat.FiniteLocalization.IdealClosedSupport
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.CoherentScheme.ClosedImmersion.Ideal
-export AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal
-  (affineFiniteSheaf_pushforward affineLocallyFiniteType_pushforward closedMap
-  closedMap_isClosedImmersion closedRing coherentClosedEquivalence
-  coherentClosedEquivalence_comp_inclusion coherentKilledInclusionComparison
-  coherentKilledInclusionExact coherentKilledInclusion_preservesFiniteColimits
-  coherentKilledInclusion_preservesFiniteLimits coherentKilled_hasFiniteProducts
-  coherentPushforward coherentPushforwardExact coherentPushforwardSquare
-  coherentPushforwardToKilled coherentPushforwardToKilledExact coherentPushforwardToKilledSquare
-  coherentPushforwardToKilled_additive coherentPushforwardToKilled_comp_inclusion
-  coherentPushforwardToKilled_essSurj coherentPushforwardToKilled_faithful
-  coherentPushforwardToKilled_full coherentPushforwardToKilled_isEquivalence
-  coherentPushforward_comp_inclusion coherentPushforward_faithful coherentPushforward_full
-  coherentPushforward_killed finiteTypeSheavesKilledBy finiteTypeSheavesKilledBy_isoClosed
-  instAbelianCoherentKilledBy killedModuleEquivalence)
-export AlgebraicGeometry.Scheme.Modules.Coherent
-  (globalSectionsExact)
-end Quillen.CoherentScheme.ClosedImmersion.Ideal
-
-end
 
 
 
@@ -65,16 +46,13 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal
 
-open FiniteModuleLocalization.IdealClosedSupport
 
 variable (R : CommRingCat.{u}) (I : Ideal R)
 
 variable [IsNoetherianRing R]
 
-open FiniteModuleLocalization.IdealClosedSupport
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (I : Ideal R)
 
-open FiniteModuleLocalization.IdealClosedSupport
 
 variable (R : CommRingCat.{u}) [IsNoetherianRing R]
 

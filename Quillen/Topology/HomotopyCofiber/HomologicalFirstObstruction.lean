@@ -24,6 +24,9 @@ homology-to-homotopy certificate is introduced.
 -/
 
 @[expose] public section
+
+open Quillen.LocalCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

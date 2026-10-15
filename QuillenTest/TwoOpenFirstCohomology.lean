@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TwoOpenFirstCohomology
+public import Aglib.AlgebraicGeometry.Cohomology.MayerVietoris.FirstCohomology
 
 /-! Consumers of the original connecting map: an overlap section has zero
 obstruction exactly when it is an actual chart coboundary, and every first
@@ -18,7 +18,6 @@ open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.TwoOpen
 universe u
 namespace QuillenTest.TwoOpenFirstCohomology
 
-open Quillen
 
 lemma firstConnecting_zero_iff {X : Scheme.{u}} (M : X.Modules) (I : InjectiveResolution M)
     (U V : X.Opens) (hUV : U ⊔ V = ⊤) (z : Γ(M, U ⊓ V)) :

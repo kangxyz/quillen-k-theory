@@ -15,6 +15,9 @@ values and all cone points. Signed class lifting and the actual boundary use the
 relative-open component, without any Bass-transition or full-open endpoint assertion.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair

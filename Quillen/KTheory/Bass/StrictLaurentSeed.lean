@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Polynomial.LaurentUnderSquare
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.CategoryTheory.Functor.IdentityAutomorphismEvaluation
 public import Quillen.CategoryTheory.Functor.IdentityAutomorphismSquare
 public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumIsoNaturality
@@ -21,8 +21,11 @@ prescribed scalar/null concatenation. Identity actions on a Model diagram supply
 track. A map preserving that track preserves the entire seed, with no replacement of its null.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory Quillen.LoopPrespectrum
 open Quillen.Waldhausen.IteratedS Quillen.FunctorIdentityAutomorphism
 universe u w
 namespace Quillen.KTheory.Bass.LaurentSeed

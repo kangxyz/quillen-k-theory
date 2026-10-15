@@ -5,12 +5,19 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Carrier
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGammaThirdSpan
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OriginalLineGodementContractions
 
 /-! # Canonical proof-forgetting carriers of the actual Gamma contraction functors -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTensorAdditivity
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueThirdEndpoint
+
 open Quillen
 
 
@@ -55,6 +62,9 @@ lemma liftPlusModelNatTrans_weak {C : Type*} [Category C] (X : Scheme.{u})
 def boundedToPlus (X : Scheme.{u}) : BoundedBelow.Obj X ⥤ CochainComplex.Plus X.Modules :=
   ObjectProperty.lift _ (BoundedBelow.objects X).ι (fun K => K.property.2)
 
+/-- The natural identification of the underlying complex after lifting a bounded-below perfect
+object to the Plus category.
+-/
 def boundedToPlusCarrierIso (X : Scheme.{u}) :
     boundedToPlus X ⋙ CochainComplex.Plus.ι X.Modules ≅ (BoundedBelow.objects X).ι :=
   ObjectProperty.liftCompιIso _ _ _
@@ -66,15 +76,20 @@ def totalCarrierIso (X : Scheme.{u}) :
   unfold FlasqueBoundedBelow.total
   exact ObjectProperty.liftCompιIso _ _ _
 
+/-- The natural identification of the underlying complex after forgetting flasqueness. -/
 def inclusionCarrierIso (X : Scheme.{u}) :
     FlasqueBoundedBelow.inclusion X ⋙ (BoundedBelow.objects X).ι ≅
       (FlasqueBoundedBelow.objects X).ι := by
   unfold FlasqueBoundedBelow.inclusion
   exact Iso.refl _
 
+/-- The natural identification of the underlying negative twist with left tensor by the tautological
+line.
+-/
 def negativeCarrierIso (R : CommRingCat.{u}) :
     FlasqueTwoSummands.boundedNegativeTwist R ⋙ (BoundedBelow.objects (twoChartLine R)).ι ≅
-      (BoundedBelow.objects (twoChartLine R)).ι ⋙ tensorByLineComplex (tautologicalLine R) := by
+      (BoundedBelow.objects (twoChartLine R)).ι ⋙
+        AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R) := by
   unfold FlasqueTwoSummands.boundedNegativeTwist
   exact ObjectProperty.liftCompιIso _ _ _
 
@@ -82,20 +97,23 @@ def negativeCarrierIso (R : CommRingCat.{u}) :
 def GammaCarrierIso (R : CommRingCat.{u}) :
     Gamma R ⋙ (FlasqueBoundedBelow.objects (twoChartLine R)).ι ≅
       (FlasqueBoundedBelow.objects (twoChartLine R)).ι ⋙
-        tensorByLineComplex (tautologicalLine R) ⋙ godementTotal (twoChartLine R) := by
+        AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R) ⋙ godementTotal
+          (twoChartLine R) := by
   let P := twoChartLine R
   let I := FlasqueBoundedBelow.inclusion P
   let B := FlasqueTwoSummands.boundedNegativeTwist R
   let T := FlasqueBoundedBelow.total P
   let J := (BoundedBelow.objects P).ι
   let K := (FlasqueBoundedBelow.objects P).ι
-  let L := tensorByLineComplex (tautologicalLine R)
+  let L := AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R)
   let V := godementTotal P
-  let eB := forgetComposeIso B T L V J J K (negativeCarrierIso R) (totalCarrierIso P)
+  let eB := (associator B T K ≪≫ isoWhiskerLeft B (totalCarrierIso P) ≪≫ (associator B J V).symm ≪≫
+    isoWhiskerRight (negativeCarrierIso R) V ≪≫ associator J L V)
   let eI : I ⋙ J ≅ K ⋙ 𝟭 (Complex P) :=
     inclusionCarrierIso P ≪≫ (Functor.rightUnitor K).symm
   exact isoWhiskerRight (associator I B T) K ≪≫
-    forgetComposeIso I (B ⋙ T) (𝟭 (Complex P)) (L ⋙ V) K J K eI eB ≪≫
+    (associator I (B ⋙ T) K ≪≫ isoWhiskerLeft I eB ≪≫ (associator I J (L ⋙ V)).symm ≪≫
+      isoWhiskerRight eI (L ⋙ V) ≪≫ associator K (𝟭 (Complex P)) (L ⋙ V)) ≪≫
     isoWhiskerLeft K (Functor.leftUnitor (L ⋙ V))
 
 /-- The chosen actual bounded tensor followed by total and Gamma keeps the same four factors. -/
@@ -106,14 +124,17 @@ def actualResolvedCarrierIso {C : Type*} [Category C] (R : CommRingCat.{u})
     ((A ⋙ FlasqueBoundedBelow.total (twoChartLine R)) ⋙ Gamma R) ⋙
         (FlasqueBoundedBelow.objects (twoChartLine R)).ι ≅
       I ⋙ (F ⋙ godementTotal (twoChartLine R)) ⋙
-        (tensorByLineComplex (tautologicalLine R) ⋙ godementTotal (twoChartLine R)) := by
+        (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R) ⋙ godementTotal
+          (twoChartLine R)) := by
   let P := twoChartLine R
   let B := (BoundedBelow.objects P).ι
   let K := (FlasqueBoundedBelow.objects P).ι
   let T := FlasqueBoundedBelow.total P
   let V := godementTotal P
-  let L := tensorByLineComplex (tautologicalLine R)
-  let eA := forgetComposeIso A T F V I B K e (totalCarrierIso P)
-  exact forgetComposeIso (A ⋙ T) (Gamma R) (F ⋙ V) (L ⋙ V) I K K eA (GammaCarrierIso R)
+  let L := AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R)
+  let eA := (associator A T K ≪≫ isoWhiskerLeft A (totalCarrierIso P) ≪≫ (associator A B V).symm ≪≫
+    isoWhiskerRight e V ≪≫ associator I F V)
+  exact (associator (A ⋙ T) (Gamma R) K ≪≫ isoWhiskerLeft (A ⋙ T) (GammaCarrierIso R) ≪≫ (associator
+    (A ⋙ T) K (L ⋙ V)).symm ≪≫ isoWhiskerRight eA (L ⋙ V) ≪≫ associator I (F ⋙ V) (L ⋙ V))
 
 end Quillen.PerfectComplexes.ProjectiveLine.FlasqueGammaEndpoints

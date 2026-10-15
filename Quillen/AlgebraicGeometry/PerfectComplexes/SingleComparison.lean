@@ -19,6 +19,10 @@ constructed vector-bundle S-comparison map; no equivalence is asserted.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+open Quillen.Waldhausen.GilletWaldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

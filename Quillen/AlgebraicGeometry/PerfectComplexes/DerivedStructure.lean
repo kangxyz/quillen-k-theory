@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRepresentativeNaturality
 public import Mathlib.Algebra.Homology.DerivedCategory.ExactFunctor
 public import Mathlib.Algebra.Homology.DerivedCategory.ShortExact
@@ -19,6 +20,9 @@ hypothesis is supplied. Exact open restriction gives its actual triangulated
 functor and localization factorization.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

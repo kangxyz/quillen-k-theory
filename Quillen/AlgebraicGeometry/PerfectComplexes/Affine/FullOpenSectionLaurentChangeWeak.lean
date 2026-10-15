@@ -5,10 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionDiagramLaurent
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionGradingPrespectrum
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionDiagramLaurent
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionGradingPrespectrum
 
 /-!
 # Original full-open Laurent tracks commute with changeWeak
@@ -19,9 +18,12 @@ therefore preserve the complete iterated-S track at the identical action time. N
 restriction comparison, or normalized localization null is assumed.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
-open Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R)

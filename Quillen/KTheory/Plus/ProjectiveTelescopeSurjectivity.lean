@@ -18,6 +18,9 @@ map is surjective with every target local coefficient system.
 -/
 
 @[expose] public section
+
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u

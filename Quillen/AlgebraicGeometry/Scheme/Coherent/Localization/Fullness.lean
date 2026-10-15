@@ -6,8 +6,11 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Limits
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.SubobjectExtension
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.AffineSectionsGlobal
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Localization.AffineSectionsGlobal
 
 /-!
 # Fullness of actual coherent restriction from the support quotient
@@ -22,7 +25,6 @@ schemes. Essential surjectivity still requires coherent object extension.
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

@@ -5,9 +5,13 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatLocality
+public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
+public import Aglib.AlgebraicGeometry.Modules.Flat.Pullback
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.LocalSplitting
+public import Aglib.AlgebraicGeometry.Modules.Flat.Locality
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatRetracts
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Pullback
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Pullback
 
 /-!
 # Actual module stalks of vector bundles are flat
@@ -18,8 +22,9 @@ prove stalkwise flatness. Global projectivity and global splitting are not
 assumed, and no affine or quasicoherent replacement is substituted.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 

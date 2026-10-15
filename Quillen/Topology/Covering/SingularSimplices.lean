@@ -25,6 +25,9 @@ existence, CW hypothesis, or homological Whitehead theorem is assumed or proved.
 
 @[expose] public section
 
+open Quillen.LocalCoefficients
+
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false

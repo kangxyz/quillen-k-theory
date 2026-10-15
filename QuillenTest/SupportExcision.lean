@@ -6,12 +6,20 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Excision
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.DerivedExcision
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.RestrictionComparison
 
 /-! # Supported perfect-complex excision consumers -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section
@@ -20,7 +28,6 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
 namespace QuillenTest.SupportExcision
-open Quillen.PerfectComplexes Quillen.Waldhausen
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens)
   (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ T)
 

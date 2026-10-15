@@ -5,10 +5,15 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalDescent
 
 /-! # Actual geometric cover detection consumers -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+open Quillen.PerfectComplexes
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry

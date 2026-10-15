@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Cylinder.Subcategory
 public import Quillen.Waldhausen.Cylinder.ZeroEndpoint
 public import Quillen.Waldhausen.Cylinder.Pushout
@@ -20,6 +21,9 @@ and componentwise quasi-isomorphisms. All statements concern the unchanged
 identity-cone cylinder and the actual full-subcategory maps.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

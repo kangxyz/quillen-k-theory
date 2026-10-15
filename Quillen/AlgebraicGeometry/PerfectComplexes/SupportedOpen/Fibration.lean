@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportCone
 public import Quillen.Waldhausen.Fibration.GeneralComparison
 public import Quillen.Waldhausen.Fibration.ComplexExtension
@@ -13,6 +14,9 @@ public import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
 
 /-! # Genuine relative-open fibration with prescribed original support -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

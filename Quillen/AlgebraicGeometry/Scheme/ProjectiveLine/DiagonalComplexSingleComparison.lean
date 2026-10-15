@@ -1,6 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+Authors: kangxyz
 -/
 module
 
@@ -16,6 +17,9 @@ including its original connecting arrow and cone sign.
 -/
 
 @[expose] public section
+
+open AlgebraicGeometry
+
 open Quillen
 
 noncomputable section
@@ -26,6 +30,7 @@ open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated
   AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open AlgebraicGeometry.Scheme.Modules
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance diagonalComplexSingleStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})

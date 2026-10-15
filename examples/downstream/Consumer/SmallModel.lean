@@ -6,6 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.API
 
 /-!
@@ -17,6 +20,9 @@ equality of maps induced by naturally isomorphic exact functors.
 -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 universe w v₁ v₂ v₃ u₁ u₂ u₃
 open CategoryTheory CategoryTheory.Limits Quillen

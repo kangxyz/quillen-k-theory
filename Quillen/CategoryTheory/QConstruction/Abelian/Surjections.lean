@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Localization.Serre.LocalizationComma
 public import Mathlib.CategoryTheory.Abelian.CommSq
 
@@ -18,6 +20,9 @@ ordinary monomorphism followed by such a surjective Q-arrow, using a genuine
 abelian pushout square which is also a pullback.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

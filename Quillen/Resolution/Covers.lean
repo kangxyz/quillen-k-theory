@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.Resolution.QCalculus
 public import Quillen.Topology.ClassifyingSpace.Equivalence
 
@@ -18,6 +19,9 @@ commuting with the augmentations. Pullback against one chosen cover gives
 the contraction needed in the length-one resolution theorem.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

@@ -23,17 +23,12 @@ equivalence or a full coefficient extension.
 -/
 
 @[expose] public section
+
+open CategoryTheory.Pretriangulated
+
 open Quillen
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.DiagonalRoofObstruction
-export CochainComplex
-  (chainMap_single_zero_to_shift_one_eq_zero)
-end Quillen.DiagonalRoofObstruction
-
-end
 
 
 noncomputable section
@@ -44,6 +39,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry DerivedCategory
   CategoryTheory.Pretriangulated
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open AlgebraicGeometry.Scheme.Modules
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance lineRotationStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})

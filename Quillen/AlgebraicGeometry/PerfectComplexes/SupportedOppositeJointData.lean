@@ -19,6 +19,9 @@ No affine or quasi-compact hypothesis is needed for these structures.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -5,11 +5,15 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ExtensionByZero
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ExtensionByZeroBaseChange
 
 /-! # Original termwise extension-by-zero base change -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

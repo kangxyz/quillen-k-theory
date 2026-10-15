@@ -4,16 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.Topology.Prespectrum.MPostmappedLift
 
 /-! The actual five native paths in the original span-map reassociation. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Convexity
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum Quillen.NativePathCells
 open scoped Topology unitInterval
 universe u
@@ -21,11 +25,24 @@ namespace Quillen.PerfectComplexes.BassMReassociation
 variable {R : CommRingCat.{u}} (P : Over (Spec R))
 variable {a b c : Under R} (u : a ⟶ b) (v : b ⟶ c)
 
+/-- The map on bounded flat perfect prespectra induced by the polynomial projection at `d`. -/
 abbrev projectionMap (d : Under R) := boundedFlatPerfectPrespectrumMap (polynomialProjection P d)
+/-- The map on bounded flat perfect prespectra induced by the coefficient map along `u`. -/
 abbrev overlapMap := boundedFlatPerfectPrespectrumMap (coefficientMap P u)
+/--
+The map on bounded flat perfect prespectra induced by the polynomial coefficient map along `u`.
+-/
 abbrev polynomialMap := boundedFlatPerfectPrespectrumMap
   (coefficientMap P ((polynomialUnderFunctor R).map u))
+/--
+The left inclusion into the homotopy pushout of the polynomial projection map at `d` with
+itself.
+-/
 abbrev leftMap (d : Under R) := HomotopyPushout.inl (projectionMap P d) (projectionMap P d)
+/--
+The right inclusion into the homotopy pushout of the polynomial projection map at `d` with
+itself.
+-/
 abbrev rightMap (d : Under R) := HomotopyPushout.inr (projectionMap P d) (projectionMap P d)
 
 /-- The first literal square, followed by the original second chart map and left inclusion. -/

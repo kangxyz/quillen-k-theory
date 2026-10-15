@@ -4,24 +4,37 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.H1SupportOrder
 
 /-! Exact tagged original full nodes and the fifty proved boundary identifications. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Quillen.Waldhausen.IteratedS
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u
 namespace Quillen.PerfectComplexes.BassH1Merged
+/--
+Tagged indices for the old 63-node family, the first and middle H1 families, and the two 25-node
+chart families.
+-/
 abbrev Input := Fin 63 ⊕ Fin 31 ⊕ Fin 31 ⊕ Fin 25 ⊕ Fin 25
 
+/-- Tags an index from the old 63-node family as an input to the H1 merge. -/
 def oldInput (i : Fin 63) : Input := .inl i
+/-- Tags an index from the first 31-node H1 family as an input to the merge. -/
 def firstInput (i : Fin 31) : Input := .inr (.inl i)
+/-- Tags an index from the middle 31-node H1 family as an input to the merge. -/
 def middleInput (i : Fin 31) : Input := .inr (.inr (.inl i))
+/-- Tags an index from the positive 25-node chart family as an input to the merge. -/
 def plusInput (i : Fin 25) : Input := .inr (.inr (.inr (.inl i)))
+/-- Tags an index from the inverse 25-node chart family as an input to the merge. -/
 def minusInput (i : Fin 25) : Input := .inr (.inr (.inr (.inr i)))
 
 variable {R : CommRingCat.{u}} (P : Over (Spec R))

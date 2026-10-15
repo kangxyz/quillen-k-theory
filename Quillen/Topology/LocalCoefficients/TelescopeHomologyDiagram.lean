@@ -10,6 +10,9 @@ public import Quillen.Topology.LocalCoefficients.TelescopeHomologyDetection
 /-! # The original transported stage maps form the actual homology colimit diagram -/
 
 @[expose] public section
+
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory Limits
 universe u

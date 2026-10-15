@@ -4,17 +4,26 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.H1OldChartCenter
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NativeMergedColumns
 
 /-! Whole first-cell outer chart rows with both original whiskerings and references retained. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1References
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH1Join
@@ -25,12 +34,20 @@ variable (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
   (ha : coefficientMap P (α.app a) ≫ polynomialProjection P a = laurentProjection P a)
   (hc : coefficientMap P (α.app c) ≫ polynomialProjection P c = laurentProjection P c)
 
+/-- The binary source combining the Laurent map along `u` with the chart coefficient map at `a`. -/
 abbrev outerFirstSource := BinaryNormalizationSimplex.sourceMap
   (coefficientMap P ((laurentUnderFunctor R).map u)) (coefficientMap P (α.app a))
+/-- The three binary normalization nodes for the Laurent map along `u` and the chart map at `a`. -/
 abbrev outerFirstBinary := binaryNodes
   (coefficientMap P ((laurentUnderFunctor R).map u)) (coefficientMap P (α.app a))
+/--
+The binary source combining the chart coefficient map at `b` with the polynomial map along `u`.
+-/
 abbrev outerSecondSource := BinaryNormalizationSimplex.sourceMap
   (coefficientMap P (α.app b)) (coefficientMap P ((polynomialUnderFunctor R).map u))
+/--
+The three binary normalization nodes for the chart map at `b` and the polynomial map along `u`.
+-/
 abbrev outerSecondBinary := binaryNodes
   (coefficientMap P (α.app b)) (coefficientMap P ((polynomialUnderFunctor R).map u))
 
@@ -55,8 +72,10 @@ theorem first_outer_first_representation : ∃ ρ, ∀ i : Fin 3,
       (polynomialProjection P b) (coefficientMap P (α.app b)) (coefficientMap P u)
       (coefficientMap P ((polynomialUnderFunctor R).map u))
       (coefficientMap P ((laurentUnderFunctor R).map u))
-      (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u)
-      (coefficientTransformation_naturality P α u) (laurentProjection P a) ha i)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (polynomialUnderCoefficient R) u)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u)
+        (laurentProjection P a) ha i)
   exact hn.trans (post_pre_node (BassOverlap.commonReference P u v)
     (BassOverlap.projectionMap P (a := a)) (BassH1Components.laurentMap P v)
     (outerFirstSource P u α) (outerFirstBinary P u α) _ (firstIso P u v) i)
@@ -81,27 +100,37 @@ theorem first_outer_second_representation : ∃ ρ, ∀ i : Fin 3,
       (polynomialProjection P b) (coefficientMap P (α.app b)) (coefficientMap P u)
       (coefficientMap P ((polynomialUnderFunctor R).map u))
       (coefficientMap P ((laurentUnderFunctor R).map u))
-      (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u)
-      (coefficientTransformation_naturality P α u) (laurentProjection P a) ha i)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (polynomialUnderCoefficient R) u)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u)
+        (laurentProjection P a) ha i)
   exact hn.trans (post_pre_node (BassOverlap.commonReference P u v)
     (BassOverlap.projectionMap P (a := a)) (BassH1Components.laurentMap P v)
     (outerSecondSource P u α) (outerSecondBinary P u α) _ (firstIso P u v) i)
 
+/--
+The last-source isomorphism for the two chart naturality squares along `u` and `v`, before
+projection precomposition.
+-/
 abbrev oldLastTripleReference := DoubleSquareCommonSimplex.lastSourceIso
   (coefficientMap P ((polynomialUnderFunctor R).map u))
   (coefficientMap P ((polynomialUnderFunctor R).map v))
   (coefficientMap P ((laurentUnderFunctor R).map u))
   (coefficientMap P ((laurentUnderFunctor R).map v))
   (coefficientMap P (α.app a)) (coefficientMap P (α.app b)) (coefficientMap P (α.app c))
-  (coefficientTransformation_naturality P α u).symm
-  (coefficientTransformation_naturality P α v).symm
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u).symm
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm
 
+/--
+The middle-source isomorphism for the chart naturality square along `v`, with the polynomial map
+along `u` retained.
+-/
 abbrev oldMiddleTripleReference := DoubleSquareCommonSimplex.middleSourceIso
   (coefficientMap P ((polynomialUnderFunctor R).map u))
   (coefficientMap P ((polynomialUnderFunctor R).map v))
   (coefficientMap P ((laurentUnderFunctor R).map v))
   (coefficientMap P (α.app b)) (coefficientMap P (α.app c))
-  (coefficientTransformation_naturality P α v).symm
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm
 
 /-- The old last column uses the original geometric total-square reference before precomposition. -/
 theorem old_outer_last_representation : ∃ ρ, ∀ i : Fin 3,
@@ -123,8 +152,8 @@ theorem old_outer_last_representation : ∃ ρ, ∀ i : Fin 3,
       (coefficientMap P ((laurentUnderFunctor R).map u))
       (coefficientMap P ((laurentUnderFunctor R).map v))
       (coefficientMap P (α.app a)) (coefficientMap P (α.app b)) (coefficientMap P (α.app c))
-      (coefficientTransformation_naturality P α u).symm
-      (coefficientTransformation_naturality P α v).symm i)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u).symm
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm i)
   exact hn.trans (pre_post_node (BassOverlap.commonReference P u v)
     (BassOverlap.projectionMap P (a := a)) (BassH1Components.laurentMap P v)
     (outerFirstSource P u α) (outerFirstBinary P u α) _
@@ -151,8 +180,8 @@ theorem old_outer_middle_representation : ∃ ρ, ∀ i : Fin 3,
       (coefficientMap P ((laurentUnderFunctor R).map u))
       (coefficientMap P ((laurentUnderFunctor R).map v))
       (coefficientMap P (α.app a)) (coefficientMap P (α.app b)) (coefficientMap P (α.app c))
-      (coefficientTransformation_naturality P α u).symm
-      (coefficientTransformation_naturality P α v).symm i)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u).symm
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm i)
   exact hn.trans (pre_post_node (BassOverlap.commonReference P u v)
     (BassOverlap.projectionMap P (a := a)) (BassH1Components.laurentMap P v)
     (outerSecondSource P u α) (outerSecondBinary P u α) _

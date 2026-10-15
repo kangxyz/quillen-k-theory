@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineRestrictionSections
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.RestrictionSections
 
 /-! # Original affine section comparison maps
 
@@ -23,7 +23,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped ChangeOfRings
 namespace QuillenTest.AffineSectionComparison
 
-open Quillen
 open AlgebraicGeometry.Scheme.Modules
 variable {R S : CommRingCat.{u}} (φ : R ⟶ S)
 

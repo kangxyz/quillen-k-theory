@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedModuleReplacement
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalReplacement
 
@@ -12,6 +13,12 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalReplace
 replacement for geometric chain maps from affine strict-perfect sheaf complexes to
 arbitrary termwise quasicoherent sheaf complexes. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
@@ -22,7 +29,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 open Quillen.ModuleComplex.PrincipalLocalization
 attribute [local instance] HasDerivedCategory.standard
 

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Identity
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineTensor
@@ -19,17 +20,15 @@ isomorphism and descended along an actual affine open cover. All comparisons
 use the installed derived units and original cartesian base-change mate.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+
+
+open AlgebraicGeometry.Scheme.Modules
+
 open Quillen
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.PerfectComplexes.ProjectiveLine
-export AlgebraicGeometry.Scheme.Modules
-  (derivedFlatPullbackPlusIdIso)
-end Quillen.PerfectComplexes.ProjectiveLine
-
-end
 
 
 
@@ -42,6 +41,7 @@ open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Modules
   AlgebraicGeometry.Scheme.ProjectiveLine
 namespace Quillen.PerfectComplexes.ProjectiveLine
 
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance nativeProjectionPerfectStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 
@@ -62,7 +62,8 @@ theorem perfect_derivedFlatPullbackPlus {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f
     (DerivedCategory.Plus.ι.mapIso
       (asIso ((Scheme.Modules.pullback f).rightDerivedFunctorPlusUnit.app L) ≪≫
         (derivedFlatPullbackPlus f).mapIso eL))
-    ((perfectDerivedObjects_toDerived_iff X ((pullbackComplex f).obj L.obj)).mpr
+    ((perfectDerivedObjects_toDerived_iff X ((AlgebraicGeometry.Scheme.Modules.Complex.pullback
+      f).obj L.obj)).mpr
       (locallyPerfect_flatPullback f hL))
 
 /-- The original native affine comparison gives a cartesian square over the identity base. -/
@@ -112,7 +113,8 @@ theorem perfectDerivedObjects_of_openImmersionCover
     apply locallyPerfect_of_openImmersionCover Y j hc
     intro i
     have := isIso_derivedFlatPullbackPlusUnit (j i)
-    have hp : locallyPerfect (Y i) ((pullbackComplex (j i)).obj L.obj) :=
+    have hp : locallyPerfect (Y i) ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (j i)).obj
+      L.obj) :=
       (perfectDerivedObjects_toDerived_iff (Y i) _).mp
         ((perfectDerivedObjects (Y i)).prop_of_iso
           (DerivedCategory.Plus.ι.mapIso

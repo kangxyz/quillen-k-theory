@@ -5,14 +5,19 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassTransition
 
 /-! Original zero-level Laurent loops, independent structure parameters, and actual iterated seeds.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS
-open Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
+open Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.SectionBassSeed
 

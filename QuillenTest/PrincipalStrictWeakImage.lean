@@ -10,6 +10,10 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalStrictW
 /-! # Unconditional original principal strict-image comparison consumers -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 

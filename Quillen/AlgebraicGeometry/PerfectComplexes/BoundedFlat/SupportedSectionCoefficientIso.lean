@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSections
 public import Quillen.CategoryTheory.ObjectProperty.LiftComposition
 
@@ -68,17 +69,21 @@ end
 theorem boundedFlatAffineSupportedPairPullback_forget :
     boundedFlatPerfectSupportedPullback (boundedFlatAffineSupportedPairSquare j j' f l h) ⋙
         (boundedFlatPerfectSupported j').ι =
-      (boundedFlatPerfectSupported j).ι ⋙ pullbackComplex (Spec.map f) :=
+      (boundedFlatPerfectSupported j).ι ⋙ AlgebraicGeometry.Scheme.Modules.Complex.pullback
+        (Spec.map f) :=
   Quillen.ObjectProperty.lift_comp_ι (boundedFlatPerfectSupported j')
-    ((boundedFlatPerfectSupported j).ι ⋙ pullbackComplex (Spec.map f))
+    ((boundedFlatPerfectSupported j).ι ⋙ AlgebraicGeometry.Scheme.Modules.Complex.pullback (Spec.map
+      f))
     (fun K ↦ boundedFlatPerfectSupported_pairPullback
       (boundedFlatAffineSupportedPairSquare j j' f l h) K.property)
 /-- The original bounded-flat pullback forgets to the exact original complex pullback. -/
 theorem boundedFlatAffineOriginalPullback_forget :
     boundedFlatPerfectPullback (Spec.map f) ⋙ (boundedFlatPerfect (Spec S)).ι =
-      (boundedFlatPerfect (Spec R)).ι ⋙ pullbackComplex (Spec.map f) :=
+      (boundedFlatPerfect (Spec R)).ι ⋙ AlgebraicGeometry.Scheme.Modules.Complex.pullback (Spec.map
+        f) :=
   Quillen.ObjectProperty.lift_comp_ι (boundedFlatPerfect (Spec S))
-    ((boundedFlatPerfect (Spec R)).ι ⋙ pullbackComplex (Spec.map f))
+    ((boundedFlatPerfect (Spec R)).ι ⋙ AlgebraicGeometry.Scheme.Modules.Complex.pullback (Spec.map
+      f))
     (fun K ↦ boundedFlatPerfect_pullback (Spec.map f) K.property)
 
 section
@@ -97,7 +102,8 @@ theorem boundedFlatAffineSupportedEvaluationPullback_forget :
     (boundedFlatPerfectSupported j') (boundedFlatAffineSupportedEvaluation j)
     (boundedFlatPerfectSupportedPullback (boundedFlatAffineSupportedPairSquare j j' f l h))
     (boundedFlatAffineOriginalEvaluation R) (boundedFlatPerfect (Spec R)).ι
-    (pullbackComplex (Spec.map f)) (boundedFlatPerfectPullback (Spec.map f))
+    (AlgebraicGeometry.Scheme.Modules.Complex.pullback (Spec.map f)) (boundedFlatPerfectPullback
+      (Spec.map f))
     (boundedFlatPerfect (Spec S)).ι (boundedFlatAffineSupportedEvaluation_forget j)
     (boundedFlatAffineSupportedPairPullback_forget j j' f l h)
     (boundedFlatAffineOriginalPullback_forget f)

@@ -6,10 +6,12 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.Functor
 public import Quillen.KTheory.Equivalence
 public import Quillen.KTheory.Map.CommonAmbient
-public import Quillen.CategoryTheory.SmallModel.Abelian
+public import Aglib.CategoryTheory.SmallModel.Abelian
 public import Quillen.CategoryTheory.SmallModel.Functoriality
 
 /-!
@@ -21,6 +23,9 @@ Use `E.K n` for an exact structure, `F.KMap n` for an exact functor, and
 for the group-valued `SmallExactCategory.KFunctor` without new mathematical data.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

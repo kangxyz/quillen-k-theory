@@ -22,6 +22,9 @@ coefficient replacement, Pi-one calculation, cover, or desired leg certificate
 is used.
 -/
 @[expose] public section
+
+open Quillen.DoubleCylinder
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

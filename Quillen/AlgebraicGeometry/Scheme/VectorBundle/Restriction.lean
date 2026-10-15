@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
 public import Aglib.AlgebraicGeometry.Modules.FinitePresentation.Transport
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.KTheory
@@ -19,21 +20,12 @@ both freeness and finiteness survive. The induced exact functor and K-map use
 the underlying geometric restriction, not a surrogate module functor.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.SchemeSheaf
-export AlgebraicGeometry.Scheme.Modules
-  (finiteLocallyFree_restrict localBasisPushforward_preservesColimits pushforwardLocalBasis
-  pushforwardLocalBasis_isFiniteType pushforwardLocalBasis_isLocallyFreeData
-  vectorBundleExactRestrict vectorBundleRestrict vectorBundleRestrict_additive
-  vectorBundleRestrict_comp_forget)
-end Quillen.SchemeSheaf
-
-end
 
 
 

@@ -12,10 +12,14 @@ Consumers of the original section grade's algebraic extension. The zero criterio
 actual raw restriction image and original perfect evaluation, without replacing the quotient.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.PerfectComplexes AlgebraicGeometry.Scheme.AffineOpenPair
-open Quillen.Waldhausen Quillen.Waldhausen.AlgebraicGrothendieck
+open AlgebraicGeometry.Scheme.AffineOpenPair
+open Quillen.Waldhausen.AlgebraicGrothendieck
 universe u
 namespace QuillenTest.FullOpenSectionGradingLift
 

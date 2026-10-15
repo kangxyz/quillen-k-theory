@@ -6,11 +6,15 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Devissage.Setup
 public import Mathlib.CategoryTheory.Abelian.ShortExact
 
 /-! # Lifting actual filtrations into a subquotient-closed abelian category -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Homology.HomotopyCategory.Plus.BoundedComparison
 public import Quillen.Algebra.Homology.HomotopyCategory.BoundedProperty
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.DerivedPushforwardVectorBundle
 

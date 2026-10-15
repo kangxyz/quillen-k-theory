@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChange
 
 /-!
@@ -16,6 +17,9 @@ Every conflation of finite projective modules splits; preserving this explicit
 splitting proves exactness for arbitrary ring homomorphisms.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 

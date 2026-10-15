@@ -22,11 +22,22 @@ universe u
 namespace Quillen.PerfectComplexes.SplitTripleSimplex
 variable {X Y Z T : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ T)
 
+/-- The scalar triangle on vertices `0, 1, 2` for the first left split-triple comparison. -/
 def leftFirstParameter := triangle (triangleFace 0 1 2 (by decide) (by decide))
+/-- The scalar triangle on vertices `2, 3, 7` for the second left split-triple comparison. -/
 def leftSecondParameter := triangle (triangleFace 2 3 7 (by decide) (by decide))
+/--
+The scalar triangle on vertices `0, 2, 7` for the normalized left triple-composition comparison.
+-/
 def normalizedLeftParameter := triangle (triangleFace 0 2 7 (by decide) (by decide))
+/-- The scalar triangle on vertices `0, 4, 5` for the first right split-triple comparison. -/
 def rightFirstParameter := triangle (triangleFace 0 4 5 (by decide) (by decide))
+/-- The scalar triangle on vertices `5, 6, 7` for the second right split-triple comparison. -/
 def rightSecondParameter := triangle (triangleFace 5 6 7 (by decide) (by decide))
+/--
+The scalar triangle on vertices `0, 5, 7` for the normalized right triple-composition
+comparison.
+-/
 def normalizedRightParameter := triangle (triangleFace 0 5 7 (by decide) (by decide))
 
 /-- The fully split left path has precisely the old two-by-two association. -/

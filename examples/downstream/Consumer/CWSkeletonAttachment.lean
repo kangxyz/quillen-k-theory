@@ -8,8 +8,13 @@ public import Quillen.Topology.CWComplex.SkeletonExtension
 
 /-! # Independent clients of the actual one-step extension theorem -/
 @[expose] public section
+
+open Topology
+
+open Quillen.ClassicalCW
+
 noncomputable section
-open Set Topology
+open Set
 universe u v w
 namespace Quillen.Consumer.CWSkeletonAttachment
 open ClassicalCW

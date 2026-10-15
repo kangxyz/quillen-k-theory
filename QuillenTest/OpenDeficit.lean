@@ -15,8 +15,11 @@ cofinality is used for concentration, while the actual zero-degree cokernel need
 No Bass transition or telescope vanishing is assumed.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.OpenDeficit

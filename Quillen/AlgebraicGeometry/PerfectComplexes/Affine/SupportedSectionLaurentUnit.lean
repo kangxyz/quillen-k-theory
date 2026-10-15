@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionUnitHomotopy
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionLaurentUnit
 
@@ -20,9 +21,12 @@ The fixed-open coefficient diagram is supplied by its separate diagram owner; co
 actual Bass seed remains separate.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange
+open Quillen.Waldhausen.IteratedS
 open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes

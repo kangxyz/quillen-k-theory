@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineChartSections
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffinePushforward
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Pushforward
 
 /-! # The actual tilde counit on affine chart pushforwards
 
@@ -16,8 +16,9 @@ The intermediate scheme and its projection need not be affine.
 -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 section

@@ -6,10 +6,17 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.MayerVietoris
 
 /-! # Supported Mayer–Vietoris consumers -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section
@@ -18,7 +25,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u
 namespace QuillenTest.SupportedMayerVietoris
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.SupportedMayerVietoris
+open Quillen.PerfectComplexes.SupportedMayerVietoris
 local instance (Y : Scheme.{u}) (A : Y.Opens) (n : ℕ) : CommGroup (PerfectSupportedK A.ι n) :=
   Quillen.Waldhausen.Additivity.KCommGroup (perfectSupportedWaldhausen A.ι) n
 variable {V X : Scheme.{u}} [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace V]

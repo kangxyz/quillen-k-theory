@@ -16,6 +16,9 @@ attachment edge, a proper zero-divisor family, and empty opens are tested.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -23,7 +26,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated
 open AlgebraicGeometry HomologicalComplex
 open Quillen.ModuleComplex Quillen.ModuleComplex.PrincipalLocalization
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 attribute [local instance] HasDerivedCategory.standard
 namespace QuillenTest.FinitePrincipalApproximation
 

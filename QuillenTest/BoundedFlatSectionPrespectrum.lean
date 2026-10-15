@@ -14,8 +14,12 @@ The strict spectrum maps retain original coefficient restrictions, literal compo
 actual original K-map under the zero-space comparison.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.Waldhausen
+open CategoryTheory AlgebraicGeometry
 open scoped unitInterval
 universe u
 namespace QuillenTest.BoundedFlatSectionPrespectrum

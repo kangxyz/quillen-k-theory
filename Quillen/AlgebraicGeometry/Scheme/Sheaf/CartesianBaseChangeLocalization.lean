@@ -4,15 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Cartesian
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianBaseChangeHorizontal
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianOpenBaseChangeMate
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenCoverExactness
+public import Aglib.AlgebraicGeometry.Modules.Locality.Exactness
 
 /-! # Target-open localization of the original geometric base-change mate -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

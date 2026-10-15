@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.GrothendieckGroup.Basic
 public import Quillen.CategoryTheory.ExactCategory.Functor
 
@@ -15,6 +16,9 @@ These are algebraic Grothendieck groups. Their comparison with the homotopical
 K₀ remains a separate theorem.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

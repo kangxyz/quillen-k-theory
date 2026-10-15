@@ -7,7 +7,8 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.CoherentHomology
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlatPullback
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.FlatPullback
+public import Aglib.AlgebraicGeometry.Modules.Coherent.FlatPullback
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FlatPullback
 
 /-!
 # Original coherent-homology comparison for flat perfect pullback

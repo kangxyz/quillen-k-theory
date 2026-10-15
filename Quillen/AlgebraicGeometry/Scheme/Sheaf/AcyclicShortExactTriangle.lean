@@ -5,9 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Pushforward
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedSingleAcyclicity
-public import Quillen.Algebra.Homology.DerivedCategory.PlusSingleTriangle
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedPushforwardSection
+public import Aglib.Algebra.Homology.DerivedCategory.Plus.SingleTriangle
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PushforwardSection
 
 /-!
 # The actual derived triangle of a short exact sequence with acyclic last terms
@@ -17,8 +18,9 @@ The comparison preserves the original derived connecting morphism.
 -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 

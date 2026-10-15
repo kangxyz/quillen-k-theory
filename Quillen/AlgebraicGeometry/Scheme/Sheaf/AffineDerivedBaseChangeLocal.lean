@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
+public import Aglib.AlgebraicGeometry.Cohomology.BaseChange.Flat
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineDerivedBaseChangeCoordinates
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChangeBaseOpen
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChangeOpenCover
@@ -12,8 +13,9 @@ public import Mathlib.AlgebraicGeometry.Morphisms.Affine
 /-! # Affine-morphism derived base change on quasicoherent single sheaves -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -33,7 +35,7 @@ theorem isIso_derivedFlatBaseChangeMap_affineSource_single
       ((DerivedCategory.Plus.singleFunctor U.Modules 0).obj M)) := by
   let Y := V.affineCover.X
   let k := V.affineCover.f
-  let Z := fun i => pullback b (k i)
+  let Z := fun i => CategoryTheory.Limits.pullback b (k i)
   let c := fun i => pullback.fst b (k i)
   let d := fun i => pullback.snd b (k i)
   have hs (i) : IsPullback (c i) (d i) b (k i) := IsPullback.of_hasPullback b (k i)
@@ -60,7 +62,7 @@ theorem isIso_derivedFlatBaseChangeMap_affineHom_single
   let D := C.pullback₁ j
   let Y := D.X
   let k := D.f
-  let Z := fun i => pullback b (k i)
+  let Z := fun i => CategoryTheory.Limits.pullback b (k i)
   let c := fun i => pullback.fst b (k i)
   let d := fun i => pullback.snd b (k i)
   have hs (i) : IsPullback (c i) (d i) b (k i) := IsPullback.of_hasPullback b (k i)
@@ -69,7 +71,7 @@ theorem isIso_derivedFlatBaseChangeMap_affineHom_single
   intro i
   let e := C.f i
   let l := pullback.snd j e
-  let A := pullback f e
+  let A := CategoryTheory.Limits.pullback f e
   let aa := pullback.fst f e
   let ff := pullback.snd f e
   have he : IsPullback aa ff f e := IsPullback.of_hasPullback f e

@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.GilletWaldhausen.QuotientExact
 public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 
@@ -18,6 +20,9 @@ The relative-pushout cofibration condition is derived from exactness of
 the quotient, rather than supplied as a hypothesis.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

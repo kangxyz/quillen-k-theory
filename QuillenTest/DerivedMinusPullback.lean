@@ -5,17 +5,21 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedMinusPullbackComposition
 
 /-! Semantic consumers of genuine ambient bounded-above derived pullback. -/
 @[expose] public section
+
+open Quillen.CochainComplex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w w₁ w₂ w₃
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.CochainComplex AlgebraicGeometry.Scheme.Modules
+open AlgebraicGeometry.Scheme.Modules
 namespace QuillenTest.DerivedMinusPullback
 
 open Quillen
@@ -51,7 +55,7 @@ theorem original_sheaf_quasiIso_inverted {X Y : Scheme.{u}} (f : X ⟶ Y)
     [HasDerivedCategory.{w} X.Modules] {K L : BoundedAboveComplex Y.Modules}
     (s : K ⟶ L) [QuasiIso s.hom] :
     IsIso (DerivedCategory.Q.map
-      ((Quillen.PerfectComplexes.pullbackComplex f).map (flatModelMap s))) := by
+      ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map (flatModelMap s))) := by
   have := pullback_flatModelMap_quasiIso f s
   infer_instance
 
@@ -72,7 +76,8 @@ def actual_derived_object {X Y : Scheme.{u}} (f : X ⟶ Y)
     [HasDerivedCategory.{w₁} Y.Modules] [HasDerivedCategory.{w₂} X.Modules]
     (K : BoundedAboveComplex Y.Modules) :
     ((derivedPullbackMinus f).obj ((boundedAboveQMinus Y.Modules).obj K)).obj ≅
-      DerivedCategory.Q.obj ((Quillen.PerfectComplexes.pullbackComplex f).obj (flatModel Y K)) :=
+      DerivedCategory.Q.obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj (flatModel Y
+        K)) :=
   derivedPullbackMinusObjectIso f K
 
 /-- Identity pullback acts naturally as the identity on every ambient derived morphism. -/
@@ -90,7 +95,8 @@ def successive_pullbacks_on_flat_input {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y
     (hK : ∀ n, stalkwiseFlat Z (K.obj.X n)) :
     ((derivedPullbackMinus f).obj
       ((derivedPullbackMinus g).obj ((boundedAboveQMinus Z.Modules).obj K))).obj ≅
-      DerivedCategory.Q.obj ((Quillen.PerfectComplexes.pullbackComplex (f ≫ g)).obj K.obj) :=
+      DerivedCategory.Q.obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (f ≫ g)).obj K.obj)
+        :=
   (DerivedCategory.Minus.ι).mapIso
       ((derivedPullbackMinusCompIso f g).app ((boundedAboveQMinus Z.Modules).obj K)).symm ≪≫
     derivedPullbackMinusFlatObjectIso (f ≫ g) K hK

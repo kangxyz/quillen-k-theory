@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.AlgebraicGeometry.Modules.Complex.AcyclicSupport
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativePhiObjects
@@ -18,17 +19,15 @@ the original total augmentation preserve acyclicity on that same open. No
 compactness of the open, quasi-separatedness or source-term quasicoherence is used.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativePhi
-export AlgebraicGeometry.Scheme.Modules.Complex
-  (coprod_acyclic)
-end Quillen.PerfectComplexes.ProjectiveLine.P5NativePhi
-
-end
 
 
 
@@ -49,11 +48,15 @@ lemma rawBeforeTotal_preservesSupport (X : QuasiCompactSchemes.{u}) (Z : X.obj.O
     (hA : ((restrict Z.ι).obj A.obj).Acyclic) (hB : ((restrict Z.ι).obj B.obj).Acyclic) :
     ((restrict ((nativeProjection.app X).hom ⁻¹ᵁ Z).ι).obj
       ((rawBeforeTotal X).obj (A, B))).Acyclic := by
-  exact coprod_preservesSupport ((nativeProjection.app X).hom ⁻¹ᵁ Z).ι _ _
-    (flatPullback_preservesSupport (nativeProjection.app X).hom Z A.obj hA)
-    (leftTensor_preservesSupport ((nativeProjection.app X).hom ⁻¹ᵁ Z).ι
+  exact AlgebraicGeometry.Scheme.Modules.Complex.coprod_restrict_acyclic ((nativeProjection.app
+    X).hom ⁻¹ᵁ Z).ι _ _
+    (AlgebraicGeometry.Scheme.Modules.Complex.pullback_restrict_acyclic (nativeProjection.app X).hom
+      Z A.obj hA)
+    (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft_restrict_acyclic ((nativeProjection.app
+      X).hom ⁻¹ᵁ Z).ι
       (nativeTautologicalLine X) _
-      (flatPullback_preservesSupport (nativeProjection.app X).hom Z B.obj hB))
+      (AlgebraicGeometry.Scheme.Modules.Complex.pullback_restrict_acyclic (nativeProjection.app
+        X).hom Z B.obj hB))
 
 /-- The same support property holds for the actual original bounded-model coproduct. -/
 lemma beforeTotal_preservesSupport (X : QuasiCompactSchemes.{u}) (Z : X.obj.Opens)
@@ -88,11 +91,15 @@ lemma nativeTwoSummands_preservesSupport (X : QuasiCompactSchemes.{u}) (Z : X.ob
   let : PreservesBinaryBiproducts i := preservesBinaryBiproducts_of_preservesBiproducts i
   let : PreservesColimitsOfShape (Discrete WalkingPair) i :=
     preservesBinaryCoproducts_of_preservesBinaryBiproducts i
-  have hab := coprod_preservesSupport ((nativeProjection.app X).hom ⁻¹ᵁ Z).ι _ _
-    (flatPullback_preservesSupport (nativeProjection.app X).hom Z A.obj hA)
-    (leftTensor_preservesSupport ((nativeProjection.app X).hom ⁻¹ᵁ Z).ι
+  have hab := AlgebraicGeometry.Scheme.Modules.Complex.coprod_restrict_acyclic
+    ((nativeProjection.app X).hom ⁻¹ᵁ Z).ι _ _
+    (AlgebraicGeometry.Scheme.Modules.Complex.pullback_restrict_acyclic (nativeProjection.app X).hom
+      Z A.obj hA)
+    (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft_restrict_acyclic ((nativeProjection.app
+      X).hom ⁻¹ᵁ Z).ι
       (nativeTautologicalLine X) _
-      (flatPullback_preservesSupport (nativeProjection.app X).hom Z B.obj hB))
+      (AlgebraicGeometry.Scheme.Modules.Complex.pullback_restrict_acyclic (nativeProjection.app
+        X).hom Z B.obj hB))
   intro n
   exact (hab n).of_iso
     ((restrict ((nativeProjection.app X).hom ⁻¹ᵁ Z).ι).mapIso (asIso

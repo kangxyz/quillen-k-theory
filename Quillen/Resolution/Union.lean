@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.Resolution.Bounded
 public import Quillen.Topology.FilteredRealization.NerveColimit
 public import Quillen.Topology.FilteredRealization.HomotopyEquivalence

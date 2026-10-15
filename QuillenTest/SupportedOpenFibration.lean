@@ -20,13 +20,17 @@ restriction maps with forgetting support.
 
 @[expose] public section
 
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 namespace QuillenTest.SupportedOpenFibration
-open Quillen Quillen.PerfectComplexes Waldhausen Fibration
+open Quillen Waldhausen Fibration
 
 /-- The actual union-support fiber equivalence retains both the original
 complex and every original chain map, in both directions. -/

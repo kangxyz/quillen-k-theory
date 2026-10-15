@@ -19,7 +19,6 @@ freeness. The original inclusion and projection form the displayed short exact s
 @[expose] public section
 
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
 
 

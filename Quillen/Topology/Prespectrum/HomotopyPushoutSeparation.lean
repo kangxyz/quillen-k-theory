@@ -10,8 +10,10 @@ public import Mathlib.Topology.Separation.Basic
 
 /-! # Closed point fibers of the actual reduced double mapping cylinder -/
 @[expose] public section
+
+open Topology
 noncomputable section
-open CategoryTheory Set Topology
+open CategoryTheory Set
 open scoped unitInterval
 universe u
 namespace Quillen.LoopPrespectrum.HomotopyPushout

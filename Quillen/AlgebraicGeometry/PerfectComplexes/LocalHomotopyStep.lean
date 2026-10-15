@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalLifting
 public import Mathlib.Algebra.Homology.HomotopyCategory.HomComplex
 public import Mathlib.Tactic.Abel
@@ -20,6 +21,9 @@ lifting step; a bounded descending induction is still needed for a complete
 local nullhomotopy theorem.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

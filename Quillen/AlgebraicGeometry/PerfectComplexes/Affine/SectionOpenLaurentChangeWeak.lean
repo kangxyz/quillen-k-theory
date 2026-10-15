@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionOpenDiagramLaurent
 
 /-!
@@ -16,9 +18,12 @@ Consequently every realized homotopy value, including degree zero, is carried to
 track without reparameterization or an assumed seed compatibility.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
-open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

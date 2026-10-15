@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.Map.CoherenceData
 public import Quillen.Topology.Realization.HomotopyBridge
 
@@ -18,6 +20,9 @@ that basepoint. Homotopy invariance of actual homotopy-group maps therefore
 proves the composition law for the zero-based Quillen K-group homomorphisms.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

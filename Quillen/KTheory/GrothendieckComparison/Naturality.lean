@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.GrothendieckComparison.Edges
 public import Quillen.KTheory.Map.CoherenceData
 public import Quillen.KTheory.GrothendieckGroup.Map
@@ -18,6 +20,9 @@ all basepoint transports use the canonical zero-object isomorphism already
 used by `CategoryTheory.ExactCategory.ExactFunctor.KMap`.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

@@ -19,7 +19,7 @@ arrow induces zero on signed stable groups; no vanishing of its fine source is a
 -/
 @[expose] public section
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes

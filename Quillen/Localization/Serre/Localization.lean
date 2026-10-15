@@ -6,7 +6,9 @@ Authors: kangxyz
 
 module
 
-public import Quillen.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.KTheory.GrothendieckGroup.Map
 public import Quillen.KTheory.Map.Basic
 public import Mathlib.CategoryTheory.Abelian.SerreClass.Localization
@@ -25,6 +27,9 @@ long exact K-theory sequence, or identification of algebraic Grothendieck
 groups with homotopical K₀ is asserted here.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

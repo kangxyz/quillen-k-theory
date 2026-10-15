@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalScalar
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Spectrum.GlobalUnit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenConeFiberLoop
@@ -16,11 +17,17 @@ Only the restricted scalar is required to be a unit. Its original global endomor
 open-weak, and gives the actual relative-open cylinder and supported mapping-cone fiber loop.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.Fibration
 universe u
 namespace Quillen.PerfectComplexes
 

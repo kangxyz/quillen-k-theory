@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportComparison
 public import Quillen.Waldhausen.Functoriality.ExactEquivalence
 
@@ -16,6 +18,12 @@ bounded-flat full subcategory. Cofibrations retain their genuine supported
 quotients, as proved by exact restriction and its homology sequence.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open CategoryTheory.ExactCategory
 

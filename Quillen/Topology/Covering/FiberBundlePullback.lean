@@ -18,8 +18,10 @@ topology. Discrete fiber bundles therefore give actual covers after base change.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open Bundle Topology
+open Bundle
 open scoped Topology
 universe u
 namespace Quillen.Covering

@@ -13,9 +13,12 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionLaurentUn
 
 /-! Original open-pair, coefficient, zero and Laurent consumers for the full-open comparison. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes AlgebraicGeometry.Scheme.AffineOpenPair
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.FullOpenCoefficient
 

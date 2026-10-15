@@ -15,6 +15,11 @@ the literal inverse image of the compact base open. The supported functor
 still has exactly the original ambient two-summand complex and chain map.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.OpenFunctorNaturality
+open Quillen.Waldhausen
+open Quillen.Waldhausen.ExtensionCategory
+
 open Quillen
 
 

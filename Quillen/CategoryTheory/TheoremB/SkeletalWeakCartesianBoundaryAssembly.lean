@@ -20,6 +20,9 @@ assumed; the boundary-to-cell square is already genuinely Cartesian.
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

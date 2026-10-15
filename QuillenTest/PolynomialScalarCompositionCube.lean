@@ -10,10 +10,14 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PolynomialScalar
 
 /-! # Original composition-cube faces and scalar/cofiber pasting consumers -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Convexity unitInterval
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
-open Quillen.Waldhausen AlgebraicGeometry.Scheme.PolynomialLaurent
+open Quillen.PerfectComplexes.Affine
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped Simplicial Topology
 universe u v
 namespace QuillenTest.PolynomialScalarCompositionCube

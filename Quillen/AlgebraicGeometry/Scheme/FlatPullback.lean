@@ -5,7 +5,10 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.FlatPullback
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pullback
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.AlgebraicGeometry.Modules.Coherent.FlatPullback
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FlatPullback
 public import Quillen.AlgebraicGeometry.Scheme.Pullback
 public import Quillen.AlgebraicGeometry.Scheme.Comparison.KToG
 public import Mathlib.CategoryTheory.Widesubcategory
@@ -81,7 +84,7 @@ omit [IsLocallyNoetherian X] in
 as a functor, before flatness is needed for the coherent exact structure. -/
 theorem vectorBundleToCoherent_pullback (f : X ⟶ Y) :
     AlgebraicGeometry.Scheme.Modules.vectorBundleToCoherent Y ⋙
-      AlgebraicGeometry.Scheme.Modules.Coherent.coherentPullback f =
+      AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePullback f =
       AlgebraicGeometry.Scheme.Modules.vectorBundlePullback f ⋙
         AlgebraicGeometry.Scheme.Modules.vectorBundleToCoherent X := rfl
 

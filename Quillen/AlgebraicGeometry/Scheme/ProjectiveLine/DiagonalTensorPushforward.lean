@@ -4,8 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.ProjectionFormula
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Pullback
+public import Aglib.AlgebraicGeometry.Modules.ProjectionFormula.FiniteLocallyFree
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Pullback
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalIncidence
 /-!
 # Tensor with a sheaf supported on the original relative diagonal

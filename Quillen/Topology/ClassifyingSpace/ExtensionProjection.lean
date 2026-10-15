@@ -5,12 +5,16 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionIdentityQuotient
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionFunctor
 public import Quillen.Topology.ClassifyingSpace.ExtensionTotal
 public import Quillen.Topology.ClassifyingSpace.AsSmall
 /-! # The original Q projection and its specified basepoint path -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 open CategoryTheory CategoryTheory.Limits ZeroObject
 noncomputable section

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurentFlat
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Spectrum.FlatSquare
 public import Quillen.Topology.Prespectrum.PushoutHomotopySquare
@@ -19,10 +20,17 @@ with the Bass square comparison or its transition requires further higher cohere
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
+
 noncomputable section
 
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.LoopPrespectrum
-open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 open Quillen.Waldhausen.IteratedS
 
 universe u

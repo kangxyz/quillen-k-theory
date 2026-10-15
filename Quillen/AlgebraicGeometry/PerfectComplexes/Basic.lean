@@ -31,4 +31,3 @@ strict-perfect K with all-perfect K or with the existing vector-bundle Q model.
 Those comparison and localization theorems require separate proofs.
 -/
 @[expose] public section
-

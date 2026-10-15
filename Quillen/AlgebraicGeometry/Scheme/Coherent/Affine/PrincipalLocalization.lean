@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.RestrictionExact
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.PrincipalSupport
 public import Quillen.GTheory.SmallModelLocalization
 
@@ -25,10 +27,12 @@ the support term with coherent sheaves on a closed subscheme without dévissage.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.KTheory.GrothendieckComparison.Edges
 public import Mathlib.CategoryTheory.SingleObj
 
@@ -17,6 +18,9 @@ and the exact pullback relation prove that this is a genuine group-valued
 functor, rather than an assumed presentation map.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

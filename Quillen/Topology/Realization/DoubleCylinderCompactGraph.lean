@@ -17,8 +17,10 @@ closed graphs and the finite-parameter quotient pullback topology.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Simplicial Topology
 universe u v w z
 namespace Quillen.DoubleCylinder

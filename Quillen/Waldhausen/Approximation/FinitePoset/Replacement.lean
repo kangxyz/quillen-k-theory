@@ -18,11 +18,14 @@ Insertion diagrams and projections construct a cofibrant replacement step with p
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 open Quillen.FinitePosetLatching
 universe w w' z u v u' v'
 
@@ -237,7 +240,7 @@ end
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 open Quillen.FinitePosetLatching
 universe w w' z u v u' v'
 
@@ -443,7 +446,7 @@ end
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 open Quillen.FinitePosetLatching
 universe w w' z u v u' v'
 

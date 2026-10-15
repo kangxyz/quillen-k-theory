@@ -16,9 +16,12 @@ including in negative degrees. Endpoint, entire cylinder and first-track interva
 literal, at every original level including zero.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open Quillen Quillen.LoopPrespectrum
 open scoped unitInterval
 universe u
 namespace QuillenTest.SectionBassPushoutHomotopyStableEquivalence

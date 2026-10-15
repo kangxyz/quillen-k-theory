@@ -6,10 +6,10 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Restriction
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedPushforwardPlus
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenBaseChange
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.InjectiveRestriction
-public import Quillen.Algebra.Homology.DerivedCategory.RightDerivedFunctorPlusComposition
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.OpenImmersion
+public import Aglib.AlgebraicGeometry.Cohomology.Injective.Restriction
+public import Aglib.Algebra.Homology.DerivedCategory.RightDerivedFunctorPlus.Composition
 
 /-! # Original bounded-below derived direct image under open base change
 
@@ -19,20 +19,12 @@ quasicoherence, affine, finite, flat or noetherian assumptions on the direct-ima
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-open Quillen
-open Quillen.SchemeSheaf
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.SchemeSheaf
-export AlgebraicGeometry.Scheme.Modules
-  (derivedRestrictionPlus isIso_derivedRestrictionPlusUnit)
-end Quillen.SchemeSheaf
-
-end
 
 
 noncomputable section

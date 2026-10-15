@@ -14,6 +14,9 @@ Every finite stage, arbitrary signed degree, original fiber basepoint and comple
 coordinate is retained. The first proved cutoff includes genuine target-component coverage.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open scoped Topology unitInterval

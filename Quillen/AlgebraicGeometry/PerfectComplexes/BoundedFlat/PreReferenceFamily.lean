@@ -8,6 +8,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NativeSquar
 
 /-! Full original node families under repeated fixed precomposition and reference cancellation. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

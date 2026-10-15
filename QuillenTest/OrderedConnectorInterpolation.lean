@@ -9,6 +9,9 @@ public import Quillen.Topology.Realization.ConnectorSimplexFaces
 
 /-! Named regressions for actual finite interpolation and zero-coordinate faces. -/
 @[expose] public section
+
+open Quillen.NumerableConnectorCover
+
 noncomputable section
 open Convexity
 open scoped Topology unitInterval

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportRestriction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedStabilizedExtension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StabilizedExtensionTransport
@@ -20,6 +21,9 @@ image isomorphism and isoSpec, preserving original restrictions and support.
 The target E is an arbitrary all-sheaf complex satisfying local perfectness.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

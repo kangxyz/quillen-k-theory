@@ -4,44 +4,57 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NativeSquareFiveSimplex
 
 /-! Whole original polynomial and Laurent-chart square families before any overlap restriction. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Convexity
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
 open scoped Topology unitInterval
 universe u
 namespace Quillen.PerfectComplexes.CoefficientSquareFamilies
 variable {R : CommRingCat.{u}} (P : Over (Spec R)) {a b : Under R} (w : a ⟶ b)
 
+/-- The source model map for the polynomial projection naturality square of `w`. -/
 abbrev polynomialSource := NativeSquareFiveSimplex.source
   (coefficientMap P ((polynomialUnderFunctor R).map w)) (polynomialProjection P a)
+/-- The five nodes and their references for the polynomial projection naturality square of `w`. -/
 abbrev polynomialNodes := NativeSquareFiveSimplex.nodes
   (coefficientMap P ((polynomialUnderFunctor R).map w)) (polynomialProjection P a)
   (polynomialProjection P b) (coefficientMap P w)
-  (coefficientTransformation_naturality P (polynomialUnderCoefficient R) w)
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (polynomialUnderCoefficient R) w)
+/-- The 4-simplex encoding the polynomial projection naturality square of `w`. -/
 abbrev polynomialSimplex := NativeSquareFiveSimplex.simplex
   (coefficientMap P ((polynomialUnderFunctor R).map w)) (polynomialProjection P a)
   (polynomialProjection P b) (coefficientMap P w)
-  (coefficientTransformation_naturality P (polynomialUnderCoefficient R) w)
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (polynomialUnderCoefficient R) w)
 
 variable (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
+/-- The source model map for the coefficient naturality square of the chart `α` and arrow `w`. -/
 abbrev chartSource := NativeSquareFiveSimplex.source
   (coefficientMap P ((laurentUnderFunctor R).map w)) (coefficientMap P (α.app a))
+/-- The five nodes and their references for the coefficient naturality square of `α` and `w`. -/
 abbrev chartNodes := NativeSquareFiveSimplex.nodes
   (coefficientMap P ((laurentUnderFunctor R).map w)) (coefficientMap P (α.app a))
   (coefficientMap P (α.app b)) (coefficientMap P ((polynomialUnderFunctor R).map w))
-  (coefficientTransformation_naturality P α w)
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α w)
+/-- The 4-simplex encoding the coefficient naturality square of the chart `α` and arrow `w`. -/
 abbrev chartSimplex := NativeSquareFiveSimplex.simplex
   (coefficientMap P ((laurentUnderFunctor R).map w)) (coefficientMap P (α.app a))
   (coefficientMap P (α.app b)) (coefficientMap P ((polynomialUnderFunctor R).map w))
-  (coefficientTransformation_naturality P α w)
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α w)
 
 /-- The whole original polynomial square, on every original source input and level. -/
 theorem polynomial_native (n : ℕ) (t : unitInterval)

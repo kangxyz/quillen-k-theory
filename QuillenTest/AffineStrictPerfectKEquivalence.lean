@@ -17,6 +17,10 @@ non-domain, and the genuine all-scheme weak-arrow joint factorization.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.Affine
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 

@@ -9,6 +9,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSec
 
 /-! The original full-open Model map retains its actual functor and literal inherited zero. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair
@@ -16,7 +19,6 @@ universe u
 namespace QuillenTest.FullOpenSectionRestrictionModel
 
 open Quillen
-open Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]
 
 /-- The internal source expression is the exact original pointwise Model. -/

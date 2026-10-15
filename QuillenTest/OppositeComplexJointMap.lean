@@ -5,10 +5,17 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.JointComparison
 
 /-! # Original cross-category cocylinder consumers -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.OpenDerivedImage
+open Quillen.Waldhausen
+open Quillen.Waldhausen.SplitFactorization
+
 
 open CategoryTheory.ExactCategory
 
@@ -17,7 +24,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v u' v'
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite HomologicalComplex
-open Quillen Quillen.Waldhausen Quillen.PerfectComplexes
+open Quillen
 attribute [local instance] Abelian.hasFiniteBiproducts
 attribute [local instance] preservesBinaryBiproducts_of_preservesBiproducts
 namespace QuillenTest.OppositeJointMap

@@ -9,9 +9,12 @@ public import Quillen.Waldhausen.Fibration.CanonicalFiberObjectSquare
 
 /-! # Original transformation and reversed canonical-fiber square consumers -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor Convexity
-open Quillen.Waldhausen Quillen.Waldhausen.QuotientRows Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.QuotientRows Quillen.Waldhausen.Fibration
 open scoped Simplicial Topology
 universe u v
 namespace QuillenTest.CanonicalFiberObjectSquare

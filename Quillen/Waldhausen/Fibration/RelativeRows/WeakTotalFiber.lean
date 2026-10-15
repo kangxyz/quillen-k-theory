@@ -22,6 +22,10 @@ finite degrees, including components, without an assumed global fiber theorem.
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+open Quillen.TwoSidedBar
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -10,8 +10,11 @@ public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumCompositionHo
 /-! Original composite/concatenated faces and all three independent prespectrum coordinates. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
-open CategoryTheory Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open CategoryTheory Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
 open scoped Topology unitInterval
 universe u
 

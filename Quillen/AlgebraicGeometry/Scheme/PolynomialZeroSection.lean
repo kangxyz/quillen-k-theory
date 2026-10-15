@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.PolynomialLaurent
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Relative
 
 /-!
 # Zero sections of the original polynomial products
@@ -16,7 +16,10 @@ section of the existing polynomial functor, without replacing its pullbacks.
 The projection triangle is an equality of the original morphisms.
 -/
 @[expose] public section
-open Quillen
+
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
+
+open AlgebraicGeometry.Scheme.Products
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

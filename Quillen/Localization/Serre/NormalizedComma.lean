@@ -6,12 +6,16 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.LocalizationComma
 public import Quillen.Localization.Serre.BasedFiberComparison
 public import Quillen.CategoryTheory.TheoremB.FunctorIso
 
 /-! The zero-comma equivalence for the exact normalized functors underlying KMap. -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 universe u

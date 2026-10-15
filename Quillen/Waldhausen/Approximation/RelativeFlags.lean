@@ -20,6 +20,9 @@ the source leg is pointwise weak by App1 and target saturation.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.FunctorialFactorization
+
+
 
 noncomputable section
 

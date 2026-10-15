@@ -18,6 +18,9 @@ model. The original functor is retained by enlarging only its target weak class.
 This construction makes no assertion about the full open K₀ endpoint.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

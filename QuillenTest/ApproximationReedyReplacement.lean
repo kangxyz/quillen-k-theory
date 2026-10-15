@@ -15,9 +15,12 @@ finite dimension, original map equality, and retained chosen-zero vertices.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 
 noncomputable section
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 open Quillen.Waldhausen.FunctorialFactorization
 universe v u u'
 

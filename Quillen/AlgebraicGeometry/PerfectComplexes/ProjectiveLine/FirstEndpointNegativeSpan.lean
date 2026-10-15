@@ -18,6 +18,9 @@ the same center. Both arrows are the images of the actual alpha and beta;
 no line tensor is assumed flasque and no total-shift isomorphism is used.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

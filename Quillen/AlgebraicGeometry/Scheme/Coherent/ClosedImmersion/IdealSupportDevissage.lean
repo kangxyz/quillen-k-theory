@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.IdealSupport
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.SupportDevissage
@@ -22,10 +24,13 @@ factors annihilated by the entire ideal.
 -/
 @[expose] public section
 
+open Quillen.FiniteCentralDevissage
+open Quillen.PrincipalSupportDevissage
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section
@@ -64,7 +69,8 @@ instance supportRepresentation_additive : (supportRepresentation R I).Additive :
 
 /-- Scalar actions of the finite generating list, as actual natural maps. -/
 def supportOperators : List (𝟭 (SmallSupport R I) ⟶ 𝟭 (SmallSupport R I)) :=
-  (generators R I).toList.map (ScalarRepresentation.scalar (supportRepresentation R I))
+  (generators R I).toList.map
+    (Principal.ScalarRepresentation.scalar (supportRepresentation R I))
 
 /-- Joint annihilation by those generators. -/
 abbrev supportKilled : ObjectProperty (SmallSupport R I) := killedByAll (supportOperators R I)
@@ -74,9 +80,9 @@ theorem supportKilled_iff (M : SmallSupport R I) :
     supportKilled R I M ↔
       ∀ r ∈ I, ∀ m : (supportRepresentation R I).obj M, r • m = 0 := by
   change (∀ t ∈ (generators R I).toList.map
-    (ScalarRepresentation.scalar (supportRepresentation R I)), killed t M) ↔ _
+    (Principal.ScalarRepresentation.scalar (supportRepresentation R I)), killed t M) ↔ _
   simp only [List.forall_mem_map, Finset.mem_toList,
-    ScalarRepresentation.killed_iff]
+    Principal.ScalarRepresentation.killed_iff]
   constructor
   · intro h
     have hI : I ≤ Module.annihilator R ((supportRepresentation R I).obj M) := by
@@ -98,7 +104,8 @@ theorem supportOperators_nilpotent (M : SmallSupport R I) :
   have hM := (coherentGlobalSmallSupport_iff (openMap R I) M.obj).mp M.property
   obtain ⟨n, hn⟩ := supported_power_annihilates R I _ hM r
     (generator_mem R I (Finset.mem_toList.mp hr))
-  exact ⟨n, ScalarRepresentation.power_eq_zero (supportRepresentation R I) r M n hn⟩
+  exact ⟨n,
+    Principal.ScalarRepresentation.power_eq_zero (supportRepresentation R I) r M n hn⟩
 
 /-- The actual supported coherent category has finite filtrations with
 successive quotients annihilated by I. -/

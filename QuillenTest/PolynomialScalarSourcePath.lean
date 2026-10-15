@@ -10,10 +10,14 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PolynomialScalar
 
 /-! # The prescribed fine polynomial-cofiber source path -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry unitInterval
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration AlgebraicGeometry.Scheme.PolynomialLaurent
+open Quillen.PerfectComplexes.Affine
+open Quillen.Waldhausen.Fibration AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped Topology
 universe u
 namespace QuillenTest.PolynomialScalarSourcePath

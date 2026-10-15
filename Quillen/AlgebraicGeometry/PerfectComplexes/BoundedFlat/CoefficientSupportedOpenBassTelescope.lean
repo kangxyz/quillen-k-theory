@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenBassTower
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenBassTower
 public import Quillen.Topology.Prespectrum.TelescopeDiagramMap
 public import Quillen.Topology.Prespectrum.TelescopeConeDescentStable
 public import Quillen.Topology.Prespectrum.TelescopeStableRepresentability
@@ -27,8 +27,11 @@ actual coarse-to-fine restriction stable in every integer degree. No uniform
 whole-telescope connectivity or classical K-theory comparison is assumed.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes

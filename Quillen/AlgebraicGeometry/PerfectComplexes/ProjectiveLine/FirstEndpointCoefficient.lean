@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientOne
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueDiagonalExact
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SelfBaseChangeSpan
@@ -19,6 +21,11 @@ using the original tautological pullback-tensor mate, in its original order.
 No flasqueness of K tensor L is assumed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -46,7 +53,8 @@ abbrev coefficientUnit := tensorTotalUnit R
 lemma coefficientUnit_hom_app (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     ((coefficientUnit R).app K).hom =
       (godementTotalUnit (twoChartLine R)).app
-        ((tensorByLineRightComplex (tautologicalLine R)).obj K.obj) := rfl
+        ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)).obj K.obj) :=
+          rfl
 
 lemma coefficientUnit_quasiIso (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     QuasiIso ((coefficientUnit R).app K).hom :=
@@ -101,7 +109,8 @@ lemma coefficientMap_quasiIso (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
   have : QuasiIso
       ((Scheme.Modules.pullback (relativeFirst R)).mapCochainComplexPlus.map
         ((coefficientUnit R).app K)).hom :=
-    pullbackComplex_quasiIso (relativeFirst R) ((coefficientUnit R).app K).hom
+    AlgebraicGeometry.Scheme.Modules.Complex.pullback_quasiIso (relativeFirst R) ((coefficientUnit
+      R).app K).hom
   have : QuasiIso ((coefficientPullbackIso R).inv.app K).hom := inferInstance
   change QuasiIso (((coefficientPullbackIso R).inv.app K).hom ≫
     ((Scheme.Modules.pullback (relativeFirst R)).mapCochainComplexPlus.map

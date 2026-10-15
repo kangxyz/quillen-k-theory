@@ -27,10 +27,12 @@ through a stage.
 -/
 @[expose] public section
 
+open Topology
+
 
 noncomputable section
 
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 
 universe u v
 

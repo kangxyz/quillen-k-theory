@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FiniteFlatPushforward
 public import Quillen.AlgebraicGeometry.PerfectComplexes.QuillenComparison
 public import Quillen.AlgebraicGeometry.Scheme.FiniteFlatPushforward
@@ -53,7 +54,8 @@ theorem smallVectorBundleKMap_finiteFlatPushforward {X Y : Scheme.{u}}
       (AlgebraicGeometry.Scheme.Modules.schemeKPushforward f n) =
       ((AlgebraicGeometry.Scheme.Modules.vectorBundlePushforwardExact f).KMap n).comp
         (AlgebraicGeometry.Scheme.Modules.smallVectorBundleKMap X n) :=
-  ExactFunctor.smallModelToOriginal_commonAmbientKMap_naturality.{u + 1, u}
+  CategoryTheory.ExactCategory.ExactFunctor.smallModelToOriginal_commonAmbientKMap_naturality.{u +
+    1, u}
     (AlgebraicGeometry.Scheme.Modules.vectorBundlePushforwardExact f) n
 
 /-- The original small-model/Q/S equivalence commutes with finite flat direct image. -/

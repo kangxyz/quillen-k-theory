@@ -18,6 +18,9 @@ into a connected subspace uses the proved finite-range HELP rather than a liftin
 
 @[expose] public section
 
+open Quillen.CubicalSubdivision
+
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false

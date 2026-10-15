@@ -9,10 +9,13 @@ public import Quillen.Waldhausen.SConstruction.Rows.CofiberTwoFaces
 
 /-! # Consumers of the literal original cofiber row -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen Quillen.Waldhausen.QuotientRows
+open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen.QuotientRows
 open scoped Simplicial
 universe u v
 namespace QuillenTest.CofiberTwoRow

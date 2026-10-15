@@ -18,6 +18,9 @@ multiplication and proves commutativity, including degree zero.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.ExtensionCategory
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

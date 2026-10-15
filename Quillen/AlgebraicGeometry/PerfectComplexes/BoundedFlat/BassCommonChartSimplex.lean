@@ -4,16 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassOverlapReference
 
 /-! Both original complete chart restrictions are faces of one actual reference simplex. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite Convexity
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 open scoped Simplicial Topology unitInterval
 universe u
@@ -30,8 +35,8 @@ def chartNodes (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R) :=
     (coefficientMap P ((laurentUnderFunctor R).map v))
     (coefficientMap P (α.app a)) (coefficientMap P (α.app b))
     (coefficientMap P (α.app c))
-    (coefficientTransformation_naturality P α u).symm
-    (coefficientTransformation_naturality P α v).symm
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u).symm
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm
 
 /-- Every overlap node stores its full actual functor and common reference isomorphism. -/
 abbrev Node := Σ F : modelOf (boundedFlatPerfectWaldhausen (space (op P, a))) ⟶
@@ -74,9 +79,12 @@ def simplex : ModelSimplex
   ModelSimplex.ofIsos (commonReference P u v)
     (fun i ↦ (nodes P u v i).1) (fun i ↦ (nodes P u v i).2)
 
+/-- The face inclusion selecting the first 18 vertices, which carry the positive chart diagram. -/
 def plusFace : ⦋17⦌ ⟶ ⦋35⦌ :=
   SimplexCategory.Hom.mk ⟨Fin.castAdd 18, fun _ _ h ↦ h⟩
 
+/-- The face inclusion selecting the final 18 vertices, which carry the inverse-coordinate chart
+diagram. -/
 def minusFace : ⦋17⦌ ⟶ ⦋35⦌ :=
   SimplexCategory.Hom.mk ⟨Fin.natAdd 18, fun _ _ h ↦ Nat.add_le_add_left h 18⟩
 

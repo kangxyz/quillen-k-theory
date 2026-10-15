@@ -10,9 +10,12 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenKEquivalence
 /-! # Original affine relative-open enhancement consumers -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.Waldhausen
 universe u
 namespace QuillenTest.AffineOpenKEquivalence
 variable (R : CommRingCat.{u}) {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

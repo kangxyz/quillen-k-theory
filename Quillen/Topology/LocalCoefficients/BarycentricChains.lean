@@ -18,6 +18,9 @@ no triviality of the local system is used.
 
 @[expose] public section
 
+open Quillen.BarycentricSubdivision
+
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false

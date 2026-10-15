@@ -5,10 +5,17 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalImageExtensions
 
 /-! Semantic consumers of genuine principal strict weak-image closure. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
@@ -19,7 +26,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
-open HomologicalComplex Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open HomologicalComplex Quillen.PerfectComplexes.Affine
 open Quillen.ModuleComplex.PrincipalLocalization
 attribute [local instance] HasDerivedCategory.standard Abelian.hasFiniteBiproducts
 namespace QuillenTest.PrincipalStrictImageClosure

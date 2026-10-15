@@ -10,9 +10,12 @@ public import Quillen.Waldhausen.Approximation.Rows
 /-! Behavioral consumers for actual row approximation and its original maps. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
-open Quillen.Waldhausen Quillen.Waldhausen.QuotientRows
+open Quillen.Waldhausen.QuotientRows
 universe u v u' v'
 namespace ApproximationRowsConsumers
 variable {C : Type u} [Category.{v} C] {D : Type u'} [Category.{v'} D]

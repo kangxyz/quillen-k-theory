@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionGradingNull
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionRestrictionSeed
 public import Quillen.Waldhausen.SConstruction.Iterated.DiagramNullIdentityAction
@@ -22,10 +23,13 @@ Both independent times and all prespectrum levels are retained; Bass-seed compat
 uses these same whole tracks.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R)

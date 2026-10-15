@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.MixedNerves.RowPostcompose
 public import Quillen.Waldhausen.Fibration.MixedNerves.RowRealization
 public import Quillen.Waldhausen.SplitComplexes.Approximation
@@ -18,6 +19,9 @@ bisimplicial realization theorem therefore totalizes these actual forward
 maps. No naturality of the chosen row homotopy inverses is required.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 open CategoryTheory CochainComplex

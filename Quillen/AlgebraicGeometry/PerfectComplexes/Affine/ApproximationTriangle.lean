@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedComparison
 
 /-!
@@ -19,6 +20,9 @@ is given. Neither vanishing of the residual arrow nor splitting is assumed.
 No compactness or perfection hypothesis is needed for these triangle adapters.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

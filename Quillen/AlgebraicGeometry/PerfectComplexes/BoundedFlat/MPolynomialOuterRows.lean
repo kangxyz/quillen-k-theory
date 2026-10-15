@@ -8,6 +8,10 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MReferenceR
 
 /-! Full source-total and target-total binary rows of the unchanged moving rectangle. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -46,7 +50,15 @@ variable {A B C A' B' C' : Scheme.{u}}
   (a : A' ⟶ A) (b : B' ⟶ B) (c : C' ⟶ C)
   (hp : b ≫ p = p' ≫ a) (hq : c ≫ q = q' ≫ b)
 
+/--
+Selects the three source-total binary normalization nodes at vertices 0, 1, and 2 of the moving
+rectangle.
+-/
 def sourceTotalIndex : Fin 3 → Fin 18 := ![0, 1, 2]
+/--
+Selects the three target-total binary normalization nodes at vertices 0, 14, and 15 of the
+moving rectangle.
+-/
 def targetTotalIndex : Fin 3 → Fin 18 := ![0, 14, 15]
 
 /-- The original source total is precisely its unchanged native binary normalization row. -/

@@ -10,6 +10,9 @@ public import Quillen.Waldhausen.Cofinality.DenseKZero
 /-! # Actual coarse K-zero, original realized arrows and genuine dense-inclusion image consumers -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u

@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.PushforwardQuasiIso
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FirstEndpointCoefficient
 
 /-!
@@ -16,6 +18,11 @@ literal ordinary second images of actual flasque totals. No arbitrary ordinary
 pushforward exactness or second-projection perfect-pushforward premise is used.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -42,7 +49,7 @@ def originalFirstComplex (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
 /-- The literal original first pullback of the actual M coefficient. -/
 def pulledResolvedComplex (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     Complex (relativeSquare R) :=
-  (pullbackComplex (relativeFirst R)).obj ((resolved R).obj K).obj
+  (AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst R)).obj ((resolved R).obj K).obj
 
 /-- The original coefficient map is typed BEFORE applying totalization. -/
 def coefficientChainMap (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
@@ -56,7 +63,8 @@ lemma coefficientChainMap_naturality {K L : FlasqueBoundedBelow.Obj (twoChartLin
     (f : K ⟶ L) :
     ((FlasqueDiagonal.coefficient R .first).mapHomologicalComplex (.up ℤ)).map f.hom ≫
         coefficientChainMap R L = coefficientChainMap R K ≫
-      (pullbackComplex (relativeFirst R)).map ((resolved R).map f).hom :=
+      (AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst R)).map ((resolved R).map
+        f).hom :=
   congrArg (CochainComplex.Plus.ι (relativeSquare R).Modules).map
     ((coefficientMap R).naturality f)
 
@@ -74,7 +82,7 @@ lemma betaChainMap_quasiIso (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     ⟨pulledResolvedComplex R K, ((pulledResolvedPlus R).obj K).property⟩
   let g : X ⟶ Y := ObjectProperty.homMk (coefficientChainMap R K)
   have : QuasiIso g.hom := coefficientChainMap_quasiIso R K
-  exact FlasqueDiagonal.totalPushforwardPlus_quasiIso (relativeSecond R) g
+  exact AlgebraicGeometry.Scheme.Modules.Godement.totalPushforwardPlus_quasiIso (relativeSecond R) g
 
 lemma originalFirst_map_hom {K L : FlasqueBoundedBelow.Obj (twoChartLine R)} (f : K ⟶ L) :
     ((originalFirst R).map f).hom =
@@ -86,7 +94,8 @@ lemma comparisonTarget_map_hom {K L : FlasqueBoundedBelow.Obj (twoChartLine R)} 
     ((comparisonTarget R).map f).hom =
       ((Scheme.Modules.pushforward (relativeSecond R)).mapHomologicalComplex (.up ℤ)).map
         ((godementTotal (relativeSquare R)).map
-          ((pullbackComplex (relativeFirst R)).map ((resolved R).map f).hom)) := rfl
+          ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst R)).map ((resolved
+            R).map f).hom)) := rfl
 
 /-- The actual pre-total coefficient chain transformation, forgetting only its Plus proofs. -/
 def coefficientRawMap :
@@ -118,7 +127,7 @@ def coefficientEraseIso :
 def pulledEraseIso :
     pulledResolvedPlus R ⋙ CochainComplex.Plus.ι (relativeSquare R).Modules ≅
       (resolved R ⋙ (FlasqueBoundedBelow.objects (twoChartLine R)).ι) ⋙
-        pullbackComplex (relativeFirst R) :=
+        AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst R) :=
   let M := resolved R
   let F := toPlus (twoChartLine R)
   let A := Scheme.Modules.pullback (relativeFirst R)
@@ -126,18 +135,19 @@ def pulledEraseIso :
   let J := CochainComplex.Plus.ι (relativeSquare R).Modules
   Functor.associator (M ⋙ F) A.mapCochainComplexPlus J ≪≫
     Functor.isoWhiskerLeft (M ⋙ F) A.mapCochainComplexPlusCompι ≪≫
-    (Functor.associator (M ⋙ F) I (pullbackComplex (relativeFirst R))).symm ≪≫
+    (Functor.associator (M ⋙ F) I (AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst
+      R))).symm ≪≫
     Functor.isoWhiskerRight (Functor.associator M F I)
-      (pullbackComplex (relativeFirst R)) ≪≫
+      (AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst R)) ≪≫
     Functor.isoWhiskerRight (Functor.isoWhiskerLeft M (modelToPlusEraseIso (twoChartLine R)))
-      (pullbackComplex (relativeFirst R))
+      (AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst R))
 
 /-- The actual original raw coefficient transformation, transported before totalization. -/
 def coefficientActualRawMap :
     (FlasqueBoundedBelow.objects (twoChartLine R)).ι ⋙
         (FlasqueDiagonal.coefficient R .first).mapHomologicalComplex (.up ℤ) ⟶
       (resolved R ⋙ (FlasqueBoundedBelow.objects (twoChartLine R)).ι) ⋙
-        pullbackComplex (relativeFirst R) :=
+        AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst R) :=
   (coefficientEraseIso R).inv ≫ coefficientRawMap R ≫ (pulledEraseIso R).hom
 
 /-- Literal total and image of the actual original coefficient chain transformation. -/
@@ -147,7 +157,8 @@ def betaRawMap :
         godementTotal (relativeSquare R)) ⋙
           (Scheme.Modules.pushforward (relativeSecond R)).mapHomologicalComplex (.up ℤ) ⟶
     (((resolved R ⋙ (FlasqueBoundedBelow.objects (twoChartLine R)).ι) ⋙
-      pullbackComplex (relativeFirst R)) ⋙ godementTotal (relativeSquare R)) ⋙
+      AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst R)) ⋙ godementTotal
+        (relativeSquare R)) ⋙
         (Scheme.Modules.pushforward (relativeSecond R)).mapHomologicalComplex (.up ℤ) :=
   CategoryTheory.Functor.whiskerRight
     (CategoryTheory.Functor.whiskerRight (coefficientActualRawMap R)
@@ -180,12 +191,13 @@ def baseTargetEraseIso :
 /-- Only native associations and erasure of the actual original U(M) endpoint. -/
 def betaTargetIso :
     (((resolved R ⋙ (FlasqueBoundedBelow.objects (twoChartLine R)).ι) ⋙
-      pullbackComplex (relativeFirst R)) ⋙ godementTotal (relativeSquare R)) ⋙
+      AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst R)) ⋙ godementTotal
+        (relativeSquare R)) ⋙
         (Scheme.Modules.pushforward (relativeSecond R)).mapHomologicalComplex (.up ℤ) ≅
       comparisonTarget R ⋙ (FlasqueBoundedBelow.objects (twoChartLine R)).ι :=
   let M := resolved R
   let I := (FlasqueBoundedBelow.objects (twoChartLine R)).ι
-  let A := pullbackComplex (relativeFirst R)
+  let A := AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst R)
   let T := godementTotal (relativeSquare R)
   let B := (Scheme.Modules.pushforward (relativeSecond R)).mapHomologicalComplex (.up ℤ)
   Functor.associator ((M ⋙ I) ⋙ A) T B ≪≫
@@ -234,7 +246,7 @@ lemma betaRawMap_quasiIso (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
   let g : X ⟶ Y := ObjectProperty.homMk ((coefficientActualRawMap R).app K)
   have : QuasiIso g.hom := coefficientActualRawMap_quasiIso R K
   rw [betaRawMap_app]
-  exact FlasqueDiagonal.totalPushforwardPlus_quasiIso (relativeSecond R) g
+  exact AlgebraicGeometry.Scheme.Modules.Godement.totalPushforwardPlus_quasiIso (relativeSecond R) g
 
 private lemma quasiIso_triple_app {D : Type*} [Category D] (X : Scheme.{u})
     {F G H I : D ⥤ Complex X} (f : F ⟶ G) (g : G ⟶ H) (h : H ⟶ I) (K : D)

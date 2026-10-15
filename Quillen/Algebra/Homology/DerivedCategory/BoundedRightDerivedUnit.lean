@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Homology.BoundedComparison
+public import Aglib.Algebra.Homology.HomotopyCategory.Plus.BoundedComparison
 public import Mathlib.Algebra.Homology.DerivedCategory.RightDerivedFunctorPlus
 -- The public unit-component equation retains a hidden proof in the pinned mathlib version.
 -- Import its implementation to use that equation; no private declaration is referenced.

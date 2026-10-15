@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionOpenScalarInterchange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionOpenNullCoefficient
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionDiagramLaurent
@@ -20,10 +21,13 @@ naturality of the reversed null track therefore give its exact Laurent square. B
 the fixed-open pullback, and the original target Laurent unit remain explicit.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

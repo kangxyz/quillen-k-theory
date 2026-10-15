@@ -5,12 +5,17 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
+public import Aglib.Algebra.Polynomial.Laurent.Square
 public import Quillen.KTheory.Bass.StrictRingDiagram
 
 /-! Consumers of the closed strict Bass interface and its original polynomial/Laurent square. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory Quillen.KTheory.Bass Quillen.PolynomialBaseChange
+open CategoryTheory Quillen.KTheory.Bass
 universe u w
 namespace QuillenTest.StrictBassDiagram
 
@@ -18,22 +23,24 @@ open Quillen
 
 /-- Both chart maps have their literal original ring homomorphisms. -/
 theorem original_charts (R : CommRingCat.{u}) :
-    (laurentSquareFunctor.obj R).hom.right = CommRingCat.ofHom Polynomial.toLaurent ∧
-      (laurentSquareFunctor.obj R).right.hom = CommRingCat.ofHom
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).hom.right = CommRingCat.ofHom
+      Polynomial.toLaurent ∧
+      (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R).right.hom = CommRingCat.ofHom
         (LaurentPolynomial.invert.toRingHom.comp Polynomial.toLaurent) := ⟨rfl, rfl⟩
 
 /-- A coefficient map acts on all four corners by the original maps. -/
 theorem original_coefficients {R S : CommRingCat.{u}} (f : R ⟶ S) :
-    (laurentSquareFunctor.map f).left.left = f ∧
-      (laurentSquareFunctor.map f).left.right = polynomialMap f ∧
-      (laurentSquareFunctor.map f).right.left = polynomialMap f ∧
-      (laurentSquareFunctor.map f).right.right = laurentMap f := ⟨rfl, rfl, rfl, rfl⟩
+    (CommRingCat.PolynomialLaurent.laurentSquareFunctor.map f).left.left = f ∧
+      (CommRingCat.PolynomialLaurent.laurentSquareFunctor.map f).left.right = polynomialMap f ∧
+      (CommRingCat.PolynomialLaurent.laurentSquareFunctor.map f).right.left = polynomialMap f ∧
+      (CommRingCat.PolynomialLaurent.laurentSquareFunctor.map f).right.right = laurentMap f := ⟨rfl,
+        rfl, rfl, rfl⟩
 
 /-- The original pushout cylinder is sent to its actual constant composite at every time. -/
 theorem comparison_cylinder (F : CommRingCat.{u} ⥤ LoopPrespectrum.{w})
     (R : CommRingCat.{u}) (n : ℕ) (s : unitInterval)
     (x : (F.obj R).space n) :
-    let S := F.mapArrow.mapArrow.obj (laurentSquareFunctor.obj R)
+    let S := F.mapArrow.mapArrow.obj (CommRingCat.PolynomialLaurent.laurentSquareFunctor.obj R)
     (LoopPrespectrum.StrictSquare.comparison S).map n
         (LoopPrespectrum.HomotopyPushout.cylinder S.left.hom S.hom.left n (s, x)) =
       (F.map (coefficient R) ≫ F.map (CommRingCat.ofHom Polynomial.toLaurent)).map n x := rfl

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.KTheory.GrothendieckComparison.LoopComponents
 public import Quillen.Topology.ClassifyingSpace.OpenLoopComponents
 public import Mathlib.Topology.WithTopology
@@ -19,6 +20,9 @@ continuity, and fibers are exactly the original path components.
 -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
@@ -53,7 +57,7 @@ theorem loopKZeroLabel_eq_iff (γ δ : Path E.kBasepoint E.kBasepoint) :
     exact Quotient.exact he
   · intro h
     exact congrArg (fun a ↦ WithTopology.toTopology ⊥ (E.loopComponentsKZeroEquiv a))
-      (Quotient.sound h)
+      (_root_.Quotient.sound h)
 
 /-- Every original K₀ class is realized by an actual original based loop. -/
 theorem loopKZeroLabel_surjective : Function.Surjective E.loopKZeroLabel := by

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ExtensionByZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedStructure
 public import Mathlib.CategoryTheory.Localization.Adjunction
@@ -28,6 +29,9 @@ zero follows from its genuine invertible unit. All objects are ambient
 module-sheaf derived objects; no perfectness of extended objects is assumed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

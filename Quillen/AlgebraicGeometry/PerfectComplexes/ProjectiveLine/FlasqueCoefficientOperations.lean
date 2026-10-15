@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineTensor
@@ -76,8 +78,10 @@ def lineChartIso (R : CommRingCat.{u}) (b : Bool) :
 /-- Original K tensor L remains locally perfect by the actual tensor symmetry. -/
 lemma rightTensor_locallyPerfect (R : CommRingCat.{u}) {K : Complex (twoChartLine R)}
     (hK : locallyPerfect (twoChartLine R) K) :
-    locallyPerfect (twoChartLine R) ((tensorByLineRightComplex (tautologicalLine R)).obj K) :=
-  locallyPerfect_of_iso ((tensorByLineComplexSymmetry (tautologicalLine R)).app K)
+    locallyPerfect (twoChartLine R) ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight
+      (tautologicalLine R)).obj K) :=
+  locallyPerfect_of_iso ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeftRightIso
+    (tautologicalLine R)).app K)
     (locallyPerfect_tensorByLine (tautologicalLine R)
       (fun _ : Bool => Spec (CommRingCat.of (Polynomial R)))
       (lineChart R) (lineChart_cover R) (lineChartIso R) hK)
@@ -85,7 +89,8 @@ lemma rightTensor_locallyPerfect (R : CommRingCat.{u}) {K : Complex (twoChartLin
 /-- Right tensor preserves a specified strict lower bound. -/
 lemma rightTensor_isStrictlyGE (R : CommRingCat.{u}) (K : Complex (twoChartLine R))
     (a : ℤ) [K.IsStrictlyGE a] :
-    ((tensorByLineRightComplex (tautologicalLine R)).obj K).IsStrictlyGE a := by
+    ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)).obj K).IsStrictlyGE
+      a := by
   apply (CochainComplex.isStrictlyGE_iff _ a).mpr
   intro n hn
   exact (moduleTensorByLineRight (tautologicalLine R)).map_isZero
@@ -95,7 +100,7 @@ lemma rightTensor_isStrictlyGE (R : CommRingCat.{u}) (K : Complex (twoChartLine 
 lemma rightTensor_objects (R : CommRingCat.{u})
     (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     BoundedBelow.objects (twoChartLine R)
-      ((tensorByLineRightComplex (tautologicalLine R)).obj K.obj) := by
+      ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)).obj K.obj) := by
   obtain ⟨a, ha⟩ := K.property.1.2
   let := ha
   exact ⟨rightTensor_locallyPerfect R K.property.1.1, a,
@@ -105,15 +110,17 @@ lemma rightTensor_objects (R : CommRingCat.{u})
 def rightTensor (R : CommRingCat.{u}) :
     FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ BoundedBelow.Obj (twoChartLine R) :=
   ObjectProperty.lift _ ((FlasqueBoundedBelow.objects (twoChartLine R)).ι ⋙
-    tensorByLineRightComplex (tautologicalLine R)) (rightTensor_objects R)
+    AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)) (rightTensor_objects
+      R)
 
 instance rightTensor_additive (R : CommRingCat.{u}) : (rightTensor R).Additive where
   map_add := by
     intro K L f g
     apply ObjectProperty.hom_ext
-    change (tensorByLineRightComplex (tautologicalLine R)).map (f.hom + g.hom) =
-      (tensorByLineRightComplex (tautologicalLine R)).map f.hom +
-        (tensorByLineRightComplex (tautologicalLine R)).map g.hom
+    change (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)).map (f.hom +
+      g.hom) =
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)).map f.hom +
+        (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)).map g.hom
     exact CategoryTheory.Functor.map_add _
 
 /-- Right tensor preserves the actual inherited short exact sequences. -/
@@ -126,7 +133,7 @@ def rightTensorExactFunctor (R : CommRingCat.{u}) : ExactFunctor
   map_conflation S hS := by
     change (S.map (FlasqueBoundedBelow.objects (twoChartLine R)).ι).ShortExact at hS
     change ((S.map (FlasqueBoundedBelow.objects (twoChartLine R)).ι).map
-      (tensorByLineRightComplex (tautologicalLine R))).ShortExact
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R))).ShortExact
     exact hS.map_of_exact _
 
 lemma rightTensor_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
@@ -139,7 +146,7 @@ lemma rightTensor_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
   weak f hf := by
     change QuasiIso f.hom at hf
     let := hf
-    exact rightLineComplex_quasiIso (tautologicalLine R) f.hom
+    exact AlgebraicGeometry.Scheme.Modules.Complex.tensorRight_quasiIso (tautologicalLine R) f.hom
   pushout hi h := (rightTensorExactFunctor R).map_isPushout hi h
 
 /-- Original shift preserves the full flasque-perfect object predicate. -/

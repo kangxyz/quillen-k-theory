@@ -19,6 +19,10 @@ Closed graph hypotheses are imposed on the original overlap base only.
 -/
 @[expose] public section
 
+open Quillen.FiberwiseMappingPath
+open Quillen.TheoremB
+
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval

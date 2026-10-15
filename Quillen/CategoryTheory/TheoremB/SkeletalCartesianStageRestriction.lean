@@ -11,6 +11,10 @@ public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianAssembly
 /-! # Outgoing stage face in its actual skeleton coordinates -/
 @[expose] public section
 
+open Quillen.TheoremA
+open Quillen.TheoremB
+
+
 noncomputable section
 universe u
 open CategoryTheory Limits Opposite

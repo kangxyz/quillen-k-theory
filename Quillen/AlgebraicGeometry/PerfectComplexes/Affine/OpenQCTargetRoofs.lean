@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedStabilizedExtension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.InjectiveCounit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Models
@@ -19,6 +20,9 @@ models. Its support conclusion then passes through the actual global weak
 comparison, rather than through an unproved underived pushforward property.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

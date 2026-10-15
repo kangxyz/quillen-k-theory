@@ -20,6 +20,10 @@ outer boundary. No lifting on an open parameter locus is selected.
 -/
 @[expose] public section
 
+open Quillen.CubicalSubdivision
+open Quillen.CubicalTests
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

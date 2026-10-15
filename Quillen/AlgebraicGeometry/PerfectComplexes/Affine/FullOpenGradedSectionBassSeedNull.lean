@@ -6,8 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassSeed
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedLaurentContraction
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedLaurentContraction
 public import Quillen.Topology.Prespectrum.RelativeHomotopyLoop
 
 /-!
@@ -22,7 +21,7 @@ naturality or compatibility with the latter is assumed or asserted in this leaf.
 -/
 @[expose] public section
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R)

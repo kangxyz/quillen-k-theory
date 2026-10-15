@@ -16,6 +16,9 @@ components by that original telescope translation then detects the original
 zero component, without an assumed grading or rank cancellation.
 -/
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u

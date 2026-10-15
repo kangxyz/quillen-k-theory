@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TwoOpenCohomology
+public import Aglib.AlgebraicGeometry.Cohomology.MayerVietoris.InjectiveComplex
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.AffineCechCover
 
 /-! Consumers of the original two-open section sequence: gluing compatible
@@ -21,7 +21,6 @@ open AlgebraicGeometry.Scheme.Modules.TwoOpen AlgebraicGeometry.Scheme.Projectiv
 universe u
 namespace QuillenTest.TwoOpenCohomology
 
-open Quillen
 
 lemma glue_compatible_sections {X : Scheme.{u}} (M : X.Modules)
     (U V : X.Opens) (hUV : U ⊔ V = ⊤) (a : Γ(M, U)) (b : Γ(M, V))

@@ -7,11 +7,15 @@ module
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionModelRelativeComposition
 /-! Actual geometric Model routes, the unchanged original loop, and three independent times. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open Quillen.Waldhausen.IteratedS
 open scoped unitInterval
 universe u
 namespace QuillenTest.BoundedFlatModelRelativeComposition

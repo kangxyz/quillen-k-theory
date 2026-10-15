@@ -19,9 +19,12 @@ This is the actual section S-prespectrum. Comparison with the original geometric
 the unequal-hom-universe evaluation equivalence and remains separate from a strict Bass seed.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.CategoryTheory.StrictSections Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.CategoryTheory.StrictSections Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
 

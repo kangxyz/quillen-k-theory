@@ -15,6 +15,9 @@ inclusion and all-degree enlargement laws.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -22,7 +25,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
 universe u
 namespace SupportedBassConsumers
-open AlgebraicGeometry.Scheme Quillen.PerfectComplexes Quillen.PerfectComplexes.Bass
+open AlgebraicGeometry.Scheme Quillen.PerfectComplexes.Bass
 
 /-- The polynomial vanishing open is the actual inverse-image open, with no qc-open premise. -/
 theorem original_polynomial_support_square (A : QuasiCompactOpenPairs.{u}) :

@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurentBaseChange
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.BaseChange
 public import Quillen.KTheory.Bass.PolynomialLaurent
 
 /-!
@@ -15,6 +15,10 @@ diagram identifications. The two original chart transformations retain literal c
 the variance used by K-theory.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
+
+open AlgebraicGeometry.Scheme.Products
 open Quillen
 
 

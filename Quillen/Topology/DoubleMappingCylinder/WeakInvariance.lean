@@ -22,6 +22,9 @@ arbitrary, and no continuous inverse for a weak map is used.
 -/
 @[expose] public section
 
+open Quillen.CubicalSubdivision
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

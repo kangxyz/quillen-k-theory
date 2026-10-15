@@ -21,9 +21,12 @@ original bounded-flat inclusion gives the corresponding perfect map, stable when
 fiber is quasi-compact. No seed, finite Bass iterate or telescope comparison is asserted.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair
+open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

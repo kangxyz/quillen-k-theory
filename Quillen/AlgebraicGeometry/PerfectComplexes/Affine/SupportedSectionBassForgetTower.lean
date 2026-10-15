@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionForgetSeed
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionBassTower
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassTelescope
@@ -20,8 +21,11 @@ The resulting telescope arrow uses the original stage maps at the identical cyli
 No equivalence of support inclusion or negative localization statement is asserted.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes

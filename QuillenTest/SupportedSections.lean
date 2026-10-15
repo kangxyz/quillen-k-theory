@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionUnit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionReindex
@@ -16,6 +17,10 @@ Arbitrary open squares, actual evaluated complexes, original unit and inverse-un
 the original chosen zero remain visible. No negative localization is assumed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 universe u

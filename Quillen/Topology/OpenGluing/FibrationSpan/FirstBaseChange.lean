@@ -17,6 +17,9 @@ No compactness, local compactness, or pullback preservation of pushouts is used.
 -/
 @[expose] public section
 
+open Quillen.FiberwiseMappingPath
+
+
 noncomputable section
 open CategoryTheory MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval

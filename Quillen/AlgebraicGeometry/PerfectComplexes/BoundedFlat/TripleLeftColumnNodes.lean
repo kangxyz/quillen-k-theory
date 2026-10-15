@@ -8,6 +8,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassH0Sourc
 
 /-! Full dependent nodes of the original triple's left binary column. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassReferenceMerge
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -23,6 +26,9 @@ def normalizedMap {X Y : Scheme.{u}} (f : X ⟶ Y) :
     modelOf (boundedFlatPerfectWaldhausen Y) ⟶ modelOf (boundedFlatPerfectWaldhausen X) :=
   modelMap _ _ (boundedFlatNormalizedPullback_exact f) (boundedFlatNormalizedPullback_obj_zero _)
 
+/-- The source, geometric intermediate, and target of the binary normalization simplex, each with
+its comparison from the source.
+-/
 def binaryNodes {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) : Fin 3 →
     Σ F : modelOf (boundedFlatPerfectWaldhausen Z) ⟶ modelOf (boundedFlatPerfectWaldhausen X),
       (BinaryNormalizationSimplex.sourceMap f g).functor ≅ F.functor :=
@@ -35,6 +41,7 @@ variable {X Y Z T : Scheme.{u}}
   (f : X ⟶ Y) (g : Y ⟶ Z) (h : Z ⟶ T)
   (e : F.functor = (NormalizedTripleSimplex.sourceMap f g h).functor)
 
+/-- The vertex indices `2, 3, 7` selecting the left binary column of the split triple simplex. -/
 def leftIndex : Fin 3 → Fin 8 := ![2, 3, 7]
 
 /-- The full original left-column nodes, with the original common reference retained. -/

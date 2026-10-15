@@ -10,8 +10,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassS
 
 /-! Uniform cancellation and reassociation applied to the original Bass coefficient tracks. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.BassTrackReparam
 

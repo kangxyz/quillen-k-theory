@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportComparison
 public import Quillen.AlgebraicGeometry.Scheme.OpenPairs
 
@@ -18,6 +20,9 @@ Their original K-maps satisfy identity/composition; support-forgetting and
 change-weak maps commute. No qc, flatness or cartesian-square premise is used.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open CategoryTheory.ExactCategory
 
@@ -34,17 +39,18 @@ variable {A B C : AlgebraicGeometry.Scheme.OpenPairs.{u}}
 
 /-- The actual pullback/restriction square for any morphism of open pairs. -/
 def pullbackComplexOpenPairIso (f : A ⟶ B) :
-    pullbackComplex f.hom.right ⋙ restrict A.obj.hom ≅
-      restrict B.obj.hom ⋙ pullbackComplex f.hom.left :=
+    AlgebraicGeometry.Scheme.Modules.Complex.pullback f.hom.right ⋙ restrict A.obj.hom ≅
+      restrict B.obj.hom ⋙ AlgebraicGeometry.Scheme.Modules.Complex.pullback f.hom.left :=
   Functor.isoWhiskerLeft _ (restrictIsoPullbackComplex A.obj.hom) ≪≫
     (pullbackComplexCompIso A.obj.hom f.hom.right).symm ≪≫
-    eqToIso (congrArg pullbackComplex (Arrow.w f.hom).symm) ≪≫
+    eqToIso (congrArg AlgebraicGeometry.Scheme.Modules.Complex.pullback (Arrow.w f.hom).symm) ≪≫
     pullbackComplexCompIso f.hom.left B.obj.hom ≪≫
     Functor.isoWhiskerRight (restrictIsoPullbackComplex B.obj.hom).symm _
 
 theorem boundedFlatPerfectSupported_pairPullback (f : A ⟶ B)
     {K : Complex B.obj.right} (hK : boundedFlatPerfectSupported B.obj.hom K) :
-    boundedFlatPerfectSupported A.obj.hom ((pullbackComplex f.hom.right).obj K) := by
+    boundedFlatPerfectSupported A.obj.hom ((AlgebraicGeometry.Scheme.Modules.Complex.pullback
+      f.hom.right).obj K) := by
   refine ⟨boundedFlatPerfect_pullback f.hom.right hK.1, ?_⟩
   obtain ⟨b, hb⟩ := boundedAbove_restrict B.obj.hom hK.1.2.1
   have ha := acyclic_pullback_of_boundedAbove_stalkwiseFlat f.hom.left
@@ -60,7 +66,8 @@ def boundedFlatPerfectSupportedPullback (f : A ⟶ B) :
     (boundedFlatPerfectSupported B.obj.hom).FullSubcategory ⥤
       (boundedFlatPerfectSupported A.obj.hom).FullSubcategory :=
   (boundedFlatPerfectSupported A.obj.hom).lift
-    ((boundedFlatPerfectSupported B.obj.hom).ι ⋙ pullbackComplex f.hom.right)
+    ((boundedFlatPerfectSupported B.obj.hom).ι ⋙ AlgebraicGeometry.Scheme.Modules.Complex.pullback
+      f.hom.right)
     (fun K => boundedFlatPerfectSupported_pairPullback f K.property)
 
 instance boundedFlatPerfectSupportedPullback_additive (f : A ⟶ B) :
@@ -103,20 +110,23 @@ theorem boundedFlatPerfectSupportedPullback_exact (f : A ⟶ B) :
   pushout hi h := by
     apply IsPushout.of_map_of_faithful (boundedFlatPerfectSupported A.obj.hom).ι
     exact (Waldhausen.fullSubcategory_map_pushout (abelianExactStructure (Complex B.obj.right))
-      (boundedFlatPerfectSupported B.obj.hom) hi h).map (pullbackComplex f.hom.right)
+      (boundedFlatPerfectSupported B.obj.hom) hi h).map
+        (AlgebraicGeometry.Scheme.Modules.Complex.pullback f.hom.right)
 
 theorem boundedFlatPerfect_pairPullback_quasiIso (f : A ⟶ B)
     {K L : Complex B.obj.right} (hK : boundedFlatPerfect B.obj.right K)
     (hL : boundedFlatPerfect B.obj.right L) (p : K ⟶ L)
     [QuasiIso ((restrict B.obj.hom).map p)] :
-    QuasiIso ((restrict A.obj.hom).map ((pullbackComplex f.hom.right).map p)) := by
+    QuasiIso ((restrict A.obj.hom).map ((AlgebraicGeometry.Scheme.Modules.Complex.pullback
+      f.hom.right).map p)) := by
   obtain ⟨b, hb⟩ := boundedAbove_restrict B.obj.hom hK.2.1
   obtain ⟨c, hc⟩ := boundedAbove_restrict B.obj.hom hL.2.1
   have hKr (n : ℤ) : stalkwiseFlat B.obj.left (((restrict B.obj.hom).obj K).X n) :=
     stalkwiseFlat_restrict B.obj.hom (hK.2.2 n)
   have hLr (n : ℤ) : stalkwiseFlat B.obj.left (((restrict B.obj.hom).obj L).X n) :=
     stalkwiseFlat_restrict B.obj.hom (hL.2.2 n)
-  have : QuasiIso ((pullbackComplex f.hom.left).map ((restrict B.obj.hom).map p)) :=
+  have : QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f.hom.left).map ((restrict
+    B.obj.hom).map p)) :=
     quasiIso_pullback_of_boundedAbove_stalkwiseFlat f.hom.left
       (K := (restrict B.obj.hom).obj K) (L := (restrict B.obj.hom).obj L)
       hKr hLr b c
@@ -125,9 +135,11 @@ theorem boundedFlatPerfect_pairPullback_quasiIso (f : A ⟶ B)
       ((restrict B.obj.hom).map p)
   let e := pullbackComplexOpenPairIso f
   rw [← quasiIso_iff_comp_right _ (e.hom.app L)]
-  change QuasiIso (((pullbackComplex f.hom.right ⋙ restrict A.obj.hom).map p) ≫ e.hom.app L)
+  change QuasiIso (((AlgebraicGeometry.Scheme.Modules.Complex.pullback f.hom.right ⋙ restrict
+    A.obj.hom).map p) ≫ e.hom.app L)
   rw [e.hom.naturality p]
-  change QuasiIso (e.hom.app K ≫ (pullbackComplex f.hom.left).map ((restrict B.obj.hom).map p))
+  change QuasiIso (e.hom.app K ≫ (AlgebraicGeometry.Scheme.Modules.Complex.pullback f.hom.left).map
+    ((restrict B.obj.hom).map p))
   have : QuasiIso (e.hom.app K) := quasiIso_of_isIso _
   infer_instance
 

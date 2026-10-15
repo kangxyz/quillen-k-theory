@@ -4,17 +4,28 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MComponentReferences
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MReferenceAlgebra
 
 /-! Full original reference identities on both internal M vertex-stage boundaries. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+open Quillen.PerfectComplexes.BassMComponents
+open Quillen.PerfectComplexes.BassMReferences
+open Quillen.PerfectComplexes.BassReferenceMerge
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassMJoin
@@ -39,6 +50,10 @@ theorem polynomial_coefficient_column (i : Fin 3) :
   exact hn.trans (triple_left_column (polynomialSource P u v) (polynomialProjection P c)
     (coefficientMap P v) (coefficientMap P u) rfl i)
 
+/--
+The normalized polynomial projection at `c` followed by the normalized chart coefficient map at
+`c`.
+-/
 abbrev endpointMap := normalizedMap (polynomialProjection P c) ≫
   normalizedMap (coefficientMap P (α.app c))
 

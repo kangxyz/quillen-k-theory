@@ -18,7 +18,6 @@ open. This applies over arbitrary commutative rings, including the zero ring.
 -/
 
 @[expose] public section
-open Quillen
 
 
 noncomputable section

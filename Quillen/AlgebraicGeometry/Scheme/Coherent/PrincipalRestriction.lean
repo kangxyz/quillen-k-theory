@@ -6,7 +6,10 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Comparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeRestriction
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Comparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.RestrictionExact
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 
@@ -22,7 +25,6 @@ proved equivalences transport the Serre-localization universal property.
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 

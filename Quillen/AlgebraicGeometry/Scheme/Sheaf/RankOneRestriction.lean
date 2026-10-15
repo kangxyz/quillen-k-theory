@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RestrictionSquare
+public import Aglib.AlgebraicGeometry.Modules.StructureSheaf.Sections
+public import Aglib.AlgebraicGeometry.Modules.Restriction.Square
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneQuotient
 
 /-!
@@ -16,8 +17,10 @@ column under an actual commuting square of open immersions. Both projection equa
 preserved.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section

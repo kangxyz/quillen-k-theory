@@ -19,10 +19,15 @@ finite cube HELP is applied. No finite-stage continuous inverse is assumed.
 -/
 @[expose] public section
 
+open Topology
+
+open Quillen.TheoremA
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 open scoped Topology unitInterval Simplicial
 universe u
 namespace Quillen.CartesianRealization.Sequential

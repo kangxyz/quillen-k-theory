@@ -5,11 +5,18 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.SupportedQCDenominators
 public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalSupportedDensity
 
 /-! # Supported denominator transitivity via actual supported cone retracts -/
 @[expose] public section
+
+open HomologicalComplex
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

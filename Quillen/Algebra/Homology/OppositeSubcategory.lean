@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Algebra.Homology.BoundedProjectiveReplacement
 public import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
 public import Mathlib.CategoryTheory.ObjectProperty.Equivalence
@@ -23,6 +24,9 @@ Object and morphism universes remain independent. No new resolution or derived
 equivalence is a hypothesis.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ExtensionByZeroBaseChange
 public import Quillen.Algebra.Homology.HomotopyPushoutMap
 public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalDescent
@@ -12,13 +13,18 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalDescent
 /-! # Actual two-open sheaf-complex homotopy gluing -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
 namespace Quillen.PerfectComplexes.OpenHomotopyGluing
-open Quillen.CochainComplex
 variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
   [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]
   (h : a ≫ j = b ≫ k)

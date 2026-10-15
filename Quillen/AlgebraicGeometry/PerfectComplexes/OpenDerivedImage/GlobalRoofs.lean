@@ -5,12 +5,15 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.SupportedDenominatorComposition
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.SupportedDenominatorComposition
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.OneChartRoofs
 
 /-! # Genuine global qcqs supported denominators and original perfect roofs -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

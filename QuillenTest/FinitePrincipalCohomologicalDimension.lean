@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Topology.Sheaves.MayerVietorisSections
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FinitePrincipalCohomologicalDimension
 public import Mathlib.Algebra.Category.ModuleCat.FilteredColimits
 public import Mathlib.CategoryTheory.Sites.LeftExact
@@ -14,13 +15,18 @@ public import Mathlib.Data.ZMod.Basic
 principal-cover bounds, including empty opens and zero divisors. -/
 @[expose] public section
 
+open Quillen.SheafCohomology
+
+
+open TopCat.Sheaf
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits TopologicalSpace Opposite HomologicalComplex
-open Quillen.SheafCohomology
 namespace QuillenTest.FinitePrincipalCohomologicalDimension
 
 open Quillen

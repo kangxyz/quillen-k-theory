@@ -4,16 +4,26 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MSecondTargetNodes
 
 /-! Full original projection-row forms on the inter-stage middle boundary. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+open Quillen.PerfectComplexes.BassMComponents
+open Quillen.PerfectComplexes.BassMReferences
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassMOuterJoin
@@ -21,12 +31,24 @@ open BassH0Merge BassH1Join BassMComponents BassMReferences
 variable {R : CommRingCat.{u}} (P : Over (Spec R))
 variable {a b c : Under R} (u : a ⟶ b) (v : b ⟶ c)
 
+/--
+The composite of the normalized coefficient maps of `u` and `v`, used to precompose the target
+projection row.
+-/
 abbrev targetMiddlePre := normalizedMap (coefficientMap P u) ≫ normalizedMap (coefficientMap P v)
 
+/--
+The target projection-row reference, combining the middle reference with binary normalization of
+the coefficient composite.
+-/
 def targetMiddleIso := middleIso P u v ≪≫
   isoWhiskerRight (BinaryNormalizationSimplex.total (coefficientMap P v) (coefficientMap P u))
     (BassProjectionPath.source P c).functor
 
+/--
+The inverse projection-row reference, obtained from `targetMiddleIso` by the projection source
+isomorphism.
+-/
 def targetMiddleMinusIso := targetMiddleIso P u v ≪≫
   isoWhiskerLeft (targetMiddlePre P u v).functor (BassProjectionPath.sourceIso P c)
 
@@ -63,6 +85,10 @@ theorem middle_target_minus_row (i : Fin 3) :
 variable (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
   (hb : coefficientMap P (α.app b) ≫ polynomialProjection P b = laurentProjection P b)
 
+/--
+The H1 target projection-row reference, with the normalized coefficient map of `u` precomposed
+onto the target-row reference for `v`.
+-/
 def h1TargetProjectionIso := BassH1References.middleIso P u v ≪≫
   isoWhiskerLeft (normalizedMap (coefficientMap P u)).functor
     (BassH1H0Boundary.targetRowReference P v α hb)

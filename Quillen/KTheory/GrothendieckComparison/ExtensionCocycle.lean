@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.KTheory.GrothendieckComparison.Cocycle
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionFunctor
 
@@ -18,6 +19,9 @@ span and the original definition of the Q-cocycle.
 -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

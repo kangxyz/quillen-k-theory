@@ -15,9 +15,11 @@ and the unchanged original comparison maps, including degree zero.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.PerfectComplexes
 universe u
 namespace QuillenTest.PerfectDerivedPullback
 

@@ -9,6 +9,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassMergedS
 
 /-! The actual five common outer-projection nodes in a native double-square rectangle. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassReferenceMerge
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -40,6 +43,7 @@ theorem last_raw_reference :
   apply Iso.ext
   simp only [Iso.trans_hom, eqToIso.hom, ← Category.assoc, eqToHom_trans]
 
+/-- The binary normalization source for the outer projection composite `c ≫ r`. -/
 abbrev reference := BinaryNormalizationSimplex.sourceMap c r
 
 include hr in
@@ -47,6 +51,9 @@ theorem anchor : (reference c r).functor = (NormalizedTripleSimplex.sourceMap c 
   congrArg (fun F ↦ AsSmall.down ⋙ F ⋙ AsSmall.up)
     (congrArg boundedFlatNormalizedPullback (congrArg (fun k ↦ c ≫ k) hr.symm))
 
+/--
+A model morphism equipped with a natural isomorphism from the fixed outer projection reference.
+-/
 abbrev Node := Σ F : modelOf (boundedFlatPerfectWaldhausen A) ⟶
     modelOf (boundedFlatPerfectWaldhausen C'), (reference c r).functor ≅ F.functor
 
@@ -56,6 +63,10 @@ def nodes (i : Fin 18) : Node c r :=
     (F₁ := NormalizedTripleSimplex.sourceMap c q p) (eqToIso (anchor p q c r hr))
     (DoubleSquareMergedSimplex.nodes p q p' q' a b c hp hq) i
 
+/--
+The projection rectangle's model simplex reanchored at the outer projection reference using the
+equation `hr`.
+-/
 def simplex : ModelSimplex (modelOf (boundedFlatPerfectWaldhausen A))
     (modelOf (boundedFlatPerfectWaldhausen C')) 17 :=
   ModelSimplex.reanchorSimplex (F₀ := reference c r)
@@ -94,6 +105,7 @@ def outerNodes (houter : c ≫ r = r' ≫ a) : Fin 5 → Node c r :=
 def sharedNodes : Fin 5 → Node c r :=
   outerNodes a c r r' (DoubleSquareTrack.outer_eq p q p' q' a b c hp hq r r' hr hr')
 
+/-- The five rectangle labels `0, 1, 2, 14, 15` selecting the common outer-square nodes. -/
 def sharedIndex : Fin 5 → Fin 18 := ![0, 1, 2, 14, 15]
 
 /-- The actual common source node is preserved with its reference. -/

@@ -9,10 +9,13 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassEvalu
 
 /-! Original section-evaluation null tracks retain endpoints and independent cylinder times. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.SectionBassEvaluationNull
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
+open Quillen.PerfectComplexes.SectionBassEvaluationNull
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped unitInterval
 universe u
 namespace QuillenTest.SectionBassEvaluationNull

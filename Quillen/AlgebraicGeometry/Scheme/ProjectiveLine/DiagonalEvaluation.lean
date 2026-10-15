@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalAffine
 public import Mathlib.RingTheory.Polynomial.Ideal
 public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
@@ -16,6 +17,12 @@ diagonal in the affine rectangle. Both same-chart base-change diagrams retain
 the actual relative diagonal and original rectangle maps over an arbitrary base ring.
 -/
 @[expose] public section
+
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
 open Quillen
 
 noncomputable section
@@ -24,7 +31,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
-open PolynomialLaurent Quillen.PolynomialBaseChange
+open PolynomialLaurent
 /-- Evaluation on the actual equal-coordinate affine diagonal. -/
 def diagonalEvaluation (R : CommRingCat.{u}) :
     CommRingCat.of (Polynomial (Polynomial R)) ⟶ CommRingCat.of (Polynomial R) :=

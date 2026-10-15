@@ -18,6 +18,9 @@ of the same original double diagrams.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.Fibration.RelativeRows
+
+
 noncomputable section
 open CategoryTheory Opposite
 universe u v

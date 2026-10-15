@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationSourceLeg
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CompositionTrack
 public import Quillen.Waldhausen.SmallModel.CoefficientPasting
@@ -35,12 +36,18 @@ cylinder formula retain the independent comparison, cylinder and structure param
 Cone/source-null, seed and telescope evaluation comparisons are subsequent obligations.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
-open AlgebraicGeometry.Scheme.CoefficientBaseChange
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u
 namespace Quillen.PerfectComplexes
 
@@ -923,7 +930,6 @@ def boundedFlatCoefficientSectionCompositionRelHomotopy {i j k : Index R}
   exact Js.symm.trans Jw
 
 
-open Quillen.PolynomialBaseChange
 variable {P Q : Over (Spec R)} (ι : P ⟶ Q)
 
 /-- The original geometric composition track for a specified native Laurent chart. -/

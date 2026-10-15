@@ -14,13 +14,15 @@ These retain the actual section categories, the specified original scalar, the i
 null, scalar and degree-zero loop coordinates, and the inherited zero-to-section transformation.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.SupportedSectionOpenScalarInterchange
 
 open Quillen
-open Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]
     (r : (Γ(Spec R, ⊤))ˣ)
 

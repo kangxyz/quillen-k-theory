@@ -8,49 +8,78 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MTargetMidd
 
 /-! Actual complete boundary node identifications between the fixed 44- and 130-simplex families. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+open Quillen.PerfectComplexes.BassMComponents
+open Quillen.PerfectComplexes.BassMReferences
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassMOuterJoin
 open BassH0Merge BassH1Join BassMComponents BassMReferences
 
+/-- Locates the three positive moving-side nodes in the 45-node M family. -/
 def sidePlusIndex (i : Fin 3) : Fin 45 :=
   BassMVertexOrder.plusIndex (DoubleSquareMergedSimplex.lastFace.toOrderHom (rightIndex i))
+/-- Locates the matching positive old chart-side nodes in the merged 131-node H1 family. -/
 def oldSidePlusIndex (i : Fin 3) : Fin 131 :=
   BassH1Order.oldIndex (BassSupportOrder.oldIndex (BassReferenceMerge.chartFace.toOrderHom
     (BassOverlap.plusFace.toOrderHom
       (DoubleSquareMergedSimplex.firstFace.toOrderHom (leftIndex i)))))
+/-- Locates the five vertices of the positive first target word in the M family. -/
 def targetFirstPlusIndex (i : Fin 5) : Fin 45 :=
   BassMVertexOrder.plusIndex (firstTargetWordIndex i)
+/-- Locates the matching last-column nodes of the positive H1 product grid in the merged family. -/
 def oldTargetFirstPlusIndex (i : Fin 5) : Fin 131 :=
   BassH1Order.plusProductIndex (Quillen.SimplexGrid.index 4 4 (i, 4))
+/-- Locates the five vertices of the positive second target word in the M family. -/
 def targetSecondPlusIndex (i : Fin 5) : Fin 45 :=
   BassMVertexOrder.plusIndex (secondTargetWordIndex i)
+/--
+Locates the matching positive polynomial-path nodes of the middle H1 component in the merged
+family.
+-/
 def oldTargetSecondPlusIndex (i : Fin 5) : Fin 131 :=
   BassH1Order.middleIndex (BassH0Diagram.plusFace.toOrderHom (polynomialWordIndex i))
 
+/-- Locates the three inverse moving-side nodes in the 45-node M family. -/
 def sideMinusIndex (i : Fin 3) : Fin 45 :=
   BassMVertexOrder.minusIndex (DoubleSquareMergedSimplex.lastFace.toOrderHom (rightIndex i))
+/-- Locates the matching inverse old chart-side nodes in the merged 131-node H1 family. -/
 def oldSideMinusIndex (i : Fin 3) : Fin 131 :=
   BassH1Order.oldIndex (BassSupportOrder.oldIndex (BassReferenceMerge.chartFace.toOrderHom
     (BassOverlap.minusFace.toOrderHom
       (DoubleSquareMergedSimplex.firstFace.toOrderHom (leftIndex i)))))
+/-- Locates the five vertices of the inverse first target word in the M family. -/
 def targetFirstMinusIndex (i : Fin 5) : Fin 45 :=
   BassMVertexOrder.minusIndex (firstTargetWordIndex i)
+/-- Locates the matching last-column nodes of the inverse H1 product grid in the merged family. -/
 def oldTargetFirstMinusIndex (i : Fin 5) : Fin 131 :=
   BassH1Order.minusProductIndex (Quillen.SimplexGrid.index 4 4 (i, 4))
+/-- Locates the five vertices of the inverse second target word in the M family. -/
 def targetSecondMinusIndex (i : Fin 5) : Fin 45 :=
   BassMVertexOrder.minusIndex (secondTargetWordIndex i)
+/--
+Locates the matching inverse polynomial-path nodes of the middle H1 component in the merged
+family.
+-/
 def oldTargetSecondMinusIndex (i : Fin 5) : Fin 131 :=
   BassH1Order.middleIndex (BassH0Diagram.minusFace.toOrderHom (polynomialWordIndex i))
 
+/-- Locates the five target-middle nodes in the final coefficient row of the M middle grid. -/
 def targetMiddleIndex (i : Fin 5) : Fin 45 :=
   BassMVertexOrder.middleIndex (Quillen.SimplexGrid.index 2 4 (2, i))
+/--
+Reindexes the five vertices of `firstMiddleFace` in the middle H1 component's merged
+coordinates.
+-/
 def oldTargetMiddleIndex (i : Fin 5) : Fin 131 :=
   BassH1Order.middleIndex (firstMiddleFace.toOrderHom i)
 

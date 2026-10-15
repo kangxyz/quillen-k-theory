@@ -5,6 +5,7 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.Topology.Prespectrum.ConeSquareMapMovingCoherence
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassSpanComposition
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassConeFaces
@@ -19,11 +20,14 @@ The identity API accepts any whole original-span identity homotopy with its comp
 prescribed polynomial faces are not required.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes

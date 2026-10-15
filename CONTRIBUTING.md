@@ -141,6 +141,12 @@ build evidence when source, dependencies, and runtime are unchanged.
 
 ## Dependency updates
 
+General interfaces already provided by Aglib use direct imports of precise Aglib
+leaves and their native declaration names. Keep Q/K/G application constructions
+in Quillen. Do not copy transferred implementations or restore their old module
+aliases. Preserve weaker quasicoherent interfaces instead of adding Noetherian
+hypotheses to fit a coherent specialization.
+
 Ordinary checks use the committed toolchain and manifests. Run `lake update`
 when resolving a new consumer dependency or intentionally changing dependency
 pins. For an upgrade, update the root and downstream toolchains and manifests

@@ -9,7 +9,7 @@ module
 public import Quillen.Topology.ClassifyingSpace.Constant
 public import Quillen.Topology.Realization.HomotopyBridge
 public import Quillen.Topology.HomotopyFiber.Basic
-public import Quillen.Localization.Serre.FiniteProducts
+public import Aglib.CategoryTheory.Abelian.SerreClass.FiniteProducts
 public import Quillen.Localization.Serre.Localization
 public import Quillen.Devissage.Setup
 public import Quillen.CategoryTheory.QConstruction.ZeroFunctor

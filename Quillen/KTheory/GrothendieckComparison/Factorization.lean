@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.KTheory.GrothendieckComparison.Groupoid
 public import Quillen.Topology.ClassifyingSpace.GroupoidCompletion
 
@@ -17,6 +18,9 @@ meet in an exact equality of homomorphisms. The only remaining general
 presentation question is bijectivity of the canonical realized completion map.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

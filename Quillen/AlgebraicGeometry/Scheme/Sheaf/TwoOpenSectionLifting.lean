@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.SectionsHomologyZero
+public import Aglib.AlgebraicGeometry.Cohomology.Injective.DegreeZero
 public import Mathlib.Algebra.Homology.ShortComplex.ExactFunctor
 
 /-! # Original section lifting on a two-open cover
@@ -16,8 +16,6 @@ by actual kernel sections. Further lemmas preserve signed-difference surjectivit
 and surjective overlap maps, and obtain local lifts from genuine restricted splittings.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section

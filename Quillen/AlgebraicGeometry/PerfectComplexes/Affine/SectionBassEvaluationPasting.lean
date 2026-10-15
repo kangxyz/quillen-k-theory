@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
+public import Aglib.Algebra.Polynomial.Laurent.Square
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionCoefficientComposition
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassSeed
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassSquare
@@ -17,9 +19,12 @@ The two actual Laurent inclusions specialize the proved evaluation composition c
 All original coefficient homotopies and geometric composition tracks are retained.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 

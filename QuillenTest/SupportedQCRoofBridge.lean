@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.OneChartRoofs
 
 /-!
@@ -18,9 +19,15 @@ compact open and an affine chart.
 
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.OpenDerivedImage
+open Quillen.PerfectComplexes.OpenDerivedImage
 universe u
 namespace QuillenTest.SupportedQCRoofBridge
 local instance bridgeTestDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=

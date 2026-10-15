@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.KTheory.QHomotopy
 
 /-!
@@ -22,6 +22,9 @@ This file gives the definition, not the K₀ comparison theorem or the deeper
 structural theorems of algebraic K-theory.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

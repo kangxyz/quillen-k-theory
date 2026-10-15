@@ -9,8 +9,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Coefficient
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalUnitPullback
 public import Quillen.CategoryTheory.Functor.IdentityAutomorphismNaturality
 public import Quillen.CategoryTheory.Functor.IdentityAutomorphismEvaluation
-public import Quillen.AlgebraicGeometry.Scheme.Affine.LaurentUnitNaturality
-public import Quillen.Algebra.Polynomial.LaurentUnderSquare
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Units
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 
 /-!
 # Original units on the joint native coefficient sections
@@ -21,12 +21,15 @@ along the original coefficient projection gives the same forward action after co
 change or scheme restriction. In particular the original Laurent coordinate is retained.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
-open AlgebraicGeometry.Scheme.CoefficientBaseChange Quillen.FunctorIdentityAutomorphism
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients Quillen.FunctorIdentityAutomorphism
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u v₁ v₂ v₃ w₁ w₂ w₃
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}

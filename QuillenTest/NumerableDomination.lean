@@ -11,6 +11,9 @@ public import Quillen.Topology.Realization.OrderedCoverNerve
 
 /-! Named regressions for the bounded generic connector and numerable-cover primitives. -/
 @[expose] public section
+
+open Quillen.NumerableConnectorCover
+
 noncomputable section
 open Convexity
 open scoped Topology unitInterval Simplicial

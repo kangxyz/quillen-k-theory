@@ -5,12 +5,13 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.Support
+public import Aglib.AlgebraicGeometry.Modules.Support
 
 /-! # Vanishing detected on arbitrary actual open covers -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 noncomputable section

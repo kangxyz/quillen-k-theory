@@ -20,6 +20,9 @@ constructs a comparison and its under-source homotopy. No comparison or
 under-source homotopy is assumed. No general classical CW conclusion is made.
 -/
 @[expose] public section
+
+open Quillen.DoubleCylinder
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

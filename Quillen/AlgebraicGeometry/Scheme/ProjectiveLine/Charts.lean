@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurent
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Basic
 public import Mathlib.AlgebraicGeometry.Limits
 public import Mathlib.AlgebraicGeometry.Cover.Open
 public import Mathlib.AlgebraicGeometry.Morphisms.QuasiSeparated
@@ -18,7 +18,6 @@ along the Laurent chart, with inverse coordinate transition. Comparisons with
 Proj, twisting sheaves, and projective pushforward are separate constructions.
 -/
 @[expose] public section
-open Quillen
 
 
 noncomputable section

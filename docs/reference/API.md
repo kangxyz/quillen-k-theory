@@ -10,7 +10,7 @@ obligations; [scope](Scope.md) gives the cross-topic boundary.
 
 | Import | Interface |
 | --- | --- |
-| `Quillen.CategoryTheory.ExactCategory.Basic` | Exact structures and conflations |
+| `Aglib.CategoryTheory.ExactCategory.Basic` | Exact structures and conflations |
 | `Quillen.CategoryTheory.QConstruction.Basic` | Quillen's Q-construction |
 | `Quillen.KTheory.API` | Exact-category K-groups, canonical maps, equivalences, and small models |
 | `Quillen.KTheory.Plus` | Standard ring plus/Q homotopy equivalences, original K₀–plus product and component interfaces |
@@ -25,7 +25,7 @@ obligations; [scope](Scope.md) gives the cross-topic boundary.
 | `Quillen.Algebra.Category.ModuleCat.FiniteProjectiveTensorCoherence` | Agreement with original identity/composition comparisons |
 | `Quillen.KTheory.Map.RightBaseChangeTensor` | Original zero-normalized K-map equality in every degree |
 | `Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeUniversal` | Scalar-extension unit and additive Hom universal property |
-| `Quillen.Algebra.Category.ModuleCat.Finite` | Finite-module Serre and exact-category interfaces on mathlib's finitely generated module category |
+| `Aglib.Algebra.Category.ModuleCat.Finite` | Finite-module Serre and exact-category interfaces on mathlib's finitely generated module category |
 | `Quillen.Algebra.Homology.FiniteProjectiveResolution` | Actual finite-projective resolutions and finite-free PID resolutions |
 | `Quillen.KTheory.GrothendieckComparison.Equivalence` | Classical exact-category K₀ comparison |
 | `Quillen.Waldhausen.Basic` | Cofibrations, weak equivalences, and chosen zero |
@@ -59,6 +59,26 @@ Whole-topic imports include `Quillen.Algebra`, `Quillen.CategoryTheory`,
 `Quillen.Waldhausen`. `Quillen.AlgebraicGeometry.PerfectComplexes` is a generated
 nested facade; individual modules have smaller dependency closures.
 
+## Direct Aglib interfaces
+
+General exact-category, commutative-algebra, module-sheaf and cohomology interfaces
+are provided by [Aglib](https://github.com/kangxyz/aglib). Import precise `Aglib`
+leaves and use their native mathematical namespaces. The transferred general
+`Quillen` modules and aliases are removed; application imports remain in Quillen.
+
+`ExactStructure` and `ExactFunctor`, including their Quillen K-map extensions,
+use `CategoryTheory.ExactCategory`. Bundled `SmallExactCategory` and the actual
+Q/K/G constructions remain Quillen-owned. Module ownership and declaration
+namespace are distinct.
+
+For finite direct-image data on arbitrary schemes, use
+`AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePushforward` and
+`finiteTypePushforwardSpec`. The coherent specializations have locally Noetherian
+source and target. General finite-type pullback retains its locally Noetherian
+target and arbitrary source; the coherent specialization assumes both schemes
+locally Noetherian. Use the lower interface whenever the original statement has
+those weaker conditions.
+
 ## Migration to 0.5.0
 
 The 0.5.0 refactor places generic foundations below their applications and
@@ -67,13 +87,13 @@ duplicate declarations are removed; update imports and references directly.
 
 | Previous import | Current owner |
 | --- | --- |
-| `Quillen.GTheory.FiniteModules.Basic` | `Quillen.Algebra.Category.ModuleCat.Finite` |
+| `Quillen.GTheory.FiniteModules.Basic` | `Aglib.Algebra.Category.ModuleCat.Finite` |
 | `Quillen.AlgebraicGeometry.Scheme.Regular.FiniteProjectiveResolution` | `Quillen.Algebra.Homology.FiniteProjectiveResolution` |
 | `Quillen.AlgebraicGeometry.Scheme.Regular.LocalPrincipalDomain` | `Quillen.Algebra.RegularLocal.PrincipalDomain` |
 | `Quillen.Waldhausen.QuillenComparison.SpanNaturality` | `Quillen.CategoryTheory.QConstruction.SpanIsoNaturality` |
 
-Use `Quillen.ExactStructure.qSpan_iso_naturality` for the shared Q-span law and
-`Quillen.HomologicalAlgebra.mappingCone_acyclic_of_quasiIso` for cone acyclicity.
+Use `CategoryTheory.ExactCategory.ExactStructure.qSpan_iso_naturality` for the shared Q-span law and
+`CochainComplex.mappingCone_acyclic_of_quasiIso` for cone acyclicity.
 The localization functor and representative-map law are
 `Quillen.GroupCompletion.Localization.actedMapFunctor` and
 `actedMapFunctor_mkHom`. The realization constant-map law is
@@ -117,7 +137,9 @@ a published tag. Current merged checking is recorded only at
 
 Geometric source lies under `Quillen.AlgebraicGeometry.Scheme` and
 `Quillen.AlgebraicGeometry.PerfectComplexes`; principal declaration namespaces
-are `Quillen.Scheme`, `Quillen.SchemeSheaf`, and `Quillen.PerfectComplexes`.
+are `AlgebraicGeometry.Scheme`, `AlgebraicGeometry.Scheme.Modules`, and `Quillen.PerfectComplexes`.
+General module and coherent data come from Aglib; Q/K/G application declarations
+remain defined by Quillen modules even when extending a native namespace.
 Paths describe mathematical ownership and need not match declaration namespaces.
 For example, import `Quillen.AlgebraicGeometry.Scheme.Pullback` and
 `Quillen.AlgebraicGeometry.PerfectComplexes.Basic` for those canonical interfaces.
@@ -158,7 +180,7 @@ specified by the declaration and its linked topic guide.
 | Bundled small exact category | `Quillen.SmallExactCategory.ofExactStructure`, `KFunctor n` | [Size conventions](../topics/ExactCategories.md#equivalences-and-universe-boundaries) |
 | Waldhausen structure `W` | `W.Delooping`, `W.kBasepoint`, `W.K n` | [Waldhausen theory](../topics/Waldhausen.md) |
 | Bundled small Waldhausen category | `Quillen.Waldhausen.SmallWaldhausenCategory.KFunctor n` | [Chosen zero and functoriality](../topics/Waldhausen.md#exact-functors-and-the-chosen-zero) |
-| Scheme `X` | `Quillen.Scheme.K X n`, `G X n`, `restrictK`, `restrictG`, `KToG` | [Scheme K/G-theory](../topics/SchemeKTheory.md) |
+| Scheme `X` | `AlgebraicGeometry.Scheme.K X n`, `G X n`, `restrictK`, `restrictG`, `KToG` | [Scheme K/G-theory](../topics/SchemeKTheory.md) |
 | Strict/local perfect complexes | `Quillen.PerfectComplexes.StrictPerfect`, `Perfect`, `StrictK`, `PerfectK` | [Perfect complexes](../topics/PerfectComplexes.md#complexes-and-support) |
 | Based prespectrum | `Quillen.LoopPrespectrum`, signed stable groups, actual fibers and telescopes | [Spectra](../topics/SpectraAndBass.md) |
 | Ring-indexed Bass recursion | `Quillen.Bass.negativeKFunctor i` on `CommRingCat` | [Bass groups](../topics/SpectraAndBass.md#bass-cokernels-and-the-original-laurent-seed) |
@@ -166,7 +188,7 @@ specified by the declaration and its linked topic guide.
 
 For composable exact functors, the pointwise map law is
 `(F.comp G).KMap n x = G.KMap n (F.KMap n x)`.
-`Quillen.ExactFunctor.KMap_id_apply` and `KMap_comp_apply` are public helpers in
+`CategoryTheory.ExactCategory.ExactFunctor.KMap_id_apply` and `KMap_comp_apply` are public helpers in
 `Quillen.KTheory.API`. Natural-isomorphism and small-model comparisons use the
 same canonical maps; their explicit universe and comparison inputs remain in
 the individual interfaces.
@@ -198,9 +220,9 @@ presentation.
 
 | Import after `Quillen.AlgebraicGeometry.` | Selected public maps |
 | --- | --- |
-| `Scheme.Pullback`, `Scheme.FlatPullback` | `Quillen.Scheme.pullbackK`, `KFunctor`, `pullbackG`, `GFlatFunctor`, `KToG_pullback` |
-| `Scheme.FinitePushforward`, `Scheme.FiniteFlatPushforward` | `Quillen.Scheme.GFinitePushforwardFunctor`, `KFiniteFlatPushforwardFunctor` |
-| `Scheme.Regular` | `Quillen.Scheme.KToGRegularAffineEquiv`, `KToGRegularEquiv` |
+| `Scheme.Pullback`, `Scheme.FlatPullback` | `AlgebraicGeometry.Scheme.pullbackK`, `KFunctor`, `pullbackG`, `GFlatFunctor`, `KToG_pullback` |
+| `Scheme.FinitePushforward`, `Scheme.FiniteFlatPushforward` | `AlgebraicGeometry.Scheme.GFinitePushforwardFunctor`, `KFiniteFlatPushforwardFunctor` |
+| `Scheme.Regular` | `AlgebraicGeometry.Scheme.KToGRegularAffineEquiv`, `KToGRegularEquiv` |
 | `PerfectComplexes.Basic`, `PerfectComplexes.Local` | `Quillen.PerfectComplexes.StrictK`, `PerfectK` |
 | `PerfectComplexes.OpenFunctor` | `perfectOpenKMap`, `perfectOpenKRestrict`, `perfectKRestrict` |
 | `PerfectComplexes.OpenLongExactSequence` | `perfectOpenConnectingHom`, `perfectOpen_positiveLongExactSequence` |

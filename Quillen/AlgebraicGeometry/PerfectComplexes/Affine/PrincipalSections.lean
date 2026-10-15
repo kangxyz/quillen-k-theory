@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.InjectiveCounit
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.InjectiveRestriction
+public import Aglib.AlgebraicGeometry.Cohomology.Injective.Restriction
 
 /-!
 # Original principal sections of affine injective complexes
@@ -21,6 +22,9 @@ Its numerator formula is exactly original section restriction. All actual
 restriction-section isomorphisms, scalar actions, and counit maps are retained.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionOpenDiagram
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassDiagram
 public import Quillen.KTheory.Bass.StrictUnderTransition
@@ -18,8 +19,11 @@ Its inverse followed by the iterated original change of weak equivalences gives 
 ambient-to-relative-open arrow. No seed, transition or telescope comparison is asserted here.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes

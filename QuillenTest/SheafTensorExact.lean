@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Category.ModuleCat.Sheaf.TensorExact
+public import Aglib.Algebra.Category.ModuleCat.Sheaf.TensorExact
 
 /-!
 # Consumers of finite-projective coefficient tensor exactness

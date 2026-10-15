@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientLaurentEvaluation
-public import Quillen.AlgebraicGeometry.Scheme.CoefficientPolynomialLaurent
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.PolynomialLaurent
 public import Quillen.Topology.Prespectrum.PushoutHomotopySquare
 public import Quillen.Topology.Prespectrum.HomotopySquareInterchange
 public import Quillen.Topology.Prespectrum.HomotopySquareBoundary
@@ -24,12 +25,15 @@ This source-leg comparison alone does not descend evaluation to the Bass cones: 
 also needs the relative composition comparison of the two original chart tracks.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
-open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
-open AlgebraicGeometry.Scheme.CoefficientBaseChange
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}

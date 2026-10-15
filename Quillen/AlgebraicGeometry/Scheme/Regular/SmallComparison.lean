@@ -6,16 +6,22 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Coherent
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Exact
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.Scheme.Regular.AffineResolution
 public import Quillen.Resolution.LengthOne
 
 /-! # Applying the resolution theorem to the canonical scheme comparison -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 open CategoryTheory.ExactCategory

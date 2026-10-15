@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeProjectionPerfect
 
 /-! # The literal zero coefficient over every native quasi-compact base
@@ -14,6 +16,10 @@ Perfection uses the accepted native projection theorem; no caller supplies a
 pushforward-perfection or resolution premise.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 
 open CategoryTheory.ExactCategory
 
@@ -29,6 +35,7 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeCoefficients
 open FlasqueCoefficients
 
+/-- The standard derived-category instance for sheaves of modules on `Y`. -/
 local instance nativeZeroStandardDerived (Y : Scheme.{u}) :
     HasDerivedCategory.{u + 1} Y.Modules := HasDerivedCategory.standard _
 

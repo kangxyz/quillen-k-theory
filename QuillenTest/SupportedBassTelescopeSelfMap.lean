@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionBassTelescopeSelfMap
 
 /-!
@@ -15,11 +16,17 @@ supported seed, each finite transition, the whole cylinder and loop parameters, 
 coefficient maps and all negative signed degrees are retained.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.LoopPrespectrum Quillen.PerfectComplexes Quillen.PolynomialBaseChange
+open Quillen Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.SupportedBassTelescopeSelfMap
 

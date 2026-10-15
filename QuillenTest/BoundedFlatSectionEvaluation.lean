@@ -14,8 +14,11 @@ The original geometric pullback and the actual vertical section morphisms appear
 naturality square. Coefficient reindexing retains both identity and arbitrary-arrow evaluations.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry
 universe u
 namespace QuillenTest.BoundedFlatSectionEvaluation
 

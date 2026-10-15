@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StabilizedExtension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.RestrictionFunctoriality
 
@@ -18,6 +19,9 @@ complex plus its positive shift. The literal restriction, biproduct and integer
 shift are retained. No presentation of the source as a chosen open is supplied.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

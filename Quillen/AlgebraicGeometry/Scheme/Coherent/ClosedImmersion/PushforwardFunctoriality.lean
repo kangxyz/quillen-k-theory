@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Exact
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.ClosedImmersion.PushforwardFunctoriality
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralPushforward
@@ -21,20 +22,14 @@ closed-immersion maps; no general proper or nonexact direct image is introduced.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.CoherentScheme.ClosedImmersion.General
-export AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
-  (coherentPushforwardCompIso coherentPushforwardIdIso)
-end Quillen.CoherentScheme.ClosedImmersion.General
-
-end
 
 
 

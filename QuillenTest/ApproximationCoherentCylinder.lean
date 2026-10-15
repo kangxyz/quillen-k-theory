@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Approximation.WeakCommaCylinder
 public import Quillen.Waldhausen.SplitComplexes.Approximation
 public import Quillen.Waldhausen.SplitComplexes.FunctorialFactorization
@@ -18,9 +19,15 @@ The final consumer instantiates the cylinder from actual cone-closed complexes.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
+open CategoryTheory.ExactCategory
+
+
 
 noncomputable section
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 open Quillen.Waldhausen.HasApproximationProperty
 universe v u v' u' w z
 namespace QuillenTest.ApproximationCoherentCylinder

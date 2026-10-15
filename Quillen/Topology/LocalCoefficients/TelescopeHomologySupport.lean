@@ -12,6 +12,9 @@ public import Quillen.Topology.ClassifyingSpace.TelescopeComponents
 /-! # Genuine stabilized finite support for original telescope homology classes -/
 
 @[expose] public section
+
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory
 universe u

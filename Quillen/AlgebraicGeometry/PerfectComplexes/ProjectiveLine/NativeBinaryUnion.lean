@@ -15,6 +15,9 @@ the compact base of the original Mayer-Vietoris sequence; its first open and
 overlap are identified by canonical original open-immersion isomorphisms.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.ProjectiveLine.NativeMayerVietoris
+
 open Quillen
 
 
@@ -70,7 +73,8 @@ theorem nativePhiBijective_union (Y : Scheme.{u}) [QuasiSeparatedSpace Y]
   let W : A.obj.Opens := f.hom ⁻¹ᵁ T
   let : CompactSpace W.toScheme := overlap_compactSpace f T
   have hi : (Y.homOfLE (inf_le_left : U ⊓ V ≤ U)).opensRange = W :=
-    cartesian_openRange _ _ iU iV (isPullback_opens_inf_le le_sup_left le_sup_right)
+    AlgebraicGeometry.Scheme.Hom.opensRange_of_isPullback _ _ iU iV
+      (isPullback_opens_inf_le le_sup_left le_sup_right)
   let eW : (U ⊓ V).toScheme ≅ W.toScheme :=
     IsOpenImmersion.isoOfRangeEq (Y.homOfLE inf_le_left) W.ι (by
       change ((Y.homOfLE (inf_le_left : U ⊓ V ≤ U)).opensRange : Set U.toScheme) =

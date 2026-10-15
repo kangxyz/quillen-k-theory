@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.Map.Functoriality
 
 /-!
@@ -17,6 +19,9 @@ normalization has identity component. The resulting realization homotopy is
 therefore based, and proves equality of the original zero-based K-maps.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

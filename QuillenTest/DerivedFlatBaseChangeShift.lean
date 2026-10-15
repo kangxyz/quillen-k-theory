@@ -15,7 +15,6 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace QuillenTest.DerivedFlatBaseChangeShift
 
-open Quillen
 open AlgebraicGeometry.Scheme.Modules
 /-- The original standard ambient categories. -/
 local instance standard (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=

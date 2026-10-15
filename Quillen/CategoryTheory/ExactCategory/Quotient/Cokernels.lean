@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.Quotient.Basic
 public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
 
@@ -18,6 +19,9 @@ not extra axioms in a proposed exact structure on the quotient. Kernel preservat
 for the left s-filtering quotient still requires a separate argument.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

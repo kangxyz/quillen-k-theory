@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionForgetLaurent
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionBassSeed
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassSeed
@@ -18,10 +19,13 @@ cone map and unchanged null cylinder. Together with the whole original scalar fo
 these prove compatibility of the two constructed Bass seeds. No seed square is assumed.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes

@@ -10,10 +10,13 @@ public import Quillen.Waldhausen.Approximation.DualInverseImageLift
 /-! # Original coarse lifts and K-zero consumers without fine reflection -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 universe u v
 namespace QuillenTest.DualInverseImageLift
 variable {C D E : Type u} [Category.{v} C] [Category.{v} D] [Category.{v} E]

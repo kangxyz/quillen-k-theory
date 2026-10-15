@@ -10,6 +10,9 @@ public import Quillen.CategoryTheory.GroupCompletion.TelescopeInterchange
 /-! # Original quotient representatives under the telescope interchange -/
 
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 open CategoryTheory MonoidalCategory
 universe u v
 namespace Quillen.TranslationTelescope

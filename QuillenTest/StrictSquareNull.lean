@@ -11,6 +11,10 @@ public import Quillen.Topology.Prespectrum.StrictSquareNull
 naturality at every time slice. The source, cone and maps are the actual constructions. -/
 @[expose] public section
 
+open Quillen.LoopPrespectrum
+open Quillen.LoopPrespectrum.StrictSquare
+
+
 noncomputable section
 open CategoryTheory
 open scoped unitInterval

@@ -14,8 +14,11 @@ These consumers retain literal original pullback values and recover arbitrary mo
 original bounded-flat category through the proved categorical evaluation equivalence.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry
 universe u
 namespace QuillenTest.BoundedFlatSectionEquivalence
 

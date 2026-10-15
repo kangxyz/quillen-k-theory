@@ -5,8 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenKZeroExact
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenKZeroExact
 public import Quillen.Waldhausen.SConstruction.Iterated.DiagramZeroNull
 public import Quillen.Waldhausen.Fibration.Rows.JointRetarget
 public import Quillen.CategoryTheory.ObjectProperty.LiftInclusion
@@ -35,13 +34,16 @@ result requires no compactness or separation and asserts no seed, telescope
 or classical nonconnective K-theory comparison.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits AlgebraicGeometry Opposite
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.Fibration Quillen.Waldhausen.IteratedS
 open Quillen.LoopPrespectrum
-open AlgebraicGeometry.Scheme.CoefficientBaseChange HomologicalComplex
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients HomologicalComplex
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)

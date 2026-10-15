@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.Resolution.Covers
 public import Quillen.CategoryTheory.TheoremA.ContractibleStructured
 public import Mathlib.CategoryTheory.Adjunction.Comma
@@ -19,6 +20,9 @@ the resolving subcategory. The ordinary full inclusion is treated by the dual
 of Theorem A and the genuine cover category.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

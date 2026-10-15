@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Category.ModuleCat.Sheaf.Tensor
+public import Aglib.Algebra.Category.ModuleCat.Sheaf.Tensor.Basic
 
 /-!
 # Consumers of the actual sheafified tensor

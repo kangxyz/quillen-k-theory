@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.AcyclicTruncation
 
 /-!
@@ -18,6 +19,9 @@ a kernel-closed exact subcategory. Exactness of this functor is a separate
 statement and is not assumed here.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

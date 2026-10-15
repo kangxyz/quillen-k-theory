@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalTriangles
 
 /-!
@@ -17,6 +19,10 @@ is then locally a chain mapping-cone triangle. This proves the middle
 complex locally perfect, rather than postulating extension closure.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

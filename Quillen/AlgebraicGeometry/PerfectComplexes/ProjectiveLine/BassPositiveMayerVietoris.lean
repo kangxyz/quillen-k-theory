@@ -17,6 +17,9 @@ the inverse of negative restriction. The boundary is the original boundary.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -26,6 +29,7 @@ open CategoryTheory AlgebraicGeometry
 namespace Quillen.PerfectComplexes.ProjectiveLine.BassPositive
 open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine FlasqueTwoSummands
 
+/-- The commutative group structure on `PerfectK Y n` supplied by Waldhausen additivity. -/
 local instance (Y : Scheme.{u}) (n : ℕ) : CommGroup (PerfectK Y n) :=
   Waldhausen.Additivity.KCommGroup (perfectWaldhausen Y) n
 

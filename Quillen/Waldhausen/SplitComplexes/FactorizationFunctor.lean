@@ -16,17 +16,12 @@ The identity-cone construction defines a middle-object functor with natural incl
     projection maps on complexes.
 -/
 @[expose] public section
+
+open CochainComplex
+
 open Quillen
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.Waldhausen.SplitFactorization
-export CochainComplex
-  (identityConeFunctor)
-end Quillen.Waldhausen.SplitFactorization
-
-end
 
 
 
@@ -47,7 +42,7 @@ variable {A : Type u} [Category.{v} A] [Abelian A]
 /-- The actual factorization object depends functorially on the input arrow. -/
 def middleFunctor : Arrow (CochainComplex A ℤ) ⥤ CochainComplex A ℤ where
   obj f := middle f.hom
-  map α := biprod.map (identityConeFunctor.map α.left) α.right
+  map α := biprod.map (CochainComplex.identityConeFunctor.map α.left) α.right
   map_id f := by
     apply biprod.hom_ext
     · simp only [Arrow.id_left, CategoryTheory.Functor.map_id, Arrow.id_right,

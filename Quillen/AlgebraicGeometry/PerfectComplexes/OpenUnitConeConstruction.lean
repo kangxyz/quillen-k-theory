@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenRestrictionUnitCone
 /-! # Constructing the genuine supported restriction-unit cone
 
@@ -15,6 +16,9 @@ The original chain-adjoint cone has QC homology, lower bound b-1, and zero
 original derived restriction. Its perfection is not asserted.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

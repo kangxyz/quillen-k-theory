@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Devissage.CentralEndomorphism
 public import Quillen.Devissage.FiltrationRefinement
 
@@ -16,6 +17,12 @@ The filtration is built from actual images of the operators and refined by
 pullback splicing. No bound uniform in the object is required.
 -/
 @[expose] public section
+
+open Quillen.PrincipalSupportDevissage
+
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

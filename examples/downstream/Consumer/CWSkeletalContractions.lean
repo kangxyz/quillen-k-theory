@@ -10,8 +10,10 @@ public import Quillen.Topology.CWComplex.SkeletalNeighborhoodContractions
 /-! # Independent consumer of actual same-time skeletal contractions -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Topology Quillen Quillen.ClassicalCW
+open Set Quillen Quillen.ClassicalCW
 open scoped unitInterval
 universe u
 namespace Consumer.CWSkeletalContractions

@@ -24,7 +24,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open AlgebraicGeometry.Scheme.Modules
 namespace QuillenTest.FlasquePushforward
 
-open Quillen
 
 /-- The standard ambient derived category for the original direct-image functors. -/
 local instance flasquePushforwardStandard (X : Scheme.{u}) :

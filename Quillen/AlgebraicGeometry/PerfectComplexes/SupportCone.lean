@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Restriction
 
 /-!
@@ -16,6 +17,9 @@ cone with the cone of a map between acyclic complexes. This foundational
 closure theorem has no geometric roof or density dependency.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

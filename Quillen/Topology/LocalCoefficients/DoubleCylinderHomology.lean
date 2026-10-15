@@ -11,6 +11,9 @@ public import Quillen.Topology.DoubleMappingCylinder.CollarConnectivity
 
 /-! # Actual double-cylinder homology from the original attaching-map quasi-isomorphism -/
 @[expose] public section
+
+open Quillen.DoubleCylinder
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

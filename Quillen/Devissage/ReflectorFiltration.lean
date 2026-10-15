@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Devissage.Filtration
-public import Quillen.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Mathlib.CategoryTheory.Adjunction.FullyFaithful
 public import Mathlib.CategoryTheory.Functor.ReflectsIso.Balanced
 public import Mathlib.CategoryTheory.ObjectProperty.EpiMono
@@ -21,6 +21,9 @@ hypothesis. The accompanying adjunction lemma derives full faithfulness from
 a faithful right adjoint and epimorphic unit.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits

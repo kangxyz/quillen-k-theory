@@ -5,9 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenPushforwardCounit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenPushforwardBaseChange
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.InjectiveRestriction
+public import Aglib.AlgebraicGeometry.Cohomology.Injective.Restriction
 public import Mathlib.AlgebraicGeometry.Morphisms.QuasiSeparated
 
 /-! # Quasicoherent homology of actual quasi-compact open direct images
@@ -22,6 +23,9 @@ No upper bound or quasicoherence of injective terms is assumed. Ordinary
 direct image is not asserted exact; perfection of its result is not claimed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

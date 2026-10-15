@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.QCSupportedDenominators
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.ImmersionDerivedTarget
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.Nilpotence
@@ -16,6 +17,9 @@ the target is zero. Actual Mayer–Vietoris kills the remaining global map;
 local nullity is used only with this explicit zero-target condition.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

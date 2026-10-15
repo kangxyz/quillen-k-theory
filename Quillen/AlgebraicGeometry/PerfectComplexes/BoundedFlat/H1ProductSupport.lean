@@ -15,6 +15,10 @@ open scoped Simplicial Topology unitInterval
 universe u
 namespace Quillen.PerfectComplexes.BassH1Support
 
+/--
+The union of the images of the four one-simplex edges traversed by the native five-vertex square
+path.
+-/
 def squareEdgeSupport : Set (StdSimplex ℝ (Fin 5)) :=
   {z | ∃ (i : Fin 4) (w : StdSimplex ℝ (Fin 2)), StdSimplex.map (edgeFace i).toOrderHom w = z}
 

@@ -10,7 +10,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePr
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeOpenNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeAffineTwoSummands
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePerfectGeneration
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedOpenCoverConservativity
+
 
 /-! # Actual native negative-line projection vanishing
 
@@ -19,17 +19,15 @@ reduce the actual negative pullback complex to the accepted affine calculation.
 Open-cover reflection takes place in the original derived category, not on K-groups.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+
+
+open AlgebraicGeometry.Scheme.Modules
+
 open Quillen
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeEntries
-export AlgebraicGeometry.Scheme.Modules
-  (isZero_of_derivedOpenCover)
-end Quillen.PerfectComplexes.ProjectiveLine.P5NativeEntries
-
-end
 
 
 
@@ -42,6 +40,7 @@ open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Modules
   AlgebraicGeometry.Scheme.ProjectiveLine
 namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeEntries
 
+/-- The standard derived-category instance for sheaves of modules on `Y`. -/
 local instance nativeEntriesDerived (Y : Scheme.{u}) :
     HasDerivedCategory.{u + 1} Y.Modules := HasDerivedCategory.standard _
 

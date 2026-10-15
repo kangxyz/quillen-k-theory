@@ -10,6 +10,9 @@ public import Quillen.CategoryTheory.GroupCompletion.Monoidal
 
 /-! # Pullback multiplication on the fixed-quotient extension action category -/
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

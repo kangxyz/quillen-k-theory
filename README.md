@@ -60,10 +60,13 @@ and [public API reference](docs/reference/API.md).
 ## Quick start
 
 The **0.7.0 source-integration version** uses Lean **4.34.1** and the mathlib revision
-pinned in [lakefile.toml](lakefile.toml). General exact-category foundations come from
+pinned in [lakefile.toml](lakefile.toml). General algebra, exact categories,
+scheme modules and cohomology are implemented once in
 [Aglib](https://github.com/kangxyz/aglib), pinned to
-`2c9d8c0a535a02c7e47eda7a1796f39b0753d573`. Fetching this private dependency
-requires repository access. Install
+`419bd685cee21ac408756fbfe99565be19d186fd`. Quillen imports its precise modules
+and native mathematical namespaces, and owns the Q/K/G constructions and
+application maps. The transferred general Quillen modules and aliases are removed.
+Install
 [elan](https://github.com/leanprover/elan) to use the committed
 [toolchain](lean-toolchain).
 
@@ -93,10 +96,11 @@ Import the interface you need:
 ```lean
 module
 
+import Aglib.CategoryTheory.ExactCategory.Functor
 import Quillen.KTheory.API
 
 universe u
-open CategoryTheory CategoryTheory.Limits Quillen
+open CategoryTheory CategoryTheory.Limits CategoryTheory.ExactCategory Quillen
 
 example {C : Type u} [Category.{u} C] [Preadditive C]
     [HasFiniteBiproducts C] (E : ExactStructure C) (n : ℕ) (x : E.K n) :

@@ -9,8 +9,15 @@ public import Quillen.Topology.PlusConstruction.ClassicalCWUniquenessUniverseLif
 
 /-! # Original-map regressions across explicit coefficient universes -/
 @[expose] public section
+
+open Topology
+
+open Quillen.DoubleCylinder
+open Quillen.IsPlusConstruction
+open Quillen.PlusConstruction.UnivSubtype
+
 noncomputable section
-open CategoryTheory Limits MonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory
 open scoped unitInterval
 universe u v w z
 namespace QuillenTest.ClassicalCWPlusMixedUniverse

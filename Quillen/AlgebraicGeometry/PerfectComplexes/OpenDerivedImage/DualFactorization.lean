@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Closure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.KernelClosure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.HomotopyPullback
@@ -19,11 +20,16 @@ nor a strict-source representative into arbitrary sheaf terms is presumed.
 -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.CochainComplex
 universe u
 namespace Quillen.PerfectComplexes.OpenDerivedImage
 attribute [local instance] HasDerivedCategory.standard

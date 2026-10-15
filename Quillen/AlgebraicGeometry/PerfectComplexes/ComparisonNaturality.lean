@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.QuillenComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.RestrictionFunctoriality
 public import Quillen.CategoryTheory.SmallModel.CommonAmbientNaturality
@@ -61,7 +62,8 @@ theorem smallVectorBundleKMap_restrict {U X : Scheme.{u}}
       (AlgebraicGeometry.Scheme.restrictK j n) =
       ((AlgebraicGeometry.Scheme.Modules.vectorBundleExactRestrict j).KMap n).comp
         (AlgebraicGeometry.Scheme.Modules.smallVectorBundleKMap X n) :=
-  ExactFunctor.smallModelToOriginal_commonAmbientKMap_naturality.{u + 1, u}
+  CategoryTheory.ExactCategory.ExactFunctor.smallModelToOriginal_commonAmbientKMap_naturality.{u +
+    1, u}
     (AlgebraicGeometry.Scheme.Modules.vectorBundleExactRestrict j) n
 
 /-- Naturality of the actual public small-model/Q/S equivalence. -/

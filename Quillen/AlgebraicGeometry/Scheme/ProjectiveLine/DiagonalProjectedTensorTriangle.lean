@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedPushforwardSection
-public import Quillen.Algebra.Homology.DerivedCategory.PlusSingleTriangle
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PushforwardSection
+public import Aglib.Algebra.Homology.DerivedCategory.Plus.SingleTriangle
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalDerivedTensorTriangle
 /-!
 # The original diagonal triangle after derived second projection

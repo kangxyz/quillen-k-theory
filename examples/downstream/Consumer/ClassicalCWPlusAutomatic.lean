@@ -9,8 +9,14 @@ public import Quillen.Topology.PlusConstruction.ClassicalCWUniqueness
 
 /-! # Independent no-cover classical-CW plus uniqueness consumer -/
 @[expose] public section
+
+open Topology
+
+open Quillen.DoubleCylinder
+open Quillen.IsPlusConstruction
+
 noncomputable section
-open CategoryTheory Limits MonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory
 open scoped unitInterval
 universe u
 namespace Quillen.Consumer.ClassicalCWPlusAutomatic

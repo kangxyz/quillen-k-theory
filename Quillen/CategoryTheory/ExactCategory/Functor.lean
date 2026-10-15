@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Aglib.CategoryTheory.ExactCategory.Functor
-public import Quillen.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.QConstruction.Functor
 
 /-!
@@ -18,13 +18,13 @@ This module retains the Q-construction application.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
+
 noncomputable section
 universe v₁ v₂ v₃ u₁ u₂ u₃
 open CategoryTheory CategoryTheory.Limits
 
-namespace Quillen
-export CategoryTheory.ExactCategory (ExactFunctor pullbackMatrixKernel)
-end Quillen
 
 namespace CategoryTheory.ExactCategory.ExactFunctor
 open Quillen

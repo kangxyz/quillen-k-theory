@@ -5,11 +5,15 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionSpanLift
 public import Quillen.CategoryTheory.ExactCategory.ExtensionTotalIsomorphism
 
 /-! # Comparing actual extension arrows over the same original Q-arrow -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

@@ -25,6 +25,10 @@ or a nonconnective construction.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.Fibration.RelativeRows
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

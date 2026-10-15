@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.Map.RebasePath
 
 /-!
@@ -15,6 +17,9 @@ for exact functors, the raw Q-map and its actual canonical zero-isomorphism edge
 -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Cylinder
 
@@ -16,9 +17,12 @@ No equivalence with the original Perf model is assumed.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes AlgebraicGeometry.Scheme.Modules
+open AlgebraicGeometry.Scheme.Modules
 universe u
 namespace QuillenTest.BoundedFlatPerfectModel
 
@@ -27,7 +31,8 @@ open Quillen
 /-- The model functor retains the literal original chain map. -/
 theorem original_chain_map {X Y : Scheme.{u}} (f : X ⟶ Y)
     {K L : BoundedFlatPerfect Y} (s : K ⟶ L) :
-    ((boundedFlatPerfectPullback f).map s).hom = (pullbackComplex f).map s.hom := rfl
+    ((boundedFlatPerfectPullback f).map s).hom = (AlgebraicGeometry.Scheme.Modules.Complex.pullback
+      f).map s.hom := rfl
 
 /-- Arbitrary geometric pullback preserves genuine quotient cofibrations. -/
 theorem original_cofibration {X Y : Scheme.{u}} (f : X ⟶ Y)

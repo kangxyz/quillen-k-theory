@@ -10,8 +10,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NormalizedP
 
 /-! The genuine geometric three-map comparison in the reversed-edge Bass-square orientation. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.NormalizedPullbackRotation
 

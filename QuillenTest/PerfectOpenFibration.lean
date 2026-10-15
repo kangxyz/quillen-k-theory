@@ -5,15 +5,23 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenLongExactSequence
 
 /-! Semantic consumers for actual local shifts, relative weak classes, unchanged
 joint cylinders, the original fiber map and the coarse-only connective sequence. -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open Quillen Quillen.Waldhausen.Fibration
 universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

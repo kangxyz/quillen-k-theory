@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Native
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineTensor
 public import Quillen.Waldhausen.Additivity.GroupFormula
@@ -20,6 +22,12 @@ nonnegative degree, including zero. Bijectivity is not asserted.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Products
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
+
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -27,8 +35,8 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.ProjectiveLine
-open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Bass AlgebraicGeometry.Scheme.ProjectiveLine
-open Quillen.Waldhausen Quillen.Waldhausen.ExtensionCategory
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
+open Quillen.Waldhausen.ExtensionCategory
 
 /-- Boolean indexing of the two original native chart maps. -/
 def nativeChart (X : QuasiCompactSchemes.{u}) (b : Bool) :
@@ -42,7 +50,8 @@ instance nativeChart_isOpenImmersion (X : QuasiCompactSchemes.{u}) (b : Bool) :
 /-- Both actual native chart maps retain the original projection. -/
 @[reassoc (attr := simp)]
 theorem nativeChart_projection (X : QuasiCompactSchemes.{u}) (b : Bool) :
-    nativeChart X b ≫ (nativeProjection.app X).hom = (polynomialProjection.app X).hom := by
+    nativeChart X b ≫ (nativeProjection.app X).hom =
+      (PolynomialLaurent.Relative.polynomialProjection.app X).hom := by
   cases b
   · exact congrArg (fun f => f.hom) (nativeMinus_projection X)
   · exact congrArg (fun f => f.hom) (nativePlus_projection X)
@@ -96,9 +105,10 @@ def nativeSecondSummand (X : QuasiCompactSchemes.{u}) :
 /-- The second summand is the prescribed pullback tensor O(-1), through actual symmetry. -/
 def nativeSecondSummandTensorOrderIso (X : QuasiCompactSchemes.{u}) (B : Perfect X.obj) :
     ((nativeSecondSummand X).obj B).obj ≅
-      (tensorByLineRightComplex (nativeTautologicalLine X)).obj
-        ((pullbackComplex (nativeProjection.app X).hom).obj B.obj) :=
-  (tensorByLineComplexSymmetry (nativeTautologicalLine X)).app _
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X)).obj
+        ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeProjection.app X).hom).obj B.obj)
+          :=
+  (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeftRightIso (nativeTautologicalLine X)).app _
 
 theorem nativeFirstSummand_exact (X : QuasiCompactSchemes.{u}) :
     IsExact (perfectWaldhausen X.obj).cof (perfectWaldhausen X.obj).weq
@@ -115,7 +125,7 @@ theorem nativeSecondSummand_exact (X : QuasiCompactSchemes.{u}) :
 /-- Actual chart restriction of the structure-line summand is native polynomial pullback. -/
 def nativeFirstSummandChartIso (X : QuasiCompactSchemes.{u}) (b : Bool) :
     nativeFirstSummand X ⋙ perfectRestrict (nativeChart X b) ≅
-      perfectFlatPullback (polynomialProjection.app X).hom :=
+      perfectFlatPullback (PolynomialLaurent.Relative.polynomialProjection.app X).hom :=
   Functor.isoWhiskerLeft (nativeFirstSummand X)
       (perfectRestrictIsoFlatPullback (nativeChart X b)) ≪≫
     (perfectFlatPullbackCompIso (nativeChart X b) (nativeProjection.app X).hom).symm ≪≫
@@ -124,7 +134,7 @@ def nativeFirstSummandChartIso (X : QuasiCompactSchemes.{u}) (b : Bool) :
 /-- Actual chart restriction of the negative-line summand is the same polynomial pullback. -/
 def nativeSecondSummandChartIso (X : QuasiCompactSchemes.{u}) (b : Bool) :
     nativeSecondSummand X ⋙ perfectRestrict (nativeChart X b) ≅
-      perfectFlatPullback (polynomialProjection.app X).hom :=
+      perfectFlatPullback (PolynomialLaurent.Relative.polynomialProjection.app X).hom :=
   Functor.associator _ _ _ ≪≫
     Functor.isoWhiskerLeft (nativeFirstSummand X) (nativeNegativeTwistChartIso X b) ≪≫
     nativeFirstSummandChartIso X b
@@ -179,14 +189,14 @@ theorem nativeTwoSummandKMap_apply (X : QuasiCompactSchemes.{u}) (n : ℕ)
 /-- The actual first-summand restriction equation in every original nonnegative K-group. -/
 theorem nativeFirstSummandKMap_chart (X : QuasiCompactSchemes.{u}) (b : Bool) (n : ℕ) :
     (perfectKRestrict (nativeChart X b) n).comp (KMap (nativeFirstSummand_exact X) n) =
-      perfectKFlatPullback (polynomialProjection.app X).hom n := by
+      perfectKFlatPullback (PolynomialLaurent.Relative.polynomialProjection.app X).hom n := by
   rw [perfectKRestrict, KMap_comp_KMap]
   exact KMap_eq_of_iso _ _ (nativeFirstSummandChartIso X b) n
 
 /-- The negative-line summand has exactly the same original restriction map. -/
 theorem nativeSecondSummandKMap_chart (X : QuasiCompactSchemes.{u}) (b : Bool) (n : ℕ) :
     (perfectKRestrict (nativeChart X b) n).comp (KMap (nativeSecondSummand_exact X) n) =
-      perfectKFlatPullback (polynomialProjection.app X).hom n := by
+      perfectKFlatPullback (PolynomialLaurent.Relative.polynomialProjection.app X).hom n := by
   rw [perfectKRestrict, KMap_comp_KMap]
   exact KMap_eq_of_iso _ _ (nativeSecondSummandChartIso X b) n
 
@@ -194,8 +204,8 @@ theorem nativeSecondSummandKMap_chart (X : QuasiCompactSchemes.{u}) (b : Bool) (
 theorem nativeTwoSummandKMap_chart (X : QuasiCompactSchemes.{u}) (b : Bool) (n : ℕ)
     (a c : PerfectK X.obj n) :
     perfectKRestrict (nativeChart X b) n (nativeTwoSummandKMap X n (a, c)) =
-      perfectKFlatPullback (polynomialProjection.app X).hom n a *
-        perfectKFlatPullback (polynomialProjection.app X).hom n c := by
+      perfectKFlatPullback (PolynomialLaurent.Relative.polynomialProjection.app X).hom n a *
+        perfectKFlatPullback (PolynomialLaurent.Relative.polynomialProjection.app X).hom n c := by
   rw [nativeTwoSummandKMap_apply, map_mul]
   exact congrArg₂ (· * ·)
     (DFunLike.congr_fun (nativeFirstSummandKMap_chart X b n) a)

@@ -5,7 +5,10 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TildeExact
+public import Aglib.AlgebraicGeometry.Modules.Pullback.Free
+public import Aglib.AlgebraicGeometry.Modules.Pullback.Unit
+public import Aglib.AlgebraicGeometry.Modules.StructureSheaf.Sections
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.TildeExact
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.PullbackRankOne
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.LocallyFree
 
@@ -16,8 +19,10 @@ an affine scheme. A regular global scalar therefore gives a monomorphism of the 
 structure module. An actual affine scheme identification transports this statement.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section

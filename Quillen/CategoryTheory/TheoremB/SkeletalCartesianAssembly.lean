@@ -13,6 +13,10 @@ public import Quillen.Topology.Realization.Cartesian.CoproductAssembly
 /-! # Actual replacement-stage cartesian cube assembly -/
 @[expose] public section
 
+open Quillen.TheoremA
+open Quillen.TheoremB
+
+
 noncomputable section
 universe u
 open CategoryTheory Limits Opposite

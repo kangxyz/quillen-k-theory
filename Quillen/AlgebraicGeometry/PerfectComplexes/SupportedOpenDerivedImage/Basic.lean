@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Restriction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalSupportedDensity
 
@@ -22,6 +23,9 @@ Its support is proved using the original derived biproduct retraction.
 No one-arrow replacement into an arbitrary all-sheaf target is asserted.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

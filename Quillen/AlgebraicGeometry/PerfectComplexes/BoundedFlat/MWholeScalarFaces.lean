@@ -8,6 +8,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MWholeNodes
 
 /-! Concrete whole original M parameters and all twelve exact scalar boundary joins. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassMWholeOrder
+
 noncomputable section
 set_option autoImplicit false
 open Convexity
@@ -46,10 +49,15 @@ theorem supportOrders : BassMFamilyTransfer.SupportOrders vertexIndex oldIndex w
   vertexMinus := vertexMinus_monotone
   vertexMiddle := vertexMiddle_monotone
 
+/-- The original H0 scalar family relabeled by `oldIndex` into the common 140-label simplex. -/
 abbrev h0Parameter := BassMScalarPasting.h0 oldIndex
+/-- The original H1 scalar family relabeled by `oldIndex` into the common 140-label simplex. -/
 abbrev h1Parameter := BassMScalarPasting.h1.{u} oldIndex
+/-- The original positive chart scalar family relabeled by `oldIndex` into the common simplex. -/
 abbrev plusParameter := BassMScalarPasting.plus oldIndex
+/-- The original inverse chart scalar family relabeled by `oldIndex` into the common simplex. -/
 abbrev minusParameter := BassMScalarPasting.minus oldIndex
+/-- The original bottom scalar family relabeled by `oldIndex` into the common 140-label simplex. -/
 abbrev bottomParameter := BassMScalarPasting.bottom.{u} oldIndex
 
 /-- The pure complete M family pastes the two literal original stages at their native speeds. -/

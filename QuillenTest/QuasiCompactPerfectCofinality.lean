@@ -10,13 +10,16 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.QuasiCompactPerf
 /-! # Original qc-affine positive endpoint and sharp K-zero image consumers -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u
 namespace QuillenTest.QuasiCompactPerfectCofinality
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 
 /-- Every original positive target class has one and only one relative lift. -/
 theorem original_positive_unique_preimage (R : CommRingCat.{u}) (W : (Spec R).Opens)

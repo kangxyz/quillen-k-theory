@@ -17,11 +17,14 @@ statement retains the chosen object component. Passage to a specified Laurent lo
 boundary and its normalized homotopy-group class remains a separate comparison.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry unitInterval
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.Fibration
 open scoped Topology
 universe u
 namespace Quillen.PerfectComplexes

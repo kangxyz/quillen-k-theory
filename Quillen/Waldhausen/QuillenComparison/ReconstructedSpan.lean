@@ -6,12 +6,16 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.Waldhausen.QuillenComparison.ReconstructedRows
 public import Quillen.Waldhausen.QuillenComparison.ExtendedSpan
 public import Quillen.Waldhausen.QuillenComparison.IntervalTransport
 
 /-! # The terminal arrow of the recursively reconstructed Q-chain -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

@@ -26,6 +26,8 @@ variable {A B C A' B' C' : Scheme.{u}}
 /-- Representatives ordered so that all three original eight-vertex diagrams remain faces. -/
 def select : Fin 18 → Fin 24 := ![0, 1, 2, 3, 9, 10, 11, 19, 4, 5, 6, 7, 14, 15, 20, 21, 22, 23]
 
+/-- The 18 selected common-diagram nodes, retaining their functors and source reference
+isomorphisms. -/
 def nodes (i : Fin 18) : DoubleSquareCommonSimplex.Node p q c :=
   DoubleSquareCommonSimplex.nodes p q p' q' a b c hp hq (select i)
 
@@ -36,16 +38,19 @@ def simplex : ModelSimplex (modelOf (boundedFlatPerfectWaldhausen A))
     (fun i ↦ (nodes p q p' q' a b c hp hq i).1)
     (fun i ↦ (nodes p q p' q' a b c hp hq i).2)
 
+/-- The face inclusion retaining the first split-triple diagram in the merged 17-simplex. -/
 def firstFace : ⦋7⦌ ⟶ ⦋17⦌ :=
   SimplexCategory.Hom.mk ⟨![0, 1, 2, 3, 8, 9, 10, 11], by
     intro i j hij
     fin_cases i <;> fin_cases j <;> simp_all⟩
 
+/-- The face inclusion retaining the middle split-triple diagram in the merged 17-simplex. -/
 def middleFace : ⦋7⦌ ⟶ ⦋17⦌ :=
   SimplexCategory.Hom.mk ⟨![0, 4, 5, 6, 8, 9, 12, 13], by
     intro i j hij
     fin_cases i <;> fin_cases j <;> simp_all⟩
 
+/-- The face inclusion retaining the last split-triple diagram in the merged 17-simplex. -/
 def lastFace : ⦋7⦌ ⟶ ⦋17⦌ :=
   SimplexCategory.Hom.mk ⟨![0, 4, 5, 7, 14, 15, 16, 17], by
     intro i j hij

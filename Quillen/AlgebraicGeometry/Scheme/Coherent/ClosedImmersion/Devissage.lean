@@ -6,6 +6,15 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.ClosedImmersion.IdealPushforward
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Exact
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Restriction
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeRestriction
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
+public import Aglib.CategoryTheory.SmallModel.Abelian
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.SupportDevissage
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GTheory
@@ -20,10 +29,15 @@ the supported G-equivalence, with the original canonical pushforward map.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme
+
+open AlgebraicGeometry.Scheme.Modules.Coherent
+open CategoryTheory.ExactCategory
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section
@@ -33,7 +47,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Principal
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (f : R)
 
 local instance : PreservesFiniteLimits (coherentRestrictionExact (principalOpen R f)).toFunctor :=
@@ -48,24 +62,33 @@ local instance : (coherentRestrictionExact (principalOpen R f)).toFunctor.IsLoca
 
 /-- The canonical upper-universe small model of actual closed pushforward. -/
 abbrev smallPushforward :=
-  (CategoryTheory.ExactCategory.ExactFunctor.smallModel.{u+1} (coherentPushforwardExact R
-    f)).toFunctor
+  (CategoryTheory.ExactCategory.ExactFunctor.smallModel.{u+1}
+    (Modules.Coherent.Pushforward.ClosedImmersion.Ideal.coherentPushforwardExact R (Ideal.span
+    {f}))).toFunctor
 
 /-- The represented actual pushforward is killed by f, including the
 canonical small-model unit isomorphism. -/
 theorem smallPushforward_killed
-    (M : SmallModel.{u + 1} (FiniteTypeSheaves (Spec (principalRing R f)))) :
+    (M : SmallModel.{u + 1} (FiniteTypeSheaves (Spec
+      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+      (Ideal.span {f}))))) :
     finiteTypeSheavesKilledBy R f ((equivSmallModel.{u+1} (FiniteTypeSheaves (Spec R))).inverse.obj
       ((smallPushforward R f).obj M)) :=
   (finiteTypeSheavesKilledBy R f).prop_of_iso
     ((equivSmallModel.{u+1} (FiniteTypeSheaves (Spec R))).unitIso.app
-      ((coherentPushforward R f).obj
-        ((equivSmallModel.{u+1} (FiniteTypeSheaves (Spec (principalRing R f)))).inverse.obj M)))
+      ((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePushforward
+        (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedMap R
+        (Ideal.span {f}))).obj
+        ((equivSmallModel.{u+1} (FiniteTypeSheaves (Spec
+          (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+          (Ideal.span {f}))))).inverse.obj M)))
     (coherentPushforward_killed R f _)
 
 /-- Actual closed pushforward, landing in the actual small support category. -/
 def smallPushforwardToSupport :
-    SmallModel.{u+1} (FiniteTypeSheaves (Spec (principalRing R f))) ⥤ SmallSupport R f :=
+    SmallModel.{u+1} (FiniteTypeSheaves (Spec
+      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+      (Ideal.span {f})))) ⥤ SmallSupport R f :=
   ObjectProperty.lift _ (smallPushforward R f) (fun M ↦ by
     rw [coherentPrincipalSmallSupport_iff, finiteTypeSheavesSupportedAway_iff_uniform]
     refine ⟨1, ?_⟩
@@ -74,19 +97,29 @@ def smallPushforwardToSupport :
 
 /-- Its precise smaller target consists of the actual killed supported objects. -/
 def smallPushforwardToKilled :
-    SmallModel.{u+1} (FiniteTypeSheaves (Spec (principalRing R f))) ⥤
+    SmallModel.{u+1} (FiniteTypeSheaves (Spec
+      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+      (Ideal.span {f})))) ⥤
       (supportKilled R f).FullSubcategory :=
   ObjectProperty.lift _ (smallPushforwardToSupport R f) (fun M ↦
     (supportKilled_iff R f _).mpr (smallPushforward_killed R f M))
 
 instance smallPushforward_full : (smallPushforward R f).Full := by
-  change (((equivSmallModel.{u+1} (FiniteTypeSheaves (Spec (principalRing R f)))).inverse ⋙
-    coherentPushforward R f) ⋙ (equivSmallModel.{u+1} (FiniteTypeSheaves (Spec R))).functor).Full
+  change (((equivSmallModel.{u+1} (FiniteTypeSheaves (Spec
+    (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+    (Ideal.span {f}))))).inverse ⋙
+    AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePushforward
+      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedMap R
+      (Ideal.span {f}))) ⋙ (equivSmallModel.{u+1} (FiniteTypeSheaves (Spec R))).functor).Full
   infer_instance
 
 instance smallPushforward_faithful : (smallPushforward R f).Faithful := by
-  change (((equivSmallModel.{u+1} (FiniteTypeSheaves (Spec (principalRing R f)))).inverse ⋙
-    coherentPushforward R f) ⋙
+  change (((equivSmallModel.{u+1} (FiniteTypeSheaves (Spec
+    (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+    (Ideal.span {f}))))).inverse ⋙
+    AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePushforward
+      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedMap R
+      (Ideal.span {f}))) ⋙
       (equivSmallModel.{u+1} (FiniteTypeSheaves (Spec R))).functor).Faithful
   infer_instance
 
@@ -107,15 +140,21 @@ instance smallPushforwardToKilled_essSurj : (smallPushforwardToKilled R f).EssSu
       ⟨(equivSmallModel.{u+1} (FiniteTypeSheaves (Spec R))).inverse.obj M.obj.obj,
         (supportKilled_iff R f M.obj).mp M.property⟩
     let L := (coherentClosedEquivalence R f).inverse.obj N
-    let e : (coherentPushforward R f).obj L ≅ N.obj :=
+    let e : (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePushforward
+      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedMap R
+      (Ideal.span {f}))).obj L ≅ N.obj :=
       (finiteTypeSheavesKilledBy R f).ι.mapIso ((coherentClosedEquivalence R f).counitIso.app N)
-    let Q := equivSmallModel.{u+1} (FiniteTypeSheaves (Spec (principalRing R f)))
+    let Q := equivSmallModel.{u+1} (FiniteTypeSheaves (Spec
+      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+      (Ideal.span {f}))))
     let A := equivSmallModel.{u+1} (FiniteTypeSheaves (Spec R))
     refine ⟨Q.functor.obj L, ⟨?_⟩⟩
     apply ObjectProperty.isoMk
     apply ObjectProperty.isoMk
     exact A.functor.mapIso
-      ((coherentPushforward R f).mapIso (Q.unitIso.app L).symm ≪≫ e) ≪≫
+      ((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePushforward
+        (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedMap R
+        (Ideal.span {f}))).mapIso (Q.unitIso.app L).symm ≪≫ e) ≪≫
         A.counitIso.app M.obj.obj
 
 instance smallPushforwardToKilled_isEquivalence :
@@ -132,14 +171,16 @@ instance smallPushforwardToKilled_additive : (smallPushforwardToKilled R f).Addi
 exact structure, rather than a newly chosen unrelated K-map. -/
 def smallPushforwardToKilledExact :
     ExactFunctor (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1}
-      (coherentExactStructure (Spec (principalRing R
-      f))))
+      (coherentExactStructure (Spec
+        (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+        (Ideal.span {f})))))
       (CategoryTheory.ObjectProperty.subcategoryExactStructure (supportKilled R f)) where
   toFunctor := smallPushforwardToKilled R f
   map_conflation S h := by
     change (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1} (abelianExactStructure
       (FiniteTypeSheaves (Spec
-      (principalRing R f))))).conflation S at h
+      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+        (Ideal.span {f})))))).conflation S at h
     rw [abelianExactStructure_smallModel] at h
     exact h.map_of_exact _
 
@@ -153,7 +194,8 @@ instance smallPushforwardToKilledExact_mapQ_isEquivalence :
   · intro M N a ha
     change (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1} (abelianExactStructure
       (FiniteTypeSheaves (Spec
-      (principalRing R f))))).inflation a
+      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+        (Ideal.span {f})))))).inflation a
     rw [abelianExactStructure_smallModel, abelianExactStructure_inflation_iff]
     have : Mono ((smallPushforwardToKilled R f).map a) :=
       (abelianExactStructure_inflation_iff _ _).mp ha
@@ -161,7 +203,8 @@ instance smallPushforwardToKilledExact_mapQ_isEquivalence :
   · intro M N a ha
     change (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1} (abelianExactStructure
       (FiniteTypeSheaves (Spec
-      (principalRing R f))))).deflation a
+      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+        (Ideal.span {f})))))).deflation a
     rw [abelianExactStructure_smallModel, abelianExactStructure_deflation_iff]
     have : Epi ((smallPushforwardToKilled R f).map a) :=
       (abelianExactStructure_deflation_iff _ _).mp ha
@@ -170,7 +213,9 @@ instance smallPushforwardToKilledExact_mapQ_isEquivalence :
 /-- Public scheme G-theory of the principal closed subscheme is equivalent
 to the actual compatible supported G-term by geometric dévissage. -/
 def closedSupportGEquiv (n : ℕ) :
-    AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec (principalRing R f)) n ≃*
+    AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec
+      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+      (Ideal.span {f}))) n ≃*
       CoherentPrincipalSupportedG R f n :=
   ((smallPushforwardToKilledExact R f).KEquivOfMapQIsEquivalence n).trans
     (supportDevissageKEquiv R f n)
@@ -178,8 +223,9 @@ def closedSupportGEquiv (n : ℕ) :
 /-- The canonical factorization of actual closed pushforward through support. -/
 def smallPushforwardToSupportExact :
     ExactFunctor (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1}
-      (coherentExactStructure (Spec (principalRing R
-      f))))
+      (coherentExactStructure (Spec
+        (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+        (Ideal.span {f})))))
       (CategoryTheory.ObjectProperty.subcategoryExactStructure (coherentPrincipalSmallSupport R f))
         :=
   (smallPushforwardToKilledExact R f).comp (CategoryTheory.ObjectProperty.exactInclusion
@@ -188,7 +234,9 @@ def smallPushforwardToSupportExact :
 /-- The monoid-hom coercion is the canonical forward map. -/
 @[simp] theorem closedSupportGEquiv_coe (n : ℕ) :
     (↑(closedSupportGEquiv R f n) :
-      AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec (principalRing R f)) n →*
+      AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec
+        (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+        (Ideal.span {f}))) n →*
         CoherentPrincipalSupportedG R f n) =
       (smallPushforwardToSupportExact R f).KMap n := by
   rw [smallPushforwardToSupportExact, CategoryTheory.ExactCategory.ExactFunctor.KMap_comp]
@@ -203,7 +251,9 @@ theorem closedSupportGEquiv_pushforward (n : ℕ) :
   have h : ((smallPushforwardToKilledExact R f).comp
       (CategoryTheory.ObjectProperty.exactInclusion (supportKilled R f))).comp
       (CategoryTheory.ObjectProperty.exactInclusion (coherentPrincipalSmallSupport R f)) =
-    (CategoryTheory.ExactCategory.ExactFunctor.smallModel.{u+1} (coherentPushforwardExact R f)).comp
+    (CategoryTheory.ExactCategory.ExactFunctor.smallModel.{u+1}
+      (Modules.Coherent.Pushforward.ClosedImmersion.Ideal.coherentPushforwardExact R (Ideal.span
+      {f}))).comp
       (SmallModelLocalization.standardExactFunctor.{u+1} (FiniteTypeSheaves (Spec R))) := by rfl
   have hk := congrArg (fun F ↦ F.KMap n) h
   simp only [CategoryTheory.ExactCategory.ExactFunctor.KMap_comp] at hk
@@ -217,4 +267,4 @@ theorem closedSupportGEquiv_pushforward (n : ℕ) :
   rw [MulEquiv.apply_symm_apply]
   exact DFunLike.congr_fun hk x
 
-end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Principal

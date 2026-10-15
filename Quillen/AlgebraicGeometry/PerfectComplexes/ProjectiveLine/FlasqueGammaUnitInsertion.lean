@@ -5,11 +5,17 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueNegativeGamma
 public import Quillen.Waldhausen.Functoriality.KMap
 
 /-! # The actual model left-tensor insertion of the original Godement unit -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTensorAdditivity
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -69,7 +75,7 @@ def negativeInsertion (R : CommRingCat.{u}) :
 lemma negativeInsertionBounded_hom_app (R : CommRingCat.{u})
     (K : BoundedBelow.Obj (twoChartLine R)) :
     ((negativeInsertionBounded R).app K).hom =
-      (tensorByLineComplex (tautologicalLine R)).map
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R)).map
         ((FlasqueBoundedBelow.unit (twoChartLine R)).app K).hom := rfl
 
 /-- Totalization retains the actual original bounded insertion chain map. -/

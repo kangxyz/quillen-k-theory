@@ -5,12 +5,18 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueTensorDiagonalAdditivity
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueThirdSpan
 public import Quillen.Waldhausen.Functoriality.KMap
 
 /-! # Gamma of the actual original third model weak span -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTensorAdditivity
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -71,7 +77,7 @@ lemma rightQTotalGammaToCenter_weak (R : CommRingCat.{u})
 lemma thirdGammaToCenter_hom_app (R : CommRingCat.{u})
     (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     ((thirdGammaToCenter R).app K).hom = (godementTotal (twoChartLine R)).map
-      ((tensorByLineComplex (tautologicalLine R)).map
+      ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R)).map
         ((FlasqueThirdEndpoint.thirdToCenter R).app K).hom) :=
   Gamma_map R ((FlasqueThirdEndpoint.thirdToCenter R).app K)
 
@@ -79,7 +85,7 @@ lemma thirdGammaToCenter_hom_app (R : CommRingCat.{u})
 lemma rightQTotalGammaToCenter_hom_app (R : CommRingCat.{u})
     (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     ((rightQTotalGammaToCenter R).app K).hom = (godementTotal (twoChartLine R)).map
-      ((tensorByLineComplex (tautologicalLine R)).map
+      ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R)).map
         ((FlasqueThirdEndpoint.totalToCenter R).app K).hom) :=
   Gamma_map R ((FlasqueThirdEndpoint.totalToCenter R).app K)
 

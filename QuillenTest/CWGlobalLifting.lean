@@ -8,8 +8,13 @@ public import Quillen.Topology.CWComplex.GlobalLifting
 
 /-! # Named tests of genuine global classical-CW lifting -/
 @[expose] public section
+
+open Topology
+
+open Quillen.ClassicalCW
+
 noncomputable section
-open Set Topology
+open Set
 universe u v w
 namespace QuillenTest.CWGlobalLifting
 

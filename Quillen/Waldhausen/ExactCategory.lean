@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Waldhausen.KTheory
-public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
+public import Aglib.CategoryTheory.ExactCategory.Isomorphisms
 
 /-!
 # Exact categories as Waldhausen categories

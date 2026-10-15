@@ -15,9 +15,12 @@ stable degree remain visible. These consumers use the proved all-stage excision,
 connectivity, point HEP, seed-compatibility or cofiber-exactness premise.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open Quillen Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.SectionBassStableSequence
 

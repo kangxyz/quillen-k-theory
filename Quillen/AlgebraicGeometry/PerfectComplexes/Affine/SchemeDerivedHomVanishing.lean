@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRestrictionIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedHomVanishing
 
@@ -19,6 +20,9 @@ A genuine supplied strict derived model also handles an arbitrary original
 ambient source. Zero reflection uses the actual isomorphism restriction.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

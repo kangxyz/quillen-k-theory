@@ -22,7 +22,6 @@ open AlgebraicGeometry.Scheme.Modules
 
 namespace QuillenTest.ProjectiveLineChartAcyclicity
 
-open Quillen
 
 /-- Use the installed standard derived category of original module sheaves. -/
 local instance chartAcyclicityDerivedStandard (X : Scheme.{u}) :

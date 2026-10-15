@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.Algebra.Polynomial.LaurentFlat
-public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurent
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Basic
 
 /-!
 # Flat coefficient maps of the original polynomial and Laurent charts
@@ -15,6 +16,12 @@ Flatness follows from the actual coefficient pushouts. The resulting scheme squa
 literal coefficient homomorphisms and both Laurent chart maps.
 -/
 @[expose] public section
+
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
 open Quillen
 
 
@@ -26,7 +33,6 @@ universe u
 
 namespace AlgebraicGeometry.Scheme.PolynomialLaurent
 
-open Quillen.PolynomialBaseChange
 
 variable {R S : CommRingCat.{u}} (f : R ⟶ S)
 

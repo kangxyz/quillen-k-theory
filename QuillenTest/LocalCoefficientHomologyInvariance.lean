@@ -7,6 +7,9 @@ module
 
 import Quillen.Topology.ClassifyingSpace.GroupCompletionHomology
 
+open Quillen.GroupCompletion.Localization
+
+
 /-!
 # Consumers of homotopy invariance with actual coefficient transport
 

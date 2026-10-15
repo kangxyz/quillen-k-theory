@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.Waldhausen.Additivity.GroupFormula
 public import Quillen.Waldhausen.QuillenComparison.Equivalence
 
@@ -16,6 +17,9 @@ commutativity to exactly the pre-existing Quillen K-group multiplication,
 including degree zero. No Grothendieck presentation comparison is used.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

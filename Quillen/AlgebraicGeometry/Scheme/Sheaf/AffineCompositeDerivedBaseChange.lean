@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
+public import Aglib.AlgebraicGeometry.Cohomology.BaseChange.Flat
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Pushforward
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineDerivedBaseChangeLocal
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChangeVertical
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineDerivedPushforward
@@ -11,8 +13,9 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedSingleAcyclicity
 /-! # Original affine-composite chart base change -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

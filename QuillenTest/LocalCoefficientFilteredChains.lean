@@ -18,6 +18,9 @@ one common stage, even when stage maps are not injective.
 
 @[expose] public section
 
+open Quillen.LocalCoefficients
+
+
 noncomputable section
 
 open CategoryTheory Limits

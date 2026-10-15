@@ -11,18 +11,24 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassRectang
 noncomputable section
 set_option autoImplicit false
 open CategoryTheory AlgebraicGeometry Opposite Convexity Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
 open scoped Topology unitInterval
 universe u
 namespace Quillen.PerfectComplexes.DoubleSquareScalarPaths
 
+/-- The outer-square scalar path from vertex 15 to 2, reversing the target total before
+following the source total. -/
 def outerSquarePath := targetTotal.symm.trans sourceTotal
 
+/-- The chart-word source path from vertex 17 to 11, obtained by reversing the two concatenated
+restriction routes. -/
 def originalComparisonSource :=
   ((firstRestriction.symm.trans secondRestriction).trans
     (middleChart.symm.trans lastRestriction)).symm
 
+/-- The chart-word target path from vertex 17 to 11, following the reversed target chart, outer
+square, and source chart. -/
 def originalComparisonTarget :=
   (targetChart.symm.trans outerSquarePath).trans sourceChart
 

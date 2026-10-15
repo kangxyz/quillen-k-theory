@@ -9,11 +9,15 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenConeFiberLoop
 
 /-! Consumers retain the original weak diagonal and the actual supported-cone fiber coordinates. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration Quillen.PerfectComplexes
+open Quillen.Waldhausen.Fibration
 universe u v
 namespace QuillenTest.CanonicalFiberObjectLoop
 

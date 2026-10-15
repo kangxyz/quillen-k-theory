@@ -5,6 +5,8 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.LineTensorCompatibility
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientOne
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePerfectGeneration
@@ -20,6 +22,11 @@ Godement totalization and ordinary projection retain an actual short exact
 sequence, using the flasque kernel terms.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -76,19 +83,22 @@ def middleIso : (sequence R).X₂ ≅ tautologicalLine R ⊞ tautologicalLine R 
 /-- Each endpoint tensor is the original sheafified tensor with a fixed Euler endpoint. -/
 def endpointComplex (M : (twoChartLine R).Modules) :
     StrictPerfect (Spec R) ⥤ Complex (twoChartLine R) :=
-  (strictPerfect (Spec R)).ι ⋙ pullbackComplex (projection R) ⋙ tensorByLineComplex M
+  (strictPerfect (Spec R)).ι ⋙ AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R) ⋙
+    AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft M
 
 instance endpointComplex_additive (M : (twoChartLine R).Modules) :
     (endpointComplex R M).Additive := by unfold endpointComplex; infer_instance
 
 /-- Tensoring the actual first Euler arrow is natural in the original coefficient complex. -/
 def first : endpointComplex R (sequence R).X₁ ⟶ endpointComplex R (sequence R).X₂ :=
-  Functor.whiskerLeft ((strictPerfect (Spec R)).ι ⋙ pullbackComplex (projection R))
+  Functor.whiskerLeft ((strictPerfect (Spec R)).ι ⋙
+    AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R))
     ((moduleTensorCoefficientMap (twoChartLine R) (sequence R).f).mapHomologicalComplex (.up ℤ))
 
 /-- Tensoring the actual quotient Euler arrow is natural in the original coefficient complex. -/
 def second : endpointComplex R (sequence R).X₂ ⟶ endpointComplex R (sequence R).X₃ :=
-  Functor.whiskerLeft ((strictPerfect (Spec R)).ι ⋙ pullbackComplex (projection R))
+  Functor.whiskerLeft ((strictPerfect (Spec R)).ι ⋙
+    AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R))
     ((moduleTensorCoefficientMap (twoChartLine R) (sequence R).g).mapHomologicalComplex (.up ℤ))
 
 lemma first_second : first R ≫ second R = 0 := by
@@ -97,9 +107,11 @@ lemma first_second : first R ≫ second R = 0 := by
   apply HomologicalComplex.Hom.ext
   funext n
   change (moduleTensorByLineRight
-    (((pullbackComplex (projection R)).obj A.obj).X n)).map (sequence R).f ≫
+    (((AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).obj A.obj).X n)).map
+      (sequence R).f ≫
       (moduleTensorByLineRight
-        (((pullbackComplex (projection R)).obj A.obj).X n)).map (sequence R).g = 0
+        (((AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).obj A.obj).X n)).map
+          (sequence R).g = 0
   rw [← Functor.map_comp, (sequence R).zero, Functor.map_zero]
 
 /-- The actual coefficient Euler short complex, retaining the first-variable tensor maps. -/
@@ -113,10 +125,11 @@ lemma coefficientSequence_shortExact (A : StrictPerfect (Spec R)) :
   intro n
   let : IsFiniteLocallyFree (Spec R) (A.obj.X n) := A.property.2 n
   let : IsFiniteLocallyFree (twoChartLine R)
-      (((pullbackComplex (projection R)).obj A.obj).X n) :=
+      (((AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).obj A.obj).X n) :=
     finiteLocallyFree_pullback (projection R) (A.obj.X n)
   change ((sequence R).map (moduleTensorByLineRight
-    (((pullbackComplex (projection R)).obj A.obj).X n))).ShortExact
+    (((AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).obj A.obj).X
+      n))).ShortExact
   exact (sequence_shortExact R).map_of_exact _
 
 /-- Every endpoint keeps each specified strict lower bound of the original coefficient. -/

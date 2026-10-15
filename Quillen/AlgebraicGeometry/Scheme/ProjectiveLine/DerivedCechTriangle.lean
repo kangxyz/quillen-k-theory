@@ -19,7 +19,6 @@ coefficient-base-change or projective-bundle generation assertion is made.
 -/
 
 @[expose] public section
-open Quillen
 
 noncomputable section
 

@@ -6,9 +6,12 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.FinitePresentation
+public import Aglib.AlgebraicGeometry.Modules.Coherent.FinitePresentation
+public import Aglib.AlgebraicGeometry.Modules.FinitePresentation.AffineTransport
+public import Aglib.AlgebraicGeometry.Modules.FinitePresentation.Noetherian
 
 /-!
 # Public locally noetherian scheme G-theory interface

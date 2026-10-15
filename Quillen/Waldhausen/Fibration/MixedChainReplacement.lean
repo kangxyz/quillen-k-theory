@@ -20,6 +20,9 @@ is inferred from it.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.FunctorialFactorization
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

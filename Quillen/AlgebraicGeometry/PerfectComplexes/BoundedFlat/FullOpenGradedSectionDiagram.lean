@@ -16,9 +16,12 @@ composition laws give a genuine strict Model diagram and its original iterated-S
 The change from fine to graded weakness is an actual natural transformation of those diagrams.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.IteratedS
 open Quillen.CategoryTheory.StrictSections AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes

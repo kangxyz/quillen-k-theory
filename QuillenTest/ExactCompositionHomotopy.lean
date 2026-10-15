@@ -11,8 +11,11 @@ public import Quillen.Waldhausen.SConstruction.Iterated.ExactCompositionHomotopy
 components. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
-open CategoryTheory Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open CategoryTheory Quillen.Waldhausen.IteratedS
 open Quillen.LoopPrespectrum
 open scoped Topology unitInterval
 universe u v

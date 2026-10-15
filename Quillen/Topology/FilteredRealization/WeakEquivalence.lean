@@ -18,8 +18,10 @@ finite-subcomplex support and eventual equality, not on a Whitehead theorem.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 open scoped Simplicial unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false

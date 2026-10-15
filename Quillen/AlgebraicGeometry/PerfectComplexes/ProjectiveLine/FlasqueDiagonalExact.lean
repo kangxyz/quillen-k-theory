@@ -5,11 +5,16 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.PushforwardQuasiIso
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueDiagonalVertices
 public import Quillen.Waldhausen.ExactFunctor
 
 /-! # Exactness of the literal original flasque diagonal endofunctors -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
 
 open CategoryTheory.ExactCategory
 noncomputable section
@@ -76,28 +81,6 @@ lemma E_cofibration (R : CommRingCat.{u}) (v : Vertex)
     (FlasqueBoundedBelow.waldhausen (twoChartLine R)).cof ((E R v).map f) :=
   (EExactFunctor R v).map_inflation f hf
 
-/-- Actual direct image of the literal total preserves all lower-bounded quasi-isomorphisms. -/
-lemma totalPushforwardPlus_quasiIso {X Y : Scheme.{u}} (p : X ⟶ Y)
-    {K L : CochainComplex.Plus X.Modules} (f : K ⟶ L) [QuasiIso f.hom] :
-    QuasiIso
-      (((Scheme.Modules.pushforward p).mapHomologicalComplex (.up ℤ)).map
-        ((godementTotal X).map f.hom)) := by
-  let : QuasiIso ((godementTotal X).map f.hom) := godementTotalPlus_map_quasiIso f
-  obtain ⟨a, ha⟩ := K.property
-  obtain ⟨b, hb⟩ := L.property
-  let := ha
-  let := hb
-  have hz := fun n hn => CochainComplex.isZero_of_isStrictlyGE K.obj a n hn
-  have hw := fun n hn => CochainComplex.isZero_of_isStrictlyGE L.obj b n hn
-  let : ((godementTotal X).obj K.obj).IsStrictlyGE a := godementTotal_isStrictlyGE K.obj a hz
-  let : ((godementTotal X).obj L.obj).IsStrictlyGE b := godementTotal_isStrictlyGE L.obj b hw
-  exact quasiIso_pushforward_of_flasque p ((godementTotal X).map f.hom) a b
-    (fun n hn => CochainComplex.isZero_of_isStrictlyGE
-      ((godementTotal X).obj K.obj) a n hn)
-    (fun n hn => CochainComplex.isZero_of_isStrictlyGE
-      ((godementTotal X).obj L.obj) b n hn)
-    (godementTotal_isFlasque K.obj a hz) (godementTotal_isFlasque L.obj b hw)
-
 /-- Ordinary second image preserves the actual quasi-isomorphism between the two totals. -/
 lemma E_weak (R : CommRingCat.{u}) (v : Vertex)
     {K L : FlasqueBoundedBelow.Obj (twoChartLine R)} (f : K ⟶ L)
@@ -111,7 +94,8 @@ lemma E_weak (R : CommRingCat.{u}) (v : Vertex)
   let : QuasiIso cp.hom := by
     change QuasiIso (((coefficient R v).mapHomologicalComplex (.up ℤ)).map f.hom)
     infer_instance
-  exact totalPushforwardPlus_quasiIso (relativeSecond R) cp
+  exact AlgebraicGeometry.Scheme.Modules.Godement.totalPushforwardPlus_quasiIso (relativeSecond R)
+    cp
 
 /-- Literal original diagonal vertices preserve zero, cofibrations, weak arrows and pushouts. -/
 lemma E_exact (R : CommRingCat.{u}) (v : Vertex) : Waldhausen.IsExact

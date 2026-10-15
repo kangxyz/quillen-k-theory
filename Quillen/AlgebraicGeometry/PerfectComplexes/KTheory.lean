@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Extension
 public import Quillen.Waldhausen.SubcategoryInclusion
 
@@ -24,6 +26,9 @@ schemes, TT's uniform global Tor-amplitude convention is an additional scope
 issue; the object predicate here is explicitly local perfectness.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open CategoryTheory.ExactCategory
 

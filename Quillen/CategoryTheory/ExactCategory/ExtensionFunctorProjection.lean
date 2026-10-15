@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.CategoryTheory.ExactCategory.ExtensionFunctor
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionFunctor
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionGeometry
@@ -11,6 +13,9 @@ public import Quillen.CategoryTheory.QConstruction.SpanIsoNaturality
 
 /-! # Exact-functor naturality of the original extension projection -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

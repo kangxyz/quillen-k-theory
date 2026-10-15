@@ -11,6 +11,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Approx
 /-! # Genuine coherent opposite joint data on original weak restriction arrows -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

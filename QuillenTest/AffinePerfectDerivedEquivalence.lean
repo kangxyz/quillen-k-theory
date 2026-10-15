@@ -19,6 +19,9 @@ quasi-isomorphisms.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 
@@ -28,7 +31,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 attribute [local instance] Quillen.PerfectComplexes.Affine.standardDerivedModules
   Quillen.PerfectComplexes.Affine.standardDerivedSheaves
 namespace QuillenTest.AffinePerfectDerivedEquivalence

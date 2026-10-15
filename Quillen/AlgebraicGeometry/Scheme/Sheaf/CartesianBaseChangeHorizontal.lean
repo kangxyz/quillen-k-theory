@@ -4,14 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianBaseChange
-public import Quillen.CategoryTheory.Adjunction.MateHomEquiv
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Cartesian
+public import Aglib.CategoryTheory.Adjunction.MateHomEquiv
 
 /-! # Horizontal pasting of the original geometric base-change mate -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

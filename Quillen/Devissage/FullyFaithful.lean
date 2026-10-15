@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.Abelian.Subcategory.Exact
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Devissage.Setup
 
 /-!
@@ -21,6 +23,10 @@ not require the finite-filtration hypothesis and does not assert essential
 surjectivity of the Q-functor or the homotopical dévissage theorem.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+open CategoryTheory.ObjectProperty
+
 
 
 noncomputable section

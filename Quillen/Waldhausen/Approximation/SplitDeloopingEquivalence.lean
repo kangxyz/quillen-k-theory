@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Approximation.SplitRowEquivalence
 public import Quillen.Waldhausen.Approximation.WeakRowDiagonal
 public import Quillen.Topology.Realization.BisimplicialEquivalence
@@ -19,6 +20,9 @@ an equivalence on the original S-grid realization with exactly the canonical
 identity comparison as forward map.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

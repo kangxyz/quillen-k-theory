@@ -5,13 +5,17 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.Square
 public import Quillen.KTheory.Bass.StrictRingDiagram
 
 /-! Assemble pointwise maps into the existing strict Bass endofunctor without changing their values.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory Quillen.LoopPrespectrum
 universe u w
 namespace Quillen.KTheory.Bass
 

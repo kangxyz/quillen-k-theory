@@ -5,19 +5,21 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Mathlib.Algebra.Homology.DerivedCategory.FullyFaithful
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedStructure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Single
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Closure
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneGluing
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Locality
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Locality
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Tautological
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.UnitSections
+public import Aglib.AlgebraicGeometry.Modules.StructureSheaf.Sections
 public import Mathlib.AlgebraicGeometry.Modules.Tilde
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FiniteAttachment
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.ChartAffineness
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.FinitePresentation
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenCoverExactness
+public import Aglib.AlgebraicGeometry.Modules.FinitePresentation.Noetherian
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteGenerators
+public import Aglib.AlgebraicGeometry.Modules.Locality.Exactness
 
 /-! # Actual graph attachments and strict reassembly on the projective line
 
@@ -26,6 +28,12 @@ morphisms. Strict reassembly uses only chain realization into a top single,
 not global projectivity of vector bundles or unrestricted chain realization.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
@@ -392,7 +400,7 @@ theorem exists_unit_map_denominator {R : CommRingCat.{u}} {X : Scheme.{u}}
     change e.hom.hom (M.presheaf.map
         (homOfLE (show j ''ᵁ ⊤ ≤ ⊤ from le_top)).op t) =
       e.hom.hom (r ^ n • (M.restrictAppIso j ⊤).hom x)
-    rw [map_smul]
+    rw [_root_.map_smul]
     have he' := congrArg (fun q => (q : N.obj (op ⊤) ⟶
       N.obj (op (PrimeSpectrum.basicOpen r))) t) he
     change e.hom.hom (M.presheaf.map

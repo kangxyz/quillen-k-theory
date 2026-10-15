@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.PullbackUnit
+public import Aglib.AlgebraicGeometry.Modules.Pullback.Free
+public import Aglib.AlgebraicGeometry.Modules.Pullback.Unit
 
 /-! # Original pullback comparisons on commuting squares
 
@@ -14,8 +15,9 @@ maps into and out of the ordered unit square.
 -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 noncomputable section

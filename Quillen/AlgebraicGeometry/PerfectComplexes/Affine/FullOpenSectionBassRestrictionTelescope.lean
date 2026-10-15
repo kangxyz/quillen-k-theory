@@ -5,8 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassRestrictionTower
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassRestrictionTower
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassTelescope
 public import Quillen.Topology.Prespectrum.TelescopeDiagramMap
 

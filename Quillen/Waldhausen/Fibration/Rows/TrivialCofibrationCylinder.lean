@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.Rows.SecondEndpoint
 public import Quillen.Waldhausen.Fibration.TrivialCofibrations.Category
 
@@ -15,6 +16,9 @@ The data is supplied by the genuine exact joint cylinder, its proved target
 section and its original projection. No comma or nerve comparison is assumed.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits CochainComplex

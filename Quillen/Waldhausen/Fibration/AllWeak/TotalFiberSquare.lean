@@ -19,6 +19,9 @@ fiber comparison.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.Fibration.RelativeRows
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial Topology

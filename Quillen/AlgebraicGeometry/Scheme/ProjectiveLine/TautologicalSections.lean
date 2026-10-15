@@ -7,7 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Tautological
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.StructureSheafCohomology
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RestrictionSections
+public import Aglib.AlgebraicGeometry.Modules.Restriction.Sections
 
 /-!
 # Original sections of the tautological line

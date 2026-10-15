@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
+public import Aglib.AlgebraicGeometry.Modules.Stalk.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatResolution
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.BoundedFlatPullback
 public import Mathlib.Algebra.Homology.Embedding.ExtendHomology
@@ -18,8 +21,10 @@ a quasi-isomorphism. Arbitrary geometric pullback can be applied to these genuin
 representatives for single sheaves.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
 
@@ -98,7 +103,8 @@ theorem single_stalkwiseFlat (X : Scheme.{u}) (M : X.Modules) (hM : stalkwiseFla
 augmentation remains a quasi-isomorphism under every geometric pullback. -/
 theorem quasiIso_pullback_flatCochainResolutionπ {X Y : Scheme.{u}} (f : X ⟶ Y)
     (M : Y.Modules) (hM : stalkwiseFlat Y M) :
-    QuasiIso ((PerfectComplexes.pullbackComplex f).map (flatCochainResolutionπ Y M)) :=
+    QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map (flatCochainResolutionπ Y
+      M)) :=
   quasiIso_pullback_of_boundedAbove_stalkwiseFlat f
     (flatCochainResolution_term_flat Y M) (single_stalkwiseFlat Y M hM) 0 0
     (flatCochainResolution_isZero_above Y M)

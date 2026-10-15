@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionOpenBassDiagram
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionOpenBassSeed
 public import Quillen.Topology.Prespectrum.TelescopeDiagram
@@ -17,8 +18,11 @@ transitions and quotient telescope. Every coefficient arrow keeps the original c
 The endpoint remains the relative-open coarse section Model on the fixed original pullback.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes

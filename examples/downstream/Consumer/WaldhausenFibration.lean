@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.CanonicalFiberMap
 public import Quillen.Waldhausen.Cylinder.Subcategory
 public import Quillen.Waldhausen.Cylinder.JointExact
@@ -15,10 +16,13 @@ public import Quillen.Waldhausen.SConstruction.Rows.JointFunctor
 /-! Actual canonical fiber and common-cylinder maps, without a fibration conclusion. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 open CategoryTheory.ExactCategory
 
 noncomputable section
-open CategoryTheory CategoryTheory.Limits CochainComplex Quillen Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits CochainComplex Quillen
 open scoped Topology
 universe u v
 namespace Consumer

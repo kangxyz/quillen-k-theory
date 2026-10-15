@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.SpecialFractions
 public import Mathlib.CategoryTheory.ComposableArrows.Basic
 
@@ -17,6 +18,9 @@ monomorphisms, and the projection to the old flag is objectwise an
 admissible epimorphism. The top term is canonically the original apex.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

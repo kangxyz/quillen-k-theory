@@ -19,6 +19,9 @@ cofibrant pushout legs supply actual collapse homotopy equivalences.
 -/
 @[expose] public section
 
+open Quillen.HomotopyPullbackDoubleCylinder
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

@@ -4,16 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassH1References
 
 /-! Exact outer-node normal forms of the frozen original H0 family for an arbitrary arrow. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH1H0Boundary
@@ -21,8 +26,10 @@ variable {R : CommRingCat.{u}} (P : Over (Spec R)) {a b : Under R} (w : a ⟶ b)
 
 theorem laurent_naturality : coefficientMap P ((laurentUnderFunctor R).map w) ≫
     laurentProjection P a = laurentProjection P b ≫ coefficientMap P w :=
-  coefficientTransformation_naturality P (laurentUnderCoefficient R) w
+  AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (laurentUnderCoefficient R) w
 
+/-- The positions of the five shared outer-path nodes in the combined 31-vertex H0 diagram. -/
 def outerIndex (i : Fin 5) : Fin 31 :=
   BassH0Diagram.plusFace.toOrderHom (ProjectionReference.sharedIndex i)
 
@@ -38,8 +45,10 @@ theorem outer_nodes (i : Fin 5) :
       (polynomialProjection P b) (laurentPlus P b)
       (coefficientMap P w) (coefficientMap P ((polynomialUnderFunctor R).map w))
       (coefficientMap P ((laurentUnderFunctor R).map w))
-      (coefficientTransformation_naturality P (polynomialUnderCoefficient R) w)
-      (coefficientTransformation_naturality P (underToLaurent R) w)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (polynomialUnderCoefficient R) w)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P (underToLaurent
+        R) w)
       (laurentProjection P a) (laurentProjection P b)
       (laurentPlus_projection P a) (laurentPlus_projection P b) i)
 

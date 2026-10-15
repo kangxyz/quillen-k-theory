@@ -11,7 +11,10 @@ public import Quillen.Waldhausen.SConstruction.NerveTriangle
 and literal zero restriction. -/
 @[expose] public section
 
-open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor Quillen.Waldhausen
+open Quillen.Waldhausen
+
+
+open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor
 open scoped Simplicial
 
 universe u v

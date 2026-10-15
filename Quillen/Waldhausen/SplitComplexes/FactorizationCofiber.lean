@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.SplitComplexes.FactorizationSign
 public import Quillen.Waldhausen.SplitComplexes.FunctorialFactorization
 public import Quillen.Waldhausen.ExtensionCategory.Cofiber
@@ -18,6 +19,9 @@ Its categorical cofiber is identified with Cone(f) by the original quotient foll
 explicit sign isomorphism from Cone(−f).
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

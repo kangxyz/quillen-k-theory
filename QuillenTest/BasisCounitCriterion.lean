@@ -10,6 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.CounitCriterion
 /-! # Consumers of original basis detection and the actual affine counit -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -59,7 +62,7 @@ theorem original_composition_cancels {X : Scheme.{u}}
   exact (quasiIso_iff_comp_left f g).mp
     (AlgebraicGeometry.Scheme.Modules.quasiIso_of_sections_on_basis (f ≫ g) hB hfg)
 
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 
 /-- The inverse is for the unchanged original affine counit homology map. -/
 theorem original_counit_homology_inverse (R : CommRingCat.{u}) (K : Complex (Spec R))

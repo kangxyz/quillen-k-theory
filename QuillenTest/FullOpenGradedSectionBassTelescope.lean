@@ -5,8 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassTelescope
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassTelescope
 
 /-!
 # Original-map consumers of graded Bass telescope vanishing
@@ -15,9 +14,11 @@ The signed consumer includes negative degrees. The map consumers preserve the ac
 stage-zero seed and stage inclusion, rather than replacing the tower by a zero diagram.
 -/
 @[expose] public section
-noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+
 open Quillen.PerfectComplexes
+
+noncomputable section
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.FullOpenGradedSectionBassTelescope
 

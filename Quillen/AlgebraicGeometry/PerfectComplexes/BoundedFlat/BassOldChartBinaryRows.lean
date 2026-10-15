@@ -4,16 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.RectangleInitialBinaryRow
 
 /-! Exact outer and initial binary rows of the unchanged original composition charts. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH0Merge
@@ -22,6 +27,7 @@ variable {a b c : Under R} (u : a ⟶ b) (v : b ⟶ c)
 variable (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
   (hc : coefficientMap P (α.app c) ≫ polynomialProjection P c = laurentProjection P c)
 
+/-- The common-reference isomorphism for the original chart's precomposed outer binary row. -/
 def oldOuterRowReference : (BassOverlap.commonReference P u v).functor ≅
     (BassOverlap.projectionMap P (a := a) ≫ BinaryNormalizationSimplex.sourceMap
       (BassReferenceMerge.laurentComposite P u v) (coefficientMap P (α.app a))).functor :=
@@ -31,11 +37,12 @@ def oldOuterRowReference : (BassOverlap.commonReference P u v).functor ≅
     (coefficientMap P ((laurentUnderFunctor R).map u))
     (coefficientMap P ((laurentUnderFunctor R).map v))
     (coefficientMap P (α.app a)) (coefficientMap P (α.app b)) (coefficientMap P (α.app c))
-    (coefficientTransformation_naturality P α u).symm
-    (coefficientTransformation_naturality P α v).symm
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u).symm
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm
     (BassOverlap.commonReference P u v) (BassOverlap.projectionMap P (a := a))
     (BassOverlap.commonToChartReference P u v α hc)
 
+/-- The common-reference isomorphism for the original chart's precomposed initial binary row. -/
 def oldInitialRowReference : (BassOverlap.commonReference P u v).functor ≅
     (BassOverlap.projectionMap P (a := a) ≫ BinaryNormalizationSimplex.sourceMap
       (coefficientMap P (α.app c))
@@ -55,8 +62,8 @@ theorem old_chart_outer_row (i : Fin 3) :
     (coefficientMap P ((laurentUnderFunctor R).map u))
     (coefficientMap P ((laurentUnderFunctor R).map v))
     (coefficientMap P (α.app a)) (coefficientMap P (α.app b)) (coefficientMap P (α.app c))
-    (coefficientTransformation_naturality P α u).symm
-    (coefficientTransformation_naturality P α v).symm
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u).symm
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm
     (BassOverlap.commonReference P u v) (BassOverlap.projectionMap P (a := a))
     (BassOverlap.commonToChartReference P u v α hc) i
 
@@ -74,8 +81,8 @@ theorem old_chart_initial_row (i : Fin 3) :
     (coefficientMap P ((laurentUnderFunctor R).map u))
     (coefficientMap P ((laurentUnderFunctor R).map v))
     (coefficientMap P (α.app a)) (coefficientMap P (α.app b)) (coefficientMap P (α.app c))
-    (coefficientTransformation_naturality P α u).symm
-    (coefficientTransformation_naturality P α v).symm
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u).symm
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm
     (BassOverlap.commonReference P u v) (BassOverlap.projectionMap P (a := a))
     (BassOverlap.commonToChartReference P u v α hc) i
 

@@ -15,8 +15,6 @@ The original augmentation remains a quasi-isomorphism whenever the actual direct
 resolution is exact in positive degrees. No affine or quasicoherence hypothesis is required.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

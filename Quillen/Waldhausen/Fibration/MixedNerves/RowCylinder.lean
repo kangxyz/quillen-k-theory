@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.MixedNerves.Cylinder
 public import Quillen.Waldhausen.Fibration.Rows.TrivialCofibrationCylinder
 
@@ -16,6 +17,9 @@ exactness. Thus the pointwise chain cylinder applies to the same original
 quotient-row objects, with the original row cofibrations and coarse maps.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 open CategoryTheory CochainComplex

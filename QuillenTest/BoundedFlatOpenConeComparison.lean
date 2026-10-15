@@ -15,6 +15,12 @@ signed fiber boundary and actual negative-degree class lift are retained. The co
 endpoint is kept distinct from the entire perfect K₀ of the open.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+open Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.IteratedS
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u

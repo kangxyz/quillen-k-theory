@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.CategoryTheory.QConstruction.Basic
 public import Mathlib.CategoryTheory.Abelian.CommSq
 
@@ -19,6 +19,9 @@ epimorphic pullback projections. This will make inclusion comma categories
 thin, a necessary part of their identification with the poset of layers.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

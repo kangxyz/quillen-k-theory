@@ -5,12 +5,20 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.Algebra.Homology.DerivedHomVanishing
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedExtensionByZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.BinaryDescent
 
 /-! # Actual binary-cover derived Hom null-detection with shifted overlap -/
 @[expose] public section
+
+open Quillen.CochainComplex
+open Quillen.PerfectComplexes.OpenHomotopyGluing
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -19,7 +27,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
 namespace Quillen.PerfectComplexes.OpenHomotopyGluing
 attribute [local instance] HasDerivedCategory.standard
-open Quillen.CochainComplex
 variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
   [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]
   (h : a ≫ j = b ≫ k)

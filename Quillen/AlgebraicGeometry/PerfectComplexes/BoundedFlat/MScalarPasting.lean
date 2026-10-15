@@ -8,6 +8,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MChartSideS
 
 /-! Literal scalar pasting from the finite index equations of the actual proved boundary nodes. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassMOuterJoin
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -39,18 +42,27 @@ theorem map_index_values {d : ℕ} (a : Fin (d + 1) → Fin 45) (b : Fin (d + 1)
   rw [← StdSimplex.map_comp, ← StdSimplex.map_comp]
   exact congrArg (fun h : Fin (d + 1) → Fin (k + 1) ↦ StdSimplex.map h z) (funext h)
 
+/-- The H0 scalar parameter transported to the target simplex by the labels `g`. -/
 def h0 : C(unitInterval × unitInterval, StdSimplex ℝ (Fin (k + 1))) :=
   ⟨fun z ↦ StdSimplex.map g (BassH1Order.h0Parameter z), by fun_prop⟩
+/-- The H1 scalar parameter transported to the target simplex by the labels `g`. -/
 def h1 : C(unitInterval × unitInterval, StdSimplex ℝ (Fin (k + 1))) :=
   ⟨fun z ↦ StdSimplex.map g (BassH1Order.h1Parameter.{u} z), by fun_prop⟩
+/-- The positive scalar boundary parameter transported to the target simplex by the labels `g`. -/
 def plus : C(unitInterval × unitInterval, StdSimplex ℝ (Fin (k + 1))) :=
   ⟨fun z ↦ StdSimplex.map g (BassH1Order.plusParameter z), by fun_prop⟩
+/-- The inverse scalar boundary parameter transported to the target simplex by the labels `g`. -/
 def minus : C(unitInterval × unitInterval, StdSimplex ℝ (Fin (k + 1))) :=
   ⟨fun z ↦ StdSimplex.map g (BassH1Order.minusParameter z), by fun_prop⟩
+/-- The bottom scalar boundary parameter transported to the target simplex by the labels `g`. -/
 def bottom : C(unitInterval × unitInterval, StdSimplex ℝ (Fin (k + 1))) :=
   ⟨fun z ↦ StdSimplex.map g (BassH1Order.bottomParameter.{u} z), by fun_prop⟩
+/-- The first M vertex-stage parameter transported to the target simplex by the labels `f`. -/
 def vertex : C(unitInterval × unitInterval, StdSimplex ℝ (Fin (k + 1))) :=
   ⟨fun z ↦ StdSimplex.map f (BassMVertexOrder.parameter.{u} z), by fun_prop⟩
+/--
+The second M reassociation-stage parameter transported to the target simplex by the labels `g`.
+-/
 def second : C(unitInterval × unitInterval, StdSimplex ℝ (Fin (k + 1))) :=
   ⟨fun z ↦ StdSimplex.map g (BassMReassociation.secondParameter z), by fun_prop⟩
 

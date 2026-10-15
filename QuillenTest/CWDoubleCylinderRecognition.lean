@@ -9,8 +9,13 @@ public import Quillen.Topology.DoubleMappingCylinder.CWWhitehead
 
 /-! # QuillenTest for exact original-map recognition into the actual cylinder -/
 @[expose] public section
+
+open Topology
+
+open Quillen.DoubleCylinder
+
 noncomputable section
-open CategoryTheory Limits MonoidalCategory Set Topology
+open CategoryTheory Limits MonoidalCategory Set
 open scoped unitInterval
 universe u
 namespace QuillenTest.CWDoubleCylinderRecognition

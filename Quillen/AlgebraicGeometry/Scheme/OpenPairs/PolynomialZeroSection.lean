@@ -17,7 +17,10 @@ projection therefore splits on pairs, without requiring a quasi-compact
 vanishing open. Both actual Laurent charts retain this pair projection.
 -/
 @[expose] public section
-open Quillen
+
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
+
+open AlgebraicGeometry.Scheme.Products
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

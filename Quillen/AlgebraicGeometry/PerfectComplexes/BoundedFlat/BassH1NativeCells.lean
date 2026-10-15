@@ -4,18 +4,22 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.Topology.Prespectrum.NativeH1CellOps
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassH1References
 
 /-! Exact evaluation of every original H1 parameter cell, with the literal native time coordinates.
 The scalar component families are not yet identified on their shared cell boundaries. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Convexity
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters Quillen.LoopPrespectrum
 open Quillen.NativePathCells
 open scoped Topology unitInterval

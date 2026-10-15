@@ -17,6 +17,9 @@ the original map, based path and subgroup through the canonical homeomorphism.
 All coefficient conversions are the existing actual equivalence-square maps.
 -/
 @[expose] public section
+
+open Quillen.LocalCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

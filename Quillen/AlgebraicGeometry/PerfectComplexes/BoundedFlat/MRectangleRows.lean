@@ -8,6 +8,10 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MSourceBoun
 
 /-! Full native left and right rows of all three unchanged moving-rectangle triples. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

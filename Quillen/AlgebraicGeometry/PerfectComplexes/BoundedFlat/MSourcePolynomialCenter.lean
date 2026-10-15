@@ -4,16 +4,28 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MReferenceRows
 
 /-! Actual polynomial centre references on both M-source/H0-target chart pieces. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+open Quillen.PerfectComplexes.BassMComponents
+open Quillen.PerfectComplexes.BassMReferences
+open Quillen.PerfectComplexes.BassReferenceMerge
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassMOuterJoin
@@ -28,7 +40,8 @@ variable (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
 theorem direct_polynomial_total :
     coefficientMap P ((polynomialUnderFunctor R).map (u ≫ v)) ≫ polynomialProjection P a =
       polynomialProjection P c ≫ coefficientMap P v ≫ coefficientMap P u := by
-  have hn := coefficientTransformation_naturality P (polynomialUnderCoefficient R) (u ≫ v)
+  have hn := AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (polynomialUnderCoefficient R) (u ≫ v)
   change coefficientMap P ((polynomialUnderFunctor R).map (u ≫ v)) ≫ polynomialProjection P a =
     polynomialProjection P c ≫ coefficientMap P (u ≫ v) at hn
   rw [coefficientMap_comp] at hn

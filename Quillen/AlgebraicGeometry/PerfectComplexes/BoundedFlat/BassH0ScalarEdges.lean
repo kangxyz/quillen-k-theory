@@ -9,6 +9,9 @@ public import Quillen.Topology.Path.SimplexCollapsedEdges
 
 /-! All four scalar edge paths of the exact original H0 cylinder face. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.ProjectionRectangleParameters
+
 noncomputable section
 set_option autoImplicit false
 open Convexity Quillen.SimplexParameters

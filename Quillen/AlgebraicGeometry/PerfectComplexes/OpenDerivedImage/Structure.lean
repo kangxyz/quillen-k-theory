@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Closure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OppositeJointData
 
@@ -16,6 +18,12 @@ constructing the genuine quotient membership. The opposite structure uses
 actual admissible epis and kernels. The roof hypothesis is explicit.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open CategoryTheory.ExactCategory
 

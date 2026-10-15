@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Polynomial.LaurentUnderSquare
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.KTheory.Bass.StrictRingDiagram
 
 /-!

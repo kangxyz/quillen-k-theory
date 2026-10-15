@@ -25,14 +25,17 @@ variable {A B C A' B' C' : Scheme.{u}}
   (a : A' ⟶ A) (b : B' ⟶ B) (c : C' ⟶ C)
   (hp : b ≫ p = p' ≫ a) (hq : c ≫ q = q' ≫ b)
 
+/-- The split-triple comparison parameter embedded in the first face of the merged 17-simplex. -/
 def firstParameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 18)) :=
   ⟨fun z ↦ StdSimplex.map firstFace.toOrderHom (SplitTripleSimplex.comparisonParameter z),
     by fun_prop⟩
 
+/-- The split-triple comparison parameter embedded in the middle face of the merged 17-simplex. -/
 def middleParameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 18)) :=
   ⟨fun z ↦ StdSimplex.map middleFace.toOrderHom (SplitTripleSimplex.comparisonParameter z),
     by fun_prop⟩
 
+/-- The split-triple comparison parameter embedded in the last face of the merged 17-simplex. -/
 def lastParameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 18)) :=
   ⟨fun z ↦ StdSimplex.map lastFace.toOrderHom (SplitTripleSimplex.comparisonParameter z),
     by fun_prop⟩

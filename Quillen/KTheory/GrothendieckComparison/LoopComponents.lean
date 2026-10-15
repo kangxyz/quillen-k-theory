@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.GrothendieckComparison.Basic
 public import Quillen.Topology.ClassifyingSpace.FundamentalGroup
 public import Quillen.KTheory.Map.Functoriality
@@ -19,6 +21,9 @@ identification. An actual loop is sent to its original homotopical K₀ class.
 -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

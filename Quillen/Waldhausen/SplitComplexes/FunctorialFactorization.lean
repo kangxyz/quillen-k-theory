@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.FunctorialFactorization.Basic
 public import Quillen.Waldhausen.SplitComplexes.Approximation
 public import Quillen.Waldhausen.SplitComplexes.FactorizationFunctor
@@ -17,6 +18,9 @@ The identity-cone middle-object functor gives functorial split-cofibration facto
     complexes and on the stated cone-closed full subcategories.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

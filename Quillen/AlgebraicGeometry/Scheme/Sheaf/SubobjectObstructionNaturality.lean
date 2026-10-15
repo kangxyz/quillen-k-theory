@@ -16,9 +16,6 @@ direct image on the global obstruction.
 @[expose] public section
 
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

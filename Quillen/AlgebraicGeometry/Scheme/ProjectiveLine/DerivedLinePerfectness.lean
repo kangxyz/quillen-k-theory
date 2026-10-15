@@ -1,8 +1,10 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+Authors: kangxyz
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalGenerationEndpoints
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalCoefficientFunctors
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineTensor
@@ -14,6 +16,9 @@ Use actual local line trivializations on an arbitrary bounded-below representati
 No global strict model or quasicoherent representative is selected here.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 open Quillen
 
 noncomputable section
@@ -22,7 +27,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
-open AlgebraicGeometry.Scheme.Modules Quillen.PerfectComplexes
+open AlgebraicGeometry.Scheme.Modules
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance derivedLinePerfectStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 variable (R : CommRingCat.{u})
@@ -43,7 +49,8 @@ theorem locallyPerfect_original_tautologicalRightTensor
   have h := locallyPerfect_tensorByLine (tautologicalLine R)
     (fun _ : Bool => Spec (.of (Polynomial R))) (polynomialChart R)
     (polynomialChart_cover R) e hK
-  exact locallyPerfect_of_iso ((tensorByLineComplexSymmetry (tautologicalLine R)).app K) h
+  exact locallyPerfect_of_iso ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeftRightIso
+    (tautologicalLine R)).app K) h
 
 /-- The original exact quotient-free tautological tensor preserves intrinsic
 perfectness on genuine D+ inputs by its installed exact unit and local trivializations. -/

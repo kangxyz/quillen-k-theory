@@ -4,8 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ProjectionFormulaOpenBaseChange
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenCoverExactness
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Symmetry
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.OpenImmersion.Cartesian
+public import Aglib.AlgebraicGeometry.Modules.ProjectionFormula.Basic
+public import Aglib.AlgebraicGeometry.Modules.Pullback.Free
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Basic
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Restriction
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Sections
+public import Aglib.AlgebraicGeometry.Modules.ProjectionFormula.OpenBaseChange
+public import Aglib.AlgebraicGeometry.Modules.Locality.Exactness
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Tautological
 
 /-!
@@ -20,8 +27,6 @@ module sheaf is arbitrary, and the scheme morphism has no flatness hypothesis.
 -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -289,13 +294,6 @@ lemma modulePullbackTensorMap_isIso_of_trivializingCover {ι : Type v}
     exact IsIso.of_isIso_comp_left
       ((pullback (b i)).map (tensorRestrictionIso (j i) L N).hom ≫
         K.app ((moduleTensorLeftFunctor Y L).obj N)) _
-
-/-- The original presheaf braiding, followed by the original module sheafification. -/
-def moduleTensorSymmetry (Z : Scheme.{u}) (M N : Z.Modules) :
-    (moduleTensorLeftFunctor Z M).obj N ≅ (moduleTensorLeftFunctor Z N).obj M :=
-  (SheafOfModulesOfCommRing.associatedSheaf Z.sheaf).mapIso
-    (β_ ((SheafOfModulesOfCommRing.toPresheaf Z.sheaf).obj M)
-      ((SheafOfModulesOfCommRing.toPresheaf Z.sheaf).obj N))
 
 /-- The original sheafified braiding switches the two original tensor generators. -/
 lemma moduleTensorSymmetry_section (Z : Scheme.{u}) (M N : Z.Modules) (O : Z.Opens)

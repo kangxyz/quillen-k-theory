@@ -6,7 +6,8 @@ Authors: kangxyz
 
 module
 
-public import Quillen.GTheory.FiniteModules.IdealClosedSupport
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.Algebra.Category.ModuleCat.IdealClosedSupport
 public import Quillen.Devissage.FiltrationRefinement
 public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
 
@@ -18,6 +19,10 @@ Every step lowers an annihilating ideal-power exponent. Hence the displayed
 finite filtration consists of actual submodules, with I-annihilated factors.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+open ModuleCat.FiniteLocalization.IdealClosedSupport
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

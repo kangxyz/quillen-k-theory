@@ -10,10 +10,13 @@ public import Quillen.Waldhausen.SConstruction.Iterated.ExactCoherence
 /-! Consumers of the actual spectrum maps, whole based homotopies and original K-map. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Quillen Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open CategoryTheory Quillen Quillen.Waldhausen.IteratedS
 open scoped Topology unitInterval
 universe u v
 namespace QuillenTest.ExactSpectrumHomotopy

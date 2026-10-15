@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.CategoryTheory.ExactCategory.FunctorPushout
 public import Quillen.Waldhausen.ExactCategory
 public import Quillen.Waldhausen.Functor
@@ -17,6 +19,9 @@ not supplied as an extra hypothesis. All other structural conditions follow
 from genuine additive exactness and functorial preservation of isomorphisms.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

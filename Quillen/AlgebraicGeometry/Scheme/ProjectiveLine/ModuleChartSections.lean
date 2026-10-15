@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineRestrictionCoefficients
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.RestrictionCoefficients
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Charts
 public import Quillen.Algebra.Polynomial.LaurentModuleCech
 public import Quillen.LinearAlgebra.Prod
@@ -18,6 +18,9 @@ Quasicoherence supplies the original overlap comparison; no chart freeness is as
 -/
 
 @[expose] public section
+
+open Quillen.LaurentProjector
+
 open Quillen
 
 

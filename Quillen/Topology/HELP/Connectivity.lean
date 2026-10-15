@@ -23,6 +23,10 @@ See https://www.math.uni-bonn.de/people/schwede/Blakers-Massey.pdf.
 
 @[expose] public section
 
+open Quillen.CubicalTests
+open Quillen.HomotopyPullback
+
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false

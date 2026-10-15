@@ -5,10 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFibration
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenCoverVanishing
-public import Quillen.Algebra.Homology.MappingConeQuasiIso
+public import Aglib.Algebra.Homology.MappingCone.QuasiIso
 /-! # Actual local perfection, acyclicity and quasi-isomorphism descent
 
 Local neighborhoods are pushed forward using their actual scheme image
@@ -17,6 +18,9 @@ acyclicity and quasi-isomorphisms. Covers may be arbitrarily large; no
 quasi-compactness or supplied global strict representative is required.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace

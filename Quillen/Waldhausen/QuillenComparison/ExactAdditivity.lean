@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.QuillenComparison.KCommutativity
 public import Quillen.Waldhausen.QuillenComparison.ExactNaturality
 public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
@@ -17,6 +19,12 @@ sequence. Canonical based Q/S naturality transports its proved multiplication
 formula to the unchanged original Quillen KMap API.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen.QuillenComparison
+
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

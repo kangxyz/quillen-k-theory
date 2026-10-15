@@ -9,6 +9,9 @@ public import Quillen.Topology.ClassifyingSpace.ZerothHomotopy
 
 /-! # All components of the original projective telescope completion map -/
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u

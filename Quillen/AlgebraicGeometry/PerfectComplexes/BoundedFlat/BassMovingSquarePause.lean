@@ -11,7 +11,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassBoundar
 noncomputable section
 set_option autoImplicit false
 open CategoryTheory AlgebraicGeometry Opposite Convexity Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
 open scoped Topology unitInterval
 universe u

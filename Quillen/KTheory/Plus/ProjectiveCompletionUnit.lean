@@ -10,6 +10,9 @@ public import Quillen.CategoryTheory.Grothendieck.EndofunctorTelescopeCoconeNatu
 
 /-! # The original telescope unit and the original completion map -/
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u

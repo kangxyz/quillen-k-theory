@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineDerivedGlobalSections
+public import Aglib.AlgebraicGeometry.Cohomology.Affine.DerivedGlobalSections
 public import QuillenTest.AffineCechSections
 
 /-!
@@ -29,7 +29,6 @@ open QuillenTest.AffineCechSections
 
 namespace QuillenTest.AffineDerivedGlobalSections
 
-open Quillen
 
 lemma torsion_ring_quasicoherent_first_derived
     (M : (Spec torsionRing).Modules) [M.IsQuasicoherent] :

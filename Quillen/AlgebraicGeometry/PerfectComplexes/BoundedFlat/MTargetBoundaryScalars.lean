@@ -18,7 +18,15 @@ open scoped Topology unitInterval
 universe u
 namespace Quillen.PerfectComplexes.BassMOuterJoin
 
+/--
+The first native target path: the reversed binary path through `5, 7, 17` followed by the path
+through `5, 6, 13`.
+-/
 abbrev firstTargetPath := (binaryPath (k := 17) 5 7 17).symm.trans (binaryPath 5 6 13)
+/--
+The second native target path: the reversed binary path through `9, 12, 13` followed by the path
+through `9, 10, 11`.
+-/
 abbrev secondTargetPath := (binaryPath (k := 17) 9 12 13).symm.trans (binaryPath 9 10 11)
 
 /-- The original target boundary is exactly the native composite-square word at unchanged speed. -/

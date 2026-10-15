@@ -17,6 +17,9 @@ multiplication through the original canonical functorial K-maps.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.ExtensionCategory
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

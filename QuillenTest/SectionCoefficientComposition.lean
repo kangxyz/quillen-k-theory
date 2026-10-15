@@ -9,10 +9,13 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionCoef
 
 /-! Original split composition, coefficient tracks, loop time and structure time are retained. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
-open Quillen.PerfectComplexes
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
 open scoped unitInterval
 universe u
 namespace QuillenTest.SectionCoefficientComposition

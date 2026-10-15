@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.ExcisionComplex
 public import Quillen.Waldhausen.SConstruction.WeakNaturalTransformationBased
 
@@ -21,6 +22,9 @@ original K-maps are mutually inverse in every connective degree, including
 zero. No quasi-compactness or separation hypothesis is used.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 
 open CategoryTheory.ExactCategory
 

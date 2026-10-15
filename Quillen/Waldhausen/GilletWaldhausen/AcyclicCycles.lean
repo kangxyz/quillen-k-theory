@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Resolution.Finite
-public import Quillen.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
 public import Mathlib.Data.Int.Init
 

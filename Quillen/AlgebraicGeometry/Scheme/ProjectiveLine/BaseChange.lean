@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Charts
 public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurentFlat
 public import Mathlib.AlgebraicGeometry.Pullbacks
@@ -15,6 +16,12 @@ The map is glued from the actual polynomial coefficient maps. The original polyn
 projection squares are cartesian by the original ring pushouts, over arbitrary commutative rings.
 -/
 @[expose] public section
+
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
 open Quillen
 
 noncomputable section
@@ -23,7 +30,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
-open PolynomialLaurent Quillen.PolynomialBaseChange
+open PolynomialLaurent
 variable {R S : CommRingCat.{u}} (f : R ⟶ S)
 
 /-- The coefficient map glued from the original two polynomial chart maps. -/

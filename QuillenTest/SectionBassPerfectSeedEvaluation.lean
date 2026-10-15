@@ -9,9 +9,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassPerfe
 
 /-! Consumers retain both original perfect seed endpoints and the independent structure time. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
-open Quillen.PerfectComplexes
 open scoped unitInterval
 universe u
 namespace QuillenTest.SectionBassPerfectSeedEvaluation

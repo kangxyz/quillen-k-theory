@@ -27,11 +27,14 @@ automorphism class, its comparison with this forward-square class, and the suppo
 boundary formula remain separate interfaces.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.Fibration
 open scoped Topology
 universe u
 namespace Quillen.PerfectComplexes

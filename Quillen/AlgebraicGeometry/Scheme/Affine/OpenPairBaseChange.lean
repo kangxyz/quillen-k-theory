@@ -20,7 +20,6 @@ objects. At the identity algebra the original projection is an actual isomorphis
 with the independently chosen pullback object.
 -/
 @[expose] public section
-open Quillen
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry

@@ -14,6 +14,10 @@ public import Quillen.CategoryTheory.GroupCompletion.UnitEntry
 /-! # Actual projective telescope action and first-projection comma transport -/
 
 @[expose] public section
+
+open Quillen.GroupCompletion
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u

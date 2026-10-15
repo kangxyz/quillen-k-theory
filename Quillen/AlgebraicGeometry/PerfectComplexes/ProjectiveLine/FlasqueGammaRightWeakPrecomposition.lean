@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGammaCarrierComparisons
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PlusQuasiIso
 
 /-! # Typed arbitrary precomposition of the actual original right contraction weak law -/
 @[expose] public section
@@ -20,7 +21,8 @@ namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueGammaEndpoints
 lemma rightContraction_precompose_weak {C : Type*} [Category C]
     (R : CommRingCat.{u}) (H : C ⥤ CochainComplex.Plus (twoChartLine R).Modules) (K : C) :
     QuasiIso ((Functor.whiskerLeft H (originalRightLineGodementContractionMap R)).app K).hom :=
-  originalPlusNatTransPrecomposeWeak (originalRightLineGodementContractionMap R) H
+  AlgebraicGeometry.Scheme.Modules.Plus.plus_nattrans_precompose_quasiIso
+    (originalRightLineGodementContractionMap R) H
     (originalRightLineGodementContractionMap_quasiIso R) K
 
 end Quillen.PerfectComplexes.ProjectiveLine.FlasqueGammaEndpoints

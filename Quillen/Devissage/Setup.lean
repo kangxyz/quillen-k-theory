@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Aglib.CategoryTheory.Abelian.Subcategory.Exact
-public import Quillen.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Devissage.Filtration
 public import Quillen.KTheory.Map.Basic
 public import Mathlib.CategoryTheory.Abelian.Subcategory
@@ -34,19 +34,13 @@ theorems. Algebraic Grothendieck-group injectivity is proved in the subsequent
 `Quillen.DevissageGrothendieck` module.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+open CategoryTheory.ObjectProperty
+
 open Quillen
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.Devissage
-export CategoryTheory.ObjectProperty
-  (Subcategory containsZero_iff_nonempty exactInclusion inclusionFullyFaithful
-  inclusion_preservesFiniteColimits inclusion_preservesFiniteLimits subcategoryAbelian
-  subcategoryExactStructure)
-end Quillen.Devissage
-
-end
 
 
 

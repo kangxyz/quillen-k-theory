@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenPseudofunctor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PairRestriction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalUnitPullback
@@ -20,6 +21,9 @@ unit, and original bounded-flat pullback retains that unit as well. These formul
 assert a full-open cofinality equivalence or identify independently chosen zeros.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open AlgebraicGeometry.Scheme.AffineOpenPair

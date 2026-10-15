@@ -4,16 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassH1Components
 
 /-! Actual geometric reference transports for all four prescribed H1 component families. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassReferenceMerge
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite Convexity
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH1References
@@ -33,7 +41,8 @@ theorem first_total : coefficientMap P ((laurentUnderFunctor R).map v) ≫
 theorem middle_total : (coefficientMap P ((laurentUnderFunctor R).map v) ≫
     laurentProjection P b) ≫ coefficientMap P u =
       laurentProjection P c ≫ coefficientMap P v ≫ coefficientMap P u := by
-  have h := coefficientTransformation_naturality P (laurentUnderCoefficient R) v
+  have h := AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (laurentUnderCoefficient R) v
   change coefficientMap P ((laurentUnderFunctor R).map v) ≫ laurentProjection P b =
     laurentProjection P c ≫ coefficientMap P v at h
   rw [h, Category.assoc]
@@ -44,7 +53,8 @@ theorem chart_total (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
     (coefficientMap P ((laurentUnderFunctor R).map v) ≫ coefficientMap P (α.app b)) ≫
       (coefficientMap P ((polynomialUnderFunctor R).map u) ≫ polynomialProjection P a) =
         laurentProjection P c ≫ coefficientMap P v ≫ coefficientMap P u := by
-  have hp := coefficientTransformation_naturality P (polynomialUnderCoefficient R) u
+  have hp := AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (polynomialUnderCoefficient R) u
   change coefficientMap P ((polynomialUnderFunctor R).map u) ≫ polynomialProjection P a =
     polynomialProjection P b ≫ coefficientMap P u at hp
   calc
@@ -85,9 +95,12 @@ def chartIso (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
 def firstNodes : Fin 31 → BassOverlap.Node P u v :=
   ModelSimplex.reanchorNodes (firstIso P u v) (BassH1Components.firstNodes P u v)
 
+/-- The middle H1 component nodes transported to the common Laurent reference via `middleIso`. -/
 def middleNodes : Fin 31 → BassOverlap.Node P u v :=
   ModelSimplex.reanchorNodes (middleIso P u v) (BassH1Components.middleNodes P u v)
 
+/-- The 25 product nodes of the polynomial-`u` and chart-`v` squares, with common Laurent
+references. -/
 def chartNodes (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
     (hb : coefficientMap P (α.app b) ≫ polynomialProjection P b = laurentProjection P b)
     (i : Fin 25) : BassOverlap.Node P u v :=

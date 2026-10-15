@@ -16,6 +16,9 @@ categories and all exact functors. Both components are the original public maps.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.AlgebraicGrothendieck
+
+
 noncomputable section
 open CategoryTheory
 universe u

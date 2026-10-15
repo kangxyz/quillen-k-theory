@@ -17,11 +17,14 @@ are the original geometric ones. This is the route equation used to compute the 
 by the existing iterated-fiber map; it does not assume a localization boundary identity.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.Fibration
 open scoped Topology
 universe u
 namespace Quillen.PerfectComplexes

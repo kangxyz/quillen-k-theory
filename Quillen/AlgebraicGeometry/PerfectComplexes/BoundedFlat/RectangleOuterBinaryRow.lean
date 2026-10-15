@@ -8,6 +8,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ReferenceRo
 
 /-! The original outer binary row of a rectangle, with its actual source equality transport. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassReferenceMerge
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
@@ -29,6 +32,7 @@ variable {V : Model.{u + 1}} {A B C A' B' C' : Scheme.{u}}
 def preRectangleNodes (i : Fin 18) :=
   preReferenceNode F P ρ (DoubleSquareMergedSimplex.nodes p q p' q' a b c hp hq i)
 
+/-- The rectangle labels `0, 14, 15` selecting the outer binary normalization row. -/
 def outerIndex : Fin 3 → Fin 18 := ![0, 14, 15]
 
 include hp hq in

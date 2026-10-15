@@ -22,6 +22,9 @@ K-zero image; no additional surjectivity at its last arrow is assumed.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes.OpenDerivedImage
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

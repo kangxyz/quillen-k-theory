@@ -5,15 +5,23 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PolynomialScalarCone
 public import Quillen.Waldhausen.SplitComplexes.FactorizationSign
 
 /-! # Original scalar, Laurent restriction and supported cone consumers -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry
 open Quillen.PerfectComplexes.Affine AlgebraicGeometry.Scheme.PolynomialLaurent
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.Fibration
 universe u
 namespace QuillenTest.PolynomialScalarCone
 

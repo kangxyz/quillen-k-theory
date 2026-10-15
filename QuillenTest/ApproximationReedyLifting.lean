@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Approximation.ReedyLifting
 public import Quillen.Waldhausen.ExtensionCategory.TransposeExact
 public import Quillen.Waldhausen.SplitComplexes.Approximation
@@ -19,11 +20,17 @@ for the genuine split-to-ambient complex comparison.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
+open CategoryTheory.ExactCategory
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 open Quillen.Waldhausen.HasApproximationProperty
 universe v u v' u'
 

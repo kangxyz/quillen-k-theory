@@ -18,9 +18,11 @@ compare to the original perfect relative-open category on the ambient affine sch
 forward comparisons retain original object-loop classes; no full-open restriction is inverted.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

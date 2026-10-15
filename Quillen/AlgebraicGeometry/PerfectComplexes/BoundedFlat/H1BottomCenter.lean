@@ -4,16 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.H1InternalScalarJoins
 
 /-! The original full central node on the external H1/bottom boundary. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH1References
+open Quillen.PerfectComplexes.BassReferenceMerge
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH1Join
@@ -29,6 +37,8 @@ theorem bottomSourceGeom :
   congrArg (fun h ↦ coefficientMap P ((laurentUnderFunctor R).map u) ≫ h)
     (laurentPlus_projection P a).symm
 
+/-- The first H1 center node formed from the Laurent binary target for `u`, then postcomposed by
+the Laurent map for `v`. -/
 def firstBottomCenter : BassOverlap.Node P u v :=
   postReferenceNode (BassOverlap.commonReference P u v) (BassH1Components.laurentMap P v)
     (firstIso P u v)
@@ -40,6 +50,8 @@ def firstBottomCenter : BassOverlap.Node P u v :=
         (coefficientMap P ((laurentUnderFunctor R).map u))
         (laurentPlus P a ≫ polynomialProjection P a)⟩ : BassH0Diagram.Node P u)
 
+/-- The bottom target center node obtained by precomposing the Laurent binary target with the
+projection source. -/
 def bottomTargetCenter : BassOverlap.Node P u v :=
   BassH0Merge.preReferenceNode (BassOverlap.commonReference P u v)
     (BassProjectionPath.source P a) (BassBottomCommonFamily.referenceIso P u v)

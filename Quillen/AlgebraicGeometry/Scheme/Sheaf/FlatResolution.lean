@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatGenerators
+public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
 public import Mathlib.Algebra.Homology.LeftResolution.Basic
 public import Mathlib.Algebra.Homology.SingleHomology
 public import Mathlib.Algebra.Homology.QuasiIso
@@ -19,8 +19,9 @@ module sheaves, exact in every positive degree. Nothing in the construction
 assumes the existence of a flat replacement or of a derived equivalence.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 

@@ -13,8 +13,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassDiagr
 These are genuine iterated objects and coefficient actions. No connecting seed is supplied.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry
 universe u
 namespace QuillenTest.SectionBassDiagram
 

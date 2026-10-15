@@ -18,6 +18,11 @@ complete levelwise weakness. The literal support-inclusion square is retained fo
 null-track and cone comparison; no full-open endpoint identification is inferred.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+open Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.IteratedS
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 universe u

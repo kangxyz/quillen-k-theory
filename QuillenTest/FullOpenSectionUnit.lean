@@ -10,9 +10,12 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionFull
 
 /-! The original ambient scalar survives actual full-open evaluation and coefficient change. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.PerfectComplexes
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.FullOpenSectionUnit
 

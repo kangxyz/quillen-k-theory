@@ -9,6 +9,9 @@ public import Quillen.Topology.PlusConstruction.DoubleCylinderWeakEquivalence
 
 /-! # Independent original twisted-cylinder weak-leg client with explicit covers -/
 @[expose] public section
+
+open Quillen.DoubleCylinder
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory
 open scoped Topology unitInterval

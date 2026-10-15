@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 
+import Aglib.CategoryTheory.ExactCategory.Basic
 import Quillen.CategoryTheory.ExactCategory.ExtensionBaseChange
+
+open CategoryTheory.ExactCategory
+
 
 /-! # Original Q-span transport on the actual extension fibers -/
 noncomputable section

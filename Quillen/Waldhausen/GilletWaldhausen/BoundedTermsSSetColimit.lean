@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsSSet
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedSSetColimit
 
@@ -18,10 +19,15 @@ K-equivalence is assumed.
 -/
 @[expose] public section
 
+open Topology
+
+open CategoryTheory.ExactCategory
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits Topology
+open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial
 universe v u w
 namespace Quillen.Waldhausen.GilletWaldhausen

@@ -22,6 +22,12 @@ projective-line K-equivalence.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Products
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -29,7 +35,7 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped ZeroObject
 open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Modules
-  AlgebraicGeometry.Scheme.ProjectiveLine AlgebraicGeometry.Scheme.Bass
+  AlgebraicGeometry.Scheme.ProjectiveLine
 namespace Quillen.PerfectComplexes.ProjectiveLine
 
 /-- The standard derived category of module sheaves, used for native projection base change. -/
@@ -120,12 +126,12 @@ theorem isIso_nativeProjectionBaseChange_single
       (nativeProjection.app X).hom (nativeProjection.app Y).hom f.hom
       (nativeMap_isPullback f)).app
         ((DerivedCategory.Plus.singleFunctor (nativeLineFunctor.obj Y).obj.Modules 0).obj M)) := by
-  let : IsAffineHom (Bass.plus.app Y).hom :=
+  let : IsAffineHom (PolynomialLaurent.Relative.plus.app Y).hom :=
     MorphismProperty.of_isPullback
       (baseProductTransformation_isPullback _ _ _
         (AlgebraicGeometry.Scheme.PolynomialLaurent.laurentPlus_projection integerRing) Y.obj).flip
       inferInstance
-  let : IsAffineHom (polynomialProjection.app Y).hom := by
+  let : IsAffineHom (PolynomialLaurent.Relative.polynomialProjection.app Y).hom := by
     change IsAffineHom (pullback.fst (toIntegerBase Y.obj)
       (AlgebraicGeometry.Scheme.PolynomialLaurent.polynomialProjection integerRing))
     exact MorphismProperty.pullback_fst _ _
@@ -133,16 +139,16 @@ theorem isIso_nativeProjectionBaseChange_single
         (AlgebraicGeometry.Scheme.PolynomialLaurent.polynomialProjection integerRing))
   let : IsAffineHom ((nativePlus.app Y).hom ≫ (nativeProjection.app Y).hom) := by
     simpa only [← ObjectProperty.FullSubcategory.comp_hom, nativePlus_projection] using
-      (inferInstance : IsAffineHom (polynomialProjection.app Y).hom)
+      (inferInstance : IsAffineHom (PolynomialLaurent.Relative.polynomialProjection.app Y).hom)
   let : IsAffineHom ((nativeMinus.app Y).hom ≫ (nativeProjection.app Y).hom) := by
     simpa only [← ObjectProperty.FullSubcategory.comp_hom, nativeMinus_projection] using
-      (inferInstance : IsAffineHom (polynomialProjection.app Y).hom)
-  let : IsAffineHom (((Bass.plus.app Y).hom ≫ (nativePlus.app Y).hom) ≫
+      (inferInstance : IsAffineHom (PolynomialLaurent.Relative.polynomialProjection.app Y).hom)
+  let : IsAffineHom (((PolynomialLaurent.Relative.plus.app Y).hom ≫ (nativePlus.app Y).hom) ≫
       (nativeProjection.app Y).hom) := by
     rw [Category.assoc]
     infer_instance
   exact isIso_derivedFlatBaseChangeMap_twoOpen_single _ _ _ _ (nativeMap_isPullback f)
-    (Bass.plus.app Y).hom (Bass.minus.app Y).hom
+    (PolynomialLaurent.Relative.plus.app Y).hom (PolynomialLaurent.Relative.minus.app Y).hom
     (nativePlus.app Y).hom (nativeMinus.app Y).hom
     (native_chart_isPullback Y) (native_charts_cover Y) M
 

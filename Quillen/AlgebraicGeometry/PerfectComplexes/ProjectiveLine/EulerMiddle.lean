@@ -5,10 +5,16 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerNegative
 
 /-! # Original middle Euler coefficient and its canonical natural weak-zero map -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -22,6 +28,7 @@ namespace Quillen.PerfectComplexes.ProjectiveLine.Euler
 open FlasqueCoefficients
 variable (R : CommRingCat.{u})
 
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance eulerMiddleStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 
@@ -45,19 +52,20 @@ def coefficientTensorFunctor (A : StrictPerfect (Spec R)) :
     exact ⟨a, endpointComplex_isStrictlyGE R M A a⟩⟩
   map f := ObjectProperty.homMk
     (((moduleTensorCoefficientMap (twoChartLine R) f).mapHomologicalComplex (.up ℤ)).app
-      ((pullbackComplex (projection R)).obj A.obj))
+      ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).obj A.obj))
   map_id M := by
     apply ObjectProperty.hom_ext
     apply HomologicalComplex.Hom.ext
     funext n
     exact (moduleTensorByLineRight
-      (((pullbackComplex (projection R)).obj A.obj).X n)).map_id M
+      (((AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).obj A.obj).X n)).map_id M
   map_comp f g := by
     apply ObjectProperty.hom_ext
     apply HomologicalComplex.Hom.ext
     funext n
     exact (moduleTensorByLineRight
-      (((pullbackComplex (projection R)).obj A.obj).X n)).map_comp f g
+      (((AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).obj A.obj).X n)).map_comp
+        f g
 
 instance coefficientTensorFunctor_additive (A : StrictPerfect (Spec R)) :
     (coefficientTensorFunctor R A).Additive where
@@ -67,7 +75,7 @@ instance coefficientTensorFunctor_additive (A : StrictPerfect (Spec R)) :
     apply HomologicalComplex.Hom.ext
     funext n
     exact Functor.map_add (moduleTensorByLineRight
-      (((pullbackComplex (projection R)).obj A.obj).X n))
+      (((AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).obj A.obj).X n))
 
 /-- Original sheafified tensor and installed derived projection with the original coefficient. -/
 def coefficientDerivedProjection (A : StrictPerfect (Spec R)) :

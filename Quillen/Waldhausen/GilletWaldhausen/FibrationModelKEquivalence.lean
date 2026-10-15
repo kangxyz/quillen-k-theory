@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.FibrationModels
 public import Quillen.Waldhausen.Functoriality.ExactEquivalence
 
@@ -16,6 +17,9 @@ It does not identify that category with the homotopy fiber of a change of weak
 classes. The latter fibration theorem is a separate obligation.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

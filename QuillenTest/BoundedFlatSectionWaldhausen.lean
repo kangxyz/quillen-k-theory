@@ -14,8 +14,11 @@ These consumers use the original morphism classes, genuinely constructed pushout
 coefficient maps and both original functors of the evaluation equivalence.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 namespace QuillenTest.BoundedFlatSectionWaldhausen
 

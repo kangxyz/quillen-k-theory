@@ -23,8 +23,10 @@ transport, singular-realization counit, compact HELP, domination, covering
 space, or conversion of CW notions is assumed.
 -/
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Topology
+open Set
 open scoped unitInterval
 universe u
 namespace Quillen.ClassicalCW

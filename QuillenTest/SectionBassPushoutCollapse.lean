@@ -15,9 +15,12 @@ and the old overlap cylinder, kills every value of the attached C-cylinder, and 
 level zero. The all-signed stable conclusion includes every negative degree.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open Quillen Quillen.LoopPrespectrum
 open scoped unitInterval
 universe u
 namespace QuillenTest.SectionBassPushoutCollapse

@@ -22,7 +22,6 @@ public import Quillen.Localization.Serre.AuxiliaryStructuredTransition
 public import Quillen.Localization.Serre.BasedFiberComparison
 public import Quillen.Localization.Serre.FiberComparison
 public import Quillen.Localization.Serre.FilteredComparisonAssembly
-public import Quillen.Localization.Serre.FiniteProducts
 public import Quillen.Localization.Serre.GrothendieckExactness
 public import Quillen.Localization.Serre.ImageKernelComma
 public import Quillen.Localization.Serre.KernelPushout

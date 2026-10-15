@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.CategoryTheory.ExactCategory.Quotient.Conflations
 public import Quillen.CategoryTheory.ExactCategory.Functor
 public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Zero
@@ -19,6 +21,9 @@ either filtering hypothesis this descent is additive and preserves the
 specified quotient conflations. No exact structure on the quotient is assumed.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

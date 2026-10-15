@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Comparison.SmallVectorBundleK
 
@@ -20,12 +21,17 @@ factorization of the scheme-to-perfect map through strict-perfect K-theory.
 
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 noncomputable section
 universe u
 open CategoryTheory AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Consumer
-open Quillen.PerfectComplexes
 
 /-- Strict-perfect K uses the genuine quasi-isomorphism S-construction. -/
 noncomputable def strict_restriction_map {U X : Scheme.{u}} (j : U ⟶ X)

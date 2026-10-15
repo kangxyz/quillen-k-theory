@@ -6,7 +6,8 @@ Authors: kangxyz
 
 module
 
-public import Quillen.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.KTheory.Basic
 public import Mathlib.Algebra.Category.ModuleCat.Abelian
 
@@ -18,6 +19,9 @@ check the zero basepoint and K-group instances, and exhibit the split conflation
 `ℤ ⟶ ℤ ⊞ ℤ ⟶ ℤ`. The category here contains all small integer modules.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 

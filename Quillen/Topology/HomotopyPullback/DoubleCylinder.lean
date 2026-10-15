@@ -21,8 +21,13 @@ equivalence with the path-space homotopy pullback.
 -/
 @[expose] public section
 
+open Topology
+
+open Quillen.DoubleCylinder
+
+
 noncomputable section
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval
 open unitInterval
 universe u
@@ -269,7 +274,7 @@ end Quillen.HomotopyPullbackDoubleCylinder
 end
 
 noncomputable section
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval
 open unitInterval
 universe u

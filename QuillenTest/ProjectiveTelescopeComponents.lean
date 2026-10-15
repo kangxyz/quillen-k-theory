@@ -31,4 +31,3 @@ example (P : IsoCategory PUnitᵐᵒᵖ)
     Joined (classifyingSpaceMap (projectiveTelescopeTranslation PUnit P) x)
       (classifyingSpaceMap (projectiveTelescopeTranslation PUnit P) y) ↔ Joined x y :=
   projectiveTelescopeTranslation_joined_iff PUnit P x y
-

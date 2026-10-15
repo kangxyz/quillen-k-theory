@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRestrictionRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenDerivedImageRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.RestrictionFunctoriality
@@ -17,6 +18,9 @@ isomorphism. Actual global numerators and denominators remain unchanged at
 the stated endpoints; no presentation of the affine scheme is supplied.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Cylinder.Subcategory
 public import Quillen.Waldhausen.ArrowCategory.Structure
 public import Quillen.Waldhausen.Additivity.SplitSequence

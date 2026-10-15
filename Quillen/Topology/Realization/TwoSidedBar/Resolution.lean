@@ -17,6 +17,9 @@ The resolution category has an evaluation functor, section and contraction. Its 
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

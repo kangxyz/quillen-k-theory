@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Homology.CochainComplex.DegreewiseSplitMono
+public import Aglib.Algebra.Homology.MappingCone.Identity
 public import Quillen.Waldhausen.Approximation.RelativeSplitMono
 
 /-!
@@ -17,6 +19,9 @@ sources is degreewise split. These are structural cylinder calculations, not a
 fibration or K-theory comparison theorem.
 -/
 @[expose] public section
+
+open CochainComplex
+
 
 
 noncomputable section

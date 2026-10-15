@@ -15,8 +15,11 @@ and its original classifying map, including the empty-poset base case.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 open Quillen.FinitePosetLatching Quillen.FinitePosetInsertion
 open Quillen.Waldhausen.HasApproximationProperty
 universe w u v u' v'

@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Homology.BoundedComparison
+public import Aglib.Algebra.Homology.Embedding.StupidTrunc.Maps
+public import Aglib.Algebra.Homology.HomotopyCategory.Plus.BoundedComparison
 public import Mathlib.CategoryTheory.Triangulated.Subcategory
 
 /-! # Triangulated properties from bounded complex terms
@@ -15,17 +16,18 @@ object property from single terms to a complex with explicit finite term bounds.
 -/
 @[expose] public section
 
+open CochainComplex
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated
 universe v u v' u'
-open Quillen.CochainComplex
-open Quillen.Waldhausen.GilletWaldhausen
 namespace HomotopyCategory.Plus
 variable {A : Type u} [Category.{v} A] [Abelian A]
 variable {D : Type u'} [Category.{v'} D] [Preadditive D] [HasZeroObject D] [HasShift D ℤ]
-  [∀ n : ℤ, (shiftFunctor D n).Additive] [Pretriangulated D]
+  [∀ n : ℤ, (CategoryTheory.shiftFunctor D n).Additive] [Pretriangulated D]
 variable (F : HomotopyCategory.Plus A ⥤ D) [F.CommShift ℤ] [F.IsTriangulated]
 variable (P : ObjectProperty D) [P.ContainsZero] [P.IsClosedUnderIsomorphisms]
   [P.IsTriangulatedClosed₂]

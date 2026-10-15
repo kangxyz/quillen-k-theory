@@ -5,9 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.NativeBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.PullbackTensorCompatibility
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.PullbackUnit
+public import Aglib.AlgebraicGeometry.Modules.Pullback.Unit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeTwoSummands
 
 /-! # The original native two-summand map under actual open immersion
@@ -18,6 +20,15 @@ projection to the original integer projective line. Restriction of the actual
 left tensor functor uses the original tensor restriction isomorphism.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Products
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
+
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen
 
 
@@ -29,7 +40,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
-open AlgebraicGeometry.Scheme.Bass AlgebraicGeometry.Scheme.Modules
+open AlgebraicGeometry.Scheme.Modules
 
 /-- Native base change retains the original projection to the integer line. -/
 @[reassoc (attr := simp)]
@@ -137,8 +148,8 @@ theorem nativeTautologicalLineOpenIso_inclusion {U X : QuasiCompactSchemes.{u}} 
 end AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace Quillen.PerfectComplexes.ProjectiveLine
-open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Bass AlgebraicGeometry.Scheme.ProjectiveLine
-open AlgebraicGeometry.Scheme.Modules Quillen.Waldhausen
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules
 
 /-- The original chart naturality square keeps the actual original polynomial map. -/
 @[reassoc (attr := simp)]
@@ -223,8 +234,10 @@ def nativeTwistOpenModuleIso {U X : QuasiCompactSchemes.{u}} (f : U ⟶ X)
 /-- Degreewise actual tensor and actual restriction retain their module comparison. -/
 def nativeTwistOpenComplexIso {U X : QuasiCompactSchemes.{u}} (f : U ⟶ X)
     [IsOpenImmersion f.hom] :
-    tensorByLineComplex (nativeTautologicalLine X) ⋙ restrict (nativeLineFunctor.map f).hom ≅
-      restrict (nativeLineFunctor.map f).hom ⋙ tensorByLineComplex (nativeTautologicalLine U) :=
+    AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (nativeTautologicalLine X) ⋙ restrict
+      (nativeLineFunctor.map f).hom ≅
+      restrict (nativeLineFunctor.map f).hom ⋙ AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft
+        (nativeTautologicalLine U) :=
   Functor.mapHomologicalComplexCompIso (nativeTwistOpenModuleIso f) (.up ℤ)
 
 /-- The actual exact negative twist commutes with actual open restriction. -/

@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.GrothendieckComparison.Retraction
 public import Quillen.Topology.ClassifyingSpace.CompletionSurjectivity
 
@@ -17,6 +19,9 @@ its target is the existing homotopical Quillen K₀. The inverse is the previous
 constructed topological retraction. Both directions respect exact functors.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 universe v u

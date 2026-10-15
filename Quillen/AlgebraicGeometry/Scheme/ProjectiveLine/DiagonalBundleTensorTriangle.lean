@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.TensorLocalExactness
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Pullback
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Tensor.Exact
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Pullback
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalCokernel
 public import Mathlib.Algebra.Homology.DerivedCategory.SingleTriangle
 

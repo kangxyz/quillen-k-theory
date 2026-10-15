@@ -21,6 +21,9 @@ The target coefficient Y is arbitrary; it is not replaced by a point.
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval

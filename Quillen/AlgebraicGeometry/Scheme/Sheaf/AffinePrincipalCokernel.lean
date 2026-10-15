@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineExactness
+public import Aglib.AlgebraicGeometry.Modules.StructureSheaf.Sections
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Exactness
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.UnitPushforward
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.LocallyFree
 public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
@@ -17,8 +18,9 @@ original structure-module map. The proofs retain the original ΓSpec naturality 
 and sheaf maps over arbitrary commutative rings, without noetherianity assumptions.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 noncomputable section

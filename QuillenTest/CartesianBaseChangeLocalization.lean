@@ -14,7 +14,6 @@ universe u v
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace QuillenTest.CartesianBaseChangeLocalization
 
-open Quillen
 open AlgebraicGeometry.Scheme.Modules Scheme.Modules
 variable {W' W U V' V X : Scheme.{u}}
   (c : W' ⟶ W) (d : W' ⟶ V') (k : V' ⟶ V)

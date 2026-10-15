@@ -22,6 +22,9 @@ cofinality property for an arbitrary open is asserted.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u

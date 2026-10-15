@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueNativePhiKMap
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientOne
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.StrictPositiveSourceComparison
@@ -18,6 +19,13 @@ The original coproduct inclusion compares that sum with its original summand.
 The forward base augmentation is pulled and totalized before applying G0.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
+open Quillen.PerfectComplexes.ProjectiveLine.StrictPositiveRetraction
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -170,12 +178,13 @@ def strictBoundedPullbackIso (R : CommRingCat.{u}) :
     strictPullback (projection R) ⋙ strictToBoundedBelow (twoChartLine R) ≅
       strictToBoundedBelow (Spec R) ⋙ boundedPullback (projection R) :=
   NatIso.ofComponents
-    (fun K => ObjectProperty.isoMk _ (Iso.refl ((pullbackComplex (projection R)).obj K.obj)))
+    (fun K => ObjectProperty.isoMk _ (Iso.refl ((AlgebraicGeometry.Scheme.Modules.Complex.pullback
+      (projection R)).obj K.obj)))
     (by
       intro K L f
       apply ObjectProperty.hom_ext
-      change (pullbackComplex (projection R)).map f.hom ≫ 𝟙 _ =
-        𝟙 _ ≫ (pullbackComplex (projection R)).map f.hom
+      change (AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).map f.hom ≫ 𝟙 _ =
+        𝟙 _ ≫ (AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).map f.hom
       simp)
 
 /-- The actual geometric pullback of that forward base augmentation. -/
@@ -232,6 +241,9 @@ lemma strictPhiFirst_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
     (FlasqueBoundedBelow.waldhausen (twoChartLine R)).weq (strictPhiFirst R) :=
   (strictTotal_exact (Spec R)).comp ((firstInjection_exact R).comp (Phi_exact R))
 
+/-- The totalized first coproduct inclusion, precomposed with Godement totalization of the strict
+base model.
+-/
 def strictFirstPhiUnit (R : CommRingCat.{u}) : strictFirstTotal R ⟶ strictPhiFirst R :=
   Functor.whiskerLeft (strictTotal (Spec R)) (firstPhiUnit R)
 

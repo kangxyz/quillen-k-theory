@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionLaurentEvaluationUnit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionModelIntertwining
 
@@ -16,12 +17,16 @@ lift. Opaque component identities retain the literal source action, original tar
 and unchanged evaluation comparison before their whole-prespectrum realization.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
+open Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 

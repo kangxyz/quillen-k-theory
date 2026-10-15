@@ -15,11 +15,16 @@ Actual simply connected covers, target-cover surjectivity and points remain
 explicit. Their commuting lifts are constructed by the frozen chosen-cover API.
 -/
 @[expose] public section
+
+open Topology
+
+open Quillen.DoubleCylinder
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Limits MonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory
 open scoped Simplicial Topology unitInterval
 universe u
 namespace Quillen.IsPlusConstruction

@@ -13,6 +13,9 @@ public import Quillen.Waldhausen.Fibration.AllWeak.TotalFiberSquare
 zero, finite components, and both exact nested inputs used by global assembly. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial Topology
@@ -20,7 +23,7 @@ universe u
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace QuillenTest.RelativeRowsWeakTotalFiber
-open Quillen Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open Quillen Quillen.Waldhausen.Fibration
 open RelativeRows
 variable {C : Type u} [SmallCategory C] {V : Structure C}
   (N : NestedWeakEquivalences V)

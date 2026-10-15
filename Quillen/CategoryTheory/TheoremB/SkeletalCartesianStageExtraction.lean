@@ -13,6 +13,10 @@ public import Quillen.Topology.Realization.Cartesian.CoordinateTransport
 from the two outgoing faces of the actual replacement attachment cube. -/
 @[expose] public section
 
+open Quillen.TheoremA
+open Quillen.TheoremB
+
+
 noncomputable section
 universe u
 open CategoryTheory Limits Opposite

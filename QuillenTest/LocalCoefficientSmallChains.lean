@@ -18,6 +18,9 @@ and fails to contain one explicit crossing simplex in either member.
 
 @[expose] public section
 
+open Quillen.LocalCoefficients
+
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false

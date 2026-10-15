@@ -5,15 +5,23 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ScalarCofiberPrism
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PolynomialScalarCone
 
 /-! # The original polynomial scalar factorization and its actual cofiber-prism consumers -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry unitInterval
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration AlgebraicGeometry.Scheme.PolynomialLaurent
+open Quillen.PerfectComplexes.Affine
+open Quillen.Waldhausen.Fibration AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped Topology
 universe u
 namespace QuillenTest.PolynomialScalarCofiberPrism

@@ -20,6 +20,9 @@ group nerve is a further combinatorial step.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.QuotientRows
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial

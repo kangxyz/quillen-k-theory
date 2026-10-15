@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianOpenBaseChange
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Cartesian
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.OpenImmersion.Cartesian
 
 /-! # Comparison of original pullback and open-restriction base-change mates -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

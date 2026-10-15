@@ -10,7 +10,10 @@ public import Quillen.Waldhausen.SConstruction.Iterated.TriangleStructure
 /-! Actual iterated triangle faces, whole zero restriction and independent suspension parameter. -/
 @[expose] public section
 
-open CategoryTheory Opposite MonoidalCategory Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen
+
+
+open CategoryTheory Opposite MonoidalCategory Quillen.Waldhausen.IteratedS
 open scoped Simplicial
 universe u
 

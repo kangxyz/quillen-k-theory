@@ -6,6 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Localization.SmallModel
 public import Quillen.Localization.Serre.LocalizationTarget
 
@@ -18,6 +21,9 @@ a Serre localization yields the connective localization sequence for its origina
 the only localization hypothesis here concerns the actual input functor.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

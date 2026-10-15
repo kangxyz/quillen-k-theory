@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.SFiltering
 public import Mathlib.CategoryTheory.Localization.Predicate
 public import Mathlib.CategoryTheory.Localization.CalculusOfFractions.Preadditive
@@ -25,6 +26,9 @@ construct the quotient's exact structure and prove exact localization, neither
 of which is asserted or included as an axiom here.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

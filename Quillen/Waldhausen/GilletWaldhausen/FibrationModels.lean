@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.AcyclicSubcategory
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsAcyclic
 
@@ -18,6 +19,9 @@ bounded-acyclic complex category by unchanged objects and chain maps.
 No fibration theorem or K-equivalence is assumed.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

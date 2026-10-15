@@ -13,7 +13,7 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Convexity
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters Quillen.LoopPrespectrum
 open scoped Topology unitInterval
 universe u
@@ -21,8 +21,16 @@ namespace Quillen.PerfectComplexes.BassMComponents
 variable {R : CommRingCat.{u}} (P : Over (Spec R))
 variable {a b c : Under R} (u : a ⟶ b) (v : b ⟶ c)
 
+/--
+The binary normalization source for the coefficient maps of `u` and `v`, used in the
+middle-cylinder product.
+-/
 abbrev coefficientSource := BinaryNormalizationSimplex.sourceMap
   (coefficientMap P v) (coefficientMap P u)
+/--
+The three coefficient-composition nodes, with their binary normalization references, used in the
+middle-cylinder product.
+-/
 abbrev coefficientNodes := BassH0Merge.binaryNodes (coefficientMap P v) (coefficientMap P u)
 
 /-- Literal realized composition of the original coefficient triangle and Bass projection path. -/

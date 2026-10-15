@@ -18,6 +18,9 @@ and on a fully prescribed boundary homotopy including each of its stored target-
 
 @[expose] public section
 
+open Quillen.DoubleCylinder
+
+
 noncomputable section
 
 open CategoryTheory Limits MonoidalCategory

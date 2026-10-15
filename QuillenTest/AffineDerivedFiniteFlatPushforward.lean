@@ -10,11 +10,14 @@ public import Mathlib.Data.ZMod.Basic
 
 /-! Original derived perfectness and the concrete strict-model direct-image isomorphism. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine AlgebraicGeometry.Scheme.Modules
+open Quillen.PerfectComplexes.Affine AlgebraicGeometry.Scheme.Modules
 universe u
 namespace QuillenTest.AffineDerivedFiniteFlatPushforward
 

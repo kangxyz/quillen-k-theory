@@ -6,8 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.ComplexSubcategory
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Exact
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Exact
 public import Mathlib.Algebra.Homology.Single
 
 /-!
@@ -23,6 +24,9 @@ Strict-perfect K-theory is not identified with all-perfect K-theory here.
 That comparison requires geometric resolution hypotheses and a theorem.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

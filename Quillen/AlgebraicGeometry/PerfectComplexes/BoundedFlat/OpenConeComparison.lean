@@ -19,6 +19,9 @@ still retains the honest K₀-image obstruction. Transport to original supported
 separate from this acyclic-model statement.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u

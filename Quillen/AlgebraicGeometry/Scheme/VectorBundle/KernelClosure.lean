@@ -6,9 +6,15 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.AffineProjective
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Locality
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.QuasicoherentClosure
+public import Aglib.AlgebraicGeometry.Modules.Exact
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Affine.LocalBases
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Exact
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.FiniteType
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Restriction
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Affine.Projective
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Locality
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Limits
 public import Quillen.Resolution.Finite
 
 /-! # Ambient kernels and admissible epimorphisms of vector bundles
@@ -19,10 +25,12 @@ asserts projectivity of vector bundles in the global sheaf category.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 open CategoryTheory.ExactCategory

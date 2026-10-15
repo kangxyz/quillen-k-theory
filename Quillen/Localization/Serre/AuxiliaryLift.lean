@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.Localization
 public import Quillen.Devissage.SpanLayers
 public import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
@@ -30,6 +31,9 @@ These are the ordinary lift categories appearing in the localization proof.
 Their filteredness alone is not asserted to prove homotopical localization.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

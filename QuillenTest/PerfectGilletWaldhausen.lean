@@ -14,8 +14,11 @@ and the existing triangle to locally-perfect K without asserting its equivalence
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
-open Quillen Quillen.PerfectComplexes AlgebraicGeometry
+open Quillen AlgebraicGeometry
 universe u
 
 example (X : Scheme.{u}) (n : ℕ) :

@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ObscureAxiom
 public import Quillen.CategoryTheory.ExactCategory.SFiltering
 
@@ -18,6 +19,9 @@ bicartesian diagram needed to straighten an elementary weak deflation.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -27,7 +31,6 @@ open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 
 namespace CategoryTheory.ExactCategory.ExactStructure
-open Quillen
 
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)

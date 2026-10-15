@@ -9,6 +9,9 @@ public import Quillen.Topology.PlusConstruction.RealizationComparisonUniqueness
 
 /-! # Independent ordinary homotopy-cancellation client -/
 @[expose] public section
+
+open Quillen.DoubleCylinder
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory
 open scoped Simplicial Topology unitInterval

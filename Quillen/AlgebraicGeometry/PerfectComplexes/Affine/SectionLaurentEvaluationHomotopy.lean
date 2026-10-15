@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionLaurentModelUnit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionLaurentHomotopy
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassStep
@@ -20,12 +21,16 @@ The section action, original coefficient evaluation track, and normalized raw ge
 are unchanged, at all levels and with independent loop, square and structure parameters.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 variable (R : CommRingCat.{u})

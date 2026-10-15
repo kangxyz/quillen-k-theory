@@ -5,14 +5,10 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassRestrictionTower
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassLocalization
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientOpenConeStable
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationNaturality
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassRestrictionTower
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassLocalization
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientOpenConeStable
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationNaturality
 public import Quillen.Topology.Prespectrum.StableLocalization
 
 /-!
@@ -24,8 +20,11 @@ null, image-exactness or stability input. The constructed telescope restriction 
 cone comparison also give isomorphisms of the actual localized coefficient diagrams.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace Consumer.FullOpenSectionComparison
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R)

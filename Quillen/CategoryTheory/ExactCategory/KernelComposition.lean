@@ -5,18 +5,21 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.ExactCategory.Composition
-public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Composition
+public import Aglib.CategoryTheory.ExactCategory.Isomorphisms
 
 /-! # The admissible inclusion between kernels of composable deflations -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
 open CategoryTheory CategoryTheory.Limits
 namespace CategoryTheory.ExactCategory.ExactStructure
-open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 

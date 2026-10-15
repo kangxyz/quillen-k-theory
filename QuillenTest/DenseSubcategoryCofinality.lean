@@ -10,6 +10,9 @@ public import Quillen.Waldhausen.Cofinality.DenseKEquivalence
 /-! # Genuine complement density and literal original full-inclusion consumers -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v

@@ -5,9 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.AlgebraicGeometry.Modules.FinitePresentation.AffineTransport
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedStructure
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.QuasicoherentClosure
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.Support
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Limits
+public import Aglib.AlgebraicGeometry.Modules.Support
 public import Mathlib.Data.Set.Finite.Lattice
 
 /-!
@@ -21,10 +23,15 @@ affine strictification hypothesis on the original complex.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 

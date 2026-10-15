@@ -8,7 +8,7 @@ module
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalLocalCokernel
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalSpecModels
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalMonomorphism
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenCoverExactness
+public import Aglib.AlgebraicGeometry.Modules.Locality.Exactness
 
 /-! # The genuine twisted diagonal short exact sequence
 

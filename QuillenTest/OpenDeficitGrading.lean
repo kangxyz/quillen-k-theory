@@ -9,9 +9,12 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDeficitGrading
 
 /-! Original restriction, cone face, cylinder and structure-coordinate consumers. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.OpenDeficitGrading
 

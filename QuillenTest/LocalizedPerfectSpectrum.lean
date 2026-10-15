@@ -12,10 +12,13 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Spectrum.DerivedPullbac
 normalization in the constructed spectrum localization. -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS Quillen.PerfectComplexes
+open Quillen Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
 universe u v
 namespace QuillenTest.LocalizedPerfectSpectrum
 

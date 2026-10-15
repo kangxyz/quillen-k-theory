@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativeCoefficientTensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientOne
 
@@ -15,6 +16,12 @@ native projection and the signed cochain shift by one. Its derived comparison
 retains the installed unit, original total augmentation and shift comparisons.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -28,6 +35,7 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeCoefficients
 open FlasqueCoefficients
 
+/-- The standard derived-category instance for sheaves of modules on `Y`. -/
 local instance nativeCoefficientStandardDerived (Y : Scheme.{u}) :
     HasDerivedCategory.{u + 1} Y.Modules := HasDerivedCategory.standard _
 
@@ -70,7 +78,8 @@ lemma G1_obj_underlying (X : QuasiCompactSchemes.{u})
       ((((Scheme.Modules.pushforward (nativeProjection.app X).hom).mapHomologicalComplex (.up
         ℤ)).obj
         ((godementTotal (nativeLineFunctor.obj X).obj).obj
-          ((tensorByLineRightComplex (nativeTautologicalLine X)).obj K.obj)))⟦(1 : ℤ)⟧) := rfl
+          ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X)).obj
+            K.obj)))⟦(1 : ℤ)⟧) := rfl
 
 /-- The underlying arrows retain the original tensor, total, direct image and shift maps. -/
 lemma G1_map_underlying (X : QuasiCompactSchemes.{u})
@@ -79,7 +88,8 @@ lemma G1_map_underlying (X : QuasiCompactSchemes.{u})
       ((((Scheme.Modules.pushforward (nativeProjection.app X).hom).mapHomologicalComplex (.up
         ℤ)).map
         ((godementTotal (nativeLineFunctor.obj X).obj).map
-          ((tensorByLineRightComplex (nativeTautologicalLine X)).map f.hom)))⟦(1 : ℤ)⟧') := rfl
+          ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X)).map
+            f.hom)))⟦(1 : ℤ)⟧') := rfl
 
 /-- A specified original bound a becomes exactly a-1 after the actual shift by one. -/
 lemma G1_isStrictlyGE (X : QuasiCompactSchemes.{u})

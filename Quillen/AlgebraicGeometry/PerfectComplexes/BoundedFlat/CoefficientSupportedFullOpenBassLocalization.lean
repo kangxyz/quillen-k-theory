@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedFiberBassTelescope
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedFiberBassTelescope
 
 /-!
 # Auxiliary-supported global native full-open section-completion localization
@@ -20,9 +20,12 @@ This result concerns these section-completion objects; identification with
 classical nonconnective K-theory remains separate.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange Quillen.KTheory.Bass Quillen.Waldhausen.IteratedS
+open Quillen.KTheory.Bass Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedWeakArrowFactorization
 public import Quillen.Waldhausen.WeakArrow.JointData
 public import Quillen.Waldhausen.Approximation.Dual
@@ -25,12 +26,14 @@ no termwise quasicoherence or quasi-compactness of the open is assumed.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.Waldhausen
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.Affine
 
@@ -82,7 +85,7 @@ lemma supportedStrictToPerfect_target_hasDualApproximation (R : CommRingCat.{u})
       (fun i => by have := hd i; infer_instance)
     constructor
     · apply (CategoryTheory.ExactCategory.ExactSubcategory.deflation_iff
-      (Quillen.abelianExactStructure (Complex
+      (CategoryTheory.ExactCategory.abelianExactStructure (Complex
         (Spec R)))
         (strictSupported j) f.hom.left).mpr
       refine ⟨kernel f.hom.left.hom, hkc, kernel.ι f.hom.left.hom,
@@ -91,7 +94,7 @@ lemma supportedStrictToPerfect_target_hasDualApproximation (R : CommRingCat.{u})
               mono_f := inferInstance
               epi_g := inferInstance }
     · apply (CategoryTheory.ExactCategory.ExactSubcategory.deflation_iff
-      (Quillen.abelianExactStructure (Complex
+      (CategoryTheory.ExactCategory.abelianExactStructure (Complex
         (Spec R)))
         (perfectSupported j) f.hom.right).mpr
       refine ⟨kernel f.hom.right.hom, hkd, kernel.ι f.hom.right.hom,

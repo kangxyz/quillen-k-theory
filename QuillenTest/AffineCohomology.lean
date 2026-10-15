@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineCohomology
+public import Aglib.AlgebraicGeometry.Cohomology.Affine.Vanishing
 public import QuillenTest.AffineCechHigher
 
 /-!
@@ -31,7 +31,6 @@ open AlgebraicGeometry.Scheme.Modules.AffineDerived QuillenTest.AffineCechSectio
 
 namespace QuillenTest.AffineCohomology
 
-open Quillen
 
 lemma arbitrary_ring_original_higher_derived {R : CommRingCat.{u}}
     (M : (Spec R).Modules) [M.IsQuasicoherent] (n : ℕ) :

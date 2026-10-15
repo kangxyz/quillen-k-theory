@@ -8,6 +8,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.OldChartMid
 
 /-! Full middle and last binary columns in the original merged square-composition diagram. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

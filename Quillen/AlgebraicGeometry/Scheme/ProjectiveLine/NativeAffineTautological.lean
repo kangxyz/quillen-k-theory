@@ -16,6 +16,9 @@ Arbitrary coefficient pullback of the original integer line identifies its
 native tautological pullback with the actual two-chart tautological line.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Products
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
 open Quillen
 
 noncomputable section
@@ -23,7 +26,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory AlgebraicGeometry
-open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Bass
+open AlgebraicGeometry.Scheme.Modules
 
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 

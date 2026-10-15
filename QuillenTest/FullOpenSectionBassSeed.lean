@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassSeed
 
 /-!
@@ -14,9 +15,14 @@ The polynomial charts stay in their original order. The seed is coefficient-natu
 literal loop retains the original forward-T track between the original two null legs.
 -/
 @[expose] public section
-noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+
 open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
+noncomputable section
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.FullOpenSectionBassSeed
 

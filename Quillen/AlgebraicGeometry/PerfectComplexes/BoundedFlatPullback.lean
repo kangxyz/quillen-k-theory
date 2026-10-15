@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedMinusPullbackComposition
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.StalkFlat
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PullbackNaturality
@@ -22,12 +23,18 @@ scheme, or Waldhausen K-equivalence, is asserted.
 -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.CochainComplex AlgebraicGeometry.Scheme.Modules
+open AlgebraicGeometry.Scheme.Modules
 attribute [local instance] HasDerivedCategory.standard
 namespace Quillen.PerfectComplexes
 
@@ -38,8 +45,8 @@ def boundedFlatPullbackDerivedIso {X Y : Scheme.{u}} (f : X ⟶ Y)
     (hK : ∀ n, stalkwiseFlat Y (K.obj.X n))
     (hL : ∀ n, stalkwiseFlat Y (L.obj.X n))
     (e : (toDerived Y).obj K.obj ≅ (toDerived Y).obj L.obj) :
-    (toDerived X).obj ((pullbackComplex f).obj K.obj) ≅
-      (toDerived X).obj ((pullbackComplex f).obj L.obj) := by
+    (toDerived X).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K.obj) ≅
+      (toDerived X).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj L.obj) := by
   let e' : (boundedAboveQMinus Y.Modules).obj K ≅ (boundedAboveQMinus Y.Modules).obj L :=
     ObjectProperty.isoMk _ e
   exact (derivedPullbackMinusFlatObjectIso f K hK).symm ≪≫
@@ -71,7 +78,7 @@ predicate on bounded-above flat inputs. No uniform bound on all locally perfect 
 theorem locallyPerfect_pullback_of_boundedAbove_stalkwiseFlat {X Y : Scheme.{u}} (f : X ⟶ Y)
     {K : Complex Y} (hK : locallyPerfect Y K) (hbound : boundedAbove Y.Modules K)
     (hflat : ∀ n, stalkwiseFlat Y (K.X n)) :
-    locallyPerfect X ((pullbackComplex f).obj K) := by
+    locallyPerfect X ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K) := by
   intro x
   obtain ⟨U, hx, P, ⟨eP⟩⟩ := hK (f x)
   have hP := strictPerfect_boundedAbove_stalkwiseFlat P.property
@@ -80,9 +87,10 @@ theorem locallyPerfect_pullback_of_boundedAbove_stalkwiseFlat {X Y : Scheme.{u}}
   let PU : BoundedAboveComplex U.toScheme.Modules := ⟨P.obj, hP.1⟩
   have hKU (n : ℤ) : stalkwiseFlat U.toScheme (KU.obj.X n) :=
     stalkwiseFlat_restrict U.ι (hflat n)
-  refine ⟨f ⁻¹ᵁ U, hx, ⟨(pullbackComplex (f ∣_ U)).obj P.obj,
+  refine ⟨f ⁻¹ᵁ U, hx, ⟨(AlgebraicGeometry.Scheme.Modules.Complex.pullback (f ∣_ U)).obj P.obj,
     strictPerfect_pullback (f ∣_ U) P.property⟩, ?_⟩
-  exact ⟨(toDerived (f ⁻¹ᵁ U).toScheme).mapIso ((pullbackComplexRestrictIso f U).app K) ≪≫
+  exact ⟨(toDerived (f ⁻¹ᵁ U).toScheme).mapIso
+    ((AlgebraicGeometry.Scheme.Modules.Complex.pullbackRestrictIso f U).app K) ≪≫
     boundedFlatPullbackDerivedIso (f ∣_ U) KU PU hKU hP.2 eP⟩
 
 /-- The actual flat replacement of a bounded-above locally perfect input is locally perfect. -/
@@ -94,7 +102,7 @@ theorem locallyPerfect_flatModel {X : Scheme.{u}} (K : BoundedAboveComplex X.Mod
 actual ambient derived pullback whenever the original input is genuinely bounded above. -/
 theorem locallyPerfect_pullback_flatModel {X Y : Scheme.{u}} (f : X ⟶ Y)
     (K : BoundedAboveComplex Y.Modules) (hK : locallyPerfect Y K.obj) :
-    locallyPerfect X ((pullbackComplex f).obj (flatModel Y K)) :=
+    locallyPerfect X ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj (flatModel Y K)) :=
   locallyPerfect_pullback_of_boundedAbove_stalkwiseFlat f (locallyPerfect_flatModel K hK)
     (flatModelBounded Y K).property (flatModel_flat Y K)
 

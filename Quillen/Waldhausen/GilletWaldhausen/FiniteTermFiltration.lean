@@ -6,6 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Homology.Embedding.StupidTrunc.Layer
+public import Aglib.Algebra.Homology.Embedding.StupidTrunc.Maps
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.GilletWaldhausen.StupidTruncationFixedBounds
 
 /-! # The actual brutal filtration inside each finite term stratum
@@ -16,6 +20,10 @@ cofibration sequence of exact endofunctors, with identity and zero endpoints.
 Only isomorphism weak equivalences are used, and kernel closure is absent.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+open CochainComplex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

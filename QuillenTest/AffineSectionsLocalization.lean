@@ -10,13 +10,17 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionsLocaliza
 /-! # Exact-map consumers of principal and arbitrary-open section localization -/
 @[expose] public section
 
+open HomologicalComplex
+open Quillen.PerfectComplexes
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Opposite
   HomologicalComplex
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 namespace QuillenTest.AffineSectionsLocalization
 
 open Quillen

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatPullback
+public import Aglib.AlgebraicGeometry.Modules.Pullback.FlatMorphism
 
 /-!
 # Consumers of ambient flat sheaf pullback

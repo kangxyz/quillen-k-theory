@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionDeflationSpan
 
 /-! # Original contravariant Q-span and structured-comma consumers -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 universe u v
 open CategoryTheory CategoryTheory.Limits Quillen

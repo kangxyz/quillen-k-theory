@@ -5,11 +5,17 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Carrier
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SecondEndpointResolution
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueDiagonalComparisons
 
 /-! # Original underlying-complex comparisons for second endpoint model values -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -71,7 +77,8 @@ def CUnderlyingIso : CRaw R ≅ CNative R := by
   let P := (Scheme.Modules.pullback (relativeFirst R)).mapHomologicalComplex (.up ℤ)
   let T := godementTotal (relativeSquare R)
   exact associator (firstPlus R) (godementTotalPlus (relativeSquare R)) I ≪≫
-    isoWhiskerLeft (firstPlus R) (FlasqueDiagonal.totalPlusUnderlyingIso (relativeSquare R)) ≪≫
+    isoWhiskerLeft (firstPlus R) (AlgebraicGeometry.Scheme.Modules.Godement.totalPlusCompιIso
+      (relativeSquare R)) ≪≫
     (associator (firstPlus R) I T).symm ≪≫
     isoWhiskerRight (associator A B I ≪≫
       isoWhiskerLeft A (Scheme.Modules.pullback (relativeFirst R)).mapCochainComplexPlusCompι ≪≫
@@ -95,7 +102,8 @@ def VUnderlyingIso : VRaw R ≅ VNative R := by
   let eC : (C ⋙ D) ⋙ I ≅ J ⋙ T ⋙ P :=
     associator C D I ≪≫ isoWhiskerLeft C eD ≪≫
       (associator C J P).symm ≪≫
-      isoWhiskerRight (FlasqueDiagonal.totalPlusUnderlyingIso (relativeSquare R)) P ≪≫
+      isoWhiskerRight (AlgebraicGeometry.Scheme.Modules.Godement.totalPlusCompιIso (relativeSquare
+        R)) P ≪≫
       associator J T P
   let eB : (B ⋙ C ⋙ D) ⋙ I ≅ J ⋙ F ⋙ T ⋙ P :=
     associator B (C ⋙ D) I ≪≫ isoWhiskerLeft B eC ≪≫

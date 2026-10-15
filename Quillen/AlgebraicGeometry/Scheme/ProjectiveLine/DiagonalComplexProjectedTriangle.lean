@@ -1,6 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+Authors: kangxyz
 -/
 module
 
@@ -17,6 +18,10 @@ The first two projected terms remain their actual derived-image objects.
 -/
 
 @[expose] public section
+
+open AlgebraicGeometry
+open CategoryTheory.Pretriangulated
+
 open Quillen
 
 noncomputable section
@@ -27,6 +32,7 @@ open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits
   CategoryTheory.Pretriangulated AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open AlgebraicGeometry.Scheme.Modules
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance diagonalComplexProjectedStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 local instance diagonalComplexProjectedClosed (R : CommRingCat.{u}) :

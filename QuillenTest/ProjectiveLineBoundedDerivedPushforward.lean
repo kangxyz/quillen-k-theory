@@ -13,10 +13,13 @@ These consumers retain the original quotient and direct-image functors, allow ar
 finite bounds, and transport the proved property along an actual derived isomorphism.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.ProjectiveLine
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.ProjectiveLine
 universe u
 namespace QuillenTest.ProjectiveLineBoundedDerivedPushforward
 

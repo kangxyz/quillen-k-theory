@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportComparison
 
 /-! # Original relative-open and supported bounded-flat comparisons
@@ -15,9 +16,14 @@ by all perfect K-theory of the open.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.PerfectComplexes
 universe u
 namespace QuillenTest.BoundedFlatRelativeComparison
 

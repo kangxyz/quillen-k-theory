@@ -17,6 +17,9 @@ degree, including the boundary from K1 to supported K0.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -30,12 +33,17 @@ variable {U X V Y : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ Y)
 
 /-- An exact square of the original perfect functors and actual open restrictions. -/
 structure ExactRestrictionSquare where
+  /-- The functor on perfect complexes over the ambient schemes. -/
   ambient : Perfect X ⥤ Perfect Y
+  /-- The functor on perfect complexes over the prescribed open subschemes. -/
   onOpen : Perfect U ⥤ Perfect V
   ambient_exact : IsExact (perfectWaldhausen X).cof (perfectWaldhausen X).weq
     (perfectWaldhausen Y).cof (perfectWaldhausen Y).weq ambient
   onOpen_exact : IsExact (perfectWaldhausen U).cof (perfectWaldhausen U).weq
     (perfectWaldhausen V).cof (perfectWaldhausen V).weq onOpen
+  /-- The natural isomorphism identifying ambient transport followed by restriction with restriction
+  followed by transport on the opens.
+  -/
   restrictionIso : ambient ⋙ perfectRestrict k ≅ perfectRestrict j ⋙ onOpen
 
 namespace ExactRestrictionSquare

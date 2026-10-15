@@ -21,8 +21,10 @@ homotopy, Whitehead conclusion, singular counit comparison, realization
 domination or cover-existence theorem is assumed or asserted here.
 -/
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Topology
+open Set
 universe u v w
 namespace Quillen.ClassicalCW
 variable {X : Type u} [TopologicalSpace X] [T2Space X]

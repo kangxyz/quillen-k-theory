@@ -5,6 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueTwoSummandComparison
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.NativeBaseChange
 
@@ -16,6 +20,13 @@ the original native line chart trivializations discharge the geometric inputs.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Products
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
+
+
 open CategoryTheory.ExactCategory
 
 noncomputable section
@@ -23,7 +34,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Bass AlgebraicGeometry.Scheme.Modules
+open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Modules
   AlgebraicGeometry.Scheme.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
 
@@ -35,7 +46,7 @@ def boundedNegativeTwist (X : QuasiCompactSchemes.{u}) :
     BoundedBelow.Obj (nativeLineFunctor.obj X).obj ⥤ BoundedBelow.Obj (nativeLineFunctor.obj
       X).obj :=
   ObjectProperty.lift _ ((BoundedBelow.objects (nativeLineFunctor.obj X).obj).ι ⋙
-    tensorByLineComplex (nativeTautologicalLine X)) (fun K => by
+    AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (nativeTautologicalLine X)) (fun K => by
       obtain ⟨hp, a, ha⟩ := K.property
       let := ha
       refine ⟨locallyPerfect_tensorByLine (nativeTautologicalLine X)
@@ -52,6 +63,9 @@ instance boundedNegativeTwist_additive (X : QuasiCompactSchemes.{u}) :
   unfold boundedNegativeTwist
   infer_instance
 
+/-- Left tensor by the native tautological line on bounded-below perfect complexes, bundled with
+preservation of degreewise short exact sequences.
+-/
 def boundedNegativeTwistExactFunctor (X : QuasiCompactSchemes.{u}) : ExactFunctor
     (ExactSubcategory.exactStructure (abelianExactStructure (Complex (nativeLineFunctor.obj X).obj))
       (BoundedBelow.objects (nativeLineFunctor.obj X).obj))
@@ -61,7 +75,7 @@ def boundedNegativeTwistExactFunctor (X : QuasiCompactSchemes.{u}) : ExactFuncto
   map_conflation S hs := by
     change (S.map (BoundedBelow.objects (nativeLineFunctor.obj X).obj).ι).ShortExact at hs
     change ((S.map (BoundedBelow.objects (nativeLineFunctor.obj X).obj).ι).map
-      (tensorByLineComplex (nativeTautologicalLine X))).ShortExact
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (nativeTautologicalLine X))).ShortExact
     exact hs.map_of_exact _
 
 lemma boundedNegativeTwist_exact (X : QuasiCompactSchemes.{u}) : Waldhausen.IsExact
@@ -75,7 +89,8 @@ lemma boundedNegativeTwist_exact (X : QuasiCompactSchemes.{u}) : Waldhausen.IsEx
   weak s hs := by
     change QuasiIso s.hom at hs
     let := hs
-    exact tensorByLineComplex_quasiIso (nativeTautologicalLine X) s.hom
+    exact AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft_quasiIso (nativeTautologicalLine X)
+      s.hom
   pushout hi h := (boundedNegativeTwistExactFunctor X).map_isPushout hi h
 
 /-- The literal structure summand from the original flasque input model. -/
@@ -91,9 +106,10 @@ def second (X : QuasiCompactSchemes.{u}) :
 /-- This component is the actual native symmetry to prescribed pullback tensor L order. -/
 def secondTensorOrderIso (X : QuasiCompactSchemes.{u}) (K : FlasqueBoundedBelow.Obj X.obj) :
     ((second X).obj K).obj ≅
-      (tensorByLineRightComplex (nativeTautologicalLine X)).obj
-        ((pullbackComplex (nativeProjection.app X).hom).obj K.obj) :=
-  (tensorByLineComplexSymmetry (nativeTautologicalLine X)).app _
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X)).obj
+        ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeProjection.app X).hom).obj K.obj)
+          :=
+  (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeftRightIso (nativeTautologicalLine X)).app _
 
 lemma first_exact (X : QuasiCompactSchemes.{u}) : Waldhausen.IsExact
     (FlasqueBoundedBelow.waldhausen X.obj).cof (FlasqueBoundedBelow.waldhausen X.obj).weq

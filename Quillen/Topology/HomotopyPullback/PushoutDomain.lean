@@ -20,6 +20,9 @@ No preservation of an arbitrary quotient pushout by pullback is assumed.
 -/
 @[expose] public section
 
+open Quillen.HomotopyPullbackDoubleCylinder
+
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval

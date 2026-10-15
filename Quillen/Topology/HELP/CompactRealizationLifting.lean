@@ -19,8 +19,10 @@ the proved relative skeletal construction.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
-open CategoryTheory Limits Topology MonoidalCategory
+open CategoryTheory Limits MonoidalCategory
 open scoped Simplicial
 universe u
 set_option backward.isDefEq.respectTransparency false

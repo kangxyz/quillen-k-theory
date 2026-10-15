@@ -6,7 +6,12 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Regular.AffineProjective
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Exact
+public import Quillen.AlgebraicGeometry.Scheme.Regular.Field
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Exact
+public import Aglib.CategoryTheory.ExactCategory.Functor
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Affine.LocalBases
 public import Quillen.Algebra.Homology.FiniteProjectiveResolution
 public import Quillen.Resolution.Transport
 
@@ -20,10 +25,13 @@ sheaf. All terms are actual finite locally free sheaves.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+open CategoryTheory.ExactCategory
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section

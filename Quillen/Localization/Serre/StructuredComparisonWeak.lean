@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.NormalizedStructuredComma
 public import Quillen.Localization.Serre.LocalizationLESAdapter
 
@@ -13,6 +14,9 @@ public import Quillen.Localization.Serre.LocalizationLESAdapter
 the already defined based localization comparison. The missing geometric
 comparison remains an explicit input, not an axiom or a completed endpoint. -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 universe u

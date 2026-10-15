@@ -5,11 +5,15 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Local
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GlobalScalarRestriction
 
 /-! The actual global scalar acts termwise on the original ambient and perfect complexes. -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

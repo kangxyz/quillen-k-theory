@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.StructuredTransitionReduction
 public import Quillen.Localization.Serre.AuxiliaryStructuredTransition
 public import Quillen.Localization.Serre.AuxiliaryBaseChangeEquivalence
@@ -18,6 +19,9 @@ This final assembly is kept separate from the filtered realization theorem
 which must supply the map-preserving comparator equivalences.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

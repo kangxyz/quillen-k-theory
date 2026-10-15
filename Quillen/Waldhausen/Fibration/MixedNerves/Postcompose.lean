@@ -16,6 +16,9 @@ or comparison square is an input.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.Fibration.RelativeRows
+
+
 noncomputable section
 open CategoryTheory
 universe u v

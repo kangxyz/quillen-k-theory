@@ -6,10 +6,17 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.MayerVietoris
 
 /-! # Perfect-complex Mayer–Vietoris consumers -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section
@@ -18,7 +25,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u
 namespace QuillenTest.PerfectMayerVietoris
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.PerfectMayerVietoris
+open Quillen.PerfectComplexes.PerfectMayerVietoris
 variable {V X : Scheme.{u}} [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace V]
   (j : V ⟶ X) [IsOpenImmersion j] (T : X.Opens) (hT : IsCompact (T : Set X))
   (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ T)
@@ -108,7 +115,7 @@ end QuillenTest.PerfectMayerVietoris
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 namespace QuillenTest.PerfectMayerVietorisKZero
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.PerfectMayerVietoris
+open Quillen.PerfectComplexes.PerfectMayerVietoris
 variable {V X : Scheme.{u}} [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace V]
   (j : V ⟶ X) [IsOpenImmersion j] (T : X.Opens) (hT : IsCompact (T : Set X))
   (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ T)

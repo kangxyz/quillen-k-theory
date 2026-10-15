@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ProjectivePresheaves
 public import Quillen.Algebra.Homology.BoundedProjectiveReplacement
 
@@ -19,8 +20,10 @@ No quasicoherence, affineness, flat morphism, or replacement existence hypothesi
 is used. No functorial choice or derived-localization descent is asserted here.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
 
@@ -71,7 +74,7 @@ theorem exists_boundedAbove_flat_complex_replacement (X : Scheme.{u})
   let R := SheafOfModules.forget X.ringCatSheaf ⋙
     PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)
   let A := PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)
-  let K₀ : CochainComplex (PresheafOfModules.{u} X.ringCatSheaf.obj) ℤ :=
+  let K₀ : CochainComplex (_root_.PresheafOfModules.{u} X.ringCatSheaf.obj) ℤ :=
     (R.mapHomologicalComplex (ComplexShape.up ℤ)).obj K
   have : K₀.IsStrictlyLE b := by
     rw [CochainComplex.isStrictlyLE_iff]

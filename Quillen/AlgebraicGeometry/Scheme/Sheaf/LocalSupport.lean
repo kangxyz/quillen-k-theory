@@ -6,7 +6,8 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineSupport
+public import Aglib.AlgebraicGeometry.Modules.Support
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Support
 
 /-!
 # Closed support from finite affine local models
@@ -18,8 +19,9 @@ scheme. The local hypotheses are actual sheaf and module conditions; no
 closed-support conclusion is supplied as finiteness data.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 

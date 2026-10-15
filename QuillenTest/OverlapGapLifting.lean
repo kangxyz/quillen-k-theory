@@ -19,6 +19,9 @@ zero connectivity, without replacing the actual constant-path comparison.
 
 @[expose] public section
 
+open Quillen.HomotopyPullback
+
+
 noncomputable section
 
 open CategoryTheory Limits MonoidalCategory

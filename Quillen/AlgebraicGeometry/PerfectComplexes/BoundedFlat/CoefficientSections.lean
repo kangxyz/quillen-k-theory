@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.CoefficientBaseChange
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Pseudofunctor
 public import Quillen.CategoryTheory.FiberedCategory.GrothendieckZeroSections
 public import Quillen.CategoryTheory.FiberedCategory.CocartesianSectionTransition
@@ -36,7 +36,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open Quillen.CategoryTheory.StrictSections Quillen.CategoryTheory.GrothendieckZeroSections
-open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.CoefficientBaseChange
+open Quillen.Waldhausen.IteratedS AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u
 namespace Quillen.PerfectComplexes
 

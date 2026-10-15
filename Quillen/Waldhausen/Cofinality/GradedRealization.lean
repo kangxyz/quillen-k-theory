@@ -19,6 +19,10 @@ K-zero presentation, group-space calculation or cofinality endpoint is assumed.
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+open Quillen.Waldhausen.QuotientRows
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial

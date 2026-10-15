@@ -6,10 +6,11 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Restriction
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.Support
+public import Aglib.AlgebraicGeometry.Modules.Support
 
 /-!
 # Exact restriction and actual support for global coherent sheaves
@@ -22,28 +23,14 @@ No global quotient-equivalence or global localization theorem is assumed.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.CoherentScheme
-export AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-  (SupportedFiniteTypeSheaves affineLocallyFiniteType_restrict finiteTypeSheavesRestriction
-  finiteTypeSheavesRestriction_comp_inclusion finiteTypeSheavesRestriction_kernel_eq_support
-  finiteTypeSheavesSupportedAway finiteTypeSheavesSupportedAway_iff_support_subset)
-export AlgebraicGeometry.Scheme.Modules.Coherent
-  (coherentRestrictionExact finiteTypeSheavesRestriction_additive
-  finiteTypeSheavesRestriction_preservesFiniteColimits
-  finiteTypeSheavesRestriction_preservesFiniteLimits finiteTypeSheavesSupportedAway_isSerreClass
-  instAbelianSupportedCoherent supportedCoherentExactStructure
-  supportedCoherent_essentiallySmall)
-end Quillen.CoherentScheme
-
-end
 
 
 

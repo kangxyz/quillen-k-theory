@@ -11,8 +11,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.GrothendieckComparison
 category and literal PerfectK, with its original open restriction. -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open Quillen.Waldhausen.AlgebraicGrothendieck
 universe u
 namespace QuillenTest.PerfectGrothendieckComparison

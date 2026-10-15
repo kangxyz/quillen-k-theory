@@ -17,8 +17,10 @@ TopCat pushout. No CW structure or Hausdorff assumption on the pushout is used.
 The only lifting hypothesis is the actual finite cubical BoundaryLifting of p.
 -/
 @[expose] public section
+
+open Topology
 noncomputable section
-open CategoryTheory Limits MonoidalCategory Set Topology
+open CategoryTheory Limits MonoidalCategory Set
 open scoped unitInterval
 universe u
 namespace Quillen.DoubleCylinder

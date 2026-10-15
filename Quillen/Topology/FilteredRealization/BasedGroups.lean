@@ -18,10 +18,12 @@ factorization and relative-homotopy lifting theorems.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 open scoped Simplicial
 universe u
 namespace Quillen.FilteredRealization

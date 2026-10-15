@@ -19,6 +19,9 @@ Both signs and the negative-chart overlap identification are retained.
 -/
 
 @[expose] public section
+
+open Quillen.LaurentProjector
+
 open Quillen
 
 

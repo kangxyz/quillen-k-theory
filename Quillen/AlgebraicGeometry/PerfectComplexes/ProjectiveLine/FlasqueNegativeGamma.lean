@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientOperations
 
@@ -16,6 +19,8 @@ Only the original totalization supplies flasque terms. No flasqueness of a line
 tensor is asserted, and no Godement/shift comparison is needed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
 
 open CategoryTheory.ExactCategory
 noncomputable section
@@ -52,14 +57,16 @@ instance Gamma_additive (R : CommRingCat.{u}) : (Gamma R).Additive := by
 lemma Gamma_obj (R : CommRingCat.{u}) (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     ((Gamma R).obj K).obj =
       (godementTotal (twoChartLine R)).obj
-        ((tensorByLineComplex (tautologicalLine R)).obj K.obj) := rfl
+        ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R)).obj K.obj) :=
+          rfl
 
 /-- Original left-tensor and total chain maps, with no tensor-order replacement. -/
 lemma Gamma_map (R : CommRingCat.{u})
     {K L : FlasqueBoundedBelow.Obj (twoChartLine R)} (f : K ⟶ L) :
     ((Gamma R).map f).hom =
       (godementTotal (twoChartLine R)).map
-        ((tensorByLineComplex (tautologicalLine R)).map f.hom) := rfl
+        ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R)).map f.hom) :=
+          rfl
 
 /-- Original left tensor retains any specified input lower bound. -/
 lemma leftNegative_isStrictlyGE (R : CommRingCat.{u})
@@ -101,7 +108,7 @@ def GammaExactFunctor (R : CommRingCat.{u}) :
   map_conflation S hS := by
     change (S.map (FlasqueBoundedBelow.objects (twoChartLine R)).ι).ShortExact at hS
     change (((S.map (FlasqueBoundedBelow.objects (twoChartLine R)).ι).map
-      (tensorByLineComplex (tautologicalLine R))).map
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R))).map
         (godementTotal (twoChartLine R))).ShortExact
     exact godementTotal_shortExact (hS.map_of_exact _)
 

@@ -96,6 +96,7 @@ fi
     def test_cache_enrolls_native_tool_imports_with_modern_modifiers(self):
         shutil.copyfile(ROOT / 'scripts/cache.sh', self.root / 'scripts/cache.sh')
         shutil.copyfile(ROOT / 'scripts/library_sources.py', self.root / 'scripts/library_sources.py')
+        shutil.copyfile(ROOT / 'scripts/cache_sources.py', self.root / 'scripts/cache_sources.py')
         (self.root / 'bin/python3').unlink()  # Execute the real source enumerator.
         (self.root / 'Quillen.lean').write_text('import Mathlib.Data.Nat.Basic\n')
         (self.root / 'Tools').mkdir()
@@ -104,11 +105,14 @@ fi
         result = subprocess.run(['bash', 'scripts/cache.sh'], cwd=self.root,
                                 env=self.env, text=True, capture_output=True)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(self.log.read_text().split('|', 1)[1].strip(),
-                         'lake exe cache get Mathlib.Data.Nat.Basic Mathlib.Tactic.Linter.TextBased')
+        self.assertEqual([line.split('|', 1)[1].strip() for line in
+                          self.log.read_text().splitlines()],
+                         ['lake resolve-deps',
+                          'lake exe cache get Mathlib.Data.Nat.Basic Mathlib.Tactic.Linter.TextBased'])
 
     def test_cache_propagates_enumerator_failure_without_download(self):
         shutil.copyfile(ROOT / 'scripts/cache.sh', self.root / 'scripts/cache.sh')
+        shutil.copyfile(ROOT / 'scripts/cache_sources.py', self.root / 'scripts/cache_sources.py')
         (self.root / 'scripts/library_sources.py').write_text('raise SystemExit(17)\n')
         (self.root / 'bin/python3').unlink()
         result = subprocess.run(['bash', 'scripts/cache.sh'], cwd=self.root,

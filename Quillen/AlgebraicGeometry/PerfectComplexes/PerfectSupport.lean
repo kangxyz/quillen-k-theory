@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.KTheory
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Support
 
@@ -18,6 +20,10 @@ exact sequence. This gives genuine supported connective K-groups and their
 inclusion map. No homotopy-fiber or localization-sequence theorem is assumed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

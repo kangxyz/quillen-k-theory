@@ -25,4 +25,3 @@ quasi-compact regular scheme with the ordinary resolution property. Its
 finite resolutions are derived, without a global dimension bound.
 -/
 @[expose] public section
-

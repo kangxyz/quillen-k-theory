@@ -5,12 +5,16 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenSourceSupportRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StabilizedExtension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRetractComplement
 
 /-! # Stabilized projector cones preserve the original source support -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

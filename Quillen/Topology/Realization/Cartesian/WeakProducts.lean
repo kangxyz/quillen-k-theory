@@ -11,6 +11,9 @@ public import Quillen.CategoryTheory.TheoremB.SkeletalCartesianCoordinates
 /-! # Weak naturality squares in actual enriched product coordinates -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 noncomputable section
 open CategoryTheory Limits Opposite MonoidalCategory CartesianMonoidalCategory
 open scoped Simplicial Topology unitInterval

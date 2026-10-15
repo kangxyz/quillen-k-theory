@@ -11,6 +11,10 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeMa
 /-! # Original native Phi and the original two-open Mayer-Vietoris arrows -/
 @[expose] public section
 
+open Quillen.PerfectComplexes.OpenFunctorNaturality
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

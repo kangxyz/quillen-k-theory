@@ -20,6 +20,9 @@ for a parameter cube of dimension `d`, including `d = 0`; no natural-number subt
 
 @[expose] public section
 
+open Quillen.CubicalSubdivision
+
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false

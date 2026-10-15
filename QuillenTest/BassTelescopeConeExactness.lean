@@ -15,6 +15,9 @@ degrees and finite-stage boundary maps are retained without any whole-telescope 
 assumption. Every actual source point and full cylinder time remains available.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open scoped Topology unitInterval

@@ -15,6 +15,9 @@ This is the index used in the localization–Grothendieck interchange.
 -/
 
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 open CategoryTheory MonoidalCategory
 universe u v
 namespace Quillen.TranslationTelescope

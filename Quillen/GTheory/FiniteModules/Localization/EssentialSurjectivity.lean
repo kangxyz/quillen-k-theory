@@ -6,12 +6,15 @@ Authors: kangxyz
 
 module
 
-public import Quillen.GTheory.FiniteModules.Localization.Basic
+public import Aglib.Algebra.Category.ModuleCat.FiniteLocalization
 public import Mathlib.Algebra.Module.LocalizedModule.Submodule
 
 /-! Every finite module over a localization descends to a finite module over the
 original ring, by taking the original-ring span of finitely many generators. -/
 @[expose] public section
+
+open ModuleCat.FiniteLocalization
+
 
 
 noncomputable section

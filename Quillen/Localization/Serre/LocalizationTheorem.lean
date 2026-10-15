@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.CategoryTheory.TheoremB.StructuredWeakComparison
 public import Quillen.Localization.Serre.StructuredTransitions
 public import Quillen.Localization.Serre.LocalizationEndpoint
@@ -26,6 +27,9 @@ the sequence terminates in the canonical surjection onto homotopical K₀.
 The comparison theorem here is weak: no global homotopy inverse is claimed.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

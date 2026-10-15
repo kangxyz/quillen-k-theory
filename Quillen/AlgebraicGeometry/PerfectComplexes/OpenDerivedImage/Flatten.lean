@@ -25,6 +25,9 @@ relative-source-to-image K comparison is a separate theorem.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -145,5 +148,3 @@ theorem flatten_inclusion_range (n : ℕ) :
   rw [← flattenKEquiv_inclusion j h n, MonoidHom.range_comp, hr, Subgroup.map_top]
 
 end Quillen.PerfectComplexes.OpenDerivedImage
-
-

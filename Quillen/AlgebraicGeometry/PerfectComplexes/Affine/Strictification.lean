@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedDerivedComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalPerfectDescent
 
@@ -27,6 +28,9 @@ See Stacks Project Tags 08EB and 066D for the corresponding affine
 perfectness and finite-attachment arguments.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

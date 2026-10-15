@@ -9,10 +9,13 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPushforwardCompa
 
 /-! The original finite-flat comparison identifies maps into strict derived direct image. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes AlgebraicGeometry.Scheme.Modules
+open CategoryTheory AlgebraicGeometry AlgebraicGeometry.Scheme.Modules
 universe u
 namespace Consumer.DerivedPushforwardComparison
 local instance standardDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=

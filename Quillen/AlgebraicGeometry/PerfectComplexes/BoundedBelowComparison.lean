@@ -5,6 +5,7 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.Algebra.Homology.Embedding.CochainComplex.TruncGE
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OppositeJointData
@@ -20,6 +21,9 @@ K-map in every degree. This module uses no Godement premise.
 -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 open Quillen
 
 
@@ -37,6 +41,7 @@ namespace Quillen.PerfectComplexes.BoundedBelow
 def objects (X : Scheme.{u}) : ObjectProperty (Complex X) := fun K =>
   locallyPerfect X K ∧ ∃ a : ℤ, K.IsStrictlyGE a
 
+/-- The full subcategory of locally perfect complexes whose terms vanish below some degree. -/
 abbrev Obj (X : Scheme.{u}) := (objects X).FullSubcategory
 
 variable {X : Scheme.{u}}
@@ -88,9 +93,11 @@ lemma objects_shift {K : Complex X} (hK : objects X K) (n : ℤ) : objects X (K�
   change IsZero (K.X (i + n))
   exact K.isZero_of_isStrictlyGE a (i + n) (by omega)
 
+/-- The complex-subcategory Waldhausen structure on lower-bounded locally perfect complexes. -/
 def waldhausen (X : Scheme.{u}) : Waldhausen.Structure (Obj X) :=
   Waldhausen.complexSubcategory (objects X)
 
+/-- The inclusion that forgets the lower bound on the terms of a locally perfect complex. -/
 def inclusion (X : Scheme.{u}) : Obj X ⥤ Perfect X :=
   ObjectProperty.ιOfLE (fun _ h => h.1)
 
@@ -99,6 +106,7 @@ lemma inclusion_exact (X : Scheme.{u}) : Waldhausen.IsExact
     (perfectWaldhausen X).cof (perfectWaldhausen X).weq (inclusion X) :=
   Waldhausen.subcategoryInclusion_exact _ _ (fun _ h => h.1)
 
+/-- The opposite complex-subcategory Waldhausen structure for lower-bounded perfect complexes. -/
 def oppositeWaldhausen (X : Scheme.{u}) : Waldhausen.Structure (Obj X)ᵒᵖ :=
   Waldhausen.oppositeComplexSubcategory (objects X)
 
@@ -112,6 +120,7 @@ lemma inclusion_op_exact (X : Scheme.{u}) : Waldhausen.IsExact
     (inclusion X).op :=
   Waldhausen.oppositeSubcategoryInclusion_exact _ _ (fun _ h => h.1)
 
+/-- Joint row-factorization data for the opposite structure, using closure under shift by `-1`. -/
 def oppositeJointData (X : Scheme.{u}) :
     Waldhausen.Fibration.RowFactorization.JointData
       (Waldhausen.Fibration.NestedWeakEquivalences.refl (oppositeWaldhausen X)) :=
@@ -137,7 +146,7 @@ theorem inclusion_op_approximation (X : Scheme.{u}) [CompactSpace X] :
       (locallyPerfect_iff_of_quasiIso (L.unop.obj.πTruncGE a)).mp L.unop.property,
       a, inferInstance⟩
     let s : L.unop.obj ⟶ K.unop.obj := f.unop.hom
-    let g : T ⟶ K.unop := ObjectProperty.homMk (fromGoodTruncation s a)
+    let g : T ⟶ K.unop := ObjectProperty.homMk (CochainComplex.fromTruncGE s a)
     let η : L.unop ⟶ (inclusion X).obj T :=
       ObjectProperty.homMk (L.unop.obj.πTruncGE a)
     have hη : (perfectWaldhausen X).weq η := by
@@ -145,7 +154,7 @@ theorem inclusion_op_approximation (X : Scheme.{u}) [CompactSpace X] :
       infer_instance
     have hfac : η ≫ (inclusion X).map g = f.unop := by
       apply ObjectProperty.hom_ext
-      exact fromGoodTruncation_fac s a
+      exact CochainComplex.πTruncGE_fromTruncGE s a
     let D := (oppositeJointData X).sourceFactorization
     let A := Arrow.mk g.op
     let i := D.inclusion.app A

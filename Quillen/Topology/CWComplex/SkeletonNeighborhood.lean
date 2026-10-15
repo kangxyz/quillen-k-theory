@@ -23,8 +23,10 @@ particular, none of these open subsets is assumed to have a CW structure.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Metric Topology
+open Set Metric
 universe u
 namespace Quillen.ClassicalCW
 variable {X : Type u} [TopologicalSpace X] [T2Space X]

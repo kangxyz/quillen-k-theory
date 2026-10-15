@@ -19,8 +19,10 @@ base-change assumption.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval
 open unitInterval
 universe u

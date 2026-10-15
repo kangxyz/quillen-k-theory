@@ -8,8 +8,8 @@ module
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OpenBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.StructureSheafCohomology
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.GlobalSections
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineOpenCohomology
-public import Quillen.CategoryTheory.Sites.BasisExactness
+public import Aglib.AlgebraicGeometry.Cohomology.Injective.RestrictionSections
+public import Aglib.Topology.Sheaves.BasisExactness
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Limits
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
 public import Mathlib.Topology.Sheaves.SheafCondition.Sites

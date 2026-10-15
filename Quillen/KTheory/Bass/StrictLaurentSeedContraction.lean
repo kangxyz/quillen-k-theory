@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.KTheory.Bass.StrictLaurentSeed
 public import Quillen.Waldhausen.SConstruction.Iterated.EndotransformationContractionNaturality
 public import Quillen.Topology.Prespectrum.RelativeHomotopyLoop
@@ -21,10 +22,13 @@ coordinate identities prove coefficient naturality, retaining contraction time,
 source-null time and the output-loop coordinate independently.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open CategoryTheory Quillen.LoopPrespectrum
 open Quillen.Waldhausen.IteratedS Quillen.FunctorIdentityAutomorphism
 open scoped Topology unitInterval
 universe u w

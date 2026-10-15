@@ -8,6 +8,9 @@ public import Quillen.Topology.Realization.OrderedNerveRealizationMap
 
 /-! Named regressions for all-mono coherence and the actual return map. -/
 @[expose] public section
+
+open Quillen.NumerableConnectorCover
+
 noncomputable section
 open Convexity CategoryTheory Opposite
 open scoped Topology Simplicial

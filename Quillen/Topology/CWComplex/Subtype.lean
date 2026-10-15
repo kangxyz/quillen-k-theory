@@ -22,8 +22,10 @@ conversion to the abstract categorical CW notion is assumed.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Metric Topology
+open Set Metric
 universe u
 namespace Quillen.ClassicalCW
 variable {X : Type u} [TopologicalSpace X]

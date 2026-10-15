@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.BoundedFlatReplacement
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ReducedFlatCover
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.BoundedFlatPullback
@@ -40,14 +41,14 @@ theorem actual_counit_component (X : Scheme.{u}) (K : CochainComplex X.Modules �
 
 /-- Free Yoneda projectives solve actual lifting problems of module presheaves. -/
 theorem actual_freeYoneda_lift (X : Scheme.{u}) (U : X.Opens)
-    {P Q : PresheafOfModules.{u} X.ringCatSheaf.obj} (q : P ⟶ Q) [Epi q]
+    {P Q : _root_.PresheafOfModules.{u} X.ringCatSheaf.obj} (q : P ⟶ Q) [Epi q]
     (s : (PresheafOfModules.free X.ringCatSheaf.obj).obj (yoneda.obj U) ⟶ Q) :
     ∃ t, t ≫ q = s := by
   exact ⟨Projective.factorThru s q, Projective.factorThru_comp s q⟩
 
 /-- Applying exact sheafification to an arbitrary actual projective gives flat stalks. -/
 theorem actual_projective_sheafification_flat (X : Scheme.{u})
-    (P : PresheafOfModules.{u} X.ringCatSheaf.obj) [Projective P] :
+    (P : _root_.PresheafOfModules.{u} X.ringCatSheaf.obj) [Projective P] :
     stalkwiseFlat X ((PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)).obj P) :=
   stalkwiseFlat_sheafify_projective X P
 
@@ -66,7 +67,7 @@ theorem replacement_augmentation_survives_arbitrary_pullback {X Y : Scheme.{u}} 
     (hK : ∀ n, stalkwiseFlat Y (K.X n)) :
     ∃ (P : CochainComplex Y.Modules ℤ) (p : P ⟶ K), QuasiIso p ∧
       (∀ n, stalkwiseFlat Y (P.X n)) ∧ P.IsStrictlyLE b ∧
-      QuasiIso ((Quillen.PerfectComplexes.pullbackComplex f).map p) := by
+      QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map p) := by
   obtain ⟨P, p, hp, hP, hb⟩ := exists_boundedAbove_flat_complex_replacement Y K b
   let : QuasiIso p := hp
   exact ⟨P, p, hp, hP, hb, quasiIso_pullback_of_boundedAbove_stalkwiseFlat f hP hK b b

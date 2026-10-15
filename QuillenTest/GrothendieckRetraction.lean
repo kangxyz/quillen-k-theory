@@ -6,11 +6,16 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.GrothendieckComparison.Retraction
 
 /-! Regression properties for the original homotopical-to-classical retraction. -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 universe v u

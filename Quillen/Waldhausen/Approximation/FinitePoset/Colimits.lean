@@ -17,11 +17,14 @@ Lower-ideal restrictions, cocones and their gluing describe preserved latching c
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 universe w w' z u v u' v'
 
 namespace Quillen.FinitePosetLatching

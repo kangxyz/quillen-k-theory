@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Closure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PerfectComplement
 public import Quillen.CategoryTheory.Abelian.ZeroPushout
@@ -12,6 +13,12 @@ public import Quillen.Waldhausen.Cofinality.GeneralDense
 
 /-! # Original dense cofiber data for the derived-saturated open image -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

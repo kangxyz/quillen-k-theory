@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.FiniteSupportedRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.FiniteSupportedEquality
 
@@ -18,13 +19,19 @@ inverse roof equations and global homotopies, and include an empty target family
 
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u v
 namespace QuillenTest.FiniteSupportedRoofs
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.OpenDerivedImage
+open Quillen.PerfectComplexes.OpenDerivedImage
 attribute [local instance] Affine.standardDerivedSheaves
 
 /-- Every original local isomorphism in a finite family has an actual weak

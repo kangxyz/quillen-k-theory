@@ -22,7 +22,6 @@ bound, finite-resolution hypothesis or K-equivalence is assumed.
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section

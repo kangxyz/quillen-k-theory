@@ -15,12 +15,14 @@ including the unchanged multiplicative K0 relation and unrestricted morphism law
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicGeometry.Scheme
-open Quillen.PerfectComplexes
 universe u v
 namespace BassSchemeGroupsConsumers
 

@@ -5,18 +5,23 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlatPullback
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatExtensions
 
 /-! Semantic consumers of original local-perfect preservation under arbitrary pullback. -/
 @[expose] public section
 
+open Quillen.CochainComplex
+open Quillen.PerfectComplexes
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.CochainComplex AlgebraicGeometry.Scheme.Modules Quillen.PerfectComplexes
+open AlgebraicGeometry.Scheme.Modules
 attribute [local instance] HasDerivedCategory.standard
 namespace QuillenTest.BoundedFlatPerfectPullback
 
@@ -26,7 +31,7 @@ open Quillen
 theorem actual_local_perfect_pullback {X Y : Scheme.{u}} (f : X ⟶ Y)
     (K : Complex Y) (b : ℤ) [K.IsStrictlyLE b]
     (hK : locallyPerfect Y K) (hflat : ∀ n, stalkwiseFlat Y (K.X n)) :
-    locallyPerfect X ((pullbackComplex f).obj K) :=
+    locallyPerfect X ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K) :=
   locallyPerfect_pullback_of_boundedAbove_stalkwiseFlat f hK ⟨b, inferInstance⟩ hflat
 
 /-- An original local-perfect input has an actual local-perfect geometric representative
@@ -36,13 +41,15 @@ theorem actual_derived_perfect_representative {X Y : Scheme.{u}} (f : X ⟶ Y)
     ∃ P : Perfect X, Nonempty
       (((derivedPullbackMinus f).obj ((boundedAboveQMinus Y.Modules).obj K)).obj ≅
         (toDerived X).obj P.obj) :=
-  ⟨⟨(pullbackComplex f).obj (flatModel Y K), locallyPerfect_pullback_flatModel f K hK⟩,
+  ⟨⟨(AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj (flatModel Y K),
+    locallyPerfect_pullback_flatModel f K hK⟩,
     ⟨derivedPullbackMinusObjectIso f K⟩⟩
 
 /-- On original strict-perfect complexes the local-flat criterion recovers actual
 geometric local perfectness with no global projectivity or flat-map premise. -/
 theorem strict_input_local_perfect_pullback {X Y : Scheme.{u}} (f : X ⟶ Y)
-    (P : StrictPerfect Y) : locallyPerfect X ((pullbackComplex f).obj P.obj) :=
+    (P : StrictPerfect Y) : locallyPerfect X ((AlgebraicGeometry.Scheme.Modules.Complex.pullback
+      f).obj P.obj) :=
   locallyPerfect_pullback_of_boundedAbove_stalkwiseFlat f
     (locallyPerfect_of_strictPerfect P.property)
     (strictPerfect_boundedAbove_stalkwiseFlat P.property).1
@@ -55,8 +62,9 @@ theorem actual_pulled_back_inverse {X Y : Scheme.{u}} (f : X ⟶ Y)
     (hK : ∀ n, stalkwiseFlat Y (K.obj.X n))
     (hL : ∀ n, stalkwiseFlat Y (L.obj.X n))
     (e : (toDerived Y).obj K.obj ≅ (toDerived Y).obj L.obj) :
-    ∃ a : (toDerived X).obj ((pullbackComplex f).obj K.obj) ⟶
-        (toDerived X).obj ((pullbackComplex f).obj L.obj), IsIso a :=
+    ∃ a : (toDerived X).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K.obj) ⟶
+        (toDerived X).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj L.obj), IsIso a
+          :=
   ⟨(boundedFlatPullbackDerivedIso f K L hK hL e).hom, inferInstance⟩
 
 /-- An actual possibly nonsplit extension of flat sheaves stays flat, and its

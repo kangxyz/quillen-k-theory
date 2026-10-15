@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedLaurentContraction
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedLaurentContraction
 
 /-!
 # Consumers of the chosen original graded Laurent contraction
@@ -16,10 +16,15 @@ constant coefficient track. Every comparison slice fixes the original action end
 and point line. Its structure equation retains independent comparison, action and structure times.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
-open Quillen.PerfectComplexes
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.FullOpenGradedSectionLaurentContraction
 

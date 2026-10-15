@@ -5,11 +5,16 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.GrothendieckComparison.Functor
 
 /-! Consumers of the genuine natural comparison, on arbitrary homotopical K₀
 classes and the original object generators and conflation relations. -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 universe u v

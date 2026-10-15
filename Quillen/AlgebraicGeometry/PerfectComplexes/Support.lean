@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Restriction
 public import Quillen.Waldhausen.SubcategoryInclusion
 
@@ -18,6 +20,10 @@ supported S-construction K-groups and their inclusion map. No localization
 sequence is asserted; the all-perfect nonconnective theorem is separate.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

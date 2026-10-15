@@ -18,19 +18,29 @@ universe u
 namespace Quillen.PerfectComplexes.BassMPrimitiveSupport
 open Quillen.SimplexGrid
 
+/-- The starting vertices 0 and 1 of the two consecutive coefficient normalization edges. -/
 def coefficientEdgeStart : Fin 2 → Fin 3 := ![0, 1]
+/-- The ending vertices 1 and 2 of the two consecutive coefficient normalization edges. -/
 def coefficientEdgeEnd : Fin 2 → Fin 3 := ![1, 2]
+/--
+The one-simplex face selecting a consecutive coefficient normalization edge in the two-simplex.
+-/
 def coefficientEdgeFace (i : Fin 2) : ⦋1⦌ ⟶ ⦋2⦌ :=
   SimplexCategory.Hom.mk ⟨![coefficientEdgeStart i, coefficientEdgeEnd i],
     (by decide : ∀ i : Fin 2, Monotone
       (![coefficientEdgeStart i, coefficientEdgeEnd i] : Fin 2 → Fin 3)) i⟩
 
+/-- The four grid vertices obtained by pairing coefficient edge `i` with projection edge `j`. -/
 def middleEdgePairIndex (i : Fin 2) (j : Fin 4) : Fin 4 → Fin 15 :=
   ![index 2 4 (coefficientEdgeStart i, BassH1Support.edgeStart j),
     index 2 4 (coefficientEdgeStart i, BassH1Support.edgeEnd j),
     index 2 4 (coefficientEdgeEnd i, BassH1Support.edgeStart j),
     index 2 4 (coefficientEdgeEnd i, BassH1Support.edgeEnd j)]
 
+/--
+The three-simplex face of the 14-simplex spanned by coefficient edge `i` and projection edge
+`j`.
+-/
 def middleEdgePairFace (i : Fin 2) (j : Fin 4) : ⦋3⦌ ⟶ ⦋14⦌ :=
   SimplexCategory.Hom.mk ⟨middleEdgePairIndex i j,
     (by decide : ∀ (i : Fin 2) (j : Fin 4), Monotone (middleEdgePairIndex i j)) i j⟩

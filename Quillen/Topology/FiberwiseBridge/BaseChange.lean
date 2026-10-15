@@ -23,6 +23,10 @@ a pushout, arbitrary weak-equivalence base-change, or global bridge SDR is used.
 -/
 @[expose] public section
 
+open Quillen.CubicalSubdivision
+open Quillen.FiberwiseMappingPath
+
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval

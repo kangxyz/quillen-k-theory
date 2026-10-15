@@ -6,6 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Localization.AffineSectionsGlobal
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.ObjectExtensionInduction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.AffineEnlargement
 
@@ -23,7 +26,6 @@ additional hypotheses.
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

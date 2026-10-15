@@ -6,6 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Coherent.AffineDetection
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.AffineReflection
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralUnitBaseChange
 public import Quillen.Devissage.ReflectorFiltration
@@ -19,10 +23,12 @@ closed essential image are then consequences of the proved adjunction.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section
@@ -67,11 +73,11 @@ instance coherentAdjunction_counit_isIso : IsIso (coherentAdjunction i).counit :
 
 /-- The actual annihilated coherent objects, as the proved closed direct-image
 essential image. It is smaller than the category of all supported objects. -/
-abbrev coherentKilled : ObjectProperty (FiniteTypeSheaves X) := (coherentPushforward i).essImage
+abbrev coherentKilled : ObjectProperty (FiniteTypeSheaves X) := (finiteTypePushforward i).essImage
 
 instance coherentKilled_containsZero : (coherentKilled i).ContainsZero :=
-  ⟨⟨(coherentPushforward i).obj 0, (coherentPushforward i).map_isZero (isZero_zero _),
-    (coherentPushforward i).obj_mem_essImage _⟩⟩
+  ⟨⟨(finiteTypePushforward i).obj 0, (finiteTypePushforward i).map_isZero (isZero_zero _),
+    (finiteTypePushforward i).obj_mem_essImage _⟩⟩
 
 instance coherentKilled_subobjects : (coherentKilled i).IsClosedUnderSubobjects where
   prop_of_mono f _ h := ReflectorDevissage.essImage_of_mono (coherentAdjunction i) f h

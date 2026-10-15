@@ -8,6 +8,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MPrimitiveS
 
 /-! Native family preservation through actual full nodes and their ordered support faces. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH1Merged
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

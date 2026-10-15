@@ -16,8 +16,10 @@ coordinate, without imposing a discrete topology on any summand.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 open scoped Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false

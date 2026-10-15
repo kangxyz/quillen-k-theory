@@ -5,17 +5,22 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.KComparison
 
 /-! Consumers of actual relative replacements and the original all-degree K-comparison. -/
 @[expose] public section
+
+open Quillen.CochainComplex
+open Quillen.PerfectComplexes
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.CochainComplex AlgebraicGeometry.Scheme.Modules Quillen.PerfectComplexes
+open AlgebraicGeometry.Scheme.Modules
 namespace QuillenTest.BoundedFlatPerfectApproximation
 
 open Quillen
@@ -48,7 +53,8 @@ theorem relative_shortExact_survives_pullback {X Y : Scheme.{u}} (g : X ⟶ Y)
     {K L : Complex Y} (f : K ⟶ L) (b : ℤ) [K.IsStrictlyLE b] [L.IsStrictlyLE b]
     (hK : ∀ n, stalkwiseFlat Y (K.X n)) :
     ∃ (M Q : Complex Y) (i : K ⟶ M) (p : M ⟶ L) (q : M ⟶ Q) (w : i ≫ q = 0),
-      QuasiIso p ∧ i ≫ p = f ∧ ((ShortComplex.mk i q w).map (pullbackComplex g)).ShortExact := by
+      QuasiIso p ∧ i ≫ p = f ∧ ((ShortComplex.mk i q w).map
+        (AlgebraicGeometry.Scheme.Modules.Complex.pullback g)).ShortExact := by
   obtain ⟨M, Q, i, p, q, w, hp, hfac, hS, _, _, _, hQ⟩ :=
     exists_boundedAbove_relative_flat_factorization Y f b hK
   refine ⟨M, Q, i, p, q, w, hp, hfac, ?_⟩

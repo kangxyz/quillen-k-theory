@@ -9,9 +9,12 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenGra
 
 /-! Consumers keep both the actual section stable groups and the original graded K-groups. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.FullOpenGradedSectionStable
 

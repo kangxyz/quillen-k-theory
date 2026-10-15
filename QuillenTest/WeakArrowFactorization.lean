@@ -10,6 +10,9 @@ public import Quillen.Waldhausen.WeakArrow.KEquivalence
 /-! # Original weak-arrow objects, commuting squares and connective maps -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'

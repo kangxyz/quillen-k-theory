@@ -12,7 +12,7 @@ This does not supply a two-parameter scalar family for M. -/
 noncomputable section
 set_option autoImplicit false
 open CategoryTheory AlgebraicGeometry Opposite Convexity
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters Quillen.LoopPrespectrum
 open scoped Topology unitInterval
 universe u

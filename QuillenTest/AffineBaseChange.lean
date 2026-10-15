@@ -25,7 +25,6 @@ open AlgebraicGeometry.Scheme.Modules
 
 namespace QuillenTest.AffineBaseChange
 
-open Quillen
 
 variable (R S A B : Type u) [CommRing R] [CommRing S] [CommRing A] [CommRing B]
   [Algebra R S] [Algebra R A] [Algebra R B] [Algebra A B] [Algebra S B]

@@ -5,9 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.Algebra.ModuleComplex.PrincipalProjectiveDescent
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalFreeExtension
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Exact
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Exact
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Exact
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedMorphisms
 
 /-!
@@ -22,6 +24,9 @@ category. Arbitrary rings are allowed; this does not assert extension of the
 unstabilized target, global strictification, or Thomason–Trobaugh cofinality.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

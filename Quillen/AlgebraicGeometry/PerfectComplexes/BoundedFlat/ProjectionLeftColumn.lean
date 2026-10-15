@@ -24,8 +24,13 @@ variable {A B C A' B' C' : Scheme.{u}}
   (F : modelOf (boundedFlatPerfectWaldhausen A) ⟶ modelOf (boundedFlatPerfectWaldhausen C'))
   (e : F.functor = (ProjectionReference.reference c r).functor)
 
+/-- The three rectangle labels `2, 3, 11` selecting the source binary column. -/
 def rectangleLeftIndex : Fin 3 → Fin 18 := ![2, 3, 11]
 
+/--
+The source-column nodes of the projection rectangle, reanchored from the projection reference to
+`F` using `e`.
+-/
 def projectionLeftNode (i : Fin 3) :=
   ModelSimplex.reanchorNodes (F₀ := F) (F₁ := ProjectionReference.reference c r) (eqToIso e)
     (ProjectionReference.nodes p q p' q' a b c hp hq r hr) (rectangleLeftIndex i)

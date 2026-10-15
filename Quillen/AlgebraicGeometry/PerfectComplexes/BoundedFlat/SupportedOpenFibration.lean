@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedOpenComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportUnion
 public import Quillen.Waldhausen.Functoriality.ExactEquivalence
@@ -20,6 +22,12 @@ original joint cylinder and extension axiom prove the canonical fiber comparison
 weak and define the original connecting map. No compactness premise is used.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open CategoryTheory.ExactCategory
 

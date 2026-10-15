@@ -23,6 +23,9 @@ nonempty categories of replacements do not assert their contractibility.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.FunctorialFactorization
+
+
 
 noncomputable section
 

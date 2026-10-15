@@ -18,9 +18,12 @@ original iterate-zero maps are retained. The actual affine section model and ori
 square provide an independent concrete instantiation of the generic model theorem.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.LoopPrespectrum Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
 universe u v w
 namespace QuillenTest.ModelDiagramBassStableEquivalence
 

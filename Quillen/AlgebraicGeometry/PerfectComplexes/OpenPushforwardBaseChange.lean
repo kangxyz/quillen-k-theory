@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenPushforwardBaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenInjectiveModel
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRestrictionIso
@@ -16,6 +17,9 @@ Composition and scheme-isomorphism comparisons retain the original all-sheaf
 complexes and maps; no preservation of arbitrary quasi-isomorphisms is claimed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

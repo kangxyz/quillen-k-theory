@@ -4,7 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedOpenCoverConservativity
+public import Aglib.AlgebraicGeometry.Cohomology.BaseChange.Flat
+public import Aglib.AlgebraicGeometry.Cohomology.Locality.Derived
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChangeLocalization
 /-! # Open-cover detection for the original derived flat base-change map
 
@@ -13,8 +14,9 @@ mates of its actual horizontally pasted squares. The local invertibility assumpt
 explicit; no general flat base-change invertibility is inferred. -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

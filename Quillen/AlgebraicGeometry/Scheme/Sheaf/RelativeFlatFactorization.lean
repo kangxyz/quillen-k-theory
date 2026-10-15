@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
 public import Quillen.Algebra.Homology.RelativeProjectiveFactorization
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.BoundedFlatModels
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatExtensions
@@ -20,8 +21,13 @@ the original commuting triangle and explicit upper bounds. The forgetful
 functor to presheaves is not assumed exact.
 -/
 @[expose] public section
+
+open Quillen.CochainComplex
+
+
+open AlgebraicGeometry.Scheme.Modules
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
 
@@ -30,7 +36,6 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite HomologicalComplex
-open Quillen.CochainComplex
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Actual relative flat replacement for a map between bounded-above complexes.
@@ -48,8 +53,9 @@ theorem exists_boundedAbove_relative_flat_factorization (X : Scheme.{u})
     PresheafOfModules.restrictScalars (𝟙 X.ringCatSheaf.obj)
   let A := PresheafOfModules.sheafification (𝟙 X.ringCatSheaf.obj)
   let RH : CochainComplex X.Modules ℤ ⥤
-      CochainComplex (PresheafOfModules.{u} X.ringCatSheaf.obj) ℤ := R.mapHomologicalComplex (.up ℤ)
-  let AH : CochainComplex (PresheafOfModules.{u} X.ringCatSheaf.obj) ℤ ⥤
+      CochainComplex (_root_.PresheafOfModules.{u} X.ringCatSheaf.obj) ℤ := R.mapHomologicalComplex
+        (.up ℤ)
+  let AH : CochainComplex (_root_.PresheafOfModules.{u} X.ringCatSheaf.obj) ℤ ⥤
       CochainComplex X.Modules ℤ := A.mapHomologicalComplex (.up ℤ)
   have hR (T : CochainComplex X.Modules ℤ) [T.IsStrictlyLE b] : (RH.obj T).IsStrictlyLE b := by
     rw [CochainComplex.isStrictlyLE_iff]

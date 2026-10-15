@@ -9,8 +9,11 @@ public import Quillen.Waldhausen.Additivity.ChangeWeakBasedHomotopy
 
 /-! # Original based-additivity endpoint and independent-time consumers -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 open Quillen.Waldhausen.Additivity
 open scoped Simplicial Topology
 universe u v

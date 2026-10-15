@@ -5,12 +5,18 @@ Authors: Quillen K-theory contributors
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Carrier
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueThirdTensor
 
 /-! # Actual original third endpoint span in the flasque perfect model -/
 
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open CategoryTheory.ExactCategory
+
 open Quillen
 
 
@@ -327,14 +333,18 @@ def centerRawUnderlyingIso (R : CommRingCat.{u}) :
         (quotientTensor R).mapCochainComplexPlusCompι ≪≫
       (associator (FlasqueCoefficients.toPlus (twoChartLine R)) I Qr).symm ≪≫
       isoWhiskerRight (FlasqueDiagonal.toPlusUnderlyingIso (twoChartLine R)) Qr
-  let eV := forgetComposeIso V P Vr Pr J J I
-    (FlasqueDiagonal.totalPlusUnderlyingIso (relativeSquare R))
-    (Scheme.Modules.pushforward (relativeSecond R)).mapCochainComplexPlusCompι
-  let eD := forgetComposeIso D (V ⋙ P) Dr (Vr ⋙ Pr) I J I
-    (Scheme.Modules.pushforward (relativeDiagonal R)).mapCochainComplexPlusCompι eV
-  let eT := forgetComposeIso T (D ⋙ V ⋙ P) Tr (Dr ⋙ Vr ⋙ Pr) I I I
-    (FlasqueDiagonal.totalPlusUnderlyingIso (twoChartLine R)) eD
-  exact forgetComposeIso A (T ⋙ D ⋙ V ⋙ P) Qr (Tr ⋙ Dr ⋙ Vr ⋙ Pr) B I I eA eT ≪≫
+  let eV := (associator V P I ≪≫ isoWhiskerLeft V (Scheme.Modules.pushforward (relativeSecond
+    R)).mapCochainComplexPlusCompι ≪≫ (associator V J Pr).symm ≪≫ isoWhiskerRight
+    (AlgebraicGeometry.Scheme.Modules.Godement.totalPlusCompιIso (relativeSquare R)) Pr ≪≫
+    associator J Vr Pr)
+  let eD := (associator D (V ⋙ P) I ≪≫ isoWhiskerLeft D eV ≪≫ (associator D J (Vr ⋙ Pr)).symm ≪≫
+    isoWhiskerRight (Scheme.Modules.pushforward (relativeDiagonal R)).mapCochainComplexPlusCompι (Vr
+    ⋙ Pr) ≪≫ associator I Dr (Vr ⋙ Pr))
+  let eT := (associator T (D ⋙ V ⋙ P) I ≪≫ isoWhiskerLeft T eD ≪≫ (associator T I (Dr ⋙ Vr ⋙
+    Pr)).symm ≪≫ isoWhiskerRight (AlgebraicGeometry.Scheme.Modules.Godement.totalPlusCompιIso
+    (twoChartLine R)) (Dr ⋙ Vr ⋙ Pr) ≪≫ associator I Tr (Dr ⋙ Vr ⋙ Pr))
+  exact (associator A (T ⋙ D ⋙ V ⋙ P) I ≪≫ isoWhiskerLeft A eT ≪≫ (associator A I (Tr ⋙ Dr ⋙ Vr ⋙
+    Pr)).symm ≪≫ isoWhiskerRight eA (Tr ⋙ Dr ⋙ Vr ⋙ Pr) ≪≫ associator B Qr (Tr ⋙ Dr ⋙ Vr ⋙ Pr)) ≪≫
     isoWhiskerLeft B
       (isoWhiskerLeft Qr (associator Tr Dr (Vr ⋙ Pr)).symm ≪≫
         (associator Qr (Tr ⋙ Dr) (Vr ⋙ Pr)).symm) ≪≫

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TensorRestriction
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Restriction
 
 /-!
 # Original-map consumers of tensor restriction
@@ -15,6 +15,9 @@ actual inverse comparison and original scheme restriction. All rings may be zero
 -/
 
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -23,7 +26,6 @@ open CategoryTheory CategoryTheory.MonoidalCategory AlgebraicGeometry
   SheafOfModulesOfCommRing AlgebraicGeometry.Scheme.Modules
 namespace QuillenTest.TensorRestriction
 
-open Quillen
 section Sites
 variable {C : Type u₁} [Category.{v₁} C] {D : Type u₂} [Category.{v₂} D]
   {J : GrothendieckTopology C} {K : GrothendieckTopology D} {F : C ⥤ D}

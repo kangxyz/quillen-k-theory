@@ -12,12 +12,15 @@ public import Quillen.Waldhausen.Functoriality.WeakKEquivalence
 /-! Behavioral consumers retaining components, original maps, and canonical K-zero. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory Opposite
 open scoped Simplicial
 universe u v
 namespace ApproximationRowWeakConsumers
-open Quillen Quillen.Waldhausen Quillen.Waldhausen.QuotientRows
+open Quillen Quillen.Waldhausen.QuotientRows
 
 section Rows
 variable {C D : Type u} [SmallCategory C] [SmallCategory D]

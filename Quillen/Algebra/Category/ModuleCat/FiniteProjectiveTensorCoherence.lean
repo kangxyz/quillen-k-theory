@@ -19,6 +19,9 @@ identity or composition comparison is chosen. Ring universes are independent.
 
 @[expose] public section
 
+open Quillen.RightScalarExtension
+
+
 noncomputable section
 
 universe u v w

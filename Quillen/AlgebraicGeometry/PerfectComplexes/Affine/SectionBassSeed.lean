@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
+public import Aglib.Algebra.Polynomial.Laurent.Square
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionLaurentHomotopy
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassDiagram
 public import Quillen.Topology.Prespectrum.StrictSquareNull
@@ -19,8 +21,11 @@ Both tracks are literally coefficient-natural, so this construction is an actual
 transformation from the original section diagram to its existing Bass endofunctor value.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.StructureSheaf.Sections
 public import Quillen.CategoryTheory.Limits.SplitColumnCokernel
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneGluing
 
@@ -16,10 +17,11 @@ inverse transition unit. All comparisons retain the original module-sheaf restri
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section
@@ -115,7 +117,7 @@ lemma secondRow_eq {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (s : Γ(
 /-- Reciprocal chart coordinates give the inverse-unit transition for the literal quotient rows. -/
 lemma rows_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k] (s : Γ(U, ⊤)) (t : Γ(V, ⊤))
-    (v : (Γ(pullback j k, ⊤))ˣ)
+    (v : (Γ(CategoryTheory.Limits.pullback j k, ⊤))ˣ)
     (hs : (pullback.fst j k).appTop.hom s = ↑v)
     (ht : (pullback.snd j k).appTop.hom t = ↑v⁻¹) :
     (Scheme.Modules.restrictFunctor (pullback.fst j k)).map (firstRow j s) ≫

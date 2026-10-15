@@ -11,8 +11,11 @@ public import Quillen.Waldhausen.GrothendieckComparison.ObjectCompatibility
 arbitrary fine K₀ classes, without any factorization or presentation assumption. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 universe u
 namespace QuillenTest.WaldhausenGrothendieckComparison
 

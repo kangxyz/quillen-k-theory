@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
+public import Aglib.Algebra.Polynomial.Laurent.Square
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassStableConnectivity
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassSquareExcision
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassTransition
@@ -16,11 +18,17 @@ The original seed, coefficient maps, polynomial chart inclusions and signed cone
 their literal values and indices. No transition-stabilization assertion is used.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open Quillen Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.SectionBassStableConnectivity
 

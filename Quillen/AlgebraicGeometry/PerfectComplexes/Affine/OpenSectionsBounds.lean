@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Mathlib.Algebra.Category.ModuleCat.FilteredColimits
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FinitePrincipalCohomologicalDimension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalSections
@@ -32,6 +33,9 @@ All coefficient rings are arbitrary. Empty principal families and empty opens
 are included. Compactness is explicit when extracting a finite principal cover.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

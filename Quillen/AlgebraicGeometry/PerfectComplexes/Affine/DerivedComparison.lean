@@ -5,9 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StrictModuleModel
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedStructure
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Exact
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Exact
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Exact
 
 /-!
 # The actual affine derived comparison and termwise quasicoherent acyclicity
@@ -22,6 +24,9 @@ faithfulness of the derived comparison and replacement of arbitrary complexes
 with quasicoherent cohomology remain separate geometric theorems.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

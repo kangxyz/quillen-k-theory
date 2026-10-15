@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.Additivity.GroupFormula
 public import Quillen.Waldhausen.Product.KEquivalence
 public import Quillen.Waldhausen.QuillenComparison.KCommutativity
@@ -15,8 +17,14 @@ public import Quillen.Waldhausen.ExtensionCategory.ProductKEquivalence
 /-! Downstream contracts for original product, group-law and exact-functor maps. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
+open CategoryTheory.ExactCategory
+
+
 noncomputable section
-open CategoryTheory CategoryTheory.Limits Quillen Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits Quillen
 universe u v
 namespace Consumer
 section Waldhausen

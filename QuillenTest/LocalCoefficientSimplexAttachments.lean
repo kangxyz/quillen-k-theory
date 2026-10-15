@@ -33,4 +33,3 @@ example (X : TopCat.{u}) {B D : TopCat.{u}}
       (SimplexAttachment.sourceBoundary X 0) (SimplexAttachment.baseImage (j := j))
       (SimplexAttachment.cell_mapsTo_boundary X 0 sq) L) :=
   LocalCoefficients.simplexAttachmentCell_relative_quasiIso X 0 sq L
-

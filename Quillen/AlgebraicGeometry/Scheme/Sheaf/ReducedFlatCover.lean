@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatRetracts
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatResolution
 public import Mathlib.Algebra.Homology.LeftResolution.Reduced
@@ -18,8 +19,9 @@ not asserted. The resulting cover of complexes is epic in every degree but
 is not asserted to be a quasi-isomorphism.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 

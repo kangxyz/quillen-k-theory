@@ -12,8 +12,13 @@ public import Quillen.Topology.CylinderAttachment.Overlap
 the collar chart remains valid when the two attaching maps are identical. -/
 @[expose] public section
 
+open Topology
+
+open Quillen.CylinderAttachment
+
+
 noncomputable section
-open CategoryTheory Limits MonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory
 open scoped Topology unitInterval
 universe u
 

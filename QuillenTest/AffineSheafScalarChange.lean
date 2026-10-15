@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffinePullback
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Pullback
 
 /-!
 # Original affine module-sheaf scalar-change comparisons
@@ -25,7 +25,6 @@ open CategoryTheory AlgebraicGeometry
 
 namespace QuillenTest.AffineSheafScalarChange
 
-open Quillen
 
 variable {R S : CommRingCat.{u}} (φ : R ⟶ S)
 

@@ -5,9 +5,12 @@ Authors: Quillen K-theory contributors
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueDiagonalComparisons
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientOperations
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementClosedSectionSpan
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.Section.Span
 
 /-! # Original right quotient-line tensor and its flasque total -/
 
@@ -51,9 +54,10 @@ lemma rightQ_locallyPerfect (R : CommRingCat.{u})
     (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     locallyPerfect (twoChartLine R) ((rightQRaw R).obj K) := by
   change locallyPerfect (twoChartLine R)
-    ((tensorByLineRightComplex (tautologicalQuotientLine R)).obj K.obj)
+    ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalQuotientLine R)).obj K.obj)
   exact locallyPerfect_of_iso
-    ((tensorByLineComplexSymmetry (tautologicalQuotientLine R)).app K.obj)
+    ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeftRightIso (tautologicalQuotientLine R)).app
+      K.obj)
     (FlasqueDiagonal.quotientLeft_locallyPerfect R K.obj K.property.1.1)
 
 /-- The original right tensor preserves every specified strict lower bound. -/

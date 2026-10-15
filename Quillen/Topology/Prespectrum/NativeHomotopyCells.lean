@@ -15,8 +15,10 @@ open scoped Topology unitInterval
 universe u
 namespace Quillen.NativePathCells
 
+/-- The affine parameter map `t ↦ t / 2` into the first half of the unit interval. -/
 def lower : C(unitInterval, unitInterval) :=
   ⟨fun t ↦ ⟨(t : ℝ) / 2, by constructor <;> linarith [t.2.1, t.2.2]⟩, by fun_prop⟩
+/-- The affine parameter map `t ↦ (t + 1) / 2` into the second half of the unit interval. -/
 def upper : C(unitInterval, unitInterval) :=
   ⟨fun t ↦ ⟨((t : ℝ) + 1) / 2, by constructor <;> linarith [t.2.1, t.2.2]⟩, by fun_prop⟩
 

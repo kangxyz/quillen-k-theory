@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.API
 
 /-!
@@ -18,6 +20,9 @@ and equality for naturally isomorphic functors.
 -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits Quillen

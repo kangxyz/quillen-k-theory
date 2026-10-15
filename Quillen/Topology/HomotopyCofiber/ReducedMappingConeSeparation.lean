@@ -10,8 +10,10 @@ public import Mathlib.Topology.Separation.Basic
 
 /-! # Closed point fibers of the actual reduced mapping cone -/
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Topology
+open Set
 open scoped unitInterval
 universe u v
 namespace Quillen.ReducedMappingCone

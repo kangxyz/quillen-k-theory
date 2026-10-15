@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SquareTrackProjection
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassSpanMap
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassSquare
@@ -12,9 +13,15 @@ public import Quillen.Topology.Prespectrum.RelativeHomotopySquarePasting
 
 /-! Genuine double-square pasting for both original Laurent coefficient diagrams. -/
 @[expose] public section
+
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 variable {R S : CommRingCat.{u}} (f : R ⟶ S)

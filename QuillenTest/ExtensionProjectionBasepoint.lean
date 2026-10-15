@@ -5,7 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 import Quillen.Topology.ClassifyingSpace.ExtensionProjection
+
+open CategoryTheory.ExactCategory
+
 
 /-! Consumers of the actual quotient isomorphism and original zero-vertex path. -/
 

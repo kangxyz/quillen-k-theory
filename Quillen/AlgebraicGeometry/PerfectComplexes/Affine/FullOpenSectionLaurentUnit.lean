@@ -6,8 +6,8 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionUnit
-public import Quillen.AlgebraicGeometry.Scheme.Affine.LaurentUnitNaturality
-public import Quillen.Algebra.Polynomial.LaurentUnderSquare
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Units
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 
 /-!
 # The original Laurent unit on actual full-open sections
@@ -18,10 +18,12 @@ square retain that same forward unit. The inverse-coordinate polynomial chart do
 this action to the inverse unit.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open AlgebraicGeometry.Scheme.AffineOpenPair AlgebraicGeometry.Scheme.PolynomialLaurent
-open Quillen.PolynomialBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

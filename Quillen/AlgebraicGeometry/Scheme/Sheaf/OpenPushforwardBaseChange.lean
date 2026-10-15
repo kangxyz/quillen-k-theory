@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Restriction.ExtensionByZero
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ExtensionByZeroBaseChange
 
 /-! # Genuine open base change for direct image
@@ -15,8 +16,9 @@ proved extension-by-zero base change and uniqueness of actual right adjoints.
 It imposes no compactness or exactness assumption on ordinary direct image.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 

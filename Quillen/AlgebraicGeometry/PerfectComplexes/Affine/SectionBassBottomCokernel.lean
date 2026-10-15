@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
+public import Aglib.Algebra.Polynomial.Laurent.Square
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassBottomGroups
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassStableConnectivity
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassSquareExcision
@@ -19,11 +21,13 @@ The two literal polynomial inclusions generate the bottom group of the original 
 Its actual comparison cone therefore realizes the original polynomial-difference cokernel.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 

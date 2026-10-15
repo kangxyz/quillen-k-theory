@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BassStepComparison
 
+open Quillen.PerfectComplexes
+
+
 /-!
 # Original affine Bass-step loop-preservation consumers
 
@@ -15,7 +18,7 @@ compatibility track is kept explicit throughout.
 -/
 
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.LoopPrespectrum Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS
+open Quillen Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
 open AlgebraicGeometry.Scheme.PolynomialLaurent
 
 namespace QuillenTest.BassStepLoopPreservation

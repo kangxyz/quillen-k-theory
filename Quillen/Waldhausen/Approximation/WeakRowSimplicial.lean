@@ -12,6 +12,9 @@ public import Quillen.Waldhausen.QuillenComparison.RowSimplicial
 /-! # The simplicial categories of genuine weak-equivalence quotient rows -/
 @[expose] public section
 
+open Quillen.Waldhausen.QuillenComparison
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

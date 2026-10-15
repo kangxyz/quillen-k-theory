@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Aglib.CategoryTheory.SmallModel.Exact
 public import Quillen.KTheory.Equivalence
 
@@ -16,6 +18,9 @@ The general exact small models and presentation comparisons come from Aglib.
 This module supplies their Q-construction and K-group applications.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 universe w v v' u u'

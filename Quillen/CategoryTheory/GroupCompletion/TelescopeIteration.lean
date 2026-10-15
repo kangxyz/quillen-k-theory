@@ -12,6 +12,9 @@ public import Quillen.CategoryTheory.Monoidal.Action.RightTensorLinear
 /-! # Actual completed iterates and their original associator lineators -/
 
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 open CategoryTheory MonoidalCategory
 universe u v
 namespace Quillen.TranslationTelescope

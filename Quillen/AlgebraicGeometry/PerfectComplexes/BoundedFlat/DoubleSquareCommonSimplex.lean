@@ -83,14 +83,17 @@ def simplex : ModelSimplex (modelOf (boundedFlatPerfectWaldhausen A))
     (fun i ↦ (nodes p q p' q' a b c hp hq i).1)
     (fun i ↦ (nodes p q p' q' a b c hp hq i).2)
 
+/-- The face inclusion selecting vertices 0 through 7 for the first split-triple diagram. -/
 def firstFace : ⦋7⦌ ⟶ ⦋23⦌ :=
   SimplexCategory.Hom.mk ⟨Fin.castAdd 16, fun _ _ h ↦ h⟩
 
+/-- The face inclusion selecting vertices 8 through 15 for the middle split-triple diagram. -/
 def middleFace : ⦋7⦌ ⟶ ⦋23⦌ :=
   SimplexCategory.Hom.mk ⟨fun i ↦ Fin.natAdd 8 (Fin.castAdd 8 i), by
     intro i j hij
     exact Nat.add_le_add_left hij 8⟩
 
+/-- The face inclusion selecting vertices 16 through 23 for the last split-triple diagram. -/
 def lastFace : ⦋7⦌ ⟶ ⦋23⦌ :=
   SimplexCategory.Hom.mk ⟨fun i ↦ Fin.natAdd 8 (Fin.natAdd 8 i), by
     intro i j hij

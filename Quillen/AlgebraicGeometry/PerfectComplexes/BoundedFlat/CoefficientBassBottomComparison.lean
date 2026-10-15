@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.KTheory.Bass.ModelDiagramBottomNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientTwoChartStableSequence
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedFiberBassTower
@@ -19,9 +20,12 @@ and do not assert stabilization of any original seed.
 -/
 
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.KTheory.Bass Quillen.PolynomialBaseChange
+open Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}}

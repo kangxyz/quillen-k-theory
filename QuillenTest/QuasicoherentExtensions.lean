@@ -20,7 +20,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 namespace QuillenTest.QuasicoherentExtensions
 
-open Quillen
 
 /-- Both inverse laws retain the actual middle affine counit. -/
 theorem original_middle_counit_inverse (R : CommRingCat.{u})

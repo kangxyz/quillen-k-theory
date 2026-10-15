@@ -14,8 +14,11 @@ The comparison retains actual evaluation, both all-class inverse identities and 
 original-prespectrum map inducing that same original K-equivalence.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS
+open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.BoundedFlatSectionComparison
 

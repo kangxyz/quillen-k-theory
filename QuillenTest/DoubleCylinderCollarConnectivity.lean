@@ -19,6 +19,10 @@ tracks are retained.
 
 @[expose] public section
 
+open Quillen.CubicalTests
+open Quillen.DoubleCylinder
+
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false

@@ -1,6 +1,7 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+Authors: kangxyz
 -/
 module
 
@@ -12,6 +13,10 @@ The localization-preimage vertex isos retain the original triangle factors and
 installed coefficient derived units on every bounded-below complex.
 -/
 @[expose] public section
+
+open AlgebraicGeometry
+open CategoryTheory.Pretriangulated
+
 open Quillen
 
 noncomputable section
@@ -23,6 +28,7 @@ open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open AlgebraicGeometry.Scheme.Modules
 
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance vertexUnitsStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 

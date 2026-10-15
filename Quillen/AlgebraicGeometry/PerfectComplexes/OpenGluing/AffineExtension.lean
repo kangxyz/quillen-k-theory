@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StabilizedExtensionTransport
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.Derived
 public import Mathlib.AlgebraicGeometry.Morphisms.QuasiSeparated
@@ -23,6 +25,10 @@ Quasi-separatedness supplies compactness of the overlap. The ambient scheme
 is not assumed to have affine diagonal or to be quasi-compact.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

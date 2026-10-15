@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.PolynomialLaurent
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Relative
 public import Quillen.AlgebraicGeometry.Scheme.OpenPairs
 
 /-!
@@ -15,7 +15,10 @@ pair squares. The vanishing open is a genuine inverse image, only the ambient sc
 and shrinking the open gives the original identity-base pair map.
 -/
 @[expose] public section
-open Quillen
+
+open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
+
+open AlgebraicGeometry.Scheme.Products
 
 
 

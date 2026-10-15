@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenModuleAdjunction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalRestrictionQuasiIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FinitePrincipalRoofs
@@ -30,6 +31,9 @@ The ambient target is an actual module complex; arbitrary non-quasicoherent
 all-sheaf targets are outside this theorem's scope.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

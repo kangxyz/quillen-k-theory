@@ -10,8 +10,11 @@ public import Quillen.Waldhausen.Additivity.SplitSequence
 
 /-! # Original mixed-grid, chosen-zero and parameter consumers -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 open Quillen.Waldhausen.Additivity Quillen.MixedOrdinalCylinder
 open scoped Simplicial Topology
 universe u v

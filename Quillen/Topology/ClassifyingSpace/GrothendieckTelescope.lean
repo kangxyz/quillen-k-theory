@@ -20,6 +20,9 @@ unit. No ordinary/fat topological telescope identification is asserted.
 
 @[expose] public section
 
+open Quillen.FiniteGrothendieckTelescope
+
+
 open CategoryTheory Limits
 noncomputable section
 universe u

@@ -9,6 +9,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassTeles
 
 /-! Original coefficient-square consumers retain the actual signed boundary and cone cylinder. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalClosedImmersion
 
 /-! # Original spectrum models of the four diagonal rectangles
@@ -14,6 +15,12 @@ squares with the literal equal-coordinate and mixed evaluation spectrum maps. Th
 mixed evaluation retains both original Laurent legs and its signed principal kernel.
 -/
 @[expose] public section
+
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
 open Quillen
 
 
@@ -53,7 +60,7 @@ theorem mixedSpec_diagonal_isPullback (R : CommRingCat.{u}) :
 end AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
-open PolynomialLaurent Quillen.PolynomialBaseChange Quillen.PolynomialDiagonal
+open PolynomialLaurent Quillen.PolynomialDiagonal
 /-- The original opposite mixed evaluation sends the first variable to T^-1 and the second to T. -/
 def oppositeMixedEvaluation (R : CommRingCat.{u}) :
     CommRingCat.of (Polynomial (Polynomial R)) ⟶ CommRingCat.of (LaurentPolynomial R) :=

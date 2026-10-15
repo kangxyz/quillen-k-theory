@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientOpenBassSeed
 public import Quillen.KTheory.Bass.StrictLaurentSeedContraction
 
@@ -17,8 +18,11 @@ its coefficient-natural original seed null. The source-leg cylinder, both
 independent times and original output-loop coordinate are unchanged.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.Waldhausen.IteratedS Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes

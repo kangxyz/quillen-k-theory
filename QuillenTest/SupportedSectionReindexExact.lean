@@ -15,6 +15,9 @@ edges, and literal source-independent zero remain explicit. The geometric coeffi
 comparison is a proved natural isomorphism, with its original forgetful squares retained.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u

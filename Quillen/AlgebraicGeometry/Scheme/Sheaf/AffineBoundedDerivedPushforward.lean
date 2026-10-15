@@ -5,13 +5,15 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.Pushforward
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineDerivedPushforward
 public import Quillen.Algebra.Homology.DerivedCategory.BoundedRightDerivedUnit
 
 /-! # The actual affine derived unit on bounded quasicoherent complexes -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry

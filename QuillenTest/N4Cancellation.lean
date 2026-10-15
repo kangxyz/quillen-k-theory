@@ -10,6 +10,10 @@ public import Quillen.Topology.PlusConstruction.DisplayedComparisonRealizations
 
 /-! # Fresh nonabelian, based-path and low-degree cancellation regressions -/
 @[expose] public section
+
+open Quillen.DoubleCylinder
+open Quillen.IsPlusConstruction
+
 noncomputable section
 open CategoryTheory Limits MonoidalCategory
 open scoped Topology unitInterval

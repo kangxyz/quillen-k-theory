@@ -18,8 +18,11 @@ factorization of the vector-bundle-to-perfect map.
 
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry
 universe u
 
 example {X Y : AlgebraicGeometry.Scheme.OpenImmersionSchemes.{u}ᵒᵖ} (f : X ⟶ Y) :

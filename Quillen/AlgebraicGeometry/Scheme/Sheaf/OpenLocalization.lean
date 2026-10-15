@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Mathlib.AlgebraicGeometry.Modules.Sheaf
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianOpenBaseChange
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.OpenImmersion.Cartesian
 
 /-!
 # Original open restriction followed by direct image
@@ -19,8 +19,9 @@ invertible on the other chart.
 -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 

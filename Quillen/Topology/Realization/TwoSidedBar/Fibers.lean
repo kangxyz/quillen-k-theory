@@ -19,6 +19,9 @@ The drop and evaluation augmentations induce explicit fiber maps. Their weak equ
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

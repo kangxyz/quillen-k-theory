@@ -14,6 +14,10 @@ diagram. The actual comma-entry adjunction and exact unit square identify its
 map with the original unit; no homology-fibration premise is introduced.
 -/
 @[expose] public section
+
+open Quillen.GroupCompletion
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u

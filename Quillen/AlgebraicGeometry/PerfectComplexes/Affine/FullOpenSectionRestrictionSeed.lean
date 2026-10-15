@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionRestrictionDiagram
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionUnit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionFullOpenUnit
@@ -23,10 +24,13 @@ original source-leg null cylinder give the actual Bass-seed equation. The locali
 is not substituted for that Bass cylinder, and no unit or seed premise is supplied.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.FunctorIdentityAutomorphism
-open Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
 open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u v w
 namespace Quillen.PerfectComplexes

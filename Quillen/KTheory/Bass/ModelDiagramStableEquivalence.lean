@@ -20,8 +20,11 @@ unchanged iterate of the supplied original natural transformation. A categorical
 specialization proves its stability directly from the actual original forward model maps.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
-open CategoryTheory Quillen.LoopPrespectrum Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open CategoryTheory Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
 universe u v w
 namespace Quillen.KTheory.Bass
 variable {C : Type u} [Category.{v} C] (Q : C ⥤ Arrow (Arrow C))

@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassMap
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SquareTrackOriginal
 public import Quillen.Topology.Prespectrum.ParameterLoopingHomotopy
@@ -20,11 +22,14 @@ canonical identity and binary composition tracks. It supplies coherence faces of
 Bass maps for an arbitrary ambient scheme, without flatness or compactness assumptions.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
@@ -88,7 +93,8 @@ def boundedFlatCoefficientLaurentCompositionHomotopy :
 theorem boundedFlatCoefficientPolynomialGeometricNaturality {a b : Under R} (u : a ⟶ b) :
     coefficientMap P ((polynomialUnderFunctor R).map u) ≫ polynomialProjection P a =
       polynomialProjection P b ≫ coefficientMap P u :=
-  coefficientTransformation_naturality P (polynomialUnderCoefficient R) u
+  AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (polynomialUnderCoefficient R) u
 
 /-- The existing rectangle comparison is used in the coefficient-composition direction. -/
 def boundedFlatCoefficientPolynomialTransposedRectangle :=

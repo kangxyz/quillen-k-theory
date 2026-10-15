@@ -17,8 +17,10 @@ equivalences of the actual image subspaces with the open collars.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false

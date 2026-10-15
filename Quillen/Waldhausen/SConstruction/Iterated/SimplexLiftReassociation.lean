@@ -34,6 +34,7 @@ private theorem relative_mp_level2 {E F : LoopPrespectrum.{u}} {f g : E ⟶ F}
   subst K'
   rfl
 
+/-- The continuous time change used by native reassociation of three concatenated paths. -/
 def associativityTime : C(unitInterval, unitInterval) :=
   ⟨fun t ↦ ⟨Path.Homotopy.transAssocReparamAux t,
     Path.Homotopy.transAssocReparamAux_mem_I t⟩, by fun_prop⟩
@@ -75,6 +76,7 @@ theorem PathLift.transAssoc {p : Path a b} {q : Path b c} {z : Path c d}
   rw [native_associativity_level]
   exact (PathLift.trans S hp (PathLift.trans S hq hz)) n _ x
 
+/-- The continuous time change used to remove the terminal constant segment of a path. -/
 def terminalTime : C(unitInterval, unitInterval) :=
   ⟨fun t ↦ ⟨Path.Homotopy.transReflReparamAux t,
     Path.Homotopy.transReflReparamAux_mem_I t⟩, by fun_prop⟩

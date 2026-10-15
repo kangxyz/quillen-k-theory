@@ -5,6 +5,7 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCoherence
 public import Quillen.Topology.Prespectrum.HomotopySquareBoundary
 
@@ -18,7 +19,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.CoefficientTransformationComposition
@@ -35,7 +36,7 @@ def coefficientComposition (M : Under R ⥤ Under R) :=
 def square (u : a ⟶ b) :=
   boundedFlatPerfectPrespectrumSquareHomotopy (coefficientMap P (N.map u))
     (coefficientMap P (α.app a)) (coefficientMap P (α.app b)) (coefficientMap P (M.map u))
-    (coefficientTransformation_naturality P α u)
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u)
 
 /-- The actual original rectangle, in the coefficient-composition direction. -/
 def rectangle :=
@@ -43,8 +44,8 @@ def rectangle :=
     (coefficientMap P (M.map u)) (coefficientMap P (M.map v))
     (coefficientMap P (N.map u)) (coefficientMap P (N.map v))
     (coefficientMap P (α.app a)) (coefficientMap P (α.app b)) (coefficientMap P (α.app c))
-    (coefficientTransformation_naturality P α u).symm
-    (coefficientTransformation_naturality P α v).symm
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u).symm
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm
 
 /-- Two successive ORIGINAL transformation squares, with literal associations. -/
 def compositeSquare :=
@@ -75,20 +76,21 @@ theorem rectangle_source_level (n : ℕ) :
     exact (boundedFlatGeometricSquareReverse_level
       (coefficientMap P (N.map u)) (coefficientMap P (α.app a))
       (coefficientMap P (α.app b)) (coefficientMap P (M.map u))
-      (coefficientTransformation_naturality P α u) n).symm
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u) n).symm
   · change (Homotopy.precomp (boundedFlatPerfectPrespectrumMap (coefficientMap P (M.map u)))
       (square P α v)).level n =
         (Homotopy.precomp (boundedFlatPerfectPrespectrumMap (coefficientMap P (M.map u)))
           (boundedFlatPerfectPrespectrumSquareHomotopy
             (coefficientMap P (α.app c)) (coefficientMap P (M.map v))
             (coefficientMap P (N.map v)) (coefficientMap P (α.app b))
-            (coefficientTransformation_naturality P α v).symm)).symm.level n
+            (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α
+              v).symm)).symm.level n
     rw [← Homotopy.precomp_symm]
     apply Homotopy.precomp_level_congr
     exact (boundedFlatGeometricSquareReverse_level
       (coefficientMap P (N.map v)) (coefficientMap P (α.app b))
       (coefficientMap P (α.app c)) (coefficientMap P (M.map v))
-      (coefficientTransformation_naturality P α v) n).symm
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v) n).symm
 
 /-- The whole target is the direct original square and both actual coefficient compositions. -/
 theorem rectangle_target_level (n : ℕ) :
@@ -105,7 +107,8 @@ theorem rectangle_target_level (n : ℕ) :
     · refine (boundedFlatGeometricSquareReverse_level
         (coefficientMap P (N.map (u ≫ v))) (coefficientMap P (α.app a))
         (coefficientMap P (α.app c)) (coefficientMap P (M.map (u ≫ v)))
-        (coefficientTransformation_naturality P α (u ≫ v)) n).symm.trans ?_
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α (u ≫ v))
+          n).symm.trans ?_
       apply Homotopy.symm_level_congr
       exact boundedFlatGeometricSquare_level_congr _ _ rfl
         ((congrArg (coefficientMap P) (M.map_comp u v)).trans

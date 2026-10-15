@@ -19,8 +19,10 @@ are allowed, including the empty-boundary case in dimension zero.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open CategoryTheory Limits Convexity Topology
+open CategoryTheory Limits Convexity
 open scoped Topology
 universe u
 set_option backward.isDefEq.respectTransparency false

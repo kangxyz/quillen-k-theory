@@ -10,6 +10,9 @@ public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveExtensionProduc
 
 /-! # The natural diagonal into the pullback square on extension action categories -/
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

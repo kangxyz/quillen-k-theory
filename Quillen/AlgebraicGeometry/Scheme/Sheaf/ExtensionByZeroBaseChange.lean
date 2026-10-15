@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ExtensionByZero
+public import Aglib.AlgebraicGeometry.Modules.Support
+public import Aglib.AlgebraicGeometry.Modules.Restriction.ExtensionByZero
 public import Mathlib.CategoryTheory.Adjunction.Whiskering
 
 /-!
@@ -22,8 +23,9 @@ left adjoints; both original unit and counit formulas retain the scalar and
 open-restriction coherence maps. All sheaves are ambient module sheaves.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 

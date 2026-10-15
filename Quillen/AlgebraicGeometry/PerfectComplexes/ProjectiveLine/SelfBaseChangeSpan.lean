@@ -16,6 +16,8 @@ the original forward Godement augmentation. Every arrow is natural and weak;
 all three functors are exact in the actual original flasque Waldhausen model.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

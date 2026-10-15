@@ -5,11 +5,15 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionIsomorphism
 public import Quillen.CategoryTheory.SubdivisionAction
 
 /-! # Extension isomorphisms from actual middle and quotient squares -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

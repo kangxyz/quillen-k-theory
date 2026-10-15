@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.Quotient.Basic
 public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
 
@@ -19,6 +20,9 @@ zero composite. This is one half of quotient exactness, not an assumed exact
 structure on the quotient.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

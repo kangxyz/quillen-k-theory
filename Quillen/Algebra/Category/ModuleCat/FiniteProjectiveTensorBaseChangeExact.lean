@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeTensor
 
 /-!
@@ -16,6 +17,9 @@ without a flatness assumption and without changing its quotient carrier.
 -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 

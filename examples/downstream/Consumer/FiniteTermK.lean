@@ -6,19 +6,23 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.FiniteTermKEquivalence
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Exact
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Exact
 
 /-! The original evaluation/insertion K-maps on actual finite term strata. -/
 @[expose] public section
+
+open Quillen.Waldhausen
+open Quillen.Waldhausen.GilletWaldhausen
+
 
 open CategoryTheory.ExactCategory
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits HomologicalComplex Quillen Quillen.Waldhausen
-open Quillen.Waldhausen.GilletWaldhausen
+open CategoryTheory CategoryTheory.Limits HomologicalComplex Quillen
 universe u v
 namespace Consumer
 attribute [local instance] Abelian.hasFiniteBiproducts

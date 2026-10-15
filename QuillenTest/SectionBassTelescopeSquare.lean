@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
+public import Aglib.Algebra.Polynomial.Laurent.Square
 public import Quillen.Topology.Prespectrum.TelescopeStrictSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassTelescope
 
@@ -15,11 +17,17 @@ Every corner and transition below is the unchanged original section Bass tower. 
 polynomial chart inclusions, full overlap track and independent cone/telescope times are kept.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open Quillen Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.SectionBassTelescopeSquare
 

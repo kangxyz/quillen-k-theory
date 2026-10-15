@@ -17,9 +17,12 @@ points satisfy the exact growing finite bounds. These consumers do not presume a
 or infer connectivity from separation or chosen-point HEP.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.Waldhausen.IteratedS
+open Quillen Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.OriginalFiniteConnectivity
 

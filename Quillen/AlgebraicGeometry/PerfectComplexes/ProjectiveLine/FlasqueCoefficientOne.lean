@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientOperations
 public import Quillen.Waldhausen.ExtensionCategory.Product
 
@@ -23,10 +24,12 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
+open AlgebraicGeometry.Scheme.Modules.Godement
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
 
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance coefficientStandardDerived (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 
@@ -70,7 +73,8 @@ lemma G1_obj_underlying (R : CommRingCat.{u})
     ((G1 R).obj K).obj =
       ((((Scheme.Modules.pushforward (projection R)).mapHomologicalComplex (.up ℤ)).obj
         ((godementTotal (twoChartLine R)).obj
-          ((tensorByLineRightComplex (tautologicalLine R)).obj K.obj)))⟦(1 : ℤ)⟧) := rfl
+          ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)).obj
+            K.obj)))⟦(1 : ℤ)⟧) := rfl
 
 /-- The underlying arrows retain the original tensor, total, direct image and shift maps. -/
 lemma G1_map_underlying (R : CommRingCat.{u})
@@ -78,7 +82,8 @@ lemma G1_map_underlying (R : CommRingCat.{u})
     ((G1 R).map f).hom =
       ((((Scheme.Modules.pushforward (projection R)).mapHomologicalComplex (.up ℤ)).map
         ((godementTotal (twoChartLine R)).map
-          ((tensorByLineRightComplex (tautologicalLine R)).map f.hom)))⟦(1 : ℤ)⟧') := rfl
+          ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)).map
+            f.hom)))⟦(1 : ℤ)⟧') := rfl
 
 /-- A specified original bound a becomes exactly a-1 after the actual shift by one. -/
 lemma G1_isStrictlyGE (R : CommRingCat.{u})

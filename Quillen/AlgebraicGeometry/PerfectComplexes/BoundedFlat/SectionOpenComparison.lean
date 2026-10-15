@@ -20,6 +20,10 @@ forward Model map has whole two-sided inverse homotopies and is a complete weak 
 at every level. No identification with the full open-scheme endpoint is asserted.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+open Quillen.Waldhausen.IteratedS
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 universe u

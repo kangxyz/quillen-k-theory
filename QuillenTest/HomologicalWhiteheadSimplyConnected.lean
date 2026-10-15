@@ -11,6 +11,9 @@ public import Quillen.Topology.LocalCoefficients.HomologicalWhiteheadSimplyConne
 range-zero component coverage, and the original ordinary singular map. -/
 
 @[expose] public section
+
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory Limits
 universe u

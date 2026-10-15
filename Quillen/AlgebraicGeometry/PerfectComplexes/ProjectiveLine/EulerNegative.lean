@@ -9,6 +9,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerFun
 
 /-! # Actual negative Euler coefficients vanish after original Godement projection -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -21,6 +26,7 @@ namespace Quillen.PerfectComplexes.ProjectiveLine.Euler
 open FlasqueCoefficients
 variable (R : CommRingCat.{u})
 
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance eulerNegativeStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 

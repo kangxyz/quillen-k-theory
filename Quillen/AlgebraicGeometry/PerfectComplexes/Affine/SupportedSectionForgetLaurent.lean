@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionForgetModel
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionDiagramLaurent
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionLaurentHomotopy
@@ -17,11 +19,14 @@ Model arrows. Its realized square preserves every level and interval value of th
 Laurent track. The specified fixed pullbacks and original Laurent coordinate remain explicit.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
-open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

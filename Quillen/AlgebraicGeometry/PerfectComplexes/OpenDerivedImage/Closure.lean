@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Roofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPerfect
 
@@ -15,6 +16,9 @@ cone supplies the original distinguished third vertex, so closure never
 requires an unproved global representative for an arbitrary open object.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

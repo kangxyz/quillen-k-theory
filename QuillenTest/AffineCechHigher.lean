@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineCechHigher
+public import Aglib.AlgebraicGeometry.Cohomology.Cech.AffineHigherExactness
 public import QuillenTest.AffineCechSections
 
 /-!
@@ -26,7 +26,6 @@ open QuillenTest.AffineCechSections
 
 namespace QuillenTest.AffineCechHigher
 
-open Quillen
 
 lemma torsion_cover_original_cech_exact
     (M : (Spec torsionRing).Modules) [M.IsQuasicoherent] (n : ℕ) :

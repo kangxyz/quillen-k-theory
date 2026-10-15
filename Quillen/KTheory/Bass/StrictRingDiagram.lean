@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Polynomial.LaurentSquare
+public import Aglib.Algebra.Polynomial.Laurent.Square
 public import Quillen.KTheory.Bass.StrictDiagram
 
 /-!

@@ -20,6 +20,9 @@ No compactness or lifting property of the open parameter loci is asserted.
 -/
 @[expose] public section
 
+open Quillen.CubicalSubdivision
+
+
 noncomputable section
 open scoped Topology unitInterval
 universe u v w

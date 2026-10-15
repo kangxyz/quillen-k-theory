@@ -11,9 +11,11 @@ public import Quillen.Waldhausen.WeakArrow.RelativeKEquivalence
 /-! # Semantic consumers of actual relative dual approximation -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
-open Quillen.Waldhausen
 universe u v
 namespace QuillenTest.RelativeDualApproximation
 section Lift

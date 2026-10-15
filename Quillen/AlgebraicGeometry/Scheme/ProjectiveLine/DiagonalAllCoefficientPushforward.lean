@@ -5,7 +5,8 @@ Authors: kangxyz, Codex
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ClosedImmersionProjectionFormula
+public import Aglib.AlgebraicGeometry.Modules.ProjectionFormula.ClosedImmersion
+public import Aglib.AlgebraicGeometry.Modules.Stalk.Reflection
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalTensorPushforward
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalClosedImmersion
 
@@ -33,7 +34,7 @@ local instance allCoefficientDiagonalClosed (R : CommRingCat.{u}) :
     IsClosedImmersion (relativeDiagonal R) := isClosedImmersion_relativeDiagonal R
 
 /-- The original diagonal-supported tensor identification for arbitrary module sheaves. -/
-def diagonalTensorPushforwardIso_all (R : CommRingCat.{u})
+def diagonalTensorPushforwardIsoAll (R : CommRingCat.{u})
     (E M : (twoChartLine R).Modules) :
     (moduleTensorLeftFunctor (relativeSquare R)
       ((AlgebraicGeometry.Scheme.Modules.pullback (relativeFirst R)).obj E)).obj
@@ -50,7 +51,7 @@ def diagonalTensorPushforwardIso_all (R : CommRingCat.{u})
 /-- The forward arrow keeps the original projection unit and diagonal section identification. -/
 theorem diagonalTensorPushforwardIso_all_hom (R : CommRingCat.{u})
     (E M : (twoChartLine R).Modules) :
-    (diagonalTensorPushforwardIso_all R E M).hom =
+    (diagonalTensorPushforwardIsoAll R E M).hom =
       projectionFormulaMap (relativeDiagonal R)
         ((AlgebraicGeometry.Scheme.Modules.pullback (relativeFirst R)).obj E) M ≫
       (AlgebraicGeometry.Scheme.Modules.pushforward (relativeDiagonal R)).map
@@ -62,7 +63,7 @@ theorem diagonalTensorPushforwardIso_all_hom (R : CommRingCat.{u})
 theorem diagonalTensorPushforwardIso_all_eq (R : CommRingCat.{u})
     (E : (twoChartLine R).Modules) [IsFiniteLocallyFree (twoChartLine R) E]
     (M : (twoChartLine R).Modules) :
-    diagonalTensorPushforwardIso_all R E M = diagonalTensorPushforwardIso R E M := by
+    diagonalTensorPushforwardIsoAll R E M = diagonalTensorPushforwardIso R E M := by
   apply Iso.ext
   rfl
 

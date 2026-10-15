@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SelfBaseChangeAlpha
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlatPullback
 
@@ -17,6 +20,8 @@ pullback. Its perfection is transferred by the proved ORIGINAL alpha; no general
 perfect-pushforward premise for the second projection is imposed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
 
 open CategoryTheory.ExactCategory
 noncomputable section
@@ -32,7 +37,8 @@ namespace Quillen.PerfectComplexes.ProjectiveLine.SelfBaseChange
 /-- Literal flat pullback with the original existential strict lower bound. -/
 def boundedFlatPullback {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
     BoundedBelow.Obj Y ⥤ BoundedBelow.Obj X :=
-  ObjectProperty.lift _ ((BoundedBelow.objects Y).ι ⋙ pullbackComplex f) (fun K => by
+  ObjectProperty.lift _ ((BoundedBelow.objects Y).ι ⋙
+    AlgebraicGeometry.Scheme.Modules.Complex.pullback f) (fun K => by
     obtain ⟨hp, a, ha⟩ := K.property
     let := ha
     refine ⟨locallyPerfect_flatPullback f hp, a, ?_⟩
@@ -64,7 +70,8 @@ def boundedFlatPullbackExactFunctor {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] : 
   toFunctor := boundedFlatPullback f
   map_conflation S hs := by
     change (S.map (BoundedBelow.objects Y).ι).ShortExact at hs
-    change ((S.map (BoundedBelow.objects Y).ι).map (pullbackComplex f)).ShortExact
+    change ((S.map (BoundedBelow.objects Y).ι).map
+      (AlgebraicGeometry.Scheme.Modules.Complex.pullback f)).ShortExact
     exact hs.map_of_exact _
 
 lemma boundedFlatPullback_exact {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] : Waldhausen.IsExact
@@ -76,7 +83,7 @@ lemma boundedFlatPullback_exact {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] : Wald
   weak s hs := by
     change QuasiIso s.hom at hs
     let := hs
-    exact pullbackComplex_quasiIso f s.hom
+    exact AlgebraicGeometry.Scheme.Modules.Complex.pullback_quasiIso f s.hom
   pushout hi h := (boundedFlatPullbackExactFunctor f).map_isPushout hi h
 
 variable (R : CommRingCat.{u})
@@ -108,7 +115,8 @@ lemma source_isStrictlyGE (K : FlasqueBoundedBelow.Obj (twoChartLine R))
 
 /-- The literal original target complex p2_* T_Z(p1* M). -/
 def targetRaw : FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ Complex (twoChartLine R) :=
-  (FlasqueBoundedBelow.objects (twoChartLine R)).ι ⋙ pullbackComplex (relativeFirst R) ⋙
+  (FlasqueBoundedBelow.objects (twoChartLine R)).ι ⋙
+    AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst R) ⋙
     godementTotal (relativeSquare R) ⋙
       (Scheme.Modules.pushforward (relativeSecond R)).mapHomologicalComplex (.up ℤ)
 
@@ -171,9 +179,10 @@ lemma targetRaw_shortExact {S : ShortComplex (FlasqueBoundedBelow.Obj (twoChartL
     (hs : (S.map (FlasqueBoundedBelow.objects (twoChartLine R)).ι).ShortExact) :
     (S.map (targetRaw R)).ShortExact := by
   let S₀ := S.map (FlasqueBoundedBelow.objects (twoChartLine R)).ι
-  let S₁ := S₀.map (pullbackComplex (relativeFirst R))
+  let S₁ := S₀.map (AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst R))
   let S₂ := S₁.map (godementTotal (relativeSquare R))
-  have ha : S₁.ShortExact := hs.map_of_exact (pullbackComplex (relativeFirst R))
+  have ha : S₁.ShortExact := hs.map_of_exact (AlgebraicGeometry.Scheme.Modules.Complex.pullback
+    (relativeFirst R))
   have ht : S₂.ShortExact := godementTotal_shortExact ha
   have hfl : ∀ n, TopCat.Presheaf.IsFlasque (S₂.X₁.X n).presheaf := by
     let A := (boundedFlatPullback (relativeFirst R)).obj

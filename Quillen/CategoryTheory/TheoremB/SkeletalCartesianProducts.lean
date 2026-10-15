@@ -12,6 +12,9 @@ public import Quillen.Topology.Realization.Cartesian.Calculus
 /-! # Actual enriched product charts and their canonical cartesian squares -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 noncomputable section
 open CategoryTheory Limits Opposite MonoidalCategory CartesianMonoidalCategory
 open scoped Simplicial Topology unitInterval

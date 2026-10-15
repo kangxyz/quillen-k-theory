@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportCone
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpenDerivedImage.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.SupportedRoofs
@@ -21,6 +22,9 @@ sequences. The precise roof property is explicit in these reusable closure
 lemmas; its qcqs geometric proof is provided by the imported SupportedRoofs.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

@@ -9,8 +9,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassT
 
 /-! Literal transition composites and all independent coordinates for arbitrary coefficient maps. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.BassTransitionCoefficientNaturality

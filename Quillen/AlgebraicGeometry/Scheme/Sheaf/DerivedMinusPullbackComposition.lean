@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
+public import Aglib.AlgebraicGeometry.Modules.Flat.Pullback
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedMinusPullback
 
 /-!
@@ -18,8 +21,13 @@ Pentagon coherence, triangulatedness, and preservation of local perfectness are
 separate results, not asserted here.
 -/
 @[expose] public section
+
+open Quillen.CochainComplex
+
+
+open AlgebraicGeometry.Scheme.Modules
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
 
@@ -28,7 +36,6 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u w₁ w₂ w₃
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.CochainComplex
 namespace AlgebraicGeometry.Scheme.Modules
 
 variable {X Y Z : Scheme.{u}}
@@ -38,7 +45,7 @@ variable {X Y Z : Scheme.{u}}
 def pullbackBoundedFunctor (f : X ⟶ Y) :
     BoundedAboveComplex Y.Modules ⥤ BoundedAboveComplex X.Modules :=
   (boundedAbove X.Modules).lift ((boundedAbove Y.Modules).ι ⋙
-    Quillen.PerfectComplexes.pullbackComplex f)
+    AlgebraicGeometry.Scheme.Modules.Complex.pullback f)
     (fun K => ⟨chosenUpperBound K, by
       rw [CochainComplex.isStrictlyLE_iff]
       intro n hn
@@ -84,13 +91,14 @@ def resolvedFlatComparisonMinus (f : X ⟶ Y) [HasDerivedCategory.{w₁} X.Modul
     (K : BoundedAboveComplex Y.Modules) (hK : ∀ n, stalkwiseFlat Y (K.obj.X n)) :
     (resolvedPullbackFunctorMinus f).obj K ≅
       (boundedAboveQMinus X.Modules).obj ((pullbackBoundedFunctor f).obj K) := by
-  have : QuasiIso ((Quillen.PerfectComplexes.pullbackComplex f).map (flatModelπ Y K)) :=
+  have : QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map (flatModelπ Y K)) :=
     quasiIso_pullback_of_boundedAbove_stalkwiseFlat f (flatModel_flat Y K) hK
       (chosenUpperBound ((underlyingPresheafBoundedFunctor Y).obj K)) (chosenUpperBound K)
       (fun n hn => (flatModel Y K).isZero_of_isStrictlyLE _ n hn)
       (fun n hn => K.obj.isZero_of_isStrictlyLE _ n hn) _
   exact ObjectProperty.isoMk _
-    (asIso (DerivedCategory.Q.map ((Quillen.PerfectComplexes.pullbackComplex f).map (flatModelπ Y
+    (asIso (DerivedCategory.Q.map ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map
+      (flatModelπ Y
       K))))
 
 /-- This comparison is natural for actual maps between arbitrary bounded-above flat complexes. -/
@@ -103,11 +111,13 @@ theorem resolvedFlatComparisonMinus_naturality (f : X ⟶ Y) [HasDerivedCategory
         (boundedAboveQMinus X.Modules).map ((pullbackBoundedFunctor f).map s) := by
   apply ObjectProperty.hom_ext
   change (resolvedPullbackFunctor f).map s ≫
-      DerivedCategory.Q.map ((Quillen.PerfectComplexes.pullbackComplex f).map (flatModelπ Y L)) =
-    DerivedCategory.Q.map ((Quillen.PerfectComplexes.pullbackComplex f).map (flatModelπ Y K)) ≫
-      DerivedCategory.Q.map ((Quillen.PerfectComplexes.pullbackComplex f).map s.hom)
+      DerivedCategory.Q.map ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map (flatModelπ Y
+        L)) =
+    DerivedCategory.Q.map ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map (flatModelπ Y
+      K)) ≫
+      DerivedCategory.Q.map ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map s.hom)
   rw [resolvedPullbackFunctor_map]
-  simpa only [Functor.map_comp, Quillen.PerfectComplexes.pullbackComplex] using
+  simpa only [Functor.map_comp, AlgebraicGeometry.Scheme.Modules.Complex.pullback] using
     DerivedCategory.Q_map_eq_of_homotopy X.Modules
     ((Scheme.Modules.pullback f).mapHomotopy (flatModelMapHomotopy s))
 
@@ -148,8 +158,8 @@ theorem resolvedPullbackCompGeometric_naturality {K L : BoundedAboveComplex Z.Mo
     DerivedCategory.Q.map
         ((Quillen.PerfectComplexes.pullbackComplexCompIso f g).hom.app (flatModel Z K)) ≫
       DerivedCategory.Q.map
-        ((Quillen.PerfectComplexes.pullbackComplex g ⋙
-          Quillen.PerfectComplexes.pullbackComplex f).map (flatModelMap s))
+        ((AlgebraicGeometry.Scheme.Modules.Complex.pullback g ⋙
+          AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map (flatModelMap s))
   rw [resolvedPullbackFunctor_map]
   exact (Functor.map_comp DerivedCategory.Q _ _).symm.trans
     ((congrArg DerivedCategory.Q.map

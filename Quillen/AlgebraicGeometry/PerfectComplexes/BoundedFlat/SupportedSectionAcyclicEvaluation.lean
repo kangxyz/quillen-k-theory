@@ -17,6 +17,10 @@ the inherited fine geometric zero. This retains the literal support inclusion fo
 null-track comparison without identifying independently chosen supported geometric zeros.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+open Quillen.Waldhausen.Fibration
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u

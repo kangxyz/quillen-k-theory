@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionIdentity
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionComposition
 
@@ -16,6 +17,9 @@ pullback composition. Theorem B's comma-transition condition and the relation
 between the strict fibers and extension groupoids remain further theorems.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 universe v u
 open CategoryTheory

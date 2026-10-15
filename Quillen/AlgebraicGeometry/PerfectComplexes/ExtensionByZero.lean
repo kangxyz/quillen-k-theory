@@ -5,12 +5,16 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ExtensionByZero
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.AlgebraicGeometry.Modules.Restriction.ExtensionByZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Restriction
 public import Mathlib.Algebra.Homology.Homotopy
 
 /-! # Actual extension-by-zero adjunction on original sheaf complexes -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

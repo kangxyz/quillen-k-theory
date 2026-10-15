@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
 public import Quillen.Waldhausen.SConstruction.Iterated.ScalarChartPause
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.DoubleSquareRectangleFaces
 
@@ -14,7 +15,7 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Convexity Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
 open scoped Topology unitInterval
 universe u
@@ -29,8 +30,8 @@ def simplex := DoubleSquareMergedSimplex.simplex
   (coefficientMap P (N.map u)) (coefficientMap P (N.map v))
   (coefficientMap P (α.app a)) (coefficientMap P (α.app b))
   (coefficientMap P (α.app c))
-  (coefficientTransformation_naturality P α u).symm
-  (coefficientTransformation_naturality P α v).symm
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u).symm
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm
 
 /-- Every parameter of the native coefficient rectangle uses the common scalar surface. -/
 theorem rectangle_nativeLift :
@@ -41,8 +42,8 @@ theorem rectangle_nativeLift :
     (coefficientMap P (N.map u)) (coefficientMap P (N.map v))
     (coefficientMap P (α.app a)) (coefficientMap P (α.app b))
     (coefficientMap P (α.app c))
-    (coefficientTransformation_naturality P α u).symm
-    (coefficientTransformation_naturality P α v).symm
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u).symm
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm
 
 /-- The actual `ofLevels` coefficient comparison retains the reversed scalar path coordinate. -/
 theorem comparison_nativeLift :

@@ -6,9 +6,14 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.Algebra.Category.ModuleCat.Finite
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeCategory
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Exact
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Exact
-public import Quillen.CategoryTheory.SmallModel.Abelian
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Exact
+public import Aglib.CategoryTheory.SmallModel.Abelian
 
 /-!
 # Genuine affine G-theory and its module comparison
@@ -21,20 +26,15 @@ G-theory of finite `R`-modules.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+open CategoryTheory.ExactCategory
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.CoherentScheme
-export AlgebraicGeometry.Scheme.Modules.Coherent
-  (affineGlobalSectionsExact affineGlobalSections_additive)
-end Quillen.CoherentScheme
-
-end
 
 
 

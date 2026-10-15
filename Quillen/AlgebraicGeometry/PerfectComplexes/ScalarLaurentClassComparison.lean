@@ -14,11 +14,13 @@ The fine class is built from the actual global-unit automorphism. The old source
 canonical K-map rebasing and inverse orientation of the cofiber class are retained. -/
 
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.Waldhausen
 universe u
 
 namespace Quillen.PerfectComplexes

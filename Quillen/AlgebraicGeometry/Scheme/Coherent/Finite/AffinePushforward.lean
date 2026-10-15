@@ -5,12 +5,13 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.Finite.AffinePushforward
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.Finite.GeneralPushforward
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
-public import Quillen.GTheory.FiniteModules.RestrictionScalars
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffinePushforward
+public import Aglib.Algebra.Category.ModuleCat.FiniteRestrictionScalars
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Pushforward
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.ComparisonGTheory
 public import Quillen.CategoryTheory.SmallModel.Functoriality
 
@@ -22,19 +23,8 @@ public import Quillen.CategoryTheory.SmallModel.Functoriality
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.CoherentScheme.FiniteAffine
-export AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite.Affine
-  (affineLocallyFiniteType_pushforward coherentPushforward coherentPushforwardExact
-  coherentPushforwardSquare coherentPushforward_additive coherentPushforward_comp_inclusion
-  coherentPushforward_preservesFiniteColimits coherentPushforward_preservesFiniteLimits)
-end Quillen.CoherentScheme.FiniteAffine
-
-end
 
 
 

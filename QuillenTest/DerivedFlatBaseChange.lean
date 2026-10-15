@@ -15,7 +15,6 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace QuillenTest.DerivedFlatBaseChange
 
-open Quillen
 /-- Use the actual standard ambient derived categories. -/
 local instance standard (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _

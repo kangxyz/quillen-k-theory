@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Devissage.Homotopical
 
 /-!
@@ -17,6 +18,9 @@ identifies this equivalence with the canonical subcategory inclusion map.
 -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits Quillen

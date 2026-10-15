@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Homology.CochainComplex.DegreewiseSplitMono
 public import Quillen.Waldhausen.SplitComplexes.FactorizationFunctor
 public import Mathlib.Algebra.Homology.HomotopyCategory.DegreewiseSplit
 
@@ -18,6 +19,9 @@ source. The explicit short exact sequence supplies the joint-endpoint
 cofibration condition in any shift-closed full complex subcategory.
 -/
 @[expose] public section
+
+open CochainComplex
+
 
 
 noncomputable section

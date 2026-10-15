@@ -18,6 +18,9 @@ so the construction does not require constant coefficients.
 
 @[expose] public section
 
+open Quillen.LocalCoefficients
+
+
 noncomputable section
 
 set_option backward.isDefEq.respectTransparency false

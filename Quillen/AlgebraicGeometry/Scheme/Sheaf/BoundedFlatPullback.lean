@@ -5,7 +5,11 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatObjectsPullback
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.AlgebraicGeometry.Modules.Exact
+public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
+public import Aglib.AlgebraicGeometry.Modules.Stalk.Basic
+public import Aglib.AlgebraicGeometry.Modules.Flat.Pullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Pullback
 
 /-!
@@ -16,8 +20,10 @@ Consequently arbitrary geometric pullback preserves acyclic bounded-above
 flat complexes and quasi-isomorphisms between such complexes.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
 
@@ -51,7 +57,7 @@ theorem stalkwiseFlat_cycles_of_boundedAbove_acyclic {X : Scheme.{u}}
 theorem acyclic_pullback_of_boundedAbove_stalkwiseFlat {X Y : Scheme.{u}} (f : X ⟶ Y)
     (K : CochainComplex Y.Modules ℤ) (hK : ∀ n, stalkwiseFlat Y (K.X n))
     (ha : K.Acyclic) (b : ℤ) (hb : ∀ n, b < n → IsZero (K.X n)) :
-    ((PerfectComplexes.pullbackComplex f).obj K).Acyclic := by
+    ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K).Acyclic := by
   apply HomologicalAlgebra.acyclic_map_of_cycle_sequences
   intro n
   exact shortExact_pullback_of_stalkwiseFlat_quotient f
@@ -84,7 +90,7 @@ theorem quasiIso_pullback_of_boundedAbove_stalkwiseFlat {X Y : Scheme.{u}} (f : 
     (hK : ∀ n, stalkwiseFlat Y (K.X n)) (hL : ∀ n, stalkwiseFlat Y (L.X n))
     (b c : ℤ) (hb : ∀ n, b < n → IsZero (K.X n))
     (hc : ∀ n, c < n → IsZero (L.X n)) (s : K ⟶ L) [QuasiIso s] :
-    QuasiIso ((PerfectComplexes.pullbackComplex f).map s) := by
+    QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map s) := by
   have ht (n : ℤ) : stalkwiseFlat Y ((CochainComplex.mappingCone s).X n) := by
     let e := HomologicalComplex.homotopyCofiber.XIsoBiprod s n (n + 1) rfl
     exact (stalkwiseFlat Y).prop_of_iso e.symm (stalkwiseFlat_biprod Y (hK (n + 1)) (hL n))

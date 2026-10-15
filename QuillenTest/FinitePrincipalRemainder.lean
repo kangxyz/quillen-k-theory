@@ -5,11 +5,18 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FinitePrincipalRemainder
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.StalkFlat
 
 /-! # Original residual homology and genuine cover consumers -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
@@ -31,7 +38,7 @@ theorem original_homology_identity {C : Type u} [Category.{v} C] [Abelian C]
       (DerivedCategory.singleFunctorCompHomologyFunctorIso C n).hom.app (K.homology n) = 𝟙 _ :=
   Quillen.CochainComplex.derivedSingleHomologyIso_homology K n
 
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 open Quillen.ModuleComplex.PrincipalLocalization
 attribute [local instance] HasDerivedCategory.standard
 variable (R : CommRingCat.{u}) {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

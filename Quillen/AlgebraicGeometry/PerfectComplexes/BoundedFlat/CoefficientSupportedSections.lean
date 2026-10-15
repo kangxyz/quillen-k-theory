@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSections
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.PairPullback
 public import Quillen.CategoryTheory.ObjectProperty.NestedEquivalence
@@ -24,12 +25,18 @@ The constructions impose no compactness or flatness condition on the schemes
 or coefficient maps. They supply no supported density or quotient theorem.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.CategoryTheory.StrictSections AlgebraicGeometry.Scheme.CoefficientBaseChange
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.CategoryTheory.StrictSections AlgebraicGeometry.Scheme.BaseChange.Coefficients
+open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {i k t : Index R} {U V W : Scheme.{u}}
@@ -267,10 +274,12 @@ theorem boundedFlatCoefficientSupportedPairPullback_forget :
     boundedFlatPerfectSupportedPullback (boundedFlatCoefficientSupportSquare j j' f l h) ⋙
         (boundedFlatPerfectSupported j').ι =
       (boundedFlatPerfectSupported j).ι ⋙
-        pullbackComplex (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f) :=
+        AlgebraicGeometry.Scheme.Modules.Complex.pullback
+          (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f) :=
   Quillen.ObjectProperty.lift_comp_ι (boundedFlatPerfectSupported j')
     ((boundedFlatPerfectSupported j).ι ⋙
-      pullbackComplex (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
+      AlgebraicGeometry.Scheme.Modules.Complex.pullback
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
     (fun K ↦ boundedFlatPerfectSupported_pairPullback
       (boundedFlatCoefficientSupportSquare j j' f l h) K.property)
 
@@ -280,10 +289,12 @@ theorem boundedFlatCoefficientOriginalPullback_forget :
     boundedFlatPerfectPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f) ⋙
         (boundedFlatPerfect (space k)).ι =
       (boundedFlatPerfect (space i)).ι ⋙
-        pullbackComplex (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f) :=
+        AlgebraicGeometry.Scheme.Modules.Complex.pullback
+          (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f) :=
   Quillen.ObjectProperty.lift_comp_ι (boundedFlatPerfect (space k))
     ((boundedFlatPerfect (space i)).ι ⋙
-      pullbackComplex (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
+      AlgebraicGeometry.Scheme.Modules.Complex.pullback
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
     (fun K ↦ boundedFlatPerfect_pullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f)
       K.property)
 
@@ -305,7 +316,8 @@ theorem boundedFlatCoefficientSupportedEvaluationPullback_forget :
     (boundedFlatPerfectSupported j') (boundedFlatCoefficientSupportedEvaluation j)
     (boundedFlatPerfectSupportedPullback (boundedFlatCoefficientSupportSquare j j' f l h))
     (boundedFlatCoefficientOriginalEvaluation i) (boundedFlatPerfect (space i)).ι
-    (pullbackComplex (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
+    (AlgebraicGeometry.Scheme.Modules.Complex.pullback
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
     (boundedFlatPerfectPullback (AlgebraicGeometry.Scheme.BaseChange.Coefficients.map f))
     (boundedFlatPerfect (space k)).ι (boundedFlatCoefficientSupportedEvaluation_forget j)
     (boundedFlatCoefficientSupportedPairPullback_forget j j' f l h)

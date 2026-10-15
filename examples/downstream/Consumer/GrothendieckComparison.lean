@@ -5,11 +5,16 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.GrothendieckComparison.Functor
 
 /-! An independent client detecting exact-functor K₀ kernels through the
 original classical Grothendieck map, on arbitrary homotopical classes. -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 universe u v

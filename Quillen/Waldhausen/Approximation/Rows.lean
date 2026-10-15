@@ -17,6 +17,9 @@ degrees. No row lifting or contractibility endpoint is assumed.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.QuotientRows
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v'

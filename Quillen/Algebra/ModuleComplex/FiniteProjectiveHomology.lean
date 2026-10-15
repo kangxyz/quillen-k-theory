@@ -25,6 +25,9 @@ no finite generation of lower homology over a noncoherent ring is assumed.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.GilletWaldhausen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -34,7 +37,6 @@ open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated
 open HomologicalComplex
 
 namespace Quillen.ModuleComplex
-open Quillen.Waldhausen.GilletWaldhausen
 variable {R : Type u} [CommRing R]
 
 /-- Actual upper cycle sequences split, making every cycle at or above the cohomological bound

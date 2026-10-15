@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassOriginalNegativeComparison
-public import Quillen.AlgebraicGeometry.Scheme.CoefficientPolynomialLaurentSchemeNaturality
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.PolynomialLaurentSchemeNaturality
 public import Quillen.KTheory.Bass.DiagramTransportNaturality
 
 /-!
@@ -19,12 +20,15 @@ coefficient arrow. No supported, transition, seed or telescope assertion occurs.
 -/
 
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite Quillen.LoopPrespectrum
-open Quillen.Waldhausen.IteratedS Quillen.KTheory.Bass Quillen.PolynomialBaseChange
-open AlgebraicGeometry.Scheme.CoefficientBaseChange
+open Quillen.Waldhausen.IteratedS Quillen.KTheory.Bass
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 universe u w
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)

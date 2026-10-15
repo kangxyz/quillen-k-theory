@@ -16,6 +16,9 @@ S-maps. The simplicial isomorphism retains the chosen zero vertex exactly.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.ExtensionCategory
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

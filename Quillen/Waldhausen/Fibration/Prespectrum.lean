@@ -16,6 +16,9 @@ equivalence is asserted by this construction.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.IteratedS
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

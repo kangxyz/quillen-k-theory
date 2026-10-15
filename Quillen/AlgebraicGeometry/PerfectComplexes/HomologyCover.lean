@@ -5,12 +5,16 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.Algebra.Homology.ConcentratedHomology
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Locality
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Locality
 
 /-! # Actual concentrated vector-bundle homology from open-cover models -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

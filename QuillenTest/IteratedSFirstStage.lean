@@ -10,12 +10,15 @@ public import Quillen.Waldhausen.SConstruction.Iterated.Functoriality
 /-! # Original-map consumers for the first genuine iterated-S structure map -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits Opposite MonoidalCategory
 open scoped Simplicial Topology unitInterval
-open Quillen Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen Quillen.Waldhausen.IteratedS
 universe u v u' v'
 namespace QuillenTest.IteratedSFirstStage
 

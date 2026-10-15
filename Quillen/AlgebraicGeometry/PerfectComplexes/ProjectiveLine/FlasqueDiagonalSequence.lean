@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.Limits.Shapes.CokernelPushout
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueDiagonalExact
 public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 public import Quillen.Waldhausen.ExtensionCategory.Structure
@@ -17,6 +19,11 @@ the actual second projection. Its original maps give a genuine inherited
 conflation, a Waldhausen cofibration sequence and an exact Reedy extension functor.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open CategoryTheory.ExactCategory
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -327,7 +334,7 @@ lemma sequence_isCofibrationSequence (R : CommRingCat.{u}) :
   exactG := E_exact R .second
   exactH := E_exact R .third
   cofibration := incidence_cofibration R
-  cofiber K := Waldhausen.QuillenComparison.isPushoutOfZeroCokernel _
+  cofiber K := CategoryTheory.Limits.isPushout_of_isColimit_cokernel _
     ((modelExactStructure R).cokernel _ (sequence_conflation R K))
     (FlasqueBoundedBelow.waldhausen (twoChartLine R)).isZero _ _
 

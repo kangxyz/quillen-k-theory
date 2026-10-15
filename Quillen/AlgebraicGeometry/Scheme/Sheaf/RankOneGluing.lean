@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.UnitSections
+public import Aglib.AlgebraicGeometry.Modules.StructureSheaf.Sections
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GluingSubobjects
 public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.BinaryProducts
 
@@ -19,10 +19,10 @@ required by the existing subobject-gluing construction.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section
@@ -144,7 +144,7 @@ instance secondColumn_mono {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 /-- The original rank-one transition given by an invertible overlap section. -/
 def columnTransition {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
-    [IsOpenImmersion j] [IsOpenImmersion k] (s : (Γ(pullback j k, ⊤))ˣ) :
+    [IsOpenImmersion j] [IsOpenImmersion k] (s : (Γ(CategoryTheory.Limits.pullback j k, ⊤))ˣ) :
     Scheme.Modules.restrict (SheafOfModules.unit U.ringCatSheaf) (pullback.fst j k) ≅
       Scheme.Modules.restrict (SheafOfModules.unit V.ringCatSheaf) (pullback.snd j k) :=
   Scheme.Modules.restrictUnitIso (pullback.fst j k) ≪≫ unitMulIso _ s ≪≫
@@ -168,7 +168,7 @@ lemma restrictUnitIso_overlap_inv {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ 
 with the displayed unit transition, as required by module-subobject gluing. -/
 lemma columns_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k] (s : Γ(U, ⊤)) (t : Γ(V, ⊤))
-    (v : (Γ(pullback j k, ⊤))ˣ)
+    (v : (Γ(CategoryTheory.Limits.pullback j k, ⊤))ˣ)
     (hs : (pullback.fst j k).appTop.hom s = v)
     (ht : (pullback.snd j k).appTop.hom t = ↑v⁻¹) :
     (Scheme.Modules.restrictFunctor (pullback.fst j k)).map (firstColumn j s) ≫

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalImageExtensions
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalStrictWeakImage
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalProjectiveExtension
@@ -18,6 +19,12 @@ categorical density data. Complement membership retains an actual original
 restriction-to-target weak map, with the actual coproduct comparison.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open CategoryTheory.ExactCategory
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

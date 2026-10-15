@@ -11,8 +11,11 @@ public import Quillen.Waldhausen.GrothendieckComparison.WeakRelations
 actual homotopical Waldhausen K₀, before any classical presentation theorem. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 universe u v
 namespace QuillenTest.WaldhausenWeakObjectClasses
 

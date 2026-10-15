@@ -20,6 +20,11 @@ to a specified cone map with unchanged target face and cylinder values. Stabilit
 section-level descent and comparison with the full open endpoint are separate obligations.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+open Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.IteratedS
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

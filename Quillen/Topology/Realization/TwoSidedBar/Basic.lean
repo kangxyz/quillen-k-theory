@@ -18,6 +18,9 @@ The two-sided bar diagram and its diagonal, row and column objects retain their 
 -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 
 noncomputable section
 open CategoryTheory Opposite MonoidalCategory CartesianMonoidalCategory

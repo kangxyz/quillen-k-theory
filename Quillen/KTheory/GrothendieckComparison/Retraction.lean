@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.KTheory.GrothendieckComparison.Factorization
 public import Quillen.Topology.ClassifyingSpace.CompletionRetraction
 
@@ -19,6 +20,9 @@ classes remain distinct in the actual homotopical K₀. Surjectivity of the
 original comparison is a separate edge-path generation theorem.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 universe v u

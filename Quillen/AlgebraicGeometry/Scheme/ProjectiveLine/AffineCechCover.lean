@@ -20,7 +20,6 @@ No Cech-to-derived comparison or projective bundle formula is asserted. The base
 is an arbitrary commutative ring, including the zero ring.
 -/
 @[expose] public section
-open Quillen
 
 
 noncomputable section

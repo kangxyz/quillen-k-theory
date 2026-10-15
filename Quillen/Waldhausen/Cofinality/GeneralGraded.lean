@@ -17,6 +17,9 @@ the genuine original fibration then proves the unchanged inclusion results.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.Fibration
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

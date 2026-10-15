@@ -11,13 +11,16 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.HomotopyPullback
 /-! Semantic consumers of the actual mapping-cocone homotopy pullback. -/
 @[expose] public section
 
+open Quillen.CochainComplex
+open Quillen.PerfectComplexes
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits HomologicalComplex AlgebraicGeometry
-open Quillen.CochainComplex Quillen.PerfectComplexes
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace QuillenTest.HomotopyPullback
 

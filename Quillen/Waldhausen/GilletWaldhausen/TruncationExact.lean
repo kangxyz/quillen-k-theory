@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.GilletWaldhausen.CyclesExact
 public import Quillen.Waldhausen.GilletWaldhausen.TruncationFunctor
 
@@ -19,6 +21,9 @@ zero objects above it. The forward maps remain mathlib's actual truncation
 maps throughout.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

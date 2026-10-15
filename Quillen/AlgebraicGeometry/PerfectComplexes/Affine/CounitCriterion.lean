@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.BasisQuasiIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalSections
 
@@ -20,6 +21,9 @@ input complex; the displayed principal-comparison premise must be proved by
 geometry in applications.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

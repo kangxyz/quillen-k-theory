@@ -17,6 +17,9 @@ homotopies and their actual coefficient maps on any given homology class.
 -/
 
 @[expose] public section
+
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory
 universe u

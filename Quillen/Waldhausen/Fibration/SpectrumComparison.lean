@@ -24,6 +24,10 @@ theorem, not a Bass nonconnective construction.
 -/
 @[expose] public section
 
+open Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

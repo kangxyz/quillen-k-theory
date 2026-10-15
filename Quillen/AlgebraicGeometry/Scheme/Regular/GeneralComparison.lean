@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Coherent
 public import Quillen.AlgebraicGeometry.Scheme.Regular.SmallComparison
 public import Quillen.Resolution.Theorem
 
@@ -19,10 +20,12 @@ regularity remains a separate commutative-algebra/geometric theorem.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section

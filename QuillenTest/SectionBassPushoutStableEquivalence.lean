@@ -15,9 +15,12 @@ Three original stable corner maps imply stable equivalence of its existing spanM
 negative degrees. Its original C inclusion and full overlap cylinder remain literal.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open Quillen Quillen.LoopPrespectrum
 open scoped unitInterval
 universe u
 namespace QuillenTest.SectionBassPushoutStableEquivalence

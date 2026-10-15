@@ -18,8 +18,10 @@ homotopy. No CW structure, Hausdorff instance, domination, or covering data on
 the pushout is assumed. Actual weakness of the specified map remains a premise.
 -/
 @[expose] public section
+
+open Topology
 noncomputable section
-open CategoryTheory Limits MonoidalCategory Set Topology
+open CategoryTheory Limits MonoidalCategory Set
 open scoped unitInterval
 universe u
 namespace Quillen.DoubleCylinder

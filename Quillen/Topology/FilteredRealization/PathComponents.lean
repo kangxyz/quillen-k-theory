@@ -16,8 +16,10 @@ to a stage where exactly its eventual component identifications already hold.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 open scoped Simplicial unitInterval
 universe u v
 set_option backward.isDefEq.respectTransparency false

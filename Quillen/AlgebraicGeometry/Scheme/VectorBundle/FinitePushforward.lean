@@ -6,12 +6,21 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.AffineProjective
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Coherent
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Locality
+public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.KTheory
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Affine.LocalBases
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Exact
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.FiniteType
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Restriction
+public import Aglib.AlgebraicGeometry.Modules.Pushforward.Isomorphism
+public import Aglib.CategoryTheory.ExactCategory.Functor
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Affine.Projective
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Coherent
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Locality
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Finite.GeneralPushforward
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffinePushforward
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatLocality
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.Flat.Locality
 public import Mathlib.RingTheory.Flat.EquationalCriterion
 
 /-! # Actual finite flat direct image of vector bundles
@@ -25,10 +34,13 @@ or perfect complexes.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+open CategoryTheory.ExactCategory
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section
@@ -96,7 +108,7 @@ theorem finiteLocallyFree_pushforward {Z X : Scheme.{u}} [IsLocallyNoetherian X]
   intro i
   have : IsNoetherianRing (U.X i) :=
     AlgebraicGeometry.Scheme.Modules.Coherent.noetherian_affineChart _ (U.f i)
-  have : IsFiniteLocallyFree (pullback f (U.f i))
+  have : IsFiniteLocallyFree (CategoryTheory.Limits.pullback f (U.f i))
       ((Scheme.Modules.restrictFunctor (pullback.fst f (U.f i))).obj M) :=
     finiteLocallyFree_restrict _ M
   have : IsFiniteLocallyFree (Spec (U.X i))

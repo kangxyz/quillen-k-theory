@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Homology.MappingCone.Identity
 public import Quillen.Waldhausen.Approximation.JointEndpoints
 public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Biproducts
 public import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
@@ -77,8 +78,8 @@ lemma coneIsoOfEq_naturality {K L K' L' : CochainComplex D ℤ}
 
 /-- The actual identity cone commutes with every additive functor. -/
 def identityConeMapIso (K : CochainComplex C ℤ) :
-    (F.mapHomologicalComplex (.up ℤ)).obj (identityConeFunctor.obj K) ≅
-      identityConeFunctor.obj ((F.mapHomologicalComplex (.up ℤ)).obj K) :=
+    (F.mapHomologicalComplex (.up ℤ)).obj (CochainComplex.identityConeFunctor.obj K) ≅
+      CochainComplex.identityConeFunctor.obj ((F.mapHomologicalComplex (.up ℤ)).obj K) :=
   mappingCone.mapHomologicalComplexIso (𝟙 K) F ≪≫
     coneIsoOfEq ((F.mapHomologicalComplex (.up ℤ)).map_id K)
 
@@ -91,10 +92,10 @@ lemma identityConeMapIso_inr (K : CochainComplex C ℤ) :
 
 /-- Naturality of the actual identity-cone comparison. -/
 lemma identityConeMapIso_naturality {K L : CochainComplex C ℤ} (f : K ⟶ L) :
-    (F.mapHomologicalComplex (.up ℤ)).map (identityConeFunctor.map f) ≫
+    (F.mapHomologicalComplex (.up ℤ)).map (CochainComplex.identityConeFunctor.map f) ≫
         (identityConeMapIso F L).hom =
       (identityConeMapIso F K).hom ≫
-        identityConeFunctor.map ((F.mapHomologicalComplex (.up ℤ)).map f) := by
+        CochainComplex.identityConeFunctor.map ((F.mapHomologicalComplex (.up ℤ)).map f) := by
   change (F.mapHomologicalComplex (.up ℤ)).map (mappingCone.map (𝟙 K) (𝟙 L) f f (by simp)) ≫ _ = _
   rw [identityConeMapIso, identityConeMapIso, Iso.trans_hom, Iso.trans_hom,
     ← Category.assoc, coneMapIso_naturality, Category.assoc,

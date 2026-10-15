@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.CategoryTheory.ExactCategory.MatrixInflation
 public import Quillen.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.GrothendieckComparison.Basic
@@ -19,6 +21,9 @@ map is admissible, so exactness preserves this conflation. The canonical
 biproduct comparison then recovers the original mapped pushout square.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

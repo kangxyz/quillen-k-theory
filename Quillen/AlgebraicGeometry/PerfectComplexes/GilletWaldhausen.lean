@@ -18,9 +18,12 @@ no regularity, quasi-compactness or resolution-property hypothesis is needed.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+open Quillen.Waldhausen.GilletWaldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.GilletWaldhausen
 attribute [local instance] Abelian.hasFiniteBiproducts
 universe u
 set_option backward.isDefEq.respectTransparency false

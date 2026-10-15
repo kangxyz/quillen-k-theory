@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalQuasiIsoLifting
 public import Mathlib.Algebra.Homology.DerivedCategory.Fractions
 
@@ -18,6 +19,9 @@ local quasi-isomorphism lifting, gives actual chain representatives near
 each point for derived maps with strict perfect source.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

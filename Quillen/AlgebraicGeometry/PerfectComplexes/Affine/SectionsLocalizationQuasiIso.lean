@@ -5,9 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionsLocalization
 public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalRestriction
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.AffineSections
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Localization.AffineSections
 
 /-!
 # The original localized-section comparison on every principal chart
@@ -29,6 +30,9 @@ localization at zero. Finite-union propagation is a separate Mayer--Vietoris
 argument using this affine-chart theorem as its geometric input.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

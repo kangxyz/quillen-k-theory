@@ -10,13 +10,16 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.QuasicoherentStr
 /-! Semantic consumers of original affine termwise-QC strict chain replacements. -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 attribute [local instance] Quillen.PerfectComplexes.Affine.standardDerivedModules
   Quillen.PerfectComplexes.Affine.standardDerivedSheaves
 namespace QuillenTest.AffineQuasicoherentStrictReplacement

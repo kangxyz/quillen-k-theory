@@ -19,8 +19,13 @@ or base change of that weak map is inferred.
 -/
 @[expose] public section
 
+open Topology
+
+open Quillen.CubicalSubdivision
+
+
 noncomputable section
-open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory Topology
+open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval
 universe u
 set_option backward.isDefEq.respectTransparency false

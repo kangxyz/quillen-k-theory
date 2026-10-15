@@ -5,11 +5,17 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.SourceSupportedDenominators
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.SourceSupportedDenominators
 
 /-! # Original global derived roofs with prescribed source support -/
 @[expose] public section
+
+open HomologicalComplex
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

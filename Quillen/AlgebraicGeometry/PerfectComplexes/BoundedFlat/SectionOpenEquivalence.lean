@@ -16,6 +16,9 @@ actual counit. Both directions are exact for the same original relative-open str
 The target remains the relative model on the ambient scheme, with no full-open identification.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u

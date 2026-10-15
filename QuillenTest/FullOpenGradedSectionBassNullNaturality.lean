@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassSeedDiagramNull
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassSeedDiagramNull
 
 /-!
 # Coordinate consumers of the original graded seed null naturality
@@ -16,9 +16,14 @@ times. The loop-valued seed null retains a separately evaluated output-loop coor
 with the identity target changes neither the original null time nor its prescribed loop value.
 -/
 @[expose] public section
-noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+
 open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
+noncomputable section
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.FullOpenGradedSectionBassNullNaturality
 

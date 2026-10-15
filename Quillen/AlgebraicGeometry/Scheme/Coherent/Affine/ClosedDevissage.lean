@@ -6,6 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
+public import Aglib.CategoryTheory.SmallModel.Abelian
 public import Quillen.Devissage.CentralEndomorphism
 public import Quillen.GTheory.FiniteModules.ClosedSupport
 
@@ -17,6 +21,9 @@ The finite-module quotient equivalence is used only for modules killed by f;
 its passage to all supported modules is the proved image-filtration dévissage.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 open ModuleCat
 

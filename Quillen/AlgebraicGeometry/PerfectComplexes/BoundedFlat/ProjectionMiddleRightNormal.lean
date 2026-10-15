@@ -4,16 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.H1BottomJoinFace
 
 /-! The actual middle-triple right source, including its shared-node and association transports. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassReferenceMerge
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH1Join
@@ -62,17 +70,27 @@ variable {R : CommRingCat.{u}} (P : Over (Spec R)) {a b : Under R} (u : a ⟶ b)
 variable (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
   (ha : coefficientMap P (α.app a) ≫ polynomialProjection P a = laurentProjection P a)
 
+/--
+The chart projection equality with the chart map and polynomial coefficient map composed before
+polynomial projection.
+-/
 abbrev chartMiddleRightGeom := projection_middle_right_geom
   (polynomialProjection P a) (coefficientMap P (α.app a)) (coefficientMap P (α.app b))
   (coefficientMap P ((polynomialUnderFunctor R).map u))
   (coefficientMap P ((laurentUnderFunctor R).map u))
-  (coefficientTransformation_naturality P α u) (laurentProjection P a) ha
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u)
+    (laurentProjection P a) ha
 
+/--
+The source-functor equality for the middle-right chart node, with the first two geometric maps
+composed before normalization.
+-/
 abbrev chartMiddleRightSourceEq := projection_middle_right_source_eq
   (polynomialProjection P a) (coefficientMap P (α.app a)) (coefficientMap P (α.app b))
   (coefficientMap P ((polynomialUnderFunctor R).map u))
   (coefficientMap P ((laurentUnderFunctor R).map u))
-  (coefficientTransformation_naturality P α u) (laurentProjection P a) ha
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u)
+    (laurentProjection P a) ha
 
 /-- The original coefficient node retains the full actual middle-square reference route. -/
 theorem chart_middle_right_normal : BassH0Diagram.chartNodes P u α ha 9 =
@@ -86,7 +104,9 @@ theorem chart_middle_right_normal : BassH0Diagram.chartNodes P u α ha 9 =
     (polynomialProjection P b) (coefficientMap P (α.app b)) (coefficientMap P u)
     (coefficientMap P ((polynomialUnderFunctor R).map u))
     (coefficientMap P ((laurentUnderFunctor R).map u))
-    (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u)
-    (coefficientTransformation_naturality P α u) (laurentProjection P a) ha
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+      (polynomialUnderCoefficient R) u)
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u)
+      (laurentProjection P a) ha
 
 end Quillen.PerfectComplexes.BassH1Join

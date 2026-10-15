@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.Equivalence
 public import Quillen.Topology.HomotopyGroups.Equivalence
 
@@ -19,6 +21,9 @@ an apex object. Thus the existing classifying-space and based-homotopy APIs
 apply directly, without identifying realizations in different universes.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits

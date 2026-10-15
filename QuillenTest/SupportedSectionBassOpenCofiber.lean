@@ -16,8 +16,11 @@ and signed boundary. In particular, the identity algebra retains its actual pull
 No geometric, topology or excision hypothesis is supplied beyond the original open immersion.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen Quillen.LoopPrespectrum Quillen.PerfectComplexes
+open CategoryTheory AlgebraicGeometry Quillen Quillen.LoopPrespectrum
 open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.SupportedSectionBassOpenCofiber

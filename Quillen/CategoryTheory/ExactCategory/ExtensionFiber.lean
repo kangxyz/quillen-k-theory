@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Mathlib.CategoryTheory.Comma.Over.Basic
 public import Mathlib.CategoryTheory.ObjectProperty.FullSubcategory
 public import Mathlib.CategoryTheory.Core
@@ -21,11 +21,13 @@ fiber with a comma category or assume any Theorem B transition condition.
 -/
 @[expose] public section
 
+open CategoryTheory.ExactCategory
+
+
 noncomputable section
 universe v u
 open CategoryTheory CategoryTheory.Limits ZeroObject
 namespace CategoryTheory.ExactCategory.ExactStructure
-open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C)
 

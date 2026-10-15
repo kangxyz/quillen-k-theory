@@ -6,11 +6,15 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.OverQArrows
 public import Quillen.Localization.Serre.KernelPushoutComparison
 
 /-! # Base change for the auxiliary kernel categories -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

@@ -44,35 +44,44 @@ def rightSecondMap : modelOf (boundedFlatPerfectWaldhausen T) ⟶
     (by simp only [comp_obj, boundedFlatNormalizedPullback_obj_zero,
       Quillen.rebaseFunctor_obj_base])
 
+/-- The geometric comparison for the first left binary step, using `f` and `g ≫ h`. -/
 abbrev leftFirstGeometric := BinaryNormalizationSimplex.first f (g ≫ h)
+/-- The normalization comparison for the first left binary step, using `f` and `g ≫ h`. -/
 abbrev leftFirstNormalization := BinaryNormalizationSimplex.second f (g ≫ h)
 
+/-- The geometric comparison for `g` and `h`, postcomposed with normalized pullback along `f`. -/
 def leftSecondGeometric : (NormalizedTripleSimplex.leftMap f g h).functor ≅
     (leftSecondMap f g h).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight
     (isoWhiskerRight (BinaryNormalizationSimplex.geometricIso g h)
       (boundedFlatNormalizedPullback f)) AsSmall.up)
 
+/-- The normalization comparison for `g` and `h`, postcomposed with normalized pullback along `f`.
+-/
 def leftSecondNormalization : (leftSecondMap f g h).functor ≅
     (NormalizedTripleSimplex.targetMap f g h).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight
     (isoWhiskerRight (BinaryNormalizationSimplex.normalizationIso g h)
       (boundedFlatNormalizedPullback f)) AsSmall.up)
 
+/-- The geometric comparison for `f ≫ g` and `h`, after reassociating the composite pullback. -/
 def rightFirstGeometric : (NormalizedTripleSimplex.sourceMap f g h).functor ≅
     (rightFirstMap f g h).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight
     (eqToIso (congrArg boundedFlatNormalizedPullback (Category.assoc f g h).symm) ≪≫
       BinaryNormalizationSimplex.geometricIso (f ≫ g) h) AsSmall.up)
 
+/-- The normalization comparison for the first right binary step, using `f ≫ g` and `h`. -/
 abbrev rightFirstNormalization := BinaryNormalizationSimplex.second (f ≫ g) h
 
+/-- The geometric comparison for `f` and `g`, precomposed with normalized pullback along `h`. -/
 def rightSecondGeometric : (NormalizedTripleSimplex.rightMap f g h).functor ≅
     (rightSecondMap f g h).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight
     (isoWhiskerLeft (boundedFlatNormalizedPullback h)
       (BinaryNormalizationSimplex.geometricIso f g)) AsSmall.up)
 
+/-- The normalization comparison for `f` and `g`, precomposed with normalized pullback along `h`. -/
 def rightSecondNormalization : (rightSecondMap f g h).functor ≅
     (NormalizedTripleSimplex.targetMap f g h).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight

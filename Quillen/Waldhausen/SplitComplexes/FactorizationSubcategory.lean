@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.SplitComplexes.FactorizationQuotient
 
 /-!
@@ -18,6 +19,9 @@ factorization property there; no approximation or K-equivalence theorem is
 an assumption or a conclusion.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

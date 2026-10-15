@@ -9,8 +9,13 @@ public import Quillen.Topology.DoubleMappingCylinder.CWWhitehead
 
 /-! # Independent actual-cylinder recognition clients -/
 @[expose] public section
+
+open Topology
+
+open Quillen.DoubleCylinder
+
 noncomputable section
-open CategoryTheory Limits MonoidalCategory Set Topology
+open CategoryTheory Limits MonoidalCategory Set
 universe u
 namespace Quillen.Consumer.CWDoubleCylinderRecognition
 open DoubleCylinder

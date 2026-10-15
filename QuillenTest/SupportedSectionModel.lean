@@ -15,6 +15,9 @@ uses the actual two open-side maps and their entire composite square. The induce
 prespectrum map retains every level and the independent original structure parameter.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen.IteratedS

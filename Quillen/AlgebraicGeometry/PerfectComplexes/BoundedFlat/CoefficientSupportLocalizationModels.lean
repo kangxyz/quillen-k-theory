@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedSections
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientOpenSections
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.OpenConeComparison
@@ -26,12 +27,18 @@ evaluation equivalences prove stability of this same initial cone descent.
 No cofinality, completion or classical identification is assumed here.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits AlgebraicGeometry Opposite
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration Quillen.Waldhausen.IteratedS
-open AlgebraicGeometry.Scheme.CoefficientBaseChange Quillen.LoopPrespectrum HomologicalComplex
+open Quillen.Waldhausen.Fibration Quillen.Waldhausen.IteratedS
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients Quillen.LoopPrespectrum HomologicalComplex
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)

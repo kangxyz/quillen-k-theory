@@ -31,4 +31,3 @@ theorem exists_preimage_of_homotopy_factorization {X Y Z : Type u}
   exact (congrArg (fun k ↦ k x) he).symm
 
 end Quillen.LocalCoefficients
-

@@ -5,10 +5,16 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerSequence
 
 /-! # The literal Euler endpoint exact functors on strict-perfect coefficients -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -52,7 +58,8 @@ lemma tensor_strictPerfect_of_charts (M : (twoChartLine R).Modules)
     (e : ∀ b, M.restrict (lineChart R b) ≅
       SheafOfModules.unit (Spec (CommRingCat.of (Polynomial R))).ringCatSheaf)
     (K : Complex (twoChartLine R)) (hK : strictPerfect (twoChartLine R) K) :
-    strictPerfect (twoChartLine R) ((tensorByLineComplex M).obj K) := by
+    strictPerfect (twoChartLine R) ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft M).obj K)
+      := by
   obtain ⟨⟨a, b, hab⟩, hf⟩ := hK
   refine ⟨⟨a, b, fun n hn => (moduleTensorLeftFunctor (twoChartLine R) M).map_isZero
     (hab n hn)⟩, fun n => ?_⟩
@@ -70,8 +77,9 @@ lemma squareEndpoint_strictPerfect (A : StrictPerfect (Spec R)) :
 
 /-- The original left unitor, with no choice of derived representative. -/
 def unitEndpointIso : endpointComplex R (sequence R).X₃ ≅
-    (strictPerfect (Spec R)).ι ⋙ pullbackComplex (projection R) :=
-  Functor.isoWhiskerLeft ((strictPerfect (Spec R)).ι ⋙ pullbackComplex (projection R))
+    (strictPerfect (Spec R)).ι ⋙ AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R) :=
+  Functor.isoWhiskerLeft ((strictPerfect (Spec R)).ι ⋙
+    AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R))
     (NatIso.mapHomologicalComplex
       (SheafOfModulesOfCommRing.tensorLeftUnitIso (twoChartLine R).sheaf) (.up ℤ) ≪≫
         Functor.mapHomologicalComplexIdIso _ (.up ℤ)) ≪≫ Functor.rightUnitor _
@@ -114,14 +122,14 @@ def endpointBoundedExactFunctor (M : (twoChartLine R).Modules)
     (hM : ∀ A, strictPerfect (twoChartLine R) ((endpointComplex R M).obj A)) :
     CategoryTheory.ExactCategory.ExactFunctor (strictExactStructure (Spec R))
       (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-        (Quillen.abelianExactStructure (Complex (twoChartLine R)))
+        (CategoryTheory.ExactCategory.abelianExactStructure (Complex (twoChartLine R)))
         (BoundedBelow.objects (twoChartLine R))) where
   toFunctor := endpointBounded R M hM
   map_conflation S hS := by
     have hp := (strictExactPullback (projection R)).map_conflation S hS
     change (S.map (strictPullback (projection R)) |>.map
       (strictPerfect (twoChartLine R)).ι).ShortExact at hp
-    exact hp.map_of_exact (tensorByLineComplex M)
+    exact hp.map_of_exact (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft M)
 
 lemma endpointBounded_exact (M : (twoChartLine R).Modules)
     [IsFiniteLocallyFree (twoChartLine R) M]
@@ -133,10 +141,11 @@ lemma endpointBounded_exact (M : (twoChartLine R).Modules)
   cofibration f hf := (endpointBoundedExactFunctor R M hM).map_inflation f hf
   weak {A B} f hf := by
     let : QuasiIso f.hom := hf
-    let : QuasiIso ((pullbackComplex (projection R)).map f.hom) :=
+    let : QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).map f.hom) :=
       quasiIso_pullback_of_strictPerfect (projection R) A.property B.property f.hom
-    change QuasiIso ((tensorByLineComplex M).map ((pullbackComplex (projection R)).map f.hom))
-    exact tensorByLineComplex_quasiIso M _
+    change QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft M).map
+      ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).map f.hom))
+    exact AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft_quasiIso M _
   pushout hi h := (endpointBoundedExactFunctor R M hM).map_isPushout hi h
 
 /-- Actual Godement totalization followed by the original ordinary projection. -/

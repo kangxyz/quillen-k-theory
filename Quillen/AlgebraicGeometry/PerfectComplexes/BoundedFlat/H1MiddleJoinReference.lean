@@ -4,16 +4,25 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.H0OuterReferenceNodes
 
 /-! Actual full central reference equality at the first/middle H1 cell boundary. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH1H0Boundary
+open Quillen.PerfectComplexes.BassH1References
+open Quillen.PerfectComplexes.BassReferenceMerge
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH1Join
@@ -28,6 +37,10 @@ def postReferenceNode {V W T : Model.{u}} (F : V ⟶ T) (J : W ⟶ T) {H : V ⟶
 variable {R : CommRingCat.{u}} (P : Over (Spec R))
 variable {a b c : Under R} (u : a ⟶ b) (v : b ⟶ c)
 
+/--
+The first H1 central node after Laurent postcomposition, with its Laurent naturality transport
+and binary normalization reference.
+-/
 def firstCenter : BassOverlap.Node P u v :=
   postReferenceNode (BassOverlap.commonReference P u v) (BassH1Components.laurentMap P v)
     (firstIso P u v)
@@ -37,6 +50,10 @@ def firstCenter : BassOverlap.Node P u v :=
         BinaryNormalizationSimplex.total (laurentProjection P b) (coefficientMap P u)⟩ :
       BassH0Diagram.Node P u)
 
+/--
+The middle H1 central node after coefficient precomposition, with its binary Laurent
+normalization reference.
+-/
 def middleCenter : BassOverlap.Node P u v :=
   BassH0Merge.preReferenceNode (BassOverlap.commonReference P u v)
     (BassH1Components.coefficientMapModel P u) (middleIso P u v)

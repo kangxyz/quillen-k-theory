@@ -13,8 +13,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionZero
 The existing Waldhausen zero is retained under actual evaluation and strict coefficient maps.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.PerfectComplexes
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 namespace QuillenTest.BoundedFlatSectionZero
 

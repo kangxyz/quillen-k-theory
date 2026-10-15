@@ -10,10 +10,12 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Spectrum.ConeComparison
 /-! The actual zero-arrow cofiber comparison of bounded-flat inclusion spectra is stable in every
 integer degree. Arbitrary original S-spectrum arrows also retain well-based positive cone points. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 
 open CategoryTheory AlgebraicGeometry Quillen Quillen.LoopPrespectrum
-open Quillen.PerfectComplexes
 open Quillen.Waldhausen.IteratedS hiding zeroHom
 universe u v
 namespace QuillenTest.MappingConeWeakEquivalence

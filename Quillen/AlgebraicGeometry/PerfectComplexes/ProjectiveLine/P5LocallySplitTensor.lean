@@ -6,9 +6,9 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Tensor.LocallySplit
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Pullback
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TensorRestriction
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenCoverExactness
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Pullback
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Restriction
+public import Aglib.AlgebraicGeometry.Modules.Locality.Exactness
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineTensor
 
 /-! # Arbitrary coefficient tensor on an actual locally split sequence
@@ -19,18 +19,8 @@ exactness for an arbitrary coefficient sheaf; it need not be flat.
 -/
 @[expose] public section
 open Quillen
-open Quillen.SchemeSheaf
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.SchemeSheaf
-export AlgebraicGeometry.Scheme.Modules
-  (shortExact_tensorLeft_of_finiteLocallyFree_quotient
-  shortExact_tensorRight_of_finiteLocallyFree_quotient)
-end Quillen.SchemeSheaf
-
-end
 
 
 

@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalHomotopyStep
 public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalRestriction
 
@@ -18,6 +19,9 @@ homotopy after restriction. Finite local freeness is used only for the
 finitely many corrections; global projectivity is never assumed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

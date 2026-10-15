@@ -17,6 +17,9 @@ naturality use the genuine original module-sheaf and derived functors.
 
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 noncomputable section
 
 universe u
@@ -27,7 +30,6 @@ open AlgebraicGeometry.Scheme.ProjectiveLine AlgebraicGeometry.Scheme.Polynomial
 
 namespace QuillenTest.ProjectiveLineDerivedCechTriangle
 
-open Quillen
 
 /-- Use the standard derived category of the original module sheaves. -/
 local instance derivedCechTestsStandard (X : Scheme.{u}) :

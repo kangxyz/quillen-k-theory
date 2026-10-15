@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.CechSections
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.AffineProjective
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Affine.Projective
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Restriction
 public import Quillen.Algebra.ModuleComplex.LaurentModuleCech
 

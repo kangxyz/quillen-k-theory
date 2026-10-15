@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.AuxiliaryBaseChange
 
 /-!
@@ -15,6 +16,9 @@ The structure map of each auxiliary object is inverted in the Serre
 quotient. The comparison retains the actual ambient Q-arrow on morphisms.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

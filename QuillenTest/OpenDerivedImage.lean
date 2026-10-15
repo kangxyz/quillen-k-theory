@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Structure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Dense
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.DualFactorization
@@ -13,13 +14,19 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenDerivedImage
 /-! # Original image, global roof, cofiber and literal dual-lift consumers -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex TopologicalSpace
 universe u
 namespace QuillenTest.OpenDerivedImage
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.OpenDerivedImage
+open Quillen.PerfectComplexes.OpenDerivedImage
 attribute [local instance] HasDerivedCategory.standard Abelian.hasFiniteBiproducts
 
 /-- A backward original weak arrow really preserves the saturated image. -/

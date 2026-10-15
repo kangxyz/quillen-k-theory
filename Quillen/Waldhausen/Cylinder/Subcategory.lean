@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Cylinder.ComplexQuotient
 public import Quillen.Waldhausen.SplitComplexes.FunctorialFactorization
 public import Quillen.CategoryTheory.ExactCategory.SubcategoryCokernel

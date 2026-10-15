@@ -13,9 +13,12 @@ The clients inspect all original weak-arrow boundary squares, both actual triang
 faces and the unchanged basepoint lines, preserving independent geometric coordinates.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Convexity
-open Quillen Quillen.Waldhausen Quillen.Waldhausen.QuotientRows
+open Quillen Quillen.Waldhausen.QuotientRows
 open scoped Simplicial Topology
 universe u v
 namespace QuillenTest.CofiberPrismRealization

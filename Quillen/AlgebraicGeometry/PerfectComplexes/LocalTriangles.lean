@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedStructure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalModels
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Closure
@@ -19,6 +20,9 @@ are locally represented by chain maps, their mapping cones are strict, and
 the triangle comparison is the proved uniqueness of distinguished cones.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

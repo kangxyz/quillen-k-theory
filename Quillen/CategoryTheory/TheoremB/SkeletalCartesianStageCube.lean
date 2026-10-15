@@ -15,6 +15,9 @@ skeleton tower. The finite cube is applied only after both incoming
 boundary comparisons have been proved. -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 noncomputable section
 universe u
 open CategoryTheory Limits Opposite

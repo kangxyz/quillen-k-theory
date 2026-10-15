@@ -18,11 +18,14 @@ therefore exposes the exact loop, including reversal of the mapped source path. 
 with the Laurent-unit loop and the final boundary sign remain separate obligations.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.Fibration
 open scoped Topology
 universe u
 namespace Quillen.PerfectComplexes

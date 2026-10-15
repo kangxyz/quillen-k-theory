@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionForgetLaurent
 
 /-!
@@ -14,9 +15,15 @@ The original section arrows, chosen zero, all four pushout edges, arbitrary open
 fixed-pullback coefficient diagram and whole Laurent action retain their actual parameters.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Quillen.Waldhausen.IteratedS
-open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.SupportedSectionForget
 

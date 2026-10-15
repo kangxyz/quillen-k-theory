@@ -8,12 +8,15 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MWholeSelec
 
 /-! The concrete common 139-simplex retains every original full dependent reference node. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassMWholeOrder
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassMWhole

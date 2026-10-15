@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineCohomology
+public import Aglib.AlgebraicGeometry.Cohomology.Cech.InjectiveCoefficients
+public import Aglib.AlgebraicGeometry.Cohomology.Affine.Vanishing
 public import Quillen.Algebra.Homology.OpcycleBoundary
 
 
@@ -21,8 +22,11 @@ right homology data. Neither the opcycles nor the injective terms are assumed
 quasicoherent. No global exactness of sections on all sheaves is claimed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules
+open Quillen.CochainComplex
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
 
@@ -31,13 +35,13 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Opposite
-open PrimeSpectrum Quillen.Cech HomologicalComplex
+open PrimeSpectrum HomologicalComplex
 namespace AlgebraicGeometry.Scheme.Modules.AffineCech
 
 /-- Actual positive Čech exactness on every finite principal cover of a principal open. -/
 def principalCechAcyclic {R : CommRingCat.{u}} (M : (Spec R).Modules) : Prop :=
   ∀ (r : R) (ι : Type u) [Fintype ι] (f : ι → R),
-    (⨆ i, basicOpen (f i)) = basicOpen r →
+    (⨆ i, PrimeSpectrum.basicOpen (f i)) = PrimeSpectrum.basicOpen r →
       ∀ n : ℕ, (principalCechComplex M f).ExactAt (n + 1)
 
 lemma principalCechAcyclic_of_quasicoherent {R : CommRingCat.{u}}
@@ -46,13 +50,13 @@ lemma principalCechAcyclic_of_quasicoherent {R : CommRingCat.{u}}
 
 lemma principalCechAcyclic_of_injective {R : CommRingCat.{u}}
     (M : (Spec R).Modules) [Injective M] : principalCechAcyclic M :=
-  fun _ _ _ f _ n => affine_injectiveCech_exact_succ M (fun i => basicOpen (f i)) n
+  fun _ _ _ f _ n => affine_injectiveCech_exact_succ M (fun i => PrimeSpectrum.basicOpen (f i)) n
 
 lemma principalCechAcyclic_of_isZero {R : CommRingCat.{u}}
     (M : (Spec R).Modules) (hM : IsZero M) : principalCechAcyclic M := by
   intro r ι _ f hf n
   let F := affineSectionPresheafFunctor R ⋙
-    cechComplexFunctor (fun i => (basicOpen (f i) : (Spec R).Opens))
+    cechComplexFunctor (fun i => (PrimeSpectrum.basicOpen (f i) : (Spec R).Opens))
   have hF : IsZero ((principalCechComplex M f).X (n + 1)) :=
     (HomologicalComplex.eval _ _ (n + 1)).map_isZero (F.map_isZero hM)
   exact ShortComplex.exact_of_isZero_X₂ _ hF
@@ -64,7 +68,7 @@ lemma shortExact_globalSections_of_principalCechAcyclic {R : CommRingCat.{u}}
   let := hS.mono_f
   let := hS.epi_g
   have hs := sections_surjective_of_principalCech_exact_one hS ⊤ isCompact_univ
-    (fun ι _ f hf => hA 1 ι f (by simpa only [basicOpen_one] using hf) 0)
+    (fun ι _ f hf => hA 1 ι f (by simpa only [PrimeSpectrum.basicOpen_one] using hf) 0)
   exact shortExact_sections_of_surjective hS ⊤ hs
 
 /-- Quotients of two genuinely Čech-acyclic terms remain Čech-acyclic. -/
@@ -91,7 +95,6 @@ lemma principalCechAcyclic_extension {R : CommRingCat.{u}}
   exact (hT.homology_exact₂ (n + 1)).isZero_of_both_isZero
     (hA r ι f hf n).isZero_homology (hC r ι f hf n).isZero_homology
 
-open Quillen.CochainComplex
 
 /-- Ascending from the actual lower term bound proves Čech acyclicity of unrestricted opcycles. -/
 lemma principalCechAcyclic_opcycles {R : CommRingCat.{u}}

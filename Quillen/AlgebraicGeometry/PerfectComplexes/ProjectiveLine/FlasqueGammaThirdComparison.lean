@@ -5,10 +5,16 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Carrier
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGammaRightWeakPrecomposition
 
 /-! # Actual Gamma-third identity through the original right-pair contraction and model units -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTensorAdditivity
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -52,7 +58,8 @@ def modelTotalUnderlyingIso (R : CommRingCat.{u}) :
       (FlasqueCoefficients.toPlus (twoChartLine R) ⋙ godementTotalPlus (twoChartLine R)) ⋙
         CochainComplex.Plus.ι (twoChartLine R).Modules :=
   modelTotalRawCarrierIso R ≪≫
-    (plusTotalCarrierIso (twoChartLine R) (FlasqueCoefficients.toPlus (twoChartLine R))
+    (AlgebraicGeometry.Scheme.Modules.Godement.compTotalPlusCarrierIso (twoChartLine R)
+      (FlasqueCoefficients.toPlus (twoChartLine R))
       (FlasqueBoundedBelow.objects (twoChartLine R)).ι
       (FlasqueDiagonal.toPlusUnderlyingIso (twoChartLine R))).symm
 
@@ -75,7 +82,7 @@ def rightQTotalGammaUnderlyingIso (R : CommRingCat.{u}) :
     (FlasqueBoundedBelow.objects (twoChartLine R)).ι
     ((moduleTensorRightFunctor (twoChartLine R)
       (tautologicalQuotientLine R)).mapHomologicalComplex (.up ℤ)) (rightQCarrierIso R) ≪≫
-    (precomposedResolvedCarrierIso (twoChartLine R)
+    (AlgebraicGeometry.Scheme.Modules.Godement.precompResolvedContractionCompιIso (twoChartLine R)
       (FlasqueCoefficients.toPlus (twoChartLine R))
       (FlasqueBoundedBelow.objects (twoChartLine R)).ι
       (FlasqueDiagonal.toPlusUnderlyingIso (twoChartLine R))

@@ -19,9 +19,7 @@ inclusions.
 @[expose] public section
 
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.SchemeSheaf
 
 
 noncomputable section
@@ -85,14 +83,14 @@ instance moduleSecondColumn_mono : Mono (moduleSecondColumn j M s) := by
 /-- Scalar multiplication followed by the original overlap restriction comparison. -/
 def moduleColumnTransition {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k] (M : X.Modules)
-    (v : (Γ(pullback j k, ⊤))ˣ) :
+    (v : (Γ(CategoryTheory.Limits.pullback j k, ⊤))ˣ) :
     (M.restrict j).restrict (pullback.fst j k) ≅
       (M.restrict k).restrict (pullback.snd j k) :=
   moduleMulIso _ v ≪≫ (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).app M
 
 lemma moduleColumns_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k] (M : X.Modules)
-    (s : Γ(U, ⊤)) (t : Γ(V, ⊤)) (v : (Γ(pullback j k, ⊤))ˣ)
+    (s : Γ(U, ⊤)) (t : Γ(V, ⊤)) (v : (Γ(CategoryTheory.Limits.pullback j k, ⊤))ˣ)
     (hs : (pullback.fst j k).appTop.hom s = ↑v)
     (ht : (pullback.snd j k).appTop.hom t = ↑v⁻¹) :
     (Scheme.Modules.restrictFunctor (pullback.fst j k)).map (moduleFirstColumn j M s) ≫

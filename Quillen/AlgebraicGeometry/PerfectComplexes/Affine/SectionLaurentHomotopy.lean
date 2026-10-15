@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionLaurentPullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionPrespectrum
 public import Quillen.CategoryTheory.Functor.IdentityAutomorphismSquare
@@ -18,11 +19,14 @@ Its actual coefficient square gives literal naturality at every homotopy time, i
 all positive realizations and the unchanged degree-zero compact-open loop space.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
-open Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 

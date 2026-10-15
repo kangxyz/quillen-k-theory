@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
+public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasquePhiOffDiagonal
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerInverse
 
@@ -16,6 +19,11 @@ the actual shifted Euler square endpoint. Original right-tensor symmetry,
 two-line associator, signed shift, and the E0 left unitor are retained.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
+open Quillen.PerfectComplexes.ProjectiveLine.StrictPositiveRetraction
+
 
 open CategoryTheory.ExactCategory
 noncomputable section
@@ -33,7 +41,7 @@ open StrictPositiveRetraction FlasqueTwoSummands FlasqueCoefficients
 def boundedRightTensor (R : CommRingCat.{u}) :
     BoundedBelow.Obj (twoChartLine R) ⥤ BoundedBelow.Obj (twoChartLine R) :=
   ObjectProperty.lift _ ((BoundedBelow.objects (twoChartLine R)).ι ⋙
-    tensorByLineRightComplex (tautologicalLine R)) (fun K => by
+    AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)) (fun K => by
       obtain ⟨hp, a, ha⟩ := K.property
       let := ha
       exact ⟨rightTensor_locallyPerfect R hp, a, rightTensor_isStrictlyGE R K.obj a⟩)
@@ -43,6 +51,9 @@ instance boundedRightTensor_additive (R : CommRingCat.{u}) :
   unfold boundedRightTensor
   infer_instance
 
+/-- Right tensor by the tautological line on bounded-below perfect complexes, bundled with
+preservation of degreewise short exact sequences.
+-/
 def boundedRightTensorExactFunctor (R : CommRingCat.{u}) : ExactFunctor
     (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
       (BoundedBelow.objects (twoChartLine R)))
@@ -52,7 +63,7 @@ def boundedRightTensorExactFunctor (R : CommRingCat.{u}) : ExactFunctor
   map_conflation S hs := by
     change (S.map (BoundedBelow.objects (twoChartLine R)).ι).ShortExact at hs
     change ((S.map (BoundedBelow.objects (twoChartLine R)).ι).map
-      (tensorByLineRightComplex (tautologicalLine R))).ShortExact
+      (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R))).ShortExact
     exact hs.map_of_exact _
 
 lemma boundedRightTensor_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
@@ -65,7 +76,7 @@ lemma boundedRightTensor_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
   weak f hf := by
     change QuasiIso f.hom at hf
     let := hf
-    exact rightLineComplex_quasiIso (tautologicalLine R) f.hom
+    exact AlgebraicGeometry.Scheme.Modules.Complex.tensorRight_quasiIso (tautologicalLine R) f.hom
   pushout hi h := (boundedRightTensorExactFunctor R).map_isPushout hi h
 
 /-- Identity chain maps reconcile only the two proofs of right-tensor model membership. -/
@@ -73,11 +84,14 @@ def rightTensorInclusionIso (R : CommRingCat.{u}) :
     FlasqueBoundedBelow.inclusion (twoChartLine R) ⋙ boundedRightTensor R ≅ rightTensor R :=
   NatIso.ofComponents
     (fun K => ObjectProperty.isoMk _
-      (Iso.refl ((tensorByLineRightComplex (tautologicalLine R)).obj K.obj))) (by
+      (Iso.refl ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)).obj
+        K.obj))) (by
         intro K L f
         apply ObjectProperty.hom_ext
-        change (tensorByLineRightComplex (tautologicalLine R)).map f.hom ≫ 𝟙 _ =
-          𝟙 _ ≫ (tensorByLineRightComplex (tautologicalLine R)).map f.hom
+        change (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)).map f.hom
+          ≫ 𝟙 _ =
+          𝟙 _ ≫ (AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)).map
+            f.hom
         simp)
 
 /-- Actual negative pullback of the original strict coefficient, before any totalization. -/
@@ -91,6 +105,7 @@ lemma strictNegativeBounded_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
   ((strictPullback_waldhausenExact (projection R)).comp
     (strictToBoundedBelow_exact (twoChartLine R))).comp (boundedNegativeTwist_exact R)
 
+/-- The strict negative pullback followed by Godement totalization on the two-chart line. -/
 def strictNegativeTotal (R : CommRingCat.{u}) :=
   strictNegativeBounded R ⋙ FlasqueBoundedBelow.total (twoChartLine R)
 
@@ -112,6 +127,9 @@ lemma strictNegativeUnit_weak (R : CommRingCat.{u}) (K : StrictPerfect (Spec R))
     ((boundedNegativeTwist_exact R).weak _ (strictPullbackUnit_weak R K))
     ((BoundedBelow.waldhausen (twoChartLine R)).weq_iso _ inferInstance)
 
+/-- The Godement-totalized comparison from the strict negative pullback to the negative column of
+the totalized base model.
+-/
 def strictNegativeTotalUnit (R : CommRingCat.{u}) :
     strictNegativeTotal R ⟶ strictTotal (Spec R) ⋙ secondTotal R :=
   Functor.whiskerRight (strictNegativeUnit R) (FlasqueBoundedBelow.total (twoChartLine R)) ≫
@@ -125,6 +143,9 @@ lemma strictNegativeTotalUnit_weak (R : CommRingCat.{u}) (K : StrictPerfect (Spe
     (FlasqueBoundedBelow.total_weak ((strictNegativeUnit R).app K) (strictNegativeUnit_weak R K))
     ((FlasqueBoundedBelow.waldhausen (twoChartLine R)).weq_iso _ inferInstance)
 
+/-- The totalized second coproduct inclusion, precomposed with Godement totalization of the strict
+base model.
+-/
 def strictSecondPhiUnit (R : CommRingCat.{u}) :
     strictTotal (Spec R) ⋙ secondTotal R ⟶ strictPhiSecond R :=
   Functor.whiskerLeft (strictTotal (Spec R)) (secondPhiUnit R)
@@ -142,6 +163,9 @@ lemma G1Second_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
     (FlasqueBoundedBelow.waldhausen (Spec R)).weq (G1Second R) :=
   (strictPhiSecond_exact R).comp (G1_exact R)
 
+/-- The comparison to the second `G1` matrix entry, obtained by applying `G1` to the totalized
+negative augmentation and second coproduct inclusion.
+-/
 def negativeToG1Second (R : CommRingCat.{u}) :
     strictNegativeTotal R ⋙ G1 R ⟶ G1Second R :=
   Functor.whiskerRight (strictNegativeTotalUnit R) (G1 R) ≫
@@ -207,6 +231,9 @@ def rightProjectedShiftIso (R : CommRingCat.{u}) :
   (Functor.associator (rightTensor R) (FlasqueBoundedBelow.total (twoChartLine R))
     (G0 R ⋙ modelShift (Spec R) 1)).symm
 
+/-- The associativity identification of right tensor followed by shifted projection with `G1`, after
+the strict negative total functor.
+-/
 def negativeRightProjectedIso (R : CommRingCat.{u}) :
     (strictNegativeTotal R ⋙ rightTensor R) ⋙ projectedShift R ≅
       strictNegativeTotal R ⋙ G1 R :=

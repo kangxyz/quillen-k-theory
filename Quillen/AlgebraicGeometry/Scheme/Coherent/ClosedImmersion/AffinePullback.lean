@@ -6,8 +6,10 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Comparison
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffinePullback
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeProperty
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Comparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Pullback
 public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
 
 /-!
@@ -21,8 +23,6 @@ module-sheaf owner.
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

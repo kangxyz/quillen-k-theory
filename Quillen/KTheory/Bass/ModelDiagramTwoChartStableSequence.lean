@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Polynomial.LaurentUnderSquare
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.KTheory.Bass.ModelDiagramConnectivity
 public import Quillen.KTheory.Bass.TwoChartStableSequence
 public import Quillen.Topology.Prespectrum.PushoutLinearExcision
@@ -24,11 +25,14 @@ Thus all inputs of the structural spectral row are constructed from the actual M
 No chart middle exactness, fundamental sequence, or original seed preservation is an input.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits Quillen.LoopPrespectrum
-open Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange
+open Quillen.Waldhausen.IteratedS
 universe u w
 namespace Quillen.KTheory.Bass
 

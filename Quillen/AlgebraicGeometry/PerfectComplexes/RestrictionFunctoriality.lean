@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.KTheory
 public import Quillen.Waldhausen.Functoriality.KMap
 
@@ -17,6 +18,9 @@ K-maps inherit strict identity and composition laws. The original inclusion
 from strict to locally perfect complexes commutes with restriction.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

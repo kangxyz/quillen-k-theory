@@ -6,8 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeCategory
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeSupport
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.RestrictionExact
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Restriction
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeRestriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Support
 public import Quillen.GTheory.FiniteModules.Localization.Quotient
 public import Mathlib.CategoryTheory.Localization.Equivalence
@@ -21,22 +23,14 @@ is identified with the actual stalk-support condition.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.CoherentScheme
-export AlgebraicGeometry.Scheme.Modules.Coherent
-  (affinePrincipalRestrictionExact affinePrincipalRestriction_additive
-  affinePrincipalRestriction_preservesFiniteColimits
-  affinePrincipalRestriction_preservesFiniteLimits principalRestriction_kernel_eq_support)
-end Quillen.CoherentScheme
-
-end
 
 
 

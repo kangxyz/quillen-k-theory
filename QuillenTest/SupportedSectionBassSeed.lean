@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionBassSeed
 
 /-!
@@ -15,9 +16,15 @@ coefficient maps are retained. Iteration uses the actual constructed seed. The f
 identity-algebra pullback is not identified with the separately supplied original j.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.SupportedSectionBassSeed
 

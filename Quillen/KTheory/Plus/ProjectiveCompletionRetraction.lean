@@ -18,6 +18,9 @@ homotopies is used in this categorical cocone.
 -/
 
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u

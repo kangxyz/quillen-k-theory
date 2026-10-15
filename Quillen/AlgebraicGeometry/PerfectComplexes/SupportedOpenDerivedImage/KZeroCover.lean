@@ -14,6 +14,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.GlobalCof
 /-! # Genuine supported K-zero image reflection on a covering pair -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

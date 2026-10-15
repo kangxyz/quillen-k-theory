@@ -12,8 +12,11 @@ original fine K₀, original grading inverse, all exact functors and original
 object classes. No functorial factorization or cylinder data are present. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
-open CategoryTheory Quillen.Waldhausen
+open CategoryTheory
 universe u v
 namespace QuillenTest.WaldhausenGrothendieckEquivalence
 

@@ -4,17 +4,28 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MSourcePolynomialCenter
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MPolynomialOuterRows
 
 /-! Every full polynomial-path node on the M-source/H0-target boundary. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+open Quillen.PerfectComplexes.BassMComponents
+open Quillen.PerfectComplexes.BassMReferences
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassMOuterJoin
@@ -25,23 +36,41 @@ variable (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
   (ha : coefficientMap P (α.app a) ≫ polynomialProjection P a = laurentProjection P a)
   (hc : coefficientMap P (α.app c) ≫ polynomialProjection P c = laurentProjection P c)
 
+/--
+The target-total source equality for the polynomial projection rectangle, using naturality of
+both coefficient maps.
+-/
 abbrev polynomialTotalEq := targetTotalSourceEq
   (coefficientMap P u) (coefficientMap P v)
   (coefficientMap P ((polynomialUnderFunctor R).map u))
   (coefficientMap P ((polynomialUnderFunctor R).map v))
   (polynomialProjection P a) (polynomialProjection P b) (polynomialProjection P c)
-  (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u).symm
-  (coefficientTransformation_naturality P (polynomialUnderCoefficient R) v).symm
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (polynomialUnderCoefficient R) u).symm
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (polynomialUnderCoefficient R) v).symm
 
+/--
+The moving target-total row reference, transporting along `polynomialTotalEq` before the target
+chart map.
+-/
 def movingTargetRowIso := movingIso P u v α hc ≪≫
   isoWhiskerRight (eqToIso (polynomialTotalEq P u v))
     (normalizedMap (coefficientMap P (α.app c))).functor
 
+/--
+The first original H0 polynomial row reference, transported to the common overlap and normalized
+through the middle triple.
+-/
 def oldFirstPolynomialRowIso := eqToIso (reference_eq P u v) ≪≫
   (polynomialMiddleReference P (u ≫ v) α ha ≪≫ BinaryNormalizationSimplex.total
     (coefficientMap P (α.app c))
     (coefficientMap P ((polynomialUnderFunctor R).map (u ≫ v)) ≫ polynomialProjection P a))
 
+/--
+The second original H0 polynomial row reference, transported to the common overlap and
+normalized through the last triple.
+-/
 def oldSecondPolynomialRowIso := eqToIso (reference_eq P u v) ≪≫
   (BassH1H0Boundary.lastReference P (u ≫ v) α ha ≪≫ BinaryNormalizationSimplex.total
     (coefficientMap P (α.app c)) (polynomialProjection P c ≫ coefficientMap P (u ≫ v)))
@@ -59,8 +88,10 @@ theorem moving_target_total_row (i : Fin 3) :
         (coefficientMap P ((polynomialUnderFunctor R).map u))
         (coefficientMap P ((polynomialUnderFunctor R).map v))
         (polynomialProjection P a) (polynomialProjection P b) (polynomialProjection P c)
-        (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u).symm
-        (coefficientTransformation_naturality P (polynomialUnderCoefficient R) v).symm i)
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+          (polynomialUnderCoefficient R) u).symm
+        (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+          (polynomialUnderCoefficient R) v).symm i)
   exact hn.trans (post_anchor_node (BassOverlap.commonReference P u v)
     (normalizedMap (coefficientMap P (α.app c))) (movingIso P u v α hc)
     (eqToIso (polynomialTotalEq P u v)) _)
@@ -77,8 +108,10 @@ theorem moving_source_total_row (i : Fin 3) :
       (coefficientMap P ((polynomialUnderFunctor R).map u))
       (coefficientMap P ((polynomialUnderFunctor R).map v))
       (polynomialProjection P a) (polynomialProjection P b) (polynomialProjection P c)
-      (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u).symm
-      (coefficientTransformation_naturality P (polynomialUnderCoefficient R) v).symm i)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (polynomialUnderCoefficient R) u).symm
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (polynomialUnderCoefficient R) v).symm i)
 
 /-- The original H0 first polynomial row retains its actual middle-triple source normalization. -/
 theorem old_first_polynomial_row (i : Fin 3) :
@@ -96,8 +129,10 @@ theorem old_first_polynomial_row (i : Fin 3) :
       (polynomialProjection P c) (coefficientMap P (α.app c)) (coefficientMap P (u ≫ v))
       (coefficientMap P ((polynomialUnderFunctor R).map (u ≫ v)))
       (coefficientMap P ((laurentUnderFunctor R).map (u ≫ v)))
-      (coefficientTransformation_naturality P (polynomialUnderCoefficient R) (u ≫ v))
-      (coefficientTransformation_naturality P α (u ≫ v)) (laurentProjection P a) ha i)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (polynomialUnderCoefficient R) (u ≫ v))
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α (u ≫ v))
+        (laurentProjection P a) ha i)
   exact hn.trans (anchor_post_node (normalizedMap (coefficientMap P (α.app c)))
     (eqToIso (reference_eq P u v)) _ _)
 
@@ -116,8 +151,10 @@ theorem old_second_polynomial_row (i : Fin 3) :
       (polynomialProjection P c) (coefficientMap P (α.app c)) (coefficientMap P (u ≫ v))
       (coefficientMap P ((polynomialUnderFunctor R).map (u ≫ v)))
       (coefficientMap P ((laurentUnderFunctor R).map (u ≫ v)))
-      (coefficientTransformation_naturality P (polynomialUnderCoefficient R) (u ≫ v))
-      (coefficientTransformation_naturality P α (u ≫ v)) (laurentProjection P a) ha i)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (polynomialUnderCoefficient R) (u ≫ v))
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α (u ≫ v))
+        (laurentProjection P a) ha i)
   exact hn.trans (anchor_post_node (normalizedMap (coefficientMap P (α.app c)))
     (eqToIso (reference_eq P u v)) _ _)
 

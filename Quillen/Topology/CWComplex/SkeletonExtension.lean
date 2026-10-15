@@ -16,8 +16,10 @@ proved from original open-cell disjointness and characteristic interior
 injectivity. The actual step quotient then gives the unique continuous map.
 -/
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Metric Topology
+open Set Metric
 universe u v
 namespace Quillen.ClassicalCW
 variable {X : Type u} [TopologicalSpace X] [T2Space X]

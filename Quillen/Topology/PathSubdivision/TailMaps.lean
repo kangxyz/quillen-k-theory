@@ -21,6 +21,9 @@ constant prefix, retaining every constant original boundary track.
 -/
 @[expose] public section
 
+open Quillen.CubicalSubdivision
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

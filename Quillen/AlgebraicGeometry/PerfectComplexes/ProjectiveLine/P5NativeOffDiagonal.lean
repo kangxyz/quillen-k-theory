@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativeNegativeVanishing
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativePhi
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativeCoefficientsOne
@@ -18,6 +19,12 @@ Godement augmentations and the prescribed right tensor and signed shift.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,6 +35,7 @@ open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Modules
 namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeEntries
 open FlasqueCoefficients
 
+/-- The standard derived-category instance for sheaves of modules on `Y`. -/
 local instance nativeOffDiagonalDerived (Y : Scheme.{u}) :
     HasDerivedCategory.{u + 1} Y.Modules := HasDerivedCategory.standard _
 
@@ -79,7 +87,7 @@ def firstRightTensorUnit (X : QuasiCompactSchemes.{u}) (K : FlasqueBoundedBelow.
         ((boundedToPlus (nativeLineFunctor.obj X).obj).obj ((P5NativePhi.first X).obj K)) ⟶
       (P5NativeCoefficients.rightTensorPlus X).obj ((firstTotal X).obj K) :=
   ObjectProperty.homMk
-    ((tensorByLineRightComplex (nativeTautologicalLine X)).map
+    ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X)).map
       ((godementTotalUnit (nativeLineFunctor.obj X).obj).app
         ((boundedToPlus (nativeLineFunctor.obj X).obj).obj ((P5NativePhi.first X).obj K)).obj))
 
@@ -88,7 +96,8 @@ lemma firstRightTensorUnit_quasiIso (X : QuasiCompactSchemes.{u})
   let P := (nativeLineFunctor.obj X).obj
   let C := (boundedToPlus P).obj ((P5NativePhi.first X).obj K)
   let : QuasiIso ((godementTotalPlusUnit P).app C).hom := godementTotalPlusUnit_quasiIso P C
-  change QuasiIso ((tensorByLineRightComplex (nativeTautologicalLine X)).map
+  change QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine
+    X)).map
     ((godementTotalPlusUnit P).app C).hom)
   infer_instance
 
@@ -103,7 +112,8 @@ lemma rightTensor_firstTotal_derivedZero (X : QuasiCompactSchemes.{u})
   let N := (boundedToPlus P).obj ((P5NativePhi.second X).obj K)
   let M := (moduleTensorByLineRight (nativeTautologicalLine X)).mapCochainComplexPlus.obj C
   let e : N ≅ M := (CochainComplex.plus P.Modules).isoMk
-    ((tensorByLineComplexSymmetry (nativeTautologicalLine X)).app C.obj)
+    ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeftRightIso (nativeTautologicalLine X)).app
+      C.obj)
   have hm := (second_derivedZero X K).of_iso
     ((derivedPushforwardPlus (nativeProjection.app X).hom).mapIso
       (DerivedCategory.Plus.Q.mapIso e.symm))

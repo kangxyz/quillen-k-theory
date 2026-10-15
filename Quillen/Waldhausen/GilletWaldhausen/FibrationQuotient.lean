@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.LongExactSequence
 public import Quillen.Waldhausen.GilletWaldhausen.FineProductDecomposition
 public import Quillen.Waldhausen.GilletWaldhausen.FibrationModelKEquivalence

@@ -15,6 +15,9 @@ actual ULift homeomorphisms. The coefficient hypothesis already ranges over
 the common universe; no enlargement from smaller coefficients is asserted.
 -/
 @[expose] public section
+
+open Quillen.LocalCoefficients
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

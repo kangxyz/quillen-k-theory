@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PerfectSupport
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SplitFactorization
 public import Quillen.Waldhausen.Fibration.GeneralComparison
@@ -28,6 +29,9 @@ No equivalence with `Perfect U`, density, cofinality, or nonconnective
 Thomason–Trobaugh localization is asserted here.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

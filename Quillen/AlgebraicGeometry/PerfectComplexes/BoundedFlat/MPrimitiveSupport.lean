@@ -22,6 +22,10 @@ theorem moving_support (z : unitInterval × unitInterval) :
         DoubleSquareScalarPaths.coefficientMovingSquareParameter z :=
   collapsed_in BassPrimitiveSupport.coefficient_boundary_in z
 
+/--
+The union of the two consecutive edge images supporting the binary coefficient path in the two-
+simplex.
+-/
 def coefficientEdgeSupport : Set (StdSimplex ℝ (Fin 3)) :=
   {z | ∃ (i : Fin 2) (w : StdSimplex ℝ (Fin 2)),
     StdSimplex.map (coefficientEdgeFace i).toOrderHom w = z}

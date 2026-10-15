@@ -5,19 +5,26 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.UnitTrack
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassStep
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassPasting
-public import Quillen.AlgebraicGeometry.Scheme.Affine.LaurentUnitNaturality
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Units
 public import Quillen.Topology.Prespectrum.RelativeHomotopyIntertwining
 
 /-! Actual Laurent-unit tracks commute relatively with the original coefficient square. -/
 @[expose] public section
+
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
-open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 

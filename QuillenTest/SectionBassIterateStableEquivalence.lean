@@ -16,9 +16,12 @@ An additional consumer checks iteration of the actual original Laurent seed, wit
 that this seed is stable and without choosing a new unit or transition.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open Quillen Quillen.LoopPrespectrum
 universe u
 namespace QuillenTest.SectionBassIterateStableEquivalence
 

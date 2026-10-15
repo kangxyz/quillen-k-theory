@@ -5,11 +5,12 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Pullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPushforwardComparison
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.VectorBundleComplexDirectImage
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementTotalDerivedComparison
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.DerivedPushforward.Total
 public import Quillen.Waldhausen.Functoriality.KMap
 
 /-!
@@ -23,6 +24,8 @@ natural span inside the original flasque model and equality of original K-maps.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Godement
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -33,6 +36,7 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.StrictPositiveRetraction
 
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance positiveStandard (X : Scheme.{u}) : HasDerivedCategory.{u + 1} X.Modules :=
   HasDerivedCategory.standard _
 
@@ -168,13 +172,15 @@ lemma strictTotal_obj (X : Scheme.{u}) (K : StrictPerfect X) :
 lemma positive_obj (R : CommRingCat.{u}) (K : StrictPerfect (Spec R)) :
     ((positive R).obj K).obj =
       ((Scheme.Modules.pushforward (projection R)).mapHomologicalComplex (.up ℤ)).obj
-        ((godementTotal (twoChartLine R)).obj ((pullbackComplex (projection R)).obj K.obj)) := rfl
+        ((godementTotal (twoChartLine R)).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback
+          (projection R)).obj K.obj)) := rfl
 
 /-- Original source chain maps remain the original pulled, totalized, and pushed chain maps. -/
 lemma positive_map (R : CommRingCat.{u}) {K L : StrictPerfect (Spec R)} (f : K ⟶ L) :
     ((positive R).map f).hom =
       ((Scheme.Modules.pushforward (projection R)).mapHomologicalComplex (.up ℤ)).map
-        ((godementTotal (twoChartLine R)).map ((pullbackComplex (projection R)).map f.hom)) := rfl
+        ((godementTotal (twoChartLine R)).map ((AlgebraicGeometry.Scheme.Modules.Complex.pullback
+          (projection R)).map f.hom)) := rfl
 
 /-- The actual totalized source retains each specified original strict lower bound. -/
 lemma strictTotal_isStrictlyGE (X : Scheme.{u}) (K : StrictPerfect X) (a : ℤ)
@@ -211,7 +217,7 @@ lemma positiveUnit_app (R : CommRingCat.{u}) (K : StrictPerfect (Spec R)) :
       (projectionPullbackComplexUnit R ((strictToPlus (Spec R)).obj K)).hom ≫
         ((Scheme.Modules.pushforward (projection R)).mapHomologicalComplex (.up ℤ)).map
           ((godementTotalUnit (twoChartLine R)).app
-            ((pullbackComplex (projection R)).obj K.obj)) := rfl
+            ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R)).obj K.obj)) := rfl
 
 /-- Every actual strict-source canonical unit is an original quasi-isomorphism. -/
 lemma positiveUnit_weak (R : CommRingCat.{u}) (K : StrictPerfect (Spec R)) :

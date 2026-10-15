@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.AffineExtension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRetractComplement
 
@@ -26,6 +27,9 @@ used for compact overlaps, without a global affine-diagonal hypothesis.
 Global morphism roofs and a K-theory localization endpoint are separate results.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

@@ -4,17 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionPath
 public import Quillen.Waldhausen.SConstruction.Iterated.RealizationSimplexComposition
 
 /-! The full prescribed Laurent-composition cylinder face in one actual product simplex. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Convexity Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
 open scoped Simplicial Topology unitInterval
 universe u
@@ -22,10 +26,16 @@ namespace Quillen.PerfectComplexes.BassLaurentBottomFace
 variable {R : CommRingCat.{u}} (P : Over (Spec R))
 variable {a b c : Under R} (u : a ⟶ b) (v : b ⟶ c)
 
+/-- The Laurent coefficient scheme map induced by `v`. -/
 abbrev firstMap := coefficientMap P ((laurentUnderFunctor R).map v)
+/-- The Laurent coefficient scheme map induced by `u`. -/
 abbrev secondMap := coefficientMap P ((laurentUnderFunctor R).map u)
+/-- The source model map of the binary normalization triangle for the two Laurent coefficient
+maps. -/
 abbrev source := BinaryNormalizationSimplex.sourceMap (firstMap P v) (secondMap P u)
 
+/-- The source, intermediate, and target model maps of the Laurent binary normalization
+triangle. -/
 def vertices : Fin 3 →
     (modelOf (boundedFlatPerfectWaldhausen (space (op P, (laurentUnderFunctor R).obj a))) ⟶
       modelOf (boundedFlatPerfectWaldhausen
@@ -34,6 +44,8 @@ def vertices : Fin 3 →
     BinaryNormalizationSimplex.intermediateMap (firstMap P v) (secondMap P u),
     BinaryNormalizationSimplex.targetMap (firstMap P v) (secondMap P u)]
 
+/-- The identity, first-step, and total references from the source to the three Laurent
+vertices. -/
 def references : ∀ i, (source P u v).functor ≅ (vertices P u v i).functor :=
   Fin.cases (Iso.refl _)
     (Fin.cases (BinaryNormalizationSimplex.first (firstMap P v) (secondMap P u))

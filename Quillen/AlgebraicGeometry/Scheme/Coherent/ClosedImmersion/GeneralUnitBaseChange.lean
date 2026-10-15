@@ -6,6 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.OpenImmersion
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralPullback
 
 /-!
@@ -18,10 +22,12 @@ an arbitrary isomorphism between the four underlying functors.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section
@@ -123,9 +129,10 @@ variable [IsLocallyNoetherian Z] [IsLocallyNoetherian X] [IsLocallyNoetherian V]
 
 /-- The unit codomain comparison on the actual coherent categories. -/
 def coherentUnitTargetOpenBaseChange (M : FiniteTypeSheaves X) :
-    (finiteTypeSheavesRestriction a).obj ((coherentPushforward i).obj ((coherentPullback i).obj M))
+    (finiteTypeSheavesRestriction a).obj
+      ((finiteTypePushforward i).obj ((coherentPullback i).obj M))
       ≅
-      (coherentPushforward (pullback.snd i a)).obj
+      (finiteTypePushforward (pullback.snd i a)).obj
         ((coherentPullback (pullback.snd i a)).obj ((finiteTypeSheavesRestriction a).obj M)) :=
   (affineLocallyFiniteType V).fullyFaithfulι.preimageIso (unitTargetOpenBaseChange i a M.obj)
 

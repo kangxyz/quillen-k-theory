@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Restriction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ExtensionByZeroBaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.AffineExtension
@@ -22,6 +23,9 @@ The original global adjunction counit is then a quasi-isomorphism on this
 class. There is no compactness, separation, affine, or termwise-QC premise.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

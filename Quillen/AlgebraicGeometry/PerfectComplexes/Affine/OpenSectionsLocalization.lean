@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionsLocalizationQuasiIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenSectionsBounds
 public import Quillen.Waldhausen.Duality.PullbackGluing
@@ -25,6 +26,13 @@ are included. The endpoint retains the original localization numerator and
 strict shrinking-open square from SectionsLocalization.
 -/
 @[expose] public section
+
+open HomologicalComplex
+open Quillen.SheafCohomology
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -102,7 +110,6 @@ lemma quasiIso_sectionsLocalizationComplexComparison_sup {R : CommRingCat.{u}} (
     (sectionsLocalizationComplexComparison_restrict R r inf_le_left I)
     (sectionsLocalizationComplexComparison_restrict R r inf_le_right I)
 
-open Quillen.SheafCohomology
 
 /-- Empty-open localization is an actual isomorphism between zero complexes. -/
 lemma isIso_sectionsLocalizationComplexComparison_bot (R : CommRingCat.{u}) (r : R)

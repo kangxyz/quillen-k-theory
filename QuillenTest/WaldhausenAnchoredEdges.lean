@@ -12,8 +12,11 @@ public import Quillen.Waldhausen.GrothendieckComparison.ClassicalMap
 one-simplices and their coherent original zero-object anchors. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
-open CategoryTheory CategoryTheory.Limits Quillen.Waldhausen
+open CategoryTheory CategoryTheory.Limits
 open scoped Simplicial Topology
 universe u
 namespace QuillenTest.WaldhausenAnchoredEdges

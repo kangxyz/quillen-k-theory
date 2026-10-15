@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OppositeJointData
 public import Quillen.Waldhausen.WeakArrow.JointData
 public import Quillen.Waldhausen.Approximation.Dual
@@ -35,6 +36,9 @@ nontrivial-ring hypothesis is imposed.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 open CategoryTheory.ExactCategory
 
 noncomputable section
@@ -42,7 +46,6 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.Waldhausen
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.Affine
 

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenModuleReconstruction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.Strictification
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FinitePrincipalRemainder
@@ -28,6 +29,9 @@ homology, or full localization theorem is inferred here. Arbitrarily small
 cutoffs are retained for the subsequent genuine Ext-vanishing argument.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

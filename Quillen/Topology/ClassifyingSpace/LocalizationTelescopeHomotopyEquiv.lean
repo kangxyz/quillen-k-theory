@@ -13,6 +13,9 @@ public import Quillen.CategoryTheory.GroupCompletion.TelescopeInterchangeEquival
 /-! # Genuine homotopy equivalences for the original completed stage maps -/
 
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u v

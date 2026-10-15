@@ -5,12 +5,19 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.Limits.Shapes.CokernelPushout
+public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueNegativeGamma
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueDiagonalComparisons
 public import Quillen.Waldhausen.ExtensionCategory.Functoriality
 
 /-! # The original diagonal conflation after actual left negative-line totalization -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueDiagonal
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -98,7 +105,7 @@ lemma tensorSequence_isCofibrationSequence (R : CommRingCat.{u}) :
   exactG := tensorVertex_exact R .second
   exactH := tensorVertex_exact R .third
   cofibration := tensorIncidence_cofibration R
-  cofiber K := Waldhausen.QuillenComparison.isPushoutOfZeroCokernel _
+  cofiber K := CategoryTheory.Limits.isPushout_of_isColimit_cokernel _
     ((exactStructure R).cokernel _ (tensorSequence_conflation R K))
     (FlasqueBoundedBelow.waldhausen (twoChartLine R)).isZero _ _
 
@@ -132,7 +139,7 @@ lemma tensorExtension_obj_hom (R : CommRingCat.{u})
 lemma tensorVertex_obj (R : CommRingCat.{u}) (v : Vertex)
     (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     ((tensorVertex R v).obj K).obj = (godementTotal (twoChartLine R)).obj
-      ((tensorByLineComplex (tautologicalLine R)).obj
+      ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R)).obj
         (((Scheme.Modules.pushforward (relativeSecond R)).mapHomologicalComplex (.up ℤ)).obj
           ((godementTotal (relativeSquare R)).obj
             (((coefficient R v).mapHomologicalComplex (.up ℤ)).obj K.obj)))) := by
@@ -145,7 +152,8 @@ The named original incidence retains its literal pushed coefficient map and sour
 lemma tensorIncidence_original (R : CommRingCat.{u})
     (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     ((tensorIncidence R).app K).hom = (godementTotal (twoChartLine R)).map
-      ((tensorByLineComplex (tautologicalLine R)).map ((incidence R).app K).hom) :=
+      ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R)).map ((incidence
+        R).app K).hom) :=
   Gamma_map R ((incidence R).app K)
 
 /-- The quotient chain map is actual LEFT tensor followed by total of the original quotient.
@@ -154,7 +162,8 @@ The named original quotient retains its literal closed-diagonal coefficient and 
 lemma tensorQuotient_original (R : CommRingCat.{u})
     (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     ((tensorQuotient R).app K).hom = (godementTotal (twoChartLine R)).map
-      ((tensorByLineComplex (tautologicalLine R)).map ((quotient R).app K).hom) :=
+      ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalLine R)).map ((quotient
+        R).app K).hom) :=
   Gamma_map R ((quotient R).app K)
 
 /-- Each transported original vertex retains the specified input lower bound. -/

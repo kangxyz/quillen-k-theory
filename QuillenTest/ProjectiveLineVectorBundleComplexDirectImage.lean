@@ -11,6 +11,9 @@ public import Mathlib.Data.ZMod.Basic
 
 /-! # Consumers of original strict-complex projection and negative-twist maps -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -24,7 +27,6 @@ open Quillen
 local instance standardDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
   HasDerivedCategory.standard _
 
-open Quillen.PerfectComplexes
 
 /-- Each actual complex-unit component is the original geometric adjunction unit. -/
 theorem original_unit_component (R : CommRingCat.{u})

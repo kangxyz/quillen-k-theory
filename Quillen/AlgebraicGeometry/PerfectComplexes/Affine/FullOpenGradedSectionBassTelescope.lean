@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import
-  Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassTransitionNull
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassTransitionNull
 public import Quillen.KTheory.Bass.ModelDiagramConnectivity
 public import Quillen.Topology.Prespectrum.TelescopeDiagram
 public import Quillen.Topology.Prespectrum.TelescopeStableRepresentability
@@ -22,8 +22,11 @@ original Model-stage theorem. No individual stage-vanishing premise is used. Tra
 original restriction deficit and the full localization conclusion remain separate.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes

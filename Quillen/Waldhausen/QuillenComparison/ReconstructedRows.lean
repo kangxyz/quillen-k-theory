@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.Waldhausen.QuillenComparison.ReconstructionIndices
 public import Quillen.Waldhausen.QuillenComparison.ExtendedRows
 public import Quillen.Waldhausen.QuillenComparison.FlagPresentation
@@ -13,6 +14,9 @@ public import Quillen.Waldhausen.QuillenComparison.BisimplicialMap
 
 /-! # The reconstructed edgewise row and its original central chain -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

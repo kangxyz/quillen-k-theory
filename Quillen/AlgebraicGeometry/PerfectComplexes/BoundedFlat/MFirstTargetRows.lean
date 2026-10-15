@@ -4,16 +4,27 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MChartSideRows
 
 /-! Full original row representations for the first path of the target reassociation word. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1Join
+open Quillen.PerfectComplexes.BassMComponents
+open Quillen.PerfectComplexes.BassMReferences
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassMOuterJoin
@@ -24,27 +35,45 @@ variable (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
   (hb : coefficientMap P (α.app b) ≫ polynomialProjection P b = laurentProjection P b)
   (hc : coefficientMap P (α.app c) ≫ polynomialProjection P c = laurentProjection P c)
 
+/--
+The middle-source isomorphism for the polynomial projection square along `v`, retaining the
+coefficient map along `u`.
+-/
 abbrev polynomialMiddleIso := DoubleSquareCommonSimplex.middleSourceIso
   (coefficientMap P u) (coefficientMap P v)
   (coefficientMap P ((polynomialUnderFunctor R).map v))
   (polynomialProjection P b) (polynomialProjection P c)
-  (coefficientTransformation_naturality P (polynomialUnderCoefficient R) v).symm
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+    (polynomialUnderCoefficient R) v).symm
 
+/-- The normalized polynomial map along `v` followed by the normalized chart map at `c`. -/
 abbrev targetPost := normalizedMap (coefficientMap P ((polynomialUnderFunctor R).map v)) ≫
   normalizedMap (coefficientMap P (α.app c))
 
+/--
+The first moving target-row reference, using the polynomial last-source transport before chart
+postcomposition at `c`.
+-/
 def movingFirstTargetIso := movingIso P u v α hc ≪≫ isoWhiskerRight
   (polynomialLastIso P u v ≪≫ BinaryNormalizationSimplex.total
     (coefficientMap P ((polynomialUnderFunctor R).map v))
     (coefficientMap P ((polynomialUnderFunctor R).map u) ≫ polynomialProjection P a))
   (normalizedMap (coefficientMap P (α.app c))).functor
 
+/--
+The second moving target-row reference, using the polynomial middle-source transport before
+chart postcomposition at `c`.
+-/
 def movingSecondTargetIso := movingIso P u v α hc ≪≫ isoWhiskerRight
   (polynomialMiddleIso P u v ≪≫ BinaryNormalizationSimplex.total
     (coefficientMap P ((polynomialUnderFunctor R).map v))
     (polynomialProjection P b ≫ coefficientMap P u))
   (normalizedMap (coefficientMap P (α.app c))).functor
 
+/--
+The product target reference obtained by prewhiskering the final chart-square node by the
+polynomial source along `u`.
+-/
 def productTargetIso := BassH1References.chartIso P u v α hb ≪≫
   isoWhiskerLeft (CoefficientSquareFamilies.polynomialSource P u).functor
     (CoefficientSquareFamilies.chartNodes P v α 4).2
@@ -62,8 +91,10 @@ theorem moving_first_target_row (i : Fin 3) :
       (coefficientMap P ((polynomialUnderFunctor R).map u))
       (coefficientMap P ((polynomialUnderFunctor R).map v))
       (polynomialProjection P a) (polynomialProjection P b) (polynomialProjection P c)
-      (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u).symm
-      (coefficientTransformation_naturality P (polynomialUnderCoefficient R) v).symm i)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (polynomialUnderCoefficient R) u).symm
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (polynomialUnderCoefficient R) v).symm i)
   exact hn.trans (post_post_node (BassOverlap.commonReference P u v)
     (normalizedMap (coefficientMap P ((polynomialUnderFunctor R).map v)))
     (normalizedMap (coefficientMap P (α.app c)))
@@ -81,8 +112,10 @@ theorem moving_second_target_row (i : Fin 3) :
       (coefficientMap P ((polynomialUnderFunctor R).map u))
       (coefficientMap P ((polynomialUnderFunctor R).map v))
       (polynomialProjection P a) (polynomialProjection P b) (polynomialProjection P c)
-      (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u).symm
-      (coefficientTransformation_naturality P (polynomialUnderCoefficient R) v).symm i)
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (polynomialUnderCoefficient R) u).symm
+      (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+        (polynomialUnderCoefficient R) v).symm i)
   exact hn.trans (post_post_node (BassOverlap.commonReference P u v)
     (normalizedMap (coefficientMap P ((polynomialUnderFunctor R).map v)))
     (normalizedMap (coefficientMap P (α.app c)))
@@ -114,7 +147,8 @@ theorem product_first_target_row (i : Fin 3) :
   (product_target_column P u v α hb _).trans (post_square_first_nodes
     (coefficientMap P ((polynomialUnderFunctor R).map u)) (polynomialProjection P a)
     (polynomialProjection P b) (coefficientMap P u)
-    (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u)
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+      (polynomialUnderCoefficient R) u)
     (BassOverlap.commonReference P u v) (targetPost P v α) (productTargetIso P u v α hb) i)
 
 /-- The product second target row retains its actual polynomial-square source equality. -/
@@ -126,13 +160,15 @@ theorem product_second_target_row (i : Fin 3) :
         (NativeSquareFiveSimplex.sourceIso
           (coefficientMap P ((polynomialUnderFunctor R).map u)) (polynomialProjection P a)
           (polynomialProjection P b) (coefficientMap P u)
-          (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u))
+          (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+            (polynomialUnderCoefficient R) u))
         (targetPost P v α).functor)
       (binaryNodes (polynomialProjection P b) (coefficientMap P u) i) :=
   (product_target_column P u v α hb _).trans (post_square_second_nodes
     (coefficientMap P ((polynomialUnderFunctor R).map u)) (polynomialProjection P a)
     (polynomialProjection P b) (coefficientMap P u)
-    (coefficientTransformation_naturality P (polynomialUnderCoefficient R) u)
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+      (polynomialUnderCoefficient R) u)
     (BassOverlap.commonReference P u v) (targetPost P v α) (productTargetIso P u v α hb) i)
 
 end Quillen.PerfectComplexes.BassMOuterJoin

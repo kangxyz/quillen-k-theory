@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.GrothendieckComparison.Basic
 
@@ -15,6 +16,9 @@ squares. All kernel and cokernel properties are derived from the original
 universal square, with no abelian ambient category required.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits

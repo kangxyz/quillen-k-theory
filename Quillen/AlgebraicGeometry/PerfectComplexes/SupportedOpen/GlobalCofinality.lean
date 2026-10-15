@@ -21,6 +21,10 @@ and categorical premise; forward maps remain literal original restrictions.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes.SupportedOpenDerivedImage
+open Quillen.Waldhausen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

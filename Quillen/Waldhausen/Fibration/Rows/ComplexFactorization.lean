@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.Rows.JointFactorization
 public import Quillen.Waldhausen.Fibration.ComplexChainReplacement
 public import Quillen.Waldhausen.Cylinder.JointExact
@@ -18,6 +19,9 @@ identity-cone formulas at each interval. Reedy row cofibrancy and exact
 middle functoriality are proved, rather than inferred from component cofibrancy.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen.SplitFactorization
+
 
 open CategoryTheory.ExactCategory
 

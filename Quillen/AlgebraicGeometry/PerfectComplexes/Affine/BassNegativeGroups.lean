@@ -8,7 +8,7 @@ module
 
 public import Quillen.KTheory.Bass.Iteration
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.KZeroFunctor
-public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurent
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Basic
 
 /-!
 Genuine Bass negative affine groups, starting with the unchanged original perfect K0 functor. The
@@ -19,6 +19,9 @@ exactness are separate statements.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -26,7 +29,6 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 namespace Quillen.Bass
-open Quillen.PerfectComplexes
 
 /-- The standard Bass recursion, starting with the unchanged original affine K0 functor. -/
 def negativeKFunctor (n : ℕ) : CommRingCat.{u} ⥤ AddCommGrpCat.{u+1} :=

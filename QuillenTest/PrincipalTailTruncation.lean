@@ -11,12 +11,16 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedCompariso
 /-! Semantic consumers of actual projective locality and lower-tail cutoff. -/
 @[expose] public section
 
+open Quillen.CochainComplex
+open Quillen.PerfectComplexes
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.ModuleComplex.PrincipalLocalization Quillen.CochainComplex Quillen.PerfectComplexes
+open Quillen.ModuleComplex.PrincipalLocalization
 open Quillen.PerfectComplexes.Affine
 attribute [local instance] HasDerivedCategory.standard
 namespace QuillenTest.PrincipalTailTruncation

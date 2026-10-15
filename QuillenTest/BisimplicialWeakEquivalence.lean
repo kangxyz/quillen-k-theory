@@ -14,6 +14,10 @@ weak-only finite attachments and the prescribed colimit comparison.
 -/
 @[expose] public section
 
+open Quillen.BisimplicialRealization
+open Quillen.TheoremA
+
+
 noncomputable section
 open CategoryTheory Limits Opposite MonoidalCategory
 open scoped Simplicial Topology

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.SupportedEquality
 public import Quillen.Algebra.Homology.DerivedFinitePreEqualityDenominators
 
@@ -15,6 +16,9 @@ or chain homotopy is retained on a common source-supported global denominator.
 The statements concern finite families; no higher coherence is asserted.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

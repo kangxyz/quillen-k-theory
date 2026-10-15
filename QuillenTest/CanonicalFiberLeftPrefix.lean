@@ -11,10 +11,15 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PolynomialScalar
 
 /-! # Original fiber-prefix and specified component-translation consumers -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.PolynomialLaurent
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry unitInterval
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.Waldhausen.Fibration
+open Quillen.PerfectComplexes.Affine
   AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped Topology
 universe u v

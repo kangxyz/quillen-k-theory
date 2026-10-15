@@ -5,11 +5,15 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.LocalModels
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SchemeDerivedHomVanishing
 
 /-! # Genuine uniform low-single Hom vanishing for compact semi-separated schemes -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

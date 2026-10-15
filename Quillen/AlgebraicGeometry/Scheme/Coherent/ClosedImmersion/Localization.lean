@@ -6,6 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.ClosedImmersion.IdealPushforward
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Restriction
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeRestriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.Devissage
@@ -20,10 +24,12 @@ finite-image dévissage. All groups are the public upper-universe G-groups.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section
@@ -33,7 +39,7 @@ universe u w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Principal
 
 private theorem exact_transport
     {A B C A' B' C' : Type w}
@@ -76,7 +82,9 @@ local instance : (coherentRestrictionExact (principalOpen R f)).toFunctor.IsLoca
 /-- Actual closed-scheme G-theory agrees with the public supported G-group,
 by the proved geometric dévissage and exact small-presentation comparisons. -/
 def closedSupportedGEquiv (n : ℕ) :
-    AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec (principalRing R f)) n ≃* SupportedG
+    AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec
+      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+      (Ideal.span {f}))) n ≃* SupportedG
       (principalOpen R f) n :=
   (closedSupportGEquiv R f n).trans (coherentPrincipalSupportedGEquiv R f n).symm
 
@@ -97,7 +105,9 @@ theorem closedSupportedGEquiv_pushforward (n : ℕ) :
 def closedConnectingHom (n : ℕ) :
     AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec (CommRingCat.of (Localization.Away f))) (n +
       1) →*
-      AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec (principalRing R f)) n :=
+      AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec
+        (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+        (Ideal.span {f}))) n :=
   (closedSupportedGEquiv R f n).symm.toMonoidHom.comp (globalPrincipalConnectingHom R f n)
 
 /-- Exactness at G_n(Spec R), with canonical actual i_* and j*. -/
@@ -160,4 +170,4 @@ theorem principal_closed_open_GZero_tail :
     pushforward_range_eq_restriction_ker R f 0,
     globalPrincipal_GZero_surjective R f⟩
 
-end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Principal

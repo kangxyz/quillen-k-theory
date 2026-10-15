@@ -6,10 +6,11 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.Topology.HomotopyGroups.Map
 public import Quillen.CategoryTheory.QConstruction.Functor
 public import Quillen.KTheory.Basic
-public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
+public import Aglib.CategoryTheory.ExactCategory.Isomorphisms
 public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Iso
 
 /-!
@@ -25,6 +26,9 @@ This construction uses the supplied isomorphism. Independence from this choice,
 and compatibility with a separate path-transport construction, are not claimed.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

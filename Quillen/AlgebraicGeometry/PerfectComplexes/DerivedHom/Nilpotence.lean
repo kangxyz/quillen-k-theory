@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.OpenUnion
 
 
@@ -23,6 +24,13 @@ conclusion retains a power of the original chain map. Local nullity is not
 mistaken for global nullity; the Mayer–Vietoris step raises the exponent.
 -/
 @[expose] public section
+
+open HomologicalComplex
+open Quillen.CochainComplex
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section
@@ -60,7 +68,6 @@ end Quillen.CochainComplex
 
 namespace Quillen.PerfectComplexes.OpenHomotopyGluing
 attribute [local instance] HasDerivedCategory.standard
-open Quillen.CochainComplex
 variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
   [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]
   (h : a ≫ j = b ≫ k)

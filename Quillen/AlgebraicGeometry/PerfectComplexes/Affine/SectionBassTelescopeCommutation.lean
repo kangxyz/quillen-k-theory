@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.Square
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassTopology
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassSuccessor
 public import Quillen.KTheory.Bass.StrictDiagramTelescope
@@ -19,10 +20,13 @@ seed to its Bass image, giving a comparison from the unchanged successor-stage t
 All topology hypotheses are discharged for the actual original section model and its iterates.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 

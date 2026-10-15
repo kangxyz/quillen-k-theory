@@ -20,6 +20,9 @@ in degree zero. The remaining degree-zero endpoint is retained literally.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.Fibration
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

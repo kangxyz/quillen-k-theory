@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.SectionPullbackTensorStalk
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.SheafStalkShortExact
+public import Aglib.AlgebraicGeometry.Modules.Tensor.SectionStalk
+public import Aglib.Algebra.Category.ModuleCat.ChangeOfRings.Exactness
+public import Aglib.AlgebraicGeometry.Modules.Stalk.Exactness
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalRestrictedStalkExactness
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalBundleTensorTriangle
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalTensorTriangle
@@ -19,6 +20,9 @@ pullback/tensor/scalar comparisons. Off the original diagonal, the original
 incidence stalk is an isomorphism and the original quotient stalk vanishes.
 -/
 @[expose] public section
+
+open AlgebraicGeometry
+
 open Quillen
 
 noncomputable section
@@ -49,7 +53,7 @@ theorem diagonalBundleTensorSequence_stalk_shortExact_on_diagonal
           (relativeDiagonal_first R) x E)).symm
       (diagonalRestrictedStalkSequence_tensor_shortExact R x
         ((moduleStalk (twoChartLine R) x).obj E))
-  exact shortExact_of_restrictScalars α S hS
+  exact ModuleCat.shortExact_of_restrictScalars α S hS
 
 /-- Away from the actual diagonal, tensoring retains its split stalk sequence. -/
 theorem diagonalBundleTensorSequence_stalk_shortExact_off_diagonal

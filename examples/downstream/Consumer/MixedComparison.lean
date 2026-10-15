@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.RelativeRows.CoarseEvaluation
 public import Quillen.Waldhausen.Fibration.Rows.SecondEndpoint
 public import Quillen.Waldhausen.Fibration.ComplexExtension
@@ -14,9 +15,15 @@ public import Quillen.Waldhausen.GilletWaldhausen.FibrationModels
 /-! Actual original-model comparisons consumed through the public library. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
+open CategoryTheory.ExactCategory
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits Opposite CochainComplex
-open Quillen Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open Quillen Quillen.Waldhausen.Fibration
 open Quillen.Waldhausen.Fibration.RelativeRows
 open scoped Simplicial Topology
 universe u

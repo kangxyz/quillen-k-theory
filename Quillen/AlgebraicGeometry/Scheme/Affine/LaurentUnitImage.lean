@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurent
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Basic
 
 /-!
 # Images of the original Laurent global unit
@@ -18,7 +18,6 @@ identifies a replacement scalar with the Laurent coordinate.
 -/
 
 @[expose] public section
-open Quillen
 
 
 noncomputable section

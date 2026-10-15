@@ -7,7 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionOpenDiagram
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionLaurentHomotopy
-public import Quillen.Algebra.Polynomial.LaurentUnderSquare
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 
 /-!
 # The original Laurent-unit track on relative-open sections
@@ -18,9 +18,12 @@ realization supplies the whole coefficient-natural loop, including degree zero. 
 fixed-open pullbacks and both original Laurent legs remain unchanged.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

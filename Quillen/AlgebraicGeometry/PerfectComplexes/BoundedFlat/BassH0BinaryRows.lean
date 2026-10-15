@@ -4,16 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ProjectionRightRows
 
 /-! The four actual H0 chart-edge rows retain their complete original binary references. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH0Merge
@@ -22,18 +27,22 @@ variable {a b c : Under R} (u : a ⟶ b) (v : b ⟶ c)
 variable (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
   (ha : coefficientMap P (α.app a) ≫ polynomialProjection P a = laurentProjection P a)
 
+/-- The first projection reference for the chart `α`, anchored at the common Laurent total. -/
 abbrev chartProjectionFirstRef := projectionFirstReference
   (polynomialProjection P a) (coefficientMap P (α.app a))
   (coefficientMap P ((laurentUnderFunctor R).map (u ≫ v))) (laurentProjection P a) ha
   (BassOverlap.commonReference P u v) (reference_eq P u v)
 
+/-- The middle projection reference for `α`, using chart naturality for the composite `u ≫ v`. -/
 abbrev chartProjectionMiddleRef := projectionMiddleReference
   (polynomialProjection P a) (coefficientMap P (α.app a)) (coefficientMap P (α.app c))
   (coefficientMap P ((polynomialUnderFunctor R).map (u ≫ v)))
   (coefficientMap P ((laurentUnderFunctor R).map (u ≫ v)))
-  (coefficientTransformation_naturality P α (u ≫ v)) (laurentProjection P a) ha
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α (u ≫ v))
+    (laurentProjection P a) ha
   (BassOverlap.commonReference P u v) (reference_eq P u v)
 
+/-- The reference from the common Laurent total to the precomposed first binary source row. -/
 def chartFirstRowReference : (BassOverlap.commonReference P u v).functor ≅
     (BassOverlap.projectionMap P (a := a) ≫ BinaryNormalizationSimplex.sourceMap
       (coefficientMap P ((laurentUnderFunctor R).map (u ≫ v)))
@@ -42,6 +51,7 @@ def chartFirstRowReference : (BassOverlap.commonReference P u v).functor ≅
     (coefficientMap P ((laurentUnderFunctor R).map (u ≫ v)))
     (coefficientMap P (α.app a)) (polynomialProjection P a) (chartProjectionFirstRef P u v α ha)
 
+/-- The reference from the common Laurent total to the precomposed middle binary source row. -/
 def chartMiddleRowReference : (BassOverlap.commonReference P u v).functor ≅
     (BassOverlap.projectionMap P (a := a) ≫ BinaryNormalizationSimplex.sourceMap
       (coefficientMap P (α.app c))
@@ -64,8 +74,10 @@ theorem chart_first_row (i : Fin 3) :
     (polynomialProjection P c) (coefficientMap P (α.app c))
     (coefficientMap P (u ≫ v)) (coefficientMap P ((polynomialUnderFunctor R).map (u ≫ v)))
     (coefficientMap P ((laurentUnderFunctor R).map (u ≫ v)))
-    (coefficientTransformation_naturality P (polynomialUnderCoefficient R) (u ≫ v))
-    (coefficientTransformation_naturality P α (u ≫ v)) (laurentProjection P a) ha
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+      (polynomialUnderCoefficient R) (u ≫ v))
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α (u ≫ v))
+      (laurentProjection P a) ha
     (BassOverlap.commonReference P u v) (reference_eq P u v) i
 
 /-- The exact middle right row retains the original chart naturality transport and raw node. -/
@@ -82,8 +94,10 @@ theorem chart_middle_row (i : Fin 3) :
     (polynomialProjection P c) (coefficientMap P (α.app c))
     (coefficientMap P (u ≫ v)) (coefficientMap P ((polynomialUnderFunctor R).map (u ≫ v)))
     (coefficientMap P ((laurentUnderFunctor R).map (u ≫ v)))
-    (coefficientTransformation_naturality P (polynomialUnderCoefficient R) (u ≫ v))
-    (coefficientTransformation_naturality P α (u ≫ v)) (laurentProjection P a) ha
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P
+      (polynomialUnderCoefficient R) (u ≫ v))
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α (u ≫ v))
+      (laurentProjection P a) ha
     (BassOverlap.commonReference P u v) (reference_eq P u v) i
 
 /-- The complete original plus H0 first binary row in the common reference. -/

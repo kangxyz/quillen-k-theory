@@ -10,6 +10,9 @@ public import Mathlib.Data.ZMod.Basic
 
 /-! # Literal relative structure-sheaf maps and original-resolution consumers -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.TwoOpen

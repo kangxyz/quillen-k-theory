@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.Algebra.Homology.ProjectorCone
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenDerivedRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PerfectComplement
@@ -26,6 +27,9 @@ empty opens are included. No direct strict-to-E chain quasi-isomorphism is
 asserted for an arbitrary all-sheaf E.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

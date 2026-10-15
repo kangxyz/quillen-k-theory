@@ -9,9 +9,12 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPushforwardCompa
 
 /-! Consumers retain the actual bounded derived unit and strict finite-flat naturality square. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open AlgebraicGeometry.Scheme.Modules Quillen.PerfectComplexes
+open AlgebraicGeometry.Scheme.Modules
 universe u
 namespace QuillenTest.DerivedPushforwardComparison
 

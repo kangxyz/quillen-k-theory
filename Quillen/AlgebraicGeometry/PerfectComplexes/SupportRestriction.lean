@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRestrictionIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.RestrictionFunctoriality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.OpenUnion
@@ -20,6 +21,9 @@ No perfectness, quasicoherence, or separation premise is needed for the
 restriction and zero-detection statements.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

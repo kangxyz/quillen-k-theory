@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedOpenFibration
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.PairPullback
 public import Quillen.Waldhausen.Fibration.ConnectingNaturality
@@ -20,6 +21,12 @@ with the original union-support pullback. Literal restriction agrees with the
 existing pullback comparison. No compactness hypothesis is required.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section
@@ -115,8 +122,9 @@ lemma boundedFlatPerfectSupportedOpenRestriction_exact : Waldhausen.IsExact
   weak {K L} p hp := by
     have : QuasiIso ((restrict j).map p.hom) := hp
     let e := restrictIsoPullbackComplex j
-    change QuasiIso ((pullbackComplex j).map p.hom)
-    exact quasiIso_of_arrow_mk_iso ((restrict j).map p.hom) ((pullbackComplex j).map p.hom)
+    change QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.pullback j).map p.hom)
+    exact quasiIso_of_arrow_mk_iso ((restrict j).map p.hom)
+      ((AlgebraicGeometry.Scheme.Modules.Complex.pullback j).map p.hom)
       (Arrow.isoMk (e.app K.obj) (e.app L.obj) (e.hom.naturality p.hom).symm)
 
 /-- The supported relative K-map induced by actual open restriction. -/
@@ -147,7 +155,8 @@ def boundedFlatPerfectSupportedOpenPairIso :
   Functor.fullyFaithfulCancelRight (boundedFlatPerfectSupported (j' ⁻¹ᵁ S).ι).ι
     (Functor.isoWhiskerLeft (boundedFlatPerfectSupported T.ι).ι
       ((pullbackComplexCompIso j' f.hom.right).symm ≪≫
-        eqToIso (congrArg pullbackComplex w) ≪≫ pullbackComplexCompIso g j))
+        eqToIso (congrArg AlgebraicGeometry.Scheme.Modules.Complex.pullback w) ≪≫
+          pullbackComplexCompIso g j))
 
 lemma boundedFlatPerfectSupportedOpenKRestrict_pullback (n : ℕ) :
     (boundedFlatPerfectSupportedKPullback (supportedPairTargetSquare j' j f g w) n).comp

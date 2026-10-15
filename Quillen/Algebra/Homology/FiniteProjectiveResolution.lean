@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Algebra.Category.ModuleCat.Finite
+public import Aglib.Algebra.Category.ModuleCat.Finite
 public import Quillen.Resolution.Finite
 public import Mathlib.Algebra.Category.ModuleCat.ProjectiveDimension
 public import Mathlib.CategoryTheory.Abelian.Exact
@@ -29,7 +29,6 @@ extra hypothesis: its first syzygy is free by the submodule theorem.
 
 open ModuleCat
 open Quillen
-open Quillen.CoherentScheme
 
 
 

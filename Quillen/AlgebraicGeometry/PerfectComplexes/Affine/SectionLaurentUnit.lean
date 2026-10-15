@@ -5,9 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionUnitNaturality
 public import Quillen.AlgebraicGeometry.Scheme.Affine.LaurentUnitImage
-public import Quillen.AlgebraicGeometry.Scheme.Affine.LaurentUnitNaturality
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Units
 
 /-!
 # The original Laurent unit on the strict section model
@@ -18,11 +19,13 @@ inverse coordinate. Coefficient reindexing commutes strictly with this action. T
 seed action; no new unit is supplied at later Bass iterates.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry AlgebraicGeometry.Scheme.PolynomialLaurent
-  Quillen.PolynomialBaseChange
 universe u
 namespace Quillen.PerfectComplexes
 

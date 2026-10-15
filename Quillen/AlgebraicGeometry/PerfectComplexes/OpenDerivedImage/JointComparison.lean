@@ -19,6 +19,9 @@ no approximation or localization conclusion is assumed here.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

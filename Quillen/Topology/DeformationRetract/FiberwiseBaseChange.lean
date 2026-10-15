@@ -17,6 +17,9 @@ matched pullback without a quotient or pushout preservation assumption.
 -/
 @[expose] public section
 
+open Quillen.FiberwiseMappingPath
+
+
 noncomputable section
 open CategoryTheory MonoidalCategory CartesianMonoidalCategory
 open scoped Topology unitInterval

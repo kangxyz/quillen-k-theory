@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.Nilpotence
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalRestrictionQuasiIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedModuleReplacement
@@ -30,6 +31,9 @@ perfect-extension route of Stacks Project, Section 36.13; the broader
 arbitrary-map scalar-localization statement is separate.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

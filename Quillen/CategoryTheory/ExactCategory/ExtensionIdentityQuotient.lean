@@ -5,10 +5,14 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjection
 public import Quillen.KTheory.Map.CoherenceData
 /-! # Canonical zero quotients of identity extensions -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 open CategoryTheory CategoryTheory.Limits ZeroObject
 noncomputable section

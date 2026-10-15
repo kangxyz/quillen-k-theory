@@ -5,10 +5,12 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Basic
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.Contraction
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OriginalLineContractionComplexes
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementTensorUnit
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OriginalUnitPostcomposition
+public import Aglib.AlgebraicGeometry.Cohomology.Godement.Tensor
+public import Aglib.CategoryTheory.NatTrans.Unit
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PlusQuasiIso
 
 /-! # Natural weak original line contractions after Godement totalization
 
@@ -18,23 +20,12 @@ the unresolved pair before the original outer total is applied.
 -/
 
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Godement
+
 open Quillen
-open Quillen.SchemeSheaf
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.SchemeSheaf
-export AlgebraicGeometry.Scheme.Modules.Godement
-  (godementContractionInputUnit godementContractionInputUnit_quasiIso
-  godementContractionInsertion godementContractionInsertion_quasiIso godementContractionMap
-  godementContractionMap_app godementContractionMap_quasiIso godementContractionPlain
-  godementContractionPlainIso godementContractionPreTotalMap
-  godementContractionPreTotalMap_quasiIso godementContractionResolved
-  godementContractionResolved_sameLowerBound godementContractionResolved_termwiseFlasque)
-end Quillen.SchemeSheaf
-
-end
 
 
 noncomputable section

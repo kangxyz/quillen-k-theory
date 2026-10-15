@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.Limits.Shapes.CokernelPushout
 public import Quillen.Waldhausen.QuillenComparison.SimplicialMap
 public import Quillen.Waldhausen.QuillenComparison.QuotientCalculus
 public import Quillen.Waldhausen.Functor
@@ -46,7 +47,8 @@ theorem exactPostcompSimplex {n : SimplexCategory} {A : Grid n ⥤ C}
   quotient t i j k hij hjk := by
     let S := ShortComplex.mk _ _ (rowMap_zero EC hA t i j k hij hjk)
     have hS := F.map_conflation S (row_conflation EC hA t i j k hij hjk)
-    exact isPushoutOfZeroCokernel (S.map F.toFunctor).zero (ED.cokernel _ hS)
+    exact CategoryTheory.Limits.isPushout_of_isColimit_cokernel (S.map F.toFunctor).zero
+      (ED.cokernel _ hS)
       (F.toFunctor.map_isZero (hA.zero t j)) _ _
   weak s t i j hst hij := by
     let : IsIso (A.map (homOfLE

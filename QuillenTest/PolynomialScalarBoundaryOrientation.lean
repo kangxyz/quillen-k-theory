@@ -16,10 +16,14 @@ three homotopy coordinates. The terminal formula reverses the parameter of the o
 forward-T scalar square; it does not replace that scalar by an unproved inverse-action model.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Convexity
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration AlgebraicGeometry.Scheme.PolynomialLaurent
+open Quillen.PerfectComplexes.Affine
+open Quillen.Waldhausen.Fibration AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped Topology
 universe u
 namespace QuillenTest.PolynomialScalarBoundaryOrientation

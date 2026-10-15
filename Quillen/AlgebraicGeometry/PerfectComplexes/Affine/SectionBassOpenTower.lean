@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionOpenBassTower
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionOpenBassSeedChangeWeak
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassTelescope
@@ -19,8 +20,11 @@ quotient telescopes receive an actual map with unchanged cylinder coordinates. N
 of the change of weaknesses or replacement by a full-open endpoint is asserted.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open Quillen.KTheory.Bass
 universe u
 namespace Quillen.PerfectComplexes

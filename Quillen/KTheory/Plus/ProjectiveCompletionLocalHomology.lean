@@ -17,6 +17,10 @@ component of the completion supplies the abelian monodromy of each pulled-back
 system. All coefficient conversions are the actual homotopy-square conversions.
 -/
 @[expose] public section
+
+open Quillen.GroupCompletion
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u

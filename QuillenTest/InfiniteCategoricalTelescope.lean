@@ -17,6 +17,10 @@ and local-homology cocone arrows for a genuinely path-dependent system.
 
 @[expose] public section
 
+open Quillen.GrothendieckTelescope
+open Quillen.LocalCoefficients
+
+
 open CategoryTheory Limits
 noncomputable section
 universe u

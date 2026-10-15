@@ -17,7 +17,6 @@ universe u v u' v' w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicGeometry.Scheme.Modules
 namespace QuillenTest.DerivedBaseChangeCover
 
-open Quillen
 /-- The exact derived homology comparison retains its literal installed unit square. -/
 theorem original_homology_unit
     {A : Type u} [Category.{v} A] [Abelian A] [HasDerivedCategory A] [EnoughInjectives A]

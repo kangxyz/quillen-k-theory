@@ -19,6 +19,9 @@ comparison for arbitrary finite projectives through their actual presentation.
 
 @[expose] public section
 
+open Quillen.RightScalarExtension
+
+
 noncomputable section
 
 universe u v

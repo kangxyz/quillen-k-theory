@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Category.ModuleCat.Finite
 public import Quillen.Algebra.RegularLocal.ProjectiveDimension
 public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
 public import Mathlib.RingTheory.LocalProperties.ProjectiveDimension
@@ -22,7 +23,6 @@ without imposing a uniform dimension bound on the ring.
 
 open ModuleCat
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

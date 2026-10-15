@@ -5,12 +5,16 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.Algebra.Homology.DerivedPreEqualityDenominators
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.OverlapCompatibility
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedMorphisms
 
 /-! # Actual perfect gluing from the original derived overlap isomorphism -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

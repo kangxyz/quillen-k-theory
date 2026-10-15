@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedExtensionTransport
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.AffineExtension
 
@@ -20,6 +22,10 @@ on Z. Quasi-separatedness supplies compact overlaps; no affine-diagonal or
 ambient compactness hypothesis is used.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

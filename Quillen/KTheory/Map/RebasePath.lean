@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.Map.CoherenceData
 public import Quillen.Topology.ClassifyingSpace.NaturalTransformationTracks
 public import Quillen.Topology.HomotopyGroups.PathTransportGroup
@@ -24,6 +26,9 @@ in the Q-category is used, and the definition of `CategoryTheory.ExactCategory.E
 -/
 
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 

@@ -24,6 +24,10 @@ finite cube-boundary tests are concluded.
 -/
 @[expose] public section
 
+open Quillen.CubicalTests
+open Quillen.HomotopyPullback
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

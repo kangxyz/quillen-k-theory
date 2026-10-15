@@ -23,13 +23,19 @@ QuillenTest, tools, and clients depend on the library. Implementation source imp
 individual dependencies, avoiding broad facades. The structural checker rejects
 cycles and reverse dependencies on tests, tools, or clients.
 
+General algebra, exact-category, module-sheaf and cohomology implementations are
+owned by Aglib. Quillen consumers import its exact leaves and native mathematical
+names. The transferred compatibility modules and aliases are removed. A Quillen
+application may extend a native namespace while remaining defined and audited
+as a Quillen module.
+
 ## Mathematical owners
 
 | Owner | Principal objects and interfaces |
 | --- | --- |
 | `Algebra` | Finite-module exact categories and resolutions, module complexes, homological algebra, regular-local ring theory, finite-defect Laurent parametrices, stable matrix groups, and finite-projective scalar extension |
 | `LinearAlgebra` | Generic linear product identities used by the module constructions |
-| `CategoryTheory` | Exact categories, Q-construction, small models, categorical localization, and Theorems A/B |
+| `CategoryTheory` | Q-construction, exact-category applications, small-model K-theory, categorical localization, and Theorems A/B |
 | `Topology` | Based homotopy, fibers and cylinders, lifting, realization, prespectra, stable fibers, and categorical stable localization |
 | `KTheory` | Exact-category K-groups, canonical maps, and generic Bass diagrams and cokernel recursion |
 | `KTheory/Plus` | Projective group completion, original ring plus/Q comparison, ring-change naturality, and component classification |
@@ -58,7 +64,7 @@ sheaf interfaces, rather than repeated in their applications.
 
 A module's path records its owner. Its declaration namespace should describe
 the mathematical construction and need not mirror the path. Geometric interfaces
-use `Quillen.Scheme` and `Quillen.PerfectComplexes`; generic constructions have
+use `AlgebraicGeometry.Scheme` and `Quillen.PerfectComplexes`; generic constructions have
 their own canonical namespaces. See [the API reference](../reference/API.md#module-paths-and-namespaces).
 
 ## Import generation and extension

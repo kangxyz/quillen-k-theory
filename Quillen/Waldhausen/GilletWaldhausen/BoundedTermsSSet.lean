@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsStrata
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedSSet
 
@@ -16,6 +17,9 @@ Every finite grid lifts to a genuine common term-bound stratum, retaining its
 actual zero objects, inflations, pushout squares, and inverse-image weak maps.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

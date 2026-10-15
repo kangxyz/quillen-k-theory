@@ -20,9 +20,12 @@ a whole prespectrum homotopy. No strict naturality of the
 geometric evaluation maps is asserted.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
 noncomputable section
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
 variable {R S : CommRingCat.{u}} {U V : Scheme.{u}}

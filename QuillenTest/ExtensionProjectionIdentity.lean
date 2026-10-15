@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 
+import Aglib.CategoryTheory.ExactCategory.Basic
 import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionIdentity
+
+open CategoryTheory.ExactCategory
+
 
 /-! # The original Q-arrow assignment preserves identities -/
 noncomputable section

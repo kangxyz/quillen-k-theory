@@ -8,10 +8,13 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassScalarC
 
 /-! Exact four constituent route tracks of the original coefficient rectangle. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.DoubleSquareScalarPaths
+
 noncomputable section
 set_option autoImplicit false
 open CategoryTheory AlgebraicGeometry Opposite Convexity Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
 open scoped Topology unitInterval
 universe u

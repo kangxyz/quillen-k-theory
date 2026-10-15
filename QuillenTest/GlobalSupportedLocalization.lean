@@ -11,6 +11,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Restricti
 /-! # Original-map consumers of the qcqs supported connective endpoint -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

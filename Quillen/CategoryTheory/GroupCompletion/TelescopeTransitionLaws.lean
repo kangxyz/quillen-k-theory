@@ -12,6 +12,9 @@ public import Quillen.CategoryTheory.Grothendieck.FiberTransitions
 /-! # Coherence of the actual localized stage transitions -/
 
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 open CategoryTheory MonoidalCategory
 universe u v
 namespace Quillen.TranslationTelescope

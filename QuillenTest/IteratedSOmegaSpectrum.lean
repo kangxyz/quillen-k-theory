@@ -10,12 +10,16 @@ public import Quillen.Waldhausen.SConstruction.Iterated.OmegaSpectrum
 /-! # Original-map consumers of the genuine all-stage Waldhausen Omega-spectrum -/
 @[expose] public section
 
+open Quillen.TheoremA
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits Opposite MonoidalCategory CartesianMonoidalCategory
 open scoped Simplicial Topology unitInterval
-open Quillen Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen Quillen.Waldhausen.IteratedS
 universe u v
 namespace QuillenTest.IteratedSOmegaSpectrum
 

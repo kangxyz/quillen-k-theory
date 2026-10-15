@@ -5,12 +5,18 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.ScalarNilpotence
 public import Mathlib.Data.ZMod.Basic
 
 
 /-! # Original-map consumers of finite-cover and affine scalar nilpotence -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+open Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.Affine
+
 
 
 noncomputable section

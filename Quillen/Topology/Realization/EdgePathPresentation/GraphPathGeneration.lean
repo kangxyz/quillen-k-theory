@@ -20,9 +20,11 @@ no edge-path approximation is assumed in the theorem.
 -/
 @[expose] public section
 
+open Topology
+
 noncomputable section
 universe u v w
-open CategoryTheory CategoryTheory.Limits Convexity Topology Set
+open CategoryTheory CategoryTheory.Limits Convexity Set
 open scoped Topology unitInterval
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

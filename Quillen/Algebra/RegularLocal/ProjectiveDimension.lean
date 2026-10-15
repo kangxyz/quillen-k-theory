@@ -6,7 +6,8 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Algebra.RegularLocal.Parameters
+public import Aglib.RingTheory.RegularLocalRing.DimensionZero
+public import Aglib.RingTheory.RegularLocalRing.Parameters
 public import Quillen.Algebra.RegularLocal.QuotientLifting
 
 /-!
@@ -18,6 +19,9 @@ exactness and Nakayama lift finite-free syzygies. No finite-projective-
 dimension or resolution hypothesis on the original regular ring is assumed.
 -/
 @[expose] public section
+
+open IsRegularLocalRing
+
 
 open ModuleCat
 

@@ -20,8 +20,10 @@ The target is the actual subspace C, not all of an unrelated ambient space.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Metric Topology
+open Set Metric
 open scoped unitInterval
 universe u v
 namespace Quillen.ClassicalCW

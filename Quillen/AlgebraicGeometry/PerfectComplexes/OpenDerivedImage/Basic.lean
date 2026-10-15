@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenWeakImage
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRightFractions
 
@@ -17,6 +18,9 @@ The explicit geometric complement belongs to this derived-saturated image;
 closure and approximation are established separately from actual roofs.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

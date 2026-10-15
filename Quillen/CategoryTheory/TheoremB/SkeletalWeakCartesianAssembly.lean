@@ -14,6 +14,9 @@ public import Quillen.Topology.Realization.Cartesian.WeakCoproducts
 /-! # Actual successor assembly for arbitrary weak-cartesian transformations -/
 @[expose] public section
 
+open Quillen.TheoremA
+
+
 noncomputable section
 open CategoryTheory Limits Opposite
 open scoped Simplicial Topology unitInterval

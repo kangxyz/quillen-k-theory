@@ -19,8 +19,10 @@ No local-finiteness, finite-dimensionality or countability assumption occurs.
 -/
 
 @[expose] public section
+
+open Topology
 noncomputable section
-open Set Topology
+open Set
 universe u
 namespace Quillen.ClassicalCW
 variable {X : Type u} [TopologicalSpace X] [T2Space X]

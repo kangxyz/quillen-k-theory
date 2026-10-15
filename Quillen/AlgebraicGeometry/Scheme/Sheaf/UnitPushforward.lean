@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.UnitSections
+public import Aglib.AlgebraicGeometry.Modules.StructureSheaf.Sections
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
 
 /-! # Original scalar multiplication and structure-module pushforward
@@ -14,8 +14,9 @@ The original structure-module map intertwines multiplication by original global 
 A section in the actual ring-map kernel gives a zero composite of the actual sheaf maps.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 noncomputable section

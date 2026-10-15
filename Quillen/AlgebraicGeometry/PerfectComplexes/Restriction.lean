@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.VectorBundleInclusion
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Restriction
@@ -18,18 +19,13 @@ implies preservation of quasi-isomorphisms. Strict boundedness and finite
 local freeness are preserved, giving genuine Waldhausen restriction maps.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+open CategoryTheory.ExactCategory
+
 open Quillen
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.PerfectComplexes
-export AlgebraicGeometry.Scheme.Modules.Complex
-  (restrict restrictFunctor_preservesHomology restrict_additive restrict_preservesFiniteColimits
-  restrict_preservesFiniteLimits restrict_quasiIso)
-end Quillen.PerfectComplexes
-
-end
 
 
 

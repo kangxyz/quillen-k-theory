@@ -22,6 +22,9 @@ needed for these structural constructions. No K-equivalence is asserted here.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -6,9 +6,11 @@ Authors: kangxyz
 
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.PrincipalLocalization
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.ClosedDevissage
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Comparison
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Comparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
 
 /-!
 # Public lower-universe affine coherent G-theory

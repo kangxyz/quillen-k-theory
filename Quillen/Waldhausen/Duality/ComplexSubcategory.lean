@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Algebra.Homology.OppositeSubcategory
 public import Quillen.Waldhausen.Duality.ExactCategory
 public import Quillen.CategoryTheory.ExactCategory.Functor
@@ -21,6 +22,9 @@ kernel/cokernel squares.
 -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
 open CategoryTheory.ExactCategory
 
 
@@ -31,7 +35,6 @@ universe u v
 open CategoryTheory CategoryTheory.Limits Opposite HomologicalComplex
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.Waldhausen
-open Quillen.CochainComplex
 variable {C : Type u} [Category.{v} C] [Abelian C]
 variable (P : ObjectProperty (CochainComplex C ℤ))
   [P.ContainsZero] [P.IsClosedUnderIsomorphisms]

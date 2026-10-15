@@ -13,8 +13,6 @@ Original global functions act on every actual module sheaf, and original units a
 automorphisms with their literal inverse scalar.
 -/
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
 
 
 

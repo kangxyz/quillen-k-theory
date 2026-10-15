@@ -5,30 +5,31 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Aglib.CategoryTheory.Limits.Shapes.CokernelPushout
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.Algebra.Homology.MappingCone.Identity
+public import Aglib.Algebra.Homology.MappingCone.Map
 public import Aglib.Algebra.Homology.QuasiIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientOperations
 public import Quillen.Waldhausen.Cylinder.Pushout
 public import Quillen.Waldhausen.Cylinder.ZeroEndpoint
 public import Quillen.Algebra.Homology.MappingConeBiprod
-public import Quillen.Algebra.Homology.MappingConeAcyclicity
+public import Aglib.Algebra.Homology.MappingCone.Acyclicity
 public import Quillen.Waldhausen.Additivity.GroupFormula
 public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 
 /-! # Original cone-of-identity additivity and the signed shift on the flasque model -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+open Quillen.Waldhausen.SplitFactorization
+
+
+open CochainComplex
+
 open Quillen
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.PerfectComplexes.FlasqueBoundedBelow
-export CochainComplex
-  (coneSequence_shortExact identityConeFunctor_additive identityConeFunctor_map_mono
-  identityConeFunctor_shortExact quasiIso_of_two_acyclic)
-end Quillen.PerfectComplexes.FlasqueBoundedBelow
-
-end
 
 
 noncomputable section
@@ -47,7 +48,7 @@ variable (X : Scheme.{u})
 /-- The literal identity cone stays in the original flasque, lower-bounded perfect model. -/
 lemma identityCone_objects (K : Obj X) :
     objects X (identityConeFunctor.obj K.obj) :=
-  objects_of_shortExact (coneSequence_shortExact X K.obj) K.property
+  objects_of_shortExact (CochainComplex.coneSequence_shortExact (A := X.Modules) K.obj) K.property
     (shift_objects K.property 1)
 
 /-- The literal cone of identity and its native original cone maps. -/
@@ -58,21 +59,23 @@ instance identityCone_additive : (identityCone X).Additive where
   map_add := by
     intro K L f g
     apply ObjectProperty.hom_ext
-    exact Quillen.CochainComplex.mappingCone_map_add (𝟙 K.obj) (𝟙 L.obj)
+    exact CochainComplex.mappingCone.map_add (𝟙 K.obj) (𝟙 L.obj)
       f.hom g.hom f.hom g.hom (by simp) (by simp)
 
 /-- The actual identity cone preserves the inherited original conflations. -/
 def identityConeExactFunctor : CategoryTheory.ExactCategory.ExactFunctor
-    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure (Quillen.abelianExactStructure
+    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
+      (CategoryTheory.ExactCategory.abelianExactStructure
       (Complex X))
       (objects X))
-    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure (Quillen.abelianExactStructure
+    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
+      (CategoryTheory.ExactCategory.abelianExactStructure
       (Complex X))
       (objects X)) where
   toFunctor := identityCone X
   map_conflation S hS := by
     change ((S.map (objects X).ι).map identityConeFunctor).ShortExact
-    exact identityConeFunctor_shortExact X hS
+    exact CochainComplex.identityConeFunctor_shortExact (A := X.Modules) hS
 
 /-- Every original identity cone is acyclic, for arbitrary original flasque-perfect input. -/
 lemma identityCone_acyclic (K : Obj X) : ((identityCone X).obj K).obj.Acyclic :=
@@ -88,7 +91,8 @@ lemma identityCone_exact : Waldhausen.IsExact (waldhausen X).cof (waldhausen X).
     (waldhausen X).cof (waldhausen X).weq (identityCone X) where
   zero h := identityCone_zero X h
   cofibration f hf := (identityConeExactFunctor X).map_inflation f hf
-  weak {K L} f _ := quasiIso_of_two_acyclic X ((identityCone X).map f).hom
+  weak {K L} f _ :=
+    CochainComplex.quasiIso_of_two_acyclic (A := X.Modules) ((identityCone X).map f).hom
     (identityCone_acyclic X K) (identityCone_acyclic X L)
   pushout hi h := (identityConeExactFunctor X).map_isPushout hi h
 
@@ -113,12 +117,13 @@ lemma coneFirst_second : coneFirst X ≫ coneSecond X = 0 := by
   exact (mappingCone.triangleRotateShortComplex (𝟙 K.obj)).zero
 
 lemma coneModelSequence_conflation (K : Obj X) :
-    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure (Quillen.abelianExactStructure
+    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
+      (CategoryTheory.ExactCategory.abelianExactStructure
       (Complex X))
       (objects X)).conflation
       (ShortComplex.mk ((coneFirst X).app K) ((coneSecond X).app K)
         (NatTrans.congr_app (coneFirst_second X) K)) :=
-  coneSequence_shortExact X K.obj
+  CochainComplex.coneSequence_shortExact (A := X.Modules) K.obj
 
 /-- The actual identity-cone sequence has the native relative cofibration and cofiber squares. -/
 lemma coneSequence_isCofibrationSequence :
@@ -129,11 +134,12 @@ lemma coneSequence_isCofibrationSequence :
   exactH := modelShift_exact X 1
   cofibration := {
     app_cof K := (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-      (Quillen.abelianExactStructure (Complex X)) (objects X)).inflation_of_conflation
+      (CategoryTheory.ExactCategory.abelianExactStructure (Complex X)) (objects
+        X)).inflation_of_conflation
         (coneModelSequence_conflation X K)
     relative_cof {K L} f hf := by
       let E := CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-        (Quillen.abelianExactStructure (Complex X)) (objects X)
+        (CategoryTheory.ExactCategory.abelianExactStructure (Complex X)) (objects X)
       let φ := Waldhausen.GilletWaldhausen.exactFunctorSequenceMap
         (coneFirst X) (coneSecond X) (coneFirst_second X) f
       let : HasPushout
@@ -144,8 +150,9 @@ lemma coneSequence_isCofibrationSequence :
       exact Waldhausen.GilletWaldhausen.relativePushout_inflation E φ
         (coneModelSequence_conflation X K) (coneModelSequence_conflation X L)
         ((modelShift_exact X 1).cofibration f hf) }
-  cofiber K := Waldhausen.QuillenComparison.isPushoutOfZeroCokernel _
-    ((CategoryTheory.ExactCategory.ExactSubcategory.exactStructure (Quillen.abelianExactStructure
+  cofiber K := CategoryTheory.Limits.isPushout_of_isColimit_cokernel _
+    ((CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
+      (CategoryTheory.ExactCategory.abelianExactStructure
       (Complex X))
       (objects X)).cokernel _ (coneModelSequence_conflation X K))
     (waldhausen X).isZero _ _
@@ -154,7 +161,7 @@ lemma coneSequence_isCofibrationSequence :
 def coneToZero : identityCone X ⟶ Waldhausen.zeroFunctor (waldhausen X) := 0
 
 lemma coneToZero_weak (K : Obj X) : (waldhausen X).weq ((coneToZero X).app K) := by
-  apply quasiIso_of_two_acyclic X
+  apply CochainComplex.quasiIso_of_two_acyclic (A := X.Modules)
   · exact identityCone_acyclic X K
   · exact HomologicalComplex.acyclic_of_isZero _
       ((objects X).ι.map_isZero (waldhausen X).isZero)

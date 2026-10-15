@@ -1,13 +1,14 @@
 /-
 Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
+Authors: kangxyz
 -/
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalCoefficientFunctors
-public import Quillen.Algebra.Homology.DerivedCategory.PlusComplexTriangle
+public import Aglib.Algebra.Homology.DerivedCategory.Plus.ShortExact
 public import Mathlib.Algebra.Homology.HomologicalComplexAbelian
-public import Quillen.Algebra.Homology.CochainComplexPlusNatTrans
+public import Aglib.Algebra.Homology.CochainComplexPlus.NatTrans
 
 /-! # Functorial original all-coefficient diagonal complex triangle
 
@@ -19,6 +20,9 @@ invert every quasi-isomorphism and descend through the genuine D+ localization.
 -/
 
 @[expose] public section
+
+open AlgebraicGeometry
+
 open Quillen
 
 noncomputable section
@@ -30,6 +34,7 @@ open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open AlgebraicGeometry.Scheme.Modules
 
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance diagonalComplexStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 

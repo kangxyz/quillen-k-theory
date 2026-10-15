@@ -10,6 +10,9 @@ public import Quillen.Waldhausen.GrothendieckGroup.Image
 /-! # Original algebraic classes, exact functors and actual image-quotient consumers -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v u' v' w

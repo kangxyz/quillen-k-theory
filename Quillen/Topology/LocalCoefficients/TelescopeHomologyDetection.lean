@@ -14,6 +14,9 @@ public import Quillen.CategoryTheory.TheoremB.Naturality
 /-! # Eventual vanishing under the original telescope stage maps -/
 
 @[expose] public section
+
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory
 universe u

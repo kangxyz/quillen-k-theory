@@ -5,9 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.Algebra.ModuleComplex.PrincipalDenominators
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Restriction
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.AffineProjective
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Affine.Projective
 public import Mathlib.Data.Int.Interval
 
 /-!
@@ -18,6 +19,9 @@ complexes, and global sections of an affine strict-perfect complex give a
 bounded finite-projective module complex. All rings are arbitrary.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

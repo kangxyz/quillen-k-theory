@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.MixedNerves.RowCylinder
 public import Quillen.Waldhausen.Fibration.MixedNerves.Realization
 public import Quillen.Waldhausen.SplitComplexes.Approximation
@@ -18,6 +19,9 @@ requires the stated cone and shift closure, with no kernel closure. As with
 the generic realized theorem, object and hom universes agree here.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 open CategoryTheory CochainComplex

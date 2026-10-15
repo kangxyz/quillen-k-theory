@@ -11,6 +11,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.StrictOpenRelative
 /-! # Original relative-open strict-to-perfect comparison and dual restriction -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

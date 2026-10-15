@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.BaseChange
 public import Mathlib.AlgebraicGeometry.RelativeGluing
 
@@ -14,6 +15,12 @@ The original coefficient squares form an equifibered gluing diagram. Relative gl
 its actual chart inverse images, retaining the original two-chart scheme and its structural map.
 -/
 @[expose] public section
+
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
 open Quillen
 
 noncomputable section
@@ -23,7 +30,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
-open PolynomialLaurent Quillen.PolynomialBaseChange
+open PolynomialLaurent
 
 private abbrev chartCover (R : CommRingCat.{u}) :=
   AlgebraicGeometry.Scheme.IsLocallyDirected.openCover (span (laurentPlus R) (laurentMinus R))

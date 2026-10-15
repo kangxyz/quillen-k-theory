@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.KTheory.Bass.ModelDiagramTwoChartStableSequence
 public import Quillen.KTheory.Bass.StrictDiagramIteration
 public import Quillen.KTheory.Bass.TwoChart
@@ -22,11 +23,14 @@ The original scheme/supported Bass recursions still need their geometric and K0 
 -/
 
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits Quillen.LoopPrespectrum
-open Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange
+open Quillen.Waldhausen.IteratedS
 universe u v w
 namespace Quillen.KTheory.Bass
 
@@ -92,6 +96,9 @@ theorem modelDiagramTwoChartLeft_isIso_of_lt (a : Under R) (d : ℤ)
   (modelDiagramTwoChartSequence_shortExact F i a d).isIso_f_iff.mpr
     (modelDiagramTwoChartRight_isZero_of_lt F i a d hd)
 
+/-- The chart-difference cokernel identified with the cone stable homotopy group in degree `e`, when
+`d < -i` and `d + 1 = e`.
+-/
 def modelDiagramCokerConeIso (a : Under R) (d e : ℤ)
     (hd : d < -(i : ℤ)) (he : d + 1 = e) :
     cokernel (Quillen.Bass.TwoChartStable.chartDifference (modelDiagramTwoChartSquare F i a)

@@ -12,6 +12,10 @@ public import Quillen.Topology.LocalCoefficients.TelescopeHomologyDiagram
 /-! # Original finite-stage action maps commute with actual stabilization transport -/
 
 @[expose] public section
+
+open Quillen.GrothendieckTelescope
+open Quillen.LocalCoefficients
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u v

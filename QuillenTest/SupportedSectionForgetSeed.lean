@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionForgetSeed
 
 /-!
@@ -14,10 +15,16 @@ The source corner, Laurent cone face, whole null track, loop coordinate and inde
 structure time are retained. The target seed is the original constructed ambient seed.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.PolynomialBaseChange
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.SupportedSectionForgetSeed

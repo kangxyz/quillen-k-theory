@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SplitKTheory
 public import Quillen.Waldhausen.SplitComplexes.FactorizationSubcategory
 
@@ -20,6 +21,9 @@ This establishes factorization input for future approximation arguments,
 without assuming or asserting a K-theory comparison equivalence.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

@@ -6,9 +6,15 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Category.ModuleCat.IdealClosedSupport
+public import Aglib.AlgebraicGeometry.Modules.Pushforward.Stalk
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.IdealPushforward
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineSupport
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Support
 public import Mathlib.RingTheory.Finiteness.Ideal
 
 /-!
@@ -21,10 +27,12 @@ an assumed localization or dévissage equivalence.
 -/
 @[expose] public section
 
+open ModuleCat.FiniteLocalization.IdealClosedSupport
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section
@@ -34,7 +42,6 @@ universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
 namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal
-open FiniteModuleLocalization.IdealClosedSupport
 
 variable (R : CommRingCat.{u}) (I : Ideal R)
 
@@ -122,7 +129,26 @@ theorem finiteTypeSheavesKilledBy_le_supportedAway :
 omit [IsNoetherianRing R] in
 /-- Actual quotient closed pushforward is supported on its closed subset. -/
 theorem coherentPushforward_supported (M : FiniteTypeSheaves (Spec (closedRing R I))) :
-    finiteTypeSheavesSupportedAway (openMap R I) ((coherentPushforward R I).obj M) :=
-  finiteTypeSheavesKilledBy_le_supportedAway R I _ (coherentPushforward_killed R I M)
+    finiteTypeSheavesSupportedAway (openMap R I)
+      ((finiteTypePushforward (closedMap R I)).obj M) := by
+  apply (finiteTypeSheavesSupportedAway_iff_support_subset (openMap R I) _).mpr
+  rw [openMap_range_compl]
+  change Scheme.Modules.support
+      ((Scheme.Modules.pushforward (closedMap R I)).obj M.obj) ⊆
+    PrimeSpectrum.zeroLocus (I : Set R)
+  intro x hx
+  by_contra hxi
+  have hnot : x ∉ Set.range (closedMap R I) := by
+    rintro ⟨y, rfl⟩
+    apply hxi
+    intro r hr
+    change Ideal.Quotient.mk I r ∈ y.asIdeal
+    rw [Ideal.Quotient.eq_zero_iff_mem.mpr hr]
+    exact y.asIdeal.zero_mem
+  have hz := Scheme.Modules.isZero_closedImmersion_moduleStalk_of_not_mem
+    (closedMap R I) x hnot M.obj
+  have hzAb := (forget₂ (ModuleCat ((Spec R).presheaf.stalk x)) AddCommGrpCat.{u}).map_isZero hz
+  exact hx (hzAb.of_iso ((Scheme.Modules.moduleStalkForgetIso (Spec R) x).app
+    ((Scheme.Modules.pushforward (closedMap R I)).obj M.obj)).symm)
 
 end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal

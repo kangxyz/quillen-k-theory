@@ -5,16 +5,23 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalDirectImage
 public import Mathlib.Data.ZMod.Basic
 
 /-! # Original tautological localization and relative cohomology consumers -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.ProjectiveLine
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.TwoOpen
   AlgebraicGeometry.Scheme.ProjectiveLine
-open Quillen.PolynomialBaseChange
 universe u
 namespace QuillenTest.ProjectiveLineTautologicalDirectImage
 

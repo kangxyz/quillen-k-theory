@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Tensor.Basic
 public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.ComplexContraction
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OriginalLineContraction
 
@@ -16,18 +17,8 @@ The bounded-below lifts retain the original composition and identity comparisons
 
 @[expose] public section
 open Quillen
-open Quillen.SchemeSheaf
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.SchemeSheaf
-export AlgebraicGeometry.Scheme.Modules
-  (cochainContractionIso cochainContractionIso_hom_f plusContractionIso
-  plusContractionIso_hom_app plusContractionIso_hom_f)
-end Quillen.SchemeSheaf
-
-end
 
 
 noncomputable section

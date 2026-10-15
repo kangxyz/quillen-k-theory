@@ -15,6 +15,11 @@ Their literal supported sum commutes with the original qcqs localization
 boundary, with domain K(n+1) and supported target K(n), including n = 0.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.OpenFunctorNaturality
+open Quillen.Waldhausen
+open Quillen.Waldhausen.ExtensionCategory
+
 open Quillen
 
 

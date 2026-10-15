@@ -7,7 +7,7 @@ module
 
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveMonoidal
 public import Quillen.CategoryTheory.ExactCategory.ExtensionTotal
-public import Quillen.CategoryTheory.ExactCategory.Isomorphisms
+public import Aglib.CategoryTheory.ExactCategory.Isomorphisms
 public import Mathlib.CategoryTheory.Monoidal.Action.Basic
 
 /-! # Direct-sum action on admissible inflations of finite projective modules -/

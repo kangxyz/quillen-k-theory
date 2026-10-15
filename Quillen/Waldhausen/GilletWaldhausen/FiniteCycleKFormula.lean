@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleFiltration
 public import Quillen.Waldhausen.Additivity.GroupFormula
 public import Mathlib.Algebra.BigOperators.Fin
@@ -19,6 +20,9 @@ as products of their original disk-cycle layers. No acyclic K-group is assumed
 trivial, and no global uniform term bound is imposed.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

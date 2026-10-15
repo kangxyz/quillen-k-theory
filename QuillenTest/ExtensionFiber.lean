@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 
+import Aglib.CategoryTheory.ExactCategory.Basic
 import Quillen.CategoryTheory.ExactCategory.ExtensionFiber
 import Quillen.Algebra.Category.ModuleCat.FiniteProjective
+
+open CategoryTheory.ExactCategory
+
 
 /-! # Extension fibers and their actual kernel presentations -/
 

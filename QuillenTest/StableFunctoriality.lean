@@ -13,9 +13,12 @@ Original exact-functor stable maps and original K0 normalization without a zero-
 -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory Quillen Quillen.LoopPrespectrum
-open Quillen.Waldhausen Quillen.Waldhausen.IteratedS
+open Quillen.Waldhausen.IteratedS
 universe u v
 namespace QuillenTest.StableFunctoriality
 

@@ -10,6 +10,9 @@ public import Quillen.Topology.ClassifyingSpace.FundamentalGroup
 /-! # Original groupoid loops, inverse comparison and independent universes -/
 @[expose] public section
 
+open Quillen.GroupoidClassifying
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 open CategoryTheory

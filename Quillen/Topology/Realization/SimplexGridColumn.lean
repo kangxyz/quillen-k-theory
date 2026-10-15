@@ -15,10 +15,14 @@ open scoped Simplicial Topology
 universe u
 namespace Quillen.SimplexGrid
 
+/-- The simplex map selecting grid vertices `(i, j)` with second coordinate fixed to `j`. -/
 def columnFace (p q : ℕ) (j : Fin (q + 1)) : ⦋p⦌ ⟶ ⦋dimension p q⦌ :=
   SimplexCategory.Hom.mk ⟨fun i ↦ index p q (i, j),
     fun _ _ h ↦ (index p q).monotone ⟨h, le_rfl⟩⟩
 
+/-- The simplicial inclusion of the column with second coordinate equal to vertex `j` and first
+coordinate varying in `Δ[p]`.
+-/
 def column (p q : ℕ) (j : Fin (q + 1)) : (Δ[p] : SSet.{u}) ⟶ Δ[p] ⊗ Δ[q] :=
   lift (𝟙 _) (SSet.stdSimplex.map (constantFace j))
 

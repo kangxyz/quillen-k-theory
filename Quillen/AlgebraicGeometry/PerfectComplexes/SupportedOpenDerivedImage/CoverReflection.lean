@@ -6,11 +6,15 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.Supported
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpenDerivedImage.Basic
 
 /-! # Supported derived image reflection on a genuine covering pair -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -5,17 +5,24 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Approximation.CoarseKEquivalence
 public import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
 
 /-! Actual coarse-cylinder maps and a genuine complex-model specialization. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
+open CategoryTheory.ExactCategory
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
 namespace CoarseApproximationConsumers
-open Quillen Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open Quillen Quillen.Waldhausen.Fibration
 open RowFactorization
 variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   {W : Structure C} {V : Structure D} {F : C ⥤ D}
@@ -66,7 +73,7 @@ theorem original_coarse_K_zero_right_inverse (y : V.K 0) :
 end CoarseApproximationConsumers
 
 namespace ComplexCoarseApproximationConsumer
-open Quillen Quillen.Waldhausen Quillen.Waldhausen.Fibration CochainComplex
+open Quillen Quillen.Waldhausen.Fibration CochainComplex
 attribute [local instance] Abelian.hasFiniteBiproducts
 variable {A : Type u} [Category.{v} A] [Abelian A]
   (P : ObjectProperty (CochainComplex A ℤ))

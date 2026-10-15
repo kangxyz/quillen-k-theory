@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionDiagramLaurent
 
 /-!
@@ -14,9 +15,15 @@ The forward and inverse components retain the literal original coordinates T and
 The degree-zero consumer retains the same unit-action time through every coefficient map.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
-open AlgebraicGeometry.Scheme.AffineOpenPair Quillen.PerfectComplexes Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace QuillenTest.FullOpenSectionLaurent
 

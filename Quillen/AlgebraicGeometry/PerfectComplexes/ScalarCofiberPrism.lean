@@ -17,12 +17,16 @@ cofibration factor is coarse weak. Its original quotient square therefore suppli
 constructed continuous cofiber prism and canonical-fiber face. The source scalar need not be a unit.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+open Quillen.Waldhausen.SplitFactorization
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry unitInterval
 open scoped Topology
-open Quillen.Waldhausen Quillen.Waldhausen.SplitFactorization Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.Fibration
 universe u
 namespace Quillen.PerfectComplexes
 attribute [local instance] Abelian.hasFiniteBiproducts

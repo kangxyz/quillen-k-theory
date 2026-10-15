@@ -4,16 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.H1BottomCenter
 
 /-! Full original projection rows on the external H1/bottom boundary. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH0Merge
+open Quillen.PerfectComplexes.BassH1References
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH1Join
@@ -21,8 +29,13 @@ open BassH0Merge BassH1References
 variable {R : CommRingCat.{u}} (P : Over (Spec R))
 variable {a b c : Under R} (u : a ⟶ b) (v : b ⟶ c)
 
+/-- The composite Laurent coefficient map used to postcompose the bottom boundary nodes. -/
 abbrev bottomJoinPost := BassH1Components.laurentMap P u ≫ BassH1Components.laurentMap P v
 
+/--
+Identifies the common reference with the first binary projection source after both Laurent maps,
+using the source projection equality `ha`.
+-/
 def firstSourceRowReference (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
     (ha : coefficientMap P (α.app a) ≫ polynomialProjection P a = laurentProjection P a) :=
   firstIso P u v ≪≫ isoWhiskerRight
@@ -31,6 +44,10 @@ def firstSourceRowReference (α : polynomialUnderFunctor R ⟶ laurentUnderFunct
       (coefficientMap P (α.app a) ≫ polynomialProjection P a))
     (BassH1Components.laurentMap P v).functor
 
+/--
+Identifies the common reference with the projection path at `a` postcomposed by both Laurent
+coefficient maps.
+-/
 def bottomColumnReference := BassBottomCommonFamily.referenceIso P u v ≪≫
   isoWhiskerLeft (BassProjectionPath.source P a).functor
     (BinaryNormalizationSimplex.total

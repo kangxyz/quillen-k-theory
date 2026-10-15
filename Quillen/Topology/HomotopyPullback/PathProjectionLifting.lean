@@ -23,6 +23,9 @@ is inserted.
 -/
 
 @[expose] public section
+
+open Quillen.HomotopyPullback
+
 noncomputable section
 open CategoryTheory Limits
 open scoped Topology unitInterval

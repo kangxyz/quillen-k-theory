@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenSupport
 public import Quillen.Waldhausen.Fibration.CanonicalFiberObjectLoop
 
@@ -17,11 +18,17 @@ fine object coordinate and the specified reversed zero-to-acyclic path coordinat
 with an original Laurent automorphism class remains a separate boundary calculation.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
-open Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open Quillen.Waldhausen.Fibration
 universe u
 namespace Quillen.PerfectComplexes
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRightFractions
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.Derived
 
@@ -16,6 +17,9 @@ The resulting actual global map recovers both specified morphisms and the
 specified overlap isomorphism at the original local derived objects.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

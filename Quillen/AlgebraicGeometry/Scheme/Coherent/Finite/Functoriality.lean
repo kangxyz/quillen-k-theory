@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Exact
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.Finite.Functoriality
@@ -21,21 +23,14 @@ agrees with the existing finite affine and closed-immersion direct images.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Coherent
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.CoherentScheme.Finite
-export AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite
-  (coherentPushforwardCompIso coherentPushforwardIdIso coherentPushforward_closed
-  coherentPushforward_specMap)
-end Quillen.CoherentScheme.Finite
-
-end
 
 
 

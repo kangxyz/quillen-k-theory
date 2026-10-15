@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.Resolution.Closure
 
 /-!
@@ -16,6 +17,9 @@ resolution-length strata without assuming that the resolving objects are
 projective or that comparison morphisms lift against arbitrary epimorphisms.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

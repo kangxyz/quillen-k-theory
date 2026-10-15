@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedAcyclic
 public import Quillen.Waldhausen.GilletWaldhausen.TruncationMaps
 
@@ -20,6 +21,9 @@ predicate, and acyclic. The resulting sequence is a genuine conflation in
 the inherited full exact subcategory of bounded acyclic complexes.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

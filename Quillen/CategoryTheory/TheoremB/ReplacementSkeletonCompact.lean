@@ -22,8 +22,13 @@ is neither assumed nor substituted for them.
 -/
 @[expose] public section
 
+open Topology
+
+open Quillen.TheoremA
+
+
 noncomputable section
-open CategoryTheory Limits Topology
+open CategoryTheory Limits
 open scoped Simplicial
 universe u
 set_option backward.isDefEq.respectTransparency false

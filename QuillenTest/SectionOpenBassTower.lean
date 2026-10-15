@@ -15,6 +15,9 @@ into the original relative-open tower at every stage and cylinder height, includ
 stage-zero section map. Arbitrary coefficient arrows and structure times remain visible.
 -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 universe u

@@ -16,6 +16,10 @@ fiber boundary criterion, zero localization, and the empty affine case.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+open Quillen.PerfectComplexes.Affine
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 

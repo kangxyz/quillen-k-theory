@@ -9,7 +9,7 @@ public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PullbackPushforwa
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.PullbackPushforward
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.StrictPositiveRetraction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.Strictification
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GodementBaseChangeUnit
+public import Aglib.AlgebraicGeometry.Cohomology.BaseChange.GodementUnit
 
 /-! # The actual positive unit on all affine perfect bounded-below complexes
 
@@ -32,40 +32,38 @@ open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativePositiveUnit
 
+/-- The standard derived-category instance for sheaves of modules on `X`. -/
 local instance positiveUnitStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 
-local instance identityQLifting (X : Scheme.{u}) : Localization.Lifting
-    DerivedCategory.Plus.Q (CochainComplex.Plus.quasiIso X.Modules)
-    DerivedCategory.Plus.Q (𝟭 (DerivedCategory.Plus X.Modules)) :=
-  ⟨Functor.rightUnitor _⟩
-
-local instance positiveQLifting {P X : Scheme.{u}} (p : P ⟶ X) [Flat p] :
-    Localization.Lifting DerivedCategory.Plus.Q (CochainComplex.Plus.quasiIso X.Modules)
-      (DerivedCategory.Plus.Q ⋙ derivedPositive p) (derivedPositive p) := ⟨Iso.refl _⟩
-
 /-- The original affine strict positive unit is retained literally. -/
 lemma positivePlusUnit_affine (R : CommRingCat.{u}) (K : CochainComplex.Plus (Spec R).Modules) :
-    (positivePlusUnit (projection R)).app K =
+    (AlgebraicGeometry.Scheme.Modules.Godement.pullbackPushforwardPlusUnit (projection R)).app K =
       (StrictPositiveRetraction.positivePlusUnit R).app K := rfl
 
 /-- Actual affine perfect complexes have the same canonical weak unit without term-QC premises. -/
 theorem positivePlusUnit_affine_quasiIso (R : CommRingCat.{u})
     (K : CochainComplex.Plus (Spec R).Modules) (hK : locallyPerfect (Spec R) K.obj) :
-    QuasiIso ((positivePlusUnit (projection R)).app K).hom := by
+    QuasiIso ((AlgebraicGeometry.Scheme.Modules.Godement.pullbackPushforwardPlusUnit (projection
+      R)).app K).hom := by
   obtain ⟨P, ⟨eP⟩⟩ := Affine.locallyPerfect_exists_strictPerfect_representative R hK
   let A := (strictToPlus (Spec R)).obj P
   let e : DerivedCategory.Plus.Q.obj A ≅ DerivedCategory.Plus.Q.obj K :=
     DerivedCategory.Plus.ι.preimageIso eP
-  have hA : QuasiIso ((positivePlusUnit (projection R)).app A).hom := by
+  have hA : QuasiIso ((AlgebraicGeometry.Scheme.Modules.Godement.pullbackPushforwardPlusUnit
+    (projection R)).app A).hom := by
     rw [positivePlusUnit_affine]
     obtain ⟨a, b, hab⟩ := P.property.1
     exact StrictPositiveRetraction.positivePlusUnit_quasiIso R A a b
       (fun i hi => hab i (Or.inl hi)) (fun i hi => hab i (Or.inr hi)) P.property.2
-  have hD : IsIso ((derivedPositiveUnit (projection R)).app (DerivedCategory.Plus.Q.obj A)) := by
-    rw [derivedPositiveUnit_app]
-    exact unitOnPlus_isIso_of_quasiIso (projection R) A hA
-  exact positivePlusUnit_quasiIso_of_derivedUnit (projection R) K
-    ((NatTrans.isIso_app_iff_of_iso (derivedPositiveUnit (projection R)) e).mp hD)
+  have hD : IsIso ((AlgebraicGeometry.Scheme.Modules.derivedPullbackPushforwardPlusUnit (projection
+    R)).app (DerivedCategory.Plus.Q.obj A)) := by
+    rw [AlgebraicGeometry.Scheme.Modules.derivedPullbackPushforwardPlusUnit_app]
+    exact AlgebraicGeometry.Scheme.Modules.Godement.isIso_derivedUnit_of_quasiIso_unit (projection
+      R) A hA
+  exact AlgebraicGeometry.Scheme.Modules.Godement.quasiIso_unit_of_isIso_derivedUnit (projection R)
+    K
+    ((NatTrans.isIso_app_iff_of_iso
+      (AlgebraicGeometry.Scheme.Modules.derivedPullbackPushforwardPlusUnit (projection R)) e).mp hD)
 
 end Quillen.PerfectComplexes.ProjectiveLine.P5NativePositiveUnit

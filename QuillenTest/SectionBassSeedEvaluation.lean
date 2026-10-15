@@ -9,9 +9,12 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassSeedE
 
 /-! The original strict and raw Bass seeds retain their actual loop maps and independent times. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
-open Quillen.PerfectComplexes AlgebraicGeometry.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 open scoped unitInterval
 universe u
 namespace QuillenTest.SectionBassSeedEvaluation

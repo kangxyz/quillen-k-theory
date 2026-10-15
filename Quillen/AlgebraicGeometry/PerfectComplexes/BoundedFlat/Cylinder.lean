@@ -19,13 +19,16 @@ Waldhausen model, without an added cylinder hypothesis.
 -/
 @[expose] public section
 
+open Quillen.CochainComplex
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.CochainComplex AlgebraicGeometry.Scheme.Modules
+open AlgebraicGeometry.Scheme.Modules
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
 

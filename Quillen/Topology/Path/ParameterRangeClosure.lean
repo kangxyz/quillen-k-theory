@@ -16,7 +16,10 @@ universe u
 namespace Quillen.ParameterSupport
 variable {X : Type u} [TopologicalSpace X] {U : Set X} {a b c d : X}
 
+/-- The assertion that every value of the path `p` lies in `U`. -/
 def PathIn (U : Set X) {a b : X} (p : Path a b) : Prop := ∀ t, p t ∈ U
+/-- The assertion that the entire path homotopy `J`, at every time and path parameter, lies in `U`.
+-/
 def HomotopyIn (U : Set X) {a b : X} {p q : Path a b} (J : p.Homotopy q) : Prop :=
   ∀ t, J t ∈ U
 

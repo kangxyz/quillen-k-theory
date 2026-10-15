@@ -4,16 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ProjectionMiddleRightNormal
 
 /-! Exact normalized middle node in the unchanged coefficient-composition chart. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassReferenceMerge
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH1Join
@@ -24,6 +32,10 @@ variable {A B C A' B' C' : Scheme.{u}}
   (a : A' ⟶ A) (b : B' ⟶ B) (c : C' ⟶ C)
   (hp : b ≫ p = p' ≫ a) (hq : c ≫ q = q' ≫ b)
 
+/--
+The middle-square geometric equality oriented from the common triple composite to the binary
+middle composite.
+-/
 abbrev mergedMiddleGeom := (DoubleSquareTrack.middle_eq p q q' b c hq).symm
 
 include hq in
@@ -53,19 +65,26 @@ variable {R : CommRingCat.{u}} (P : Over (Spec R))
 variable {a b c : Under R} (u : a ⟶ b) (v : b ⟶ c)
 variable (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
 
+/--
+The middle-square geometric equality specialized to the polynomial-to-Laurent coefficient chart.
+-/
 abbrev oldChartMiddleGeom := mergedMiddleGeom
   (coefficientMap P ((polynomialUnderFunctor R).map u))
   (coefficientMap P ((polynomialUnderFunctor R).map v))
   (coefficientMap P ((laurentUnderFunctor R).map v))
   (coefficientMap P (α.app b)) (coefficientMap P (α.app c))
-  (coefficientTransformation_naturality P α v).symm
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm
 
+/--
+The source-functor equality for the chart's middle node, induced by the specialized
+middle-square equality.
+-/
 abbrev oldChartMiddleSourceEq := mergedMiddleSourceEq
   (coefficientMap P ((polynomialUnderFunctor R).map u))
   (coefficientMap P ((polynomialUnderFunctor R).map v))
   (coefficientMap P ((laurentUnderFunctor R).map v))
   (coefficientMap P (α.app b)) (coefficientMap P (α.app c))
-  (coefficientTransformation_naturality P α v).symm
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm
 
 /-- The original chart's whole dependent middle node has this exact normalized representation. -/
 theorem old_chart_middle_normal : BassOverlap.chartNodes P u v α 5 =
@@ -84,7 +103,7 @@ theorem old_chart_middle_normal : BassOverlap.chartNodes P u v α 5 =
     (coefficientMap P ((laurentUnderFunctor R).map u))
     (coefficientMap P ((laurentUnderFunctor R).map v))
     (coefficientMap P (α.app a)) (coefficientMap P (α.app b)) (coefficientMap P (α.app c))
-    (coefficientTransformation_naturality P α u).symm
-    (coefficientTransformation_naturality P α v).symm
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u).symm
+    (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α v).symm
 
 end Quillen.PerfectComplexes.BassH1Join

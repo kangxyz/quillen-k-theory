@@ -20,6 +20,9 @@ of maps: supplied under-source tracks are not asserted fixed or coherently
 identified, and no contractible comparison-space claim is made.
 -/
 @[expose] public section
+
+open Quillen.DoubleCylinder
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false

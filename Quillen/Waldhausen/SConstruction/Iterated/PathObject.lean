@@ -21,6 +21,9 @@ contractible, without assuming any higher Omega-equivalence.
 -/
 @[expose] public section
 
+open Quillen.Waldhausen.Fibration.RelativeRows
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -5,13 +5,14 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.CategoryTheory.SmallModel.Exact
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.Finite.GeneralPushforward
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Finite.AffinePushforward
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.AffineDetection
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenBaseChange
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.PushforwardIso
+public import Aglib.AlgebraicGeometry.Modules.Coherent.AffineDetection
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.OpenImmersion
+public import Aglib.AlgebraicGeometry.Modules.Pushforward.Isomorphism
 public import Mathlib.AlgebraicGeometry.Morphisms.Finite
 
 /-!
@@ -28,22 +29,8 @@ No proper direct-image or perfect-complex preservation assertion is made.
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
--- Transitional names share Aglib declarations and canonical instances.
-noncomputable section
-namespace Quillen.CoherentScheme.Finite
-export AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.Finite
-  (affineLocallyFiniteType_pushforward affineLocallyFiniteType_pushforward_affine
-  affinePresentationComparison coherentOpenBaseChange coherentPushforward
-  coherentPushforwardExact coherentPushforward_additive
-  coherentPushforward_affine_preservesFiniteColimits coherentPushforward_comp_inclusion
-  coherentPushforward_preservesEpimorphisms coherentPushforward_preservesFiniteColimits
-  coherentPushforward_preservesFiniteLimits exists_affine_presentation)
-end Quillen.CoherentScheme.Finite
-
-end
 
 
 

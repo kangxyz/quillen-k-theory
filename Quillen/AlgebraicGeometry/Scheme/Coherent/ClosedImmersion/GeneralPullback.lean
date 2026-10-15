@@ -6,9 +6,15 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.FinitePresentation.Noetherian
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.AffinePullback
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralPushforward
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.GluingLocality
+public import Aglib.AlgebraicGeometry.Modules.Coherent.FinitePresentation
+public import Aglib.AlgebraicGeometry.Modules.FinitePresentation.Locality
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.FinitePresentation
 public import Mathlib.CategoryTheory.Adjunction.Restrict
 
 /-!
@@ -21,10 +27,12 @@ The resulting coherent adjunction is the restriction of the sheaf adjunction.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules
+
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section
@@ -84,11 +92,11 @@ theorem affineLocallyFiniteType_pullback {Z X : Scheme.{u}} [IsLocallyNoetherian
   apply affineLocallyFiniteType_of_schemeOpenCover _ 𝒰
   intro j
   let a := X.affineOpenCover.f j
-  have h : affineLocallyFiniteType (pullback i a)
+  have h : affineLocallyFiniteType (CategoryTheory.Limits.pullback i a)
       ((Scheme.Modules.pullback (pullback.snd i a)).obj ((restrictFunctor a).obj M)) :=
     affineLocallyFiniteType_pullback_affine (X.affineOpenCover.X j) (pullback.snd i a)
       (affineLocallyFiniteType_restrict a hM)
-  exact (affineLocallyFiniteType (pullback i a)).prop_of_iso
+  exact (affineLocallyFiniteType (CategoryTheory.Limits.pullback i a)).prop_of_iso
     ((AlgebraicGeometry.Scheme.Modules.pullbackOpenSquare (pullback.fst i a) (pullback.snd i a) i a
       (pullback.condition (f := i) (g := a))).app M).symm h
 
@@ -111,14 +119,15 @@ def coherentPullbackOpenBaseChange {V : Scheme.{u}}
     (a : V ⟶ X) [IsOpenImmersion a] :
     coherentPullback i ⋙ finiteTypeSheavesRestriction (pullback.fst i a) ≅
       finiteTypeSheavesRestriction a ⋙ coherentPullback (pullback.snd i a) :=
-  Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules (pullback i a))
+  Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules (CategoryTheory.Limits.pullback i a))
     (Functor.isoWhiskerLeft (finiteTypeSheavesToModules X)
       (AlgebraicGeometry.Scheme.Modules.pullbackOpenSquare (pullback.fst i a) (pullback.snd i a) i a
         (pullback.condition (f := i) (g := a))))
 
 /-- The coherent adjunction is the restriction of the genuine sheaf
 pullback–pushforward adjunction. -/
-def coherentAdjunction : coherentPullback i ⊣ coherentPushforward i :=
+def coherentAdjunction : coherentPullback i ⊣
+    AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePushforward i :=
   (pullbackPushforwardAdjunction i).restrictFullyFaithful
     (affineLocallyFiniteType X).fullyFaithfulι (affineLocallyFiniteType Z).fullyFaithfulι (Iso.refl
       _) (Iso.refl _)
@@ -126,7 +135,8 @@ def coherentAdjunction : coherentPullback i ⊣ coherentPushforward i :=
 instance coherentPullback_isLeftAdjoint : (coherentPullback i).IsLeftAdjoint :=
   (coherentAdjunction i).isLeftAdjoint
 
-instance coherentPushforward_isRightAdjoint : (coherentPushforward i).IsRightAdjoint :=
+instance coherentPushforward_isRightAdjoint :
+    (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePushforward i).IsRightAdjoint :=
   (coherentAdjunction i).isRightAdjoint
 
 instance coherentPullback_additive : (coherentPullback i).Additive where

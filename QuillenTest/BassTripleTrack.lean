@@ -10,8 +10,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassS
 
 /-! Genuine Laurent coefficient triples retain original tracks and independent structure time. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.LoopPrespectrum
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.Waldhausen.IteratedS
 universe u
 namespace QuillenTest.BassTripleTrack

@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Homology.CochainComplex.DegreewiseSplitMono
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.SplitComplexes.Subcategory
 
 /-!
@@ -17,6 +19,9 @@ subcategory. The degreewise retractions are extended to full short-complex
 splittings using exactness; no chain splitting is required.
 -/
 @[expose] public section
+
+open CochainComplex
+
 
 open CategoryTheory.ExactCategory
 

@@ -4,16 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassSharedNodes
 
 /-! Merge the complete original chart/bottom boundary nodes, retaining all three whole faces. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Convexity
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 open scoped Simplicial Topology unitInterval
 universe u
@@ -27,19 +31,23 @@ def select (i : Fin 45) : Fin 51 :=
         if i.val < 42 then i.val + 6 else i.val - 9, by
     split_ifs <;> omega⟩
 
+/-- The vertex map placing the 36 chart vertices in the merged 45-vertex order. -/
 def chartIndex (i : Fin 36) : Fin 45 :=
   ⟨if i.val < 15 then i.val else if i.val < 33 then i.val + 6 else i.val + 9, by
     split_ifs <;> omega⟩
 
+/-- The vertex map placing the 15 bottom vertices in the merged 45-vertex order. -/
 def bottomIndex (i : Fin 15) : Fin 45 :=
   ⟨if i.val < 9 then i.val + 15 else i.val + 30, by split_ifs <;> omega⟩
 
+/-- The face inclusion retaining the complete chart diagram in the merged boundary simplex. -/
 def chartFace : ⦋35⦌ ⟶ ⦋44⦌ := SimplexCategory.Hom.mk ⟨chartIndex, by
   intro i j hij
   change (chartIndex i).val ≤ (chartIndex j).val
   dsimp [chartIndex]
   split_ifs <;> omega⟩
 
+/-- The face inclusion retaining the complete bottom diagram in the merged boundary simplex. -/
 def bottomFace : ⦋14⦌ ⟶ ⦋44⦌ := SimplexCategory.Hom.mk ⟨bottomIndex, by
   intro i j hij
   change (bottomIndex i).val ≤ (bottomIndex j).val

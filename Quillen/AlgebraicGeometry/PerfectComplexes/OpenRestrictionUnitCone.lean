@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.QuasicoherentHomology
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenPushforwardQuasicoherent
 public import Quillen.AlgebraicGeometry.PerfectComplexes.InjectivePushforwardAdjunction
@@ -19,6 +20,9 @@ assumed or asserted. The support conclusion needs no compactness; quasicoherence
 uses quasi-compactness of the open immersion.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 noncomputable section

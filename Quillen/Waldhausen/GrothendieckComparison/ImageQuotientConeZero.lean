@@ -19,6 +19,9 @@ comparison. They identify the previously constructed cone descent, retaining its
 nullhomotopy and both original categorical maps.
 -/
 @[expose] public section
+
+open Quillen.Waldhausen.IteratedS
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

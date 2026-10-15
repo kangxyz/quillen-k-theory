@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.PairNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.PairPullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.AuxiliaryNaturality
@@ -13,9 +14,14 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Auxiliary
 /-! # Supported pair naturality consumers -/
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
-open Quillen.PerfectComplexes
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -37,7 +43,8 @@ include g w in
 lemma original_boundedFlat_relative_quasiIso
     {K L : (boundedFlatPerfectSupported T.ι).FullSubcategory} (p : K ⟶ L)
     (hp : QuasiIso ((restrict j).map p.hom)) :
-    QuasiIso ((restrict j').map ((pullbackComplex f.hom.right).map p.hom)) := by
+    QuasiIso ((restrict j').map ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f.hom.right).map
+      p.hom)) := by
   exact @boundedFlatPerfect_pairPullback_quasiIso _ _
     (supportedOpenRestrictionSquare j' j f g w) _ _ K.property.1 L.property.1 p.hom hp
 

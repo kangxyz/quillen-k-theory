@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.Map.Functoriality
 public import Mathlib.Algebra.Category.Grp.Basic
 
@@ -18,6 +20,9 @@ functors. The checked identity/composition laws package K_n as a group-valued
 functor, without claiming K₀ commutativity.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

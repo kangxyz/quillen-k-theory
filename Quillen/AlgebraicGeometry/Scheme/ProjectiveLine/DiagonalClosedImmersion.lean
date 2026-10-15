@@ -94,6 +94,6 @@ theorem isClosedImmersion_relativeDiagonal (R : CommRingCat.{u}) :
       (sameChart_diagonal_isPullback R (plusChart R) (plusChart_projection R))
 /-- The original structural projection of the two-chart line is separated. -/
 theorem isSeparated_projection (R : CommRingCat.{u}) : IsSeparated (projection R) := by
-  apply (isSeparated_iff (projection R)).mpr
+  apply (AlgebraicGeometry.isSeparated_iff (projection R)).mpr
   exact isClosedImmersion_relativeDiagonal R
 end AlgebraicGeometry.Scheme.ProjectiveLine

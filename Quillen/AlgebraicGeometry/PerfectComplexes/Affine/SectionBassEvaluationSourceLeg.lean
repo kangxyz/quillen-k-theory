@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassEvaluation
 public import Quillen.Topology.Prespectrum.HomotopySquareInterchange
 public import Quillen.Topology.Prespectrum.HomotopySquareBoundary
@@ -16,11 +17,14 @@ The unchanged polynomial evaluation track moves the actual strict Bass source le
 geometric counterpart. Interchange with the original cone contraction retains both parameters.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.PolynomialLaurent
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 variable (R : CommRingCat.{u})

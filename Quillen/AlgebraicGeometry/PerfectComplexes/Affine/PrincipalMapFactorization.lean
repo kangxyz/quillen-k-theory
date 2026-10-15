@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalModuleFactorization
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedComparison
 
@@ -19,6 +20,9 @@ strict-perfect categories with their original Waldhausen weak predicates.
 No arbitrary locally-perfect strictification or all-perfect App2 is assumed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent

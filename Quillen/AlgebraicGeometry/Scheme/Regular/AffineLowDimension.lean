@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.Algebra.Category.ModuleCat.Finite
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Regular.LocalLowDimension
 public import Mathlib.RingTheory.LocalProperties.ProjectiveDimension
@@ -24,7 +25,6 @@ the canonical Quillen comparison.
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 open Quillen
-open Quillen.CoherentScheme
 
 
 noncomputable section

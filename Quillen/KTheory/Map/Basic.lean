@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.CategoryTheory.ExactCategory.Functor
 public import Quillen.Topology.ClassifyingSpace.PointedFunctor
 public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Zero
@@ -23,6 +24,9 @@ The identity law is proved below. The composition law, using the actual
 based realization homotopy, is proved in `Quillen.KMapFunctoriality`.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 
 noncomputable section

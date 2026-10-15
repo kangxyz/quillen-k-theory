@@ -4,16 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChange
+public import Aglib.AlgebraicGeometry.Cohomology.BaseChange.Flat
 public import Quillen.Algebra.Homology.DerivedCategory.RightDerivedFunctorPlusCompositionShift
 public import Quillen.CategoryTheory.Functor.Derived.RightDerivedShift
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedPushforwardSection
+public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PushforwardSection
 
 /-! # Shift compatibility of the actual derived flat base-change mate -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

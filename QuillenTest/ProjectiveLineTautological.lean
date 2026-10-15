@@ -12,7 +12,6 @@ public import Mathlib.Data.ZMod.Basic
 @[expose] public section
 
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -21,7 +20,6 @@ open AlgebraicGeometry.Scheme.ProjectiveLine
 universe u
 namespace QuillenTest.ProjectiveLineTautological
 
-open Quillen
 variable (R : CommRingCat.{u})
 
 /-- The first global coordinate becomes the actual positive-chart trivialization. -/

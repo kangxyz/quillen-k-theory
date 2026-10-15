@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Waldhausen.Complexes
-public import Quillen.CategoryTheory.ExactCategory.Abelian
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 
 /-!
 # Quasi-isomorphisms on actual filtration quotients

@@ -4,17 +4,26 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ProjectionMiddleNormalNode
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ProductReferenceRows
 
 /-! Full central reference equality for the first/product-column H1 joins. -/
 @[expose] public section
+
+open Quillen.PerfectComplexes.BassH1References
+open Quillen.PerfectComplexes.BassReferenceMerge
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes.BassH1Join
@@ -25,12 +34,21 @@ variable (α : polynomialUnderFunctor R ⟶ laurentUnderFunctor R)
   (ha : coefficientMap P (α.app a) ≫ polynomialProjection P a = laurentProjection P a)
   (hb : coefficientMap P (α.app b) ≫ polynomialProjection P b = laurentProjection P b)
 
+/--
+Rewrites the Laurent projection composite along `u` through the chart map at `b` and the
+polynomial projection at `a`.
+-/
 abbrev chartMiddleGeom := projection_middle_geom
   (polynomialProjection P a) (coefficientMap P (α.app a)) (coefficientMap P (α.app b))
   (coefficientMap P ((polynomialUnderFunctor R).map u))
   (coefficientMap P ((laurentUnderFunctor R).map u))
-  (coefficientTransformation_naturality P α u) (laurentProjection P a) ha
+  (AlgebraicGeometry.Scheme.BaseChange.Coefficients.coefficientMap_naturality P α u)
+    (laurentProjection P a) ha
 
+/--
+The first-component polynomial center, with the middle-square source transport and Laurent
+postcomposition.
+-/
 def firstPolynomialCenter : BassOverlap.Node P u v :=
   postReferenceNode (BassOverlap.commonReference P u v) (BassH1Components.laurentMap P v)
     (firstIso P u v)
@@ -41,6 +59,10 @@ def firstPolynomialCenter : BassOverlap.Node P u v :=
         (coefficientMap P ((polynomialUnderFunctor R).map u) ≫ polynomialProjection P a)⟩ :
       BassH0Diagram.Node P u)
 
+/--
+The product-column center obtained by precomposing the normalized chart target node with the
+polynomial source along `u`.
+-/
 def productPolynomialCenter : BassOverlap.Node P u v :=
   BassH0Merge.preReferenceNode (BassOverlap.commonReference P u v)
     (CoefficientSquareFamilies.polynomialSource P u) (chartIso P u v α hb)

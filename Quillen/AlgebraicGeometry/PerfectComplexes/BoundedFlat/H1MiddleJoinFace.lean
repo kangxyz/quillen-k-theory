@@ -15,15 +15,17 @@ set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Convexity
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters Quillen.LoopPrespectrum
 open Quillen.NativePathCells
 open scoped Simplicial Topology unitInterval
 universe u
 namespace Quillen.PerfectComplexes.BassH1Join
 
+/-- The five-vertex middle-path face at vertices 26 through 30 of the first H1 component. -/
 def firstMiddleFace : ⦋4⦌ ⟶ ⦋30⦌ :=
   SimplexCategory.Hom.mk ⟨![26, 27, 28, 29, 30], by decide⟩
+/-- The five-vertex source-path face of the middle H1 component shared with the first component. -/
 def middleSourceFace : ⦋4⦌ ⟶ ⦋30⦌ :=
   SimplexCategory.Hom.mk ⟨![2, 3, 11, 14, 22], by decide⟩
 

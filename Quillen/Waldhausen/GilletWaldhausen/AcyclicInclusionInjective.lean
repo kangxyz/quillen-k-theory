@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleInclusion
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsKCoverage
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedAcyclicKCoverage
@@ -18,6 +19,9 @@ cycle incidence detects that class. No categorywide term bound, global
 graded equivalence, or fibration theorem is an input.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CompositionTrack
-public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurent
+public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Basic
 public import Quillen.Topology.Prespectrum.HomotopyTransport
 public import Quillen.Topology.Prespectrum.RelativeHomotopyHorizontal
 public import Quillen.Topology.Prespectrum.PushoutHomotopy

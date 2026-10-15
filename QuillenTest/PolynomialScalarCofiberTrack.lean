@@ -10,9 +10,13 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PolynomialScalar
 
 /-! # Original signed polynomial cofiber transport in the canonical fiber -/
 @[expose] public section
+
+open Quillen.PerfectComplexes
+open Quillen.Waldhausen
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
-open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.Waldhausen Quillen.Waldhausen.Fibration
+open CategoryTheory AlgebraicGeometry Quillen.PerfectComplexes.Affine
+open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.Waldhausen.Fibration
 open scoped Topology
 universe u
 namespace QuillenTest.PolynomialScalarCofiberTrack

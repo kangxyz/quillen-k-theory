@@ -26,6 +26,10 @@ No surjectivity onto the full open K-zero group is asserted.
 -/
 @[expose] public section
 
+open Quillen.PerfectComplexes.OpenDerivedImage
+open Quillen.Waldhausen
+
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

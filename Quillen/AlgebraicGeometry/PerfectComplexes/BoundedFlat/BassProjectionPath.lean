@@ -4,22 +4,27 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BinaryNativePath
 
 /-! The original two-chart Bass cylinder path in one actual five-vertex simplex. -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite Convexity
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS Quillen.SimplexParameters
 open scoped Simplicial Topology unitInterval
 universe u
 namespace Quillen.PerfectComplexes.BassProjectionPath
 variable {R : CommRingCat.{u}} (P : Over (Spec R)) (a : Under R)
 
+/-- The shared source of the positive and inverse-coordinate projection normalization triangles. -/
 abbrev source := BinaryNormalizationSimplex.sourceMap (laurentPlus P a) (polynomialProjection P a)
 
 /-- The two actual binary composites have precisely the same geometric projection. -/
@@ -32,6 +37,7 @@ theorem source_eq : (source P a).functor =
 /-- Transport between the two actual geometric source functors, with no chosen new homotopy. -/
 def sourceIso := eqToIso (source_eq P a)
 
+/-- A model map equipped with an isomorphism from the shared projection-normalization source. -/
 abbrev Node := Σ F : modelOf (boundedFlatPerfectWaldhausen (space (op P, a))) ⟶
     modelOf (boundedFlatPerfectWaldhausen
       (space (op P, (laurentUnderFunctor R).obj a))), (source P a).functor ≅ F.functor
@@ -50,15 +56,20 @@ def nodes : Fin 5 → Node P a :=
       sourceIso P a ≪≫
         BinaryNormalizationSimplex.total (laurentMinus P a) (polynomialProjection P a)⟩]
 
+/-- The 4-simplex containing both projection normalization triangles with their common source
+shared. -/
 def simplex : ModelSimplex
     (modelOf (boundedFlatPerfectWaldhausen (space (op P, a))))
     (modelOf (boundedFlatPerfectWaldhausen
       (space (op P, (laurentUnderFunctor R).obj a)))) 4 :=
   ModelSimplex.ofIsos (source P a) (fun i ↦ (nodes P a i).1) (fun i ↦ (nodes P a i).2)
 
+/-- The face inclusion selecting the positive normalization triangle on vertices `0, 1, 2`. -/
 def plusFace : ⦋2⦌ ⟶ ⦋4⦌ := SimplexCategory.Hom.mk ⟨![0, 1, 2], by
   intro i j h; fin_cases i <;> fin_cases j <;> simp_all⟩
 
+/-- The face inclusion selecting the inverse-coordinate normalization triangle on vertices `0,
+3, 4`. -/
 def minusFace : ⦋2⦌ ⟶ ⦋4⦌ := SimplexCategory.Hom.mk ⟨![0, 3, 4], by
   intro i j h; fin_cases i <;> fin_cases j <;> simp_all⟩
 
@@ -82,6 +93,7 @@ def minusVertices : Fin 3 →
     BinaryNormalizationSimplex.intermediateMap (laurentMinus P a) (polynomialProjection P a),
     BinaryNormalizationSimplex.targetMap (laurentMinus P a) (polynomialProjection P a)]
 
+/-- The source-to-vertex references of the inverse-coordinate normalization triangle. -/
 def minusReferences : ∀ i,
     (BinaryNormalizationSimplex.sourceMap (laurentMinus P a) (polynomialProjection P a)).functor ≅
       (minusVertices P a i).functor :=
@@ -91,6 +103,8 @@ def minusReferences : ∀ i,
         (BinaryNormalizationSimplex.total (laurentMinus P a) (polynomialProjection P a))
         (fun i ↦ Fin.elim0 i)))
 
+/-- The inverse-coordinate triangle nodes transported to the positive triangle's source
+reference. -/
 def minusNodes (i : Fin 3) : Node P a :=
   ⟨minusVertices P a i, sourceIso P a ≪≫ minusReferences P a i⟩
 

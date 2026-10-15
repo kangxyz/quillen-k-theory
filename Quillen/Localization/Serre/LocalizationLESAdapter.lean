@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.BasedFiberComparison
 public import Quillen.Topology.HomotopyFiber.LESTail
 public import Quillen.Topology.Realization.Connectivity
@@ -18,6 +19,9 @@ comparison isomorphism must still be constructed by the geometric theorem.
 It is not a localization theorem under the Serre hypotheses alone.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+
 
 noncomputable section
 universe u

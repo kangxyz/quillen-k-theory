@@ -10,11 +10,14 @@ public import Quillen.Waldhausen.Approximation.GeneralKEquivalence
 /-! Actual-map and genuinely different-universe consumers for approximation transport. -/
 @[expose] public section
 
+open Quillen.Waldhausen
+
+
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
 universe u v
 namespace SmallModelApproximationConsumers
-open Quillen Quillen.Waldhausen
+open Quillen
 variable {C D : Type u} [Category.{v} C] [Category.{v} D]
   {W : Structure C} {V : Structure D} {F : C ⥤ D}
   (h : HasApproximationProperty W V F)
@@ -66,7 +69,7 @@ theorem original_small_K_square (n : ℕ) (x : W.K n) :
 end SmallModelApproximationConsumers
 
 namespace LargerObjectApproximationConsumer
-open Quillen Quillen.Waldhausen
+open Quillen
 variable {C D : Type (u+1)} [Category.{u} C] [Category.{u} D]
   {W : Structure C} {V : Structure D} {F : C ⥤ D}
   (h : HasApproximationProperty W V F)
@@ -82,7 +85,7 @@ theorem original_KMap_bijective (n : ℕ) : Function.Bijective (KMap hF n) :=
 end LargerObjectApproximationConsumer
 
 namespace LargerHomApproximationConsumer
-open Quillen Quillen.Waldhausen
+open Quillen
 variable {C D : Type u} [Category.{u+1} C] [Category.{u+1} D]
   {W : Structure C} {V : Structure D} {F : C ⥤ D}
   (h : HasApproximationProperty W V F)

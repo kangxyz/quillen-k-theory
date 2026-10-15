@@ -12,6 +12,9 @@ public import Mathlib.CategoryTheory.Equivalence
 /-! # Equivalence for the original localization–Grothendieck interchange -/
 
 @[expose] public section
+
+open Quillen.GroupCompletion
+
 noncomputable section
 open CategoryTheory MonoidalCategory
 universe u v

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.KTheory.Bass.ModelDiagramBottomComparison
 
 /-!
@@ -16,11 +17,14 @@ open restriction as soon as their existing strict transformations are supplied.
 -/
 
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits Quillen.LoopPrespectrum
-open Quillen.Waldhausen.IteratedS Quillen.PolynomialBaseChange
+open Quillen.Waldhausen.IteratedS
 universe u w
 namespace Quillen.KTheory.Bass
 variable {R : CommRingCat.{u}} {F G : Under R ⥤ Model.{w}}

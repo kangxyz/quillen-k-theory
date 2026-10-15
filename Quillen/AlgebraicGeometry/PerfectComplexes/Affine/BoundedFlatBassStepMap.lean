@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassStep
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BassSpanComparisonTrack
 public import Quillen.Topology.Prespectrum.ConeHomotopySquare
@@ -16,9 +17,15 @@ The proved original comparison-map homotopy supplies the cone map and its parame
 looping. Composition coherence and compatibility with the seed transition remain separate.
 -/
 @[expose] public section
+
+open Quillen.PolynomialBaseChange
+
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum Quillen.Waldhausen.IteratedS
-open AlgebraicGeometry.Scheme.PolynomialLaurent Quillen.PolynomialBaseChange
+open AlgebraicGeometry.Scheme.PolynomialLaurent
 universe u
 namespace Quillen.PerfectComplexes
 variable {R S : CommRingCat.{u}} (f : R ⟶ S)

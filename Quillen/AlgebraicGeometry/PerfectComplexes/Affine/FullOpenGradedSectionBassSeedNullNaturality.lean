@@ -5,9 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedSectionBassSeedNull
-public import
-Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedLaurentContractionNaturality
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenGradedLaurentContractionNaturality
 
 /-!
 # Coefficient naturality of the original graded Bass seed null
@@ -19,8 +19,11 @@ retain both times through the original operations and endpoint casts. No replace
 supplied naturality hypothesis, or interchange with a localization null is used.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
-open CategoryTheory AlgebraicGeometry Quillen.PolynomialBaseChange Quillen.LoopPrespectrum
+open CategoryTheory AlgebraicGeometry Quillen.LoopPrespectrum
 open scoped Topology unitInterval
 universe u
 namespace Quillen.LoopPrespectrum

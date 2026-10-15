@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedStabilizedExtension
 
 /-!
@@ -18,13 +19,19 @@ prescribed principal-localization support.
 
 @[expose] public section
 
+open Quillen.PerfectComplexes
+
+
+open AlgebraicGeometry.Scheme.Modules.Complex
+
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
 namespace QuillenTest.SupportedStabilizedExtension
-open Quillen.PerfectComplexes Quillen.PerfectComplexes.Affine
+open Quillen.PerfectComplexes.Affine
 open Quillen.ModuleComplex.PrincipalLocalization
 attribute [local instance] Affine.standardDerivedModules Affine.standardDerivedSheaves
 attribute [local instance] Abelian.hasFiniteBiproducts

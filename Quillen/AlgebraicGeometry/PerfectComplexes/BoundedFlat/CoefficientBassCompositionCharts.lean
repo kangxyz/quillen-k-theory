@@ -5,6 +5,7 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientTransformationComposition
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassConditionalLaws
 
@@ -15,11 +16,14 @@ Constructed whole chart faces of the ORIGINAL Bass comparison-composition cube.
 The inner polynomial cylinder still needs a compatible three-parameter filler.
 -/
 @[expose] public section
+
+open CommRingCat.PolynomialLaurent
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Opposite Quillen.LoopPrespectrum
-open Quillen.PolynomialBaseChange AlgebraicGeometry.Scheme.CoefficientBaseChange
+open AlgebraicGeometry.Scheme.BaseChange.Coefficients
 open Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes

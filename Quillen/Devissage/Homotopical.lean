@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Aglib.CategoryTheory.Abelian.Subcategory.Exact
+public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Devissage.LayerContraction
 public import Quillen.Devissage.CommaLayers
 public import Quillen.CategoryTheory.TheoremA.ContractibleComma
@@ -26,6 +28,10 @@ invariance
 theorem, without assuming based inverse homotopies.
 -/
 @[expose] public section
+
+open CategoryTheory.ExactCategory
+open CategoryTheory.ObjectProperty
+
 
 
 noncomputable section

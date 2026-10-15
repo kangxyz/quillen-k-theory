@@ -6,7 +6,8 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineRestrictionCoefficients
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Pushforward
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.RestrictionCoefficients
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenLocalization
 
 /-! # Sections of affine charts over an affine base
@@ -16,8 +17,9 @@ changes of the actual open arrow. No finiteness hypothesis is used.
 -/
 
 @[expose] public section
-open Quillen
-open Quillen.SchemeSheaf
+
+open AlgebraicGeometry.Scheme.Modules
+
 
 
 section

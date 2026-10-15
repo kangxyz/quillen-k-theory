@@ -18,13 +18,15 @@ lower-bounded injective complexes by scheme pushforward and affine global sectio
 -/
 
 @[expose] public section
+
+open Quillen.CochainComplex
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u v w u' v'
 namespace QuillenTest.KInjectiveRepresentatives
-open Quillen.CochainComplex
 
 /-- A prescribed original factorization remains homotopic after any additive coefficient functor. -/
 theorem original_factorization_after_coefficients
