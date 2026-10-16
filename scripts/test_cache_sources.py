@@ -106,20 +106,24 @@ if sys.argv[1:] == ['resolve-deps']:
         env = self.cache_fixture()
         self.write('.lake/packages/Aglib/scripts/build_serial.py', '''
 from contextlib import contextmanager
+import os
 @contextmanager
 def capped_toolchain(root):
     lean = root / 'fake-capped-lean'
-    lean.write_text('original capped launcher')
-    yield dict(LEAN=str(lean))
+    lean.write_text('#!/usr/bin/env python3\\nimport sys\\n'
+                    'assert sys.argv[1:] in [["--print-prefix"], ["--githash"]]\\n'
+                    'print("fixture metadata")\\n')
+    lean.chmod(0o755)
+    yield dict(os.environ, LEAN=str(lean))
 ''')
         self.write('.lake/packages/Aglib/scripts/resource_guard.py', '''
 from pathlib import Path
 import json, os, subprocess, sys
 def run(command, *, env, receipt):
-    assert 'flock' in Path(env['LEAN']).read_text()
+    assert command[2:4] == ['--guarded-cache', env['LEAN']]
     with open(os.environ['COMMAND_LOG'], 'a') as out:
         out.write(json.dumps(['guard', str(receipt)] + command) + '\\n')
-    return subprocess.call(command)
+    return subprocess.call(command, env=env)
 ''')
         result = subprocess.run(['bash', 'scripts/cache.sh', '--ci'], cwd=self.root, env=env,
                                 capture_output=True, text=True)
@@ -130,8 +134,9 @@ def run(command, *, env, receipt):
         self.assertEqual(commands[1][0], 'guard')
         self.assertTrue(commands[1][1].endswith('-cache.json'))
         self.assertNotIn('--bootstrap-cache', commands[1])
-        self.assertEqual(commands[1][-6:],
-                         ['lake', 'exe', 'cache', 'get', 'Mathlib.Direct', 'Mathlib.Resolved'])
+        self.assertEqual(commands[1][-4:],
+                         ['--guarded-cache', str((self.root / 'fake-capped-lean').resolve()),
+                          'Mathlib.Direct', 'Mathlib.Resolved'])
         self.assertEqual(commands[2],
                          ['exe', 'cache', 'get', 'Mathlib.Direct', 'Mathlib.Resolved'])
 
