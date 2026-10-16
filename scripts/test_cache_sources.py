@@ -64,7 +64,7 @@ class CacheSourceTests(unittest.TestCase):
             mathlib_cache_roots(self.root)
 
     def cache_fixture(self):
-        for name in ['cache.sh', 'cache_sources.py', 'library_sources.py']:
+        for name in ['cache.sh', 'cache_ci.py', 'cache_sources.py', 'library_sources.py']:
             self.write('scripts/' + name, (ROOT / 'scripts' / name).read_text())
         lake = self.write('bin/lake', '''#!/usr/bin/env python3
 import json, os, pathlib, sys
@@ -104,11 +104,22 @@ if sys.argv[1:] == ['resolve-deps']:
     def test_ci_cache_acquisition_uses_resolved_guard_and_scoped_targets(self):
         self.write('Quillen.lean', 'import Aglib.Resolved\nimport Mathlib.Direct\n')
         env = self.cache_fixture()
+        self.write('.lake/packages/Aglib/scripts/build_serial.py', '''
+from contextlib import contextmanager
+@contextmanager
+def capped_toolchain(root):
+    lean = root / 'fake-capped-lean'
+    lean.write_text('original capped launcher')
+    yield dict(LEAN=str(lean))
+''')
         self.write('.lake/packages/Aglib/scripts/resource_guard.py', '''
+from pathlib import Path
 import json, os, subprocess, sys
-with open(os.environ['COMMAND_LOG'], 'a') as out:
-    out.write(json.dumps(['guard'] + sys.argv[1:]) + '\\n')
-raise SystemExit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))
+def run(command, *, env, receipt):
+    assert 'flock' in Path(env['LEAN']).read_text()
+    with open(os.environ['COMMAND_LOG'], 'a') as out:
+        out.write(json.dumps(['guard', str(receipt)] + command) + '\\n')
+    return subprocess.call(command)
 ''')
         result = subprocess.run(['bash', 'scripts/cache.sh', '--ci'], cwd=self.root, env=env,
                                 capture_output=True, text=True)
@@ -116,7 +127,8 @@ raise SystemExit(subprocess.call(sys.argv[sys.argv.index('--') + 1:]))
         commands = [json.loads(line) for line in
                     (self.root / 'commands.jsonl').read_text().splitlines()]
         self.assertEqual(commands[0], ['resolve-deps'])
-        self.assertEqual(commands[1][0:2], ['guard', '--capped-toolchain'])
+        self.assertEqual(commands[1][0], 'guard')
+        self.assertTrue(commands[1][1].endswith('-cache.json'))
         self.assertNotIn('--bootstrap-cache', commands[1])
         self.assertEqual(commands[1][-6:],
                          ['lake', 'exe', 'cache', 'get', 'Mathlib.Direct', 'Mathlib.Resolved'])

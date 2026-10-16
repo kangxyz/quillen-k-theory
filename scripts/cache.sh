@@ -36,9 +36,9 @@ if [[ -e "$cache_receipt" ]]; then
   exit 2
 fi
 cache_status=0
-# Scoped arguments do not use Aglib's unscoped --bootstrap-cache exception.
-python3 "$guard" --capped-toolchain --receipt "$cache_receipt" -- \
-  lake exe cache get "${modules[@]}" || cache_status=$?
+# Serialize cache-tool compilation while retaining the pinned guard and scoped roots.
+python3 scripts/cache_ci.py "$(dirname "$guard")" "$cache_receipt" \
+  "${modules[@]}" || cache_status=$?
 if [[ -f "$cache_receipt" ]]; then
   cat "$cache_receipt"
 fi
