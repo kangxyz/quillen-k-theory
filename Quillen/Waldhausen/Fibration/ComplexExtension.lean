@@ -6,10 +6,11 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.Abelian.ZeroCornerPushout
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Fibration.WeakEquivalenceCofiber
 public import Quillen.Waldhausen.ComplexSubcategory
-public import Quillen.Algebra.Homology.QuasiIsoExtension
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.QuasiIsoExtension
 
 /-! # The structural extension axiom for genuine complex weak equivalences
 
@@ -28,38 +29,6 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits HomologicalComplex
 universe u v
 namespace Quillen.Waldhausen.Fibration
-
-section Cofiber
-variable {C : Type u} [Category.{v} C] [Abelian C]
-  {A B Q Z : C} {i : A ⟶ B} {z : A ⟶ Z} {q : B ⟶ Q} {t : Z ⟶ Q}
-  (h : IsPushout i z q t) (hZ : IsZero Z)
-
-include h hZ
-
-/-- The composite in an actual zero-corner pushout vanishes. -/
-theorem cofiber_comp_zero : i ≫ q = 0 := by
-  rw [h.w, hZ.eq_of_tgt z 0, zero_comp]
-
-/-- The displayed cofiber is the actual categorical cokernel. -/
-def cofiberIsCokernel : IsColimit (CokernelCofork.ofπ q (cofiber_comp_zero h hZ)) := by
-  refine CokernelCofork.IsColimit.ofπ q (cofiber_comp_zero h hZ)
-    (fun a ha ↦ h.desc a (hZ.to_ _) (by rw [hZ.eq_of_tgt z 0, zero_comp]; exact ha)) ?_ ?_
-  · intro W a ha
-    exact h.inl_desc _ _ _
-  · intro W a ha m hm
-    apply h.hom_ext
-    · rw [h.inl_desc]
-      exact hm
-    · exact hZ.eq_of_src _ _
-
-/-- A monic cofibration and displayed zero-corner pushout give a short exact sequence. -/
-theorem cofiber_shortExact [Mono i] :
-    (ShortComplex.mk i q (cofiber_comp_zero h hZ)).ShortExact where
-  mono_f := inferInstance
-  epi_g := Cofork.IsColimit.epi (cofiberIsCokernel h hZ)
-  exact := (ShortComplex.mk i q (cofiber_comp_zero h hZ)).exact_of_g_is_cokernel
-    (cofiberIsCokernel h hZ)
-end Cofiber
 
 variable {A : Type u} [Category.{v} A] [Abelian A]
 

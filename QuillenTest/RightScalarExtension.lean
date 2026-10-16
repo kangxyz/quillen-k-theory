@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Matrix.RightScalarExtension
+public import Quillen.Aglib.LinearAlgebra.Matrix.RightScalarExtension
 public import Mathlib.Data.ZMod.Basic
 
 /-!

@@ -5,6 +5,12 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlasqueBoundedBelow.UnitWhisker
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Plus.Additive
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
@@ -44,10 +50,7 @@ variable (X : QuasiCompactSchemes.{u})
 local instance nativeMiddleDerived (Y : Scheme.{u}) :
     HasDerivedCategory.{u + 1} Y.Modules := HasDerivedCategory.standard _
 
-local instance derivedPlusQ_additive (Y : Scheme.{u}) :
-    (DerivedCategory.Plus.Q (C := Y.Modules)).Additive := by
-  dsimp [DerivedCategory.Plus.Q]
-  infer_instance
+attribute [local instance] derivedPlusQ_additive
 
 local instance derivedProjection_additive :
     (derivedPushforwardPlus (nativeProjection.app X).hom).Additive := by
@@ -250,21 +253,10 @@ def negativeRightTensorIso : P5NativePhi.second X ⋙ boundedRightTensor X ≅
       apply ObjectProperty.hom_ext
       exact (P5NativeEuler.originalRightTensorIso X).hom.naturality f)
 
-/-- The actual forward line augmentation before right tensor. -/
-def totalUnitWhisker {C : Type (u + 1)} [Category.{u} C] (Y : Scheme.{u})
-    (F : C ⥤ BoundedBelow.Obj Y) :
-    F ⟶ (F ⋙ FlasqueBoundedBelow.total Y) ⋙ FlasqueBoundedBelow.inclusion Y :=
-  Functor.whiskerLeft F (FlasqueBoundedBelow.unit Y)
-
 lemma totalUnitWhisker_weak {C : Type (u + 1)} [Category.{u} C] (Y : Scheme.{u})
     (F : C ⥤ BoundedBelow.Obj Y) (K : C) :
     (BoundedBelow.waldhausen Y).weq ((totalUnitWhisker Y F).app K) :=
   FlasqueBoundedBelow.unit_weak Y (F.obj K)
-
-/-- The component is the same original total augmentation, with no replacement chain map. -/
-lemma totalUnitWhisker_app {C : Type (u + 1)} [Category.{u} C] (Y : Scheme.{u})
-    (F : C ⥤ BoundedBelow.Obj Y) (K : C) :
-    (totalUnitWhisker Y F).app K = (FlasqueBoundedBelow.unit Y).app (F.obj K) := rfl
 
 /-- The actual forward line augmentation before right tensor. -/
 def negativeLineUnit : P5NativePhi.second X ⟶

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPushforwardComparison
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPushforwardComparison
 
 /-! Consumers retain the actual bounded derived unit and strict finite-flat naturality square. -/
 @[expose] public section

@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.CategoryTheory.Limits.SequentialExactness
+public import Quillen.Aglib.CategoryTheory.Limits.Shapes.SequentialSystem.Exactness
 public import Quillen.Topology.Prespectrum.StableHomotopy
 
 /-!

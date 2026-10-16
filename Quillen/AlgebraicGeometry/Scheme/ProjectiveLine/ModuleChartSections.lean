@@ -8,8 +8,8 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.RestrictionCoefficients
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Charts
-public import Quillen.Algebra.Polynomial.LaurentModuleCech
-public import Quillen.LinearAlgebra.Prod
+public import Quillen.Aglib.Algebra.Polynomial.Laurent.ModuleCech
+public import Quillen.Aglib.LinearAlgebra.Prod
 
 /-! # Actual chart modules and their signed restriction maps
 

@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.Pushforward.FiniteFunctoriality
+
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Exact
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Restriction
@@ -38,20 +40,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 variable {X Y Z : Scheme.{u}}
   [IsLocallyNoetherian X] [IsLocallyNoetherian Y] [IsLocallyNoetherian Z]
 
-/-- Identity comparison inherited from the actual module-sheaf direct image. -/
-def vectorBundlePushforwardIdIso (X : Scheme.{u}) [IsLocallyNoetherian X] :
-    vectorBundlePushforward (𝟙 X) ≅ 𝟭 (FiniteLocallyFree X) :=
-  Functor.fullyFaithfulCancelRight (finiteLocallyFree X).ι
-    (Functor.isoWhiskerLeft (finiteLocallyFree X).ι (Scheme.Modules.pushforwardId X) ≪≫
-      Functor.rightUnitor _)
-
-/-- Composition comparison retains the original geometric direct images. -/
-def vectorBundlePushforwardCompIso (f : X ⟶ Y) (g : Y ⟶ Z)
-    [AlgebraicGeometry.IsFinite f] [Flat f] [AlgebraicGeometry.IsFinite g] [Flat g] :
-    vectorBundlePushforward f ⋙ vectorBundlePushforward g ≅ vectorBundlePushforward (f ≫ g) :=
-  Functor.fullyFaithfulCancelRight (finiteLocallyFree Z).ι
-    (Functor.isoWhiskerLeft (finiteLocallyFree X).ι (Scheme.Modules.pushforwardComp f g))
-
 /-- Identity direct image gives the identity original vector-bundle K-map. -/
 @[simp] theorem schemeKPushforward_id (X : Scheme.{u}) [IsLocallyNoetherian X] (n : ℕ) :
     schemeKPushforward (𝟙 X) n = MonoidHom.id (SchemeK X n) :=
@@ -70,16 +58,6 @@ def vectorBundlePushforwardCompIso (f : X ⟶ Y) (g : Y ⟶ Z)
     (G := (vectorBundlePushforwardExact f).comp (vectorBundlePushforwardExact g))
     (vectorBundlePushforwardCompIso f g).symm n).trans
       (CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp _ _ n)
-
-/-- The original open base-change isomorphism restricts to vector bundles. -/
-def vectorBundlePushforwardOpenBaseChange (f : X ⟶ Y)
-    [AlgebraicGeometry.IsFinite f] [Flat f]
-    {V : Scheme.{u}} [IsLocallyNoetherian V] (j : V ⟶ Y) [IsOpenImmersion j] :
-    vectorBundlePushforward f ⋙ vectorBundleRestrict j ≅
-      vectorBundleRestrict (pullback.fst f j) ⋙ vectorBundlePushforward (pullback.snd f j) :=
-  Functor.fullyFaithfulCancelRight (finiteLocallyFree V).ι
-    (Functor.isoWhiskerLeft (finiteLocallyFree X).ι (AlgebraicGeometry.Scheme.Modules.openBaseChange
-      f j))
 
 /-- Original open restriction and finite flat K-pushforward commute by actual base change. -/
 theorem schemeKPushforward_openBaseChange (f : X ⟶ Y)

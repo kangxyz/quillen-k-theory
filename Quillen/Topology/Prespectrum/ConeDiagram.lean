@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.ArrowDiagrams
+public import Quillen.Aglib.CategoryTheory.ArrowDiagrams
 public import Quillen.Topology.Prespectrum.ConeDescNaturality
 
 /-!

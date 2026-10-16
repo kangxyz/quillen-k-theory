@@ -5,6 +5,12 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.UnitFiniteLocallyFree
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedBelow.StrictProperty
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
@@ -35,12 +41,6 @@ def squareChartIso (b : Bool) :
       SheafOfModules.unit (Spec (CommRingCat.of (Polynomial R))).ringCatSheaf :=
   tensorPairingTrivialization (lineChart R b) (tautologicalLine R) (tautologicalLine R)
     (lineChartIso R b) (lineChartIso R b)
-
-private lemma unit_finiteLocallyFree (X : Scheme.{u}) :
-    IsFiniteLocallyFree X (SheafOfModules.unit X.ringCatSheaf) := by
-  let e : SheafOfModules.free (R := X.ringCatSheaf) (ULift.{u} Unit) ≅
-      SheafOfModules.unit X.ringCatSheaf := coproductUniqueIso _
-  exact finiteLocallyFree_of_iso e
 
 instance square_finiteLocallyFree : IsFiniteLocallyFree (twoChartLine R) (sequence R).X₁ := by
   apply finiteLocallyFree_of_affineCharts (sequence R).X₁
@@ -95,13 +95,6 @@ lemma middleEndpoint_strictPerfect (A : StrictPerfect (Spec R)) :
     strictPerfect (twoChartLine R) ((endpointComplex R (sequence R).X₂).obj A) :=
   strictPerfect_of_shortExact (coefficientSequence_shortExact R A)
     (squareEndpoint_strictPerfect R A) (unitEndpoint_strictPerfect R A)
-
-/-- Strict boundedness supplies an actual term lower bound. -/
-lemma boundedBelow_of_strictPerfect {X : Scheme.{u}} {K : CochainComplex X.Modules ℤ}
-    (hK : strictPerfect X K) : BoundedBelow.objects X K := by
-  obtain ⟨a, b, hab⟩ := hK.1
-  exact ⟨locallyPerfect_of_strictPerfect hK, a,
-    (CochainComplex.isStrictlyGE_iff _ a).mpr (fun i hi => hab i (Or.inl hi))⟩
 
 /-- A fixed endpoint with its proved strict-perfect values, keeping the raw original complex. -/
 def endpointBounded (M : (twoChartLine R).Modules)

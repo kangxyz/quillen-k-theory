@@ -4,8 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.CategoryTheory.ObjectProperty.ExtensionByConstant
-public import Quillen.CategoryTheory.Localization.RightReachable
+public import Quillen.Aglib.CategoryTheory.ObjectProperty.ExtensionByConstant
+public import Quillen.Aglib.CategoryTheory.Localization.RightReachable
 public import Mathlib.CategoryTheory.Discrete.Basic
 
 /-! Component extension preserves both the selected character and the outside constant. -/

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeMonoidal
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeMonoidal
 public import Quillen.CategoryTheory.GroupCompletion.MonoidalFunctor
 public import Quillen.Topology.ClassifyingSpace.StableGeneralLinearCompletionBased
 public import Quillen.Topology.HomotopyGroups.PathComponentWeakEquivalence

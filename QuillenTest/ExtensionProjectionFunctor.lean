@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 import Aglib.CategoryTheory.ExactCategory.Basic
 import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionFunctor
-import Quillen.Algebra.Category.ModuleCat.FiniteProjective
+import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjective
 
 open CategoryTheory.ExactCategory
 

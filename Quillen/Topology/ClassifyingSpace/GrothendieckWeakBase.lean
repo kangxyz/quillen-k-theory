@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.Grothendieck.ForgetComma
+public import Quillen.Aglib.CategoryTheory.Grothendieck.ForgetComma
 public import Quillen.Topology.ClassifyingSpace.UniverseHomotopy
 public import Quillen.Topology.HomotopyEquiv.HomotopySquare
 public import Quillen.CategoryTheory.TheoremB.UniverseWeakComparison

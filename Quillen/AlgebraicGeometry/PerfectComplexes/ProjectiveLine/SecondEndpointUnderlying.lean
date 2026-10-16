@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlasqueBoundedBelow.PlusAdditive
+
+
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Carrier
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SecondEndpointResolution
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueDiagonalComparisons
@@ -24,19 +27,6 @@ open CategoryTheory CategoryTheory.Functor CategoryTheory.Limits AlgebraicGeomet
 open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 namespace Quillen.PerfectComplexes.ProjectiveLine.SecondEndpoint
 open FlasqueCoefficients
-
-instance mapPlus_additive {X Y : Scheme.{u}} (F : X.Modules ⥤ Y.Modules) [F.Additive] :
-    F.mapCochainComplexPlus.Additive := by
-  unfold Functor.mapCochainComplexPlus
-  infer_instance
-
-instance toPlus_additive (X : Scheme.{u}) : (toPlus X).Additive := by
-  unfold toPlus
-  infer_instance
-
-instance totalPlus_additive (X : Scheme.{u}) : (godementTotalPlus X).Additive := by
-  unfold godementTotalPlus
-  infer_instance
 
 instance CRaw_additive (R : CommRingCat.{u}) : (CRaw R).Additive := by
   unfold CRaw CPlus firstPlus

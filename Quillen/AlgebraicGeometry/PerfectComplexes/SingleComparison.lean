@@ -6,6 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedTermsComparison
+
+
 public import Quillen.Waldhausen.GilletWaldhausen.SingleQuasiComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.VectorBundleInclusion
 
@@ -33,17 +36,6 @@ universe u
 namespace Quillen.PerfectComplexes
 attribute [local instance] Abelian.hasFiniteBiproducts
 open Waldhausen Waldhausen.GilletWaldhausen
-
-/-- The two actual strict boundedness predicates agree on the original sheaf complexes. -/
-theorem boundedTerms_finiteLocallyFree_eq_strictPerfect (X : Scheme.{u}) :
-    boundedTerms (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree X) = strictPerfect X := rfl
-
-/-- The already constructed vector-bundle inclusion is the same original single functor. -/
-theorem vectorBundleInclusion_eq_boundedTermsSingle (X : Scheme.{u}) :
-    vectorBundleInclusion X = boundedTermsSingleFunctor.{u,u+1}
-      (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree X) 0
-      := by
-  apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 
 /-- The existing strict comparison uses exactly the actual coarse single KMap. -/
 theorem vectorBundleSComparison_eq_coarseSingle (X : Scheme.{u}) (k : ℕ) :

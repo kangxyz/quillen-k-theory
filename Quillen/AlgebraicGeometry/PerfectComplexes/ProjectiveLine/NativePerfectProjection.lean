@@ -6,10 +6,10 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.NativeBaseChange
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TwoOpenDerivedBaseChange
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Derived.TwoOpen
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Homology
-public import Quillen.Algebra.Homology.DerivedCategory.BoundedComparison
+public import Quillen.Aglib.Algebra.Homology.DerivedCategory.BoundedComparison
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic

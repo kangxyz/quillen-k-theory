@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Topology.ClassifyingSpace.UniverseHomotopy
-public import Quillen.CategoryTheory.Grothendieck.EndofunctorTelescope
+public import Quillen.Aglib.CategoryTheory.Grothendieck.EndofunctorTelescope
 
 /-! # Homotopy equivalences for original endofunctor iterates -/
 

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.FiberCocartesianComma
+public import Quillen.Aglib.CategoryTheory.FiberedCategory.CocartesianComma
 
 /-! # Consumer tests for the actual strict-fiber comma inclusion -/
 @[expose] public section

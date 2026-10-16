@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.QuasicoherentStrictReplacement
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.QuasicoherentStrictReplacement
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic

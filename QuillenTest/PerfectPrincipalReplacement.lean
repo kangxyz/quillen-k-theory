@@ -6,8 +6,8 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedModuleReplacement
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalReplacement
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.DerivedModuleReplacement
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.PrincipalReplacement
 
 /-! Semantic consumers: actual derived roofs, original homotopies, and
 replacement for geometric chain maps from affine strict-perfect sheaf complexes to

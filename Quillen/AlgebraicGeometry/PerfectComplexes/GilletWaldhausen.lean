@@ -8,7 +8,7 @@ module
 public import Quillen.Waldhausen.GilletWaldhausen.GeneralComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SingleComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.QuillenComparison
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.KernelClosure
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.KernelClosure
 
 /-!
 # The original scheme K to strict-perfect K comparison in every degree

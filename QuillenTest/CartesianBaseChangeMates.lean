@@ -4,8 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianBaseChangePasting
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChangeOpen
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Cartesian.Pasting
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Derived.OpenImmersion
 
 /-! # Original cartesian mate pasting and open-specialization consumers -/
 

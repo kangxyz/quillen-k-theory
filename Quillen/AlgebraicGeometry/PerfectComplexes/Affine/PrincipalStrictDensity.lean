@@ -8,7 +8,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalImageExtensions
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalStrictWeakImage
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalProjectiveExtension
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.PrincipalProjectiveExtension
 public import Quillen.Waldhausen.Cofinality.DenseSubcategory
 
 /-! # Genuine density and cofiber closure of the principal strict witnessed image

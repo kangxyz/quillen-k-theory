@@ -8,7 +8,7 @@ module
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionDiagram
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedSectionLaurentUnit
 public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
-public import Quillen.CategoryTheory.Functor.IdentityAutomorphismSquare
+public import Quillen.Aglib.CategoryTheory.Functor.IdentityAutomorphismSquare
 
 /-!
 # Original Laurent tracks on the fixed-open supported coefficient diagram

@@ -5,8 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.FullOpenSectionEvaluation
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionFullOpenZero
-public import Quillen.CategoryTheory.FiberedCategory.GrothendieckZeroSections
+public import Quillen.Aglib.CategoryTheory.FiberedCategory.GrothendieckZeroSections
 public import Quillen.Waldhausen.EquivalenceStructure
 
 /-!
@@ -24,22 +27,6 @@ open Quillen.CategoryTheory.GrothendieckZeroSections AlgebraicGeometry.Scheme.Af
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]
-
-/-- Original identity evaluation into the specified full-open fiber category. -/
-def boundedFlatAffineFullOpenOriginalEvaluation (a : Under R) :
-    BoundedFlatAffineFullOpenSections j a ⥤ BoundedFlatPerfect (openSpace j a) :=
-  Quillen.CategoryTheory.GrothendieckSections.originalEvaluation
-    (boundedFlatAffineFullOpenPseudofunctor j) a
-
-instance instIsEquivalenceBoundedFlatAffineFullOpenOriginalEvaluation (a : Under R) :
-    (boundedFlatAffineFullOpenOriginalEvaluation j a).IsEquivalence :=
-  inferInstanceAs (Quillen.CategoryTheory.GrothendieckSections.originalEvaluation
-    (boundedFlatAffineFullOpenPseudofunctor j) a).IsEquivalence
-
-/-- The original evaluation functor is the actual forward equivalence. -/
-def boundedFlatAffineFullOpenSectionEquivalence (a : Under R) :
-    BoundedFlatAffineFullOpenSections j a ≌ BoundedFlatPerfect (openSpace j a) :=
-  (boundedFlatAffineFullOpenOriginalEvaluation j a).asEquivalence
 
 /-- Actual open pullback preserves the specified original image-zero universal property. -/
 theorem boundedFlatAffineFullOpenImageZero_map_isZero {a b : Under R} (f : a ⟶ b) :

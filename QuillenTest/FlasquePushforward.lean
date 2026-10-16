@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlasqueDerivedPushforward
+public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Pushforward.Flasque
 
 /-!
 # Original flasque direct-image consumers

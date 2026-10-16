@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Flatten
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenDerivedImageRoofs
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.OpenDerivedImageRoofs
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-!

@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.Regular.SmallComparison
-public import Quillen.Algebra.RegularLocal.LowDimension
+public import Quillen.Aglib.RingTheory.RegularLocalRing.LowDimension
 
 /-!
 # Canonical K-to-G comparison from low-dimensional local regularity

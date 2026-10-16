@@ -5,6 +5,12 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlasqueBoundedBelow.ShiftPlus
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedBelow.Plus
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientOperations
 public import Quillen.Waldhausen.ExtensionCategory.Product
@@ -29,13 +35,7 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
 
-/-- The standard derived-category instance for sheaves of modules on `X`. -/
-local instance coefficientStandardDerived (X : Scheme.{u}) :
-    HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
-
-/-- Forget only perfection, retaining the same original lower-bounded complex. -/
-def boundedToPlus (X : Scheme.{u}) : BoundedBelow.Obj X ⥤ CochainComplex.Plus X.Modules :=
-  ObjectProperty.lift _ (BoundedBelow.objects X).ι (fun K => K.property.2)
+attribute [local instance] coefficientStandardDerived
 
 /-- The original prescribed K tensor L with its existing strict lower bound. -/
 def rightTensorPlus (R : CommRingCat.{u}) :
@@ -101,28 +101,6 @@ lemma G1_isStrictlyGE (R : CommRingCat.{u})
   change ((((G0 R).obj ((rightTensorTotal R).obj K)).obj)⟦(1 : ℤ)⟧).IsStrictlyGE (a - 1)
   exact CochainComplex.isStrictlyGE_shift
     ((G0 R).obj ((rightTensorTotal R).obj K)).obj a 1 (a - 1) (by omega)
-
-/-- The native Plus shift comparison lifted through its actual full inclusion. -/
-def modelShiftPlusIso (X : Scheme.{u}) (n : ℤ) :
-    modelShift X n ⋙ toPlus X ≅ toPlus X ⋙ shiftFunctor (CochainComplex.Plus X.Modules) n :=
-  Functor.fullyFaithfulCancelRight (CochainComplex.Plus.ι X.Modules)
-    (Functor.isoWhiskerLeft (toPlus X) ((CochainComplex.Plus.ι X.Modules).commShiftIso n).symm)
-
-/-- Its underlying arrow is precisely the native inclusion-shift comparison. -/
-lemma modelShiftPlusIso_hom_underlying (X : Scheme.{u}) (n : ℤ)
-    (K : FlasqueBoundedBelow.Obj X) :
-    ((modelShiftPlusIso X n).hom.app K).hom =
-      ((CochainComplex.Plus.ι X.Modules).commShiftIso n).inv.app ((toPlus X).obj K) := by
-  change (CochainComplex.Plus.ι X.Modules).map ((modelShiftPlusIso X n).hom.app K) = _
-  rw [modelShiftPlusIso, Functor.fullyFaithfulCancelRight_hom_app, Functor.map_preimage]
-  rfl
-
-/-- Native localization of the actual standard original shift. -/
-def modelShiftDerivedIso (X : Scheme.{u}) (n : ℤ) :
-    modelShift X n ⋙ toPlus X ⋙ DerivedCategory.Plus.Q ≅
-      toPlus X ⋙ DerivedCategory.Plus.Q ⋙ shiftFunctor (DerivedCategory.Plus X.Modules) n :=
-  Functor.isoWhiskerRight (modelShiftPlusIso X n) DerivedCategory.Plus.Q ≪≫
-    Functor.isoWhiskerLeft (toPlus X) (DerivedCategory.Plus.Q.commShiftIso n)
 
 /-- The original actual total augmentation in the precise full-model source. -/
 def tensorTotalUnit (R : CommRingCat.{u}) :

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.CategoryTheory.Functor.PointwiseCoproduct
 public import Quillen.Waldhausen.Additivity.NormalizedEndpointFamilies
 public import Quillen.Waldhausen.Additivity.CoproductAlgebra
 public import Quillen.Waldhausen.Functoriality.KMap
@@ -94,13 +95,6 @@ theorem pushoutTransformation_identity (X : C) :
 
 variable {H H' : C ⥤ D} (b : G ⟶ H) (b' : G' ⟶ H') (ηH : H ⟶ H')
   (hbη : b ≫ ηH = ηG ≫ b') [HasBinaryCoproducts D]
-
-/-- The actual quotient-first pair-sum transformation. -/
-def splitEndpointTransformation : splitEndpoint H F ⟶ splitEndpoint H' F' where
-  app X := coprod.map (ηH.app X.1) (ηF.app X.2)
-  naturality X Y f := by
-    apply coprod.hom_ext <;>
-      simp [splitEndpoint, ηH.naturality, ηF.naturality]
 
 /-- The pair-sum components preserve the original weak maps. -/
 theorem splitEndpointTransformation_weak

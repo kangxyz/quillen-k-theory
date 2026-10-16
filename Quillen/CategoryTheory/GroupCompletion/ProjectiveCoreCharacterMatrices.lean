@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.CategoryTheory.GroupCompletion.ProjectiveCoreCharacter
-public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeFree
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeFree
 public import Quillen.CategoryTheory.GroupCompletion.StableFreeDiagram
 
 /-!

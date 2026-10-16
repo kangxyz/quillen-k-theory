@@ -6,8 +6,8 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Algebra.ModuleComplex.LaurentCech
-public import Quillen.Algebra.Polynomial.LaurentCech
+public import Quillen.Aglib.Algebra.Homology.ModuleCat.LaurentCech
+public import Quillen.Aglib.Algebra.Polynomial.Laurent.Cech
 public import Mathlib.Data.ZMod.Basic
 
 /-! # Consumers of finite Laurent-matrix Cech models

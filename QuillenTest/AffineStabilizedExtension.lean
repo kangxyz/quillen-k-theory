@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StabilizedExtension
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.StabilizedExtension
 public import Mathlib.Data.ZMod.Basic
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure

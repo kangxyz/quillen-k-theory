@@ -6,11 +6,11 @@ Authors: kangxyz
 module
 
 public import Aglib.Algebra.Homology.HomotopyCategory.Plus.BoundedComparison
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedFiniteFlatPushforward
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.DerivedFiniteFlatPushforward
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineTensor
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.VectorBundleComplexDirectImage
 public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PullbackSingle
-public import Quillen.Algebra.Homology.HomotopyCategory.BoundedProperty
+public import Quillen.Aglib.Algebra.Homology.HomotopyCategory.BoundedProperty
 public import Aglib.Algebra.Category.ModuleCat.Sheaf.Tensor.RightUnit
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 

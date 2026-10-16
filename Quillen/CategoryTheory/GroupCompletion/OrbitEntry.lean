@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.CategoryTheory.Monoidal.Action.Orbit
+public import Quillen.Aglib.CategoryTheory.Monoidal.Action.Orbit
 public import Quillen.CategoryTheory.GroupCompletion.DiagonalAction
 public import Quillen.CategoryTheory.GroupCompletion.Functoriality
 

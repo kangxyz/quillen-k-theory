@@ -9,7 +9,7 @@ module
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.CechSections
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Affine.Projective
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.Restriction
-public import Quillen.Algebra.ModuleComplex.LaurentModuleCech
+public import Quillen.Aglib.Algebra.Homology.ModuleCat.LaurentModuleCech
 
 /-! # Finite-projective Cech models for actual vector bundles
 

@@ -11,10 +11,10 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineCoordinateChart
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.TensorToUnitCharts
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalSections
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ScalarLaurentClassComparison
-public import Quillen.Algebra.Homology.MappingConeIso
+public import Quillen.Aglib.Algebra.Homology.MappingCone.Iso
 
 /-!
 # The original tautological coordinate with arbitrary perfect coefficients

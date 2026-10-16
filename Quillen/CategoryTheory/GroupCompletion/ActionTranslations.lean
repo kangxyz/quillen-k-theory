@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 public import Quillen.CategoryTheory.GroupCompletion.FirstCoordinateTranslation
-public import Quillen.CategoryTheory.Monoidal.Action.Braided
+public import Quillen.Aglib.CategoryTheory.Monoidal.Action.Braided
 
 /-! # Inverting translations for an arbitrary acted-on category -/
 @[expose] public section

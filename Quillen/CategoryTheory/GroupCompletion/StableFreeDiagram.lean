@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Matrix.RightAutomorphismsLeft
+public import Quillen.Aglib.LinearAlgebra.Matrix.RightAutomorphismsLeft
 public import Mathlib.CategoryTheory.SingleObj
 public import Mathlib.CategoryTheory.Functor.OfSequence
 

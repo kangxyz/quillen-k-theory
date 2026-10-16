@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.ModuleComplex.ConcentratedPerfectHomology
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedComparison
+public import Quillen.Aglib.Algebra.Homology.ModuleCat.ConcentratedPerfectHomology
+public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Affine.Comparison
 
 /-! Semantic consumers of the actual finite-projective concentrated remainder. -/
 @[expose] public section

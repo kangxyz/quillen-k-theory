@@ -6,8 +6,8 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FinitePrincipalRemainder
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.StalkFlat
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.FinitePrincipalRemainder
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.StalkFlat
 
 /-! # Original residual homology and genuine cover consumers -/
 @[expose] public section

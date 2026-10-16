@@ -10,7 +10,7 @@ public import Aglib.AlgebraicGeometry.Modules.Pushforward.ClosedImmersion
 public import Aglib.AlgebraicGeometry.Modules.Stalk.Reflection
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalCokernel
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalClosedImmersion
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.StalkFlat
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.StalkFlat
 public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Closed
 public import Mathlib.RingTheory.Flat.Equalizer
 

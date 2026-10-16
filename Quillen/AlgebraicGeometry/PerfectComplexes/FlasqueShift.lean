@@ -5,15 +5,18 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlasqueBoundedBelow.IdentityCone
+
+
 public import Aglib.CategoryTheory.Limits.Shapes.CokernelPushout
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.Algebra.Homology.MappingCone.Identity
 public import Aglib.Algebra.Homology.MappingCone.Map
 public import Aglib.Algebra.Homology.QuasiIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientOperations
-public import Quillen.Waldhausen.Cylinder.Pushout
-public import Quillen.Waldhausen.Cylinder.ZeroEndpoint
-public import Quillen.Algebra.Homology.MappingConeBiprod
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.Pushout
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.ZeroEndpoint
+public import Quillen.Aglib.Algebra.Homology.MappingCone.Biprod
 public import Aglib.Algebra.Homology.MappingCone.Acyclicity
 public import Quillen.Waldhausen.Additivity.GroupFormula
 public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
@@ -45,48 +48,6 @@ open Waldhausen.SplitFactorization
 open ProjectiveLine.FlasqueCoefficients
 variable (X : Scheme.{u})
 
-/-- The literal identity cone stays in the original flasque, lower-bounded perfect model. -/
-lemma identityCone_objects (K : Obj X) :
-    objects X (identityConeFunctor.obj K.obj) :=
-  objects_of_shortExact (CochainComplex.coneSequence_shortExact (A := X.Modules) K.obj) K.property
-    (shift_objects K.property 1)
-
-/-- The literal cone of identity and its native original cone maps. -/
-def identityCone : Obj X ⥤ Obj X :=
-  ObjectProperty.lift _ ((objects X).ι ⋙ identityConeFunctor) (identityCone_objects X)
-
-instance identityCone_additive : (identityCone X).Additive where
-  map_add := by
-    intro K L f g
-    apply ObjectProperty.hom_ext
-    exact CochainComplex.mappingCone.map_add (𝟙 K.obj) (𝟙 L.obj)
-      f.hom g.hom f.hom g.hom (by simp) (by simp)
-
-/-- The actual identity cone preserves the inherited original conflations. -/
-def identityConeExactFunctor : CategoryTheory.ExactCategory.ExactFunctor
-    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-      (CategoryTheory.ExactCategory.abelianExactStructure
-      (CochainComplex X.Modules ℤ))
-      (objects X))
-    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-      (CategoryTheory.ExactCategory.abelianExactStructure
-      (CochainComplex X.Modules ℤ))
-      (objects X)) where
-  toFunctor := identityCone X
-  map_conflation S hS := by
-    change ((S.map (objects X).ι).map identityConeFunctor).ShortExact
-    exact CochainComplex.identityConeFunctor_shortExact (A := X.Modules) hS
-
-/-- Every original identity cone is acyclic, for arbitrary original flasque-perfect input. -/
-lemma identityCone_acyclic (K : Obj X) : ((identityCone X).obj K).obj.Acyclic :=
-  CochainComplex.mappingCone_acyclic_of_quasiIso (𝟙 K.obj)
-
-lemma identityCone_zero {K : Obj X} (hK : IsZero K) : IsZero ((identityCone X).obj K) := by
-  have hz := identityCone_isZero ((objects X).ι.map_isZero hK)
-  rw [IsZero.iff_id_eq_zero]
-  apply ObjectProperty.hom_ext
-  exact hz.eq_of_src _ _
-
 lemma identityCone_exact : Waldhausen.IsExact (waldhausen X).cof (waldhausen X).weq
     (waldhausen X).cof (waldhausen X).weq (identityCone X) where
   zero h := identityCone_zero X h
@@ -95,35 +56,6 @@ lemma identityCone_exact : Waldhausen.IsExact (waldhausen X).cof (waldhausen X).
     CochainComplex.quasiIso_of_two_acyclic (A := X.Modules) ((identityCone X).map f).hom
     (identityCone_acyclic X K) (identityCone_acyclic X L)
   pushout hi h := (identityConeExactFunctor X).map_isPushout hi h
-
-/-- The literal original cone inclusion is natural in all original maps. -/
-def coneFirst : 𝟭 (Obj X) ⟶ identityCone X where
-  app K := ObjectProperty.homMk (mappingCone.inr (𝟙 K.obj))
-  naturality {K L} f := by
-    apply ObjectProperty.hom_ext
-    exact (mappingCone.triangleMap (𝟙 K.obj) (𝟙 L.obj) f.hom f.hom (by simp)).comm₂.symm
-
-/-- The literal signed original cone quotient to the native shifted input is natural. -/
-def coneSecond : identityCone X ⟶ modelShift X 1 where
-  app K := ObjectProperty.homMk (mappingCone.triangle (𝟙 K.obj)).mor₃
-  naturality {K L} f := by
-    apply ObjectProperty.hom_ext
-    exact (mappingCone.triangleMap (𝟙 K.obj) (𝟙 L.obj) f.hom f.hom (by simp)).comm₃.symm
-
-lemma coneFirst_second : coneFirst X ≫ coneSecond X = 0 := by
-  apply NatTrans.ext
-  funext K
-  apply ObjectProperty.hom_ext
-  exact (mappingCone.triangleRotateShortComplex (𝟙 K.obj)).zero
-
-lemma coneModelSequence_conflation (K : Obj X) :
-    (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-      (CategoryTheory.ExactCategory.abelianExactStructure
-      (CochainComplex X.Modules ℤ))
-      (objects X)).conflation
-      (ShortComplex.mk ((coneFirst X).app K) ((coneSecond X).app K)
-        (NatTrans.congr_app (coneFirst_second X) K)) :=
-  CochainComplex.coneSequence_shortExact (A := X.Modules) K.obj
 
 /-- The actual identity-cone sequence has the native relative cofibration and cofiber squares. -/
 lemma coneSequence_isCofibrationSequence :

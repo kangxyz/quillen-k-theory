@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Algebra.ModuleComplex.BoundedFiniteDomination
+public import Quillen.Aglib.Algebra.Homology.ModuleCat.BoundedFiniteDomination
 public import Mathlib.Algebra.Homology.QuasiIso
 
 /-! # Original-map consumers of bounded finite domination

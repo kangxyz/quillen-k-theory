@@ -8,8 +8,8 @@ module
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Homology
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Cylinder
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RelativeFlatFactorization
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Replacement
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Flat.RelativeFactorization
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.Replacement
 public import Quillen.Waldhausen.Approximation.Basic
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 

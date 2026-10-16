@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.CategoryTheory.ShortComplex.MapComposition
+
+
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.PushforwardQuasiIso
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
@@ -50,14 +53,6 @@ instance coefficient_preservesFiniteColimits (R : CommRingCat.{u}) (v : Vertex) 
 /-- The full model inclusion recovers the literal original raw functor. -/
 lemma E_underlying (R : CommRingCat.{u}) (v : Vertex) :
     E R v ⋙ (FlasqueBoundedBelow.objects (twoChartLine R)).ι = raw R v := rfl
-
-private theorem shortExact_map_comp_of
-    {C₀ C₁ C₂ : Type*} [Category* C₀] [Category* C₁] [Category* C₂]
-    [HasZeroMorphisms C₀] [HasZeroMorphisms C₁] [HasZeroMorphisms C₂]
-    (S : ShortComplex C₀) (F : C₀ ⥤ C₁) (G : C₁ ⥤ C₂)
-    [F.PreservesZeroMorphisms] [G.PreservesZeroMorphisms]
-    (h : ((S.map F).map G).ShortExact) : (S.map (F ⋙ G)).ShortExact := by
-  simpa only [ShortComplex.map_comp] using h
 
 /-- Exactness of the actual raw sequence retains its actual totalized flasque kernel. -/
 lemma raw_shortExact (R : CommRingCat.{u}) (v : Vertex)

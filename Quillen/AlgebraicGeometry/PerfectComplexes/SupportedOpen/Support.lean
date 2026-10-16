@@ -8,7 +8,7 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Fibration
-public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportUnion
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.Union
 public import Quillen.Waldhausen.Functoriality.ExactEquivalence
 
 /-! # The actual supported relative fiber is support on the original union -/

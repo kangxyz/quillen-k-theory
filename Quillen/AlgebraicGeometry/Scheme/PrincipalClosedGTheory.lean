@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Morphisms.ClosedImmersion.PrincipalClosedScheme
+
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.ClosedImmersion.IdealPushforward
 public import Quillen.AlgebraicGeometry.Scheme.GTheory
@@ -27,11 +29,6 @@ universe u
 open CategoryTheory AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.PrincipalClosed
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (f : R)
-
-/-- The actual principal closed subscheme Spec(R/(f)). -/
-abbrev closedScheme := Spec
-  (Pushforward.ClosedImmersion.Ideal.closedRing R
-    (Ideal.span {f}))
 
 /-- The canonical G-map of actual closed sheaf pushforward. -/
 abbrev pushforwardG (n : ℕ) : G (closedScheme R f) n →* G (Spec R) n :=

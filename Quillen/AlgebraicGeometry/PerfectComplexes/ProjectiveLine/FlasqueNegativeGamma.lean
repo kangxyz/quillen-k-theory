@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlasqueBoundedBelow.InclusionProperties
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
@@ -34,12 +37,6 @@ open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueTensorAdditivity
-
-instance inclusion_additive (X : Scheme.{u}) : (FlasqueBoundedBelow.inclusion X).Additive where
-  map_add := by
-    intro K L f g
-    apply ObjectProperty.hom_ext
-    rfl
 
 /-- Original LEFT negative-line tensor on the actual lower-bounded source model. -/
 def leftNegative (R : CommRingCat.{u}) :

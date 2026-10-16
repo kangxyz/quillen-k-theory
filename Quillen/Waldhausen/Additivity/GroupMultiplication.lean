@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.Functor.PointwiseCoproduct
 public import Quillen.Waldhausen.Product.Functoriality
 public import Quillen.Waldhausen.Additivity.SplitSequence
 
@@ -31,10 +32,6 @@ universe u v
 namespace Quillen.Waldhausen.Additivity
 open ExtensionCategory
 variable {C : Type u} [Category.{v} C] (W : Structure C) [HasBinaryCoproducts C]
-
-/-- The actual binary coproduct functor. -/
-def coproductFunctor : C × C ⥤ C :=
-  sumFunctor (CategoryTheory.Prod.fst C C) (CategoryTheory.Prod.snd C C)
 
 /-- Binary coproduct is genuinely exact for the componentwise product structure. -/
 theorem coproductFunctor_isExact :

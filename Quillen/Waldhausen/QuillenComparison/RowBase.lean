@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Waldhausen.QuillenComparison.FlagPresentation
-public import Quillen.Waldhausen.QuillenComparison.FlagExtension
+public import Quillen.Aglib.CategoryTheory.ExactCategory.Filtration.FlagExtension
 public import Quillen.Waldhausen.QuillenComparison.RowFull
 
 /-! # The zero-length Q-chain is realized by an actual exact row -/

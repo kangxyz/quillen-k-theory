@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Homology.ConnectingKernel
+public import Quillen.Aglib.Algebra.Homology.HomologySequence.ConnectingKernel
 public import Mathlib.Algebra.Category.ModuleCat.Abelian
 
 /-! # Consumers of the connecting-kernel comparison and its sign convention -/

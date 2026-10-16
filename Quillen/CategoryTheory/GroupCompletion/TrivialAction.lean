@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.CategoryTheory.GroupCompletion.ActionLocalization
-public import Quillen.CategoryTheory.Monoidal.TrivialAction
+public import Quillen.Aglib.CategoryTheory.Monoidal.TrivialAction
 
 /-!
 # Forgetting the translation for a trivial action

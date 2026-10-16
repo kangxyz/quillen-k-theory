@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedSingleComparison
+public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Affine.SingleComparison
 public import QuillenTest.AffineCechHigher
 
 /-!

@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.Algebra.Polynomial.Laurent.BaseChange
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalUnitPullback
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.GlobalUnitPullback
 public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Units
 
 /-! Actual scalar and geometric-comparison consumers under arbitrary Laurent coefficient change. -/

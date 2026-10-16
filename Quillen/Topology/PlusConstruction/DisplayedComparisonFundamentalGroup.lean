@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Group.Hom.KernelComparison
+public import Quillen.Aglib.Algebra.Group.Hom.KernelComparison
 public import Quillen.Topology.PlusConstruction.Basic
 public import Quillen.Topology.HomotopyGroups.MovingBasepoint
 public import Quillen.Topology.HomotopyGroups.PathTransportComposition

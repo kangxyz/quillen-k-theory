@@ -6,6 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Complex.DegreewiseSplitRestriction
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.Waldhausen.SplitComplexes.Subcategory
 public import Quillen.AlgebraicGeometry.PerfectComplexes.KTheory
@@ -75,15 +78,6 @@ def splitStrictToPerfectKMap (X : Scheme.{u}) (n : ℕ) :
     (fun _ h ↦ locallyPerfect_of_strictPerfect h) n
 
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-
-/-- Open restriction preserves the degreewise splittings themselves. -/
-theorem degreewiseSplitMono_restrict {K L : CochainComplex X.Modules ℤ} {f : K ⟶ L}
-    (hf : CochainComplex.degreewiseSplitMono f) :
-    CochainComplex.degreewiseSplitMono ((restrict j).map f) := by
-  intro n
-  let : IsSplitMono (f.f n) := hf n
-  change IsSplitMono ((Scheme.Modules.restrictFunctor j).map (f.f n))
-  infer_instance
 
 /-- Actual strict-perfect restriction is exact with split cofibrations. -/
 theorem splitStrictRestrict_waldhausenExact :

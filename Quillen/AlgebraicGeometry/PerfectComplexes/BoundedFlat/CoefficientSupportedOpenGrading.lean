@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.CoefficientSupportedPerfectEvaluation
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenModels
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.ImageQuotientPullback
 public import Quillen.Waldhausen.Cofinality.ComplementMap
@@ -46,13 +49,6 @@ attribute [local irreducible] boundedFlatCoefficientOriginalEvaluation
 /-- The actual raw supported image quotient for the same native support and localization opens. -/
 abbrev BoundedFlatCoefficientSupportedOpenImageQuotient (a : Under R) :=
   PerfectSupportedOpenImageQuotient (schemeMap f a) (boundedFlatCoefficientSupportOpen Q T a)
-
-/-- Original supported native evaluation followed by the actual supported perfect inclusion. -/
-def boundedFlatCoefficientSupportedFullOpenPerfectEvaluation (a : Under R) :
-    BoundedFlatCoefficientSupportedOpenSections f T a ⥤
-      (perfectSupported (boundedFlatCoefficientOpenSupportOpen f T a).ι).FullSubcategory :=
-  boundedFlatCoefficientSupportedEvaluation (boundedFlatCoefficientOpenSupportOpen f T a).ι ⋙
-    boundedFlatPerfectSupportedInclusion (boundedFlatCoefficientOpenSupportOpen f T a).ι
 
 omit [IsOpenImmersion f.left] in
 /-- The original supported perfect evaluation is exact for the actual fine structures. -/

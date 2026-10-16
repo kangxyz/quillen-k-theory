@@ -7,7 +7,7 @@ module
 
 public import Quillen.Topology.LocalCoefficients.EmbeddingRelativeChains
 public import Quillen.Topology.LocalCoefficients.MapSquares
-public import Quillen.Algebra.Homology.QuasiIsoMiddle
+public import Quillen.Aglib.Algebra.Homology.HomologicalComplex.QuasiIsoMiddle
 
 /-!
 # Actual cokernel chain maps of commuting embedding squares

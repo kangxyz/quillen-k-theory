@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.PullbackIsomorphisms
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Pullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlatPullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PullbackFunctor
@@ -45,21 +48,6 @@ def boundedFlatPerfectKPullback {X Y : Scheme.{u}} (f : X ⟶ Y) (n : ℕ) :
     BoundedFlatPerfectK Y n →* BoundedFlatPerfectK X n :=
   Waldhausen.KMap (boundedFlatPerfectPullback_exact f) n
 
-/-- The natural isomorphism identifying pullback along the identity of `X` with the identity on
-bounded-flat perfect complexes. -/
-def boundedFlatPerfectPullbackIdIso (X : Scheme.{u}) :
-    boundedFlatPerfectPullback (𝟙 X) ≅ 𝟭 (BoundedFlatPerfect X) :=
-  Functor.fullyFaithfulCancelRight (boundedFlatPerfect X).ι
-    (Functor.isoWhiskerLeft (boundedFlatPerfect X).ι (Complex.pullbackIdIso X))
-
-/-- The natural isomorphism identifying pullback along `f ≫ g` with pullback first along `g` and
-then along `f` on bounded-flat perfect complexes. -/
-def boundedFlatPerfectPullbackCompIso {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) :
-    boundedFlatPerfectPullback (f ≫ g) ≅
-      boundedFlatPerfectPullback g ⋙ boundedFlatPerfectPullback f :=
-  Functor.fullyFaithfulCancelRight (boundedFlatPerfect X).ι
-    (Functor.isoWhiskerLeft (boundedFlatPerfect Z).ι (Complex.pullbackCompIso f g))
-
 @[simp] theorem boundedFlatPerfectKPullback_id (X : Scheme.{u}) (n : ℕ) :
     boundedFlatPerfectKPullback (𝟙 X) n = MonoidHom.id (BoundedFlatPerfectK X n) :=
   (Waldhausen.KMap_eq_of_iso (boundedFlatPerfectPullback_exact (𝟙 X))
@@ -82,10 +70,6 @@ def BoundedFlatPerfectKFunctor (n : ℕ) : Scheme.{u}ᵒᵖ ⥤ GrpCat.{u + 1} w
   map f := GrpCat.ofHom (boundedFlatPerfectKPullback f.unop n)
   map_id X := by apply GrpCat.hom_ext; exact boundedFlatPerfectKPullback_id X.unop n
   map_comp f g := by apply GrpCat.hom_ext; exact boundedFlatPerfectKPullback_comp g.unop f.unop n
-
-theorem strictPerfect_boundedFlatPerfect {X : Scheme.{u}} {K : CochainComplex X.Modules ℤ}
-    (hK : strictPerfect X K) : boundedFlatPerfect X K :=
-  ⟨locallyPerfect_of_strictPerfect hK, strictPerfect_boundedAbove_stalkwiseFlat hK⟩
 
 /-- The degree-`n` K-map induced by the inclusion of strictly perfect complexes into bounded-flat
 perfect complexes on `X`. -/

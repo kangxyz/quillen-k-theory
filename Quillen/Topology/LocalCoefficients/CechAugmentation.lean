@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Topology.LocalCoefficients.CechBicomplex
-public import Quillen.Algebra.Homology.TotalSingle
+public import Quillen.Aglib.Algebra.Homology.TotalComplex.Single
 
 /-!
 # The original Čech total augmentation to twisted singular chains

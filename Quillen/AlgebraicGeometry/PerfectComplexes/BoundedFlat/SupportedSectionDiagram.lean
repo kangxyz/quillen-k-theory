@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Affine.OpenPairBaseChange
+public import Quillen.Aglib.AlgebraicGeometry.Morphisms.OpenImmersion.Pair.AffineBaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionModel
 
 /-!

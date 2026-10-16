@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.Algebra.Group.MulExactProduct
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeInverseImageBoundary
 public import Mathlib.Algebra.FiveLemma
 
@@ -38,22 +41,6 @@ end AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace Quillen.PerfectComplexes.ProjectiveLine
 open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
-
-private theorem mulExact_prodMap {A B C : Type*} [Group A] [Group B] [Group C]
-    (f : A →* B) (g : B →* C) (h : Function.MulExact f g) :
-    Function.MulExact (f.prodMap f) (g.prodMap g) := by
-  rintro ⟨a, b⟩
-  change (g a, g b) = (1, 1) ↔ ∃ x : A × A, (f x.1, f x.2) = (a, b)
-  constructor
-  · intro hab
-    obtain ⟨x, hx⟩ := (h a).mp (congrArg Prod.fst hab)
-    obtain ⟨y, hy⟩ := (h b).mp (congrArg Prod.snd hab)
-    exact ⟨(x, y), Prod.ext hx hy⟩
-  · rintro ⟨⟨x, y⟩, hxy⟩
-    have hx : f x = a := congrArg Prod.fst hxy
-    have hy : f y = b := congrArg Prod.snd hxy
-    rw [← hx, ← hy]
-    exact Prod.ext (h.apply_apply_eq_one x) (h.apply_apply_eq_one y)
 
 variable (X : QuasiCompactSchemes.{u}) (Z : X.obj.Opens) [CompactSpace Z.toScheme]
 

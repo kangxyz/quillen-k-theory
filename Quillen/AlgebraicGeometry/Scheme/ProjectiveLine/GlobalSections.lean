@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Charts
-public import Quillen.Algebra.Polynomial.LaurentPullback
+public import Quillen.Aglib.Algebra.Polynomial.Laurent.Pullback
 public import Mathlib.AlgebraicGeometry.GammaSpecAdjunction
 
 /-! # Original global sections of the two-chart projective line

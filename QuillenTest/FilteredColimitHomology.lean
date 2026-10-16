@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 
-import Quillen.Algebra.Category.ModuleCat.FilteredColimits
+import Quillen.Aglib.Algebra.Category.ModuleCat.FilteredColimits
 import Mathlib.Algebra.Homology.QuasiIso
 
 /-! Regression consumers for natural filtered-colimit homology comparisons. -/

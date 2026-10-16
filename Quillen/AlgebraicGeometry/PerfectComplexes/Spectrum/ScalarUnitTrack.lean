@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlatPullbackRestriction
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ScalarLaurentClassComparison
 public import Quillen.Waldhausen.SConstruction.Iterated.NormalizationTrackPasting
 public import Quillen.Waldhausen.SConstruction.Iterated.ExactPastingHomotopy
@@ -30,11 +33,6 @@ open Quillen.LoopPrespectrum
 universe u
 namespace Quillen.PerfectComplexes
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-
-/-- The original restriction/flat-pullback isomorphism, including its actual left unitor. -/
-def perfectOpenRestrictionFlatIso :
-    (𝟭 (Perfect X)) ⋙ perfectRestrict j ≅ perfectFlatPullback j :=
-  Functor.leftUnitor (perfectRestrict j) ≪≫ perfectRestrictIsoFlatPullback j
 
 /-- The actual normalized open-restriction prespectrum map. -/
 def perfectOpenScalarRestrictionMap :

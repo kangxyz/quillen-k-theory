@@ -6,8 +6,8 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Algebra.Module.FiniteCoefficientRetract
-public import Quillen.Algebra.Polynomial.LaurentCech
+public import Quillen.Aglib.Algebra.Module.FiniteCoefficientRetract
+public import Quillen.Aglib.Algebra.Polynomial.Laurent.Cech
 public import Mathlib.Data.ZMod.Basic
 
 /-! Semantic consumers of the original Laurent Čech maps and genuine finite-window

@@ -9,7 +9,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleKEquivalence
-public import Quillen.Waldhausen.GilletWaldhausen.FiniteTermEvaluation
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.FiniteTermEvaluation
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsAcyclic
 public import Quillen.Waldhausen.GilletWaldhausen.CycleEvaluationSequence
 public import Aglib.Algebra.Homology.CochainComplex.Cycles

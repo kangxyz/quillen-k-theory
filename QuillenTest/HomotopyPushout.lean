@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Homology.HomotopyPushoutMap
+public import Quillen.Aglib.Algebra.Homology.HomotopyPushout.Map
 
 /-! # Actual homotopy-pushout and local weak-gluing consumers -/
 @[expose] public section

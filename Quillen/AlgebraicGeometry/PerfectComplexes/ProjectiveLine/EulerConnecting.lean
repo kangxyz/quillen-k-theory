@@ -5,6 +5,9 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlasqueBoundedBelow.ExactPlus
+
+
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerInverse
 public import Aglib.Algebra.Homology.DerivedCategory.Plus.ShortExact
@@ -32,16 +35,7 @@ variable (R : CommRingCat.{u})
 local instance eulerConnectingStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 
-local instance toPlus_additive (X : Scheme.{u}) : (toPlus X).Additive := by
-  unfold toPlus
-  infer_instance
-
-lemma flasqueSequencePlus_shortExact {X : Scheme.{u}}
-    (S : ShortComplex (FlasqueBoundedBelow.Obj X))
-    (hS : (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-      (CategoryTheory.ExactCategory.abelianExactStructure (CochainComplex X.Modules ℤ))
-      (FlasqueBoundedBelow.objects X)).conflation S) :
-    ((S.map (toPlus X)).map (CochainComplex.Plus.ι X.Modules)).ShortExact := hS
+attribute [local instance] toPlus_additive
 
 /-- The original projected incidence map, retaining its actual bounded-below inclusion. -/
 def plusFirst : E2 R ⋙ toPlus (Spec R) ⟶ E1 R ⋙ toPlus (Spec R) :=

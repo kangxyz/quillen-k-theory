@@ -5,6 +5,15 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.ChangeSupport
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.ChangeOpenPairs
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.Antitone
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.GlobalLocalization
 public import Quillen.Waldhausen.Fibration.ConnectingNaturality
@@ -47,18 +56,6 @@ attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes
 open Waldhausen Fibration
 attribute [local instance] HasDerivedCategory.standard
-
-/-- Shrinking the acyclicity open weakens the original support predicate. -/
-lemma perfectSupported_antitone {X : Scheme.{u}} {S T : X.Opens} (h : S ≤ T) :
-    perfectSupported T.ι ≤ perfectSupported S.ι := by
-  intro K hK
-  refine ⟨hK.1, ?_⟩
-  rw [← isZero_toDerived_iff_acyclic]
-  let c : restrict T.ι ⋙ restrict (X.homOfLE h) ≅ restrict S.ι :=
-    restrictCompIso _ _ ≪≫ eqToIso (restrict_congr (Scheme.homOfLE_ι X h))
-  exact (isZero_toDerived_restrict_of_isZero (X.homOfLE h)
-    ((isZero_toDerived_iff_acyclic _).mpr hK.2)).of_iso
-      ((DerivedCategory.Q (C := S.toScheme.Modules)).mapIso (c.app K)).symm
 
 /-- The original supported inclusion, with only the acyclicity open weakened. -/
 def perfectSupportedChangeOpenKMap {X : Scheme.{u}} {S T : X.Opens}
@@ -206,21 +203,6 @@ universe u
 namespace Quillen.PerfectComplexes
 variable {X : Scheme.{u}} {S T : X.Opens} (h : S ≤ T)
 
-/-- The actual identity-base square for an inclusion of auxiliary opens. -/
-def supportChangeOpenPair : supportOpenPair S ⟶ supportOpenPair T :=
-  ObjectProperty.homMk (Arrow.homMk (X.homOfLE h) (𝟙 X)
-    (by change X.homOfLE h ≫ T.ι = S.ι ≫ 𝟙 X
-        rw [Category.comp_id, Scheme.homOfLE_ι]))
-
-/-- Actual bounded-flat pullback on the identity base is the literal inclusion. -/
-def boundedFlatPerfectSupportedChangeOpenIso :
-    boundedFlatPerfectSupportedInclusion T.ι ⋙ ObjectProperty.ιOfLE (perfectSupported_antitone h) ≅
-      boundedFlatPerfectSupportedPullback (supportChangeOpenPair h) ⋙
-        boundedFlatPerfectSupportedInclusion S.ι :=
-  Functor.fullyFaithfulCancelRight (perfectSupported S.ι).ι
-    (Functor.isoWhiskerLeft (boundedFlatPerfectSupported T.ι).ι
-      (Scheme.Modules.Complex.pullbackIdIso X).symm)
-
 lemma perfectSupportedChangeOpenKMap_comp_boundedFlat (n : ℕ) :
     (perfectSupportedChangeOpenKMap h n).comp
         (boundedFlatPerfectSupportedToPerfectSupportedKMap T.ι n) =
@@ -232,13 +214,6 @@ lemma perfectSupportedChangeOpenKMap_comp_boundedFlat (n : ℕ) :
   exact Waldhausen.KMap_eq_of_iso _ _ (boundedFlatPerfectSupportedChangeOpenIso h) n
 
 variable [CompactSpace X]
-
-/-- The actual auxiliary-support change as a morphism of quasi-compact open pairs. -/
-def qcSupportChangeOpenPair :
-    (⟨supportOpenPair S, (by change CompactSpace X; infer_instance)⟩ :
-      AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}) ⟶
-      ⟨supportOpenPair T, (by change CompactSpace X; infer_instance)⟩ :=
-  ObjectProperty.homMk (supportChangeOpenPair h)
 
 /-- Changing auxiliary support is precisely the existing public pair pullback. -/
 lemma perfectSupportedChangeOpenKMap_eq_pullback (n : ℕ) :

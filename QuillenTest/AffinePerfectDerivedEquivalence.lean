@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PerfectDerivedEquivalence
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.PerfectDerivedEquivalence
 public import Mathlib.Data.ZMod.Basic
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 

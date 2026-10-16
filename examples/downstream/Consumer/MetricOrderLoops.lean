@@ -8,7 +8,7 @@ module
 public import Quillen.Topology.MetricOrderComplex.LoopEquiconnection
 public import Quillen.Topology.MetricOrderComplex.RealizationHomotopyEquiv
 public import Quillen.Topology.ClassifyingSpace.PosetLoop
-public import Quillen.Algebra.Category.ModuleCat.FiniteProjective
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjective
 public import Quillen.CategoryTheory.QConstruction.Connected
 
 /-!

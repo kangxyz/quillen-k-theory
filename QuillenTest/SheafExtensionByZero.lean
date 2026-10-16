@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ExtensionByZeroBaseChange
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.OpenImmersion.ExtensionByZero
 public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
 
 /-! Semantic consumers of actual extension by zero and open base change. -/

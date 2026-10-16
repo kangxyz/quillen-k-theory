@@ -6,10 +6,10 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineChartCounit
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Restriction.AffineChartCounit
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.CechSections
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.TildeExact
-public import Quillen.CategoryTheory.Limits.NatTransProduct
+public import Quillen.Aglib.CategoryTheory.Limits.Shapes.NatTransProduct
 
 /-! # Original counits on the two projective-line Cech terms
 

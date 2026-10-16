@@ -6,8 +6,8 @@ Authors: kangxyz
 module
 
 public import Quillen.KTheory.Map.RightBaseChangeTensor
-public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveTensorCoherence
-public import Quillen.Algebra.Category.ModuleCat.MatrixImageTensor
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveTensorCoherence
+public import Quillen.Aglib.Algebra.Category.ModuleCat.MatrixImageTensor
 
 /-!
 A downstream consumer of the actual universe-lifted naturality square and the

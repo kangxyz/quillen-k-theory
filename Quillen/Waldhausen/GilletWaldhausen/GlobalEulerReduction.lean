@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.SingleInsertion
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.GilletWaldhausen.FiniteEulerReduction
@@ -34,32 +35,6 @@ variable (P : ObjectProperty A) [P.ContainsZero] [P.IsClosedUnderIsomorphisms]
   [(abelianExactStructure A).IsExtensionClosed P]
 local instance globalEulerReduction_termPropertyProducts : P.IsClosedUnderFiniteProducts :=
   (abelianExactStructure A).extensionClosed_finiteProducts P
-
-/-- The original single complex as an actual bounded termwise-P complex. -/
-def boundedTermsSingleFunctor (n : ℤ) : P.FullSubcategory ⥤ (boundedTerms P).FullSubcategory :=
-  (boundedTerms P).lift (P.ι ⋙ single A (ComplexShape.up ℤ) n)
-    (fun X ↦ boundedTerms_single_mem P n X.obj X.property)
-
-omit [(abelianExactStructure A).IsExtensionClosed P] in
-@[simp] theorem boundedTermsSingleFunctor_map (n : ℤ) {X Y : P.FullSubcategory} (f : X ⟶ Y) :
-    ((boundedTermsSingleFunctor P n).map f).hom = (single A (ComplexShape.up ℤ) n).map f.hom := rfl
-
-instance boundedTermsSingleFunctor_additive (n : ℤ) : (boundedTermsSingleFunctor P n).Additive :=
-  inferInstanceAs (Functor.Additive ((boundedTerms P).lift _ _))
-
-/-- Original single insertion preserves the actual inherited conflations. -/
-def boundedTermsSingleExactFunctor (n : ℤ) :
-    ExactFunctor (ExactSubcategory.exactStructure (abelianExactStructure A) P)
-      (boundedTermsExactStructure P) where
-  toFunctor := boundedTermsSingleFunctor P n
-  map_conflation S hS := singleTerm_shortExact (S.map P.ι) hS n
-
-omit [(abelianExactStructure A).IsExtensionClosed P] in
-/-- Any allowed stage insertion is the original global single functor after inclusion. -/
-theorem finiteTermSingle_comp_inclusion (a b n : ℤ) (ha : a ≤ n) (hb : n ≤ b) :
-    finiteTermSingle P a b n ha hb ⋙ (fixedTermsBounds P a b).ι = boundedTermsSingleFunctor P n
-      := by
-  apply CategoryTheory.Functor.ext (fun _ ↦ rfl)
 
 /-- The corresponding original normalized KMaps commute exactly. -/
 theorem finiteTermSingle_KMap_inclusion (a b n : ℤ) (ha : a ≤ n) (hb : n ≤ b) (k : ℕ)

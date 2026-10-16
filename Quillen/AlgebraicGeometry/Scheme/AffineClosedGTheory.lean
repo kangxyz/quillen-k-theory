@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Morphisms.ClosedImmersion.AffineComplement
+
 public import Quillen.AlgebraicGeometry.Scheme.GTheory
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.IdealLocalization
 
@@ -25,19 +27,6 @@ universe u
 open CategoryTheory AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.AffineClosed
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (I : Ideal R)
-
-/-- The actual affine closed subscheme Spec(R/I). -/
-abbrev closedScheme := Spec
-  (Pushforward.ClosedImmersion.Ideal.closedRing R I)
-
-/-- The actual open complement of V(I), which need not be affine. -/
-abbrev openScheme :=
-  (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.openComplement R
-  I).toScheme
-
-/-- Its canonical open immersion into Spec R. -/
-abbrev openMap :=
-  AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.openMap R I
 
 /-- The canonical map of actual closed-immersion sheaf pushforward. -/
 abbrev pushforwardG (n : ℕ) : G (closedScheme R I) n →* G (Spec R) n :=

@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.Grothendieck.EndofunctorTelescope
+public import Quillen.Aglib.CategoryTheory.Grothendieck.EndofunctorTelescope
 public import Mathlib.CategoryTheory.Monoidal.Category
+public import Quillen.Aglib.CategoryTheory.Monoidal.TensorFunctor.Associativity
 /-! # Actual left translations on the right-translation telescope -/
 
 @[expose] public section
@@ -18,11 +19,6 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 set_option backward.defeqAttrib.useBackward true
 variable {C : Type u} [Category.{v} C] [MonoidalCategory C]
-/-- The original associator commutes left tensoring with one right-translation step. -/
-def leftStep (e P : C) : tensorLeft P ⋙ tensorRight e ⟶ tensorRight e ⋙ tensorLeft P where
-  app X := (α_ P X e).hom
-  naturality X Y f := by dsimp; simp
-
 /-- The original right-translation sequence in a common universe, retaining every iterate. -/
 def diagram (e : C) : ℕ ⥤ Cat.{max u v, max u v} :=
   EndofunctorTelescope.diagram (tensorRight e) ⋙ Cat.asSmallFunctor.{0}

@@ -7,7 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.Strictification
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.BoundedDerivedPushforward
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPushforwardComparison
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPushforwardComparison
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Actual projective-line direct image from quasicoherent representatives

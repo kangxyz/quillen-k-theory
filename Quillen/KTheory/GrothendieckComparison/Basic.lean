@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.ExactCategory.KernelPullback
 public import Aglib.CategoryTheory.ExactCategory.BaseChange
 public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.Topology.ClassifyingSpace.ArrowPaths
@@ -99,22 +100,6 @@ lemma fromZeroTotal_qDeflation {X Y : C} (p : X ⟶ Y) (hp : E.deflation p) :
     _ (Iso.refl _)
   · simp [Q.of]
   · simp [Q.of]
-
-/-- The kernel universal property gives the pullback square against zero. -/
-lemma conflation_kernel_isPullback {S : ShortComplex C} (hS : E.conflation S) :
-    IsPullback (0 : S.X₁ ⟶ 0) S.f (0 : 0 ⟶ S.X₃) S.g := by
-  refine IsPullback.of_isLimit (PullbackCone.IsLimit.mk (by simp [S.zero])
-    (fun s => (E.kernel S hS).lift
-      (KernelFork.ofι s.snd (by rw [← s.condition]; simp))) ?_ ?_ ?_)
-  · intro s
-    exact Subsingleton.elim _ _
-  · intro s
-    exact Fork.IsLimit.lift_ι _
-  · intro s m hm hn
-    apply Fork.IsLimit.hom_ext (E.kernel S hS)
-    apply hn.trans
-    simpa using ((E.kernel S hS).fac
-      (KernelFork.ofι s.snd (by rw [← s.condition]; simp)) WalkingParallelPair.zero).symm
 
 /-- The whole-apex arrow followed by an inflation represents its subobject. -/
 lemma fromZeroTotal_qInflation {X Y : C} (i : X ⟶ Y) (hi : E.inflation i) :

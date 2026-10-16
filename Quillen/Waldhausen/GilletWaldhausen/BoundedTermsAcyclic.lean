@@ -6,9 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.BoundedTermsAcyclic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
-public import Quillen.Waldhausen.GilletWaldhausen.BoundedTerms
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.BoundedTerms
 public import Quillen.Waldhausen.ExactFunctor
 
 /-! # The actual acyclic subcategory of bounded termwise-P complexes
@@ -33,51 +34,8 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 variable {A : Type u} [Category.{v} A] [Abelian A]
 variable (P : ObjectProperty A)
 
-/-- Forgetting acyclicity leaves the original bounded termwise conditions. -/
-theorem boundedAcyclic_le_boundedTerms : boundedAcyclic P ≤ boundedTerms P :=
-  fun _ hK ↦ ⟨hK.1, hK.2.1⟩
-
-/-- The actual full-subcategory inclusion, with unchanged complexes and chain maps. -/
-def boundedAcyclicTermsInclusion :
-    (boundedAcyclic P).FullSubcategory ⥤ (boundedTerms P).FullSubcategory :=
-  ObjectProperty.ιOfLE (boundedAcyclic_le_boundedTerms P)
-
-@[simp]
-theorem boundedAcyclicTermsInclusion_comp_ι :
-    boundedAcyclicTermsInclusion P ⋙ (boundedTerms P).ι = (boundedAcyclic P).ι := rfl
-
-instance boundedAcyclicTermsInclusion_additive : (boundedAcyclicTermsInclusion P).Additive where
-  map_add := by intros; rfl
-
 variable [P.ContainsZero] [P.IsClosedUnderIsomorphisms]
   [(abelianExactStructure A).IsExtensionClosed P]
-
-/-- Exactness of the original inclusion for the actual inherited conflations. -/
-def boundedAcyclicTermsExactInclusion :
-    ExactFunctor (boundedAcyclicExactStructure P) (boundedTermsExactStructure P) where
-  toFunctor := boundedAcyclicTermsInclusion P
-  map_conflation _ hS := hS
-
-/-- Between acyclic objects, an inherited ambient quotient is automatically
-acyclic, so the actual inclusion reflects inherited inflations. -/
-theorem boundedAcyclicTermsInclusion_inflation_iff
-    {K L : (boundedAcyclic P).FullSubcategory} (f : K ⟶ L) :
-    (boundedTermsExactStructure P).inflation ((boundedAcyclicTermsInclusion P).map f) ↔
-      (boundedAcyclicExactStructure P).inflation f := by
-  constructor
-  · intro hf
-    obtain ⟨Q, p, w, hS⟩ := hf
-    let S := (ShortComplex.mk ((boundedAcyclicTermsInclusion P).map f) p w).map (boundedTerms P).ι
-    have hs : S.ShortExact := hS
-    have hq : QuasiIso S.f := by
-      rw [quasiIso_iff]
-      intro n
-      exact (quasiIsoAt_iff_exactAt' f.hom n (L.property.2.2 n)).2 (K.property.2.2 n)
-    apply (ExactSubcategory.inflation_iff (abelianExactStructure (CochainComplex A ℤ))
-      (boundedAcyclic P) f).2
-    exact ⟨Q.obj, ⟨Q.property.1, Q.property.2, hs.acyclic_X₃ hq⟩,
-      p.hom, congrArg (fun z ↦ z.hom) w, hS⟩
-  · exact (boundedAcyclicTermsExactInclusion P).map_inflation f
 
 /-- The same original inclusion is exact with genuine quasi-isomorphisms. -/
 theorem boundedAcyclicTermsInclusion_quasiExact :

@@ -6,6 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.RestrictionFunctoriality
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Coherent.RestrictionFunctoriality
+
 public import Quillen.CategoryTheory.SmallModel.Exact
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Restriction
@@ -45,38 +49,9 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace AlgebraicGeometry.Scheme.Modules
 
-/-- The geometric identity comparison lifts to actual vector bundles. -/
-def vectorBundleRestrictIdIso (X : Scheme.{u}) :
-    vectorBundleRestrict (𝟙 X) ≅ 𝟭 (FiniteLocallyFree X) :=
-  Functor.fullyFaithfulCancelRight (finiteLocallyFree X).ι
-    (Functor.isoWhiskerLeft (finiteLocallyFree X).ι Scheme.Modules.restrictFunctorId)
-
-/-- The geometric composition comparison lifts to actual vector bundles. -/
-def vectorBundleRestrictCompIso {V U X : Scheme.{u}}
-    (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] :
-    vectorBundleRestrict (i ≫ j) ≅ vectorBundleRestrict j ⋙ vectorBundleRestrict i :=
-  Functor.fullyFaithfulCancelRight (finiteLocallyFree V).ι
-    (Functor.isoWhiskerLeft (finiteLocallyFree X).ι
-      (Scheme.Modules.restrictFunctorComp i j))
-
 end AlgebraicGeometry.Scheme.Modules
 
 namespace AlgebraicGeometry.Scheme.Modules.Coherent
-
-/-- The geometric identity comparison lifts to actual coherent sheaves. -/
-def coherentRestrictionIdIso (X : Scheme.{u}) :
-    finiteTypeSheavesRestriction (𝟙 X) ≅ 𝟭 (FiniteTypeSheaves X) :=
-  Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules X)
-    (Functor.isoWhiskerLeft (finiteTypeSheavesToModules X) Scheme.Modules.restrictFunctorId)
-
-/-- The geometric composition comparison lifts to actual coherent sheaves. -/
-def coherentRestrictionCompIso {V U X : Scheme.{u}}
-    (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] :
-    finiteTypeSheavesRestriction (i ≫ j) ≅
-      finiteTypeSheavesRestriction j ⋙ finiteTypeSheavesRestriction i :=
-  Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules V)
-    (Functor.isoWhiskerLeft (finiteTypeSheavesToModules X)
-      (Scheme.Modules.restrictFunctorComp i j))
 
 end AlgebraicGeometry.Scheme.Modules.Coherent
 

@@ -6,8 +6,8 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.FiniteSupportedRoofs
-public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.FiniteSupportedEquality
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.OpenDerivedImage.FiniteSupportedRoofs
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.OpenDerivedImage.FiniteSupportedEquality
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-!

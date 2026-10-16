@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Algebra.ModuleComplex.SplitPivot
+public import Quillen.Aglib.Algebra.Homology.ModuleCat.SplitPivot
 public import Mathlib.Algebra.Homology.QuasiIso
 
 /-! # Consumers of whole-complex split-pivot cancellation

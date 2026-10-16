@@ -7,7 +7,7 @@ module
 
 public import Quillen.CategoryTheory.GroupCompletion.UnitArrows
 public import Quillen.CategoryTheory.GroupCompletion.CommonDenominator
-public import Quillen.CategoryTheory.Localization.RightRoofs
+public import Quillen.Aglib.CategoryTheory.Localization.RightRoofs
 public import Mathlib.CategoryTheory.Endomorphism
 
 /-!

@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.CategoryTheory.Limits.Shapes.CoproductZero
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueNativePhiKMap
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientOne
@@ -64,33 +67,6 @@ lemma secondInjection_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
     (Waldhausen.ExtensionCategory.productStructure
       (FlasqueBoundedBelow.waldhausen (Spec R)) (FlasqueBoundedBelow.waldhausen (Spec R))).weq
     (secondInjection R) := Waldhausen.Additivity.secondEmbedding_isExact _
-
-/-- The literal coproduct inclusion is invertible when its other actual object is zero. -/
-lemma coprod_inl_isIso_of_isZero {C : Type*} [Category C] [HasZeroMorphisms C]
-    [HasBinaryCoproducts C] (X Y : C) (hY : IsZero Y) :
-    IsIso (coprod.inl : X ⟶ X ⨿ Y) := by
-  let e : X ≅ X ⨿ Y :=
-    { hom := coprod.inl
-      inv := coprod.desc (𝟙 X) 0
-      hom_inv_id := by simp
-      inv_hom_id := by
-        apply coprod.hom_ext
-        · simp
-        · exact hY.eq_of_src _ _ }
-  exact ⟨⟨e.inv, e.hom_inv_id, e.inv_hom_id⟩⟩
-
-lemma coprod_inr_isIso_of_isZero {C : Type*} [Category C] [HasZeroMorphisms C]
-    [HasBinaryCoproducts C] (X Y : C) (hX : IsZero X) :
-    IsIso (coprod.inr : Y ⟶ X ⨿ Y) := by
-  let e : Y ≅ X ⨿ Y :=
-    { hom := coprod.inr
-      inv := coprod.desc 0 (𝟙 Y)
-      hom_inv_id := by simp
-      inv_hom_id := by
-        apply coprod.hom_ext
-        · exact hX.eq_of_src _ _
-        · simp }
-  exact ⟨⟨e.inv, e.hom_inv_id, e.inv_hom_id⟩⟩
 
 /-- The first original summand maps into the actual injected selected coproduct. -/
 def firstSumUnit (R : CommRingCat.{u}) :

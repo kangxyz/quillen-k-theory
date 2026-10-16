@@ -7,7 +7,7 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Basic
 import Quillen.Topology.ClassifyingSpace.ExtensionTotal
-import Quillen.Algebra.Category.ModuleCat.FiniteProjective
+import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjective
 
 open CategoryTheory.ExactCategory
 

@@ -9,7 +9,7 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.Algebra.Category.ModuleCat.Sheaf.TensorAdditive
 public import Aglib.AlgebraicGeometry.Modules.Complex.Sheafification
 public import Aglib.AlgebraicGeometry.Modules.Complex.Flat.BoundedAboveReplacement
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ReducedFlatCover
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Flat.ReducedCover
 public import Aglib.AlgebraicGeometry.Modules.Flat.Closure
 public import Aglib.AlgebraicGeometry.Modules.Complex.Flat.BoundedPullback
 public import Aglib.AlgebraicGeometry.Modules.Flat.ProjectivePresheaves

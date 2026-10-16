@@ -8,7 +8,7 @@ module
 public import Quillen.Waldhausen.SConstruction.Iterated.DiagramZeroNull
 public import Quillen.Waldhausen.SConstruction.Iterated.TransformationInterchange
 public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumIdentityAction
-public import Quillen.CategoryTheory.Functor.IdentityAutomorphismEvaluation
+public import Quillen.Aglib.CategoryTheory.Functor.IdentityAutomorphismEvaluation
 
 /-!
 # Identity actions on the original reversed zero null

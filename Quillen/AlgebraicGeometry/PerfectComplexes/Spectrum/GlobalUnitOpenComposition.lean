@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlatPullbackOpenComposition
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalUnitKOneRestriction
 public import Quillen.Waldhausen.SConstruction.Iterated.NormalizationTrackPasting
 public import Quillen.Waldhausen.SConstruction.Iterated.ExactPastingHomotopy
@@ -32,12 +35,6 @@ universe u
 namespace Quillen.PerfectComplexes
 variable {U X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] (i : U ⟶ X) [IsOpenImmersion i]
 
-/-- The original open/flat comparison followed by the inverse geometric composition iso. -/
-def perfectFlatOpenCompositionIso :
-    perfectFlatPullback f ⋙ perfectRestrict i ≅ perfectFlatPullback (i ≫ f) :=
-  Functor.isoWhiskerLeft (perfectFlatPullback f) (perfectRestrictIsoFlatPullback i) ≪≫
-    (perfectFlatPullbackCompIso i f).symm
-
 /-- The original reversed normalization and forward geometric comparison, with exact endpoints. -/
 def perfectFlatOpenCompositionHomotopy :
     Homotopy
@@ -51,35 +48,6 @@ def perfectFlatOpenCompositionHomotopy :
         (perfectFlatPullback_waldhausenExact (i ≫ f)) (perfectFlatOpenCompositionIso f i))
 
 variable (q : (Γ(X, ⊤))ˣ)
-
-/-- The actual restricted unit commutes with the original geometric composition isomorphism. -/
-theorem perfectFlatUnitOpenCompositionTransformation :
-    Functor.whiskerRight (perfectFlatPullbackUnitIso f q).hom (perfectRestrict i) ≫
-        (perfectFlatOpenCompositionIso f i).hom =
-      (perfectFlatOpenCompositionIso f i).hom ≫
-        (perfectFlatPullbackUnitIso (i ≫ f)
-          (Units.map i.appTop.hom.toMonoidHom q)).hom := by
-  apply NatTrans.ext
-  funext K
-  simp only [NatTrans.comp_app, Functor.whiskerRight_app, perfectFlatPullbackUnitIso,
-    Iso.trans_hom, Iso.symm_hom, Functor.rightUnitor_inv_app,
-    Functor.rightUnitor_hom_app, Functor.isoWhiskerLeft_hom, Functor.whiskerLeft_app,
-    Category.id_comp]
-  have hc := congrArg Iso.hom
-    (perfectRestrict_globalUnitIso_app i q ((perfectFlatPullback f).obj K))
-  change (perfectRestrict i).map ((perfectGlobalUnitIso X q).hom.app
-    ((perfectFlatPullback f).obj K)) = _ at hc
-  have hf : (perfectGlobalUnitIso X q).hom.app ((perfectFlatPullback f).obj K) ≫
-      𝟙 ((perfectFlatPullback f).obj K) =
-        (perfectGlobalUnitIso X q).hom.app ((perfectFlatPullback f).obj K) :=
-    Category.comp_id _
-  have hp : (perfectGlobalUnitIso U (Units.map i.appTop.hom.toMonoidHom q)).hom.app
-      ((perfectFlatPullback (i ≫ f)).obj K) ≫ 𝟙 ((perfectFlatPullback (i ≫ f)).obj K) =
-        (perfectGlobalUnitIso U (Units.map i.appTop.hom.toMonoidHom q)).hom.app
-          ((perfectFlatPullback (i ≫ f)).obj K) := Category.comp_id _
-  rw [hf, hp, hc]
-  exact ((perfectGlobalUnitIso U (Units.map i.appTop.hom.toMonoidHom q)).hom.naturality
-    ((perfectFlatOpenCompositionIso f i).hom.app K)).symm
 
 /-- The whole actual unit track intertwines along the original binary normalization comparison. -/
 def perfectFlatUnitOpenCompositionTrack :

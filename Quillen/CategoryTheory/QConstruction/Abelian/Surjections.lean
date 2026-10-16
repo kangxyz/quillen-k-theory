@@ -10,6 +10,7 @@ public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Localization.Serre.LocalizationComma
 public import Mathlib.CategoryTheory.Abelian.CommSq
+public import Quillen.Aglib.CategoryTheory.Abelian.Bicartesian
 
 /-!
 # Surjective Q-arrows and cospan representatives
@@ -35,28 +36,6 @@ open scoped ZeroObject
 namespace Quillen
 attribute [local instance] Abelian.hasFiniteBiproducts
 variable {C : Type u} [Category.{v} C] [Abelian C]
-
-/-- An abelian pushout with a monic left leg is also an actual pullback. -/
-theorem isPullback_of_isPushout_mono {A B D E : C}
-    {f : A ⟶ B} {g : A ⟶ D} {i : B ⟶ E} {j : D ⟶ E}
-    (sq : IsPushout f g i j) [Mono g] : IsPullback f g i j := by
-  have : Mono sq.shortComplex.f := by
-    change Mono (biprod.lift f (-g))
-    exact mono_of_mono_fac (biprod.lift_snd f (-g))
-  let hk := sq.exact_shortComplex.fIsKernel
-  apply IsPullback.mk' sq.w
-  · intro T a b _ h
-    exact (cancel_mono g).1 h
-  · intro T a b h
-    let fork : KernelFork sq.shortComplex.g :=
-      KernelFork.ofι (biprod.lift a (-b)) (by simp [CommSq.shortComplex, h])
-    let l := hk.lift fork
-    have hl : l ≫ biprod.lift f (-g) = biprod.lift a (-b) := hk.fac fork .zero
-    refine ⟨l, ?_, ?_⟩
-    · have hh := congrArg (fun k => k ≫ biprod.fst) hl
-      simpa [Category.assoc] using hh
-    · have hh := congrArg (fun k => k ≫ biprod.snd) hl
-      simpa [Category.assoc] using hh
 
 namespace Q
 

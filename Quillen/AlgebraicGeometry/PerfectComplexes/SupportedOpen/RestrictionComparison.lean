@@ -5,6 +5,12 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SupportedRestriction
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.Pairs
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Restriction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PairPullback
 
@@ -31,24 +37,6 @@ namespace Quillen.PerfectComplexes
 
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens)
 
-/-- The original support open, viewed as an actual open-pair object. -/
-def supportOpenPair : AlgebraicGeometry.Scheme.OpenPairs.{u} :=
-  ⟨Arrow.mk T.ι, (by change IsOpenImmersion T.ι; infer_instance)⟩
-
-/-- The literal inverse-image support square. -/
-def supportRestrictionPair : supportOpenPair (j ⁻¹ᵁ T) ⟶ supportOpenPair T :=
-  ObjectProperty.homMk (Arrow.homMk (j.resLE T (j ⁻¹ᵁ T) le_rfl) j
-    (j.resLE_comp_ι le_rfl))
-
-/-- Restriction and pullback agree through the original supported inclusions. -/
-def boundedFlatPerfectSupportedOriginalRestrictionIso :
-    boundedFlatPerfectSupportedInclusion T.ι ⋙ perfectSupportedRestrict j T ≅
-      boundedFlatPerfectSupportedPullback (supportRestrictionPair j T) ⋙
-        boundedFlatPerfectSupportedInclusion (j ⁻¹ᵁ T).ι :=
-  Functor.fullyFaithfulCancelRight (perfectSupported (j ⁻¹ᵁ T).ι).ι
-    (Functor.isoWhiskerLeft (boundedFlatPerfectSupported T.ι).ι
-      (restrictIsoPullbackComplex j))
-
 lemma perfectSupportedKRestrict_comp_boundedFlat (n : ℕ) :
     (perfectSupportedKRestrict j T n).comp
         (boundedFlatPerfectSupportedToPerfectSupportedKMap T.ι n) =
@@ -61,13 +49,6 @@ lemma perfectSupportedKRestrict_comp_boundedFlat (n : ℕ) :
     (boundedFlatPerfectSupportedOriginalRestrictionIso j T) n
 
 variable [CompactSpace X] [CompactSpace U]
-
-/-- The same original square in the existing qc open-pair category. -/
-def qcSupportRestrictionPair :
-    (⟨supportOpenPair (j ⁻¹ᵁ T), (by change CompactSpace U; infer_instance)⟩ :
-      AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}) ⟶
-      ⟨supportOpenPair T, (by change CompactSpace X; infer_instance)⟩ :=
-  ObjectProperty.homMk (supportRestrictionPair j T)
 
 /-- The literal exact restriction map is the existing public supported pullback. -/
 lemma perfectSupportedKRestrict_eq_pullback (n : ℕ) :

@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveExtensions
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveExtensionAction
-public import Quillen.CategoryTheory.ExactCategory.ExtensionProduct
+public import Quillen.Aglib.CategoryTheory.ExactCategory.Extensions.Product
 public import Mathlib.CategoryTheory.IsConnected
 
 /-!
@@ -27,12 +28,6 @@ namespace Quillen.FiniteProjectiveModule
 variable (R : Type u) [Ring R]
 attribute [local instance] categoryDirectSumMonoidal directSumMonoidal extensionFiberDirectSumAction
 attribute [local instance] hasBinaryBiproducts_of_finite_biproducts
-
-/-- The kernel, with the finite-projective structure provided by the original
-exact category, is an actual acting object. -/
-def extensionKernelIsoObject {C : Category.{u, u} R}
-    (p : (exactStructure R).ExtensionFiber C) : IsoCategory R :=
-  ⟨((exactStructure R).extensionKernelData p.of).obj⟩
 
 /-- Splitting an extension identifies it with its kernel acting on the identity
 extension over exactly the same quotient. -/

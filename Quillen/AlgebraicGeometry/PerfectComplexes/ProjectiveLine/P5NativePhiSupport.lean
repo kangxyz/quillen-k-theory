@@ -9,7 +9,7 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.AlgebraicGeometry.Modules.Complex.AcyclicSupport
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativePhiObjects
-public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportClosure
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.Closure
 
 /-! # Native Phi support on the actual inverse-image base open
 

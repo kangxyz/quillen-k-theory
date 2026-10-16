@@ -5,11 +5,20 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.GlobalScalarSingle
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Complex.SingleRestriction
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Complex.MappingConeRestriction
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalFirstCoordinate
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ScalarLaurentClassComparison
-public import Quillen.Algebra.Homology.MappingConeIso
+public import Quillen.Aglib.Algebra.Homology.MappingCone.Iso
 
 /-!
 # The supported cone of the original first tautological coordinate
@@ -64,29 +73,6 @@ def tautologicalPerfectMinusIso (R : CommRingCat.{u}) :
       (Scheme.Modules.restrictFunctor (minusChart R)) (.up ℤ) 0).app (tautologicalLine R) ≪≫
     (CochainComplex.singleFunctor (Spec (.of (Polynomial R))).Modules 0).mapIso
       (tautologicalLineMinusIso R)
-
-private theorem single_restriction_square {U X : Scheme.{u}}
-    (j : U ⟶ X) [IsOpenImmersion j] {M N : X.Modules} (f : M ⟶ N)
-    {M' N' : U.Modules} (a : M.restrict j ≅ M') (b : N.restrict j ≅ N')
-    (g : M' ⟶ N') (h : (Scheme.Modules.restrictFunctor j).map f ≫ b.hom = a.hom ≫ g) :
-    (restrict j).map ((CochainComplex.singleFunctor X.Modules 0).map f) ≫
-        ((HomologicalComplex.singleMapHomologicalComplex
-          (Scheme.Modules.restrictFunctor j) (.up ℤ) 0).app N ≪≫
-            (CochainComplex.singleFunctor U.Modules 0).mapIso b).hom =
-      ((HomologicalComplex.singleMapHomologicalComplex
-          (Scheme.Modules.restrictFunctor j) (.up ℤ) 0).app M ≪≫
-            (CochainComplex.singleFunctor U.Modules 0).mapIso a).hom ≫
-        (CochainComplex.singleFunctor U.Modules 0).map g := by
-  let e := HomologicalComplex.singleMapHomologicalComplex
-    (Scheme.Modules.restrictFunctor j) (.up ℤ) 0
-  have hn := e.hom.naturality f
-  change (restrict j).map ((CochainComplex.singleFunctor X.Modules 0).map f) ≫
-      (e.app N).hom = (e.app M).hom ≫
-        (CochainComplex.singleFunctor U.Modules 0).map
-          ((Scheme.Modules.restrictFunctor j).map f) at hn
-  simp only [Iso.trans_hom, Functor.mapIso_hom]
-  rw [← Category.assoc, hn, Category.assoc, ← Functor.map_comp, h, Functor.map_comp]
-  simp only [e, Category.assoc]
 
 /-- The original positive restricted arrow is the displayed trivialization square. -/
 theorem tautologicalCoordinatePerfect_plus (R : CommRingCat.{u}) :
@@ -166,34 +152,6 @@ theorem tautologicalCoordinateConeMinusIso_inr (R : CommRingCat.{u}) :
   rw [tautologicalCoordinateConeMinusIso, Iso.trans_hom, ← Category.assoc, h]
   simp [CochainComplex.mappingCone.isoOfIso, CochainComplex.mappingCone.map]
 
-private theorem unitMul_eq_globalScalar (X : Scheme.{u}) (r : Γ(X, ⊤)) :
-    unitMul X r = (AlgebraicGeometry.Scheme.Modules.globalScalar X r).app
-      (SheafOfModules.unit X.ringCatSheaf) := by
-  apply Scheme.Modules.hom_ext
-  intro U
-  ext x
-  change Γ(X, U) at x
-  change x * (X.presheaf.map (homOfLE (show U ≤ ⊤ from le_top)).op).hom r =
-    (X.presheaf.map (homOfLE (show U ≤ ⊤ from le_top)).op).hom r * x
-  exact mul_comm _ _
-
-private theorem single_unitMul_eq_globalScalar (X : Scheme.{u}) (r : Γ(X, ⊤)) :
-    (CochainComplex.singleFunctor X.Modules 0).map (unitMul X r) =
-      (complexGlobalScalar X r).app (rankOnePerfect X).obj := by
-  apply HomologicalComplex.from_single_hom_ext
-  change ((HomologicalComplex.single X.Modules (.up ℤ) 0).map (unitMul X r)).f 0 =
-    (AlgebraicGeometry.Scheme.Modules.globalScalar X r).app
-      (((HomologicalComplex.single X.Modules (.up ℤ) 0).obj
-        (SheafOfModules.unit X.ringCatSheaf)).X 0)
-  rw [HomologicalComplex.single_map_f_self, unitMul_eq_globalScalar]
-  let e := HomologicalComplex.singleObjXSelf (.up ℤ) (0 : ℤ)
-    (SheafOfModules.unit X.ringCatSheaf)
-  change e.hom ≫ (AlgebraicGeometry.Scheme.Modules.globalScalar X r).app _ ≫ e.inv =
-    (AlgebraicGeometry.Scheme.Modules.globalScalar X r).app _
-  rw [← cancel_mono e.hom]
-  simp only [Category.assoc, Iso.inv_hom_id, Category.comp_id]
-  exact ((AlgebraicGeometry.Scheme.Modules.globalScalar X r).naturality e.hom).symm
-
 /-- The negative scalar single equals the original termwise global scalar on actual rank one. -/
 theorem tautologicalNegativeScalar_eq_globalScalar (R : CommRingCat.{u}) :
     (CochainComplex.singleFunctor (Spec (.of (Polynomial R))).Modules 0).map
@@ -214,14 +172,6 @@ def tautologicalCoordinateConeMinusGlobalScalarIso (R : CommRingCat.{u}) :
   tautologicalCoordinateConeMinusIso R ≪≫
     eqToIso (congrArg (fun f => CochainComplex.mappingCone f)
       (tautologicalNegativeScalar_eq_globalScalar R))
-
-private theorem mappingCone_eqToIso_inr {X : Scheme.{u}} {K L : CochainComplex X.Modules ℤ}
-    {f g : K ⟶ L} (h : f = g) :
-    CochainComplex.mappingCone.inr f ≫
-        (eqToIso (congrArg (fun f => CochainComplex.mappingCone f) h)).hom =
-      CochainComplex.mappingCone.inr g := by
-  subst g
-  simp
 
 /-- The comparison with the original scalar cone preserves the actual target cone inclusion. -/
 theorem tautologicalCoordinateConeMinusGlobalScalarIso_inr (R : CommRingCat.{u}) :

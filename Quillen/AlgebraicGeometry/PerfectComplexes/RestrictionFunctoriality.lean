@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.RestrictionFunctoriality
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.KTheory
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Restriction
@@ -33,37 +36,6 @@ universe u
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes
-
-/-- Termwise restriction along the identity is canonically the identity. -/
-def restrictIdIso (X : Scheme.{u}) : restrict (𝟙 X) ≅ 𝟭 (CochainComplex X.Modules ℤ) :=
-  NatIso.mapHomologicalComplex Scheme.Modules.restrictFunctorId (ComplexShape.up ℤ) ≪≫
-    Functor.mapHomologicalComplexIdIso X.Modules (ComplexShape.up ℤ)
-
-/-- The geometric identity comparison lifts to strict perfect complexes. -/
-def strictRestrictIdIso (X : Scheme.{u}) :
-    strictRestrict (𝟙 X) ≅ 𝟭 (StrictPerfect X) :=
-  Functor.fullyFaithfulCancelRight (strictPerfect X).ι
-    (Functor.isoWhiskerLeft (strictPerfect X).ι (restrictIdIso X))
-
-/-- The geometric composition comparison lifts to strict perfect complexes. -/
-def strictRestrictCompIso {V U X : Scheme.{u}}
-    (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] :
-    strictRestrict (i ≫ j) ≅ strictRestrict j ⋙ strictRestrict i :=
-  Functor.fullyFaithfulCancelRight (strictPerfect V).ι
-    (Functor.isoWhiskerLeft (strictPerfect X).ι (restrictCompIso i j).symm)
-
-/-- The geometric identity comparison lifts to locally perfect complexes. -/
-def perfectRestrictIdIso (X : Scheme.{u}) :
-    perfectRestrict (𝟙 X) ≅ 𝟭 (Perfect X) :=
-  Functor.fullyFaithfulCancelRight (locallyPerfect X).ι
-    (Functor.isoWhiskerLeft (locallyPerfect X).ι (restrictIdIso X))
-
-/-- The geometric composition comparison lifts to locally perfect complexes. -/
-def perfectRestrictCompIso {V U X : Scheme.{u}}
-    (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] :
-    perfectRestrict (i ≫ j) ≅ perfectRestrict j ⋙ perfectRestrict i :=
-  Functor.fullyFaithfulCancelRight (locallyPerfect V).ι
-    (Functor.isoWhiskerLeft (locallyPerfect X).ι (restrictCompIso i j).symm)
 
 @[simp high]
 theorem strictKRestrict_id (X : Scheme.{u}) (n : ℕ) :

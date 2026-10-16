@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 
-import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeExact
+import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeExact
 import Mathlib.Algebra.Ring.PUnit
 
 /-! Actual change of rings preserves sums and all inherited conflations. -/

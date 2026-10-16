@@ -8,8 +8,8 @@ module
 public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalOpenBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalPullback
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.PullbackSquare
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.PullbackRankOne
+public import Quillen.Aglib.AlgebraicGeometry.Modules.RankOne.PullbackSquare
+public import Quillen.Aglib.AlgebraicGeometry.Modules.RankOne.Pullback
 public import Aglib.AlgebraicGeometry.Modules.Restriction.ZeroMorphisms
 public import Aglib.AlgebraicGeometry.Modules.Subobjects.Gluing
 

@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Algebra.ModuleComplex.FiniteDomination
+public import Quillen.Aglib.Algebra.Homology.ModuleCat.FiniteDomination
 public import Mathlib.Algebra.Homology.QuasiIso
 
 /-! # Consumers of finite-domination replacement

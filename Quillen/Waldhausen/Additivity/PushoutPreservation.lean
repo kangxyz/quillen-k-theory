@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Waldhausen.Additivity.PushoutInterchange
+public import Quillen.Aglib.CategoryTheory.Limits.PointwisePushoutInterchange
 public import Quillen.Waldhausen.Additivity.PushoutCofibrations
 
 /-! # Exactness properties of the actual additivity deformation

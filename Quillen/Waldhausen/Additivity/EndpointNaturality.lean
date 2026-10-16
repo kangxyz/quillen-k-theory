@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.NaturalTransformation.HExt
 public import Quillen.Waldhausen.Additivity.DeformationMap
 public import Quillen.Waldhausen.Additivity.SumDiagrams
 
@@ -53,17 +54,6 @@ theorem separatedIntervalArrows_reindex {n n' m m' : SimplexCategory}
   rw [intervalArrows_input]
   exact intervalArrows_congr (OrdinalSubdivision.first.naturality α)
     (OrdinalSubdivision.second.naturality α) _
-
-/-- Heterogeneous component equality is enough once the endpoint functors are
-identified; this is ordinary extensionality of natural transformations. -/
-theorem natTrans_heq_of_app_heq {J : Type u} [Category.{v} J]
-    {A A' B B' : J ⥤ D} (η : A ⟶ B) (η' : A' ⟶ B')
-    (hA : A = A') (hB : B = B') (hη : ∀ x, HEq (η.app x) (η'.app x)) : HEq η η' := by
-  subst A'
-  subst B'
-  apply heq_of_eq
-  ext x
-  exact eq_of_heq (hη x)
 
 variable [HasBinaryCoproducts D]
 variable (b : G ⟶ H) (hs : IsCofibrationSequence V W a b)

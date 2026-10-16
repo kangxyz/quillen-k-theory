@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneQuotient
+public import Quillen.Aglib.AlgebraicGeometry.Modules.RankOne.Quotient
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Tautological
 public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
 public import Aglib.AlgebraicGeometry.Modules.Restriction.Overlap

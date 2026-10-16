@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedExactFunctor
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlatPullback
@@ -38,13 +41,7 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueDiagonal
 open FlasqueCoefficients
 
-/-- The standard derived-category instance for sheaves of modules on `X`. -/
-local instance standardDerived (X : Scheme.{u}) :
-    HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
-
-/-- The three original incidence-sequence vertices, in their original order. -/
-inductive Vertex
-  | first | second | third
+attribute [local instance] standardDerived
 
 /-- The literal original sheaf at the selected incidence-sequence vertex. -/
 def vertexSheaf (R : CommRingCat.{u}) : Vertex → (relativeSquare R).Modules
@@ -202,27 +199,6 @@ def toOriginalPerfectPlus (R : CommRingCat.{u}) :
     FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ OriginalPerfectPlus R :=
   ObjectProperty.lift _ (toPlus (twoChartLine R) ⋙ DerivedCategory.Plus.Q)
     (fun K => (perfectDerivedObjects_toDerived_iff (twoChartLine R) K.obj).mpr K.property.1.1)
-
-/-- Exact sheaf functors that preserve actual local perfection preserve intrinsic perfect D+. -/
-lemma perfect_exactDerived {X Y : Scheme.{u}} (F : X.Modules ⥤ Y.Modules)
-    [F.Additive] [F.PreservesHomology]
-    (hF : ∀ K : CochainComplex X.Modules ℤ, locallyPerfect X K →
-      locallyPerfect Y ((F.mapHomologicalComplex (.up ℤ)).obj K))
-    (K : DerivedCategory.Plus X.Modules)
-    (hK : perfectDerivedObjects X (DerivedCategory.Plus.ι.obj K)) :
-    perfectDerivedObjects Y (DerivedCategory.Plus.ι.obj (F.rightDerivedFunctorPlus.obj K)) := by
-  let := F.isIso_rightDerivedFunctorPlusUnit_of_preservesHomology
-  let := Localization.essSurj DerivedCategory.Plus.Q (CochainComplex.Plus.quasiIso X.Modules)
-  let P := DerivedCategory.Plus.Q.objPreimage K
-  let eP := DerivedCategory.Plus.Q.objObjPreimageIso K
-  have hP : locallyPerfect X P.obj :=
-    (perfectDerivedObjects_toDerived_iff X P.obj).mp
-      ((perfectDerivedObjects X).prop_of_iso (DerivedCategory.Plus.ι.mapIso eP.symm) hK)
-  let e : DerivedCategory.Plus.Q.obj (F.mapCochainComplexPlus.obj P) ≅
-      F.rightDerivedFunctorPlus.obj K :=
-    asIso (F.rightDerivedFunctorPlusUnit.app P) ≪≫ F.rightDerivedFunctorPlus.mapIso eP
-  exact (perfectDerivedObjects Y).prop_of_iso (DerivedCategory.Plus.ι.mapIso e)
-    ((perfectDerivedObjects_toDerived_iff Y _).mpr (hF P.obj hP))
 
 /-- Exact original quotient-line tensors preserve actual local perfection. -/
 lemma quotientLeft_locallyPerfect (R : CommRingCat.{u})

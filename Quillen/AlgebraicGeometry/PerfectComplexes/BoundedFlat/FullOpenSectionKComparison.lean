@@ -7,7 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionJointData
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.KComparison
-public import Quillen.AlgebraicGeometry.Scheme.Affine.OpenPairCompactness
+public import Quillen.Aglib.AlgebraicGeometry.Morphisms.OpenImmersion.Pair.Compactness
 public import Quillen.Waldhausen.Functoriality.ExactEquivalence
 public import Quillen.Waldhausen.GrothendieckComparison.SmallModel
 

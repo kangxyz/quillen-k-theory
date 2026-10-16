@@ -6,9 +6,9 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionUnit
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SupportedSectionUnit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionZero
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionReindex
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SupportedSectionReindex
 
 /-!
 # Original supported coefficient and Laurent-unit consumers

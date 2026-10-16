@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Topology.Prespectrum.TelescopeConeBoundary
-public import Quillen.CategoryTheory.Limits.SequentialExactness
+public import Quillen.Aglib.CategoryTheory.Limits.Shapes.SequentialSystem.Exactness
 
 /-!
 # Exact signed groups of the original telescope cone

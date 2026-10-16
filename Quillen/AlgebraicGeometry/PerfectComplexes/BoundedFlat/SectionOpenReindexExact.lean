@@ -7,7 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionOpenStructure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionReindexExact
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionCoefficientIso
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SupportedSectionCoefficientIso
 public import Quillen.Waldhausen.ExtensionCategory.ExactTransport
 
 /-!

@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.Algebra.Group.Hom.Exact
+
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
@@ -39,32 +41,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal
-
-private theorem exact_transport
-    {A B C A' B' C' : Type w}
-    [Group A] [Group B] [Group C] [Group A'] [Group B'] [Group C']
-    (i : A →* B) (f : B →* C) (i' : A' →* B') (f' : B' →* C')
-    (eA : A ≃* A') (eB : B ≃* B') (eC : C ≃* C')
-    (hi : ∀ a, eB (i a) = i' (eA a))
-    (hf : ∀ b, eC (f b) = f' (eB b))
-    (h : i'.range = f'.ker) : i.range = f.ker := by
-  ext b
-  rw [MonoidHom.mem_range, MonoidHom.mem_ker]
-  constructor
-  · rintro ⟨a, rfl⟩
-    apply eC.injective
-    rw [map_one, hf, hi]
-    have hx : i' (eA a) ∈ i'.range := ⟨eA a, rfl⟩
-    rw [h] at hx
-    exact hx
-  · intro hb
-    have hx : eB b ∈ i'.range := by
-      rw [h]
-      change f' (eB b) = 1
-      rw [← hf, hb, map_one]
-    obtain ⟨a, ha⟩ := hx
-    refine ⟨eA.symm a, eB.injective ?_⟩
-    rw [hi, eA.apply_symm_apply, ha]
 
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (I : Ideal R)
 
@@ -109,7 +85,7 @@ def closedConnectingHom (n : ℕ) :
 /-- Exactness at G_n(Spec R), with canonical actual i_* and j*. -/
 theorem pushforward_range_eq_restriction_ker (n : ℕ) :
     (coherentPushforwardGMap R I n).range = (restrictionGMap (openMap R I) n).ker := by
-  apply exact_transport
+  apply MonoidHom.range_eq_ker_of_equivalences
     (coherentPushforwardGMap R I n) (restrictionGMap (openMap R I) n)
     (globalInclusionGMap (openMap R I) n) (restrictionGMap (openMap R I) n)
     (closedSupportedGEquiv R I n) (MulEquiv.refl _) (MulEquiv.refl _)
@@ -121,7 +97,7 @@ theorem pushforward_range_eq_restriction_ker (n : ℕ) :
 /-- Exactness at G_(n+1) of the actual open complement. -/
 theorem restriction_range_eq_closedConnecting_ker (n : ℕ) :
     (restrictionGMap (openMap R I) (n + 1)).range = (closedConnectingHom R I n).ker := by
-  apply exact_transport
+  apply MonoidHom.range_eq_ker_of_equivalences
     (restrictionGMap (openMap R I) (n + 1)) (closedConnectingHom R I n)
     (restrictionGMap (openMap R I) (n + 1)) (globalConnectingHom (openMap R I) n)
     (MulEquiv.refl _) (MulEquiv.refl _) (closedSupportedGEquiv R I n)
@@ -133,7 +109,7 @@ theorem restriction_range_eq_closedConnecting_ker (n : ℕ) :
 /-- Exactness at G_n of the actual affine closed subscheme. -/
 theorem closedConnecting_range_eq_pushforward_ker (n : ℕ) :
     (closedConnectingHom R I n).range = (coherentPushforwardGMap R I n).ker := by
-  apply exact_transport
+  apply MonoidHom.range_eq_ker_of_equivalences
     (closedConnectingHom R I n) (coherentPushforwardGMap R I n)
     (globalConnectingHom (openMap R I) n) (globalInclusionGMap (openMap R I) n)
     (MulEquiv.refl _) (closedSupportedGEquiv R I n) (MulEquiv.refl _)

@@ -5,6 +5,12 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlasqueBoundedBelow.Carriers
+
+
+public import Quillen.Aglib.CategoryTheory.Functor.UnderlyingIso
+
+
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Carrier
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueDiagonalSequence
 
@@ -66,16 +72,6 @@ lemma quotient_original (R : CommRingCat.{u})
             ((FlasqueCoefficients.toPlus (twoChartLine R)).obj K)).hom)) := rfl
 
 end
-
-/-- Forgetting a full-subcategory lift retains its entire original functor. -/
-def liftUnderlyingIso {C D : Type*} [Category C] [Category D]
-    (P : ObjectProperty D) (F : C ⥤ D) (hF : ∀ K, P (F.obj K)) :
-    P.lift F hF ⋙ P.ι ≅ F := Iso.refl _
-
-/-- The original lower-bound proof forgetful functor retains the actual input complexes. -/
-def toPlusUnderlyingIso (X : Scheme.{u}) :
-    FlasqueCoefficients.toPlus X ⋙ CochainComplex.Plus.ι X.Modules ≅
-      (FlasqueBoundedBelow.objects X).ι := Iso.refl _
 
 /-- The output underlying comparison uses the original three termwise/total forgetful factors. -/
 def rawPlusUnderlyingIso (R : CommRingCat.{u}) (v : Vertex) :

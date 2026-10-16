@@ -5,9 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.AffinePlane
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalIncidence
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalPullback
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.PullbackSquare
+public import Quillen.Aglib.AlgebraicGeometry.Modules.RankOne.PullbackSquare
 
 /-! # Four original affine coordinates of diagonal incidence
 
@@ -30,15 +31,6 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open AlgebraicGeometry.Scheme.Modules PolynomialLaurent
-/-- The original affine-line fiber square over the base ring. -/
-def polynomialSquare (R : CommRingCat.{u}) : Scheme.{u} :=
-  pullback (polynomialProjection R) (polynomialProjection R)
-/-- The original first polynomial projection. -/
-def polynomialFirst (R : CommRingCat.{u}) : polynomialSquare R ⟶ Spec (.of (Polynomial R)) :=
-  pullback.fst _ _
-/-- The original second polynomial projection. -/
-def polynomialSecond (R : CommRingCat.{u}) : polynomialSquare R ⟶ Spec (.of (Polynomial R)) :=
-  pullback.snd _ _
 variable (R : CommRingCat.{u})
     (j k : Spec (.of (Polynomial R)) ⟶ twoChartLine R)
     (hj : j ≫ projection R = polynomialProjection R)
@@ -170,12 +162,6 @@ end AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open AlgebraicGeometry.Scheme.Modules PolynomialLaurent
-/-- The actual first polynomial coordinate on the affine rectangle. -/
-def rectangleFirstCoordinate (R : CommRingCat.{u}) : Γ(polynomialSquare R, ⊤) :=
-  (polynomialFirst R).appTop.hom (polynomialCoordinate R)
-/-- The actual second polynomial coordinate on the affine rectangle. -/
-def rectangleSecondCoordinate (R : CommRingCat.{u}) : Γ(polynomialSquare R, ⊤) :=
-  (polynomialSecond R).appTop.hom (polynomialCoordinate R)
 /-- The literal incidence scalar on the plus-plus rectangle. -/
 theorem diagonalIncidence_plus_plus (R : CommRingCat.{u}) :
     (AlgebraicGeometry.Scheme.Modules.pullback

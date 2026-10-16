@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.ChartAffineness
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineCompositeDerivedPushforward
+public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Pushforward.AffineComposite
 
 /-! # Actual acyclic chart terms for the original projective-line projection -/
 

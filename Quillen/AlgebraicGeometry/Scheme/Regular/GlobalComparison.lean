@@ -6,8 +6,8 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Regular.GlobalResolution
-public import Quillen.AlgebraicGeometry.Scheme.Regular.KernelClosure
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.Resolution.Global
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.CoherentKernelClosure
 public import Quillen.AlgebraicGeometry.Scheme.Regular.Affine
 
 /-!

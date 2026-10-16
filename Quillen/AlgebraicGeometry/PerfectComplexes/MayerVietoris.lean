@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Excision
-public import Quillen.Algebra.Group.MayerVietoris
+public import Quillen.Aglib.Algebra.Group.MayerVietoris
 public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalLocalizationNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.RestrictionComparison
 public import Quillen.Waldhausen.Additivity.GroupFormula

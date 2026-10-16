@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
-public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleEvaluation
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.FiniteCycleEvaluation
 public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleKFormula
 
 /-! # Genuine finite cycle K-decomposition

@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.CategoryTheory.IsoQuotient
+public import Quillen.Aglib.CategoryTheory.Bicategory.IsoQuotient
 public import Mathlib.CategoryTheory.Bicategory.Span.Basic
 
 /-!

@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Pseudofunctor
-public import Quillen.CategoryTheory.FiberedCategory.CocartesianSectionComposition
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.Pseudofunctor
+public import Quillen.Aglib.CategoryTheory.FiberedCategory.CocartesianSectionComposition
 
 /-!
 # Actual bounded-flat section coefficient composition

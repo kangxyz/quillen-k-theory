@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 
-import Quillen.Algebra.Matrix.Elementary
+import Quillen.Aglib.LinearAlgebra.Matrix.Elementary
 
 /-! Regression tests for noncommutative elementary matrix identities. -/
 

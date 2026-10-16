@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.Monoidal.Action.Restriction
+public import Quillen.Aglib.CategoryTheory.Monoidal.Action.Restriction
 public import Quillen.CategoryTheory.GroupCompletion.Functoriality
 
 /-! # Changing the actor in the original action localization

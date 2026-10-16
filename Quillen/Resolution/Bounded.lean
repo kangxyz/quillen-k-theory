@@ -6,9 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.ExactCategory.Resolution.BoundedStrata
 public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Aglib.CategoryTheory.ExactCategory.Functor
-public import Quillen.Resolution.Strata
+public import Quillen.Aglib.CategoryTheory.ExactCategory.Resolution.Strata
 public import Quillen.Resolution.SubcategoryComparison
 /-!
 # Quillen resolution with an arbitrary finite common bound
@@ -39,38 +40,6 @@ variable {C : Type u} [SmallCategory C] [Preadditive C] [HasFiniteBiproducts C]
 section Strata
 variable [Fact (E.ResolutionHypothesis P)]
 
-/-- The inherited exact category of objects with resolutions of length at
-most `n`. Its exact axioms come from the proved extension closure. -/
-abbrev stratumExactStructure (n : ℕ) : ExactStructure (E.ResolutionLength P n).FullSubcategory :=
-  ExactSubcategory.exactStructure E (E.ResolutionLength P n)
-
-/-- The canonical exact inclusion of adjacent length strata. -/
-abbrev stratumExactInclusion (n : ℕ) :
-    ExactFunctor (stratumExactStructure E P n) (stratumExactStructure E P (n + 1)) :=
-  exactInclusionOfLE E (E.ResolutionLength P n) (E.ResolutionLength P (n + 1))
-    (E.resolutionLength_mono P (Nat.le_succ n))
-
-omit [P.IsClosedUnderFiniteProducts] in
-/-- An object in the next stratum has a length-one admissible resolution
-inside that stratum by objects in the preceding stratum. -/
-theorem adjacentStratum_resolutionLength_one (n : ℕ)
-    (X : (E.ResolutionLength P (n + 1)).FullSubcategory) :
-    (stratumExactStructure E P (n + 1)).ResolutionLength
-      ((E.ResolutionLength P n).inverseImage (E.ResolutionLength P (n + 1)).ι) 1 X := by
-  obtain ⟨T⟩ := (E.resolutionLength_succ_iff P n X.obj).1 X.property
-  let A : (E.ResolutionLength P (n + 1)).FullSubcategory :=
-    ⟨T.syzygy, E.resolutionLength_mono P (Nat.le_succ n) _ T.syzygy_mem⟩
-  let B : (E.ResolutionLength P (n + 1)).FullSubcategory :=
-    ⟨T.middle, E.le_resolutionLength P (n + 1) _ T.middle_mem⟩
-  let S : ShortComplex (E.ResolutionLength P (n + 1)).FullSubcategory :=
-    ShortComplex.mk
-      (ObjectProperty.homMk T.f : A ⟶ B)
-      (ObjectProperty.homMk T.g : B ⟶ X)
-      ((E.ResolutionLength P (n + 1)).hom_ext T.zero)
-  have hS : (stratumExactStructure E P (n + 1)).conflation S := T.conflation
-  exact ⟨.step S hS (E.le_resolutionLength P n _ T.middle_mem) (.of_mem T.syzygy_mem),
-    Nat.le_refl 1⟩
-
 omit [P.IsClosedUnderFiniteProducts] in
 /-- Every adjacent length-stratum inclusion induces the actual all-degree
 K-isomorphism furnished by the proved length-one resolution theorem. -/
@@ -96,12 +65,6 @@ omit [P.IsClosedUnderFiniteProducts] in
     (stratumClassifyingHomotopyEquiv E P n).toFun =
       (classifyingSpaceMap (stratumExactInclusion E P n).mapQ).hom :=
   inclusionOfLEClassifyingHomotopyEquivOfLengthOne_toFun _ _ _ _ _
-
-/-- The canonical exact inclusion of any two ordered length strata. -/
-abbrev stratumTransition {m n : ℕ} (h : m ≤ n) :
-    ExactFunctor (stratumExactStructure E P m) (stratumExactStructure E P n) :=
-  exactInclusionOfLE E (E.ResolutionLength P m) (E.ResolutionLength P n)
-    (E.resolutionLength_mono P h)
 
 /-- Iterate a specified finite number of adjacent comparisons. -/
 def stratumAddHomotopyEquiv (m : ℕ) : (k : ℕ) →
@@ -163,11 +126,6 @@ omit [P.IsClosedUnderFiniteProducts] in
     (stratumTransitionHomotopyEquiv E P h).toFun =
       (classifyingSpaceMap (stratumTransition E P h).mapQ).hom :=
   Classical.choose_spec (exists_stratumTransitionHomotopyEquiv E P h)
-
-/-- The original resolving category includes canonically in every stratum. -/
-abbrev intoStratumExact (n : ℕ) :
-    ExactFunctor (ExactSubcategory.exactStructure E P) (stratumExactStructure E P n) :=
-  exactInclusionOfLE E P (E.ResolutionLength P n) (E.le_resolutionLength P n)
 
 /-- Iteration retains the exact canonical inclusion map at each stage. -/
 theorem intoStratumKMap_bijective (n k : ℕ) :

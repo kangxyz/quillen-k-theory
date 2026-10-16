@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 
-import Quillen.Algebra.Matrix.ElementaryReindex
+import Quillen.Aglib.LinearAlgebra.Matrix.ElementaryReindex
 
 /-! Reindexing preserves actual elementary generators and their generated subgroup. -/
 

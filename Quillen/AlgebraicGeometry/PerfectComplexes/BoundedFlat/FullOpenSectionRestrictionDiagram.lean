@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionRestrictionModel
-public import Quillen.CategoryTheory.FiberedCategory.GrothendieckUnderRestrictionNaturality
+public import Quillen.Aglib.CategoryTheory.FiberedCategory.GrothendieckUnderRestrictionNaturality
 
 /-!
 # The original full-open section restriction as a coefficient transformation

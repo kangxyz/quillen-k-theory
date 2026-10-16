@@ -8,7 +8,7 @@ module
 
 public import Aglib.CategoryTheory.Limits.Shapes.CokernelPushout
 public import Quillen.Waldhausen.QuillenComparison.SimplicialMap
-public import Quillen.Waldhausen.QuillenComparison.QuotientCalculus
+public import Quillen.Aglib.CategoryTheory.Limits.Shapes.CompositeCokernel
 public import Quillen.Waldhausen.Functor
 
 /-!

@@ -6,9 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.Functor.PointwiseCoproduct
 public import Quillen.Waldhausen.Additivity.CofibrationSequence
 public import Quillen.Waldhausen.Additivity.CoproductAlgebra
-public import Quillen.Waldhausen.Additivity.PushoutInterchange
+public import Quillen.Aglib.CategoryTheory.Limits.PointwisePushoutInterchange
 
 /-! # The actual split cofibration sequence of exact functors
 
@@ -31,27 +32,10 @@ variable {C : Type u} [Category.{v} C] {D : Type u'} [Category.{v'} D]
 variable (V : Structure C) (W : Structure D)
 variable [HasBinaryCoproducts D]
 
-/-- Pointwise binary coproduct of two functors, in quotient/subobject order. -/
-def sumFunctor (H F : C ⥤ D) : C ⥤ D where
-  obj X := H.obj X ⨿ F.obj X
-  map f := coprod.map (H.map f) (F.map f)
-  map_id _ := by apply coprod.hom_ext <;> simp
-  map_comp _ _ := by apply coprod.hom_ext <;> simp [Category.assoc]
-
 /-- The canonical transformation from the chosen constant zero functor. -/
 def zeroToFunctor (F : C ⥤ D) : (Functor.const C).obj W.zero ⟶ F where
   app X := W.isZero.to_ (F.obj X)
   naturality _ _ _ := W.isZero.eq_of_src _ _
-
-/-- First summand inclusion. -/
-def sumInl (H F : C ⥤ D) : H ⟶ sumFunctor H F where
-  app _ := coprod.inl
-  naturality _ _ _ := by simp [sumFunctor]
-
-/-- Second summand inclusion. -/
-def sumInr (H F : C ⥤ D) : F ⟶ sumFunctor H F where
-  app _ := coprod.inr
-  naturality _ _ _ := by simp [sumFunctor]
 
 /-- Projection onto the quotient summand, through the chosen zero on `F`. -/
 def sumProjection (H F : C ⥤ D) : sumFunctor H F ⟶ H where

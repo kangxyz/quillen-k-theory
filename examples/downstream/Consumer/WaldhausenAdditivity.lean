@@ -12,7 +12,7 @@ public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.Additivity.BasedAdditivity
 public import Quillen.Waldhausen.QuillenComparison.ExactNaturality
 public import Quillen.Waldhausen.GilletWaldhausen.AdjacentTruncation
-public import Quillen.Waldhausen.GilletWaldhausen.FixedBounds
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.FixedBounds
 public import Quillen.Waldhausen.ExtensionCategory.KEquivalence
 
 /-! Downstream contracts for the actual additivity and acyclic-filtration interfaces. -/

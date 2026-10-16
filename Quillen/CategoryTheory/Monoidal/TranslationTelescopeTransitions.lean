@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.CategoryTheory.Monoidal.TranslationTelescopeStages
-public import Quillen.CategoryTheory.Monoidal.Action.RightTensorLinear
+public import Quillen.Aglib.CategoryTheory.Monoidal.Action.RightTensorLinear
 
 /-! # Original stage transitions retain their actual action compatibility -/
 

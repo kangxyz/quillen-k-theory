@@ -9,7 +9,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleIncidence
 public import Quillen.Waldhausen.GilletWaldhausen.FiniteTermKEquivalence
-public import Quillen.Algebra.FiniteAdjacentSection
+public import Quillen.Aglib.Algebra.Group.FiniteAdjacentSection
 
 /-! # Actual finite Euler reduction at any original term coordinate
 

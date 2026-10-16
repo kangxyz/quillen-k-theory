@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.UnitScalarRestriction
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Scalar.TrivializationRestriction
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalAffine
 
 /-! # Original incidence scalars on affine-spectrum rectangles

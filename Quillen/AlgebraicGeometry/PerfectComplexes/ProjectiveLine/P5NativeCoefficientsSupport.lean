@@ -9,8 +9,8 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.AcyclicSupport
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5NativeCoefficientsOne
-public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportClosure
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianOpenBaseChangeMate
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.Closure
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Cartesian.OpenImmersion
 
 /-! # Actual inverse-image open support for the native coefficients
 

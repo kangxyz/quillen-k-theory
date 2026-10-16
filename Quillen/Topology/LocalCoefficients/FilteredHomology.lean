@@ -7,7 +7,7 @@ module
 
 public import Quillen.Topology.LocalCoefficients.FilteredColimit
 public import Quillen.Topology.LocalCoefficients.Homology
-public import Quillen.Algebra.Category.ModuleCat.FilteredColimits
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FilteredColimits
 public import Mathlib.CategoryTheory.Limits.Final
 
 /-!

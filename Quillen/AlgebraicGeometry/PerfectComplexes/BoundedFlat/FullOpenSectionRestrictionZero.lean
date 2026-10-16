@@ -5,9 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionRestriction
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.FullOpenSectionRestriction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionWaldhausen
-public import Quillen.CategoryTheory.FiberedCategory.GrothendieckZeroExt
+public import Quillen.Aglib.CategoryTheory.FiberedCategory.GrothendieckZeroExt
 
 /-!
 # The inherited zero under actual full-open section restriction

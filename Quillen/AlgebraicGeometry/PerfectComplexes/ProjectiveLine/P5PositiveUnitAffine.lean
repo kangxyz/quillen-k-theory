@@ -8,7 +8,7 @@ module
 public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PullbackPushforward
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.PullbackPushforward
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.StrictPositiveRetraction
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.Strictification
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.Strictification
 public import Aglib.AlgebraicGeometry.Cohomology.BaseChange.GodementUnit
 
 /-! # The actual positive unit on all affine perfect bounded-below complexes

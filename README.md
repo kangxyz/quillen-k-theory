@@ -59,13 +59,15 @@ and [public API reference](docs/reference/API.md).
 
 ## Quick start
 
-The **0.8.0 source-integration version** uses Lean **4.34.1** and the mathlib revision
+The **0.9.0 candidate-organization version** uses Lean **4.34.1** and the mathlib revision
 pinned in [lakefile.toml](lakefile.toml). General algebra, exact categories,
-scheme modules and cohomology are implemented once in
+scheme modules and cohomology use accepted implementations from
 [Aglib](https://github.com/kangxyz/aglib), pinned to
 `40af743ab794d607f566cec0c5417d8e4d02a735`. Quillen imports its precise modules
 and native mathematical namespaces, and owns the Q/K/G constructions and
-application maps. The transferred general Quillen modules and aliases are removed.
+application maps. Further general implementations awaiting upstream admission
+live in the [local Aglib candidate tree](Quillen/Aglib/README.md), separated from
+their specialized applications with one local implementation per declaration.
 Install
 [elan](https://github.com/leanprover/elan) to use the committed
 [toolchain](lean-toolchain).
@@ -116,7 +118,7 @@ perfect-localization import, use
 `Quillen.AlgebraicGeometry.PerfectComplexes.GlobalLocalization`.
 For ring plus comparison, use `Quillen.KTheory.Plus`; for the scalar-extension
 universal property, use
-`Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeUniversal`.
+`Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeUniversal`.
 `import Quillen` imports the complete library. See the
 [module-path conventions](docs/reference/API.md#module-paths-and-namespaces) when
 choosing focused imports.

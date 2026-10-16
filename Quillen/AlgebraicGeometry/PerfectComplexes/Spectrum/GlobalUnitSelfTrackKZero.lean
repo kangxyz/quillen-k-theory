@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.GlobalUnitComponents
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Spectrum.GlobalUnit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ScalarLaurentClassComparison
 public import Quillen.Waldhausen.SConstruction.Iterated.SelfTrackKOperationObject
@@ -28,13 +31,6 @@ universe u
 namespace Quillen.PerfectComplexes
 variable {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
   (q : (Γ(X, ⊤))ˣ) (K : Perfect Y)
-
-/-- The actual right-unitor factors leave precisely the original forward unit component. -/
-theorem perfectFlatPullbackUnitIso_app :
-    (perfectFlatPullbackUnitIso f q).app K =
-      (perfectGlobalUnitIso X q).app ((perfectFlatPullback f).obj K) := by
-  apply Iso.ext
-  simp [perfectFlatPullbackUnitIso]
 
 /-- The original K-zero object loop evaluates to the forward scalar K-one class. -/
 theorem perfectFlatUnitHomotopy_object :

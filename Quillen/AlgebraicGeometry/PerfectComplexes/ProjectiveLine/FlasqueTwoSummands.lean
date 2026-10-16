@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedBelow.FlatPullback
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
@@ -35,37 +38,6 @@ open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
-
-/-- Literal flat geometric pullback on original lower-bounded perfect complexes. -/
-def boundedPullback {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
-    BoundedBelow.Obj Y ⥤ BoundedBelow.Obj X :=
-  ObjectProperty.lift _ ((BoundedBelow.objects Y).ι ⋙
-    AlgebraicGeometry.Scheme.Modules.Complex.pullback f) (fun K => by
-    obtain ⟨hp, a, ha⟩ := K.property
-    let := ha
-    refine ⟨locallyPerfect_flatPullback f hp, a, ?_⟩
-    apply (CochainComplex.isStrictlyGE_iff _ a).mpr
-    intro n hn
-    exact (Scheme.Modules.pullback f).map_isZero
-      (CochainComplex.isZero_of_isStrictlyGE K.obj a n hn))
-
-instance boundedPullback_additive {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
-    (boundedPullback f).Additive := by
-  unfold boundedPullback
-  infer_instance
-
-/-- Original flat pullback preserves inherited actual exact sequences. -/
-def boundedPullbackExactFunctor {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex Y.Modules ℤ))
-      (BoundedBelow.objects Y))
-    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
-      (BoundedBelow.objects X)) where
-  toFunctor := boundedPullback f
-  map_conflation S hs := by
-    change (S.map (BoundedBelow.objects Y).ι).ShortExact at hs
-    change ((S.map (BoundedBelow.objects Y).ι).map
-      (AlgebraicGeometry.Scheme.Modules.Complex.pullback f)).ShortExact
-    exact hs.map_of_exact _
 
 lemma boundedPullback_exact {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] : Waldhausen.IsExact
     (BoundedBelow.waldhausen Y).cof (BoundedBelow.waldhausen Y).weq

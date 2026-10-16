@@ -5,7 +5,10 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenRestrictionNaturality
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SectionFullOpenRestriction
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.FullOpenRestrictionNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionOpenStructure
 
 /-!
@@ -23,11 +26,6 @@ universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]
 attribute [local irreducible] boundedFlatAffineOriginalEvaluation
-
-/-- The exact original coarse-section-to-full-open functor, before chosen-zero normalization. -/
-def boundedFlatAffineSectionFullOpenRestriction (a : Under R) :
-    BoundedFlatAffineSections a.right ⥤ BoundedFlatPerfect (openSpace j a) :=
-  boundedFlatAffineOriginalEvaluation a.right ⋙ boundedFlatAffineFullOpenRestriction j a
 
 /-- Actual evaluation and actual open restriction preserve the genuine Waldhausen classes. -/
 theorem boundedFlatAffineSectionFullOpenRestriction_exact (a : Under R) :

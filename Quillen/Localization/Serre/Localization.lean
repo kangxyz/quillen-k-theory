@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.Abelian.SerreClass.Annihilation
 public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Aglib.CategoryTheory.ExactCategory.Abelian
@@ -61,10 +62,6 @@ lemma mapQ_obj_of (X : C) :
       (Q.of (abelianExactStructure C).deflation (abelianExactStructure C).inflation X) =
     Q.of (abelianExactStructure D).deflation (abelianExactStructure D).inflation
       (L.obj X) := rfl
-
-/-- The Serre class is precisely the class of objects killed by localization. -/
-lemma isZero_obj_iff (X : C) : IsZero (L.obj X) ↔ P X :=
-  ObjectProperty.SerreClassLocalization.isZero_obj_iff L P X
 
 /-- The algebraic Grothendieck-group map of a Serre localization. -/
 def grothendieckMap :
@@ -183,13 +180,6 @@ section CanonicalQuotient
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
-@[instance_reducible]
-local instance canonicalQuotientAbelian
-    {C₀ : Type u} [Category.{u} C₀] [Abelian C₀]
-    (P₀ : ObjectProperty C₀) [P₀.IsSerreClass] :
-    Abelian P₀.isoModSerre.Localization :=
-  ObjectProperty.SerreClassLocalization.abelian P₀.isoModSerre.Q P₀
-
 /-- The Q-functor from the abelian category to its canonical Serre quotient. -/
 def quotientMapQ :
     Q (abelianExactStructure C).deflation (abelianExactStructure C).inflation ⥤
@@ -207,10 +197,6 @@ def quotientGrothendieckMap :
     (abelianExactStructure C).GrothendieckGroup →+
       ((abelianExactStructure P.isoModSerre.Localization)).GrothendieckGroup :=
   ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P P.isoModSerre.Q)).grothendieckMap
-
-/-- The canonical quotient annihilates exactly the objects of the Serre class. -/
-lemma quotient_isZero_obj_iff (X : C) : IsZero (P.isoModSerre.Q.obj X) ↔ P X :=
-  isZero_obj_iff P P.isoModSerre.Q X
 
 /-- Serre-class object classes vanish under the canonical quotient map. -/
 lemma quotientGrothendieckMap_class_eq_zero {X : C} (hX : P X) :

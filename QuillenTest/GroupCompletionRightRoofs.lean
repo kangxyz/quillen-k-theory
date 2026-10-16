@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 import Quillen.CategoryTheory.GroupCompletion.CommonDenominator
-import Quillen.CategoryTheory.Localization.RightRoofs
+import Quillen.Aglib.CategoryTheory.Localization.RightRoofs
 
 /-! Actual action-localization zigzags admit roofs without any cancellation assumption. -/
 universe u v u' v'

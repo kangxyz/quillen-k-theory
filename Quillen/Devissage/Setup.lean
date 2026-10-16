@@ -9,6 +9,7 @@ module
 public import Aglib.CategoryTheory.Abelian.Subcategory.Exact
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Devissage.Filtration
+public import Quillen.Aglib.CategoryTheory.ExactCategory.Filtration.Hypothesis
 public import Quillen.KTheory.Map.Basic
 public import Mathlib.CategoryTheory.Abelian.Subcategory
 public import Mathlib.CategoryTheory.Preadditive.LeftExact
@@ -91,12 +92,6 @@ lemma grothendieckMap_class (X : Subcategory P) :
     grothendieckMap P ((subcategoryExactStructure P).grothendieckClass X) =
       (abelianExactStructure C).grothendieckClass X.obj :=
   (exactInclusion P).grothendieckMap_class X
-
-/-- Classical dévissage requires finite filtrations by actual short exact
-sequences, starting with a zero object, and with successive quotients in `P`.
-No extension closure is required of `P`. -/
-def FiltrationHypothesis : Prop :=
-  ∀ X : C, Nonempty ((abelianExactStructure C).Filtration P X)
 
 /-- A finite filtration with factors in `P` puts the ambient object's class in
 the image of the inclusion-induced algebraic Grothendieck-group map. -/

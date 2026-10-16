@@ -10,6 +10,7 @@ reader guides and references.
 | Location | Purpose |
 | --- | --- |
 | `Quillen/` | Reusable mathematics |
+| `Quillen/Aglib/` | General-theory candidates prepared for later upstream admission |
 | `Quillen.lean` | Generated complete import surface |
 | `Quillen/<Subject>.lean` and owned nested facades | Whole-topic or selected public imports |
 | `QuillenTest/` | Maintained tests and exhaustive library axiom audit |
@@ -23,25 +24,29 @@ QuillenTest, tools, and clients depend on the library. Implementation source imp
 individual dependencies, avoiding broad facades. The structural checker rejects
 cycles and reverse dependencies on tests, tools, or clients.
 
-General algebra, exact-category, module-sheaf and cohomology implementations are
-owned by Aglib. Quillen consumers import its exact leaves and native mathematical
-names. The transferred compatibility modules and aliases are removed. A Quillen
-application may extend a native namespace while remaining defined and audited
-as a Quillen module.
+Accepted shared algebra, exact-category, module-sheaf and cohomology interfaces
+are owned by Aglib. Further general implementations live in the local
+[Quillen/Aglib candidate tree](../../Quillen/Aglib/README.md), under their intended
+mathematical subjects. Specialized applications import these focused leaves.
+Relocation preserves existing declaration names and chosen maps; a candidate
+module prefix does not assert upstream admission. Each declaration has one local
+implementation, and mixed sources keep only their specialized application part.
 
 ## Mathematical owners
 
 | Owner | Principal objects and interfaces |
 | --- | --- |
-| `Algebra` | Finite-module exact categories and resolutions, module complexes, homological algebra, regular-local ring theory, finite-defect Laurent parametrices, stable matrix groups, and finite-projective scalar extension |
-| `LinearAlgebra` | Generic linear product identities used by the module constructions |
+| `Aglib/Algebra`, `Aglib/CategoryTheory`, `Aglib/RingTheory` | General module and homological algebra, exact-category foundations, filtrations/resolutions, regular-local rings, and finite-defect constructions |
+| `Algebra` | Stable matrix groups and application-specific algebraic constructions |
+| `Aglib/LinearAlgebra` | Generic product identities and finite matrix constructions |
 | `CategoryTheory` | Q-construction, exact-category applications, small-model K-theory, categorical localization, and Theorems A/B |
 | `Topology` | Based homotopy, fibers and cylinders, lifting, realization, prespectra, stable fibers, and categorical stable localization |
 | `KTheory` | Exact-category K-groups, canonical maps, and generic Bass diagrams and cokernel recursion |
 | `KTheory/Plus` | Projective group completion, original ring plus/Q comparison, ring-change naturality, and component classification |
 | `Devissage`, `Resolution`, `Localization`, `GTheory` | Filtration and resolution comparisons, localization, and finite-module G-theory |
-| `AlgebraicGeometry/Scheme` | Sheaves, vector bundles, finite-type/coherent sheaves, scheme K/G interfaces, base products, and projective-line charts |
-| `AlgebraicGeometry/PerfectComplexes` | Strict/local models, derived representatives, support, localization, Mayer–Vietoris, localized spectra, and Bass groups |
+| `Aglib/AlgebraicGeometry` | General scheme, module-sheaf, cohomological and perfect-complex candidates |
+| `AlgebraicGeometry/Scheme` | Scheme K/G interfaces and specialized projective-line applications |
+| `AlgebraicGeometry/PerfectComplexes` | Waldhausen/K-theory models, localized spectra, Bass groups and specialized applications |
 | `Waldhausen` | Waldhausen structures, S-construction, additivity, approximation, cofinality, fibration, and comparisons |
 
 Categorical constructions and topology interact; subject directories do not
@@ -54,9 +59,9 @@ belong in `CategoryTheory/GroupCompletion`. The ring-specific plus comparison
 consumes those foundations and the finite-projective module constructions.
 
 Finite-module category foundations and finite-projective resolutions belong in
-`Algebra/Category/ModuleCat` and `Algebra/Homology`; their G-theory localization
-consumers remain in `GTheory`. Regular-local ring arguments belong in
-`Algebra/RegularLocal`, while the canonical scheme K-to-G comparisons remain in
+`Aglib/Algebra/Category/ModuleCat` and `Aglib/Algebra/Homology`; their G-theory
+localization consumers remain in `GTheory`. Regular-local ring arguments belong
+in `Aglib/RingTheory/RegularLocalRing`, while the canonical scheme K-to-G comparisons remain in
 `AlgebraicGeometry/Scheme/Regular`. Shared realization, interval, simplex and
 arrow lemmas live below the theorem-specific constructions that use them.
 Chart selectors and open pullback squares are owned by the existing chart and

@@ -7,7 +7,7 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PolynomialScalarCone
-public import Quillen.Waldhausen.SplitComplexes.FactorizationSign
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.FactorizationSign
 
 /-! # Original scalar, Laurent restriction and supported cone consumers -/
 @[expose] public section

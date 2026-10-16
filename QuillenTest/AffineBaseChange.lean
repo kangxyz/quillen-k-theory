@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineBaseChange
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Affine.QuasiCoherent
 public import Mathlib.Data.ZMod.Basic
 public import Mathlib.AlgebraicGeometry.Pullbacks
 

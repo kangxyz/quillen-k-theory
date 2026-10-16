@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.Comma.Transitions
 public import Quillen.CategoryTheory.TheoremB.StructuredComparison
 public import Quillen.CategoryTheory.TheoremA.Conclusion
 
@@ -24,15 +25,6 @@ variable {C D : Type u} [SmallCategory C] [SmallCategory D] (F : C ⥤ D)
 def StructuredTransitionIsHE {d e : D} (f : d ⟶ e) : Prop :=
   ∃ E : ContinuousMap.HomotopyEquiv (ClassifyingSpace (StructuredArrow e F))
       (ClassifyingSpace (StructuredArrow d F)), E.toFun = structuredTransitionMap F f
-
-lemma structuredTransition_comp_eq {d e z : D} (f : d ⟶ e) (g : e ⟶ z) :
-    structuredTransition F (f ≫ g) = structuredTransition F g ⋙ structuredTransition F f := by
-  refine CategoryTheory.Functor.ext (fun X => StructuredArrow.map_comp) ?_
-  intro X Y h
-  apply StructuredArrow.hom_ext
-  simp only [StructuredArrow.comp_right, StructuredArrow.eqToHom_right,
-    eqToHom_refl, Category.id_comp, Category.comp_id]
-  rfl
 
 @[simp]
 lemma structuredTransitionMap_comp {d e z : D} (f : d ⟶ e) (g : e ⟶ z) :

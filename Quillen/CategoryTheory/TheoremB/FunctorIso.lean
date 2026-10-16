@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.Comma.Transitions
 public import Quillen.CategoryTheory.TheoremB.Conditions
 public import Quillen.CategoryTheory.TheoremA.Conclusion
 
@@ -20,16 +21,6 @@ set_option backward.isDefEq.respectTransparency false
 namespace Quillen.TheoremB
 variable {C D : Type u} [SmallCategory C] [SmallCategory D]
   {F G : C ⥤ D} (e : F ≅ G)
-
-/-- Changing the original functor commutes with comma postcomposition. -/
-def commaIsoTransitionIso {d d' : D} (f : d ⟶ d') :
-    (CostructuredArrow.mapNatIso (T := d) e).functor ⋙ transition G f ≅
-      transition F f ⋙ (CostructuredArrow.mapNatIso (T := d') e).functor :=
-  NatIso.ofComponents (fun X ↦ CostructuredArrow.isoMk (Iso.refl _)
-    (by simp [transition])) (by
-    intro X Y a
-    apply CostructuredArrow.hom_ext
-    simp)
 
 /-- Natural-isomorphic functors have the same actual homotopy-equivalence
 condition on all comma transitions. No transition equivalence is inferred

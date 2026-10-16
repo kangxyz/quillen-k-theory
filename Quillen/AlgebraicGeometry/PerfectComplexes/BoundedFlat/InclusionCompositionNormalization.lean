@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.InclusionNormalization
-public import Quillen.CategoryTheory.Functor.IsoConjugation
+public import Quillen.Aglib.CategoryTheory.Functor.IsoConjugation
 
 /-!
 # Original normalized bounded-flat inclusion and geometric composition

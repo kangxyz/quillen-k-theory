@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Morphisms.FiniteFlat.Category
+
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.FinitePushforwardFunctoriality
 public import Quillen.AlgebraicGeometry.Scheme.KTheory
 public import Quillen.AlgebraicGeometry.Scheme.FinitePushforward
@@ -26,34 +28,6 @@ open CategoryTheory AlgebraicGeometry
 universe u
 namespace AlgebraicGeometry.Scheme
 
-/-- Actual finite flat scheme morphisms. -/
-abbrev finiteFlatMorphisms : MorphismProperty AlgebraicGeometry.Scheme.{u} :=
-  (@AlgebraicGeometry.IsFinite) ⊓ (@Flat)
-
-instance finiteFlatMorphisms_isMultiplicative : finiteFlatMorphisms.{u}.IsMultiplicative :=
-  inferInstanceAs ((@AlgebraicGeometry.IsFinite ⊓ @Flat :
-    MorphismProperty AlgebraicGeometry.Scheme.{u}).IsMultiplicative)
-
-/-- Schemes with finite flat morphisms. -/
-abbrev FiniteFlatSchemes := WideSubcategory finiteFlatMorphisms.{u}
-
-instance finiteFlatSchemes_isFinite {X Y : FiniteFlatSchemes.{u}} (f : X ⟶ Y) :
-    AlgebraicGeometry.IsFinite f.hom := f.property.1
-
-instance finiteFlatSchemes_flat {X Y : FiniteFlatSchemes.{u}} (f : X ⟶ Y) :
-    Flat f.hom := f.property.2
-
-/-- Locally noetherian objects in the finite flat scheme category. -/
-abbrev locallyNoetherianFiniteFlatSchemeProperty : ObjectProperty FiniteFlatSchemes.{u} :=
-  fun X ↦ IsLocallyNoetherian X.obj
-
-/-- Locally noetherian schemes and actual finite flat morphisms. -/
-abbrev LocallyNoetherianFiniteFlatSchemes :=
-  locallyNoetherianFiniteFlatSchemeProperty.{u}.FullSubcategory
-
-instance locallyNoetherianFiniteFlatSchemes_isLocallyNoetherian
-    (X : LocallyNoetherianFiniteFlatSchemes.{u}) : IsLocallyNoetherian X.obj.obj := X.property
-
 /-- Genuine covariant vector-bundle K-theory for finite flat direct image. -/
 def KFiniteFlatPushforwardFunctor (n : ℕ) :
     LocallyNoetherianFiniteFlatSchemes.{u} ⥤ GrpCat.{u + 1} where
@@ -65,11 +39,5 @@ def KFiniteFlatPushforwardFunctor (n : ℕ) :
   map_comp f g := by
     apply GrpCat.hom_ext
     exact AlgebraicGeometry.Scheme.Modules.schemeKPushforward_comp f.hom.hom g.hom.hom n
-
-/-- Forgetting flatness retains the original schemes and finite scheme maps. -/
-def forgetFiniteFlat : LocallyNoetherianFiniteFlatSchemes.{u} ⥤ LocallyNoetherianFiniteSchemes.{u}
-    where
-  obj X := ⟨⟨X.obj.obj⟩, X.property⟩
-  map f := ObjectProperty.homMk ⟨f.hom.hom, f.hom.property.1⟩
 
 end AlgebraicGeometry.Scheme

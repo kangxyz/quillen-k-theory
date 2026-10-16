@@ -6,8 +6,11 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.ExcisionAdjunction
+
+
 public import Aglib.CategoryTheory.ExactCategory.Abelian
-public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.ExcisionComplex
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.ExtensionByZero
 public import Quillen.Waldhausen.SConstruction.WeakNaturalTransformationBased
 
 /-!
@@ -37,41 +40,8 @@ namespace Quillen.PerfectComplexes
 open Waldhausen
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-instance instPreservesFiniteLimitsExtensionByZero {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-  :
-    PreservesFiniteLimits (extensionByZero j) := by unfold extensionByZero; infer_instance
-
-instance instPreservesFiniteColimitsExtensionByZero {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion
-  j]
-  :
-    PreservesFiniteColimits (extensionByZero j) := by unfold extensionByZero; infer_instance
-
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens)
   (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ T)
-
-/-- Extension by zero on the supported perfect objects under the stated cover condition. -/
-def perfectSupportedExtensionByZero : (perfectSupported (j ⁻¹ᵁ T).ι).FullSubcategory ⥤
-    (perfectSupported T.ι).FullSubcategory :=
-  (perfectSupported T.ι).lift ((perfectSupported (j ⁻¹ᵁ T).ι).ι ⋙ extensionByZero j)
-    (fun K => perfectSupported_extensionByZero_of_cover j T hcover K.property)
-
-instance instAdditivePerfectSupportedExtensionByZero : (perfectSupportedExtensionByZero j T
-  hcover).Additive := by
-  unfold perfectSupportedExtensionByZero
-  infer_instance
-
-/-- The exact functor on supported perfect objects induced by extension by zero. -/
-def perfectSupportedExactExtensionByZero : CategoryTheory.ExactCategory.ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex U.Modules ℤ))
-      (perfectSupported (j ⁻¹ᵁ
-      T).ι))
-    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
-      (perfectSupported T.ι))
-      where
-  toFunctor := perfectSupportedExtensionByZero j T hcover
-  map_conflation S hS := by
-    change ((S.map (perfectSupported (j ⁻¹ᵁ T).ι).ι).map (extensionByZero j)).ShortExact
-    exact hS.map_of_exact _
 
 lemma perfectSupportedExtensionByZero_exact : IsExact
     (perfectSupportedWaldhausen (j ⁻¹ᵁ T).ι).cof (perfectSupportedWaldhausen (j ⁻¹ᵁ T).ι).weq
@@ -84,30 +54,6 @@ lemma perfectSupportedExtensionByZero_exact : IsExact
     apply IsPushout.of_map_of_faithful (perfectSupported T.ι).ι
     exact (fullSubcategory_map_pushout (abelianExactStructure (CochainComplex U.Modules ℤ))
       (perfectSupported (j ⁻¹ᵁ T).ι) hi h).map (extensionByZero j)
-
-/-- The original adjunction unit, with no change to its underlying chain map. -/
-def perfectSupportedExcisionUnit : 𝟭 ((perfectSupported (j ⁻¹ᵁ T).ι).FullSubcategory) ⟶
-    perfectSupportedExtensionByZero j T hcover ⋙ perfectSupportedRestrict j T where
-  app K := ObjectProperty.homMk ((extensionByZeroAdjunction j).unit.app K.obj)
-  naturality _ _ f := ObjectProperty.hom_ext _ ((extensionByZeroAdjunction j).unit.naturality f.hom)
-
-/-- The original adjunction counit, with no change to its underlying chain map. -/
-def perfectSupportedExcisionCounit :
-    perfectSupportedRestrict j T ⋙ perfectSupportedExtensionByZero j T hcover ⟶
-      𝟭 ((perfectSupported T.ι).FullSubcategory) where
-  app K := ObjectProperty.homMk ((extensionByZeroAdjunction j).counit.app K.obj)
-  naturality _ _ f := ObjectProperty.hom_ext _ ((extensionByZeroAdjunction j).counit.naturality
-    f.hom)
-
-/-- The genuine supported adjunction retains both original triangle identities. -/
-def perfectSupportedExcisionAdjunction :
-    perfectSupportedExtensionByZero j T hcover ⊣ perfectSupportedRestrict j T where
-  unit := perfectSupportedExcisionUnit j T hcover
-  counit := perfectSupportedExcisionCounit j T hcover
-  left_triangle_components K := ObjectProperty.hom_ext _
-    ((extensionByZeroAdjunction j).left_triangle_components K.obj)
-  right_triangle_components K := ObjectProperty.hom_ext _
-    ((extensionByZeroAdjunction j).right_triangle_components K.obj)
 
 lemma perfectSupportedExcisionUnit_weak (K : (perfectSupported (j ⁻¹ᵁ T).ι).FullSubcategory) :
     (perfectSupportedWaldhausen (j ⁻¹ᵁ T).ι).weq ((perfectSupportedExcisionUnit j T hcover).app K)

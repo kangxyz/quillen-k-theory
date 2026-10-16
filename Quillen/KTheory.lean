@@ -27,9 +27,7 @@ public import Quillen.KTheory.Bass.ModelDiagramIterateCofiberPreservation
 public import Quillen.KTheory.Bass.ModelDiagramStableEquivalence
 public import Quillen.KTheory.Bass.ModelDiagramTwoChartStableSequence
 public import Quillen.KTheory.Bass.ModelPushoutHomotopyStableEquivalence
-public import Quillen.KTheory.Bass.PolynomialLaurent
 public import Quillen.KTheory.Bass.RightExactness
-public import Quillen.KTheory.Bass.SchemeDiagram
 public import Quillen.KTheory.Bass.StrictDiagram
 public import Quillen.KTheory.Bass.StrictDiagramCofiberDescent
 public import Quillen.KTheory.Bass.StrictDiagramHomotopy

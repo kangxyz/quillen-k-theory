@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.LinearAlgebra.Matrix.GeneralLinearGroup.BlockOperations
 public import Quillen.Algebra.Group.StableElementaryQuotient
 
 /-!
@@ -38,44 +39,10 @@ lemma finiteClass_transition {n m : ℕ} (h : n ≤ m) (g : GL R n) :
   rw [of_transition]
   rfl
 
-/-- The actual permutation matrix as a matrix unit over a possibly noncommutative ring. -/
-def permutationUnit {I : Type v} [Fintype I] [DecidableEq I] (e : I ≃ I) :
-    (Matrix I I R)ˣ where
-  val := (1 : Matrix I I R).submatrix e.symm (Equiv.refl I)
-  inv := (1 : Matrix I I R).submatrix e (Equiv.refl I)
-  val_inv := by
-    rw [Matrix.one_submatrix_mul _ (Equiv.refl I)]
-    ext i j
-    simp [Matrix.submatrix, Matrix.one_apply]
-  inv_val := by
-    rw [Matrix.one_submatrix_mul _ (Equiv.refl I)]
-    ext i j
-    simp [Matrix.submatrix, Matrix.one_apply]
-
-/-- Reindexing both coordinates is conjugation by the original permutation matrix. -/
-lemma reindex_eq_conjugate {I : Type v} [Fintype I] [DecidableEq I]
-    (e : I ≃ I) (g : (Matrix I I R)ˣ) :
-    ElementaryMatrix.reindex e g = permutationUnit R e * g * (permutationUnit R e)⁻¹ := by
-  apply Units.ext
-  change g.val.submatrix e.symm e.symm =
-    ((1 : Matrix I I R).submatrix e.symm (Equiv.refl I) * g.val) *
-      (1 : Matrix I I R).submatrix e (Equiv.refl I)
-  rw [Matrix.one_submatrix_mul _ (Equiv.refl I), Matrix.mul_submatrix_one e]
-  rfl
-
 /-- Permuting a labelled finite basis leaves its actual stable quotient class unchanged. -/
 lemma finiteClass_reindex (n : ℕ) (e : Fin n ≃ Fin n) (g : GL R n) :
     finiteClass R n (ElementaryMatrix.reindex e g) = finiteClass R n g := by
   rw [reindex_eq_conjugate, finiteClass_conjugate]
-
-/-- Composing finite coordinate relabellings composes the actual matrix-unit maps. -/
-lemma reindex_trans {I : Type v} {J : Type w} {K : Type x} [Fintype I] [DecidableEq I]
-    [Fintype J] [DecidableEq J] [Fintype K] [DecidableEq K]
-    (e : I ≃ J) (f : J ≃ K) (g : (Matrix I I R)ˣ) :
-    ElementaryMatrix.reindex f (ElementaryMatrix.reindex e g) =
-      ElementaryMatrix.reindex (e.trans f) g := by
-  apply Units.ext
-  rfl
 
 /-- The class is independent of enumerations of the same finite coordinate set. -/
 lemma finiteClass_enumeration {I : Type v} [Fintype I] [DecidableEq I]
@@ -98,15 +65,6 @@ lemma finiteClass_blockSum_one (n m : ℕ) (g : GL R n) :
   rw [← transition_eq_reindex_blockSum]
   exact finiteClass_transition R _ g
 
-/-- Interchanging the two finite blocks is the explicit sum-coordinate relabelling. -/
-lemma reindex_blockSum_swap {I J : Type v} [Fintype I] [DecidableEq I]
-    [Fintype J] [DecidableEq J] (g : (Matrix I I R)ˣ) (h : (Matrix J J R)ˣ) :
-    ElementaryMatrix.reindex (Equiv.sumComm I J) (ElementaryMatrix.blockSum g h) =
-      ElementaryMatrix.blockSum h g := by
-  apply Units.ext
-  ext i j
-  cases i <;> cases j <;> rfl
-
 /-- Appending an identity on the left also preserves the original stable quotient class. -/
 lemma finiteClass_one_blockSum (n m : ℕ) (g : GL R n) :
     finiteClass R (m + n) (ElementaryMatrix.reindex finSumFinEquiv
@@ -126,15 +84,6 @@ lemma finiteClass_blockSum (n m : ℕ) (g : GL R n) (h : GL R m) :
         ElementaryMatrix.blockSum (1 : GL R n) h := by
     rw [← ElementaryMatrix.blockSum_mul, mul_one, one_mul]
   rw [hb, map_mul, map_mul, finiteClass_blockSum_one, finiteClass_one_blockSum]
-
-/-- Rectangular inverse matrices give an actual involution after taking their labelled sum. -/
-def rectangularSwap {n m : ℕ} (a : Matrix (Fin n) (Fin m) R)
-    (b : Matrix (Fin m) (Fin n) R) (hab : a * b = 1) (hba : b * a = 1) :
-    (Matrix (Fin n ⊕ Fin m) (Fin n ⊕ Fin m) R)ˣ where
-  val := Matrix.fromBlocks 0 a b 0
-  inv := Matrix.fromBlocks 0 a b 0
-  val_inv := by simp [Matrix.fromBlocks_multiply, hab, hba]
-  inv_val := by simp [Matrix.fromBlocks_multiply, hab, hba]
 
 /-- Isomorphic free modules give the same automorphism class, even with unequal rank labels. -/
 theorem finiteClass_rectangular_conjugate {n m : ℕ}

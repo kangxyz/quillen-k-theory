@@ -8,7 +8,7 @@ module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.CechSheafComplex
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.VectorBundleCech
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StrictModuleModel
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.StrictModuleModel
 
 /-! # Actual strict-perfect models of vector-bundle sheaf Cech complexes
 

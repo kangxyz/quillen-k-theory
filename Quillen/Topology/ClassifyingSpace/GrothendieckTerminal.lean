@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.Grothendieck.Terminal
+public import Quillen.Aglib.CategoryTheory.Grothendieck.Terminal
 public import Quillen.Topology.ClassifyingSpace.Equivalence
 /-!
 # Actual realization retraction to a terminal Grothendieck fiber

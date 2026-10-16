@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionReindexExact
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionReindex
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SupportedSectionReindex
 public import Quillen.Waldhausen.SConstruction.Iterated.Prespectrum
 
 /-!

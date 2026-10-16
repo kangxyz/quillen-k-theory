@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionEquivalence
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SupportedSectionEquivalence
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionZero
 public import Quillen.Waldhausen.EquivalenceStructure
 

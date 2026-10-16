@@ -5,10 +5,13 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlasqueBoundedBelow.StrictTotal
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Pullback
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPushforwardComparison
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPushforwardComparison
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.VectorBundleComplexDirectImage
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.DerivedPushforward.Total
 public import Quillen.Waldhausen.Functoriality.KMap
@@ -42,23 +45,12 @@ namespace Quillen.PerfectComplexes.ProjectiveLine.StrictPositiveRetraction
 local instance positiveStandard (X : Scheme.{u}) : HasDerivedCategory.{u + 1} X.Modules :=
   HasDerivedCategory.standard _
 
-/-- Literal inclusion of the original strict complex into the lower-bounded model. -/
-def strictToBoundedBelow (X : Scheme.{u}) : StrictPerfect X ⥤ BoundedBelow.Obj X :=
-  ObjectProperty.ιOfLE (fun K hK => by
-    obtain ⟨a, b, h⟩ := hK.1
-    exact ⟨locallyPerfect_of_strictPerfect hK, a,
-      (CochainComplex.isStrictlyGE_iff K a).mpr (fun i hi => h i (Or.inl hi))⟩)
-
 /-- The literal inclusion is exact for the original quotient-bearing cofibrations. -/
 lemma strictToBoundedBelow_exact (X : Scheme.{u}) : Waldhausen.IsExact
     (strictWaldhausen X).cof (strictWaldhausen X).weq
     (BoundedBelow.waldhausen X).cof (BoundedBelow.waldhausen X).weq
     (strictToBoundedBelow X) :=
   Waldhausen.subcategoryInclusion_exact _ _ _
-
-/-- Actual base Godement totalization of the original strict source complex. -/
-def strictTotal (X : Scheme.{u}) : StrictPerfect X ⥤ FlasqueBoundedBelow.Obj X :=
-  strictToBoundedBelow X ⋙ FlasqueBoundedBelow.total X
 
 lemma strictTotal_exact (X : Scheme.{u}) : Waldhausen.IsExact
     (strictWaldhausen X).cof (strictWaldhausen X).weq
@@ -166,10 +158,6 @@ lemma positivePlusUnit_quasiIso (R : CommRingCat.{u})
     (DerivedCategory.Plus.Q.map ((positivePlusUnit R).app K)))
   infer_instance
 
-/-- The functor retains the original complex, rather than a chosen strict model. -/
-lemma strictTotal_obj (X : Scheme.{u}) (K : StrictPerfect X) :
-    ((strictTotal X).obj K).obj = (godementTotal X).obj K.obj := rfl
-
 /-- The positive value is the original direct image of the actual pullback total. -/
 lemma positive_obj (R : CommRingCat.{u}) (K : StrictPerfect (Spec R)) :
     ((positive R).obj K).obj =
@@ -183,13 +171,6 @@ lemma positive_map (R : CommRingCat.{u}) {K L : StrictPerfect (Spec R)} (f : K �
       ((Scheme.Modules.pushforward (projection R)).mapHomologicalComplex (.up ℤ)).map
         ((godementTotal (twoChartLine R)).map ((AlgebraicGeometry.Scheme.Modules.Complex.pullback
           (projection R)).map f.hom)) := rfl
-
-/-- The actual totalized source retains each specified original strict lower bound. -/
-lemma strictTotal_isStrictlyGE (X : Scheme.{u}) (K : StrictPerfect X) (a : ℤ)
-    [K.obj.IsStrictlyGE a] : ((strictTotal X).obj K).obj.IsStrictlyGE a := by
-  change ((godementTotal X).obj K.obj).IsStrictlyGE a
-  exact godementTotal_isStrictlyGE K.obj a
-    (fun n hn => CochainComplex.isZero_of_isStrictlyGE K.obj a n hn)
 
 /-- Actual pullback, totalization, and direct image retain the specified source lower bound. -/
 lemma positive_isStrictlyGE (R : CommRingCat.{u}) (K : StrictPerfect (Spec R)) (a : ℤ)

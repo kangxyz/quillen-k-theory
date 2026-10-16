@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.OpenDerivedImage.Flatten
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Structure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Dense
 public import Quillen.Waldhausen.Cofinality.GeneralDense
@@ -39,38 +42,8 @@ namespace Quillen.PerfectComplexes.OpenDerivedImage
 open Waldhausen
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
-/-- Forget only the redundant perfect-object wrapper. -/
-def flatten : Obj j ⥤ ComplexObj j where
-  obj A := ⟨A.obj.obj, A.property⟩
-  map f := (complexObjects j).homMk f.hom.hom
-  map_id _ := rfl
-  map_comp _ _ := rfl
-
-/-- Restore the proved local perfectness of the same original complex. -/
-def nest : ComplexObj j ⥤ Obj j where
-  obj A := ⟨⟨A.obj, locallyPerfect_of_mem j A.property⟩, A.property⟩
-  map f := (objects j).homMk ((locallyPerfect U).homMk f.hom)
-  map_id _ := rfl
-  map_comp _ _ := rfl
-
-@[simp] theorem flatten_comp_nest : flatten j ⋙ nest j = 𝟭 (Obj j) := rfl
-@[simp] theorem nest_comp_flatten : nest j ⋙ flatten j = 𝟭 (ComplexObj j) := rfl
-
-/-- A genuine equivalence on unchanged original complexes and chain maps. -/
-def flattenEquivalence : Obj j ≌ ComplexObj j where
-  functor := flatten j
-  inverse := nest j
-  unitIso := NatIso.ofComponents (fun _ => Iso.refl _)
-    (by intros; simp only [Iso.refl_hom, Category.id_comp, Category.comp_id]; rfl)
-  counitIso := NatIso.ofComponents (fun _ => Iso.refl _)
-    (by intros; simp only [Iso.refl_hom, Category.id_comp, Category.comp_id]; rfl)
-
 local instance : (flatten j).IsEquivalence := (flattenEquivalence j).isEquivalence_functor
 local instance : (nest j).IsEquivalence := (flattenEquivalence j).isEquivalence_inverse
-
-/-- Flattening retains the literal original perfect-complex inclusion. -/
-@[simp] theorem flatten_comp_inclusion : flatten j ⋙ inclusion j = (objects j).ι := rfl
-@[simp] theorem nest_comp_inclusion : nest j ⋙ (objects j).ι = inclusion j := rfl
 
 variable [Fact (HasDerivedRoofs j)] [HasBinaryCoproducts (Perfect U)]
   (h : Cofinality.DenseCofiberData (perfectWaldhausen U) (objects j))

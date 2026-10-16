@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Waldhausen.Cofinality.ImageReflection
-public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.CoverReflection
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.OpenDerivedImage.CoverReflection
 public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalCofinality
 
 /-! # Original K-zero image reflection on a genuine covering pair -/

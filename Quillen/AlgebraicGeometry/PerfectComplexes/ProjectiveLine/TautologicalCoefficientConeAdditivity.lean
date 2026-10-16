@@ -7,7 +7,7 @@ module
 
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.TautologicalCoefficientConeFunctor
-public import Quillen.Waldhausen.SplitComplexes.FactorizationConeFunctor
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.FactorizationConeFunctor
 public import Quillen.Waldhausen.SplitComplexes.FactorizationCofiber
 public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 public import Quillen.Waldhausen.Additivity.GroupFormula

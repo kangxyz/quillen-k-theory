@@ -16,7 +16,7 @@ public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Exact
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Exact
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.Principal
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.ClosedImmersion.Principal
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.ComparisonGTheory
 public import Quillen.CategoryTheory.SmallModel.Functoriality
 

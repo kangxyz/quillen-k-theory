@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Homology.HomotopyPullbackQuasiIso
-public import Quillen.AlgebraicGeometry.PerfectComplexes.HomotopyPullback
+public import Quillen.Aglib.Algebra.Homology.HomotopyPullback.QuasiIso
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.HomotopyPullback
 
 /-! Semantic consumers of the actual mapping-cocone homotopy pullback. -/
 @[expose] public section

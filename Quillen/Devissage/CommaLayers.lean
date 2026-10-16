@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.ExactCategory.Filtration.LayerQuotients
 public import Aglib.CategoryTheory.Abelian.Subcategory.Exact
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Devissage.SpanLayers
@@ -36,39 +37,6 @@ open CategoryTheory CategoryTheory.Category CategoryTheory.Limits
 namespace Quillen.Devissage
 attribute [local instance] Abelian.hasFiniteBiproducts
 variable {C : Type u} [Category.{v} C] [Abelian C]
-
-/-- Passing to quotients by the same subobject gives a monomorphism. -/
-lemma quotientMap_mono {A U V : C} (i : A ⟶ U) (g : U ⟶ V) (k : A ⟶ V)
-    [Mono g] (w : i ≫ g = k) :
-    Mono (cokernel.map i k (𝟙 A) g (by simpa using w)) := by
-  apply Abelian.mono_cokernel_map_of_isPullback
-  exact IsPullback.of_vert_isIso_mono ⟨by simpa using w⟩
-
-/-- The quotient square of an inclusion of subobjects is a pullback. -/
-lemma quotientMap_isPullback {A U V : C} (i : A ⟶ U) (g : U ⟶ V) (k : A ⟶ V)
-    [Mono g] (w : i ≫ g = k) :
-    IsPullback (cokernel.π i) g
-      (cokernel.map i k (𝟙 A) g (by simpa using w)) (cokernel.π k) := by
-  let m := cokernel.map i k (𝟙 A) g (by simpa using w)
-  let : Mono m := quotientMap_mono i g k w
-  have wk : k ≫ cokernel.π g = 0 := by rw [← w, assoc, cokernel.condition, comp_zero]
-  let d := cokernel.desc k (cokernel.π g) wk
-  have md : m ≫ d = 0 := by
-    apply (cancel_epi (cokernel.π i)).mp
-    simp [m, d]
-  have hz (s : PullbackCone m (cokernel.π k)) : s.snd ≫ cokernel.π g = 0 := by
-    rw [← cokernel.π_desc k (cokernel.π g) wk, ← assoc, ← s.condition, assoc, md, comp_zero]
-  apply IsPullback.of_isLimit (c := PullbackCone.mk (cokernel.π i) g (by simp))
-  apply PullbackCone.IsLimit.mk (by simp [m])
-    (fun s => Abelian.monoLift g s.snd (hz s))
-  · intro s
-    apply (cancel_mono m).mp
-    simpa [m] using s.condition.symm
-  · intro s
-    exact Abelian.monoLift_comp _ _ _
-  · intro s a _ ha
-    apply (cancel_mono g).mp
-    simpa using ha
 
 variable (P : ObjectProperty C) [P.ContainsZero] [P.IsClosedUnderSubobjects]
   [P.IsClosedUnderQuotients] [P.IsClosedUnderFiniteProducts] (M : C)
@@ -142,28 +110,6 @@ def comma (L : Layer P M) : QComma P M :=
   CostructuredArrow.mk (Y := Q.of (subcategoryExactStructure P).deflation
     (subcategoryExactStructure P).inflation ⟨L.quotient, L.property⟩)
     (Q.mkHom _ _ L.span)
-
-/-- The intermediate quotient for an inclusion of layers. -/
-abbrev middle {L K : Layer P M} (h : L ≤ K) : C :=
-  cokernel (Subobject.ofLE K.lower L.upper (h.1.trans L.le))
-
-/-- The intermediate quotient embeds in the target quotient. -/
-def rightMap {L K : Layer P M} (h : L ≤ K) : middle h ⟶ K.quotient :=
-  cokernel.map (Subobject.ofLE K.lower L.upper (h.1.trans L.le))
-    (Subobject.ofLE K.lower K.upper K.le) (𝟙 _)
-    (Subobject.ofLE L.upper K.upper h.2) (by simp)
-
-instance rightMap_mono {L K : Layer P M} (h : L ≤ K) : Mono (rightMap h) :=
-  quotientMap_mono _ _ _ (by simp)
-
-/-- The intermediate quotient surjects onto the source quotient. -/
-def leftMap {L K : Layer P M} (h : L ≤ K) : middle h ⟶ L.quotient :=
-  cokernel.desc _ (cokernel.π (Subobject.ofLE L.lower L.upper L.le)) (by
-    rw [← Subobject.ofLE_comp_ofLE K.lower L.lower L.upper h.1 L.le, assoc]
-    simp)
-
-instance leftMap_epi {L K : Layer P M} (h : L ≤ K) : Epi (leftMap h) :=
-  epi_of_epi_fac (cokernel.π_desc _ _ _)
 
 /-- The actual Q-span between the two quotient objects. -/
 def mapSpan {L K : Layer P M} (h : L ≤ K) : Q.AbelianSpan L.quotient K.quotient where

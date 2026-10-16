@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 import Quillen.KTheory.Map.RightBaseChangeTensor
-import Quillen.Algebra.Category.ModuleCat.MatrixImageTensor
+import Quillen.Aglib.Algebra.Category.ModuleCat.MatrixImageTensor
 
 /-! Regression properties of the literal tensor functor and original K-map comparison. -/
 

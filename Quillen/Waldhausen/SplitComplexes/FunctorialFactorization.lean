@@ -6,10 +6,11 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.SubcategoryFunctor
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.FunctorialFactorization.Basic
 public import Quillen.Waldhausen.SplitComplexes.Approximation
-public import Quillen.Waldhausen.SplitComplexes.FactorizationFunctor
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.FactorizationFunctor
 
 /-!
 # Functorial factorizations in split-complex models
@@ -53,11 +54,6 @@ variable (P : ObjectProperty (CochainComplex A ℤ))
   [P.IsClosedUnderFiniteProducts]
   (hcone : ∀ {K L : CochainComplex A ℤ}, P K → P L →
     ∀ f : K ⟶ L, P (mappingCone f))
-
-/-- The explicit middle-object functor, restricted to the actual full subcategory. -/
-def subcategoryMiddleFunctor : Arrow P.FullSubcategory ⥤ P.FullSubcategory :=
-  P.lift (P.ι.mapArrow ⋙ SplitFactorization.middleFunctor)
-    (fun f ↦ SplitFactorization.middle_property P hcone f.left.property f.right.property f.hom.hom)
 
 /-- The actual functorial factorization stays in the cone-closed full subcategory. -/
 def splitSubcategoryFunctorialFactorization : FunctorialFactorization (splitComplexSubcategory

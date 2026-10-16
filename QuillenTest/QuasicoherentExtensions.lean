@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.QuasicoherentExtensions
+public import Quillen.Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Extensions
 public import Mathlib.Data.ZMod.Basic
 
 

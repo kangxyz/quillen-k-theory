@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.CartesianBaseChangeLocalization
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Cartesian.Localization
 
 /-! # Literal horizontal mate and target-open localization consumers -/
 

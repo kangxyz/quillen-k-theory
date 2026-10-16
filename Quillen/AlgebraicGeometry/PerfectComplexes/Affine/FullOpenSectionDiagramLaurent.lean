@@ -8,7 +8,7 @@ module
 public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionLaurentUnit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionModel
-public import Quillen.CategoryTheory.Functor.IdentityAutomorphismSquare
+public import Quillen.Aglib.CategoryTheory.Functor.IdentityAutomorphismSquare
 public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumIsoNaturality
 
 /-!

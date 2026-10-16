@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Algebra.Matrix.IdempotentAutomorphismClass
-public import Quillen.Algebra.Category.ModuleCat.MatrixImageFunctor
+public import Quillen.Aglib.Algebra.Category.ModuleCat.MatrixImageFunctor
 
 /-!
 # Stable matrix classes of actual projective automorphisms

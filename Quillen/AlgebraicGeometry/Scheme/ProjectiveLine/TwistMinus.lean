@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ModuleColumns
+public import Quillen.Aglib.AlgebraicGeometry.Modules.RankOne.Columns
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Tautological
 public import Aglib.AlgebraicGeometry.Modules.Subobjects.Gluing
 public import Aglib.CategoryTheory.Limits.Shapes.BinaryProducts

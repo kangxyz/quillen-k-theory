@@ -8,7 +8,7 @@ module
 public import Quillen.CategoryTheory.GroupCompletion.StableGeneralLinearMap
 public import Quillen.KTheory.Plus.ProjectiveTelescope
 public import Quillen.CategoryTheory.GroupCompletion.UnitEntry
-public import Quillen.CategoryTheory.Grothendieck.EndofunctorTelescopeCocone
+public import Quillen.Aglib.CategoryTheory.Grothendieck.EndofunctorTelescopeCocone
 public import Quillen.KTheory.Plus.StableProjectiveTelescope
 public import Quillen.Topology.ClassifyingSpace.StableGeneralLinearCompletion
 

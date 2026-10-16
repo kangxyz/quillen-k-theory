@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Homology.TotalRowContraction
+public import Quillen.Aglib.Algebra.Homology.TotalComplex.RowContraction
 
 /-! # Consumers of the genuine first-quadrant row-contraction comparison -/
 

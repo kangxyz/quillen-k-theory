@@ -5,9 +5,10 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveMonoidal
-public import Quillen.CategoryTheory.ExactCategory.ExtensionFiber
-public import Quillen.CategoryTheory.ExactCategory.CoproductDeflation
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveExtensions
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveMonoidal
+public import Quillen.Aglib.CategoryTheory.ExactCategory.Extensions.Basic
+public import Quillen.Aglib.CategoryTheory.ExactCategory.CoproductDeflation
 public import Quillen.CategoryTheory.GroupCompletion.ActionLocalization
 
 /-!
@@ -68,14 +69,6 @@ def extensionAddUnit (C : Category.{u, u} R) (p : (exactStructure R).ExtensionFi
       apply coprod.hom_ext
       · exact initialIsInitial.hom_ext _ _
       · simp)))
-
-/-- Equality of extension isomorphisms is detected on their middle-term maps. -/
-theorem extensionFiber_hom_ext {C : Category.{u, u} R}
-    {p q : (exactStructure R).ExtensionFiber C} {f g : p ⟶ q}
-    (h : f.iso.hom.hom.left = g.iso.hom.hom.left) : f = g := by
-  apply Core.hom_ext
-  apply ObjectProperty.hom_ext
-  exact Over.OverMorphism.ext h
 
 /-- The actual direct-sum action on the groupoid of extensions with quotient `C`. -/
 @[instance_reducible]

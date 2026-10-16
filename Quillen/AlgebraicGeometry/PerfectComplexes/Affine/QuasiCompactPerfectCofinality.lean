@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.KTheory
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenDerivedImageRoofs
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.OpenDerivedImageRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.JointData
 
 /-! # Original perfect K endpoints on quasi-compact affine opens

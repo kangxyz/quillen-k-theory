@@ -7,7 +7,7 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionIsomorphism
-public import Quillen.CategoryTheory.SubdivisionAction
+public import Quillen.Aglib.CategoryTheory.Subdivision.Action
 
 /-! # Extension isomorphisms from actual middle and quotient squares -/
 @[expose] public section

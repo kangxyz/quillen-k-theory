@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.UnitProperties
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Cohomology
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.CechDifference
 public import Aglib.AlgebraicGeometry.Cohomology.MayerVietoris.FirstCohomology
@@ -32,27 +33,6 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open Opposite
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
-private lemma gammaIsoTop_inv {X Y : Scheme.{u}} (f : X ⟶ Y) [IsOpenImmersion f] :
-    (IsOpenImmersion.ΓIsoTop f).inv = f.appLE f.opensRange ⊤ (by simp) := by
-  simp only [IsOpenImmersion.ΓIsoTop, Iso.trans_inv, Functor.mapIso_inv,
-    Iso.op_inv, eqToIso.inv, eqToHom_op, Iso.symm_inv,
-    Scheme.Hom.appIso_hom', Scheme.Hom.map_appLE]
-
-private theorem isQuasicoherent_unit (X : Scheme.{u}) :
-    (SheafOfModules.unit X.ringCatSheaf).IsQuasicoherent := by
-  let e : SheafOfModules.free (R := X.ringCatSheaf) (ULift.{u} Unit) ≅
-      SheafOfModules.unit X.ringCatSheaf := coproductUniqueIso _
-  exact (SheafOfModules.isQuasicoherent X.ringCatSheaf).prop_of_iso e (by infer_instance)
-
-private lemma restrict_gammaIsoTop_inv {W Y X : Scheme.{u}} (g : W ⟶ Y) (f : Y ⟶ X)
-    [IsOpenImmersion g] [IsOpenImmersion f]
-    (hle : (g ≫ f).opensRange ≤ f.opensRange) :
-    X.presheaf.map (homOfLE hle).op ≫ (IsOpenImmersion.ΓIsoTop (g ≫ f)).inv =
-      (IsOpenImmersion.ΓIsoTop f).inv ≫ g.appTop := by
-  rw [gammaIsoTop_inv, gammaIsoTop_inv, Scheme.Hom.map_appLE]
-  rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE, Scheme.Hom.appLE_comp_appLE]
-  rfl
-
 open PolynomialLaurent
 variable (R : CommRingCat.{u})
 /-- Original Laurent sections identified with sections on the actual chart intersection. -/

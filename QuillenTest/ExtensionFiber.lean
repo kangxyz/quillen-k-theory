@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 
 import Aglib.CategoryTheory.ExactCategory.Basic
-import Quillen.CategoryTheory.ExactCategory.ExtensionFiber
-import Quillen.Algebra.Category.ModuleCat.FiniteProjective
+import Quillen.Aglib.CategoryTheory.ExactCategory.Extensions.Basic
+import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjective
 
 open CategoryTheory.ExactCategory
 

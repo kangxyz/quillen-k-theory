@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPushforwardComparison
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPushforwardComparison
 
 /-! The original finite-flat comparison identifies maps into strict derived direct image. -/
 @[expose] public section

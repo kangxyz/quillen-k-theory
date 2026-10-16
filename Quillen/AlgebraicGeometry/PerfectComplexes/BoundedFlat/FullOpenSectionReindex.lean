@@ -5,8 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.FullOpenSectionTransition
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionWaldhausen
-public import Quillen.CategoryTheory.FiberedCategory.CocartesianSectionTransition
+public import Quillen.Aglib.CategoryTheory.FiberedCategory.CocartesianSectionTransition
 public import Quillen.Waldhausen.ExtensionCategory.ExactTransport
 
 /-!
@@ -25,18 +28,6 @@ universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]
 attribute [local irreducible] boundedFlatAffineFullOpenOriginalEvaluation
-
-/-- The original transition, with its actual coefficient-evaluation comparison. -/
-def boundedFlatAffineFullOpenSectionCoefficientIso {a b : Under R} (f : a ⟶ b) :
-    boundedFlatAffineFullOpenSectionsMap j f ⋙
-        boundedFlatAffineFullOpenOriginalEvaluation j b ≅
-      boundedFlatAffineFullOpenOriginalEvaluation j a ⋙
-        boundedFlatPerfectPullback (openMap j f) := by
-  unfold boundedFlatAffineFullOpenOriginalEvaluation
-  exact eqToIso (Quillen.CategoryTheory.GrothendieckSections.originalEvaluation_reindex
-    (boundedFlatAffineFullOpenPseudofunctor j) a f) ≪≫
-  (Quillen.CategoryTheory.GrothendieckSections.originalEvaluationTransitionIso
-    (boundedFlatAffineFullOpenPseudofunctor j) a (Under.mk f)).symm
 
 /-- Evaluation after the unchanged original reindexing is exact. -/
 theorem boundedFlatAffineFullOpenSectionsMap_evaluation_exact {a b : Under R} (f : a ⟶ b) :

@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Coherent.Affine.SmallModelEquivalence
+
 public import Quillen.CategoryTheory.SmallModel.Exact
 public import Aglib.Algebra.Category.FGModuleCat.Basic
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Basic
@@ -61,13 +63,6 @@ abbrev AffineG (n : ℕ) : Type u :=
 chosen small models. -/
 def affineGToRingG (n : ℕ) : AffineG R n →* RingG R n :=
   (affineGlobalSectionsExact R).smallKMap n
-
-instance affineGlobalSectionsSmall_isEquivalence :
-    ((affineGlobalSectionsExact R).smallModel).toFunctor.IsEquivalence := by
-  change (((equivSmallModel.{u} (AffineFiniteType R)).inverse ⋙
-    (affineFiniteTypeModuleEquivalence R).functor) ⋙
-    (equivSmallModel.{u} (FiniteModule.{u, u} R)).functor).IsEquivalence
-  infer_instance
 
 instance affineGlobalSectionsSmall_mapQ_isEquivalence :
     ((affineGlobalSectionsExact R).smallModel).mapQ.IsEquivalence := by

@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.Restriction
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PairPullback
 
@@ -54,14 +57,6 @@ def boundedFlatPerfectOpenKRestrict (n : ℕ) :
     BoundedFlatPerfectOpenK j n →* BoundedFlatPerfectK U n :=
   Waldhausen.KMap (boundedFlatPerfectOpenRestriction_exact j) n
 
-/-- The natural isomorphism comparing restriction of the inclusion into perfect complexes with
-bounded-flat pullback along the open immersion `j`. -/
-def boundedFlatPerfectOriginalRestrictionIso :
-    boundedFlatPerfectInclusion X ⋙ perfectRestrict j ≅
-      boundedFlatPerfectPullback j ⋙ boundedFlatPerfectInclusion U :=
-  Functor.fullyFaithfulCancelRight (locallyPerfect U).ι
-    (Functor.isoWhiskerLeft (boundedFlatPerfect X).ι (restrictIsoPullbackComplex j))
-
 theorem boundedFlatPerfectOpenKRestrict_comparison (n : ℕ) :
     (perfectOpenKRestrict j n).comp (boundedFlatPerfectOpenToPerfectOpenKMap j n) =
       (boundedFlatPerfectToPerfectKMap U n).comp (boundedFlatPerfectOpenKRestrict j n) := by
@@ -71,15 +66,6 @@ theorem boundedFlatPerfectOpenKRestrict_comparison (n : ℕ) :
   exact Waldhausen.KMap_eq_of_iso _ _ (boundedFlatPerfectOriginalRestrictionIso j) n
 
 variable {A B : AlgebraicGeometry.Scheme.OpenPairs.{u}}
-
-/-- The natural isomorphism comparing the two composites of bounded-flat pullback around the
-commutative open-pair square `f : A ⟶ B`. -/
-def boundedFlatPerfectOpenPairIso (f : A ⟶ B) :
-    boundedFlatPerfectPullback f.hom.right ⋙ boundedFlatPerfectPullback A.obj.hom ≅
-      boundedFlatPerfectPullback B.obj.hom ⋙ boundedFlatPerfectPullback f.hom.left :=
-  (boundedFlatPerfectPullbackCompIso A.obj.hom f.hom.right).symm ≪≫
-    eqToIso (congrArg boundedFlatPerfectPullback (Arrow.w f.hom).symm) ≪≫
-    boundedFlatPerfectPullbackCompIso f.hom.left B.obj.hom
 
 theorem boundedFlatPerfectOpenKRestrict_pullback (f : A ⟶ B) (n : ℕ) :
     (boundedFlatPerfectKPullback f.hom.left n).comp (boundedFlatPerfectOpenKRestrict B.obj.hom n) =

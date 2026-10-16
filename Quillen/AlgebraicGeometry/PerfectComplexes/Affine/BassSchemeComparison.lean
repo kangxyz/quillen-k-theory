@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.KTheory.Bass.SchemeDiagram
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.NaturalDiagram
 public import Quillen.KTheory.Bass.DiagramTransport
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BassNegativeGroups
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BassNegativeGroups

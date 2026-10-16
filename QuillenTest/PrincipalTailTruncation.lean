@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalDerivedTruncation
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedComparison
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.PrincipalDerivedTruncation
+public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Affine.Comparison
 
 /-! Semantic consumers of actual projective locality and lower-tail cutoff. -/
 @[expose] public section

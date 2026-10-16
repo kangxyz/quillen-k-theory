@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.Topology.Sheaves.MayerVietorisSections
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FinitePrincipalCohomologicalDimension
+public import Quillen.Aglib.AlgebraicGeometry.Cohomology.Affine.FinitePrincipalDimension
 public import Mathlib.Algebra.Category.ModuleCat.FilteredColimits
 public import Mathlib.CategoryTheory.Sites.LeftExact
 public import Mathlib.Data.ZMod.Basic

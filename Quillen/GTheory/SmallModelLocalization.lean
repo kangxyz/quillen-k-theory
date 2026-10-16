@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.Algebra.Group.ExactTransport
+public import Quillen.Aglib.CategoryTheory.SmallModel.LocalizationSupport
 public import Quillen.CategoryTheory.SmallModel.Exact
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
@@ -34,41 +36,12 @@ universe w v₁ v₂ u₁ u₂
 open CategoryTheory CategoryTheory.Limits
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.SmallModelGLocalization
-private theorem exact_transport
-    {A B C A' B' C' : Type w}
-    [Group A] [Group B] [Group C] [Group A'] [Group B'] [Group C']
-    (i : A →* B) (f : B →* C) (i' : A' →* B') (f' : B' →* C')
-    (eA : A ≃* A') (eB : B ≃* B') (eC : C ≃* C')
-    (hi : ∀ a, eB (i a) = i' (eA a))
-    (hf : ∀ b, eC (f b) = f' (eB b))
-    (h : i'.range = f'.ker) : i.range = f.ker := by
-  ext b
-  rw [MonoidHom.mem_range, MonoidHom.mem_ker]
-  constructor
-  · rintro ⟨a, rfl⟩
-    apply eC.injective
-    rw [map_one, hf, hi]
-    have hx : i' (eA a) ∈ i'.range := ⟨eA a, rfl⟩
-    rw [h] at hx
-    exact hx
-  · intro hb
-    have hx : eB b ∈ i'.range := by
-      rw [h]
-      change f' (eB b) = 1
-      rw [← hf, hb, map_one]
-    obtain ⟨a, ha⟩ := hx
-    refine ⟨eA.symm a, eB.injective ?_⟩
-    rw [hi, eA.apply_symm_apply, ha]
 
 variable {C : Type u₁} {D : Type u₂} [Category.{v₁} C] [Category.{v₂} D]
   [Abelian C] [Abelian D] [EssentiallySmall.{w} C] [EssentiallySmall.{w} D]
   (F : ExactFunctor (abelianExactStructure C) (abelianExactStructure D))
   [PreservesFiniteLimits F.toFunctor] [PreservesFiniteColimits F.toFunctor]
   [F.toFunctor.IsLocalization F.toFunctor.kernel.isoModSerre]
-
-/-- The actual Serre kernel in the chosen source small model. -/
-abbrev supported : ObjectProperty (SmallModel.{w} C) :=
-  (CategoryTheory.SmallModel.functor F.toFunctor).kernel
 
 /-- The genuine supported K-term in the chosen small model. -/
 abbrev SupportedK (n : ℕ) := (CategoryTheory.ObjectProperty.subcategoryExactStructure (supported

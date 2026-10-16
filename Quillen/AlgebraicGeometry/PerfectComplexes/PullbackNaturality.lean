@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.VectorBundlePullback
+
+
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Pullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.QuillenComparison
@@ -34,15 +37,6 @@ open CategoryTheory.Pretriangulated CochainComplex
 universe u
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
-
-/-- The actual degree-zero inclusion commutes with arbitrary pullback. -/
-def vectorBundleInclusionPullbackIso {X Y : Scheme.{u}} (f : X ⟶ Y) :
-    vectorBundleInclusion Y ⋙ strictPullback f ≅
-      AlgebraicGeometry.Scheme.Modules.vectorBundlePullback f ⋙ vectorBundleInclusion X :=
-  Functor.fullyFaithfulCancelRight (strictPerfect X).ι
-    (Functor.isoWhiskerLeft (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree Y).ι
-      (HomologicalComplex.singleMapHomologicalComplex
-        (Scheme.Modules.pullback f) (ComplexShape.up ℤ) 0))
 
 /-- Naturality of the original degree-zero S-construction comparison. -/
 theorem vectorBundleSComparison_pullback {X Y : Scheme.{u}} (f : X ⟶ Y) (n : ℕ) :

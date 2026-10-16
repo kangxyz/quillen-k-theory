@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.CategoryTheory.ExactCategory.Inflations
 public import Aglib.CategoryTheory.ExactCategory.Basic
-public import Quillen.CategoryTheory.Subdivision
+public import Quillen.Aglib.CategoryTheory.Subdivision.Basic
 public import Mathlib.CategoryTheory.Widesubcategory
 
 /-!
@@ -28,11 +29,6 @@ namespace CategoryTheory.ExactCategory.ExactStructure
 open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C]
 variable [Limits.HasFiniteBiproducts C] (E : ExactStructure C)
-
-instance inflation_isMultiplicative : E.inflation.IsMultiplicative where
-
-/-- The original objects and their admissible monomorphisms. -/
-abbrev InflationCategory := WideSubcategory E.inflation
 
 /-- The total extension category, in Grayson's subdivision model. -/
 abbrev ExtensionTotal := Quillen.Subdivision E.InflationCategory

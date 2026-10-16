@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.CechCounit
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineSectionsCone
+public import Quillen.Aglib.AlgebraicGeometry.Cohomology.Cech.AffineSectionsCone
 
 /-! # The original two-term sheaf Cech cone
 

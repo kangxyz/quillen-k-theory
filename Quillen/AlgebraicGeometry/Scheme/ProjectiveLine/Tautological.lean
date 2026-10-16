@@ -5,7 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneGluing
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.OriginalCoordinate
+public import Quillen.Aglib.AlgebraicGeometry.Modules.UnitProperties
+public import Quillen.Aglib.AlgebraicGeometry.Modules.RankOne.Gluing
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Charts
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Locality
 public import Aglib.AlgebraicGeometry.Modules.Restriction.Overlap
@@ -37,29 +39,6 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent AlgebraicGeometry.Scheme.Modules
 variable (R : CommRingCat.{u})
-
-/-- The original polynomial coordinate section under the canonical affine section isomorphism. -/
-def polynomialCoordinate : Γ(Spec (.of (Polynomial R)), ⊤) :=
-  (Scheme.ΓSpecIso (.of (Polynomial R))).inv.hom Polynomial.X
-
-lemma laurentPlus_coordinate :
-    (Scheme.ΓSpecIso (.of (LaurentPolynomial R))).hom.hom
-      ((laurentPlus R).appTop.hom (polynomialCoordinate R)) = LaurentPolynomial.T 1 := by
-  have h := congrArg (fun f => CommRingCat.Hom.hom f (polynomialCoordinate R))
-    (Scheme.ΓSpecIso_naturality
-      (CommRingCat.ofHom (Polynomial.toLaurent : Polynomial R →+* LaurentPolynomial R)))
-  simp only [CommRingCat.hom_comp, RingHom.comp_apply] at h
-  simpa [laurentPlus, polynomialCoordinate] using h
-
-lemma laurentMinus_coordinate :
-    (Scheme.ΓSpecIso (.of (LaurentPolynomial R))).hom.hom
-      ((laurentMinus R).appTop.hom (polynomialCoordinate R)) = LaurentPolynomial.T (-1) := by
-  have h := congrArg (fun f => CommRingCat.Hom.hom f (polynomialCoordinate R))
-    (Scheme.ΓSpecIso_naturality
-      (CommRingCat.ofHom (LaurentPolynomial.invert.toRingHom.comp Polynomial.toLaurent :
-        Polynomial R →+* LaurentPolynomial R)))
-  simp only [CommRingCat.hom_comp, RingHom.comp_apply] at h
-  simpa [laurentMinus, polynomialCoordinate] using h
 
 lemma overlap_coordinates_mul :
     (pullback.fst (plusChart R) (minusChart R)).appTop.hom (polynomialCoordinate R) *
@@ -196,12 +175,6 @@ lemma tautologicalLine_transition :
     (pullback.snd (plusChart R) (minusChart R))).map
       (secondColumn (minusChart R) (polynomialCoordinate R)))).mp (by
         simpa only [Category.assoc] using hn)
-
-private theorem finiteLocallyFree_unit (X : Scheme.{u}) :
-    IsFiniteLocallyFree X (SheafOfModules.unit X.ringCatSheaf) := by
-  let e : SheafOfModules.free (R := X.ringCatSheaf) (ULift.{u} Unit) ≅
-      SheafOfModules.unit X.ringCatSheaf := coproductUniqueIso _
-  exact finiteLocallyFree_of_iso e
 
 /-- The original tautological sheaf is finite locally free over every base ring. -/
 instance tautologicalLine_finiteLocallyFree :

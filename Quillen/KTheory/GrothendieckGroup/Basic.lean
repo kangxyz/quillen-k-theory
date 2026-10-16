@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Quillen.Aglib.CategoryTheory.ExactCategory.AdditiveInvariant
 public import Mathlib.GroupTheory.FreeAbelianGroup
 public import Mathlib.GroupTheory.QuotientGroup.Defs
 
@@ -95,11 +95,6 @@ open ZeroObject in
   exact (add_left_cancel (a := E.grothendieckClass (0 : C))
     (hadd.symm.trans (add_zero _).symm))
 
-/-- A function on objects is a conflation-additive invariant if it takes a middle
-object to the sum of the two outer objects for every conflation. -/
-def IsAdditiveInvariant {A : Type w} [AddCommGroup A] (f : C → A) : Prop :=
-  ∀ (S : ShortComplex C), E.conflation S → f S.X₂ = f S.X₁ + f S.X₃
-
 variable {A : Type w} [AddCommGroup A]
 
 /-- Additive invariants kill every element of the relation subgroup. -/
@@ -163,18 +158,6 @@ def grothendieckHomEquiv : (E.GrothendieckGroup →+ A) ≃
     apply Subtype.ext
     funext X
     exact E.grothendieckLift_class _ _ X
-
-/-- Conflation additivity alone implies isomorphism invariance. -/
-lemma IsAdditiveInvariant.iso {f : C → A} (hf : E.IsAdditiveInvariant f)
-    {X Y : C} (e : X ≅ Y) : f X = f Y := by
-  rw [← E.grothendieckLift_class f hf X, ← E.grothendieckLift_class f hf Y,
-    E.grothendieckClass_iso e]
-
-open ZeroObject in
-/-- An additive invariant necessarily vanishes on the zero object. -/
-lemma IsAdditiveInvariant.zero {f : C → A} (hf : E.IsAdditiveInvariant f) :
-    f (0 : C) = 0 := by
-  rw [← E.grothendieckLift_class f hf (0 : C), E.grothendieckClass_zero, map_zero]
 
 open ZeroObject in
 /-- Any zero object, not merely the chosen one, represents zero. -/

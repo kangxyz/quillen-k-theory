@@ -6,10 +6,11 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.SubcategoryZero
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Cylinder.Subcategory
-public import Quillen.Waldhausen.Cylinder.ZeroEndpoint
-public import Quillen.Waldhausen.Cylinder.Pushout
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.ZeroEndpoint
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.Pushout
 public import Quillen.Waldhausen.ArrowCategory.Structure
 public import Quillen.Waldhausen.SplitComplexes.FunctorialFactorization
 
@@ -43,24 +44,6 @@ variable {A : Type u} [Category.{v} A] [Abelian A]
     ∀ f : K ⟶ L, P (mappingCone f))
 
 omit [P.ContainsZero] [P.IsClosedUnderIsomorphisms] [P.IsClosedUnderFiniteProducts] in
-/-- A cylinder with two genuinely zero endpoints is genuinely zero. -/
-theorem subcategoryMiddleFunctor_obj_isZero {f : Arrow P.FullSubcategory}
-    (hl : IsZero f.left) (hr : IsZero f.right) :
-    IsZero ((subcategoryMiddleFunctor P hcone).obj f) := by
-  have hm : IsZero ((subcategoryMiddleFunctor P hcone).obj f).obj :=
-    (P.ι.map_isZero hr).of_iso
-      (projectionIsoOfIsZeroSource f.hom.hom (P.ι.map_isZero hl))
-  rw [IsZero.iff_id_eq_zero]
-  apply ObjectProperty.hom_ext
-  exact hm.eq_of_src _ _
-
-/-- Every genuine zero object of the entire arrow category is preserved. -/
-theorem subcategoryMiddleFunctor_zero {f : Arrow P.FullSubcategory} (hf : IsZero f) :
-    IsZero ((subcategoryMiddleFunctor P hcone).obj f) :=
-  subcategoryMiddleFunctor_obj_isZero P hcone
-    ((ArrowCategory.source_exact (complexSubcategory P)).zero hf)
-    ((ArrowCategory.target_exact (complexSubcategory P)).zero hf)
-
 /-- The actual middle cylinder preserves displayed pointwise pushouts along
 inherited admissible maps, with no global ambient-pushout closure assumption. -/
 theorem subcategoryMiddleFunctor_map_isPushout

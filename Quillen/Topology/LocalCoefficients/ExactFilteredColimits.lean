@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Category.ModuleCat.FilteredColimits
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FilteredColimits
 
 /-!
 # Exact filtered colimits for integral local coefficients

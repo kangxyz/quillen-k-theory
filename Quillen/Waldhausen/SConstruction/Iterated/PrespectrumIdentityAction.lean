@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumIsoNaturality
-public import Quillen.CategoryTheory.Functor.IdentityAutomorphism
+public import Quillen.Aglib.CategoryTheory.Functor.IdentityAutomorphism
 
 /-!
 # The original pointwise identity action on an exact Model map

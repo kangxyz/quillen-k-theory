@@ -5,7 +5,10 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalDensity
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.OpenDerivedImage.GlobalComplements
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.GlobalDensity
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Dense
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
@@ -38,21 +41,6 @@ open Waldhausen
 attribute [local instance] HasDerivedCategory.standard Abelian.hasFiniteBiproducts
 variable {U X : Scheme.{u}} [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace U]
   (j : U ⟶ X) [IsOpenImmersion j]
-
-/-- Genuine global qcqs complement geometry supplies the original saturated
-image complement, before imposing any derived morphism roof hypothesis. -/
-theorem exists_global_perfect_complement (E : CochainComplex U.Modules ℤ)
-    (hE : locallyPerfect U E) :
-    ∃ C : CochainComplex U.Modules ℤ, locallyPerfect U C ∧ complexObjects j (C ⊞ E) := by
-  obtain ⟨P, C, hP, hC, ⟨e⟩⟩ :=
-    locallyPerfect_exists_global_perfect_complement_of_openImmersion j E hE
-  exact ⟨C, hC, P, hP, ⟨e ≪≫ (DerivedCategory.Q (C := U.Modules)).mapIso (biprod.braiding E C)⟩⟩
-
-/-- Actual chosen coproduct density for the original perfect category. -/
-theorem global_complement [HasBinaryCoproducts (Perfect U)] (A : Perfect U) :
-    ∃ B : Perfect U, objects j (A ⨿ B) := by
-  obtain ⟨C, hC, hAC⟩ := exists_global_perfect_complement j A.obj A.property
-  exact coprod_complement_of_complex_complement j A C hC hAC
 
 /-- Genuine qcqs density and closure reduce cofinality precisely to original
 morphism roofs; no complement or joint-data hypothesis remains. -/

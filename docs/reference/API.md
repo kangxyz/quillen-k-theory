@@ -6,6 +6,20 @@ maps, and size conventions. The [topic guides](../README.md#mathematical-topics)
 develop the mathematical comparisons, their hypotheses, and their remaining
 obligations; [scope](Scope.md) gives the cross-topic boundary.
 
+## Local Aglib candidates in 0.9.0
+
+General algebraic geometry and its algebraic, categorical and homological
+prerequisites awaiting upstream admission live below `Quillen.Aglib`. Import
+their precise mathematical leaves from the [candidate tree](../../Quillen/Aglib/README.md).
+Existing public declaration namespaces and chosen comparison maps are preserved;
+this change reorganizes implementation ownership and splits mixed sources.
+
+The source modules for moved general implementations use the new candidate
+paths. Application modules keep their existing paths and import their lower
+candidate prerequisites. No duplicate implementation or default forwarding
+module is retained for a moved source. Q/K/G/S, Waldhausen, spectra and the
+specialized projective-line applications remain in their mathematical owners.
+
 ## Imports
 
 | Import | Interface |
@@ -19,14 +33,14 @@ obligations; [scope](Scope.md) gives the cross-topic boundary.
 | `Quillen.Topology.CWComplex.SimplyConnectedCover` | Constructed same-universe simply connected surjective cover of an actual connected Hausdorff CW subtype |
 | `Quillen.Topology.CWComplex.UniverseTransport` | Actual intrinsic CW subtype and literal ULift geometry |
 | `Quillen.Topology.HomotopyGroups.Loop.Reversal` | Actual inner-loop reflection and degree-shift formulas |
-| `Quillen.Algebra.Module.RightScalarExtension` | Literal noncommutative balanced right tensor and its universal properties |
-| `Quillen.Algebra.Category.ModuleCat.RightScalarExtension` | Tensor functor, identity/composition equivalences and literal-carrier triple coherence |
-| `Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeTensor` | Comparison with original scalar extension and explicit target lifts |
-| `Quillen.Algebra.Category.ModuleCat.FiniteProjectiveTensorCoherence` | Agreement with original identity/composition comparisons |
+| `Quillen.Aglib.Algebra.Module.RightScalarExtension` | Literal noncommutative balanced right tensor and its universal properties |
+| `Quillen.Aglib.Algebra.Category.ModuleCat.RightScalarExtension` | Tensor functor, identity/composition equivalences and literal-carrier triple coherence |
+| `Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeTensor` | Comparison with original scalar extension and explicit target lifts |
+| `Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveTensorCoherence` | Agreement with original identity/composition comparisons |
 | `Quillen.KTheory.Map.RightBaseChangeTensor` | Original zero-normalized K-map equality in every degree |
-| `Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeUniversal` | Scalar-extension unit and additive Hom universal property |
+| `Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeUniversal` | Scalar-extension unit and additive Hom universal property |
 | `Aglib.Algebra.Category.ModuleCat.Finite` | Finite-module Serre and exact-category interfaces on mathlib's finitely generated module category |
-| `Quillen.Algebra.Homology.FiniteProjectiveResolution` | Actual finite-projective resolutions and finite-free PID resolutions |
+| `Quillen.Aglib.Algebra.Homology.ModuleCat.FiniteProjectiveResolution` | Actual finite-projective resolutions and finite-free PID resolutions |
 | `Quillen.KTheory.GrothendieckComparison.Equivalence` | Classical exact-category K₀ comparison |
 | `Quillen.Waldhausen.Basic` | Cofibrations, weak equivalences, and chosen zero |
 | `Quillen.Waldhausen.KTheory` | Connective S-construction groups |
@@ -88,8 +102,8 @@ duplicate declarations are removed; update imports and references directly.
 | Previous import | Current owner |
 | --- | --- |
 | `Quillen.GTheory.FiniteModules.Basic` | `Aglib.Algebra.Category.ModuleCat.Finite` |
-| `Quillen.AlgebraicGeometry.Scheme.Regular.FiniteProjectiveResolution` | `Quillen.Algebra.Homology.FiniteProjectiveResolution` |
-| `Quillen.AlgebraicGeometry.Scheme.Regular.LocalPrincipalDomain` | `Quillen.Algebra.RegularLocal.PrincipalDomain` |
+| `Quillen.AlgebraicGeometry.Scheme.Regular.FiniteProjectiveResolution` | `Quillen.Aglib.Algebra.Homology.ModuleCat.FiniteProjectiveResolution` |
+| `Quillen.AlgebraicGeometry.Scheme.Regular.LocalPrincipalDomain` | `Quillen.Aglib.RingTheory.RegularLocalRing.PrincipalDomain` |
 | `Quillen.Waldhausen.QuillenComparison.SpanNaturality` | `Quillen.CategoryTheory.QConstruction.SpanIsoNaturality` |
 
 Use `CategoryTheory.ExactCategory.ExactStructure.qSpan_iso_naturality` for the shared Q-span law and
@@ -358,8 +372,8 @@ original K₀ and zero-completion maps. No natural chosen inverse, strictly
 pointed naturality, H-space, A∞ or infinite-loop splitting is asserted.
 
 The raw finite-free and idempotent-image scalar owners are
-`Quillen.Algebra.Matrix.RightScalarExtension` and
-`Quillen.Algebra.Category.ModuleCat.MatrixImageScalarExtension`. The literal
+`Quillen.Aglib.LinearAlgebra.Matrix.RightScalarExtension` and
+`Quillen.Aglib.Algebra.Category.ModuleCat.MatrixImageScalarExtension`. The literal
 balanced tensor comparison, original unit/composition agreement, exactness
 and all-degree K-map equality are proved in the focused tensor imports above.
 Raw module and ring universes are independent; the original finite-projective

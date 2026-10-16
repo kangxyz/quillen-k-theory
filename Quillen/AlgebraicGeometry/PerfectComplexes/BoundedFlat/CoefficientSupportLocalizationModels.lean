@@ -5,11 +5,14 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.CoefficientSupportSections
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedSections
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientOpenSections
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.OpenConeComparison
-public import Quillen.CategoryTheory.ObjectProperty.LiftInclusion
+public import Quillen.Aglib.CategoryTheory.ObjectProperty.LiftInclusion
 public import Quillen.Waldhausen.SmallModel.Composition
 public import Quillen.Waldhausen.SConstruction.Iterated.ExactModelEquivalence
 public import Quillen.Waldhausen.SConstruction.Iterated.DiagramZeroNull
@@ -45,10 +48,6 @@ variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)
   [IsOpenImmersion f.left]
 attribute [local irreducible] boundedFlatCoefficientOriginalEvaluation
   boundedFlatCoefficientSupportedEvaluation boundedFlatCoefficientSupportedSectionEquivalence
-
-/-- Native joint sections supported on the complement of the actual native open. -/
-abbrev BoundedFlatCoefficientSupportSections (a : Under R) :=
-  BoundedFlatCoefficientSupportedSections (schemeMap f a)
 
 /-- The original fine supported Model, retaining the restricted joint zero. -/
 def boundedFlatCoefficientSupportedModel (a : Under R) : Model.{u+1} :=

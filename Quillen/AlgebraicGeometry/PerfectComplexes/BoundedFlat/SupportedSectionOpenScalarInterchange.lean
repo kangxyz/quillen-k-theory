@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionOpenNull
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionUnit
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SupportedSectionUnit
 public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumIsoNaturality
 public import Quillen.Waldhausen.SConstruction.Iterated.TransformationInterchange
 

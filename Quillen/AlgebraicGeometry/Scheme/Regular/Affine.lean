@@ -6,7 +6,9 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Algebra.RegularLocal.GlobalProjectiveDimension
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.Resolution.RegularAffine
+
+public import Quillen.Aglib.RingTheory.RegularLocalRing.GlobalProjectiveDimension
 public import Quillen.AlgebraicGeometry.Scheme.Regular.GeneralComparison
 
 /-!
@@ -30,15 +32,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace AlgebraicGeometry.Scheme.Modules
-
-/-- Every actual coherent sheaf on a regular affine scheme has a genuine
-finite locally free admissible resolution, with an object-dependent length. -/
-theorem coherentResolutionHypothesis_of_regular (R : CommRingCat.{u}) [IsRegularRing R] :
-    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec R)).ResolutionHypothesis
-      (coherentVectorBundle (Spec R)) :=
-  coherentResolutionHypothesis_of_finite_projectiveDimension R
-    (fun M => AlgebraicGeometry.Scheme.Modules.Coherent.projectiveDimension_ne_top_of_regular R
-      M.obj)
 
 end AlgebraicGeometry.Scheme.Modules
 

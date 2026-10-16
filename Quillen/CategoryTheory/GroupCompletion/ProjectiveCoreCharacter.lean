@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Algebra.Category.ModuleCat.ProjectiveAutomorphismAdditivity
-public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveMonoidal
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveMonoidal
 
 /-!
 # The additive stable matrix character on the actual projective core

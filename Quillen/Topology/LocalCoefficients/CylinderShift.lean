@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Topology.LocalCoefficients.CylinderBoundaryHomology
-public import Quillen.Algebra.Homology.ConnectingKernel
+public import Quillen.Aglib.Algebra.Homology.HomologySequence.ConnectingKernel
 
 /-!
 # The relative homology shift for the actual two-ended cylinder

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.CoherentHomology
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.CoherentHomology
 
 /-! # Actual coherent homology consumers for locally perfect complexes -/
 @[expose] public section

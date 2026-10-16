@@ -9,7 +9,7 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.TensorToUnit
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineCoordinateTensor
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.TensorToUnit
 
 /-! Named consumers of the original tensor coordinate, scalar and restriction maps. -/
 set_option warningAsError true

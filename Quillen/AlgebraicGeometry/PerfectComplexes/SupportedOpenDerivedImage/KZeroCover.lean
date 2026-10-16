@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpenDerivedImage.CoverReflection
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.SupportedOpenDerivedImage.CoverReflection
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.RestrictionOfLE
 public import Quillen.Waldhausen.Cofinality.ImageReflection
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.GlobalCofinality
