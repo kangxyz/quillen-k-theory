@@ -9,11 +9,13 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 public import Aglib.Algebra.Homology.DerivedCategory.RightDerivedFunctorPlus.Composition
 public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Mathlib.CategoryTheory.Abelian.GrothendieckCategory.EnoughInjectives
 
 /-!
 # Exact sheaf functors preserve intrinsic perfection
 
-An additive homology-preserving sheaf functor that preserves the actual local-perfect complex predicate preserves intrinsic perfect objects in the original D-plus category.
+An additive homology-preserving sheaf functor that preserves the actual local-perfect complex
+predicate preserves intrinsic perfect objects in the original D-plus category.
 -/
 @[expose] public section
 noncomputable section

@@ -12,7 +12,8 @@ public import Aglib.CategoryTheory.ExactCategory.Functor
 /-!
 # Flat pullback of lower-bounded perfect complexes
 
-Actual flat termwise pullback preserves the same specified lower bound and inherited short exact sequences.
+Actual flat termwise pullback preserves the same specified lower bound and inherited short
+exact sequences.
 -/
 @[expose] public section
 noncomputable section
@@ -20,6 +21,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite ModuleCat
+open CategoryTheory.ExactCategory
+attribute [local instance] Abelian.hasFiniteBiproducts
 open AlgebraicGeometry.Scheme.Modules
 open AlgebraicGeometry.Scheme.Modules.Complex HomologicalComplex CochainComplex
 namespace Quillen.PerfectComplexes.ProjectiveLine.SelfBaseChange
@@ -74,6 +77,8 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite ModuleCat
+open CategoryTheory.ExactCategory
+attribute [local instance] Abelian.hasFiniteBiproducts
 open AlgebraicGeometry.Scheme.Modules
 open AlgebraicGeometry.Scheme.Modules.Complex HomologicalComplex CochainComplex
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands

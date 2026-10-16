@@ -24,7 +24,6 @@ universe u
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Positive-degree exactness of the actual direct-image resolution preserves its augmentation. -/
-
 theorem quasiIso_pushforward_injectiveResolution_of_exact {Z X : Scheme.{u}}
     (f : Z ⟶ X) (M : Z.Modules)
     (I : InjectiveResolution M)
@@ -50,7 +49,6 @@ theorem quasiIso_pushforward_injectiveResolution_of_exact {Z X : Scheme.{u}}
       exact F.map_isZero (HomologicalComplex.isZero_single_obj_X _ _ _ _ (by omega))
 
 /-- The original integer-indexed injective augmentation remains a quasi-isomorphism. -/
-
 theorem quasiIso_pushforward_injectiveResolution_int_of_quasiIso {Z X : Scheme.{u}}
     (f : Z ⟶ X) (M : Z.Modules)
     (I : InjectiveResolution M)

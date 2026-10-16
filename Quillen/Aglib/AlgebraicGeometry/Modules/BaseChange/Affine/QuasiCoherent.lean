@@ -41,7 +41,6 @@ variable (h : IsPullback
   (Spec.map (CommRingCat.ofHom (algebraMap R S))))
 
 /-- The source comparison for the actual affine base-change mate. -/
-
 def affineBaseChangeSourceIso (M : ModuleCat A) :
     (Scheme.Modules.pullback (Spec.map (CommRingCat.ofHom (algebraMap R S)))).obj
         ((Scheme.Modules.pushforward (Spec.map (CommRingCat.ofHom (algebraMap R A)))).obj
@@ -54,7 +53,6 @@ def affineBaseChangeSourceIso (M : ModuleCat A) :
       ((ModuleCat.restrictScalars (algebraMap R A)).obj M)
 
 /-- The target comparison for the actual affine base-change mate. -/
-
 def affineBaseChangeTargetIso (M : ModuleCat A) :
     (Scheme.Modules.pushforward (Spec.map (CommRingCat.ofHom (algebraMap S B)))).obj
         ((Scheme.Modules.pullback (Spec.map (CommRingCat.ofHom (algebraMap A B)))).obj
@@ -67,7 +65,6 @@ def affineBaseChangeTargetIso (M : ModuleCat A) :
       ((ModuleCat.extendScalars (algebraMap A B)).obj M)
 
 /-- The original affine geometric base-change mate is the actual scalar base-change mate. -/
-
 theorem affineBaseChangeMap_tilde (M : ModuleCat A) :
     (cartesianBaseChangeMap _ _ _ _ h).app (tilde M) ≫
       (affineBaseChangeTargetIso S A B M).hom =
@@ -116,7 +113,6 @@ theorem affineBaseChangeMap_tilde (M : ModuleCat A) :
       (tilde.functor (CommRingCat.of R)).map q) (ModuleCat.scalarBaseChangeMap_unit R S A B M)
 
 /-- The original affine geometric mate is invertible on associated sheaves over a ring pushout. -/
-
 theorem isIso_affineBaseChangeMap_tilde (M : ModuleCat A) :
     IsIso ((cartesianBaseChangeMap _ _ _ _ h).app (tilde M)) := by
   have := isPushout_of_affineCartesian R S A B h
@@ -128,7 +124,6 @@ theorem isIso_affineBaseChangeMap_tilde (M : ModuleCat A) :
   exact (isIso_comp_right_iff _ (affineBaseChangeTargetIso S A B M).hom).mp hc
 
 /-- The actual affine base-change mate is invertible on every quasicoherent sheaf. -/
-
 theorem isIso_affineBaseChangeMap
     (M : (Spec (CommRingCat.of A)).Modules) [M.IsQuasicoherent] :
     IsIso ((cartesianBaseChangeMap _ _ _ _ h).app M) := by

@@ -10,6 +10,7 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.I
 
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.Closure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OppositeJointData
+public import Quillen.AlgebraicGeometry.PerfectComplexes.PerfectSupport
 
 /-!
 # Coherent actual cocylinders for supported perfect complexes

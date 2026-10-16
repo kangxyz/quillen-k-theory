@@ -20,8 +20,8 @@ public import Aglib.CategoryTheory.SmallModel.Functor
 /-!
 # The principal affine supported small model
 
-On a noetherian spectrum, the kernel of small-model principal-open restriction is an exact categorical presentation of the actual coherent sheaves supported on the complement.
--/
+On a noetherian spectrum, the kernel of small-model principal-open restriction is an exact
+categorical presentation of the actual coherent sheaves supported on the complement.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Coherent
@@ -42,17 +42,14 @@ namespace AlgebraicGeometry.Scheme.Modules.Coherent
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (r : R)
 
 /-- The actual principal-open restriction in the chosen small coherent models. -/
-
 abbrev principalSmallRestriction :=
   CategoryTheory.SmallModel.functor.{u} (affinePrincipalRestriction R r)
 
 /-- The support property on that small model. -/
-
 abbrev principalSmallSupport := (principalSmallRestriction R r).kernel
 
 /-- Membership still means ordinary stalk support in the actual closed
 complement for the represented coherent sheaf. -/
-
 theorem principalSmallSupport_iff (M : SmallModel.{u} (AffineFiniteType R)) :
     principalSmallSupport R r M ↔
       affineSupportedAway R (principalOpen R r)
@@ -63,7 +60,6 @@ theorem principalSmallSupport_iff (M : SmallModel.{u} (AffineFiniteType R)) :
 
 /-- The small support category is genuinely a presentation of the actual
 supported coherent sheaf category. -/
-
 def principalSmallSupportEquivalence :
     (principalSmallSupport R r).FullSubcategory ≌
       SupportedAffineFiniteType R (principalOpen R r) :=
@@ -74,7 +70,6 @@ def principalSmallSupportEquivalence :
 
 /-- Its forward functor commutes with actual supported-sheaf inclusion.
 The underlying functors are equal by definition. -/
-
 theorem principalSmallSupportEquivalence_comp_inclusion :
     (principalSmallSupportEquivalence R r).functor ⋙
         (affineSupportedAway R (principalOpen R r)).ι =
@@ -82,7 +77,6 @@ theorem principalSmallSupportEquivalence_comp_inclusion :
 
 /-- This is a genuine small presentation comparison with the previously
 chosen small model of actual supported coherent sheaves. -/
-
 def principalSupportSmallModelEquivalence :
     SmallModel.{u} (SupportedAffineFiniteType R (principalOpen R r)) ≌
       (principalSmallSupport R r).FullSubcategory :=
@@ -96,7 +90,6 @@ instance principalSupportSmallModelEquivalence_additive :
   exact Functor.additive_of_preservesBinaryBiproducts _
 
 /-- The actual exact comparison of the two small supported presentations. -/
-
 def principalSupportComparison :
     ExactFunctor (supportedAffineCoherentExactStructure R (principalOpen R r)).smallModel
       (abelianExactStructure (principalSmallSupport R r).FullSubcategory) where

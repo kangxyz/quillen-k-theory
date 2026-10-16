@@ -18,7 +18,9 @@ public import Aglib.CategoryTheory.SmallModel.Exact
 /-!
 # Small exact models of principal quotient restriction
 
-For a commutative noetherian ring, actual quotient-ring restriction gives an exact equivalence onto the killed objects of the supported small category, retaining the canonical support factorization.
+For a commutative noetherian ring, actual quotient-ring restriction gives an exact equivalence
+onto the killed objects of the supported small category, retaining the canonical support
+factorization.
 -/
 @[expose] public section
 
@@ -39,7 +41,6 @@ namespace Quillen.FiniteModuleLocalization
 variable {R : Type u} [CommRing R] [IsNoetherianRing R] (f : R)
 
 omit [IsNoetherianRing R] in
-
 lemma killedBy_of_iso {M N : FGModuleCat.{u} R} (e : M ≅ N) (hM : killedBy f M) :
     killedBy f N := by
   intro n
@@ -47,7 +48,6 @@ lemma killedBy_of_iso {M N : FGModuleCat.{u} R} (e : M ≅ N) (hM : killedBy f M
   rw [← map_smul, hM m, map_zero]
 
 /-- The canonical small-model quotient-ring restriction, with no changed choices. -/
-
 abbrev smallClosedFunctor := (closedRestrictionExact f).smallModel.toFunctor
 
 lemma smallClosedFunctor_killed (M : SmallModel.{u} (FGModuleCat.{u} (ClosedRing f))) :
@@ -60,7 +60,6 @@ lemma smallClosedFunctor_killed (M : SmallModel.{u} (FGModuleCat.{u} (ClosedRing
   exact closedRestriction_killed f _
 
 /-- The actual closed pushforward lands in modules supported on V(f). -/
-
 def smallClosedToSupport : SmallModel.{u} (FGModuleCat.{u} (ClosedRing f)) ⥤ PrincipalSupport f :=
   ObjectProperty.lift _ (smallClosedFunctor f) (fun M ↦ by
     rw [smallTorsion_powers_iff_uniform]
@@ -69,7 +68,6 @@ def smallClosedToSupport : SmallModel.{u} (FGModuleCat.{u} (ClosedRing f)) ⥤ P
     simpa only [pow_one] using smallClosedFunctor_killed f M m)
 
 /-- Its further factorization lands exactly in the killed-by-f objects. -/
-
 def smallClosedToKilled : SmallModel.{u} (FGModuleCat.{u} (ClosedRing f)) ⥤
     (principalKilled f).FullSubcategory :=
   ObjectProperty.lift _ (smallClosedToSupport f) (fun M ↦
@@ -95,7 +93,6 @@ instance smallClosedToKilled_faithful : (smallClosedToKilled f).Faithful where
     (congrArg (fun a ↦ a.hom.hom) h)
 
 /-- Every killed support object comes from an actual finite quotient-ring module. -/
-
 instance smallClosedToKilled_essSurj : (smallClosedToKilled f).EssSurj where
   mem_essImage M := by
     let N : (killedBy f).FullSubcategory :=
@@ -121,12 +118,10 @@ instance smallClosedToKilled_additive : (smallClosedToKilled f).Additive where
     exact (smallClosedFunctor f).map_add
 
 /-- The actual small restriction functor is an equivalence onto the killed objects. -/
-
 def smallClosedEquivalence : SmallModel.{u} (FGModuleCat.{u} (ClosedRing f)) ≌
     (principalKilled f).FullSubcategory := (smallClosedToKilled f).asEquivalence
 
 /-- This equivalence uses the original transported exact structure on its source. -/
-
 def smallClosedToKilledExact :
     ExactFunctor (ModuleCat.finiteModuleExactStructure.{u, u} (ClosedRing f)).smallModel
       (CategoryTheory.ObjectProperty.subcategoryExactStructure (principalKilled f)) where
@@ -141,7 +136,6 @@ instance smallClosedToKilledExact_isEquivalence :
     (smallClosedToKilledExact f).toFunctor.IsEquivalence := smallClosedToKilled_isEquivalence f
 
 /-- Actual closed restriction of scalars with codomain in the supported category. -/
-
 def smallClosedToSupportExact :
     ExactFunctor (ModuleCat.finiteModuleExactStructure.{u, u} (ClosedRing f)).smallModel
       (CategoryTheory.ObjectProperty.subcategoryExactStructure (smallTorsion (Submonoid.powers f)))

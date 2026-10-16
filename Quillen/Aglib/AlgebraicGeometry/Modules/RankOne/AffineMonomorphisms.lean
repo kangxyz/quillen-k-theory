@@ -33,7 +33,6 @@ set_option backward.defeqAttrib.useBackward true
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Injectivity on global sections detects a mono between actual quasicoherent affine sheaves. -/
-
 theorem mono_of_mono_globalSections (R : CommRingCat.{u})
     {M N : (Spec R).Modules} [M.IsQuasicoherent] [N.IsQuasicoherent]
     (f : M ⟶ N) [Mono (moduleSpecΓFunctor.map f)] : Mono f := by
@@ -50,7 +49,6 @@ theorem mono_of_mono_globalSections (R : CommRingCat.{u})
   infer_instance
 
 /-- The original affine unit multiplier is monic when its actual global scalar is regular. -/
-
 theorem mono_unitMul_of_regular (R : CommRingCat.{u}) (s : Γ(Spec R, ⊤))
     (hs : s ∈ nonZeroDivisors Γ(Spec R, ⊤)) : Mono (unitMul (Spec R) s) := by
   let e : SheafOfModules.free (R := (Spec R).ringCatSheaf) (ULift.{u} Unit) ≅
@@ -66,7 +64,6 @@ theorem mono_unitMul_of_regular (R : CommRingCat.{u}) (s : Γ(Spec R, ⊤))
   exact mono_of_mono_globalSections R (unitMul (Spec R) s)
 
 /-- An actual affine scheme identification transports regular scalar monomorphisms. -/
-
 theorem mono_unitMul_of_affineModel (R : CommRingCat.{u}) {X : Scheme.{u}}
     (e : Spec R ≅ X) (s : Γ(X, ⊤))
     (hs : e.hom.appTop.hom s ∈ nonZeroDivisors Γ(Spec R, ⊤)) : Mono (unitMul X s) := by

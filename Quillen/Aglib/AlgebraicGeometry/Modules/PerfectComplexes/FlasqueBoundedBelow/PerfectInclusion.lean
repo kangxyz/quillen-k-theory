@@ -11,7 +11,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedBe
 /-!
 # The original full flasque-to-perfect inclusion
 
-Only the two original lower-bound and flasque proof wrappers are forgotten. The actual complex and all chain maps are retained.
+Only the two original lower-bound and flasque proof wrappers are forgotten. The actual complex
+and all chain maps are retained.
 -/
 @[expose] public section
 

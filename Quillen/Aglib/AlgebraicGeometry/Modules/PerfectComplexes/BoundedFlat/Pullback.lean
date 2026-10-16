@@ -13,8 +13,8 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Flat.BoundedPullback
 /-!
 # Arbitrary pullback of bounded-flat perfect complexes
 
-The actual geometric functor preserves local perfection, upper term bounds, stalkwise flatness and inherited short exact sequences with flat quotient.
--/
+The actual geometric functor preserves local perfection, upper term bounds, stalkwise flatness and
+inherited short exact sequences with flat quotient.-/
 @[expose] public section
 
 

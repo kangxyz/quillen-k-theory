@@ -31,13 +31,11 @@ local instance standardDerivedSheaves (X : Scheme.{u}) : HasDerivedCategory.{u+1
   HasDerivedCategory.standard _
 
 /-- The right adjoint to exact flat pullback preserves actual injective module sheaves. -/
-
 theorem injective_pushforward_of_flat {Z X : Scheme.{u}} (f : Z ⟶ X) [Flat f]
     (M : Z.Modules) [Injective M] : Injective ((Scheme.Modules.pushforward f).obj M) :=
   (Scheme.Modules.pullbackPushforwardAdjunction f).map_injective M inferInstance
 
 /-- Lower-bounded termwise injective targets stay K-injective under flat direct image. -/
-
 theorem pushforward_isKInjective_of_flat {Z X : Scheme.{u}} (f : Z ⟶ X) [Flat f]
     (I : CochainComplex Z.Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n)) :
@@ -51,7 +49,6 @@ theorem pushforward_isKInjective_of_flat {Z X : Scheme.{u}} (f : Z ⟶ X) [Flat 
   exact CochainComplex.isKInjective_of_injective J a
 
 /-- The original geometric adjunction gives actual derived Hom transport at an injective model. -/
-
 def flatPushforwardDerivedHomEquiv {Z X : Scheme.{u}} (f : Z ⟶ X) [Flat f]
     (K : CochainComplex X.Modules ℤ) (I : CochainComplex Z.Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n)) :
@@ -69,7 +66,6 @@ def flatPushforwardDerivedHomEquiv {Z X : Scheme.{u}} (f : Z ⟶ X) [Flat f]
 
 /-- Original chain arrows retain their actual sheaf-adjoint image under derived transport. -/
 @[simp]
-
 theorem flatPushforwardDerivedHomEquiv_map {Z X : Scheme.{u}} (f : Z ⟶ X) [Flat f]
     (K : CochainComplex X.Modules ℤ) (I : CochainComplex Z.Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))

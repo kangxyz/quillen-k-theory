@@ -12,8 +12,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.Scalar.GlobalUnit
 /-!
 # Global units on original sheaf complexes
 
-Literal degreewise multiplication by a global unit restricts to the original perfect category and acts on actual flat pullback.
--/
+Literal degreewise multiplication by a global unit restricts to the original perfect category and
+acts on actual flat pullback.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex

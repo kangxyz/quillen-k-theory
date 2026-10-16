@@ -27,7 +27,6 @@ variable {R : CommRingCat.{u}} {U : AlgebraicGeometry.Scheme.{u}}
     (j : U ⟶ Spec R) [IsOpenImmersion j]
 
 /-- Each coefficient algebra retains its specified original pulled-back open. -/
-
 def openFunctor : Under R ⥤ AlgebraicGeometry.Scheme.{u}ᵒᵖ where
   obj a := op (openSpace j a)
   map f := (openMap j f).op
@@ -35,12 +34,10 @@ def openFunctor : Under R ⥤ AlgebraicGeometry.Scheme.{u}ᵒᵖ where
   map_comp f g := by rw [openMap_comp]; rfl
 
 /-- The affine base of the same original coefficient diagram. -/
-
 def ambientFunctor (R : CommRingCat.{u}) : Under R ⥤ AlgebraicGeometry.Scheme.{u}ᵒᵖ :=
   Under.forget R ⋙ AlgebraicGeometry.Scheme.Spec.rightOp
 
 /-- The actual inclusions give a natural transformation with the original pullback square. -/
-
 def inclusionTransformation : ambientFunctor R ⟶ openFunctor j where
   app a := (inclusion j a).op
   naturality _ _ f := by
@@ -48,12 +45,10 @@ def inclusionTransformation : ambientFunctor R ⟶ openFunctor j where
     exact (openMap_inclusion j f).symm
 
 /-- The original map, rather than a chosen comparison, is the coefficient action. -/
-
 theorem openFunctor_map_unop {a b : Under R} (f : a ⟶ b) :
     ((openFunctor j).map f).unop = openMap j f := rfl
 
 /-- The identity-algebra fiber is related to the original open by its actual projection. -/
-
 theorem openFunctor_identityProjection :
     (identityProjectionIso j).hom ≫ j =
       ((inclusionTransformation j).app (Under.mk (𝟙 R))).unop :=

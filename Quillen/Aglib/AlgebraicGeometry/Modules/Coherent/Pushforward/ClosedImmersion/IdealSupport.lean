@@ -44,13 +44,11 @@ namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.
 variable (R : CommRingCat.{u}) (I : Ideal R)
 
 /-- The actual open complement of the closed subset V(I) in Spec R. -/
-
 def openComplement : (Spec R).Opens :=
   ⟨(PrimeSpectrum.zeroLocus (I : Set R))ᶜ,
     (PrimeSpectrum.isClosed_zeroLocus (I : Set R)).isOpen_compl⟩
 
 /-- Inclusion of the actual open complement of the affine closed subscheme. -/
-
 def openMap : (openComplement R I).toScheme ⟶ Spec R := (openComplement R I).ι
 
 instance openMap_isOpenImmersion : IsOpenImmersion (openMap R I) := by
@@ -70,10 +68,8 @@ theorem openMap_range_compl :
 variable [IsNoetherianRing R]
 
 omit [IsNoetherianRing R] in
-
 /-- Actual geometric support in V(I) is the radical-annihilator condition
 on the actual finite global-section module. -/
-
 theorem finiteTypeSheavesSupportedAway_iff_le_radical_annihilator (M : FiniteTypeSheaves (Spec R)) :
     finiteTypeSheavesSupportedAway (openMap R I) M ↔
       I ≤ (Module.annihilator R ((finiteTypeSheavesSpecModuleEquivalence R).functor.obj M)).radical
@@ -87,7 +83,6 @@ theorem finiteTypeSheavesSupportedAway_iff_le_radical_annihilator (M : FiniteTyp
   rfl
 
 /-- Noetherian finite generation makes the ideal-power exponent uniform. -/
-
 theorem finiteTypeSheavesSupportedAway_iff_pow_le_annihilator (M : FiniteTypeSheaves (Spec R)) :
     finiteTypeSheavesSupportedAway (openMap R I) M ↔ ∃ n : ℕ,
       I ^ n ≤ Module.annihilator R ((finiteTypeSheavesSpecModuleEquivalence R).functor.obj M) := by
@@ -99,10 +94,8 @@ theorem finiteTypeSheavesSupportedAway_iff_pow_le_annihilator (M : FiniteTypeShe
     exact ⟨n, hn (Ideal.pow_mem_pow hr n)⟩
 
 omit [IsNoetherianRing R] in
-
 /-- Each element of I acts nilpotently on every section, with one exponent
 for the whole finite module. -/
-
 theorem finiteTypeSheavesSupportedAway_iff_elementwise_uniform (M : FiniteTypeSheaves (Spec R)) :
     finiteTypeSheavesSupportedAway (openMap R I) M ↔ ∀ r ∈ I, ∃ n : ℕ,
       ∀ m : (finiteTypeSheavesSpecModuleEquivalence R).functor.obj M, r ^ n • m = 0 := by
@@ -110,16 +103,13 @@ theorem finiteTypeSheavesSupportedAway_iff_elementwise_uniform (M : FiniteTypeSh
   simp only [SetLike.le_def, Ideal.mem_radical_iff, Module.mem_annihilator]
 
 omit [IsNoetherianRing R] in
-
 /-- Elementwise nilpotence extracted from genuine geometric support. -/
-
 theorem supported_power_annihilates (M : FiniteTypeSheaves (Spec R))
     (hM : finiteTypeSheavesSupportedAway (openMap R I) M) (r : R) (hr : r ∈ I) :
     ∃ n : ℕ, ∀ m : (finiteTypeSheavesSpecModuleEquivalence R).functor.obj M, r ^ n • m = 0 :=
   (finiteTypeSheavesSupportedAway_iff_elementwise_uniform R I M).mp hM r hr
 
 /-- One ideal-power annihilates all actual finite global sections. -/
-
 theorem finiteTypeSheavesSupportedAway_iff_uniform (M : FiniteTypeSheaves (Spec R)) :
     finiteTypeSheavesSupportedAway (openMap R I) M ↔ ∃ n : ℕ, ∀ r ∈ I ^ n,
       ∀ m : (finiteTypeSheavesSpecModuleEquivalence R).functor.obj M, r • m = 0 := by
@@ -127,9 +117,7 @@ theorem finiteTypeSheavesSupportedAway_iff_uniform (M : FiniteTypeSheaves (Spec 
   simp only [SetLike.le_def, Module.mem_annihilator]
 
 omit [IsNoetherianRing R] in
-
 /-- Annihilation by I implies genuine geometric support in V(I). -/
-
 theorem finiteTypeSheavesKilledBy_le_supportedAway :
     finiteTypeSheavesKilledBy R I ≤ finiteTypeSheavesSupportedAway (openMap R I) := by
   intro M hM
@@ -137,9 +125,7 @@ theorem finiteTypeSheavesKilledBy_le_supportedAway :
   exact ((killedBy_iff_le_annihilator I _).mp hM).trans Ideal.le_radical
 
 omit [IsNoetherianRing R] in
-
 /-- Actual quotient closed pushforward is supported on its closed subset. -/
-
 theorem coherentPushforward_supported (M : FiniteTypeSheaves (Spec
   (Pushforward.ClosedImmersion.Ideal.closedRing R I))) :
     finiteTypeSheavesSupportedAway (openMap R I)

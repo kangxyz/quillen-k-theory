@@ -24,7 +24,6 @@ universe u
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Affine direct image preserves the original augmentation of every quasicoherent resolution. -/
-
 theorem quasiIso_pushforward_injectiveResolution {Z X : Scheme.{u}}
     (f : Z ⟶ X) [IsAffineHom f] (M : Z.Modules) [M.IsQuasicoherent]
     (I : InjectiveResolution M) :
@@ -33,7 +32,6 @@ theorem quasiIso_pushforward_injectiveResolution {Z X : Scheme.{u}}
     (affinePushforward_injectiveResolution_exact_succ f M I)
 
 /-- The original integer-indexed injective augmentation remains a quasi-isomorphism. -/
-
 theorem quasiIso_pushforward_injectiveResolution_int {Z X : Scheme.{u}}
     (f : Z ⟶ X) [IsAffineHom f] (M : Z.Modules) [M.IsQuasicoherent]
     (I : InjectiveResolution M) :

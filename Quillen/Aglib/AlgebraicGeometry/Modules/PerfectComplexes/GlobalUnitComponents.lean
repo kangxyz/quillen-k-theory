@@ -11,8 +11,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.GlobalUni
 /-!
 # Original flat-pullback unit components
 
-The inverse unit and actual natural-automorphism components retain the original functor and geometric unit.
--/
+The inverse unit and actual natural-automorphism components retain the original functor and
+geometric unit.-/
 @[expose] public section
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

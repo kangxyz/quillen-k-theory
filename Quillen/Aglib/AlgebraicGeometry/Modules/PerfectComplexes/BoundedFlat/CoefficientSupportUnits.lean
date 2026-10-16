@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportLocalizationModels
+
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.CoefficientSectionUnits
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.CoefficientSupportSections
 public import Quillen.Aglib.CategoryTheory.Functor.IdentityAutomorphismNaturality
@@ -12,7 +14,8 @@ public import Quillen.Aglib.CategoryTheory.Functor.IdentityAutomorphismNaturalit
 /-!
 # Actual units on the original localization-support sections
 
-The specified coefficient unit and forward Laurent automorphism retain the same original supported section maps and coefficient preservation.
+The specified coefficient unit and forward Laurent automorphism retain the same original
+supported section maps and coefficient preservation.
 -/
 @[expose] public section
 

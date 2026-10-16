@@ -14,7 +14,9 @@ public import Quillen.Aglib.CategoryTheory.ObjectProperty.LiftComposition
 /-!
 # Actual supported sections on the joint geometric family
 
-The original restricted acyclicity defines supported sections. Actual evaluation is an equivalence, and every original commuting support square gives the literal reindexing functor, its geometric comparison and its identity/composition laws.
+The original restricted acyclicity defines supported sections. Actual evaluation is an
+equivalence, and every original commuting support square gives the literal reindexing functor,
+its geometric comparison and its identity/composition laws.
 -/
 @[expose] public section
 

@@ -15,7 +15,9 @@ public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.QuasiIso
 /-!
 # Lower-bounded flasque perfect complexes and Godement totalization
 
-The original full category retains locally perfect, lower-bounded complexes with flasque terms. Godement totalization preserves the stated strict lower bound, inherited exact sequences, and the original augmentation transformations.
+The original full category retains locally perfect, lower-bounded complexes with flasque terms.
+Godement totalization preserves the stated strict lower bound, inherited exact sequences, and
+the original augmentation transformations.
 -/
 @[expose] public section
 

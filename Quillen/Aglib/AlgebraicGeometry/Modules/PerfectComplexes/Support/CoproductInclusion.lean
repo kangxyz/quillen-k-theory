@@ -15,14 +15,12 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.P
 /-!
 # Forgetting support and binary coproducts
 
-The actual supported full-subcategory inclusion retains its underlying complexes, chain maps and selected coproduct comparison.
+The actual supported full-subcategory inclusion retains its underlying complexes, chain maps
+and selected coproduct comparison.
 -/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex
-
-open Quillen.Waldhausen
-
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -31,8 +29,6 @@ universe u v w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.OpenFunctorNaturality
-open Waldhausen 
-
 variable {U X V Y : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ Y)
   [IsOpenImmersion j] [IsOpenImmersion k]
 
@@ -40,9 +36,8 @@ variable {U X V Y : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ Y)
 def supportInclusion : (perfectSupported j).FullSubcategory ⥤ Perfect X :=
   ObjectProperty.ιOfLE (show perfectSupported j ≤ locallyPerfect X from fun _ h => h.1)
 
-instance supportInclusion_additive : (supportInclusion j).Additive := by
-  unfold supportInclusion
-  infer_instance
+instance supportInclusion_additive : (supportInclusion j).Additive where
+  map_add := by intros; rfl
 
 instance supportInclusion_preservesBinaryCoproducts :
     PreservesColimitsOfShape (Discrete WalkingPair) (supportInclusion j) := by

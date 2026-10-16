@@ -10,13 +10,10 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.P
 /-!
 # The actual identity-base support square
 
-An inequality of support opens retains its original inclusion and identity ambient map, with the unchanged compact-ambient wrapper.
+An inequality of support opens retains its original inclusion and identity ambient map, with
+the unchanged compact-ambient wrapper.
 -/
 @[expose] public section
-
-
-
-open AlgebraicGeometry.Scheme.Modules.Complex
 
 
 

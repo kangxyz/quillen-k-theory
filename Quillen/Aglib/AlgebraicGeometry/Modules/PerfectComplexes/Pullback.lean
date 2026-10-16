@@ -21,14 +21,15 @@ public import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
 /-!
 # Arbitrary pullback of strict perfect complexes
 
-Termwise geometric pullback preserves strict perfectness, actual quasi-isomorphisms and inherited exact sequences. Identity, composition, and open-restriction comparisons retain their original maps.
+Termwise geometric pullback preserves strict perfectness, actual quasi-isomorphisms and
+inherited exact sequences. Identity, composition, and open-restriction comparisons retain their
+original maps.
 -/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex
 open CategoryTheory.ExactCategory
 
-open Quillen
 
 
 

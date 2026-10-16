@@ -116,7 +116,7 @@ lemma freeBaseChangeIso_matrix_action (f : R →+* S) (n : ℕ)
     apply (cancel_mono eR.hom).1
     simp only [Category.assoc, Iso.inv_hom_id, Category.comp_id]
     rw [freeImageIso_matrix_action]
-    simp
+    simp only [eR, Iso.inv_hom_id_assoc]
   have hF : F.map (freeAutEquiv R n g).hom ≫ F.map eR.inv =
       F.map eR.inv ≫ F.map (imageFunctor.map a) := by
     rw [← F.map_comp, hR, F.map_comp]

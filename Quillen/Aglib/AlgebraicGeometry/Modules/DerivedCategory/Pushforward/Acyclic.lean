@@ -29,12 +29,10 @@ local instance acyclicDerivedPushforwardStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
 
 /-- An actual module sheaf placed in degree zero in bounded-below complexes. -/
-
 def singleZeroPlus (X : Scheme.{u}) (M : X.Modules) : CochainComplex.Plus X.Modules :=
   ⟨(CochainComplex.singleFunctor X.Modules 0).obj M, 0, inferInstance⟩
 
 /-- The original right-derived unit is invertible for an actual acyclic resolution. -/
-
 theorem isIso_derivedPushforwardPlusUnit_single_of_resolution {Z X : Scheme.{u}}
     (f : Z ⟶ X) (M : Z.Modules) (I : InjectiveResolution M)
     (hI : QuasiIso (((Scheme.Modules.pushforward f).mapHomologicalComplex (.up ℤ)).map I.ι')) :
@@ -78,13 +76,11 @@ theorem isIso_derivedPushforwardPlusUnit_single_of_resolution {Z X : Scheme.{u}}
   exact IsIso.of_isIso_comp_right _ ((DerivedCategory.Plus.Q ⋙ derivedPushforwardPlus f).map q)
 
 /-- An original sheaf isomorphism placed in degree zero in bounded-below complexes. -/
-
 def singleZeroPlusIso {X : Scheme.{u}} {M N : X.Modules} (e : M ≅ N) :
     singleZeroPlus X M ≅ singleZeroPlus X N :=
   (CochainComplex.plus X.Modules).isoMk ((CochainComplex.singleFunctor X.Modules 0).mapIso e)
 
 /-- Termwise direct image of a single sheaf retains the original single-complex comparison. -/
-
 def pushforwardSingleZeroPlusIso {Z X : Scheme.{u}} (f : Z ⟶ X) (M : Z.Modules) :
     (Scheme.Modules.pushforward f).mapCochainComplexPlus.obj (singleZeroPlus Z M) ≅
       singleZeroPlus X ((Scheme.Modules.pushforward f).obj M) :=

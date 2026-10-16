@@ -34,7 +34,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 variable {X Y : Scheme.{u}}
 
 /-- Tensoring with a pulled-back affine vector bundle preserves an original short exact sequence. -/
-
 theorem tensor_shortExact_pullback_affine_vectorBundle (R : CommRingCat.{u})
     (f : X ⟶ Spec R) (M : (Spec R).Modules) [IsFiniteLocallyFree (Spec R) M]
     (S : ShortComplex X.Modules) (hS : S.ShortExact) :

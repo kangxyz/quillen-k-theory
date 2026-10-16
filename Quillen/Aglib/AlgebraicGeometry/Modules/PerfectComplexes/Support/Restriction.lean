@@ -17,12 +17,10 @@ public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-!
 # Exact restriction with a prescribed support
 
-Derived vanishing is actual acyclicity. Literal open restriction preserves the support on the original inverse-image open and the inherited short exact sequences.
+Derived vanishing is actual acyclicity. Literal open restriction preserves the support on the
+original inverse-image open and the inherited short exact sequences.
 -/
 @[expose] public section
-
-open Quillen.Waldhausen
-
 
 open AlgebraicGeometry.Scheme.Modules.Complex
 
@@ -37,7 +35,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
 attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes
-open Waldhausen
 attribute [local instance] HasDerivedCategory.standard Abelian.hasFiniteBiproducts
 
 /-- Original derived vanishing is precisely actual acyclicity of the complex. -/

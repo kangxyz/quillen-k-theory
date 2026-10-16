@@ -28,7 +28,6 @@ local instance openMateStandard (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Mo
   HasDerivedCategory.standard _
 
 /-- Open pullback preserves injectives via the original restriction iso. -/
-
 instance pullback_preservesInjectiveObjects_of_open {U X : Scheme.{u}}
     (j : U ⟶ X) [IsOpenImmersion j] : (Scheme.Modules.pullback j).PreservesInjectiveObjects where
   injective_obj {M} hM := Injective.of_iso ((Scheme.Modules.restrictFunctorIsoPullback j).app M)
@@ -39,7 +38,6 @@ variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (f : U ⟶ X) (j : V
 
 /-- The original derived flat mate is invertible on all bounded-below complexes
 under open base change. -/
-
 theorem isIso_derivedFlatBaseChangeMap_of_open :
     IsIso (derivedFlatBaseChangeMap a b f j h) := by
   let : IsOpenImmersion a := MorphismProperty.of_isPullback h.flip inferInstance

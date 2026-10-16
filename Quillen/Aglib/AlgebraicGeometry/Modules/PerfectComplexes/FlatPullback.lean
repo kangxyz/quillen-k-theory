@@ -19,8 +19,8 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Pullback
 /-!
 # Flat pullback of locally perfect complexes
 
-Actual flat termwise pullback descends to the existing derived localization and preserves local strict models. The inherited exact functor and all geometric comparison isomorphisms are retained.
--/
+Actual flat termwise pullback descends to the existing derived localization and preserves local
+strict models. The inherited exact functor and all geometric comparison isomorphisms are retained.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex

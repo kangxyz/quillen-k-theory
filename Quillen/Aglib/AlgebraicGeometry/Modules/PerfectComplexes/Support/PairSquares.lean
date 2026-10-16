@@ -11,8 +11,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.P
 /-!
 # Actual squares of support and localization opens
 
-The given two commuting open squares induce the original inverse-image and union support squares. Every scheme map, inequality and compact-ambient wrapper is retained.
--/
+The given two commuting open squares induce the original inverse-image and union support squares.
+Every scheme map, inequality and compact-ambient wrapper is retained.-/
 @[expose] public section
 
 

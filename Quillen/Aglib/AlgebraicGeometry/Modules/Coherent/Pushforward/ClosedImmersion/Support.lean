@@ -35,7 +35,6 @@ namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.
 variable (R : CommRingCat.{u}) (I : Ideal R)
 
 /-- The actual quotient closed immersion has precisely the zero-locus image. -/
-
 theorem closedMap_range : Set.range (Pushforward.ClosedImmersion.Ideal.closedMap R I) =
   PrimeSpectrum.zeroLocus (I : Set R) := by
   change Set.range (PrimeSpectrum.comap (Ideal.Quotient.mk I)) = _
@@ -49,12 +48,10 @@ namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 variable {Z X : Scheme.{u}} (i : Z ⟶ X) [IsClosedImmersion i]
 
 /-- The actual open complement of the closed immersion's underlying image. -/
-
 def openComplement : X.Opens :=
   ⟨(Set.range i)ᶜ, i.isClosedEmbedding.isClosed_range.isOpen_compl⟩
 
 /-- The open immersion of the complement of the closed image of `i` into `X`. -/
-
 def openMap : (openComplement i).toScheme ⟶ X := (openComplement i).ι
 
 instance : IsOpenImmersion (openMap i) := by unfold openMap; infer_instance
@@ -65,18 +62,14 @@ instance : IsOpenImmersion (openMap i) := by unfold openMap; infer_instance
 variable [IsLocallyNoetherian X]
 
 omit [IsLocallyNoetherian X] in
-
 /-- Support on the actual closed image is precisely vanishing on its open complement. -/
-
 theorem supported_iff (M : FiniteTypeSheaves X) :
     finiteTypeSheavesSupportedAway (openMap i) M ↔ AlgebraicGeometry.Scheme.Modules.support M.obj ⊆
       Set.range i := by
   rw [finiteTypeSheavesSupportedAway_iff_support_subset, openMap_range, compl_compl]
 
 omit [IsLocallyNoetherian X] in
-
 /-- Actual closed support pulls back to the actual closed image on every open chart. -/
-
 theorem supported_restrict {V : Scheme.{u}}
     (a : V ⟶ X) [IsOpenImmersion a] (M : FiniteTypeSheaves X)
     (hM : finiteTypeSheavesSupportedAway (openMap i) M) :
@@ -90,9 +83,7 @@ theorem supported_restrict {V : Scheme.{u}}
 variable [IsLocallyNoetherian Z]
 
 omit [IsLocallyNoetherian X] [IsLocallyNoetherian Z] in
-
 /-- The actual closed pushforward is supported on the genuine closed image. -/
-
 theorem coherentPushforward_supported (M : FiniteTypeSheaves Z) :
     finiteTypeSheavesSupportedAway (openMap i) ((finiteTypePushforward i).obj M) := by
   have : IsEmpty (CategoryTheory.Limits.pullback i (openMap i) : Scheme) :=
@@ -105,9 +96,7 @@ theorem coherentPushforward_supported (M : FiniteTypeSheaves Z) :
   exact hz'.of_iso ((openBaseChange i (openMap i)).app M.obj)
 
 omit [IsLocallyNoetherian Z] in
-
 /-- Every actual closed-image coherent object has genuine closed support. -/
-
 theorem coherentKilled_le_supported :
     coherentKilled i ≤ finiteTypeSheavesSupportedAway (openMap i) := by
   rintro M ⟨N, ⟨e⟩⟩

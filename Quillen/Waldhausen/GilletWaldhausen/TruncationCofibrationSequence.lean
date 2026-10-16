@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Waldhausen.ComplexSubcategory
+
 public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.TruncationTransformations
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor

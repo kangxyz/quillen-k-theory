@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.PairPullback
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionWaldhausen
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SupportedSectionCoefficientIso
 public import Quillen.Waldhausen.ExtensionCategory.ExactTransport

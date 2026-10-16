@@ -14,7 +14,8 @@ public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-!
 # Exact category of the supported derived restriction image
 
-Actual support and the prescribed supported-roof hypothesis give the original shift, zero, isomorphism, extension and finite-product closure, full inclusion and exact corestriction.
+Actual support and the prescribed supported-roof hypothesis give the original shift, zero,
+isomorphism, extension and finite-product closure, full inclusion and exact corestriction.
 -/
 @[expose] public section
 

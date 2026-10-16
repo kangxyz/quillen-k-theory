@@ -22,7 +22,7 @@ open CategoryTheory.ExactCategory
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits HomologicalComplex
+open CategoryTheory CategoryTheory.Limits
 universe u v
 namespace Quillen.Waldhausen.Fibration
 

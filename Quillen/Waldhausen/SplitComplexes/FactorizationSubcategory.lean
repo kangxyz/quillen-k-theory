@@ -8,6 +8,7 @@ module
 
 public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.Subcategory
 public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Quillen.Waldhausen.SplitComplexes.ExactSequences
 public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.FactorizationQuotient
 
 /-!
@@ -48,7 +49,6 @@ variable {A : Type u} [Category.{v} A] [Abelian A]
 
 include hcone
 
-omit [P.ContainsZero] [P.IsClosedUnderIsomorphisms] [P.IsClosedUnderFiniteProducts] in
 /-- Every map in the full subcategory factors as an actual split cofibration
 followed by an actual quasi-isomorphism in the same category. Its cofibration
 quotient is the mapping cone of the negative original map. -/

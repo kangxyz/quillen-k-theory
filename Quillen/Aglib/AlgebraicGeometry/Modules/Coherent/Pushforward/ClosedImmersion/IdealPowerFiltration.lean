@@ -50,17 +50,14 @@ open FiniteModuleLocalization.IdealClosedSupport
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (I : Ideal R)
 
 /-- The actual inverse affine equivalence is exact. -/
-
 def associatedCoherentExact :
     ExactFunctor (finiteModuleExactStructure.{u, u} R) (coherentExactStructure (Spec R)) where
   toFunctor := (finiteTypeSheavesSpecModuleEquivalence R).inverse
   map_conflation _ h := h.map_of_exact _
 
 omit [IsNoetherianRing R] in
-
 /-- The actual associated coherent sheaf of an I-annihilated finite module
 is itself annihilated by I. -/
-
 theorem associatedCoherent_killed (M : FGModuleCat.{u} R) (hM : killedBy I M) :
     finiteTypeSheavesKilledBy R I ((finiteTypeSheavesSpecModuleEquivalence R).inverse.obj M) :=
   (killedBy I).prop_of_iso ((finiteTypeSheavesSpecModuleEquivalence R).counitIso.app M).symm hM
@@ -68,7 +65,6 @@ theorem associatedCoherent_killed (M : FGModuleCat.{u} R) (hM : killedBy I M) :
 /-- Every actual coherent sheaf supported on V(I) has its genuine finite
 ideal-power filtration, transported from actual I-power submodules of its
 finite global-section module and ending at the original sheaf. -/
-
 theorem coherentIdealPowerFiltration (M : FiniteTypeSheaves (Spec R))
     (hM : finiteTypeSheavesSupportedAway (openMap R I) M) :
     Nonempty ((coherentExactStructure (Spec R)).Filtration (finiteTypeSheavesKilledBy R I) M) := by

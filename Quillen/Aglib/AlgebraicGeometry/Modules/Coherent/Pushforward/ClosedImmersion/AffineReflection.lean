@@ -55,7 +55,6 @@ end Quillen.FiniteModuleLocalization.IdealClosedSupport
 namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 
 /-- Scheme isomorphisms give actual coherent restriction equivalences. -/
-
 def coherentIsoEquivalence {Z X : Scheme.{u}} (e : Z ≅ X) :
     FiniteTypeSheaves Z ≌ FiniteTypeSheaves X :=
   CategoryTheory.Equivalence.mk (finiteTypeSheavesRestriction e.inv) (finiteTypeSheavesRestriction
@@ -76,7 +75,6 @@ variable {Z : Scheme.{u}} [IsLocallyNoetherian Z]
   (i : Z ⟶ Spec R) [IsClosedImmersion i]
 
 /-- Actual closed pushforward with affine target is full. -/
-
 instance coherentPushforward_affine_full : (coherentPushforward i).Full := by
   obtain ⟨I, e, hi⟩ := (IsClosedImmersion.Spec_iff (f := i)).mp inferInstance
   have : (finiteTypeSheavesRestriction e.inv).IsEquivalence := (coherentIsoEquivalence
@@ -84,10 +82,8 @@ instance coherentPushforward_affine_full : (coherentPushforward i).Full := by
   exact Functor.Full.of_iso (affinePresentationComparison R i I e hi).symm
 
 omit [IsLocallyNoetherian Z] [IsNoetherianRing R] in
-
 /-- The actual essential image is exactly annihilation by the ideal in an
 actual quotient presentation of the closed immersion. -/
-
 theorem coherentPushforward_essImage_iff (I : Ideal R)
     (e : Z ≅ Spec (Pushforward.ClosedImmersion.Ideal.closedRing R I)) (hi : i = e.hom ≫
       Pushforward.ClosedImmersion.Ideal.closedMap R I)
@@ -131,7 +127,6 @@ theorem coherentPushforward_essImage_iff (I : Ideal R)
           (killedBy I).ι.mapIso ((closedEquivalence I).counitIso.app Q))
 
 /-- The actual affine closed essential image is closed under quotients. -/
-
 instance coherentPushforward_affine_essImage_quotients :
     (coherentPushforward i).essImage.IsClosedUnderQuotients where
   prop_of_epi {M N} f hf hM := by
@@ -145,7 +140,6 @@ instance coherentPushforward_affine_essImage_quotients :
 
 /-- The actual affine closed pullback unit is epic, because its genuine
 right adjoint has quotient-closed essential image. -/
-
 instance coherentAdjunction_affine_unit_epi (M : FiniteTypeSheaves (Spec R)) :
     Epi ((coherentAdjunction i).unit.app M) :=
   ReflectorDevissage.unit_epi_of_essImage_quotient_closed (coherentAdjunction i) M

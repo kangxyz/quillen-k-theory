@@ -14,8 +14,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.Pushforward.Fi
 /-!
 # Functoriality of finite flat vector-bundle direct image
 
-The original sheaf direct-image comparisons lift to identity, composition and open base change for finite flat vector-bundle pushforward.
--/
+The original sheaf direct-image comparisons lift to identity, composition and open base change for
+finite flat vector-bundle pushforward.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules
@@ -36,7 +36,6 @@ variable {X Y Z : Scheme.{u}}
   [IsLocallyNoetherian X] [IsLocallyNoetherian Y] [IsLocallyNoetherian Z]
 
 /-- Identity comparison inherited from the actual module-sheaf direct image. -/
-
 def vectorBundlePushforwardIdIso (X : Scheme.{u}) [IsLocallyNoetherian X] :
     vectorBundlePushforward (𝟙 X) ≅ 𝟭 (FiniteLocallyFree X) :=
   Functor.fullyFaithfulCancelRight (finiteLocallyFree X).ι
@@ -44,7 +43,6 @@ def vectorBundlePushforwardIdIso (X : Scheme.{u}) [IsLocallyNoetherian X] :
       Functor.rightUnitor _)
 
 /-- Composition comparison retains the original geometric direct images. -/
-
 def vectorBundlePushforwardCompIso (f : X ⟶ Y) (g : Y ⟶ Z)
     [AlgebraicGeometry.IsFinite f] [Flat f] [AlgebraicGeometry.IsFinite g] [Flat g] :
     vectorBundlePushforward f ⋙ vectorBundlePushforward g ≅ vectorBundlePushforward (f ≫ g) :=
@@ -52,7 +50,6 @@ def vectorBundlePushforwardCompIso (f : X ⟶ Y) (g : Y ⟶ Z)
     (Functor.isoWhiskerLeft (finiteLocallyFree X).ι (Scheme.Modules.pushforwardComp f g))
 
 /-- The original open base-change isomorphism restricts to vector bundles. -/
-
 def vectorBundlePushforwardOpenBaseChange (f : X ⟶ Y)
     [AlgebraicGeometry.IsFinite f] [Flat f]
     {V : Scheme.{u}} [IsLocallyNoetherian V] (j : V ⟶ Y) [IsOpenImmersion j] :

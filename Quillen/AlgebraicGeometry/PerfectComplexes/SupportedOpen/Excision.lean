@@ -12,6 +12,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.E
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.ExtensionByZero
 public import Quillen.Waldhausen.SConstruction.WeakNaturalTransformationBased
+public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Restriction
+public import Quillen.Waldhausen.Functoriality.KMap
 
 /-!
 # Genuine support excision on the original S-construction and K-groups

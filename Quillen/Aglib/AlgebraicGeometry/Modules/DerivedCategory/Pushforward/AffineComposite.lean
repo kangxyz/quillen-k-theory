@@ -38,7 +38,6 @@ local instance affineCompositeDerivedStandard (X : Scheme.{u}) :
   HasDerivedCategory.standard _
 
 /-- A single affine direct image is acyclic for a second map when the composite is affine. -/
-
 theorem isIso_derivedPushforwardPlusUnit_pushforward_single {X Y Z : Scheme.{u}}
     (j : X ⟶ Y) (f : Y ⟶ Z) [IsAffineHom j] [IsAffineHom (j ≫ f)]
     (M : X.Modules) [M.IsQuasicoherent] :

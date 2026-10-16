@@ -7,6 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.Regular.SmallComparison
+public import Quillen.AlgebraicGeometry.Scheme.Regular.Field
 public import Quillen.Aglib.RingTheory.RegularLocalRing.LowDimension
 
 /-!

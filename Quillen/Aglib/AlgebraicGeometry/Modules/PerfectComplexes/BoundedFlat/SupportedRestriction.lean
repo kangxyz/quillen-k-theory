@@ -13,7 +13,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Pullback
 /-!
 # Supported restriction and bounded-flat pullback
 
-The literal original supported inclusions compare restriction with the actual inverse-image pair pullback.
+The literal original supported inclusions compare restriction with the actual inverse-image
+pair pullback.
 -/
 @[expose] public section
 

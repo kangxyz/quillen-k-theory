@@ -27,7 +27,6 @@ universe u
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Actual direct image and open restriction in a pointwise cartesian open square. -/
-
 def openPushforwardBaseChangeIso {W U V X : Scheme.{u}}
     (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]

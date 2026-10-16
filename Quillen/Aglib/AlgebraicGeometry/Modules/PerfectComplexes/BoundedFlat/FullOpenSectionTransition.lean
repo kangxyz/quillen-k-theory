@@ -11,7 +11,8 @@ public import Quillen.Aglib.CategoryTheory.FiberedCategory.CocartesianSectionTra
 /-!
 # Original full-open evaluation transition
 
-Coefficient reindexing compares identity evaluation with the original actual geometric pullback by the same section transition.
+Coefficient reindexing compares identity evaluation with the original actual geometric pullback
+by the same section transition.
 -/
 @[expose] public section
 noncomputable section

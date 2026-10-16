@@ -9,7 +9,6 @@ module
 public import Quillen.Aglib.CategoryTheory.ExactCategory.SpecialFractions
 
 public import Aglib.CategoryTheory.ExactCategory.Basic
-public import Quillen.Aglib.CategoryTheory.ExactCategory.SpecialFractions
 public import Mathlib.CategoryTheory.ComposableArrows.Basic
 
 /-!

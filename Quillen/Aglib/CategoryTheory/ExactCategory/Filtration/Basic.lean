@@ -86,7 +86,9 @@ theorem additiveInvariant_eq_sum {A : Type w} [AddCommGroup A] (f : C → A)
     (hf : E.IsAdditiveInvariant f) {X : C} (F : E.Filtration P X) :
     f X = (F.factors.map f).sum := by
   induction F with
-  | zero hX => simpa using (hf.iso (hX.iso (isZero_zero C))).trans hf.zero
+  | zero hX =>
+    simpa using (IsAdditiveInvariant.iso E hf (hX.iso (isZero_zero C))).trans
+      (IsAdditiveInvariant.zero E hf)
   | step S hS previous hP ih =>
     rw [hf S hS, ih]
     simp

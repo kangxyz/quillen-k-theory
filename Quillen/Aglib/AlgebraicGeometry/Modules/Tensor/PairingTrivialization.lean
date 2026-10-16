@@ -18,7 +18,6 @@ sections, retaining the native sheafified tensor and unitor maps.
 -/
 
 @[expose] public section
-open Quillen
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -30,12 +30,10 @@ universe u
 namespace AlgebraicGeometry.Scheme.PolynomialLaurent
 
 /-- The actual affine zero section induced by polynomial evaluation at zero. -/
-
 def polynomialZero (R : CommRingCat.{u}) : Spec R ⟶ Spec (.of (Polynomial R)) :=
   Spec.map (CommRingCat.ofHom (Polynomial.evalRingHom (0 : R)))
 
 @[reassoc (attr := simp)]
-
 theorem polynomialZero_projection (R : CommRingCat.{u}) :
     polynomialZero R ≫ polynomialProjection R = 𝟙 (Spec R) := by
   change Spec.map _ ≫ Spec.map _ = _
@@ -53,14 +51,12 @@ end AlgebraicGeometry.Scheme.PolynomialLaurent
 namespace AlgebraicGeometry.Scheme.Bass
 
 /-- Zero evaluation on the same native polynomial product over an arbitrary scheme. -/
-
 def nativePolynomialZero (X : AlgebraicGeometry.Scheme.{u}) :
     X ⟶ (baseProductFunctor (PolynomialLaurent.polynomialProjection integerRing)).obj X :=
   pullback.lift (𝟙 X) (toIntegerBase X ≫ PolynomialLaurent.polynomialZero integerRing)
     (by simp)
 
 @[reassoc (attr := simp)]
-
 theorem nativePolynomialZero_projection (X : AlgebraicGeometry.Scheme.{u}) :
     nativePolynomialZero X ≫
       (baseProductProjection (PolynomialLaurent.polynomialProjection integerRing)).app X =
@@ -68,14 +64,12 @@ theorem nativePolynomialZero_projection (X : AlgebraicGeometry.Scheme.{u}) :
   simp [nativePolynomialZero, baseProductProjection]
 
 @[reassoc]
-
 theorem nativePolynomialZero_naturality {X Y : AlgebraicGeometry.Scheme.{u}} (f : X ⟶ Y) :
     f ≫ nativePolynomialZero Y = nativePolynomialZero X ≫
       (baseProductFunctor (PolynomialLaurent.polynomialProjection integerRing)).map f := by
   apply pullback.hom_ext <;> simp [nativePolynomialZero, baseProductFunctor]
 
 /-- The natural zero section of the original endofunctor on quasi-compact schemes. -/
-
 def polynomialZero : 𝟭 QuasiCompactSchemes.{u} ⟶ polynomialFunctor where
   app X := ⟨nativePolynomialZero X.obj⟩
   naturality {X Y} f := by
@@ -83,14 +77,12 @@ def polynomialZero : 𝟭 QuasiCompactSchemes.{u} ⟶ polynomialFunctor where
     exact nativePolynomialZero_naturality f.hom
 
 @[reassoc (attr := simp)]
-
 theorem polynomialZero_projection (X : QuasiCompactSchemes.{u}) :
     polynomialZero.app X ≫ polynomialProjection.app X = 𝟙 X := by
   apply ObjectProperty.hom_ext
   exact nativePolynomialZero_projection X.obj
 
 /-- The original projection has the same zero section at the functor level. -/
-
 theorem polynomialZero_comp_projection : polynomialZero ≫ polynomialProjection = 𝟙 _ := by
   ext X
   exact congrArg (fun f => f.hom) (polynomialZero_projection X)

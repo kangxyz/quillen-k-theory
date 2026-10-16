@@ -14,8 +14,9 @@ public import Aglib.AlgebraicGeometry.Modules.Coherent.Restriction
 /-!
 # Projective dimension on actual affine charts
 
-Restriction and global sections give an exact finite chart-module functor. Finite local freeness is equivalent to chart-module projectivity, and vector-bundle quotients lower projective dimension of coherent syzygies.
--/
+Restriction and global sections give an exact finite chart-module functor. Finite local freeness is
+equivalent to chart-module projectivity, and vector-bundle quotients lower projective dimension of
+coherent syzygies.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules
@@ -37,7 +38,6 @@ variable {X : AlgebraicGeometry.Scheme.{u}} [IsLocallyNoetherian X]
 
 /-- Restrict a genuine coherent sheaf to an affine chart, take its finite
 module under the tilde equivalence, and forget finiteness. -/
-
 def coherentChartModule : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X ⥤
   ModuleCat.{u} R := by
   letI := AlgebraicGeometry.Scheme.Modules.Coherent.noetherian_affineChart R j
@@ -56,7 +56,6 @@ instance coherentChartModule_additive : (coherentChartModule R j).Additive := by
 
 /-- Actual global coherent short exact sequences stay exact in the module
 category of an affine chart. -/
-
 theorem coherentChartModule_shortExact (S : ShortComplex
   (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X))
     (hS : S.ShortExact) : (S.map (coherentChartModule R j)).ShortExact := by
@@ -69,7 +68,6 @@ theorem coherentChartModule_shortExact (S : ShortComplex
 
 /-- Finite local freeness on the affine chart is exactly projectivity of
 its finite section module, expressed in the ambient module category. -/
-
 theorem coherentChartModule_projective_iff (M :
   AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) :
     Projective ((coherentChartModule R j).obj M) ↔
@@ -88,7 +86,6 @@ theorem coherentChartModule_projective_iff (M :
 
 /-- A global vector bundle gives a projective module on every affine chart;
 no global sheaf-projectivity assertion is made. -/
-
 theorem coherentChartModule_projective (M :
   AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X)
     (hM : coherentVectorBundle X M) : Projective ((coherentChartModule R j).obj M) := by
@@ -97,7 +94,6 @@ theorem coherentChartModule_projective (M :
 
 /-- Each genuine global vector-bundle cover drops the local projective
 dimension of its coherent kernel by one on every affine chart. -/
-
 theorem coherentChartModule_syzygy (S : ShortComplex
   (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X))
     (hS : S.ShortExact) (hP : coherentVectorBundle X S.X₂) (n : ℕ)
@@ -110,7 +106,6 @@ theorem coherentChartModule_syzygy (S : ShortComplex
     (coherentChartModule_projective R j S.X₂ hP)).mp hdim
 
 /-- The actual chart module is finite. -/
-
 instance coherentChartModule_finite (M :
   AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) :
     Module.Finite R ((coherentChartModule R j).obj M) := by

@@ -18,9 +18,9 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w
-open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry Opposite ModuleCat HomologicalComplex
+open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
+open Opposite ModuleCat HomologicalComplex
 open AlgebraicGeometry.Scheme.Modules.Complex AlgebraicGeometry.Scheme.Modules
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
@@ -41,9 +41,9 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w
-open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry Opposite ModuleCat HomologicalComplex
+open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
+open Opposite ModuleCat HomologicalComplex
 open AlgebraicGeometry.Scheme.Modules.Complex AlgebraicGeometry.Scheme.Modules
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts

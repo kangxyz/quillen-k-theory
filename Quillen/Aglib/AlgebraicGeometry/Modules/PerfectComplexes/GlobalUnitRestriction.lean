@@ -10,7 +10,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.ScalarRes
 /-!
 # Global-unit automorphisms under open restriction
 
-The perfect scalar of a unit is its original automorphism and the unchanged restriction functor preserves it.
+The perfect scalar of a unit is its original automorphism and the unchanged restriction functor
+preserves it.
 -/
 @[expose] public section
 

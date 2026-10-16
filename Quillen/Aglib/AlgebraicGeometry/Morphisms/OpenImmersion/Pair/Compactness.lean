@@ -23,7 +23,6 @@ universe u
 namespace AlgebraicGeometry.Scheme.AffineOpenPair
 
 /-- Every original fixed pullback open is compact when the initial open is compact. -/
-
 theorem compactSpace_openSpace {R : CommRingCat.{u}} {U : AlgebraicGeometry.Scheme.{u}}
     (j : U ⟶ Spec R) [CompactSpace U] (a : Under R) : CompactSpace (openSpace j a) := by
   let : QuasiCompact j := quasiCompact_of_compactSpace j

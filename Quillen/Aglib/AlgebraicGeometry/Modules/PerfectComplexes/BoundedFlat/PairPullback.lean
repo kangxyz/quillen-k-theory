@@ -18,8 +18,8 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Pullback
 /-!
 # Supported bounded-flat pullback on open-pair squares
 
-Every actual commuting open-pair square preserves the original support, inherited exact sequences, and quasi-isomorphisms detected on the open. No flatness, cartesianness or compactness is added.
--/
+Every actual commuting open-pair square preserves the original support, inherited exact sequences,
+and quasi-isomorphisms detected on the open. No flatness, cartesianness or compactness is added.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex

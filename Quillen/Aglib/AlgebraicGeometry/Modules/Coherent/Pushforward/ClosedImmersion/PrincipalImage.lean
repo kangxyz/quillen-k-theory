@@ -48,7 +48,6 @@ variable (R : CommRingCat.{u}) [IsNoetherianRing R] (f : R)
 
 /-- Annihilation by f on actual affine coherent sheaves, tested on the
 actual global-section module. This is stronger than power-torsion support. -/
-
 def finiteTypeSheavesKilledBy : ObjectProperty (FiniteTypeSheaves (Spec R)) :=
   (killedBy f).inverseImage (finiteTypeSheavesSpecModuleEquivalence R).functor
 
@@ -64,15 +63,12 @@ instance finiteTypeSheavesKilledBy_isoClosed : (finiteTypeSheavesKilledBy R
   infer_instance
 
 /-- The affine global-section equivalence restricts to annihilated objects. -/
-
 def killedModuleEquivalence :
     (finiteTypeSheavesKilledBy R f).FullSubcategory ≌ (killedBy f).FullSubcategory :=
   (finiteTypeSheavesSpecModuleEquivalence R).congrFullSubcategory rfl
 
 omit [IsNoetherianRing R] in
-
 /-- The actual closed pushforward is annihilated by the defining element. -/
-
 theorem coherentPushforward_killed (M : FiniteTypeSheaves (Spec
   (Pushforward.ClosedImmersion.Ideal.closedRing R
   (Ideal.span {f})))) :
@@ -91,7 +87,6 @@ theorem coherentPushforward_killed (M : FiniteTypeSheaves (Spec
 
 /-- Actual sheaf pushforward, with its codomain restricted to annihilated
 objects rather than the larger supported category. -/
-
 def coherentPushforwardToKilled :
     FiniteTypeSheaves (Spec
       (Pushforward.ClosedImmersion.Ideal.closedRing R
@@ -102,9 +97,7 @@ def coherentPushforwardToKilled :
     (Ideal.span {f}))) (coherentPushforward_killed R f)
 
 omit [IsNoetherianRing R] in
-
 /-- Forgetting the annihilation proof recovers actual coherent pushforward. -/
-
 theorem coherentPushforwardToKilled_comp_inclusion :
     coherentPushforwardToKilled R f ⋙ (finiteTypeSheavesKilledBy R f).ι =
       AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePushforward
@@ -112,7 +105,6 @@ theorem coherentPushforwardToKilled_comp_inclusion :
         (Ideal.span {f})) := rfl
 
 /-- The comparison square restricts to the actual annihilated full subcategories. -/
-
 def coherentPushforwardToKilledSquare :
     coherentPushforwardToKilled R f ⋙ (killedModuleEquivalence R f).functor ≅
       (finiteTypeSheavesSpecModuleEquivalence
@@ -137,7 +129,6 @@ instance coherentPushforwardToKilled_isEquivalence :
 
 /-- The equivalence onto exactly the f-annihilated coherent objects, induced
 by the actual geometric closed pushforward. -/
-
 def coherentClosedEquivalence :
     FiniteTypeSheaves (Spec
       (Pushforward.ClosedImmersion.Ideal.closedRing R
@@ -151,7 +142,6 @@ instance coherentKilled_hasFiniteProducts :
 
 /-- The annihilated category is abelian via its proved actual closed-sheaf
 equivalence, without claiming that it is a Serre subcategory. -/
-
 instance instAbelianCoherentKilledBy : Abelian (finiteTypeSheavesKilledBy R f).FullSubcategory :=
   abelianOfEquivalence (coherentClosedEquivalence R f).inverse
 
@@ -161,7 +151,6 @@ instance coherentPushforwardToKilled_additive : (coherentPushforwardToKilled R f
 
 /-- Actual closed pushforward is exact as an equivalence onto the annihilated
 coherent category equipped with its standard abelian exact structure. -/
-
 def coherentPushforwardToKilledExact :
     ExactFunctor (coherentExactStructure (Spec
       (Pushforward.ClosedImmersion.Ideal.closedRing R

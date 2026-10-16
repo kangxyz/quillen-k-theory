@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Mathlib.CategoryTheory.NatTrans
+public import Mathlib.CategoryTheory.Functor.Category
 
 /-! # Heterogeneous equality from actual natural-transformation components -/
 @[expose] public section

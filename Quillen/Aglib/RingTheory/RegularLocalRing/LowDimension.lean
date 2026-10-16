@@ -32,7 +32,7 @@ namespace Quillen.RegularLocal
 domain conclusion is the low-dimensional specialization of the canonical
 Aglib regular-domain theorem; its original dimension hypothesis is retained. -/
 theorem isDomain_of_dimension_le_one (R : Type u) [CommRing R]
-    [IsRegularLocalRing R] (h : ringKrullDim R ≤ 1) : IsDomain R :=
+    [IsRegularLocalRing R] (_h : ringKrullDim R ≤ 1) : IsDomain R :=
   IsRegularLocalRing.isDomain_of_regularLocal R
 
 /-- A regular local ring of dimension at most one is a PID. Both the domain

@@ -61,16 +61,13 @@ local instance instDecidableEqCarrierQuillen : DecidableEq R := Classical.decEq 
 
 /-- The actual union of a finite family of principal opens. The family need
 not cover the ambient spectrum. -/
-
 def principalUnion (s : Finset R) : Opens (PrimeSpectrum R) :=
   ⨆ r ∈ s, PrimeSpectrum.basicOpen r
 
 @[simp]
-
 lemma principalUnion_empty : principalUnion R ∅ = ⊥ := by simp [principalUnion]
 
 @[simp]
-
 lemma principalUnion_insert (r : R) (s : Finset R) :
     principalUnion R (insert r s) = PrimeSpectrum.basicOpen r ⊔ principalUnion R s := by
   classical
@@ -116,7 +113,6 @@ variable (K : CochainComplex (TopCat.Sheaf A (TopCat.of (PrimeSpectrum R))) ℤ)
 
 /-- For a finite principal family, each extra open costs at most one
 cohomological degree. The empty family is included. -/
-
 lemma sectionsComplex_isLE_principalUnion (W : Opens (PrimeSpectrum R)) (b : ℤ)
     (hlocal : ∀ r : R, PrimeSpectrum.basicOpen r ≤ W →
       CochainComplex.IsLE (sectionsComplex K (PrimeSpectrum.basicOpen r)) b)
@@ -163,7 +159,6 @@ lemma sectionsComplex_isLE_principalUnion (W : Opens (PrimeSpectrum R)) (b : ℤ
 
 /-- A compact open has a finite cohomological bound, obtained from an actual
 finite principal cover and uniform bounds on all contained principal opens. -/
-
 lemma exists_sectionsComplex_isLE_of_isCompact (W : Opens (PrimeSpectrum R))
     (hW : IsCompact (W : Set (PrimeSpectrum R))) (b : ℤ)
     (hlocal : ∀ r : R, PrimeSpectrum.basicOpen r ≤ W →

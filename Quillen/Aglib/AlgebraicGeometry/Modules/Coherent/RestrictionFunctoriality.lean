@@ -14,8 +14,8 @@ public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restricti
 /-!
 # Functoriality of coherent restriction
 
-The actual finite-type sheaf restrictions along open immersions retain the original identity and composition comparisons.
--/
+The actual finite-type sheaf restrictions along open immersions retain the original identity and
+composition comparisons.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules
@@ -33,14 +33,12 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace AlgebraicGeometry.Scheme.Modules.Coherent
 
 /-- The geometric identity comparison lifts to actual coherent sheaves. -/
-
 def coherentRestrictionIdIso (X : Scheme.{u}) :
     finiteTypeSheavesRestriction (𝟙 X) ≅ 𝟭 (FiniteTypeSheaves X) :=
   Functor.fullyFaithfulCancelRight (finiteTypeSheavesToModules X)
     (Functor.isoWhiskerLeft (finiteTypeSheavesToModules X) Scheme.Modules.restrictFunctorId)
 
 /-- The geometric composition comparison lifts to actual coherent sheaves. -/
-
 def coherentRestrictionCompIso {V U X : Scheme.{u}}
     (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] :
     finiteTypeSheavesRestriction (i ≫ j) ≅

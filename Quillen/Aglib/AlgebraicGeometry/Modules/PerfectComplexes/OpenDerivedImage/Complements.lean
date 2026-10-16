@@ -9,12 +9,14 @@ public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.OpenDerivedImage.Closure
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.PerfectComplement
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Extension
 public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 
 /-!
 # Actual complements in the affine derived restriction image
 
-On a compact open of an affine scheme, original locally perfect objects have the displayed strict complements. The chosen coproduct comparison retains the same actual chain complexes.
+On a compact open of an affine scheme, original locally perfect objects have the displayed
+strict complements. The chosen coproduct comparison retains the same actual chain complexes.
 -/
 @[expose] public section
 

@@ -19,14 +19,17 @@ public import Aglib.Algebra.Homology.CochainComplex.Cycles
 /-!
 # Affine strict models with retained lower bounds
 
-Actual strict models, cycles, good truncation windows and their cone comparisons retain the stated integer bounds. Top homology is finite only under the displayed upper cohomological bound; no lower-homology finiteness over a noncoherent ring is claimed.
+Actual strict models, cycles, good truncation windows and their cone comparisons retain the
+stated integer bounds. Top homology is finite only under the displayed upper cohomological
+bound; no lower-homology finiteness over a noncoherent ring is claimed.
 -/
 @[expose] public section
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w
-open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry Opposite ModuleCat HomologicalComplex
+open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
+open Opposite ModuleCat HomologicalComplex
 open AlgebraicGeometry.Scheme.Modules.Complex AlgebraicGeometry.Scheme.Modules
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory

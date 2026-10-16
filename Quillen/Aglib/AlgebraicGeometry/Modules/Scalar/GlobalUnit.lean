@@ -22,7 +22,6 @@ universe u
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Actual multiplication by a global function on every original module sheaf. -/
-
 def globalScalar (X : Scheme.{u}) (r : Γ(X, ⊤)) : 𝟭 X.Modules ⟶ 𝟭 X.Modules where
   app M := { val := {
     app U := ModuleCat.ofHom {
@@ -57,7 +56,6 @@ def globalScalar (X : Scheme.{u}) (r : Γ(X, ⊤)) : 𝟭 X.Modules ⟶ 𝟭 X.M
 /--
 A genuine global unit acts by an original natural automorphism, with the literal inverse scalar.
 -/
-
 def globalUnitIso (X : Scheme.{u}) (r : (Γ(X, ⊤))ˣ) : 𝟭 X.Modules ≅ 𝟭 X.Modules where
   hom := globalScalar X r
   inv := globalScalar X (↑r⁻¹)

@@ -12,8 +12,8 @@ public import Aglib.AlgebraicGeometry.Modules.StructureSheaf.Sections
 /-!
 # Rank-one structure-sheaf perfect complex
 
-The genuine structure sheaf in degree zero is locally perfect, and its actual open restriction is the same structure single.
--/
+The genuine structure sheaf in degree zero is locally perfect, and its actual open restriction is
+the same structure single.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex

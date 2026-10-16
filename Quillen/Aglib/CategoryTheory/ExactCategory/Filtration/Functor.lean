@@ -21,7 +21,6 @@ universe v u v' u'
 open CategoryTheory CategoryTheory.Limits
 
 namespace CategoryTheory.ExactCategory.ExactFunctor
-open Quillen
 variable {C : Type u} {D : Type u'} [Category.{v} C] [Category.{v'} D]
   [Preadditive C] [Preadditive D] [HasFiniteBiproducts C] [HasFiniteBiproducts D]
   {E : ExactStructure C} {E' : ExactStructure D}

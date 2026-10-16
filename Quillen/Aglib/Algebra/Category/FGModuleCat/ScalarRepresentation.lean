@@ -12,7 +12,8 @@ public import Quillen.Aglib.CategoryTheory.ExactCategory.Filtration.CentralEndom
 /-!
 # Scalar maps through a fully faithful finite-module representation
 
-Scalar multiplication lifts through a fully faithful finite-module representation with independent ring and category universes. Additivity identifies zero and nilpotent scalar actions.
+Scalar multiplication lifts through a fully faithful finite-module representation with
+independent ring and category universes. Additivity identifies zero and nilpotent scalar actions.
 -/
 @[expose] public section
 
@@ -21,14 +22,14 @@ universe u v w
 open CategoryTheory CategoryTheory.Limits
 open Quillen.PrincipalSupportDevissage
 
-namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Principal.ScalarRepresentation
+namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Principal
+namespace ScalarRepresentation
 
 variable {C : Type w} [Category.{v} C] [Abelian C]
   {A : Type u} [CommRing A] (F : C ⥤ FGModuleCat.{u} A) [F.Full] [F.Faithful]
 
 /-- Scalar multiplication lifted through a fully faithful representation,
 with independent ring and category universes. -/
-
 def scalar (f : A) : 𝟭 C ⟶ 𝟭 C where
   app X := F.preimage (FGModuleCat.ofHom (LinearMap.lsmul A (F.obj X) f))
   naturality {X Y} a := by
@@ -43,7 +44,6 @@ omit [Abelian C] in
   F.map_preimage _
 
 omit [Abelian C] in
-
 theorem map_power_apply (f : A) (X : C) (n : ℕ) (m : F.obj X) :
     (F.map (power (scalar F f) X n)).hom.hom m = f ^ n • m := by
   induction n with
@@ -73,4 +73,5 @@ theorem power_eq_zero (f : A) (X : C) (n : ℕ)
   ext m
   exact (map_power_apply F f X n m).trans (h m)
 
-end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Principal.ScalarRepresentation
+end ScalarRepresentation
+end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Principal

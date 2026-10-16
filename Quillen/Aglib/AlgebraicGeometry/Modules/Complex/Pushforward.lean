@@ -20,7 +20,6 @@ universe u
 namespace Quillen.PerfectComplexes
 
 /-- Actual termwise direct image, without asserting it is exact. -/
-
 def pushforwardComplex {U X : Scheme.{u}} (j : U ⟶ X) :
     CochainComplex U.Modules ℤ ⥤ CochainComplex X.Modules ℤ :=
   (Scheme.Modules.pushforward j).mapHomologicalComplex (.up ℤ)

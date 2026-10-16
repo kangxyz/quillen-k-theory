@@ -24,6 +24,7 @@ open AlgebraicGeometry.Scheme.Modules
 open AlgebraicGeometry.Scheme.Modules.Complex HomologicalComplex CochainComplex
 open AlgebraicGeometry.Scheme.Modules.Godement
 open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
+attribute [local instance] Abelian.hasFiniteBiproducts
 attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.ProjectiveLine.Euler
 local instance toPlus_additive (X : Scheme.{u}) : (toPlus X).Additive := by

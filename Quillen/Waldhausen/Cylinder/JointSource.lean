@@ -39,6 +39,8 @@ variable {A : Type u} [Category.{v} A] [Abelian A]
   (P : ObjectProperty (CochainComplex A ℤ))
   [(abelianExactStructure (CochainComplex A ℤ)).IsExtensionClosed P]
 
+variable [P.IsClosedUnderFiniteProducts]
+
 /-- Genuine source exactness, for any actual Waldhausen structure on the full subcategory. -/
 theorem subcategoryJointSourceFunctor_isExact (W : Structure P.FullSubcategory) :
     IsExact (ArrowCategory.waldhausenStructure W).cof (ArrowCategory.waldhausenStructure W).weq

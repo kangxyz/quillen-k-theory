@@ -14,16 +14,17 @@ public import Quillen.Aglib.Algebra.Homology.DerivedCategory.TopSingleRepresenta
 /-!
 # Strict reassembly from an actual top attachment
 
-The actual vector-bundle single, its given cone model and the exact interval [a,b-1] reassemble the original complex in [a,b]. Only the retained top-single chain realization is used.
+The actual vector-bundle single, its given cone model and the exact interval [a,b-1] reassemble
+the original complex in [a,b]. Only the retained top-single chain realization is used.
 -/
 @[expose] public section
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w
-open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry Opposite ModuleCat HomologicalComplex
+open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
+open Opposite ModuleCat HomologicalComplex
 open AlgebraicGeometry.Scheme.Modules.Complex AlgebraicGeometry.Scheme.Modules
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts

@@ -8,6 +8,7 @@ module
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SupportedSectionEquivalence
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionZero
 public import Quillen.Waldhausen.EquivalenceStructure
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportComparison
 
 /-!
 # Genuine Waldhausen structure on original supported affine sections

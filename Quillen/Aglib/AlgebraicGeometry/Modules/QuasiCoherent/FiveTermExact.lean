@@ -27,7 +27,6 @@ universe u
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Original ambient exactness and four quasicoherent ends detect the middle sheaf. -/
-
 lemma quasicoherent_of_five_exact {X : Scheme.{u}}
     {A B C D E : X.Modules} (f : A ⟶ B) (g : B ⟶ C) (h : C ⟶ D) (k : D ⟶ E)
     (wfg : f ≫ g = 0) (wgh : g ≫ h = 0) (whk : h ≫ k = 0)

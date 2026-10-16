@@ -13,7 +13,8 @@ public import Mathlib.CategoryTheory.Widesubcategory
 /-!
 # Schemes with finite flat morphisms
 
-The finite-flat morphism property is multiplicative. Its genuine scheme categories have the original forgetful functor to finite morphisms.
+The finite-flat morphism property is multiplicative. Its genuine scheme categories have the
+original forgetful functor to finite morphisms.
 -/
 @[expose] public section
 
@@ -26,7 +27,6 @@ universe u
 namespace AlgebraicGeometry.Scheme
 
 /-- Actual finite flat scheme morphisms. -/
-
 abbrev finiteFlatMorphisms : MorphismProperty AlgebraicGeometry.Scheme.{u} :=
   (@AlgebraicGeometry.IsFinite) ⊓ (@Flat)
 
@@ -35,7 +35,6 @@ instance finiteFlatMorphisms_isMultiplicative : finiteFlatMorphisms.{u}.IsMultip
     MorphismProperty AlgebraicGeometry.Scheme.{u}).IsMultiplicative)
 
 /-- Schemes with finite flat morphisms. -/
-
 abbrev FiniteFlatSchemes := WideSubcategory finiteFlatMorphisms.{u}
 
 instance finiteFlatSchemes_isFinite {X Y : FiniteFlatSchemes.{u}} (f : X ⟶ Y) :
@@ -45,12 +44,10 @@ instance finiteFlatSchemes_flat {X Y : FiniteFlatSchemes.{u}} (f : X ⟶ Y) :
     Flat f.hom := f.property.2
 
 /-- Locally noetherian objects in the finite flat scheme category. -/
-
 abbrev locallyNoetherianFiniteFlatSchemeProperty : ObjectProperty FiniteFlatSchemes.{u} :=
   fun X ↦ IsLocallyNoetherian X.obj
 
 /-- Locally noetherian schemes and actual finite flat morphisms. -/
-
 abbrev LocallyNoetherianFiniteFlatSchemes :=
   locallyNoetherianFiniteFlatSchemeProperty.{u}.FullSubcategory
 
@@ -58,7 +55,6 @@ instance locallyNoetherianFiniteFlatSchemes_isLocallyNoetherian
     (X : LocallyNoetherianFiniteFlatSchemes.{u}) : IsLocallyNoetherian X.obj.obj := X.property
 
 /-- Forgetting flatness retains the original schemes and finite scheme maps. -/
-
 def forgetFiniteFlat : LocallyNoetherianFiniteFlatSchemes.{u} ⥤ LocallyNoetherianFiniteSchemes.{u}
     where
   obj X := ⟨⟨X.obj.obj⟩, X.property⟩

@@ -40,7 +40,6 @@ variable {X : AlgebraicGeometry.Scheme.{u}} [IsLocallyNoetherian X]
 
 /-- Zero chart-module projective dimension means the original coherent
 sheaf is an actual finite locally free sheaf. -/
-
 theorem coherentVectorBundle_of_affineCoverDimensionLE_zero
     (U : X.AffineOpenCover.{v}) (M :
       AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X)
@@ -54,7 +53,6 @@ theorem coherentVectorBundle_of_affineCoverDimensionLE_zero
 modules construct an actual finite coherent conflation tower of that bound.
 The syzygies are genuine coherent kernels, and every resolving term is a
 finite locally free sheaf on the original scheme. -/
-
 theorem coherentResolution_length_le_of_affineCoverDimensionLE
     [Scheme.HasResolutionProperty X] (U : X.AffineOpenCover.{v}) (n : ℕ)
     (M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) (hM :
@@ -82,7 +80,6 @@ variable {X : AlgebraicGeometry.Scheme.{u}}
 /-- Every coherent sheaf on a quasi-compact regular scheme with the ordinary
 resolution property admits an actual finite global vector-bundle resolution.
 The bound may depend on the sheaf, even if the scheme has infinite dimension. -/
-
 theorem coherentResolutionHypothesis_of_regular_resolutionProperty
     [Scheme.IsRegular X] [CompactSpace X] [Scheme.HasResolutionProperty X] :
     (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).ResolutionHypothesis

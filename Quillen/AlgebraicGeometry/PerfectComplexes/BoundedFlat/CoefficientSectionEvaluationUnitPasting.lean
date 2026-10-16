@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalUnit
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationUnit
 public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumIsoNaturality
 public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumIntertwiningHomotopy

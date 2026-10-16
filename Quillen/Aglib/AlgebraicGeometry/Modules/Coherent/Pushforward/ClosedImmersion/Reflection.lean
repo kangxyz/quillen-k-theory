@@ -43,7 +43,6 @@ variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsLocallyNoetherian X]
   (i : Z ⟶ X) [IsClosedImmersion i]
 
 /-- The actual coherent pullback unit is an epimorphism globally. -/
-
 instance coherentAdjunction_unit_epi (M : FiniteTypeSheaves X) :
     Epi ((coherentAdjunction i).unit.app M) := by
   apply Preadditive.epi_of_isZero_cokernel
@@ -61,7 +60,6 @@ instance coherentAdjunction_unit_epi (M : FiniteTypeSheaves X) :
       (PreservesCokernel.iso (finiteTypeSheavesRestriction a) ((coherentAdjunction i).unit.app M))
 
 /-- Genuine global closed pushforward is fully faithful. -/
-
 def fullyFaithfulCoherentPushforward : (coherentPushforward i).FullyFaithful :=
   ReflectorDevissage.fullyFaithfulRight (coherentAdjunction i)
 
@@ -69,13 +67,11 @@ instance coherentPushforward_full : (coherentPushforward i).Full :=
   (fullyFaithfulCoherentPushforward i).full
 
 /-- The actual coherent-adjunction counit is an isomorphism. -/
-
 instance coherentAdjunction_counit_isIso : IsIso (coherentAdjunction i).counit :=
   NatIso.isIso_of_isIso_app _
 
 /-- The actual annihilated coherent objects, as the proved closed direct-image
 essential image. It is smaller than the category of all supported objects. -/
-
 abbrev coherentKilled : ObjectProperty (FiniteTypeSheaves X) := (finiteTypePushforward i).essImage
 
 instance coherentKilled_containsZero : (coherentKilled i).ContainsZero :=
@@ -103,7 +99,6 @@ instance coherentKilled_finiteProducts : (coherentKilled i).IsClosedUnderFiniteP
 
 /-- The actual closed essential image is equivalently recognized by the
 actual adjunction unit being an isomorphism. -/
-
 theorem coherentKilled_iff_unit_isIso (M : FiniteTypeSheaves X) :
     coherentKilled i M ↔ IsIso ((coherentAdjunction i).unit.app M) :=
   (coherentAdjunction i).isIso_unit_app_iff_mem_essImage.symm

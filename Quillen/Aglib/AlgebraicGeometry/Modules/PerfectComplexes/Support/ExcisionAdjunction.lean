@@ -12,8 +12,9 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.E
 /-!
 # Supported extension-by-zero adjunction
 
-For an open immersion whose image together with the auxiliary acyclicity open covers the scheme, the unchanged extension-by-zero and restriction functors preserve the original supported objects and exact sequences. Their unit, counit and triangle identities are literal.
--/
+For an open immersion whose image together with the auxiliary acyclicity open covers the scheme, the
+unchanged extension-by-zero and restriction functors preserve the original supported objects and
+exact sequences. Their unit, counit and triangle identities are literal.-/
 @[expose] public section
 
 open Quillen.Waldhausen

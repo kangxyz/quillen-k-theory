@@ -10,18 +10,18 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFl
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.CoefficientOpenRestriction
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SupportUnion
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.Pairs
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.PairSquares
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SupportedRestriction
 public import Aglib.AlgebraicGeometry.BaseChange.Coefficients.Basic
 
 /-!
 # Actual auxiliary support and joint coefficient restriction
 
-The specified support opens, inverse-image pair maps, supported section restrictions and literal coefficient square are preserved. The fiber support is precisely the intersection of the original auxiliary closed support and localization complement.
+The specified support opens, inverse-image pair maps, supported section restrictions and literal
+coefficient square are preserved. The fiber support is precisely the intersection of the original
+auxiliary closed support and localization complement.
 -/
 @[expose] public section
-
-open Quillen.Waldhausen
-
 
 open AlgebraicGeometry.Scheme.Modules.Complex
 
@@ -139,7 +139,10 @@ def boundedFlatCoefficientSupportedOpenMap {a b : Under R} (g : a ⟶ b) :
     (boundedFlatCoefficientOpenSupportOpen f T b).ι
     (i := (op P, a)) (k := (op P, b)) (𝟙 (op P), g)
     (boundedFlatCoefficientOpenSupportPairMap f T g).hom.left
-    (Arrow.w (boundedFlatCoefficientOpenSupportPairMap f T g).hom)
+    (by
+      dsimp only [boundedFlatCoefficientOpenSupportPairMap, supportedPairTargetSquare,
+        supportOpenPair, ObjectProperty.homMk, Arrow.homMk]
+      exact Scheme.Hom.resLE_comp_ι _ _)
 
 /-- Restriction uses original joint reindexing with the literal inverse-image support square. -/
 def boundedFlatCoefficientSupportedOpenRestriction (a : Under R) :
@@ -194,7 +197,10 @@ theorem boundedFlatCoefficientSupportedOpenRestriction_square {a b : Under R} (g
       (boundedFlatCoefficientSupportOpen Q T b)).hom)
     (Arrow.w (supportRestrictionPair (schemeMap f a)
       (boundedFlatCoefficientSupportOpen Q T a)).hom)
-    (Arrow.w (boundedFlatCoefficientOpenSupportPairMap f T g).hom)
+    (by
+      dsimp only [boundedFlatCoefficientOpenSupportPairMap, supportedPairTargetSquare,
+        supportOpenPair, ObjectProperty.homMk, Arrow.homMk]
+      exact Scheme.Hom.resLE_comp_ι _ _)
     ((rowTransformation f).naturality g)
 
 omit [IsOpenImmersion f.left] in

@@ -20,8 +20,8 @@ public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeCom
 /-!
 # Equivalences of affine coherent small models
 
-Global sections and the identity-on-sheaves affine comparison induce genuine equivalences of the categorical small models.
--/
+Global sections and the identity-on-sheaves affine comparison induce genuine equivalences of the
+categorical small models.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Coherent

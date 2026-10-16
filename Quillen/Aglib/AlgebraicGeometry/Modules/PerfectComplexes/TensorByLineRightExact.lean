@@ -10,7 +10,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.TensorByL
 /-!
 # Exactness of the actual right line tensor
 
-The original sheafified tensor symmetry transports finite limits, colimits and homology preservation for a finite locally free coefficient.
+The original sheafified tensor symmetry transports finite limits, colimits and homology
+preservation for a finite locally free coefficient.
 -/
 @[expose] public section
 noncomputable section

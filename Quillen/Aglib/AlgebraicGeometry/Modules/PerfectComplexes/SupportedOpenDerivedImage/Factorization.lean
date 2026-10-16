@@ -20,7 +20,9 @@ public import Mathlib.Algebra.Homology.DerivedCategory.Fractions
 /-!
 # Supported chain roofs and strict factorization
 
-Under the original supported derived-roof hypothesis, genuine weak cospans, common denominators and two actual homotopy pullbacks preserve both literal chain triangles, degreewise split epimorphisms and original supported kernels.
+Under the original supported derived-roof hypothesis, genuine weak cospans, common denominators
+and two actual homotopy pullbacks preserve both literal chain triangles, degreewise split
+epimorphisms and original supported kernels.
 -/
 @[expose] public section
 

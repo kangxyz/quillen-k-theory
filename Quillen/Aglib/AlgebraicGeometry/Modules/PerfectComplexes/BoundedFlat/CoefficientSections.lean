@@ -14,7 +14,9 @@ public import Quillen.Aglib.CategoryTheory.FiberedCategory.CocartesianSectionTra
 /-!
 # Actual bounded-flat sections over joint scheme and coefficient indices
 
-The original geometric pseudofunctor gives actual cocartesian sections, literal coefficient reindexing, original identity-evaluation equivalences and their genuine transition isomorphisms.
+The original geometric pseudofunctor gives actual cocartesian sections, literal coefficient
+reindexing, original identity-evaluation equivalences and their genuine transition
+isomorphisms.
 -/
 @[expose] public section
 noncomputable section

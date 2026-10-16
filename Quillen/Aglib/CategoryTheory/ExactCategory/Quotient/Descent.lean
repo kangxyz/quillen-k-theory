@@ -9,7 +9,6 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Aglib.CategoryTheory.ExactCategory.Quotient.Conflations
-public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Zero
 
 /-!
@@ -23,6 +22,7 @@ specified quotient conflations. No exact structure on the quotient is assumed.
 @[expose] public section
 
 open CategoryTheory.ExactCategory
+open Quillen
 
 
 

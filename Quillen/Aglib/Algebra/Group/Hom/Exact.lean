@@ -11,7 +11,8 @@ public import Mathlib.Algebra.Group.Subgroup.Ker
 /-!
 # Transporting exactness of group homomorphisms
 
-Commuting equivalences of the source, middle and target groups transport the equality between the range and kernel. The original hypotheses require only groups.
+Commuting equivalences of the source, middle and target groups transport the equality
+between the range and kernel. The original hypotheses require only groups.
 -/
 @[expose] public section
 

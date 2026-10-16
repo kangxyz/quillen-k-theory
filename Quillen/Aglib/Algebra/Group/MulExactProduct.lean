@@ -10,7 +10,8 @@ public import Mathlib.Algebra.FiveLemma
 /-!
 # Original product group exactness and pair shuffle
 
-The literal four-factor shuffle is a group isomorphism and two copies of the original exact group row remain exact.
+The literal four-factor shuffle is a group isomorphism and two copies of the original
+exact group row remain exact.
 -/
 @[expose] public section
 noncomputable section

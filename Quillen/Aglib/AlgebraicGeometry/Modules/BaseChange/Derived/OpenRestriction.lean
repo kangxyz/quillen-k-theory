@@ -35,7 +35,6 @@ local instance derivedOpenBaseChangeStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
 
 /-- The actual original open base-change isomorphism for bounded-below derived direct image. -/
-
 def derivedPushforwardPlusOpenBaseChange {Z U X : Scheme.{u}}
     (f : Z ⟶ X) (j : U ⟶ X) [IsOpenImmersion j] :
     derivedPushforwardPlus f ⋙ derivedRestrictionPlus j ≅
@@ -50,7 +49,6 @@ def derivedPushforwardPlusOpenBaseChange {Z U X : Scheme.{u}}
 
 /-- The derived open base-change comparison retains the original module-sheaf base-change map
 and the composite original derived units. -/
-
 lemma derivedPushforwardPlusOpenBaseChange_unit {Z U X : Scheme.{u}}
     (f : Z ⟶ X) (j : U ⟶ X) [IsOpenImmersion j]
     (K : CochainComplex.Plus Z.Modules) :

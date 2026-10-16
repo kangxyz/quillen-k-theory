@@ -26,7 +26,6 @@ variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (f : U ⟶ X) (j : V
   (h : IsPullback a b f j) [IsIso f]
 
 /-- Base change of an actual scheme isomorphism retains an invertible original ordinary mate. -/
-
 theorem isIso_cartesianBaseChangeMap_of_isIso : IsIso (cartesianBaseChangeMap a b f j h) := by
   let := h.isIso_snd_of_isIso
   have := pushforward_isEquivalence_of_isIso f

@@ -22,7 +22,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 open Scheme.Modules
 
 /-- The original geometric composite adjunction unit retains the pullback comparison. -/
-
 theorem pullbackAdjunctionUnit_comp {Y Z T : Scheme.{u}} (c : T ⟶ Y) (a : Y ⟶ Z)
     (M : Z.Modules) :
     (pullbackPushforwardAdjunction a).unit.app M ≫
@@ -50,7 +49,6 @@ variable {W' W U V' V X : Scheme.{u}}
   (hs : IsPullback c d b k) (h : IsPullback a b f j)
 
 /-- Original pushforward square comparison respects horizontal geometric pasting. -/
-
 theorem cartesianPushforwardSquare_paste_horiz (N : W'.Modules) :
     (pushforward f).map ((pushforwardComp c a).hom.app N) ≫
         (cartesianPushforwardSquare (c ≫ a) d f (k ≫ j) (hs.paste_horiz h)).hom.app N =
@@ -68,7 +66,6 @@ theorem cartesianPushforwardSquare_paste_horiz (N : W'.Modules) :
   congr 2
 
 /-- Transposition of the actual base-change mate is its original unit-square arrow. -/
-
 theorem cartesianBaseChangeMap_homEquiv {D E F G : Scheme.{u}}
     (a : D ⟶ E) (b : D ⟶ F) (f : E ⟶ G) (j : F ⟶ G) (h : IsPullback a b f j)
     (M : E.Modules) :
@@ -123,7 +120,6 @@ private theorem cartesianBaseChangeMap_paste_horiz_aux (M : U.Modules) :
   exact hu.symm.trans ht
 
 /-- The actual base-change mate retains the original horizontal pullback-composition maps. -/
-
 theorem cartesianBaseChangeMap_paste_horiz (M : U.Modules) :
     (pullbackComp k j).hom.app ((pushforward f).obj M) ≫
         (cartesianBaseChangeMap (c ≫ a) d f (k ≫ j) (hs.paste_horiz h)).app M =

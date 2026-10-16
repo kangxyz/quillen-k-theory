@@ -25,7 +25,6 @@ set_option backward.defeqAttrib.useBackward true
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- A pullback trivialization determines the original open-restriction trivialization. -/
-
 def restrictionUnitTrivialization {X Y : Scheme.{u}} (j : X ⟶ Y) [IsOpenImmersion j]
     {M : Y.Modules} (e : (Scheme.Modules.pullback j).obj M ≅
       SheafOfModules.unit X.ringCatSheaf) :
@@ -33,7 +32,6 @@ def restrictionUnitTrivialization {X Y : Scheme.{u}} (j : X ⟶ Y) [IsOpenImmers
   (Scheme.Modules.restrictFunctorIsoPullback j).app M ≪≫ e
 
 /-- The original pullback scalar equation is retained on actual open restriction. -/
-
 theorem restrictionUnitTrivialization_map {X Y : Scheme.{u}}
     (j : X ⟶ Y) [IsOpenImmersion j] {M N : Y.Modules} (f : M ⟶ N)
     (e : (Scheme.Modules.pullback j).obj M ≅ SheafOfModules.unit X.ringCatSheaf)
@@ -47,14 +45,12 @@ theorem restrictionUnitTrivialization_map {X Y : Scheme.{u}}
     Category.assoc, hf, Category.assoc]
 
 /-- An actual unit trivialization restricts through the canonical restriction-unit isomorphism. -/
-
 def restrictUnitTrivialization {X Y : Scheme.{u}} (j : X ⟶ Y) [IsOpenImmersion j]
     {M : Y.Modules} (e : M ≅ SheafOfModules.unit Y.ringCatSheaf) :
     (Scheme.Modules.restrictFunctor j).obj M ≅ SheafOfModules.unit X.ringCatSheaf :=
   (Scheme.Modules.restrictFunctor j).mapIso e ≪≫ Scheme.Modules.restrictUnitIso j
 
 /-- Restricting an original scalar equation pulls back precisely its original global section. -/
-
 theorem restrictUnitTrivialization_map {X Y : Scheme.{u}}
     (j : X ⟶ Y) [IsOpenImmersion j] {M N : Y.Modules} (f : M ⟶ N)
     (e : M ≅ SheafOfModules.unit Y.ringCatSheaf)

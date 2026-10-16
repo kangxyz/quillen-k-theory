@@ -11,8 +11,8 @@ public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 /-!
 # Cones of morphisms acyclic after open restriction
 
-The original actual mapping cone is supported on the complement of the open whenever its restricted chain map is a quasi-isomorphism.
--/
+The original actual mapping cone is supported on the complement of the open whenever its restricted
+chain map is a quasi-isomorphism.-/
 @[expose] public section
 
 

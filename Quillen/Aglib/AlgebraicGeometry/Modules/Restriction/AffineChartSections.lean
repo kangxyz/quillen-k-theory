@@ -15,7 +15,6 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.Restriction.OpenLocalizati
 These comparisons preserve the original pushforward, restriction units, and
 changes of the actual open arrow. No finiteness hypothesis is used.
 -/
-
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules
@@ -32,13 +31,11 @@ namespace AlgebraicGeometry.Scheme.Modules
 variable {R S : CommRingCat.{u}} (φ : R ⟶ S)
 
 /-- The affine global-sections functor acts by the original map on top sections. -/
-
 theorem globalSectionsMap_apply {M N : (Spec R).Modules} (f : M ⟶ N)
     (x : moduleSpecΓFunctor.obj M) :
     moduleSpecΓFunctor.map f x = f.app ⊤ x := rfl
 
 /-- The affine pushforward comparison retains the original top section. -/
-
 theorem pushforwardGlobalSectionsIso_hom_apply (N : (Spec S).Modules)
     (x : moduleSpecΓFunctor.obj ((Scheme.Modules.pushforward (Spec.map φ)).obj N)) :
     (pushforwardGlobalSectionsIso φ).hom.app N x = x := rfl
@@ -62,7 +59,6 @@ variable {R A : CommRingCat.{u}} {X : Scheme.{u}}
 variable (a : R ⟶ A) (j : Spec A ⟶ X) (p : X ⟶ Spec R) (h : j ≫ p = Spec.map a)
 
 /-- Actual pushforward sections of an affine chart, with coefficients on the affine base. -/
-
 def chartPushforwardSectionsIso :
     Scheme.Modules.pushforward j ⋙ Scheme.Modules.pushforward p ⋙ moduleSpecΓFunctor ≅
       moduleSpecΓFunctor ⋙ ModuleCat.restrictScalars a.hom :=
@@ -72,7 +68,6 @@ def chartPushforwardSectionsIso :
     pushforwardGlobalSectionsIso a
 
 /-- The chart pushforward comparison retains the original section. -/
-
 theorem chartPushforwardSectionsIso_hom_apply (N : (Spec A).Modules)
     (x : moduleSpecΓFunctor.obj ((Scheme.Modules.pushforward p).obj
       ((Scheme.Modules.pushforward j).obj N))) :
@@ -103,11 +98,8 @@ variable (j : Spec A ⟶ X) (p : X ⟶ Spec R) (hj : j ≫ p = Spec.map a)
 variable [IsOpenImmersion j] [IsOpenImmersion (Spec.map φ)]
 
 include hc hj in
-
 omit [IsOpenImmersion j] [IsOpenImmersion (Spec.map φ)] in
-
 /-- A nested affine chart has the literal composite coefficient map. -/
-
 theorem nestedProjection : (Spec.map φ ≫ j) ≫ p = Spec.map c := by
   rw [Category.assoc, hj, ← Spec.map_comp]
   congr 1
@@ -115,7 +107,6 @@ theorem nestedProjection : (Spec.map φ ≫ j) ≫ p = Spec.map c := by
   exact hc.symm
 
 /-- The original localization map becomes the actual affine coefficient restriction map. -/
-
 theorem original_nested_restriction (M : X.Modules) :
     moduleSpecΓFunctor.map ((Scheme.Modules.pushforward p).map
         (openLocalizationMap (Spec.map φ) j M)) ≫
@@ -166,7 +157,6 @@ variable (p : X ⟶ Spec R) (h : j = k)
 variable (hj : j ≫ p = Spec.map a) (hk : k ≫ p = Spec.map a)
 
 /-- Changing equal chart arrows preserves the original localization comparison. -/
-
 theorem chartPushforwardSections_congr (M : X.Modules) :
     moduleSpecΓFunctor.map ((Scheme.Modules.pushforward p).map
         ((openLocalizationCongr h).hom.app M)) ≫

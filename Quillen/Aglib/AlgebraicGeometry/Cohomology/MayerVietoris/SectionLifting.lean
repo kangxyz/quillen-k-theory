@@ -31,14 +31,12 @@ private lemma app_comp_apply {A B C : X.Modules} (f : A ⟶ B) (g : B ⟶ C)
     ((f ≫ g).app W).hom a = (g.app W).hom ((f.app W).hom a) := rfl
 
 /-- Original additive sections preserve exactness at the middle of a short exact sequence. -/
-
 lemma sections_exact {S : ShortComplex X.Modules} (hS : S.ShortExact) (W : X.Opens) :
     (S.map (sectionsFunctor X W)).Exact :=
   ((Functor.preservesFiniteLimits_iff_forall_exact_map_and_mono
     (sectionsFunctor X W)).mp inferInstance S hS).1
 
 /-- Local quotient lifts glue after correcting their difference by original kernel sections. -/
-
 lemma globalSections_surjective_of_difference_surjective
     {S : ShortComplex X.Modules} (hS : S.ShortExact) (U V : X.Opens) (hUV : U ⊔ V = ⊤)
     (hU : Function.Surjective (S.g.app U).hom)
@@ -82,7 +80,6 @@ lemma globalSections_surjective_of_difference_surjective
     simpa using hb
 
 /-- Original signed difference surjectivity descends along a surjective overlap section map. -/
-
 lemma difference_surjective_of_section_surjective {M N : X.Modules} (f : M ⟶ N)
     (U V : X.Opens) (hf : Function.Surjective (f.app (U ⊓ V)).hom)
     (hD : Function.Surjective (difference M U V)) :
@@ -95,7 +92,6 @@ lemma difference_surjective_of_section_surjective {M N : X.Modules} (f : M ⟶ N
   simp only [difference_apply, map_sub, app_res]
 
 /-- Surjective original signed differences remain surjective for the actual sheaf product. -/
-
 lemma difference_surjective_prod (M N : X.Modules) (U V : X.Opens)
     (hM : Function.Surjective (difference M U V))
     (hN : Function.Surjective (difference N U V)) :
@@ -126,7 +122,6 @@ open TwoOpen
 
 /-- A splitting of the actual restricted sheaf morphism gives surjectivity on original image
 sections. -/
-
 lemma section_surjective_of_restriction_split {U X : Scheme.{u}} (j : U ⟶ X)
     [IsOpenImmersion j] {M N : X.Modules} (f : M ⟶ N)
     [IsSplitEpi ((Scheme.Modules.restrictFunctor j).map f)] (W : U.Opens) :

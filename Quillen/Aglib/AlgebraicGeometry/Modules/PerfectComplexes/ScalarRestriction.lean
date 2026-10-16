@@ -11,8 +11,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.GlobalUni
 /-!
 # Scalars which become units on an open
 
-The original restricted scalar is exactly the genuine unit automorphism. Its quasi-isomorphism statement unfolds only the original relative weak-equivalence wrapper.
--/
+The original restricted scalar is exactly the genuine unit automorphism. Its quasi-isomorphism
+statement unfolds only the original relative weak-equivalence wrapper.-/
 @[expose] public section
 
 

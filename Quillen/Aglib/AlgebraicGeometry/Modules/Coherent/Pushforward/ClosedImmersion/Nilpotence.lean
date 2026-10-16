@@ -44,7 +44,6 @@ variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsLocallyNoetherian X]
   (i : Z ⟶ X) [IsClosedImmersion i]
 
 /-- Every genuine unit-kernel iterate commutes with actual open restriction. -/
-
 def kernelIterateOpenBaseChange {V : Scheme.{u}} [IsLocallyNoetherian V]
     (a : V ⟶ X) [IsOpenImmersion a] (n : ℕ) (M : FiniteTypeSheaves X) :
     (finiteTypeSheavesRestriction a).obj (kernelIterate (coherentAdjunction i).unit n M) ≅
@@ -59,7 +58,6 @@ def kernelIterateOpenBaseChange {V : Scheme.{u}} [IsLocallyNoetherian V]
 
 /-- A closed immersion into an affine scheme has the actual quotient
 zero-locus image, with its genuine source isomorphism accounted for. -/
-
 theorem affinePresentation_range {Z : Scheme.{u}}
     (R : CommRingCat.{u})
     (i : Z ⟶ Spec R)
@@ -78,7 +76,6 @@ theorem affinePresentation_range {Z : Scheme.{u}}
 
 /-- Actual affine support gives eventual vanishing of genuine unit-kernel
 iterations, by an actual annihilating ideal power. -/
-
 theorem affine_kernelIterate_eventually_zero {Z : Scheme.{u}} [IsLocallyNoetherian Z]
     (R : CommRingCat.{u}) [IsNoetherianRing R]
     (i : Z ⟶ Spec R) [IsClosedImmersion i] (M : FiniteTypeSheaves (Spec R))
@@ -93,7 +90,6 @@ theorem affine_kernelIterate_eventually_zero {Z : Scheme.{u}} [IsLocallyNoetheri
 
 /-- A finite actual affine subcover produces a finite exponent on each
 supported coherent sheaf of the noetherian ambient scheme. -/
-
 theorem kernelIterate_eventually_zero {Z X : Scheme.{u}}
     [IsLocallyNoetherian Z] [IsNoetherian X]
     (i : Z ⟶ X) [IsClosedImmersion i] (M : FiniteTypeSheaves X)

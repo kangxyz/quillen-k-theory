@@ -18,7 +18,6 @@ universe u
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The original open restriction takes scalar multiplication to the actual restricted scalar. -/
-
 lemma restrict_map_globalScalar {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
     (r : Γ(X, ⊤)) (M : X.Modules) :
     (Scheme.Modules.restrictFunctor j).map ((globalScalar X r).app M) =

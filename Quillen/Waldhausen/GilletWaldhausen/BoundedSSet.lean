@@ -9,6 +9,8 @@ module
 public import Quillen.Aglib.CategoryTheory.Functor.FullSubcategoryExt
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.BoundedStrata
+public import Quillen.Waldhausen.Functor
+public import Aglib.CategoryTheory.ExactCategory.FunctorPushout
 
 /-! # Actual finite S-grids lift into bounded exact strata
 

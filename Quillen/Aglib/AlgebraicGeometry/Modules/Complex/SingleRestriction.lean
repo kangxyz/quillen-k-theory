@@ -11,8 +11,8 @@ public import Mathlib.Algebra.Homology.Single
 /-!
 # The actual single-complex restriction square
 
-The supplied sheaf square and original single/restriction comparisons give the same literal degree-zero chain square.
--/
+The supplied sheaf square and original single/restriction comparisons give the same literal
+degree-zero chain square.-/
 @[expose] public section
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

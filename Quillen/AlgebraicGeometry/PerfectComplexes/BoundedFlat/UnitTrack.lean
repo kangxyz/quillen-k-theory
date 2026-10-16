@@ -5,6 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalUnit
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Spectrum.BoundedFlatPullback
+
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.GlobalUnitPullback
 public import Quillen.Waldhausen.SConstruction.Iterated.NormalizationTrackPasting
 public import Quillen.Topology.Prespectrum.RelativeHomotopyReparam

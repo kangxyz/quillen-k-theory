@@ -27,7 +27,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 variable {X : Scheme.{u}}
 
 /-- Multiplication by an original global ring section on a module sheaf. -/
-
 def moduleMul (M : X.Modules) (s : Γ(X, ⊤)) : M ⟶ M where
   val :=
     { app := fun U => by
@@ -98,7 +97,6 @@ lemma moduleMul_restrict {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
     congrArg (fun f => CommRingCat.Hom.hom f s) h
 
 /-- Multiplication by a global unit as an automorphism of the original module sheaf. -/
-
 def moduleMulIso (M : X.Modules) (s : (Γ(X, ⊤))ˣ) : M ≅ M where
   hom := moduleMul M s
   inv := moduleMul M (↑s⁻¹)

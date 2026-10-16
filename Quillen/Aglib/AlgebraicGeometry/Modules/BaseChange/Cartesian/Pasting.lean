@@ -26,7 +26,6 @@ variable {Z' Z W U V X : Scheme.{u}}
   (hs : IsPullback c d g a) (h : IsPullback a b f j)
 
 /-- The original pushforward-square comparisons agree with actual vertical pasting. -/
-
 theorem cartesianPushforwardSquare_paste (N : Z'.Modules) :
     (pushforwardComp g f).hom.app ((pushforward c).obj N) ≫
         (cartesianPushforwardSquare c (d ≫ b) (g ≫ f) j (hs.paste_vert h)).hom.app N ≫
@@ -44,7 +43,6 @@ theorem cartesianPushforwardSquare_paste (N : Z'.Modules) :
   congr 2
 
 /-- The literal geometric mates agree with vertical cartesian pasting. -/
-
 theorem cartesianBaseChangeMap_paste (M : Z.Modules) :
     (Scheme.Modules.pullback j).map ((pushforwardComp g f).hom.app M) ≫
         (cartesianBaseChangeMap c (d ≫ b) (g ≫ f) j (hs.paste_vert h)).app M ≫

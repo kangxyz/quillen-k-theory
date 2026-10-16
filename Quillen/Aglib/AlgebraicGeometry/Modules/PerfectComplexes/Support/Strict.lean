@@ -9,11 +9,13 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Restriction
+public import Mathlib.Algebra.Homology.HomologySequenceLemmas
 
 /-!
 # Strict perfect complexes with open acyclicity
 
-Support is actual acyclicity after the specified open restriction. Zero, isomorphism, extension and finite-product closure retain the original complex and maps.
+Support is actual acyclicity after the specified open restriction. Zero, isomorphism,
+extension and finite-product closure retain the original complex and maps.
 -/
 @[expose] public section
 

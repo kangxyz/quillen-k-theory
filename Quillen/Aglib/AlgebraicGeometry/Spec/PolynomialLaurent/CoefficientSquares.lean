@@ -7,6 +7,7 @@ module
 
 public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Basic
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Flat
 public import Mathlib.AlgebraicGeometry.Pullbacks
 
 /-! # Actual coefficient pullback squares for polynomial and Laurent spectra -/
@@ -14,7 +15,7 @@ public import Mathlib.AlgebraicGeometry.Pullbacks
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-open Quillen.PolynomialBaseChange CommRingCat.PolynomialLaurent
+open CommRingCat.PolynomialLaurent
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open PolynomialLaurent
 variable {R S : CommRingCat.{u}} (f : R ⟶ S)

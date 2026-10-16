@@ -7,18 +7,22 @@ module
 
 public import Quillen.Aglib.CategoryTheory.Functor.Rebase
 public import Quillen.Aglib.CategoryTheory.Functor.IdentityAutomorphismSquare
+public import Quillen.Aglib.CategoryTheory.Functor.IdentityAutomorphismNaturality
+public import Quillen.Aglib.CategoryTheory.Functor.IdentityAutomorphismEvaluation
 
 /-!
 # Identity automorphisms under actual functor rebasing
 
-The original object replacement and conjugated functor preserve the same supplied identity automorphisms. All category, object and isomorphism data and the preservation hypothesis are unchanged.
+The original object replacement and conjugated functor preserve the same supplied identity
+automorphisms. All category, object and isomorphism data and the preservation hypothesis
+are unchanged.
 -/
 @[expose] public section
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w u₁ v₁
-open CategoryTheory CategoryTheory.Limits
+open CategoryTheory
 open Quillen.FunctorIdentityAutomorphism
 namespace Quillen.PerfectComplexes
 theorem rebase_preserves {C D : Type u₁} [Category.{v₁} C] [Category.{v₁} D]

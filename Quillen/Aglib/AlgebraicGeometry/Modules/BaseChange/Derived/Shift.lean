@@ -28,7 +28,6 @@ local instance shiftStandard (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modul
   HasDerivedCategory.standard _
 
 /-- The exact flat pullback retains its installed shift comparison. -/
-
 instance derivedFlatPullbackPlusCommShift {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
     (derivedFlatPullbackPlus f).CommShift ℤ := by
   unfold derivedFlatPullbackPlus
@@ -38,7 +37,6 @@ variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (f : U ⟶ X) (j : V
   (h : IsPullback a b f j) [Flat j]
 
 /-- The literal derived mate respects the installed shifts. -/
-
 theorem derivedFlatBaseChangeMap_commShift :
     letI := flat_cartesian_baseChange a b f j h
     NatTrans.CommShift (derivedFlatBaseChangeMap a b f j h) ℤ := by

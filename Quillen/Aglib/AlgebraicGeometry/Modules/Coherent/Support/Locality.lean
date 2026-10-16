@@ -33,7 +33,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Closedness of stalk support is local for an actual open cover of schemes. -/
-
 theorem isClosed_support_iff_openCover {X : Scheme.{u}} (𝒰 : X.OpenCover.{v})
     (M : X.Modules) :
     IsClosed (support M) ↔
@@ -55,7 +54,6 @@ theorem isClosed_support_iff_openCover {X : Scheme.{u}} (𝒰 : X.OpenCover.{v})
 /-- Finite modules on an affine open cover give closed support of the sheaf.
 This does not impose noetherianity: the local finite-module criterion itself
 suffices. -/
-
 theorem isClosed_support_of_finite_affineCover {X : Scheme.{u}}
     (𝒰 : X.AffineOpenCover.{v}) (M : X.Modules)
     [∀ i, ((Scheme.Modules.restrictFunctor (𝒰.f i)).obj M).IsQuasicoherent]

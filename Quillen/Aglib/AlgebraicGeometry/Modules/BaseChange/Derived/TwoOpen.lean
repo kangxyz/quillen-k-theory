@@ -12,8 +12,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Derived.Shift
 public import Aglib.CategoryTheory.Triangulated.NatTransIso
 public import Quillen.Aglib.CategoryTheory.Limits.Shapes.NatTransProduct
 public import Aglib.Algebra.Homology.DerivedCategory.Plus.SingleTriangle
-/-! # Flat base change from the original signed two-open triangle -/
-
+/-! # Flat base change from the original signed two-open triangle 
+-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules
@@ -35,7 +35,6 @@ variable {W U V X : Scheme.{u}}
   (h : IsPullback a b f j) [Flat j]
 
 /-- An actual affine open chart and its affine composite give the original Čech term comparison. -/
-
 theorem isIso_derivedFlatBaseChangeMap_openLocalization
     {Z : Scheme.{u}} (g : Z ⟶ U) [IsOpenImmersion g]
     [IsAffineHom g] [IsAffineHom (g ≫ f)] (M : U.Modules) [M.IsQuasicoherent] :
@@ -46,7 +45,6 @@ theorem isIso_derivedFlatBaseChangeMap_openLocalization
     (IsPullback.of_hasPullback g a) h (M.restrict g)
 
 /-- The original signed two-open short exact triangle proves flat base change on QC singles. -/
-
 theorem isIso_derivedFlatBaseChangeMap_twoOpen_single
     {O A B : Scheme.{u}} (t : O ⟶ A) (s : O ⟶ B) (iA : A ⟶ U) (iB : B ⟶ U)
     [IsOpenImmersion t] [IsOpenImmersion s] [IsOpenImmersion iA] [IsOpenImmersion iB]

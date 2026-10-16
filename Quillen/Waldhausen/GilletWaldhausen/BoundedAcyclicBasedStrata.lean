@@ -9,6 +9,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedSSetColimit
 public import Quillen.Waldhausen.Functoriality.KMap
+public import Quillen.Waldhausen.ExactFunctor
 
 /-! # Strict original-zero models for bounded acyclic term strata
 

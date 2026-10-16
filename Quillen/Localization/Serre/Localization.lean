@@ -177,6 +177,8 @@ end Homotopical
 
 section CanonicalQuotient
 
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
+
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 

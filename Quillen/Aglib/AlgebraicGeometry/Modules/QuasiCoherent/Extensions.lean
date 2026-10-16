@@ -38,7 +38,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The ORIGINAL affine counit is invertible on the middle term of a
 short exact sequence with quasicoherent ends. -/
-
 lemma isIso_fromTildeΓ_of_shortExact (R : CommRingCat.{u})
     {S : ShortComplex (Spec R).Modules} (hS : S.ShortExact)
     [S.X₁.IsQuasicoherent] [S.X₃.IsQuasicoherent] : IsIso S.X₂.fromTildeΓ := by
@@ -58,7 +57,6 @@ lemma isIso_fromTildeΓ_of_shortExact (R : CommRingCat.{u})
 
 /-- Quasicoherence is closed under genuine ambient short exact extensions on
 Spec R, with no noetherian or ambient-middle QC assumption. -/
-
 lemma quasicoherent_of_shortExact_affine (R : CommRingCat.{u})
     {S : ShortComplex (Spec R).Modules} (hS : S.ShortExact)
     [S.X₁.IsQuasicoherent] [S.X₃.IsQuasicoherent] : S.X₂.IsQuasicoherent :=
@@ -67,7 +65,6 @@ lemma quasicoherent_of_shortExact_affine (R : CommRingCat.{u})
 
 /-- Genuine short-exact extension closure of quasicoherent module sheaves on
 an arbitrary scheme. Exactness is that of the original ambient sheaf category. -/
-
 theorem quasicoherent_of_shortExact {X : Scheme.{u}}
     {S : ShortComplex X.Modules} (hS : S.ShortExact)
     [S.X₁.IsQuasicoherent] [S.X₃.IsQuasicoherent] : S.X₂.IsQuasicoherent := by
@@ -81,7 +78,6 @@ theorem quasicoherent_of_shortExact {X : Scheme.{u}}
 
 /-- The existing intrinsic quasicoherent property is genuinely closed under
 ambient short exact extensions. -/
-
 instance quasicoherent_isClosedUnderExtensions (X : Scheme.{u}) :
     (SheafOfModules.isQuasicoherent X.ringCatSheaf).IsClosedUnderExtensions where
   prop_X₂_of_shortExact {S} hS h₁ h₃ := by

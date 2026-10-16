@@ -12,8 +12,8 @@ public import Quillen.Aglib.RingTheory.RegularLocalRing.GlobalProjectiveDimensio
 /-!
 # Finite locally free resolutions over regular affine schemes
 
-Every coherent sheaf on the spectrum of an arbitrary regular ring admits an actual finite locally free resolution with a bound depending on the sheaf.
--/
+Every coherent sheaf on the spectrum of an arbitrary regular ring admits an actual finite locally
+free resolution with a bound depending on the sheaf.-/
 @[expose] public section
 
 open ModuleCat
@@ -28,7 +28,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Every actual coherent sheaf on a regular affine scheme has a genuine
 finite locally free admissible resolution, with an object-dependent length. -/
-
 theorem coherentResolutionHypothesis_of_regular (R : CommRingCat.{u}) [IsRegularRing R] :
     (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec R)).ResolutionHypothesis
       (coherentVectorBundle (Spec R)) :=

@@ -11,7 +11,6 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Derived.OpenCov
 public import Mathlib.AlgebraicGeometry.Morphisms.Affine
 
 /-! # Affine-morphism derived base change on quasicoherent single sheaves -/
-
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules
@@ -28,7 +27,6 @@ local instance affineTargetCoverStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
 
 /-- Actual affine-chart localization discharges the target for the original flat mate. -/
-
 theorem isIso_derivedFlatBaseChangeMap_affineSource_single
     {W U V X : Scheme.{u}} [IsAffine U] [IsAffine X]
     (a : W ⟶ U) (b : W ⟶ V) (f : U ⟶ X) (j : V ⟶ X)
@@ -57,7 +55,6 @@ local instance affineMorphismBaseChangeStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
 
 /-- Affine direct-image flat base change for actual quasicoherent single sheaves. -/
-
 theorem isIso_derivedFlatBaseChangeMap_affineHom_single
     {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (f : U ⟶ X) (j : V ⟶ X)
     (h : IsPullback a b f j) [IsAffineHom f] [Flat j]

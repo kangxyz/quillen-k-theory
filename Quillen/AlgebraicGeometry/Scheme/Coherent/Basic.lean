@@ -19,7 +19,9 @@ public import Mathlib.AlgebraicGeometry.Noetherian
 /-!
 # Coherent G-theory on locally noetherian schemes
 
-The actual affine-local finite-type category, its abelian structure and its ambient exact structure come from Aglib. This downstream leaf forms its Quillen G-groups in the explicitly enlarged universe u + 1.
+The actual affine-local finite-type category, its abelian structure and its ambient exact
+structure come from Aglib. This downstream leaf forms its Quillen G-groups in the explicitly
+enlarged universe u + 1.
 -/
 @[expose] public section
 

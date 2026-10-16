@@ -32,7 +32,6 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Canonical restriction of the unit square to the original chart unit square. -/
-
 def unitSquareRestrictionIso {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] :
     (Scheme.Modules.restrictFunctor j).obj
         ((SheafOfModules.unit X.ringCatSheaf : X.Modules) ⨯ SheafOfModules.unit X.ringCatSheaf) ≅
@@ -44,7 +43,6 @@ def unitSquareRestrictionIso {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j
       prod.mapIso (Scheme.Modules.restrictUnitIso j) (Scheme.Modules.restrictUnitIso j)
 
 /-- The original positive column becomes the literal graph column. -/
-
 lemma firstColumn_unitSquareRestrictionIso {U X : Scheme.{u}} (j : U ⟶ X)
     [IsOpenImmersion j] (s : Γ(U, ⊤)) :
     firstColumn j s ≫ (unitSquareRestrictionIso j).hom = graphColumn (unitMul U s) := by
@@ -57,7 +55,6 @@ lemma firstColumn_unitSquareRestrictionIso {U X : Scheme.{u}} (j : U ⟶ X)
       congrArg (fun k => k ≫ (Scheme.Modules.restrictUnitIso j).hom) (firstColumn_snd j s)
 
 /-- The original negative column becomes the exchanged graph column. -/
-
 lemma secondColumn_unitSquareRestrictionIso {U X : Scheme.{u}} (j : U ⟶ X)
     [IsOpenImmersion j] (s : Γ(U, ⊤)) :
     secondColumn j s ≫ (unitSquareRestrictionIso j).hom = cographColumn (unitMul U s) := by
@@ -70,7 +67,6 @@ lemma secondColumn_unitSquareRestrictionIso {U X : Scheme.{u}} (j : U ⟶ X)
       congrArg (fun k => k ≫ (Scheme.Modules.restrictUnitIso j).hom) (secondColumn_snd j s)
 
 /-- The canonical square comparison preserves the first projection. -/
-
 lemma unitSquareRestrictionIso_fst {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] :
     (unitSquareRestrictionIso j).hom ≫ prod.fst =
       (Scheme.Modules.restrictFunctor j).map prod.fst ≫
@@ -78,14 +74,12 @@ lemma unitSquareRestrictionIso_fst {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmer
   simp [unitSquareRestrictionIso, Category.assoc]
 
 /-- The canonical square comparison preserves the second projection. -/
-
 lemma unitSquareRestrictionIso_snd {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] :
     (unitSquareRestrictionIso j).hom ≫ prod.snd =
       (Scheme.Modules.restrictFunctor j).map prod.snd ≫ (Scheme.Modules.restrictUnitIso j).hom := by
   simp [unitSquareRestrictionIso, Category.assoc]
 
 /-- The original chart quotient row with coefficients `(-s, 1)`. -/
-
 def firstRow {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (s : Γ(U, ⊤)) :
     (Scheme.Modules.restrictFunctor j).obj
       ((SheafOfModules.unit X.ringCatSheaf : X.Modules) ⨯ SheafOfModules.unit X.ringCatSheaf) ⟶
@@ -93,7 +87,6 @@ def firstRow {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (s : Γ(U, ⊤
   (unitSquareRestrictionIso j).hom ≫ graphRow (unitMul U s)
 
 /-- The original chart quotient row with coefficients `(-1, s)`. -/
-
 def secondRow {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (s : Γ(U, ⊤)) :
     (Scheme.Modules.restrictFunctor j).obj
       ((SheafOfModules.unit X.ringCatSheaf : X.Modules) ⨯ SheafOfModules.unit X.ringCatSheaf) ⟶
@@ -101,7 +94,6 @@ def secondRow {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (s : Γ(U, �
   (unitSquareRestrictionIso j).hom ≫ cographRow (unitMul U s)
 
 /-- The positive quotient row in the original restricted product projections. -/
-
 lemma firstRow_eq {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (s : Γ(U, ⊤)) :
     firstRow j s =
       (Scheme.Modules.restrictFunctor j).map prod.snd ≫ (Scheme.Modules.restrictUnitIso j).hom -
@@ -111,7 +103,6 @@ lemma firstRow_eq {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (s : Γ(U
     unitSquareRestrictionIso_fst, unitSquareRestrictionIso_snd]
 
 /-- The negative quotient row in the original restricted product projections. -/
-
 lemma secondRow_eq {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (s : Γ(U, ⊤)) :
     secondRow j s =
       (Scheme.Modules.restrictFunctor j).map prod.snd ≫
@@ -122,7 +113,6 @@ lemma secondRow_eq {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (s : Γ(
     unitSquareRestrictionIso_fst, unitSquareRestrictionIso_snd]
 
 /-- Reciprocal chart coordinates give the inverse-unit transition for the literal quotient rows. -/
-
 lemma rows_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k] (s : Γ(U, ⊤)) (t : Γ(V, ⊤))
     (v : (Γ(CategoryTheory.Limits.pullback j k, ⊤))ˣ)

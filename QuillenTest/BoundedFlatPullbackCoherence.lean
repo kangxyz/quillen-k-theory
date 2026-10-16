@@ -7,6 +7,7 @@ module
 
 public import Quillen.Waldhausen.SConstruction.Iterated.ExactCompositionHomotopy
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.PullbackCoherence
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Pullback
 
 /-! Two actual geometric pullback-comparison tracks after canonical spectrum normalization.
 Binary normalization of composites of spectrum maps remains a separate obligation. -/

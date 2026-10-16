@@ -15,7 +15,9 @@ public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 /-!
 # Actual scalar cones on perfect and supported complexes
 
-The literal signed scalar cone and cone maps preserve inherited short exact sequences. A scalar invertible on the specified open gives the same supported cone; no scalar regularity is assumed.
+The literal signed scalar cone and cone maps preserve inherited short exact sequences. A scalar
+invertible on the specified open gives the same supported cone; no scalar regularity is
+assumed.
 -/
 @[expose] public section
 

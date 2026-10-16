@@ -11,7 +11,9 @@ public import Mathlib.Algebra.Homology.DerivedCategory.Fractions
 /-!
 # Actual chain representatives into a top single
 
-In an abelian category with the original derived category, a derived map from a complex with terms in degrees at most n to a single in degree n has an actual chain representative. The degree bound is retained.
+In an abelian category with the original derived category, a derived map from a complex with
+terms in degrees at most n to a single in degree n has an actual chain representative. The
+degree bound is retained.
 -/
 @[expose] public section
 noncomputable section

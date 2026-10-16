@@ -33,8 +33,7 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 variable {A : Type (max u v)} [Category.{v} A] [Abelian A]
 variable (P : ObjectProperty A) [P.ContainsZero] [P.IsClosedUnderIsomorphisms]
   [(abelianExactStructure A).IsExtensionClosed P]
-local instance globalEulerReduction_termPropertyProducts : P.IsClosedUnderFiniteProducts :=
-  (abelianExactStructure A).extensionClosed_finiteProducts P
+attribute [local instance] globalEulerReduction_termPropertyProducts
 
 /-- The corresponding original normalized KMaps commute exactly. -/
 theorem finiteTermSingle_KMap_inclusion (a b n : ℤ) (ha : a ≤ n) (hb : n ≤ b) (k : ℕ)

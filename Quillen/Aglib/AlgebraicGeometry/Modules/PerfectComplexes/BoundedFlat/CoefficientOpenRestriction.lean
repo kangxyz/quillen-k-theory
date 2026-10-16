@@ -12,11 +12,10 @@ public import Aglib.AlgebraicGeometry.BaseChange.Coefficients.Basic
 /-!
 # Actual restriction on joint coefficient sections
 
-The original scheme-over-base open map gives the specified native open pair, coefficient square, actual section restriction and original evaluation comparison.
+The original scheme-over-base open map gives the specified native open pair, coefficient
+square, actual section restriction and original evaluation comparison.
 -/
 @[expose] public section
-
-open Quillen.Waldhausen
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

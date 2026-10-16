@@ -40,7 +40,6 @@ open Scheme.Modules
 variable {Z V X : Scheme.{u}} (i : Z ⟶ X) (a : V ⟶ X) [IsOpenImmersion a]
 
 /-- The actual direct-image square for a geometric pullback diagram. -/
-
 def pushforwardSquare :
     pushforward (pullback.fst i a) ⋙ pushforward i ≅
       pushforward (pullback.snd i a) ⋙ pushforward a :=
@@ -49,7 +48,6 @@ def pushforwardSquare :
       (pushforwardComp (pullback.snd i a) a).symm
 
 /-- Actual open base change is the mate of the actual composition square. -/
-
 theorem openBaseChange_eq_mate :
     (openBaseChange i a).hom =
       (mateEquiv (restrictAdjunction (pullback.fst i a)) (restrictAdjunction a)).symm
@@ -67,7 +65,6 @@ theorem openBaseChange_eq_mate :
 
 /-- The pullback/open-restriction square defined as the mate of genuine
 open base change. This definition retains the adjunction unit square. -/
-
 def pullbackBaseChangeMate :
     restrictFunctor a ⋙ Scheme.Modules.pullback (pullback.snd i a) ⟶
       Scheme.Modules.pullback i ⋙ restrictFunctor (pullback.fst i a) :=
@@ -76,7 +73,6 @@ def pullbackBaseChangeMate :
 
 /-- The second mate is an isomorphism because it is the conjugate of the
 original isomorphism between the composite right adjoints. -/
-
 instance pullbackBaseChangeMate_isIso : IsIso (pullbackBaseChangeMate i a) := by
   rw [pullbackBaseChangeMate, openBaseChange_eq_mate]
   rw [iterated_mateEquiv_conjugateEquiv_symm
@@ -90,7 +86,6 @@ instance pullbackBaseChangeMate_isIso : IsIso (pullbackBaseChangeMate i a) := by
   infer_instance
 
 /-- The exact unit compatibility furnished by the mates correspondence. -/
-
 theorem unit_openBaseChange (M : X.Modules) :
     (restrictFunctor a).map ((pullbackPushforwardAdjunction i).unit.app M) ≫
       (openBaseChange i a).hom.app ((Scheme.Modules.pullback i).obj M) =
@@ -101,7 +96,6 @@ theorem unit_openBaseChange (M : X.Modules) :
     (pullbackPushforwardAdjunction (pullback.snd i a)) (openBaseChange i a).hom M
 
 /-- The local codomain identification of the actual global unit. -/
-
 def unitTargetOpenBaseChange (M : X.Modules) :
     (restrictFunctor a).obj ((pushforward i).obj ((Scheme.Modules.pullback i).obj M)) ≅
       (pushforward (pullback.snd i a)).obj
@@ -111,7 +105,6 @@ def unitTargetOpenBaseChange (M : X.Modules) :
 
 /-- With this canonical codomain comparison, the restricted unit is
 literally the actual local unit. -/
-
 theorem unit_comp_unitTargetOpenBaseChange (M : X.Modules) :
     (restrictFunctor a).map ((pullbackPushforwardAdjunction i).unit.app M) ≫
       (unitTargetOpenBaseChange i a M).hom =
@@ -134,7 +127,6 @@ variable [IsLocallyNoetherian Z] [IsLocallyNoetherian X] [IsLocallyNoetherian V]
   [IsClosedImmersion i]
 
 /-- The unit codomain comparison on the actual coherent categories. -/
-
 def coherentUnitTargetOpenBaseChange (M : FiniteTypeSheaves X) :
     (finiteTypeSheavesRestriction a).obj
       ((finiteTypePushforward i).obj ((coherentPullback i).obj M))
@@ -144,9 +136,7 @@ def coherentUnitTargetOpenBaseChange (M : FiniteTypeSheaves X) :
   (affineLocallyFiniteType V).fullyFaithfulι.preimageIso (unitTargetOpenBaseChange i a M.obj)
 
 omit [IsLocallyNoetherian X] [IsLocallyNoetherian V] in
-
 /-- The comparison retains exactly the actual coherent-adjunction unit. -/
-
 theorem coherentUnit_comp_target (M : FiniteTypeSheaves X) :
     (finiteTypeSheavesRestriction a).map ((coherentAdjunction i).unit.app M) ≫
       (coherentUnitTargetOpenBaseChange i a M).hom =
@@ -161,7 +151,6 @@ theorem coherentUnit_comp_target (M : FiniteTypeSheaves X) :
   exact unit_comp_unitTargetOpenBaseChange i a M.obj
 
 /-- Actual ideal-kernel formation commutes with open restriction. -/
-
 def kernelUnitOpenBaseChange (M : FiniteTypeSheaves X) :
     (finiteTypeSheavesRestriction a).obj (kernel ((coherentAdjunction i).unit.app M)) ≅
       kernel ((coherentAdjunction (pullback.snd i a)).unit.app

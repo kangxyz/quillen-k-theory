@@ -53,7 +53,6 @@ variable (R : CommRingCat.{u}) (f : R)
 variable [IsNoetherianRing R]
 
 /-- The actual geometric pushforward/global-sections comparison square. -/
-
 def coherentPushforwardSquare :
     AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePushforward
       (Pushforward.ClosedImmersion.Ideal.closedMap R

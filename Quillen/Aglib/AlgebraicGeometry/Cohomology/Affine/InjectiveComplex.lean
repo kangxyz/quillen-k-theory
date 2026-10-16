@@ -36,7 +36,6 @@ open PrimeSpectrum HomologicalComplex
 namespace AlgebraicGeometry.Scheme.Modules.AffineCech
 
 /-- Actual positive Čech exactness on every finite principal cover of a principal open. -/
-
 def principalCechAcyclic {R : CommRingCat.{u}} (M : (Spec R).Modules) : Prop :=
   ∀ (r : R) (ι : Type u) [Fintype ι] (f : ι → R),
     (⨆ i, PrimeSpectrum.basicOpen (f i)) = PrimeSpectrum.basicOpen r →
@@ -60,7 +59,6 @@ lemma principalCechAcyclic_of_isZero {R : CommRingCat.{u}}
   exact ShortComplex.exact_of_isZero_X₂ _ hF
 
 /-- Actual principal-cover acyclicity gives global-section exactness for an arbitrary quotient. -/
-
 lemma shortExact_globalSections_of_principalCechAcyclic {R : CommRingCat.{u}}
     {S : ShortComplex (Spec R).Modules} (hS : S.ShortExact)
     (hA : principalCechAcyclic S.X₁) : (S.map moduleSpecΓFunctor).ShortExact := by
@@ -71,7 +69,6 @@ lemma shortExact_globalSections_of_principalCechAcyclic {R : CommRingCat.{u}}
   exact shortExact_sections_of_surjective hS ⊤ hs
 
 /-- Quotients of two genuinely Čech-acyclic terms remain Čech-acyclic. -/
-
 lemma principalCechAcyclic_quotient {R : CommRingCat.{u}}
     {S : ShortComplex (Spec R).Modules} (hS : S.ShortExact)
     (hA : principalCechAcyclic S.X₁) (hB : principalCechAcyclic S.X₂) :
@@ -84,7 +81,6 @@ lemma principalCechAcyclic_quotient {R : CommRingCat.{u}}
     (hB r ι f hf n).isZero_homology (hA r ι f hf (n + 1)).isZero_homology
 
 /-- Extensions preserve actual positive principal-cover Čech exactness. -/
-
 lemma principalCechAcyclic_extension {R : CommRingCat.{u}}
     {S : ShortComplex (Spec R).Modules} (hS : S.ShortExact)
     (hA : principalCechAcyclic S.X₁) (hC : principalCechAcyclic S.X₃) :
@@ -97,7 +93,6 @@ lemma principalCechAcyclic_extension {R : CommRingCat.{u}}
     (hA r ι f hf n).isZero_homology (hC r ι f hf n).isZero_homology
 
 /-- Ascending from the actual lower term bound proves Čech acyclicity of unrestricted opcycles. -/
-
 lemma principalCechAcyclic_opcycles {R : CommRingCat.{u}}
     (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n))
@@ -124,7 +119,6 @@ lemma principalCechAcyclic_opcycles {R : CommRingCat.{u}}
         (principalCechAcyclic_of_injective (I.X (n + 1)))
 
 /-- Every actual boundary appearing in the lower-bounded injective complex is Čech-acyclic. -/
-
 lemma principalCechAcyclic_boundaryAfter {R : CommRingCat.{u}}
     (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n))
@@ -138,7 +132,6 @@ lemma principalCechAcyclic_boundaryAfter {R : CommRingCat.{u}}
     (principalCechAcyclic_opcycles I a hbound hinj hqc n)
 
 /-- Global sections preserve the actual next-boundary/term/opcycle short exact sequence. -/
-
 lemma globalSections_boundaryOpcycle_shortExact {R : CommRingCat.{u}}
     (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n))
@@ -149,7 +142,6 @@ lemma globalSections_boundaryOpcycle_shortExact {R : CommRingCat.{u}}
     (principalCechAcyclic_boundaryAfter I a hbound hinj hqc n)
 
 /-- The literal projection from each injective term onto its opcycles is epic on global sections. -/
-
 lemma epi_globalSections_pOpcycles {R : CommRingCat.{u}}
     (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n))
@@ -164,7 +156,6 @@ lemma epi_globalSections_pOpcycles {R : CommRingCat.{u}}
 
 /-- The actual global-section cokernel is preserved at each differential of the injective complex.
 -/
-
 lemma globalSections_preserves_opcycles {R : CommRingCat.{u}}
     (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n))
@@ -193,7 +184,6 @@ lemma globalSections_preserves_opcycles {R : CommRingCat.{u}}
   exact isCokernelEpiComp hc p hd
 
 /-- Global sections preserve the original right homology data degree by degree. -/
-
 lemma globalSections_preservesRightHomology {R : CommRingCat.{u}}
     (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n))

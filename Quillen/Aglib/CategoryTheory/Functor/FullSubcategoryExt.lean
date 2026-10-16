@@ -7,6 +7,7 @@ Authors: kangxyz
 module
 
 public import Mathlib.CategoryTheory.ObjectProperty.FullSubcategory
+public import Mathlib.CategoryTheory.EqToHom
 
 /-! # Functor equality reflected by a full-subcategory inclusion -/
 @[expose] public section

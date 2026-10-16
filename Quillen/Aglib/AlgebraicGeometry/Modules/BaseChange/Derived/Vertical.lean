@@ -40,7 +40,6 @@ variable {Z' Z W U V X : Scheme.{u}}
   (hs : IsPullback c d g a) (h : IsPullback a b f j) [Flat j]
 
 /-- Vertical composition uses the actual two derived mates and pushforward comparisons. -/
-
 def derivedFlatBaseChangeVerticalComposite :
     letI := flat_cartesian_baseChange a b f j h
     letI := flat_cartesian_baseChange c d g a hs
@@ -60,7 +59,6 @@ def derivedFlatBaseChangeVerticalComposite :
       (derivedPushforwardPlusCompIso d b).symm).hom
 
 /-- The vertical component retains the two literal derived mates. -/
-
 theorem derivedFlatBaseChangeVerticalComposite_app (K : DerivedCategory.Plus Z.Modules) :
     letI := flat_cartesian_baseChange a b f j h
     letI := flat_cartesian_baseChange c d g a hs
@@ -72,9 +70,7 @@ theorem derivedFlatBaseChangeVerticalComposite_app (K : DerivedCategory.Plus Z.M
   simp [derivedFlatBaseChangeVerticalComposite]
 
 omit [Flat j] in
-
 /-- The vertical ordinary mate equation holds in the actual bounded-below complexes. -/
-
 theorem cartesianBaseChangeMap_paste_vert_complex (K : CochainComplex.Plus Z.Modules) :
     (Scheme.Modules.pullback j).mapCochainComplexPlus.map
         ((NatIso.mapCochainComplexPlus (Scheme.Modules.pushforwardComp g f)).inv.app K) ≫
@@ -101,7 +97,6 @@ theorem cartesianBaseChangeMap_paste_vert_complex (K : CochainComplex.Plus Z.Mod
   rfl
 
 omit [Flat j] in
-
 /-- The inverse direct-image comparison retains its original geometric unit square. -/
 private theorem derivedPushforwardPlusCompIso_inv_unit (K : CochainComplex.Plus Z.Modules) :
     (Functor.rightDerivedFunctorPlusCompUnit (Scheme.Modules.pushforward g)
@@ -232,7 +227,6 @@ private theorem derivedFlatBaseChangeVertical_target_unit (K : CochainComplex.Pl
   rfl
 
 /-- The vertical composite retains the original ordinary mate in its installed unit square. -/
-
 theorem derivedFlatBaseChangeVerticalComposite_unit (K : CochainComplex.Plus Z.Modules) :
     letI := flat_cartesian_baseChange a b f j h
     letI := flat_cartesian_baseChange c d g a hs
@@ -272,7 +266,6 @@ theorem derivedFlatBaseChangeVerticalComposite_unit (K : CochainComplex.Plus Z.M
   simpa only [Category.assoc] using hfinal
 
 /-- Vertical pasting is equality of the original derived base-change maps. -/
-
 theorem derivedFlatBaseChangeMap_paste_vert :
     letI := flat_cartesian_baseChange a b f j h
     letI := flat_cartesian_baseChange c d g a hs

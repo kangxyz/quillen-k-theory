@@ -9,6 +9,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.StupidTruncationFixedBounds
 public import Quillen.Waldhausen.Functoriality.KMap
+public import Quillen.Waldhausen.ExactFunctor
 
 /-! # Actual K-map endpoints of each bounded-term brutal filtration
 

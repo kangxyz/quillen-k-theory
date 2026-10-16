@@ -15,8 +15,9 @@ public import Aglib.Algebra.Homology.CochainComplex.BoundedAbove.Basic
 /-!
 # Bounded-above flat locally perfect complexes
 
-The original local-perfect predicate, an explicit upper term bound and stalkwise-flat terms define the full chain category. Actual closure and the literal inclusion into perfect complexes are preserved.
--/
+The original local-perfect predicate, an explicit upper term bound and stalkwise-flat terms define
+the full chain category. Actual closure and the literal inclusion into perfect complexes are
+preserved.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex

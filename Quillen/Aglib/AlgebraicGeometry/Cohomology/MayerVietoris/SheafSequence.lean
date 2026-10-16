@@ -39,25 +39,21 @@ variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V
   (h : a ≫ j = b ≫ k) (M : X.Modules)
 
 /-- The original second restriction transported to the common actual overlap immersion. -/
-
 def sheafSecondRestriction :
     (openLocalization k).obj M ⟶ (openLocalization (a ≫ j)).obj M :=
   openLocalizationMap b k M ≫ (openLocalizationCongr h.symm).hom.app M
 
 /-- The pair of original open-restriction adjunction units. -/
-
 def sheafAugmentation : M ⟶ (openLocalization j).obj M ⨯ (openLocalization k).obj M :=
   prod.lift ((openLocalizationUnit j).app M) ((openLocalizationUnit k).app M)
 
 /-- The signed original restriction difference to the actual overlap. -/
-
 def sheafDifference :
     (openLocalization j).obj M ⨯ (openLocalization k).obj M ⟶
       (openLocalization (a ≫ j)).obj M :=
   prod.fst ≫ openLocalizationMap a j M - prod.snd ≫ sheafSecondRestriction a b j k h M
 
 /-- The original restriction units are annihilated by the signed difference. -/
-
 theorem sheafAugmentation_difference :
     sheafAugmentation j k M ≫ sheafDifference a b j k h M = 0 := by
   simp only [sheafAugmentation, sheafDifference, Preadditive.comp_sub,
@@ -66,7 +62,6 @@ theorem sheafAugmentation_difference :
     openLocalizationUnit_map, openLocalizationUnit_congr, sub_self]
 
 /-- The original two-open restriction sequence of module sheaves. -/
-
 def sheafSequence : ShortComplex X.Modules :=
   ShortComplex.mk (sheafAugmentation j k M) (sheafDifference a b j k h M)
     (sheafAugmentation_difference a b j k h M)
@@ -86,7 +81,6 @@ variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V
   (h : IsPullback a b j k) (M : X.Modules)
 
 /-- The original augmented restrictions agree on the common actual overlap. -/
-
 theorem sheaf_restriction_compatibility :
     (openLocalizationUnit j).app M ≫ openLocalizationMap a j M =
       (openLocalizationUnit k).app M ≫ sheafSecondRestriction a b j k h.w M := by
@@ -94,7 +88,6 @@ theorem sheaf_restriction_compatibility :
     openLocalizationUnit_map, openLocalizationUnit_congr]
 
 /-- On the first chart the original signed Čech sheaf sequence is split exact. -/
-
 theorem sheafSequence_restrict_left_shortExact :
     ((sheafSequence a b j k h.w M).map (Scheme.Modules.restrictFunctor j)).ShortExact := by
   let F := Scheme.Modules.restrictFunctor j
@@ -114,7 +107,6 @@ theorem sheafSequence_restrict_left_shortExact :
   exact productSequence_map_shortExact F α β γ δ hc
 
 /-- On the second chart the other two original components give split exactness. -/
-
 theorem sheafSequence_restrict_right_shortExact :
     ((sheafSequence a b j k h.w M).map (Scheme.Modules.restrictFunctor k)).ShortExact := by
   let F := Scheme.Modules.restrictFunctor k
@@ -130,7 +122,6 @@ theorem sheafSequence_restrict_right_shortExact :
     (productSequence_shortExact_right _ _ _ _ _)
 
 /-- The original two-open Čech sequence is short exact for every module sheaf. -/
-
 theorem sheafSequence_shortExact
     (hcover : ∀ x : X, (∃ y : U, j y = x) ∨ (∃ z : V, k z = x)) :
     (sheafSequence a b j k h.w M).ShortExact := by
@@ -166,7 +157,6 @@ variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V
   (h : a ≫ j = b ≫ k)
 
 /-- The transported second restriction is natural in the original sheaf morphism. -/
-
 theorem sheafSecondRestriction_naturality {M N : X.Modules} (φ : M ⟶ N) :
     (openLocalization k).map φ ≫ sheafSecondRestriction a b j k h N =
       sheafSecondRestriction a b j k h M ≫ (openLocalization (a ≫ j)).map φ := by
@@ -175,7 +165,6 @@ theorem sheafSecondRestriction_naturality {M N : X.Modules} (φ : M ⟶ N) :
     (openLocalizationCongr h.symm).hom.naturality, ← Category.assoc]
 
 /-- The original restrictions give a morphism of the actual Čech sheaf sequences. -/
-
 def sheafSequenceMap {M N : X.Modules} (φ : M ⟶ N) :
     sheafSequence a b j k h M ⟶ sheafSequence a b j k h N where
   τ₁ := φ
@@ -192,7 +181,6 @@ def sheafSequenceMap {M N : X.Modules} (φ : M ⟶ N) :
     rw [openLocalizationMap_naturality, sheafSecondRestriction_naturality]
 
 /-- The original sheaf Čech sequence is functorial, with literal identity and composition maps. -/
-
 def sheafSequenceFunctor : X.Modules ⥤ ShortComplex X.Modules where
   obj M := sheafSequence a b j k h M
   map φ := sheafSequenceMap a b j k h φ

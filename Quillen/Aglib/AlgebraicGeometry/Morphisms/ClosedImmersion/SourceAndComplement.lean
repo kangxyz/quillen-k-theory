@@ -12,7 +12,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.Close
 /-!
 # Closed sources and their open complements
 
-A closed subscheme of a noetherian scheme is noetherian. The actual complement and its canonical open immersion retain the original closed-image geometry.
+A closed subscheme of a noetherian scheme is noetherian. The actual complement and its
+canonical open immersion retain the original closed-image geometry.
 -/
 @[expose] public section
 
@@ -33,26 +34,20 @@ variable {Z X : AlgebraicGeometry.Scheme.{u}} [IsNoetherian X]
   (i : Z ⟶ X) [IsClosedImmersion i]
 
 include i in
-
 /-- A closed subscheme of a noetherian scheme is locally noetherian. -/
-
 theorem source_locallyNoetherian : IsLocallyNoetherian Z :=
   AlgebraicGeometry.Scheme.closedSource_isLocallyNoetherian i
 
 include i in
-
 /-- The stronger global noetherianity conclusion is also derived. -/
-
 theorem source_noetherian : IsNoetherian Z :=
   AlgebraicGeometry.Scheme.closedSource_isNoetherian i
 
 /-- The actual open complement of the closed image. -/
-
 abbrev openScheme :=
   (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.openComplement i).toScheme
 
 /-- Its actual geometric open immersion. -/
-
 abbrev openMap := AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.openMap i
 
 end AlgebraicGeometry.Scheme.Closed

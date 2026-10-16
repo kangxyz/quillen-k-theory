@@ -14,7 +14,6 @@ public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Pushforward
 A chart with an affine coordinate projection has an invertible original counit.
 The intermediate scheme and its projection need not be affine.
 -/
-
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules
@@ -33,9 +32,7 @@ variable {R A : CommRingCat.{u}} {X : Scheme.{u}}
 variable (a : R ⟶ A) (j : Spec A ⟶ X) (p : X ⟶ Spec R) (h : j ≫ p = Spec.map a)
 
 include h in
-
 /-- Actual affine chart pushforwards have an invertible original tilde counit. -/
-
 theorem isIso_chartPushforward_counit (N : (Spec A).Modules) [N.IsQuasicoherent] :
     IsIso (((Scheme.Modules.pushforward p).obj
       ((Scheme.Modules.pushforward j).obj N)).fromTildeΓ) := by

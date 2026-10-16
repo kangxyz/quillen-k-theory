@@ -14,6 +14,8 @@ public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Exact
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.Resolution.Affine
 public import Quillen.Resolution.LengthOne
+public import Quillen.KTheory.Equivalence
+public import Quillen.AlgebraicGeometry.Scheme.Comparison.KToG
 
 /-! # Applying the resolution theorem to the canonical scheme comparison -/
 @[expose] public section

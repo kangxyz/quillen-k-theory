@@ -33,7 +33,6 @@ instance stalkwiseFlat_isStableUnderRetracts (X : Scheme.{u}) :
   of_retract h hN := stalkwiseFlat_of_retract h hN
 
 /-- Idempotents in the actual flat sheaf subcategory split through actual flat sheaves. -/
-
 instance stalkwiseFlat_isIdempotentComplete (X : Scheme.{u}) :
     IsIdempotentComplete (stalkwiseFlat X).FullSubcategory where
   idempotents_split M p hp := by

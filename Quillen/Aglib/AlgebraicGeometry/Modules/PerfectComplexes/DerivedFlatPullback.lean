@@ -15,7 +15,8 @@ public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 /-!
 # Flat pullback and cover descent of intrinsic perfect D-plus objects
 
-Actual derived flat pullback preserves the original perfect predicate, and the stated arbitrary open-immersion cover detects it without a projective-line hypothesis.
+Actual derived flat pullback preserves the original perfect predicate, and the stated arbitrary
+open-immersion cover detects it without a projective-line hypothesis.
 -/
 @[expose] public section
 noncomputable section

@@ -12,7 +12,8 @@ public import Aglib.AlgebraicGeometry.Modules.Restriction.Sections
 /-!
 # Unit-sheaf maps from actual top sections
 
-The original section construction, top-section extensionality, scalar equation and actual restriction formula preserve their sheaf maps.
+The original section construction, top-section extensionality, scalar equation and actual
+restriction formula preserve their sheaf maps.
 -/
 @[expose] public section
 noncomputable section
@@ -20,7 +21,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite ModuleCat
-open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open AlgebraicGeometry.Scheme.Modules
 namespace Quillen.PerfectComplexes.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
 /-- A section on the whole scheme, with all of its actual restrictions. -/

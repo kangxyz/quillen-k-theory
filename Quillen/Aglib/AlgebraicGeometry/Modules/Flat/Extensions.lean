@@ -29,7 +29,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Genuine flat modules are closed under arbitrary short exact extensions. -/
-
 theorem moduleFlat_middle_of_shortExact {R : Type u} [CommRing R]
     {S : ShortComplex (ModuleCat.{u} R)} (hS : S.ShortExact)
     [Module.Flat R S.X₁] [Module.Flat R S.X₃] : Module.Flat R S.X₂ := by
@@ -68,7 +67,6 @@ theorem moduleFlat_middle_of_shortExact {R : Type u} [CommRing R]
   simpa [hy0] using hy.symm
 
 /-- Actual module-stalk exactness detects closure of flat sheaves under extensions. -/
-
 theorem stalkwiseFlat_middle_of_shortExact {X : Scheme.{u}} {S : ShortComplex X.Modules}
     (hS : S.ShortExact) (h₁ : stalkwiseFlat X S.X₁) (h₃ : stalkwiseFlat X S.X₃) :
     stalkwiseFlat X S.X₂ := by

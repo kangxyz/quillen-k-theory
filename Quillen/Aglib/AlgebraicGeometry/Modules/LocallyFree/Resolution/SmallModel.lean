@@ -18,7 +18,8 @@ public import Quillen.Aglib.CategoryTheory.ExactCategory.Resolution.Transport
 /-!
 # Vector-bundle resolutions in small coherent models
 
-The actual vector-bundle property and finite resolutions descend to the chosen coherent small model. The lifted bundle inclusion is an exact equivalence onto its full subcategory.
+The actual vector-bundle property and finite resolutions descend to the chosen coherent
+small model. The lifted bundle inclusion is an exact equivalence onto its full subcategory.
 -/
 @[expose] public section
 
@@ -45,7 +46,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 variable (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X]
 
 /-- The actual vector-bundle property on the chosen small coherent category. -/
-
 def coherentSmallVectorBundle :
     ObjectProperty (SmallModel.{u+1}
       (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X)) :=
@@ -67,7 +67,7 @@ instance coherentSmallVectorBundle_containsZero : (coherentSmallVectorBundle X).
 
 instance coherentSmallVectorBundle_extensionClosed :
     (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
-      X).smallModel.IsExtensionClosed
+      X).smallModel.{u+1}.IsExtensionClosed
       (coherentSmallVectorBundle X) where
   prop_middle hS h₁ h₃ := CategoryTheory.ExactCategory.ExactStructure.IsExtensionClosed.prop_middle
     (E := AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X) hS h₁ h₃
@@ -75,25 +75,25 @@ instance coherentSmallVectorBundle_extensionClosed :
 instance coherentSmallVectorBundle_finiteProducts :
     (coherentSmallVectorBundle X).IsClosedUnderFiniteProducts :=
   (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
-    X).smallModel.extensionClosed_finiteProducts
+    X).smallModel.{u+1}.extensionClosed_finiteProducts
     (coherentSmallVectorBundle X)
 
 instance coherentSmallVectorBundle_kernelClosed
     [(AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).IsKernelClosed
       (coherentVectorBundle X)] :
-    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).smallModel.IsKernelClosed
+    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
+      X).smallModel.{u+1}.IsKernelClosed
       (coherentSmallVectorBundle X) where
   prop_kernel hS h₂ h₃ := CategoryTheory.ExactCategory.ExactStructure.IsKernelClosed.prop_kernel
     (E := AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X) hS h₂ h₃
 
 /-- Actual coherent resolutions descend to the actual chosen small model,
 without changing their length or forgetting any admissible sequence. -/
-
 theorem coherentSmallResolutionLength (n : ℕ)
     (h : ∀ M, (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).ResolutionLength
       (coherentVectorBundle X) n M) :
     ∀ M, (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
-      X).smallModel.ResolutionLength
+      X).smallModel.{u+1}.ResolutionLength
       (coherentSmallVectorBundle X) n M := by
   intro M
   let E := equivSmallModel.{u+1} (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves
@@ -107,10 +107,9 @@ theorem coherentSmallResolutionLength (n : ℕ)
 
 /-- The canonical small comparison, with its target restricted to vector
 bundles inside the small coherent category. -/
-
 def vectorBundleSmallLift : SmallModel.{u+1} (FiniteLocallyFree X) ⥤
     (coherentSmallVectorBundle X).FullSubcategory :=
-  (coherentSmallVectorBundle X).lift (vectorBundleToCoherentExact X).smallModel.toFunctor
+  (coherentSmallVectorBundle X).lift (vectorBundleToCoherentExact X).smallModel.{u+1}.toFunctor
     (fun M => (coherentVectorBundle X).prop_of_iso
       ((equivSmallModel.{u+1} (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves
         X)).unitIso.app
@@ -148,7 +147,7 @@ instance vectorBundleSmallLift_essSurj : (vectorBundleSmallLift X).EssSurj where
     let EC := equivSmallModel.{u+1}
       (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X)
     let V : FiniteLocallyFree X := ⟨(EC.inverse.obj Z.obj).obj, Z.property⟩
-    let e : ((vectorBundleToCoherentExact X).smallModel.toFunctor).obj (EV.functor.obj V) ≅
+    let e : ((vectorBundleToCoherentExact X).smallModel.{u+1}.toFunctor).obj (EV.functor.obj V) ≅
         Z.obj :=
       EC.functor.mapIso ((vectorBundleToCoherent X).mapIso (EV.unitIso.app V).symm) ≪≫
         EC.counitIso.app Z.obj
@@ -158,23 +157,21 @@ instance vectorBundleSmallLift_isEquivalence : (vectorBundleSmallLift X).IsEquiv
   { }
 
 /-- Restricting the codomain does not alter the actual exact comparison. -/
-
 def vectorBundleSmallLiftExact :
-    ExactFunctor (vectorBundleExactStructure X).smallModel
+    ExactFunctor (vectorBundleExactStructure X).smallModel.{u+1}
       (ExactSubcategory.exactStructure
-        (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).smallModel
+        (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).smallModel.{u+1}
         (coherentSmallVectorBundle X)) where
   toFunctor := vectorBundleSmallLift X
-  map_conflation S hS := (vectorBundleToCoherentExact X).smallModel.map_conflation S hS
+  map_conflation S hS := (vectorBundleToCoherentExact X).smallModel.{u+1}.map_conflation S hS
 
 /-- The lifted equivalence reflects the actual inherited exact structure. -/
-
 theorem vectorBundleSmallLift_conflation_iff
     (S : ShortComplex (SmallModel.{u + 1} (FiniteLocallyFree X))) :
     (ExactSubcategory.exactStructure
-      (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).smallModel
+      (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).smallModel.{u+1}
       (coherentSmallVectorBundle X)).conflation (S.map (vectorBundleSmallLift X)) ↔
-      (vectorBundleExactStructure X).smallModel.conflation S := by
+      (vectorBundleExactStructure X).smallModel.{u+1}.conflation S := by
   let EV := equivSmallModel.{u+1} (FiniteLocallyFree X)
   let EC := equivSmallModel.{u+1} (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves
     X)
@@ -194,24 +191,22 @@ instance vectorBundleSmallLiftExact_isEquivalence :
 
 /-- Pullback along the genuine lifted equivalence gives exactly the existing
 small vector-bundle exact structure. -/
-
 theorem vectorBundleSmallLift_ofEquivalence :
     (ExactSubcategory.exactStructure
-      (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).smallModel
+      (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).smallModel.{u+1}
       (coherentSmallVectorBundle X)).ofEquivalence (vectorBundleSmallLift X).asEquivalence =
-      (vectorBundleExactStructure X).smallModel := by
+      (vectorBundleExactStructure X).smallModel.{u+1} := by
   apply CategoryTheory.ExactCategory.ExactStructure.ext_conflation
   funext S
   exact propext (vectorBundleSmallLift_conflation_iff X S)
 
 /-- The actual canonical small comparison factors through the inherited
 small vector-bundle subcategory, with identical underlying map. -/
-
 theorem vectorBundleSmall_factor :
     (vectorBundleSmallLiftExact X).comp
       (Resolution.exactInclusion (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
-        X).smallModel
-        (coherentSmallVectorBundle X)) = (vectorBundleToCoherentExact X).smallModel := rfl
+        X).smallModel.{u+1}
+        (coherentSmallVectorBundle X)) = (vectorBundleToCoherentExact X).smallModel.{u+1} := rfl
 
 end AlgebraicGeometry.Scheme.Modules
 
@@ -221,12 +216,11 @@ variable (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X]
 
 /-- Objectwise actual finite resolutions pass to the chosen small model;
 no uniform bound is introduced. -/
-
 theorem coherentSmallResolutionHypothesis
     (h : (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).ResolutionHypothesis
       (coherentVectorBundle X)) :
     (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
-      X).smallModel.ResolutionHypothesis
+      X).smallModel.{u+1}.ResolutionHypothesis
       (coherentSmallVectorBundle X) := by
   intro M
   let E := equivSmallModel.{u+1} (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves

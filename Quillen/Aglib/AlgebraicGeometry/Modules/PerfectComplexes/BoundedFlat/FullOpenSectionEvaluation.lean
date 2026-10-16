@@ -11,12 +11,13 @@ public import Quillen.Aglib.CategoryTheory.FiberedCategory.GrothendieckSectionEq
 /-!
 # Actual full-open section evaluation
 
-Identity evaluation is the original Grothendieck-section equivalence, with its full original object and hom universes.
+Identity evaluation is the original Grothendieck-section equivalence, with its full original
+object and hom universes.
 -/
 @[expose] public section
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
-AlgebraicGeometry.Scheme.AffineOpenPair
+open AlgebraicGeometry.Scheme.AffineOpenPair
 universe u
 namespace Quillen.PerfectComplexes
 variable {R : CommRingCat.{u}} {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]

@@ -10,11 +10,14 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.Complex.Pushforward
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Exact
 public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.Pushforward.Finite
 public import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
+public import Mathlib.Algebra.Homology.QuasiIso
 
 /-!
 # Finite flat direct image of strict perfect complexes
 
-Under the original local noetherian, finite and flat hypotheses, the literal direct image preserves strict perfectness, quasi-isomorphisms and inherited exact sequences. The vector-bundle comparison is unchanged.
+Under the original local noetherian, finite and flat hypotheses, the literal direct image
+preserves strict perfectness, quasi-isomorphisms and inherited exact sequences.
+The vector-bundle comparison is unchanged.
 -/
 @[expose] public section
 
@@ -28,7 +31,7 @@ open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 attribute [local instance] Abelian.hasFiniteBiproducts
 universe u
 namespace Quillen.PerfectComplexes

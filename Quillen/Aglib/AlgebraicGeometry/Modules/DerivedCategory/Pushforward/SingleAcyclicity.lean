@@ -37,7 +37,6 @@ local instance derivedSingleComparisonStandard (X : Scheme.{u}) :
   HasDerivedCategory.standard _
 
 /-- The original derived unit identifies the derived image of an acyclic single sheaf. -/
-
 def derivedPushforwardPlusSingleIso {X Y : Scheme.{u}} (f : X ⟶ Y) (M : X.Modules)
     [IsIso ((derivedPushforwardPlusUnit f).app (singleZeroPlus X M))] :
     (derivedPushforwardPlus f).obj ((DerivedCategory.Plus.singleFunctor X.Modules 0).obj M) ≅
@@ -47,7 +46,6 @@ def derivedPushforwardPlusSingleIso {X Y : Scheme.{u}} (f : X ⟶ Y) (M : X.Modu
     DerivedCategory.Plus.Q.mapIso (pushforwardSingleZeroPlusIso f M)
 
 /-- The original installed unit followed by the acyclic comparison is the literal single map. -/
-
 theorem derivedPushforwardPlusSingleIso_unit {X Y : Scheme.{u}} (f : X ⟶ Y) (M : X.Modules)
     [IsIso ((derivedPushforwardPlusUnit f).app (singleZeroPlus X M))] :
     (derivedPushforwardPlusUnit f).app (singleZeroPlus X M) ≫
@@ -58,7 +56,6 @@ theorem derivedPushforwardPlusSingleIso_unit {X Y : Scheme.{u}} (f : X ⟶ Y) (M
   simp
 
 /-- The original termwise single comparison retains arbitrary original sheaf arrows. -/
-
 theorem pushforwardSingleZeroPlusIso_naturality {X Y : Scheme.{u}} (f : X ⟶ Y)
     {M N : X.Modules} (φ : M ⟶ N) :
     (Scheme.Modules.pushforward f).mapCochainComplexPlus.map
@@ -72,7 +69,6 @@ theorem pushforwardSingleZeroPlusIso_naturality {X Y : Scheme.{u}} (f : X ⟶ Y)
     (Scheme.Modules.pushforward f) (.up ℤ) 0).hom.naturality φ
 
 /-- The acyclic single comparison is natural for the original sheaf morphism. -/
-
 theorem derivedPushforwardPlusSingleIso_naturality {X Y : Scheme.{u}} (f : X ⟶ Y)
     {M N : X.Modules} (φ : M ⟶ N)
     [IsIso ((derivedPushforwardPlusUnit f).app (singleZeroPlus X M))]
@@ -118,7 +114,6 @@ local instance derivedSingleProductStandard (X : Scheme.{u}) :
   HasDerivedCategory.standard _
 
 /-- The original direct-image unit on a product of two acyclic single sheaves is invertible. -/
-
 theorem isIso_derivedPushforwardPlusUnit_single_prod {X Y : Scheme.{u}} (f : X ⟶ Y)
     (M N : X.Modules)
     [IsIso ((derivedPushforwardPlusUnit f).app (singleZeroPlus X M))]

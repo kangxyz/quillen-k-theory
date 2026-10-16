@@ -13,8 +13,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.U
 /-!
 # The actual union of bounded-flat acyclicity opens
 
-Support away from the union is exactly the original auxiliary support together with actual acyclicity on the specified open immersion.
--/
+Support away from the union is exactly the original auxiliary support together with actual
+acyclicity on the specified open immersion.-/
 @[expose] public section
 
 

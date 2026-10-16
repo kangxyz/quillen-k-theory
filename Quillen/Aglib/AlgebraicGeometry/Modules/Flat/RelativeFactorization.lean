@@ -40,7 +40,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 /-- Actual relative flat replacement for a map between bounded-above complexes.
 The first map is an original short exact inclusion with flat quotient; the
 second is an original sheaf quasi-isomorphism. -/
-
 theorem exists_boundedAbove_relative_flat_factorization (X : Scheme.{u})
     {K L : CochainComplex X.Modules ℤ} (f : K ⟶ L) (b : ℤ)
     [K.IsStrictlyLE b] [L.IsStrictlyLE b] (hK : ∀ n, stalkwiseFlat X (K.X n)) :

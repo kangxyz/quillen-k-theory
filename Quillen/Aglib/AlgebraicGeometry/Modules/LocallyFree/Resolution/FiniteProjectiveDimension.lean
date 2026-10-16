@@ -12,8 +12,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.Resolution.Aff
 /-!
 # Finite projective dimension and affine resolutions
 
-Objectwise finite Ext-defined projective dimension of finite modules gives actual finite locally free coherent resolutions on a noetherian affine scheme.
--/
+Objectwise finite Ext-defined projective dimension of finite modules gives actual finite locally
+free coherent resolutions on a noetherian affine scheme.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules
@@ -35,7 +35,6 @@ variable (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X]
 /-- Objectwise Ext-defined finite projective dimension produces the actual
 affine finite-vector-bundle-resolution hypothesis. This is a homological
 intermediate statement, not a substituted regularity assumption. -/
-
 theorem coherentResolutionHypothesis_of_finite_projectiveDimension
     (R : CommRingCat.{u}) [IsNoetherianRing R]
     (h : ∀ M : ModuleCat.FiniteModule.{u, u} R,

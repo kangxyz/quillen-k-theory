@@ -29,12 +29,10 @@ namespace AlgebraicGeometry.Scheme.Modules
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 /-- Forget the module structure degreewise, retaining the underlying complex of sheaves. -/
-
 abbrev underlyingSheafComplex (X : Scheme.{u}) :=
   (SheafOfModules.toSheaf X.ringCatSheaf).mapHomologicalComplex (.up ℤ)
 
 /-- Take sections on the specified open, degreewise in the underlying sheaf complex. -/
-
 abbrev sectionsComplex (X : Scheme.{u}) (U : X.Opens) :=
   underlyingSheafComplex X ⋙
     (TopCat.Sheaf.sectionsFunctor U).mapHomologicalComplex (.up ℤ)

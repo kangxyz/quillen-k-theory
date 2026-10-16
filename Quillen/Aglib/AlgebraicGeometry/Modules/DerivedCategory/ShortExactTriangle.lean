@@ -40,7 +40,6 @@ variable {X Y : Scheme.{u}} (f : X ⟶ Y) {S : ShortComplex X.Modules} (hS : S.S
   [IsIso ((derivedPushforwardPlusUnit f).app (singleZeroPlus X S.X₃))]
 
 /-- The actual derived image of a short exact sequence with acyclic last two terms. -/
-
 def acyclicShortExactTriangle : Triangle (DerivedCategory.Plus Y.Modules) :=
   let T := (derivedPushforwardPlus f).mapTriangle.obj hS.singleTrianglePlus
   Triangle.mk (T.mor₁ ≫ (derivedPushforwardPlusSingleIso f S.X₂).hom)
@@ -48,7 +47,6 @@ def acyclicShortExactTriangle : Triangle (DerivedCategory.Plus Y.Modules) :=
     ((derivedPushforwardPlusSingleIso f S.X₃).inv ≫ T.mor₃)
 
 /-- The computed triangle retains the original derived short-exact triangle and connecting map. -/
-
 def acyclicShortExactTriangleIso :
     acyclicShortExactTriangle f hS ≅
       (derivedPushforwardPlus f).mapTriangle.obj hS.singleTrianglePlus := by
@@ -70,7 +68,6 @@ def acyclicShortExactTriangleIso :
     simp
 
 /-- The computed short-exact direct-image triangle is genuinely distinguished. -/
-
 theorem acyclicShortExactTriangle_distinguished :
     acyclicShortExactTriangle f hS ∈ distTriang (DerivedCategory.Plus Y.Modules) :=
   isomorphic_distinguished _

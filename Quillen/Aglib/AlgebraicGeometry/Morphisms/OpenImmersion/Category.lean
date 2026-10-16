@@ -13,7 +13,8 @@ public import Mathlib.AlgebraicGeometry.Noetherian
 /-!
 # Schemes with open immersions
 
-The genuine wide morphism category and its locally noetherian full subcategory retain the original schemes and scheme maps.
+The genuine wide morphism category and its locally noetherian full subcategory retain the
+original schemes and scheme maps.
 -/
 @[expose] public section
 
@@ -26,7 +27,6 @@ open CategoryTheory AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme
 
 /-- Schemes with only open immersions as morphisms. -/
-
 abbrev OpenImmersionSchemes :=
   WideSubcategory (@IsOpenImmersion : MorphismProperty AlgebraicGeometry.Scheme.{u})
 
@@ -34,12 +34,10 @@ instance openImmersionSchemes_isOpenImmersion {X Y : OpenImmersionSchemes.{u}}
     (f : X ⟶ Y) : IsOpenImmersion f.hom := f.property
 
 /-- Local noetherianity as an object property of the open-immersion category. -/
-
 abbrev locallyNoetherianOpenSchemeProperty : ObjectProperty OpenImmersionSchemes.{u} :=
   fun X => IsLocallyNoetherian X.obj
 
 /-- Locally noetherian schemes with only open immersions as morphisms. -/
-
 abbrev LocallyNoetherianOpenSchemes :=
   locallyNoetherianOpenSchemeProperty.{u}.FullSubcategory
 
@@ -47,7 +45,6 @@ instance locallyNoetherianOpenSchemes_isLocallyNoetherian
     (X : LocallyNoetherianOpenSchemes.{u}) : IsLocallyNoetherian X.obj.obj := X.property
 
 /-- The inclusion retains the open-immersion restriction on morphisms. -/
-
 abbrev locallyNoetherianOpenSchemesInclusion :
     LocallyNoetherianOpenSchemes.{u} ⥤ OpenImmersionSchemes.{u} :=
   locallyNoetherianOpenSchemeProperty.{u}.ι

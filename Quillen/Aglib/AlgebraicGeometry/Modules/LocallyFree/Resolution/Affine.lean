@@ -30,7 +30,6 @@ open CategoryTheory.ExactCategory
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-open Quillen
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -45,7 +44,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 variable (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X]
 
 /-- The actual vector-bundle condition on an object of the coherent category. -/
-
 def coherentVectorBundle : ObjectProperty
   (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) :=
   fun M => IsFiniteLocallyFree X M.obj
@@ -81,7 +79,6 @@ variable (R : CommRingCat.{u}) [IsNoetherianRing R]
 
 /-- The actual affine coherent/module equivalence identifies vector bundles
 with finite projective modules, with no homological or K-theory assumption. -/
-
 theorem coherentVectorBundle_iff_projective (M :
   AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves (Spec R)) :
     coherentVectorBundle (Spec R) M ↔ AlgebraicGeometry.Scheme.Modules.Coherent.finiteProjective R
@@ -99,7 +96,6 @@ theorem coherentVectorBundle_iff_projective (M :
 
 /-- Kernels of epimorphisms between vector bundles are vector bundles on an
 actual affine noetherian scheme, by the projective-module characterization. -/
-
 instance coherentVectorBundle_kernelClosed_affine :
     (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec R)).IsKernelClosed
       (coherentVectorBundle (Spec R)) where
@@ -117,7 +113,6 @@ instance coherentVectorBundle_kernelClosed_affine :
 
 /-- Associated sheaves of finite modules, landing in the genuine global
 coherent category and retaining actual short exact sequences. -/
-
 def finiteModuleTildeExact :
     ExactFunctor (ModuleCat.finiteModuleExactStructure.{u, u} R)
       (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec R)) where
@@ -127,7 +122,6 @@ def finiteModuleTildeExact :
   map_conflation _ h := h.map_of_exact _
 
 /-- Tilde carries finite free modules to actual coherent vector bundles. -/
-
 theorem finiteModuleTilde_finiteFree (M : ModuleCat.FiniteModule.{u, u} R)
     (hM : Module.Free R M.obj) :
     coherentVectorBundle (Spec R) ((finiteModuleTildeExact R).toFunctor.obj M) := by
@@ -136,7 +130,6 @@ theorem finiteModuleTilde_finiteFree (M : ModuleCat.FiniteModule.{u, u} R)
   exact finiteLocallyFree_tilde_of_finite_free R M.obj
 
 /-- Tilde carries finite projective modules to actual coherent vector bundles. -/
-
 theorem finiteModuleTilde_finiteProjective (M : ModuleCat.FiniteModule.{u, u} R)
     (hM : AlgebraicGeometry.Scheme.Modules.Coherent.finiteProjective R M) :
     coherentVectorBundle (Spec R) ((finiteModuleTildeExact R).toFunctor.obj M) := by
@@ -147,7 +140,6 @@ theorem finiteModuleTilde_finiteProjective (M : ModuleCat.FiniteModule.{u, u} R)
 /-- An actual projective-dimension bound on a coherent sheaf's module of
 global sections produces a genuine finite locally free resolution of that
 same sheaf, with that bound. -/
-
 theorem coherentResolution_length_le_of_projectiveDimensionLE (n : ℕ)
     (M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves (Spec R))
     [HasProjectiveDimensionLE
@@ -167,7 +159,6 @@ theorem coherentResolution_length_le_of_projectiveDimensionLE (n : ℕ)
 
 /-- Every coherent sheaf on the spectrum of a PID has an actual admissible
 finite locally free resolution of length at most one. -/
-
 theorem coherentResolution_length_le_one_of_pid [IsDomain R] [IsPrincipalIdealRing R]
     (M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves (Spec R)) :
     ∃ T : (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec
@@ -185,7 +176,6 @@ theorem coherentResolution_length_le_one_of_pid [IsDomain R] [IsPrincipalIdealRi
 
 /-- The genuine geometric finite-vector-bundle-resolution hypothesis is
 fully discharged for the spectrum of a principal ideal domain. -/
-
 theorem coherentResolutionHypothesis_of_pid [IsDomain R] [IsPrincipalIdealRing R] :
     (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec R)).ResolutionHypothesis
       (coherentVectorBundle (Spec R)) := by

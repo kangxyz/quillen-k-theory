@@ -40,6 +40,9 @@ variable (P : ObjectProperty A) [P.ContainsZero] [P.IsClosedUnderIsomorphisms]
   [(abelianExactStructure A).IsExtensionClosed P]
   [(abelianExactStructure A).IsKernelClosed P]
 
+local instance : P.IsClosedUnderFiniteProducts :=
+  (abelianExactStructure A).extensionClosed_finiteProducts P
+
 /-- The relative pushout comparison is genuinely admissible, derived from
 exactness of the next-cycle functor rather than assumed. -/
 theorem boundedAcyclicCycleEvaluation_cofibration (n : ℤ) :

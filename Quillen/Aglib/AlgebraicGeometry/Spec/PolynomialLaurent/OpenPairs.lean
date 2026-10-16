@@ -28,7 +28,6 @@ universe u
 namespace AlgebraicGeometry.Scheme.Bass
 
 /-- Base product preserves the original map by an actual pullback square. -/
-
 lemma baseProductFunctor_map_isPullback {S : AlgebraicGeometry.Scheme.{u}}
     (p : S ⟶ integerBase) {X Y : AlgebraicGeometry.Scheme.{u}} (f : X ⟶ Y) :
     IsPullback ((baseProductFunctor p).map f) (pullback.fst (toIntegerBase X) p)
@@ -44,7 +43,6 @@ instance instIsOpenImmersionBaseProductFunctorMap {S : AlgebraicGeometry.Scheme.
   MorphismProperty.of_isPullback (baseProductFunctor_map_isPullback p f).flip inferInstance
 
 /-- Actual products of scheme/open-support pairs; only the ambient scheme is required qc. -/
-
 def pairBaseProductFunctor {S : AlgebraicGeometry.Scheme.{u}}
     (p : S ⟶ integerBase) [QuasiCompact p] : QuasiCompactOpenPairs.{u} ⥤ QuasiCompactOpenPairs.{u}
       where
@@ -61,7 +59,6 @@ def pairBaseProductFunctor {S : AlgebraicGeometry.Scheme.{u}}
     exact (baseProductFunctor p).mapArrow.map_comp f.hom.hom g.hom.hom
 
 /-- The actual chart map is applied to both entries of the original open pair. -/
-
 def pairBaseProductTransformation {S T : AlgebraicGeometry.Scheme.{u}}
     (p : S ⟶ integerBase) (q : T ⟶ integerBase) [QuasiCompact p] [QuasiCompact q]
     (f : S ⟶ T) (hf : f ≫ q = p) : pairBaseProductFunctor p ⟶ pairBaseProductFunctor q where
@@ -73,23 +70,19 @@ def pairBaseProductTransformation {S T : AlgebraicGeometry.Scheme.{u}}
       g.hom.hom
 
 /-- Base change of a quasi-compact open pair along the integer polynomial projection. -/
-
 abbrev pairPolynomialFunctor : QuasiCompactOpenPairs.{u} ⥤ QuasiCompactOpenPairs.{u} :=
   pairBaseProductFunctor (PolynomialLaurent.polynomialProjection integerRing)
 
 /-- Base change of a quasi-compact open pair along the integer Laurent projection. -/
-
 abbrev pairLaurentFunctor : QuasiCompactOpenPairs.{u} ⥤ QuasiCompactOpenPairs.{u} :=
   pairBaseProductFunctor (PolynomialLaurent.laurentProjection integerRing)
 
 /-- The transformation of open pairs induced by the usual Laurent chart map. -/
-
 def pairPlus : pairLaurentFunctor.{u} ⟶ pairPolynomialFunctor :=
   pairBaseProductTransformation _ _ (PolynomialLaurent.laurentPlus integerRing)
     (PolynomialLaurent.laurentPlus_projection integerRing)
 
 /-- The transformation of open pairs induced by the inverted Laurent chart map. -/
-
 def pairMinus : pairLaurentFunctor.{u} ⟶ pairPolynomialFunctor :=
   pairBaseProductTransformation _ _ (PolynomialLaurent.laurentMinus integerRing)
     (PolynomialLaurent.laurentMinus_projection integerRing)
@@ -103,23 +96,19 @@ def pairMinus : pairLaurentFunctor.{u} ⟶ pairPolynomialFunctor :=
       rfl
 
 /-- Forgetting the support open preserves the actual polynomial object and every map. -/
-
 def pairPolynomialBaseIso : pairPolynomialFunctor.{u} ⋙ quasiCompactOpenPairsBase ≅
     quasiCompactOpenPairsBase ⋙ polynomialFunctor := Iso.refl _
 
 /-- Forgetting the support open preserves the actual Laurent object and every map. -/
-
 def pairLaurentBaseIso : pairLaurentFunctor.{u} ⋙ quasiCompactOpenPairsBase ≅
     quasiCompactOpenPairsBase ⋙ laurentFunctor := Iso.refl _
 
 /-- The original support pair associated to any open of a qc scheme, with no qc-open premise. -/
-
 def openSupportPair (X : QuasiCompactSchemes.{u}) (U : X.obj.Opens) : QuasiCompactOpenPairs.{u} :=
   ⟨⟨Arrow.mk U.ι,(show IsOpenImmersion U.ι from inferInstance)⟩,(show CompactSpace X.obj from
     inferInstance)⟩
 
 /-- Shrinking the vanishing open is a genuine pair map over the identity ambient scheme. -/
-
 def openSupportPairMap (X : QuasiCompactSchemes.{u}) {U V : X.obj.Opens} (h : U ≤ V) :
     openSupportPair X U ⟶ openSupportPair X V :=
   ⟨⟨Arrow.homMk (X.obj.homOfLE h) (𝟙 X.obj) (by

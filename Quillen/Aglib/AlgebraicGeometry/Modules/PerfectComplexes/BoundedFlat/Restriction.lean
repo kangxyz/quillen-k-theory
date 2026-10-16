@@ -14,7 +14,8 @@ public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalRestriction
 /-!
 # Original bounded-flat restriction comparisons
 
-The actual original inclusion, open restriction and geometric pair pullback retain their canonical natural isomorphisms.
+The actual original inclusion, open restriction and geometric pair pullback retain their
+canonical natural isomorphisms.
 -/
 @[expose] public section
 

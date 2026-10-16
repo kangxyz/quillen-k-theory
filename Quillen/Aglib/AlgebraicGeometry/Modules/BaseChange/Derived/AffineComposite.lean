@@ -11,7 +11,6 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Derived.Vertica
 public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Pushforward.Affine
 public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Pushforward.SingleAcyclicity
 /-! # Original affine-composite chart base change -/
-
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules
@@ -36,7 +35,6 @@ variable {Z' Z W U V X : Scheme.{u}}
 include hs
 
 /-- Vertical pasting identifies the original mate on the actual derived chart direct image. -/
-
 theorem isIso_derivedFlatBaseChangeMap_affineDerivedImage :
     IsIso ((derivedFlatBaseChangeMap a b f j h).app
       ((derivedPushforwardPlus g).obj
@@ -53,7 +51,6 @@ theorem isIso_derivedFlatBaseChangeMap_affineDerivedImage :
   exact hb
 
 /-- The same original mate is invertible on the actual ordinary chart direct image. -/
-
 theorem isIso_derivedFlatBaseChangeMap_affinePushforward_single :
     IsIso ((derivedFlatBaseChangeMap a b f j h).app
       ((DerivedCategory.Plus.singleFunctor U.Modules 0).obj

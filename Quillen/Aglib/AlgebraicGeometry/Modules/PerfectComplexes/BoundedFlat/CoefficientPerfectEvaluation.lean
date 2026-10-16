@@ -17,8 +17,6 @@ The literal identity evaluation is followed by the unchanged bounded-flat inclus
 
 open AlgebraicGeometry.Scheme.Modules.Complex
 
-open Quillen.Waldhausen
-
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

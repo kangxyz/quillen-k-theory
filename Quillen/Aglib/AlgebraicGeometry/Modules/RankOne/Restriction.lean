@@ -36,7 +36,6 @@ variable {U V Y X : Scheme.{u}} (a : U ⟶ Y) (j : Y ⟶ X) (c : U ⟶ V) (b : V
   (e : M.restrict b ≅ SheafOfModules.unit V.ringCatSheaf)
 
 /-- The original chart trivialization transported through the actual restriction square. -/
-
 def restrictionSquareLineIso : (M.restrict j).restrict a ≅
     SheafOfModules.unit U.ringCatSheaf :=
   (restrictionSquareIso a j c b h).app M ≪≫

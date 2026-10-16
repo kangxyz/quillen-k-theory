@@ -7,6 +7,8 @@ Authors: kangxyz
 module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Quillen.Waldhausen.ArrowCategory.Structure
+public import Quillen.Waldhausen.ComplexSubcategory
 public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.JointSubcategory
 public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.ZeroEndpoint
 public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.Pushout

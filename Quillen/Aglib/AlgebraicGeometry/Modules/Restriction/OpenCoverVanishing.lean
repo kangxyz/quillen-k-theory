@@ -20,7 +20,6 @@ set_option backward.defeqAttrib.useBackward true
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Actual module sheaves vanish if their restrictions to any open cover vanish. -/
-
 theorem isZero_of_openCover {X : Scheme.{u}} (M : X.Modules) {ι : Type w}
     (U : ι → X.Opens) (hU : ∀ x : X, ∃ i, x ∈ U i)
     (hM : ∀ i, IsZero ((Scheme.Modules.restrictFunctor (U i).ι).obj M)) : IsZero M := by

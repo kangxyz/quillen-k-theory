@@ -22,7 +22,9 @@ public import Quillen.Aglib.CategoryTheory.ExactCategory.Filtration.Hypothesis
 /-!
 # Finite coherent closed-support filtrations
 
-Under the original noetherian hypotheses, genuine closed support produces finite filtrations whose factors are annihilated by the defining ideal. The actual supported categorical presentations and their universes are retained.
+Under the original noetherian hypotheses, genuine closed support produces finite filtrations
+whose factors are annihilated by the defining ideal. The actual supported categorical
+presentations and their universes are retained.
 -/
 @[expose] public section
 
@@ -48,7 +50,6 @@ variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsNoetherian X]
   (i : Z ⟶ X) [IsClosedImmersion i]
 
 /-- The genuine finite coherent filtration by actual closed-image factors. -/
-
 theorem coherentClosedFiltration (M : FiniteTypeSheaves X)
     (hM : finiteTypeSheavesSupportedAway (openMap i) M) :
     Nonempty ((coherentExactStructure X).Filtration (coherentKilled i) M) :=
@@ -58,16 +59,13 @@ theorem coherentClosedFiltration (M : FiniteTypeSheaves X)
 
 /-- The full subcategory of the global small coherent model consisting of objects supported on the
 closed image of `i`. -/
-
 abbrev SmallSupport := (coherentGlobalSmallSupport (openMap i)).FullSubcategory
 
 /-- The actual coherent object represented by the compatible small support category. -/
-
 abbrev supportRepresentation : SmallSupport i ⥤ FiniteTypeSheaves X :=
   (coherentGlobalSmallSupport (openMap i)).ι ⋙ (equivSmallModel.{u+1} (FiniteTypeSheaves X)).inverse
 
 /-- The actual annihilated property in that genuine support presentation. -/
-
 abbrev supportKilled : ObjectProperty (SmallSupport i) :=
   (coherentKilled i).inverseImage (supportRepresentation i)
 
@@ -110,7 +108,6 @@ instance supportPresentationInverse_additive :
   exact Functor.additive_of_preservesBinaryBiproducts _
 
 /-- The inverse of the canonical support presentation, as an exact functor. -/
-
 def supportPresentationExact :
     ExactFunctor (supportedCoherentExactStructure (openMap i))
       (abelianExactStructure (SmallSupport i)) where
@@ -118,7 +115,6 @@ def supportPresentationExact :
   map_conflation _ h := h.map_of_exact _
 
 /-- Genuine geometric finite filtrations give the small dévissage hypothesis. -/
-
 theorem supportFiltrationHypothesis : Devissage.FiltrationHypothesis (supportKilled i) := by
   intro M
   let E := coherentGlobalSmallSupportEquivalence (openMap i)

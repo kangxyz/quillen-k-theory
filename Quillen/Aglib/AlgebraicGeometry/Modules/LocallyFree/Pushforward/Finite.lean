@@ -24,8 +24,8 @@ public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.Finite.Genera
 /-!
 # Finite flat direct image of finite locally free sheaves
 
-A finite flat morphism to a locally noetherian target preserves finite local freeness. The actual direct image restricts to an additive exact vector-bundle functor.
--/
+A finite flat morphism to a locally noetherian target preserves finite local freeness. The actual
+direct image restricts to an additive exact vector-bundle functor.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules
@@ -48,7 +48,6 @@ variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsLocallyNoetherian X]
 
 /-- The unchanged finite flat affine direct image preserves actual finite local bases.
 No noetherianity of the source is assumed separately. -/
-
 theorem finiteLocallyFree_pushforward_affine {R S : CommRingCat.{u}} [IsNoetherianRing R]
     (φ : R ⟶ S) (hφ : φ.hom.Finite) (hflat : φ.hom.Flat)
     (M : (Spec S).Modules) [IsFiniteLocallyFree (Spec S) M] :
@@ -71,7 +70,6 @@ theorem finiteLocallyFree_pushforward_affine {R S : CommRingCat.{u}} [IsNoetheri
   exact finiteLocallyFree_of_iso e
 
 /-- Finite flat direct image to an affine target, with arbitrary source scheme. -/
-
 theorem finiteLocallyFree_pushforward_affine_target {Z : Scheme.{u}}
     (R : CommRingCat.{u}) [IsNoetherianRing R] (f : Z ⟶ Spec R)
     [AlgebraicGeometry.IsFinite f] [Flat f] (M : Z.Modules) [IsFiniteLocallyFree Z M] :
@@ -96,7 +94,6 @@ theorem finiteLocallyFree_pushforward_affine_target {Z : Scheme.{u}}
 
 /-- Actual finite flat direct image preserves finite local freeness over a locally
 noetherian target, by original open base change and affine target charts. -/
-
 theorem finiteLocallyFree_pushforward {Z X : Scheme.{u}} [IsLocallyNoetherian X]
     (f : Z ⟶ X) [AlgebraicGeometry.IsFinite f] [Flat f]
     (M : Z.Modules) [IsFiniteLocallyFree Z M] :
@@ -117,7 +114,6 @@ theorem finiteLocallyFree_pushforward {Z X : Scheme.{u}} [IsLocallyNoetherian X]
     ((AlgebraicGeometry.Scheme.Modules.openBaseChange f (U.f i)).app M).symm this
 
 /-- The literal original sheaf pushforward restricted to vector bundles. -/
-
 def vectorBundlePushforward : FiniteLocallyFree Z ⥤ FiniteLocallyFree X :=
   ObjectProperty.lift _ ((finiteLocallyFree Z).ι ⋙ Scheme.Modules.pushforward f)
     (fun M ↦ finiteLocallyFree_pushforward f M.obj)
@@ -129,7 +125,6 @@ instance vectorBundlePushforward_additive : (vectorBundlePushforward f).Additive
     exact (Scheme.Modules.pushforward f).map_add
 
 /-- The original finite flat vector-bundle direct image is exact. -/
-
 def vectorBundlePushforwardExact :
     ExactFunctor (vectorBundleExactStructure Z) (vectorBundleExactStructure X) where
   toFunctor := vectorBundlePushforward f

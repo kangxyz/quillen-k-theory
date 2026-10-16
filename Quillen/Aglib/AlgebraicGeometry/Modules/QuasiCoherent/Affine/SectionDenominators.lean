@@ -14,7 +14,8 @@ public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteGenerat
 /-!
 # Actual affine section denominators
 
-A quasicoherent section on the stated principal open admits an actual scalar denominator. The original unit-sheaf map and geometric open-image equation are retained.
+A quasicoherent section on the stated principal open admits an actual scalar denominator. The
+original unit-sheaf map and geometric open-image equation are retained.
 -/
 @[expose] public section
 noncomputable section

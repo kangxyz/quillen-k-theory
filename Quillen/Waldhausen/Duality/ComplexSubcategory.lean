@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Waldhausen.ComplexSubcategory
+
 public import Quillen.Aglib.Algebra.Homology.CochainComplex.OppositeQuasiIsoCompatibility
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Aglib.Algebra.Homology.CochainComplex.OppositeSubcategory

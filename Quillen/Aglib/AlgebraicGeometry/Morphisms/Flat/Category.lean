@@ -16,7 +16,8 @@ public import Mathlib.AlgebraicGeometry.Noetherian
 /-!
 # Schemes with flat morphisms
 
-The genuine wide morphism category and its locally noetherian full subcategory retain the original schemes and scheme maps.
+The genuine wide morphism category and its locally noetherian full subcategory retain the
+original schemes and scheme maps.
 -/
 @[expose] public section
 
@@ -29,18 +30,15 @@ open CategoryTheory AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme
 
 /-- Schemes with genuinely flat scheme morphisms. -/
-
 abbrev FlatSchemes := WideSubcategory (@Flat : MorphismProperty AlgebraicGeometry.Scheme.{u})
 
 instance flatSchemes_flat {X Y : FlatSchemes.{u}} (f : X ⟶ Y) : Flat f.hom := f.property
 
 /-- The actual locally noetherian object property on flat schemes. -/
-
 abbrev locallyNoetherianFlatSchemeProperty : ObjectProperty FlatSchemes.{u} :=
   fun X => IsLocallyNoetherian X.obj
 
 /-- Locally noetherian schemes with flat morphisms. -/
-
 abbrev LocallyNoetherianFlatSchemes := locallyNoetherianFlatSchemeProperty.{u}.FullSubcategory
 
 instance locallyNoetherianFlatSchemes_isLocallyNoetherian

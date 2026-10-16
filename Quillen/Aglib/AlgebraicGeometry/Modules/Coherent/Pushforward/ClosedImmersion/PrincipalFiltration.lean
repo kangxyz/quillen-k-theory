@@ -22,8 +22,9 @@ public import Quillen.Aglib.CategoryTheory.ExactCategory.Filtration.Hypothesis
 /-!
 # Finite coherent closed-support filtrations
 
-Under the original noetherian hypotheses, genuine closed support produces finite filtrations whose factors are annihilated by the defining ideal. The actual supported categorical presentations and their universes are retained.
--/
+Under the original noetherian hypotheses, genuine closed support produces finite filtrations whose
+factors are annihilated by the defining ideal. The actual supported categorical presentations and
+their universes are retained.-/
 @[expose] public section
 
 open ModuleCat.FiniteLocalization
@@ -49,7 +50,6 @@ variable (R : CommRingCat.{u}) [IsNoetherianRing R] (f : R)
 
 /-- Geometric vanishing on the principal open is exactly torsion of the
 actual global-section module. -/
-
 theorem finiteTypeSheavesSupportedAway_iff_torsion (M : FiniteTypeSheaves (Spec R)) :
     finiteTypeSheavesSupportedAway (principalOpen R f) M ↔
       torsion (Submonoid.powers f) ((finiteTypeSheavesSpecModuleEquivalence R).functor.obj M) := by
@@ -69,20 +69,17 @@ theorem finiteTypeSheavesSupportedAway_iff_torsion (M : FiniteTypeSheaves (Spec 
       (h.of_iso e.symm)
 
 /-- A single power of f kills every section of a supported coherent sheaf. -/
-
 theorem finiteTypeSheavesSupportedAway_iff_uniform (M : FiniteTypeSheaves (Spec R)) :
     finiteTypeSheavesSupportedAway (principalOpen R f) M ↔ ∃ n : ℕ,
       ∀ m : (finiteTypeSheavesSpecModuleEquivalence R).functor.obj M, f ^ n • m = 0 := by
   rw [finiteTypeSheavesSupportedAway_iff_torsion, torsion_powers_iff_uniform]
 
 /-- The actual small category used by public principal-open localization. -/
-
 abbrev SmallSupport := (AlgebraicGeometry.Scheme.Modules.Coherent.coherentGlobalSmallSupport
   (principalOpen R f)).FullSubcategory
 
 /-- Actual sheaves represented by the compatible support category, followed
 by their actual finite global-section modules. -/
-
 abbrev supportRepresentation : SmallSupport R f ⥤ FGModuleCat.{u} R :=
   (AlgebraicGeometry.Scheme.Modules.Coherent.coherentGlobalSmallSupport (principalOpen R f)).ι ⋙
     (equivSmallModel.{u+1} (FiniteTypeSheaves (Spec R))).inverse ⋙
@@ -93,12 +90,10 @@ instance supportRepresentation_additive : (supportRepresentation R f).Additive :
   exact Functor.additive_of_preservesBinaryBiproducts _
 
 /-- Scalar multiplication on the genuine small supported coherent category. -/
-
 abbrev supportScalar : 𝟭 (SmallSupport R f) ⟶ 𝟭 (SmallSupport R f) :=
   ScalarRepresentation.scalar (supportRepresentation R f) f
 
 /-- The killed objects inside the genuine small supported coherent category. -/
-
 abbrev supportKilled : ObjectProperty (SmallSupport R f) := killed (supportScalar R f)
 
 theorem supportKilled_iff (M : SmallSupport R f) :
@@ -106,7 +101,6 @@ theorem supportKilled_iff (M : SmallSupport R f) :
   ScalarRepresentation.killed_iff (supportRepresentation R f) f M
 
 /-- Nilpotence follows from genuine support and finite generation. -/
-
 theorem support_power_nilpotent (M : SmallSupport R f) :
     ∃ n : ℕ, power (supportScalar R f) M n = 0 := by
   have h := (AlgebraicGeometry.Scheme.Modules.Coherent.coherentGlobalSmallSupport_iff
@@ -115,7 +109,6 @@ theorem support_power_nilpotent (M : SmallSupport R f) :
   exact ⟨n, ScalarRepresentation.power_eq_zero (supportRepresentation R f) f M n hn⟩
 
 /-- The actual finite image filtration on every supported coherent object. -/
-
 theorem supportFiltrationHypothesis : Devissage.FiltrationHypothesis (supportKilled R f) :=
   PrincipalSupportDevissage.filtrationHypothesis (supportScalar R f) (support_power_nilpotent R f)
 

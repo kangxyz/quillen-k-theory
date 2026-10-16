@@ -32,17 +32,14 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The original restriction followed by direct image along an open immersion. -/
-
 def openLocalization {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] :
     X.Modules ⥤ X.Modules := Scheme.Modules.restrictFunctor j ⋙ Scheme.Modules.pushforward j
 
 /-- The original adjunction unit into localization at an open immersion. -/
-
 def openLocalizationUnit {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] :
     𝟭 X.Modules ⟶ openLocalization j := (Scheme.Modules.restrictAdjunction j).unit
 
 /-- Nested original restriction and direct image give the actual restriction-to-smaller-open map. -/
-
 def openLocalizationMap {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
     [IsOpenImmersion a] [IsOpenImmersion j] (M : X.Modules) :
     (openLocalization j).obj M ⟶ (openLocalization (a ≫ j)).obj M :=
@@ -53,7 +50,6 @@ def openLocalizationMap {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
     ((Scheme.Modules.restrictFunctorComp a j).inv.app M)
 
 /-- The actual localization arrow retains the original composite restriction unit. -/
-
 theorem openLocalizationUnit_map {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
     [IsOpenImmersion a] [IsOpenImmersion j] (M : X.Modules) :
     (openLocalizationUnit j).app M ≫ openLocalizationMap a j M =
@@ -70,7 +66,6 @@ theorem openLocalizationUnit_map {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X
   rfl
 
 /-- Equality of the original open immersions gives the canonical localization comparison. -/
-
 def openLocalizationCongr {U X : Scheme.{u}} {j k : U ⟶ X}
     [IsOpenImmersion j] [IsOpenImmersion k] (h : j = k) :
     openLocalization j ≅ openLocalization k := by
@@ -78,7 +73,6 @@ def openLocalizationCongr {U X : Scheme.{u}} {j k : U ⟶ X}
   exact Iso.refl _
 
 /-- The canonical equality comparison retains the original restriction unit. -/
-
 theorem openLocalizationUnit_congr {U X : Scheme.{u}} {j k : U ⟶ X}
     [IsOpenImmersion j] [IsOpenImmersion k] (h : j = k) (M : X.Modules) :
     (openLocalizationUnit j).app M ≫ (openLocalizationCongr h).hom.app M =
@@ -97,7 +91,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The original open-localization unit becomes invertible on its own open. -/
-
 theorem isIso_restrict_openLocalizationUnit {U X : Scheme.{u}} (j : U ⟶ X)
     [IsOpenImmersion j] (M : X.Modules) :
     IsIso ((Scheme.Modules.restrictFunctor j).map ((openLocalizationUnit j).app M)) := by
@@ -113,7 +106,6 @@ theorem isIso_restrict_openLocalizationUnit {U X : Scheme.{u}} (j : U ⟶ X)
 
 /-- The smaller-open restriction becomes invertible on the other member of its actual
 cartesian open square. -/
-
 theorem isIso_restrict_openLocalizationMap {W U V X : Scheme.{u}}
     (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion a] [IsOpenImmersion j] [IsOpenImmersion k]
@@ -140,7 +132,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The nested original restriction map is natural in every original sheaf morphism. -/
-
 theorem openLocalizationMap_naturality {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
     [IsOpenImmersion a] [IsOpenImmersion j] {M N : X.Modules} (φ : M ⟶ N) :
     (openLocalization j).map φ ≫ openLocalizationMap a j N =
@@ -168,7 +159,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The smaller original open has its actual inclusion into the larger localized open. -/
-
 theorem openLocalization_image_le {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
     [IsOpenImmersion a] [IsOpenImmersion j] (V : X.Opens) :
     (a ≫ j) ''ᵁ ((a ≫ j) ⁻¹ᵁ V) ≤ j ''ᵁ (j ⁻¹ᵁ V) := by
@@ -176,7 +166,6 @@ theorem openLocalization_image_le {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ 
   exact j.image_mono (a.image_preimage_le _)
 
 /-- Every component is the literal original sheaf restriction on the localized opens. -/
-
 theorem openLocalizationMap_app {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
     [IsOpenImmersion a] [IsOpenImmersion j] (M : X.Modules) (V : X.Opens) :
     (openLocalizationMap a j M).app V =

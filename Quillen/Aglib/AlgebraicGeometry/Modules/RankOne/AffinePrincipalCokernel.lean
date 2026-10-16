@@ -30,7 +30,6 @@ set_option backward.defeqAttrib.useBackward true
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The literal affine section map sends the section of a ring-kernel element to zero. -/
-
 theorem spec_scalar_image_zero {R S : CommRingCat.{u}} (φ : R ⟶ S) (s : R)
     (hs : φ.hom s = 0) :
     (Spec.map φ).appTop.hom ((Scheme.ΓSpecIso R).inv.hom s) = 0 := by
@@ -38,7 +37,6 @@ theorem spec_scalar_image_zero {R S : CommRingCat.{u}} (φ : R ⟶ S) (s : R)
   simpa only [CommRingCat.hom_comp, RingHom.comp_apply, hs, map_zero] using h.symm
 
 /-- A principal ring kernel gives the actual principal kernel on global structure sections. -/
-
 theorem spec_scalar_kernel {R S : CommRingCat.{u}} (φ : R ⟶ S) (s : R)
     (hker : RingHom.ker φ.hom = Ideal.span {s}) :
     ∀ x : Γ(Spec R, ⊤), (Spec.map φ).appTop.hom x = 0 →
@@ -55,7 +53,6 @@ theorem spec_scalar_kernel {R S : CommRingCat.{u}} (φ : R ⟶ S) (s : R)
   simpa using he
 
 /-- Surjectivity of the original ring map gives surjectivity of its actual global section map. -/
-
 theorem spec_appTop_surjective {R S : CommRingCat.{u}} (φ : R ⟶ S)
     (hφ : Function.Surjective φ.hom) : Function.Surjective (Spec.map φ).appTop.hom := by
   intro x
@@ -70,7 +67,6 @@ end AlgebraicGeometry.Scheme.Modules
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The scalar and original structure-module map form the actual affine short complex. -/
-
 def affineUnitScalarSequence {R S : CommRingCat.{u}} (φ : R ⟶ S) (s : Γ(Spec R, ⊤))
     (hs : (Spec.map φ).appTop.hom s = 0) : ShortComplex (Spec R).Modules :=
   ShortComplex.mk (unitMul (Spec R) s)
@@ -78,7 +74,6 @@ def affineUnitScalarSequence {R S : CommRingCat.{u}} (φ : R ⟶ S) (s : Γ(Spec
     (unitMul_unitToPushforward_zero (Spec.map φ) s hs)
 
 /-- The actual principal-kernel condition proves exactness of the original affine sheaf maps. -/
-
 theorem affineUnitScalarSequence_exact {R S : CommRingCat.{u}} (φ : R ⟶ S)
     (s : Γ(Spec R, ⊤)) (hs : (Spec.map φ).appTop.hom s = 0)
     (hex : ∀ x : Γ(Spec R, ⊤), (Spec.map φ).appTop.hom x = 0 →
@@ -107,7 +102,6 @@ theorem affineUnitScalarSequence_exact {R S : CommRingCat.{u}} (φ : R ⟶ S)
   exact ⟨y, hy⟩
 
 /-- Surjectivity of the original affine section map makes the original unit arrow epic. -/
-
 theorem epi_unitToPushforward_of_surjective_appTop {R S : CommRingCat.{u}} (φ : R ⟶ S)
     (hφ : Function.Surjective (Spec.map φ).appTop.hom) :
     Epi (SheafOfModules.unitToPushforwardObjUnit (Spec.map φ).toRingCatSheafHom) := by
@@ -133,7 +127,6 @@ theorem epi_unitToPushforward_of_surjective_appTop {R S : CommRingCat.{u}} (φ :
   exact @epi_of_epi_globalSections R _ _ (hunit R) hQC _ hΓ
 
 /-- The actual principal-kernel sequence exhibits the original unit arrow as a cokernel. -/
-
 def affineUnitScalarSequenceCokernel {R S : CommRingCat.{u}} (φ : R ⟶ S)
     (s : Γ(Spec R, ⊤)) (hs : (Spec.map φ).appTop.hom s = 0)
     (hex : ∀ x : Γ(Spec R, ⊤), (Spec.map φ).appTop.hom x = 0 →
@@ -149,13 +142,11 @@ end AlgebraicGeometry.Scheme.Modules
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The literal scalar/structure-map short complex of an original ring-map kernel element. -/
-
 def affinePrincipalSequence {R S : CommRingCat.{u}} (φ : R ⟶ S) (s : R)
     (hs : φ.hom s = 0) : ShortComplex (Spec R).Modules :=
   affineUnitScalarSequence φ ((Scheme.ΓSpecIso R).inv.hom s) (spec_scalar_image_zero φ s hs)
 
 /-- The actual original affine structure map is the cokernel of a principal kernel generator. -/
-
 def affinePrincipalSequenceCokernel {R S : CommRingCat.{u}} (φ : R ⟶ S) (s : R)
     (hs : φ.hom s = 0) (hker : RingHom.ker φ.hom = Ideal.span {s})
     (hφ : Function.Surjective φ.hom) :

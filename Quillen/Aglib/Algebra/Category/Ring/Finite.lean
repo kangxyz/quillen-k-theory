@@ -13,7 +13,8 @@ public import Mathlib.RingTheory.Noetherian.Defs
 /-!
 # Commutative rings with finite homomorphisms
 
-Finite coordinate homomorphisms form a multiplicative wide subcategory, with a full noetherian subcategory.
+Finite coordinate homomorphisms form a multiplicative wide subcategory,
+with a full noetherian subcategory.
 -/
 @[expose] public section
 
@@ -24,7 +25,6 @@ open CategoryTheory AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme
 
 /-- The genuine finite coordinate-ring homomorphisms. -/
-
 def finiteRingHom : MorphismProperty CommRingCat.{u} := fun _ _ φ => φ.hom.Finite
 
 instance finiteRingHom_multiplicative : finiteRingHom.{u}.IsMultiplicative where
@@ -32,16 +32,13 @@ instance finiteRingHom_multiplicative : finiteRingHom.{u}.IsMultiplicative where
   comp_mem _ _ hf hg := hg.comp hf
 
 /-- Commutative rings with actual finite ring homomorphisms as morphisms. -/
-
 abbrev FiniteRings := WideSubcategory finiteRingHom.{u}
 
 /-- The noetherian coordinate-ring property in the category of finite ring maps. -/
-
 abbrev noetherianFiniteRingProperty : ObjectProperty FiniteRings.{u} :=
   fun R => IsNoetherianRing R.obj
 
 /-- Noetherian coordinate rings with actual finite morphisms. -/
-
 abbrev NoetherianFiniteRings := noetherianFiniteRingProperty.{u}.FullSubcategory
 
 instance noetherianFiniteRings_noetherian (R : NoetherianFiniteRings.{u}) :

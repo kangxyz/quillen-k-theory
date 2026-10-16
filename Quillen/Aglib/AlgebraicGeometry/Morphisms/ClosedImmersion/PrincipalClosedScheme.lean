@@ -31,7 +31,6 @@ namespace AlgebraicGeometry.Scheme.PrincipalClosed
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (f : R)
 
 /-- The actual principal closed subscheme Spec(R/(f)). -/
-
 abbrev closedScheme := Spec
   (Pushforward.ClosedImmersion.Ideal.closedRing R
     (Ideal.span {f}))

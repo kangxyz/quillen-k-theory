@@ -16,8 +16,8 @@ public import Quillen.Aglib.Algebra.Homology.MappingCone.Biprod
 /-!
 # The actual identity cone of the flasque perfect model
 
-The literal cone and its signed inclusion/quotient natural maps preserve inherited exactness, original terms and the original acyclic cone sequence.
--/
+The literal cone and its signed inclusion/quotient natural maps preserve inherited exactness,
+original terms and the original acyclic cone sequence.-/
 @[expose] public section
 
 open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients

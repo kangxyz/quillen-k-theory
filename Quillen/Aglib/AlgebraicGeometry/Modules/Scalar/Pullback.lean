@@ -19,7 +19,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Pushforward retains multiplication by the original global scalar under restriction of scalars.
 -/
-
 lemma globalScalar_pushforward {X Y : Scheme.{u}} (f : X ⟶ Y)
     (r : Γ(Y, ⊤)) (M : X.Modules) :
     (globalScalar Y r).app ((Scheme.Modules.pushforward f).obj M) =
@@ -41,7 +40,6 @@ lemma globalScalar_pushforward {X Y : Scheme.{u}} (f : X ⟶ Y)
     (homOfLE (show U.unop ≤ ⊤ from le_top)).op) r
 
 /-- Geometric pullback maps the original scalar to its pulled-back scalar. -/
-
 lemma pullback_map_globalScalar {X Y : Scheme.{u}} (f : X ⟶ Y)
     (r : Γ(Y, ⊤)) (M : Y.Modules) :
     (Scheme.Modules.pullback f).map ((globalScalar Y r).app M) =

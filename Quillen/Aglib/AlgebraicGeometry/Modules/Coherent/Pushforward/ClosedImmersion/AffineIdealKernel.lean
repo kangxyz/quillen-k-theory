@@ -44,10 +44,8 @@ variable {Z : Scheme.{u}} [IsLocallyNoetherian Z]
   (hi : i = e.hom ≫ Pushforward.ClosedImmersion.Ideal.closedMap R I)
 
 include e hi in
-
 /-- On actual finite global sections, the image of the genuine unit-kernel
 inclusion is precisely the actual submodule I M. -/
-
 theorem kernelUnit_range_eq_idealProduct (M : FiniteTypeSheaves (Spec R)) :
     LinearMap.range (((finiteTypeSheavesSpecModuleEquivalence R).functor.map
       (kernel.ι ((coherentAdjunction i).unit.app M))).hom.hom) =

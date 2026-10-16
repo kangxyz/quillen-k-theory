@@ -47,7 +47,7 @@ lemma IsAdditiveInvariant.zero {f : C → A} (hf : E.IsAdditiveInvariant f) :
   obtain ⟨Z, p, h, hS⟩ := E.inflation_id (0 : C)
   have hZ : IsZero Z := CokernelCofork.IsColimit.isZero_of_epi
     (E.cokernel (ShortComplex.mk (𝟙 (0 : C)) p h) hS)
-  have hz := hf.iso (hZ.iso (isZero_zero C))
+  have hz := IsAdditiveInvariant.iso E hf (hZ.iso (isZero_zero C))
   have hadd := hf _ hS
   change f (0 : C) = f (0 : C) + f Z at hadd
   rw [hz] at hadd

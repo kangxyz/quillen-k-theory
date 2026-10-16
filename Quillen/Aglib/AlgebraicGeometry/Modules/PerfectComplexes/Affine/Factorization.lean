@@ -13,7 +13,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.HomotopyP
 /-!
 # Actual affine chain factorization
 
-The original strict/local perfect factorization retains both literal chain equations, both degreewise split epimorphisms and the actual strict/local kernels.
+The original strict/local perfect factorization retains both literal chain equations, both
+degreewise split epimorphisms and the actual strict/local kernels.
 -/
 @[expose] public section
 

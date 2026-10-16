@@ -12,7 +12,9 @@ public import Mathlib.CategoryTheory.ObjectProperty.FullSubcategory
 /-!
 # Natural pointwise short complexes
 
-Actual zero composites give pointwise short complexes and full-subcategory lifts. Original additive mapping and whiskering preserve their exact original maps and the stated short exactness.
+Actual zero composites give pointwise short complexes and full-subcategory lifts. Original
+additive mapping and whiskering preserve their exact original maps and the stated short
+exactness.
 -/
 @[expose] public section
 noncomputable section

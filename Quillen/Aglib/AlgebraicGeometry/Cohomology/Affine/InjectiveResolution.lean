@@ -34,7 +34,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.Modules.AffineDerived
 
 /-- Exact tilde makes its right adjoint preserve injective objects. -/
-
 instance globalSections_preservesInjectiveObjects (R : CommRingCat.{u}) :
     (moduleSpecΓFunctor (R := R)).PreservesInjectiveObjects :=
   Functor.preservesInjectiveObjects_of_adjunction_of_preservesMonomorphisms tilde.adjunction
@@ -43,7 +42,6 @@ variable {R : CommRingCat.{u}} (M : (Spec R).Modules) [M.IsQuasicoherent]
     (I : CategoryTheory.InjectiveResolution M)
 
 /-- The augmentation of the original Γ-complex, with its literal degree-zero map. -/
-
 def globalSectionsResolutionAugmentation :
     (CochainComplex.single₀ (ModuleCat.{u} R)).obj (moduleSpecΓFunctor.obj M) ⟶
       (moduleSpecΓFunctor.mapHomologicalComplex _).obj I.cocomplex :=
@@ -54,7 +52,6 @@ def globalSectionsResolutionAugmentation :
       rw [← Functor.map_comp, I.ι_f_zero_comp_complex_d, Functor.map_zero]⟩
 
 omit [M.IsQuasicoherent] in
-
 lemma globalSectionsResolutionAugmentation_f_zero :
     (globalSectionsResolutionAugmentation M I).f 0 = moduleSpecΓFunctor.map (I.ι.f 0) := rfl
 
@@ -82,7 +79,6 @@ instance globalSectionsResolutionAugmentation_quasiIso :
 
 /-- Original Γ of any ambient injective resolution of a QC sheaf is an injective
 module resolution. No alternative complex is chosen. -/
-
 def globalSectionsInjectiveResolution :
     CategoryTheory.InjectiveResolution (moduleSpecΓFunctor.obj M) where
   cocomplex := (moduleSpecΓFunctor.mapHomologicalComplex _).obj I.cocomplex

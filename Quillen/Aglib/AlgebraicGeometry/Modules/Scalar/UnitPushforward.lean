@@ -27,7 +27,6 @@ set_option backward.defeqAttrib.useBackward true
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The actual structure-module map intertwines original global scalar multiplication. -/
-
 theorem unitMul_unitToPushforward {X Y : Scheme.{u}} (f : X ⟶ Y) (s : Γ(Y, ⊤)) :
     unitMul Y s ≫ SheafOfModules.unitToPushforwardObjUnit f.toRingCatSheafHom =
       SheafOfModules.unitToPushforwardObjUnit f.toRingCatSheafHom ≫
@@ -47,7 +46,6 @@ theorem unitMul_unitToPushforward {X Y : Scheme.{u}} (f : X ⟶ Y) (s : Γ(Y, �
   exact congrArg (fun k => CommRingCat.Hom.hom k s) h
 
 /-- Multiplication by the zero global section is the actual zero sheaf map. -/
-
 theorem unitMul_zero (X : Scheme.{u}) : unitMul X 0 = 0 := by
   apply Scheme.Modules.hom_ext
   intro U
@@ -57,7 +55,6 @@ theorem unitMul_zero (X : Scheme.{u}) : unitMul X 0 = 0 := by
   simp
 
 /-- A scalar in the actual global ring-map kernel gives the original zero composite. -/
-
 theorem unitMul_unitToPushforward_zero {X Y : Scheme.{u}} (f : X ⟶ Y) (s : Γ(Y, ⊤))
     (hs : f.appTop.hom s = 0) :
     unitMul Y s ≫ SheafOfModules.unitToPushforwardObjUnit f.toRingCatSheafHom = 0 := by

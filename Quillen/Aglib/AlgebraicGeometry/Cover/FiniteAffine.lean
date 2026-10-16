@@ -11,8 +11,8 @@ public import Mathlib.AlgebraicGeometry.Cover.Open
 /-!
 # Finite affine covers
 
-A quasi-compact scheme has a finite affine subcover retaining the original chart rings and open-immersion maps.
--/
+A quasi-compact scheme has a finite affine subcover retaining the original chart rings and
+open-immersion maps.-/
 @[expose] public section
 
 noncomputable section
@@ -25,7 +25,6 @@ namespace AlgebraicGeometry.Scheme
 
 /-- A finite affine subcover of a quasi-compact scheme, retaining the
 actual chart rings and open-immersion maps from the chosen affine cover. -/
-
 def finiteAffineOpenCover (X : AlgebraicGeometry.Scheme.{u}) [CompactSpace X] :
     X.AffineOpenCover where
   I₀ := X.affineCover.finiteSubcover.I₀

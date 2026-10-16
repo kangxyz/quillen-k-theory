@@ -39,16 +39,13 @@ variable (h : IsPullback
   (Spec.map (CommRingCat.ofHom (algebraMap R S))))
 
 include h in
-
 /-- A genuine cartesian spectrum square yields the original coordinate-ring pushout. -/
-
 theorem isPushout_of_affineCartesian : Algebra.IsPushout R S A B := by
   apply CommRingCat.isPushout_iff_isPushout.mp
   have hp := h.of_map_of_faithful Scheme.Spec
   exact hp.unop
 
 /-- Global sections preserve the original commutative pushforward square. -/
-
 theorem affinePushforwardSquare_globalSections (N : (Spec (CommRingCat.of B)).Modules) :
     (pushforwardGlobalSectionsIso (CommRingCat.ofHom (algebraMap R A))).hom.app
         ((Scheme.Modules.pushforward (Spec.map (CommRingCat.ofHom (algebraMap A B)))).obj N) ≫
@@ -67,7 +64,6 @@ theorem affinePushforwardSquare_globalSections (N : (Spec (CommRingCat.of B)).Mo
   simp
 
 /-- The actual tilde pushforward comparisons preserve the original pushforward square. -/
-
 theorem tildePushforwardIso_square (N : ModuleCat B) :
     (Scheme.Modules.pushforward (Spec.map (CommRingCat.ofHom (algebraMap R A)))).map
         ((tildePushforwardIso (CommRingCat.ofHom (algebraMap A B))).hom.app N) ≫

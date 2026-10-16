@@ -17,8 +17,9 @@ public import Quillen.Aglib.CategoryTheory.ExactCategory.Filtration.Hypothesis
 /-!
 # Finite coherent closed-support filtrations
 
-Under the original noetherian hypotheses, genuine closed support produces finite filtrations whose factors are annihilated by the defining ideal. The actual supported categorical presentations and their universes are retained.
--/
+Under the original noetherian hypotheses, genuine closed support produces finite filtrations whose
+factors are annihilated by the defining ideal. The actual supported categorical presentations and
+their universes are retained.-/
 @[expose] public section
 
 open Quillen.FiniteCentralDevissage
@@ -42,7 +43,6 @@ namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (I : Ideal R)
 
 /-- A finite list genuinely generating the ideal. -/
-
 def generators : Finset R := I.fg_of_isNoetherianRing.choose
 @[simp] theorem span_generators : Ideal.span (generators R I : Set R) = I :=
   I.fg_of_isNoetherianRing.choose_spec
@@ -52,11 +52,9 @@ theorem generator_mem {r : R} (hr : r ∈ generators R I) : r ∈ I := by
   exact Ideal.subset_span hr
 
 /-- The actual small supported category used by global open localization. -/
-
 abbrev SmallSupport := (coherentGlobalSmallSupport (openMap R I)).FullSubcategory
 
 /-- Its faithful actual finite-global-sections representation. -/
-
 abbrev supportRepresentation : SmallSupport R I ⥤ FGModuleCat.{u} R :=
   (coherentGlobalSmallSupport (openMap R I)).ι ⋙
     (equivSmallModel.{u+1} (FiniteTypeSheaves (Spec R))).inverse ⋙
@@ -67,17 +65,14 @@ instance supportRepresentation_additive : (supportRepresentation R I).Additive :
   exact Functor.additive_of_preservesBinaryBiproducts _
 
 /-- Scalar actions of the finite generating list, as actual natural maps. -/
-
 def supportOperators : List (𝟭 (SmallSupport R I) ⟶ 𝟭 (SmallSupport R I)) :=
   (generators R I).toList.map
     (Principal.ScalarRepresentation.scalar (supportRepresentation R I))
 
 /-- Joint annihilation by those generators. -/
-
 abbrev supportKilled : ObjectProperty (SmallSupport R I) := killedByAll (supportOperators R I)
 
 /-- The finite-family predicate is exactly annihilation by the entire ideal. -/
-
 theorem supportKilled_iff (M : SmallSupport R I) :
     supportKilled R I M ↔
       ∀ r ∈ I, ∀ m : (supportRepresentation R I).obj M, r • m = 0 := by
@@ -99,7 +94,6 @@ theorem supportKilled_iff (M : SmallSupport R I) :
 
 /-- Genuine support makes every ideal generator nilpotent on each coherent
 object. No exponent uniform in the object is used. -/
-
 theorem supportOperators_nilpotent (M : SmallSupport R I) :
     ∀ t ∈ supportOperators R I, ∃ n : ℕ, power t M n = 0 := by
   intro t ht
@@ -112,7 +106,6 @@ theorem supportOperators_nilpotent (M : SmallSupport R I) :
 
 /-- The actual supported coherent category has finite filtrations with
 successive quotients annihilated by I. -/
-
 theorem supportFiltrationHypothesis : Devissage.FiltrationHypothesis (supportKilled R I) :=
   FiniteCentralDevissage.filtrationHypothesis (supportOperators R I)
     (supportOperators_nilpotent R I)

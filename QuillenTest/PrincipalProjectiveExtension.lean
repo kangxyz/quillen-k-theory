@@ -8,6 +8,7 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.PrincipalProjectiveExtension
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Strict
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Closure
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.DerivedModuleReplacement
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local

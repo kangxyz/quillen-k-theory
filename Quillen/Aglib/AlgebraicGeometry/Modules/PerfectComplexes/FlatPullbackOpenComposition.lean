@@ -12,7 +12,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.GlobalUni
 /-!
 # Original open and flat pullback composition
 
-The actual restriction/flat comparison and geometric composition isomorphism retain the original unit and its genuine pulled-back scalar.
+The actual restriction/flat comparison and geometric composition isomorphism retain the
+original unit and its genuine pulled-back scalar.
 -/
 @[expose] public section
 
@@ -21,7 +22,6 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry
-open Quillen.Waldhausen 
 universe u
 namespace Quillen.PerfectComplexes
 variable {U X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] (i : U ⟶ X) [IsOpenImmersion i]

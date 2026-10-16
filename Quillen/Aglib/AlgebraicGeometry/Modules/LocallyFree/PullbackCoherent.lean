@@ -16,8 +16,8 @@ public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Coherent
 /-!
 # Pullback and the coherent inclusion
 
-The actual vector-bundle inclusion commutes with arbitrary sheaf pullback before flatness is needed for exactness.
--/
+The actual vector-bundle inclusion commutes with arbitrary sheaf pullback before flatness is needed
+for exactness.-/
 @[expose] public section
 
 open ModuleCat
@@ -36,10 +36,8 @@ variable {X Y Z : AlgebraicGeometry.Scheme.{u}}
   [IsLocallyNoetherian X] [IsLocallyNoetherian Y] [IsLocallyNoetherian Z]
 
 omit [IsLocallyNoetherian X] in
-
 /-- The actual bundle-to-coherent inclusion commutes with arbitrary pullback
 as a functor, before flatness is needed for the coherent exact structure. -/
-
 theorem vectorBundleToCoherent_pullback (f : X ⟶ Y) :
     AlgebraicGeometry.Scheme.Modules.vectorBundleToCoherent Y ⋙
       AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePullback f =

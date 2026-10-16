@@ -11,7 +11,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedBe
 /-!
 # Whiskering the original Godement augmentation
 
-Every actual functor into lower-bounded perfect complexes retains the same pointwise totalization unit.
+Every actual functor into lower-bounded perfect complexes retains the same pointwise
+totalization unit.
 -/
 @[expose] public section
 noncomputable section

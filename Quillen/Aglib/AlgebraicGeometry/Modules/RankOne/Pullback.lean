@@ -32,7 +32,6 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The restriction adjunction sends the unit trivialization to the original structure map. -/
-
 theorem restrictUnitIso_homEquiv {X Y : Scheme.{u}} (f : X ⟶ Y) [IsOpenImmersion f] :
     (AlgebraicGeometry.Scheme.Modules.restrictAdjunction f).homEquiv _ _
       (AlgebraicGeometry.Scheme.Modules.restrictUnitIso f).hom =
@@ -51,7 +50,6 @@ theorem restrictUnitIso_homEquiv {X Y : Scheme.{u}} (f : X ⟶ Y) [IsOpenImmersi
   exact congrArg (fun k => CommRingCat.Hom.hom k x) h
 
 /-- The original restriction-to-pullback comparison preserves the structure module. -/
-
 theorem restrictFunctorIsoPullback_unit {X Y : Scheme.{u}} (f : X ⟶ Y) [IsOpenImmersion f] :
     (AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback f).hom.app
         (SheafOfModules.unit Y.ringCatSheaf) ≫ (pullbackUnitIso f).hom =
@@ -63,7 +61,6 @@ theorem restrictFunctorIsoPullback_unit {X Y : Scheme.{u}} (f : X ⟶ Y) [IsOpen
   exact pullbackUnitIso_homEquiv f
 
 /-- The original restriction-to-pullback comparison retains both ordered unit coordinates. -/
-
 theorem restrictFunctorIsoPullback_unitSquare {X Y : Scheme.{u}}
     (f : X ⟶ Y) [IsOpenImmersion f] :
     (AlgebraicGeometry.Scheme.Modules.restrictFunctorIsoPullback f).hom.app
@@ -85,7 +82,6 @@ end AlgebraicGeometry.Scheme.Modules
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Pullback of scalar multiplication retains the actual pulled-back section. -/
-
 theorem unitMul_pullback {X Y : Scheme.{u}} (f : X ⟶ Y) (s : Γ(Y, ⊤)) :
     (AlgebraicGeometry.Scheme.Modules.pullback f).map (unitMul Y s) ≫ (pullbackUnitIso f).hom =
       (pullbackUnitIso f).hom ≫ unitMul X (f.appTop.hom s) := by
@@ -114,7 +110,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 variable {X Y : Scheme.{u}} (f : X ⟶ Y) (s : Γ(Y, ⊤))
 
 /-- Pullback of the original graph column retains its two ordered coordinates. -/
-
 theorem graphColumn_pullback :
     (AlgebraicGeometry.Scheme.Modules.pullback f).map (graphColumn (unitMul Y s)) ≫
       (pullbackUnitSquareIso f).hom =
@@ -128,7 +123,6 @@ theorem graphColumn_pullback :
     exact unitMul_pullback f s
 
 /-- Pullback of the original cograph column retains its two ordered coordinates. -/
-
 theorem cographColumn_pullback :
     (AlgebraicGeometry.Scheme.Modules.pullback f).map (cographColumn (unitMul Y s)) ≫
       (pullbackUnitSquareIso f).hom =
@@ -142,7 +136,6 @@ theorem cographColumn_pullback :
       Category.comp_id]
 
 /-- Pullback of the signed graph quotient retains the original pulled-back scalar. -/
-
 theorem graphRow_pullback :
     (AlgebraicGeometry.Scheme.Modules.pullback f).map (graphRow (unitMul Y s)) ≫
       (pullbackUnitIso f).hom =
@@ -151,7 +144,6 @@ theorem graphRow_pullback :
     Functor.map_comp, Category.assoc, unitMul_pullback]
 
 /-- Pullback of the signed cograph quotient retains the original pulled-back scalar. -/
-
 theorem cographRow_pullback :
     (AlgebraicGeometry.Scheme.Modules.pullback f).map (cographRow (unitMul Y s)) ≫
       (pullbackUnitIso f).hom =
@@ -160,7 +152,6 @@ theorem cographRow_pullback :
     Functor.map_comp, Category.assoc, unitMul_pullback]
 
 /-- Subtraction of scalars is subtraction of the original unit endomorphisms. -/
-
 theorem unitMul_sub (Z : Scheme.{u}) (s t : Γ(Z, ⊤)) :
     unitMul Z (s - t) = unitMul Z s - unitMul Z t := by
   apply AlgebraicGeometry.Scheme.Modules.hom_ext
@@ -173,25 +164,21 @@ theorem unitMul_sub (Z : Scheme.{u}) (s t : Γ(Z, ⊤)) :
   rw [map_sub, mul_sub]
 
 /-- The two graph coordinates give the literal difference. -/
-
 theorem graphColumn_graphRow_unitMul (Z : Scheme.{u}) (s t : Γ(Z, ⊤)) :
     graphColumn (unitMul Z s) ≫ graphRow (unitMul Z t) = unitMul Z (s - t) := by
   simp [graphColumn, graphRow, Preadditive.comp_sub, unitMul_sub]
 
 /-- The graph and cograph coordinates give the literal product minus one. -/
-
 theorem graphColumn_cographRow_unitMul (Z : Scheme.{u}) (s t : Γ(Z, ⊤)) :
     graphColumn (unitMul Z s) ≫ cographRow (unitMul Z t) = unitMul Z (s * t - 1) := by
   simp [graphColumn, cographRow, Preadditive.comp_sub, unitMul_sub, unitMul_mul, unitMul_one]
 
 /-- The cograph and graph coordinates give one minus the literal product. -/
-
 theorem cographColumn_graphRow_unitMul (Z : Scheme.{u}) (s t : Γ(Z, ⊤)) :
     cographColumn (unitMul Z s) ≫ graphRow (unitMul Z t) = unitMul Z (1 - s * t) := by
   simp [cographColumn, graphRow, Preadditive.comp_sub, unitMul_sub, unitMul_mul, unitMul_one]
 
 /-- The two cograph coordinates give the reverse literal difference. -/
-
 theorem cographColumn_cographRow_unitMul (Z : Scheme.{u}) (s t : Γ(Z, ⊤)) :
     cographColumn (unitMul Z s) ≫ cographRow (unitMul Z t) = unitMul Z (t - s) := by
   simp [cographColumn, cographRow, Preadditive.comp_sub, unitMul_sub]

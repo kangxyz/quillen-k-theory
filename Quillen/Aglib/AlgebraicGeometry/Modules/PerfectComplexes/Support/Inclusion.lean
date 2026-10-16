@@ -16,10 +16,6 @@ The actual full-subcategory inclusion preserves the original underlying complex 
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex
-open Quillen.Waldhausen
-
-
-
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -27,7 +23,6 @@ universe u
 open CategoryTheory CategoryTheory.Limits Opposite AlgebraicGeometry HomologicalComplex
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
-open Waldhausen Fibration
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 /-- Literal original supported inclusion underlying the already public K-map. -/

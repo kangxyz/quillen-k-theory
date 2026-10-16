@@ -12,7 +12,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFl
 /-!
 # Identity-base bounded-flat support comparison
 
-The original geometric pullback along the identity-base support square is the same actual supported inclusion.
+The original geometric pullback along the identity-base support square is the same actual
+supported inclusion.
 -/
 @[expose] public section
 

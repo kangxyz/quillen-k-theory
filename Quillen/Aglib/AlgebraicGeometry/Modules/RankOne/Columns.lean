@@ -34,14 +34,12 @@ variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
   (M : X.Modules) (s : Γ(U, ⊤))
 
 /-- The graph column (1,s) into the actual restricted module square. -/
-
 def moduleFirstColumn : M.restrict j ⟶ (M ⨯ M).restrict j := by
   let := restrict_prodComparison_isIso j M M
   exact graphColumn (moduleMul (M.restrict j) s) ≫
     inv (prodComparison (Scheme.Modules.restrictFunctor j) M M)
 
 /-- The cograph column (s,1) into the actual restricted module square. -/
-
 def moduleSecondColumn : M.restrict j ⟶ (M ⨯ M).restrict j := by
   let := restrict_prodComparison_isIso j M M
   exact cographColumn (moduleMul (M.restrict j) s) ≫
@@ -84,7 +82,6 @@ instance moduleSecondColumn_mono : Mono (moduleSecondColumn j M s) := by
     ((Scheme.Modules.restrictFunctor j).map prod.snd)
 
 /-- Scalar multiplication followed by the original overlap restriction comparison. -/
-
 def moduleColumnTransition {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k] (M : X.Modules)
     (v : (Γ(CategoryTheory.Limits.pullback j k, ⊤))ˣ) :

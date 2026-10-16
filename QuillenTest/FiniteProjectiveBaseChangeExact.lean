@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 
 import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeExact
+import Quillen.CategoryTheory.ExactCategory.Functor
 import Mathlib.Algebra.Ring.PUnit
 
 /-! Actual change of rings preserves sums and all inherited conflations. -/

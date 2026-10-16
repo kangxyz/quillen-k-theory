@@ -28,7 +28,6 @@ local instance specCoordinateStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
 
 /-- The actual affine coordinate map is the spectrum of the original map on global sections. -/
-
 theorem isoSpec_coordinate {X Y : Scheme.{u}} [IsAffine X] [IsAffine Y] (f : X ⟶ Y) :
     X.isoSpec.inv ≫ f ≫ Y.isoSpec.hom = Spec.map f.appTop := by
   rw [← Scheme.isoSpec_inv_naturality_assoc]
@@ -41,7 +40,6 @@ variable {W U V X : Scheme.{u}} [IsAffine W] [IsAffine U] [IsAffine V] [IsAffine
 include h
 
 /-- The original cartesian square in its actual affine coordinate rings. -/
-
 theorem specCoordinatePullback :
     IsPullback (Spec.map a.appTop) (Spec.map b.appTop)
       (Spec.map f.appTop) (Spec.map j.appTop) := by
@@ -50,7 +48,6 @@ theorem specCoordinatePullback :
   simpa only [Iso.symm_hom, Iso.symm_inv, isoSpec_coordinate] using hc
 
 /-- Affine coordinates retain the original derived mate on the actual pulled-back sheaf. -/
-
 theorem isIso_derivedFlatBaseChangeMap_specCoordinates_iff [Flat j] (M : U.Modules) :
     letI : Flat (Spec.map j.appTop) := by
       rw [← isoSpec_coordinate j]
@@ -69,9 +66,7 @@ theorem isIso_derivedFlatBaseChangeMap_specCoordinates_iff [Flat j] (M : U.Modul
     (isoSpec_coordinate f) (isoSpec_coordinate j) _ _ _
 
 omit [IsAffine W] [IsAffine V] [IsAffine X] h in
-
 /-- The actual affine-coordinate pullback of a quasicoherent sheaf is quasicoherent. -/
-
 theorem isQuasicoherent_isoSpec_pullback (M : U.Modules) [M.IsQuasicoherent] :
     ((Scheme.Modules.pullback U.isoSpec.inv).obj M).IsQuasicoherent := by
   exact (SheafOfModules.isQuasicoherent (Spec Γ(U, ⊤)).ringCatSheaf).prop_of_iso
@@ -90,7 +85,6 @@ variable {R S A B : CommRingCat.{u}}
   (h : IsPullback (Spec.map a) (Spec.map b) (Spec.map f) (Spec.map j))
 
 /-- The same affine single-sheaf theorem for arbitrary original ring homomorphisms. -/
-
 theorem isIso_derivedFlatBaseChangeMap_spec_single [Flat (Spec.map j)]
     (M : (Spec A).Modules) [M.IsQuasicoherent] :
     IsIso ((derivedFlatBaseChangeMap _ _ _ _ h).app
@@ -110,7 +104,6 @@ theorem isIso_derivedFlatBaseChangeMap_spec_single [Flat (Spec.map j)]
 
 /-- The original derived flat base-change map on an arbitrary affine cartesian square
 is invertible on each actual quasicoherent single sheaf. -/
-
 theorem isIso_derivedFlatBaseChangeMap_affine_single
     {W U V X : Scheme.{u}} [IsAffine W] [IsAffine U] [IsAffine V] [IsAffine X]
     (a : W ⟶ U) (b : W ⟶ V) (f : U ⟶ X) (j : V ⟶ X)

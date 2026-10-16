@@ -14,7 +14,8 @@ public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
 /-!
 # Principal localization of finite-projective derived models
 
-The actual derived restriction image is triangulated. For termwise quasicoherent targets it is exactly the existence of the original strict restriction quasi-isomorphism.
+The actual derived restriction image is triangulated. For termwise quasicoherent targets it is
+exactly the existence of the original strict restriction quasi-isomorphism.
 -/
 @[expose] public section
 

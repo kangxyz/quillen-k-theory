@@ -13,7 +13,9 @@ public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-!
 # Actual supported complements and wrapper equivalence
 
-The qcqs supported complement supplies the displayed coproduct membership. The nested and direct chain categories are literally equivalent, retaining their actual support and inclusions.
+The qcqs supported complement supplies the displayed coproduct membership. The nested and
+direct chain categories are literally equivalent, retaining their actual support and
+inclusions.
 -/
 @[expose] public section
 

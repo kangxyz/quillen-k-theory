@@ -46,7 +46,8 @@ theorem restrict_cone_map_naturality {U X : Scheme.{u}} (j : U ⟶ X)
     simp [CochainComplex.mappingCone.ext_from_iff _ (n + 1) n rfl,
       CochainComplex.mappingCone.map, Category.assoc]
   simp only [CochainComplex.mappingCone.map] at hf hs
-  simp [restrict, CochainComplex.mappingCone.mapHomologicalComplexIso,
+  simp [AlgebraicGeometry.Scheme.Modules.Complex.restrict,
+    CochainComplex.mappingCone.mapHomologicalComplexIso,
     CochainComplex.mappingCone.mapHomologicalComplexXIso,
     CochainComplex.mappingCone.mapHomologicalComplexXIso',
     CochainComplex.mappingCone.map, Category.assoc, -Functor.map_comp,

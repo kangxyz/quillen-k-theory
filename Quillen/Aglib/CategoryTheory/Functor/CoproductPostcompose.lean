@@ -6,11 +6,13 @@ Authors: kangxyz
 module
 
 public import Quillen.Aglib.CategoryTheory.Functor.PointwiseCoproduct
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.BinaryProducts
 
 /-!
 # Pointwise coproducts and postcomposition
 
-A coproduct-preserving functor gives the canonical comparison between the original pointwise coproduct functors.
+A coproduct-preserving functor gives the canonical comparison between the original
+pointwise coproduct functors.
 -/
 @[expose] public section
 noncomputable section

@@ -12,8 +12,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.A
 /-!
 # Restriction with a prescribed support inequality
 
-Actual supported restriction is followed by the literal full-subcategory inclusion that weakens only the acyclicity open.
--/
+Actual supported restriction is followed by the literal full-subcategory inclusion that weakens only
+the acyclicity open.-/
 @[expose] public section
 
 

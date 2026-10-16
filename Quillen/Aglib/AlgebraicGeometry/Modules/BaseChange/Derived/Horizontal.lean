@@ -39,7 +39,6 @@ variable {W' W U V' V X : Scheme.{u}}
   (hs : IsPullback c d b k) (h : IsPullback a b f j) [Flat k] [Flat j]
 
 /-- The horizontal composite uses the original derived mates and geometric pullback comparisons. -/
-
 def derivedFlatBaseChangeHorizontalComposite :
     letI := flat_cartesian_baseChange a b f j h
     letI := flat_cartesian_baseChange c d b k hs
@@ -59,7 +58,6 @@ def derivedFlatBaseChangeHorizontalComposite :
       (derivedPushforwardPlus d)).hom
 
 /-- The component retains the two literal derived mates and both composition maps. -/
-
 theorem derivedFlatBaseChangeHorizontalComposite_app (K : DerivedCategory.Plus U.Modules) :
     letI := flat_cartesian_baseChange a b f j h
     letI := flat_cartesian_baseChange c d b k hs
@@ -71,9 +69,7 @@ theorem derivedFlatBaseChangeHorizontalComposite_app (K : DerivedCategory.Plus U
   simp [derivedFlatBaseChangeHorizontalComposite]
 
 omit [Flat k] [Flat j] in
-
 /-- The horizontal mate equation holds in the actual componentwise bounded-below complexes. -/
-
 theorem cartesianBaseChangeMap_paste_horiz_complex (K : CochainComplex.Plus U.Modules) :
     (NatIso.mapCochainComplexPlus (Scheme.Modules.pullbackComp k j)).inv.app
         ((Scheme.Modules.pushforward f).mapCochainComplexPlus.obj K) ≫
@@ -206,7 +202,6 @@ private theorem derivedFlatBaseChangeHorizontal_target_unit (K : CochainComplex.
   rfl
 
 /-- The horizontal composite retains the exact original mate and composite unit square. -/
-
 theorem derivedFlatBaseChangeHorizontalComposite_unit (K : CochainComplex.Plus U.Modules) :
     letI := flat_cartesian_baseChange a b f j h
     letI := flat_cartesian_baseChange c d b k hs
@@ -246,7 +241,6 @@ theorem derivedFlatBaseChangeHorizontalComposite_unit (K : CochainComplex.Plus U
   simpa only [Category.assoc] using hfinal
 
 /-- Horizontal pasting is equality of the original derived base-change maps. -/
-
 theorem derivedFlatBaseChangeMap_paste_horiz :
     letI := flat_cartesian_baseChange a b f j h
     letI := flat_cartesian_baseChange c d b k hs

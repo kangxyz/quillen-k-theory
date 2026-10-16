@@ -13,7 +13,8 @@ public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Exactness
 /-!
 # Additivity of the actual plus-category functors
 
-The original module functor, flasque proof-forgetting functor and Godement total retain addition of the same underlying chain maps.
+The original module functor, flasque proof-forgetting functor and Godement total retain
+addition of the same underlying chain maps.
 -/
 @[expose] public section
 noncomputable section

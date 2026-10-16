@@ -16,6 +16,7 @@ public import Mathlib.AlgebraicGeometry.OpenImmersion
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite
+open AlgebraicGeometry.Scheme.Modules
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 lemma gammaIsoTop_inv {X Y : Scheme.{u}} (f : X ⟶ Y) [IsOpenImmersion f] :
     (IsOpenImmersion.ΓIsoTop f).inv = f.appLE f.opensRange ⊤ (by simp) := by
@@ -29,6 +30,8 @@ theorem isQuasicoherent_unit (X : Scheme.{u}) :
       SheafOfModules.unit X.ringCatSheaf := coproductUniqueIso _
   exact (SheafOfModules.isQuasicoherent X.ringCatSheaf).prop_of_iso e (by infer_instance)
 
+set_option backward.isDefEq.respectTransparency false in
+set_option backward.defeqAttrib.useBackward true in
 lemma restrict_gammaIsoTop_inv {W Y X : Scheme.{u}} (g : W ⟶ Y) (f : Y ⟶ X)
     [IsOpenImmersion g] [IsOpenImmersion f]
     (hle : (g ≫ f).opensRange ≤ f.opensRange) :

@@ -24,7 +24,9 @@ public import Aglib.CategoryTheory.SmallModel.Functor
 /-!
 # G-theory of the actual principal supported presentation
 
-The general exact categorical support presentation is imported from the local Aglib candidate. This downstream leaf forms its G-theory, proves the Q-construction comparison, and identifies the original supported G-group.
+The general exact categorical support presentation is imported from the local Aglib candidate.
+This downstream leaf forms its G-theory, proves the Q-construction comparison, and identifies
+the original supported G-group.
 -/
 @[expose] public section
 

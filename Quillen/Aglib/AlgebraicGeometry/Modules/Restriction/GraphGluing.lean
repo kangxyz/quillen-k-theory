@@ -12,7 +12,9 @@ public import Aglib.AlgebraicGeometry.Modules.Locality.Exactness
 /-!
 # Actual restriction graphs and compatible gluing
 
-Chart maps into the original ambient product retain both projections. Compatible monic graph data glue by the existing subobject construction, retaining the original local maps and exact original hypotheses.
+Chart maps into the original ambient product retain both projections. Compatible monic graph
+data glue by the existing subobject construction, retaining the original local maps and exact
+original hypotheses.
 -/
 @[expose] public section
 noncomputable section
@@ -20,7 +22,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite ModuleCat
-open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.QuasiCoherent
+open AlgebraicGeometry.Scheme.Modules
 namespace Quillen.PerfectComplexes.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
 /-- A pair of chart maps into two ambient sheaves, viewed as a chart map

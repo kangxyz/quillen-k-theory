@@ -15,8 +15,9 @@ public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-!
 # Derived-saturated open restriction image
 
-Original complexes retain an actual isomorphism in the ambient derived category to the restriction of a global locally perfect complex. The full category, corestriction, and genuine weak cospans preserve every chain map.
--/
+Original complexes retain an actual isomorphism in the ambient derived category to the restriction
+of a global locally perfect complex. The full category, corestriction, and genuine weak cospans
+preserve every chain map.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex

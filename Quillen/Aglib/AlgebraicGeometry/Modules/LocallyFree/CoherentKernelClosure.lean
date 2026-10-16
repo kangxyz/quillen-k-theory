@@ -27,8 +27,6 @@ open AlgebraicGeometry.Scheme.Modules
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-open Quillen
-
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -40,7 +38,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Kernels of admissible epimorphisms between coherent vector bundles are
 actual finite locally free sheaves on any locally noetherian scheme. -/
-
 instance coherentVectorBundle_kernelClosed (X : Scheme.{u}) [IsLocallyNoetherian X] :
     (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).IsKernelClosed
       (coherentVectorBundle X) where

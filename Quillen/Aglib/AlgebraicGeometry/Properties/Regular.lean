@@ -31,14 +31,12 @@ open CategoryTheory AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme
 
 /-- The usual local-ring definition of a regular scheme. -/
-
 class IsRegular (X : AlgebraicGeometry.Scheme.{u}) : Prop extends IsLocallyNoetherian X where
   regular_stalk (x : X) : IsRegularLocalRing (X.presheaf.stalk x)
 
 attribute [instance] IsRegular.regular_stalk
 
 /-- Regularity restricts along an actual open immersion. -/
-
 theorem isRegular_of_isOpenImmersion {U X : AlgebraicGeometry.Scheme.{u}}
     (j : U ⟶ X) [IsOpenImmersion j] [IsRegular X] : IsRegular U where
   toIsLocallyNoetherian := isLocallyNoetherian_of_isOpenImmersion j
@@ -46,7 +44,6 @@ theorem isRegular_of_isOpenImmersion {U X : AlgebraicGeometry.Scheme.{u}}
     (asIso (j.stalkMap x)).commRingCatIsoToRingEquiv
 
 /-- Every affine chart of a regular scheme has an actually regular ring. -/
-
 theorem regular_affineChart {X : AlgebraicGeometry.Scheme.{u}} [IsRegular X]
     (R : CommRingCat.{u}) (j : Spec R ⟶ X) [IsOpenImmersion j] : IsRegularRing R := by
   have : IsNoetherianRing R := AlgebraicGeometry.Scheme.Modules.Coherent.noetherian_affineChart R j
@@ -59,13 +56,11 @@ theorem regular_affineChart {X : AlgebraicGeometry.Scheme.{u}} [IsRegular X]
     (Spec.stalkIso R (⟨p, hp⟩ : PrimeSpectrum R)).commRingCatIsoToRingEquiv
 
 /-- The spectrum of a regular ring is regular in the local-ring definition. -/
-
 instance isRegular_spec (R : CommRingCat.{u}) [IsRegularRing R] : IsRegular (Spec R) where
   regular_stalk x := IsRegularLocalRing.of_ringEquiv
     (Spec.stalkIso R x).symm.commRingCatIsoToRingEquiv
 
 /-- On an actual spectrum, scheme regularity is precisely ring regularity. -/
-
 theorem isRegular_spec_iff (R : CommRingCat.{u}) : IsRegular (Spec R) ↔ IsRegularRing R := by
   constructor
   · intro h
@@ -75,7 +70,6 @@ theorem isRegular_spec_iff (R : CommRingCat.{u}) : IsRegular (Spec R) ↔ IsRegu
 
 /-- Regularity on every actual affine open chart is equivalent to the
 standard stalk definition. No finite-dimensionality condition is present. -/
-
 theorem isRegular_iff_affineCharts (X : AlgebraicGeometry.Scheme.{u}) :
     IsRegular X ↔ ∀ (R : CommRingCat.{u}) (j : Spec R ⟶ X) [IsOpenImmersion j],
       IsRegularRing R := by

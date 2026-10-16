@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.ExactCategory.Subcategory
+
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.Algebra.Homology.CochainComplex.OppositeQuasiIso
 public import Aglib.Algebra.Homology.CochainComplex.BoundedAbove.ProjectiveReplacement

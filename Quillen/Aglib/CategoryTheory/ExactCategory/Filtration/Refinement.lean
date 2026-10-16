@@ -32,7 +32,6 @@ open scoped ZeroObject
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace CategoryTheory.ExactCategory.ExactStructure.Filtration
-open Quillen
 variable {C : Type u} [Category.{v} C] [Abelian C] {P : ObjectProperty C}
 
 /-- Transport a filtration along an actual isomorphism of its endpoint. -/

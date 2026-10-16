@@ -35,7 +35,6 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Both canonical unit restrictions agree on the original scheme pullback. -/
-
 lemma restrictUnitIso_overlap {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k] :
     (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.app
@@ -70,13 +69,11 @@ lemma restrictUnitIso_overlap {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
   exact congrArg (fun f => CommRingCat.Hom.hom f x) h
 
 /-- Restriction preserves the actual binary-product comparison. -/
-
 theorem restrict_prodComparison_isIso {U X : Scheme.{u}}
     (j : U ⟶ X) [IsOpenImmersion j] (M N : X.Modules) :
     IsIso (prodComparison (Scheme.Modules.restrictFunctor j) M N) := inferInstance
 
 /-- The actual split-mono column `(1, s)` into the restriction of the global unit square. -/
-
 def firstColumn {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (s : Γ(U, ⊤)) :
     (SheafOfModules.unit U.ringCatSheaf : U.Modules) ⟶
       (Scheme.Modules.restrictFunctor j).obj
@@ -112,7 +109,6 @@ instance firstColumn_mono {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
   exact mono_of_mono (firstColumn j s) ((Scheme.Modules.restrictFunctor j).map prod.fst)
 
 /-- The actual split-mono column `(s, 1)` into the restriction of the global unit square. -/
-
 def secondColumn {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (s : Γ(U, ⊤)) :
     (SheafOfModules.unit U.ringCatSheaf : U.Modules) ⟶
       (Scheme.Modules.restrictFunctor j).obj
@@ -148,7 +144,6 @@ instance secondColumn_mono {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
   exact mono_of_mono (secondColumn j s) ((Scheme.Modules.restrictFunctor j).map prod.snd)
 
 /-- The original rank-one transition given by an invertible overlap section. -/
-
 def columnTransition {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k] (s : (Γ(CategoryTheory.Limits.pullback j k, ⊤))ˣ) :
     Scheme.Modules.restrict (SheafOfModules.unit U.ringCatSheaf) (pullback.fst j k) ≅
@@ -172,7 +167,6 @@ lemma restrictUnitIso_overlap_inv {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ 
 
 /-- Reciprocal original overlap coordinates make the two actual columns compatible
 with the displayed unit transition, as required by module-subobject gluing. -/
-
 lemma columns_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k] (s : Γ(U, ⊤)) (t : Γ(V, ⊤))
     (v : (Γ(CategoryTheory.Limits.pullback j k, ⊤))ˣ)

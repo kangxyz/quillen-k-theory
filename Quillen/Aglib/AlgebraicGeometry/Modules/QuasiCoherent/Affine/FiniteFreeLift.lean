@@ -12,8 +12,8 @@ public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteGenerat
 /-!
 # Finite-free lifts over an affine scheme
 
-The given epimorphism of quasicoherent sheaves onto a target with finite global sections admits the original finite-free source map surjective after composition.
--/
+The given epimorphism of quasicoherent sheaves onto a target with finite global sections admits the
+original finite-free source map surjective after composition.-/
 @[expose] public section
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

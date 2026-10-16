@@ -32,7 +32,6 @@ variable {W' W U V' V X : Scheme.{u}}
   (hs : IsPullback c d b k) (h : IsPullback a b f j)
 
 /-- Localizing the original base retains the same derived mate on the actual restricted sheaf. -/
-
 theorem isIso_derivedFlatBaseChangeMap_baseOpen_single_iff [Flat k] [IsOpenImmersion j]
     (M : U.Modules) :
     letI := flat_cartesian_baseChange a b f j h

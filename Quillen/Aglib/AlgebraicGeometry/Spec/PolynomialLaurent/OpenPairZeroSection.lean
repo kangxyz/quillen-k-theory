@@ -30,7 +30,6 @@ universe u
 namespace AlgebraicGeometry.Scheme.Bass
 
 /-- The original first projection applied to both entries of the supported product. -/
-
 def pairBaseProductProjection {S : AlgebraicGeometry.Scheme.{u}}
     (p : S ⟶ integerBase) [QuasiCompact p] : pairBaseProductFunctor p ⟶ 𝟭 _ where
   app A := ⟨⟨((Functor.mapArrowFunctor _ _).map (baseProductProjection p)).app A.obj.obj⟩⟩
@@ -40,17 +39,14 @@ def pairBaseProductProjection {S : AlgebraicGeometry.Scheme.{u}}
     exact ((Functor.mapArrowFunctor _ _).map (baseProductProjection p)).naturality f.hom.hom
 
 /-- The original polynomial projection of the same open-support pair. -/
-
 abbrev pairPolynomialProjection : pairPolynomialFunctor.{u} ⟶ 𝟭 _ :=
   pairBaseProductProjection (PolynomialLaurent.polynomialProjection integerRing)
 
 /-- The original Laurent projection of the same open-support pair. -/
-
 abbrev pairLaurentProjection : pairLaurentFunctor.{u} ⟶ 𝟭 _ :=
   pairBaseProductProjection (PolynomialLaurent.laurentProjection integerRing)
 
 /-- The natural zero section on both original scheme entries of the support pair. -/
-
 def pairPolynomialZero : 𝟭 QuasiCompactOpenPairs.{u} ⟶ pairPolynomialFunctor where
   app A := ⟨⟨Arrow.homMk (nativePolynomialZero A.obj.obj.left)
     (nativePolynomialZero A.obj.obj.right)
@@ -63,7 +59,6 @@ def pairPolynomialZero : 𝟭 QuasiCompactOpenPairs.{u} ⟶ pairPolynomialFuncto
     · exact nativePolynomialZero_naturality f.hom.hom.right
 
 @[reassoc (attr := simp)]
-
 theorem pairPolynomialZero_projection (A : QuasiCompactOpenPairs.{u}) :
     pairPolynomialZero.app A ≫ pairPolynomialProjection.app A = 𝟙 A := by
   apply ObjectProperty.hom_ext
@@ -73,7 +68,6 @@ theorem pairPolynomialZero_projection (A : QuasiCompactOpenPairs.{u}) :
   · exact nativePolynomialZero_projection A.obj.obj.right
 
 @[reassoc (attr := simp)]
-
 theorem pairPlus_projection (A : QuasiCompactOpenPairs.{u}) :
     pairPlus.app A ≫ pairPolynomialProjection.app A = pairLaurentProjection.app A := by
   apply ObjectProperty.hom_ext
@@ -85,7 +79,6 @@ theorem pairPlus_projection (A : QuasiCompactOpenPairs.{u}) :
       (PolynomialLaurent.laurentPlus_projection integerRing) A.obj.obj.right
 
 @[reassoc (attr := simp)]
-
 theorem pairMinus_projection (A : QuasiCompactOpenPairs.{u}) :
     pairMinus.app A ≫ pairPolynomialProjection.app A = pairLaurentProjection.app A := by
   apply ObjectProperty.hom_ext
@@ -97,13 +90,11 @@ theorem pairMinus_projection (A : QuasiCompactOpenPairs.{u}) :
       (PolynomialLaurent.laurentMinus_projection integerRing) A.obj.obj.right
 
 @[simp]
-
 theorem pairPolynomialZero_base (A : QuasiCompactOpenPairs.{u}) :
     quasiCompactOpenPairsBase.map (pairPolynomialZero.app A) =
       polynomialZero.app (quasiCompactOpenPairsBase.obj A) := rfl
 
 @[simp]
-
 theorem pairPolynomialProjection_base (A : QuasiCompactOpenPairs.{u}) :
     quasiCompactOpenPairsBase.map (pairPolynomialProjection.app A) =
       polynomialProjection.app (quasiCompactOpenPairsBase.obj A) := rfl

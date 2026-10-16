@@ -28,7 +28,9 @@ public import Mathlib.RingTheory.Flat.EquationalCriterion
 /-!
 # The finite flat vector-bundle K-map
 
-The actual finite flat vector-bundle direct image and its exactness are supplied by the local Aglib candidate, with a locally noetherian target. This downstream leaf forms the canonical map on the original vector-bundle K-groups.
+The actual finite flat vector-bundle direct image and its exactness are supplied by the local
+Aglib candidate, with a locally noetherian target. This downstream leaf forms the canonical map
+on the original vector-bundle K-groups.
 -/
 @[expose] public section
 

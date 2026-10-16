@@ -12,7 +12,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.Pr
 /-!
 # Exact affine sections and principal strict witnesses
 
-The actual sections of termwise quasicoherent complexes preserve the given short exact sequence, and the original principal strict witnesses are extension closed.
+The actual sections of termwise quasicoherent complexes preserve the given short exact
+sequence, and the original principal strict witnesses are extension closed.
 -/
 @[expose] public section
 

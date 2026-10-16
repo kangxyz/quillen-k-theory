@@ -12,8 +12,8 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Pullback
 /-!
 # Geometric bounded-flat pullback comparisons
 
-The original identity/composition comparisons lift through faithful full-subcategory inclusion. Every strict perfect complex is bounded flat.
--/
+The original identity/composition comparisons lift through faithful full-subcategory inclusion.
+Every strict perfect complex is bounded flat.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex

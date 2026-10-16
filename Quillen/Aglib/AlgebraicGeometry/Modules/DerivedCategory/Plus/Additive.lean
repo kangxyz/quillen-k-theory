@@ -20,6 +20,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u v w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite ModuleCat
 open AlgebraicGeometry.Scheme.Modules
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.ProjectiveLine.Euler
 local instance derivedPlusQ_additive (X : Scheme.{u}) :
     (DerivedCategory.Plus.Q (C := X.Modules)).Additive := by
@@ -38,6 +39,7 @@ set_option backward.defeqAttrib.useBackward true
 universe u v w
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry Opposite ModuleCat
 open AlgebraicGeometry.Scheme.Modules
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeEuler
 local instance derivedPlusQ_additive (Y : Scheme.{u}) :
     (DerivedCategory.Plus.Q (C := Y.Modules)).Additive := by

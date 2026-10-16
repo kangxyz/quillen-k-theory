@@ -10,8 +10,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.OpenDeriv
 /-!
 # Flattening the actual derived-image categories
 
-The redundant perfect-object wrapper is forgotten and restored by a literal equivalence. Objects, chain maps and original inclusions are unchanged.
--/
+The redundant perfect-object wrapper is forgotten and restored by a literal equivalence. Objects,
+chain maps and original inclusions are unchanged.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex

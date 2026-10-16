@@ -12,11 +12,10 @@ public import Quillen.Aglib.CategoryTheory.ObjectProperty.LiftComposition
 /-!
 # Actual native fiber-support inclusion
 
-Only the additional fiber support is forgotten. The original evaluation retains the same complex and literal full-subcategory inclusion.
+Only the additional fiber support is forgotten. The original evaluation retains the same
+complex and literal full-subcategory inclusion.
 -/
 @[expose] public section
-
-open Quillen.Waldhausen
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

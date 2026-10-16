@@ -17,7 +17,6 @@ kernel map by lifting the original kernel and the zero map into that square.
 -/
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
-open Quillen
 universe v u
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C) {S : ShortComplex C}

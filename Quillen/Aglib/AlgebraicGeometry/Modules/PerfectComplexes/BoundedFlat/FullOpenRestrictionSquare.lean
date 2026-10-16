@@ -14,7 +14,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.ScalarRes
 /-!
 # Original full-open coefficient restriction squares
 
-Actual bounded-flat pullback along each specified open inclusion retains its existing pair comparison, scalar restriction and pulled-back unit.
+Actual bounded-flat pullback along each specified open inclusion retains its existing pair
+comparison, scalar restriction and pulled-back unit.
 -/
 @[expose] public section
 

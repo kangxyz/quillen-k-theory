@@ -11,8 +11,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.Fa
 /-!
 # Actual supported affine chain factorization
 
-The same original affine factorization retains the given restricted acyclicity and both actual supported kernels.
--/
+The same original affine factorization retains the given restricted acyclicity and both actual
+supported kernels.-/
 @[expose] public section
 
 

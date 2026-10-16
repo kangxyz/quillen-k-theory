@@ -36,7 +36,6 @@ variable {Z' Z W U V X : Scheme.{u}}
   (hs : IsPullback c d g a) (h : IsPullback a b f j) [Flat j] [IsIso g]
 
 /-- Source-coordinate transport retains the same derived mate under actual direct image. -/
-
 theorem isIso_derivedFlatBaseChangeMap_sourceIso_iff (K : DerivedCategory.Plus Z.Modules) :
     letI := flat_cartesian_baseChange a b f j h
     letI := flat_cartesian_baseChange c d g a hs
@@ -51,7 +50,6 @@ theorem isIso_derivedFlatBaseChangeMap_sourceIso_iff (K : DerivedCategory.Plus Z
     isIso_comp_right_iff]
 
 /-- Actual source-coordinate pullback transports the original single-sheaf mate. -/
-
 theorem isIso_derivedFlatBaseChangeMap_sourceIso_single_iff (M : U.Modules) :
     letI := flat_cartesian_baseChange a b f j h
     letI := flat_cartesian_baseChange c d g a hs
@@ -82,7 +80,6 @@ variable {W' W U V' V X : Scheme.{u}}
   (hs : IsPullback c d b k) (h : IsPullback a b f j)
 
 /-- An actual target-coordinate isomorphism retains invertibility of the same original mate. -/
-
 theorem isIso_derivedFlatBaseChangeMap_targetIso_iff [IsIso k] [Flat j]
     (K : DerivedCategory.Plus U.Modules) :
     letI := flat_cartesian_baseChange a b f j h
@@ -97,7 +94,6 @@ theorem isIso_derivedFlatBaseChangeMap_targetIso_iff [IsIso k] [Flat j]
   exact isIso_derivedFlatBaseChangeMap_pullback_iff c d k a b f j hs h K
 
 /-- An actual base-coordinate isomorphism preserves the original pasted mate criterion. -/
-
 theorem isIso_derivedFlatBaseChangeMap_baseIso_iff [Flat k] [IsIso j]
     (K : DerivedCategory.Plus U.Modules) :
     letI := flat_cartesian_baseChange a b f j h
@@ -124,13 +120,11 @@ variable {W U V X U' : Scheme.{u}}
   (h : IsPullback a b f j) [Flat j]
 
 /-- The original source-coordinate cartesian square. -/
-
 theorem sourceCoordinateSquare (e : U' ≅ U) :
     IsPullback (a ≫ e.inv) (𝟙 W) e.hom a :=
   IsPullback.of_vert_isIso ⟨by simp⟩
 
 /-- Source coordinates transport the actual single-sheaf base-change mate. -/
-
 theorem isIso_derivedFlatBaseChangeMap_sourceCoordinates_iff (e : U' ≅ U)
     (M : U.Modules) :
     letI := flat_cartesian_baseChange a b f j h
@@ -144,13 +138,11 @@ theorem isIso_derivedFlatBaseChangeMap_sourceCoordinates_iff (e : U' ≅ U)
     (a ≫ e.inv) (𝟙 W) e.hom a b f j (sourceCoordinateSquare a e) h M
 
 /-- The original target-coordinate cartesian square. -/
-
 theorem targetCoordinateSquare {V' : Scheme.{u}} (e : V' ≅ V) :
     IsPullback (𝟙 W) (b ≫ e.inv) b e.hom :=
   IsPullback.of_horiz_isIso ⟨by simp⟩
 
 /-- Target coordinates retain the original derived mate criterion. -/
-
 theorem isIso_derivedFlatBaseChangeMap_targetCoordinates_iff {V' : Scheme.{u}}
     (e : V' ≅ V) (K : DerivedCategory.Plus U.Modules) :
     letI := flat_cartesian_baseChange a b f j h
@@ -161,13 +153,11 @@ theorem isIso_derivedFlatBaseChangeMap_targetCoordinates_iff {V' : Scheme.{u}}
     (𝟙 W) (b ≫ e.inv) e.hom a b f j (targetCoordinateSquare b e) h K
 
 /-- Changing the base by an actual scheme isomorphism gives a cartesian square. -/
-
 theorem baseCoordinateSquare {X' : Scheme.{u}} (e : X ≅ X') :
     IsPullback (𝟙 U) f (f ≫ e.hom) e.hom :=
   IsPullback.of_horiz_isIso ⟨by simp⟩
 
 /-- Base coordinates retain the original derived mate, using its actual identity pullback. -/
-
 theorem isIso_derivedFlatBaseChangeMap_baseCoordinates_iff {X' : Scheme.{u}}
     (e : X ≅ X') (K : DerivedCategory.Plus U.Modules) :
     letI := flat_cartesian_baseChange a b f j h
@@ -184,13 +174,11 @@ theorem isIso_derivedFlatBaseChangeMap_baseCoordinates_iff {X' : Scheme.{u}}
       h (baseCoordinateSquare f e) K)
 
 /-- Changing the pullback corner by its actual scheme isomorphism is cartesian. -/
-
 theorem cornerCoordinateSquare {W' : Scheme.{u}} (e : W' ≅ W) :
     IsPullback (e.hom ≫ a) e.hom (𝟙 U) a :=
   IsPullback.of_vert_isIso ⟨by simp⟩
 
 /-- Corner coordinates retain the original derived mate, using actual identity direct image. -/
-
 theorem isIso_derivedFlatBaseChangeMap_cornerCoordinates_iff {W' : Scheme.{u}}
     (e : W' ≅ W) (K : DerivedCategory.Plus U.Modules) :
     letI := flat_cartesian_baseChange a b f j h
@@ -215,7 +203,6 @@ local instance normalizationStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
 
 /-- Equality of the four original arrows preserves the actual mate criterion. -/
-
 theorem derivedFlatBaseChangeMap_congr_iff
     {W U V X : Scheme.{u}} {a a' : W ⟶ U} {b b' : W ⟶ V}
     {f f' : U ⟶ X} {j j' : V ⟶ X} [Flat j] [Flat j']
@@ -235,7 +222,6 @@ variable {W U V X W' U' V' X' : Scheme.{u}}
 include h
 
 /-- The same cartesian square expressed in four actual scheme coordinates. -/
-
 theorem coordinatePullback :
     IsPullback (eW.hom ≫ a ≫ eU.inv) (eW.hom ≫ b ≫ eV.inv)
       (eU.hom ≫ f ≫ eX.hom) (eV.hom ≫ j ≫ eX.hom) := by
@@ -246,7 +232,6 @@ theorem coordinatePullback :
   simpa only [Category.id_comp, Category.comp_id, Category.assoc] using h4
 
 /-- All four coordinate changes retain the actual single-sheaf derived mate. -/
-
 theorem isIso_derivedFlatBaseChangeMap_coordinates_iff [Flat j] (M : U.Modules) :
     letI := flat_cartesian_baseChange a b f j h
     IsIso ((derivedFlatBaseChangeMap a b f j h).app

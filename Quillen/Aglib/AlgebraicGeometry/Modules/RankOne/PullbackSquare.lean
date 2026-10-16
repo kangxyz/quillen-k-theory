@@ -13,7 +13,6 @@ public import Aglib.AlgebraicGeometry.Modules.Pullback.Unit
 The comparison is built from composition and equality isomorphisms and preserves original
 maps into and out of the ordered unit square.
 -/
-
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules
@@ -31,7 +30,6 @@ variable {U V Y X : Scheme.{u}} (a : U ⟶ Y) (j : Y ⟶ X) (c : U ⟶ V) (b : V
   (h : a ≫ j = c ≫ b)
 
 /-- The original pullback comparison for a genuinely commuting scheme square. -/
-
 def pullbackSquareIso :
     AlgebraicGeometry.Scheme.Modules.pullback j ⋙ AlgebraicGeometry.Scheme.Modules.pullback a ≅
       AlgebraicGeometry.Scheme.Modules.pullback b ⋙ AlgebraicGeometry.Scheme.Modules.pullback c :=
@@ -40,7 +38,6 @@ def pullbackSquareIso :
       (AlgebraicGeometry.Scheme.Modules.pullbackComp c b).symm
 
 /-- The actual commuting-square comparison preserves the two ordered structure coordinates. -/
-
 theorem pullbackSquareIso_unitSquare :
     (pullbackSquareIso a j c b h).hom.app
         ((SheafOfModules.unit X.ringCatSheaf : X.Modules) ⨯ SheafOfModules.unit X.ringCatSheaf) ≫
@@ -53,7 +50,6 @@ theorem pullbackSquareIso_unitSquare :
     pullbackUnitSquareIso_congr, pullbackUnitSquareIso_comp]
 
 /-- Pullback-square transport retains the original morphism into the unit square. -/
-
 theorem pullbackSquareIso_map_to_unitSquare {M : X.Modules}
     (φ : M ⟶ ((SheafOfModules.unit X.ringCatSheaf : X.Modules) ⨯
       SheafOfModules.unit X.ringCatSheaf)) :
@@ -72,7 +68,6 @@ theorem pullbackSquareIso_map_to_unitSquare {M : X.Modules}
   simp only [Functor.map_comp, Category.assoc]
 
 /-- Pullback-square transport retains the original morphism out of the unit square. -/
-
 theorem pullbackSquareIso_map_from_unitSquare {M : X.Modules}
     (φ : ((SheafOfModules.unit X.ringCatSheaf : X.Modules) ⨯
       SheafOfModules.unit X.ringCatSheaf) ⟶ M)

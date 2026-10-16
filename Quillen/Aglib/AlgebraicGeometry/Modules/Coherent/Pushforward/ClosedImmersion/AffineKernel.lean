@@ -45,10 +45,8 @@ variable {Z : Scheme.{u}} [IsLocallyNoetherian Z]
   (hi : i = e.hom ≫ Pushforward.ClosedImmersion.Ideal.closedMap R I)
 
 omit [IsNoetherianRing R] in
-
 /-- Maps into the actual closed essential image factor through the genuine
 closed pullback unit, by its adjunction. -/
-
 theorem factor_through_unit (M : FiniteTypeSheaves (Spec R)) {Q : FiniteTypeSheaves (Spec R)}
     (hQ : (finiteTypePushforward i).essImage Q) (p : M ⟶ Q) :
     ∃ q : (finiteTypePushforward i).obj ((coherentPullback i).obj M) ⟶ Q,
@@ -62,10 +60,8 @@ theorem factor_through_unit (M : FiniteTypeSheaves (Spec R)) {Q : FiniteTypeShea
   simp
 
 include e hi in
-
 /-- Every actual section in the unit kernel maps into the genuine
 ideal-product submodule I M. -/
-
 theorem kernelUnit_section_mem_idealProduct (M : FiniteTypeSheaves (Spec R))
     (x : (finiteTypeSheavesSpecModuleEquivalence R).functor.obj
       (kernel ((coherentAdjunction i).unit.app M))) :
@@ -96,9 +92,7 @@ theorem kernelUnit_section_mem_idealProduct (M : FiniteTypeSheaves (Spec R))
   exact (Submodule.Quotient.mk_eq_zero _).mp hx
 
 include e hi in
-
 /-- The actual unit kernel lowers an annihilating ideal-power exponent. -/
-
 theorem kernelUnit_power_annihilator (M : FiniteTypeSheaves (Spec R)) (n : ℕ)
     (h : I ^ (n + 1) ≤
       Module.annihilator R ((finiteTypeSheavesSpecModuleEquivalence R).functor.obj M)) :
@@ -121,10 +115,8 @@ theorem kernelUnit_power_annihilator (M : FiniteTypeSheaves (Spec R)) (n : ℕ)
   exact congrArg Subtype.val hy
 
 include e hi in
-
 /-- An annihilating ideal power makes the genuine unit-kernel iteration
 terminate on the original coherent sheaf. -/
-
 theorem kernelIterate_isZero_of_power_annihilator (M : FiniteTypeSheaves (Spec R)) (n : ℕ)
     (h : I ^ n ≤ Module.annihilator R ((finiteTypeSheavesSpecModuleEquivalence R).functor.obj M)) :
     IsZero (ReflectorDevissage.kernelIterate (coherentAdjunction i).unit n M) := by

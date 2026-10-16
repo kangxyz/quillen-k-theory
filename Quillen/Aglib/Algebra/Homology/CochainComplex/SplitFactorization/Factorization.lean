@@ -7,6 +7,7 @@ Authors: kangxyz
 module
 
 public import Aglib.Algebra.Homology.CochainComplex.DegreewiseSplitMono
+public import Quillen.Waldhausen.SplitComplexes.Basic
 public import Quillen.Aglib.Algebra.Homology.CochainComplex.QuasiIsoGluing
 public import Mathlib.Algebra.Homology.HomotopyCategory.MappingCone
 

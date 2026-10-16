@@ -9,11 +9,13 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFl
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.CoefficientSupportedUnits
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.CoefficientFiberInclusion
 public import Quillen.Aglib.CategoryTheory.Functor.IdentityAutomorphismNaturality
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenModels
 
 /-!
 # Actual units with the original intersection support
 
-The lifted forward Laurent unit and actual supported coefficient/inclusion maps retain their original identity-automorphism preservation equations.
+The lifted forward Laurent unit and actual supported coefficient/inclusion maps retain their
+original identity-automorphism preservation equations.
 -/
 @[expose] public section
 

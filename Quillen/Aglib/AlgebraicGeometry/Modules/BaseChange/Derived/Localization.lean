@@ -37,7 +37,6 @@ variable {W' W U V' V X : Scheme.{u}}
   (hs : IsPullback c d b k) (h : IsPullback a b f j) [Flat k] [Flat j]
 
 /-- An actual target-open pullback detects the original derived mate via the pasted square. -/
-
 theorem isIso_derivedFlatBaseChangeMap_pullback_iff [IsOpenImmersion k]
     (K : DerivedCategory.Plus U.Modules) :
     letI := flat_cartesian_baseChange a b f j h

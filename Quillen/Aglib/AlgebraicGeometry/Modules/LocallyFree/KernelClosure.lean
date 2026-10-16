@@ -29,7 +29,6 @@ open AlgebraicGeometry.Scheme.Modules
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-open Quillen
 
 open CategoryTheory.ExactCategory
 
@@ -44,7 +43,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 
 /-- A kernel of an ambient epi between affine vector bundles is a vector bundle,
 over an arbitrary commutative ring. -/
-
 theorem finiteLocallyFree_kernel_of_shortExact_affine (R : CommRingCat.{u})
     {S : ShortComplex (Spec R).Modules} (hS : S.ShortExact)
     [IsFiniteLocallyFree (Spec R) S.X₂] [IsFiniteLocallyFree (Spec R) S.X₃] :
@@ -93,7 +91,6 @@ theorem finiteLocallyFree_kernel_of_shortExact_affine (R : CommRingCat.{u})
 
 /-- Kernels of ambient epimorphisms between vector bundles are vector bundles
 on every scheme, with no noetherianity or quasi-compactness hypothesis. -/
-
 theorem finiteLocallyFree_kernel_of_shortExact {X : Scheme.{u}}
     {S : ShortComplex X.Modules} (hS : S.ShortExact)
     [IsFiniteLocallyFree X S.X₂] [IsFiniteLocallyFree X S.X₃] :
@@ -110,7 +107,6 @@ theorem finiteLocallyFree_kernel_of_shortExact {X : Scheme.{u}}
 
 /-- The actual vector-bundle property is kernel-closed in the ambient
 abelian category of all module sheaves on any scheme. -/
-
 instance finiteLocallyFree_kernelClosed (X : Scheme.{u}) :
     (sheafExactStructure X).IsKernelClosed (finiteLocallyFree X) where
   prop_kernel {S} hS h₂ h₃ :=
@@ -118,7 +114,6 @@ instance finiteLocallyFree_kernelClosed (X : Scheme.{u}) :
 
 /-- The actual categorical kernel of an ambient epi between vector bundles
 is finite locally free. -/
-
 theorem finiteLocallyFree_kernel {X : Scheme.{u}} {M N : X.Modules}
     [IsFiniteLocallyFree X M] [IsFiniteLocallyFree X N] (p : M ⟶ N) [Epi p] :
     IsFiniteLocallyFree X (kernel p) := by
@@ -131,7 +126,6 @@ theorem finiteLocallyFree_kernel {X : Scheme.{u}} {M N : X.Modules}
 
 /-- Every morphism of vector bundles which is epi in ambient module sheaves
 is an actual admissible epimorphism in their inherited exact structure. -/
-
 theorem vectorBundle_deflation_of_ambient_epi {X : Scheme.{u}}
     {M N : FiniteLocallyFree X} (p : M ⟶ N) [Epi p.hom] :
     (vectorBundleExactStructure X).deflation p := by

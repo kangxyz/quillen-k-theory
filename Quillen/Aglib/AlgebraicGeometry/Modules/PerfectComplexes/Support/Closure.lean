@@ -23,9 +23,6 @@ the separately proved geometric kernel theorems on every scheme.
 
 attribute [local instance] AlgebraicGeometry.Scheme.Modules.Complex.restrictCommShift
 
-open Quillen.Waldhausen
-
-
 open AlgebraicGeometry.Scheme.Modules.Complex
 
 
@@ -37,7 +34,6 @@ universe u
 open CategoryTheory CategoryTheory.Limits Opposite AlgebraicGeometry HomologicalComplex
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
-open Waldhausen
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 lemma restrictAcyclic_iff_of_quasiIso {K L : CochainComplex X.Modules ℤ} (f : K ⟶ L) [QuasiIso f] :

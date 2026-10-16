@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SectionEvaluation
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Pullback
 
 /-!
 # Actual pointwise morphism classes on bounded-flat sections

@@ -30,7 +30,6 @@ variable {W' W U V' V X : Scheme.{u}}
 
 /-- Invertibility of the original base-change mate after an actual open pullback is equivalent
 to invertibility of the mate of the horizontally pasted square. -/
-
 theorem isIso_cartesianBaseChangeMap_pullback_iff (M : U.Modules) :
     IsIso ((Scheme.Modules.pullback k).map ((cartesianBaseChangeMap a b f j h).app M)) ↔
       IsIso ((cartesianBaseChangeMap (c ≫ a) d f (k ≫ j) (hs.paste_horiz h)).app M) := by
@@ -46,7 +45,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 universe v
 
 /-- Actual target-open localizations detect invertibility of the original geometric mate. -/
-
 theorem isIso_cartesianBaseChangeMap_of_openCover
     {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (f : U ⟶ X) (j : V ⟶ X)
     (h : IsPullback a b f j) {ι : Type v} (Y Z : ι → Scheme.{u})

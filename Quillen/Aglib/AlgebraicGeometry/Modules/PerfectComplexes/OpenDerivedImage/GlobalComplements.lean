@@ -13,8 +13,8 @@ public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-!
 # Global qcqs complements in the derived restriction image
 
-For the original compact open immersion into a qcqs scheme, the actual global complement gives coproduct membership before any additional morphism-roof input.
--/
+For the original compact open immersion into a qcqs scheme, the actual global complement gives
+coproduct membership before any additional morphism-roof input.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex

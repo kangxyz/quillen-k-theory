@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.RankOneFlatPullback
+public import Quillen.AlgebraicGeometry.PerfectComplexes.FlatPullback
 public import Quillen.Waldhausen.GrothendieckComparison.ObjectNaturality
 
 /-! The actual flat K-map retains the original rank-one object class. -/

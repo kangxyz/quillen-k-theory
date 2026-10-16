@@ -11,7 +11,8 @@ public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalRestriction
 /-!
 # Restriction of the original perfect scalar
 
-When the scalar becomes the specified unit, the literal perfect restriction map is its genuine unit automorphism.
+When the scalar becomes the specified unit, the literal perfect restriction map is its genuine
+unit automorphism.
 -/
 @[expose] public section
 

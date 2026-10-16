@@ -36,7 +36,6 @@ namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion
 variable {R S : CommRingCat.{u}} (φ : R ⟶ S)
 
 /-- Finiteness of an associated affine sheaf survives arbitrary affine pullback. -/
-
 theorem affineFiniteSheaf_pullback {M : (Spec R).Modules} (hM : affineFiniteSheaf R M) :
     affineFiniteSheaf S ((Scheme.Modules.pullback (Spec.map φ)).obj M) := by
   have : M.IsQuasicoherent := hM.1

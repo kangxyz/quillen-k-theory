@@ -17,8 +17,8 @@ public import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
 /-!
 # Finite locally free sheaves over fields
 
-Finite free modules give finite locally free associated sheaves. On a field spectrum, the actual coherent inclusion has an exact inverse preserving the underlying sheaf and morphisms.
--/
+Finite free modules give finite locally free associated sheaves. On a field spectrum, the actual
+coherent inclusion has an exact inverse preserving the underlying sheaf and morphisms.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules
@@ -38,7 +38,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 
 /-- A genuinely finite free module gives a finite locally free sheaf by
 transporting its basis through the actual tilde/free-sheaf comparison. -/
-
 theorem finiteLocallyFree_tilde_of_finite_free (R : CommRingCat.{u})
     (M : ModuleCat.{u} R) [Module.Free R M] [Module.Finite R M] :
     IsFiniteLocallyFree (Spec R) (tilde M) := by
@@ -53,7 +52,6 @@ variable (k : Type u) [Field k]
 
 /-- On the spectrum of a field, every actual coherent sheaf is finite
 locally free. The proof chooses a finite basis of global sections. -/
-
 theorem finiteLocallyFree_of_coherent_field
     (M : (Spec (CommRingCat.of k)).Modules)
     (hM : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineLocallyFiniteType (Spec
@@ -71,7 +69,6 @@ theorem finiteLocallyFree_of_coherent_field
 
 /-- The inverse to the actual vector-bundle inclusion on a field spectrum.
 It retains the sheaf and every sheaf morphism. -/
-
 def coherentToVectorBundleField :
     AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves (Spec (CommRingCat.of k)) ⥤
       FiniteLocallyFree (Spec (CommRingCat.of k)) :=
@@ -81,7 +78,6 @@ instance coherentToVectorBundleField_additive : (coherentToVectorBundleField k).
   map_add := by intros; rfl
 
 /-- The inverse preserves actual short exact sheaf sequences. -/
-
 def coherentToVectorBundleFieldExact :
     ExactFunctor (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec
       (CommRingCat.of k)))
@@ -92,7 +88,6 @@ def coherentToVectorBundleFieldExact :
       S).mp hS
 
 /-- Inclusion followed by the field inverse keeps the same vector bundle. -/
-
 def vectorBundleFieldUnitIso :
     ((vectorBundleToCoherentExact (Spec (CommRingCat.of k))).comp
       (coherentToVectorBundleFieldExact k)).toFunctor ≅
@@ -101,7 +96,6 @@ def vectorBundleFieldUnitIso :
   Iso.refl _
 
 /-- The field inverse followed by inclusion keeps the same coherent sheaf. -/
-
 def vectorBundleFieldCounitIso :
     ((coherentToVectorBundleFieldExact k).comp
       (vectorBundleToCoherentExact (Spec (CommRingCat.of k)))).toFunctor ≅

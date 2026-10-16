@@ -11,12 +11,10 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFl
 /-!
 # Actual native sections with the original closed support
 
-The support is the complement of the given native open; only the original support proof is added to the unchanged joint section.
+The support is the complement of the given native open; only the original support proof is
+added to the unchanged joint section.
 -/
 @[expose] public section
-
-open Quillen.Waldhausen
-
 
 open AlgebraicGeometry.Scheme.Modules.Complex
 

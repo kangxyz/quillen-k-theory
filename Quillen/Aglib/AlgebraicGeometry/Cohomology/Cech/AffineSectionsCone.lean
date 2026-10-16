@@ -33,7 +33,6 @@ variable (R : CommRingCat.{u}) {M N : (Spec R).Modules}
 variable [M.IsQuasicoherent] [N.IsQuasicoherent] (f : M ⟶ N)
 
 /-- The original affine counits identify the associated section cone with the sheaf cone. -/
-
 def affineSectionsCechIso :
     ((tilde.functor R).mapHomologicalComplex (.up ℤ)).obj
         (Quillen.ModuleComplex.linearMapCechComplex (moduleSpecΓFunctor.map f).hom) ≅

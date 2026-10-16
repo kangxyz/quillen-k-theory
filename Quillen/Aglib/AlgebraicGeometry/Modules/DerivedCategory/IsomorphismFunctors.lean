@@ -34,7 +34,6 @@ variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (f : U ⟶ X) (j : V
   (h : IsPullback a b f j) [IsIso f] [Flat j]
 
 /-- Base change of an isomorphism preserves the original derived flat mate on all D+ objects. -/
-
 theorem isIso_derivedFlatBaseChangeMap_of_isIso :
     letI := flat_cartesian_baseChange a b f j h
     IsIso (derivedFlatBaseChangeMap a b f j h) := by
@@ -69,7 +68,6 @@ local instance derivedIsomorphismStandard (X : Scheme.{u}) :
 variable {X Y : Scheme.{u}} (f : X ⟶ Y) [IsIso f]
 
 /-- Original geometric direct images of mutually inverse morphisms give an actual equivalence. -/
-
 theorem derivedPushforwardPlus_isEquivalence_of_isIso :
     (derivedPushforwardPlus f).IsEquivalence :=
   Functor.IsEquivalence.mk' (derivedPushforwardPlus (inv f))
@@ -77,7 +75,6 @@ theorem derivedPushforwardPlus_isEquivalence_of_isIso :
     (derivedPushforwardPlusSectionIso (inv f) f (IsIso.inv_hom_id f))
 
 /-- The original derived flat pullback along an actual scheme isomorphism is an equivalence. -/
-
 theorem derivedFlatPullbackPlus_isEquivalence_of_isIso :
     (derivedFlatPullbackPlus f).IsEquivalence := by
   let eY : derivedFlatPullbackPlus f ⋙ derivedFlatPullbackPlus (inv f) ≅

@@ -41,7 +41,6 @@ variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsLocallyNoetherian X]
 /-- Annihilation by the actual closed defining ideal on all affine charts.
 The ideals here occur in genuine quotient presentations of the actual
 base-changed closed immersion, rather than being chosen unrelated ideals. -/
-
 def annihilatedByClosedIdeal : ObjectProperty (FiniteTypeSheaves X) := fun M ↦
   ∀ (R : CommRingCat.{u}) [IsNoetherianRing R] (a : Spec R ⟶ X) [IsOpenImmersion a]
     (I : Ideal R) (e : CategoryTheory.Limits.pullback i a ≅ Spec
@@ -51,7 +50,6 @@ def annihilatedByClosedIdeal : ObjectProperty (FiniteTypeSheaves X) := fun M ↦
 
 /-- The proved global closed essential image is precisely genuine
 annihilation by the defining ideal in every affine quotient chart. -/
-
 theorem coherentKilled_iff_annihilatedByClosedIdeal (M : FiniteTypeSheaves X) :
     coherentKilled i M ↔ annihilatedByClosedIdeal i M := by
   constructor
@@ -77,7 +75,6 @@ theorem coherentKilled_iff_annihilatedByClosedIdeal (M : FiniteTypeSheaves X) :
     exact isIso_of_mono_of_epi _
 
 /-- Equality of the actual closed-image and geometric annihilator properties. -/
-
 theorem coherentKilled_eq_annihilatedByClosedIdeal :
     coherentKilled i = annihilatedByClosedIdeal i := by
   funext M
@@ -91,7 +88,6 @@ instance annihilatedByClosedIdeal_isoClosed :
 /-- Actual closed pushforward is an equivalence onto precisely the coherent
 sheaves annihilated by its defining ideal, independently characterized on
 genuine affine quotient charts. -/
-
 def coherentAnnihilatorEquivalence :
     FiniteTypeSheaves Z ≌ (annihilatedByClosedIdeal i).FullSubcategory :=
   (coherentPushforward i).toEssImage.asEquivalence |>.trans
@@ -101,7 +97,6 @@ def coherentAnnihilatorEquivalence :
       (coherentKilled_eq_annihilatedByClosedIdeal i).symm)
 
 /-- The equivalence onto ideal-annihilated objects retains actual i_*. -/
-
 theorem coherentAnnihilatorEquivalence_comp_inclusion :
     (coherentAnnihilatorEquivalence i).functor ⋙ (annihilatedByClosedIdeal i).ι =
       coherentPushforward i := rfl

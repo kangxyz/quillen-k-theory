@@ -13,7 +13,8 @@ public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 /-!
 # Actual coefficient units on supported native sections
 
-The same forward unit is lifted through the original supported inclusions. Its coefficient equations and restriction preservation retain the stated original maps.
+The same forward unit is lifted through the original supported inclusions. Its coefficient
+equations and restriction preservation retain the stated original maps.
 -/
 @[expose] public section
 

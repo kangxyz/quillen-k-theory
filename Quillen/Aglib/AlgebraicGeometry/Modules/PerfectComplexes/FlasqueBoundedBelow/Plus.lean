@@ -14,7 +14,8 @@ public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 /-!
 # Lower-bounded flasque perfect complexes in D-plus
 
-The proof-forgetting functor retains the actual lower-bounded complex. For any original scheme map, its installed direct-image unit is invertible on these flasque inputs.
+The proof-forgetting functor retains the actual lower-bounded complex. For any original scheme
+map, its installed direct-image unit is invertible on these flasque inputs.
 -/
 @[expose] public section
 noncomputable section

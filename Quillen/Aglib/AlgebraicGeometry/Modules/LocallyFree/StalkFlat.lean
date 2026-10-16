@@ -35,7 +35,6 @@ namespace AlgebraicGeometry.Scheme.Modules
 
 /-- A vector bundle is a local retract of the genuine flat cover; stalk flatness
 therefore follows from actual local splitting, without assuming global projectivity. -/
-
 theorem stalkwiseFlat_of_finiteLocallyFree {X : Scheme.{u}} (M : X.Modules)
     [IsFiniteLocallyFree X M] : stalkwiseFlat X M := by
   intro x

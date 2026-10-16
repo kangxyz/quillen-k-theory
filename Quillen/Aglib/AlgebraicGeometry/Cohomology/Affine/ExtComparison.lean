@@ -41,7 +41,6 @@ namespace AlgebraicGeometry.Scheme.Modules.AffineDerived
 
 /-- Actual positive Ext classes from tilde of a projective module into a QC
 sheaf vanish, without ambient projectivity of that associated sheaf. -/
-
 lemma ext_tilde_projective_eq_zero {R : CommRingCat.{u}}
     [HasExt.{w} (Spec R).Modules] (P : ModuleCat.{u} R) [Projective P]
     (M : (Spec R).Modules) [M.IsQuasicoherent] (n : ℕ)
@@ -71,7 +70,6 @@ lemma ext_tilde_projective_subsingleton {R : CommRingCat.{u}}
 attribute [local simp] Ext.mapExactFunctor_comp Ext.mapExactFunctor_mk₀ Ext.mapExactFunctor_extClass
 
 /-- The original exact-functor Ext map is bijective in every degree. -/
-
 lemma tilde_mapExt_bijective {R : CommRingCat.{u}}
     [HasExt.{w} (ModuleCat.{u} R)] [HasExt.{w'} (Spec R).Modules]
     (X Y : ModuleCat.{u} R) (n : ℕ) :

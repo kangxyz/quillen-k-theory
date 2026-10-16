@@ -14,8 +14,8 @@ public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restricti
 /-!
 # Functoriality of vector-bundle restriction
 
-Identity and composition isomorphisms for genuine open restriction lift through the fully faithful vector-bundle inclusion.
--/
+Identity and composition isomorphisms for genuine open restriction lift through the fully faithful
+vector-bundle inclusion.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules
@@ -33,14 +33,12 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- The geometric identity comparison lifts to actual vector bundles. -/
-
 def vectorBundleRestrictIdIso (X : Scheme.{u}) :
     vectorBundleRestrict (𝟙 X) ≅ 𝟭 (FiniteLocallyFree X) :=
   Functor.fullyFaithfulCancelRight (finiteLocallyFree X).ι
     (Functor.isoWhiskerLeft (finiteLocallyFree X).ι Scheme.Modules.restrictFunctorId)
 
 /-- The geometric composition comparison lifts to actual vector bundles. -/
-
 def vectorBundleRestrictCompIso {V U X : Scheme.{u}}
     (i : V ⟶ U) (j : U ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j] :
     vectorBundleRestrict (i ≫ j) ≅ vectorBundleRestrict j ⋙ vectorBundleRestrict i :=

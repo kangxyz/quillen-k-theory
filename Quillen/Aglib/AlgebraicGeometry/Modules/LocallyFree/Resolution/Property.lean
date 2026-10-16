@@ -20,8 +20,6 @@ syzygy is the genuine coherent kernel of this quotient.
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
-open Quillen
-
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -36,7 +34,6 @@ variable (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X]
 /-- The usual resolution property: each coherent sheaf is a quotient of a
 finite locally free sheaf. Both the object and epimorphism live in the actual
 coherent category with its ambient sheaf exact structure. -/
-
 class HasResolutionProperty : Prop where
   exists_vectorBundle_epi (M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) :
     ∃ P : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X,
@@ -46,7 +43,6 @@ class HasResolutionProperty : Prop where
 /-- The categorical formulation is exactly the ordinary sheaf quotient
 formulation: the source is an actual vector bundle and the underlying sheaf
 morphism is an epimorphism. -/
-
 theorem hasResolutionProperty_iff_sheaf_epi : HasResolutionProperty X ↔
     ∀ M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X, ∃ V :
       AlgebraicGeometry.Scheme.Modules.FiniteLocallyFree X,
@@ -72,7 +68,6 @@ theorem hasResolutionProperty_iff_sheaf_epi : HasResolutionProperty X ↔
 
 /-- A vector-bundle cover has a genuine coherent syzygy and gives an actual
 short exact sequence. No splitting or global projectivity is used. -/
-
 theorem exists_vectorBundle_shortExact [HasResolutionProperty X]
     (M : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) :
     ∃ (K P : AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves X) (i : K ⟶ P) (p : P
@@ -86,7 +81,6 @@ theorem exists_vectorBundle_shortExact [HasResolutionProperty X]
 
 /-- Every noetherian affine scheme has the geometric resolution property,
 by a finite free module cover and the actual tilde equivalence. -/
-
 instance hasResolutionProperty_spec (R : CommRingCat.{u}) [IsNoetherianRing R] :
     HasResolutionProperty (Spec R) where
   exists_vectorBundle_epi M := by

@@ -11,8 +11,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.GlobalUni
 /-!
 # Global units on bounded-flat perfect complexes
 
-The actual degreewise global unit, its inverse, and the induced automorphism of geometric pullback retain the original complex terms.
--/
+The actual degreewise global unit, its inverse, and the induced automorphism of geometric pullback
+retain the original complex terms.-/
 @[expose] public section
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

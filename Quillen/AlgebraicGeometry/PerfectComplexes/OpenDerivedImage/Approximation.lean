@@ -7,6 +7,7 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Structure
+public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFibration
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.OpenDerivedImage.DualFactorization
 public import Quillen.Waldhausen.WeakArrow.JointData
 public import Quillen.Waldhausen.WeakArrow.RelativeKEquivalence

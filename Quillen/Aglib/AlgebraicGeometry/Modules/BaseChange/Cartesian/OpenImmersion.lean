@@ -25,7 +25,6 @@ variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (f : U ⟶ X) (j : V
   [IsOpenImmersion a] [IsOpenImmersion j] (h : IsPullback a b f j)
 
 /-- The original ordinary pullback mate agrees with the original open-restriction mate. -/
-
 theorem cartesianBaseChangeMap_restrict (M : U.Modules) :
     (restrictFunctorIsoPullback j).hom.app ((pushforward f).obj M) ≫
         (cartesianBaseChangeMap a b f j h).app M =
@@ -50,7 +49,6 @@ theorem cartesianBaseChangeMap_restrict (M : U.Modules) :
     restrictFunctorIsoPullback] using he.symm
 
 /-- The actual ordinary geometric mate is invertible under open base change. -/
-
 theorem isIso_cartesianBaseChangeMap_of_open : IsIso (cartesianBaseChangeMap a b f j h) := by
   rw [NatTrans.isIso_iff_isIso_app]
   intro M

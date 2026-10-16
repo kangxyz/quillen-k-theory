@@ -25,7 +25,6 @@ local instance affineBoundedDerivedPushforwardStandard (X : Scheme.{u}) :
 
 /-- On a genuinely bounded complex of quasicoherent sheaves, affine direct image computes the
 original bounded-below derived direct image via its original unit. -/
-
 theorem isIso_derivedPushforwardPlusUnit_of_term_bounds {Z X : Scheme.{u}}
     (f : Z ⟶ X) [IsAffineHom f] (K : CochainComplex.Plus Z.Modules)
     (a b : ℤ) (hl : ∀ i, i < a → IsZero (K.obj.X i))

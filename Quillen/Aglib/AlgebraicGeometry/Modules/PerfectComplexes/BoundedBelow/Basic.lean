@@ -16,8 +16,8 @@ public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 /-!
 # Lower-bounded locally perfect complexes
 
-Objects retain their actual sheaf complexes with an explicit existential lower term bound. Zero, isomorphism, extension, finite-product and shift closure and the literal inclusion are unchanged.
--/
+Objects retain their actual sheaf complexes with an explicit existential lower term bound. Zero,
+isomorphism, extension, finite-product and shift closure and the literal inclusion are unchanged.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex

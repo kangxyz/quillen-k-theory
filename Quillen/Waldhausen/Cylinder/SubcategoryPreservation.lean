@@ -43,7 +43,6 @@ variable {A : Type u} [Category.{v} A] [Abelian A]
   (hcone : ∀ {K L : CochainComplex A ℤ}, P K → P L →
     ∀ f : K ⟶ L, P (mappingCone f))
 
-omit [P.ContainsZero] [P.IsClosedUnderIsomorphisms] [P.IsClosedUnderFiniteProducts] in
 /-- The actual middle cylinder preserves displayed pointwise pushouts along
 inherited admissible maps, with no global ambient-pushout closure assumption. -/
 theorem subcategoryMiddleFunctor_map_isPushout

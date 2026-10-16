@@ -10,6 +10,7 @@ public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.AcyclicCycles
 public import Aglib.CategoryTheory.ExactCategory.Subcategory
 public import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
+public import Mathlib.Algebra.Homology.HomologicalComplexAbelian
 public import Mathlib.Algebra.Homology.HomologySequenceLemmas
 
 /-! # Actual bounded acyclic complexes in a termwise exact subcategory -/

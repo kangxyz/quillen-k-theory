@@ -12,7 +12,8 @@ public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Strict
 /-!
 # Original strict-perfect inclusion and Godement total
 
-The literal strict inclusion and actual flasque total retain their underlying complexes and each specified strict lower bound.
+The literal strict inclusion and actual flasque total retain their underlying complexes and
+each specified strict lower bound.
 -/
 @[expose] public section
 noncomputable section

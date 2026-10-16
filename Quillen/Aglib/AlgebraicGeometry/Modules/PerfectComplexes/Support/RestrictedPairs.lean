@@ -12,8 +12,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.C
 /-!
 # The scheme pair of a restricted support inequality
 
-The original pair square retains the specified restricted map. Its ambient map determines it uniquely.
--/
+The original pair square retains the specified restricted map. Its ambient map determines it
+uniquely.-/
 @[expose] public section
 
 

@@ -21,8 +21,9 @@ public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
 /-!
 # Exact tensor by a chart-trivialized line
 
-An actual open-immersion cover and its specified line trivializations preserve local perfection by the literal sheafified tensor. Finite local freeness supplies the inherited exact functor; no derived tensor of arbitrary complexes is introduced.
--/
+An actual open-immersion cover and its specified line trivializations preserve local perfection by
+the literal sheafified tensor. Finite local freeness supplies the inherited exact functor; no
+derived tensor of arbitrary complexes is introduced.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex

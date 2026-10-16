@@ -10,8 +10,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Morphisms.OpenImmersion.Pair.Basic
 /-!
 # Actual support opens as scheme pairs
 
-The original support inclusion, inverse-image support square and compact-ambient wrapper preserve their actual scheme maps.
--/
+The original support inclusion, inverse-image support square and compact-ambient wrapper preserve
+their actual scheme maps.-/
 @[expose] public section
 
 

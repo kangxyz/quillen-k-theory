@@ -36,7 +36,6 @@ local instance flasqueDerivedPushforwardStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 
 /-- The installed derived unit is invertible on every original single flasque module sheaf. -/
-
 theorem isIso_derivedPushforwardPlusUnit_single_of_flasque {X Y : Scheme.{u}}
     (f : X ⟶ Y) (M : X.Modules) [TopCat.Presheaf.IsFlasque M.presheaf] :
     IsIso ((derivedPushforwardPlusUnit f).app (singleZeroPlus X M)) :=
@@ -46,7 +45,6 @@ theorem isIso_derivedPushforwardPlusUnit_single_of_flasque {X Y : Scheme.{u}}
         (pushforward_injectiveResolution_exact_succ_of_flasque f M (injectiveResolution M))))
 
 /-- A bounded complex of actual flasque terms computes its original bounded-below derived image. -/
-
 theorem isIso_derivedPushforwardPlusUnit_of_flasque_term_bounds {X Y : Scheme.{u}}
     (f : X ⟶ Y) (K : CochainComplex.Plus X.Modules)
     (a b : ℤ) (hl : ∀ i, i < a → IsZero (K.obj.X i))

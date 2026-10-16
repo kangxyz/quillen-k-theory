@@ -13,8 +13,8 @@ public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 /-!
 # Supported bounded-flat perfect complexes
 
-Support is actual restricted acyclicity. The original zero, isomorphism, extension, finite-product, shift and cone closure and literal supported inclusion are unchanged.
--/
+Support is actual restricted acyclicity. The original zero, isomorphism, extension, finite-product,
+shift and cone closure and literal supported inclusion are unchanged.-/
 @[expose] public section
 
 attribute [local instance] AlgebraicGeometry.Scheme.Modules.Complex.restrictCommShift

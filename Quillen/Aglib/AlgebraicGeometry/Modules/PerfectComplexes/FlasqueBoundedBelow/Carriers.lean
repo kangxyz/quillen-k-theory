@@ -14,8 +14,8 @@ public import Quillen.Aglib.CategoryTheory.Functor.UnderlyingIso
 /-!
 # Original carrier comparisons for lower-bounded and flasque complexes
 
-Only the redundant proof wrappers are forgotten. All comparisons retain the actual complexes, Godement total and original inclusions.
--/
+Only the redundant proof wrappers are forgotten. All comparisons retain the actual complexes,
+Godement total and original inclusions.-/
 @[expose] public section
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

@@ -9,12 +9,15 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.OpenDerivedImage.Closure
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Extension
 public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 
 /-!
 # Exact full category of the derived restriction image
 
-The actual image is stable under the stated shifts and, under the unchanged derived-roof hypothesis, inherited exact sequences and finite products. Inclusion and corestriction retain their original complexes.
+The actual image is stable under the stated shifts and, under the unchanged derived-roof
+hypothesis, inherited exact sequences and finite products. Inclusion and corestriction
+retain their original complexes.
 -/
 @[expose] public section
 

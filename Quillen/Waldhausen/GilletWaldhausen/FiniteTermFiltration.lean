@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
+
 public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.FiniteTermFiltration
 public import Aglib.Algebra.Homology.Embedding.StupidTrunc.Layer
 public import Aglib.Algebra.Homology.Embedding.StupidTrunc.Maps

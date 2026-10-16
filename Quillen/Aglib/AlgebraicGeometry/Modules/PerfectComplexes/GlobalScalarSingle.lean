@@ -12,8 +12,8 @@ public import Aglib.AlgebraicGeometry.Modules.StructureSheaf.Sections
 /-!
 # The original scalar on the structure single
 
-The actual structure-sheaf unit multiplication is the same original scalar on the unchanged rank-one complex.
--/
+The actual structure-sheaf unit multiplication is the same original scalar on the unchanged rank-one
+complex.-/
 @[expose] public section
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

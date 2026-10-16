@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.SupportedOpenDerivedImage.Exact
+public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOppositeJointData
 
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic

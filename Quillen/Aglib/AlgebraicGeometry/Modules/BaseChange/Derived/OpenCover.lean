@@ -30,7 +30,6 @@ local instance baseChangeOpenCoverStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
 
 /-- Local original pasted mates detect invertibility of the original derived flat mate. -/
-
 theorem isIso_derivedFlatBaseChangeMap_of_openCover
     {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (f : U ⟶ X) (j : V ⟶ X)
     (h : IsPullback a b f j) [Flat j] {ι : Type v} (Y Z : ι → Scheme.{u})

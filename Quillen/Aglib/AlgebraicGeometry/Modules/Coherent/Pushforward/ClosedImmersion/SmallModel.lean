@@ -21,7 +21,9 @@ public import Aglib.CategoryTheory.SmallModel.Exact
 /-!
 # Small models of the annihilated coherent image
 
-The actual closed pushforward is an exact categorical equivalence onto the annihilated objects in the genuine supported small model. The source and target universes and canonical factorizations are preserved.
+The actual closed pushforward is an exact categorical equivalence onto the annihilated objects
+in the genuine supported small model. The source and target universes and canonical
+factorizations are preserved.
 -/
 @[expose] public section
 
@@ -57,19 +59,16 @@ local instance : (coherentRestrictionExact (openMap i)).toFunctor.IsLocalization
   finiteTypeSheavesRestriction_isLocalization_kernel (openMap i)
 
 /-- The genuine closed pushforward equivalence onto its annihilated image. -/
-
 def coherentClosedEquivalence : FiniteTypeSheaves Z ≌ (coherentKilled i).FullSubcategory :=
   (coherentPushforward i).toEssImage.asEquivalence
 
 /-- The canonical upper-universe small model of actual closed pushforward. -/
-
 abbrev smallPushforward :=
   (CategoryTheory.ExactCategory.ExactFunctor.smallModel.{u+1} (coherentPushforwardExact
     i)).toFunctor
 
 /-- The represented actual pushforward is killed by the closed ideal, including the
 canonical small-model unit isomorphism. -/
-
 theorem smallPushforward_killed
     (M : SmallModel.{u + 1} (FiniteTypeSheaves Z)) :
     coherentKilled i ((equivSmallModel.{u+1} (FiniteTypeSheaves X)).inverse.obj
@@ -81,7 +80,6 @@ theorem smallPushforward_killed
     ((coherentPushforward i).obj_mem_essImage _)
 
 /-- Actual closed pushforward, landing in the actual small support category. -/
-
 def smallPushforwardToSupport :
     SmallModel.{u+1} (FiniteTypeSheaves Z) ⥤ SmallSupport i :=
   ObjectProperty.lift _ (smallPushforward i) (fun M ↦ by
@@ -89,7 +87,6 @@ def smallPushforwardToSupport :
     exact coherentKilled_le_supported i _ (smallPushforward_killed i M))
 
 /-- Its precise smaller target consists of the actual killed supported objects. -/
-
 def smallPushforwardToKilled :
     SmallModel.{u+1} (FiniteTypeSheaves Z) ⥤
       (supportKilled i).FullSubcategory :=
@@ -117,7 +114,6 @@ instance smallPushforwardToKilled_faithful : (smallPushforwardToKilled i).Faithf
 
 /-- Every annihilated supported object comes from an actual coherent sheaf
 on the closed subscheme. -/
-
 instance smallPushforwardToKilled_essSurj : (smallPushforwardToKilled i).EssSurj where
   mem_essImage M := by
     let N : (coherentKilled i).FullSubcategory :=
@@ -147,7 +143,6 @@ instance smallPushforwardToKilled_additive : (smallPushforwardToKilled i).Additi
 
 /-- Actual small closed pushforward with the original transported source
 exact structure, rather than a newly chosen unrelated K-map. -/
-
 def smallPushforwardToKilledExact :
     ExactFunctor (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1}
       (coherentExactStructure (Z)))
@@ -164,7 +159,6 @@ instance smallPushforwardToKilledExact_isEquivalence :
   smallPushforwardToKilled_isEquivalence i
 
 /-- The canonical factorization of actual closed pushforward through support. -/
-
 def smallPushforwardToSupportExact :
     ExactFunctor (CategoryTheory.ExactCategory.ExactStructure.smallModel.{u+1}
       (coherentExactStructure (Z)))

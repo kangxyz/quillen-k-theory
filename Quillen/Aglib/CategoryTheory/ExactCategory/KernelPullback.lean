@@ -8,7 +8,6 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Basic
 
-public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Mathlib.CategoryTheory.SingleObj
 
 /-!

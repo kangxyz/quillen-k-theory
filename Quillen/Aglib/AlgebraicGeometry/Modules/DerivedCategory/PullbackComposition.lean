@@ -30,7 +30,6 @@ local instance flatCompositionStandard (X : Scheme.{u}) : HasDerivedCategory.{u+
 variable {U V X : Scheme.{u}} (k : U ⟶ V) (j : V ⟶ X) [Flat k] [Flat j]
 
 /-- The original geometric pullback-composition comparison induces the derived comparison. -/
-
 def derivedFlatPullbackPlusCompIso :
     derivedFlatPullbackPlus j ⋙ derivedFlatPullbackPlus k ≅
       derivedFlatPullbackPlus (k ≫ j) :=
@@ -40,7 +39,6 @@ def derivedFlatPullbackPlusCompIso :
     (Scheme.Modules.pullbackComp k j)
 
 /-- The actual comparison retains the literal pullback composition and installed units. -/
-
 theorem derivedFlatPullbackPlusCompIso_unit (K : CochainComplex.Plus X.Modules) :
     (Functor.rightDerivedFunctorPlusCompUnit (Scheme.Modules.pullback j)
       (Scheme.Modules.pullback k)).app K ≫
@@ -59,7 +57,6 @@ theorem derivedFlatPullbackPlusCompIso_unit (K : CochainComplex.Plus X.Modules) 
   exact (F ⋙ G).rightDerivedFunctorPlusIso_hom_app (Scheme.Modules.pullbackComp k j) K
 
 /-- The inverse comparison retains the same original units and inverse geometric map. -/
-
 theorem derivedFlatPullbackPlusCompIso_inv_unit (K : CochainComplex.Plus X.Modules) :
     (Scheme.Modules.pullback (k ≫ j)).rightDerivedFunctorPlusUnit.app K ≫
       (derivedFlatPullbackPlusCompIso k j).inv.app (DerivedCategory.Plus.Q.obj K) =

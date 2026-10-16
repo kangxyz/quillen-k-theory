@@ -13,8 +13,8 @@ public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Strict
 /-!
 # Native bounded terms and strict-perfect singles
 
-The original finite-locally-free bounded-term predicate is strict perfectness, and the existing degree-zero inclusions agree.
--/
+The original finite-locally-free bounded-term predicate is strict perfectness, and the existing
+degree-zero inclusions agree.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex

@@ -17,7 +17,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w
-open CategoryTheory CategoryTheory.Limits
+open CategoryTheory
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueDiagonal
 /-- Forgetting a full-subcategory lift retains its entire original functor. -/
 def liftUnderlyingIso {C D : Type*} [Category C] [Category D]

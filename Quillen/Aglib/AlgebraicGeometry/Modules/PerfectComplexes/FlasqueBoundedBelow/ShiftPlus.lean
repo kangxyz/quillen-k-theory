@@ -13,8 +13,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlasqueBo
 /-!
 # Original flasque shifts and D-plus
 
-The actual proof-forgetting shift and derived-shift comparisons retain the original underlying chain maps.
--/
+The actual proof-forgetting shift and derived-shift comparisons retain the original underlying chain
+maps.-/
 @[expose] public section
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

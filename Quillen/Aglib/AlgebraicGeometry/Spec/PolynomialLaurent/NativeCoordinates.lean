@@ -6,11 +6,13 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Relative
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Coordinates
 
 /-!
 # Actual relative polynomial and Laurent coordinates
 
-The genuine products over the integral terminal scheme carry their original positive open, second-projection coordinate, and forward Laurent unit on every base scheme.
+The genuine products over the integral terminal scheme carry their original positive open,
+second-projection coordinate, and forward Laurent unit on every base scheme.
 -/
 @[expose] public section
 

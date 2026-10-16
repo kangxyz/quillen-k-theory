@@ -35,7 +35,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace Opp
 namespace AlgebraicGeometry.Scheme.Modules
 
 /-- Module-sheaf morphisms are detected on the original abelian-group stalks. -/
-
 lemma isIso_of_stalkFunctor {X : Scheme.{u}} {M N : X.Modules} (f : M ⟶ N)
     (hf : ∀ x, IsIso ((stalkFunctor X x).map f)) : IsIso f := by
   have : IsIso ((SheafOfModules.toSheaf X.ringCatSheaf).map f) :=
@@ -46,7 +45,6 @@ lemma isIso_of_stalkFunctor {X : Scheme.{u}} {M N : X.Modules} (f : M ⟶ N)
   exact isIso_of_reflects_iso f (Scheme.Modules.toPresheaf X)
 
 /-- An isomorphism on an open is global if both sheaves have zero stalks outside it. -/
-
 lemma isIso_of_restrict_of_stalks_zero {U X : Scheme.{u}} (j : U ⟶ X)
     [IsOpenImmersion j] {M N : X.Modules} (f : M ⟶ N)
     [IsIso ((Scheme.Modules.restrictFunctor j).map f)]
@@ -74,7 +72,6 @@ variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V
   (h : a ≫ j = b ≫ k)
 
 /-- The original restrictions around a commuting open square. -/
-
 def openSquareRestrictIso :
     Scheme.Modules.restrictFunctor j ⋙ Scheme.Modules.restrictFunctor a ≅
       Scheme.Modules.restrictFunctor k ⋙ Scheme.Modules.restrictFunctor b :=
@@ -82,7 +79,6 @@ def openSquareRestrictIso :
     Scheme.Modules.restrictFunctorCongr h ≪≫ Scheme.Modules.restrictFunctorComp b k
 
 /-- The unit-induced comparison on the overlap, retaining the original square. -/
-
 def extensionByZeroBaseChangeUnitIso :
     Scheme.Modules.restrictFunctor a ≅
       (extensionByZero j ⋙ Scheme.Modules.restrictFunctor k) ⋙
@@ -94,7 +90,6 @@ def extensionByZeroBaseChangeUnitIso :
     (Functor.associator _ _ _).symm
 
 /-- The actual extension-by-zero base-change mate, before assuming cartesianness. -/
-
 def extensionByZeroBaseChange :
     Scheme.Modules.restrictFunctor a ⋙ extensionByZero b ⟶
       extensionByZero j ⋙ Scheme.Modules.restrictFunctor k :=
@@ -103,7 +98,6 @@ def extensionByZeroBaseChange :
 
 /-- Restricting the actual base-change mate gives exactly its defining unit square. -/
 @[reassoc]
-
 lemma extensionByZeroBaseChange_unit (M : U.Modules) :
     (extensionByZeroRestrictAdjunction b).unit.app ((Scheme.Modules.restrictFunctor a).obj M) ≫
       (Scheme.Modules.restrictFunctor b).map ((extensionByZeroBaseChange a b j k h).app M) =
@@ -126,7 +120,6 @@ instance restrict_extensionByZeroBaseChange_isIso (M : U.Modules) :
     ((Scheme.Modules.restrictFunctor a).obj M)) _
 
 /-- Genuine open base change: the pointwise cartesian condition forces the mate to be invertible. -/
-
 lemma extensionByZeroBaseChange_isIso
     (hcart : ∀ v : V, k v ∈ Set.range j → v ∈ Set.range b) (M : U.Modules) :
     IsIso ((extensionByZeroBaseChange a b j k h).app M) := by
@@ -140,7 +133,6 @@ lemma extensionByZeroBaseChange_isIso
     exact hz.of_iso ((Scheme.Modules.restrictStalkNatIso k v).app ((extensionByZero j).obj M))
 
 /-- The genuine base-change isomorphism of original module-sheaf functors. -/
-
 def extensionByZeroBaseChangeIso
     (hcart : ∀ v : V, k v ∈ Set.range j → v ∈ Set.range b) :
     Scheme.Modules.restrictFunctor a ⋙ extensionByZero b ≅
@@ -152,7 +144,6 @@ def extensionByZeroBaseChangeIso
 
 /-- The actual base-change mate is compatible with the original counits. -/
 @[reassoc]
-
 lemma extensionByZeroBaseChange_counit (M : X.Modules) :
     (extensionByZeroBaseChange a b j k h).app ((Scheme.Modules.restrictFunctor j).obj M) ≫
       (Scheme.Modules.restrictFunctor k).map ((extensionByZeroRestrictAdjunction j).counit.app M) =
@@ -189,7 +180,6 @@ lemma extensionByZeroBaseChange_counit (M : X.Modules) :
 end Square
 
 /-- Base change for the actual scheme pullback of two arbitrary open immersions. -/
-
 def extensionByZeroPullbackIso {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k] :
     Scheme.Modules.restrictFunctor (pullback.fst j k) ⋙ extensionByZero (pullback.snd j k) ≅
@@ -200,7 +190,6 @@ def extensionByZeroPullbackIso {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     exact hv)
 
 /-- Extension by zero along a composite, retaining the genuine restriction adjunctions. -/
-
 def extensionByZeroComp {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
     [IsOpenImmersion a] [IsOpenImmersion j] :
     extensionByZero (a ≫ j) ≅ extensionByZero a ⋙ extensionByZero j :=
@@ -211,7 +200,6 @@ def extensionByZeroComp {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
 
 /-- The composition comparison retains the original extension-by-zero counits. -/
 @[reassoc]
-
 lemma extensionByZeroComp_hom_counit {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
     [IsOpenImmersion a] [IsOpenImmersion j] (M : X.Modules) :
     (extensionByZeroComp a j).hom.app ((Scheme.Modules.restrictFunctor (a ≫ j)).obj M) ≫
@@ -229,7 +217,6 @@ lemma extensionByZeroComp_hom_counit {W U X : Scheme.{u}} (a : W ⟶ U) (j : U �
 
 /-- The composition comparison also retains the actual units, including ring/open coherence. -/
 @[reassoc]
-
 lemma extensionByZeroComp_unit {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
     [IsOpenImmersion a] [IsOpenImmersion j] (M : W.Modules) :
     (extensionByZeroRestrictAdjunction (a ≫ j)).unit.app M ≫

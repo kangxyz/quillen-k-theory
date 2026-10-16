@@ -38,7 +38,6 @@ variable (h : IsPullback
   (Spec.map (CommRingCat.ofHom (algebraMap R S))))
 
 /-- The original ordinary affine mate is invertible on the actual single QC complex. -/
-
 theorem isIso_affineBaseChangeMap_singleComplex
     (M : (Spec (CommRingCat.of A)).Modules) [M.IsQuasicoherent] :
     IsIso ((NatTrans.mapCochainComplexPlus (cartesianBaseChangeMap _ _ _ _ h)).app
@@ -56,7 +55,6 @@ theorem isIso_affineBaseChangeMap_singleComplex
 
 /-- The original derived flat base-change map is invertible on an actual single affine
 quasicoherent sheaf. -/
-
 theorem isIso_derivedFlatBaseChangeMap_single
     [Flat (Spec.map (CommRingCat.ofHom (algebraMap R S)))]
     (M : (Spec (CommRingCat.of A)).Modules) [M.IsQuasicoherent] :

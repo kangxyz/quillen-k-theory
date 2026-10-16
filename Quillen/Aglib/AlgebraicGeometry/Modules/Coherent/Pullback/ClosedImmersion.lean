@@ -45,7 +45,6 @@ open Scheme.Modules
 
 /-- Coherent sheaves pull back along a closed immersion into an affine
 scheme, using its actual quotient-ring presentation. -/
-
 theorem affineLocallyFiniteType_pullback_affine {Z : Scheme.{u}} (R : CommRingCat.{u})
     (i : Z ⟶ Spec R) [IsClosedImmersion i] {M : (Spec R).Modules}
     (hM : affineLocallyFiniteType (Spec R) M) :
@@ -66,7 +65,6 @@ theorem affineLocallyFiniteType_pullback_affine {Z : Scheme.{u}} (R : CommRingCa
       hi).symm).app M) he
 
 /-- Coherence is detected on any actual scheme open cover. -/
-
 theorem affineLocallyFiniteType_of_schemeOpenCover {X : Scheme.{u}} [IsLocallyNoetherian X]
     (M : X.Modules) (𝒰 : Scheme.OpenCover.{u} X)
     (hM : ∀ j, affineLocallyFiniteType (𝒰.X j) ((restrictFunctor (𝒰.f j)).obj M)) :
@@ -86,7 +84,6 @@ theorem affineLocallyFiniteType_of_schemeOpenCover {X : Scheme.{u}} [IsLocallyNo
 
 /-- Actual pullback along a closed immersion preserves coherence on a
 locally noetherian source, by actual open-cover descent. -/
-
 theorem affineLocallyFiniteType_pullback {Z X : Scheme.{u}} [IsLocallyNoetherian Z]
     (i : Z ⟶ X) [IsClosedImmersion i] {M : X.Modules} (hM : affineLocallyFiniteType X M) :
     affineLocallyFiniteType Z ((Scheme.Modules.pullback i).obj M) := by
@@ -106,21 +103,17 @@ variable {Z X : Scheme.{u}} [IsLocallyNoetherian Z] [IsLocallyNoetherian X]
   (i : Z ⟶ X) [IsClosedImmersion i]
 
 /-- The actual module-sheaf pullback restricted to coherent objects. -/
-
 def coherentPullback : FiniteTypeSheaves X ⥤ FiniteTypeSheaves Z :=
   ObjectProperty.lift _ (finiteTypeSheavesToModules X ⋙ Scheme.Modules.pullback i)
     (fun M ↦ affineLocallyFiniteType_pullback i M.property)
 
 omit [IsLocallyNoetherian X] in
-
 /-- Forgetting coherence yields precisely the actual sheaf pullback. -/
-
 theorem coherentPullback_comp_inclusion :
     coherentPullback i ⋙ finiteTypeSheavesToModules Z =
       finiteTypeSheavesToModules X ⋙ Scheme.Modules.pullback i := rfl
 
 /-- Actual pullback and open restriction commute on coherent objects. -/
-
 def coherentPullbackOpenBaseChange {V : Scheme.{u}}
     (a : V ⟶ X) [IsOpenImmersion a] :
     coherentPullback i ⋙ finiteTypeSheavesRestriction (pullback.fst i a) ≅
@@ -132,7 +125,6 @@ def coherentPullbackOpenBaseChange {V : Scheme.{u}}
 
 /-- The coherent adjunction is the restriction of the genuine sheaf
 pullback–pushforward adjunction. -/
-
 def coherentAdjunction : coherentPullback i ⊣
     AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePushforward i :=
   (pullbackPushforwardAdjunction i).restrictFullyFaithful
@@ -153,7 +145,6 @@ instance coherentPullback_additive : (coherentPullback i).Additive where
     exact (Scheme.Modules.pullback i).map_add
 
 omit [IsLocallyNoetherian X] in
-
 /-- The coherent unit has the actual underlying sheaf-adjunction unit. -/
 @[simp] theorem coherentAdjunction_unit_hom (M : FiniteTypeSheaves X) :
     ((coherentAdjunction i).unit.app M).hom = (pullbackPushforwardAdjunction i).unit.app M.obj := by
@@ -166,7 +157,6 @@ omit [IsLocallyNoetherian X] in
   exact CategoryTheory.Category.comp_id _
 
 omit [IsLocallyNoetherian X] in
-
 /-- The coherent counit has the actual underlying sheaf-adjunction counit. -/
 @[simp] theorem coherentAdjunction_counit_hom (M : FiniteTypeSheaves Z) :
     ((coherentAdjunction i).counit.app M).hom =

@@ -16,7 +16,6 @@ isomorphism identifies the pulled-back original Laurent unit and its inverse wit
 images of `T 1` and `T (-1)`. The proof uses naturality of `Scheme.ΓSpecIso`; no hypothesis
 identifies a replacement scalar with the Laurent coordinate.
 -/
-
 @[expose] public section
 
 noncomputable section
@@ -28,7 +27,6 @@ universe u
 namespace AlgebraicGeometry.Scheme.PolynomialLaurent
 
 /-- Pulling back the original Laurent unit gives the literal image of the coordinate. -/
-
 lemma laurentGlobalUnit_image {R S : CommRingCat.{u}}
     (h : CommRingCat.of (LaurentPolynomial R) ⟶ S) :
     (Scheme.ΓSpecIso S).hom
@@ -43,7 +41,6 @@ lemma laurentGlobalUnit_image {R S : CommRingCat.{u}}
   exact hn
 
 /-- The inverse of the pulled-back original Laurent unit is the literal inverse coordinate. -/
-
 lemma laurentGlobalUnit_image_inv {R S : CommRingCat.{u}}
     (h : CommRingCat.of (LaurentPolynomial R) ⟶ S) :
     (Scheme.ΓSpecIso S).hom

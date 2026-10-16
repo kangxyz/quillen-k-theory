@@ -15,8 +15,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.S
 /-!
 # Locally perfect complexes with open acyclicity
 
-The original local-perfect predicate and actual restricted acyclicity define the supported full subcategory; its closure and zero quasi-isomorphism are preserved.
--/
+The original local-perfect predicate and actual restricted acyclicity define the supported full
+subcategory; its closure and zero quasi-isomorphism are preserved.-/
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.Modules.Complex

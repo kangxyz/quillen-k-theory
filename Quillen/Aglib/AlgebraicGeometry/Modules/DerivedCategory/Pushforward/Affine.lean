@@ -31,7 +31,6 @@ local instance affineDerivedPushforwardStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
 
 /-- The original right-derived direct-image unit is invertible on single quasicoherent sheaves. -/
-
 theorem isIso_derivedPushforwardPlusUnit_single {Z X : Scheme.{u}}
     (f : Z ⟶ X) [IsAffineHom f] (M : Z.Modules) [M.IsQuasicoherent] :
     IsIso ((derivedPushforwardPlusUnit f).app (singleZeroPlus Z M)) :=

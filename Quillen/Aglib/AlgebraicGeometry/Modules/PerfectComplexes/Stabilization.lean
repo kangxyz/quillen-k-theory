@@ -13,7 +13,8 @@ public import Quillen.Aglib.Algebra.Homology.CochainComplex.QuasiIsoGluing
 /-!
 # Actual perfect stabilization
 
-The original sum with the degree-one shift and its block-diagonal chain map preserve actual quasi-isomorphisms.
+The original sum with the degree-one shift and its block-diagonal chain map preserve actual
+quasi-isomorphisms.
 -/
 @[expose] public section
 
@@ -23,7 +24,6 @@ open CategoryTheory.ExactCategory
 
 
 open ModuleCat
-open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry

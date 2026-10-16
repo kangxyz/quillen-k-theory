@@ -34,6 +34,11 @@ attribute [local instance] HasDerivedCategory.standard
 variable {V X : Scheme.{u}} (j : V ⟶ X) [IsOpenImmersion j] (T : X.Opens)
   (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ T)
 
+local instance coverResLE_isOpenImmersion :
+    IsOpenImmersion (j.resLE T (j ⁻¹ᵁ T) le_rfl) := by
+  rw [Scheme.Hom.resLE_eq_morphismRestrict]
+  infer_instance
+
 include hcover in
 /-- Extension of the actual overlap restriction is equivalent to extension
 of the original perfect complex. The reverse implication glues the specified
