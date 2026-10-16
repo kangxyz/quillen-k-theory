@@ -60,4 +60,49 @@ theorem Track.seedMap_stableHomotopy_ι (a : Under R) (d : ℤ) (n : ℕ) :
   rw [A.seedMap_stableHomotopy, ← Category.assoc, Homotopy.stableOperation_ι]
   simp only [Category.assoc]
 
+
+/-- A supplied natural seed has the stable cone factorization of a specified Laurent track.
+The supplied seed, actual cone inclusion and parameter-loop shift all remain explicit data. -/
+abbrev Track.SeedStableFactorization (A : Track F)
+    (seed : F ⟶ (strictDiagramFunctor (laurentUnderSquareFunctor R)).obj F)
+    (a : Under R) (d : ℤ) : Prop :=
+  (stableHomotopyFunctor d).map (seed.app a) ≫
+      (parameterStableHomotopyIso (cone F a) d).hom =
+    (A.homotopy a).stableOperation d ≫
+      (stableHomotopyFunctor (d + 1)).map
+        (mappingConeInclusion (StrictSquare.comparison (square F a)))
+
+/-- The exact inverse-shift form of the same stable factorization for the supplied seed. -/
+abbrev Track.SeedStableFormula (A : Track F)
+    (seed : F ⟶ (strictDiagramFunctor (laurentUnderSquareFunctor R)).obj F)
+    (a : Under R) (d : ℤ) : Prop :=
+  (stableHomotopyFunctor d).map (seed.app a) =
+    (A.homotopy a).stableOperation d ≫
+      (stableHomotopyFunctor (d + 1)).map
+        (mappingConeInclusion (StrictSquare.comparison (square F a))) ≫
+          (parameterStableHomotopyIso (cone F a) d).inv
+
+/-- The same actual parameter-loop isomorphism converts the two factorization forms. -/
+theorem Track.seedStableFactorization_iff_seedStableFormula (A : Track F)
+    (seed : F ⟶ (strictDiagramFunctor (laurentUnderSquareFunctor R)).obj F)
+    (a : Under R) (d : ℤ) :
+    A.SeedStableFactorization seed a d ↔ A.SeedStableFormula seed a d := by
+  simpa only [Track.SeedStableFactorization, Track.SeedStableFormula, Category.assoc] using
+    (Iso.eq_comp_inv (parameterStableHomotopyIso (cone F a) d)
+      (f := (A.homotopy a).stableOperation d ≫
+        (stableHomotopyFunctor (d + 1)).map
+          (mappingConeInclusion (StrictSquare.comparison (square F a))))
+      (g := (stableHomotopyFunctor d).map (seed.app a))).symm
+
+/-- The unchanged track seed has its original stable cone factorization. -/
+theorem Track.seed_hasStableFactorization (A : Track F) (a : Under R) (d : ℤ) :
+    A.SeedStableFactorization A.seed a d :=
+  A.seedMap_stableHomotopy a d
+
+/-- The unchanged track seed has the same exact inverse-shift formula. -/
+theorem Track.seed_hasStableFormula (A : Track F) (a : Under R) (d : ℤ) :
+    A.SeedStableFormula A.seed a d :=
+  (A.seedStableFactorization_iff_seedStableFormula A.seed a d).mp
+    (A.seed_hasStableFactorization a d)
+
 end Quillen.KTheory.Bass.LaurentSeed

@@ -60,7 +60,11 @@ from resource_guard import limits, run
 budget = limits()
 budget['native_build_threads'] = build_threads()
 with capped_toolchain(Path.cwd(), threads=budget['native_build_threads']) as environment:
-    raise SystemExit(run(sys.argv[3:], env=environment, receipt=Path(sys.argv[2]), budget=budget))
+    command = sys.argv[3:]
+    # Lake may prepend its real toolchain bin to PATH for `lake env`.
+    if command[:3] == ['lake', 'env', 'lean']:
+        command[2] = environment['LEAN']
+    raise SystemExit(run(command, env=environment, receipt=Path(sys.argv[2]), budget=budget))
 PY
 }
 if (( ci_mode )); then

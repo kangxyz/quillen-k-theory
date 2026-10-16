@@ -27,6 +27,7 @@ variable {R : CommRingCat.{u}} (P : Over (Spec R)) (a : Under R)
 /-- The unchanged reference of the literal product grid. -/
 abbrev source := unitSourceMap (space (op P, a)) ≫ BassProjectionPath.source P a
 
+/-- A model-map node with an isomorphism from the fixed product-grid reference. -/
 abbrev Node := Σ F : modelOf (boundedFlatPerfectWaldhausen (space (op P, a))) ⟶
     modelOf (boundedFlatPerfectWaldhausen
       (space (op P, (laurentUnderFunctor R).obj a))), (source P a).functor ≅ F.functor

@@ -188,12 +188,14 @@ def rectangleSideNodes (i : Fin 8) :
   preReferenceNode F (sourceMap p) (δ ≪≫ BinaryNormalizationSimplex.total q p)
     ⟨vertices q i, references q i⟩
 
+/-- The reference isomorphism to the precomposed first binary row. -/
 def firstRowAnchor : F.functor ≅
     (sourceMap p ≫ BinaryNormalizationSimplex.sourceMap (𝟙 C) q).functor :=
   (δ ≪≫ eqToIso (rectangleSourceEq p q)) ≪≫
     rightRowReference (ProjectionReference.reference (𝟙 C) (q ≫ p)) (𝟙 C) q p
       (nativeFirstReference p q (𝟙 C) (q ≫ p) rfl)
 
+/-- The reference isomorphism to the precomposed middle binary row. -/
 def middleRowAnchor : F.functor ≅
     (sourceMap p ≫ BinaryNormalizationSimplex.sourceMap q (𝟙 B)).functor :=
   (δ ≪≫ eqToIso (rectangleSourceEq p q)) ≪≫
@@ -275,12 +277,14 @@ def rectangleTopNodes (i : Fin 8) :
   postReferenceNode F (sourceMap q) (δ ≪≫ BinaryNormalizationSimplex.total q p)
     ⟨vertices p i, references p i⟩
 
+/-- The reference isomorphism to the postcomposed middle binary column. -/
 def middleColumnAnchor : F.functor ≅
     (BinaryNormalizationSimplex.sourceMap (𝟙 B) p ≫ sourceMap q).functor :=
   (δ ≪≫ eqToIso (rectangleSourceEq p q)) ≪≫
     (nativeMiddleReference p q q (𝟙 B) (𝟙 C) (by simp) (q ≫ p) rfl ≪≫
       BinaryNormalizationSimplex.total q ((𝟙 B) ≫ p))
 
+/-- The reference isomorphism to the postcomposed last binary column. -/
 def lastColumnAnchor : F.functor ≅
     (BinaryNormalizationSimplex.sourceMap p (𝟙 A) ≫ sourceMap q).functor :=
   (δ ≪≫ eqToIso (rectangleSourceEq p q)) ≪≫
@@ -355,10 +359,12 @@ theorem rectangle_top_left (i : Fin 3) :
     (postReferenceNode_source F (sourceMap q) (H := sourceMap p)
       (δ ≪≫ BinaryNormalizationSimplex.total q p)).symm
 
+/-- The reference isomorphism to the first normalized triple composite. -/
 def firstTripleAnchor : F.functor ≅ (NormalizedTripleSimplex.sourceMap (𝟙 C) q p).functor :=
   (δ ≪≫ eqToIso (rectangleSourceEq p q)) ≪≫
     nativeFirstReference p q (𝟙 C) (q ≫ p) rfl
 
+/-- The reference isomorphism to the last normalized triple composite. -/
 def lastTripleAnchor : F.functor ≅ (NormalizedTripleSimplex.sourceMap q p (𝟙 A)).functor :=
   (δ ≪≫ eqToIso (rectangleSourceEq p q)) ≪≫
     nativeLastReference p q p q (𝟙 A) (𝟙 B) (𝟙 C) (by simp) (by simp) (q ≫ p) rfl
@@ -383,10 +389,12 @@ theorem rectangle_last_triple (i : Fin 8) :
     (native_last_nodes p q p q (𝟙 A) (𝟙 B) (𝟙 C) (by simp) (by simp) (q ≫ p) rfl i)
   simpa only [rectangleNodes, anchorNode, lastTripleAnchor, Iso.trans_assoc] using h
 
+/-- The first-triple reference followed by its source-column normalization. -/
 def sourceColumnAnchor : F.functor ≅
     (BinaryNormalizationSimplex.sourceMap q p ≫ sourceMap (𝟙 C)).functor :=
   firstTripleAnchor p q F δ ≪≫ BinaryNormalizationSimplex.total (𝟙 C) (q ≫ p)
 
+/-- The target-row reference induced by the last-triple reference. -/
 def targetRowAnchor : F.functor ≅
     (sourceMap (𝟙 A) ≫ BinaryNormalizationSimplex.sourceMap q p).functor :=
   rightRowReference F q p (𝟙 A) (lastTripleAnchor p q F δ)

@@ -183,6 +183,7 @@ section CanonicalQuotient
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
+/-- The abelian structure on the canonical quotient by the given Serre class. -/
 @[instance_reducible]
 local instance canonicalQuotientAbelian
     {C₀ : Type u} [Category.{u} C₀] [Abelian C₀]

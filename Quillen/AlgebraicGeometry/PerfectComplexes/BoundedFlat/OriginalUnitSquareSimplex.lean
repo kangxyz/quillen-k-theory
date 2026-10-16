@@ -34,11 +34,13 @@ def unitIntermediate (X : Scheme.{u}) : BoundedFlatPerfect X ⥤ BoundedFlatPerf
       (boundedFlatPerfectWaldhausen X).weq).zero (boundedFlatPerfectWaldhausen X).isZero).iso
       (boundedFlatPerfectWaldhausen X).isZero)
 
+/-- The geometric comparison from identity pullback to its rebased intermediate. -/
 def unitGeometric (X : Scheme.{u}) :
     boundedFlatNormalizedPullback (𝟙 X) ≅ unitIntermediate X :=
   (boundedFlatPullbackNormalizationIso (𝟙 X)).symm ≪≫
     boundedFlatPerfectPullbackIdIso X ≪≫ Quillen.rebaseFunctorIso _ _ _ _
 
+/-- The normalization from the rebased identity functor to the identity functor. -/
 def unitNormalization (X : Scheme.{u}) : unitIntermediate X ≅ 𝟭 (BoundedFlatPerfect X) :=
   (Quillen.rebaseFunctorIso _ _ _ _).symm
 
@@ -49,16 +51,22 @@ theorem unit_composite (X : Scheme.{u}) :
 
 variable {X Y : Scheme.{u}} (f : X ⟶ Y)
 
+/-- The model map induced by normalized pullback along the original scheme map. -/
 def sourceMap : modelOf (boundedFlatPerfectWaldhausen Y) ⟶
     modelOf (boundedFlatPerfectWaldhausen X) :=
   modelMap _ _ (boundedFlatNormalizedPullback_exact f)
     (boundedFlatNormalizedPullback_obj_zero f)
 
+/-- The target model map of the original right-unit binary normalization. -/
 abbrev rightMap := BinaryNormalizationSimplex.targetMap (𝟙 X) f
+/-- The target model map of the original left-unit binary normalization. -/
 abbrev leftMap := BinaryNormalizationSimplex.targetMap f (𝟙 Y)
+/-- The intermediate model map of the first right-unit comparison. -/
 abbrev rightFirstMap := BinaryNormalizationSimplex.intermediateMap (𝟙 X) f
+/-- The intermediate model map of the first left-unit comparison. -/
 abbrev leftFirstMap := BinaryNormalizationSimplex.intermediateMap f (𝟙 Y)
 
+/-- The model map with the rebased identity after the original pullback. -/
 def rightSecondMap : modelOf (boundedFlatPerfectWaldhausen Y) ⟶
     modelOf (boundedFlatPerfectWaldhausen X) :=
   modelMap _ _ ((boundedFlatNormalizedPullback_exact f).comp
@@ -67,6 +75,7 @@ def rightSecondMap : modelOf (boundedFlatPerfectWaldhausen Y) ⟶
     (by simp only [comp_obj, boundedFlatNormalizedPullback_obj_zero,
       Quillen.rebaseFunctor_obj_base])
 
+/-- The model map with the rebased identity before the original pullback. -/
 def leftSecondMap : modelOf (boundedFlatPerfectWaldhausen Y) ⟶
     modelOf (boundedFlatPerfectWaldhausen X) :=
   modelMap _ _ ((Waldhausen.IsExact.id (boundedFlatPerfectWaldhausen Y).cof
@@ -74,25 +83,31 @@ def leftSecondMap : modelOf (boundedFlatPerfectWaldhausen Y) ⟶
     (by simp only [comp_obj, Quillen.rebaseFunctor_obj_base,
       boundedFlatNormalizedPullback_obj_zero])
 
+/-- The first unsplit right-unit comparison from the original source map. -/
 def rightFirst : (sourceMap f).functor ≅ (rightMap f).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight
     (boundedFlatNormalizedRightUnitFirst f) AsSmall.up)
 
+/-- The second unsplit right-unit comparison back to the original source map. -/
 def rightSecond : (rightMap f).functor ≅ (sourceMap f).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight
     (boundedFlatNormalizedRightUnitSecond f) AsSmall.up)
 
+/-- The geometric component of the first right-unit comparison. -/
 def rightFirstGeometric : (sourceMap f).functor ≅ (rightFirstMap f).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight
     (eqToIso (congrArg boundedFlatNormalizedPullback (Category.id_comp f).symm) ≪≫
       BinaryNormalizationSimplex.geometricIso (𝟙 X) f) AsSmall.up)
 
+/-- The normalization component of the first right-unit comparison. -/
 abbrev rightFirstNormalization := BinaryNormalizationSimplex.second (𝟙 X) f
 
+/-- The geometric component of the second right-unit comparison. -/
 def rightSecondGeometric : (rightMap f).functor ≅ (rightSecondMap f).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight
     (isoWhiskerLeft (boundedFlatNormalizedPullback f) (unitGeometric X)) AsSmall.up)
 
+/-- The normalization component of the second right-unit comparison. -/
 def rightSecondNormalization : (rightSecondMap f).functor ≅ (sourceMap f).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight
     (isoWhiskerLeft (boundedFlatNormalizedPullback f) (unitNormalization X)) AsSmall.up)
@@ -120,25 +135,31 @@ theorem right_second_composite :
   rw [← Functor.map_comp, ← NatTrans.comp_app, unit_composite]
   exact congrArg (fun k ↦ AsSmall.up.map k) (Category.comp_id _).symm
 
+/-- The first unsplit left-unit comparison from the original source map. -/
 def leftFirst : (sourceMap f).functor ≅ (leftMap f).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight
     (boundedFlatNormalizedLeftUnitFirst f) AsSmall.up)
 
+/-- The second unsplit left-unit comparison back to the original source map. -/
 def leftSecond : (leftMap f).functor ≅ (sourceMap f).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight
     (boundedFlatNormalizedLeftUnitSecond f) AsSmall.up)
 
+/-- The geometric component of the first left-unit comparison. -/
 def leftFirstGeometric : (sourceMap f).functor ≅ (leftFirstMap f).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight
     (eqToIso (congrArg boundedFlatNormalizedPullback (Category.comp_id f).symm) ≪≫
       BinaryNormalizationSimplex.geometricIso f (𝟙 Y)) AsSmall.up)
 
+/-- The normalization component of the first left-unit comparison. -/
 abbrev leftFirstNormalization := BinaryNormalizationSimplex.second f (𝟙 Y)
 
+/-- The geometric component of the second left-unit comparison. -/
 def leftSecondGeometric : (leftMap f).functor ≅ (leftSecondMap f).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight
     (isoWhiskerRight (unitGeometric Y) (boundedFlatNormalizedPullback f)) AsSmall.up)
 
+/-- The normalization component of the second left-unit comparison. -/
 def leftSecondNormalization : (leftSecondMap f).functor ≅ (sourceMap f).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight
     (isoWhiskerRight (unitNormalization Y) (boundedFlatNormalizedPullback f)) AsSmall.up)
@@ -181,6 +202,7 @@ def vertices : Fin 8 → (modelOf (boundedFlatPerfectWaldhausen Y) ⟶
   ![sourceMap f, rightFirstMap f, rightMap f, rightSecondMap f,
     leftFirstMap f, leftMap f, leftSecondMap f, sourceMap f]
 
+/-- The original source-reference isomorphisms for all eight unit-square vertices. -/
 def references : ∀ i, (sourceMap f).functor ≅ (vertices f i).functor :=
   Fin.cases (Iso.refl _) (Fin.cases (rightFirstGeometric f)
     (Fin.cases (rightFirst f) (Fin.cases (rightFirst f ≪≫ rightSecondGeometric f)
@@ -193,6 +215,7 @@ def simplex : ModelSimplex (modelOf (boundedFlatPerfectWaldhausen Y))
     (modelOf (boundedFlatPerfectWaldhausen X)) 7 :=
   ModelSimplex.ofIsos (sourceMap f) (vertices f) (references f)
 
+/-- The monotone three-vertex face selected by the two given order comparisons. -/
 def triangleFace (i j k : Fin 8) (hij : i ≤ j) (hjk : j ≤ k) : ⦋2⦌ ⟶ ⦋7⦌ :=
   SimplexCategory.Hom.mk ⟨![i, j, k], by
     intro a b hab
@@ -271,23 +294,32 @@ theorem left_normalized_face :
 /-- The six scalar triangles use the unchanged dyadic composition parameter. -/
 def rightFirstParameter :=
   Quillen.SimplexParameters.triangle (triangleFace 0 1 2 (by decide) (by decide))
+/-- The scalar triangle for the split second right-unit comparison. -/
 def rightSecondParameter :=
   Quillen.SimplexParameters.triangle (triangleFace 2 3 7 (by decide) (by decide))
+/-- The scalar triangle for the two unsplit right-unit comparisons. -/
 def normalizedRightParameter :=
   Quillen.SimplexParameters.triangle (triangleFace 0 2 7 (by decide) (by decide))
+/-- The scalar triangle for the split first left-unit comparison. -/
 def leftFirstParameter :=
   Quillen.SimplexParameters.triangle (triangleFace 0 4 5 (by decide) (by decide))
+/-- The scalar triangle for the split second left-unit comparison. -/
 def leftSecondParameter :=
   Quillen.SimplexParameters.triangle (triangleFace 5 6 7 (by decide) (by decide))
+/-- The scalar triangle for the two unsplit left-unit comparisons. -/
 def normalizedLeftParameter :=
   Quillen.SimplexParameters.triangle (triangleFace 0 5 7 (by decide) (by decide))
 
+/-- The two-edge parameter path for the first right-unit comparison. -/
 def rightCompositionPath : Path (StdSimplex.single 0 : StdSimplex ℝ (Fin 8))
     (StdSimplex.single 2) := (edge 0 1).trans (edge 1 2)
+/-- The two-edge parameter path for the second right-unit comparison. -/
 def rightUnitPath : Path (StdSimplex.single 2 : StdSimplex ℝ (Fin 8))
     (StdSimplex.single 7) := (edge 2 3).trans (edge 3 7)
+/-- The two-edge parameter path for the first left-unit comparison. -/
 def leftCompositionPath : Path (StdSimplex.single 0 : StdSimplex ℝ (Fin 8))
     (StdSimplex.single 5) := (edge 0 4).trans (edge 4 5)
+/-- The two-edge parameter path for the second left-unit comparison. -/
 def leftUnitPath : Path (StdSimplex.single 5 : StdSimplex ℝ (Fin 8))
     (StdSimplex.single 7) := (edge 5 6).trans (edge 6 7)
 
@@ -474,23 +506,28 @@ theorem leftFirst_native (n : ℕ) (r t : unitInterval)
     n r t x).trans ?_
   exact (BinaryNormalizationSimplex.native_apply f (𝟙 Y) n r t x).symm
 
+/-- The model map of normalized pullback along the identity scheme map. -/
 def unitSourceMap (T : Scheme.{u}) : modelOf (boundedFlatPerfectWaldhausen T) ⟶
     modelOf (boundedFlatPerfectWaldhausen T) :=
   modelMap _ _ (boundedFlatNormalizedPullback_exact (𝟙 T))
     (boundedFlatNormalizedPullback_obj_zero _)
 
+/-- The model map of the rebased identity functor. -/
 def unitIntermediateMap (T : Scheme.{u}) : modelOf (boundedFlatPerfectWaldhausen T) ⟶
     modelOf (boundedFlatPerfectWaldhausen T) :=
   modelMap _ _ (Waldhausen.IsExact.id (boundedFlatPerfectWaldhausen T).cof
     (boundedFlatPerfectWaldhausen T).weq).rebase (Quillen.rebaseFunctor_obj_base _ _ _ _)
 
+/-- The literal identity model map at the original scheme. -/
 def unitTargetMap (T : Scheme.{u}) : modelOf (boundedFlatPerfectWaldhausen T) ⟶
     modelOf (boundedFlatPerfectWaldhausen T) :=
   modelMap _ _ (Waldhausen.IsExact.id _ _) rfl
 
+/-- The geometric comparison from the identity source map to its rebased intermediate. -/
 def unitFirst (T : Scheme.{u}) : (unitSourceMap T).functor ≅ (unitIntermediateMap T).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight (unitGeometric T) AsSmall.up)
 
+/-- The normalization comparison from the rebased intermediate to the identity map. -/
 def unitSecond (T : Scheme.{u}) : (unitIntermediateMap T).functor ≅ (unitTargetMap T).functor :=
   isoWhiskerLeft AsSmall.down (isoWhiskerRight (unitNormalization T) AsSmall.up)
 

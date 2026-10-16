@@ -33,22 +33,28 @@ def nodes (i : Fin 25) : Node P a :=
     if h' : i.val < 10 then minusNodes P a ⟨i.val - 5, by omega⟩ else
       middleNodes P a ⟨i.val - 10, by omega⟩
 
+/-- The eight plus-chart node indices in the merged 25-node simplex. -/
 def plusIndex (i : Fin 8) : Fin 25 :=
   ⟨if i.val < 5 then i.val else 5 * (i.val - 5) + 12, by split_ifs <;> omega⟩
+/-- The eight minus-chart node indices in the merged 25-node simplex. -/
 def minusIndex (i : Fin 8) : Fin 25 :=
   ⟨if i.val < 5 then i.val + 5 else 5 * (i.val - 5) + 14, by split_ifs <;> omega⟩
+/-- The fifteen middle-grid node indices in the merged 25-node simplex. -/
 def middleIndex (i : Fin 15) : Fin 25 := ⟨10 + i.val, by omega⟩
 
+/-- The monotone face selecting the eight plus-chart nodes. -/
 def plusFace : ⦋7⦌ ⟶ ⦋24⦌ := SimplexCategory.Hom.mk ⟨plusIndex, by
   intro i j h
   change (plusIndex i).val ≤ (plusIndex j).val
   dsimp [plusIndex]
   split_ifs <;> omega⟩
+/-- The monotone face selecting the eight minus-chart nodes. -/
 def minusFace : ⦋7⦌ ⟶ ⦋24⦌ := SimplexCategory.Hom.mk ⟨minusIndex, by
   intro i j h
   change (minusIndex i).val ≤ (minusIndex j).val
   dsimp [minusIndex]
   split_ifs <;> omega⟩
+/-- The monotone face selecting the fifteen middle-grid nodes. -/
 def middleFace : ⦋14⦌ ⟶ ⦋24⦌ := SimplexCategory.Hom.mk ⟨middleIndex, by
   intro i j h
   change 10 + i.val ≤ 10 + j.val
@@ -108,9 +114,11 @@ theorem middle_face : (simplex P a).face middleFace =
 def plusParameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 25)) :=
   (embed plusFace).comp OriginalUnitSquareSimplex.squareParameter
 
+/-- The minus-chart square parameter embedded in the merged simplex. -/
 def minusParameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 25)) :=
   (embed minusFace).comp OriginalUnitSquareSimplex.squareParameter
 
+/-- The original product-grid parameter embedded in the merged simplex. -/
 def middleParameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 25)) :=
   (embed middleFace).comp CoefficientPolynomialSpanUnitSimplex.middleParameter.{u}
 
@@ -183,11 +191,15 @@ def unitFaceSquare {d : ℕ} (α : ⦋7⦌ ⟶ ⦋d⦌) :
       (fun t ↦ (map_binaryPath α 2 3 7 t).symm)
       (fun t ↦ (map_binaryPath α 5 6 7 t).symm)
 
+/-- The original unit square on the ordered plus face. -/
 abbrev plusSquare := unitFaceSquare plusFace
+/-- The original unit square on the minus face with both paths reversed. -/
 abbrev minusSquare := (unitFaceSquare minusFace).reversePaths
 
+/-- The lower row word of the original middle grid in the merged simplex. -/
 def middleStart : Path (StdSimplex.single 12 : StdSimplex ℝ (Fin 25))
     (StdSimplex.single 14) := (binaryPath 10 11 12).symm.trans (binaryPath 10 13 14)
+/-- The upper row word of the original middle grid in the merged simplex. -/
 def middleEnd : Path (StdSimplex.single 22 : StdSimplex ℝ (Fin 25))
     (StdSimplex.single 24) := (binaryPath 20 21 22).symm.trans (binaryPath 20 23 24)
 
@@ -244,6 +256,7 @@ def topBoundary := movingSquare.{u}.toBoundary.trans
   (((Path.Homotopy.refl (binaryPath (k := 24) 2 3 22)).hcomp targetContraction).hcomp
     (Path.Homotopy.refl (binaryPath (k := 24) 7 8 24).symm))
 
+/-- The three-side collapse of the original contracted top boundary. -/
 def topParameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 25)) :=
   collapsed topBoundary.{u}
 
@@ -269,7 +282,9 @@ theorem top_right (r : unitInterval) :
     topParameter.{u} (r, 1) = binaryPath (k := 24) 7 8 24 r :=
   collapsed_right_path topBoundary.{u} r
 
+/-- The prespectrum map induced by the coefficient polynomial projection. -/
 abbrev polynomialMap := boundedFlatPerfectPrespectrumMap (polynomialProjection P a)
+/-- The original coefficient Bass-square comparison map. -/
 abbrev comparisonMap := boundedFlatCoefficientBassSquareComparison P a
 
 /-- The unchanged native moving square, before its identity-cylinder contractions. -/

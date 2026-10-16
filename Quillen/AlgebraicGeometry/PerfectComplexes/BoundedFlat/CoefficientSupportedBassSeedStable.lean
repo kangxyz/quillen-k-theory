@@ -34,25 +34,19 @@ variable {P Q : Over (Spec R)} (f : P ⟶ Q) [IsOpenImmersion f.left]
 
 /-- The original supported seed uses its actual supported Laurent action and cone inclusion. -/
 theorem boundedFlatCoefficientSupportedBassSeed_stableHomotopy (a : Under R) (d : ℤ) :
-    (stableHomotopyFunctor d).map ((boundedFlatCoefficientSupportedBassSeed f).app a) ≫
-        (parameterStableHomotopyIso
-          (LaurentSeed.cone (boundedFlatCoefficientSupportedPrespectrumFunctor f) a) d).hom =
-      ((boundedFlatCoefficientSupportedLaurentAction f).track.homotopy a).stableOperation d ≫
-        (stableHomotopyFunctor (d + 1)).map
-          (mappingConeInclusion (StrictSquare.comparison
-            (LaurentSeed.square (boundedFlatCoefficientSupportedPrespectrumFunctor f) a))) :=
-  (boundedFlatCoefficientSupportedLaurentAction f).track.seedMap_stableHomotopy a d
+    LaurentSeed.Track.SeedStableFactorization
+      (F := boundedFlatCoefficientSupportedPrespectrumFunctor f)
+      (boundedFlatCoefficientSupportedLaurentAction f).track
+      (boundedFlatCoefficientSupportedBassSeed f) a d :=
+  (boundedFlatCoefficientSupportedLaurentAction f).track.seed_hasStableFactorization a d
 
 /-- The actual supported seed map itself retains the exact parameter-loop shift inverse. -/
 theorem boundedFlatCoefficientSupportedBassSeed_stableHomotopy_eq (a : Under R) (d : ℤ) :
-    (stableHomotopyFunctor d).map ((boundedFlatCoefficientSupportedBassSeed f).app a) =
-      ((boundedFlatCoefficientSupportedLaurentAction f).track.homotopy a).stableOperation d ≫
-        (stableHomotopyFunctor (d + 1)).map
-          (mappingConeInclusion (StrictSquare.comparison
-            (LaurentSeed.square (boundedFlatCoefficientSupportedPrespectrumFunctor f) a))) ≫
-              (parameterStableHomotopyIso
-                (LaurentSeed.cone (boundedFlatCoefficientSupportedPrespectrumFunctor f) a) d).inv :=
-  (boundedFlatCoefficientSupportedLaurentAction f).track.seedMap_stableHomotopy_eq a d
+    LaurentSeed.Track.SeedStableFormula
+      (F := boundedFlatCoefficientSupportedPrespectrumFunctor f)
+      (boundedFlatCoefficientSupportedLaurentAction f).track
+      (boundedFlatCoefficientSupportedBassSeed f) a d :=
+  (boundedFlatCoefficientSupportedLaurentAction f).track.seed_hasStableFormula a d
 
 end Supported
 
@@ -61,25 +55,19 @@ variable (Q : Over (Spec R))
 
 /-- The unchanged ambient section seed factors through its original ambient Laurent action. -/
 theorem boundedFlatCoefficientAmbientBassSeed_stableHomotopy (a : Under R) (d : ℤ) :
-    (stableHomotopyFunctor d).map ((boundedFlatCoefficientAmbientBassSeed Q).app a) ≫
-        (parameterStableHomotopyIso
-          (LaurentSeed.cone (boundedFlatCoefficientAmbientPrespectrumFunctor Q) a) d).hom =
-      ((boundedFlatCoefficientAmbientLaurentAction Q).track.homotopy a).stableOperation d ≫
-        (stableHomotopyFunctor (d + 1)).map
-          (mappingConeInclusion (StrictSquare.comparison
-            (LaurentSeed.square (boundedFlatCoefficientAmbientPrespectrumFunctor Q) a))) :=
-  (boundedFlatCoefficientAmbientLaurentAction Q).track.seedMap_stableHomotopy a d
+    LaurentSeed.Track.SeedStableFactorization
+      (F := boundedFlatCoefficientAmbientPrespectrumFunctor Q)
+      (boundedFlatCoefficientAmbientLaurentAction Q).track
+      (boundedFlatCoefficientAmbientBassSeed Q) a d :=
+  (boundedFlatCoefficientAmbientLaurentAction Q).track.seed_hasStableFactorization a d
 
 /-- The actual ambient section seed map keeps the same exact inverse degree shift. -/
 theorem boundedFlatCoefficientAmbientBassSeed_stableHomotopy_eq (a : Under R) (d : ℤ) :
-    (stableHomotopyFunctor d).map ((boundedFlatCoefficientAmbientBassSeed Q).app a) =
-      ((boundedFlatCoefficientAmbientLaurentAction Q).track.homotopy a).stableOperation d ≫
-        (stableHomotopyFunctor (d + 1)).map
-          (mappingConeInclusion (StrictSquare.comparison
-            (LaurentSeed.square (boundedFlatCoefficientAmbientPrespectrumFunctor Q) a))) ≫
-              (parameterStableHomotopyIso
-                (LaurentSeed.cone (boundedFlatCoefficientAmbientPrespectrumFunctor Q) a) d).inv :=
-  (boundedFlatCoefficientAmbientLaurentAction Q).track.seedMap_stableHomotopy_eq a d
+    LaurentSeed.Track.SeedStableFormula
+      (F := boundedFlatCoefficientAmbientPrespectrumFunctor Q)
+      (boundedFlatCoefficientAmbientLaurentAction Q).track
+      (boundedFlatCoefficientAmbientBassSeed Q) a d :=
+  (boundedFlatCoefficientAmbientLaurentAction Q).track.seed_hasStableFormula a d
 
 end Ambient
 end Quillen.PerfectComplexes

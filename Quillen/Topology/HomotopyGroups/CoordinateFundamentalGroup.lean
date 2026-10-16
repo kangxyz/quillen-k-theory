@@ -28,8 +28,13 @@ def coordinateFundamentalGroupMulEquiv (i : N) :
     exact (homotopyGroupEquivFundamentalGroup i).apply_symm_apply _
 
 /-- The upgraded equivalence does not change the underlying original map. -/
-@[simp] theorem coordinateFundamentalGroupMulEquiv_toEquiv (i : N) :
+theorem coordinateFundamentalGroupMulEquiv_toEquiv (i : N) :
     (coordinateFundamentalGroupMulEquiv (X := X) (x := x) i).toEquiv =
+      homotopyGroupEquivFundamentalGroup i := rfl
+
+@[simp] private theorem coordinateFundamentalGroupMulEquiv_coe (i : N) :
+    (coordinateFundamentalGroupMulEquiv (X := X) (x := x) i :
+        HomotopyGroup N X x ≃ FundamentalGroup (GenLoop {j : N // j ≠ i} X x) GenLoop.const) =
       homotopyGroupEquivFundamentalGroup i := rfl
 
 end Quillen

@@ -29,6 +29,7 @@ variable {k : ℕ} {a₀ b₀ a₁ b₁ : StdSimplex ℝ (Fin (k + 1))}
 /-- A scalar square with its four literal path boundaries. -/
 structure ParameterSquare (p₀ : Path a₀ b₀) (p₁ : Path a₁ b₁)
     (l : Path a₀ a₁) (m : Path b₀ b₁) where
+  /-- The continuous two-coordinate simplex parameter with the four specified path boundaries. -/
   parameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin (k + 1)))
   at_zero (s : unitInterval) : parameter (0, s) = p₀ s
   at_one (s : unitInterval) : parameter (1, s) = p₁ s

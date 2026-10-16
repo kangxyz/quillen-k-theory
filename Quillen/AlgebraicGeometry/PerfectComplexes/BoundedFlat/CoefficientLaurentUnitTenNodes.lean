@@ -84,6 +84,7 @@ theorem source_eq : (source P u).functor =
 /-- This equality-induced isomorphism is the only reanchoring used on the new family. -/
 def sourceIso := eqToIso (source_eq P u)
 
+/-- A model-map node with an isomorphism from the original Laurent unit reference. -/
 abbrev Node := Σ F : modelOf (boundedFlatPerfectWaldhausen (space (op P, a))) ⟶
     modelOf (boundedFlatPerfectWaldhausen (space (op P, (laurentUnderFunctor R).obj b))),
     (source P u).functor ≅ F.functor

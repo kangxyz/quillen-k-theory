@@ -72,7 +72,7 @@ def perfectOpenScalarCubeReturnHomotopy :
       ((perfectOpenScalarFineCubeInclusionPath j r q hq n p).trans
         ((perfectOpenScalarFineProjectionCubePath j r n p).map
           (perfectOpenScalarCubeChangeWeak j n).continuous)).symm :=
-  Path.Homotopy.squareProjectionReturn_map (perfectOpenScalarCubeChangeWeak j n)
+  Path.Homotopy.squareProjectionReturnMap (perfectOpenScalarCubeChangeWeak j n)
     (perfectOpenScalarIdentityFineCubePath n p) (perfectOpenScalarSequenceFineCubePath r n p)
     (perfectOpenScalarFineProjectionCubePath j r n p)
     (perfectOpenScalarFineCubeBoundaryHomotopy j r q hq n p)

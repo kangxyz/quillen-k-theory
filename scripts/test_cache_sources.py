@@ -158,7 +158,8 @@ import json, os, sys
 def build_threads(): return int(os.environ['AGLIB_BUILD_THREADS'])
 @contextmanager
 def capped_toolchain(root, threads=1):
-    yield dict(os.environ, CAPPED_THREADS=str(threads), LEAN_NUM_THREADS='1')
+    yield dict(os.environ, CAPPED_THREADS=str(threads), LEAN_NUM_THREADS='1',
+               LEAN=os.environ['CAPPED_LEAN'])
 if __name__ == '__main__':
     with open(os.environ['COMMAND_LOG'], 'a') as out:
         out.write(json.dumps({'kind':'build', 'argv':sys.argv[1:], 'cwd':os.getcwd()})+'\\n')
@@ -186,13 +187,24 @@ exit 0
         python.chmod(0o755)
         lake = self.root / 'bin/lake'
         lake.write_text('#!' + sys.executable + '\n' + '''
-import os, sys
+import os, subprocess, sys
 if os.environ.get('FAIL_LINT') and 'lint' in sys.argv[1:]:
     raise SystemExit(41)
+if sys.argv[1:2] == ['env']:
+    raise SystemExit(subprocess.call(sys.argv[2:]))
 ''')
         lake.chmod(0o755)
+        self.capped_lean = self.root / 'bin/capped-lean'
+        self.capped_lean.write_text('#!' + sys.executable + '\n' + '''
+import json, os, sys
+with open(os.environ['ACTUAL_LEAN_LOG'], 'a') as output:
+    output.write(json.dumps(sys.argv[1:]) + '\\n')
+''')
+        self.capped_lean.chmod(0o755)
         self.env = dict(os.environ, PATH=str(self.root / 'bin') + ':' + os.environ['PATH'],
                         REAL_PYTHON=sys.executable, COMMAND_LOG=str(self.log),
+                        CAPPED_LEAN=str(self.capped_lean),
+                        ACTUAL_LEAN_LOG=str(self.root / 'actual-lean.jsonl'),
                         QUILLEN_VERIFY_DIR=str(self.root / 'verification'),
                         AGLIB_LEAN_MEMORY_MB='12800', AGLIB_RSS_LIMIT_MB='13824',
                         AGLIB_BUILD_THREADS='2')
@@ -216,14 +228,39 @@ if os.environ.get('FAIL_LINT') and 'lint' in sys.argv[1:]:
         self.assertEqual([entry['argv'] for entry in guarded], [
             ['lake', '--rehash', 'test'], ['lake', '--rehash', 'lint'],
             ['lake', '--rehash', 'exe', 'lint-style'],
-            ['lake', 'env', 'lean', '-j2', 'QuillenTest/Axioms.lean'],
-            ['lake', 'env', 'lean', '-j2', 'Audit.lean'],
+            ['lake', 'env', str(self.capped_lean), '-j2', 'QuillenTest/Axioms.lean'],
+            ['lake', 'env', str(self.capped_lean), '-j2', 'Audit.lean'],
         ])
         for entry in guarded:
             self.assertEqual(entry['threads'], '2')
             self.assertEqual(entry['budget'], {'lean_memory_mb':12800, 'rss_limit_mb':13824,
                 'lean_threads':1, 'max_active_lean':1, 'native_build_threads':2})
         self.assertEqual(guarded[-1]['cwd'], str(self.root / 'examples/downstream'))
+
+    def test_ci_audits_execute_capped_lean_even_with_poisoned_bare_lean(self):
+        bare_lean = self.root / 'bin/lean'
+        bare_lean.write_text('#!/bin/sh\nexit 97\n')
+        bare_lean.chmod(0o755)
+        result = self.run_check('--ci')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual([json.loads(line) for line in
+                          (self.root / 'actual-lean.jsonl').read_text().splitlines()],
+                         [['-j2', 'QuillenTest/Axioms.lean'], ['-j2', 'Audit.lean']])
+
+    def test_ci_rewrites_only_exact_lake_env_lean_prefix(self):
+        alternate = self.root / 'bin/lean-other'
+        alternate.write_text('#!/bin/sh\nexit 0\n')
+        alternate.chmod(0o755)
+        script = self.root / 'scripts/check.sh'
+        source = script.read_text()
+        original = 'safe style lake ${lake_args[@]+"${lake_args[@]}"} exe lint-style'
+        self.assertIn(original, source)
+        script.write_text(source.replace(original, 'safe style lake env lean-other sentinel'))
+        result = self.run_check('--ci')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        entries = [json.loads(line) for line in self.log.read_text().splitlines()]
+        self.assertIn(['lake', 'env', 'lean-other', 'sentinel'],
+                      [entry['argv'] for entry in entries if entry['kind'] == 'guard'])
 
     def test_source_only_needs_no_dependency_or_toolchain(self):
         shutil.rmtree(self.root / '.lake')

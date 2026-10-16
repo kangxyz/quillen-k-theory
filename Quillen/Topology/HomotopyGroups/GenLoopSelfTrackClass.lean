@@ -54,11 +54,17 @@ def genLoopSelfTrackNormalization (m : ℕ) (p : GenLoop (Fin (m + 1)) X x) :
                   (homotopyGroupEquivFundamentalGroup (0 : Fin (m + 2))).symm)))))))
 
 /-- The actual constant self-track has the identity higher class. -/
-@[simp] theorem genLoopSelfTrackNormalization_one (m : ℕ)
+theorem genLoopSelfTrackNormalization_one (m : ℕ)
     (p : GenLoop (Fin (m + 1)) X x) : genLoopSelfTrackNormalization m p 1 = 1 := by
   simp only [genLoopSelfTrackNormalization, Equiv.trans_apply, MulEquiv.toEquiv_eq_coe,
     MulEquiv.coe_toEquiv, map_one]
   rfl
+
+@[simp] private theorem genLoopSelfTrackNormalization_id (m : ℕ)
+    (p : GenLoop (Fin (m + 1)) X x) :
+    genLoopSelfTrackNormalization m p
+      (CategoryTheory.CategoryStruct.id (FundamentalGroupoid.mk p)) = 1 :=
+  genLoopSelfTrackNormalization_one m p
 
 /-- The normalized higher class retains the supplied original path, not a chosen replacement. -/
 def genLoopSelfTrackClass (m : ℕ) (p : GenLoop (Fin (m + 1)) X x)

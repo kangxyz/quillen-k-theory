@@ -26,22 +26,27 @@ universe u
 namespace Quillen.PerfectComplexes.CoefficientBassUnitScalarEdges
 open CoefficientBassUnitSupportOrder BassSupportOrder
 
+/-- The original H0 square parameter embedded in the common 48-node simplex. -/
 def h0Parameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 48)) :=
   ⟨fun z ↦ StdSimplex.map CoefficientBassUnitSupportOrder.h0Index
     (BassH0Diagram.parameter z), by fun_prop⟩
 
+/-- The original top square parameter embedded in the common 48-node simplex. -/
 def topParameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 48)) :=
   ⟨fun z ↦ StdSimplex.map topIndex (CoefficientPolynomialSpanUnitTop.topParameter.{u} z),
     by fun_prop⟩
 
+/-- The original bottom square parameter embedded in the common 48-node simplex. -/
 def bottomParameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 48)) :=
   ⟨fun z ↦ StdSimplex.map bottomIndex (CoefficientBassUnitBottom.parameter.{u} z),
     by fun_prop⟩
 
+/-- The original plus-side unit-square parameter in the common 48-node simplex. -/
 def plusParameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 48)) :=
   ⟨fun z ↦ StdSimplex.map plusSideIndex (OriginalUnitSquareSimplex.squareParameter z),
     by fun_prop⟩
 
+/-- The original minus-side unit-square parameter in the common 48-node simplex. -/
 def minusParameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 48)) :=
   ⟨fun z ↦ StdSimplex.map minusSideIndex (OriginalUnitSquareSimplex.squareParameter z),
     by fun_prop⟩

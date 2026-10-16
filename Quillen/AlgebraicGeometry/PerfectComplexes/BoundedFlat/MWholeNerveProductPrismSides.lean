@@ -38,11 +38,13 @@ open BassReferenceMerge BassH0Merge BassH1Join
 def productSideRow (e : Fin 2) : Fin 3 → Fin 18 :=
   ![CoefficientMovingSquareRows.sourceSide, CoefficientMovingSquareRows.targetSide] e
 
+/-- Embed the selected moving row in the ordered polynomial product grid. -/
 def polynomialSideIndex (e : Fin 2) (k : Fin 15) : Fin 90 :=
   Quillen.SimplexGrid.index 17 4
     (productSideRow e ((Quillen.SimplexGrid.indexEquiv 2 4).symm k).1,
       ((Quillen.SimplexGrid.indexEquiv 2 4).symm k).2)
 
+/-- Embed the selected moving row in the ordered chart product grid. -/
 def chartSideIndex (e : Fin 2) (k : Fin 15) : Fin 90 :=
   Quillen.SimplexGrid.index 4 17
     (((Quillen.SimplexGrid.indexEquiv 4 2).symm k).1,
@@ -606,6 +608,7 @@ def chartSideEdgeIndex (i : Fin 4) (j : Fin 2) : Fin 4 → Fin 15 :=
     Quillen.SimplexGrid.index 4 2
       (BassH1Support.edgeEnd i, BassMPrimitiveSupport.coefficientEdgeEnd j)]
 
+/-- The four-vertex face spanned by the selected chart and coefficient edges. -/
 def chartSideEdgeFace (i : Fin 4) (j : Fin 2) : ⦋3⦌ ⟶ ⦋14⦌ :=
   SimplexCategory.Hom.mk ⟨chartSideEdgeIndex i j,
     (by decide : ∀ i : Fin 4, ∀ j : Fin 2, Monotone (chartSideEdgeIndex i j)) i j⟩

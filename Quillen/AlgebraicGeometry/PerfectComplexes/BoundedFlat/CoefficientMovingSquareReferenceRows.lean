@@ -50,7 +50,9 @@ variable {A B C A' B' C' : Scheme.{u}}
   (a : A' ⟶ A) (b : B' ⟶ B) (c : C' ⟶ C)
   (hp : b ≫ p = p' ≫ a) (hq : c ≫ q = q' ≫ b)
 
+/-- The original normalized triple-composite reference for the moving square. -/
 abbrev reference := NormalizedTripleSimplex.sourceMap c q p
+/-- The common-reference nodes of the merged pair of scheme squares. -/
 abbrev nodes := DoubleSquareMergedSimplex.nodes p q p' q' a b c hp hq
 
 private theorem first_triple_nodes (i : Fin 8) :

@@ -182,9 +182,13 @@ specified by the declaration and its linked topic guide.
 | Bundled small Waldhausen category | `Quillen.Waldhausen.SmallWaldhausenCategory.KFunctor n` | [Chosen zero and functoriality](../topics/Waldhausen.md#exact-functors-and-the-chosen-zero) |
 | Scheme `X` | `AlgebraicGeometry.Scheme.K X n`, `G X n`, `restrictK`, `restrictG`, `KToG` | [Scheme K/G-theory](../topics/SchemeKTheory.md) |
 | Strict/local perfect complexes | `Quillen.PerfectComplexes.StrictPerfect`, `Perfect`, `StrictK`, `PerfectK` | [Perfect complexes](../topics/PerfectComplexes.md#complexes-and-support) |
+| Commuting path square | `Path.Homotopy.squareProjectionReturnMap`, `squareProjectionReturnTrack` | [Original path returns](../../Quillen/Topology/Path/SquareProjectionReturn.lean) |
 | Based prespectrum | `Quillen.LoopPrespectrum`, signed stable groups, actual fibers and telescopes | [Spectra](../topics/SpectraAndBass.md) |
 | Ring-indexed Bass recursion | `Quillen.Bass.negativeKFunctor i` on `CommRingCat` | [Bass groups](../topics/SpectraAndBass.md#bass-cokernels-and-the-original-laurent-seed) |
 | Projective completion | `Quillen.FiniteProjectiveModule.StableCompletion.Completion`, `ZeroComponent`, `stableZeroMap` | [Ring plus model](../topics/PlusConstruction.md) |
+
+The historical underscore spellings of the path-return constructors remain
+transparent deprecated aliases of these canonical names.
 
 For composable exact functors, the pointwise map law is
 `(F.comp G).KMap n x = G.KMap n (F.KMap n x)`.
@@ -251,6 +255,8 @@ endpoints until the corresponding comparison is applied.
 | `Topology.Prespectrum.TelescopeStableColimit` | T1 telescope stable-colimit comparison |
 | `Topology.Prespectrum.LoopTailReplacementFiberEquivalence` | Ω replacement and fiber comparison |
 | `KTheory.Bass.StrictRingDiagram` | Strict spectral Bass endofunctor and supplied-seed transitions |
+| `KTheory.Bass.StrictLaurentSeedStable` | Transparent `Track.SeedStableFactorization` and `SeedStableFormula` for an actual track and supplied seed |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedBassSeedStable` | Original supported and ambient seed factorizations through the actual cone inclusion |
 | `AlgebraicGeometry.PerfectComplexes.Affine.SectionBassNegativeMap` | Finite-stage bottom comparison and natural negative-class maps |
 
 The [spectrum guide](../topics/SpectraAndBass.md) distinguishes original

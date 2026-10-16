@@ -312,6 +312,7 @@ theorem tautologicalCoefficientConeKMap_forget (n : ℕ) (x : PerfectK (twoChart
     _ = x * (tautologicalCoefficientTensorKMap R n x)⁻¹ :=
       Additivity.K_mul_comm (perfectWaldhausen (twoChartLine R)) n _ _
 
+/-- The commutative group structure on the original perfect K-group supplied by additivity. -/
 local instance (n : ℕ) : CommGroup (PerfectK (twoChartLine R) n) :=
   Additivity.KCommGroup (perfectWaldhausen (twoChartLine R)) n
 

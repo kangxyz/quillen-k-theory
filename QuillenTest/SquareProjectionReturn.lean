@@ -37,14 +37,14 @@ def original_fine_return :
     (((P'.symm.trans A₁').map f.continuous).trans
       (Z'.symm.trans (A₀'.map f.continuous).symm)).Homotopy
         (I'.trans (P'.map f.continuous)).symm :=
-  Path.Homotopy.squareProjectionReturn_map f A₀' A₁' P' J'
+  Path.Homotopy.squareProjectionReturnMap f A₀' A₁' P' J'
 
 /-- The supplied original composition triangle is reversed, without changing its track. -/
 def original_track_reversal (T : Path (f a') (f a'))
     (K : T.Homotopy (I'.trans (P'.map f.continuous))) :
     (((P'.symm.trans A₁').map f.continuous).trans
       (Z'.symm.trans (A₀'.map f.continuous).symm)).Homotopy T.symm :=
-  Path.Homotopy.squareProjectionReturn_track f A₀' A₁' P' J' K
+  Path.Homotopy.squareProjectionReturnTrack f A₀' A₁' P' J' K
 
 /-- Every intermediate point remains a based cube, retaining the full original spatial boundary. -/
 theorem original_cube_boundary {Y : Type v} [TopologicalSpace Y] {y : Y} (n : ℕ)

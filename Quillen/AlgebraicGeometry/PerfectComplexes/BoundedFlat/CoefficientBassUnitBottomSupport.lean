@@ -22,25 +22,33 @@ universe u
 namespace Quillen.PerfectComplexes.CoefficientBassUnitBottomSupport
 open CoefficientBassUnitSupportOrder Quillen.SimplexGrid
 
+/-- Initial vertices of the four original projection edges. -/
 def projectionStart : Fin 4 → Fin 5 := ![0, 1, 0, 3]
+/-- Terminal vertices of the four original projection edges. -/
 def projectionEnd : Fin 4 → Fin 5 := ![1, 2, 3, 4]
+/-- Initial vertices of the two original identity edges. -/
 def identityStart : Fin 2 → Fin 3 := ![0, 1]
+/-- Terminal vertices of the two original identity edges. -/
 def identityEnd : Fin 2 → Fin 3 := ![1, 2]
 
+/-- The one-simplex selecting an original projection edge. -/
 def projectionFace (i : Fin 4) : ⦋1⦌ ⟶ ⦋4⦌ :=
   SimplexCategory.Hom.mk ⟨![projectionStart i, projectionEnd i],
     (by decide : ∀ j : Fin 4, Monotone
       (![projectionStart j, projectionEnd j] : Fin 2 → Fin 5)) i⟩
 
+/-- The one-simplex selecting an original identity edge. -/
 def identityFace (i : Fin 2) : ⦋1⦌ ⟶ ⦋2⦌ :=
   SimplexCategory.Hom.mk ⟨![identityStart i, identityEnd i],
     (by decide : ∀ j : Fin 2, Monotone
       (![identityStart j, identityEnd j] : Fin 2 → Fin 3)) i⟩
 
+/-- The four-node face of the bottom grid at the given support index. -/
 def face (i : Fin 8) : ⦋3⦌ ⟶ ⦋14⦌ :=
   SimplexCategory.Hom.mk ⟨bottomGridFace i,
     (by decide : ∀ j : Fin 8, Monotone (bottomGridFace j)) i⟩
 
+/-- The row-major support index of a projection edge paired with an identity edge. -/
 def pairIndex (i : Fin 4) (j : Fin 2) : Fin 8 := ⟨2 * i.val + j.val, by omega⟩
 
 /-- Each finite face preserves the exact row-major index of both original edge coordinates. -/
@@ -59,10 +67,12 @@ theorem parameter_pair (i : Fin 4) (j : Fin 2) (z w : StdSimplex ℝ (Fin 2)) :
   parameter_productMap (projectionFace i) (identityFace j) (face (pairIndex i j))
     (face_pair i j) z w
 
+/-- The union of the four original projection-edge images. -/
 def projectionSupport : Set (StdSimplex ℝ (Fin 5)) :=
   {z | ∃ (i : Fin 4) (w : StdSimplex ℝ (Fin 2)),
     StdSimplex.map (projectionFace i).toOrderHom w = z}
 
+/-- The union of the two original identity-edge images. -/
 def identitySupport : Set (StdSimplex ℝ (Fin 3)) :=
   {z | ∃ (i : Fin 2) (w : StdSimplex ℝ (Fin 2)),
     StdSimplex.map (identityFace i).toOrderHom w = z}

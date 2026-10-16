@@ -41,7 +41,7 @@ variable {E : Type v} [TopologicalSpace E] (f : C(E, X))
   {I' : Path (f a') (f b')} {Z' : Path (f c') (f d')}
 
 /-- The fine return remains a single original mapped path before the two reversed edges. -/
-def squareProjectionReturn_map
+def squareProjectionReturnMap
     (J : (I'.trans (A₁'.map f.continuous)).Homotopy
       ((A₀'.map f.continuous).trans Z')) :
     (((P.symm.trans A₁').map f.continuous).trans
@@ -51,12 +51,22 @@ def squareProjectionReturn_map
     squareProjectionReturn J (P.map f.continuous)
 
 /-- A supplied comparison with the original composition track retains its exact reversal. -/
-def squareProjectionReturn_track
+def squareProjectionReturnTrack
     (J : (I'.trans (A₁'.map f.continuous)).Homotopy
       ((A₀'.map f.continuous).trans Z'))
     {T : Path (f a') (f a')} (K : T.Homotopy (I'.trans (P.map f.continuous))) :
     (((P.symm.trans A₁').map f.continuous).trans
       (Z'.symm.trans (A₀'.map f.continuous).symm)).Homotopy T.symm :=
-  (squareProjectionReturn_map f A₀' A₁' P J).trans K.symm₂.symm
+  (squareProjectionReturnMap f A₀' A₁' P J).trans K.symm₂.symm
+
+/-- Deprecated transparent spelling of `squareProjectionReturnMap`. -/
+-- The historical spelling remains available to existing clients.
+@[deprecated squareProjectionReturnMap (since := "2026-10-17"), nolint defsWithUnderscore]
+abbrev squareProjectionReturn_map := @squareProjectionReturnMap
+
+/-- Deprecated transparent spelling of `squareProjectionReturnTrack`. -/
+-- The historical spelling remains available to existing clients.
+@[deprecated squareProjectionReturnTrack (since := "2026-10-17"), nolint defsWithUnderscore]
+abbrev squareProjectionReturn_track := @squareProjectionReturnTrack
 
 end Path.Homotopy

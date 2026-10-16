@@ -32,11 +32,13 @@ def identityVertices (X : Scheme.{u}) : Fin 3 →
     (modelOf (boundedFlatPerfectWaldhausen X) ⟶ modelOf (boundedFlatPerfectWaldhausen X)) :=
   ![unitSourceMap X, unitIntermediateMap X, unitTargetMap X]
 
+/-- Reference isomorphisms from the source identity-track vertex to its three vertices. -/
 def identityReferences (X : Scheme.{u}) : ∀ i,
     (unitSourceMap X).functor ≅ (identityVertices X i).functor :=
   Fin.cases (Iso.refl _) (Fin.cases (unitFirst X)
     (Fin.cases (unitFirst X ≪≫ unitSecond X) (fun i ↦ Fin.elim0 i)))
 
+/-- The two-simplex of the original identity-track vertices and references. -/
 def identitySimplex (X : Scheme.{u}) : ModelSimplex
     (modelOf (boundedFlatPerfectWaldhausen X)) (modelOf (boundedFlatPerfectWaldhausen X)) 2 :=
   ModelSimplex.ofIsos (unitSourceMap X) (identityVertices X) (identityReferences X)
@@ -135,6 +137,7 @@ def middleSimplex := CommonReferenceProduct.simplex
   (BassProjectionPath.source P a) (fun i ↦ (BassProjectionPath.nodes P a i).1)
   (fun i ↦ (BassProjectionPath.nodes P a i).2)
 
+/-- The product parameter of the binary identity path and the Bass projection path. -/
 def middleParameter : C(unitInterval × unitInterval, StdSimplex ℝ (Fin 15)) :=
   ⟨fun z ↦ SimplexGrid.parameter.{u + 1} 2 4
     (binaryPath (k := 2) 0 1 2 z.1, BassProjectionPath.parameter z.2), by fun_prop⟩
