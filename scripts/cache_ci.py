@@ -14,7 +14,11 @@ def serialized_frontend(lean: Path):
     try:
         lean.write_text(
             '#!/usr/bin/env python3\n'
-            'import fcntl, subprocess, sys\n'
+            'import fcntl, os, subprocess, sys\n'
+            # Imported Cache.IO initializers ask the compiler for its sysroot.
+            # These exact locators are already exempted by the pinned guard.
+            'if sys.argv[1:] in [["--print-prefix"], ["--githash"]]:\n'
+            f'    os.execv({str(original)!r}, [{str(original)!r}, *sys.argv[1:]])\n'
             f'with open({str(lock)!r}, "a") as lock:\n'
             '    fcntl.flock(lock, fcntl.LOCK_EX)\n'
             f'    result = subprocess.run([{str(original)!r}, *sys.argv[1:]])\n'

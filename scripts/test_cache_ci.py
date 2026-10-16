@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Check cache compiler serialization without invoking Lean or Lake."""
 from concurrent.futures import ThreadPoolExecutor
+import fcntl
 import json
 import os
 from pathlib import Path
@@ -8,6 +9,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 
 from cache_ci import serialized_frontend
@@ -57,6 +59,54 @@ raise SystemExit(int(sys.argv[1]))
                 with serialized_frontend(lean):
                     raise RuntimeError('probe')
             self.assertEqual(lean.read_text(), 'original')
+
+    def test_nested_exact_locators_do_not_wait_on_parent_compiler_lock(self):
+        with tempfile.TemporaryDirectory(prefix='quillen-cache-nested-') as temporary:
+            root = Path(temporary)
+            lean = root / 'lean'
+            lean.write_text('''#!/usr/bin/env python3
+from pathlib import Path
+import subprocess, sys
+if sys.argv[1:] in [['--print-prefix'], ['--githash']]:
+    print(sys.argv[1])
+else:
+    for query in ['--print-prefix', '--githash']:
+        child = subprocess.run([str(Path(__file__).with_name('lean')), query],
+                               capture_output=True, text=True, timeout=3)
+        assert child.returncode == 0 and child.stdout.strip() == query
+''')
+            lean.chmod(0o755)
+            with serialized_frontend(lean):
+                result = subprocess.run([str(lean), 'Compile.lean'],
+                                        capture_output=True, text=True, timeout=10)
+            self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_nonexact_locator_queries_still_wait_for_compiler_lock(self):
+        with tempfile.TemporaryDirectory(prefix='quillen-cache-malformed-') as temporary:
+            root = Path(temporary)
+            lean = root / 'lean'
+            marker = root / 'entered'
+            lean.write_text('#!/usr/bin/env python3\nfrom pathlib import Path\n'
+                            f'Path({str(marker)!r}).write_text("entered")\n')
+            lean.chmod(0o755)
+            with serialized_frontend(lean):
+                for arguments in (['--print-prefix', 'File.lean'],
+                                  ['--githash', '--print-prefix'],
+                                  ['--print-prefix', '--run', 'File.lean'], ['--version']):
+                    with self.subTest(arguments=arguments):
+                        marker.unlink(missing_ok=True)
+                        with (root / 'lean.lock').open('a') as lock:
+                            fcntl.flock(lock, fcntl.LOCK_EX)
+                            child = subprocess.Popen([str(lean), *arguments])
+                            try:
+                                time.sleep(0.15)
+                                self.assertIsNone(child.poll())
+                                self.assertFalse(marker.exists())
+                            finally:
+                                fcntl.flock(lock, fcntl.LOCK_UN)
+                                child.wait(timeout=5)
+                        self.assertEqual(child.returncode, 0)
+                        self.assertTrue(marker.exists())
 
     def test_child_signal_releases_lock_and_propagates_failure(self):
         with tempfile.TemporaryDirectory(prefix='quillen-cache-signal-') as temporary:
