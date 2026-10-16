@@ -9,6 +9,8 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedExtensionTransport
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.AffineExtension
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-!
 # Supported perfect extension across an affine chart
@@ -44,14 +46,15 @@ lemma exists_supported_perfect_extension_across_affine_openImmersion {U V X : Sc
     (j : U ⟶ X) (k : V ⟶ X) [IsOpenImmersion j] [IsOpenImmersion k]
     (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ Set.range k)
     (Z : X.Opens) (hZ : IsCompact (Z : Set X))
-    (E : Complex U) (hE : locallyPerfect U E)
-    (hz : IsZero ((toDerived (j ⁻¹ᵁ Z).toScheme).obj ((restrict (j ⁻¹ᵁ Z).ι).obj E))) :
-    ∃ P : Complex X, locallyPerfect X P ∧
+    (E : CochainComplex U.Modules ℤ) (hE : locallyPerfect U E)
+    (hz : IsZero ((DerivedCategory.Q (C := (j ⁻¹ᵁ Z).toScheme.Modules)).obj
+      ((restrict (j ⁻¹ᵁ Z).ι).obj E))) :
+    ∃ P : CochainComplex X.Modules ℤ, locallyPerfect X P ∧
       ∃ u : E ⊞ E⟦(1 : ℤ)⟧ ⟶ (restrict j).obj P, QuasiIso u ∧
-        IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj P)) := by
+        IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj ((restrict Z.ι).obj P)) := by
   let a := pullback.fst j k
   let b := pullback.snd j k
-  have hzK : IsZero ((toDerived (b ⁻¹ᵁ (k ⁻¹ᵁ Z)).toScheme).obj
+  have hzK : IsZero ((DerivedCategory.Q (C := (b ⁻¹ᵁ (k ⁻¹ᵁ Z)).toScheme.Modules)).obj
       ((restrict (b ⁻¹ᵁ (k ⁻¹ᵁ Z)).ι).obj ((restrict a).obj E))) := by
     have h := isZero_restrict_preimage_of_isZero a (j ⁻¹ᵁ Z) E hz
     have he : b ⁻¹ᵁ (k ⁻¹ᵁ Z) = a ⁻¹ᵁ (j ⁻¹ᵁ Z) := by
@@ -62,9 +65,11 @@ lemma exists_supported_perfect_extension_across_affine_openImmersion {U V X : Sc
   obtain ⟨B, hB, ⟨eB⟩, hBZ⟩ := exists_strict_supported_stabilized_extension_into_affine b
     (k ⁻¹ᵁ Z) (k.isCompact_preimage hZ) ((restrict a).obj E) (locallyPerfect_restrict a hE) hzK
   have hA : locallyPerfect U (E ⊞ E⟦(1 : ℤ)⟧) :=
-    (abelianExactStructure (Complex U)).prop_biprod (locallyPerfect U) hE (locallyPerfect_shift hE
+    (abelianExactStructure (CochainComplex U.Modules ℤ)).prop_biprod (locallyPerfect U) hE
+      (locallyPerfect_shift hE
       1)
-  let e := (toDerived (pullback j k)).mapIso (restrictStabilizationIso a E) ≪≫ eB.symm
+  let e := (DerivedCategory.Q (C := (pullback j k).Modules)).mapIso
+    (restrictStabilizationIso a E) ≪≫ eB.symm
   obtain ⟨P, hP, u, v, hu, hv⟩ := exists_perfect_glue_of_two_openImmersions j k hcover
     (E ⊞ E⟦(1 : ℤ)⟧) B hA (locallyPerfect_of_strictPerfect hB) e
   refine ⟨P, hP, u, hu, ?_⟩
@@ -82,13 +87,14 @@ lemma exists_supported_perfect_extension_across_affine_openImmersion {U V X : Sc
   · intro t
     cases t with
     | false =>
-      exact hBZ.of_iso (asIso ((toDerived (k ⁻¹ᵁ Z).toScheme).map
+      exact hBZ.of_iso (asIso ((DerivedCategory.Q (C := (k ⁻¹ᵁ Z).toScheme.Modules)).map
         ((restrict (k ⁻¹ᵁ Z).ι).map v))).symm
     | true =>
-      have hAZ : IsZero ((toDerived (j ⁻¹ᵁ Z).toScheme).obj
+      have hAZ : IsZero ((DerivedCategory.Q (C := (j ⁻¹ᵁ Z).toScheme.Modules)).obj
           ((restrict (j ⁻¹ᵁ Z).ι).obj (E ⊞ E⟦(1 : ℤ)⟧))) :=
         (isZero_toDerived_stabilization_of_isZero hz).of_iso
-          ((toDerived (j ⁻¹ᵁ Z).toScheme).mapIso (restrictStabilizationIso (j ⁻¹ᵁ Z).ι E))
-      exact hAZ.of_iso (asIso ((toDerived (j ⁻¹ᵁ Z).toScheme).map
+          ((DerivedCategory.Q (C := (j ⁻¹ᵁ Z).toScheme.Modules)).mapIso
+            (restrictStabilizationIso (j ⁻¹ᵁ Z).ι E))
+      exact hAZ.of_iso (asIso ((DerivedCategory.Q (C := (j ⁻¹ᵁ Z).toScheme.Modules)).map
         ((restrict (j ⁻¹ᵁ Z).ι).map u))).symm
 end Quillen.PerfectComplexes

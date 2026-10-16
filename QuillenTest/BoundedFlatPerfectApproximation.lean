@@ -11,6 +11,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.KComparison
 /-! Consumers of actual relative replacements and the original all-degree K-comparison. -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.CochainComplex
 open Quillen.PerfectComplexes
 
@@ -50,9 +52,9 @@ theorem original_relative_projective_quotient (C : Type u) [Category.{v} C] [Abe
 /-- Relative replacement's original short exact sequence survives arbitrary
 geometric pullback, using its actual flat quotient rather than ambient exactness. -/
 theorem relative_shortExact_survives_pullback {X Y : Scheme.{u}} (g : X ⟶ Y)
-    {K L : Complex Y} (f : K ⟶ L) (b : ℤ) [K.IsStrictlyLE b] [L.IsStrictlyLE b]
+    {K L : CochainComplex Y.Modules ℤ} (f : K ⟶ L) (b : ℤ) [K.IsStrictlyLE b] [L.IsStrictlyLE b]
     (hK : ∀ n, stalkwiseFlat Y (K.X n)) :
-    ∃ (M Q : Complex Y) (i : K ⟶ M) (p : M ⟶ L) (q : M ⟶ Q) (w : i ≫ q = 0),
+    ∃ (M Q : CochainComplex Y.Modules ℤ) (i : K ⟶ M) (p : M ⟶ L) (q : M ⟶ Q) (w : i ≫ q = 0),
       QuasiIso p ∧ i ≫ p = f ∧ ((ShortComplex.mk i q w).map
         (AlgebraicGeometry.Scheme.Modules.Complex.pullback g)).ShortExact := by
   obtain ⟨M, Q, i, p, q, w, hp, hfac, hS, _, _, _, hQ⟩ :=

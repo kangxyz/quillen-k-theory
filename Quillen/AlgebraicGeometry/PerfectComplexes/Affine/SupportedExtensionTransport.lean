@@ -9,7 +9,10 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportRestriction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedStabilizedExtension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StabilizedExtensionTransport
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
 /-!
 # Supported stabilization for original affine open immersions
 
@@ -40,23 +43,25 @@ into Spec R, with its original source and the actual inverse-image support. -/
 lemma exists_strict_supported_stabilized_extension_into_spec (R : CommRingCat.{u})
     {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j] [CompactSpace U]
     (Z : (Spec R).Opens) (hZ : IsCompact (Z : Set (Spec R)))
-    (E : Complex U) (hE : locallyPerfect U E)
-    (hz : IsZero ((toDerived (j ⁻¹ᵁ Z).toScheme).obj ((restrict (j ⁻¹ᵁ Z).ι).obj E))) :
-    ∃ Q : Complex (Spec R), strictPerfect (Spec R) Q ∧
-      Nonempty ((toDerived U).obj ((restrict j).obj Q) ≅
-        (toDerived U).obj (E ⊞ E⟦(1 : ℤ)⟧)) ∧
-      IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj Q)) := by
+    (E : CochainComplex U.Modules ℤ) (hE : locallyPerfect U E)
+    (hz : IsZero ((DerivedCategory.Q (C := (j ⁻¹ᵁ Z).toScheme.Modules)).obj
+      ((restrict (j ⁻¹ᵁ Z).ι).obj E))) :
+    ∃ Q : CochainComplex (Spec R).Modules ℤ, strictPerfect (Spec R) Q ∧
+      Nonempty ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj Q) ≅
+        (DerivedCategory.Q (C := U.Modules)).obj (E ⊞ E⟦(1 : ℤ)⟧)) ∧
+      IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj ((restrict Z.ι).obj Q)) := by
   let W := j.opensRange
   have hW : IsCompact (W : Set (Spec R)) := isCompact_range j.continuous
   let E' := (restrict j.isoOpensRange.inv).obj E
   have hE' := locallyPerfect_restrict j.isoOpensRange.inv hE
-  have hzero : IsZero ((toDerived (W ⊓ Z).toScheme).obj
+  have hzero : IsZero ((DerivedCategory.Q (C := (W ⊓ Z).toScheme.Modules)).obj
       ((restrict ((Spec R).homOfLE (inf_le_left : W ⊓ Z ≤ W))).obj E')) := by
     have h := (isZero_restrict_image_source_iff j (j ⁻¹ᵁ Z) E).mpr hz
     have hi : supportImageOpen j (j ⁻¹ᵁ Z) = W ⊓ Z := by
       rw [supportImageOpen_eq_image, Scheme.Hom.image_preimage_eq_opensRange_inf]
     have hh (A : (Spec R).Opens) (hA : A ≤ W) (ha : supportImageOpen j (j ⁻¹ᵁ Z) = A) :
-        IsZero ((toDerived A.toScheme).obj ((restrict ((Spec R).homOfLE hA)).obj E')) := by
+        IsZero ((DerivedCategory.Q (C := A.toScheme.Modules)).obj
+          ((restrict ((Spec R).homOfLE hA)).obj E')) := by
       subst A
       exact h
     exact hh _ _ hi
@@ -71,24 +76,27 @@ lemma exists_strict_supported_stabilized_extension_into_spec (R : CommRingCat.{u
     (restrictCompIso j.isoOpensRange.hom j.isoOpensRange.inv ≪≫
       eqToIso (restrict_congr j.isoOpensRange.hom_inv_id) ≪≫ restrictIdIso U).app E
   let eright := restrictStabilizationIso j.isoOpensRange.hom E' ≪≫
-    biprod.mapIso eE ((shiftFunctor (Complex U) (1 : ℤ)).mapIso eE)
-  exact ⟨Q, Affine.strictPerfect_associated R hP, ⟨(toDerived U).mapIso eleft ≪≫
-    restrictDerivedIso j.isoOpensRange.hom eQ ≪≫ (toDerived U).mapIso eright⟩, hPZ⟩
+    biprod.mapIso eE ((shiftFunctor (CochainComplex U.Modules ℤ) (1 : ℤ)).mapIso eE)
+  exact ⟨Q, Affine.strictPerfect_associated R hP, ⟨(DerivedCategory.Q
+    (C := U.Modules)).mapIso eleft ≪≫
+    restrictDerivedIso j.isoOpensRange.hom eQ ≪≫ (DerivedCategory.Q
+      (C := U.Modules)).mapIso eright⟩, hPZ⟩
 
 /-- Supported stabilization along an arbitrary compact open immersion into
 an affine scheme, retaining the original global support open. -/
 lemma exists_strict_supported_stabilized_extension_into_affine {U X : Scheme.{u}}
     (j : U ⟶ X) [IsOpenImmersion j] [IsAffine X] [CompactSpace U]
     (Z : X.Opens) (hZ : IsCompact (Z : Set X))
-    (E : Complex U) (hE : locallyPerfect U E)
-    (hz : IsZero ((toDerived (j ⁻¹ᵁ Z).toScheme).obj ((restrict (j ⁻¹ᵁ Z).ι).obj E))) :
-    ∃ Q : Complex X, strictPerfect X Q ∧
-      Nonempty ((toDerived U).obj ((restrict j).obj Q) ≅
-        (toDerived U).obj (E ⊞ E⟦(1 : ℤ)⟧)) ∧
-      IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj Q)) := by
+    (E : CochainComplex U.Modules ℤ) (hE : locallyPerfect U E)
+    (hz : IsZero ((DerivedCategory.Q (C := (j ⁻¹ᵁ Z).toScheme.Modules)).obj
+      ((restrict (j ⁻¹ᵁ Z).ι).obj E))) :
+    ∃ Q : CochainComplex X.Modules ℤ, strictPerfect X Q ∧
+      Nonempty ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj Q) ≅
+        (DerivedCategory.Q (C := U.Modules)).obj (E ⊞ E⟦(1 : ℤ)⟧)) ∧
+      IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj ((restrict Z.ι).obj Q)) := by
   let T := supportImageOpen X.isoSpec.hom Z
   have hT := isCompact_supportImageOpen X.isoSpec.hom Z hZ
-  have hz' : IsZero ((toDerived ((j ≫ X.isoSpec.hom) ⁻¹ᵁ T).toScheme).obj
+  have hz' : IsZero ((DerivedCategory.Q (C := ((j ≫ X.isoSpec.hom) ⁻¹ᵁ T).toScheme.Modules)).obj
       ((restrict ((j ≫ X.isoSpec.hom) ⁻¹ᵁ T).ι).obj E)) := by
     have he : (j ≫ X.isoSpec.hom) ⁻¹ᵁ T = j ⁻¹ᵁ Z := by
       dsimp only [T]
@@ -98,6 +106,6 @@ lemma exists_strict_supported_stabilized_extension_into_affine {U X : Scheme.{u}
   obtain ⟨Q, hQ, ⟨eQ⟩, hQZ⟩ := exists_strict_supported_stabilized_extension_into_spec _
     (j ≫ X.isoSpec.hom) T hT E hE hz'
   exact ⟨(restrict X.isoSpec.hom).obj Q, strictPerfect_restrict X.isoSpec.hom hQ,
-    ⟨(toDerived U).mapIso ((restrictCompIso j X.isoSpec.hom).app Q) ≪≫ eQ⟩,
+    ⟨(DerivedCategory.Q (C := U.Modules)).mapIso ((restrictCompIso j X.isoSpec.hom).app Q) ≪≫ eQ⟩,
     (isZero_restrict_supportImage_iff X.isoSpec.hom Z Q).mp hQZ⟩
 end Quillen.PerfectComplexes

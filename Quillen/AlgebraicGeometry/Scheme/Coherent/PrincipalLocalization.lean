@@ -13,6 +13,8 @@ public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.PrincipalSupport
 public import Quillen.GTheory.SmallModelLocalization
+public import Aglib.Algebra.Group.Subgroup.Ker
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Localization.Principal
 
 /-!
 # Principal-open localization for the public global scheme G-theory
@@ -40,37 +42,11 @@ open Quillen
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-universe u w
+universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace AlgebraicGeometry.Scheme.Modules.Coherent
-
-private theorem principal_exact_transport
-    {A B C A' B' C' : Type w}
-    [Group A] [Group B] [Group C] [Group A'] [Group B'] [Group C']
-    (i : A →* B) (f : B →* C) (i' : A' →* B') (f' : B' →* C')
-    (eA : A ≃* A') (eB : B ≃* B') (eC : C ≃* C')
-    (hi : ∀ a, eB (i a) = i' (eA a))
-    (hf : ∀ b, eC (f b) = f' (eB b))
-    (h : i'.range = f'.ker) : i.range = f.ker := by
-  ext b
-  rw [MonoidHom.mem_range, MonoidHom.mem_ker]
-  constructor
-  · rintro ⟨a, rfl⟩
-    apply eC.injective
-    rw [map_one, hf, hi]
-    have hx : i' (eA a) ∈ i'.range := ⟨eA a, rfl⟩
-    rw [h] at hx
-    exact hx
-  · intro hb
-    have hx : eB b ∈ i'.range := by
-      rw [h]
-      change f' (eB b) = 1
-      rw [← hf, hb, map_one]
-    obtain ⟨a, ha⟩ := hx
-    refine ⟨eA.symm a, eB.injective ?_⟩
-    rw [hi, eA.apply_symm_apply, ha]
 
 variable (R : CommRingCat.{u}) [IsNoetherianRing R] (r : R)
 
@@ -103,7 +79,7 @@ def globalPrincipalConnectingHom (n : ℕ) :
 theorem globalPrincipal_inclusion_range_eq_restriction_ker (n : ℕ) :
     (globalPrincipalInclusionGMap R r n).range =
       (restrictionGMap (principalOpen R r) n).ker := by
-  apply principal_exact_transport
+  apply MonoidHom.range_eq_ker_of_equiv
     (globalPrincipalInclusionGMap R r n) (restrictionGMap (principalOpen R r) n)
     (SmallModelGLocalization.inclusionKMap.{u+1} (coherentRestrictionExact (principalOpen R r)) n)
     (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (coherentRestrictionExact
@@ -118,7 +94,7 @@ theorem globalPrincipal_inclusion_range_eq_restriction_ker (n : ℕ) :
 theorem globalPrincipal_restriction_range_eq_connecting_ker (n : ℕ) :
     (restrictionGMap (principalOpen R r) (n + 1)).range =
       (globalPrincipalConnectingHom R r n).ker := by
-  apply principal_exact_transport
+  apply MonoidHom.range_eq_ker_of_equiv
     (restrictionGMap (principalOpen R r) (n + 1)) (globalPrincipalConnectingHom R r n)
     (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (coherentRestrictionExact
       (principalOpen R r)) (n + 1))
@@ -134,7 +110,7 @@ theorem globalPrincipal_restriction_range_eq_connecting_ker (n : ℕ) :
 theorem globalPrincipal_connecting_range_eq_inclusion_ker (n : ℕ) :
     (globalPrincipalConnectingHom R r n).range =
       (globalPrincipalInclusionGMap R r n).ker := by
-  apply principal_exact_transport
+  apply MonoidHom.range_eq_ker_of_equiv
     (globalPrincipalConnectingHom R r n) (globalPrincipalInclusionGMap R r n)
     (SmallModelGLocalization.connectingHom.{u+1} (coherentRestrictionExact (principalOpen R r)) n)
     (SmallModelGLocalization.inclusionKMap.{u+1} (coherentRestrictionExact (principalOpen R r)) n)

@@ -12,7 +12,7 @@ public import Quillen.Topology.Prespectrum.HomotopySquareOfPasting
 /-! The actual moving Laurent-unit square under arbitrary coefficient change. -/
 @[expose] public section
 
-open Quillen.PolynomialBaseChange
+open CommRingCat.PolynomialLaurent
 
 
 open CommRingCat.PolynomialLaurent

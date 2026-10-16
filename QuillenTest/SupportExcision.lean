@@ -10,7 +10,10 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Excision
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.DerivedExcision
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.RestrictionComparison
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.RestrictionHom
 /-! # Supported perfect-complex excision consumers -/
 @[expose] public section
 
@@ -27,6 +30,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace QuillenTest.SupportExcision
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens)
   (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ T)
@@ -103,9 +107,10 @@ theorem top_auxiliary_open (n : ℕ) :
 include hcover in
 /-- An arbitrary original target map extends from the supported local source
 with a literal chain triangle and the original unit comparison. -/
-theorem original_target_map_extension {A : Complex U} (hA : perfectSupported (j ⁻¹ᵁ T).ι A)
-    {L : Complex X} (f : A ⟶ (restrict j).obj L) :
-    ∃ (M : Complex X) (e : A ≅ (restrict j).obj M) (d : M ⟶ L),
+theorem original_target_map_extension {A : CochainComplex U.Modules ℤ}
+    (hA : perfectSupported (j ⁻¹ᵁ T).ι A)
+    {L : CochainComplex X.Modules ℤ} (f : A ⟶ (restrict j).obj L) :
+    ∃ (M : CochainComplex X.Modules ℤ) (e : A ≅ (restrict j).obj M) (d : M ⟶ L),
       perfectSupported T.ι M ∧ e.hom ≫ (restrict j).map d = f := by
   exact ⟨(extensionByZero j).obj A, asIso ((extensionByZeroAdjunction j).unit.app A),
     extensionByZeroMap j f, perfectSupported_extensionByZero_of_cover j T hcover hA,
@@ -114,20 +119,25 @@ theorem original_target_map_extension {A : Complex U} (hA : perfectSupported (j 
 include hcover in
 /-- Every original local derived arrow has a unique original global lift;
 the all-sheaf target has no perfection or quasicoherence assumption. -/
-theorem arbitrary_derived_target_unique_lift {K : Complex X} (hK : perfectSupported T.ι K)
-    (L : Complex X)
-    (f : (toDerived U).obj ((restrict j).obj K) ⟶ (toDerived U).obj ((restrict j).obj L)) :
-    ∃! g : (toDerived X).obj K ⟶ (toDerived X).obj L, restrictDerivedHom j g = f := by
+theorem arbitrary_derived_target_unique_lift {K : CochainComplex X.Modules ℤ}
+    (hK : perfectSupported T.ι K)
+    (L : CochainComplex X.Modules ℤ)
+    (f : (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj K) ⟶
+      (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj L)) :
+    ∃! g : (DerivedCategory.Q (C := X.Modules)).obj K ⟶
+      (DerivedCategory.Q (C := X.Modules)).obj L, restrictDerivedHom j g = f := by
   refine ⟨(perfectSupportedDerivedHomEquiv j T hcover hK L).symm f, by simp, ?_⟩
   intro g hg
   apply (restrictDerivedHom_bijective_of_supported_cover j T hcover hK L).injective
   simpa using hg
 
 /-- Inverse excision retains arbitrary original derived postcomposition. -/
-theorem arbitrary_derived_target_naturality {K : Complex X} (hK : perfectSupported T.ι K)
-    (L L' : Complex X)
-    (f : (toDerived U).obj ((restrict j).obj K) ⟶ (toDerived U).obj ((restrict j).obj L))
-    (b : (toDerived X).obj L ⟶ (toDerived X).obj L') :
+theorem arbitrary_derived_target_naturality {K : CochainComplex X.Modules ℤ}
+    (hK : perfectSupported T.ι K)
+    (L L' : CochainComplex X.Modules ℤ)
+    (f : (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj K) ⟶
+      (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj L))
+    (b : (DerivedCategory.Q (C := X.Modules)).obj L ⟶ (DerivedCategory.Q (C := X.Modules)).obj L') :
     (perfectSupportedDerivedHomEquiv j T hcover hK L).symm f ≫ b =
       (perfectSupportedDerivedHomEquiv j T hcover hK L').symm (f ≫ restrictDerivedHom j b) :=
   perfectSupportedDerivedHomEquiv_symm_postcomp j T hcover hK L f b

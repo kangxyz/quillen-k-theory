@@ -7,8 +7,10 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.KTheory
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Restriction
 public import Quillen.Waldhausen.Functoriality.KMap
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
 /-!
 # Functoriality of actual open restriction on perfect-complex K-theory
 
@@ -33,7 +35,7 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
 
 /-- Termwise restriction along the identity is canonically the identity. -/
-def restrictIdIso (X : Scheme.{u}) : restrict (𝟙 X) ≅ 𝟭 (Complex X) :=
+def restrictIdIso (X : Scheme.{u}) : restrict (𝟙 X) ≅ 𝟭 (CochainComplex X.Modules ℤ) :=
   NatIso.mapHomologicalComplex Scheme.Modules.restrictFunctorId (ComplexShape.up ℤ) ≪≫
     Functor.mapHomologicalComplexIdIso X.Modules (ComplexShape.up ℤ)
 

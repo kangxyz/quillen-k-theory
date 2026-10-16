@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
-public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.PolynomialLaurentNaturality
+public import Aglib.AlgebraicGeometry.BaseChange.Coefficients.PolynomialLaurentNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationNaturality
 public import Quillen.KTheory.Bass.DiagramTransport
 

@@ -17,6 +17,7 @@ public import Aglib.AlgebraicGeometry.Modules.FinitePresentation.Locality
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.FinitePresentation
 public import Mathlib.CategoryTheory.Adjunction.Restrict
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
 /-!
 # Actual coherent pullback along closed immersions
 
@@ -52,18 +53,19 @@ theorem affineLocallyFiniteType_pullback_affine {Z : Scheme.{u}} (R : CommRingCa
     (hM : affineLocallyFiniteType (Spec R) M) :
     affineLocallyFiniteType Z ((Scheme.Modules.pullback i).obj M) := by
   obtain ⟨I, e, hi⟩ := (IsClosedImmersion.Spec_iff (f := i)).mp inferInstance
-  have hq : affineLocallyFiniteType (Spec (Ideal.closedRing R I))
-      ((Scheme.Modules.pullback (Ideal.closedMap R I)).obj M) :=
+  have hq : affineLocallyFiniteType (Spec (Pushforward.ClosedImmersion.Ideal.closedRing R I))
+      ((Scheme.Modules.pullback (Pushforward.ClosedImmersion.Ideal.closedMap R I)).obj M) :=
     (affineLocallyFiniteType_spec_iff _ _).mpr
       (affineFiniteSheaf_pullback (CommRingCat.ofHom (Ideal.Quotient.mk I))
         ((affineLocallyFiniteType_spec_iff R M).mp hM))
   have he : affineLocallyFiniteType Z
       ((Scheme.Modules.pullback e.hom).obj
-        ((Scheme.Modules.pullback (Ideal.closedMap R I)).obj M)) :=
+        ((Scheme.Modules.pullback (Pushforward.ClosedImmersion.Ideal.closedMap R I)).obj M)) :=
     (affineLocallyFiniteType Z).prop_of_iso ((restrictFunctorIsoPullback e.hom).app _)
       (affineLocallyFiniteType_restrict e.hom hq)
   exact (affineLocallyFiniteType Z).prop_of_iso
-    (((pullbackComp e.hom (Ideal.closedMap R I)) ≪≫ (pullbackCongr hi).symm).app M) he
+    (((pullbackComp e.hom (Pushforward.ClosedImmersion.Ideal.closedMap R I)) ≪≫ (pullbackCongr
+      hi).symm).app M) he
 
 /-- Coherence is detected on any actual scheme open cover. -/
 theorem affineLocallyFiniteType_of_schemeOpenCover {X : Scheme.{u}} [IsLocallyNoetherian X]

@@ -10,9 +10,13 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Closur
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PerfectComplement
 public import Quillen.CategoryTheory.Abelian.ZeroPushout
 public import Quillen.Waldhausen.Cofinality.GeneralDense
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Original dense cofiber data for the derived-saturated open image -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.Waldhausen
 
@@ -25,6 +29,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex TopologicalSpace
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.OpenDerivedImage
 open Waldhausen
 attribute [local instance] HasDerivedCategory.standard Abelian.hasFiniteBiproducts
@@ -34,8 +39,9 @@ variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 DERIVED-saturated target, even for arbitrary all-sheaf terms of E. -/
 theorem exists_strict_complement (R : CommRingCat.{u})
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
-    (E : Complex W.toScheme) (hE : locallyPerfect W.toScheme E) :
-    ∃ C : Complex W.toScheme, strictPerfect W.toScheme C ∧ complexObjects W.ι (C ⊞ E) := by
+    (E : CochainComplex W.toScheme.Modules ℤ) (hE : locallyPerfect W.toScheme E) :
+    ∃ C : CochainComplex W.toScheme.Modules ℤ, strictPerfect W.toScheme C ∧ complexObjects W.ι
+      (C ⊞ E) := by
   obtain ⟨K, P, n, hP, f, eK, _, _, hC, _, e, _⟩ :=
     Affine.locallyPerfect_exists_actual_perfect_complement R W hW E hE 0
   exact ⟨_, hC, (Affine.associatedComplex R).obj P,
@@ -77,7 +83,7 @@ theorem quotient_mem (hroof : HasDerivedRoofs j)
 /-- Actual complex complements give membership of the original chosen
 categorical coproduct through its genuine colimit comparison. -/
 theorem coprod_complement_of_complex_complement [HasBinaryCoproducts (Perfect U)]
-    (A : Perfect U) (C : Complex U) (hC : locallyPerfect U C)
+    (A : Perfect U) (C : CochainComplex U.Modules ℤ) (hC : locallyPerfect U C)
     (hAC : complexObjects j (C ⊞ A.obj)) :
     ∃ B : Perfect U, objects j (A ⨿ B) := by
   let B : Perfect U := ⟨C, hC⟩
@@ -101,9 +107,9 @@ theorem coprod_complement_of_complex_complement [HasBinaryCoproducts (Perfect U)
       · exact (congrArg (fun k => k.hom) hn).trans (biprod.inr_desc _ _).symm
   let e : A ⨿ B ≅ T := (coprodIsCoprod A B).coconePointUniqueUpToIso ht
   have hT : complexObjects j T.obj := (complexObjects_iff_of_derivedIso j
-    ((toDerived U).mapIso (biprod.braiding A.obj C))).mpr hAC
+    ((DerivedCategory.Q (C := U.Modules)).mapIso (biprod.braiding A.obj C))).mpr hAC
   exact ⟨B, (complexObjects_iff_of_derivedIso j
-    ((toDerived U).mapIso ((locallyPerfect U).ι.mapIso e))).mpr hT⟩
+    ((DerivedCategory.Q (C := U.Modules)).mapIso ((locallyPerfect U).ι.mapIso e))).mpr hT⟩
 
 /-- Genuine geometric complements provide actual original coproduct density
 on every compact open of an affine scheme. -/

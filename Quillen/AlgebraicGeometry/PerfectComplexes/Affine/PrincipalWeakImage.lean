@@ -8,6 +8,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenWeakImage
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalProjectiveExtension
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-! # Actual stabilization density in the principal-open witnessed image
 
@@ -19,6 +20,8 @@ No App2, affine strictification, unstabilized extension or K-zero surjectivity
 is assumed or asserted.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open CategoryTheory.ExactCategory
 

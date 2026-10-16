@@ -52,7 +52,7 @@ instance boundedComplexInclusion_preservesBinaryCoproducts (P : Scheme.{u}) :
 /-- The original ambient cochain coproduct, retaining the actual left tensor order. -/
 def rawBeforeTotal (X : QuasiCompactSchemes.{u}) :
     FlasqueBoundedBelow.Obj X.obj × FlasqueBoundedBelow.Obj X.obj ⥤
-      Complex (nativeLineFunctor.obj X).obj :=
+      CochainComplex (nativeLineFunctor.obj X).obj.Modules ℤ :=
   Waldhausen.Additivity.sumFunctor
     (CategoryTheory.Prod.fst _ _ ⋙ (FlasqueBoundedBelow.objects X.obj).ι ⋙
       AlgebraicGeometry.Scheme.Modules.Complex.pullback (nativeProjection.app X).hom)

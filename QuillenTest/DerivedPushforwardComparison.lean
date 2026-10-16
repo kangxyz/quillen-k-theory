@@ -10,6 +10,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPushforwardCompa
 /-! Consumers retain the actual bounded derived unit and strict finite-flat naturality square. -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 
 noncomputable section

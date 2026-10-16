@@ -12,7 +12,7 @@ public import Mathlib.Data.ZMod.Basic
 /-! Consumers retain original coefficient maps and their cartesian overlap universal property. -/
 @[expose] public section
 
-open Quillen.PolynomialBaseChange
+open CommRingCat.PolynomialLaurent
 
 
 open CommRingCat.PolynomialLaurent

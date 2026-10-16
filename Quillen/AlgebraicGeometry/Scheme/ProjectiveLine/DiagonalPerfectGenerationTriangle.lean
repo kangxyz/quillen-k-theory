@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalPerfectGenerationEndpoints
-public import Quillen.CategoryTheory.Triangulated.EndpointTransport
+public import Aglib.CategoryTheory.Triangulated.EndpointTransport
 
 /-! # The natural FULL original generation triangle on intrinsic perfect D+
 
@@ -107,7 +107,7 @@ def diagonalPerfectGenerationConnecting :
 /-- The FULL generation triangle on actual intrinsic perfect D+ inputs and original roofs. -/
 def diagonalPerfectGenerationTriangleFunctor :
     OriginalPerfectPlus R ⥤ Triangle (DerivedCategory.Plus (twoChartLine R).Modules) :=
-  Quillen.TriangleTransport.functor
+  Triangle.transportEndpoints
     (originalPerfectPlusInclusion R ⋙ diagonalDerivedComplexCoefficientTriangleFunctor R)
     (diagonalPerfectGenerationCoefficientFirstIso R)
     (diagonalPerfectGenerationCoefficientSecondIso R)
@@ -117,7 +117,7 @@ def diagonalPerfectGenerationTriangleFunctor :
 def diagonalPerfectGenerationToOriginalNatIso :
     diagonalPerfectGenerationTriangleFunctor R ≅
       originalPerfectPlusInclusion R ⋙ diagonalDerivedComplexCoefficientTriangleFunctor R :=
-  Quillen.TriangleTransport.iso
+  Triangle.transportEndpointsIso
     (originalPerfectPlusInclusion R ⋙ diagonalDerivedComplexCoefficientTriangleFunctor R)
     (diagonalPerfectGenerationCoefficientFirstIso R)
     (diagonalPerfectGenerationCoefficientSecondIso R)

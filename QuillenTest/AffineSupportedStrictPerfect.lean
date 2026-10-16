@@ -56,9 +56,9 @@ theorem original_supported_inverse (R : CommRingCat.{u}) {U : Scheme.{u}}
 while both original triangles retain their exact chain maps. -/
 theorem actual_supported_factorization (R : CommRingCat.{u}) {U : Scheme.{u}}
     (j : U ⟶ Spec R) [IsOpenImmersion j]
-    (P : (strictSupported j).FullSubcategory) (B B' : Complex (Spec R))
+    (P : (strictSupported j).FullSubcategory) (B B' : CochainComplex (Spec R).Modules ℤ)
     (hB' : perfectSupported j B') (w : P.obj ⟶ B) [QuasiIso w] (b : B' ⟶ B) :
-    ∃ (C : (strictSupported j).FullSubcategory) (D : Complex (Spec R))
+    ∃ (C : (strictSupported j).FullSubcategory) (D : CochainComplex (Spec R).Modules ℤ)
       (c : C.obj ⟶ P.obj) (d : D ⟶ B) (u : C.obj ⟶ D) (v : B' ⟶ D),
       perfectSupported j D ∧ u ≫ d = c ≫ w ∧ v ≫ d = b ∧
       (∀ n, IsIso (homologyMap v n)) ∧
@@ -70,7 +70,7 @@ theorem actual_supported_factorization (R : CommRingCat.{u}) {U : Scheme.{u}}
 /-- Actual supported epi kernels restrict to zero homology in every degree,
 on every scheme, with no affine or split-epi premise. -/
 theorem original_kernel_support {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    {K L : Complex X} (hK : perfectSupported j K) (hL : perfectSupported j L)
+    {K L : CochainComplex X.Modules ℤ} (hK : perfectSupported j K) (hL : perfectSupported j L)
     (f : K ⟶ L) [Epi f] (n : ℤ) :
     IsZero (((restrict j).obj (kernel f)).homology n) :=
   (exactAt_iff_isZero_homology _ _).mp ((perfectSupported_kernel_of_epi j hK hL f).2 n)

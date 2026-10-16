@@ -19,6 +19,8 @@ are constructed without asserting a localization or equivalence theorem.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 

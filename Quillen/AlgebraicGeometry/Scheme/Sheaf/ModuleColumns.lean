@@ -8,6 +8,7 @@ module
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ModuleScalars
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneGluing
 public import Quillen.CategoryTheory.Limits.SplitColumnCokernel
+public import Aglib.AlgebraicGeometry.Modules.Restriction.Overlap
 
 /-!
 # Graph columns for arbitrary module sheaves
@@ -86,7 +87,7 @@ def moduleColumnTransition {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     (v : (Γ(CategoryTheory.Limits.pullback j k, ⊤))ˣ) :
     (M.restrict j).restrict (pullback.fst j k) ≅
       (M.restrict k).restrict (pullback.snd j k) :=
-  moduleMulIso _ v ≪≫ (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).app M
+  moduleMulIso _ v ≪≫ (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).app M
 
 lemma moduleColumns_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k] (M : X.Modules)
@@ -94,7 +95,7 @@ lemma moduleColumns_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     (hs : (pullback.fst j k).appTop.hom s = ↑v)
     (ht : (pullback.snd j k).appTop.hom t = ↑v⁻¹) :
     (Scheme.Modules.restrictFunctor (pullback.fst j k)).map (moduleFirstColumn j M s) ≫
-        (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.app (M ⨯ M) =
+        (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.app (M ⨯ M) =
       (moduleColumnTransition j k M v).hom ≫
         (Scheme.Modules.restrictFunctor (pullback.snd j k)).map (moduleSecondColumn k M t) := by
   apply (isLimitOfPreserves
@@ -105,7 +106,7 @@ lemma moduleColumns_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
         ((Scheme.Modules.restrictFunctor k).map prod.fst) = (_ ≫ _) ≫
         (Scheme.Modules.restrictFunctor (pullback.snd j k)).map
           ((Scheme.Modules.restrictFunctor k).map prod.fst)
-    have hn := (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.naturality
+    have hn := (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.naturality
       (show M ⨯ M ⟶ M from prod.fst)
     dsimp only [Functor.comp_map] at hn
     rw [Category.assoc, ← hn, ← Category.assoc, ← Functor.map_comp,
@@ -118,7 +119,7 @@ lemma moduleColumns_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
         ((Scheme.Modules.restrictFunctor k).map prod.snd) = (_ ≫ _) ≫
         (Scheme.Modules.restrictFunctor (pullback.snd j k)).map
           ((Scheme.Modules.restrictFunctor k).map prod.snd)
-    have hn := (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.naturality
+    have hn := (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.naturality
       (show M ⨯ M ⟶ M from prod.snd)
     dsimp only [Functor.comp_map] at hn
     rw [Category.assoc, ← hn, ← Category.assoc, ← Functor.map_comp,

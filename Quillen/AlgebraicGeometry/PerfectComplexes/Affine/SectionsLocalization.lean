@@ -203,16 +203,18 @@ def scalarLocalizeUnit (R : CommRingCat.{u}) (r : R) : 𝟭 (ModuleCat.{u} R) �
 
 /-- Original R-module sections of an actual affine module-sheaf complex. -/
 abbrev affineSectionsComplex (R : CommRingCat.{u}) (V : (Spec R).Opens)
-    (I : Complex (Spec R)) := ((affineSectionsAt R V).mapHomologicalComplex (.up ℤ)).obj I
+    (I : CochainComplex (Spec R).Modules ℤ) := ((affineSectionsAt R V).mapHomologicalComplex
+      (.up ℤ)).obj I
 
 /-- Actual restriction on section complexes. -/
 def affineSectionsComplexRestriction (R : CommRingCat.{u}) {U V : (Spec R).Opens} (h : U ≤ V)
-    (I : Complex (Spec R)) : affineSectionsComplex R V I ⟶ affineSectionsComplex R U I :=
+    (I : CochainComplex (Spec R).Modules ℤ) : affineSectionsComplex R V I
+      ⟶ affineSectionsComplex R U I :=
   (NatTrans.mapHomologicalComplex (affineSectionsRestriction R h) (.up ℤ)).app I
 
 /-- The genuine localized section comparison, defined for every original open and complex. -/
 def sectionsLocalizationComplexComparison (R : CommRingCat.{u}) (r : R) (V : (Spec R).Opens)
-    (I : Complex (Spec R)) :
+    (I : CochainComplex (Spec R).Modules ℤ) :
     ((scalarLocalize R r).mapHomologicalComplex (.up ℤ)).obj (affineSectionsComplex R V I) ⟶
       affineSectionsComplex R (V ⊓ PrimeSpectrum.basicOpen r) I :=
   (NatTrans.mapHomologicalComplex (sectionsLocalizationComparison R r V) (.up ℤ)).app I
@@ -220,7 +222,7 @@ def sectionsLocalizationComplexComparison (R : CommRingCat.{u}) (r : R) (V : (Sp
 /-- The comparison factors the literal original section restriction through the actual
 localization numerator chain map. -/
 lemma sectionsLocalizationComplexComparison_unit (R : CommRingCat.{u}) (r : R)
-    (V : (Spec R).Opens) (I : Complex (Spec R)) :
+    (V : (Spec R).Opens) (I : CochainComplex (Spec R).Modules ℤ) :
     (NatTrans.mapHomologicalComplex (scalarLocalizeUnit R r) (.up ℤ)).app
         (affineSectionsComplex R V I) ≫ sectionsLocalizationComplexComparison R r V I =
       affineSectionsComplexRestriction R (inf_le_left : V ⊓ PrimeSpectrum.basicOpen r ≤ V) I := by
@@ -229,7 +231,7 @@ lemma sectionsLocalizationComplexComparison_unit (R : CommRingCat.{u}) (r : R)
 
 /-- The original comparison square commutes strictly under every shrinking of opens. -/
 lemma sectionsLocalizationComplexComparison_restrict (R : CommRingCat.{u}) (r : R)
-    {U V : (Spec R).Opens} (h : U ≤ V) (I : Complex (Spec R)) :
+    {U V : (Spec R).Opens} (h : U ≤ V) (I : CochainComplex (Spec R).Modules ℤ) :
     ((scalarLocalize R r).mapHomologicalComplex (.up ℤ)).map
         (affineSectionsComplexRestriction R h I) ≫
       sectionsLocalizationComplexComparison R r U I =
@@ -268,7 +270,7 @@ lemma sectionsLocalizationComparison_top (R : CommRingCat.{u}) (r : R) :
 /-- The generic original section comparison is weak at the affine top for the proved
 lower-bounded injective QC-homology input. -/
 lemma quasiIso_sectionsLocalizationComplexComparison_top {R : CommRingCat.{u}} (r : R)
-    (I : Complex (Spec R)) (a : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent) :

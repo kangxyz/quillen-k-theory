@@ -21,6 +21,8 @@ structural input until the cross-category cocylinder comparison is supplied.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 
@@ -63,13 +65,15 @@ theorem weakArrow_target_lift
   have : Epi d := HomologicalComplex.epi_of_epi_f d (fun i => by have := hd i; infer_instance)
   refine ⟨Y, f, ObjectProperty.homMk v, ?_, hv, ObjectProperty.hom_ext _ he⟩
   constructor
-  · apply (ExactSubcategory.deflation_iff (abelianExactStructure (Complex X)) (locallyPerfect X)
+  · apply (ExactSubcategory.deflation_iff (abelianExactStructure (CochainComplex X.Modules ℤ))
+      (locallyPerfect X)
     f.hom.left).mpr
     refine ⟨kernel c, hkc, kernel.ι c, kernel.condition c, ?_⟩
     exact { exact := ShortComplex.exact_of_f_is_kernel _ (kernelIsKernel c)
             mono_f := inferInstance
             epi_g := by change Epi c; infer_instance }
-  · apply (ExactSubcategory.deflation_iff (abelianExactStructure (Complex U)) (complexObjects j)
+  · apply (ExactSubcategory.deflation_iff (abelianExactStructure (CochainComplex U.Modules ℤ))
+      (complexObjects j)
     f.hom.right).mpr
     refine ⟨kernel d, hkd, kernel.ι d, kernel.condition d, ?_⟩
     exact { exact := ShortComplex.exact_of_f_is_kernel _ (kernelIsKernel d)

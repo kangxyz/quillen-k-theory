@@ -10,6 +10,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGrothendieckImage
 /-! # Consumers retaining the original relative-open image quotient -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 
 

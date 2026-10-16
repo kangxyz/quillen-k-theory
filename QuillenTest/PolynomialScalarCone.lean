@@ -34,7 +34,7 @@ theorem original_coordinate (R : CommRingCat.{u}) :
 
 /-- Actual restriction sends the original chain map to the existing Laurent automorphism. -/
 theorem original_restricted_chain_map (R : CommRingCat.{u})
-    (K : Complex (Spec (.of (Polynomial R)))) :
+    (K : CochainComplex (Spec (.of (Polynomial R))).Modules ℤ) :
     (restrict (laurentPlus R)).map
       ((complexGlobalScalar _ (polynomialGlobalCoordinate R)).app K) =
     (complexGlobalUnitIso _ (laurentGlobalUnit R)).hom.app

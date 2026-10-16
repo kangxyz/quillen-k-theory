@@ -16,6 +16,7 @@ public import Aglib.AlgebraicGeometry.Modules.BaseChange.OpenImmersion
 public import Aglib.AlgebraicGeometry.Modules.Coherent.AffineDetection
 public import Aglib.AlgebraicGeometry.Modules.Pushforward.Isomorphism
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
 /-!
 # Actual coherent pushforward along arbitrary closed immersions
 
@@ -57,7 +58,8 @@ def coherentPushforwardGMap (n : ℕ) : G Z n →* G X n :=
 /-- The global canonical map agrees with the established affine closed map. -/
 @[simp] theorem coherentPushforwardGMap_quotient (R : CommRingCat.{u}) [IsNoetherianRing R]
     (I : Ideal R) (n : ℕ) :
-    coherentPushforwardGMap (Ideal.closedMap R I) n = Ideal.coherentPushforwardGMap R I n := rfl
+    coherentPushforwardGMap (Pushforward.ClosedImmersion.Ideal.closedMap R I) n =
+      Ideal.coherentPushforwardGMap R I n := rfl
 
 /-- Actual open base change commutes with canonical global G-theory maps. -/
 theorem coherentPushforwardGMap_openBaseChange {V : Scheme.{u}} [IsLocallyNoetherian V]

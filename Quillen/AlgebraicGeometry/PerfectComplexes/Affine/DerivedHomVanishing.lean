@@ -9,7 +9,8 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.Algebra.Homology.DerivedHomVanishing
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedDerivedComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedModuleReplacement
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Closure
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Closure
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-!
 # Genuine affine derived Hom vanishing from actual term bounds
@@ -69,14 +70,16 @@ lemma associatedComplex_derivedHom_single_eq_zero (R : CommRingCat.{u})
     (P : ModuleComplex R) (hP : moduleStrictPerfect R P)
     (M : (Spec R).Modules) [M.IsQuasicoherent]
     (a b : ℤ) (hbound : ∀ n, n < b → IsZero (P.X n)) (hab : a < b)
-    (φ : (toDerived (Spec R)).obj ((associatedComplex R).obj P) ⟶
-      (toDerived (Spec R)).obj ((_root_.CochainComplex.singleFunctor (Spec R).Modules a).obj M)) :
+    (φ : (DerivedCategory.Q (C := (Spec R).Modules)).obj ((associatedComplex R).obj P) ⟶
+      (DerivedCategory.Q (C := (Spec R).Modules)).obj
+        ((_root_.CochainComplex.singleFunctor (Spec R).Modules a).obj M)) :
     φ = 0 := by
   let A := moduleSpecΓFunctor.obj M
   let eP := (associatedDerivedFactors R).app P
   let eM : (associatedDerived R).obj (DerivedCategory.Q.obj
       ((_root_.CochainComplex.singleFunctor (ModuleCat.{u} R) a).obj A)) ≅
-      (toDerived (Spec R)).obj ((_root_.CochainComplex.singleFunctor (Spec R).Modules a).obj M) :=
+      (DerivedCategory.Q (C := (Spec R).Modules)).obj
+        ((_root_.CochainComplex.singleFunctor (Spec R).Modules a).obj M) :=
     ((tilde.functor R).mapDerivedCategorySingleFunctor a).app A ≪≫
       (DerivedCategory.singleFunctor (Spec R).Modules a).mapIso (asIso M.fromTildeΓ)
   have h := associatedDerivedHom_single_eq_zero_of_lower_terms R P hP A a b hbound hab
@@ -90,16 +93,17 @@ lemma principalRestriction_associated_derivedHom_single_eq_zero (R : CommRingCat
     (P : ModuleComplex R) (hP : moduleStrictPerfect R P)
     (M : (Spec (CommRingCat.of (Localization.Away r))).Modules) [M.IsQuasicoherent]
     (a b : ℤ) (hbound : ∀ n, n < b → IsZero (P.X n)) (hab : a < b)
-    (φ : (toDerived (Spec (CommRingCat.of (Localization.Away r)))).obj
+    (φ : (DerivedCategory.Q (C := (Spec (CommRingCat.of (Localization.Away r))).Modules)).obj
         ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
           ((associatedComplex R).obj P)) ⟶
-      (toDerived (Spec (CommRingCat.of (Localization.Away r)))).obj
+      (DerivedCategory.Q (C := (Spec (CommRingCat.of (Localization.Away r))).Modules)).obj
         ((_root_.CochainComplex.singleFunctor (Spec (CommRingCat.of (Localization.Away r))).Modules
           a).obj M)) :
     φ = 0 := by
   let S := CommRingCat.of (Localization.Away r)
   let L := Quillen.ModuleComplex.PrincipalLocalization.localize r (.up ℤ)
-  let e := (toDerived (Spec S)).mapIso ((principalRestrictionAssociatedComplexIso R r).app P)
+  let e := (DerivedCategory.Q (C := (Spec S).Modules)).mapIso
+    ((principalRestrictionAssociatedComplexIso R r).app P)
   have h := associatedComplex_derivedHom_single_eq_zero S (L.obj P)
     (moduleStrictPerfect_localize R r hP) M a b
     (fun n hn => (ModuleCat.localizedModuleFunctor (Submonoid.powers r)).map_isZero (hbound n hn))
@@ -109,13 +113,14 @@ lemma principalRestriction_associated_derivedHom_single_eq_zero (R : CommRingCat
 
 /-- Affine strict-perfect sources retain their exact original lower term bound. -/
 lemma strictPerfect_derivedHom_single_eq_zero (R : CommRingCat.{u})
-    (P : Complex (Spec R)) (hP : strictPerfect (Spec R) P)
+    (P : CochainComplex (Spec R).Modules ℤ) (hP : strictPerfect (Spec R) P)
     (M : (Spec R).Modules) [M.IsQuasicoherent]
     (a b : ℤ) (hbound : ∀ n, n < b → IsZero (P.X n)) (hab : a < b)
-    (φ : (toDerived (Spec R)).obj P ⟶
-      (toDerived (Spec R)).obj ((_root_.CochainComplex.singleFunctor (Spec R).Modules a).obj M)) :
+    (φ : (DerivedCategory.Q (C := (Spec R).Modules)).obj P ⟶
+      (DerivedCategory.Q (C := (Spec R).Modules)).obj
+        ((_root_.CochainComplex.singleFunctor (Spec R).Modules a).obj M)) :
     φ = 0 := by
-  let e := (toDerived (Spec R)).mapIso (associatedSectionsIso R hP)
+  let e := (DerivedCategory.Q (C := (Spec R).Modules)).mapIso (associatedSectionsIso R hP)
   have h := associatedComplex_derivedHom_single_eq_zero R ((sectionsComplex R).obj P)
     (moduleStrictPerfect_sections R hP) M a b
     (fun n hn => moduleSpecΓFunctor.map_isZero (hbound n hn)) hab (e.hom ≫ φ)
@@ -124,13 +129,14 @@ lemma strictPerfect_derivedHom_single_eq_zero (R : CommRingCat.{u})
 
 /-- Every integer source shift retains the exact lower-term inequality a+n<b. -/
 lemma strictPerfect_derivedHom_single_shift_eq_zero (R : CommRingCat.{u})
-    (P : Complex (Spec R)) (hP : strictPerfect (Spec R) P)
+    (P : CochainComplex (Spec R).Modules ℤ) (hP : strictPerfect (Spec R) P)
     (M : (Spec R).Modules) [M.IsQuasicoherent]
     (a b n : ℤ) (hbound : ∀ i, i < b → IsZero (P.X i)) (hab : a + n < b)
-    (φ : ((toDerived (Spec R)).obj P)⟦n⟧ ⟶
-      (toDerived (Spec R)).obj ((_root_.CochainComplex.singleFunctor (Spec R).Modules a).obj M)) :
+    (φ : ((DerivedCategory.Q (C := (Spec R).Modules)).obj P)⟦n⟧ ⟶
+      (DerivedCategory.Q (C := (Spec R).Modules)).obj
+        ((_root_.CochainComplex.singleFunctor (Spec R).Modules a).obj M)) :
     φ = 0 := by
-  let e := ((toDerived (Spec R)).commShiftIso n).app P
+  let e := ((DerivedCategory.Q (C := (Spec R).Modules)).commShiftIso n).app P
   have h := strictPerfect_derivedHom_single_eq_zero R (P⟦n⟧) (strictPerfect_shift hP n)
     M a (b-n) (fun i hi =>
       (hbound (i+n) (by omega)).of_iso (P.shiftFunctorObjXIso n i (i+n) rfl))
@@ -144,10 +150,10 @@ lemma principalRestriction_associated_derivedHom_single_shift_eq_zero
     (R : CommRingCat.{u}) (r : R) (P : ModuleComplex R) (hP : moduleStrictPerfect R P)
     (M : (Spec (CommRingCat.of (Localization.Away r))).Modules) [M.IsQuasicoherent]
     (a b n : ℤ) (hbound : ∀ i, i < b → IsZero (P.X i)) (hab : a + n < b)
-    (φ : ((toDerived (Spec (.of (Localization.Away r)))).obj
+    (φ : ((DerivedCategory.Q (C := (Spec (.of (Localization.Away r))).Modules)).obj
         ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
           ((associatedComplex R).obj P)))⟦n⟧ ⟶
-      (toDerived (Spec (.of (Localization.Away r)))).obj
+      (DerivedCategory.Q (C := (Spec (.of (Localization.Away r))).Modules)).obj
         ((_root_.CochainComplex.singleFunctor (Spec (.of (Localization.Away r))).Modules a).obj M))
           :
     φ = 0 := by
@@ -160,11 +166,11 @@ lemma principalRestriction_associated_derivedHom_single_shift_eq_zero
 
 /-- The genuine derived finite-projective model suffices; original source terms are unrestricted. -/
 lemma derivedHom_single_eq_zero_of_module_model (R : CommRingCat.{u})
-    (E : Derived (Spec R)) (P : ModuleComplex R) (hP : moduleStrictPerfect R P)
-    (e : (toDerived (Spec R)).obj ((associatedComplex R).obj P) ≅ E)
+    (E : DerivedCategory (Spec R).Modules) (P : ModuleComplex R) (hP : moduleStrictPerfect R P)
+    (e : (DerivedCategory.Q (C := (Spec R).Modules)).obj ((associatedComplex R).obj P) ≅ E)
     (M : (Spec R).Modules) [M.IsQuasicoherent]
     (a b : ℤ) (hbound : ∀ n, n < b → IsZero (P.X n)) (hab : a < b)
-    (φ : E ⟶ (toDerived (Spec R)).obj
+    (φ : E ⟶ (DerivedCategory.Q (C := (Spec R).Modules)).obj
       ((_root_.CochainComplex.singleFunctor (Spec R).Modules a).obj M)) : φ = 0 := by
   have h := associatedComplex_derivedHom_single_eq_zero R P hP M a b hbound hab (e.hom ≫ φ)
   apply (cancel_epi e.hom).mp

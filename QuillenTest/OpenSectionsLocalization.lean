@@ -42,13 +42,13 @@ theorem original_pullback_corner {C : Type u} [Category.{v} C] [Abelian C]
   exact ⟨ha, inferInstance⟩
 
 /-- No injectivity, lower bound, or quasicoherence is needed for the original empty-open map. -/
-theorem original_empty_open (R : CommRingCat.{u}) (r : R) (I : Complex (Spec R)) :
+theorem original_empty_open (R : CommRingCat.{u}) (r : R) (I : CochainComplex (Spec R).Modules ℤ) :
     IsIso (sectionsLocalizationComplexComparison R r ⊥ I) :=
   isIso_sectionsLocalizationComplexComparison_bot R r I
 
 /-- The original compact-open restriction factors through its now-proved weak localization map. -/
 theorem original_compact_map_and_numerator (R : CommRingCat.{u}) (r : R)
-    (I : Complex (Spec R)) (a : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
     (hqc : ∀ n, (((restrict W.ι).obj I).homology n).IsQuasicoherent) :
@@ -62,7 +62,7 @@ theorem original_compact_map_and_numerator (R : CommRingCat.{u}) (r : R)
 
 /-- The finite family need not cover the ambient spectrum, and QC is required only on W. -/
 theorem original_partial_principal_family (R : CommRingCat.{u}) (r : R)
-    (I : Complex (Spec R)) (a : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (W : (Spec R).Opens)
     (hqc : ∀ n, (((restrict W.ι).obj I).homology n).IsQuasicoherent)
@@ -76,7 +76,7 @@ theorem original_partial_principal_family (R : CommRingCat.{u}) (r : R)
 
 /-- Both original homology inverse laws hold at every degree with no upper bound. -/
 theorem original_compact_homology_inverse (R : CommRingCat.{u}) (r : R)
-    (I : Complex (Spec R)) (a n : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a n : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
     (hqc : ∀ n, (((restrict W.ι).obj I).homology n).IsQuasicoherent) :

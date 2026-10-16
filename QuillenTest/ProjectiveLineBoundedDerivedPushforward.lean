@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.BoundedDerivedPushforward
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Bounded projective-line direct-image consumers
 

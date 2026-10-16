@@ -26,6 +26,8 @@ these facts with the separate global injectivity of r.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 noncomputable section

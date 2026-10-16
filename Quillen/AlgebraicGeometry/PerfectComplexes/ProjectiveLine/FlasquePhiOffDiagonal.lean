@@ -8,6 +8,7 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasquePhiFirstEntry
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePerfectGeneration
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-!
 # Original off-diagonal weak zero maps for G composed with Phi
@@ -17,6 +18,8 @@ as quasi-isomorphisms. Original Godement augmentation and exact line tensor
 comparisons retain the actual flasque outputs and the original G1 shift.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open AlgebraicGeometry.Scheme.Modules.Godement
 

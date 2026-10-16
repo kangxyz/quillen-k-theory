@@ -15,6 +15,8 @@ public import Aglib.AlgebraicGeometry.Modules.Invertible.TensorFunctorAssociator
 /-! # The original Euler O(-2)[1] coefficient identity on every connective K-group -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.Modules.Godement
 
 open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients

@@ -16,6 +16,8 @@ No affine transport, derived-category replacement or K-equivalence premise is us
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.Products
 open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
 

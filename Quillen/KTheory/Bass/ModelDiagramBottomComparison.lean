@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
+public import Aglib.CategoryTheory.Limits.Shapes.SequentialSystem.SignCorrection
 public import Quillen.KTheory.Bass.ModelDiagramTwoChartStableSequence
 public import Quillen.KTheory.Bass.StrictDiagramIteration
 public import Quillen.KTheory.Bass.TwoChart
@@ -191,7 +192,7 @@ theorem modelDiagramStableSuccessorIso_ι_hom (d : ℤ) (a : Under R) (n : ℕ) 
     stableHomotopyι ((modelDiagramTwoChartDiagram F (i + 1)).obj a) d n ≫
       (modelDiagramStableSuccessorIso F i d).hom.app a =
     (stableSystemMap ((modelDiagramTwoChartSuccessorIso F i).hom.app a) d).app n ≫
-      (alternatingIso n
+      (SequentialSystem.alternatingIso n
         (parameterStableStageIso ((modelDiagramTwoChartConeDiagram F i).obj a) d n)).hom ≫
       (shiftedStableReindexIso ((modelDiagramTwoChartConeDiagram F i).obj a) d n).hom ≫
       stableHomotopyι ((modelDiagramTwoChartConeDiagram F i).obj a) (d + 1)

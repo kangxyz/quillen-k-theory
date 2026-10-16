@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Basic
+public import Aglib.AlgebraicGeometry.BaseChange.Coefficients.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Pseudofunctor
 public import Quillen.CategoryTheory.FiberedCategory.GrothendieckZeroSections
 public import Quillen.CategoryTheory.FiberedCategory.CocartesianSectionTransition

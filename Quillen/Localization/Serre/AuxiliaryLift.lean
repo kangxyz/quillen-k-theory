@@ -12,6 +12,7 @@ public import Quillen.Devissage.SpanLayers
 public import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
 public import Mathlib.CategoryTheory.Filtered.Basic
 public import Mathlib.CategoryTheory.Subobject.Lattice
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # Categories of ordinary lifts through a Serre quotient
@@ -324,7 +325,8 @@ theorem exists_qHom_lift {M : C} {V : D}
     let c := Q.isoSpan (abelianExactStructure D).deflation
       (abelianExactStructure D).inflation e ((abelianExactStructure D).inflation_of_iso e)
     let sq : IsPullback (L.map t.l) a.hom e.hom s.l := IsPullback.of_vert_isIso ⟨hl⟩
-    change Q.mkHom _ _ ((exactFunctor P L).toQCompatibleFunctor.mapSpan t) =
+    change Q.mkHom _ _ ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+      L).toQCompatibleFunctor.mapSpan t) =
       Q.mkHom _ _ (Span.comp c s)
     apply Q.mkHom_eq_of_apexIso _ _ _ _ sq.isoPullback
     · change sq.isoPullback.hom ≫ pullback.fst e.hom s.l ≫ 𝟙 _ = L.map t.l
@@ -474,7 +476,8 @@ theorem subobjectMap_eq_of_cokernel_ofLE_mem {M : C} {A B : Subobject M}
 endpoint of the localized span. -/
 theorem subobjectMap_spanUpper {X M : C} (s : Q.AbelianSpan X M) :
     subobjectMap L P M (Devissage.spanUpper s) =
-      Devissage.spanUpper ((exactFunctor P L).toQCompatibleFunctor.mapSpan s) := by
+      Devissage.spanUpper ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+        L).toQCompatibleFunctor.mapSpan s) := by
   let := ObjectProperty.SerreClassLocalization.preservesMonomorphisms L P
   exact subobjectMap_mk L P s.r
 
@@ -483,7 +486,8 @@ set_option backward.isDefEq.respectTransparency false in
 of the localized span, with the actual preserved-kernel isomorphism. -/
 theorem subobjectMap_spanLower {X M : C} (s : Q.AbelianSpan X M) :
     subobjectMap L P M (Devissage.spanLower s) =
-      Devissage.spanLower ((exactFunctor P L).toQCompatibleFunctor.mapSpan s) := by
+      Devissage.spanLower ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+        L).toQCompatibleFunctor.mapSpan s) := by
   let := ObjectProperty.SerreClassLocalization.preservesMonomorphisms L P
   let := ObjectProperty.SerreClassLocalization.preservesFiniteLimits L P
   rw [Devissage.spanLower, subobjectMap_mk]
@@ -596,7 +600,7 @@ end SubobjectLifting
 section Canonical
 
 variable {A : Type u₁} [Category.{u₁} A] [Abelian A]
-  (P : ObjectProperty A) [P.IsSerreClass] (V : Quotient P)
+  (P : ObjectProperty A) [P.IsSerreClass] (V : P.isoModSerre.Localization)
 
 /-- The ordinary lift category for the actual canonical Serre quotient. -/
 abbrev QuotientAuxiliaryLift := AuxiliaryLift P.isoModSerre.Q V

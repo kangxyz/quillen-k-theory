@@ -8,6 +8,7 @@ module
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TwistMinus
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.SubobjectObstructionNaturality
 public import Aglib.AlgebraicGeometry.Modules.Locality.Exactness
+public import Aglib.AlgebraicGeometry.Modules.Restriction.Overlap
 
 /-!
 # Functoriality and exactness of the negative twist
@@ -143,11 +144,13 @@ lemma twistMinus_transition (M : (twoChartLine R).Modules) :
     (Scheme.Modules.restrictFunctor (pullback.fst (plusChart R) (minusChart R))).map
         (twistMinusPlusIso R M).hom ≫
       (moduleColumnTransition (plusChart R) (minusChart R) M (overlapCoordinateUnit R)).hom =
-    (overlapRestrictIso (plusChart R) (minusChart R)).hom.app (twistMinus R M) ≫
+    (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso (plusChart R) (minusChart R)).hom.app
+      (twistMinus R M) ≫
       (Scheme.Modules.restrictFunctor (pullback.snd (plusChart R) (minusChart R))).map
         (twistMinusMinusIso R M).hom := by
   let := moduleSecondColumn_mono (minusChart R) M (polynomialCoordinate R)
-  have hn := (overlapRestrictIso (plusChart R) (minusChart R)).hom.naturality
+  have hn := (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso (plusChart R) (minusChart
+    R)).hom.naturality
     (twistMinusInclusion R M)
   dsimp only [Functor.comp_map] at hn
   rw [twistMinusInclusion_plus, twistMinusInclusion_minus,

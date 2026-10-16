@@ -8,6 +8,7 @@ module
 public import Aglib.AlgebraicGeometry.Modules.StructureSheaf.Sections
 public import Quillen.CategoryTheory.Limits.SplitColumnCokernel
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneGluing
+public import Aglib.AlgebraicGeometry.Modules.Restriction.Overlap
 
 /-! # Original quotient rows for a two-chart rank-one subline
 
@@ -122,7 +123,7 @@ lemma rows_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     (ht : (pullback.snd j k).appTop.hom t = ↑v⁻¹) :
     (Scheme.Modules.restrictFunctor (pullback.fst j k)).map (firstRow j s) ≫
         (columnTransition j k v⁻¹).hom =
-      (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.app
+      (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.app
           ((SheafOfModules.unit X.ringCatSheaf : X.Modules) ⨯ SheafOfModules.unit X.ringCatSheaf) ≫
         (Scheme.Modules.restrictFunctor (pullback.snd j k)).map (secondRow k t) := by
   apply (cancel_mono (Scheme.Modules.restrictUnitIso (pullback.snd j k)).hom).mp
@@ -130,10 +131,10 @@ lemma rows_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     Category.assoc, Iso.inv_hom_id, Category.comp_id]
   simp only [firstRow_eq, secondRow_eq, Functor.map_sub, Functor.map_comp,
     Preadditive.sub_comp, Preadditive.comp_sub, Category.assoc]
-  have hf := (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.naturality
+  have hf := (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.naturality
     (show ((SheafOfModules.unit X.ringCatSheaf : X.Modules) ⨯
       SheafOfModules.unit X.ringCatSheaf) ⟶ SheafOfModules.unit X.ringCatSheaf from prod.fst)
-  have hg := (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.naturality
+  have hg := (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.naturality
     (show ((SheafOfModules.unit X.ringCatSheaf : X.Modules) ⨯
       SheafOfModules.unit X.ringCatSheaf) ⟶ SheafOfModules.unit X.ringCatSheaf from prod.snd)
   dsimp only [Functor.comp_map] at hf hg

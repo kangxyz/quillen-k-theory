@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Basic
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Basic
 
 /-!
 # Images of the original Laurent global unit

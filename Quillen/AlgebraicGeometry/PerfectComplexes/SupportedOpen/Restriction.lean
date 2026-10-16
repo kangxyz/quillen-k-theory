@@ -10,7 +10,9 @@ public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportRestriction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOppositeJointData
 public import Quillen.AlgebraicGeometry.PerfectComplexes.RestrictionFunctoriality
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-!
 # Original restriction with a prescribed support
 
@@ -38,13 +40,14 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes
 open Waldhausen
 attribute [local instance] HasDerivedCategory.standard Abelian.hasFiniteBiproducts
 
 /-- Original derived vanishing is precisely actual acyclicity of the complex. -/
-lemma isZero_toDerived_iff_acyclic {X : Scheme.{u}} (K : Complex X) :
-    IsZero ((toDerived X).obj K) ↔ K.Acyclic := by
+lemma isZero_toDerived_iff_acyclic {X : Scheme.{u}} (K : CochainComplex X.Modules ℤ) :
+    IsZero ((DerivedCategory.Q (C := X.Modules)).obj K) ↔ K.Acyclic := by
   constructor
   · intro h n
     rw [exactAt_iff_isZero_homology]
@@ -55,14 +58,14 @@ lemma isZero_toDerived_iff_acyclic {X : Scheme.{u}} (K : Complex X) :
       rw [quasiIso_iff]
       intro n
       exact (quasiIsoAt_iff_exactAt (0 : K ⟶ K) n (h n)).mpr (h n)
-    have hi : IsIso ((toDerived X).map (0 : K ⟶ K)) := inferInstance
-    rw [(toDerived X).map_zero] at hi
+    have hi : IsIso ((DerivedCategory.Q (C := X.Modules)).map (0 : K ⟶ K)) := inferInstance
+    rw [(DerivedCategory.Q (C := X.Modules)).map_zero] at hi
     exact (isIsoZero_iff_source_target_isZero _ _).mp hi |>.1
 
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens)
 
 /-- Original termwise restriction preserves the prescribed actual support. -/
-lemma perfectSupported_restrict {P : Complex X} (hP : perfectSupported T.ι P) :
+lemma perfectSupported_restrict {P : CochainComplex X.Modules ℤ} (hP : perfectSupported T.ι P) :
     perfectSupported (j ⁻¹ᵁ T).ι ((restrict j).obj P) := by
   refine ⟨locallyPerfect_restrict j hP.1, ?_⟩
   rw [← isZero_toDerived_iff_acyclic]
@@ -81,8 +84,9 @@ instance perfectSupportedRestrict_additive : (perfectSupportedRestrict j T).Addi
 
 /-- The original supported restriction preserves genuine short exact sequences. -/
 def perfectSupportedExactRestrict : CategoryTheory.ExactCategory.ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (perfectSupported T.ι))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex U))
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
+      (perfectSupported T.ι))
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex U.Modules ℤ))
       (perfectSupported (j ⁻¹ᵁ T).ι)) where
   toFunctor := perfectSupportedRestrict j T
   map_conflation S hS := by
@@ -101,7 +105,7 @@ theorem perfectSupportedRestrict_exact : IsExact
     exact restrict_quasiIso j f.hom
   pushout hi h := by
     apply IsPushout.of_map_of_faithful (perfectSupported (j ⁻¹ᵁ T).ι).ι
-    exact (fullSubcategory_map_pushout (abelianExactStructure (Complex X))
+    exact (fullSubcategory_map_pushout (abelianExactStructure (CochainComplex X.Modules ℤ))
       (perfectSupported T.ι) hi h).map (restrict j)
 
 /-- The same functor preserves original admissible epis on the opposites. -/

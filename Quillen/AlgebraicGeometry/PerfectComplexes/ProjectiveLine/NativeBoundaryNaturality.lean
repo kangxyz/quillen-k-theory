@@ -16,6 +16,8 @@ boundary, with domain K(n+1) and supported target K(n), including n = 0.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes.OpenFunctorNaturality
 open Quillen.Waldhausen
 open Quillen.Waldhausen.ExtensionCategory

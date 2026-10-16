@@ -18,6 +18,8 @@ presentation; that requires a separate triangle/cofibration comparison.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen.AlgebraicGrothendieck
 
 

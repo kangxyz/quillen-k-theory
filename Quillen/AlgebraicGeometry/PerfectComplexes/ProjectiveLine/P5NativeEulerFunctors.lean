@@ -21,6 +21,8 @@ before Godement totalization; ordinary projection is used only afterwards.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.Products
 open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
 
@@ -44,7 +46,7 @@ variable (X : QuasiCompactSchemes.{u})
 
 /-- Literal tensor by a fixed native Euler endpoint after the original flat projection pullback. -/
 def endpointComplex (M : (nativeLineFunctor.obj X).obj.Modules) :
-    FlasqueBoundedBelow.Obj X.obj ⥤ Complex (nativeLineFunctor.obj X).obj :=
+    FlasqueBoundedBelow.Obj X.obj ⥤ CochainComplex (nativeLineFunctor.obj X).obj.Modules ℤ :=
   (FlasqueBoundedBelow.objects X.obj).ι ⋙ AlgebraicGeometry.Scheme.Modules.Complex.pullback
     (nativeProjection.app X).hom ⋙
     AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft M
@@ -83,7 +85,7 @@ lemma first_second : first X ≫ second X = 0 := by
 
 /-- The genuine coefficient Euler sequence on the original cochain objects. -/
 def coefficientSequence (K : FlasqueBoundedBelow.Obj X.obj) :
-    ShortComplex (Complex (nativeLineFunctor.obj X).obj) :=
+    ShortComplex (CochainComplex (nativeLineFunctor.obj X).obj.Modules ℤ) :=
   ShortComplex.mk ((first X).app K) ((second X).app K) (NatTrans.congr_app (first_second X) K)
 
 /-- Arbitrary original terms are allowed: exactness uses local splitting of the Euler quotient. -/
@@ -182,10 +184,10 @@ def endpointBoundedExactFunctor (M : (nativeLineFunctor.obj X).obj.Modules)
     [IsFiniteLocallyFree (nativeLineFunctor.obj X).obj M]
     (hM : ∀ K, locallyPerfect (nativeLineFunctor.obj X).obj ((endpointComplex X M).obj K)) :
     ExactFunctor
-      (ExactSubcategory.exactStructure (abelianExactStructure (Complex X.obj))
+      (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.obj.Modules ℤ))
         (FlasqueBoundedBelow.objects X.obj))
       (ExactSubcategory.exactStructure (abelianExactStructure
-        (Complex (nativeLineFunctor.obj X).obj)) (BoundedBelow.objects
+        (CochainComplex (nativeLineFunctor.obj X).obj.Modules ℤ)) (BoundedBelow.objects
           (nativeLineFunctor.obj X).obj)) where
   toFunctor := endpointBounded X M hM
   map_conflation S hS := by

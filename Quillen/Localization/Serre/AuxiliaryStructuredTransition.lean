@@ -8,6 +8,7 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.AuxiliaryIsoComma
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-! # Actual auxiliary squares for structured Q-transitions -/
 @[expose] public section
@@ -53,7 +54,8 @@ theorem span_naturality_of_surjection_pullback {X Y X' Y' : C}
 
 end Quillen.Q
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
 
 /-- The monic pullback counit, retaining the actual ambient Q-arrow. -/
@@ -118,10 +120,12 @@ lemma auxiliaryBaseChange_inflation_square {M N : C} (i : M ⟶ N) [Mono i]
   apply (cancel_epi (auxiliaryQuotientObjIso P ((auxiliaryBaseChange P i).obj X)).hom).1
   apply (cancel_mono (auxiliaryQuotientObjIso P X).hom).1
   simp only [Category.assoc, Iso.hom_inv_id_assoc, Iso.inv_hom_id, Category.comp_id]
-  change (quotientExactFunctor P).mapQ.map (Q.inflationArrow (pullback.fst X.obj.obj.of.hom i)) ≫
+  change ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+    P.isoModSerre.Q)).mapQ.map (Q.inflationArrow (pullback.fst X.obj.obj.of.hom i)) ≫
       Q.inflationArrow (P.isoModSerre.Q.map X.obj.obj.of.hom) =
     Q.inflationArrow (P.isoModSerre.Q.map (pullback.snd X.obj.obj.of.hom i)) ≫
-      (quotientExactFunctor P).mapQ.map (Q.inflationArrow i)
+      ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P P.isoModSerre.Q)).mapQ.map
+        (Q.inflationArrow i)
   rw [Q.mapQ_inflationArrow, Q.mapQ_inflationArrow,
     Q.inflationArrow_comp, Q.inflationArrow_comp]
   congr 1
@@ -159,8 +163,10 @@ lemma auxiliaryBaseChange_surjection_square {M N : C} (p : M ⟶ N) [Epi p]
   rw [auxiliaryQuotientObjIso_inv_eq_surjection,
     auxiliaryQuotientObjIso_inv_eq_surjection]
   change Q.surjectionArrow (P.isoModSerre.Q.map X.obj.obj.of.hom) ≫
-      (quotientExactFunctor P).mapQ.map (Q.surjectionArrow (pullback.fst X.obj.obj.of.hom p)) =
-    (quotientExactFunctor P).mapQ.map (Q.surjectionArrow p) ≫
+      ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P P.isoModSerre.Q)).mapQ.map
+        (Q.surjectionArrow (pullback.fst X.obj.obj.of.hom p)) =
+    ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P P.isoModSerre.Q)).mapQ.map
+      (Q.surjectionArrow p) ≫
       Q.surjectionArrow (P.isoModSerre.Q.map (pullback.snd X.obj.obj.of.hom p))
   rw [Q.mapQ_surjectionArrow, Q.mapQ_surjectionArrow,
     Q.surjectionArrow_comp, Q.surjectionArrow_comp]

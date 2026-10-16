@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFibration
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PerfectSupport
 public import Quillen.AlgebraicGeometry.PerfectComplexes.KernelClosure
 
@@ -20,6 +20,8 @@ proves support of the literal kernel. Strict/local perfection is supplied by
 the separately proved geometric kernel theorems on every scheme.
 -/
 @[expose] public section
+
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.Complex.restrictCommShift
 
 open Quillen.Waldhausen
 
@@ -35,14 +37,15 @@ universe u
 open CategoryTheory CategoryTheory.Limits Opposite AlgebraicGeometry HomologicalComplex
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
-open Waldhausen Fibration
+open Waldhausen
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
-lemma restrictAcyclic_iff_of_quasiIso {K L : Complex X} (f : K ⟶ L) [QuasiIso f] :
+lemma restrictAcyclic_iff_of_quasiIso {K L : CochainComplex X.Modules ℤ} (f : K ⟶ L) [QuasiIso f] :
     ((restrict j).obj K).Acyclic ↔ ((restrict j).obj L).Acyclic := by
   exact forall_congr' fun n => exactAt_iff_of_quasiIsoAt ((restrict j).map f) n
 
-lemma restrictAcyclic_shift {K : Complex X} (hK : ((restrict j).obj K).Acyclic) (n : ℤ) :
+lemma restrictAcyclic_shift {K : CochainComplex X.Modules ℤ} (hK : ((restrict j).obj K).Acyclic)
+    (n : ℤ) :
     ((restrict j).obj (K⟦n⟧)).Acyclic := by
   intro i
   have hi : (((restrict j).obj K)⟦n⟧).ExactAt i := by
@@ -52,15 +55,15 @@ lemma restrictAcyclic_shift {K : Complex X} (hK : ((restrict j).obj K).Acyclic) 
         ((restrict j).obj K))
   exact hi.of_iso (((restrict j).commShiftIso n).app K).symm
 
-lemma strictSupported_shift {K : Complex X} (hK : strictSupported j K) (n : ℤ) :
+lemma strictSupported_shift {K : CochainComplex X.Modules ℤ} (hK : strictSupported j K) (n : ℤ) :
     strictSupported j (K⟦n⟧) :=
   ⟨strictPerfect_shift hK.1 n, restrictAcyclic_shift j hK.2 n⟩
 
-lemma perfectSupported_shift {K : Complex X} (hK : perfectSupported j K) (n : ℤ) :
+lemma perfectSupported_shift {K : CochainComplex X.Modules ℤ} (hK : perfectSupported j K) (n : ℤ) :
     perfectSupported j (K⟦n⟧) :=
   ⟨locallyPerfect_shift hK.1 n, restrictAcyclic_shift j hK.2 n⟩
 
-lemma restrictAcyclic_kernel_of_epi {K L : Complex X} (f : K ⟶ L) [Epi f]
+lemma restrictAcyclic_kernel_of_epi {K L : CochainComplex X.Modules ℤ} (f : K ⟶ L) [Epi f]
     (hK : ((restrict j).obj K).Acyclic) (hL : ((restrict j).obj L).Acyclic) :
     ((restrict j).obj (kernel f)).Acyclic := by
   let S := ShortComplex.mk (kernel.ι f) f (kernel.condition f)
@@ -73,11 +76,11 @@ lemma restrictAcyclic_kernel_of_epi {K L : Complex X} (f : K ⟶ L) [Epi f]
   intro n
   exact (quasiIsoAt_iff_exactAt ((restrict j).map f) n (hK n)).mpr (hL n)
 
-lemma strictSupported_kernel_of_epi {K L : Complex X} (hK : strictSupported j K)
+lemma strictSupported_kernel_of_epi {K L : CochainComplex X.Modules ℤ} (hK : strictSupported j K)
     (hL : strictSupported j L) (f : K ⟶ L) [Epi f] : strictSupported j (kernel f) :=
   ⟨strictPerfect_kernel_of_epi hK.1 hL.1 f, restrictAcyclic_kernel_of_epi j f hK.2 hL.2⟩
 
-lemma perfectSupported_kernel_of_epi {K L : Complex X} (hK : perfectSupported j K)
+lemma perfectSupported_kernel_of_epi {K L : CochainComplex X.Modules ℤ} (hK : perfectSupported j K)
     (hL : perfectSupported j L) (f : K ⟶ L) [Epi f] : perfectSupported j (kernel f) :=
   ⟨locallyPerfect_kernel_of_epi hK.1 hL.1 f, restrictAcyclic_kernel_of_epi j f hK.2 hL.2⟩
 

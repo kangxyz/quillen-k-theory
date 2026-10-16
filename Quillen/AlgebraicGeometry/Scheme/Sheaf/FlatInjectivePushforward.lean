@@ -7,7 +7,9 @@ module
 
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ComplexPushforward
 public import Aglib.AlgebraicGeometry.Modules.Pullback.FlatMorphism
-public import Quillen.Algebra.Homology.Adjunction
+public import Aglib.Algebra.Homology.DerivedCategory.KInjective.Adjunction
+public import Aglib.Algebra.Homology.HomologicalComplex.Adjunction
+public import Aglib.Algebra.Homology.HomotopyCategory.Adjunction
 public import Mathlib.CategoryTheory.Abelian.GrothendieckCategory.EnoughInjectives
 
 /-! # Flat direct image of bounded-below injective targets

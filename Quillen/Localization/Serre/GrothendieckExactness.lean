@@ -8,6 +8,7 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.Localization
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # Algebraic Grothendieck-group localization
@@ -201,7 +202,7 @@ section Canonical
 variable {B : Type u₁} [Category.{u₁} B] [Abelian B]
   (P : ObjectProperty B) [P.IsSerreClass]
 
-attribute [local instance] quotientAbelian
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 
 /-- Exact kernel statement for the canonical Serre quotient. -/
 theorem quotientGrothendieckMap_ker :
@@ -212,7 +213,7 @@ theorem quotientGrothendieckMap_ker :
 This is a statement about the algebraic presentation, not homotopical K₀. -/
 def quotientGrothendieckEquiv :
     ((abelianExactStructure B).GrothendieckGroup ⧸ serreSubgroup P) ≃+
-      (quotientExactStructure P).GrothendieckGroup :=
+      ((abelianExactStructure P.isoModSerre.Localization)).GrothendieckGroup :=
   grothendieckModuloSerreEquiv P P.isoModSerre.Q
 
 end Canonical

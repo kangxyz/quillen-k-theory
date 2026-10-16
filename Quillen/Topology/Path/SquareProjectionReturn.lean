@@ -1,0 +1,62 @@
+/-
+Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: kangxyz
+-/
+module
+
+public import Quillen.Topology.Path.HomotopyThreeRoutes
+
+/-!
+# The signed return word of an actual square and projection
+
+The supplied square, original return path and exact reversed terminal edges give a constructive
+endpoint-fixed homotopy to the inverse composition track. All reassociations and cancellations
+use the original path homotopies. No geometric filler is selected.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+open scoped Topology
+universe u v
+namespace Path.Homotopy
+variable {X : Type u} [TopologicalSpace X] {a b c d : X}
+  {I : Path a b} {A₀ : Path a c} {A₁ : Path b d} {Z : Path c d}
+
+/-- The exact return and reversed square edges give the inverse original composition path. -/
+def squareProjectionReturn (J : (I.trans A₁).Homotopy (A₀.trans Z)) (P : Path b a) :
+    ((P.symm.trans A₁).trans (Z.symm.trans A₀.symm)).Homotopy (I.trans P).symm := by
+  have remove : ((I.symm.trans A₀).trans A₀.symm).Homotopy I.symm :=
+    (transAssoc I.symm A₀ A₀.symm).trans
+      (((refl I.symm).hcomp (reflTransSymm A₀).symm).trans (transRefl I.symm))
+  have result : ((P.symm.trans A₁).trans (Z.symm.trans A₀.symm)).Homotopy
+      (P.symm.trans I.symm) :=
+    (transAssoc P.symm A₁ (Z.symm.trans A₀.symm)).trans
+      (((refl P.symm).hcomp (transAssoc A₁ Z.symm A₀.symm).symm).trans
+        ((refl P.symm).hcomp (((rotate J).symm.hcomp (refl A₀.symm)).trans remove)))
+  exact result.cast rfl (Path.trans_symm I P).symm
+
+variable {E : Type v} [TopologicalSpace E] (f : C(E, X))
+  {a' b' c' d' : E} (A₀' : Path a' c') (A₁' : Path b' d') (P : Path b' a')
+  {I' : Path (f a') (f b')} {Z' : Path (f c') (f d')}
+
+/-- The fine return remains a single original mapped path before the two reversed edges. -/
+def squareProjectionReturn_map
+    (J : (I'.trans (A₁'.map f.continuous)).Homotopy
+      ((A₀'.map f.continuous).trans Z')) :
+    (((P.symm.trans A₁').map f.continuous).trans
+      (Z'.symm.trans (A₀'.map f.continuous).symm)).Homotopy
+        (I'.trans (P.map f.continuous)).symm := by
+  simpa only [Path.map_trans, Path.map_symm] using
+    squareProjectionReturn J (P.map f.continuous)
+
+/-- A supplied comparison with the original composition track retains its exact reversal. -/
+def squareProjectionReturn_track
+    (J : (I'.trans (A₁'.map f.continuous)).Homotopy
+      ((A₀'.map f.continuous).trans Z'))
+    {T : Path (f a') (f a')} (K : T.Homotopy (I'.trans (P.map f.continuous))) :
+    (((P.symm.trans A₁').map f.continuous).trans
+      (Z'.symm.trans (A₀'.map f.continuous).symm)).Homotopy T.symm :=
+  (squareProjectionReturn_map f A₀' A₁' P J).trans K.symm₂.symm
+
+end Path.Homotopy

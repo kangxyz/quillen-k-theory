@@ -26,6 +26,8 @@ No surjectivity onto the full open K-zero group is asserted.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes.OpenDerivedImage
 open Quillen.Waldhausen
 

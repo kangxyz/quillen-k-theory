@@ -8,7 +8,7 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.ClosedImmersion.IdealPushforward
-public import Aglib.Algebra.Category.ModuleCat.Finite
+public import Aglib.Algebra.Category.FGModuleCat.Basic
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Exact
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeProperty
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
@@ -19,6 +19,7 @@ public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeCom
 public import Quillen.GTheory.FiniteModules.ClosedSupport
 public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
 /-!
 # Principal quotient pushforward and scalar restriction
 
@@ -57,14 +58,14 @@ variable [IsNoetherianRing R]
 /-- The actual geometric pushforward/global-sections comparison square. -/
 def coherentPushforwardSquare :
     AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePushforward
-      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedMap R
+      (Pushforward.ClosedImmersion.Ideal.closedMap R
       (Ideal.span {f})) ⋙ (finiteTypeSheavesSpecModuleEquivalence R).functor ≅
       (finiteTypeSheavesSpecModuleEquivalence
-        (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+        (Pushforward.ClosedImmersion.Ideal.closedRing R
         (Ideal.span {f}))).functor ⋙ closedRestriction f :=
   ((finiteModule R).fullyFaithfulι.whiskeringRight _).preimageIso
     (Functor.isoWhiskerLeft (finiteTypeSheavesToModules (Spec
-      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+      (Pushforward.ClosedImmersion.Ideal.closedRing R
       (Ideal.span {f}))))
       (AlgebraicGeometry.Scheme.Modules.pushforwardGlobalSectionsIso
         (CommRingCat.ofHom (Ideal.Quotient.mk (Ideal.span {f})))))

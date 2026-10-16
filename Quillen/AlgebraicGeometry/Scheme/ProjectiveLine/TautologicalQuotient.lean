@@ -8,6 +8,7 @@ module
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneQuotient
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Tautological
 public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Kernels
+public import Aglib.AlgebraicGeometry.Modules.Restriction.Overlap
 
 /-! # The actual tautological quotient line
 
@@ -115,7 +116,7 @@ lemma tautologicalQuotientLine_transition :
     (Scheme.Modules.restrictFunctor (pullback.fst (plusChart R) (minusChart R))).map
         (tautologicalQuotientPlusIso R).hom ≫
       (columnTransition (plusChart R) (minusChart R) (overlapCoordinateUnit R)⁻¹).hom =
-    (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso (plusChart R) (minusChart
+    (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso (plusChart R) (minusChart
       R)).hom.app
         (tautologicalQuotientLine R) ≫
       (Scheme.Modules.restrictFunctor (pullback.snd (plusChart R) (minusChart R))).map
@@ -128,7 +129,7 @@ lemma tautologicalQuotientLine_transition :
   apply (cancel_epi ((Scheme.Modules.restrictFunctor
     (pullback.fst (plusChart R) (minusChart R))).map
       ((Scheme.Modules.restrictFunctor (plusChart R)).map (tautologicalQuotientMap R)))).mp
-  have hn := (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso (plusChart R) (minusChart
+  have hn := (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso (plusChart R) (minusChart
     R)).hom.naturality
     (tautologicalQuotientMap R)
   dsimp only [Functor.comp_map] at hn

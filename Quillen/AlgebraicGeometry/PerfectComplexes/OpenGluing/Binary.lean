@@ -21,12 +21,13 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
 namespace Quillen.PerfectComplexes.OpenHomotopyGluing
 variable {X : Scheme.{u}} (U V : X.Opens)
-  {K : Complex (pullback U.ι V.ι)} {A : Complex U.toScheme} {B : Complex V.toScheme}
+  {K : CochainComplex (pullback U.ι V.ι).Modules ℤ} {A : CochainComplex U.toScheme.Modules ℤ}
+    {B : CochainComplex V.toScheme.Modules ℤ}
   (α : K ⟶ (restrict (pullback.fst U.ι V.ι)).obj A)
   (β : K ⟶ (restrict (pullback.snd U.ι V.ι)).obj B)
 
 /-- The actual cone complex from the original two opens and original overlap maps. -/
-def binary : Complex X :=
+def binary : CochainComplex X.Modules ℤ :=
   glued (pullback.fst U.ι V.ι) (pullback.snd U.ι V.ι) U.ι V.ι pullback.condition α β
 
 /-- The actual first original local-to-global restriction map. -/
@@ -66,7 +67,7 @@ theorem locallyPerfect_binary (hUV : U ⊔ V = ⊤)
 theorem exists_perfect_glue (hUV : U ⊔ V = ⊤)
     (hA : locallyPerfect U.toScheme A) (hB : locallyPerfect V.toScheme B)
     [QuasiIso α] [QuasiIso β] :
-    ∃ P : Complex X, locallyPerfect X P ∧
+    ∃ P : CochainComplex X.Modules ℤ, locallyPerfect X P ∧
       ∃ (u : A ⟶ (restrict U.ι).obj P) (v : B ⟶ (restrict V.ι).obj P),
         QuasiIso u ∧ QuasiIso v :=
   ⟨binary U V α β, locallyPerfect_binary U V α β hUV hA hB,

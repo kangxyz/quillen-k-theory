@@ -7,7 +7,8 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Algebra.Homology.HomotopyPullback
-public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFibration
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Extension
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-!
 # Strict and locally perfect homotopy pullbacks
@@ -18,6 +19,8 @@ finite biproducts, actual cones, and shifts, without affine or uniform-bound
 hypotheses.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.CochainComplex
 
@@ -36,20 +39,20 @@ namespace Quillen.PerfectComplexes
 
 /-- The literal mapping-cocone homotopy pullback of strict-perfect complexes
 is strict perfect, on an arbitrary scheme. -/
-lemma strictPerfect_homotopyPullback {X : Scheme.{u}} {A B T : Complex X}
+lemma strictPerfect_homotopyPullback {X : Scheme.{u}} {A B T : CochainComplex X.Modules ℤ}
     (hA : strictPerfect X A) (hB : strictPerfect X B) (hT : strictPerfect X T)
     (f : A ⟶ T) (g : B ⟶ T) : strictPerfect X (homotopyPullback f g) := by
   have hAB : strictPerfect X (A ⊞ B) :=
-    (abelianExactStructure (Complex X)).prop_biprod (strictPerfect X) hA hB
+    (abelianExactStructure (CochainComplex X.Modules ℤ)).prop_biprod (strictPerfect X) hA hB
   exact strictPerfect_shift (strictPerfect_mappingCone hAB hT (biprod.desc f (-g))) (-1)
 
 /-- The literal mapping-cocone homotopy pullback preserves local perfection
 without quasi-compactness, affine, termwise-QC or uniform-bound hypotheses. -/
-lemma locallyPerfect_homotopyPullback {X : Scheme.{u}} {A B T : Complex X}
+lemma locallyPerfect_homotopyPullback {X : Scheme.{u}} {A B T : CochainComplex X.Modules ℤ}
     (hA : locallyPerfect X A) (hB : locallyPerfect X B) (hT : locallyPerfect X T)
     (f : A ⟶ T) (g : B ⟶ T) : locallyPerfect X (homotopyPullback f g) := by
   have hAB : locallyPerfect X (A ⊞ B) :=
-    (abelianExactStructure (Complex X)).prop_biprod (locallyPerfect X) hA hB
+    (abelianExactStructure (CochainComplex X.Modules ℤ)).prop_biprod (locallyPerfect X) hA hB
   exact locallyPerfect_shift (locallyPerfect_mappingCone hAB hT (biprod.desc f (-g))) (-1)
 
 end Quillen.PerfectComplexes

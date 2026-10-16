@@ -8,6 +8,8 @@ module
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneGluing
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Charts
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Locality
+public import Aglib.AlgebraicGeometry.Modules.Restriction.Overlap
+public import Aglib.AlgebraicGeometry.Modules.Subobjects.Gluing
 
 /-!
 # The tautological line on the original two-chart projective line
@@ -131,7 +133,7 @@ def tautologicalLineData : TautologicalLineData R := Classical.choice (by
   let := firstColumn_mono (plusChart R) (polynomialCoordinate R)
   let := secondColumn_mono (minusChart R) (polynomialCoordinate R)
   obtain ⟨N, i, hi, eU, eV, hU, hV⟩ :=
-    AlgebraicGeometry.Scheme.Modules.Coherent.exists_glued_subobject
+    AlgebraicGeometry.Scheme.Modules.exists_glued_subobject
     (plusChart R) (minusChart R)
     (firstColumn (plusChart R) (polynomialCoordinate R))
     (secondColumn (minusChart R) (polynomialCoordinate R))
@@ -176,13 +178,13 @@ lemma tautologicalLine_transition :
     (Scheme.Modules.restrictFunctor (pullback.fst (plusChart R) (minusChart R))).map
         (tautologicalLinePlusIso R).hom ≫
       (columnTransition (plusChart R) (minusChart R) (overlapCoordinateUnit R)).hom =
-    (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso (plusChart R) (minusChart
+    (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso (plusChart R) (minusChart
       R)).hom.app
         (tautologicalLine R) ≫
       (Scheme.Modules.restrictFunctor (pullback.snd (plusChart R) (minusChart R))).map
         (tautologicalLineMinusIso R).hom := by
   let := secondColumn_mono (minusChart R) (polynomialCoordinate R)
-  have hn := (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso (plusChart R) (minusChart
+  have hn := (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso (plusChart R) (minusChart
     R)).hom.naturality
     (tautologicalLineInclusion R)
   dsimp only [Functor.comp_map] at hn

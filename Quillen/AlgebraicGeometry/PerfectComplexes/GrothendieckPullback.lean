@@ -18,6 +18,8 @@ pullback on representatives, without a flatness assumption on the scheme map.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 

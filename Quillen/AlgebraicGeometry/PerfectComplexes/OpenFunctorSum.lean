@@ -16,6 +16,8 @@ its support proof and exactness through the canonical coproduct comparison.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 open Quillen.Waldhausen.ExtensionCategory
 

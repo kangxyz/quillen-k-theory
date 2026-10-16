@@ -8,6 +8,7 @@ module
 
 public import Quillen.Localization.Serre.KernelPushoutComparison
 public import Quillen.Localization.Serre.OverQArrows
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # Uniqueness for the kernel-pushout reflection
@@ -25,7 +26,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
 
 /-- An extension pushout detects Q-arrows with a fixed surjective kernel map. -/

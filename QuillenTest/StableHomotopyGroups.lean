@@ -10,6 +10,8 @@ public import Quillen.Waldhausen.SConstruction.Iterated.StableHomotopy
 /-! Semantic consumers of the original stable transition, colimit and K-map normalizations. -/
 @[expose] public section
 
+open CategoryTheory.Limits.SequentialSystem
+
 open Quillen.Waldhausen
 
 
@@ -49,9 +51,9 @@ theorem whole_homotopy {E F : LoopPrespectrum.{u}} {f g : E ⟶ F}
 /-- The generic comparison uses the actual inverses, with independent categorical universes. -/
 theorem original_sequential_comparison {C : Type u} [Category.{v} C] (F : ℕ ⥤ C)
     [HasColimit F] [∀ n, IsIso (F.map (homOfLE (Nat.le_succ n)))] (n : ℕ) :
-    colimit.ι F n ≫ (Quillen.SequentialIsoColimit.colimitIsoOfSucc F).hom =
-      (Quillen.SequentialIsoColimit.toZeroIso (fun n ↦ F.map (homOfLE (Nat.le_succ n))) n).hom :=
-  Quillen.SequentialIsoColimit.ι_colimitIsoOfSucc_hom F n
+    colimit.ι F n ≫ (colimitIsoOfSucc F).hom =
+      (toZeroIso (fun n ↦ F.map (homOfLE (Nat.le_succ n))) n).hom :=
+  ι_colimitIsoOfSucc_hom F n
 
 /-- Both inverse orders use the literal stage-zero inclusion, even in degree minus one. -/
 theorem negative_stage_inverse (E : LoopPrespectrum.{u}) (hE : E.IsOmega) :

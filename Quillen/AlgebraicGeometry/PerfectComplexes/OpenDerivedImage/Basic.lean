@@ -7,8 +7,11 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenWeakImage
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRightFractions
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.RestrictionHom
+public import Mathlib.Algebra.Homology.DerivedCategory.Fractions
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # The original derived-saturated restriction image
 
 This is an actual full subcategory of the original perfect chain category.
@@ -27,18 +30,20 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex TopologicalSpace
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.OpenDerivedImage
 attribute [local instance] HasDerivedCategory.standard
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 /-- The original derived restriction image, on actual ambient chain complexes. -/
-def complexObjects : ObjectProperty (Complex U) := fun E =>
-  ∃ P : Complex X, locallyPerfect X P ∧
-    Nonempty ((toDerived U).obj ((restrict j).obj P) ≅ (toDerived U).obj E)
+def complexObjects : ObjectProperty (CochainComplex U.Modules ℤ) := fun E =>
+  ∃ P : CochainComplex X.Modules ℤ, locallyPerfect X P ∧
+    Nonempty ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj P) ≅
+      (DerivedCategory.Q (C := U.Modules)).obj E)
 
 /-- Membership is invariant under the specified original derived isomorphism. -/
-theorem complexObjects_iff_of_derivedIso {E E' : Complex U}
-    (e : (toDerived U).obj E ≅ (toDerived U).obj E') :
+theorem complexObjects_iff_of_derivedIso {E E' : CochainComplex U.Modules ℤ}
+    (e : (DerivedCategory.Q (C := U.Modules)).obj E ≅ (DerivedCategory.Q (C := U.Modules)).obj E') :
     complexObjects j E ↔ complexObjects j E' := by
   constructor
   · rintro ⟨P, hP, ⟨eP⟩⟩
@@ -47,12 +52,13 @@ theorem complexObjects_iff_of_derivedIso {E E' : Complex U}
     exact ⟨P, hP, ⟨eP ≪≫ e.symm⟩⟩
 
 /-- Both directions of weak repleteness hold on unchanged original chain maps. -/
-theorem complexObjects_iff_of_quasiIso {E E' : Complex U}
+theorem complexObjects_iff_of_quasiIso {E E' : CochainComplex U.Modules ℤ}
     (f : E ⟶ E') [QuasiIso f] : complexObjects j E ↔ complexObjects j E' :=
-  complexObjects_iff_of_derivedIso j (asIso ((toDerived U).map f))
+  complexObjects_iff_of_derivedIso j (asIso ((DerivedCategory.Q (C := U.Modules)).map f))
 
 /-- Every actual image object is locally perfect, proved through the original isomorphism. -/
-theorem locallyPerfect_of_mem {E : Complex U} (hE : complexObjects j E) : locallyPerfect U E := by
+theorem locallyPerfect_of_mem {E : CochainComplex U.Modules ℤ}
+    (hE : complexObjects j E) : locallyPerfect U E := by
   obtain ⟨P, hP, ⟨e⟩⟩ := hE
   exact (locallyPerfect_iff_of_derivedIso e).mp (locallyPerfect_restrict j hP)
 
@@ -74,16 +80,22 @@ theorem of_weakImage {E : Perfect U}
     objects j E := by
   obtain ⟨P, q, hq⟩ := hE
   have : QuasiIso q.hom := hq
-  exact ⟨P.obj, P.property, ⟨asIso ((toDerived U).map q.hom)⟩⟩
+  exact ⟨P.obj, P.property, ⟨asIso ((DerivedCategory.Q (C := U.Modules)).map q.hom)⟩⟩
 
 /-- A supplied derived-image witness gives an actual weak cospan. The arrows
 point to the new target, as required for dual approximation. -/
-theorem exists_weak_cospan {E : Complex U} (hE : complexObjects j E) :
-    ∃ (P : Complex X) (M : Complex U) (p : (restrict j).obj P ⟶ M) (s : E ⟶ M),
+theorem exists_weak_cospan {E : CochainComplex U.Modules ℤ} (hE : complexObjects j E) :
+    ∃ (P : CochainComplex X.Modules ℤ) (M : CochainComplex U.Modules ℤ) (p : (restrict j).obj P ⟶ M)
+      (s : E ⟶ M),
       locallyPerfect X P ∧ locallyPerfect U M ∧ QuasiIso p ∧ QuasiIso s := by
   obtain ⟨P, hP, ⟨e⟩⟩ := hE
-  obtain ⟨M, p, s, hs, he⟩ := toDerived_left_fraction e.hom
-  have hp : IsIso ((toDerived U).map p) := by rw [← he]; infer_instance
+  obtain ⟨M, p, s, hDenIso1, hFac1⟩ := DerivedCategory.left_fac e.hom
+  have hs : QuasiIso s :=
+    (DerivedCategory.isIso_Q_map_iff_quasiIso _ s).1 hDenIso1
+  have he : (e.hom) ≫ DerivedCategory.Q.map s = DerivedCategory.Q.map p := by
+    let := hDenIso1
+    rw [hFac1, Category.assoc, IsIso.inv_hom_id, Category.comp_id]
+  have hp : IsIso ((DerivedCategory.Q (C := U.Modules)).map p) := by rw [← he]; infer_instance
   exact ⟨P, M, p, s, hP,
     (locallyPerfect_iff_of_quasiIso s).mp (locallyPerfect_of_mem j ⟨P, hP, ⟨e⟩⟩),
     (DerivedCategory.isIso_Q_map_iff_quasiIso U.Modules p).mp hp, hs⟩

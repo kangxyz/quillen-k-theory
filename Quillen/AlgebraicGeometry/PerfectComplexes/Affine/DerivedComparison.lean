@@ -7,10 +7,16 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StrictModuleModel
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedStructure
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalRestriction
+public import Mathlib.Algebra.Homology.DerivedCategory.ShortExact
+public import Mathlib.Algebra.Homology.DerivedCategory.Fractions
+public import Mathlib.Algebra.Homology.DerivedCategory.HomologySequence
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Exact
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Exact
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
 /-!
 # The actual affine derived comparison and termwise quasicoherent acyclicity
 
@@ -25,6 +31,8 @@ with quasicoherent cohomology remain separate geometric theorems.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules (derivedRestrict derivedRestrictFactors)
+
 open AlgebraicGeometry.Scheme.Modules.Complex
 
 
@@ -36,6 +44,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
 namespace Quillen.PerfectComplexes.Affine
@@ -50,7 +59,7 @@ theorem quasiIso_associated_iff (R : CommRingCat.{u})
 complexes. -/
 @[reassoc]
 theorem associatedSectionsIsoOfQuasicoherent_naturality (R : CommRingCat.{u})
-    {K L : Complex (Spec R)} (hK : ∀ i, (K.X i).IsQuasicoherent)
+    {K L : CochainComplex (Spec R).Modules ℤ} (hK : ∀ i, (K.X i).IsQuasicoherent)
     (hL : ∀ i, (L.X i).IsQuasicoherent) (f : K ⟶ L) :
     (associatedComplex R).map ((sectionsComplex R).map f) ≫
       (associatedSectionsIsoOfQuasicoherent R L hL).hom =
@@ -61,7 +70,7 @@ theorem associatedSectionsIsoOfQuasicoherent_naturality (R : CommRingCat.{u})
 /-- Actual global sections preserve and reflect quasi-isomorphisms between
 termwise quasicoherent complexes on an affine scheme. -/
 theorem quasiIso_sections_iff (R : CommRingCat.{u})
-    {K L : Complex (Spec R)} (hK : ∀ i, (K.X i).IsQuasicoherent)
+    {K L : CochainComplex (Spec R).Modules ℤ} (hK : ∀ i, (K.X i).IsQuasicoherent)
     (hL : ∀ i, (L.X i).IsQuasicoherent) (f : K ⟶ L) :
     QuasiIso ((sectionsComplex R).map f) ↔ QuasiIso f := by
   rw [← quasiIso_associated_iff R]
@@ -82,7 +91,7 @@ theorem acyclic_associated_iff (R : CommRingCat.{u}) (K : ModuleComplex R) :
 
 /-- Termwise quasicoherent affine acyclicity is detected by the genuine
 complex of global sections. This is not an assertion about arbitrary terms. -/
-theorem acyclic_sections_iff (R : CommRingCat.{u}) (K : Complex (Spec R))
+theorem acyclic_sections_iff (R : CommRingCat.{u}) (K : CochainComplex (Spec R).Modules ℤ)
     (hK : ∀ i, (K.X i).IsQuasicoherent) :
     ((sectionsComplex R).obj K).Acyclic ↔ K.Acyclic := by
   rw [← acyclic_associated_iff R]
@@ -104,12 +113,13 @@ local instance standardDerivedSheaves (X : Scheme.{u}) :
 /-- The actual affine derived comparison, constructed from exact tilde.
 Its target is the existing quasi-isomorphism localization of all sheaves. -/
 abbrev associatedDerived (R : CommRingCat.{u}) :
-    DerivedCategory (ModuleCat.{u} R) ⥤ Derived (Spec R) :=
+    DerivedCategory (ModuleCat.{u} R) ⥤ DerivedCategory (Spec R).Modules :=
   (tilde.functor R).mapDerivedCategory
 
 /-- The comparison factors through the original sheaf localization functor. -/
 def associatedDerivedFactors (R : CommRingCat.{u}) :
-    DerivedCategory.Q ⋙ associatedDerived R ≅ associatedComplex R ⋙ toDerived (Spec R) :=
+    DerivedCategory.Q ⋙ associatedDerived R ≅ associatedComplex R ⋙ DerivedCategory.Q
+      (C := (Spec R).Modules) :=
   (tilde.functor R).mapDerivedCategoryFactors
 
 instance instCommShiftAssociatedDerived (R : CommRingCat.{u}) :
@@ -135,7 +145,8 @@ theorem isIso_associatedDerived_map_iff (R : CommRingCat.{u})
   have hg : IsIso ((associatedDerived R).map (DerivedCategory.Q.map g)) := by
     rw [← hgs, Functor.map_comp]
     infer_instance
-  have hg' : IsIso ((toDerived (Spec R)).map ((associatedComplex R).map g)) :=
+  have hg' : IsIso ((DerivedCategory.Q (C := (Spec R).Modules)).map
+    ((associatedComplex R).map g)) :=
     (NatIso.isIso_map_iff (associatedDerivedFactors R) g).mp hg
   have : QuasiIso g := (quasiIso_associated_iff R g).mp
     ((DerivedCategory.isIso_Q_map_iff_quasiIso (Spec R).Modules _).mp hg')
@@ -202,19 +213,20 @@ def principalDerivedComparisonFactors (R : CommRingCat.{u}) (r : R) :
   let F := ModuleCat.localizedModuleFunctor (Submonoid.powers r)
   let e₁ : DerivedCategory.Q ⋙ (principalDerivedLocalization R r ⋙ associatedDerived S) ≅
       Quillen.ModuleComplex.PrincipalLocalization.localize r (ComplexShape.up ℤ) ⋙
-        (associatedComplex S ⋙ toDerived (Spec S)) :=
+        (associatedComplex S ⋙ DerivedCategory.Q (C := (Spec S).Modules)) :=
     (Functor.associator _ _ _).symm ≪≫
       Functor.isoWhiskerRight F.mapDerivedCategoryFactors (associatedDerived S) ≪≫
       Functor.associator _ _ _ ≪≫
       Functor.isoWhiskerLeft _ (associatedDerivedFactors S)
   let e₂ : DerivedCategory.Q ⋙ (associatedDerived R ⋙ derivedRestrict j) ≅
-      associatedComplex R ⋙ (restrict j ⋙ toDerived (Spec S)) :=
+      associatedComplex R ⋙ (restrict j ⋙ DerivedCategory.Q (C := (Spec S).Modules)) :=
     (Functor.associator _ _ _).symm ≪≫
       Functor.isoWhiskerRight (associatedDerivedFactors R) (derivedRestrict j) ≪≫
       Functor.associator _ _ _ ≪≫
       Functor.isoWhiskerLeft _ (derivedRestrictFactors j)
   exact e₁ ≪≫ (Functor.associator _ _ _).symm ≪≫
-    Functor.isoWhiskerRight (principalRestrictionAssociatedComplexIso R r) (toDerived (Spec S)) ≪≫
+    Functor.isoWhiskerRight (principalRestrictionAssociatedComplexIso R r)
+      (DerivedCategory.Q (C := (Spec S).Modules)) ≪≫
     Functor.associator _ _ _ ≪≫ e₂.symm
 
 /-- The derived principal-localization comparison uses the original

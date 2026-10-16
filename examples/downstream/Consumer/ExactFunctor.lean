@@ -25,7 +25,7 @@ open CategoryTheory.ExactCategory
 
 noncomputable section
 universe u
-open CategoryTheory CategoryTheory.Limits Quillen
+open CategoryTheory CategoryTheory.Limits
 
 namespace Consumer
 variable {C D T : Type u} [Category.{u} C] [Category.{u} D] [Category.{u} T]
@@ -33,9 +33,11 @@ variable {C D T : Type u} [Category.{u} C] [Category.{u} D] [Category.{u} T]
   [Preadditive T] [HasFiniteBiproducts T]
   (E : ExactStructure C) (E' : ExactStructure D) (E'' : ExactStructure T)
 
--- Construct a real bundled exact category from user-supplied exact structure data.
-def bundled : SmallExactCategory.{u} := SmallExactCategory.ofExactStructure E
+/-- Bundle the supplied small category with its original selected exact structure. -/
+def bundled : SmallExactCategory.{u} :=
+  SmallExactCategory.ofExactStructure E
 
+/-- The existing group structure on the genuine K-group. -/
 abbrev kGroupInstance (n : ℕ) : Group (E.K n) := inferInstance
 theorem identity_map (n : ℕ) (x : E.K n) : (CategoryTheory.ExactCategory.ExactFunctor.id E).KMap n x
   = x := by simp

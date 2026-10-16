@@ -8,6 +8,7 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.FiniteSupportedRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.FiniteSupportedEquality
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-!
 # Finite families of source-supported roofs
@@ -39,20 +40,23 @@ numerator over the same source-supported global denominator, retaining each inve
 theorem original_finite_isomorphism_roofs {U X : Scheme.{u}}
     [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace U]
     (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens) (hT : IsCompact (T : Set X))
-    {A : Complex X} (hA : locallyPerfect X A) {ι : Type v} [Fintype ι]
-    (B : ι → Complex X) (hB : ∀ i, locallyPerfect X (B i))
-    (hzA : IsZero ((toDerived T.toScheme).obj ((restrict T.ι).obj A)))
-    (e : ∀ i, (toDerived U).obj ((restrict j).obj A) ≅ (toDerived U).obj ((restrict j).obj (B i))) :
-    ∃ (M : Complex X) (q : M ⟶ A) (g : ∀ i, M ⟶ B i), locallyPerfect X M ∧
-      QuasiIso ((restrict j).map q) ∧ IsZero ((toDerived T.toScheme).obj ((restrict T.ι).obj M)) ∧
+    {A : CochainComplex X.Modules ℤ} (hA : locallyPerfect X A) {ι : Type v} [Fintype ι]
+    (B : ι → CochainComplex X.Modules ℤ) (hB : ∀ i, locallyPerfect X (B i))
+    (hzA : IsZero ((DerivedCategory.Q (C := T.toScheme.Modules)).obj ((restrict T.ι).obj A)))
+    (e : ∀ i, (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj A) ≅
+      (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj (B i))) :
+    ∃ (M : CochainComplex X.Modules ℤ) (q : M ⟶ A) (g : ∀ i, M ⟶ B i), locallyPerfect X M ∧
+      QuasiIso ((restrict j).map q) ∧ IsZero ((DerivedCategory.Q (C := T.toScheme.Modules)).obj
+        ((restrict T.ι).obj M)) ∧
       ∀ i, QuasiIso ((restrict j).map (g i)) ∧
-        (toDerived U).map ((restrict j).map (g i)) ≫ (e i).inv =
-          (toDerived U).map ((restrict j).map q) := by
+        (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map (g i)) ≫ (e i).inv =
+          (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map q) := by
   obtain ⟨M,q,g,hM,hq,hzM,hg⟩ := exists_source_supported_finite_roof j T hT hA
     Finset.univ B hB hzA (fun i => (e i).hom)
   refine ⟨M,q,(fun i => g i (Finset.mem_univ i)),hM,hq,hzM,?_⟩
   intro i
-  have hi : IsIso ((toDerived U).map ((restrict j).map (g i (Finset.mem_univ i)))) := by
+  have hi : IsIso ((DerivedCategory.Q (C := U.Modules)).map
+    ((restrict j).map (g i (Finset.mem_univ i)))) := by
     rw [← hg i (Finset.mem_univ i)]
     infer_instance
   refine ⟨(DerivedCategory.isIso_Q_map_iff_quasiIso U.Modules _).mp hi,?_⟩
@@ -63,15 +67,16 @@ genuine global homotopies, with one actual source-supported perfect denominator.
 theorem original_finite_chain_homotopies {U X : Scheme.{u}}
     [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace U]
     (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens) (hT : IsCompact (T : Set X))
-    {A : Complex X} (hA : locallyPerfect X A) {ι : Type v} [Fintype ι]
-    (B : ι → Complex X) (b : ι → ℤ) [∀ i, (B i).IsGE (b i)]
+    {A : CochainComplex X.Modules ℤ} (hA : locallyPerfect X A) {ι : Type v} [Fintype ι]
+    (B : ι → CochainComplex X.Modules ℤ) (b : ι → ℤ) [∀ i, (B i).IsGE (b i)]
     (hB : ∀ i n, ((B i).homology n).IsQuasicoherent)
-    (hzA : IsZero ((toDerived T.toScheme).obj ((restrict T.ι).obj A)))
+    (hzA : IsZero ((DerivedCategory.Q (C := T.toScheme.Modules)).obj ((restrict T.ι).obj A)))
     (f g : ∀ i, A ⟶ B i)
-    (heq : ∀ i, (toDerived U).map ((restrict j).map (f i)) =
-      (toDerived U).map ((restrict j).map (g i))) :
-    ∃ (M : Complex X) (q : M ⟶ A), locallyPerfect X M ∧ QuasiIso ((restrict j).map q) ∧
-      IsZero ((toDerived T.toScheme).obj ((restrict T.ι).obj M)) ∧
+    (heq : ∀ i, (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map (f i)) =
+      (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map (g i))) :
+    ∃ (M : CochainComplex X.Modules ℤ) (q : M ⟶ A), locallyPerfect X M ∧ QuasiIso
+      ((restrict j).map q) ∧
+      IsZero ((DerivedCategory.Q (C := T.toScheme.Modules)).obj ((restrict T.ι).obj M)) ∧
       ∀ i, Nonempty (Homotopy (q ≫ f i) (q ≫ g i)) := by
   obtain ⟨M,q,hM,hq,hzM,H⟩ := exists_source_supported_finite_homotopies j T hT hA
     Finset.univ B b hB hzA f g (fun i _ => heq i)
@@ -82,10 +87,11 @@ supported denominator, without choosing any target complex. -/
 theorem empty_family_supported_source {U X : Scheme.{u}}
     [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace U]
     (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens) (hT : IsCompact (T : Set X))
-    {A : Complex X} (hA : locallyPerfect X A)
-    (hzA : IsZero ((toDerived T.toScheme).obj ((restrict T.ι).obj A))) :
-    ∃ (M : Complex X) (q : M ⟶ A), locallyPerfect X M ∧ QuasiIso ((restrict j).map q) ∧
-      IsZero ((toDerived T.toScheme).obj ((restrict T.ι).obj M)) := by
+    {A : CochainComplex X.Modules ℤ} (hA : locallyPerfect X A)
+    (hzA : IsZero ((DerivedCategory.Q (C := T.toScheme.Modules)).obj ((restrict T.ι).obj A))) :
+    ∃ (M : CochainComplex X.Modules ℤ) (q : M ⟶ A), locallyPerfect X M ∧ QuasiIso
+      ((restrict j).map q) ∧
+      IsZero ((DerivedCategory.Q (C := T.toScheme.Modules)).obj ((restrict T.ι).obj M)) := by
   obtain ⟨M,q,g,hM,hq,hzM,hg⟩ := exists_source_supported_finite_roof j T hT hA
     (∅ : Finset Empty) (fun i => i.elim) (fun i => i.elim) hzA (fun i => i.elim)
   exact ⟨M,q,hM,hq,hzM⟩

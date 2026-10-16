@@ -11,6 +11,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.HomotopyPullback
 /-! Semantic consumers of the actual mapping-cocone homotopy pullback. -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.CochainComplex
 open Quillen.PerfectComplexes
 
@@ -93,7 +95,7 @@ theorem actual_homotopy_category_square {C : Type u} [Category.{v} C] [Abelian C
 
 /-- The literal weak projection has a locally perfect source on every scheme;
 no quasi-compactness or termwise quasicoherence is supplied. -/
-theorem actual_local_perfect_projection {X : Scheme.{u}} {A B T : Complex X}
+theorem actual_local_perfect_projection {X : Scheme.{u}} {A B T : CochainComplex X.Modules ℤ}
     (hA : locallyPerfect X A) (hB : locallyPerfect X B) (hT : locallyPerfect X T)
     (f : A ⟶ T) (g : B ⟶ T) [QuasiIso g] :
     locallyPerfect X (homotopyPullback f g) ∧
@@ -103,7 +105,7 @@ theorem actual_local_perfect_projection {X : Scheme.{u}} {A B T : Complex X}
 
 /-- The source used for strict rectification stays in the original strict
 model, and the identity opposite leg makes its original first projection weak. -/
-theorem actual_strict_identity_leg {X : Scheme.{u}} {A P : Complex X}
+theorem actual_strict_identity_leg {X : Scheme.{u}} {A P : CochainComplex X.Modules ℤ}
     (hA : strictPerfect X A) (hP : strictPerfect X P) (f : A ⟶ P) :
     strictPerfect X (homotopyPullback f (𝟙 P)) ∧
       ∀ n : ℤ, IsIso (homologyMap (homotopyPullbackFst f (𝟙 P)) n) := by

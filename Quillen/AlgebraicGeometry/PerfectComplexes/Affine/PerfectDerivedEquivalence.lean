@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPerfect
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.Strictification
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-!
 # The original affine perfect derived equivalence
@@ -29,6 +30,8 @@ subcategories, not an unbounded QC equivalence or a Waldhausen enhancement
 comparison.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
@@ -71,7 +74,8 @@ abbrev PerfectModuleDerived (R : CommRingCat.{u}) := (finiteProjectiveDerivedObj
   R).FullSubcategory
 
 /-- The literal original affine derived functor on actual perfect module objects. -/
-def associatedPerfectDerived (R : CommRingCat.{u}) : PerfectModuleDerived R ⥤ Derived (Spec R) :=
+def associatedPerfectDerived (R : CommRingCat.{u}) : PerfectModuleDerived R ⥤ DerivedCategory
+    (Spec R).Modules :=
   (finiteProjectiveDerivedObjects R).ι ⋙ associatedDerived R
 
 instance (R : CommRingCat.{u}) : (associatedPerfectDerived R).CommShift ℤ := by
@@ -98,17 +102,19 @@ instance (R : CommRingCat.{u}) : (associatedPerfectDerived R).Faithful where
 
 /-- The original affine comparison has exactly the intrinsic perfect sheaf objects as its perfect
   essential image. -/
-lemma associatedPerfectDerived_essImage_iff (R : CommRingCat.{u}) (K : Derived (Spec R)) :
-    (associatedPerfectDerived R).essImage K ↔ perfectDerivedObjects (Spec R) K := by
+lemma associatedPerfectDerived_essImage_iff (R : CommRingCat.{u})
+    (K : DerivedCategory (Spec R).Modules) :
+    (associatedPerfectDerived R).essImage K ↔ Scheme.Modules.perfectDerivedObjects (Spec R) K := by
   constructor
   · rintro ⟨A, ⟨eA⟩⟩
     obtain ⟨P, hP, ⟨eP⟩⟩ := A.property
-    apply (perfectDerivedObjects_iff_exists_representative (Spec R) K).mpr
+    apply (Scheme.Modules.perfectDerivedObjects_iff_exists_representative (Spec R) K).mpr
     exact ⟨⟨(associatedComplex R).obj P, locallyPerfect_of_strictPerfect (strictPerfect_associated R
       hP)⟩,
       ⟨((associatedDerivedFactors R).app P).symm ≪≫ (associatedDerived R).mapIso eP ≪≫ eA⟩⟩
   · intro hK
-    obtain ⟨L, ⟨eL⟩⟩ := (perfectDerivedObjects_iff_exists_representative (Spec R) K).mp hK
+    obtain ⟨L, ⟨eL⟩⟩ := (Scheme.Modules.perfectDerivedObjects_iff_exists_representative (Spec R)
+      K).mp hK
     obtain ⟨P, hP, ⟨eP⟩⟩ := locallyPerfect_exists_moduleStrictPerfect_representative R L.property
     exact ⟨⟨DerivedCategory.Q.obj P, ⟨P, hP, ⟨Iso.refl _⟩⟩⟩,
       ⟨(associatedDerivedFactors R).app P ≪≫ eP ≪≫ eL⟩⟩
@@ -118,7 +124,7 @@ module object; boundedness is proved from local perfection, not supplied. -/
 lemma finiteProjectiveDerived_iff_associated_perfect (R : CommRingCat.{u})
     (K : DerivedCategory (ModuleCat.{u} R)) :
     finiteProjectiveDerivedObjects R K ↔
-      perfectDerivedObjects (Spec R) ((associatedDerived R).obj K) := by
+      Scheme.Modules.perfectDerivedObjects (Spec R) ((associatedDerived R).obj K) := by
   constructor
   · intro hK
     exact (associatedPerfectDerived_essImage_iff R _).mp ⟨⟨K, hK⟩, ⟨Iso.refl _⟩⟩
@@ -141,13 +147,14 @@ lemma finiteProjectiveDerived_iff_associated_perfect (R : CommRingCat.{u})
 
 /-- Equality of actual essential-image and intrinsic perfectness predicates. -/
 lemma associatedPerfectDerived_essImage_eq (R : CommRingCat.{u}) :
-    (associatedPerfectDerived R).essImage = perfectDerivedObjects (Spec R) := by
+    (associatedPerfectDerived R).essImage = Scheme.Modules.perfectDerivedObjects (Spec R) := by
   funext K
   exact propext (associatedPerfectDerived_essImage_iff R K)
 
 /-- The original affine comparison restricted to the proved perfect source and target. -/
-def associatedPerfect (R : CommRingCat.{u}) : PerfectModuleDerived R ⥤ PerfectDerived (Spec R) :=
-  (perfectDerivedObjects (Spec R)).lift (associatedPerfectDerived R)
+def associatedPerfect (R : CommRingCat.{u}) : PerfectModuleDerived R ⥤
+  Scheme.Modules.PerfectDerived (Spec R) :=
+  (Scheme.Modules.perfectDerivedObjects (Spec R)).lift (associatedPerfectDerived R)
     (fun A => (associatedPerfectDerived_essImage_iff R _).mp ⟨A, ⟨Iso.refl _⟩⟩)
 
 instance (R : CommRingCat.{u}) : (associatedPerfect R).CommShift ℤ := by
@@ -159,21 +166,24 @@ instance (R : CommRingCat.{u}) : (associatedPerfect R).IsTriangulated := by
   infer_instance
 
 instance (R : CommRingCat.{u}) : (associatedPerfect R).Full :=
-  inferInstanceAs ((perfectDerivedObjects (Spec R)).lift (associatedPerfectDerived R) _).Full
+  inferInstanceAs ((Scheme.Modules.perfectDerivedObjects (Spec R)).lift
+    (associatedPerfectDerived R) _).Full
 
 instance (R : CommRingCat.{u}) : (associatedPerfect R).Faithful :=
-  inferInstanceAs ((perfectDerivedObjects (Spec R)).lift (associatedPerfectDerived R) _).Faithful
+  inferInstanceAs ((Scheme.Modules.perfectDerivedObjects (Spec R)).lift
+    (associatedPerfectDerived R) _).Faithful
 
 instance (R : CommRingCat.{u}) : (associatedPerfect R).EssSurj where
   mem_essImage K := by
     obtain ⟨A, ⟨e⟩⟩ := (associatedPerfectDerived_essImage_iff R K.obj).mpr K.property
-    exact ⟨A, ⟨ObjectProperty.isoMk (perfectDerivedObjects (Spec R)) e⟩⟩
+    exact ⟨A, ⟨ObjectProperty.isoMk (Scheme.Modules.perfectDerivedObjects (Spec R)) e⟩⟩
 
 instance (R : CommRingCat.{u}) : (associatedPerfect R).IsEquivalence where
 
 /-- The genuine perfect derived equivalence over any commutative ring. -/
 def perfectDerivedEquivalence (R : CommRingCat.{u}) :
-    PerfectModuleDerived R ≌ PerfectDerived (Spec R) := (associatedPerfect R).asEquivalence
+    PerfectModuleDerived R ≌ Scheme.Modules.PerfectDerived (Spec R) := (associatedPerfect
+      R).asEquivalence
 
 /-- The forward equivalence acts by the literal original associated-derived morphism map. -/
 @[simp]
@@ -183,7 +193,7 @@ lemma perfectDerivedEquivalence_functor_map (R : CommRingCat.{u})
 
 /-- Forgetting perfectness recovers the original affine derived functor definitionally. -/
 def perfectDerivedEquivalenceFactors (R : CommRingCat.{u}) :
-    (perfectDerivedEquivalence R).functor ⋙ (perfectDerivedObjects (Spec R)).ι ≅
+    (perfectDerivedEquivalence R).functor ⋙ (Scheme.Modules.perfectDerivedObjects (Spec R)).ι ≅
       (finiteProjectiveDerivedObjects R).ι ⋙ associatedDerived R := Iso.refl _
 
 /-- The equivalence preserves and reflects each exact lower cohomological bound. -/
@@ -231,7 +241,8 @@ def perfectDerivedEquivalencePrincipalIso (R : CommRingCat.{u}) (r : R) :
     principalPerfectModuleLocalization R r ⋙
       (perfectDerivedEquivalence (CommRingCat.of (Localization.Away r))).functor ≅
     (perfectDerivedEquivalence R).functor ⋙
-      perfectDerivedRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) :=
+      Scheme.Modules.perfectDerivedRestrict
+        (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r) :=
   NatIso.ofComponents (fun K => ObjectProperty.isoMk _ ((principalDerivedComparisonIso R r).app
     K.obj))
     (fun f => by

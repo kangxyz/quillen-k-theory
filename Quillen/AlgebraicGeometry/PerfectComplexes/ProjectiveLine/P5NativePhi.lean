@@ -67,9 +67,11 @@ instance boundedNegativeTwist_additive (X : QuasiCompactSchemes.{u}) :
 preservation of degreewise short exact sequences.
 -/
 def boundedNegativeTwistExactFunctor (X : QuasiCompactSchemes.{u}) : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (nativeLineFunctor.obj X).obj))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (nativeLineFunctor.obj X).obj.Modules ℤ))
       (BoundedBelow.objects (nativeLineFunctor.obj X).obj))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (nativeLineFunctor.obj X).obj))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (nativeLineFunctor.obj X).obj.Modules ℤ))
       (BoundedBelow.objects (nativeLineFunctor.obj X).obj)) where
   toFunctor := boundedNegativeTwist X
   map_conflation S hs := by

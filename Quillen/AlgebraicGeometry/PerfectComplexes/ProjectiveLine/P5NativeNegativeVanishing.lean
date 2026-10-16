@@ -10,6 +10,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePr
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeOpenNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeAffineTwoSummands
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePerfectGeneration
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 
 /-! # Actual native negative-line projection vanishing
@@ -19,6 +20,8 @@ reduce the actual negative pullback complex to the accepted affine calculation.
 Open-cover reflection takes place in the original derived category, not on K-groups.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open AlgebraicGeometry.Scheme.ProjectiveLine
 

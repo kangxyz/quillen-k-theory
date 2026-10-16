@@ -7,13 +7,15 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PerfectSupport
-public import Quillen.AlgebraicGeometry.PerfectComplexes.SplitFactorization
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 public import Quillen.Waldhausen.Fibration.GeneralComparison
 public import Quillen.Waldhausen.Fibration.LongExactSequence
 public import Quillen.Waldhausen.Fibration.ComplexExtension
 public import Quillen.Waldhausen.Fibration.InverseImageWeak
 public import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-!
 # The genuine relative-open Waldhausen fibration for perfect complexes
 
@@ -39,29 +41,10 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes
-
-/-- Actual open restriction commutes with integer shifts of chain complexes. -/
-instance instCommShiftRestrict {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] :
-    (restrict j).CommShift ℤ := by
-  unfold restrict
-  infer_instance
-
-/-- Every integer shift of a genuinely locally perfect complex is locally
-perfect, using the shifted actual strict model on the same neighborhood. -/
-theorem locallyPerfect_shift {X : Scheme.{u}} {K : Complex X}
-    (hK : locallyPerfect X K) (n : ℤ) :
-    locallyPerfect X ((shiftFunctor (Complex X) n).obj K) := by
-  intro x
-  obtain ⟨O, hx, P, ⟨eP⟩⟩ := hK x
-  refine ⟨O, hx, ⟨(shiftFunctor (Complex O.toScheme) n).obj P.obj,
-    strictPerfect_shift P.property n⟩, ⟨?_⟩⟩
-  exact (toDerived O.toScheme).mapIso (((restrict O.ι).commShiftIso n).app K) ≪≫
-    ((toDerived O.toScheme).commShiftIso n).app ((restrict O.ι).obj K) ≪≫
-    (shiftFunctor (Derived O.toScheme) n).mapIso eP ≪≫
-    (((toDerived O.toScheme).commShiftIso n).app P.obj).symm
 
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 

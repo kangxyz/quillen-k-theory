@@ -20,6 +20,8 @@ two-line associator, signed shift, and the E0 left unitor are retained.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
 open Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
 open Quillen.PerfectComplexes.ProjectiveLine.StrictPositiveRetraction
@@ -55,9 +57,11 @@ instance boundedRightTensor_additive (R : CommRingCat.{u}) :
 preservation of degreewise short exact sequences.
 -/
 def boundedRightTensorExactFunctor (R : CommRingCat.{u}) : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (twoChartLine R).Modules ℤ))
       (BoundedBelow.objects (twoChartLine R)))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (twoChartLine R).Modules ℤ))
       (BoundedBelow.objects (twoChartLine R))) where
   toFunctor := boundedRightTensor R
   map_conflation S hs := by

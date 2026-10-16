@@ -5,11 +5,16 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Homology
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenQCTargetRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.ImmersionDerivedTarget
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.RestrictionHom
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 /-! # Actual affine attachment over an original lower-bounded QC target
 
 The source denominator retains every compact-open support condition on the
@@ -35,21 +40,26 @@ lemma exists_perfect_target_glue_over_lowerBounded_qc_spec
     (R : CommRingCat.{u}) {U X : Scheme.{u}} [QuasiSeparatedSpace X] [CompactSpace U]
     (j : U ⟶ X) (k : Spec R ⟶ X) [IsOpenImmersion j] [IsOpenImmersion k]
     (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ Set.range k)
-    {A : Complex U} {B : Complex (Spec R)} {L : Complex X}
+    {A : CochainComplex U.Modules ℤ} {B : CochainComplex (Spec R).Modules ℤ}
+      {L : CochainComplex X.Modules ℤ}
     (hA : locallyPerfect U A) (hB : locallyPerfect (Spec R) B)
     (n : ℤ) [L.IsGE n] (hLqc : ∀ m, (L.homology m).IsQuasicoherent)
-    (e : (toDerived (pullback j k)).obj ((restrict (pullback.fst j k)).obj A) ≅
-      (toDerived (pullback j k)).obj ((restrict (pullback.snd j k)).obj B))
-    (φ : (toDerived U).obj A ⟶ (toDerived U).obj ((restrict j).obj L)) :
-    ∃ (P : Complex X), locallyPerfect X P ∧
-      ∃ (u : (toDerived U).obj A ≅ (toDerived U).obj ((restrict j).obj P)) (d : P ⟶ L),
-        u.hom ≫ (toDerived U).map ((restrict j).map d) = φ ∧
+    (e : (DerivedCategory.Q (C := (pullback j k).Modules)).obj ((restrict (pullback.fst j k)).obj A)
+      ≅
+      (DerivedCategory.Q (C := (pullback j k).Modules)).obj ((restrict (pullback.snd j k)).obj B))
+    (φ : (DerivedCategory.Q (C := U.Modules)).obj A ⟶ (DerivedCategory.Q (C := U.Modules)).obj
+      ((restrict j).obj L)) :
+    ∃ (P : CochainComplex X.Modules ℤ), locallyPerfect X P ∧
+      ∃ (u : (DerivedCategory.Q (C := U.Modules)).obj A ≅ (DerivedCategory.Q (C := U.Modules)).obj
+        ((restrict j).obj P)) (d : P ⟶ L),
+        u.hom ≫ (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map d) = φ ∧
         ∀ (Z : (Spec R).Opens), IsCompact (Z : Set (Spec R)) →
-          IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj B)) →
-          IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj ((restrict k).obj P))) := by
+          IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj ((restrict Z.ι).obj B)) →
+          IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj
+            ((restrict Z.ι).obj ((restrict k).obj P))) := by
   let a := pullback.fst j k
   let b := pullback.snd j k
-  let Q := toDerived (pullback j k)
+  let Q := DerivedCategory.Q (C := (pullback j k).Modules)
   let c := openSquareRestrictIso b a k j pullback.condition.symm
   let γ := e.inv ≫ restrictDerivedHom a φ ≫ Q.map (c.inv.app L)
   have : ((restrict k).obj L).IsGE n := by
@@ -65,7 +75,8 @@ lemma exists_perfect_target_glue_over_lowerBounded_qc_spec
   change Q.map ((restrict b).map q) ≫ γ = Q.map ((restrict b).map p) at hp
   let e' := e ≪≫ (asIso (Q.map ((restrict b).map q))).symm
   have he' : restrictDerivedHom a φ =
-      e'.hom ≫ restrictDerivedHom b ((toDerived (Spec R)).map p) ≫ Q.map (c.hom.app L) := by
+      e'.hom ≫ restrictDerivedHom b ((DerivedCategory.Q (C := (Spec R).Modules)).map p) ≫ Q.map
+        (c.hom.app L) := by
     rw [restrictDerivedHom_map]
     change _ = (e.hom ≫ inv (Q.map ((restrict b).map q))) ≫ _ ≫ _
     rw [← hp]
@@ -74,7 +85,7 @@ lemma exists_perfect_target_glue_over_lowerBounded_qc_spec
     erw [CategoryTheory.Functor.map_id, Category.comp_id]
   obtain ⟨P, hP, u, v, d, hu, hv, he⟩ :=
     OpenHomotopyGluing.exists_perfect_glue_of_derived_target_immersions j k hcover hA hB'
-      e' φ ((toDerived (Spec R)).map p) he'
+      e' φ ((DerivedCategory.Q (C := (Spec R).Modules)).map p) he'
   refine ⟨P, hP, u, d, hu, ?_⟩
   intro Z hZ hz
   exact (hs Z hZ hz).of_iso (restrictDerivedIso Z.ι v).symm
@@ -85,40 +96,44 @@ lemma exists_stabilized_qc_target_extension_across_spec
     (R : CommRingCat.{u}) {U X : Scheme.{u}} [QuasiSeparatedSpace X] [CompactSpace U]
     (j : U ⟶ X) (k : Spec R ⟶ X) [IsOpenImmersion j] [IsOpenImmersion k]
     (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ Set.range k)
-    {E : Complex U} {L : Complex X} (hE : locallyPerfect U E)
+    {E : CochainComplex U.Modules ℤ} {L : CochainComplex X.Modules ℤ} (hE : locallyPerfect U E)
     (n : ℤ) [L.IsGE n] (hLqc : ∀ m, (L.homology m).IsQuasicoherent)
-    (φ : (toDerived U).obj E ⟶ (toDerived U).obj ((restrict j).obj L)) :
-    ∃ (P : Complex X), locallyPerfect X P ∧
-      ∃ (u : (toDerived U).obj (E ⊞ E⟦(1 : ℤ)⟧) ≅
-        (toDerived U).obj ((restrict j).obj P)) (d : P ⟶ L),
-        u.hom ≫ (toDerived U).map ((restrict j).map d) =
-          (toDerived U).map (biprod.fst : E ⊞ E⟦(1 : ℤ)⟧ ⟶ E) ≫ φ := by
+    (φ : (DerivedCategory.Q (C := U.Modules)).obj E ⟶ (DerivedCategory.Q (C := U.Modules)).obj
+      ((restrict j).obj L)) :
+    ∃ (P : CochainComplex X.Modules ℤ), locallyPerfect X P ∧
+      ∃ (u : (DerivedCategory.Q (C := U.Modules)).obj (E ⊞ E⟦(1 : ℤ)⟧) ≅
+        (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj P)) (d : P ⟶ L),
+        u.hom ≫ (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map d) =
+          (DerivedCategory.Q (C := U.Modules)).map (biprod.fst : E ⊞ E⟦(1 : ℤ)⟧ ⟶ E) ≫ φ := by
   let a := pullback.fst j k
   let b := pullback.snd j k
   obtain ⟨B, hB, ⟨eB⟩⟩ := exists_strict_stabilized_extension_into_spec R b
     ((restrict a).obj E) (locallyPerfect_restrict a hE)
   have hA : locallyPerfect U (E ⊞ E⟦(1 : ℤ)⟧) :=
-    (abelianExactStructure (Complex U)).prop_biprod (locallyPerfect U)
+    (abelianExactStructure (CochainComplex U.Modules ℤ)).prop_biprod (locallyPerfect U)
       hE (locallyPerfect_shift hE 1)
-  let e := (toDerived (pullback j k)).mapIso (restrictStabilizationIso a E) ≪≫ eB.symm
+  let e := (DerivedCategory.Q (C := (pullback j k).Modules)).mapIso
+    (restrictStabilizationIso a E) ≪≫ eB.symm
   obtain ⟨P, hP, u, d, hu, _⟩ := exists_perfect_target_glue_over_lowerBounded_qc_spec
     R j k hcover hA (locallyPerfect_of_strictPerfect hB) n hLqc e
-      ((toDerived U).map biprod.fst ≫ φ)
+      ((DerivedCategory.Q (C := U.Modules)).map biprod.fst ≫ φ)
   exact ⟨P, hP, u, d, hu⟩
 
 lemma exists_retract_qc_target_extension_across_spec
     (R : CommRingCat.{u}) {U X : Scheme.{u}} [QuasiSeparatedSpace X] [CompactSpace U]
     (j : U ⟶ X) (k : Spec R ⟶ X) [IsOpenImmersion j] [IsOpenImmersion k]
     (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ Set.range k)
-    {E : Complex U} {L : Complex X} (hE : locallyPerfect U E)
+    {E : CochainComplex U.Modules ℤ} {L : CochainComplex X.Modules ℤ} (hE : locallyPerfect U E)
     (n : ℤ) [L.IsGE n] (hLqc : ∀ m, (L.homology m).IsQuasicoherent)
-    (φ : (toDerived U).obj E ⟶ (toDerived U).obj ((restrict j).obj L)) :
-    ∃ (P : Complex X), locallyPerfect X P ∧
-      ∃ (r : Retract ((toDerived U).obj E) ((toDerived U).obj ((restrict j).obj P)))
-        (d : P ⟶ L), r.i ≫ (toDerived U).map ((restrict j).map d) = φ := by
+    (φ : (DerivedCategory.Q (C := U.Modules)).obj E ⟶ (DerivedCategory.Q (C := U.Modules)).obj
+      ((restrict j).obj L)) :
+    ∃ (P : CochainComplex X.Modules ℤ), locallyPerfect X P ∧
+      ∃ (r : Retract ((DerivedCategory.Q (C := U.Modules)).obj E)
+        ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj P)))
+        (d : P ⟶ L), r.i ≫ (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map d) = φ := by
   obtain ⟨P, hP, u, d, hu⟩ :=
     exists_stabilized_qc_target_extension_across_spec R j k hcover hE n hLqc φ
-  let Q := toDerived U
+  let Q := DerivedCategory.Q (C := U.Modules)
   let r : Retract (Q.obj E) (Q.obj ((restrict j).obj P)) :=
     { i := Q.map biprod.inl ≫ u.hom
       r := u.inv ≫ Q.map biprod.fst

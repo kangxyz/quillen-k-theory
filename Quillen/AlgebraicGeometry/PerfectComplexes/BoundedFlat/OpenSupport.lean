@@ -134,9 +134,9 @@ theorem boundedFlatPerfectAcyclicToSupported_cofibration
     (boundedFlatPerfectSupportedWaldhausen j).cof ((boundedFlatPerfectAcyclicToSupported j).map f)
       := by
   obtain ⟨Z, hZ, p, hp, hS⟩ :=
-    (ExactSubcategory.inflation_iff (abelianExactStructure (Complex X))
+    (ExactSubcategory.inflation_iff (abelianExactStructure (CochainComplex X.Modules ℤ))
       (boundedFlatPerfect X) f.hom).1 hf
-  apply (ExactSubcategory.inflation_iff (abelianExactStructure (Complex X))
+  apply (ExactSubcategory.inflation_iff (abelianExactStructure (CochainComplex X.Modules ℤ))
     (boundedFlatPerfectSupported j) ((boundedFlatPerfectAcyclicToSupported j).map f)).2
   refine ⟨Z, ⟨hZ, ?_⟩, p, hp, hS⟩
   have hS' : (ShortComplex.mk f.hom.hom p hp).ShortExact := hS

@@ -17,6 +17,8 @@ or replacement of the grading is used.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 noncomputable section

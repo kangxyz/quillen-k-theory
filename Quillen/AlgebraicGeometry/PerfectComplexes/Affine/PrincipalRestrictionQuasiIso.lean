@@ -7,10 +7,11 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedComparison
-public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalRestriction
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalRestriction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.OpenUnion
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FinitePrincipalCohomologicalDimension
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
 /-!
 # Detecting original associated-sheaf quasi-isomorphisms on principal charts
 

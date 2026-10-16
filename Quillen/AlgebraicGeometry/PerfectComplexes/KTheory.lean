@@ -9,6 +9,7 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Extension
+public import Quillen.AlgebraicGeometry.PerfectComplexes.VectorBundleInclusion
 public import Quillen.Waldhausen.SubcategoryInclusion
 
 /-!
@@ -76,8 +77,10 @@ instance perfectRestrict_additive : (perfectRestrict j).Additive := by
 
 /-- Exactness of actual restriction for the inherited exact structures. -/
 def perfectExactRestrict : CategoryTheory.ExactCategory.ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (locallyPerfect X))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex U)) (locallyPerfect U)) where
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
+      (locallyPerfect X))
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex U.Modules ℤ))
+      (locallyPerfect U)) where
   toFunctor := perfectRestrict j
   map_conflation S hS := by
     change ((S.map (locallyPerfect X).ι).map (restrict j)).ShortExact
@@ -94,7 +97,8 @@ theorem perfectRestrict_waldhausenExact :
     exact restrict_quasiIso j f.hom
   pushout hi h := by
     apply IsPushout.of_map_of_faithful (locallyPerfect U).ι
-    exact (Waldhausen.fullSubcategory_map_pushout (abelianExactStructure (Complex X))
+    exact (Waldhausen.fullSubcategory_map_pushout (abelianExactStructure
+      (CochainComplex X.Modules ℤ))
       (locallyPerfect X) hi h).map (restrict j)
 
 /-- The genuine restriction homomorphism on locally perfect K-groups. -/

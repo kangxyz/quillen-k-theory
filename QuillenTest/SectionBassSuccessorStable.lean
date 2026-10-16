@@ -16,6 +16,8 @@ coefficient action remain visible through the genuine natural successor isomorph
 -/
 @[expose] public section
 
+open CategoryTheory.Limits.SequentialSystem
+
 open Quillen.PerfectComplexes
 
 

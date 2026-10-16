@@ -8,9 +8,14 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.OpenUnion
 public import Mathlib.Data.Finset.Lattice.Fold
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 /-! # Genuine finite-cover derived Hom bounds -/
 @[expose] public section
+
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.Complex.restrictCommShift
 
 open AlgebraicGeometry.Scheme.Modules.Complex
 
@@ -20,21 +25,22 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes
 attribute [local instance] HasDerivedCategory.standard
-variable {X : Scheme.{u}} (E L : Complex X)
+variable {X : Scheme.{u}} (E L : CochainComplex X.Modules ℤ)
 
 /-- Vanishing of original Hom from the displayed shifted restriction. -/
 def DerivedHomZeroOn (U : X.Opens) (n : ℤ) : Prop :=
-  ∀ φ : ((toDerived U.toScheme).obj ((restrict U.ι).obj E))⟦n⟧ ⟶
-    (toDerived U.toScheme).obj ((restrict U.ι).obj L), φ = 0
+  ∀ φ : ((DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj E))⟦n⟧ ⟶
+    (DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj L), φ = 0
 
 /-- Actual restriction and localization shift comparisons, in their original order. -/
 def restrictDerivedShiftIso (U : X.Opens) (n : ℤ) :
-    (toDerived U.toScheme).obj ((restrict U.ι).obj (E⟦n⟧)) ≅
-      ((toDerived U.toScheme).obj ((restrict U.ι).obj E))⟦n⟧ :=
-  (toDerived U.toScheme).mapIso (((restrict U.ι).commShiftIso n).app E) ≪≫
-    ((toDerived U.toScheme).commShiftIso n).app ((restrict U.ι).obj E)
+    (DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj (E⟦n⟧)) ≅
+      ((DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj E))⟦n⟧ :=
+  (DerivedCategory.Q (C := U.toScheme.Modules)).mapIso (((restrict U.ι).commShiftIso n).app E) ≪≫
+    ((DerivedCategory.Q (C := U.toScheme.Modules)).commShiftIso n).app ((restrict U.ι).obj E)
 
 /-- Exactly one source-shift degree is lost in the actual binary union step. -/
 theorem derivedHomZeroOn_union (U V : X.Opens) (n : ℤ)
@@ -47,10 +53,11 @@ theorem derivedHomZeroOn_union (U V : X.Opens) (n : ℤ)
   · exact hom_eq_zero_of_iso (restrictDerivedShiftIso E U n) (Iso.refl _) hU
   · exact hom_eq_zero_of_iso (restrictDerivedShiftIso E V n) (Iso.refl _) hV
   · exact hom_eq_zero_of_iso
-      ((shiftFunctor (Derived (U ⊓ V).toScheme) (1 : ℤ)).mapIso
+      ((shiftFunctor (DerivedCategory (U ⊓ V).toScheme.Modules) (1 : ℤ)).mapIso
         (restrictDerivedShiftIso E (U ⊓ V) n) ≪≫
-        ((shiftFunctorAdd (Derived (U ⊓ V).toScheme) n 1).app
-          ((toDerived (U ⊓ V).toScheme).obj ((restrict (U ⊓ V).ι).obj E))).symm)
+        ((shiftFunctorAdd (DerivedCategory (U ⊓ V).toScheme.Modules) n 1).app
+          ((DerivedCategory.Q (C := (U ⊓ V).toScheme.Modules)).obj
+            ((restrict (U ⊓ V).ι).obj E))).symm)
       (Iso.refl _) hW
 
 /-- The actual empty open has zero derived Hom in every source shift. -/
@@ -63,8 +70,8 @@ theorem derivedHomZeroOn_bot (n : ℤ) : DerivedHomZeroOn E L ⊥ n := by
       intro x
       exact False.elim x.property
     exact hz.eq_of_src _ _
-  exact fun φ => ((shiftFunctor (Derived (⊥ : X.Opens).toScheme) n).map_isZero
-    ((toDerived (⊥ : X.Opens).toScheme).map_isZero hE)).eq_of_src φ 0
+  exact fun φ => ((shiftFunctor (DerivedCategory (⊥ : X.Opens).toScheme.Modules) n).map_isZero
+    ((DerivedCategory.Q (C := (⊥ : X.Opens).toScheme.Modules)).map_isZero hE)).eq_of_src φ 0
 
 /-- A finite inf-closed cover loses at most one allowed source-shift degree per
 additional open. The empty family is included, with its actual zero Hom. -/

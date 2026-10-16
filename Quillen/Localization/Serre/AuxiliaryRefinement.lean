@@ -8,6 +8,7 @@ module
 
 public import Quillen.Localization.Serre.AuxiliaryArrowLift
 public import Quillen.Localization.Serre.AuxiliaryDiagram
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-! # Faithfulness and eventual equality of auxiliary object lifts -/
 @[expose] public section
@@ -33,7 +34,8 @@ theorem inflationArrow_injective {X Y : C} (f g : X ⟶ Y) [Mono f] [Mono g]
 
 end Quillen.Q
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
 variable (P : ObjectProperty C) [P.IsSerreClass]
 
@@ -42,7 +44,7 @@ instance auxiliaryForgetQ_faithful (N : C) : (auxiliaryForgetQ P N).Faithful := 
   infer_instance
 
 /-- Each comparison leg is faithful before taking the filtered colimit. -/
-instance auxiliaryToIsoStructuredWithBase_faithful {N : C} {V : Quotient P}
+instance auxiliaryToIsoStructuredWithBase_faithful {N : C} {V : P.isoModSerre.Localization}
     (φ : P.isoModSerre.Q.obj N ≅ V) : (auxiliaryToIsoStructuredWithBase P φ).Faithful where
   map_injective := by
     intro X Y f g h
@@ -51,7 +53,7 @@ instance auxiliaryToIsoStructuredWithBase_faithful {N : C} {V : Quotient P}
 
 /-- Equal comparison objects on the same ambient source have equal
 localized ordinary structure maps. -/
-lemma auxiliaryOverMk_map_eq_of_comparison_eq {N S : C} {V : Quotient P}
+lemma auxiliaryOverMk_map_eq_of_comparison_eq {N S : C} {V : P.isoModSerre.Localization}
     (φ : P.isoModSerre.Q.obj N ≅ V) (f g : S ⟶ N)
     (hf : P.isoModSerre f) (hg : P.isoModSerre g)
     (h : (auxiliaryToIsoStructuredWithBase P φ).obj (auxiliaryOverMk P f hf) =
@@ -74,7 +76,7 @@ lemma auxiliaryOverMk_map_eq_of_comparison_eq {N S : C} {V : Quotient P}
 /-- Objects identified by one comparison leg become literally equal after
 one Serre-isomorphic postcomposition. The denominator is supplied by the
 proved calculus of fractions. -/
-theorem auxiliary_eventual_obj_eq {N : C} {V : Quotient P}
+theorem auxiliary_eventual_obj_eq {N : C} {V : P.isoModSerre.Localization}
     (φ : P.isoModSerre.Q.obj N ≅ V) (X Y : AuxiliaryKernel P N)
     (h : (auxiliaryToIsoStructuredWithBase P φ).obj X =
       (auxiliaryToIsoStructuredWithBase P φ).obj Y) :
@@ -96,7 +98,7 @@ theorem auxiliary_eventual_obj_eq {N : C} {V : Quotient P}
 
 /-- A denominator refinement is itself a morphism of ordinary quotient
 lifts, so the previous equality holds at a genuine later diagram stage. -/
-theorem quotientAuxiliaryLift_eventual_obj_eq {V : Quotient P}
+theorem quotientAuxiliaryLift_eventual_obj_eq {V : P.isoModSerre.Localization}
     (A : QuotientAuxiliaryLift P V) (X Y : AuxiliaryKernel P A.obj.left)
     (h : (auxiliaryToIsoStructuredWithBase P (asIso A.obj.hom)).obj X =
       (auxiliaryToIsoStructuredWithBase P (asIso A.obj.hom)).obj Y) :

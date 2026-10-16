@@ -10,7 +10,7 @@ public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.Finite.AffinePushforward
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.Finite.GeneralPushforward
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
-public import Aglib.Algebra.Category.ModuleCat.FiniteRestrictionScalars
+public import Aglib.Algebra.Category.FGModuleCat.RestrictScalars
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Pushforward
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.ComparisonGTheory
 public import Quillen.CategoryTheory.SmallModel.Functoriality

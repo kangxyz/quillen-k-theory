@@ -7,7 +7,7 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.InjectiveCounit
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Homology
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineBoundedDerivedPushforward
 public import Aglib.Algebra.Homology.DerivedCategory.RightDerivedFunctorPlus.Composition
 public import Quillen.AlgebraicGeometry.PerfectComplexes.InjectivePushforwardAdjunction
@@ -15,9 +15,13 @@ public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TwoOpenSheafSequence
 public import Aglib.AlgebraicGeometry.Cohomology.Injective.Restriction
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Localization.AffineSectionsGlobal
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.ChartAffineness
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedStructure
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPerfect
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalRestriction
+public import Mathlib.Algebra.Homology.DerivedCategory.ShortExact
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Mathlib.Algebra.Homology.DerivedCategory.Basic
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Bounded quasicoherent sources for original affine injective counits -/
 @[expose] public section
 
@@ -30,6 +34,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 namespace Quillen.PerfectComplexes.ProjectiveLine
 
@@ -38,12 +43,12 @@ local instance qcRepresentativeStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
 
 /-- Good upper truncation of the actual affine associated-sections complex. -/
-def affineBoundedQCSource (R : CommRingCat.{u}) (I : Complex (Spec R)) (b : ℤ) :
-    Complex (Spec R) :=
+def affineBoundedQCSource (R : CommRingCat.{u}) (I : CochainComplex (Spec R).Modules ℤ) (b : ℤ) :
+    CochainComplex (Spec R).Modules ℤ :=
   ((Affine.associatedComplex R).obj ((Affine.sectionsComplex R).obj I)).truncLE b
 
 /-- The original truncated associated-sections counit, into the same actual complex. -/
-def affineBoundedQCCounit (R : CommRingCat.{u}) (I : Complex (Spec R)) (b : ℤ) :
+def affineBoundedQCCounit (R : CommRingCat.{u}) (I : CochainComplex (Spec R).Modules ℤ) (b : ℤ) :
     affineBoundedQCSource R I b ⟶ I :=
   ((Affine.associatedComplex R).obj ((Affine.sectionsComplex R).obj I)).ιTruncLE b ≫
     Affine.associatedSectionsCounit R I
@@ -51,7 +56,7 @@ def affineBoundedQCCounit (R : CommRingCat.{u}) (I : Complex (Spec R)) (b : ℤ)
 /-- Every term of the truncated affine source is quasicoherent, with no
 quasicoherence requirement on the original complex terms. -/
 theorem affineBoundedQCSource_quasicoherent (R : CommRingCat.{u})
-    (I : Complex (Spec R)) (b i : ℤ) :
+    (I : CochainComplex (Spec R).Modules ℤ) (b i : ℤ) :
     ((affineBoundedQCSource R I b).X i).IsQuasicoherent := by
   let F := (Affine.associatedComplex R).obj ((Affine.sectionsComplex R).obj I)
   let Q := SheafOfModules.isQuasicoherent (Spec R).ringCatSheaf
@@ -70,7 +75,7 @@ theorem affineBoundedQCSource_quasicoherent (R : CommRingCat.{u})
     infer_instance
 
 /-- The source retains a given lower bound and the chosen finite upper bound. -/
-theorem affineBoundedQCSource_bounds (R : CommRingCat.{u}) (I : Complex (Spec R))
+theorem affineBoundedQCSource_bounds (R : CommRingCat.{u}) (I : CochainComplex (Spec R).Modules ℤ)
     (a b : ℤ) (hab : a ≤ b) [I.IsStrictlyGE a] :
     (∀ i, i < a ∨ b < i → IsZero ((affineBoundedQCSource R I b).X i)) := by
   let F := (Affine.associatedComplex R).obj ((Affine.sectionsComplex R).obj I)
@@ -82,7 +87,7 @@ theorem affineBoundedQCSource_bounds (R : CommRingCat.{u}) (I : Complex (Spec R)
 
 /-- Bounded QC cohomology of the injective input makes its original truncated
 associated-sections counit a genuine quasi-isomorphism. -/
-theorem affineBoundedQCCounit_quasiIso (R : CommRingCat.{u}) (I : Complex (Spec R))
+theorem affineBoundedQCCounit_quasiIso (R : CommRingCat.{u}) (I : CochainComplex (Spec R).Modules ℤ)
     (a b : ℤ) [I.IsStrictlyGE a] [I.IsLE b]
     (hinj : ∀ i, Injective (I.X i)) (hqc : ∀ i, (I.homology i).IsQuasicoherent) :
     QuasiIso (affineBoundedQCCounit R I b) := by
@@ -143,14 +148,14 @@ theorem quasiIso_affinePushforward_of_boundedQC_injective
 
 /-- Every literal chain map from a termwise QC source factors through the
 original affine counit. No projectivity or injectivity is needed for this factorization. -/
-def liftToAffineCounit (R : CommRingCat.{u}) {P I : Complex (Spec R)}
+def liftToAffineCounit (R : CommRingCat.{u}) {P I : CochainComplex (Spec R).Modules ℤ}
     (hP : ∀ i, (P.X i).IsQuasicoherent) (f : P ⟶ I) :
     P ⟶ (Affine.associatedComplex R).obj ((Affine.sectionsComplex R).obj I) :=
   (Affine.associatedSectionsIsoOfQuasicoherent R P hP).inv ≫
     (Affine.associatedComplex R).map ((Affine.sectionsComplex R).map f)
 
 @[reassoc (attr := simp)]
-theorem liftToAffineCounit_fac (R : CommRingCat.{u}) {P I : Complex (Spec R)}
+theorem liftToAffineCounit_fac (R : CommRingCat.{u}) {P I : CochainComplex (Spec R).Modules ℤ}
     (hP : ∀ i, (P.X i).IsQuasicoherent) (f : P ⟶ I) :
     liftToAffineCounit R hP f ≫ Affine.associatedSectionsCounit R I = f := by
   rw [liftToAffineCounit, Category.assoc, Affine.associatedSectionsCounit_naturality]
@@ -159,13 +164,14 @@ theorem liftToAffineCounit_fac (R : CommRingCat.{u}) {P I : Complex (Spec R)}
   simp
 
 /-- The same actual factorization respects a finite upper term bound. -/
-def liftToBoundedAffineCounit (R : CommRingCat.{u}) {P I : Complex (Spec R)}
+def liftToBoundedAffineCounit (R : CommRingCat.{u}) {P I : CochainComplex (Spec R).Modules ℤ}
     (b : ℤ) [P.IsStrictlyLE b] (hP : ∀ i, (P.X i).IsQuasicoherent) (f : P ⟶ I) :
     P ⟶ affineBoundedQCSource R I b :=
   inv (P.ιTruncLE b) ≫ CochainComplex.truncLEMap (liftToAffineCounit R hP f) b
 
 @[reassoc (attr := simp)]
-theorem liftToBoundedAffineCounit_fac (R : CommRingCat.{u}) {P I : Complex (Spec R)}
+theorem liftToBoundedAffineCounit_fac (R : CommRingCat.{u})
+    {P I : CochainComplex (Spec R).Modules ℤ}
     (b : ℤ) [P.IsStrictlyLE b] (hP : ∀ i, (P.X i).IsQuasicoherent) (f : P ⟶ I) :
     liftToBoundedAffineCounit R b hP f ≫ affineBoundedQCCounit R I b = f := by
   dsimp only [liftToBoundedAffineCounit, affineBoundedQCCounit]
@@ -177,17 +183,18 @@ open AlgebraicGeometry.Scheme.Modules
 
 /-- The original open localization of a complex, with unchanged degreewise maps. -/
 def openLocalizationComplex {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    (I : Complex X) : Complex X := (pushforwardComplex j).obj ((restrict j).obj I)
+    (I : CochainComplex X.Modules ℤ) : CochainComplex X.Modules ℤ := (pushforwardComplex j).obj
+      ((restrict j).obj I)
 
 /-- The literal restriction unit on the original complex. -/
 def openLocalizationComplexUnit {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    (I : Complex X) : I ⟶ openLocalizationComplex j I where
+    (I : CochainComplex X.Modules ℤ) : I ⟶ openLocalizationComplex j I where
   f i := (openLocalizationUnit j).app (I.X i)
   comm' i k _ := ((openLocalizationUnit j).naturality (I.d i k)).symm
 
 /-- The original nested-open restriction map, degree by degree. -/
 def openLocalizationComplexMap {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
-    [IsOpenImmersion a] [IsOpenImmersion j] (I : Complex X) :
+    [IsOpenImmersion a] [IsOpenImmersion j] (I : CochainComplex X.Modules ℤ) :
     openLocalizationComplex j I ⟶ openLocalizationComplex (a ≫ j) I where
   f i := openLocalizationMap a j (I.X i)
   comm' i k _ := (openLocalizationMap_naturality a j (I.d i k)).symm
@@ -196,7 +203,7 @@ def openLocalizationComplexMap {W U X : Scheme.{u}} (a : W ⟶ U) (j : U ⟶ X)
 def openLocalizationComplexSecond {W U V X : Scheme.{u}}
     (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]
-    (h : a ≫ j = b ≫ k) (I : Complex X) :
+    (h : a ≫ j = b ≫ k) (I : CochainComplex X.Modules ℤ) :
     openLocalizationComplex k I ⟶ openLocalizationComplex (a ≫ j) I where
   f i := TwoOpen.sheafSecondRestriction a b j k h (I.X i)
   comm' i m _ := (TwoOpen.sheafSecondRestriction_naturality a b j k h (I.d i m)).symm
@@ -205,7 +212,8 @@ def openLocalizationComplexSecond {W U V X : Scheme.{u}}
 def twoOpenComplexSequence {W U V X : Scheme.{u}}
     (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]
-    (h : IsPullback a b j k) (I : Complex X) : ShortComplex (Complex X) :=
+    (h : IsPullback a b j k) (I : CochainComplex X.Modules ℤ) : ShortComplex
+      (CochainComplex X.Modules ℤ) :=
   ShortComplex.productSequence (openLocalizationComplexUnit j I)
     (openLocalizationComplexUnit k I) (openLocalizationComplexMap a j I)
     (openLocalizationComplexSecond a b j k h.w I) (by
@@ -218,7 +226,7 @@ theorem twoOpenComplexSequence_shortExact {W U V X : Scheme.{u}}
     (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]
     (h : IsPullback a b j k)
-    (hcover : ∀ x : X, (∃ y : U, j y = x) ∨ (∃ z : V, k z = x)) (I : Complex X) :
+    (hcover : ∀ x : X, (∃ y : U, j y = x) ∨ (∃ z : V, k z = x)) (I : CochainComplex X.Modules ℤ) :
     (twoOpenComplexSequence a b j k h I).ShortExact := by
   apply HomologicalComplex.shortExact_of_degreewise_shortExact
   intro i
@@ -230,26 +238,28 @@ theorem twoOpenComplexSequence_shortExact {W U V X : Scheme.{u}}
 
 /-- A bounded QC complex on the ambient scheme from the actual affine counit. -/
 def openAffineQCSource {X : Scheme.{u}} (R : CommRingCat.{u})
-    (j : Spec R ⟶ X) [IsOpenImmersion j] (I : Complex X) (b : ℤ) : Complex X :=
+    (j : Spec R ⟶ X) [IsOpenImmersion j] (I : CochainComplex X.Modules ℤ)
+      (b : ℤ) : CochainComplex X.Modules ℤ :=
   (pushforwardComplex j).obj (affineBoundedQCSource R ((restrict j).obj I) b)
 
 /-- The actual direct image of the original bounded affine counit. -/
 def openAffineQCCounit {X : Scheme.{u}} (R : CommRingCat.{u})
-    (j : Spec R ⟶ X) [IsOpenImmersion j] (I : Complex X) (b : ℤ) :
+    (j : Spec R ⟶ X) [IsOpenImmersion j] (I : CochainComplex X.Modules ℤ) (b : ℤ) :
     openAffineQCSource R j I b ⟶ openLocalizationComplex j I :=
   (pushforwardComplex j).map (affineBoundedQCCounit R ((restrict j).obj I) b)
 
 /-- The pushed source is termwise QC for an actual quasi-compact affine open. -/
 theorem openAffineQCSource_quasicoherent {X : Scheme.{u}} (R : CommRingCat.{u})
     (j : Spec R ⟶ X) [IsOpenImmersion j] [QuasiCompact j]
-    (I : Complex X) (b i : ℤ) : ((openAffineQCSource R j I b).X i).IsQuasicoherent := by
+    (I : CochainComplex X.Modules ℤ) (b i : ℤ) : ((openAffineQCSource R j I b).X i).IsQuasicoherent
+      := by
   let := affineBoundedQCSource_quasicoherent R ((restrict j).obj I) b i
   exact AlgebraicGeometry.Scheme.Modules.QuasiCoherent.quasicoherent_pushforward_open j _
 
 /-- The pushed source retains the actual finite term window. -/
 theorem openAffineQCSource_bounds {X : Scheme.{u}} (R : CommRingCat.{u})
     (j : Spec R ⟶ X) [IsOpenImmersion j]
-    (I : Complex X) (a b : ℤ) (hab : a ≤ b) [I.IsStrictlyGE a] :
+    (I : CochainComplex X.Modules ℤ) (a b : ℤ) (hab : a ≤ b) [I.IsStrictlyGE a] :
     ∀ i, i < a ∨ b < i → IsZero ((openAffineQCSource R j I b).X i) := by
   have : ((restrict j).obj I).IsStrictlyGE a := by
     dsimp [AlgebraicGeometry.Scheme.Modules.Complex.restrict]
@@ -262,7 +272,7 @@ theorem openAffineQCSource_bounds {X : Scheme.{u}} (R : CommRingCat.{u})
 input with bounded QC cohomology. -/
 theorem openAffineQCCounit_quasiIso {X : Scheme.{u}} (R : CommRingCat.{u})
     (j : Spec R ⟶ X) [IsOpenImmersion j] [IsAffineHom j]
-    (I : Complex X) (a b : ℤ) (hab : a ≤ b) [I.IsStrictlyGE a] [I.IsLE b]
+    (I : CochainComplex X.Modules ℤ) (a b : ℤ) (hab : a ≤ b) [I.IsStrictlyGE a] [I.IsLE b]
     (hinj : ∀ i, Injective (I.X i)) (hqc : ∀ i, (I.homology i).IsQuasicoherent) :
     QuasiIso (openAffineQCCounit R j I b) := by
   let J := (restrict j).obj I
@@ -297,7 +307,8 @@ theorem openAffineQCCounit_quasiIso {X : Scheme.{u}} (R : CommRingCat.{u})
 /-- An actual ambient chain map from a bounded QC source factors through the
 pushed affine counit, by the original restriction/direct-image adjunction. -/
 def liftToOpenAffineQCCounit {X : Scheme.{u}} (R : CommRingCat.{u})
-    (j : Spec R ⟶ X) [IsOpenImmersion j] {P I : Complex X} (b : ℤ) [P.IsStrictlyLE b]
+    (j : Spec R ⟶ X) [IsOpenImmersion j] {P I : CochainComplex X.Modules ℤ} (b : ℤ)
+      [P.IsStrictlyLE b]
     (hP : ∀ i, (P.X i).IsQuasicoherent) (f : P ⟶ openLocalizationComplex j I) :
     P ⟶ openAffineQCSource R j I b := by
   have : ((restrict j).obj P).IsStrictlyLE b := by
@@ -312,7 +323,8 @@ def liftToOpenAffineQCCounit {X : Scheme.{u}} (R : CommRingCat.{u})
 
 @[reassoc (attr := simp)]
 theorem liftToOpenAffineQCCounit_fac {X : Scheme.{u}} (R : CommRingCat.{u})
-    (j : Spec R ⟶ X) [IsOpenImmersion j] {P I : Complex X} (b : ℤ) [P.IsStrictlyLE b]
+    (j : Spec R ⟶ X) [IsOpenImmersion j] {P I : CochainComplex X.Modules ℤ} (b : ℤ)
+      [P.IsStrictlyLE b]
     (hP : ∀ i, (P.X i).IsQuasicoherent) (f : P ⟶ openLocalizationComplex j I) :
     liftToOpenAffineQCCounit R j b hP f ≫ openAffineQCCounit R j I b = f := by
   dsimp only [liftToOpenAffineQCCounit, openAffineQCCounit]
@@ -320,17 +332,17 @@ theorem liftToOpenAffineQCCounit_fac {X : Scheme.{u}} (R : CommRingCat.{u})
     Equiv.apply_symm_apply]
 
 /-- Products of the two original chain comparisons remain weak. -/
-theorem quasiIso_complex_prod_map {X : Scheme.{u}} {A B C D : Complex X}
+theorem quasiIso_complex_prod_map {X : Scheme.{u}} {A B C D : CochainComplex X.Modules ℤ}
     (f : A ⟶ C) (g : B ⟶ D) [QuasiIso f] [QuasiIso g] : QuasiIso (prod.map f g) := by
   apply (DerivedCategory.isIso_Q_map_iff_quasiIso X.Modules _).mp
-  let F := toDerived X
+  let F := DerivedCategory.Q (C := X.Modules)
   have : IsIso (F.map (prod.map f g) ≫ prodComparison F C D) := by
     rw [prodComparison_natural]
     infer_instance
   exact IsIso.of_isIso_comp_right (F.map (prod.map f g)) (prodComparison F C D)
 
 /-- The actual complex product of two QC complexes is termwise QC. -/
-theorem quasicoherent_complex_prod {X : Scheme.{u}} (A B : Complex X)
+theorem quasicoherent_complex_prod {X : Scheme.{u}} (A B : CochainComplex X.Modules ℤ)
     (hA : ∀ i, (A.X i).IsQuasicoherent) (hB : ∀ i, (B.X i).IsQuasicoherent) (i : ℤ) :
     ((A ⨯ B).X i).IsQuasicoherent := by
   let Q := SheafOfModules.isQuasicoherent X.ringCatSheaf
@@ -339,7 +351,7 @@ theorem quasicoherent_complex_prod {X : Scheme.{u}} (A B : Complex X)
     (Q.prop_prod _ _ (hA i) (hB i))
 
 /-- A common term window is retained by the actual complex product. -/
-theorem complex_prod_bounds {X : Scheme.{u}} (A B : Complex X) (a b : ℤ)
+theorem complex_prod_bounds {X : Scheme.{u}} (A B : CochainComplex X.Modules ℤ) (a b : ℤ)
     (hA : ∀ i, i < a ∨ b < i → IsZero (A.X i))
     (hB : ∀ i, i < a ∨ b < i → IsZero (B.X i)) :
     ∀ i, i < a ∨ b < i → IsZero ((A ⨯ B).X i) := by
@@ -365,10 +377,11 @@ theorem exists_bounded_qc_model_of_twoAffine_injective
     [IsOpenImmersion p] [IsOpenImmersion q] [IsOpenImmersion j] [IsOpenImmersion k]
     [IsAffineHom j] [IsAffineHom k] (h : IsPullback p q j k)
     (hcover : ∀ x : X, (∃ y : Spec R, j y = x) ∨ (∃ z : Spec S, k z = x))
-    (I : Complex X) (a b : ℤ) (hab : a ≤ b) [I.IsStrictlyGE a] [I.IsLE b]
+    (I : CochainComplex X.Modules ℤ) (a b : ℤ) (hab : a ≤ b) [I.IsStrictlyGE a] [I.IsLE b]
     (hinj : ∀ i, Injective (I.X i)) (hqc : ∀ i, (I.homology i).IsQuasicoherent) :
-    ∃ P : Complex X, (∀ i, i < a ∨ b + 1 < i → IsZero (P.X i)) ∧
-      (∀ i, (P.X i).IsQuasicoherent) ∧ Nonempty ((toDerived X).obj P ≅ (toDerived X).obj I) := by
+    ∃ P : CochainComplex X.Modules ℤ, (∀ i, i < a ∨ b + 1 < i → IsZero (P.X i)) ∧
+      (∀ i, (P.X i).IsQuasicoherent) ∧ Nonempty ((DerivedCategory.Q (C := X.Modules)).obj P ≅
+        (DerivedCategory.Q (C := X.Modules)).obj I) := by
   let A := openAffineQCSource R j I b
   let B := openAffineQCSource S k I b
   let C := openAffineQCSource T (p ≫ j) I b
@@ -394,20 +407,23 @@ theorem exists_bounded_qc_model_of_twoAffine_injective
   have : QuasiIso cb := openAffineQCCounit_quasiIso S k I a b hab hinj hqc
   have : QuasiIso cc := openAffineQCCounit_quasiIso T (p ≫ j) I a b hab hinj hqc
   have : QuasiIso c := quasiIso_complex_prod_map ca cb
-  let e₀ : (toDerived X).obj (A ⨯ B) ≅ (toDerived X).obj Seq.X₂ :=
-    asIso ((toDerived X).map c)
-  let e₁ : (toDerived X).obj C ≅ (toDerived X).obj Seq.X₃ :=
-    asIso ((toDerived X).map cc)
-  have hcomm : (toDerived X).map δ ≫ e₁.hom =
-      e₀.hom ≫ (shortExactTriangle hSeq).rotate.mor₁ := by
-    change (toDerived X).map δ ≫ (toDerived X).map cc =
-      (toDerived X).map c ≫ (toDerived X).map Seq.g
+  let e₀ : (DerivedCategory.Q (C := X.Modules)).obj (A ⨯ B) ≅
+    (DerivedCategory.Q (C := X.Modules)).obj Seq.X₂ :=
+    asIso ((DerivedCategory.Q (C := X.Modules)).map c)
+  let e₁ : (DerivedCategory.Q (C := X.Modules)).obj C ≅
+    (DerivedCategory.Q (C := X.Modules)).obj Seq.X₃ :=
+    asIso ((DerivedCategory.Q (C := X.Modules)).map cc)
+  have hcomm : (DerivedCategory.Q (C := X.Modules)).map δ ≫ e₁.hom =
+      e₀.hom ≫ (DerivedCategory.triangleOfSES hSeq).rotate.mor₁ := by
+    change (DerivedCategory.Q (C := X.Modules)).map δ ≫ (DerivedCategory.Q (C := X.Modules)).map cc
+      =
+      (DerivedCategory.Q (C := X.Modules)).map c ≫ (DerivedCategory.Q (C := X.Modules)).map Seq.g
     simp only [← Functor.map_comp, hδ]
-  let eC : (toDerived X).obj (CochainComplex.mappingCone δ) ≅
-      ((toDerived X).obj I)⟦(1 : ℤ)⟧ :=
-    Triangle.π₃.mapIso (isoTriangleOfIso₁₂ _ (shortExactTriangle hSeq).rotate
-      (mappingConeTriangle_distinguished δ)
-      (rot_of_distTriang _ (shortExactTriangle_distinguished hSeq)) e₀ e₁ hcomm)
+  let eC : (DerivedCategory.Q (C := X.Modules)).obj (CochainComplex.mappingCone δ) ≅
+      ((DerivedCategory.Q (C := X.Modules)).obj I)⟦(1 : ℤ)⟧ :=
+    Triangle.π₃.mapIso (isoTriangleOfIso₁₂ _ (DerivedCategory.triangleOfSES hSeq).rotate
+      (DerivedCategory.mappingCone_triangle_distinguished δ)
+      (rot_of_distTriang _ (DerivedCategory.triangleOfSES_distinguished hSeq)) e₀ e₁ hcomm)
   let P := (CochainComplex.mappingCone δ)⟦(-1 : ℤ)⟧
   refine ⟨P, ?_, ?_, ⟨?_⟩⟩
   · intro i hi
@@ -421,9 +437,11 @@ theorem exists_bounded_qc_model_of_twoAffine_injective
       (HomologicalComplex.homotopyCofiber.XIsoBiprod δ (i + -1) i
         (by change i + -1 + 1 = i; omega)).symm
     exact Q.prop_of_iso (biprod.isoProd _ _).symm (Q.prop_prod _ _ (hMq i) (hCq (i + -1)))
-  · exact ((toDerived X).commShiftIso (-1)).app (CochainComplex.mappingCone δ) ≪≫
-      (shiftFunctor (Derived X) (-1)).mapIso eC ≪≫
-      (shiftFunctorCompIsoId (Derived X) (1 : ℤ) (-1) (by omega)).app ((toDerived X).obj I)
+  · exact ((DerivedCategory.Q (C := X.Modules)).commShiftIso (-1)).app
+      (CochainComplex.mappingCone δ) ≪≫
+      (shiftFunctor (DerivedCategory X.Modules) (-1)).mapIso eC ≪≫
+      (shiftFunctorCompIsoId (DerivedCategory X.Modules) (1 : ℤ) (-1) (by omega)).app
+        ((DerivedCategory.Q (C := X.Modules)).obj I)
 
 open AlgebraicGeometry.Scheme.ProjectiveLine AlgebraicGeometry.Scheme.PolynomialLaurent
 
@@ -431,11 +449,11 @@ open AlgebraicGeometry.Scheme.ProjectiveLine AlgebraicGeometry.Scheme.Polynomial
 cohomology admits a constructed bounded termwise-QC model in the original
 ambient derived category. No termwise QC hypothesis on the input is used. -/
 theorem exists_bounded_quasicoherent_model (R : CommRingCat.{u})
-    (K : Complex (twoChartLine R)) (a b : ℤ) (hab : a ≤ b) [K.IsGE a] [K.IsLE b]
+    (K : CochainComplex (twoChartLine R).Modules ℤ) (a b : ℤ) (hab : a ≤ b) [K.IsGE a] [K.IsLE b]
     (hqc : ∀ i, (K.homology i).IsQuasicoherent) :
-    ∃ P : Complex (twoChartLine R), (∀ i, i < a ∨ b + 1 < i → IsZero (P.X i)) ∧
+    ∃ P : CochainComplex (twoChartLine R).Modules ℤ, (∀ i, i < a ∨ b + 1 < i → IsZero (P.X i)) ∧
       (∀ i, (P.X i).IsQuasicoherent) ∧
-        Nonempty ((toDerived _).obj P ≅ (toDerived _).obj K) := by
+        Nonempty ((DerivedCategory.Q).obj P ≅ (DerivedCategory.Q).obj K) := by
   have : QuasiIso (K.πTruncGE a) := (K.quasiIso_πTruncGE_iff a).mpr inferInstance
   obtain ⟨I, s, hs, hinj, hl⟩ :=
     CochainComplex.Plus.modelCategoryQuillen.exists_quasiIso_injective (K.truncGE a) a
@@ -454,7 +472,7 @@ theorem exists_bounded_quasicoherent_model (R : CommRingCat.{u})
     (.of (Polynomial R)) (.of (Polynomial R)) (.of (LaurentPolynomial R))
     (laurentPlus R) (laurentMinus R) (plusChart R) (minusChart R)
     (chart_isPullback R) (charts_jointly_surjective R) I a b hab hinj hIq
-  exact ⟨P, hPb, hPq, ⟨eP ≪≫ (asIso ((toDerived _).map q)).symm⟩⟩
+  exact ⟨P, hPb, hPq, ⟨eP ≪≫ (asIso ((DerivedCategory.Q).map q)).symm⟩⟩
 
 /-- An arbitrary intrinsic perfect bounded-below derived object on the actual
 line has a genuine bounded-below termwise-QC representative. This is a producer,

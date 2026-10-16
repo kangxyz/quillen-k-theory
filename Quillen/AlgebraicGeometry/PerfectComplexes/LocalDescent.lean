@@ -6,10 +6,14 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
-public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFibration
+public import Aglib.AlgebraicGeometry.Modules.Complex.Homology
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.OpenCoverVanishing
 public import Aglib.Algebra.Homology.MappingCone.QuasiIso
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
 /-! # Actual local perfection, acyclicity and quasi-isomorphism descent
 
 Local neighborhoods are pushed forward using their actual scheme image
@@ -25,12 +29,13 @@ open AlgebraicGeometry.Scheme.Modules.Complex
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u w
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace Quillen.PerfectComplexes
 
 /-- Local perfection patches from arbitrary actual open neighborhoods. -/
-theorem locallyPerfect_of_openNeighborhoods {X : Scheme.{u}} {K : Complex X}
+theorem locallyPerfect_of_openNeighborhoods {X : Scheme.{u}} {K : CochainComplex X.Modules ℤ}
     (hK : ∀ x : X, ∃ U : X.Opens, x ∈ U ∧ locallyPerfect U.toScheme ((restrict U.ι).obj K)) :
     locallyPerfect X K := by
   intro x
@@ -44,10 +49,11 @@ theorem locallyPerfect_of_openNeighborhoods {X : Scheme.{u}} {K : Complex X}
       eqToIso (restrict_congr (U.ι.isoImage_inv_ι T))
   refine ⟨O, ?_, ⟨(restrict e.inv).obj P.obj, strictPerfect_restrict _ P.property⟩, ?_⟩
   · exact ⟨⟨x,hx⟩,hT,rfl⟩
-  · exact ⟨(toDerived O.toScheme).mapIso (ec.app K).symm ≪≫ restrictDerivedIso e.inv eP⟩
+  · exact ⟨(DerivedCategory.Q (C := O.toScheme.Modules)).mapIso
+      (ec.app K).symm ≪≫ restrictDerivedIso e.inv eP⟩
 
 /-- Arbitrary covers detect actual local perfection; no finite cover is required. -/
-theorem locallyPerfect_of_openCover {X : Scheme.{u}} {K : Complex X} {ι : Type w}
+theorem locallyPerfect_of_openCover {X : Scheme.{u}} {K : CochainComplex X.Modules ℤ} {ι : Type w}
     (U : ι → X.Opens) (hU : ∀ x : X, ∃ i, x ∈ U i)
     (hK : ∀ i, locallyPerfect (U i).toScheme ((restrict (U i).ι).obj K)) : locallyPerfect X K :=
   locallyPerfect_of_openNeighborhoods fun x => by
@@ -55,7 +61,7 @@ theorem locallyPerfect_of_openCover {X : Scheme.{u}} {K : Complex X} {ι : Type 
     exact ⟨U i,hi,hK i⟩
 
 /-- A pair of actual opens covering the scheme detects local perfection. -/
-theorem locallyPerfect_of_binaryOpenCover {X : Scheme.{u}} {K : Complex X}
+theorem locallyPerfect_of_binaryOpenCover {X : Scheme.{u}} {K : CochainComplex X.Modules ℤ}
     (U V : X.Opens) (hUV : U ⊔ V = ⊤)
     (hU : locallyPerfect U.toScheme ((restrict U.ι).obj K))
     (hV : locallyPerfect V.toScheme ((restrict V.ι).obj K)) : locallyPerfect X K := by
@@ -70,7 +76,7 @@ end Quillen.PerfectComplexes
 
 namespace Quillen.PerfectComplexes
 /-- Actual acyclicity is detected by arbitrary open covers. -/
-theorem acyclic_of_openCover {X : Scheme.{u}} (K : Complex X) {ι : Type w}
+theorem acyclic_of_openCover {X : Scheme.{u}} (K : CochainComplex X.Modules ℤ) {ι : Type w}
     (U : ι → X.Opens) (hU : ∀ x : X, ∃ i, x ∈ U i)
     (hK : ∀ i, ((restrict (U i).ι).obj K).Acyclic) : K.Acyclic := by
   intro n
@@ -81,7 +87,8 @@ theorem acyclic_of_openCover {X : Scheme.{u}} (K : Complex X) {ι : Type w}
     (restrictHomologyIso (U i).ι K n).symm
 
 /-- Actual quasi-isomorphisms are detected by arbitrary open covers. -/
-theorem quasiIso_of_openCover {X : Scheme.{u}} {K L : Complex X} (f : K ⟶ L) {ι : Type w}
+theorem quasiIso_of_openCover {X : Scheme.{u}} {K L : CochainComplex X.Modules ℤ} (f : K ⟶ L)
+    {ι : Type w}
     (U : ι → X.Opens) (hU : ∀ x : X, ∃ i, x ∈ U i)
     (hf : ∀ i, QuasiIso ((restrict (U i).ι).map f)) : QuasiIso f := by
   apply CochainComplex.quasiIso_of_mappingCone_acyclic

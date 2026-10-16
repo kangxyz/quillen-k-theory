@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Homology
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.InjectiveCounit
 public import Aglib.AlgebraicGeometry.Cohomology.Injective.Restriction
@@ -45,7 +46,7 @@ local instance principalGlobalSections_additive (R : CommRingCat.{u}) (r : R) :
 /-- Genuine affine global sections preserve a weak map from a quasicoherent-term complex
 to a lower-bounded injective complex with quasicoherent homology. -/
 lemma quasiIso_sections_of_quasicoherent_to_injective {R : CommRingCat.{u}}
-    {K I : Complex (Spec R)} (a : ℤ)
+    {K I : CochainComplex (Spec R).Modules ℤ} (a : ℤ)
     (hK : ∀ n, (K.X n).IsQuasicoherent)
     (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n))
@@ -62,7 +63,7 @@ lemma quasiIso_sections_of_quasicoherent_to_injective {R : CommRingCat.{u}}
 
 /-- Original homology quasicoherence survives actual open restriction. -/
 lemma quasicoherent_homology_restrict {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    (K : Complex X) (hqc : ∀ n, (K.homology n).IsQuasicoherent) (n : ℤ) :
+    (K : CochainComplex X.Modules ℤ) (hqc : ∀ n, (K.homology n).IsQuasicoherent) (n : ℤ) :
     (((restrict j).obj K).homology n).IsQuasicoherent := by
   let := hqc n
   exact (SheafOfModules.isQuasicoherent U.ringCatSheaf).prop_of_iso
@@ -85,7 +86,8 @@ def principalSectionsComparison (R : CommRingCat.{u}) (r : R) :
         (moduleSpecΓFunctor (R := CommRingCat.of (Localization.Away r)))
 
 /-- The literal principal-localized comparison on original complexes. -/
-def principalSectionsComplexComparison (R : CommRingCat.{u}) (r : R) (I : Complex (Spec R)) :
+def principalSectionsComplexComparison (R : CommRingCat.{u}) (r : R)
+    (I : CochainComplex (Spec R).Modules ℤ) :
     ((ModuleCat.localizedModuleFunctor (Submonoid.powers r)).mapHomologicalComplex (.up ℤ)).obj
       ((sectionsComplex R).obj I) ⟶
       (sectionsComplex (CommRingCat.of (Localization.Away r))).obj
@@ -94,7 +96,8 @@ def principalSectionsComplexComparison (R : CommRingCat.{u}) (r : R) (I : Comple
 
 /-- The comparison is the original localization/restriction isomorphism followed by the
 actual restricted counit, as a chain map. -/
-lemma principalSectionsComplexComparison_eq (R : CommRingCat.{u}) (r : R) (I : Complex (Spec R)) :
+lemma principalSectionsComplexComparison_eq (R : CommRingCat.{u}) (r : R)
+    (I : CochainComplex (Spec R).Modules ℤ) :
     principalSectionsComplexComparison R r I =
       (NatIso.mapHomologicalComplex
         (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.localizationRestrictionNatIso R r) (.up
@@ -107,7 +110,7 @@ lemma principalSectionsComplexComparison_eq (R : CommRingCat.{u}) (r : R) (I : C
 /-- Actual scalar-localized global sections compute sections on the principal open for
 lower-bounded injective complexes with quasicoherent homology. -/
 lemma quasiIso_principalSectionsComplexComparison {R : CommRingCat.{u}} (r : R)
-    (I : Complex (Spec R)) (a : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent) :
@@ -240,13 +243,13 @@ lemma principalSectionsScalarComparison_mk (R : CommRingCat.{u}) (r : R)
 /-- The actual principal comparison with both source and target in the original R-module category.
 -/
 def principalSectionsScalarComplexComparison (R : CommRingCat.{u}) (r : R)
-    (I : Complex (Spec R)) :=
+    (I : CochainComplex (Spec R).Modules ℤ) :=
   (NatTrans.mapHomologicalComplex (principalSectionsScalarComparison R r) (.up ℤ)).app I
 
 /-- The original R-module map is the scalar-forgotten geometric comparison followed by
 its genuine section identification. -/
 lemma principalSectionsScalarComplexComparison_eq (R : CommRingCat.{u}) (r : R)
-    (I : Complex (Spec R)) :
+    (I : CochainComplex (Spec R).Modules ℤ) :
     principalSectionsScalarComplexComparison R r I =
       ((ModuleCat.restrictScalars (algebraMap R (Localization.Away r))).mapHomologicalComplex (.up
         ℤ)).map
@@ -255,7 +258,7 @@ lemma principalSectionsScalarComplexComparison_eq (R : CommRingCat.{u}) (r : R)
 
 /-- Actual principal localization is a weak equivalence in the original R-module category. -/
 lemma quasiIso_principalSectionsScalarComplexComparison {R : CommRingCat.{u}} (r : R)
-    (I : Complex (Spec R)) (a : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent) :

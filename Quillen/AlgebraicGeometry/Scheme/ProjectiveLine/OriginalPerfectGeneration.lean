@@ -7,6 +7,7 @@ module
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalGenerationPerfectCoefficients
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalGenerationUnitEquations
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalPerfectGenerationSingle
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Actual original two-line generation of intrinsic perfect D+
 

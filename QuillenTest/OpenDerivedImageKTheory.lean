@@ -10,6 +10,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.KTheor
 /-! # Literal image maps, incoming triangles and the sharp K-zero endpoint -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 open Quillen.Waldhausen
 

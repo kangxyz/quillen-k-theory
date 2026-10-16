@@ -17,6 +17,8 @@ forward-T scalar square; it does not replace that scalar by an unproved inverse-
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 open Quillen.Waldhausen
 

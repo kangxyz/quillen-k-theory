@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Codex
 -/
 module
-public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.AlgebraicGeometry.BaseChange.Coefficients.Naturality
 public import Quillen.Waldhausen.SConstruction.Iterated.ScalarChartPause
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.DoubleSquareRectangleFaces
 

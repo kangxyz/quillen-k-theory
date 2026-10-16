@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Aglib.Algebra.Category.ModuleCat.FiniteLocalization
+public import Aglib.Algebra.Category.FGModuleCat.Localization
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.GTheory.FiniteModules.SmallModelLocalization

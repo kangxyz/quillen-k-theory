@@ -6,12 +6,17 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedMinusPullbackComposition
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Minus.PullbackComposition
+public import Aglib.Algebra.Homology.CochainComplex.BoundedAbove.Basic
+public import Aglib.Algebra.Homology.CochainComplex.BoundedAbove.ProjectiveHomotopy
+public import Aglib.Algebra.Homology.DerivedCategory.Minus.Localization
+public import Aglib.AlgebraicGeometry.Modules.Complex.Flat.Models
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Minus.Pullback
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Minus.ResolvedPullback
 
 /-! Semantic consumers of genuine ambient bounded-above derived pullback. -/
 @[expose] public section
 
-open Quillen.CochainComplex
 
 
 noncomputable section
@@ -22,29 +27,30 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open AlgebraicGeometry.Scheme.Modules
 namespace QuillenTest.DerivedMinusPullback
 
-open Quillen
 
 /-- Actual ambient morphisms lift uniquely to the localization of bounded complexes,
 with no projective or injective existence assumption on the abelian category. -/
 theorem ambient_bounded_morphism_lift (C : Type u) [Category.{v} C] [Abelian C]
-    [HasDerivedCategory.{w} C] (K L : (boundedAboveQuasiIso C).Localization)
-    (a : (boundedAboveLocalizationToMinus C).obj K ⟶
-      (boundedAboveLocalizationToMinus C).obj L) :
-    ∃! b : K ⟶ L, (boundedAboveLocalizationToMinus C).map b = a := by
-  let F := boundedAboveLocalizationToMinusFullyFaithful C
+    [HasDerivedCategory.{w} C] (K L : (_root_.CochainComplex.boundedAboveQuasiIso C).Localization)
+    (a : (_root_.CochainComplex.boundedAboveLocalizationToMinus C).obj K ⟶
+      (_root_.CochainComplex.boundedAboveLocalizationToMinus C).obj L) :
+    ∃! b : K ⟶ L, (_root_.CochainComplex.boundedAboveLocalizationToMinus C).map b = a := by
+  let F := _root_.CochainComplex.boundedAboveLocalizationToMinusFullyFaithful C
   exact ⟨F.preimage a, F.map_preimage a, fun b hb => F.map_injective (hb.trans (F.map_preimage
     a).symm)⟩
 
 /-- Comparisons of actual projective models commute with the original augmentations
 up to an actual chain homotopy, before any derived localization. -/
 theorem actual_projective_comparison (C : Type u) [Category.{v} C] [Abelian C]
-    [EnoughProjectives C] {K L : BoundedAboveComplex C} (s : K ⟶ L) :
-    Nonempty (Homotopy (projectiveModelMap s ≫ projectiveModelπ L)
-      (projectiveModelπ K ≫ s.hom)) :=
-  ⟨projectiveModelMapHomotopy s⟩
+    [EnoughProjectives C] {K L : _root_.CochainComplex.BoundedAboveComplex C} (s : K ⟶ L) :
+    Nonempty (Homotopy (_root_.CochainComplex.projectiveModelMap s ≫
+      _root_.CochainComplex.projectiveModelπ L)
+      (_root_.CochainComplex.projectiveModelπ K ≫ s.hom)) :=
+  ⟨_root_.CochainComplex.projectiveModelMapHomotopy s⟩
 
 /-- The original sheaf augmentation induces genuine isomorphisms on all homology objects. -/
-theorem actual_flat_model_homology (X : Scheme.{u}) (K : BoundedAboveComplex X.Modules) (n : ℤ) :
+theorem actual_flat_model_homology (X : Scheme.{u}) (K :
+  _root_.CochainComplex.BoundedAboveComplex X.Modules) (n : ℤ) :
     IsIso ((homologyFunctor X.Modules (.up ℤ) n).map (flatModelπ X K)) := by
   change IsIso (homologyMap (flatModelπ X K) n)
   exact (quasiIsoAt_iff_isIso_homologyMap _ _).mp inferInstance
@@ -52,7 +58,7 @@ theorem actual_flat_model_homology (X : Scheme.{u}) (K : BoundedAboveComplex X.M
 /-- Arbitrary scheme pullback of the constructed comparison inverts an original sheaf
 quasi-isomorphism, without assuming its underlying presheaf map is a quasi-isomorphism. -/
 theorem original_sheaf_quasiIso_inverted {X Y : Scheme.{u}} (f : X ⟶ Y)
-    [HasDerivedCategory.{w} X.Modules] {K L : BoundedAboveComplex Y.Modules}
+    [HasDerivedCategory.{w} X.Modules] {K L : _root_.CochainComplex.BoundedAboveComplex Y.Modules}
     (s : K ⟶ L) [QuasiIso s.hom] :
     IsIso (DerivedCategory.Q.map
       ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map (flatModelMap s))) := by
@@ -62,11 +68,12 @@ theorem original_sheaf_quasiIso_inverted {X Y : Scheme.{u}} (f : X ⟶ Y)
 /-- The actual derived map formula commutes with the original bounded-complex localization. -/
 theorem derived_map_formula {X Y : Scheme.{u}} (f : X ⟶ Y)
     [HasDerivedCategory.{w₁} Y.Modules] [HasDerivedCategory.{w₂} X.Modules]
-    {K L : BoundedAboveComplex Y.Modules} (s : K ⟶ L) :
-    (derivedPullbackMinus f).map ((boundedAboveQMinus Y.Modules).map s) ≫
+    {K L : _root_.CochainComplex.BoundedAboveComplex Y.Modules} (s : K ⟶ L) :
+    (derivedPullbackMinus f).map ((_root_.CochainComplex.boundedAboveQMinus Y.Modules).map s) ≫
       (derivedPullbackMinusFactors f).hom.app L =
     (derivedPullbackMinusFactors f).hom.app K ≫
-      (boundedAboveQMinus X.Modules).map (pullbackFlatModelBoundedMap f s) := by
+      (_root_.CochainComplex.boundedAboveQMinus X.Modules).map (pullbackFlatModelBoundedMap f s)
+        := by
   simpa only [Functor.comp_map, resolvedPullbackFunctorMinus_map] using
     (derivedPullbackMinusFactors f).hom.naturality s
 
@@ -74,8 +81,9 @@ theorem derived_map_formula {X Y : Scheme.{u}} (f : X ⟶ Y)
   model. -/
 def actual_derived_object {X Y : Scheme.{u}} (f : X ⟶ Y)
     [HasDerivedCategory.{w₁} Y.Modules] [HasDerivedCategory.{w₂} X.Modules]
-    (K : BoundedAboveComplex Y.Modules) :
-    ((derivedPullbackMinus f).obj ((boundedAboveQMinus Y.Modules).obj K)).obj ≅
+    (K : _root_.CochainComplex.BoundedAboveComplex Y.Modules) :
+    ((derivedPullbackMinus f).obj ((_root_.CochainComplex.boundedAboveQMinus Y.Modules).obj
+      K)).obj ≅
       DerivedCategory.Q.obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj (flatModel Y
         K)) :=
   derivedPullbackMinusObjectIso f K
@@ -91,19 +99,22 @@ theorem derived_identity_natural (X : Scheme.{u}) [HasDerivedCategory.{w} X.Modu
 the original termwise pullback along the composite. -/
 def successive_pullbacks_on_flat_input {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
     [HasDerivedCategory.{w₁} Z.Modules] [HasDerivedCategory.{w₂} Y.Modules]
-    [HasDerivedCategory.{w₃} X.Modules] (K : BoundedAboveComplex Z.Modules)
+    [HasDerivedCategory.{w₃} X.Modules] (K : _root_.CochainComplex.BoundedAboveComplex Z.Modules)
     (hK : ∀ n, stalkwiseFlat Z (K.obj.X n)) :
     ((derivedPullbackMinus f).obj
-      ((derivedPullbackMinus g).obj ((boundedAboveQMinus Z.Modules).obj K))).obj ≅
+      ((derivedPullbackMinus g).obj ((_root_.CochainComplex.boundedAboveQMinus Z.Modules).obj
+        K))).obj ≅
       DerivedCategory.Q.obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback (f ≫ g)).obj K.obj)
         :=
   (DerivedCategory.Minus.ι).mapIso
-      ((derivedPullbackMinusCompIso f g).app ((boundedAboveQMinus Z.Modules).obj K)).symm ≪≫
+      ((derivedPullbackMinusCompIso f g).app ((_root_.CochainComplex.boundedAboveQMinus
+        Z.Modules).obj K)).symm ≪≫
     derivedPullbackMinusFlatObjectIso (f ≫ g) K hK
 
 /-- The genuine resolved functor sends sums of original chain maps to sums of derived maps. -/
 theorem resolved_pullback_additive {X Y : Scheme.{u}} (f : X ⟶ Y)
-    [HasDerivedCategory.{w} X.Modules] {K L : BoundedAboveComplex Y.Modules} (s t : K ⟶ L) :
+    [HasDerivedCategory.{w} X.Modules] {K L : _root_.CochainComplex.BoundedAboveComplex
+      Y.Modules} (s t : K ⟶ L) :
     (resolvedPullbackFunctor f).map (s + t) =
       (resolvedPullbackFunctor f).map s + (resolvedPullbackFunctor f).map t :=
   (resolvedPullbackFunctor f).map_add

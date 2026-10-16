@@ -9,9 +9,14 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.Supported
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpenDerivedImage.Basic
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
 /-! # Supported derived image reflection on a genuine covering pair -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules (derivedRestrict derivedRestrictFactors)
 
 open AlgebraicGeometry.Scheme.Modules.Complex
 
@@ -22,6 +27,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open scoped ZeroObject
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.SupportedOpenDerivedImage
 attribute [local instance] HasDerivedCategory.standard
 variable {V X : Scheme.{u}} (j : V ⟶ X) [IsOpenImmersion j] (T Z : X.Opens)
@@ -31,7 +37,8 @@ include hcover in
 /-- Supported extension of the actual overlap restriction is equivalent to extension
 of the original supported perfect complex. The reverse implication glues the specified
 derived isomorphism, without replacing it by an assumed weak arrow. -/
-theorem complexObjects_cover_iff (E : Complex T.toScheme) (hE : perfectSupported (T.ι ⁻¹ᵁ Z).ι E) :
+theorem complexObjects_cover_iff (E : CochainComplex T.toScheme.Modules ℤ)
+    (hE : perfectSupported (T.ι ⁻¹ᵁ Z).ι E) :
     complexObjects T.ι Z E ↔
       complexObjects (j ⁻¹ᵁ T).ι (j ⁻¹ᵁ Z) ((restrict (j.resLE T (j ⁻¹ᵁ T) le_rfl)).obj E) := by
   let a := j.resLE T (j ⁻¹ᵁ T) le_rfl
@@ -40,7 +47,7 @@ theorem complexObjects_cover_iff (E : Complex T.toScheme) (hE : perfectSupported
   constructor
   · rintro ⟨P,hP,⟨e⟩⟩
     refine ⟨(restrict j).obj P,perfectSupported_restrict j Z hP,⟨?_⟩⟩
-    exact (toDerived (j ⁻¹ᵁ T).toScheme).mapIso
+    exact (DerivedCategory.Q (C := (j ⁻¹ᵁ T).toScheme.Modules)).mapIso
       ((openSquareRestrictIso a b T.ι j hs).app P).symm ≪≫
         (derivedRestrictFactors a).symm.app ((restrict T.ι).obj P) ≪≫
         (derivedRestrict a).mapIso e ≪≫
@@ -62,6 +69,6 @@ theorem complexObjects_cover_iff (E : Complex T.toScheme) (hE : perfectSupported
         exact ⟨⟨x,by change j x ∈ T; rw [←hy]; exact y.property⟩,rfl⟩)
       (fun x ↦ (hcover x).symm.imp (fun hx ↦ ⟨⟨x,hx⟩,rfl⟩) id)
       Z E B hE hB e.symm
-    exact ⟨P,hP,⟨(asIso ((toDerived T.toScheme).map u)).symm⟩⟩
+    exact ⟨P,hP,⟨(asIso ((DerivedCategory.Q (C := T.toScheme.Modules)).map u)).symm⟩⟩
 
 end Quillen.PerfectComplexes.SupportedOpenDerivedImage

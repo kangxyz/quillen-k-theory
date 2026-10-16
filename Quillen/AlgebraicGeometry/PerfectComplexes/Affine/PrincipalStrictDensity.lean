@@ -20,6 +20,8 @@ restriction-to-target weak map, with the actual coproduct comparison.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 

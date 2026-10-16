@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FinitePrincipalApproximation
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
 
 /-!
 # Perfect denominators for maps into supported module complexes
@@ -74,7 +75,7 @@ lemma exists_perfect_supported_factorization (R : CommRingCat.{u})
   | @insert r s hr ih =>
     obtain ⟨C, hC, i, γ, hγ, hs⟩ := ih (fun q hq => hM q (Finset.mem_insert_of_mem hq))
     have := isKProjective_of_moduleStrictPerfect R hC
-    obtain ⟨g, hg⟩ := Quillen.CochainComplex.exists_chain_representative_of_isKProjective γ
+    obtain ⟨g, hg⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective γ
     have heq : DerivedCategory.Q.map ((localize r (.up ℤ)).map g) =
         DerivedCategory.Q.map ((localize r (.up ℤ)).map (0 : C ⟶ M)) :=
       (hM r (Finset.mem_insert_self _ _)).eq_of_tgt _ _
@@ -145,7 +146,7 @@ lemma exists_perfect_denominator_with_supported_nullhomotopy (R : CommRingCat.{u
     exists_perfect_denominator_annihilating_supported_map R s hP hM (DerivedCategory.Q.map f)
   have := isKProjective_of_moduleStrictPerfect R hP'
   exact ⟨P', hP', q,
-    ⟨Quillen.CochainComplex.homotopyOfDerivedEqOfIsKProjective (q ≫ f) 0
+    ⟨_root_.CochainComplex.homotopyOfDerivedEqOfIsKProjective (q ≫ f) 0
       (by simpa only [CategoryTheory.Functor.map_comp, DerivedCategory.Q.map_zero] using hq)⟩, hr⟩
 
 end Quillen.PerfectComplexes.Affine

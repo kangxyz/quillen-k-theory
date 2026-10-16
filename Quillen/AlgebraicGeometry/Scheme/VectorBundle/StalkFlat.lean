@@ -12,6 +12,7 @@ public import Aglib.AlgebraicGeometry.Modules.LocallyFree.LocalSplitting
 public import Aglib.AlgebraicGeometry.Modules.Flat.Locality
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatRetracts
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Pullback
+public import Aglib.AlgebraicGeometry.Modules.Flat.Closure
 
 /-!
 # Actual module stalks of vector bundles are flat

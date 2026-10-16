@@ -7,7 +7,7 @@ module
 
 public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientLaurentEvaluation
-public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.PolynomialLaurent
+public import Aglib.AlgebraicGeometry.BaseChange.Coefficients.PolynomialLaurent
 public import Quillen.Topology.Prespectrum.PushoutHomotopySquare
 public import Quillen.Topology.Prespectrum.HomotopySquareInterchange
 public import Quillen.Topology.Prespectrum.HomotopySquareBoundary

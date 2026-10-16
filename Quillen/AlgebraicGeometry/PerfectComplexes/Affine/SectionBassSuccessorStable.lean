@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.Algebra.Polynomial.Laurent.Square
+public import Aglib.CategoryTheory.Limits.Shapes.SequentialSystem.SignCorrection
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionBassSuccessor
 public import Quillen.Topology.Prespectrum.StableShift
 public import Mathlib.CategoryTheory.Whiskering
@@ -65,7 +66,7 @@ theorem boundedFlatAffineSectionBassStableSuccessorIso_ι_hom (i : ℕ) (d : ℤ
     stableHomotopyι ((boundedFlatAffineSectionBassDiagram (i + 1)).obj R) d n ≫
         (boundedFlatAffineSectionBassStableSuccessorIso i d).hom.app R =
       (stableSystemMap ((boundedFlatAffineSectionBassSuccessorIso i).hom.app R) d).app n ≫
-        (alternatingIso n
+        (CategoryTheory.Limits.SequentialSystem.alternatingIso n
           (parameterStableStageIso ((boundedFlatAffineSectionBassConeDiagram i).obj R) d n)).hom ≫
         (shiftedStableReindexIso ((boundedFlatAffineSectionBassConeDiagram i).obj R) d n).hom ≫
         stableHomotopyι ((boundedFlatAffineSectionBassConeDiagram i).obj R) (d + 1)

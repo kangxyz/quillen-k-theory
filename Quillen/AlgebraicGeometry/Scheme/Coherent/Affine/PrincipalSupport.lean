@@ -14,8 +14,10 @@ public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeSup
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Aglib.CategoryTheory.SmallModel.Abelian
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.RestrictionExact
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Localization.Principal
 public import Quillen.Localization.SmallModel
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Support
+public import Aglib.CategoryTheory.SmallModel.Functor
 
 /-!
 # The actual support category in the principal-open small model
@@ -47,7 +49,7 @@ variable (R : CommRingCat.{u}) [IsNoetherianRing R] (r : R)
 
 /-- The actual principal-open restriction in the chosen small coherent models. -/
 abbrev principalSmallRestriction :=
-  SmallModelLocalization.functor.{u} (affinePrincipalRestriction R r)
+  CategoryTheory.SmallModel.functor.{u} (affinePrincipalRestriction R r)
 
 /-- The support property on that small model. -/
 abbrev principalSmallSupport := (principalSmallRestriction R r).kernel
@@ -58,7 +60,7 @@ theorem principalSmallSupport_iff (M : SmallModel.{u} (AffineFiniteType R)) :
     principalSmallSupport R r M ↔
       affineSupportedAway R (principalOpen R r)
         ((equivSmallModel (AffineFiniteType R)).inverse.obj M) := by
-  have h := SmallModelLocalization.kernel_iff.{u} (affinePrincipalRestriction R r) M
+  have h := CategoryTheory.SmallModel.kernel_iff.{u} (affinePrincipalRestriction R r) M
   rw [principalRestriction_kernel_eq_support] at h
   exact h
 

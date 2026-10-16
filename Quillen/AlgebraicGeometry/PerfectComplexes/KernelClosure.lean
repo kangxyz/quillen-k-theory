@@ -5,9 +5,12 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPerfect
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.KernelClosure
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Mathlib.Algebra.Homology.DerivedCategory.ShortExact
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-!
 # Actual kernels of epimorphisms of perfect complexes
 
@@ -19,17 +22,20 @@ quasi-compactness, termwise splitting, or noetherianity is required.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace Quillen.PerfectComplexes
 
 /-- An actual ambient epi between strict-perfect complexes has a strict-perfect
 categorical kernel, on every scheme. -/
-lemma strictPerfect_kernel_of_epi {X : Scheme.{u}} {K L : Complex X}
+lemma strictPerfect_kernel_of_epi {X : Scheme.{u}} {K L : CochainComplex X.Modules ℤ}
     (hK : strictPerfect X K) (hL : strictPerfect X L) (f : K ⟶ L) [Epi f] :
     strictPerfect X (kernel f) := by
   let S := ShortComplex.mk (kernel.ι f) f (kernel.condition f)
@@ -50,7 +56,7 @@ lemma strictPerfect_kernel_of_epi {X : Scheme.{u}} {K L : Complex X}
 
 /-- An actual ambient epi between locally-perfect complexes has a
 locally-perfect categorical kernel, without any compactness hypothesis. -/
-lemma locallyPerfect_kernel_of_epi {X : Scheme.{u}} {K L : Complex X}
+lemma locallyPerfect_kernel_of_epi {X : Scheme.{u}} {K L : CochainComplex X.Modules ℤ}
     (hK : locallyPerfect X K) (hL : locallyPerfect X L) (f : K ⟶ L) [Epi f] :
     locallyPerfect X (kernel f) := by
   let S := ShortComplex.mk (kernel.ι f) f (kernel.condition f)
@@ -58,10 +64,11 @@ lemma locallyPerfect_kernel_of_epi {X : Scheme.{u}} {K L : Complex X}
     exact := S.exact_of_f_is_kernel (kernelIsKernel f)
     mono_f := inferInstance
     epi_g := inferInstance }
-  exact (perfectDerivedObjects_toDerived_iff X (kernel f)).mp
-    ((perfectDerivedObjects X).ext_of_isTriangulatedClosed₁ (shortExactTriangle hS)
-      (shortExactTriangle_distinguished hS)
-      ((perfectDerivedObjects_toDerived_iff X K).mpr hK)
-      ((perfectDerivedObjects_toDerived_iff X L).mpr hL))
+  exact (Scheme.Modules.perfectDerivedObjects_toDerived_iff X (kernel f)).mp
+    ((Scheme.Modules.perfectDerivedObjects X).ext_of_isTriangulatedClosed₁
+      (DerivedCategory.triangleOfSES hS)
+      (DerivedCategory.triangleOfSES_distinguished hS)
+      ((Scheme.Modules.perfectDerivedObjects_toDerived_iff X K).mpr hK)
+      ((Scheme.Modules.perfectDerivedObjects_toDerived_iff X L).mpr hL))
 
 end Quillen.PerfectComplexes

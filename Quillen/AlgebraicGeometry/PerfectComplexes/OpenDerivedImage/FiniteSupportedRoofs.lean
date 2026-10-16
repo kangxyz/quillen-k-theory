@@ -7,6 +7,7 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.SupportedRoofs
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-! # Common actual supported roofs for finite families of local derived arrows -/
 @[expose] public section
@@ -27,14 +28,16 @@ global source-supported denominator and actual numerators to every original targ
 lemma exists_source_supported_finite_roof {U X : Scheme.{u}}
     [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace U]
     (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens) (hT : IsCompact (T : Set X))
-    {A : Complex X} (hA : locallyPerfect X A) {ι : Type v} (s : Finset ι)
-    (B : ι → Complex X) (hB : ∀ i, locallyPerfect X (B i))
-    (hzA : IsZero ((toDerived T.toScheme).obj ((restrict T.ι).obj A)))
-    (φ : ∀ i, (toDerived U).obj ((restrict j).obj A) ⟶ (toDerived U).obj ((restrict j).obj (B i))) :
-    ∃ (M : Complex X) (q : M ⟶ A) (g : ∀ i ∈ s, M ⟶ B i), locallyPerfect X M ∧
-      QuasiIso ((restrict j).map q) ∧ IsZero ((toDerived T.toScheme).obj ((restrict T.ι).obj M)) ∧
-      ∀ i (hi : i ∈ s), (toDerived U).map ((restrict j).map q) ≫ φ i =
-        (toDerived U).map ((restrict j).map (g i hi)) := by
+    {A : CochainComplex X.Modules ℤ} (hA : locallyPerfect X A) {ι : Type v} (s : Finset ι)
+    (B : ι → CochainComplex X.Modules ℤ) (hB : ∀ i, locallyPerfect X (B i))
+    (hzA : IsZero ((DerivedCategory.Q (C := T.toScheme.Modules)).obj ((restrict T.ι).obj A)))
+    (φ : ∀ i, (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj A) ⟶
+      (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj (B i))) :
+    ∃ (M : CochainComplex X.Modules ℤ) (q : M ⟶ A) (g : ∀ i ∈ s, M ⟶ B i), locallyPerfect X M ∧
+      QuasiIso ((restrict j).map q) ∧ IsZero ((DerivedCategory.Q (C := T.toScheme.Modules)).obj
+        ((restrict T.ι).obj M)) ∧
+      ∀ i (hi : i ∈ s), (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map q) ≫ φ i =
+        (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map (g i hi)) := by
   classical
   induction s using Finset.induction_on with
   | empty =>
@@ -45,7 +48,7 @@ lemma exists_source_supported_finite_roof {U X : Scheme.{u}}
   | @insert i s hi ih =>
       obtain ⟨M,q,g,hM,hq,hzM,hg⟩ := ih
       obtain ⟨N,r,a,hN,hr,ha,hzN⟩ := exists_source_supported_derived_roof j T hT hM (hB i) hzM
-        ((toDerived U).map ((restrict j).map q) ≫ φ i)
+        ((DerivedCategory.Q (C := U.Modules)).map ((restrict j).map q) ≫ φ i)
       let g' : ∀ k ∈ insert i s, N ⟶ B k := fun k hk => by
         by_cases e : k = i
         · subst k; exact a

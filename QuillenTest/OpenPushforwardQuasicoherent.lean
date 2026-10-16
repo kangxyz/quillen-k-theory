@@ -42,7 +42,7 @@ def original_pullback {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
 
 /-- The actual base-change comparison keeps every original complex morphism. -/
 theorem original_map {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
-    [IsOpenImmersion j] [IsOpenImmersion k] {I J : Complex U} (f : I ⟶ J) :
+    [IsOpenImmersion j] [IsOpenImmersion k] {I J : CochainComplex U.Modules ℤ} (f : I ⟶ J) :
     (restrict k).map ((pushforwardComplex j).map f) ≫ (original_pullback j k).hom.app J =
       (original_pullback j k).hom.app I ≫
         (pushforwardComplex (pullback.snd j k)).map ((restrict (pullback.fst j k)).map f) :=
@@ -50,7 +50,7 @@ theorem original_map {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
 
 /-- No ambient compactness, separation or upper cohomological bound is needed. -/
 theorem original_homology {U X : Scheme.{u}} (j : U ⟶ X)
-    [IsOpenImmersion j] [QuasiCompact j] (I : Complex U) (a : ℤ)
+    [IsOpenImmersion j] [QuasiCompact j] (I : CochainComplex U.Modules ℤ) (a : ℤ)
     (hb : ∀ n, n < a → IsZero (I.X n)) (hi : ∀ n, Injective (I.X n))
     (hq : ∀ n, (I.homology n).IsQuasicoherent) (n : ℤ) :
     (((pushforwardComplex j).obj I).homology n).IsQuasicoherent :=
@@ -59,13 +59,13 @@ theorem original_homology {U X : Scheme.{u}} (j : U ⟶ X)
 /-- The compact-source corollary does not require the ambient scheme compact. -/
 theorem compact_source {U X : Scheme.{u}} (j : U ⟶ X)
     [IsOpenImmersion j] [CompactSpace U] [QuasiSeparatedSpace X]
-    (I : Complex U) (a : ℤ) (hb : ∀ n, n < a → IsZero (I.X n))
+    (I : CochainComplex U.Modules ℤ) (a : ℤ) (hb : ∀ n, n < a → IsZero (I.X n))
     (hi : ∀ n, Injective (I.X n)) (hq : ∀ n, (I.homology n).IsQuasicoherent) (n : ℤ) :
     (((pushforwardComplex j).obj I).homology n).IsQuasicoherent :=
   compact_openPushforward_quasicoherent_homology j I a hb hi hq n
 
 /-- Isomorphic sources compare through the actual inverse restriction. -/
-theorem original_iso {U X : Scheme.{u}} (e : U ≅ X) (I : Complex U) :
+theorem original_iso {U X : Scheme.{u}} (e : U ≅ X) (I : CochainComplex U.Modules ℤ) :
     (pushforwardComplexOfIso e).hom.app I ≫ (pushforwardComplexOfIso e).inv.app I = 𝟙 _ :=
   (pushforwardComplexOfIso e).hom_inv_id_app I
 

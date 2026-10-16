@@ -21,6 +21,8 @@ with the actual strict-perfect K-map in every connective degree, including zero.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open CategoryTheory.ExactCategory
 
 

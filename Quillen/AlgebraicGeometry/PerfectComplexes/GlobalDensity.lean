@@ -8,7 +8,10 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.AffineExtension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRetractComplement
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
 /-!
 # Genuine global perfect-complex density on qcqs schemes
 
@@ -45,15 +48,18 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 map and the literal open-restriction composition isomorphism. -/
 def derivedRetractOfWeakStabilization {U Y X : Scheme.{u}}
     (i : U ⟶ Y) (j : Y ⟶ X) [IsOpenImmersion i] [IsOpenImmersion j]
-    {E : Complex U} {P : Complex Y} {Q : Complex X}
-    (r : Retract ((toDerived U).obj E) ((toDerived U).obj ((restrict i).obj P)))
+    {E : CochainComplex U.Modules ℤ} {P : CochainComplex Y.Modules ℤ}
+      {Q : CochainComplex X.Modules ℤ}
+    (r : Retract ((DerivedCategory.Q (C := U.Modules)).obj E)
+      ((DerivedCategory.Q (C := U.Modules)).obj ((restrict i).obj P)))
     (f : P ⊞ P⟦(1 : ℤ)⟧ ⟶ (restrict j).obj Q) [QuasiIso f] :
-    Retract ((toDerived U).obj E) ((toDerived U).obj ((restrict (i ≫ j)).obj Q)) := by
+    Retract ((DerivedCategory.Q (C := U.Modules)).obj E)
+      ((DerivedCategory.Q (C := U.Modules)).obj ((restrict (i ≫ j)).obj Q)) := by
   let rP : Retract P (P ⊞ P⟦(1 : ℤ)⟧) :=
     { i := biprod.inl, r := biprod.fst, retract := biprod.inl_fst }
-  exact r.trans ((rP.map (restrict i ⋙ toDerived U)).trans (Retract.ofIso
-    (asIso ((toDerived U).map ((restrict i).map f)) ≪≫
-      (toDerived U).mapIso ((restrictCompIso i j).app Q))))
+  exact r.trans ((rP.map (restrict i ⋙ DerivedCategory.Q (C := U.Modules))).trans (Retract.ofIso
+    (asIso ((DerivedCategory.Q (C := U.Modules)).map ((restrict i).map f)) ≪≫
+      (DerivedCategory.Q (C := U.Modules)).mapIso ((restrictCompIso i j).app Q))))
 
 lemma isCompact_finite_affine_sup {X : Scheme.{u}} (s : Finset X.affineOpens) :
     IsCompact ((s.sup (fun V => V.val) : X.Opens) : Set X) := by
@@ -65,18 +71,20 @@ lemma isCompact_finite_affine_sup {X : Scheme.{u}} (s : Finset X.affineOpens) :
     exact V.property.isCompact.union ih
 
 lemma exists_perfect_retract_on_finite_affine_union {X : Scheme.{u}} [QuasiSeparatedSpace X]
-    (U : X.Opens) (hU : IsCompact (U : Set X)) (E : Complex U.toScheme)
+    (U : X.Opens) (hU : IsCompact (U : Set X)) (E : CochainComplex U.toScheme.Modules ℤ)
     (hE : locallyPerfect U.toScheme E) (s : Finset X.affineOpens) :
     ∃ (hUS : U ≤ U ⊔ s.sup (fun V => V.val))
-      (P : Complex (U ⊔ s.sup (fun V => V.val)).toScheme),
+      (P : CochainComplex (U ⊔ s.sup (fun V => V.val)).toScheme.Modules ℤ),
       locallyPerfect (U ⊔ s.sup (fun V => V.val)).toScheme P ∧
-      Nonempty (Retract ((toDerived U.toScheme).obj E)
-        ((toDerived U.toScheme).obj ((restrict (X.homOfLE hUS)).obj P))) := by
+      Nonempty (Retract ((DerivedCategory.Q (C := U.toScheme.Modules)).obj E)
+        ((DerivedCategory.Q (C := U.toScheme.Modules)).obj
+          ((restrict (X.homOfLE hUS)).obj P))) := by
   classical
   induction s using Finset.induction_on with
   | empty =>
     rw [Finset.sup_empty, sup_bot_eq]
-    refine ⟨le_rfl, E, hE, ⟨Retract.ofIso ((toDerived U.toScheme).mapIso ?_)⟩⟩
+    refine ⟨le_rfl, E, hE, ⟨Retract.ofIso ((DerivedCategory.Q
+      (C := U.toScheme.Modules)).mapIso ?_)⟩⟩
     exact ((eqToIso (restrict_congr (X.homOfLE_rfl U)) ≪≫ restrictIdIso U.toScheme).app E).symm
   | @insert V s hV ih =>
     rw [Finset.sup_insert, show U ⊔ (V.val ⊔ s.sup (fun V => V.val)) =
@@ -98,7 +106,7 @@ lemma exists_perfect_retract_on_finite_affine_union {X : Scheme.{u}} [QuasiSepar
     obtain ⟨Q, hQ, f, hf⟩ := exists_perfect_extension_across_affine_openImmersion j k hcover P hP
     refine ⟨hUS.trans le_sup_left, Q, hQ, ⟨(derivedRetractOfWeakStabilization i j r f).trans
       (Retract.ofIso ?_)⟩⟩
-    exact (toDerived U.toScheme).mapIso
+    exact (DerivedCategory.Q (C := U.toScheme.Modules)).mapIso
       ((eqToIso (restrict_congr (X.homOfLE_homOfLE hUS
         (le_sup_left : S ≤ S ⊔ V.val)))).app Q)
 
@@ -108,11 +116,11 @@ perfect complex. Only a finite affine cover is used; shift multiplicities are
 allowed to grow during the actual chart-by-chart construction. -/
 lemma locallyPerfect_exists_global_derived_retract {X : Scheme.{u}}
     [CompactSpace X] [QuasiSeparatedSpace X] (U : X.Opens)
-    (hU : IsCompact (U : Set X)) (E : Complex U.toScheme)
+    (hU : IsCompact (U : Set X)) (E : CochainComplex U.toScheme.Modules ℤ)
     (hE : locallyPerfect U.toScheme E) :
-    ∃ P : Complex X, locallyPerfect X P ∧
-      Nonempty (Retract ((toDerived U.toScheme).obj E)
-        ((toDerived U.toScheme).obj ((restrict U.ι).obj P))) := by
+    ∃ P : CochainComplex X.Modules ℤ, locallyPerfect X P ∧
+      Nonempty (Retract ((DerivedCategory.Q (C := U.toScheme.Modules)).obj E)
+        ((DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj P))) := by
   classical
   obtain ⟨s, hs, hcover⟩ := (isCompact_iff_finite_and_eq_biUnion_affineOpens
     (X := X) (U := ⊤)).mp (by simpa using (CompactSpace.isCompact_univ : IsCompact (Set.univ : Set
@@ -129,19 +137,19 @@ lemma locallyPerfect_exists_global_derived_retract {X : Scheme.{u}}
   let e : (restrict U.ι).obj Q ≅ (restrict (X.homOfLE (le_top : U ≤ ⊤))).obj P :=
     (restrictCompIso U.ι X.topIso.inv ≪≫ eqToIso (restrict_congr hj)).app P
   exact ⟨Q, locallyPerfect_restrict X.topIso.inv hP,
-    ⟨r.trans (Retract.ofIso ((toDerived U.toScheme).mapIso e.symm))⟩⟩
+    ⟨r.trans (Retract.ofIso ((DerivedCategory.Q (C := U.toScheme.Modules)).mapIso e.symm))⟩⟩
 
 /-- Genuine global density on a qcqs scheme: the ORIGINAL local perfect E has
 an actual local perfect complement, and their literal complex biproduct is
 derived-isomorphic to the original restriction of an actual global perfect P. -/
 lemma locallyPerfect_exists_global_perfect_complement {X : Scheme.{u}}
     [CompactSpace X] [QuasiSeparatedSpace X] (U : X.Opens)
-    (hU : IsCompact (U : Set X)) (E : Complex U.toScheme)
+    (hU : IsCompact (U : Set X)) (E : CochainComplex U.toScheme.Modules ℤ)
     (hE : locallyPerfect U.toScheme E) :
-    ∃ (P : Complex X) (C : Complex U.toScheme),
+    ∃ (P : CochainComplex X.Modules ℤ) (C : CochainComplex U.toScheme.Modules ℤ),
       locallyPerfect X P ∧ locallyPerfect U.toScheme C ∧
-      Nonempty ((toDerived U.toScheme).obj ((restrict U.ι).obj P) ≅
-        (toDerived U.toScheme).obj (E ⊞ C)) := by
+      Nonempty ((DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj P) ≅
+        (DerivedCategory.Q (C := U.toScheme.Modules)).obj (E ⊞ C)) := by
   obtain ⟨P, hP, ⟨r⟩⟩ := locallyPerfect_exists_global_derived_retract U hU E hE
   obtain ⟨C, hC, e, he⟩ := exists_actual_perfect_complement_of_derived_retract hE
     (locallyPerfect_restrict U.ι hP) r
@@ -151,9 +159,11 @@ lemma locallyPerfect_exists_global_perfect_complement {X : Scheme.{u}}
 with no chosen presentation of its source as a literal open subscheme. -/
 lemma locallyPerfect_exists_global_perfect_complement_of_openImmersion
     {U X : Scheme.{u}} [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace U]
-    (j : U ⟶ X) [IsOpenImmersion j] (E : Complex U) (hE : locallyPerfect U E) :
-    ∃ (P : Complex X) (C : Complex U), locallyPerfect X P ∧ locallyPerfect U C ∧
-      Nonempty ((toDerived U).obj ((restrict j).obj P) ≅ (toDerived U).obj (E ⊞ C)) := by
+    (j : U ⟶ X) [IsOpenImmersion j] (E : CochainComplex U.Modules ℤ) (hE : locallyPerfect U E) :
+    ∃ (P : CochainComplex X.Modules ℤ) (C : CochainComplex U.Modules ℤ), locallyPerfect X P
+      ∧ locallyPerfect U C ∧
+      Nonempty ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj P) ≅
+        (DerivedCategory.Q (C := U.Modules)).obj (E ⊞ C)) := by
   let W := j.opensRange
   have hW : IsCompact (W : Set X) := isCompact_range j.continuous
   let E' := (restrict j.isoOpensRange.inv).obj E
@@ -170,7 +180,8 @@ lemma locallyPerfect_exists_global_perfect_complement_of_openImmersion
     preservesBinaryBiproducts_of_preservesBiproducts _
   let eright := (restrict j.isoOpensRange.hom).mapBiprod E' C' ≪≫ biprod.mapIso eE (Iso.refl C)
   exact ⟨P, C, hP, locallyPerfect_restrict j.isoOpensRange.hom hC',
-    ⟨(toDerived U).mapIso eleft ≪≫ restrictDerivedIso j.isoOpensRange.hom e ≪≫
-      (toDerived U).mapIso eright⟩⟩
+    ⟨(DerivedCategory.Q (C := U.Modules)).mapIso eleft ≪≫ restrictDerivedIso j.isoOpensRange.hom e
+      ≪≫
+      (DerivedCategory.Q (C := U.Modules)).mapIso eright⟩⟩
 
 end Quillen.PerfectComplexes

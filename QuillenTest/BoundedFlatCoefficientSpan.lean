@@ -13,7 +13,7 @@ coefficients. -/
 @[expose] public section
 
 open Quillen.PerfectComplexes
-open Quillen.PolynomialBaseChange
+open CommRingCat.PolynomialLaurent
 
 
 open CommRingCat.PolynomialLaurent

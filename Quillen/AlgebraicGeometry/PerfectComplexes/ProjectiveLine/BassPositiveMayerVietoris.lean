@@ -6,6 +6,8 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.BassPositiveCharts
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.RestrictionIsoEquivalence
+public import Quillen.AlgebraicGeometry.PerfectComplexes.MayerVietoris
 public import Mathlib.Algebra.Exact.Basic
 
 /-! # Original projective-line Mayer-Vietoris on literal affine vertices

@@ -7,7 +7,9 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenInjectiveModel
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Genuine injective extension consumers -/
 @[expose] public section
 
@@ -18,6 +20,7 @@ open Quillen.PerfectComplexes
 noncomputable section
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace QuillenTest.OpenInjectiveModel
 
 open Quillen
@@ -25,15 +28,16 @@ open PerfectComplexes
 
 /-- The original counit has the literal inverse equations on the original complex. -/
 theorem actual_counit_inverse {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    (I : Complex U) :
+    (I : CochainComplex U.Modules ℤ) :
     ((pushforwardComplexRestrictIso j).app I).inv ≫
       ((pushforwardComplexRestrictIso j).app I).hom = 𝟙 I := by simp
 
 /-- No termwise lower bound is imposed on the input to recover its original derived value. -/
 theorem original_derived_value {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    (E : Complex U) (a : ℤ) [E.IsGE a] :
-    ∃ J : Complex X, J.IsStrictlyGE a ∧ (∀ n : ℤ, Injective (J.X n)) ∧
-      Nonempty ((toDerived U).obj E ≅ (toDerived U).obj ((restrict j).obj J)) := by
+    (E : CochainComplex U.Modules ℤ) (a : ℤ) [E.IsGE a] :
+    ∃ J : CochainComplex X.Modules ℤ, J.IsStrictlyGE a ∧ (∀ n : ℤ, Injective (J.X n)) ∧
+      Nonempty ((DerivedCategory.Q (C := U.Modules)).obj E ≅
+        (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj J)) := by
   obtain ⟨J, hJ, hI, ⟨e⟩⟩ := exists_open_injective_model j E a
   exact ⟨J, hJ, hI, ⟨e.symm⟩⟩
 
@@ -41,7 +45,7 @@ theorem original_derived_value {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion
 quasi-isomorphism into the restricted model, retaining local perfection there. -/
 theorem perfect_restricted_model {U X : Scheme.{u}} [CompactSpace U]
     (j : U ⟶ X) [IsOpenImmersion j] (E : Perfect U) :
-    ∃ (a : ℤ) (J : Complex X) (q : E.obj ⟶ (restrict j).obj J),
+    ∃ (a : ℤ) (J : CochainComplex X.Modules ℤ) (q : E.obj ⟶ (restrict j).obj J),
       J.IsStrictlyGE a ∧ (∀ n : ℤ, Injective (J.X n)) ∧ QuasiIso q ∧
       locallyPerfect U ((restrict j).obj J) := by
   obtain ⟨a, J, q, hJ, hI, hq⟩ := exists_perfect_open_injective_quasiIso j E

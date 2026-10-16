@@ -8,6 +8,7 @@ module
 public import Aglib.AlgebraicGeometry.Cohomology.BaseChange.GodementUnit
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DerivedSelfBaseChangePerfect
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientZero
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-!
 # The actual ordinary self-base-change quasi-isomorphism

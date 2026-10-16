@@ -17,6 +17,8 @@ pushforward-perfection or resolution premise.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.ProjectiveLine
 open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
 
@@ -41,7 +43,7 @@ local instance nativeZeroStandardDerived (Y : Scheme.{u}) :
 
 /-- The underlying zero coefficient is the literal original degreewise direct image. -/
 def G0Raw (X : QuasiCompactSchemes.{u}) :
-    FlasqueBoundedBelow.Obj (nativeLineFunctor.obj X).obj ⥤ Complex X.obj :=
+    FlasqueBoundedBelow.Obj (nativeLineFunctor.obj X).obj ⥤ CochainComplex X.obj.Modules ℤ :=
   (FlasqueBoundedBelow.objects (nativeLineFunctor.obj X).obj).ι ⋙
     (Scheme.Modules.pushforward (nativeProjection.app X).hom).mapHomologicalComplex (.up ℤ)
 
@@ -90,9 +92,10 @@ instance G0_additive (X : QuasiCompactSchemes.{u}) : (G0 X).Additive where
 
 /-- Exactness uses the proved original flasque-kernel section lifts. -/
 def G0ExactFunctor (X : QuasiCompactSchemes.{u}) : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (nativeLineFunctor.obj X).obj))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (nativeLineFunctor.obj X).obj.Modules ℤ))
       (FlasqueBoundedBelow.objects (nativeLineFunctor.obj X).obj))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex X.obj))
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.obj.Modules ℤ))
       (FlasqueBoundedBelow.objects X.obj)) where
   toFunctor := G0 X
   map_conflation S hS := by

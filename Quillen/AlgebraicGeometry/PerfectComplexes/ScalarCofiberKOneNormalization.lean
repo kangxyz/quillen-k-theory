@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ScalarCofiberFiberBoundaryPath
-public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialCoordinate
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Coordinates
 public import Quillen.Topology.HomotopyGroups.Loop.InverseComponentTranslation
 public import Quillen.Topology.HomotopyGroups.PathTransportFundamentalGroup
 public import Quillen.Waldhausen.Fibration.IdentityCofiberNormalization
@@ -27,6 +27,8 @@ automorphism class, its comparison with this forward-square class, and the suppo
 boundary formula remain separate interfaces.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.Waldhausen
 

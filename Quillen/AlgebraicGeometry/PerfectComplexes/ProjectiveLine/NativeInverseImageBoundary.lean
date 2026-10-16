@@ -16,6 +16,8 @@ still has exactly the original ambient two-summand complex and chain map.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes.OpenFunctorNaturality
 open Quillen.Waldhausen
 open Quillen.Waldhausen.ExtensionCategory

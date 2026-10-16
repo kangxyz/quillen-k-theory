@@ -137,6 +137,21 @@ class ImportGenerationTests(unittest.TestCase):
         self.assertEqual(project_imports((self.root / 'Quillen/Algebra.lean').read_text()),
                          ['Quillen.Algebra.A', 'Quillen.Algebra.Z'])
 
+    def test_readme_only_candidate_family_waits_for_enrolled_lean_source(self):
+        self.generate()
+        baseline = generated_files(self.root)
+        directory = self.root / 'Quillen/Future/Candidate'
+        directory.mkdir(parents=True)
+        (directory / 'README.md').write_text('Future candidates; no implementation enrolled.\n')
+        self.assertEqual(generated_files(self.root), baseline)
+        self.assertEqual(stale_files(self.root), [])
+        self.assertFalse((self.root / 'Quillen/Future.lean').exists())
+        (directory / 'Leaf.lean').write_text('')
+        outputs = generated_files(self.root)
+        self.assertEqual(project_imports(outputs[Path('Quillen/Future.lean')]),
+                         ['Quillen.Future.Candidate.Leaf'])
+        self.assertIn('Quillen.Future', project_imports(outputs[Path('Quillen.lean')]))
+
     def test_new_family_requires_generation_without_registry_edit(self):
         self.generate()
         path = self.root / 'Quillen/Future/Deep/New.lean'

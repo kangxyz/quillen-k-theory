@@ -12,6 +12,8 @@ public import Mathlib.Data.ZMod.Basic
 /-! # Consumers of original strict-complex projection and negative-twist maps -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 
 noncomputable section

@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Topology.Prespectrum.StableHomotopy
-public import Quillen.CategoryTheory.Limits.SequentialIsoColimit
+public import Aglib.CategoryTheory.Limits.Shapes.SequentialSystem.IsoColimit
 
 /-! # Stable groups of genuine Omega-spectra
 
@@ -44,14 +44,14 @@ theorem stableSystem_succ_isIso (d : ℤ) (n : ℕ) :
 def stableHomotopyStageZeroIso (d : ℤ) : stableHomotopyGroup E d ≅ (stableSystem E d).obj 0 := by
   letI (n : ℕ) : IsIso ((stableSystem E d).map (homOfLE (Nat.le_succ n))) :=
     stableSystem_succ_isIso E hE d n
-  exact Quillen.SequentialIsoColimit.colimitIsoOfSucc (stableSystem E d)
+  exact SequentialSystem.colimitIsoOfSucc (stableSystem E d)
 
 /-- The displayed isomorphism is the inverse of the original stage-zero inclusion. -/
 theorem stableHomotopyι_zero_hom (d : ℤ) :
     stableHomotopyι E d 0 ≫ (stableHomotopyStageZeroIso E hE d).hom = 𝟙 _ := by
   let (n : ℕ) : IsIso ((stableSystem E d).map (homOfLE (Nat.le_succ n))) :=
     stableSystem_succ_isIso E hE d n
-  exact Quillen.SequentialIsoColimit.ι_colimitIsoOfSucc_hom (stableSystem E d) 0
+  exact SequentialSystem.ι_colimitIsoOfSucc_hom (stableSystem E d) 0
 
 /-- Both original directions are inverses, not only an abstract group equivalence. -/
 theorem stableHomotopyStageZeroIso_inv (d : ℤ) :

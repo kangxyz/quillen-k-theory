@@ -48,9 +48,12 @@ def source_authors(source: str) -> set[str]:
 
 def family_facades(root: Path) -> set[Path]:
     """Create top-level surfaces; enroll existing nested opt-in surfaces only."""
+    occupied_families = {path.parts[1] for path in source_modules(root)
+                         if len(path.parts) > 2}
     top_level = {Path('Quillen') / (path.name + '.lean')
             for path in (root / 'Quillen').iterdir()
-            if path.is_dir() and path.name not in EXCLUDED_FAMILIES
+            if path.is_dir() and path.name in occupied_families
+            and path.name not in EXCLUDED_FAMILIES
             and not path.name.startswith('.')}
     nested = {path.relative_to(root) for path in (root / 'Quillen').rglob('*.lean')
               if len(path.relative_to(root).parts) > 2

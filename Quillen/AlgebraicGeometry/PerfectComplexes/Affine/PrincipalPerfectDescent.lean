@@ -9,6 +9,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.ModulePerfectClo
 public import Quillen.Algebra.ModuleComplex.FiniteProjectiveHomology
 public import Quillen.Algebra.ModuleComplex.FiniteFreeAttachment
 public import Quillen.Algebra.ModuleComplex.ConcentratedPerfectHomology
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
 
 /-!
 # Finite-principal descent of perfect module models
@@ -50,7 +51,7 @@ lemma exists_moduleStrictPerfect_cone_model_boundedBelow (R : CommRingCat.{u})
       Nonempty (DerivedCategory.Q.obj (CochainComplex.mappingCone f) ≅ DerivedCategory.Q.obj C) :=
         by
   have := isKProjective_of_moduleStrictPerfect R hP
-  obtain ⟨g, hg⟩ := Quillen.CochainComplex.exists_chain_representative_of_isKProjective
+  obtain ⟨g, hg⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective
     (DerivedCategory.Q.map f ≫ e.hom)
   refine ⟨CochainComplex.mappingCone g, moduleStrictPerfect_mappingCone R hP hL g,
     fun i hi => ?_, ⟨?_⟩⟩

@@ -9,6 +9,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Topology.FilteredRealization.HomotopyEquivalence
 public import Quillen.Localization.Serre.FilteredComparisonAssembly
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # The actual Serre quotient structured-transition homotopy equivalences
@@ -30,14 +31,15 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
 /-- The actual canonical stage map into the isomorphism-comma nerve is a
 homotopy equivalence, by the proved filtered realization theorem. -/
 def quotientAuxiliaryNerveStageHomotopyEquiv
-    (V : Quotient P) (A : QuotientAuxiliaryLift P V) :
+    (V : P.isoModSerre.Localization) (A : QuotientAuxiliaryLift P V) :
     ContinuousMap.HomotopyEquiv
       (SSet.toTop.obj ((quotientAuxiliaryNerveDiagram P V).obj A))
       (SSet.toTop.obj (quotientAuxiliaryNerveCocone P V).pt) :=
@@ -48,17 +50,18 @@ def quotientAuxiliaryNerveStageHomotopyEquiv
 
 @[simp]
 theorem quotientAuxiliaryNerveStageHomotopyEquiv_toFun
-    (V : Quotient P) (A : QuotientAuxiliaryLift P V) :
+    (V : P.isoModSerre.Localization) (A : QuotientAuxiliaryLift P V) :
     (quotientAuxiliaryNerveStageHomotopyEquiv P V A).toFun =
       (SSet.toTop.map ((quotientAuxiliaryNerveCocone P V).ι.app A)).hom := rfl
 
 /-- Quillen's auxiliary comparison for every specified ordinary quotient
 identification, with exactly the genuine functor as its forward map. -/
 def auxiliaryToIsoStructuredWithBaseClassifyingHomotopyEquiv
-    {N : C} {V : Quotient P} (φ : P.isoModSerre.Q.obj N ≅ V) :
+    {N : C} {V : P.isoModSerre.Localization} (φ : P.isoModSerre.Q.obj N ≅ V) :
     ContinuousMap.HomotopyEquiv (ClassifyingSpace (AuxiliaryKernel P N))
       (ClassifyingSpace (IsoStructuredComma P
-        (Q.of (quotientExactStructure P).deflation (quotientExactStructure P).inflation V))) := by
+        (Q.of ((abelianExactStructure P.isoModSerre.Localization)).deflation
+          ((abelianExactStructure P.isoModSerre.Localization)).inflation V))) := by
   let A := auxiliaryLiftMk P.isoModSerre.Q V φ
   let e := quotientAuxiliaryNerveStageHomotopyEquiv P V A
   apply TheoremA.homotopyEquivWithMap e (classifyingSpaceMap (auxiliaryToIsoStructuredWithBase P
@@ -71,7 +74,7 @@ def auxiliaryToIsoStructuredWithBaseClassifyingHomotopyEquiv
 
 @[simp]
 theorem auxiliaryToIsoStructuredWithBaseClassifyingHomotopyEquiv_toFun
-    {N : C} {V : Quotient P} (φ : P.isoModSerre.Q.obj N ≅ V) :
+    {N : C} {V : P.isoModSerre.Localization} (φ : P.isoModSerre.Q.obj N ≅ V) :
     (auxiliaryToIsoStructuredWithBaseClassifyingHomotopyEquiv P φ).toFun =
       (classifyingSpaceMap (auxiliaryToIsoStructuredWithBase P φ)).hom := rfl
 

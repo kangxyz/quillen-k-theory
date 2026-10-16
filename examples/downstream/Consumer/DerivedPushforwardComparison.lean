@@ -22,7 +22,8 @@ local instance standardDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Mod
   HasDerivedCategory.standard _
 
 lemma original_unit_detects_maps {Z X : Scheme.{u}} (f : Z ⟶ X)
-    [IsFinite f] [Flat f] [IsLocallyNoetherian X] (K : StrictPerfect Z)
+    [IsFinite f] [Flat f] [IsLocallyNoetherian X]
+    (K : AlgebraicGeometry.Scheme.Modules.Complex.StrictPerfect Z)
     {T : DerivedCategory.Plus X.Modules}
     (p q : T ⟶ (strictToDerivedPlus X).obj ((strictFiniteFlatPushforward f).obj K)) :
     p ≫ (derivedPushforwardPlusUnit f).app ((strictToPlus Z).obj K) =

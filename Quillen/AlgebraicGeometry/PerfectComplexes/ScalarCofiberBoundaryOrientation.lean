@@ -18,6 +18,8 @@ boundary and its normalized homotopy-group class remains a separate comparison.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 noncomputable section

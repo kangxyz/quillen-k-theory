@@ -40,7 +40,7 @@ example (K : Perfect X) :
     Acyclic (perfectOpenWeakWaldhausen j) K ↔ ((restrict j).obj K.obj).Acyclic :=
   perfectOpenAcyclic_iff j K
 
-example (K : Complex X) (hK : locallyPerfect X K) :
+example (K : CochainComplex X.Modules ℤ) (hK : locallyPerfect X K) :
     Acyclic (perfectOpenNested j).coarse ⟨K, hK⟩ ↔ perfectSupported j K := by
   change Acyclic (perfectOpenWeakWaldhausen j) ⟨K, hK⟩ ↔ perfectSupported j K
   rw [perfectOpenAcyclic_iff]

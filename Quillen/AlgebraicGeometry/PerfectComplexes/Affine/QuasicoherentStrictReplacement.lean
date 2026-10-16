@@ -5,7 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Homology
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.Strictification
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
 
 /-!
 # Actual affine strict replacements for termwise quasicoherent complexes
@@ -23,6 +26,8 @@ ambient sheaf complexes but does not assert an actual chain map to them.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -36,7 +41,7 @@ attribute [local instance] standardDerivedModules standardDerivedSheaves
 finite-projective module chain replacement of its literal global sections.
 The source is made K-projective by its proved bounded projective terms. -/
 lemma locallyPerfect_sections_exists_moduleStrictPerfect_derivedIso_lift (R : CommRingCat.{u})
-    {K : Complex (Spec R)} (hK : locallyPerfect (Spec R) K)
+    {K : CochainComplex (Spec R).Modules ℤ} (hK : locallyPerfect (Spec R) K)
     (hqc : ∀ i, (K.X i).IsQuasicoherent) :
     ∃ (P : ModuleComplex R), moduleStrictPerfect R P ∧
       ∃ (e : DerivedCategory.Q.obj P ≅ DerivedCategory.Q.obj ((sectionsComplex R).obj K))
@@ -44,7 +49,7 @@ lemma locallyPerfect_sections_exists_moduleStrictPerfect_derivedIso_lift (R : Co
   let L := (sectionsComplex R).obj K
   let e := associatedSectionsIsoOfQuasicoherent R K hqc
   have hL : locallyPerfect (Spec R) ((associatedComplex R).obj L) :=
-    (locallyPerfect_iff_of_derivedIso ((toDerived (Spec R)).mapIso e)).mpr hK
+    (locallyPerfect_iff_of_derivedIso ((DerivedCategory.Q (C := (Spec R).Modules)).mapIso e)).mpr hK
   obtain ⟨a, b, hab⟩ := locallyPerfect_homology_bounded hL
   have : L.IsGE a := by
     rw [CochainComplex.isGE_iff]
@@ -58,13 +63,13 @@ lemma locallyPerfect_sections_exists_moduleStrictPerfect_derivedIso_lift (R : Co
     exact (exactAt_iff_isZero_homology _ i).mpr (hab i (Or.inr hi))
   obtain ⟨P, hP, ⟨eP⟩⟩ := finiteProjectiveDerived_of_locallyPerfect_associated R L a b hL
   have : P.IsKProjective := isKProjective_of_moduleStrictPerfect R hP
-  obtain ⟨f, hf⟩ := Quillen.CochainComplex.exists_chain_representative_of_isKProjective eP.hom
+  obtain ⟨f, hf⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective eP.hom
   have : IsIso (DerivedCategory.Q.map f) := by rw [hf]; infer_instance
   exact ⟨P, hP, eP, f, hf, (DerivedCategory.isIso_Q_map_iff_quasiIso _ f).mp inferInstance⟩
 
 /-- The actual module chain replacement, retaining literal global sections. -/
 lemma locallyPerfect_sections_exists_moduleStrictPerfect_quasiIso (R : CommRingCat.{u})
-    {K : Complex (Spec R)} (hK : locallyPerfect (Spec R) K)
+    {K : CochainComplex (Spec R).Modules ℤ} (hK : locallyPerfect (Spec R) K)
     (hqc : ∀ i, (K.X i).IsQuasicoherent) :
     ∃ (P : ModuleComplex R), moduleStrictPerfect R P ∧
       ∃ f : P ⟶ (sectionsComplex R).obj K, QuasiIso f := by
@@ -75,25 +80,27 @@ lemma locallyPerfect_sections_exists_moduleStrictPerfect_quasiIso (R : CommRingC
 /-- The geometric chain map through the original affine counit realizes the
 literal associated-derived image of its original module chain map. -/
 lemma associated_counit_comparison_derived_map (R : CommRingCat.{u})
-    {P : ModuleComplex R} {K : Complex (Spec R)}
+    {P : ModuleComplex R} {K : CochainComplex (Spec R).Modules ℤ}
     (hqc : ∀ i, (K.X i).IsQuasicoherent)
     (f : P ⟶ (sectionsComplex R).obj K) :
-    (toDerived (Spec R)).map ((associatedComplex R).map f ≫
+    (DerivedCategory.Q (C := (Spec R).Modules)).map ((associatedComplex R).map f ≫
       (associatedSectionsIsoOfQuasicoherent R K hqc).hom) =
       ((associatedDerivedFactors R).app P).inv ≫
         (associatedDerived R).map (DerivedCategory.Q.map f) ≫
         ((associatedDerivedFactors R).app ((sectionsComplex R).obj K)).hom ≫
-        (toDerived (Spec R)).map (associatedSectionsIsoOfQuasicoherent R K hqc).hom := by
+        (DerivedCategory.Q (C := (Spec R).Modules)).map
+          (associatedSectionsIsoOfQuasicoherent R K hqc).hom := by
   rw [Functor.map_comp, ← cancel_epi ((associatedDerivedFactors R).app P).hom]
   simp only [Iso.hom_inv_id_assoc]
   simpa only [Functor.comp_map, Category.assoc, Iso.app_hom] using (congrArg (fun t => t ≫
-    (toDerived (Spec R)).map (associatedSectionsIsoOfQuasicoherent R K hqc).hom)
+    (DerivedCategory.Q (C := (Spec R).Modules)).map
+      (associatedSectionsIsoOfQuasicoherent R K hqc).hom)
       ((associatedDerivedFactors R).hom.naturality f)).symm
 
 /-- The actual associated replacement followed by the original sheafification
 counit is a quasi-isomorphism to the original termwise-QC target. -/
 lemma locallyPerfect_exists_associated_quasiIso_of_quasicoherent (R : CommRingCat.{u})
-    {K : Complex (Spec R)} (hK : locallyPerfect (Spec R) K)
+    {K : CochainComplex (Spec R).Modules ℤ} (hK : locallyPerfect (Spec R) K)
     (hqc : ∀ i, (K.X i).IsQuasicoherent) :
     ∃ (P : ModuleComplex R), moduleStrictPerfect R P ∧
       ∃ f : P ⟶ (sectionsComplex R).obj K,
@@ -108,7 +115,7 @@ strict-perfect chain complex mapping quasi-isomorphically to it. Termwise QC
 is essential for the actual chain endpoint, unlike the derived representative
 statement for arbitrary ambient sheaf complexes. -/
 lemma locallyPerfect_exists_strictPerfect_quasiIso_of_quasicoherent (R : CommRingCat.{u})
-    {K : Complex (Spec R)} (hK : locallyPerfect (Spec R) K)
+    {K : CochainComplex (Spec R).Modules ℤ} (hK : locallyPerfect (Spec R) K)
     (hqc : ∀ i, (K.X i).IsQuasicoherent) :
     ∃ (P : StrictPerfect (Spec R)) (f : P.obj ⟶ K), QuasiIso f := by
   obtain ⟨P, hP, f, _, hf⟩ := locallyPerfect_exists_associated_quasiIso_of_quasicoherent R hK hqc

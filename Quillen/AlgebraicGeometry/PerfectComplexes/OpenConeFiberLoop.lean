@@ -8,6 +8,7 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenSupport
 public import Quillen.Waldhausen.Fibration.CanonicalFiberObjectLoop
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-!
 # The actual supported cone in the original localization fiber

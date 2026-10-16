@@ -11,6 +11,8 @@ public import Quillen.Topology.Prespectrum.FiberSequence
 /-! Actual coordinate, connecting-map and negative-degree fiber-sequence consumers. -/
 @[expose] public section
 
+open CategoryTheory.Limits.SequentialSystem
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

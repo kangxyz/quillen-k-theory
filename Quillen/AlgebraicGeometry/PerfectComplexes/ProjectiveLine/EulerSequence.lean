@@ -23,6 +23,8 @@ sequence, using the flasque kernel terms.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.Modules.Godement
 
 open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
@@ -82,7 +84,7 @@ def middleIso : (sequence R).X₂ ≅ tautologicalLine R ⊞ tautologicalLine R 
 
 /-- Each endpoint tensor is the original sheafified tensor with a fixed Euler endpoint. -/
 def endpointComplex (M : (twoChartLine R).Modules) :
-    StrictPerfect (Spec R) ⥤ Complex (twoChartLine R) :=
+    StrictPerfect (Spec R) ⥤ CochainComplex (twoChartLine R).Modules ℤ :=
   (strictPerfect (Spec R)).ι ⋙ AlgebraicGeometry.Scheme.Modules.Complex.pullback (projection R) ⋙
     AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft M
 
@@ -115,7 +117,8 @@ lemma first_second : first R ≫ second R = 0 := by
   rw [← Functor.map_comp, (sequence R).zero, Functor.map_zero]
 
 /-- The actual coefficient Euler short complex, retaining the first-variable tensor maps. -/
-def coefficientSequence (A : StrictPerfect (Spec R)) : ShortComplex (Complex (twoChartLine R)) :=
+def coefficientSequence (A : StrictPerfect (Spec R)) : ShortComplex
+    (CochainComplex (twoChartLine R).Modules ℤ) :=
   ShortComplex.mk ((first R).app A) ((second R).app A) (NatTrans.congr_app (first_second R) A)
 
 /-- Each pulled-back coefficient term is finite locally free; no arbitrary flatness is assumed. -/
@@ -143,7 +146,8 @@ lemma endpointComplex_isStrictlyGE (M : (twoChartLine R).Modules)
       (CochainComplex.isZero_of_isStrictlyGE A.obj a n hn))
 
 /-- Literal Godement totalization of the original coefficient Euler sequence. -/
-def totalSequence (A : StrictPerfect (Spec R)) : ShortComplex (Complex (twoChartLine R)) :=
+def totalSequence (A : StrictPerfect (Spec R)) : ShortComplex
+    (CochainComplex (twoChartLine R).Modules ℤ) :=
   (coefficientSequence R A).map (godementTotal (twoChartLine R))
 
 lemma totalSequence_shortExact (A : StrictPerfect (Spec R)) :
@@ -162,7 +166,8 @@ lemma totalSequence_kernel_flasque (A : StrictPerfect (Spec R)) (n : ℤ) :
     (fun i hi => CochainComplex.isZero_of_isStrictlyGE K a i hi) n
 
 /-- Literal ordinary projection of the actual totalized Euler sequence. -/
-def pushedSequence (A : StrictPerfect (Spec R)) : ShortComplex (Complex (Spec R)) :=
+def pushedSequence (A : StrictPerfect (Spec R)) : ShortComplex
+    (CochainComplex (Spec R).Modules ℤ) :=
   (totalSequence R A).map
     ((Scheme.Modules.pushforward (projection R)).mapHomologicalComplex (.up ℤ))
 

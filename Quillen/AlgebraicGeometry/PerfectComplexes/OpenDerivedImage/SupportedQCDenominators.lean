@@ -5,11 +5,17 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Homology
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenUnitConeConstruction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Models
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.SupportedCocone
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Mathlib.Algebra.Homology.DerivedCategory.Basic
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.RestrictionHom
+public import Mathlib.Algebra.Homology.DerivedCategory.Fractions
 /-! # From genuine supported QC denominators to original open roofs
 
 The remaining geometric input is stated explicitly: annihilation of maps from
@@ -33,6 +39,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes
 /-- The standard derived model used for supported quasicoherent denominators. -/
 local instance qcDenominatorDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
@@ -43,22 +50,24 @@ variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 /-- Geometric annihilating denominators for genuinely supported lower-bounded QC targets. -/
 def HasSupportedQCDenominators : Prop :=
-  ∀ (A B : Complex X), locallyPerfect X A → ∀ b : ℤ, B.IsGE b →
+  ∀ (A B : CochainComplex X.Modules ℤ), locallyPerfect X A → ∀ b : ℤ, B.IsGE b →
     (∀ n, (B.homology n).IsQuasicoherent) →
-    IsZero ((toDerived U).obj ((restrict j).obj B)) →
-    ∀ α : (toDerived X).obj A ⟶ (toDerived X).obj B,
-      ∃ (M : Complex X) (q : M ⟶ A), locallyPerfect X M ∧
-        QuasiIso ((restrict j).map q) ∧ (toDerived X).map q ≫ α = 0
+    IsZero ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj B)) →
+    ∀ α : (DerivedCategory.Q (C := X.Modules)).obj A ⟶ (DerivedCategory.Q (C := X.Modules)).obj B,
+      ∃ (M : CochainComplex X.Modules ℤ) (q : M ⟶ A), locallyPerfect X M ∧
+        QuasiIso ((restrict j).map q) ∧ (DerivedCategory.Q (C := X.Modules)).map q ≫ α = 0
 
 /-- Original supported factorization through an actual global perfect chain model. -/
 def HasSupportedQCFactorizations : Prop :=
-  ∀ (A B : Complex X), locallyPerfect X A → ∀ b : ℤ, B.IsGE b →
+  ∀ (A B : CochainComplex X.Modules ℤ), locallyPerfect X A → ∀ b : ℤ, B.IsGE b →
     (∀ n, (B.homology n).IsQuasicoherent) →
-    IsZero ((toDerived U).obj ((restrict j).obj B)) →
-    ∀ α : (toDerived X).obj A ⟶ (toDerived X).obj B,
-      ∃ (C : Complex X) (i : A ⟶ C) (γ : (toDerived X).obj C ⟶ (toDerived X).obj B),
-        locallyPerfect X C ∧ (toDerived X).map i ≫ γ = α ∧
-          IsZero ((toDerived U).obj ((restrict j).obj C))
+    IsZero ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj B)) →
+    ∀ α : (DerivedCategory.Q (C := X.Modules)).obj A ⟶ (DerivedCategory.Q (C := X.Modules)).obj B,
+      ∃ (C : CochainComplex X.Modules ℤ) (i : A ⟶ C)
+        (γ : (DerivedCategory.Q (C := X.Modules)).obj C ⟶
+        (DerivedCategory.Q (C := X.Modules)).obj B),
+        locallyPerfect X C ∧ (DerivedCategory.Q (C := X.Modules)).map i ≫ γ = α ∧
+          IsZero ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj C))
 
 /-- Actual supported perfect factorizations give original weak denominators via the literal cocone.
 -/
@@ -68,7 +77,8 @@ lemma hasSupportedQCDenominators_of_factorizations
   obtain ⟨C, i, γ, hC, heq, hzC⟩ := h A B hA b hb hqc hz α
   refine ⟨CochainComplex.mappingCocone i, CochainComplex.mappingCocone.fst i,
     locallyPerfect_mappingCocone hA hC i, quasiIso_restrict_mappingCocone_fst_of_isZero j i hzC, ?_⟩
-  have hi : (toDerived X).map (CochainComplex.mappingCocone.fst i) ≫ (toDerived X).map i = 0 :=
+  have hi : (DerivedCategory.Q (C := X.Modules)).map (CochainComplex.mappingCocone.fst i) ≫
+    (DerivedCategory.Q (C := X.Modules)).map i = 0 :=
     comp_distTriang_mor_zero₁₂ _ (DerivedCategory.mappingCocone_triangle_distinguished i)
   rw [← heq, ← Category.assoc, hi, zero_comp]
 
@@ -87,29 +97,40 @@ lemma hasDerivedRoofs_of_supportedQCDenominators [CompactSpace X] [QuasiCompact 
     fun n hn => (CochainComplex.isStrictlyGE_iff I b).mp hIb n hn
   let u := (restrictPushforwardComplexAdjunction j).homEquiv P I q
   let B := CochainComplex.mappingCone u
-  let α := (pushforwardDerivedHomEquiv j A I b hbI hi).symm (φ ≫ (toDerived U).map q)
+  let α := (pushforwardDerivedHomEquiv j A I b hbI hi).symm
+    (φ ≫ (DerivedCategory.Q (C := U.Modules)).map q)
   obtain ⟨M, r, hM, hr, hkill⟩ := h A B hA (b-1) hCb hCqc hzC
-    (α ≫ (toDerived X).map (CochainComplex.mappingCone.inr u))
+    (α ≫ (DerivedCategory.Q (C := X.Modules)).map (CochainComplex.mappingCone.inr u))
   let := hr
-  obtain ⟨γ, hγ⟩ := Triangle.coyoneda_exact₂ _ (mappingConeTriangle_distinguished u)
-    ((toDerived X).map r ≫ α) (by
-      change ((toDerived X).map r ≫ α) ≫
-        (toDerived X).map (CochainComplex.mappingCone.inr u) = 0
+  obtain ⟨γ, hγ⟩ := Triangle.coyoneda_exact₂ _ (DerivedCategory.mappingCone_triangle_distinguished
+    u)
+    ((DerivedCategory.Q (C := X.Modules)).map r ≫ α) (by
+      change ((DerivedCategory.Q (C := X.Modules)).map r ≫ α) ≫
+        (DerivedCategory.Q (C := X.Modules)).map (CochainComplex.mappingCone.inr u) = 0
       simpa only [Category.assoc] using hkill)
-  change (toDerived X).obj M ⟶ (toDerived X).obj P at γ
-  change (toDerived X).map r ≫ α = γ ≫ (toDerived X).map u at hγ
-  have hlocal : (toDerived U).map ((restrict j).map r) ≫ φ = restrictDerivedHom j γ := by
-    apply (cancel_mono ((toDerived U).map q)).mp
+  change (DerivedCategory.Q (C := X.Modules)).obj M ⟶
+    (DerivedCategory.Q (C := X.Modules)).obj P at γ
+  change (DerivedCategory.Q (C := X.Modules)).map r ≫ α = γ ≫
+    (DerivedCategory.Q (C := X.Modules)).map u at hγ
+  have hlocal : (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map r) ≫ φ
+    = restrictDerivedHom j γ := by
+    apply (cancel_mono ((DerivedCategory.Q (C := U.Modules)).map q)).mp
     have hh := congrArg (pushforwardDerivedHomEquiv j M I b hbI hi) hγ
     rw [pushforwardDerivedHomEquiv_precomp, pushforwardDerivedHomEquiv_precomp] at hh
-    have hu : pushforwardDerivedHomEquiv j P I b hbI hi ((toDerived X).map u) =
-        (toDerived U).map q := by
+    have hu : pushforwardDerivedHomEquiv j P I b hbI hi ((DerivedCategory.Q (C := X.Modules)).map u)
+      =
+        (DerivedCategory.Q (C := U.Modules)).map q := by
       rw [pushforwardDerivedHomEquiv_map]
-      exact congrArg ((toDerived U).map)
+      exact congrArg ((DerivedCategory.Q (C := U.Modules)).map)
         (((restrictPushforwardComplexAdjunction j).homEquiv P I).symm_apply_apply q)
     rw [hu, AddEquiv.apply_symm_apply] at hh
     simpa only [restrictDerivedHom_map, Category.assoc] using hh
-  obtain ⟨N, s, a, hs, ha⟩ := toDerived_right_fraction γ
+  obtain ⟨N, s, hDenIso1, a, hFac1⟩ := DerivedCategory.right_fac γ
+  have hs : QuasiIso s :=
+    (DerivedCategory.isIso_Q_map_iff_quasiIso _ s).1 hDenIso1
+  have ha : DerivedCategory.Q.map s ≫ (γ) = DerivedCategory.Q.map a := by
+    let := hDenIso1
+    rw [hFac1, IsIso.hom_inv_id_assoc]
   let := hs
   refine ⟨N, s ≫ r, a, (locallyPerfect_iff_of_quasiIso s).mpr hM, ?_, ?_⟩
   · rw [Functor.map_comp]
@@ -122,44 +143,47 @@ lemma hasDerivedRoofs_of_supportedQCDenominators [CompactSpace X] [QuasiCompact 
 /-- Genuine supported denominators kill every original map whose open restriction is zero.
 The target need only be lower-bounded with QC homology, not perfect or supported globally. -/
 lemma exists_denominator_of_restrictDerivedHom_zero [QuasiCompact j]
-    (h : HasSupportedQCDenominators j) {A B : Complex X}
+    (h : HasSupportedQCDenominators j) {A B : CochainComplex X.Modules ℤ}
     (hA : locallyPerfect X A) (b : ℤ) [B.IsGE b]
     (hB : ∀ n, (B.homology n).IsQuasicoherent)
-    (α : (toDerived X).obj A ⟶ (toDerived X).obj B)
+    (α : (DerivedCategory.Q (C := X.Modules)).obj A ⟶ (DerivedCategory.Q (C := X.Modules)).obj B)
     (hzero : restrictDerivedHom j α = 0) :
-    ∃ (M : Complex X) (q : M ⟶ A), locallyPerfect X M ∧
-      QuasiIso ((restrict j).map q) ∧ (toDerived X).map q ≫ α = 0 := by
+    ∃ (M : CochainComplex X.Modules ℤ) (q : M ⟶ A), locallyPerfect X M ∧
+      QuasiIso ((restrict j).map q) ∧ (DerivedCategory.Q (C := X.Modules)).map q ≫ α = 0 := by
   obtain ⟨I, q, hIb, hi, hq, hCqc, hCb, hzC⟩ := exists_restrictionUnitCone_model j B b hB
   let := hq
   have hbI : ∀ n, n < b → IsZero (I.X n) :=
     fun n hn => (CochainComplex.isStrictlyGE_iff I b).mp hIb n hn
   let u := (restrictPushforwardComplexAdjunction j).homEquiv B I q
-  have hαu : α ≫ (toDerived X).map u = 0 := by
+  have hαu : α ≫ (DerivedCategory.Q (C := X.Modules)).map u = 0 := by
     apply (pushforwardDerivedHomEquiv j A I b hbI hi).injective
     rw [pushforwardDerivedHomEquiv_precomp, hzero, zero_comp, map_zero]
   obtain ⟨γ, hγ⟩ := Triangle.coyoneda_exact₂ _
     (DerivedCategory.mappingCocone_triangle_distinguished u) α hαu
-  change (toDerived X).obj A ⟶ (toDerived X).obj (CochainComplex.mappingCocone u) at γ
-  change α = γ ≫ (toDerived X).map (CochainComplex.mappingCocone.fst u) at hγ
+  change (DerivedCategory.Q (C := X.Modules)).obj A ⟶ (DerivedCategory.Q (C := X.Modules)).obj
+    (CochainComplex.mappingCocone u) at γ
+  change α = γ ≫ (DerivedCategory.Q (C := X.Modules)).map (CochainComplex.mappingCocone.fst u) at hγ
   have hFqc (n : ℤ) : ((CochainComplex.mappingCocone u).homology n).IsQuasicoherent :=
     quasicoherent_homology_shift _ hCqc (-1) n
   have hFb : (CochainComplex.mappingCocone u).IsGE b := by
     let := hCb
     exact CochainComplex.isGE_shift (CochainComplex.mappingCone u) (b-1) (-1) b (by omega)
-  have hFzero : IsZero ((toDerived U).obj ((restrict j).obj (CochainComplex.mappingCocone u))) :=
+  have hFzero : IsZero ((DerivedCategory.Q (C := U.Modules)).obj
+    ((restrict j).obj (CochainComplex.mappingCocone u))) :=
     isZero_restrict_shift_of_isZero j _ hzC (-1)
   obtain ⟨M,r,hM,hr,hkill⟩ := h A _ hA b hFb hFqc hFzero γ
   exact ⟨M,r,hM,hr,by rw [hγ, ← Category.assoc, hkill, zero_comp]⟩
 
 /-- Original equality on the open is equalized by one genuine locally weak perfect denominator. -/
 lemma exists_denominator_of_restrictDerivedHom_eq [QuasiCompact j]
-    (h : HasSupportedQCDenominators j) {A B : Complex X}
+    (h : HasSupportedQCDenominators j) {A B : CochainComplex X.Modules ℤ}
     (hA : locallyPerfect X A) (b : ℤ) [B.IsGE b]
     (hB : ∀ n, (B.homology n).IsQuasicoherent)
-    (α β : (toDerived X).obj A ⟶ (toDerived X).obj B)
+    (α β : (DerivedCategory.Q (C := X.Modules)).obj A ⟶ (DerivedCategory.Q (C := X.Modules)).obj B)
     (heq : restrictDerivedHom j α = restrictDerivedHom j β) :
-    ∃ (M : Complex X) (q : M ⟶ A), locallyPerfect X M ∧
-      QuasiIso ((restrict j).map q) ∧ (toDerived X).map q ≫ α = (toDerived X).map q ≫ β := by
+    ∃ (M : CochainComplex X.Modules ℤ) (q : M ⟶ A), locallyPerfect X M ∧
+      QuasiIso ((restrict j).map q) ∧ (DerivedCategory.Q (C := X.Modules)).map q ≫ α =
+        (DerivedCategory.Q (C := X.Modules)).map q ≫ β := by
   have hz : restrictDerivedHom j (α-β) = 0 := by
     simpa only [restrictDerivedHom, Functor.map_sub, Preadditive.comp_sub,
       Preadditive.sub_comp] using sub_eq_zero.mpr heq

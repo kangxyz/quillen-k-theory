@@ -13,6 +13,8 @@ Semantic consumers of coherent original opposite-complex cylinders.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 open Quillen.Waldhausen
 
@@ -34,7 +36,7 @@ theorem actual_strict_fibration_class (X : Scheme.{u}) {A B : StrictPerfect X} (
     (strictOppositeWaldhausen X).cof f.op ↔
       (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
         (CategoryTheory.ExactCategory.abelianExactStructure
-        (Complex X))
+        (CochainComplex X.Modules ℤ))
         (strictPerfect X)).deflation f := Iff.rfl
 
 /-- The constructed perfect cocylinder factors the original map in its

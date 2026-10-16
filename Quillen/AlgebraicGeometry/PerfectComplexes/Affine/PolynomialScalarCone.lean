@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenScalarUnit
-public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialCoordinate
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Coordinates
 
 /-!
 # The original polynomial scalar cone on the Laurent open
@@ -17,6 +17,8 @@ and its canonical fiber loop. Identifying the localization boundary of the Laure
 with this specified fiber loop remains a separate comparison.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.Waldhausen
 

@@ -8,7 +8,10 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedDerivedComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalPerfectDescent
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
 /-!
 # Affine strictification of original locally-perfect complexes
 
@@ -49,12 +52,12 @@ attribute [local instance] standardDerivedModules standardDerivedSheaves
 /-- Refine an original local strict model to an actual principal neighborhood of a specified affine
   point. -/
 lemma exists_principal_strict_model_near (R : CommRingCat.{u})
-    {K : Complex (Spec R)} (hK : locallyPerfect (Spec R) K) (x : Spec R) :
+    {K : CochainComplex (Spec R).Modules ℤ} (hK : locallyPerfect (Spec R) K) (x : Spec R) :
     ∃ r : R, x ∈ PrimeSpectrum.basicOpen r ∧
       ∃ P : StrictPerfect (Spec (CommRingCat.of (Localization.Away r))),
-        Nonempty ((toDerived _).obj ((restrict
+        Nonempty ((DerivedCategory.Q).obj ((restrict
           (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj K) ≅
-          (toDerived _).obj P.obj) := by
+          (DerivedCategory.Q).obj P.obj) := by
   obtain ⟨U, hxU, P, ⟨eP⟩⟩ := hK x
   obtain ⟨_, ⟨r, rfl⟩, hxr, hrU⟩ :=
     PrimeSpectrum.isTopologicalBasis_basic_opens.exists_subset_of_mem_open hxU U.isOpen
@@ -69,21 +72,21 @@ lemma exists_principal_strict_model_near (R : CommRingCat.{u})
   let e : restrict U.ι ⋙ restrict k ≅ restrict j :=
     restrictCompIso k U.ι ≪≫ eqToIso (restrict_congr hk)
   exact ⟨r, hxr, ⟨(restrict k).obj P.obj, strictPerfect_restrict k P.property⟩,
-    ⟨(toDerived _).mapIso (e.app K).symm ≪≫ restrictDerivedIso k eP⟩⟩
+    ⟨(DerivedCategory.Q).mapIso (e.app K).symm ≪≫ restrictDerivedIso k eP⟩⟩
 
 /-- Affine compactness extracts a finite principal cover with original restricted strict models. -/
 lemma exists_finite_principal_strict_models (R : CommRingCat.{u})
-    {K : Complex (Spec R)} (hK : locallyPerfect (Spec R) K) :
+    {K : CochainComplex (Spec R).Modules ℤ} (hK : locallyPerfect (Spec R) K) :
     ∃ s : Finset R, Ideal.span (s : Set R) = ⊤ ∧
       ∀ r : s, ∃ P : StrictPerfect (Spec (CommRingCat.of (Localization.Away r.val))),
-        Nonempty ((toDerived _).obj ((restrict
+        Nonempty ((DerivedCategory.Q).obj ((restrict
           (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r.val)).obj K) ≅
-          (toDerived _).obj P.obj) := by
+          (DerivedCategory.Q).obj P.obj) := by
   classical
   let S : Set R := {r | ∃ P : StrictPerfect (Spec (CommRingCat.of (Localization.Away r))),
-    Nonempty ((toDerived _).obj ((restrict
+    Nonempty ((DerivedCategory.Q).obj ((restrict
       (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj K) ≅
-      (toDerived _).obj P.obj)}
+      (DerivedCategory.Q).obj P.obj)}
   have hS : Ideal.span S = ⊤ := by
     rw [← PrimeSpectrum.iSup_basicOpen_eq_top_iff']
     apply top_unique
@@ -151,8 +154,8 @@ lemma exists_finite_principal_module_strict_models (R : CommRingCat.{u})
   let e : (associatedDerived S).obj (DerivedCategory.Q.obj K') ≅
       (associatedDerived S).obj (DerivedCategory.Q.obj P) :=
     (associatedDerivedFactors S).app K' ≪≫
-      (toDerived _).mapIso ((principalRestrictionAssociatedComplexIso R r.val).app K) ≪≫
-      eQ ≪≫ (toDerived _).mapIso (associatedSectionsIso S Q.property).symm ≪≫
+      (DerivedCategory.Q).mapIso ((principalRestrictionAssociatedComplexIso R r.val).app K) ≪≫
+      eQ ≪≫ (DerivedCategory.Q).mapIso (associatedSectionsIso S Q.property).symm ≪≫
       ((associatedDerivedFactors S).app P).symm
   exact ⟨P, ⟨⟨c, d, hcd⟩, hterms⟩,
     ⟨associatedDerivedIsoLiftBounded S (DerivedCategory.Q.obj K') (DerivedCategory.Q.obj P) a b c d
@@ -197,10 +200,10 @@ lemma finiteProjectiveDerived_of_locallyPerfect_associated (R : CommRingCat.{u})
 /-- Original affine local perfection gives a genuine bounded finite-projective
 module representative, over an arbitrary commutative ring. -/
 lemma locallyPerfect_exists_moduleStrictPerfect_representative (R : CommRingCat.{u})
-    {K : Complex (Spec R)} (hK : locallyPerfect (Spec R) K) :
+    {K : CochainComplex (Spec R).Modules ℤ} (hK : locallyPerfect (Spec R) K) :
     ∃ P : ModuleComplex R, moduleStrictPerfect R P ∧
-      Nonempty ((toDerived (Spec R)).obj ((associatedComplex R).obj P) ≅
-        (toDerived (Spec R)).obj K) := by
+      Nonempty ((DerivedCategory.Q (C := (Spec R).Modules)).obj ((associatedComplex R).obj P) ≅
+        (DerivedCategory.Q (C := (Spec R).Modules)).obj K) := by
   obtain ⟨L, a, b, hge, hle, ⟨eL⟩⟩ := locallyPerfect_exists_bounded_module_representative R hK
   have hL : locallyPerfect (Spec R) ((associatedComplex R).obj L) :=
     (locallyPerfect_iff_of_derivedIso eL).mpr hK
@@ -211,9 +214,10 @@ lemma locallyPerfect_exists_moduleStrictPerfect_representative (R : CommRingCat.
 /-- Every affine locally-perfect complex has a strict-perfect representative
 in the original derived category of all module sheaves. -/
 lemma locallyPerfect_exists_strictPerfect_representative (R : CommRingCat.{u})
-    {K : Complex (Spec R)} (hK : locallyPerfect (Spec R) K) :
+    {K : CochainComplex (Spec R).Modules ℤ} (hK : locallyPerfect (Spec R) K) :
     ∃ P : StrictPerfect (Spec R),
-      Nonempty ((toDerived (Spec R)).obj P.obj ≅ (toDerived (Spec R)).obj K) := by
+      Nonempty ((DerivedCategory.Q (C := (Spec R).Modules)).obj P.obj ≅
+        (DerivedCategory.Q (C := (Spec R).Modules)).obj K) := by
   obtain ⟨P, hP, e⟩ := locallyPerfect_exists_moduleStrictPerfect_representative R hK
   exact ⟨⟨(associatedComplex R).obj P, strictPerfect_associated R hP⟩, e⟩
 

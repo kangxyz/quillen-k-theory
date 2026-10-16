@@ -22,6 +22,8 @@ augmentation supplies forward weak natural units on both original models.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open CategoryTheory.ExactCategory
 
 noncomputable section
@@ -37,14 +39,14 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.FlasqueBoundedBelow
 
 /-- Original lower-bounded locally perfect complexes with every term flasque. -/
-def objects (X : Scheme.{u}) : ObjectProperty (Complex X) := fun K =>
+def objects (X : Scheme.{u}) : ObjectProperty (CochainComplex X.Modules ℤ) := fun K =>
   BoundedBelow.objects X K ∧ ∀ n : ℤ, TopCat.Presheaf.IsFlasque (K.X n).presheaf
 
 /-- All original chain maps between these complexes are retained. -/
 abbrev Obj (X : Scheme.{u}) := (objects X).FullSubcategory
 
 /-- Every actual zero complex belongs, including on the empty scheme. -/
-lemma objects_of_isZero {X : Scheme.{u}} {K : Complex X} (hK : IsZero K) :
+lemma objects_of_isZero {X : Scheme.{u}} {K : CochainComplex X.Modules ℤ} (hK : IsZero K) :
     objects X K := by
   refine ⟨BoundedBelow.objects_of_isZero hK, fun n => ?_⟩
   exact godement_isFlasque_of_isZero _
@@ -54,7 +56,7 @@ instance containsZero (X : Scheme.{u}) : (objects X).ContainsZero where
   exists_zero := ⟨0, isZero_zero _, objects_of_isZero (isZero_zero _)⟩
 
 /-- Membership is transported by the actual original complex isomorphism. -/
-lemma objects_of_iso {X : Scheme.{u}} {K L : Complex X} (e : K ≅ L)
+lemma objects_of_iso {X : Scheme.{u}} {K L : CochainComplex X.Modules ℤ} (e : K ≅ L)
     (hK : objects X K) : objects X L := by
   refine ⟨BoundedBelow.objects_of_iso e hK.1, fun n => ?_⟩
   let : TopCat.Presheaf.IsFlasque
@@ -65,7 +67,7 @@ instance isoClosed (X : Scheme.{u}) : (objects X).IsClosedUnderIsomorphisms wher
   of_iso e := objects_of_iso e
 
 /-- Actual extensions remain lower-bounded, locally perfect, and termwise flasque. -/
-lemma objects_of_shortExact {X : Scheme.{u}} {S : ShortComplex (Complex X)}
+lemma objects_of_shortExact {X : Scheme.{u}} {S : ShortComplex (CochainComplex X.Modules ℤ)}
     (hS : S.ShortExact) (h₁ : objects X S.X₁) (h₃ : objects X S.X₃) :
     objects X S.X₂ := by
   refine ⟨BoundedBelow.objects_of_shortExact hS h₁.1 h₃.1, fun n => ?_⟩
@@ -77,12 +79,12 @@ lemma objects_of_shortExact {X : Scheme.{u}} {S : ShortComplex (Complex X)}
     ((HomologicalComplex.shortExact_iff_degreewise_shortExact S).mp hS n)
 
 instance extensionClosed (X : Scheme.{u}) :
-    (abelianExactStructure (Complex X)).IsExtensionClosed (objects X) where
+    (abelianExactStructure (CochainComplex X.Modules ℤ)).IsExtensionClosed (objects X) where
   prop_middle := objects_of_shortExact
 
 instance closedUnderFiniteProducts (X : Scheme.{u}) :
     (objects X).IsClosedUnderFiniteProducts :=
-  (abelianExactStructure (Complex X)).extensionClosed_finiteProducts (objects X)
+  (abelianExactStructure (CochainComplex X.Modules ℤ)).extensionClosed_finiteProducts (objects X)
 
 /-- The genuine full Waldhausen subcategory with inherited cofibrations and quasi-isomorphisms. -/
 def waldhausen (X : Scheme.{u}) : Waldhausen.Structure (Obj X) :=
@@ -99,7 +101,7 @@ lemma inclusion_exact (X : Scheme.{u}) : Waldhausen.IsExact
   Waldhausen.subcategoryInclusion_exact _ _ (fun _ h => h.1)
 
 /-- Actual totalization has flasque terms, the same strict lower bound, and is locally perfect. -/
-lemma godement_objects {X : Scheme.{u}} {K : Complex X}
+lemma godement_objects {X : Scheme.{u}} {K : CochainComplex X.Modules ℤ}
     (hK : BoundedBelow.objects X K) : objects X ((godementTotal X).obj K) := by
   obtain ⟨hp, a, ha⟩ := hK
   let := ha
@@ -121,18 +123,16 @@ lemma total_isStrictlyGE (X : Scheme.{u}) (K : BoundedBelow.Obj X) (a : ℤ)
   godementTotal_isStrictlyGE K.obj a
     (fun n hn => CochainComplex.isZero_of_isStrictlyGE K.obj a n hn)
 
-instance total_additive (X : Scheme.{u}) : (total X).Additive where
-  map_add := by
-    intro K L f g
-    apply ObjectProperty.hom_ext
-    change (godementTotal X).map (f.hom + g.hom) =
-      (godementTotal X).map f.hom + (godementTotal X).map g.hom
-    exact CategoryTheory.Functor.map_add (godementTotal X)
+instance total_additive (X : Scheme.{u}) : (total X).Additive := by
+  unfold total
+  infer_instance
 
 /-- The original total functor preserves inherited actual short exact sequences. -/
 def totalExactFunctor (X : Scheme.{u}) : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (BoundedBelow.objects X))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (objects X)) where
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
+      (BoundedBelow.objects X))
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
+      (objects X)) where
   toFunctor := total X
   map_conflation S hS := by
     change (S.map (BoundedBelow.objects X).ι).ShortExact at hS
@@ -162,9 +162,7 @@ lemma total_exact (X : Scheme.{u}) : Waldhausen.IsExact
   cofibration f hf := total_cofibration f hf
   weak f hf := total_weak f hf
   pushout hi h := by
-    apply IsPushout.of_map_of_faithful (objects X).ι
-    exact (Waldhausen.fullSubcategory_map_pushout (abelianExactStructure (Complex X))
-      (BoundedBelow.objects X) hi h).map (godementTotal X)
+    exact (totalExactFunctor X).map_isPushout hi h
 
 /-- The original augmentation lifted to the lower-bounded perfect source model. -/
 def unit (X : Scheme.{u}) : 𝟭 (BoundedBelow.Obj X) ⟶ total X ⋙ inclusion X where

@@ -11,6 +11,8 @@ public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.IdealDevissage
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Localization.Equivalence
 /-!
 # Geometric affine closed–open localization for public scheme G-theory
 
@@ -79,7 +81,8 @@ local instance : (coherentRestrictionExact (openMap R I)).toFunctor.IsLocalizati
 /-- Actual closed-scheme G-theory agrees with the public supported G-group,
 by the proved geometric dévissage and exact small-presentation comparisons. -/
 def closedSupportedGEquiv (n : ℕ) :
-    AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec (closedRing R I)) n ≃* SupportedG (openMap R
+    AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec
+      (Pushforward.ClosedImmersion.Ideal.closedRing R I)) n ≃* SupportedG (openMap R
       I) n :=
   (closedSupportGEquiv R I n).trans (coherentGlobalSupportedGEquiv (openMap R I) n).symm
 
@@ -99,7 +102,8 @@ theorem closedSupportedGEquiv_pushforward (n : ℕ) :
 /-- The boundary into G-theory of the actual affine closed subscheme. -/
 def closedConnectingHom (n : ℕ) :
     AlgebraicGeometry.Scheme.Modules.Coherent.G (openComplement R I).toScheme (n + 1) →*
-      AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec (closedRing R I)) n :=
+      AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec
+        (Pushforward.ClosedImmersion.Ideal.closedRing R I)) n :=
   (closedSupportedGEquiv R I n).symm.toMonoidHom.comp (globalConnectingHom (openMap R I) n)
 
 /-- Exactness at G_n(Spec R), with canonical actual i_* and j*. -/

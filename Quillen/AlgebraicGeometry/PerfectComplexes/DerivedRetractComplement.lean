@@ -5,10 +5,13 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.SplitFactorization
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 public import Mathlib.CategoryTheory.Retract
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRightFractions
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.RestrictionHom
+public import Mathlib.Algebra.Homology.DerivedCategory.Fractions
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-!
 # Actual perfect complements of original derived retracts
 
@@ -22,12 +25,15 @@ quasi-compactness, or strict representative is assumed.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes
 attribute [local instance] HasDerivedCategory.standard
 attribute [local instance] Abelian.hasFiniteBiproducts
@@ -36,38 +42,48 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 perfect complex complement. The actual cone of a fraction representative
 supplies the complement; its inclusion retains the original retract map. -/
 lemma exists_actual_perfect_complement_of_derived_retract {X : Scheme.{u}}
-    {E P : Complex X} (hE : locallyPerfect X E) (hP : locallyPerfect X P)
-    (r : Retract ((toDerived X).obj E) ((toDerived X).obj P)) :
-    ∃ (C : Complex X), locallyPerfect X C ∧
-      ∃ e : (toDerived X).obj P ≅ (toDerived X).obj (E ⊞ C),
-        r.i ≫ e.hom = (toDerived X).map (biprod.inl : E ⟶ E ⊞ C) := by
-  let : PreservesBinaryBiproducts (toDerived X) := preservesBinaryBiproducts_of_preservesBiproducts
+    {E P : CochainComplex X.Modules ℤ} (hE : locallyPerfect X E) (hP : locallyPerfect X P)
+    (r : Retract ((DerivedCategory.Q (C := X.Modules)).obj E)
+      ((DerivedCategory.Q (C := X.Modules)).obj P)) :
+    ∃ (C : CochainComplex X.Modules ℤ), locallyPerfect X C ∧
+      ∃ e : (DerivedCategory.Q (C := X.Modules)).obj P ≅ (DerivedCategory.Q (C := X.Modules)).obj
+        (E ⊞ C),
+        r.i ≫ e.hom = (DerivedCategory.Q (C := X.Modules)).map (biprod.inl : E ⟶ E ⊞ C) := by
+  let : PreservesBinaryBiproducts (DerivedCategory.Q (C := X.Modules))
+    := preservesBinaryBiproducts_of_preservesBiproducts
     _
   obtain ⟨M, s, hs, f, hfac⟩ := DerivedCategory.right_fac r.i
   have := hs
   have hs' : QuasiIso s := (DerivedCategory.isIso_Q_map_iff_quasiIso _ s).mp hs
-  change r.i = inv ((toDerived X).map s) ≫ (toDerived X).map f at hfac
+  change r.i = inv ((DerivedCategory.Q (C := X.Modules)).map s) ≫
+    (DerivedCategory.Q (C := X.Modules)).map f at hfac
   have hM : locallyPerfect X M := (locallyPerfect_iff_of_quasiIso s).mpr hE
-  have hsf : (toDerived X).map s ≫ r.i = (toDerived X).map f := by
+  have hsf : (DerivedCategory.Q (C := X.Modules)).map s ≫ r.i =
+    (DerivedCategory.Q (C := X.Modules)).map f := by
     rw [hfac, IsIso.hom_inv_id_assoc]
-  have hret : (toDerived X).map f ≫ (r.r ≫ inv ((toDerived X).map s)) = 𝟙 _ := by
+  have hret : (DerivedCategory.Q (C := X.Modules)).map f ≫
+    (r.r ≫ inv ((DerivedCategory.Q (C := X.Modules)).map s)) = 𝟙 _ := by
     rw [← hsf, Category.assoc, r.retract_assoc, IsIso.hom_inv_id]
-  have : IsSplitMono ((toDerived X).map f) := IsSplitMono.mk' ⟨r.r ≫ inv ((toDerived X).map s),
+  have : IsSplitMono ((DerivedCategory.Q (C := X.Modules)).map f) := IsSplitMono.mk'
+    ⟨r.r ≫ inv ((DerivedCategory.Q (C := X.Modules)).map s),
     hret⟩
-  let T := (toDerived X).mapTriangle.obj (CochainComplex.mappingCone.triangle f)
-  have hT : T ∈ distTriang (Derived X) := DerivedCategory.mappingCone_triangle_distinguished f
+  let T := (DerivedCategory.Q (C := X.Modules)).mapTriangle.obj
+    (CochainComplex.mappingCone.triangle f)
+  have hT : T ∈ distTriang (DerivedCategory X.Modules)
+    := DerivedCategory.mappingCone_triangle_distinguished f
   have hz : T.mor₃ = 0 := T.mor₃_eq_zero_of_mono₁ hT (by
-    change Mono ((toDerived X).map f)
+    change Mono ((DerivedCategory.Q (C := X.Modules)).map f)
     infer_instance)
   obtain ⟨e, he, _⟩ := exists_iso_binaryBiproduct_of_distTriang T hT hz
-  change (toDerived X).map f ≫ e.hom = biprod.inl at he
-  let e' := e ≪≫ biprod.mapIso (asIso ((toDerived X).map s)) (Iso.refl _) ≪≫
-    ((toDerived X).mapBiprod E (CochainComplex.mappingCone f)).symm
+  change (DerivedCategory.Q (C := X.Modules)).map f ≫ e.hom = biprod.inl at he
+  let e' := e ≪≫ biprod.mapIso (asIso ((DerivedCategory.Q (C := X.Modules)).map s)) (Iso.refl _) ≪≫
+    ((DerivedCategory.Q (C := X.Modules)).mapBiprod E (CochainComplex.mappingCone f)).symm
   refine ⟨CochainComplex.mappingCone f, locallyPerfect_mappingCone hM hP f, e', ?_⟩
-  apply (cancel_epi ((toDerived X).map s)).mp
+  apply (cancel_epi ((DerivedCategory.Q (C := X.Modules)).map s)).mp
   dsimp only [e', Iso.trans_hom, Iso.symm_hom]
   rw [← Category.assoc, hsf, ← Category.assoc, ← Category.assoc, he]
-  apply (cancel_mono ((toDerived X).mapBiprod E (CochainComplex.mappingCone f)).hom).mp
+  apply (cancel_mono ((DerivedCategory.Q (C := X.Modules)).mapBiprod E
+    (CochainComplex.mappingCone f)).hom).mp
   simp [← Functor.map_comp]
 
 end Quillen.PerfectComplexes

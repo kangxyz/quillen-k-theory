@@ -9,7 +9,10 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.QuasicoherentHomology
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenPushforwardQuasicoherent
 public import Quillen.AlgebraicGeometry.PerfectComplexes.InjectivePushforwardAdjunction
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Mathlib.Algebra.Homology.DerivedCategory.Basic
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # The actual open restriction-unit cone
 
 The cone of the original chain adjoint into an actual injective direct image
@@ -30,6 +33,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes
 /-- The standard upper-universe derived category used in restriction-cone comparisons. -/
 local instance restrictionConeDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
@@ -38,7 +42,7 @@ local instance restrictionConeDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1
 /-- The actual adjoint cone has QC homology for a quasi-compact open immersion. -/
 lemma quasicoherent_homology_restrictionUnitCone {U X : Scheme.{u}}
     (j : U ⟶ X) [IsOpenImmersion j] [QuasiCompact j]
-    (K : Complex X) (I : Complex U) (a : ℤ)
+    (K : CochainComplex X.Modules ℤ) (I : CochainComplex U.Modules ℤ) (a : ℤ)
     (hb : ∀ n, n < a → IsZero (I.X n)) (hi : ∀ n, Injective (I.X n))
     (hK : ∀ n, (K.homology n).IsQuasicoherent)
     (hI : ∀ n, (I.homology n).IsQuasicoherent)
@@ -50,23 +54,26 @@ lemma quasicoherent_homology_restrictionUnitCone {U X : Scheme.{u}}
 
 /-- An original local weak replacement makes the literal adjoint cone vanish on the open. -/
 lemma isZero_restrict_restrictionUnitCone {U X : Scheme.{u}}
-    (j : U ⟶ X) [IsOpenImmersion j] (K : Complex X) (I : Complex U)
+    (j : U ⟶ X) [IsOpenImmersion j] (K : CochainComplex X.Modules ℤ)
+      (I : CochainComplex U.Modules ℤ)
     (q : (restrict j).obj K ⟶ I) [QuasiIso q] :
-    IsZero ((toDerived U).obj ((restrict j).obj (CochainComplex.mappingCone
+    IsZero ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj (CochainComplex.mappingCone
       ((restrictPushforwardComplexAdjunction j).homEquiv K I q)))) := by
   let f := (restrictPushforwardComplexAdjunction j).homEquiv K I q
   let := quasiIso_restrict_chain_adjoint j q
-  have hz : IsZero ((toDerived U).obj (CochainComplex.mappingCone ((restrict j).map f))) := by
+  have hz : IsZero ((DerivedCategory.Q (C := U.Modules)).obj
+    (CochainComplex.mappingCone ((restrict j).map f))) := by
     apply CategoryTheory.Pretriangulated.Triangle.isZero₃_of_isIso₁ _
-      (mappingConeTriangle_distinguished _)
-    change IsIso ((toDerived U).map ((restrict j).map f))
+      (DerivedCategory.mappingCone_triangle_distinguished ((restrict j).map f))
+    change IsIso ((DerivedCategory.Q (C := U.Modules)).map ((restrict j).map f))
     infer_instance
-  exact hz.of_iso ((toDerived U).mapIso
+  exact hz.of_iso ((DerivedCategory.Q (C := U.Modules)).mapIso
     (CochainComplex.mappingCone.mapHomologicalComplexIso f (Scheme.Modules.restrictFunctor j)))
 
 /-- A lower term bound on the injective target gives the exact global cone bound. -/
 lemma restrictionUnitCone_isGE {U X : Scheme.{u}}
-    (j : U ⟶ X) [IsOpenImmersion j] (K : Complex X) (I : Complex U) (a b : ℤ)
+    (j : U ⟶ X) [IsOpenImmersion j] (K : CochainComplex X.Modules ℤ)
+      (I : CochainComplex U.Modules ℤ) (a b : ℤ)
     (hb : ∀ n, n < a → IsZero (I.X n)) [K.IsGE b]
     (q : (restrict j).obj K ⟶ I) :
     (CochainComplex.mappingCone ((restrictPushforwardComplexAdjunction j).homEquiv K I q)).IsGE
@@ -81,13 +88,13 @@ lemma restrictionUnitCone_isGE {U X : Scheme.{u}}
 original adjoint cone has QC homology, the exact lower bound, and zero restriction. -/
 theorem restrictionUnitCone_properties {U X : Scheme.{u}}
     (j : U ⟶ X) [IsOpenImmersion j] [QuasiCompact j]
-    (K : Complex X) (I : Complex U) (a b : ℤ)
+    (K : CochainComplex X.Modules ℤ) (I : CochainComplex U.Modules ℤ) (a b : ℤ)
     (hb : ∀ n, n < a → IsZero (I.X n)) (hi : ∀ n, Injective (I.X n))
     (hK : ∀ n, (K.homology n).IsQuasicoherent) [K.IsGE b]
     (q : (restrict j).obj K ⟶ I) [QuasiIso q] :
     let C := CochainComplex.mappingCone ((restrictPushforwardComplexAdjunction j).homEquiv K I q)
     (∀ n, (C.homology n).IsQuasicoherent) ∧ C.IsGE (min (b-1) a) ∧
-      IsZero ((toDerived U).obj ((restrict j).obj C)) := by
+      IsZero ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj C)) := by
   have hI (n : ℤ) : (I.homology n).IsQuasicoherent := by
     have : IsIso (HomologicalComplex.homologyMap q n) :=
       (quasiIsoAt_iff_isIso_homologyMap q n).mp inferInstance

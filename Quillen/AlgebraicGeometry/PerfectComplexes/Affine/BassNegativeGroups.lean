@@ -8,7 +8,7 @@ module
 
 public import Quillen.KTheory.Bass.Iteration
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.KZeroFunctor
-public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Basic
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Basic
 
 /-!
 Genuine Bass negative affine groups, starting with the unchanged original perfect K0 functor. The

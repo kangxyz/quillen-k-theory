@@ -5,11 +5,13 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Homology
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionsLocalization
-public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalRestriction
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalRestriction
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Localization.AffineSections
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
 /-!
 # The original localized-section comparison on every principal chart
 
@@ -91,7 +93,7 @@ local instance principalSectionsHomologyGlobalSections_additive (R : CommRingCat
   AlgebraicGeometry.Scheme.Modules.moduleSpecΓFunctor_additive _
 
 lemma principalSections_preservesRightHomology {R : CommRingCat.{u}}
-    (I : Complex (Spec R)) (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))
+    (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n)) (r : R)
     (hqc : ∀ n, (((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
       I).homology n).IsQuasicoherent)
@@ -156,7 +158,7 @@ lemma isIso_sectionsLocalizationLift_basicOpen {R : CommRingCat.{u}} (r q : R)
 /-- The literal original localized-section chain map is weak on every principal
 chart. Its cohomology hypothesis is confined to that chart. -/
 lemma quasiIso_sectionsLocalizationComplexComparison_basicOpen {R : CommRingCat.{u}}
-    (r q : R) (I : Complex (Spec R)) (a : ℤ)
+    (r q : R) (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R q)).obj
       I).homology n).IsQuasicoherent)

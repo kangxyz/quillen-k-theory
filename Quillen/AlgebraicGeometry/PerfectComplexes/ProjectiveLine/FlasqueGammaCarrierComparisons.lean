@@ -109,17 +109,17 @@ def GammaCarrierIso (R : CommRingCat.{u}) :
   let V := godementTotal P
   let eB := (associator B T K ≪≫ isoWhiskerLeft B (totalCarrierIso P) ≪≫ (associator B J V).symm ≪≫
     isoWhiskerRight (negativeCarrierIso R) V ≪≫ associator J L V)
-  let eI : I ⋙ J ≅ K ⋙ 𝟭 (Complex P) :=
+  let eI : I ⋙ J ≅ K ⋙ 𝟭 (CochainComplex P.Modules ℤ) :=
     inclusionCarrierIso P ≪≫ (Functor.rightUnitor K).symm
   exact isoWhiskerRight (associator I B T) K ≪≫
     (associator I (B ⋙ T) K ≪≫ isoWhiskerLeft I eB ≪≫ (associator I J (L ⋙ V)).symm ≪≫
-      isoWhiskerRight eI (L ⋙ V) ≪≫ associator K (𝟭 (Complex P)) (L ⋙ V)) ≪≫
+      isoWhiskerRight eI (L ⋙ V) ≪≫ associator K (𝟭 (CochainComplex P.Modules ℤ)) (L ⋙ V)) ≪≫
     isoWhiskerLeft K (Functor.leftUnitor (L ⋙ V))
 
 /-- The chosen actual bounded tensor followed by total and Gamma keeps the same four factors. -/
 def actualResolvedCarrierIso {C : Type*} [Category C] (R : CommRingCat.{u})
-    (A : C ⥤ BoundedBelow.Obj (twoChartLine R)) (I : C ⥤ Complex (twoChartLine R))
-    (F : Complex (twoChartLine R) ⥤ Complex (twoChartLine R))
+    (A : C ⥤ BoundedBelow.Obj (twoChartLine R)) (I : C ⥤ CochainComplex (twoChartLine R).Modules ℤ)
+    (F : CochainComplex (twoChartLine R).Modules ℤ ⥤ CochainComplex (twoChartLine R).Modules ℤ)
     (e : A ⋙ (BoundedBelow.objects (twoChartLine R)).ι ≅ I ⋙ F) :
     ((A ⋙ FlasqueBoundedBelow.total (twoChartLine R)) ⋙ Gamma R) ⋙
         (FlasqueBoundedBelow.objects (twoChartLine R)).ι ≅

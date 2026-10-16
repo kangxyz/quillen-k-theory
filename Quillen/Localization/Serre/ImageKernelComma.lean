@@ -9,6 +9,7 @@ module
 public import Quillen.Localization.Serre.AuxiliaryImages
 public import Quillen.Localization.Serre.AuxiliaryBaseChange
 public import Quillen.Topology.ClassifyingSpace.FactorContraction
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-! # Contraction of the image-index structured kernel commas -/
 @[expose] public section
@@ -19,7 +20,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
 variable (P : ObjectProperty C) [P.IsSerreClass]
 variable (N : C) (T : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory)

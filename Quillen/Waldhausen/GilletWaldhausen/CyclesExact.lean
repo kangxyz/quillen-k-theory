@@ -9,6 +9,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.GilletWaldhausen.AcyclicTruncation
+public import Aglib.Algebra.Homology.CochainComplex.Cycles
 
 /-!
 # Exact cycle functors on actual acyclic complexes
@@ -50,7 +51,7 @@ theorem cyclesMap_epi_of_exactAt {K L : CochainComplex A ℤ} (f : K ⟶ L)
     (i n : ℤ) (hin : i + 1 = n) [Epi (f.f i)] (hL : L.ExactAt n) :
     Epi (cyclesMap f n) := by
   subst n
-  let : Epi (L.toCycles i (i + 1)) := epi_toCycles_of_exactAt L i hL
+  let : Epi (L.toCycles i (i + 1)) := _root_.CochainComplex.epi_toCycles_of_exactAt L i hL
   exact epi_of_epi_fac (toCycles_naturality f i (i + 1))
 
 /-- The sequence of cycles is short exact when the rightmost complex is
@@ -81,7 +82,7 @@ variable (P : ObjectProperty A) [P.ContainsZero] [P.IsClosedUnderIsomorphisms]
 def boundedAcyclicCyclesFunctor (n : ℤ) : (boundedAcyclic P).FullSubcategory ⥤ P.FullSubcategory :=
   P.lift ((boundedAcyclic P).ι ⋙ cyclesFunctor A (ComplexShape.up ℤ) n) (fun K ↦ by
     obtain ⟨a, b, hab⟩ := K.property.1
-    exact cycles_mem P K.obj K.property.2.1 K.property.2.2 b
+    exact _root_.CochainComplex.cycles_mem P K.obj K.property.2.1 K.property.2.2 b
       (fun i hi ↦ hab i (Or.inr hi)) n)
 
 instance boundedAcyclicCyclesFunctor_additive (n : ℤ) :

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Relative
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Relative
 
 /-!
 # Zero sections of the original polynomial products

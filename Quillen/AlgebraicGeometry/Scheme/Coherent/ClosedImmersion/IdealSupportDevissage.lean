@@ -13,6 +13,7 @@ public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.IdealSup
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.SupportDevissage
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.GlobalLocalization
 public import Quillen.Devissage.FiniteCentralFamily
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Support.SmallModel
 
 /-!
 # Dévissage on actual coherent support for an arbitrary affine ideal

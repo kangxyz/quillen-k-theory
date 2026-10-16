@@ -29,7 +29,8 @@ namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueDiagonal
 
 /-- The inherited exact structure on the literal original flasque-perfect model. -/
 abbrev modelExactStructure (R : CommRingCat.{u}) :=
-  ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+  ExactSubcategory.exactStructure (abelianExactStructure
+    (CochainComplex (twoChartLine R).Modules ℤ))
     (FlasqueBoundedBelow.objects (twoChartLine R))
 
 instance E_additive (R : CommRingCat.{u}) (v : Vertex) : (E R v).Additive where
@@ -50,6 +51,14 @@ instance coefficient_preservesFiniteColimits (R : CommRingCat.{u}) (v : Vertex) 
 lemma E_underlying (R : CommRingCat.{u}) (v : Vertex) :
     E R v ⋙ (FlasqueBoundedBelow.objects (twoChartLine R)).ι = raw R v := rfl
 
+private theorem shortExact_map_comp_of
+    {C₀ C₁ C₂ : Type*} [Category* C₀] [Category* C₁] [Category* C₂]
+    [HasZeroMorphisms C₀] [HasZeroMorphisms C₁] [HasZeroMorphisms C₂]
+    (S : ShortComplex C₀) (F : C₀ ⥤ C₁) (G : C₁ ⥤ C₂)
+    [F.PreservesZeroMorphisms] [G.PreservesZeroMorphisms]
+    (h : ((S.map F).map G).ShortExact) : (S.map (F ⋙ G)).ShortExact := by
+  simpa only [ShortComplex.map_comp] using h
+
 /-- Exactness of the actual raw sequence retains its actual totalized flasque kernel. -/
 lemma raw_shortExact (R : CommRingCat.{u}) (v : Vertex)
     (S : ShortComplex (FlasqueBoundedBelow.Obj (twoChartLine R)))
@@ -57,7 +66,10 @@ lemma raw_shortExact (R : CommRingCat.{u}) (v : Vertex)
     (S.map (raw R v)).ShortExact := by
   let C := (coefficient R v).mapHomologicalComplex (.up ℤ)
   let T := godementTotal (relativeSquare R)
-  simp only [raw, ShortComplex.map_comp]
+  let P := (Scheme.Modules.pushforward (relativeSecond R)).mapHomologicalComplex (.up ℤ)
+  apply shortExact_map_comp_of S (FlasqueBoundedBelow.objects (twoChartLine R)).ι (C ⋙ T ⋙ P)
+  apply shortExact_map_comp_of _ C (T ⋙ P)
+  apply shortExact_map_comp_of _ T P
   have hc : ((S.map (FlasqueBoundedBelow.objects (twoChartLine R)).ι).map C).ShortExact :=
     hS.map_of_exact C
   have ht : (((S.map (FlasqueBoundedBelow.objects (twoChartLine R)).ι).map C).map

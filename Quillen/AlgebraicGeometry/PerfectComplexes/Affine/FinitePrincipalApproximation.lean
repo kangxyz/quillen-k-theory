@@ -7,6 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FinitePrincipalAttachment
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PerfectDerivedEquivalence
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
 
 /-!
 # Perfect approximations on an arbitrary finite principal family
@@ -106,7 +107,7 @@ lemma exists_moduleStrictPerfect_fiber_of_perfect_cone
     ((finiteProjectiveDerivedObjects R).trW_iff' (DerivedCategory.Q.map q)).mp hq
   obtain ⟨P, hP, ⟨eP⟩⟩ := hA
   have := isKProjective_of_moduleStrictPerfect R hP
-  obtain ⟨f, hf⟩ := Quillen.CochainComplex.exists_chain_representative_of_isKProjective
+  obtain ⟨f, hf⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective
     (eP.hom ≫ α)
   let eT := isoTriangleOfIso₁₂ _ _
     (DerivedCategory.mappingCone_triangle_distinguished f) hT eP (Iso.refl _)

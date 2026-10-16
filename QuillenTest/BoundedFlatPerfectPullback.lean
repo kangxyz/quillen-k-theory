@@ -8,11 +8,17 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlatPullback
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatExtensions
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.Algebra.Homology.CochainComplex.BoundedAbove.Basic
+public import Aglib.AlgebraicGeometry.Modules.Complex.Flat.Models
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Minus.Pullback
 /-! Semantic consumers of original local-perfect preservation under arbitrary pullback. -/
 @[expose] public section
 
-open Quillen.CochainComplex
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 
 
@@ -20,6 +26,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open AlgebraicGeometry.Scheme.Modules
 attribute [local instance] HasDerivedCategory.standard
@@ -29,7 +36,7 @@ open Quillen
 
 /-- The original local-perfect predicate is preserved with an explicit arbitrary upper bound. -/
 theorem actual_local_perfect_pullback {X Y : Scheme.{u}} (f : X ⟶ Y)
-    (K : Complex Y) (b : ℤ) [K.IsStrictlyLE b]
+    (K : CochainComplex Y.Modules ℤ) (b : ℤ) [K.IsStrictlyLE b]
     (hK : locallyPerfect Y K) (hflat : ∀ n, stalkwiseFlat Y (K.X n)) :
     locallyPerfect X ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K) :=
   locallyPerfect_pullback_of_boundedAbove_stalkwiseFlat f hK ⟨b, inferInstance⟩ hflat
@@ -37,10 +44,11 @@ theorem actual_local_perfect_pullback {X Y : Scheme.{u}} (f : X ⟶ Y)
 /-- An original local-perfect input has an actual local-perfect geometric representative
 of its ambient derived pullback, rather than only a new abstract object predicate. -/
 theorem actual_derived_perfect_representative {X Y : Scheme.{u}} (f : X ⟶ Y)
-    (K : BoundedAboveComplex Y.Modules) (hK : locallyPerfect Y K.obj) :
+    (K : _root_.CochainComplex.BoundedAboveComplex Y.Modules) (hK : locallyPerfect Y K.obj) :
     ∃ P : Perfect X, Nonempty
-      (((derivedPullbackMinus f).obj ((boundedAboveQMinus Y.Modules).obj K)).obj ≅
-        (toDerived X).obj P.obj) :=
+      (((derivedPullbackMinus f).obj ((_root_.CochainComplex.boundedAboveQMinus Y.Modules).obj
+        K)).obj ≅
+        (DerivedCategory.Q (C := X.Modules)).obj P.obj) :=
   ⟨⟨(AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj (flatModel Y K),
     locallyPerfect_pullback_flatModel f K hK⟩,
     ⟨derivedPullbackMinusObjectIso f K⟩⟩
@@ -58,12 +66,15 @@ theorem strict_input_local_perfect_pullback {X Y : Scheme.{u}} (f : X ⟶ Y)
 /-- The original derived inverse to an isomorphism of flat bounded inputs also
 pulls back to an actual two-sided inverse in the original localization. -/
 theorem actual_pulled_back_inverse {X Y : Scheme.{u}} (f : X ⟶ Y)
-    (K L : BoundedAboveComplex Y.Modules)
+    (K L : _root_.CochainComplex.BoundedAboveComplex Y.Modules)
     (hK : ∀ n, stalkwiseFlat Y (K.obj.X n))
     (hL : ∀ n, stalkwiseFlat Y (L.obj.X n))
-    (e : (toDerived Y).obj K.obj ≅ (toDerived Y).obj L.obj) :
-    ∃ a : (toDerived X).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K.obj) ⟶
-        (toDerived X).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj L.obj), IsIso a
+    (e : (DerivedCategory.Q (C := Y.Modules)).obj K.obj ≅
+      (DerivedCategory.Q (C := Y.Modules)).obj L.obj) :
+    ∃ a : (DerivedCategory.Q (C := X.Modules)).obj
+      ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K.obj) ⟶
+        (DerivedCategory.Q (C := X.Modules)).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback
+          f).obj L.obj), IsIso a
           :=
   ⟨(boundedFlatPullbackDerivedIso f K L hK hL e).hom, inferInstance⟩
 

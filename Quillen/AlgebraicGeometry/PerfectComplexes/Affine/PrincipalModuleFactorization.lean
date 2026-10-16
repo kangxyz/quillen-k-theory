@@ -7,7 +7,7 @@ module
 
 public import Quillen.Algebra.Homology.HomotopySquareStrictification
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedModuleReplacement
-public import Quillen.Algebra.Homology.KProjectiveComparison
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Comparison
 
 /-!
 # Genuine principal map factorization in bounded-projective module models
@@ -72,7 +72,7 @@ theorem exists_principal_module_map_factorization (R : CommRingCat.{u}) (r : R)
   let F := localize r (.up ℤ)
   have : CochainComplex.IsKProjective (F.obj A) :=
     isKProjective_of_moduleStrictPerfect _ (moduleStrictPerfect_localize R r hA)
-  obtain ⟨g, ⟨H⟩⟩ := Quillen.CochainComplex.exists_lift_quasiIso_up_to_homotopy q f
+  obtain ⟨g, ⟨H⟩⟩ := _root_.CochainComplex.exists_lift_quasiIso_up_to_homotopy q f
   obtain ⟨n, a, _, ha⟩ := exists_moduleStrictPerfect_fraction R r hA g
   let d : E ⟶ E := r ^ n • 𝟙 E
   have hd : IsIso (F.map d) := localize_power_id_isIso r E n

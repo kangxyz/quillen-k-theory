@@ -7,11 +7,11 @@ Authors: kangxyz
 module
 
 public import Quillen.CategoryTheory.SmallModel.Exact
-public import Aglib.Algebra.Category.ModuleCat.FiniteLocalization
+public import Aglib.Algebra.Category.FGModuleCat.Localization
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
-public import Quillen.GTheory.FiniteModules.Localization.Quotient
-public import Aglib.Algebra.Category.ModuleCat.Finite
+public import Aglib.Algebra.Category.FGModuleCat.Localization.Quotient
+public import Aglib.Algebra.Category.FGModuleCat.Basic
 public import Aglib.CategoryTheory.SmallModel.Abelian
 public import Mathlib.CategoryTheory.Localization.Equivalence
 

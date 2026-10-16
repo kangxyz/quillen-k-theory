@@ -21,6 +21,8 @@ perfect-pushforward premise for the second projection is imposed.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.Modules.Godement
 
 open CategoryTheory.ExactCategory
@@ -63,9 +65,9 @@ lemma boundedFlatPullback_isStrictlyGE {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
 
 /-- Flat pullback preserves the inherited actual short exact sequences. -/
 def boundedFlatPullbackExactFunctor {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex Y))
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex Y.Modules ℤ))
       (BoundedBelow.objects Y))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex X))
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
       (BoundedBelow.objects X)) where
   toFunctor := boundedFlatPullback f
   map_conflation S hs := by
@@ -114,7 +116,8 @@ lemma source_isStrictlyGE (K : FlasqueBoundedBelow.Obj (twoChartLine R))
     ((FlasqueBoundedBelow.inclusion (Spec R)).obj ((FlasqueCoefficients.G0 R).obj K)) a
 
 /-- The literal original target complex p2_* T_Z(p1* M). -/
-def targetRaw : FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ Complex (twoChartLine R) :=
+def targetRaw : FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ CochainComplex
+    (twoChartLine R).Modules ℤ :=
   (FlasqueBoundedBelow.objects (twoChartLine R)).ι ⋙
     AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst R) ⋙
     godementTotal (relativeSquare R) ⋙
@@ -193,9 +196,11 @@ lemma targetRaw_shortExact {S : ShortComplex (FlasqueBoundedBelow.Obj (twoChartL
 
 /-- The target exactness uses flat pullback, exact total, then ONLY flasque-kernel pushforward. -/
 def targetExactFunctor : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (twoChartLine R).Modules ℤ))
       (FlasqueBoundedBelow.objects (twoChartLine R)))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (twoChartLine R).Modules ℤ))
       (FlasqueBoundedBelow.objects (twoChartLine R))) where
   toFunctor := target R
   map_conflation S hs := by

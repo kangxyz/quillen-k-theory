@@ -7,9 +7,14 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedFiniteFlatPushforward
 public import Mathlib.Data.ZMod.Basic
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 /-! Original derived perfectness and the concrete strict-model direct-image isomorphism. -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.PerfectComplexes
 
@@ -19,6 +24,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open Quillen.PerfectComplexes.Affine AlgebraicGeometry.Scheme.Modules
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace QuillenTest.AffineDerivedFiniteFlatPushforward
 
 open Quillen
@@ -41,7 +47,7 @@ lemma original_derived_output_perfect {R : CommRingCat.{u}} {X : Scheme.{u}}
     (f : Spec R ⟶ X) [IsFinite f] [Flat f] [IsLocallyNoetherian X]
     (K : DerivedCategory.Plus (Spec R).Modules)
     (hK : perfectDerivedObjects (Spec R) (DerivedCategory.Plus.ι.obj K)) :
-    ∃ P : Perfect X, Nonempty ((toDerived X).obj P.obj ≅
+    ∃ P : Perfect X, Nonempty ((DerivedCategory.Q (C := X.Modules)).obj P.obj ≅
       DerivedCategory.Plus.ι.obj ((derivedPushforwardPlus f).obj K)) :=
   (perfectDerivedObjects_iff_exists_representative X _).mp
     (perfectDerivedObjects_derivedPushforwardPlus f K hK)

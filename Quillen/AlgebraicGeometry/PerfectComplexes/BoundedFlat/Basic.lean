@@ -7,9 +7,10 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatExtensions
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatCochainResolution
+public import Aglib.AlgebraicGeometry.Modules.Flat.Closure
+public import Aglib.AlgebraicGeometry.Modules.Complex.Flat.Resolution
 public import Quillen.AlgebraicGeometry.PerfectComplexes.KTheory
-public import Quillen.Algebra.Homology.BoundedAboveComplex
+public import Aglib.Algebra.Homology.CochainComplex.BoundedAbove.Basic
 
 /-!
 # The actual bounded-flat locally-perfect Waldhausen model
@@ -22,7 +23,8 @@ no equivalence with that larger category is assumed here.
 -/
 @[expose] public section
 
-open Quillen.CochainComplex
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 open CategoryTheory.ExactCategory
@@ -40,8 +42,8 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
 
 /-- Actual bounded-above, degreewise stalkwise-flat, locally perfect complexes. -/
-def boundedFlatPerfect (X : Scheme.{u}) : ObjectProperty (Complex X) := fun K =>
-  locallyPerfect X K ∧ boundedAbove X.Modules K ∧ ∀ n, stalkwiseFlat X (K.X n)
+def boundedFlatPerfect (X : Scheme.{u}) : ObjectProperty (CochainComplex X.Modules ℤ) := fun K =>
+  locallyPerfect X K ∧ _root_.CochainComplex.boundedAbove X.Modules K ∧ ∀ n, stalkwiseFlat X (K.X n)
 
 /-- The full category of locally perfect complexes on `X` that are bounded above in their terms and
 have stalkwise-flat terms. -/
@@ -49,7 +51,7 @@ abbrev BoundedFlatPerfect (X : Scheme.{u}) := (boundedFlatPerfect X).FullSubcate
 
 variable {X : Scheme.{u}}
 
-theorem boundedFlatPerfect_of_isZero {K : Complex X} (hK : IsZero K) :
+theorem boundedFlatPerfect_of_isZero {K : CochainComplex X.Modules ℤ} (hK : IsZero K) :
     boundedFlatPerfect X K := by
   have hz (n : ℤ) := (HomologicalComplex.eval X.Modules (ComplexShape.up ℤ) n).map_isZero hK
   exact ⟨locallyPerfect_of_strictPerfect (strictPerfect_of_isZero hK),
@@ -59,7 +61,7 @@ theorem boundedFlatPerfect_of_isZero {K : Complex X} (hK : IsZero K) :
 instance boundedFlatPerfect_containsZero : (boundedFlatPerfect X).ContainsZero where
   exists_zero := ⟨0, isZero_zero _, boundedFlatPerfect_of_isZero (isZero_zero _)⟩
 
-theorem boundedFlatPerfect_of_iso {K L : Complex X} (e : K ≅ L)
+theorem boundedFlatPerfect_of_iso {K L : CochainComplex X.Modules ℤ} (e : K ≅ L)
     (hK : boundedFlatPerfect X K) : boundedFlatPerfect X L := by
   obtain ⟨hp, ⟨b, hb⟩, hf⟩ := hK
   let en (n : ℤ) := (HomologicalComplex.eval X.Modules (ComplexShape.up ℤ) n).mapIso e
@@ -73,7 +75,7 @@ instance boundedFlatPerfect_closedUnderIsomorphisms :
     (boundedFlatPerfect X).IsClosedUnderIsomorphisms where
   of_iso e hK := boundedFlatPerfect_of_iso e hK
 
-theorem boundedFlatPerfect_of_shortExact {S : ShortComplex (Complex X)}
+theorem boundedFlatPerfect_of_shortExact {S : ShortComplex (CochainComplex X.Modules ℤ)}
     (hS : S.ShortExact) (h₁ : boundedFlatPerfect X S.X₁)
     (h₃ : boundedFlatPerfect X S.X₃) : boundedFlatPerfect X S.X₂ := by
   obtain ⟨hp₁, ⟨b, hb⟩, hf₁⟩ := h₁
@@ -89,12 +91,14 @@ theorem boundedFlatPerfect_of_shortExact {S : ShortComplex (Complex X)}
     exact stalkwiseFlat_middle_of_shortExact (hs n) (hf₁ n) (hf₃ n)
 
 instance boundedFlatPerfect_extensionClosed :
-    (abelianExactStructure (Complex X)).IsExtensionClosed (boundedFlatPerfect X) where
+    (abelianExactStructure (CochainComplex X.Modules ℤ)).IsExtensionClosed
+      (boundedFlatPerfect X) where
   prop_middle := boundedFlatPerfect_of_shortExact
 
 instance boundedFlatPerfect_closedUnderFiniteProducts :
     (boundedFlatPerfect X).IsClosedUnderFiniteProducts :=
-  (abelianExactStructure (Complex X)).extensionClosed_finiteProducts (boundedFlatPerfect X)
+  (abelianExactStructure (CochainComplex X.Modules ℤ)).extensionClosed_finiteProducts
+    (boundedFlatPerfect X)
 
 /-- Actual Waldhausen structure, with ambient admissible monomorphisms and original
   quasi-isomorphisms. -/

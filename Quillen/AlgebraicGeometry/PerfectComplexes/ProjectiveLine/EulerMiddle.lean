@@ -11,6 +11,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerNeg
 /-! # Original middle Euler coefficient and its canonical natural weak-zero map -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.Modules.Godement
 
 open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients

@@ -11,6 +11,7 @@ public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.ClosedImmersi
 public import Quillen.AlgebraicGeometry.Scheme.GTheory
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.Localization
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
 /-! Public principal closed–open G-localization with actual geometric pushforward. -/
 @[expose] public section
 
@@ -29,7 +30,7 @@ variable (R : CommRingCat.{u}) [IsNoetherianRing R] (f : R)
 
 /-- The actual principal closed subscheme Spec(R/(f)). -/
 abbrev closedScheme := Spec
-  (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+  (Pushforward.ClosedImmersion.Ideal.closedRing R
     (Ideal.span {f}))
 
 /-- The canonical G-map of actual closed sheaf pushforward. -/

@@ -24,6 +24,8 @@ natural span inside the original flasque model and equality of original K-maps.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.Modules.Godement
 
 noncomputable section

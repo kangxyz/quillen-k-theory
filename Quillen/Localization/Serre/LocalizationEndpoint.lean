@@ -7,6 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Localization.Serre.StructuredComparisonWeak
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # Exact-sequence packaging for the canonical Serre comparison
@@ -24,7 +25,8 @@ noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
@@ -35,7 +37,8 @@ structure KLocalizationSequence where
   /-- The boundary homomorphism from degree `n + 1` K-theory of the Serre quotient to degree `n`
   K-theory of the Serre subcategory, compatible with the specified fiber comparison. -/
   connecting : ∀ n : ℕ,
-    (quotientExactStructure P).K (n + 1) →* (CategoryTheory.ObjectProperty.subcategoryExactStructure
+    ((CategoryTheory.ExactCategory.abelianExactStructure P.isoModSerre.Localization)).K (n + 1) →*
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure
       P).K n
   comparison_connecting : ∀ n,
     (localizationFiberComparisonHom P n).comp (connecting n) = fiberConnectingHom P n
@@ -97,7 +100,8 @@ def localizationSequenceOfComparison
 comparison equation whenever the comparison is injective. -/
 theorem connecting_unique_of_comparison_injective (n : ℕ)
     (h : Function.Injective (localizationFiberComparisonHom P n))
-    (δ δ' : (quotientExactStructure P).K (n + 1) →*
+    (δ δ' : ((CategoryTheory.ExactCategory.abelianExactStructure P.isoModSerre.Localization)).K
+      (n + 1) →*
       (CategoryTheory.ObjectProperty.subcategoryExactStructure P).K n)
     (hδ : (localizationFiberComparisonHom P n).comp δ = fiberConnectingHom P n)
     (hδ' : (localizationFiberComparisonHom P n).comp δ' = fiberConnectingHom P n) :

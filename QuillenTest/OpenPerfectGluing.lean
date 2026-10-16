@@ -7,7 +7,9 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.BinaryDescent
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Actual two-open perfect gluing and target-map consumers -/
 @[expose] public section
 
@@ -23,24 +25,26 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open Quillen.PerfectComplexes.OpenHomotopyGluing
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace QuillenTest.OpenPerfectGluing
 
 /-- The complex adjunction unit is exactly the original module-sheaf unit degreewise. -/
 theorem original_unit_degree {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    (K : Complex U) (n : ℤ) :
+    (K : CochainComplex U.Modules ℤ) (n : ℤ) :
     ((extensionByZeroAdjunction j).unit.app K).f n =
       (AlgebraicGeometry.Scheme.Modules.extensionByZeroRestrictAdjunction j).unit.app (K.X n) := rfl
 
 /-- The actual adjoint of a local map restricts to that original map, without a QC premise. -/
 theorem original_adjoint_restriction {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    {K : Complex U} {L : Complex X} (f : K ⟶ (restrict j).obj L) :
+    {K : CochainComplex U.Modules ℤ} {L : CochainComplex X.Modules ℤ} (f : K ⟶ (restrict j).obj L) :
     (extensionByZeroAdjunction j).unit.app K ≫ (restrict j).map (extensionByZeroMap j f) = f :=
   extensionByZeroMap_restrict j f
 
 section Binary
 variable {X : Scheme.{u}} (U V : X.Opens)
-  {K : Complex (pullback U.ι V.ι)} {A : Complex U.toScheme} {B : Complex V.toScheme}
-  {L : Complex X}
+  {K : CochainComplex (pullback U.ι V.ι).Modules ℤ} {A : CochainComplex U.toScheme.Modules ℤ}
+    {B : CochainComplex V.toScheme.Modules ℤ}
+  {L : CochainComplex X.Modules ℤ}
   (α : K ⟶ (restrict (pullback.fst U.ι V.ι)).obj A)
   (β : K ⟶ (restrict (pullback.snd U.ι V.ι)).obj B)
 
@@ -57,14 +61,14 @@ theorem actual_cone_perfect (hUV : U ⊔ V = ⊤)
 
 /-- The local derived comparison is induced by the original constructed chain map. -/
 def actual_first_derived_iso [QuasiIso β] :
-    (toDerived U.toScheme).obj A ≅
-      (toDerived U.toScheme).obj ((restrict U.ι).obj (binary U V α β)) := by
+    (DerivedCategory.Q (C := U.toScheme.Modules)).obj A ≅
+      (DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj (binary U V α β)) := by
   let := binaryFirst_quasiIso U V α β
-  exact asIso ((toDerived U.toScheme).map (binaryFirst U V α β))
+  exact asIso ((DerivedCategory.Q (C := U.toScheme.Modules)).map (binaryFirst U V α β))
 
 @[simp] theorem actual_first_derived_iso_hom [QuasiIso β] :
     (actual_first_derived_iso U V α β).hom =
-      (toDerived U.toScheme).map (binaryFirst U V α β) := rfl
+      (DerivedCategory.Q (C := U.toScheme.Modules)).map (binaryFirst U V α β) := rfl
 
 variable (p : A ⟶ (restrict U.ι).obj L) (q : B ⟶ (restrict V.ι).obj L)
   (H : Homotopy (α ≫ (restrict (pullback.fst U.ι V.ι)).map p)
@@ -84,7 +88,7 @@ include H in
 theorem arbitrary_original_target_maps (hUV : U ⊔ V = ⊤)
     (hA : locallyPerfect U.toScheme A) (hB : locallyPerfect V.toScheme B)
     [QuasiIso α] [QuasiIso β] :
-    ∃ P : Complex X, locallyPerfect X P ∧
+    ∃ P : CochainComplex X.Modules ℤ, locallyPerfect X P ∧
       ∃ (u : A ⟶ (restrict U.ι).obj P) (v : B ⟶ (restrict V.ι).obj P) (d : P ⟶ L),
         QuasiIso u ∧ QuasiIso v ∧
         u ≫ (restrict U.ι).map d = p ∧ v ≫ (restrict V.ι).map d = q :=
@@ -102,7 +106,7 @@ include H in
 theorem actual_perfect_source (hUV : U ⊔ V = ⊤)
     (hA : locallyPerfect U.toScheme A) (hB : locallyPerfect V.toScheme B)
     [QuasiIso α] [QuasiIso β] [QuasiIso p] [QuasiIso q] :
-    ∃ (P : Complex X) (_ : locallyPerfect X P) (d : P ⟶ L), QuasiIso d := by
+    ∃ (P : CochainComplex X.Modules ℤ) (_ : locallyPerfect X P) (d : P ⟶ L), QuasiIso d := by
   obtain ⟨P, hP, u, v, d, hu, hv, hd, he, hf⟩ :=
     exists_perfect_glue_over_target U V α β p q H hUV hA hB
   exact ⟨P, hP, d, hd⟩

@@ -8,7 +8,10 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.HomologyCover
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FinitePrincipalApproximation
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # The actual vector-bundle remainder on a finite union of principal opens
 
 The actual principal-local finite-projective homology identifies the homology
@@ -29,6 +32,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.Affine
 attribute [local instance] HasDerivedCategory.standard
 open Quillen.ModuleComplex.PrincipalLocalization
@@ -60,7 +64,8 @@ theorem vectorBundle_single_of_principal_concentration
         Projective (L.homology a)) :
     let D := (restrict j).obj ((associatedComplex R).obj C)
     AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree U (D.homology a) ∧ D.IsGE a ∧ D.IsLE a ∧
-      Nonempty ((toDerived U).obj D ≅ (toDerived U).obj
+      Nonempty ((DerivedCategory.Q (C := U.Modules)).obj D ≅
+        (DerivedCategory.Q (C := U.Modules)).obj
         ((CochainComplex.singleFunctor U.Modules a).obj (D.homology a))) := by
   let D := (restrict j).obj ((associatedComplex R).obj C)
   let Y (r : s) := Spec (.of (Localization.Away r.val))
@@ -117,7 +122,8 @@ theorem exists_moduleStrictPerfect_approximation_with_vectorBundle_remainder
     ∃ (P : ModuleComplex R) (_ : moduleStrictPerfect R P) (f : P ⟶ K),
       let D := (restrict j).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))
       AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree U (D.homology a) ∧ D.IsGE a ∧ D.IsLE a ∧
-        Nonempty ((toDerived U).obj D ≅ (toDerived U).obj
+        Nonempty ((DerivedCategory.Q (C := U.Modules)).obj D ≅
+          (DerivedCategory.Q (C := U.Modules)).obj
           ((CochainComplex.singleFunctor U.Modules a).obj (D.homology a))) := by
   obtain ⟨P, hP, f, hf⟩ :=
     exists_moduleStrictPerfect_approximation_with_local_projective_remainder R K a b s hbound hlocal

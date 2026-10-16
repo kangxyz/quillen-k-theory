@@ -9,6 +9,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedAcyclic
 public import Quillen.Waldhausen.GilletWaldhausen.TruncationMaps
+public import Aglib.Algebra.Homology.CochainComplex.Cycles
 
 /-!
 # The actual acyclic truncation sequence stays in the bounded exact subcategory
@@ -56,7 +57,7 @@ object, by the two actual cokernel universal properties. -/
 def truncationQuotientBoundaryIso (hK : K.ExactAt (n + 1)) :
     (K.shortComplexTruncLE n).X₃.X n ≅ K.cycles (n + 1) :=
   (truncationDegree_shortExact K n n).gIsCokernel.coconePointUniqueUpToIso
-    (isCokernelEpiComp (cycleSequence_shortExact K n hK).gIsCokernel
+    (isCokernelEpiComp (_root_.CochainComplex.cycleSequence_shortExact K n hK).gIsCokernel
       (K.truncLEXIsoCycles n).hom (truncLE_inclusion_boundary K n).symm)
 
 /-- Truncation of an actual acyclic complex remains acyclic. -/
@@ -95,7 +96,7 @@ theorem truncLE_mem (hK : boundedAcyclic P K) : boundedAcyclic P (K.truncLE n) :
   · exact P.prop_of_iso (K.truncLEXIso n i hi).symm (hK.2.1 i)
   · subst i
     exact P.prop_of_iso (K.truncLEXIsoCycles n).symm
-      (cycles_mem P K hK.2.1 hK.2.2 b (fun j hj ↦ hab j (Or.inr hj)) n)
+      (_root_.CochainComplex.cycles_mem P K hK.2.1 hK.2.2 b (fun j hj ↦ hab j (Or.inr hj)) n)
   · exact P.prop_of_isZero ((K.truncLE n).isZero_of_isStrictlyLE n i hi)
 
 /-- The genuine quotient also remains termwise in P, using zero objects
@@ -110,7 +111,7 @@ theorem truncationQuotient_mem (hK : boundedAcyclic P K) :
   · exact P.prop_of_isZero (truncationQuotient_isZero_below K n i hi)
   · subst i
     exact P.prop_of_iso (truncationQuotientBoundaryIso K n (hK.2.2 (n + 1))).symm
-      (cycles_mem P K hK.2.1 hK.2.2 b (fun j hj ↦ hab j (Or.inr hj)) (n + 1))
+      (_root_.CochainComplex.cycles_mem P K hK.2.1 hK.2.2 b (fun j hj ↦ hab j (Or.inr hj)) (n + 1))
   · let S := (K.shortComplexTruncLE n).map (eval A (ComplexShape.up ℤ) i)
     let : IsIso S.g := (truncationDegree_shortExact K n i).isIso_g_iff.2
       ((K.truncLE n).isZero_of_isStrictlyLE n i hi)

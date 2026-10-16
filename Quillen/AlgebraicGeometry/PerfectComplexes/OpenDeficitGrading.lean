@@ -18,6 +18,8 @@ for every open immersion; no stable equivalence or inherited Laurent seed square
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 noncomputable section

@@ -80,7 +80,7 @@ def boundedModelSequence (K : FlasqueBoundedBelow.Obj X.obj) :
 
 lemma boundedModelSequence_conflation (K : FlasqueBoundedBelow.Obj X.obj) :
     (ExactSubcategory.exactStructure (abelianExactStructure
-      (Complex (nativeLineFunctor.obj X).obj)) (BoundedBelow.objects
+      (CochainComplex (nativeLineFunctor.obj X).obj.Modules ℤ)) (BoundedBelow.objects
         (nativeLineFunctor.obj X).obj)).conflation (boundedModelSequence X K) :=
   coefficientSequence_shortExact X K
 
@@ -91,7 +91,7 @@ def projectedModelSequence (K : FlasqueBoundedBelow.Obj X.obj) :
     (FlasqueBoundedBelow.total (nativeLineFunctor.obj X).obj ⋙ P5NativeCoefficients.G0 X)
 
 lemma projectedModelSequence_conflation (K : FlasqueBoundedBelow.Obj X.obj) :
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex X.obj))
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.obj.Modules ℤ))
       (FlasqueBoundedBelow.objects X.obj)).conflation (projectedModelSequence X K) :=
   ((FlasqueBoundedBelow.totalExactFunctor (nativeLineFunctor.obj X).obj).comp
     (P5NativeCoefficients.G0ExactFunctor X)).map_conflation _ (boundedModelSequence_conflation X K)
@@ -106,7 +106,7 @@ lemma flasqueTargetSequence_isCofibrationSequence {C : Type (u + 1)} [Category.{
       (FlasqueBoundedBelow.waldhausen Y).cof (FlasqueBoundedBelow.waldhausen Y).weq G)
     (hH : Waldhausen.IsExact W.cof W.weq
       (FlasqueBoundedBelow.waldhausen Y).cof (FlasqueBoundedBelow.waldhausen Y).weq H)
-    (hc : ∀ K, (ExactSubcategory.exactStructure (abelianExactStructure (Complex Y))
+    (hc : ∀ K, (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex Y.Modules ℤ))
       (FlasqueBoundedBelow.objects Y)).conflation
       (ShortComplex.mk (a.app K) (b.app K) (NatTrans.congr_app w K))) :
     Waldhausen.Additivity.IsCofibrationSequence W (FlasqueBoundedBelow.waldhausen Y) a b where
@@ -114,10 +114,11 @@ lemma flasqueTargetSequence_isCofibrationSequence {C : Type (u + 1)} [Category.{
   exactG := hG
   exactH := hH
   cofibration := {
-    app_cof K := (ExactSubcategory.exactStructure (abelianExactStructure (Complex Y))
+    app_cof K := (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex Y.Modules ℤ))
       (FlasqueBoundedBelow.objects Y)).inflation_of_conflation (hc K)
     relative_cof {K L} f hf := by
-      let E := ExactSubcategory.exactStructure (abelianExactStructure (Complex Y))
+      let E := ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex Y.Modules ℤ))
         (FlasqueBoundedBelow.objects Y)
       let φ := Waldhausen.GilletWaldhausen.exactFunctorSequenceMap a b w f
       let : HasPushout (Waldhausen.GilletWaldhausen.exactFunctorSequenceAt a b w K).f φ.τ₁ :=
@@ -126,7 +127,7 @@ lemma flasqueTargetSequence_isCofibrationSequence {C : Type (u + 1)} [Category.{
       exact Waldhausen.GilletWaldhausen.relativePushout_inflation E φ
         (hc K) (hc L) (hH.cofibration f hf) }
   cofiber K := CategoryTheory.Limits.isPushout_of_isColimit_cokernel _
-    ((ExactSubcategory.exactStructure (abelianExactStructure (Complex Y))
+    ((ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex Y.Modules ℤ))
       (FlasqueBoundedBelow.objects Y)).cokernel _ (hc K))
     (FlasqueBoundedBelow.waldhausen Y).isZero _ _
 

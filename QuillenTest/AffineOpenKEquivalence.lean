@@ -10,6 +10,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenKEquivalence
 /-! # Original affine relative-open enhancement consumers -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 open Quillen.Waldhausen
 

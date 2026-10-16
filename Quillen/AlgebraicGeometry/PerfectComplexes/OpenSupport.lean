@@ -5,9 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFibration
+public import Quillen.Waldhausen.Fibration.AcyclicSubcategory
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
-public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFibration
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PerfectSupport
 public import Quillen.Waldhausen.Functoriality.ExactEquivalence
 
@@ -130,9 +132,9 @@ theorem perfectAcyclicToSupported_cofibration
     (hf : (acyclicStructure (perfectOpenNested j)).cof f) :
     (perfectSupportedWaldhausen j).cof ((perfectAcyclicToSupported j).map f) := by
   obtain ⟨Z, hZ, p, hp, hS⟩ :=
-    (ExactSubcategory.inflation_iff (abelianExactStructure (Complex X))
+    (ExactSubcategory.inflation_iff (abelianExactStructure (CochainComplex X.Modules ℤ))
       (locallyPerfect X) f.hom).1 hf
-  apply (ExactSubcategory.inflation_iff (abelianExactStructure (Complex X))
+  apply (ExactSubcategory.inflation_iff (abelianExactStructure (CochainComplex X.Modules ℤ))
     (perfectSupported j) ((perfectAcyclicToSupported j).map f)).2
   refine ⟨Z, ⟨hZ, ?_⟩, p, hp, hS⟩
   have hS' : (ShortComplex.mk f.hom.hom p hp).ShortExact := hS

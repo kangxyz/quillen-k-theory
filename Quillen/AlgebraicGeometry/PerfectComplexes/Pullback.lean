@@ -7,14 +7,16 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorCycles
+public import Aglib.Algebra.Homology.CochainComplex.Cycles
 public import Aglib.Algebra.Homology.MappingCone.QuasiIso
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Pullback
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.KernelClosure
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Closure
-public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalQuasiIsoLifting
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Closure
+public import Aglib.Algebra.Homology.MappingCone.NullHomotopy
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalQuasiIsoLifting
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Restriction
 public import Quillen.Waldhausen.Functoriality.KMap
+public import Aglib.AlgebraicGeometry.Modules.Complex.Pullback
 
 /-!
 # Actual arbitrary pullback of strict-perfect complexes
@@ -48,7 +50,7 @@ namespace Quillen.PerfectComplexes
 
 /-- Arbitrary termwise pullback preserves genuine strict perfectness. -/
 theorem strictPerfect_pullback {X Y : Scheme.{u}} (f : X ⟶ Y)
-    {K : Complex Y} (hK : strictPerfect Y K) :
+    {K : CochainComplex Y.Modules ℤ} (hK : strictPerfect Y K) :
     strictPerfect X ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K) := by
   obtain ⟨⟨a, b, hb⟩, ht⟩ := hK
   refine ⟨⟨a, b, fun i hi => (Scheme.Modules.pullback f).map_isZero (hb i hi)⟩, fun i => ?_⟩
@@ -59,25 +61,25 @@ theorem strictPerfect_pullback {X Y : Scheme.{u}} (f : X ⟶ Y)
 The proof uses actual finite-locally-free cycles and local exactness, rather
 than assuming exactness of the ambient sheaf pullback. -/
 theorem acyclic_pullback_of_strictPerfect {X Y : Scheme.{u}} (f : X ⟶ Y)
-    {K : Complex Y} (hK : strictPerfect Y K) (ha : K.Acyclic) :
+    {K : CochainComplex Y.Modules ℤ} (hK : strictPerfect Y K) (ha : K.Acyclic) :
     ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K).Acyclic := by
   obtain ⟨⟨a, b, hb⟩, ht⟩ := hK
-  apply HomologicalAlgebra.acyclic_map_of_cycle_sequences
+  apply _root_.CochainComplex.acyclic_map_of_cycle_sequences
   intro n
   let : AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree Y (K.cycles (n + 1)) :=
-    Waldhausen.GilletWaldhausen.cycles_mem (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree Y) K
+    _root_.CochainComplex.cycles_mem (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree Y) K
       ht ha b
       (fun i hi => hb i (Or.inr hi)) (n + 1)
   let : AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree Y
-      (Waldhausen.GilletWaldhausen.cycleSequence K n).X₃ := by
+      (_root_.CochainComplex.cycleSequence K n).X₃ := by
     change AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree Y (K.cycles (n + 1))
     infer_instance
   exact AlgebraicGeometry.Scheme.Modules.shortExact_pullback f
-    (Waldhausen.GilletWaldhausen.cycleSequence_shortExact K n (ha (n + 1)))
+    (_root_.CochainComplex.cycleSequence_shortExact K n (ha (n + 1)))
 
 /-- Arbitrary pullback preserves quasi-isomorphisms between strict-perfect complexes. -/
 theorem quasiIso_pullback_of_strictPerfect {X Y : Scheme.{u}} (f : X ⟶ Y)
-    {K L : Complex Y} (hK : strictPerfect Y K) (hL : strictPerfect Y L)
+    {K L : CochainComplex Y.Modules ℤ} (hK : strictPerfect Y K) (hL : strictPerfect Y L)
     (s : K ⟶ L) [QuasiIso s] : QuasiIso ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map
       s) := by
   have hc := acyclic_pullback_of_strictPerfect f (strictPerfect_mappingCone hK hL s)
@@ -126,37 +128,25 @@ theorem strictPullback_waldhausenExact {X Y : Scheme.{u}} (f : X ⟶ Y) :
     exact quasiIso_pullback_of_strictPerfect f K.property L.property s.hom
   pushout hi h := by
     apply IsPushout.of_map_of_faithful (strictPerfect X).ι
-    exact (Waldhausen.fullSubcategory_map_pushout (abelianExactStructure (Complex Y))
+    exact (Waldhausen.fullSubcategory_map_pushout (abelianExactStructure
+      (CochainComplex Y.Modules ℤ))
       (strictPerfect Y) hi h).map (AlgebraicGeometry.Scheme.Modules.Complex.pullback f)
 
 /-- The K-map is induced by the actual termwise strict-perfect pullback. -/
 def strictKPullback {X Y : Scheme.{u}} (f : X ⟶ Y) (n : ℕ) :
     StrictK Y n →* StrictK X n := Waldhausen.KMap (strictPullback_waldhausenExact f) n
 
-/-- Geometric termwise pullback along an identity is the identity functor. -/
-def pullbackComplexIdIso (X : Scheme.{u}) : AlgebraicGeometry.Scheme.Modules.Complex.pullback (𝟙 X)
-  ≅ 𝟭 (Complex X) :=
-  NatIso.mapHomologicalComplex (Scheme.Modules.pullbackId X) (ComplexShape.up ℤ) ≪≫
-    Functor.mapHomologicalComplexIdIso X.Modules (ComplexShape.up ℤ)
-
-/-- The actual geometric comparison for successive termwise pullbacks. -/
-def pullbackComplexCompIso {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) :
-    AlgebraicGeometry.Scheme.Modules.Complex.pullback (f ≫ g) ≅
-      AlgebraicGeometry.Scheme.Modules.Complex.pullback g ⋙
-      AlgebraicGeometry.Scheme.Modules.Complex.pullback f :=
-  (Functor.mapHomologicalComplexCompIso (Scheme.Modules.pullbackComp f g) _).symm
-
 /-- The geometric identity comparison lifts to strict-perfect complexes. -/
 def strictPullbackIdIso (X : Scheme.{u}) :
     strictPullback (𝟙 X) ≅ 𝟭 (StrictPerfect X) :=
   Functor.fullyFaithfulCancelRight (strictPerfect X).ι
-    (Functor.isoWhiskerLeft (strictPerfect X).ι (pullbackComplexIdIso X))
+    (Functor.isoWhiskerLeft (strictPerfect X).ι (Scheme.Modules.Complex.pullbackIdIso X))
 
 /-- The geometric composition comparison lifts to strict-perfect complexes. -/
 def strictPullbackCompIso {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z) :
     strictPullback (f ≫ g) ≅ strictPullback g ⋙ strictPullback f :=
   Functor.fullyFaithfulCancelRight (strictPerfect X).ι
-    (Functor.isoWhiskerLeft (strictPerfect Z).ι (pullbackComplexCompIso f g))
+    (Functor.isoWhiskerLeft (strictPerfect Z).ι (Scheme.Modules.Complex.pullbackCompIso f g))
 
 /-- On an open immersion, actual termwise restriction is geometric pullback. -/
 def restrictIsoPullbackComplex {X Y : Scheme.{u}} (j : X ⟶ Y) [IsOpenImmersion j] :

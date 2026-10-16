@@ -8,10 +8,10 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.VectorBundleInclusion
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Restriction
-public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalRestriction
-public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalLifting
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalRestriction
+public import Aglib.AlgebraicGeometry.Modules.LocallyFree.LocalLifting
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Support
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Closure
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Closure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PerfectSupport
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SplitSupport
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SplitComparison

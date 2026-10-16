@@ -12,6 +12,8 @@ public import Aglib.Algebra.Homology.DerivedCategory.Plus.ShortExact
 /-! # The actual natural Euler connecting isomorphism in D+ -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
 
 noncomputable section
@@ -37,7 +39,7 @@ local instance toPlus_additive (X : Scheme.{u}) : (toPlus X).Additive := by
 lemma flasqueSequencePlus_shortExact {X : Scheme.{u}}
     (S : ShortComplex (FlasqueBoundedBelow.Obj X))
     (hS : (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-      (CategoryTheory.ExactCategory.abelianExactStructure (Complex X))
+      (CategoryTheory.ExactCategory.abelianExactStructure (CochainComplex X.Modules ℤ))
       (FlasqueBoundedBelow.objects X)).conflation S) :
     ((S.map (toPlus X)).map (CochainComplex.Plus.ι X.Modules)).ShortExact := hS
 

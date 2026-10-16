@@ -20,6 +20,8 @@ Strict/all-perfect comparison and image-inclusion cofinality remain separate.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 

@@ -9,6 +9,7 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlatPullback
+public import Aglib.AlgebraicGeometry.Modules.Complex.Flat.BoundedPullback
 
 /-!
 # Genuine arbitrary pullback on bounded-flat locally-perfect complexes
@@ -20,7 +21,6 @@ No ambient sheaf exactness, flat-map premise or derived-to-K shortcut is used.
 -/
 @[expose] public section
 
-open Quillen.CochainComplex
 
 
 open CategoryTheory.ExactCategory
@@ -40,7 +40,7 @@ variable {X : Scheme.{u}}
 
 /-- Arbitrary geometric pullback preserves the actual bounded-flat perfect property. -/
 theorem boundedFlatPerfect_pullback {Y : Scheme.{u}} (f : X ⟶ Y)
-    {K : Complex Y} (hK : boundedFlatPerfect Y K) :
+    {K : CochainComplex Y.Modules ℤ} (hK : boundedFlatPerfect Y K) :
     boundedFlatPerfect X ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K) := by
   obtain ⟨hp, ⟨b, hb⟩, hf⟩ := hK
   refine ⟨locallyPerfect_pullback_of_boundedAbove_stalkwiseFlat f hp ⟨b, hb⟩ hf,
@@ -65,8 +65,10 @@ instance boundedFlatPerfectPullback_additive {Y : Scheme.{u}} (f : X ⟶ Y) :
 -/
 def boundedFlatPerfectExactPullback {Y : Scheme.{u}} (f : X ⟶ Y) :
     CategoryTheory.ExactCategory.ExactFunctor
-      (ExactSubcategory.exactStructure (abelianExactStructure (Complex Y)) (boundedFlatPerfect Y))
-      (ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (boundedFlatPerfect X))
+      (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex Y.Modules ℤ))
+        (boundedFlatPerfect Y))
+      (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
+        (boundedFlatPerfect X))
         where
   toFunctor := boundedFlatPerfectPullback f
   map_conflation S hS := by

@@ -15,6 +15,7 @@ public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.Principal
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
 /-!
 # Principal closed pushforward onto the annihilated coherent objects
 
@@ -71,11 +72,11 @@ def killedModuleEquivalence :
 omit [IsNoetherianRing R] in
 /-- The actual closed pushforward is annihilated by the defining element. -/
 theorem coherentPushforward_killed (M : FiniteTypeSheaves (Spec
-  (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+  (Pushforward.ClosedImmersion.Ideal.closedRing R
   (Ideal.span {f})))) :
     finiteTypeSheavesKilledBy R f
       ((AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePushforward
-      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedMap R
+      (Pushforward.ClosedImmersion.Ideal.closedMap R
       (Ideal.span {f}))).obj M) := by
   let e := (coherentPushforwardSquare R f).app M
   intro m
@@ -83,18 +84,18 @@ theorem coherentPushforward_killed (M : FiniteTypeSheaves (Spec
   rw [_root_.map_smul, _root_.map_zero]
   exact closedRestriction_killed f
     ((finiteTypeSheavesSpecModuleEquivalence
-      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+      (Pushforward.ClosedImmersion.Ideal.closedRing R
       (Ideal.span {f}))).functor.obj M) _
 
 /-- Actual sheaf pushforward, with its codomain restricted to annihilated
 objects rather than the larger supported category. -/
 def coherentPushforwardToKilled :
     FiniteTypeSheaves (Spec
-      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+      (Pushforward.ClosedImmersion.Ideal.closedRing R
       (Ideal.span {f}))) ⥤ (finiteTypeSheavesKilledBy R f).FullSubcategory
       :=
   ObjectProperty.lift _ (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePushforward
-    (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedMap R
+    (Pushforward.ClosedImmersion.Ideal.closedMap R
     (Ideal.span {f}))) (coherentPushforward_killed R f)
 
 omit [IsNoetherianRing R] in
@@ -102,14 +103,14 @@ omit [IsNoetherianRing R] in
 theorem coherentPushforwardToKilled_comp_inclusion :
     coherentPushforwardToKilled R f ⋙ (finiteTypeSheavesKilledBy R f).ι =
       AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePushforward
-        (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedMap R
+        (Pushforward.ClosedImmersion.Ideal.closedMap R
         (Ideal.span {f})) := rfl
 
 /-- The comparison square restricts to the actual annihilated full subcategories. -/
 def coherentPushforwardToKilledSquare :
     coherentPushforwardToKilled R f ⋙ (killedModuleEquivalence R f).functor ≅
       (finiteTypeSheavesSpecModuleEquivalence
-        (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+        (Pushforward.ClosedImmersion.Ideal.closedRing R
         (Ideal.span {f}))).functor ⋙ closedToKilled f :=
   ((killedBy f).fullyFaithfulι.whiskeringRight _).preimageIso (coherentPushforwardSquare R f)
 
@@ -132,7 +133,7 @@ instance coherentPushforwardToKilled_isEquivalence :
 by the actual geometric closed pushforward. -/
 def coherentClosedEquivalence :
     FiniteTypeSheaves (Spec
-      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+      (Pushforward.ClosedImmersion.Ideal.closedRing R
       (Ideal.span {f}))) ≌ (finiteTypeSheavesKilledBy R f).FullSubcategory
       :=
   (coherentPushforwardToKilled R f).asEquivalence
@@ -154,7 +155,7 @@ instance coherentPushforwardToKilled_additive : (coherentPushforwardToKilled R f
 coherent category equipped with its standard abelian exact structure. -/
 def coherentPushforwardToKilledExact :
     ExactFunctor (coherentExactStructure (Spec
-      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+      (Pushforward.ClosedImmersion.Ideal.closedRing R
       (Ideal.span {f}))))
       (abelianExactStructure (finiteTypeSheavesKilledBy R f).FullSubcategory) where
   toFunctor := coherentPushforwardToKilled R f

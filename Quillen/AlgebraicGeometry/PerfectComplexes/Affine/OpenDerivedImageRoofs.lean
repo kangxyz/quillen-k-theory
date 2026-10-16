@@ -16,6 +16,8 @@ numerators land in the unchanged original all-sheaf complexes.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -28,7 +30,7 @@ attribute [local instance] HasDerivedCategory.standard
 has a genuine globally perfect locally weak roof on a compact affine open. -/
 theorem affine_hasDerivedRoofs (R : CommRingCat.{u}) (W : (Spec R).Opens)
     (hW : IsCompact (W : Set (Spec R))) : HasDerivedRoofs W.ι := by
-  let Q : ObjectProperty (Complex (Spec R)) := fun A =>
+  let Q : ObjectProperty (CochainComplex (Spec R).Modules ℤ) := fun A =>
     ∃ P : Affine.ModuleComplex R, Affine.moduleStrictPerfect R P ∧ A = (Affine.associatedComplex
       R).obj P
   apply hasDerivedRoofs_of_models W.ι Q

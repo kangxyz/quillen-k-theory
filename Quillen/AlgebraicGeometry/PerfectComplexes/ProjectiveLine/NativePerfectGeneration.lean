@@ -11,7 +11,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineTens
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.VectorBundleComplexDirectImage
 public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PullbackSingle
 public import Quillen.Algebra.Homology.HomotopyCategory.BoundedProperty
-public import Quillen.Algebra.Category.ModuleCat.Sheaf.TensorRightUnit
+public import Aglib.Algebra.Category.ModuleCat.Sheaf.Tensor.RightUnit
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Affine coefficient projection calculations toward native generation
 

@@ -7,6 +7,7 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenQCTargetRoofs
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-!
 # Affine-open roofs with quasicoherent targets
@@ -36,46 +37,55 @@ attribute [local instance] Affine.standardDerivedSheaves
 legs weak, even when the target has arbitrary all-sheaf terms. -/
 theorem both_actual_legs_weak (R : CommRingCat.{u}) {U : Scheme.{u}}
     (j : U ⟶ Spec R) [IsOpenImmersion j] [CompactSpace U]
-    {A B : Complex (Spec R)} (hA : locallyPerfect (Spec R) A) (b : ℤ) [B.IsGE b]
+    {A B : CochainComplex (Spec R).Modules ℤ} (hA : locallyPerfect (Spec R) A) (b : ℤ) [B.IsGE b]
     (hB : ∀ n, (B.homology n).IsQuasicoherent)
-    (e : (toDerived U).obj ((restrict j).obj A) ≅ (toDerived U).obj ((restrict j).obj B)) :
-    ∃ (M : Complex (Spec R)) (q : M ⟶ A) (g : M ⟶ B), locallyPerfect (Spec R) M ∧
+    (e : (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj A) ≅
+      (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj B)) :
+    ∃ (M : CochainComplex (Spec R).Modules ℤ) (q : M ⟶ A) (g : M ⟶ B), locallyPerfect (Spec R) M ∧
       QuasiIso ((restrict j).map q) ∧ QuasiIso ((restrict j).map g) ∧
-      (toDerived U).map ((restrict j).map q) ≫ e.hom = (toDerived U).map ((restrict j).map g) := by
+      (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map q) ≫ e.hom =
+        (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map g) := by
   obtain ⟨M, q, g, hM, hq, hg, _⟩ :=
     Affine.exists_immersion_roof_to_lowerBounded_quasicoherent_target R j hA b hB e.hom
-  have hi : IsIso ((toDerived U).map ((restrict j).map g)) := by rw [← hg]; infer_instance
+  have hi : IsIso ((DerivedCategory.Q (C := U.Modules)).map ((restrict j).map g))
+    := by rw [← hg]; infer_instance
   exact ⟨M, q, g, hM, hq, (DerivedCategory.isIso_Q_map_iff_quasiIso U.Modules _).mp hi, hg⟩
 
 /-- The same original denominator simultaneously retains two independently
 chosen compact-open support conditions. -/
 theorem two_original_supports (R : CommRingCat.{u}) {U : Scheme.{u}}
     (j : U ⟶ Spec R) [IsOpenImmersion j] [CompactSpace U]
-    {A B : Complex (Spec R)} (hA : locallyPerfect (Spec R) A) (b : ℤ) [B.IsGE b]
+    {A B : CochainComplex (Spec R).Modules ℤ} (hA : locallyPerfect (Spec R) A) (b : ℤ) [B.IsGE b]
     (hB : ∀ n, (B.homology n).IsQuasicoherent)
-    (α : (toDerived U).obj ((restrict j).obj A) ⟶ (toDerived U).obj ((restrict j).obj B))
+    (α : (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj A) ⟶
+      (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj B))
     (Z T : (Spec R).Opens) (hZ : IsCompact (Z : Set (Spec R))) (hT : IsCompact (T : Set (Spec R)))
-    (hz : IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj A)))
-    (ht : IsZero ((toDerived T.toScheme).obj ((restrict T.ι).obj A))) :
-    ∃ (M : Complex (Spec R)) (q : M ⟶ A) (g : M ⟶ B), locallyPerfect (Spec R) M ∧
+    (hz : IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj ((restrict Z.ι).obj A)))
+    (ht : IsZero ((DerivedCategory.Q (C := T.toScheme.Modules)).obj ((restrict T.ι).obj A))) :
+    ∃ (M : CochainComplex (Spec R).Modules ℤ) (q : M ⟶ A) (g : M ⟶ B), locallyPerfect (Spec R) M ∧
       QuasiIso ((restrict j).map q) ∧
-      (toDerived U).map ((restrict j).map q) ≫ α = (toDerived U).map ((restrict j).map g) ∧
-      IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj M)) ∧
-      IsZero ((toDerived T.toScheme).obj ((restrict T.ι).obj M)) := by
+      (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map q) ≫ α =
+        (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map g) ∧
+      IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj ((restrict Z.ι).obj M)) ∧
+      IsZero ((DerivedCategory.Q (C := T.toScheme.Modules)).obj ((restrict T.ι).obj M)) := by
   obtain ⟨M, q, g, hM, hq, hg, hs⟩ :=
     Affine.exists_immersion_roof_to_lowerBounded_quasicoherent_target R j hA b hB α
   exact ⟨M, q, g, hM, hq, hg, hs Z hZ hz, hs T hT ht⟩
 
 /-- The actual empty open is included, with the unchanged original target. -/
 theorem empty_open_original_roof (R : CommRingCat.{u})
-    {A B : Complex (Spec R)} (hA : locallyPerfect (Spec R) A) (b : ℤ) [B.IsGE b]
+    {A B : CochainComplex (Spec R).Modules ℤ} (hA : locallyPerfect (Spec R) A) (b : ℤ) [B.IsGE b]
     (hB : ∀ n, (B.homology n).IsQuasicoherent)
-    (α : (toDerived (⊥ : (Spec R).Opens).toScheme).obj ((restrict (⊥ : (Spec R).Opens).ι).obj A) ⟶
-      (toDerived (⊥ : (Spec R).Opens).toScheme).obj ((restrict (⊥ : (Spec R).Opens).ι).obj B)) :
-    ∃ (M : Complex (Spec R)) (q : M ⟶ A) (g : M ⟶ B), locallyPerfect (Spec R) M ∧
+    (α : (DerivedCategory.Q (C := (⊥ : (Spec R).Opens).toScheme.Modules)).obj
+      ((restrict (⊥ : (Spec R).Opens).ι).obj A) ⟶
+      (DerivedCategory.Q (C := (⊥ : (Spec R).Opens).toScheme.Modules)).obj
+        ((restrict (⊥ : (Spec R).Opens).ι).obj B)) :
+    ∃ (M : CochainComplex (Spec R).Modules ℤ) (q : M ⟶ A) (g : M ⟶ B), locallyPerfect (Spec R) M ∧
       QuasiIso ((restrict (⊥ : (Spec R).Opens).ι).map q) ∧
-      (toDerived (⊥ : (Spec R).Opens).toScheme).map ((restrict (⊥ : (Spec R).Opens).ι).map q) ≫ α =
-        (toDerived (⊥ : (Spec R).Opens).toScheme).map ((restrict (⊥ : (Spec R).Opens).ι).map g) :=
+      (DerivedCategory.Q (C := (⊥ : (Spec R).Opens).toScheme.Modules)).map
+        ((restrict (⊥ : (Spec R).Opens).ι).map q) ≫ α =
+        (DerivedCategory.Q (C := (⊥ : (Spec R).Opens).toScheme.Modules)).map
+          ((restrict (⊥ : (Spec R).Opens).ι).map g) :=
           by
   obtain ⟨M, q, g, hM, hq, hg, _⟩ :=
     Affine.exists_open_roof_to_lowerBounded_quasicoherent_target R ⊥ (by simp) hA b hB α

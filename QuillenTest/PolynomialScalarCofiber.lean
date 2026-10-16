@@ -11,6 +11,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PolynomialScalar
 /-! # The original polynomial scalar extension and supported cofiber consumers -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 open Quillen.Waldhausen
 open Quillen.Waldhausen.SplitFactorization

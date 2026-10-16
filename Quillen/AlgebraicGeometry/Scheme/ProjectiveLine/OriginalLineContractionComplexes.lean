@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Tensor.Basic
-public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.ComplexContraction
+public import Aglib.AlgebraicGeometry.Modules.Complex.Contraction
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OriginalLineContraction
 
 /-! # The original line contractions on actual cochain complexes

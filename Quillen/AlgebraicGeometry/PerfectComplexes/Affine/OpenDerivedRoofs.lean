@@ -5,11 +5,13 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Homology
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenModuleAdjunction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalRestrictionQuasiIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FinitePrincipalRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PerfectOpenApproximation
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-!
 # Genuine geometric roofs and equality denominators on qc affine opens
@@ -50,16 +52,20 @@ attribute [local instance] standardDerivedModules standardDerivedSheaves
 
 lemma exists_open_module_roof_from_injective_model (R : CommRingCat.{u})
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
-    {P B : ModuleComplex R} (hP : moduleStrictPerfect R P) (I : Complex W.toScheme)
+    {P B : ModuleComplex R} (hP : moduleStrictPerfect R P) (I : CochainComplex W.toScheme.Modules ℤ)
     (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent)
     (q : (restrict W.ι).obj ((associatedComplex R).obj B) ⟶ I) [QuasiIso q]
-    (α : (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj P)) ⟶
-      (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj B))) :
+    (α : (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+      ((restrict W.ι).obj ((associatedComplex R).obj P)) ⟶
+      (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+        ((restrict W.ι).obj ((associatedComplex R).obj B))) :
     ∃ (P' : ModuleComplex R) (_ : moduleStrictPerfect R P') (t : P' ⟶ P) (g : P' ⟶ B),
       QuasiIso ((restrict W.ι).map ((associatedComplex R).map t)) ∧
-      (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map t)) ≫ α =
-        (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map g)) := by
+      (DerivedCategory.Q (C := W.toScheme.Modules)).map
+        ((restrict W.ι).map ((associatedComplex R).map t)) ≫ α =
+        (DerivedCategory.Q (C := W.toScheme.Modules)).map
+          ((restrict W.ι).map ((associatedComplex R).map g)) := by
   let η := openModuleChainAdjoint R W.ι q
   have hη := quasiIso_restrict_associated_openModuleChainAdjoint R W hW a hbound hinj hqc q
   obtain ⟨s, hs⟩ := exists_finite_principal_cover R W hW
@@ -69,35 +75,46 @@ lemma exists_open_module_roof_from_injective_model (R : CommRingCat.{u})
   have hηs (r : R) (hr : r ∈ s) : QuasiIso ((localize r (.up ℤ)).map η) :=
     quasiIso_localize_of_restrict_associated R W η r (hsr r hr)
   obtain ⟨f, hf⟩ := exists_openModuleChainAdjoint R W.ι P I a hbound hinj
-    (α ≫ (toDerived W.toScheme).map q)
+    (α ≫ (DerivedCategory.Q (C := W.toScheme.Modules)).map q)
   obtain ⟨P', hP', t, g, ⟨H⟩, ht⟩ := exists_finite_principal_chain_roof R s hP η hηs f
   refine ⟨P', hP', t, g, quasiIso_restrict_associated_of_principalUnion R W s hs t ht, ?_⟩
   have heq := DerivedCategory.Q_map_eq_of_homotopy _
     (((tilde.functor R) ⋙ Scheme.Modules.restrictFunctor W.ι).mapHomotopy H)
-  change (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map (g ≫ η))) =
-    (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map (t ≫ f))) at heq
+  change (DerivedCategory.Q (C := W.toScheme.Modules)).map
+    ((restrict W.ι).map ((associatedComplex R).map (g ≫ η))) =
+    (DerivedCategory.Q (C := W.toScheme.Modules)).map
+      ((restrict W.ι).map ((associatedComplex R).map (t ≫ f))) at heq
   rw [(associatedComplex R).map_comp, (associatedComplex R).map_comp,
     (restrict W.ι).map_comp, (restrict W.ι).map_comp,
-    (toDerived W.toScheme).map_comp, (toDerived W.toScheme).map_comp] at heq
-  have hηc : (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map η)) ≫
-      (toDerived W.toScheme).map (openModuleComplexCounit R W.ι I) =
-        (toDerived W.toScheme).map q := by
-    rw [← (toDerived W.toScheme).map_comp]
-    exact congrArg ((toDerived W.toScheme).map) (openModuleChainAdjoint_counit R W.ι q)
-  apply (cancel_mono ((toDerived W.toScheme).map q)).mp
+    (DerivedCategory.Q (C := W.toScheme.Modules)).map_comp,
+      (DerivedCategory.Q (C := W.toScheme.Modules)).map_comp] at heq
+  have hηc : (DerivedCategory.Q (C := W.toScheme.Modules)).map
+    ((restrict W.ι).map ((associatedComplex R).map η)) ≫
+      (DerivedCategory.Q (C := W.toScheme.Modules)).map (openModuleComplexCounit R W.ι I) =
+        (DerivedCategory.Q (C := W.toScheme.Modules)).map q := by
+    rw [← (DerivedCategory.Q (C := W.toScheme.Modules)).map_comp]
+    exact congrArg ((DerivedCategory.Q (C := W.toScheme.Modules)).map)
+      (openModuleChainAdjoint_counit R W.ι q)
+  apply (cancel_mono ((DerivedCategory.Q (C := W.toScheme.Modules)).map q)).mp
   calc
-    ((toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map t)) ≫ α) ≫
-        (toDerived W.toScheme).map q =
-      (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map t)) ≫
-        ((toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map f)) ≫
-          (toDerived W.toScheme).map (openModuleComplexCounit R W.ι I)) := by
+    ((DerivedCategory.Q (C := W.toScheme.Modules)).map
+      ((restrict W.ι).map ((associatedComplex R).map t)) ≫ α) ≫
+        (DerivedCategory.Q (C := W.toScheme.Modules)).map q =
+      (DerivedCategory.Q (C := W.toScheme.Modules)).map
+        ((restrict W.ι).map ((associatedComplex R).map t)) ≫
+        ((DerivedCategory.Q (C := W.toScheme.Modules)).map
+          ((restrict W.ι).map ((associatedComplex R).map f)) ≫
+          (DerivedCategory.Q (C := W.toScheme.Modules)).map (openModuleComplexCounit R W.ι I)) := by
             rw [Category.assoc, hf]
-    _ = ((toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map g)) ≫
-        (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map η))) ≫
-          (toDerived W.toScheme).map (openModuleComplexCounit R W.ι I) := by
+    _ = ((DerivedCategory.Q (C := W.toScheme.Modules)).map
+      ((restrict W.ι).map ((associatedComplex R).map g)) ≫
+        (DerivedCategory.Q (C := W.toScheme.Modules)).map
+          ((restrict W.ι).map ((associatedComplex R).map η))) ≫
+          (DerivedCategory.Q (C := W.toScheme.Modules)).map (openModuleComplexCounit R W.ι I) := by
             rw [← Category.assoc, heq]
-    _ = (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map g)) ≫
-        (toDerived W.toScheme).map q := by rw [Category.assoc, hηc]
+    _ = (DerivedCategory.Q (C := W.toScheme.Modules)).map
+      ((restrict W.ι).map ((associatedComplex R).map g)) ≫
+        (DerivedCategory.Q (C := W.toScheme.Modules)).map q := by rw [Category.assoc, hηc]
 
 /-- Original qc-open derived arrows between associated module complexes have
 genuine finite-projective denominator roofs. Only the target's lower
@@ -105,12 +122,16 @@ cohomological bound is required, and no injective model is supplied. -/
 lemma exists_quasiCompact_open_derived_module_roof (R : CommRingCat.{u})
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
     {P B : ModuleComplex R} (hP : moduleStrictPerfect R P) (b : ℤ) [B.IsGE b]
-    (α : (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj P)) ⟶
-      (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj B))) :
+    (α : (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+      ((restrict W.ι).obj ((associatedComplex R).obj P)) ⟶
+      (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+        ((restrict W.ι).obj ((associatedComplex R).obj B))) :
     ∃ (P' : ModuleComplex R) (_ : moduleStrictPerfect R P') (t : P' ⟶ P) (g : P' ⟶ B),
       QuasiIso ((restrict W.ι).map ((associatedComplex R).map t)) ∧
-      (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map t)) ≫ α =
-        (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map g)) := by
+      (DerivedCategory.Q (C := W.toScheme.Modules)).map
+        ((restrict W.ι).map ((associatedComplex R).map t)) ≫ α =
+        (DerivedCategory.Q (C := W.toScheme.Modules)).map
+          ((restrict W.ι).map ((associatedComplex R).map g)) := by
   let E := (restrict W.ι).obj ((associatedComplex R).obj B)
   have hEb : E.IsGE b := by
     rw [CochainComplex.isGE_iff]
@@ -118,7 +139,7 @@ lemma exists_quasiCompact_open_derived_module_roof (R : CommRingCat.{u})
     exact ((B.exactAt_of_isGE b n hn).map (tilde.functor R)).map
       (Scheme.Modules.restrictFunctor W.ι)
   have hEqc (n : ℤ) : (E.homology n).IsQuasicoherent := by
-    apply AlgebraicGeometry.Scheme.Modules.Coherent.quasicoherent_homology E
+    apply AlgebraicGeometry.Scheme.Modules.QuasiCoherent.quasicoherent_homology E
     intro m
     change ((Scheme.Modules.restrictFunctor W.ι).obj ((tilde.functor R).obj (B.X
       m))).IsQuasicoherent
@@ -140,12 +161,16 @@ exact qc-open numerator/denominator roof, with no auxiliary bound premise. -/
 lemma exists_quasiCompact_open_strict_module_roof (R : CommRingCat.{u})
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
     {P B : ModuleComplex R} (hP : moduleStrictPerfect R P) (hB : moduleStrictPerfect R B)
-    (α : (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj P)) ⟶
-      (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj B))) :
+    (α : (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+      ((restrict W.ι).obj ((associatedComplex R).obj P)) ⟶
+      (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+        ((restrict W.ι).obj ((associatedComplex R).obj B))) :
     ∃ (P' : ModuleComplex R) (_ : moduleStrictPerfect R P') (t : P' ⟶ P) (g : P' ⟶ B),
       QuasiIso ((restrict W.ι).map ((associatedComplex R).map t)) ∧
-      (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map t)) ≫ α =
-        (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map g)) := by
+      (DerivedCategory.Q (C := W.toScheme.Modules)).map
+        ((restrict W.ι).map ((associatedComplex R).map t)) ≫ α =
+        (DerivedCategory.Q (C := W.toScheme.Modules)).map
+          ((restrict W.ι).map ((associatedComplex R).map g)) := by
   obtain ⟨a, b, hb⟩ := hB.1
   have : B.IsStrictlyGE a := (CochainComplex.isStrictlyGE_iff B a).mpr
     (fun n hn => hb n (Or.inl hn))
@@ -155,13 +180,15 @@ lemma exists_quasiCompact_open_strict_module_roof (R : CommRingCat.{u})
 homotopy after a finite-projective denominator weak on the chosen qc open. -/
 lemma exists_open_module_equality_from_injective_model (R : CommRingCat.{u})
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
-    {P B : ModuleComplex R} (hP : moduleStrictPerfect R P) (I : Complex W.toScheme)
+    {P B : ModuleComplex R} (hP : moduleStrictPerfect R P) (I : CochainComplex W.toScheme.Modules ℤ)
     (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent)
     (q : (restrict W.ι).obj ((associatedComplex R).obj B) ⟶ I) [QuasiIso q]
     (f g : P ⟶ B)
-    (hfg : (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map f)) =
-      (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map g))) :
+    (hfg : (DerivedCategory.Q (C := W.toScheme.Modules)).map
+      ((restrict W.ι).map ((associatedComplex R).map f)) =
+      (DerivedCategory.Q (C := W.toScheme.Modules)).map
+        ((restrict W.ι).map ((associatedComplex R).map g))) :
     ∃ (P' : ModuleComplex R) (_ : moduleStrictPerfect R P') (t : P' ⟶ P),
       QuasiIso ((restrict W.ι).map ((associatedComplex R).map t)) ∧
       Nonempty (Homotopy (t ≫ f) (t ≫ g)) := by
@@ -183,8 +210,10 @@ lemma exists_quasiCompact_open_module_equality (R : CommRingCat.{u})
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
     {P B : ModuleComplex R} (hP : moduleStrictPerfect R P) (b : ℤ) [B.IsGE b]
     (f g : P ⟶ B)
-    (hfg : (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map f)) =
-      (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map g))) :
+    (hfg : (DerivedCategory.Q (C := W.toScheme.Modules)).map
+      ((restrict W.ι).map ((associatedComplex R).map f)) =
+      (DerivedCategory.Q (C := W.toScheme.Modules)).map
+        ((restrict W.ι).map ((associatedComplex R).map g))) :
     ∃ (P' : ModuleComplex R) (_ : moduleStrictPerfect R P') (t : P' ⟶ P),
       QuasiIso ((restrict W.ι).map ((associatedComplex R).map t)) ∧
       Nonempty (Homotopy (t ≫ f) (t ≫ g)) := by
@@ -195,7 +224,7 @@ lemma exists_quasiCompact_open_module_equality (R : CommRingCat.{u})
     exact ((B.exactAt_of_isGE b n hn).map (tilde.functor R)).map
       (Scheme.Modules.restrictFunctor W.ι)
   have hEqc (n : ℤ) : (E.homology n).IsQuasicoherent := by
-    apply AlgebraicGeometry.Scheme.Modules.Coherent.quasicoherent_homology E
+    apply AlgebraicGeometry.Scheme.Modules.QuasiCoherent.quasicoherent_homology E
     intro m
     change ((Scheme.Modules.restrictFunctor W.ι).obj ((tilde.functor R).obj (B.X
       m))).IsQuasicoherent
@@ -217,8 +246,10 @@ lemma exists_quasiCompact_open_strict_module_equality (R : CommRingCat.{u})
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
     {P B : ModuleComplex R} (hP : moduleStrictPerfect R P) (hB : moduleStrictPerfect R B)
     (f g : P ⟶ B)
-    (hfg : (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map f)) =
-      (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map g))) :
+    (hfg : (DerivedCategory.Q (C := W.toScheme.Modules)).map
+      ((restrict W.ι).map ((associatedComplex R).map f)) =
+      (DerivedCategory.Q (C := W.toScheme.Modules)).map
+        ((restrict W.ι).map ((associatedComplex R).map g))) :
     ∃ (P' : ModuleComplex R) (_ : moduleStrictPerfect R P') (t : P' ⟶ P),
       QuasiIso ((restrict W.ι).map ((associatedComplex R).map t)) ∧
       Nonempty (Homotopy (t ≫ f) (t ≫ g)) := by

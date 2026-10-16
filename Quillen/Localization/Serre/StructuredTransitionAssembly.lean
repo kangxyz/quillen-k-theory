@@ -10,6 +10,7 @@ public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.StructuredTransitionReduction
 public import Quillen.Localization.Serre.AuxiliaryStructuredTransition
 public import Quillen.Localization.Serre.AuxiliaryBaseChangeEquivalence
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # Assembling structured transitions from the filtered comparator equivalences
@@ -29,7 +30,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 

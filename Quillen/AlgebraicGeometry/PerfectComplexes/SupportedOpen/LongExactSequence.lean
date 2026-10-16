@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Support
+public import Quillen.Waldhausen.Fibration.LongExactSequence
 
 /-!
 # The original supported inclusion in the relative-open long exact sequence

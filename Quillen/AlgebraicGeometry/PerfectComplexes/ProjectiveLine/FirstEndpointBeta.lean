@@ -43,12 +43,12 @@ def comparisonTarget := resolved R ⋙ SelfBaseChange.target R
 
 /-- The literal original first coefficient complex, before totalization. -/
 def originalFirstComplex (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
-    Complex (relativeSquare R) :=
+    CochainComplex (relativeSquare R).Modules ℤ :=
   ((FlasqueDiagonal.coefficient R .first).mapHomologicalComplex (.up ℤ)).obj K.obj
 
 /-- The literal original first pullback of the actual M coefficient. -/
 def pulledResolvedComplex (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
-    Complex (relativeSquare R) :=
+    CochainComplex (relativeSquare R).Modules ℤ :=
   (AlgebraicGeometry.Scheme.Modules.Complex.pullback (relativeFirst R)).obj ((resolved R).obj K).obj
 
 /-- The original coefficient map is typed BEFORE applying totalization. -/
@@ -249,7 +249,7 @@ lemma betaRawMap_quasiIso (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
   exact AlgebraicGeometry.Scheme.Modules.Godement.totalPushforwardPlus_quasiIso (relativeSecond R) g
 
 private lemma quasiIso_triple_app {D : Type*} [Category D] (X : Scheme.{u})
-    {F G H I : D ⥤ Complex X} (f : F ⟶ G) (g : G ⟶ H) (h : H ⟶ I) (K : D)
+    {F G H I : D ⥤ CochainComplex X.Modules ℤ} (f : F ⟶ G) (g : G ⟶ H) (h : H ⟶ I) (K : D)
     (hf : QuasiIso (f.app K)) (hg : QuasiIso (g.app K)) (hh : QuasiIso (h.app K)) :
     QuasiIso ((f ≫ g ≫ h).app K) := by
   let := hf

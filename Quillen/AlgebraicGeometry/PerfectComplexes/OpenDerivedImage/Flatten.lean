@@ -25,6 +25,8 @@ relative-source-to-image K comparison is a separate theorem.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 

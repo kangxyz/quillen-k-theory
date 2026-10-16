@@ -8,6 +8,7 @@ module
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.Strictification
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.BoundedDerivedPushforward
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPushforwardComparison
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Actual projective-line direct image from quasicoherent representatives
 
@@ -18,6 +19,8 @@ require a genuine quasicoherent representative; that existence is not an axiom
 or an implicit input to the unrestricted projection theorem.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

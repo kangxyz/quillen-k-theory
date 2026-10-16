@@ -20,7 +20,7 @@ an actual natural isomorphism to the existing homotopical `KFunctor 0`.
 noncomputable section
 universe u
 open CategoryTheory
-namespace Quillen.SmallExactCategory
+namespace CategoryTheory.ExactCategory.SmallExactCategory
 
 /-- The classical object/conflation Grothendieck group functor, written
 multiplicatively to compare with the existing group-valued K-functor. -/
@@ -59,4 +59,4 @@ def grothendieckKZeroIso : grothendieckFunctor.{u} ≅ KFunctor 0 :=
 @[simp] theorem grothendieckKZeroIso_inv_app (C : SmallExactCategory.{u}) :
     grothendieckKZeroIso.inv.app C = GrpCat.ofHom C.exactStructure.kZeroToGrothendieck := rfl
 
-end Quillen.SmallExactCategory
+end CategoryTheory.ExactCategory.SmallExactCategory

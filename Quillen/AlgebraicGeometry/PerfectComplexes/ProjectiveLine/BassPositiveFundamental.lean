@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.BassPositiveMayerVietoris
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeGlobalBundle
 
 /-! # The original positive Bass fundamental row on perfect K-groups
 
@@ -31,9 +32,8 @@ open CategoryTheory AlgebraicGeometry
 namespace Quillen.PerfectComplexes.ProjectiveLine.BassPositive
 open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine FlasqueTwoSummands
 
-/-- The commutative group structure on `PerfectK Y n` supplied by Waldhausen additivity. -/
-local instance (Y : Scheme.{u}) (n : ℕ) : CommGroup (PerfectK Y n) :=
-  Waldhausen.Additivity.KCommGroup (perfectWaldhausen Y) n
+/- The commutative group structure on `PerfectK Y n` supplied by Waldhausen additivity. -/
+attribute [local instance] Waldhausen.Additivity.KCommGroup
 
 variable (R : CommRingCat.{u})
 

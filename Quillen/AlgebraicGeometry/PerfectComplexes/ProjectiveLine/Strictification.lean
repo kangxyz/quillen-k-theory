@@ -5,11 +5,13 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Homology
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Mathlib.Algebra.Homology.DerivedCategory.FullyFaithful
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedStructure
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalRestriction
+public import Mathlib.Algebra.Homology.DerivedCategory.ShortExact
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Single
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Closure
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Closure
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneGluing
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Locality
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Tautological
@@ -20,7 +22,12 @@ public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.ChartAffineness
 public import Aglib.AlgebraicGeometry.Modules.FinitePresentation.Noetherian
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteGenerators
 public import Aglib.AlgebraicGeometry.Modules.Locality.Exactness
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Mathlib.Algebra.Homology.DerivedCategory.Basic
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.Restriction.Overlap
+public import Aglib.AlgebraicGeometry.Modules.Subobjects.Gluing
 /-! # Actual graph attachments and strict reassembly on the projective line
 
 The local maps and denominator equations retain their original geometric
@@ -41,6 +48,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v w
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry Opposite
 open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.Coherent
   AlgebraicGeometry.Scheme.ProjectiveLine
@@ -78,35 +86,41 @@ local instance reassemblyStandard (X : Scheme.{u}) :
 /-- A strict model of the cone of a top-degree vector-bundle attachment
 reassembles to a strict model of the original object in the exact interval.
 Only maps to the top single are realized by chain maps. -/
-theorem strict_model_of_top_attachment {X : Scheme.{u}} (K : Complex X)
+theorem strict_model_of_top_attachment {X : Scheme.{u}} (K : CochainComplex X.Modules ℤ)
     (V : X.Modules) [AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X V]
     (a b : ℤ) (hab : a ≤ b)
     (f : (CochainComplex.singleFunctor X.Modules b).obj V ⟶ K)
     (P : StrictPerfect X)
     (hP : ∀ i, i < a ∨ b - 1 < i → IsZero (P.obj.X i))
-    (eP : (toDerived X).obj (CochainComplex.mappingCone f) ≅ (toDerived X).obj P.obj) :
+    (eP : (DerivedCategory.Q (C := X.Modules)).obj (CochainComplex.mappingCone f) ≅
+      (DerivedCategory.Q (C := X.Modules)).obj P.obj) :
     ∃ S : StrictPerfect X, (∀ i, i < a ∨ b < i → IsZero (S.obj.X i)) ∧
-      Nonempty ((toDerived X).obj S.obj ≅ (toDerived X).obj K) := by
+      Nonempty ((DerivedCategory.Q (C := X.Modules)).obj S.obj ≅
+        (DerivedCategory.Q (C := X.Modules)).obj K) := by
   let A := (CochainComplex.singleFunctor X.Modules b).obj V
   let B := (CochainComplex.singleFunctor X.Modules (b - 1)).obj V
-  let T := (toDerived X).mapTriangle.obj (CochainComplex.mappingCone.triangle f)
-  let eV : ((toDerived X).obj A)⟦(1 : ℤ)⟧ ≅ (toDerived X).obj B :=
+  let T := (DerivedCategory.Q (C := X.Modules)).mapTriangle.obj
+    (CochainComplex.mappingCone.triangle f)
+  let eV : ((DerivedCategory.Q (C := X.Modules)).obj A)⟦(1 : ℤ)⟧ ≅
+    (DerivedCategory.Q (C := X.Modules)).obj B :=
     ((DerivedCategory.singleFunctors X.Modules).shiftIso 1 (b - 1) b (by omega)).app V
   have : P.obj.IsStrictlyLE (b - 1) :=
     (CochainComplex.isStrictlyLE_iff _ _).mpr (fun i hi => hP i (Or.inr hi))
-  let α : (toDerived X).obj P.obj ⟶ (toDerived X).obj B :=
+  let α : (DerivedCategory.Q (C := X.Modules)).obj P.obj ⟶
+    (DerivedCategory.Q (C := X.Modules)).obj B :=
     eP.inv ≫ T.mor₃ ≫ eV.hom
   obtain ⟨g, hg⟩ := exists_chain_to_top_single P.obj (b - 1) V α
-  change (toDerived X).map g = α at hg
-  have hT : T ∈ distTriang _ := mappingConeTriangle_distinguished f
-  have hcomm : (toDerived X).map g ≫ eV.inv = eP.inv ≫ T.rotate.rotate.mor₁ := by
-    change (toDerived X).map g ≫ eV.inv = eP.inv ≫ T.mor₃
+  change (DerivedCategory.Q (C := X.Modules)).map g = α at hg
+  have hT : T ∈ distTriang _ := DerivedCategory.mappingCone_triangle_distinguished f
+  have hcomm : (DerivedCategory.Q (C := X.Modules)).map g ≫ eV.inv = eP.inv
+    ≫ T.rotate.rotate.mor₁ := by
+    change (DerivedCategory.Q (C := X.Modules)).map g ≫ eV.inv = eP.inv ≫ T.mor₃
     rw [hg]
     simp [α]
-  let eC : (toDerived X).obj (CochainComplex.mappingCone g) ≅
-      ((toDerived X).obj K)⟦(1 : ℤ)⟧ :=
+  let eC : (DerivedCategory.Q (C := X.Modules)).obj (CochainComplex.mappingCone g) ≅
+      ((DerivedCategory.Q (C := X.Modules)).obj K)⟦(1 : ℤ)⟧ :=
     Triangle.π₃.mapIso (isoTriangleOfIso₁₂ _ T.rotate.rotate
-      (mappingConeTriangle_distinguished g)
+      (DerivedCategory.mappingCone_triangle_distinguished g)
       (rot_of_distTriang _ (rot_of_distTriang _ hT)) eP.symm eV.symm hcomm)
   let S : StrictPerfect X := ⟨(CochainComplex.mappingCone g)⟦(-1 : ℤ)⟧,
     strictPerfect_shift
@@ -121,10 +135,12 @@ theorem strict_model_of_top_attachment {X : Scheme.{u}} (K : Complex X)
       · exact Or.inl (by omega)
       · exact Or.inr (by omega)
     · exact HomologicalComplex.isZero_single_obj_X _ _ _ _ (by rcases hi with hi | hi <;> omega)
-  · change (toDerived X).obj ((CochainComplex.mappingCone g)⟦(-1 : ℤ)⟧) ≅ _
-    exact ((toDerived X).commShiftIso (-1)).app (CochainComplex.mappingCone g) ≪≫
-      (shiftFunctor (Derived X) (-1)).mapIso eC ≪≫
-      (shiftFunctorCompIsoId (Derived X) (1 : ℤ) (-1) (by omega)).app ((toDerived X).obj K)
+  · change (DerivedCategory.Q (C := X.Modules)).obj ((CochainComplex.mappingCone g)⟦(-1 : ℤ)⟧) ≅ _
+    exact ((DerivedCategory.Q (C := X.Modules)).commShiftIso (-1)).app
+      (CochainComplex.mappingCone g) ≪≫
+      (shiftFunctor (DerivedCategory X.Modules) (-1)).mapIso eC ≪≫
+      (shiftFunctorCompIsoId (DerivedCategory X.Modules) (1 : ℤ) (-1) (by omega)).app
+        ((DerivedCategory.Q (C := X.Modules)).obj K)
 
 
 /-- A pair of chart maps into two ambient sheaves, viewed as a chart map
@@ -164,17 +180,18 @@ theorem exists_glued_graph_map {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     (f : A ⟶ M.restrict j) (g : B ⟶ M.restrict k)
     (e : A.restrict (pullback.fst j k) ≅ B.restrict (pullback.snd j k))
     (hG : (Scheme.Modules.restrictFunctor (pullback.fst j k)).map i ≫
-        (overlapRestrictIso j k).hom.app G =
+        (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.app G =
       e.hom ≫ (Scheme.Modules.restrictFunctor (pullback.snd j k)).map l)
     (hM : (Scheme.Modules.restrictFunctor (pullback.fst j k)).map f ≫
-        (overlapRestrictIso j k).hom.app M =
+        (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.app M =
       e.hom ≫ (Scheme.Modules.restrictFunctor (pullback.snd j k)).map g) :
     ∃ (N : X.Modules) (h : N ⟶ M),
       ∃ (eU : N.restrict j ≅ A) (eV : N.restrict k ≅ B),
         (Scheme.Modules.restrictFunctor j).map h = eU.hom ≫ f ∧
         (Scheme.Modules.restrictFunctor k).map h = eV.hom ≫ g := by
   have hc : (Scheme.Modules.restrictFunctor (pullback.fst j k)).map
-        (restrictionGraph j i f) ≫ (overlapRestrictIso j k).hom.app (G ⨯ M) =
+        (restrictionGraph j i f) ≫ (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j
+          k).hom.app (G ⨯ M) =
       e.hom ≫ (Scheme.Modules.restrictFunctor (pullback.snd j k)).map
         (restrictionGraph k l g) := by
     let F := Scheme.Modules.restrictFunctor k ⋙
@@ -183,10 +200,11 @@ theorem exists_glued_graph_map {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     apply prod.hom_ext
     · simp only [Category.assoc, prodComparison_fst]
       change (Scheme.Modules.restrictFunctor (pullback.fst j k)).map
-          (restrictionGraph j i f) ≫ (overlapRestrictIso j k).hom.app (G ⨯ M) ≫
+          (restrictionGraph j i f) ≫ (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j
+            k).hom.app (G ⨯ M) ≫
           (Scheme.Modules.restrictFunctor (pullback.snd j k)).map
             ((Scheme.Modules.restrictFunctor k).map prod.fst) = _
-      have hn := (overlapRestrictIso j k).hom.naturality
+      have hn := (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.naturality
         (show G ⨯ M ⟶ G from prod.fst)
       dsimp only [Functor.comp_map] at hn
       dsimp only [F, Functor.comp_map]
@@ -195,17 +213,18 @@ theorem exists_glued_graph_map {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
       exact hG
     · simp only [Category.assoc, prodComparison_snd]
       change (Scheme.Modules.restrictFunctor (pullback.fst j k)).map
-          (restrictionGraph j i f) ≫ (overlapRestrictIso j k).hom.app (G ⨯ M) ≫
+          (restrictionGraph j i f) ≫ (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j
+            k).hom.app (G ⨯ M) ≫
           (Scheme.Modules.restrictFunctor (pullback.snd j k)).map
             ((Scheme.Modules.restrictFunctor k).map prod.snd) = _
-      have hn := (overlapRestrictIso j k).hom.naturality
+      have hn := (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.naturality
         (show G ⨯ M ⟶ M from prod.snd)
       dsimp only [Functor.comp_map] at hn
       dsimp only [F, Functor.comp_map]
       rw [← hn, ← Category.assoc, ← Functor.map_comp, restrictionGraph_snd]
       rw [← Functor.map_comp, restrictionGraph_snd]
       exact hM
-  obtain ⟨N, h, _, eU, eV, hU, hV⟩ := exists_glued_subobject j k
+  obtain ⟨N, h, _, eU, eV, hU, hV⟩ := AlgebraicGeometry.Scheme.Modules.exists_glued_subobject j k
     (restrictionGraph j i f) (restrictionGraph k l g) e hc
   refine ⟨N, h ≫ prod.snd, eU, eV, ?_, ?_⟩
   · rw [Functor.map_comp, hU, Category.assoc, restrictionGraph_snd]
@@ -222,7 +241,8 @@ theorem exists_vectorBundle_map_of_compatible_chart_maps
       M.restrict (minusChart R))
     (hfg : (Scheme.Modules.restrictFunctor
         (pullback.fst (plusChart R) (minusChart R))).map f ≫
-        (overlapRestrictIso (plusChart R) (minusChart R)).hom.app M =
+        (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso (plusChart R) (minusChart
+          R)).hom.app M =
       (columnTransition (plusChart R) (minusChart R) (overlapCoordinateUnit R ^ n)).hom ≫
         (Scheme.Modules.restrictFunctor
           (pullback.snd (plusChart R) (minusChart R))).map g) :
@@ -431,7 +451,7 @@ theorem exists_vectorBundle_lift_plus (R : CommRingCat.{u})
   let u : (SheafOfModules.unit (pullback j k).ringCatSheaf) ⟶
       (M.restrict k).restrict q :=
     (Scheme.Modules.restrictUnitIso p).inv ≫ (Scheme.Modules.restrictFunctor p).map f ≫
-      (overlapRestrictIso j k).hom.app M
+      (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.app M
   have hq : q ''ᵁ ⊤ = PrimeSpectrum.basicOpen (Polynomial.X : Polynomial R) := by
     rw [q.image_top_eq_opensRange]
     dsimp only [q]
@@ -444,7 +464,7 @@ theorem exists_vectorBundle_lift_plus (R : CommRingCat.{u})
     simp only [map_pow, ← inv_pow, Units.val_pow_eq_pow_val]
     rfl
   have hfg : (Scheme.Modules.restrictFunctor p).map f ≫
-        (overlapRestrictIso j k).hom.app M =
+        (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.app M =
       (columnTransition j k (overlapCoordinateUnit R ^ n)).hom ≫
         (Scheme.Modules.restrictFunctor q).map g := by
     symm
@@ -474,7 +494,7 @@ theorem exists_vectorBundle_lift_minus (R : CommRingCat.{u})
   let u : (SheafOfModules.unit (pullback j k).ringCatSheaf) ⟶
       (M.restrict j).restrict p :=
     (Scheme.Modules.restrictUnitIso q).inv ≫ (Scheme.Modules.restrictFunctor q).map g ≫
-      (overlapRestrictIso j k).inv.app M
+      (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).inv.app M
   have hp : p ''ᵁ ⊤ = PrimeSpectrum.basicOpen (Polynomial.X : Polynomial R) := by
     rw [p.image_top_eq_opensRange]
     dsimp only [p]
@@ -487,7 +507,7 @@ theorem exists_vectorBundle_lift_minus (R : CommRingCat.{u})
     simp only [map_pow, Units.val_pow_eq_pow_val]
     rfl
   have hfg : (Scheme.Modules.restrictFunctor p).map f ≫
-        (overlapRestrictIso j k).hom.app M =
+        (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.app M =
       (columnTransition j k (overlapCoordinateUnit R ^ n)).hom ≫
         (Scheme.Modules.restrictFunctor q).map g := by
     apply (cancel_epi (Scheme.Modules.restrictUnitIso p).inv).mp
@@ -624,13 +644,13 @@ theorem exists_vectorBundle_lift_of_finite_twoChart_epi
 
 /-- An actual morphism into the cycle sheaf gives the corresponding original
 single-complex chain map, without a projectivity hypothesis. -/
-def singleCycleLift {X : Scheme.{u}} (K : Complex X) (b : ℤ)
+def singleCycleLift {X : Scheme.{u}} (K : CochainComplex X.Modules ℤ) (b : ℤ)
     (V : X.Modules) (v : V ⟶ K.cycles b) :
     (CochainComplex.singleFunctor X.Modules b).obj V ⟶ K :=
   HomologicalComplex.mkHomFromSingle (v ≫ K.iCycles b) (by intro j hj; simp)
 
 /-- The original homology map of the cycle lift is its specified map to homology. -/
-theorem singleCycleLift_homology {X : Scheme.{u}} (K : Complex X) (b : ℤ)
+theorem singleCycleLift_homology {X : Scheme.{u}} (K : CochainComplex X.Modules ℤ) (b : ℤ)
     (V : X.Modules) (v : V ⟶ K.cycles b) :
     (HomologicalComplex.singleObjHomologySelfIso (.up ℤ) b V).inv ≫
       HomologicalComplex.homologyMap (singleCycleLift K b V v) b = v ≫ K.homologyπ b := by
@@ -645,7 +665,7 @@ theorem singleCycleLift_homology {X : Scheme.{u}} (K : Complex X) (b : ℤ)
     HomologicalComplex.homologyπ_naturality, ← Category.assoc, hc]
 
 private theorem restriction_isLE {R : CommRingCat.{u}} {X : Scheme.{u}}
-    (j : Spec R ⟶ X) [IsOpenImmersion j] (K : Complex X) (b : ℤ) [K.IsLE b] :
+    (j : Spec R ⟶ X) [IsOpenImmersion j] (K : CochainComplex X.Modules ℤ) (b : ℤ) [K.IsLE b] :
     ((restrict j).obj K).IsLE b := by
   rw [CochainComplex.isLE_iff]
   intro i hi
@@ -655,7 +675,7 @@ private theorem restriction_isLE {R : CommRingCat.{u}} {X : Scheme.{u}}
 locally free attachment onto top homology over every base ring. The given
 local strict models supply finiteness; no global resolution is assumed. -/
 theorem exists_vectorBundle_single_epi_top (R : CommRingCat.{u})
-    (K : Complex (twoChartLine R)) (hqc : ∀ i, (K.X i).IsQuasicoherent)
+    (K : CochainComplex (twoChartLine R).Modules ℤ) (hqc : ∀ i, (K.X i).IsQuasicoherent)
     (a b : ℤ) (hab : a ≤ b) [K.IsLE b] (hK : twoChartStrictLowerModels R K a) :
     ∃ V : (twoChartLine R).Modules, IsFiniteLocallyFree (twoChartLine R) V ∧
       ∃ f : (CochainComplex.singleFunctor _ b).obj V ⟶ K,
@@ -667,7 +687,7 @@ theorem exists_vectorBundle_single_epi_top (R : CommRingCat.{u})
         · exact hqc b
         · exact hqc (b + 1))
   have : (K.homology b).IsQuasicoherent :=
-    AlgebraicGeometry.Scheme.Modules.Coherent.quasicoherent_homology K hqc b
+    AlgebraicGeometry.Scheme.Modules.QuasiCoherent.quasicoherent_homology K hqc b
   have : Module.Finite (Polynomial R)
       (moduleSpecΓFunctor.obj ((K.homology b).restrict (plusChart R))) := by
     have := restriction_isLE (plusChart R) K b
@@ -692,7 +712,7 @@ theorem exists_vectorBundle_single_epi_top (R : CommRingCat.{u})
 strict amplitude. The original chain map and original cone are retained.
 Actual [a,b-1] chart windows follow from the named window theorem. -/
 theorem exists_vectorBundle_top_attachment (R : CommRingCat.{u})
-    (K : Complex (twoChartLine R)) (hqc : ∀ i, (K.X i).IsQuasicoherent)
+    (K : CochainComplex (twoChartLine R).Modules ℤ) (hqc : ∀ i, (K.X i).IsQuasicoherent)
     (a b : ℤ) (hab : a < b) [K.IsLE b] (hK : twoChartStrictLowerModels R K a) :
     ∃ V : (twoChartLine R).Modules, IsFiniteLocallyFree (twoChartLine R) V ∧
       ∃ f : (CochainComplex.singleFunctor _ b).obj V ⟶ K,
@@ -709,19 +729,19 @@ theorem exists_vectorBundle_top_attachment (R : CommRingCat.{u})
 quasicoherent representative with the specified finite local amplitude.
 The induction decreases the actual integer upper bound and retains a. -/
 theorem exists_strict_window_of_twoChart_models (R : CommRingCat.{u})
-    (K : Complex (twoChartLine R)) (hqc : ∀ i, (K.X i).IsQuasicoherent)
+    (K : CochainComplex (twoChartLine R).Modules ℤ) (hqc : ∀ i, (K.X i).IsQuasicoherent)
     (a b : ℤ) (hab : a ≤ b) [K.IsStrictlyGE a] [K.IsLE b]
     (hK : twoChartStrictLowerModels R K a) :
     ∃ P : StrictPerfect (twoChartLine R),
       (∀ i, i < a ∨ b < i → IsZero (P.obj.X i)) ∧
-      Nonempty ((toDerived _).obj P.obj ≅ (toDerived _).obj K) := by
+      Nonempty ((DerivedCategory.Q).obj P.obj ≅ (DerivedCategory.Q).obj K) := by
   induction b, hab using Int.leInduction generalizing K with
   | base =>
     obtain ⟨hV, hf⟩ := terminal_single_vectorBundle_model R K a hK
     have : IsFiniteLocallyFree (twoChartLine R) (K.cycles a) := hV
     have : QuasiIso (singleCyclesMap K a) := hf
     refine ⟨⟨_, single_strictPerfect_int (K.cycles a) a⟩, ?_,
-      ⟨asIso ((toDerived _).map (singleCyclesMap K a))⟩⟩
+      ⟨asIso ((DerivedCategory.Q).map (singleCyclesMap K a))⟩⟩
     intro i hi
     exact HomologicalComplex.isZero_single_obj_X _ _ _ _ (by omega)
   | succ n hn ih =>
@@ -753,10 +773,10 @@ theorem exists_strict_window_of_twoChart_models (R : CommRingCat.{u})
 the original two-chart line has an actual global strict derived model.
 No noetherianity or global vector-bundle resolution premise is assumed. -/
 theorem exists_strict_model_of_boundedBelow_quasicoherent (R : CommRingCat.{u})
-    (K : Complex (twoChartLine R)) (c : ℤ) [K.IsStrictlyGE c]
+    (K : CochainComplex (twoChartLine R).Modules ℤ) (c : ℤ) [K.IsStrictlyGE c]
     (hqc : ∀ i, (K.X i).IsQuasicoherent) (hK : locallyPerfect (twoChartLine R) K) :
     ∃ P : StrictPerfect (twoChartLine R),
-      Nonempty ((toDerived _).obj P.obj ≅ (toDerived _).obj K) := by
+      Nonempty ((DerivedCategory.Q).obj P.obj ≅ (DerivedCategory.Q).obj K) := by
   obtain ⟨d, hmodels⟩ := exists_twoChartStrictLowerModels R hK
   obtain ⟨e, b, hb⟩ := locallyPerfect_homology_bounded hK
   have : K.IsLE b := by

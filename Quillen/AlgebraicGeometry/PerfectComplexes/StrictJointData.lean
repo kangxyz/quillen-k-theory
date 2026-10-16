@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Closure
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Closure
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Strict
 public import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
 public import Quillen.Waldhausen.Fibration.Rows.ReflexiveFactorization
 
@@ -15,6 +16,8 @@ The actual strict cone and shift provide the original fine joint functor,
 its quasi-isomorphism projection, and the genuine second-endpoint section.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.Waldhausen
 

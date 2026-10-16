@@ -8,8 +8,10 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.InjectiveCounit
 public import Aglib.AlgebraicGeometry.Cohomology.Injective.Restriction
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-!
 # Semantic consumers of the original affine injective counit
 
@@ -30,6 +32,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe v u
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open Quillen.PerfectComplexes.Affine
 open AlgebraicGeometry.Scheme.Modules.AffineCech
@@ -50,7 +53,7 @@ theorem original_boundary_sequences {C : Type u} [Category.{v} C] [Abelian C]
 
 /-- Actual Γ preserves the next-boundary SES, without asserting exactness on all sheaves. -/
 theorem original_global_section_sequence {R : CommRingCat.{u}}
-    (I : Complex (Spec R)) (a n : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a n : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent) :
     ((Quillen.CochainComplex.boundaryOpcycleSequence I n).map moduleSpecΓFunctor).ShortExact ∧
@@ -60,7 +63,7 @@ theorem original_global_section_sequence {R : CommRingCat.{u}}
 
 /-- The actual counit naturality square retains every component, even on arbitrary complexes. -/
 theorem original_counit_square {R : CommRingCat.{u}}
-    {I J : Complex (Spec R)} (f : I ⟶ J) (n : ℤ) :
+    {I J : CochainComplex (Spec R).Modules ℤ} (f : I ⟶ J) (n : ℤ) :
     (associatedSectionsCounit R I).f n = (I.X n).fromTildeΓ ∧
     (associatedComplex R).map ((sectionsComplex R).map f) ≫ associatedSectionsCounit R J =
       associatedSectionsCounit R I ≫ f :=
@@ -68,7 +71,7 @@ theorem original_counit_square {R : CommRingCat.{u}}
 
 /-- Both inverse laws concern the original homology map of the literal affine counit. -/
 theorem original_homology_inverse {R : CommRingCat.{u}}
-    (I : Complex (Spec R)) (a n : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a n : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent) :
     ∃ r, homologyMap (associatedSectionsCounit R I) n ≫ r = 𝟙 _ ∧
@@ -78,7 +81,7 @@ theorem original_homology_inverse {R : CommRingCat.{u}}
     IsIso.hom_inv_id _, IsIso.inv_hom_id _⟩
 
 /-- Distinct lower term bounds are retained in the actual global-section weak-map comparison. -/
-theorem original_sections_map {R : CommRingCat.{u}} {I J : Complex (Spec R)}
+theorem original_sections_map {R : CommRingCat.{u}} {I J : CochainComplex (Spec R).Modules ℤ}
     (hIa : ∀ n, n < -3 → IsZero (I.X n)) (hJb : ∀ n, n < 4 → IsZero (J.X n))
     (hI : ∀ n, Injective (I.X n)) (hJ : ∀ n, Injective (J.X n))
     (hqcI : ∀ n, (I.homology n).IsQuasicoherent)
@@ -88,16 +91,17 @@ theorem original_sections_map {R : CommRingCat.{u}} {I J : Complex (Spec R)}
 
 /-- Original lower-bounded module reconstruction allows an independent derived model universe. -/
 theorem original_lower_bound {R : CommRingCat.{u}}
-    [HasDerivedCategory.{v} (Spec R).Modules] (K : Complex (Spec R)) (a : ℤ) [K.IsGE a]
+    [HasDerivedCategory.{v} (Spec R).Modules] (K : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
+      [K.IsGE a]
     (hqc : ∀ n, (K.homology n).IsQuasicoherent) :
     ∃ P : ModuleComplex R, P.IsStrictlyGE a ∧
-      Nonempty ((toDerived (Spec R)).obj ((associatedComplex R).obj P) ≅
-        (toDerived (Spec R)).obj K) :=
+      Nonempty ((DerivedCategory.Q (C := (Spec R).Modules)).obj ((associatedComplex R).obj P) ≅
+        (DerivedCategory.Q (C := (Spec R).Modules)).obj K) :=
   exists_lowerBounded_module_representative K a hqc
 
 /-- Injective restriction retains an arbitrary original open and its literal complex terms. -/
 theorem original_open_injective_terms {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    (I : Complex X) (a : ℤ) [I.IsStrictlyGE a] (hI : ∀ n, Injective (I.X n)) :
+    (I : CochainComplex X.Modules ℤ) (a : ℤ) [I.IsStrictlyGE a] (hI : ∀ n, Injective (I.X n)) :
     ((restrict j).obj I).IsStrictlyGE a ∧
       ∀ n, Injective (((restrict j).obj I).X n) := by
   refine ⟨?_, fun n => ?_⟩

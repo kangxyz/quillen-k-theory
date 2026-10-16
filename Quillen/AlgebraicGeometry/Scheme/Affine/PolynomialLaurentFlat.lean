@@ -7,7 +7,7 @@ module
 
 public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.Algebra.Polynomial.LaurentFlat
-public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Basic
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Basic
 
 /-!
 # Flat coefficient maps of the original polynomial and Laurent charts

@@ -7,7 +7,10 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedDerivedComparison
 public import Mathlib.Data.ZMod.Basic
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
 /-!
 # Consumers of the bounded affine derived equivalence
 
@@ -16,6 +19,10 @@ original localization and principal restriction, with zero-ring and
 zero-divisor consumers. Original sheaf-complex terms need not be QC.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules (derivedRestrict)
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.PerfectComplexes
 
@@ -28,6 +35,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
 open Quillen.PerfectComplexes.Affine
 namespace QuillenTest.AffineBoundedDerivedComparison
@@ -74,26 +82,28 @@ lemma forward_preserves_distinguished_triangles (R : CommRingCat.{u})
       distTriang (BoundedQuasicoherentDerived R) :=
   (associatedBoundedQuasicoherent R).map_distinguished T hT
 
-lemma exact_requested_term_bounds (R : CommRingCat.{u}) (K : Derived (Spec R)) (a b : ℤ)
+lemma exact_requested_term_bounds (R : CommRingCat.{u}) (K : DerivedCategory (Spec R).Modules)
+    (a b : ℤ)
     [DerivedCategory.IsGE (C := (Spec R).Modules) K a]
     [DerivedCategory.IsLE (C := (Spec R).Modules) K b]
     (hK : ∀ i, ((DerivedCategory.homologyFunctor (Spec R).Modules i).obj K).IsQuasicoherent) :
     ∃ (L : ModuleComplex R), L.IsStrictlyGE a ∧ L.IsStrictlyLE b ∧
-      Nonempty ((toDerived (Spec R)).obj ((associatedComplex R).obj L) ≅ K) :=
+      Nonempty ((DerivedCategory.Q (C := (Spec R).Modules)).obj ((associatedComplex R).obj L)
+        ≅ K) :=
   exists_bounded_module_representative_of_quasicoherent_homology R K a b hK
 
 lemma empty_affine_exact_bounds
-    (K : Derived (Spec (CommRingCat.of (ZMod 1)))) (a b : ℤ)
+    (K : DerivedCategory (Spec (CommRingCat.of (ZMod 1))).Modules) (a b : ℤ)
     [DerivedCategory.IsGE (C := (Spec (CommRingCat.of (ZMod 1))).Modules) K a]
     [DerivedCategory.IsLE (C := (Spec (CommRingCat.of (ZMod 1))).Modules) K b]
     (hK : ∀ i, ((DerivedCategory.homologyFunctor (Spec (CommRingCat.of (ZMod 1))).Modules i).obj
       K).IsQuasicoherent) :
     ∃ (L : ModuleComplex (CommRingCat.of (ZMod 1))), L.IsStrictlyGE a ∧ L.IsStrictlyLE b ∧
-      Nonempty ((toDerived _).obj ((associatedComplex _).obj L) ≅ K) :=
+      Nonempty ((DerivedCategory.Q).obj ((associatedComplex _).obj L) ≅ K) :=
   exact_requested_term_bounds _ K a b hK
 
 lemma zero_divisor_ring_essential_image
-    (K : Derived (Spec (CommRingCat.of (ZMod 6)))) (a b : ℤ)
+    (K : DerivedCategory (Spec (CommRingCat.of (ZMod 6))).Modules) (a b : ℤ)
     [DerivedCategory.IsGE (C := (Spec (CommRingCat.of (ZMod 6))).Modules) K a]
     [DerivedCategory.IsLE (C := (Spec (CommRingCat.of (ZMod 6))).Modules) K b]
     (hK : ∀ i, ((DerivedCategory.homologyFunctor (Spec (CommRingCat.of (ZMod 6))).Modules i).obj
@@ -102,10 +112,10 @@ lemma zero_divisor_ring_essential_image
   associatedBoundedDerived_essImage_of_quasicoherent_homology _ K a b hK
 
 lemma locally_perfect_unrestricted_terms (R : CommRingCat.{u})
-    (K : Complex (Spec R)) (hK : locallyPerfect (Spec R) K) :
+    (K : CochainComplex (Spec R).Modules ℤ) (hK : locallyPerfect (Spec R) K) :
     ∃ (L : ModuleComplex R) (a b : ℤ), L.IsStrictlyGE a ∧ L.IsStrictlyLE b ∧
-      Nonempty ((toDerived (Spec R)).obj ((associatedComplex R).obj L) ≅
-        (toDerived (Spec R)).obj K) :=
+      Nonempty ((DerivedCategory.Q (C := (Spec R).Modules)).obj ((associatedComplex R).obj L) ≅
+        (DerivedCategory.Q (C := (Spec R).Modules)).obj K) :=
   locallyPerfect_exists_bounded_module_representative R hK
 
 lemma exact_functor_reflects_both_bounds (R : CommRingCat.{u})

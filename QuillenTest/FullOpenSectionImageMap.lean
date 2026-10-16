@@ -15,6 +15,8 @@ and original full-open section reindexing on arbitrary coefficient arrows.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 
 noncomputable section

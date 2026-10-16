@@ -9,6 +9,7 @@ public import Quillen.Waldhausen.Approximation.WeakImageKEquivalence
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenKZeroImage
 public import Quillen.Waldhausen.Fibration.Rows.CoarseJoint
 public import Quillen.Waldhausen.Fibration.ComplexChainReplacement
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-! # Relative-open approximation onto the actual witnessed restriction image
 
@@ -21,6 +22,8 @@ original relative endpoint to it, retaining the original target inclusion and
 its precise degree-zero image. Density of the inclusion remains separate.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.Waldhausen
 

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.AlgebraicGeometry.PerfectComplexes.KTheory
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.KernelClosure
 public import Quillen.Algebra.Homology.HomotopyPullbackQuasiIso
@@ -28,6 +29,8 @@ dual K-comparison steps are not assumed or inferred here.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.CochainComplex
 
 
@@ -44,9 +47,9 @@ attribute [local instance] standardDerivedModules standardDerivedSheaves
 split epic in every degree, with actual strict/local-perfect kernels. The
 factorization and weak-arrow square commute as literal chain-map equalities. -/
 lemma exists_strict_dual_factorization (R : CommRingCat.{u})
-    (P : StrictPerfect (Spec R)) (B B' : Complex (Spec R))
+    (P : StrictPerfect (Spec R)) (B B' : CochainComplex (Spec R).Modules ℤ)
     (hB' : locallyPerfect (Spec R) B') (w : P.obj ⟶ B) [QuasiIso w] (b : B' ⟶ B) :
-    ∃ (C : StrictPerfect (Spec R)) (D : Complex (Spec R))
+    ∃ (C : StrictPerfect (Spec R)) (D : CochainComplex (Spec R).Modules ℤ)
       (c : C.obj ⟶ P.obj) (d : D ⟶ B) (u : C.obj ⟶ D) (v : B' ⟶ D),
       locallyPerfect (Spec R) D ∧ QuasiIso u ∧ QuasiIso v ∧
       u ≫ d = c ≫ w ∧ v ≫ d = b ∧

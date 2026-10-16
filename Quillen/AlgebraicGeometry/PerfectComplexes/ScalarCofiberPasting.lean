@@ -18,6 +18,8 @@ by the existing iterated-fiber map; it does not assume a localization boundary i
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 noncomputable section

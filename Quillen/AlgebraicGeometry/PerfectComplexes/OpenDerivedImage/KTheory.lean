@@ -7,9 +7,12 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Approximation
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Flatten
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-! # Original relative-open endpoint transport through the genuine image -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.Waldhausen
 

@@ -8,7 +8,12 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.SupportedQCDenominators
 public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalSupportedDensity
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Mathlib.Algebra.Homology.DerivedCategory.Basic
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.RestrictionHom
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 /-! # Supported denominator transitivity via actual supported cone retracts -/
 @[expose] public section
 
@@ -28,22 +33,24 @@ namespace Quillen.PerfectComplexes
 attribute [local instance] Affine.standardDerivedSheaves
 
 lemma isZero_restrict_opensRange_of_isZero {U X : Scheme.{u}}
-    (j : U ⟶ X) [IsOpenImmersion j] {E : Complex X}
-    (hz : IsZero ((toDerived U).obj ((restrict j).obj E))) :
-    IsZero ((toDerived j.opensRange.toScheme).obj ((restrict j.opensRange.ι).obj E)) := by
+    (j : U ⟶ X) [IsOpenImmersion j] {E : CochainComplex X.Modules ℤ}
+    (hz : IsZero ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj E))) :
+    IsZero ((DerivedCategory.Q (C := j.opensRange.toScheme.Modules)).obj
+      ((restrict j.opensRange.ι).obj E)) := by
   rw [← isZero_toDerived_restrict_iff_of_isIso j.isoOpensRange.hom]
   let c := restrictCompIso j.isoOpensRange.hom j.opensRange.ι ≪≫
     eqToIso (restrict_congr j.isoOpensRange_hom_ι)
-  exact hz.of_iso ((toDerived U).mapIso (c.app E))
+  exact hz.of_iso ((DerivedCategory.Q (C := U.Modules)).mapIso (c.app E))
 
 lemma isZero_restrict_of_isZero_opensRange {U X : Scheme.{u}}
-    (j : U ⟶ X) [IsOpenImmersion j] {E : Complex X}
-    (hz : IsZero ((toDerived j.opensRange.toScheme).obj ((restrict j.opensRange.ι).obj E))) :
-    IsZero ((toDerived U).obj ((restrict j).obj E)) := by
+    (j : U ⟶ X) [IsOpenImmersion j] {E : CochainComplex X.Modules ℤ}
+    (hz : IsZero ((DerivedCategory.Q (C := j.opensRange.toScheme.Modules)).obj
+      ((restrict j.opensRange.ι).obj E))) :
+    IsZero ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj E)) := by
   let c := restrictCompIso j.isoOpensRange.hom j.opensRange.ι ≪≫
     eqToIso (restrict_congr j.isoOpensRange_hom_ι)
   exact (isZero_toDerived_restrict_of_isZero j.isoOpensRange.hom hz).of_iso
-    ((toDerived U).mapIso (c.app E)).symm
+    ((DerivedCategory.Q (C := U.Modules)).mapIso (c.app E)).symm
 
 namespace OpenDerivedImage
 
@@ -65,20 +72,24 @@ lemma hasSupportedQCDenominators_comp {Z U X : Scheme.{u}}
     rw [CochainComplex.isGE_iff]
     intro n hn
     exact (B.exactAt_of_isGE b n hn).map (Scheme.Modules.restrictFunctor j)
-  have hzBU : IsZero ((toDerived Z).obj ((restrict i).obj ((restrict j).obj B))) :=
-    hzB.of_iso ((toDerived Z).mapIso (c.app B))
+  have hzBU : IsZero ((DerivedCategory.Q (C := Z.Modules)).obj
+    ((restrict i).obj ((restrict j).obj B))) :=
+    hzB.of_iso ((DerivedCategory.Q (C := Z.Modules)).mapIso (c.app B))
   obtain ⟨N, q, hN, hq, hqα⟩ := h₁ ((restrict j).obj A) ((restrict j).obj B)
     (locallyPerfect_restrict j hA) b hBU (Affine.quasicoherent_homology_restrict j B hB)
     hzBU (restrictDerivedHom j α)
   let E := CochainComplex.mappingCone q
   have hE : locallyPerfect U E := locallyPerfect_mappingCone hN (locallyPerfect_restrict j hA) q
-  have hzEi : IsZero ((toDerived Z).obj ((restrict i).obj E)) := by
-    exact (Triangle.isZero₃_of_isIso₁ _ (mappingConeTriangle_distinguished ((restrict i).map q)) (by
-      change IsIso ((toDerived Z).map ((restrict i).map q))
+  have hzEi : IsZero ((DerivedCategory.Q (C := Z.Modules)).obj ((restrict i).obj E)) := by
+    exact (Triangle.isZero₃_of_isIso₁ _ (DerivedCategory.mappingCone_triangle_distinguished
+      ((restrict i).map q)) (by
+      change IsIso ((DerivedCategory.Q (C := Z.Modules)).map ((restrict i).map q))
       infer_instance)).of_iso
-        ((toDerived Z).mapIso (CochainComplex.mappingCone.mapHomologicalComplexIso q
+        ((DerivedCategory.Q (C := Z.Modules)).mapIso
+          (CochainComplex.mappingCone.mapHomologicalComplexIso q
           (Scheme.Modules.restrictFunctor i)))
-  have hzE : IsZero ((toDerived (j ⁻¹ᵁ V).toScheme).obj ((restrict (j ⁻¹ᵁ V).ι).obj E)) := by
+  have hzE : IsZero ((DerivedCategory.Q (C := (j ⁻¹ᵁ V).toScheme.Modules)).obj
+    ((restrict (j ⁻¹ᵁ V).ι).obj E)) := by
     have h := isZero_restrict_opensRange_of_isZero i hzEi
     have hpre : j ⁻¹ᵁ V = i.opensRange := by
       dsimp [V]
@@ -89,13 +100,14 @@ lemma hasSupportedQCDenominators_comp {Z U X : Scheme.{u}}
     locallyPerfect_exists_global_supported_perfect_complement_of_openImmersion j E hE V hV hzE
   let r₀ : Retract E (E ⊞ D) :=
     { i := biprod.inl, r := biprod.fst, retract := biprod.inl_fst }
-  let r := (r₀.map (toDerived U)).trans (Retract.ofIso eC.symm)
-  have hzC : IsZero ((toDerived Z).obj ((restrict (i ≫ j)).obj C)) :=
+  let r := (r₀.map (DerivedCategory.Q (C := U.Modules))).trans (Retract.ofIso eC.symm)
+  have hzC : IsZero ((DerivedCategory.Q (C := Z.Modules)).obj ((restrict (i ≫ j)).obj C)) :=
     isZero_restrict_of_isZero_opensRange (i ≫ j) hzCV
-  obtain ⟨γ, hγ⟩ := Triangle.yoneda_exact₂ _ (mappingConeTriangle_distinguished q)
+  obtain ⟨γ, hγ⟩ := Triangle.yoneda_exact₂ _ (DerivedCategory.mappingCone_triangle_distinguished q)
     (restrictDerivedHom j α) hqα
-  change restrictDerivedHom j α = (toDerived U).map (CochainComplex.mappingCone.inr q) ≫ γ at hγ
-  let β := (toDerived U).map (CochainComplex.mappingCone.inr q) ≫ r.i
+  change restrictDerivedHom j α = (DerivedCategory.Q (C := U.Modules)).map
+    (CochainComplex.mappingCone.inr q) ≫ γ at hγ
+  let β := (DerivedCategory.Q (C := U.Modules)).map (CochainComplex.mappingCone.inr q) ≫ r.i
   let η := r.r ≫ γ
   have hβη : β ≫ η = restrictDerivedHom j α := by
     dsimp [β, η]
@@ -111,19 +123,22 @@ lemma hasSupportedQCDenominators_comp {Z U X : Scheme.{u}}
     have hui : QuasiIso ((restrict i).map ((restrict j).map a)) := inferInstance
     exact (quasiIso_iff_of_arrow_mk_iso _ _
       (Arrow.isoMk (c.app A') (c.app A) (c.hom.naturality a).symm)).mp hui
-  have hfg : (toDerived X).map f ≫ (toDerived X).map g = 0 :=
+  have hfg : (DerivedCategory.Q (C := X.Modules)).map f ≫ (DerivedCategory.Q (C := X.Modules)).map g
+    = 0 :=
     comp_distTriang_mor_zero₁₂ _ (DerivedCategory.mappingCocone_triangle_distinguished g)
   have hfgU := congrArg (restrictDerivedHom j) hfg
   simp only [restrictDerivedHom_comp, restrictDerivedHom_map] at hfgU
-  have hz : restrictDerivedHom j (0 : (toDerived X).obj P ⟶ (toDerived X).obj C) = 0 := by simp
+  have hz : restrictDerivedHom j (0 : (DerivedCategory.Q (C := X.Modules)).obj P ⟶
+    (DerivedCategory.Q (C := X.Modules)).obj C) = 0 := by simp
     [restrictDerivedHom]
   rw [hz] at hfgU
-  have hnull : restrictDerivedHom j ((toDerived X).map (f ≫ a) ≫ α) = 0 := by
+  have hnull : restrictDerivedHom j ((DerivedCategory.Q (C := X.Modules)).map (f ≫ a) ≫ α) = 0 := by
     simp only [Functor.map_comp, restrictDerivedHom_comp, restrictDerivedHom_map]
-    rw [← hβη, Category.assoc, ← Category.assoc ((toDerived U).map ((restrict j).map a)), hg]
+    rw [← hβη, Category.assoc, ← Category.assoc ((DerivedCategory.Q (C := U.Modules)).map
+      ((restrict j).map a)), hg]
     rw [← Category.assoc, hfgU, zero_comp]
   obtain ⟨M, s, hM, hs, hkill⟩ := exists_denominator_of_restrictDerivedHom_zero j h₂
-    hP b hB ((toDerived X).map (f ≫ a) ≫ α) hnull
+    hP b hB ((DerivedCategory.Q (C := X.Modules)).map (f ≫ a) ≫ α) hnull
   have hsZ : QuasiIso ((restrict (i ≫ j)).map s) := by
     have hui : QuasiIso ((restrict i).map ((restrict j).map s)) := inferInstance
     exact (quasiIso_iff_of_arrow_mk_iso _ _

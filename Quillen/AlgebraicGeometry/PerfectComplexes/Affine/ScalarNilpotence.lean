@@ -10,8 +10,12 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.Nilpotence
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalRestrictionQuasiIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedModuleReplacement
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PerfectOpenApproximation
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
+public import Mathlib.Algebra.Homology.DerivedCategory.Basic
 /-!
 # Original scalar nilpotence on compact affine opens
 
@@ -41,6 +45,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.Affine
 attribute [local instance] HasDerivedCategory.standard
 open Quillen.ModuleComplex.PrincipalLocalization
@@ -50,12 +55,13 @@ and cancelling the genuinely invertible q-power on D(q). -/
 lemma exists_scalar_power_zero_on_principal_of_localized_isZero
     (R : CommRingCat.{u}) (q r : R) {P : ModuleComplex R} (hP : moduleStrictPerfect R P)
     (hz : IsZero (DerivedCategory.Q.obj ((localize (q * r) (.up ℤ)).obj P))) :
-    ∃ n : ℕ, (toDerived (Scheme.Opens.toScheme (X := Spec R) (PrimeSpectrum.basicOpen q))).map
+    ∃ n : ℕ, (DerivedCategory.Q (C := (Scheme.Opens.toScheme (X := Spec R)
+      (PrimeSpectrum.basicOpen q)).Modules)).map
       ((restrict (Scheme.Opens.ι (X := Spec R) (PrimeSpectrum.basicOpen q))).map
         ((associatedComplex R).map (r ^ n • 𝟙 P))) = 0 := by
   have : CochainComplex.IsKProjective ((localize (q*r) (.up ℤ)).obj P) :=
     isKProjective_of_moduleStrictPerfect _ (moduleStrictPerfect_localize R (q*r) hP)
-  let H := Quillen.CochainComplex.homotopyOfDerivedEqOfIsKProjective
+  let H := _root_.CochainComplex.homotopyOfDerivedEqOfIsKProjective
     ((localize (q*r) (.up ℤ)).map (𝟙 P)) ((localize (q*r) (.up ℤ)).map (0 : P ⟶ P))
     (hz.eq_of_src _ _)
   obtain ⟨⟨s, hs⟩, hfp⟩ := moduleStrictPerfect_denominator_inputs R hP
@@ -63,9 +69,9 @@ lemma exists_scalar_power_zero_on_principal_of_localized_isZero
     (by simpa only [Functor.map_zero] using H)
   let U : (Spec R).Opens := PrimeSpectrum.basicOpen q
   let F := associatedComplex R ⋙ restrict U.ι
-  have hnull : (toDerived U.toScheme).map (F.map ((q*r)^n • 𝟙 P)) = 0 := by
-    rw [← (toDerived U.toScheme).map_zero]
-    apply toDerived_map_eq_of_homotopy
+  have hnull : (DerivedCategory.Q (C := U.toScheme.Modules)).map (F.map ((q*r)^n • 𝟙 P)) = 0 := by
+    rw [← (DerivedCategory.Q (C := U.toScheme.Modules)).map_zero]
+    apply DerivedCategory.Q_map_eq_of_homotopy _
     simpa only [F, restrict, Functor.comp_map, Functor.comp_obj, Functor.map_zero] using
       ((Scheme.Modules.restrictFunctor U.ι).mapHomotopy ((tilde.functor R).mapHomotopy Hn))
   have hqi : QuasiIso (F.map (q^n • 𝟙 P)) := by
@@ -80,15 +86,16 @@ lemma exists_scalar_power_zero_on_principal_of_localized_isZero
     simp only [mul_pow, Linear.smul_comp, Linear.comp_smul, Category.id_comp, smul_smul, mul_comm]
   rw [he, F.map_comp, Functor.map_comp] at hnull
   refine ⟨n, ?_⟩
-  change (toDerived U.toScheme).map (F.map (r^n • 𝟙 P)) = 0
-  apply (cancel_epi ((toDerived U.toScheme).map (F.map (q^n • 𝟙 P)))).mp
+  change (DerivedCategory.Q (C := U.toScheme.Modules)).map (F.map (r^n • 𝟙 P)) = 0
+  apply (cancel_epi ((DerivedCategory.Q (C := U.toScheme.Modules)).map (F.map (q^n • 𝟙 P)))).mp
   simpa only [comp_zero] using hnull
 
 /-- Genuine zero detection of the localized module complex from its original
 associated restriction to a surrounding open. -/
 lemma isZero_localize_of_isZero_restrict_associated (R : CommRingCat.{u})
     (W : (Spec R).Opens) (P : ModuleComplex R)
-    (hz : IsZero ((toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj P))))
+    (hz : IsZero ((DerivedCategory.Q (C := W.toScheme.Modules)).obj
+      ((restrict W.ι).obj ((associatedComplex R).obj P))))
     (q : R) (hq : PrimeSpectrum.basicOpen q ≤ W) :
     IsZero (DerivedCategory.Q.obj ((localize q (.up ℤ)).obj P)) := by
   have hw : QuasiIso ((restrict W.ι).map ((associatedComplex R).map (0 : P ⟶ P))) := by
@@ -103,9 +110,10 @@ lemma isZero_localize_of_isZero_restrict_associated (R : CommRingCat.{u})
 lemma exists_scalar_power_zero_on_contained_principal (R : CommRingCat.{u})
     (W : (Spec R).Opens) (q r : R) (hq : PrimeSpectrum.basicOpen q ≤ W)
     {P : ModuleComplex R} (hP : moduleStrictPerfect R P)
-    (hz : IsZero ((toDerived (W ⊓ PrimeSpectrum.basicOpen r).toScheme).obj
+    (hz : IsZero ((DerivedCategory.Q (C := (W ⊓ PrimeSpectrum.basicOpen r).toScheme.Modules)).obj
       ((restrict (W ⊓ PrimeSpectrum.basicOpen r).ι).obj ((associatedComplex R).obj P)))) :
-    ∃ n : ℕ, (toDerived (Scheme.Opens.toScheme (X := Spec R) (PrimeSpectrum.basicOpen q))).map
+    ∃ n : ℕ, (DerivedCategory.Q (C := (Scheme.Opens.toScheme (X := Spec R)
+      (PrimeSpectrum.basicOpen q)).Modules)).map
       ((restrict (Scheme.Opens.ι (X := Spec R) (PrimeSpectrum.basicOpen q))).map
         ((associatedComplex R).map (r ^ n • 𝟙 P))) = 0 := by
   apply exists_scalar_power_zero_on_principal_of_localized_isZero R q r hP
@@ -133,9 +141,9 @@ on W. The genuine finite MV induction supplies the global exponent. -/
 theorem exists_scalar_power_zero_of_isZero_on_intersection
     (R : CommRingCat.{u}) (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
     (r : R) {P : ModuleComplex R} (hP : moduleStrictPerfect R P)
-    (hz : IsZero ((toDerived (W ⊓ PrimeSpectrum.basicOpen r).toScheme).obj
+    (hz : IsZero ((DerivedCategory.Q (C := (W ⊓ PrimeSpectrum.basicOpen r).toScheme.Modules)).obj
       ((restrict (W ⊓ PrimeSpectrum.basicOpen r).ι).obj ((associatedComplex R).obj P)))) :
-    ∃ n : ℕ, (toDerived W.toScheme).map
+    ∃ n : ℕ, (DerivedCategory.Q (C := W.toScheme.Modules)).map
       ((restrict W.ι).map ((associatedComplex R).map (r^n • 𝟙 P))) = 0 := by
   classical
   obtain ⟨s, hs⟩ := exists_finite_principal_cover R W hW

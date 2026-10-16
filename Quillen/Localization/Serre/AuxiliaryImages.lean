@@ -8,6 +8,7 @@ module
 
 public import Quillen.Localization.Serre.KernelReflection
 public import Quillen.CategoryTheory.TheoremA.ContractibleStructured
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-! # Images of the auxiliary objects as a genuine ordered base -/
 @[expose] public section
@@ -18,7 +19,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
 
 /-- Epi precomposition leaves the image subobject unchanged in an abelian category. -/

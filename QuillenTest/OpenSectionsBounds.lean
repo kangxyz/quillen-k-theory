@@ -35,7 +35,7 @@ open Quillen
 /-- The actual affine sections have vanishing homology above the original
 sheaf-cohomology bound; no upper bound on the injective terms is used. -/
 lemma actual_affine_homology_vanishes {R : CommRingCat.{u}}
-    (I : Complex (Spec R)) (a b : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a b : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent) [I.IsLE b] (n : ℤ) (hn : b < n) :
     IsZero (((sectionsComplex R).obj I).homology n) := by
@@ -44,7 +44,7 @@ lemma actual_affine_homology_vanishes {R : CommRingCat.{u}}
 
 /-- Exact cohomology vanishing degree for an arbitrary original finite family. -/
 lemma finite_union_homology_vanishes {R : CommRingCat.{u}}
-    (I : Complex (Spec R)) (a b : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a b : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (W : (Spec R).Opens) [((restrict W.ι).obj I).IsLE b]
     (hqc : ∀ n, (((restrict W.ι).obj I).homology n).IsQuasicoherent)
@@ -57,7 +57,7 @@ lemma finite_union_homology_vanishes {R : CommRingCat.{u}}
 
 /-- The genuine compact-open result only uses QC on the chosen restriction. -/
 lemma compact_open_homology_bound {R : CommRingCat.{u}}
-    (I : Complex (Spec R)) (a b : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a b : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
     [((restrict W.ι).obj I).IsLE b]
@@ -70,10 +70,10 @@ lemma compact_open_homology_bound {R : CommRingCat.{u}}
 /-- The model retains the original homology maps and exact lower term bound
 on actual R-module sections. -/
 lemma original_model_homology_maps (R : CommRingCat.{u}) (W : (Spec R).Opens)
-    (hW : IsCompact (W : Set (Spec R))) (E : Complex W.toScheme)
+    (hW : IsCompact (W : Set (Spec R))) (E : CochainComplex W.toScheme.Modules ℤ)
     (a b : ℤ) [E.IsGE a] [E.IsLE b]
     (hqc : ∀ n, (E.homology n).IsQuasicoherent) :
-    ∃ (I : Complex (Spec R)) (q : E ⟶ (restrict W.ι).obj I) (c : ℤ),
+    ∃ (I : CochainComplex (Spec R).Modules ℤ) (q : E ⟶ (restrict W.ι).obj I) (c : ℤ),
       (∀ n, IsIso (homologyMap q n)) ∧
       (∀ n, n < a → IsZero (((affineSectionsAt R W).mapHomologicalComplex (.up ℤ)).obj I |>.X n)) ∧
       (∀ n, c < n → IsZero ((((affineSectionsAt R W).mapHomologicalComplex (.up ℤ)).obj I).homology
@@ -89,7 +89,7 @@ lemma original_model_homology_maps (R : CommRingCat.{u}) (W : (Spec R).Opens)
 
 /-- Localization at zero is allowed in the genuine principal-section bound. -/
 lemma zero_principal_homology_bound {R : CommRingCat.{u}}
-    (I : Complex (Spec R)) (a b : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a b : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R 0)).obj
       I).homology n).IsQuasicoherent)

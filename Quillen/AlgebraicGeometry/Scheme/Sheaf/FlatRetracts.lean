@@ -8,6 +8,7 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Stalk.Basic
 public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
 public import Mathlib.CategoryTheory.Idempotents.Karoubi
+public import Aglib.AlgebraicGeometry.Modules.Flat.Closure
 
 /-!
 # Retracts of stalkwise-flat module sheaves
@@ -29,15 +30,6 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace AlgebraicGeometry.Scheme.Modules
-
-/-- Genuine sheaf retracts preserve flatness of all actual module stalks. -/
-theorem stalkwiseFlat_of_retract {X : Scheme.{u}} {M N : X.Modules}
-    (h : Retract M N) (hN : stalkwiseFlat X N) : stalkwiseFlat X M := by
-  intro x
-  let : Module.Flat (X.presheaf.stalk x) ((moduleStalk X x).obj N) := hN x
-  let hx := h.map (moduleStalk X x)
-  apply Module.Flat.of_retract hx.i.hom hx.r.hom
-  exact congrArg (fun p : (moduleStalk X x).obj M ⟶ (moduleStalk X x).obj M => p.hom) hx.retract
 
 instance stalkwiseFlat_isStableUnderRetracts (X : Scheme.{u}) :
     (stalkwiseFlat X).IsStableUnderRetracts where

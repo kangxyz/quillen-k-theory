@@ -7,6 +7,8 @@ module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TwistMinusFunctor
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ModuleColumns
+public import Aglib.AlgebraicGeometry.Modules.Restriction.ZeroMorphisms
+public import Aglib.AlgebraicGeometry.Modules.Subobjects.Gluing
 
 /-!
 # The negative twist of the structure module
@@ -34,7 +36,8 @@ lemma tautologicalLineInclusion_twistMinusObstruction :
       twistMinusObstruction R (SheafOfModules.unit (twoChartLine R).ringCatSheaf) = 0 := by
   apply prod.hom_ext
   · simp only [twistMinusObstruction, Category.assoc, prod.lift_fst, zero_comp]
-    apply eq_zero_of_restrict_map_eq_zero (plusChart R) _ ⟨_, ⟨Iso.refl _⟩⟩
+    apply AlgebraicGeometry.Scheme.Modules.eq_zero_of_restrict_map_eq_zero (plusChart R) _ ⟨_,
+      ⟨Iso.refl _⟩⟩
     rw [Functor.map_comp, tautologicalLineInclusion_plus]
     have hc := moduleFirstColumn_unit (plusChart R) (polynomialCoordinate R)
     have he : firstColumn (plusChart R) (polynomialCoordinate R) =
@@ -42,10 +45,12 @@ lemma tautologicalLineInclusion_twistMinusObstruction :
           moduleFirstColumn (plusChart R)
             (SheafOfModules.unit (twoChartLine R).ringCatSheaf) (polynomialCoordinate R) := by
       rw [hc, Iso.inv_hom_id_assoc]
-    rw [he, Category.assoc, Category.assoc, subobjectObstruction_local_zero, comp_zero,
+    rw [he, Category.assoc, Category.assoc,
+      AlgebraicGeometry.Scheme.Modules.subobjectObstruction_local_zero, comp_zero,
       comp_zero]
   · simp only [twistMinusObstruction, Category.assoc, prod.lift_snd, zero_comp]
-    apply eq_zero_of_restrict_map_eq_zero (minusChart R) _ ⟨_, ⟨Iso.refl _⟩⟩
+    apply AlgebraicGeometry.Scheme.Modules.eq_zero_of_restrict_map_eq_zero (minusChart R) _ ⟨_,
+      ⟨Iso.refl _⟩⟩
     rw [Functor.map_comp, tautologicalLineInclusion_minus]
     have hc := moduleSecondColumn_unit (minusChart R) (polynomialCoordinate R)
     have he : secondColumn (minusChart R) (polynomialCoordinate R) =
@@ -53,7 +58,8 @@ lemma tautologicalLineInclusion_twistMinusObstruction :
           moduleSecondColumn (minusChart R)
             (SheafOfModules.unit (twoChartLine R).ringCatSheaf) (polynomialCoordinate R) := by
       rw [hc, Iso.inv_hom_id_assoc]
-    rw [he, Category.assoc, Category.assoc, subobjectObstruction_local_zero, comp_zero,
+    rw [he, Category.assoc, Category.assoc,
+      AlgebraicGeometry.Scheme.Modules.subobjectObstruction_local_zero, comp_zero,
       comp_zero]
 
 /-- The original tautological inclusion factored through the canonical twist kernel. -/

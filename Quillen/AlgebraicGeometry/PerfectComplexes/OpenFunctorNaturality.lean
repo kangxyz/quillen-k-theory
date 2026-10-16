@@ -17,6 +17,8 @@ degree, including the boundary from K1 to supported K0.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 

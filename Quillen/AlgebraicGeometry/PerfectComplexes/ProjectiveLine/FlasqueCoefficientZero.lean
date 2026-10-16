@@ -12,6 +12,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.Intrinsi
 public import Aglib.AlgebraicGeometry.Cohomology.Flasque.PushforwardExactness
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.DerivedPushforward.Total
 public import Quillen.Waldhausen.ExactFunctor
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-!
 # The original exact zero coefficient on the flasque perfect model
@@ -21,6 +22,8 @@ kernel complex has flasque terms. Its natural installed derived unit and the
 intrinsic projective-line pushforward theorem prove perfection of the values.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open CategoryTheory.ExactCategory
 
@@ -62,7 +65,7 @@ def derivedPushforwardIso {X Y : Scheme.{u}} (f : X ⟶ Y) :
 
 /-- The underlying zero coefficient is the literal original degreewise direct image. -/
 def G0Raw (R : CommRingCat.{u}) :
-    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ Complex (Spec R) :=
+    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ CochainComplex (Spec R).Modules ℤ :=
   (FlasqueBoundedBelow.objects (twoChartLine R)).ι ⋙
     (Scheme.Modules.pushforward (projection R)).mapHomologicalComplex (.up ℤ)
 
@@ -116,9 +119,10 @@ instance G0_additive (R : CommRingCat.{u}) : (G0 R).Additive where
 
 /-- Exactness uses the proved original flasque-kernel section lifts. -/
 def G0ExactFunctor (R : CommRingCat.{u}) : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (twoChartLine R).Modules ℤ))
       (FlasqueBoundedBelow.objects (twoChartLine R)))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (Spec R)))
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex (Spec R).Modules ℤ))
       (FlasqueBoundedBelow.objects (Spec R))) where
   toFunctor := G0 R
   map_conflation S hS := by

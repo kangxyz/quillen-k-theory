@@ -26,7 +26,7 @@ namespace Quillen.PerfectComplexes
 
 /-- Actual homotopies of adjoint maps restrict back to homotopies of the original local maps. -/
 def extensionByZeroMapHomotopyReflect {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    {K : Complex U} {L : Complex X} {f g : K ⟶ (restrict j).obj L}
+    {K : CochainComplex U.Modules ℤ} {L : CochainComplex X.Modules ℤ} {f g : K ⟶ (restrict j).obj L}
     (H : Homotopy (extensionByZeroMap j f) (extensionByZeroMap j g)) : Homotopy f g :=
   (Homotopy.ofEq (extensionByZeroMap_restrict j f).symm).trans
     ((((Scheme.Modules.restrictFunctor j).mapHomotopy H).compLeft
@@ -37,7 +37,7 @@ namespace OpenHomotopyGluing
 variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
   [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]
   (h : a ≫ j = b ≫ k)
-  {K : Complex W} {A : Complex U} {B : Complex V}
+  {K : CochainComplex W.Modules ℤ} {A : CochainComplex U.Modules ℤ} {B : CochainComplex V.Modules ℤ}
   (α : K ⟶ (restrict a).obj A) (β : K ⟶ (restrict b).obj B)
 
 /-- The adjoint of the original first local comparison is precisely the original cone inclusion. -/

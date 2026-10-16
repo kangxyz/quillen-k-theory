@@ -9,6 +9,7 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueCoefficientZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlatPullback
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OriginalPerfectGeneration
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-!
 # Literal flasque diagonal vertices
@@ -19,6 +20,8 @@ through the actual total derived comparison and the accepted P3 endpoint maps.
 No arbitrary-base perfect-pushforward theorem or chosen coefficient model is used.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open AlgebraicGeometry.Scheme.Modules.Godement
 
@@ -66,7 +69,7 @@ def rawPlus (R : CommRingCat.{u}) (v : Vertex) :
 
 /-- The actual original chain complex p2_* T_Z(F_v(K)), with no outer total. -/
 def raw (R : CommRingCat.{u}) (v : Vertex) :
-    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ Complex (twoChartLine R) :=
+    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ CochainComplex (twoChartLine R).Modules ℤ :=
   (FlasqueBoundedBelow.objects (twoChartLine R)).ι ⋙
     (coefficient R v).mapHomologicalComplex (.up ℤ) ⋙ godementTotal (relativeSquare R) ⋙
       (Scheme.Modules.pushforward (relativeSecond R)).mapHomologicalComplex (.up ℤ)
@@ -77,7 +80,7 @@ instance raw_additive (R : CommRingCat.{u}) (v : Vertex) : (raw R v).Additive :=
 
 /-- Original exact coefficient mapping preserves every specified strict lower bound. -/
 lemma coefficient_isStrictlyGE (R : CommRingCat.{u}) (v : Vertex)
-    (K : Complex (twoChartLine R)) (a : ℤ) [K.IsStrictlyGE a] :
+    (K : CochainComplex (twoChartLine R).Modules ℤ) (a : ℤ) [K.IsStrictlyGE a] :
     CochainComplex.IsStrictlyGE
       (((coefficient R v).mapHomologicalComplex (.up ℤ)).obj K) a := by
   apply (CochainComplex.isStrictlyGE_iff _ a).mpr
@@ -88,7 +91,7 @@ lemma coefficient_isStrictlyGE (R : CommRingCat.{u}) (v : Vertex)
 lemma raw_isStrictlyGE (R : CommRingCat.{u}) (v : Vertex)
     (K : FlasqueBoundedBelow.Obj (twoChartLine R)) (a : ℤ) [K.obj.IsStrictlyGE a] :
     ((raw R v).obj K).IsStrictlyGE a := by
-  let C : Complex (relativeSquare R) :=
+  let C : CochainComplex (relativeSquare R).Modules ℤ :=
     ((coefficient R v).mapHomologicalComplex (.up ℤ)).obj K.obj
   let : C.IsStrictlyGE a := coefficient_isStrictlyGE R v K.obj a
   let : ((godementTotal (relativeSquare R)).obj C).IsStrictlyGE a :=
@@ -107,7 +110,7 @@ lemma totalCoefficient_flasque (R : CommRingCat.{u}) (v : Vertex)
         (((coefficient R v).mapHomologicalComplex (.up ℤ)).obj K.obj)).X n).presheaf := by
   obtain ⟨a, ha⟩ := K.property.1.2
   let := ha
-  let C : Complex (relativeSquare R) :=
+  let C : CochainComplex (relativeSquare R).Modules ℤ :=
     ((coefficient R v).mapHomologicalComplex (.up ℤ)).obj K.obj
   let : C.IsStrictlyGE a := coefficient_isStrictlyGE R v K.obj a
   exact godementTotal_isFlasque C a
@@ -203,7 +206,7 @@ def toOriginalPerfectPlus (R : CommRingCat.{u}) :
 /-- Exact sheaf functors that preserve actual local perfection preserve intrinsic perfect D+. -/
 lemma perfect_exactDerived {X Y : Scheme.{u}} (F : X.Modules ⥤ Y.Modules)
     [F.Additive] [F.PreservesHomology]
-    (hF : ∀ K : Complex X, locallyPerfect X K →
+    (hF : ∀ K : CochainComplex X.Modules ℤ, locallyPerfect X K →
       locallyPerfect Y ((F.mapHomologicalComplex (.up ℤ)).obj K))
     (K : DerivedCategory.Plus X.Modules)
     (hK : perfectDerivedObjects X (DerivedCategory.Plus.ι.obj K)) :
@@ -223,7 +226,7 @@ lemma perfect_exactDerived {X Y : Scheme.{u}} (F : X.Modules ⥤ Y.Modules)
 
 /-- Exact original quotient-line tensors preserve actual local perfection. -/
 lemma quotientLeft_locallyPerfect (R : CommRingCat.{u})
-    (K : Complex (twoChartLine R)) (hK : locallyPerfect (twoChartLine R) K) :
+    (K : CochainComplex (twoChartLine R).Modules ℤ) (hK : locallyPerfect (twoChartLine R) K) :
     locallyPerfect (twoChartLine R)
       ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft (tautologicalQuotientLine R)).obj K) :=
         by

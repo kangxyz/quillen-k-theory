@@ -18,6 +18,8 @@ raw pullback functor or flatness hypothesis is substituted.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen.AlgebraicGrothendieck

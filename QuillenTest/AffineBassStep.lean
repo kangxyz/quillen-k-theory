@@ -75,7 +75,8 @@ theorem original_unit_inverse (X : Scheme.{u}) (r : (Γ(X, ⊤))ˣ) (M : X.Modul
     M⟩
 
 /-- The literal chain action has the original module-sheaf scalar in every degree. -/
-theorem original_chain_action (X : Scheme.{u}) (r : (Γ(X, ⊤))ˣ) (K : Complex X) (n : ℤ) :
+theorem original_chain_action (X : Scheme.{u}) (r : (Γ(X, ⊤))ˣ) (K : CochainComplex X.Modules ℤ)
+    (n : ℤ) :
     ((complexGlobalUnitIso X r).hom.app K).f n =
       (AlgebraicGeometry.Scheme.Modules.globalUnitIso X r).hom.app (K.X n) :=
         complexGlobalUnitIso_original_terms X r K n

@@ -7,7 +7,7 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatRetracts
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatResolution
+public import Aglib.AlgebraicGeometry.Modules.Flat.Resolution
 public import Mathlib.Algebra.Homology.LeftResolution.Reduced
 
 /-!

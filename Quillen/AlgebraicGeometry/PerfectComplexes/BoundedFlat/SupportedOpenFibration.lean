@@ -42,7 +42,7 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
 open Waldhausen Fibration
 lemma boundedFlatPerfectSupported_sup_opensRange_iff {U X : Scheme.{u}}
-    (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens) (A : Complex X) :
+    (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens) (A : CochainComplex X.Modules ℤ) :
     boundedFlatPerfectSupported (T ⊔ j.opensRange).ι A ↔
       boundedFlatPerfectSupported T.ι A ∧ ((restrict j).obj A).Acyclic := by
   change (boundedFlatPerfect X A ∧ _) ↔ (boundedFlatPerfect X A ∧ _) ∧ _
@@ -157,9 +157,9 @@ theorem boundedFlatPerfectSupportedOpenAcyclicToSupported_cofibration
     (boundedFlatPerfectSupportedWaldhausen (T ⊔ j.opensRange).ι).cof
       ((boundedFlatPerfectSupportedOpenAcyclicToSupported j T).map f) := by
   obtain ⟨Z, hZ, p, hp, hS⟩ :=
-    (ExactSubcategory.inflation_iff (abelianExactStructure (Complex X))
+    (ExactSubcategory.inflation_iff (abelianExactStructure (CochainComplex X.Modules ℤ))
       (boundedFlatPerfectSupported T.ι) f.hom).1 hf
-  apply (ExactSubcategory.inflation_iff (abelianExactStructure (Complex X))
+  apply (ExactSubcategory.inflation_iff (abelianExactStructure (CochainComplex X.Modules ℤ))
     (boundedFlatPerfectSupported (T ⊔ j.opensRange).ι)
       ((boundedFlatPerfectSupportedOpenAcyclicToSupported j T).map f)).2
   refine ⟨Z, (boundedFlatPerfectSupported_sup_opensRange_iff j T Z).mpr ⟨hZ, ?_⟩, p, hp, hS⟩

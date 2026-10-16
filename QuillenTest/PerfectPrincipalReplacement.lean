@@ -71,7 +71,8 @@ theorem original_homotopy_survives (R : Type u) [CommRing R] (r : R)
 /-- The algebraic construction supplies actual source replacement for
 geometric chain maps from affine strict-perfect to termwise quasicoherent complexes. -/
 theorem geometric_strict_chain_replacement (R : CommRingCat.{u}) (r : R)
-    {K L : Complex (Spec R)} (hK : strictPerfect (Spec R) K) (hL : ∀ i, (L.X i).IsQuasicoherent)
+    {K L : CochainComplex (Spec R).Modules ℤ} (hK : strictPerfect (Spec R) K)
+      (hL : ∀ i, (L.X i).IsQuasicoherent)
     (φ : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj K ⟶
       (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj L) :
     ∃ (s : K ⟶ K) (g : K ⟶ L),

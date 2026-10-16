@@ -19,6 +19,8 @@ No coefficient action, restriction comparison or inherited-seed compatibility is
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 noncomputable section

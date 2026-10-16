@@ -7,7 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DerivedCechCone
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.CechModel
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPerfect
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Perfect derived direct images of projective-line vector bundles
 
@@ -16,6 +16,8 @@ line has an actual strict-perfect representative over the arbitrary base ring. T
 uses the original derived Cech comparison and the proved finite-projective Cech model.
 Arbitrary locally perfect coefficients and projective generation are separate obligations. -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false

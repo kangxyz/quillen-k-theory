@@ -7,6 +7,9 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PerfectDerivedEquivalence
 public import Quillen.Algebra.Homology.DerivedEqualityDenominators
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
+public import Mathlib.Algebra.Homology.DerivedCategory.Fractions
 
 /-!
 # Genuine affine derived roofs with original chain maps
@@ -25,6 +28,8 @@ is asserted.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -36,8 +41,9 @@ attribute [local instance] standardDerivedModules standardDerivedSheaves
 
 lemma exists_strict_chain_representative (R : CommRingCat.{u})
     (P Q : StrictPerfect (Spec R))
-    (α : (toDerived (Spec R)).obj P.obj ⟶ (toDerived (Spec R)).obj Q.obj) :
-    ∃ f : P.obj ⟶ Q.obj, (toDerived (Spec R)).map f = α := by
+    (α : (DerivedCategory.Q (C := (Spec R).Modules)).obj P.obj ⟶
+      (DerivedCategory.Q (C := (Spec R).Modules)).obj Q.obj) :
+    ∃ f : P.obj ⟶ Q.obj, (DerivedCategory.Q (C := (Spec R).Modules)).map f = α := by
   let P' := (sectionsComplex R).obj P.obj
   let Q' := (sectionsComplex R).obj Q.obj
   have hP' : moduleStrictPerfect R P' := moduleStrictPerfect_sections R P.property
@@ -48,32 +54,40 @@ lemma exists_strict_chain_representative (R : CommRingCat.{u})
   let eQ := associatedSectionsIso R Q.property
   let e := associatedDerivedFactors R
   let β : (associatedPerfectDerived R).obj A ⟶ (associatedPerfectDerived R).obj B :=
-    e.hom.app P' ≫ (toDerived _).map eP.hom ≫ α ≫ (toDerived _).map eQ.inv ≫ e.inv.app Q'
+    e.hom.app P' ≫ (DerivedCategory.Q).map eP.hom ≫ α ≫ (DerivedCategory.Q).map eQ.inv
+      ≫ e.inv.app Q'
   obtain ⟨g, hg⟩ := (associatedPerfectDerived R).map_surjective β
   have : P'.IsKProjective := isKProjective_of_moduleStrictPerfect R hP'
-  obtain ⟨f, hf⟩ := Quillen.CochainComplex.exists_chain_representative_of_isKProjective
+  obtain ⟨f, hf⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective
     (C := ModuleCat.{u} R) (K := P') (L := Q') g.hom
   refine ⟨eP.inv ≫ (associatedComplex R).map f ≫ eQ.hom, ?_⟩
   have hfg : (associatedDerived R).map (DerivedCategory.Q.map f) = β := by
     rw [hf]
     exact hg
   have hn := (NatIso.naturality_1 e f).symm
-  change (toDerived _).map ((associatedComplex R).map f) =
+  change (DerivedCategory.Q).map ((associatedComplex R).map f) =
     e.inv.app P' ≫ (associatedDerived R).map (DerivedCategory.Q.map f) ≫ e.hom.app Q' at hn
   simp only [Functor.map_comp, hn, hfg]
   dsimp [β]
   simp only [Category.assoc, Iso.inv_hom_id_app_assoc, ← Functor.map_comp, Iso.inv_hom_id]
-  rw [(toDerived (Spec R)).map_id, Category.comp_id, ← Functor.map_comp_assoc,
-    eP.inv_hom_id, (toDerived (Spec R)).map_id, Category.id_comp]
+  rw [(DerivedCategory.Q (C := (Spec R).Modules)).map_id, Category.comp_id, ←
+    Functor.map_comp_assoc,
+    eP.inv_hom_id, (DerivedCategory.Q (C := (Spec R).Modules)).map_id, Category.id_comp]
 
 lemma exists_strict_weak_cospan (R : CommRingCat.{u})
-    (K : Complex (Spec R)) (hK : locallyPerfect (Spec R) K) :
-    ∃ (P : StrictPerfect (Spec R)) (M : Complex (Spec R))
+    (K : CochainComplex (Spec R).Modules ℤ) (hK : locallyPerfect (Spec R) K) :
+    ∃ (P : StrictPerfect (Spec R)) (M : CochainComplex (Spec R).Modules ℤ)
       (p : P.obj ⟶ M) (s : K ⟶ M),
       locallyPerfect (Spec R) M ∧ QuasiIso p ∧ QuasiIso s := by
   obtain ⟨P, ⟨e⟩⟩ := locallyPerfect_exists_strictPerfect_representative R hK
-  obtain ⟨M, p, s, hs, he⟩ := toDerived_left_fraction e.hom
-  have hp : IsIso ((toDerived (Spec R)).map p) := by rw [← he]; infer_instance
+  obtain ⟨M, p, s, hDenIso2, hFac2⟩ := DerivedCategory.left_fac e.hom
+  have hs : QuasiIso s :=
+    (DerivedCategory.isIso_Q_map_iff_quasiIso _ s).1 hDenIso2
+  have he : (e.hom) ≫ DerivedCategory.Q.map s = DerivedCategory.Q.map p := by
+    let := hDenIso2
+    rw [hFac2, Category.assoc, IsIso.inv_hom_id, Category.comp_id]
+  have hp : IsIso ((DerivedCategory.Q (C := (Spec R).Modules)).map p)
+    := by rw [← he]; infer_instance
   exact ⟨P, M, p, s, (locallyPerfect_iff_of_quasiIso s).mp hK,
     (DerivedCategory.isIso_Q_map_iff_quasiIso (Spec R).Modules p).mp hp, hs⟩
 
@@ -81,20 +95,25 @@ lemma exists_strict_weak_cospan (R : CommRingCat.{u})
 /-- The genuine homotopy-commuting roof input for affine dual approximation.
 All objects, weak arrows and homotopies live in the original chain category. -/
 lemma exists_strict_homotopy_roof (R : CommRingCat.{u})
-    (P : StrictPerfect (Spec R)) (B B' : Complex (Spec R))
+    (P : StrictPerfect (Spec R)) (B B' : CochainComplex (Spec R).Modules ℤ)
     (hB' : locallyPerfect (Spec R) B') (w : P.obj ⟶ B) [QuasiIso w] (b : B' ⟶ B) :
-    ∃ (A : StrictPerfect (Spec R)) (M N : Complex (Spec R))
+    ∃ (A : StrictPerfect (Spec R)) (M N : CochainComplex (Spec R).Modules ℤ)
       (a : A.obj ⟶ P.obj) (p : A.obj ⟶ M) (t : B' ⟶ M) (s : B ⟶ N) (q : M ⟶ N),
       locallyPerfect (Spec R) M ∧ locallyPerfect (Spec R) N ∧
       QuasiIso p ∧ QuasiIso t ∧ QuasiIso s ∧
       Nonempty (Homotopy (p ≫ q) (a ≫ w ≫ s)) ∧
       Nonempty (Homotopy (t ≫ q) (b ≫ s)) := by
   obtain ⟨A, M, p, t, hM, hp, ht⟩ := exists_strict_weak_cospan R B' hB'
-  let D := toDerived (Spec R)
+  let D := DerivedCategory.Q (C := (Spec R).Modules)
   let β : D.obj M ⟶ D.obj B := inv (D.map t) ≫ D.map b
   let α : D.obj A.obj ⟶ D.obj P.obj := D.map p ≫ β ≫ inv (D.map w)
   obtain ⟨a, ha⟩ := exists_strict_chain_representative R A P α
-  obtain ⟨N, q, s, hs, he⟩ := toDerived_left_fraction β
+  obtain ⟨N, q, s, hDenIso1, hFac1⟩ := DerivedCategory.left_fac β
+  have hs : QuasiIso s :=
+    (DerivedCategory.isIso_Q_map_iff_quasiIso _ s).1 hDenIso1
+  have he : (β) ≫ DerivedCategory.Q.map s = DerivedCategory.Q.map q := by
+    let := hDenIso1
+    rw [hFac1, Category.assoc, IsIso.inv_hom_id, Category.comp_id]
   change D.map a = α at ha
   change β ≫ D.map s = D.map q at he
   have hB : locallyPerfect (Spec R) B :=

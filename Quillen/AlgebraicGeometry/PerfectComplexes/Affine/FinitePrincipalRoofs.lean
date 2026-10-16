@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedDenominators
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
 
 /-!
 # Original derived roofs over a finite principal family
@@ -59,7 +60,7 @@ lemma exists_finite_principal_derived_roof (R : CommRingCat.{u}) (s : Finset R)
   change DerivedCategory.Q.obj P' ⟶ DerivedCategory.Q.obj B at γ
   change DerivedCategory.Q.map q ≫ α = γ ≫ DerivedCategory.Q.map η at hγ
   have := isKProjective_of_moduleStrictPerfect R hP'
-  obtain ⟨g, hg⟩ := Quillen.CochainComplex.exists_chain_representative_of_isKProjective γ
+  obtain ⟨g, hg⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective γ
   exact ⟨P', hP', q, g, by rw [hg]; exact hγ.symm, hlocal⟩
 
 lemma isZero_localized_mappingCocone_of_isIso (R : CommRingCat.{u}) (r : R)
@@ -111,7 +112,7 @@ lemma exists_finite_principal_chain_roof (R : CommRingCat.{u}) (s : Finset R)
     exists_finite_principal_derived_roof R s hP η hη (DerivedCategory.Q.map a)
   have := isKProjective_of_moduleStrictPerfect R hP'
   exact ⟨P', hP', q, g,
-    ⟨Quillen.CochainComplex.homotopyOfDerivedEqOfIsKProjective (g ≫ η) (q ≫ a)
+    ⟨_root_.CochainComplex.homotopyOfDerivedEqOfIsKProjective (g ≫ η) (q ≫ a)
       (by simpa only [CategoryTheory.Functor.map_comp] using hg)⟩, hq⟩
 
 /-- Equality of original composites gives an actual homotopy after the same
@@ -128,7 +129,7 @@ lemma exists_finite_principal_chain_equality (R : CommRingCat.{u}) (s : Finset R
     (by simpa only [CategoryTheory.Functor.map_comp] using hfg)
   have := isKProjective_of_moduleStrictPerfect R hP'
   exact ⟨P', hP', q,
-    ⟨Quillen.CochainComplex.homotopyOfDerivedEqOfIsKProjective (q ≫ f) (q ≫ g)
+    ⟨_root_.CochainComplex.homotopyOfDerivedEqOfIsKProjective (q ≫ f) (q ≫ g)
       (by simpa only [CategoryTheory.Functor.map_comp] using hq)⟩, hlocal⟩
 
 end Quillen.PerfectComplexes.Affine

@@ -19,6 +19,8 @@ No full-target K-zero surjectivity is inferred.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 

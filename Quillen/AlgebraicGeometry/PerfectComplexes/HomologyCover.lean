@@ -7,9 +7,11 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.Algebra.Homology.ConcentratedHomology
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
+public import Aglib.AlgebraicGeometry.Modules.Complex.Homology
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Locality
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Actual concentrated vector-bundle homology from open-cover models -/
 @[expose] public section
 
@@ -21,8 +23,9 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u v
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes
-variable {X : Scheme.{u}} (K : Complex X) {ι : Type v}
+variable {X : Scheme.{u}} (K : CochainComplex X.Modules ℤ) {ι : Type v}
   (Y : ι → Scheme.{u}) (j : ∀ i, Y i ⟶ X) [∀ i, IsOpenImmersion (j i)]
   (hj : ∀ x : X, ∃ i, ∃ y : Y i, j i y = x)
 include hj
@@ -77,7 +80,8 @@ theorem exists_vectorBundle_single_of_openImmersionCover (n : ℤ)
     (hvb : ∀ i, AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree (Y i) (((restrict (j i)).obj
       K).homology n)) :
     AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X (K.homology n) ∧
-      Nonempty ((toDerived X).obj K ≅ (toDerived X).obj
+      Nonempty ((DerivedCategory.Q (C := X.Modules)).obj K ≅
+        (DerivedCategory.Q (C := X.Modules)).obj
         ((CochainComplex.singleFunctor X.Modules n).obj (K.homology n))) := by
   have := isGE_of_openImmersionCover K Y j hj n hlo
   have := isLE_of_openImmersionCover K Y j hj n hhi

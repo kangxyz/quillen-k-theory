@@ -13,6 +13,7 @@ public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralD
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralAnnihilator
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.AffineIdealKernel
 public import Aglib.AlgebraicGeometry.Morphisms.ClosedImmersion.Noetherian
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Localization.Equivalence
 
 /-!
 # Geometric closed–open localization for public scheme G-theory

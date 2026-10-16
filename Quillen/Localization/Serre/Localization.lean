@@ -12,6 +12,7 @@ public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.KTheory.GrothendieckGroup.Map
 public import Quillen.KTheory.Map.Basic
 public import Mathlib.CategoryTheory.Abelian.SerreClass.Localization
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # Serre quotient functors and their induced maps
@@ -48,21 +49,11 @@ variable {C : Type u₁} {D : Type u₂} [Category.{v₁} C] [Category.{v₂} D]
   [Abelian C] [Abelian D] (P : ObjectProperty C) [P.IsSerreClass]
   (L : C ⥤ D) [L.IsLocalization P.isoModSerre] [L.Additive]
 
-/-- An additive Serre localization is an exact functor for the standard exact
-structures. Finite limit and colimit preservation are proved by mathlib from
-the Serre localization hypotheses. -/
-def exactFunctor : ExactFunctor (abelianExactStructure C) (abelianExactStructure D) where
-  toFunctor := L
-  map_conflation S hS := by
-    let := ObjectProperty.SerreClassLocalization.preservesFiniteLimits L P
-    let := ObjectProperty.SerreClassLocalization.preservesFiniteColimits L P
-    exact hS.map_of_exact L
-
 /-- The Q-construction map induced by an actual Serre localization. -/
 def mapQ :
     Q (abelianExactStructure C).deflation (abelianExactStructure C).inflation ⥤
       Q (abelianExactStructure D).deflation (abelianExactStructure D).inflation :=
-  (exactFunctor P L).mapQ
+  (CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P L).mapQ
 
 @[simp]
 lemma mapQ_obj_of (X : C) :
@@ -79,13 +70,13 @@ lemma isZero_obj_iff (X : C) : IsZero (L.obj X) ↔ P X :=
 def grothendieckMap :
     (abelianExactStructure C).GrothendieckGroup →+
       (abelianExactStructure D).GrothendieckGroup :=
-  (exactFunctor P L).grothendieckMap
+  (CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P L).grothendieckMap
 
 @[simp]
 lemma grothendieckMap_class (X : C) :
     grothendieckMap P L ((abelianExactStructure C).grothendieckClass X) =
       (abelianExactStructure D).grothendieckClass (L.obj X) :=
-  (exactFunctor P L).grothendieckMap_class X
+  (CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P L).grothendieckMap_class X
 
 /-- Every object of the Serre class has zero image in the algebraic
 Grothendieck group of the quotient. -/
@@ -183,7 +174,7 @@ variable {C D : Type u} [Category.{v} C] [Category.{v} D]
 /-- The genuine Quillen K-group homomorphism induced by a Serre localization.
 This definition alone does not assert a localization exact sequence. -/
 def KMap (n : ℕ) : (abelianExactStructure C).K n →* (abelianExactStructure D).K n :=
-  (exactFunctor P L).KMap n
+  (CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P L).KMap n
 
 end Homotopical
 
@@ -192,41 +183,30 @@ section CanonicalQuotient
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
-/-- The Serre quotient, realized by mathlib's categorical localization. -/
-abbrev Quotient := P.isoModSerre.Localization
-
-/-- The Serre quotient is abelian; the structure is constructed from the
-calculus of fractions, rather than supplied as an additional hypothesis. -/
 @[instance_reducible]
-def quotientAbelian : Abelian (Quotient P) :=
-  ObjectProperty.SerreClassLocalization.abelian P.isoModSerre.Q P
-
-attribute [local instance] quotientAbelian
-
-/-- The standard exact structure on the actual Serre quotient. -/
-def quotientExactStructure : ExactStructure (Quotient P) :=
-  abelianExactStructure (Quotient P)
-
-/-- The canonical Serre quotient functor, bundled as an exact functor. -/
-def quotientExactFunctor : ExactFunctor (abelianExactStructure C) (quotientExactStructure P) :=
-  exactFunctor P P.isoModSerre.Q
+local instance canonicalQuotientAbelian
+    {C₀ : Type u} [Category.{u} C₀] [Abelian C₀]
+    (P₀ : ObjectProperty C₀) [P₀.IsSerreClass] :
+    Abelian P₀.isoModSerre.Localization :=
+  ObjectProperty.SerreClassLocalization.abelian P₀.isoModSerre.Q P₀
 
 /-- The Q-functor from the abelian category to its canonical Serre quotient. -/
 def quotientMapQ :
     Q (abelianExactStructure C).deflation (abelianExactStructure C).inflation ⥤
-      Q (quotientExactStructure P).deflation (quotientExactStructure P).inflation :=
-  (quotientExactFunctor P).mapQ
+      Q ((abelianExactStructure P.isoModSerre.Localization)).deflation ((abelianExactStructure
+        P.isoModSerre.Localization)).inflation :=
+  ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P P.isoModSerre.Q)).mapQ
 
 /-- The induced map to the K-theory of the actual Serre quotient. -/
 def quotientKMap (n : ℕ) :
-    (abelianExactStructure C).K n →* (quotientExactStructure P).K n :=
-  (quotientExactFunctor P).KMap n
+    (abelianExactStructure C).K n →* ((abelianExactStructure P.isoModSerre.Localization)).K n :=
+  ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P P.isoModSerre.Q)).KMap n
 
 /-- The induced map to the algebraic Grothendieck group of the Serre quotient. -/
 def quotientGrothendieckMap :
     (abelianExactStructure C).GrothendieckGroup →+
-      (quotientExactStructure P).GrothendieckGroup :=
-  (quotientExactFunctor P).grothendieckMap
+      ((abelianExactStructure P.isoModSerre.Localization)).GrothendieckGroup :=
+  ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P P.isoModSerre.Q)).grothendieckMap
 
 /-- The canonical quotient annihilates exactly the objects of the Serre class. -/
 lemma quotient_isZero_obj_iff (X : C) : IsZero (P.isoModSerre.Q.obj X) ↔ P X :=

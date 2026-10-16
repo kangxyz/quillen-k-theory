@@ -46,7 +46,7 @@ attribute [local instance] HasDerivedCategory.standard Abelian.hasFiniteBiproduc
 complexes have QC terms. The proof reflects exactness through faithful tilde
 and its original counit, not exactness of sections on all sheaves. -/
 lemma shortExact_sections_of_quasicoherent (R : CommRingCat.{u})
-    (S : ShortComplex (Complex (Spec R))) (hS : S.ShortExact)
+    (S : ShortComplex (CochainComplex (Spec R).Modules ℤ)) (hS : S.ShortExact)
     (h₁ : ∀ i, (S.X₁.X i).IsQuasicoherent)
     (h₂ : ∀ i, (S.X₂.X i).IsQuasicoherent)
     (h₃ : ∀ i, (S.X₃.X i).IsQuasicoherent) :
@@ -67,7 +67,8 @@ lemma shortExact_sections_of_quasicoherent (R : CommRingCat.{u})
 /-- Actual principal strict witnesses are closed under original short exact
 sequences of termwise-QC target complexes. -/
 lemma principal_strict_witness_extension (R : CommRingCat.{u}) (r : R)
-    (S : ShortComplex (Complex (Spec (.of (Localization.Away r))))) (hS : S.ShortExact)
+    (S : ShortComplex (CochainComplex (Spec (.of (Localization.Away r))).Modules ℤ))
+      (hS : S.ShortExact)
     (h₁ : ∀ i, (S.X₁.X i).IsQuasicoherent)
     (h₂ : ∀ i, (S.X₂.X i).IsQuasicoherent)
     (h₃ : ∀ i, (S.X₃.X i).IsQuasicoherent)
@@ -102,7 +103,8 @@ lemma principal_strict_image_extension (R : CommRingCat.{u}) (r : R)
       (strictRestrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)) B := by
   let X := Spec (.of (Localization.Away r))
   let P := strictPerfect X
-  have hp := Waldhausen.fullSubcategory_map_pushout (abelianExactStructure (Complex X)) P hi h
+  have hp := Waldhausen.fullSubcategory_map_pushout
+    (abelianExactStructure (CochainComplex X.Modules ℤ)) P hi h
   have : Mono i.hom := (Waldhausen.complexSubcategory_inclusion_exact P).cofibration i hi
   obtain ⟨w, hw⟩ := Quillen.Abelian.shortExact_of_mono_pushout_zero
     (P.ι.map_isZero (strictWaldhausen X).isZero) hp

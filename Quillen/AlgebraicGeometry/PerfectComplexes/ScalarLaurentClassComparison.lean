@@ -15,6 +15,8 @@ canonical K-map rebasing and inverse orientation of the cofiber class are retain
 
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 noncomputable section

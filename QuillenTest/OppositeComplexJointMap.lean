@@ -11,6 +11,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.JointC
 /-! # Original cross-category cocylinder consumers -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 open Quillen.PerfectComplexes.OpenDerivedImage
 open Quillen.Waldhausen
@@ -122,10 +124,11 @@ theorem original_restriction_joint_naturality {f g : Arrow (Perfect X)ᵒᵖ} (�
   category. -/
 theorem original_target_kernel_witness (f : Arrow (Perfect X)ᵒᵖ) :
     let e := ((complexOppositeJointData j).joint.obj ((complexCorestrict j).op.mapArrow.obj f))
-    ∃ (Z : Complex U) (_hZ : complexObjects j Z) (i : Z ⟶ e.obj.right.unop.obj)
+    ∃ (Z : CochainComplex U.Modules ℤ) (_hZ : complexObjects j Z) (i : Z ⟶ e.obj.right.unop.obj)
         (h : i ≫ e.obj.hom.unop.hom = 0),
       (ShortComplex.mk i e.obj.hom.unop.hom h).ShortExact := by
-  exact (ExactSubcategory.deflation_iff (abelianExactStructure (Complex U)) (complexObjects j) _).mp
+  exact (ExactSubcategory.deflation_iff (abelianExactStructure (CochainComplex U.Modules ℤ))
+    (complexObjects j) _).mp
     (((complexOppositeJointData j).joint.obj ((complexCorestrict j).op.mapArrow.obj f)).property)
 end Geometry
 end QuillenTest.OppositeJointMap

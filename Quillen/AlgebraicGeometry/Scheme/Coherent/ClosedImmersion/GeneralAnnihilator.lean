@@ -11,6 +11,7 @@ public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralReflection
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
 /-!
 # The actual closed essential image is the ideal-annihilated subcategory
 
@@ -43,8 +44,9 @@ The ideals here occur in genuine quotient presentations of the actual
 base-changed closed immersion, rather than being chosen unrelated ideals. -/
 def annihilatedByClosedIdeal : ObjectProperty (FiniteTypeSheaves X) := fun M ↦
   ∀ (R : CommRingCat.{u}) [IsNoetherianRing R] (a : Spec R ⟶ X) [IsOpenImmersion a]
-    (I : Ideal R) (e : CategoryTheory.Limits.pullback i a ≅ Spec (Ideal.closedRing R I)),
-    pullback.snd i a = e.hom ≫ Ideal.closedMap R I →
+    (I : Ideal R) (e : CategoryTheory.Limits.pullback i a ≅ Spec
+      (Pushforward.ClosedImmersion.Ideal.closedRing R I)),
+    pullback.snd i a = e.hom ≫ Pushforward.ClosedImmersion.Ideal.closedMap R I →
       Ideal.finiteTypeSheavesKilledBy R I ((finiteTypeSheavesRestriction a).obj M)
 
 /-- The proved global closed essential image is precisely genuine

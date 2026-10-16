@@ -11,6 +11,7 @@ public import Quillen.CategoryTheory.TheoremB.StructuredWeakTransport
 public import Quillen.CategoryTheory.TheoremB.StructuredFunctorIso
 public import Quillen.CategoryTheory.TheoremB.StructuredIsoHomotopy
 public import Quillen.Topology.ClassifyingSpace.FunctorChain
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-! The normalized structured zero-comma inclusion retains the exact
 functors used by the canonical K maps. -/
@@ -23,14 +24,16 @@ open scoped ZeroObject Topology
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
 /-- The structured-arrow category of Q-arrows from the quotient Q-zero object to the image of
 the normalized quotient functor. -/
 abbrev NormalizedZeroStructuredComma :=
-  StructuredArrow (quotientExactStructure P).qZero (quotientNormalizedQ P)
+  StructuredArrow ((CategoryTheory.ExactCategory.abelianExactStructure
+    P.isoModSerre.Localization)).qZero (quotientNormalizedQ P)
 
 /-- The functor from the Serre subcategory Q-category to the normalized structured zero-comma
 category, using the inverse of the natural zero comparison as its structure arrow. -/
@@ -45,12 +48,15 @@ def normalizedSerreToZeroStructuredComma :
 the quotient normalization, with `normalizedSerreToZeroStructuredComma P`. -/
 def normalizedSerreToZeroStructuredCommaIso :
     serreToZeroStructuredComma P ⋙ (StructuredArrow.mapNatIso
-      (S := (quotientExactStructure P).qZero) (quotientNormalizedIso P)).functor ≅
+      (S := ((CategoryTheory.ExactCategory.abelianExactStructure
+        P.isoModSerre.Localization)).qZero) (quotientNormalizedIso
+        P)).functor ≅
       normalizedSerreToZeroStructuredComma P :=
   NatIso.ofComponents (fun X ↦ StructuredArrow.isoMk ((inclusionNormalizedIso P).app X)
     (by
       apply (cancel_mono ((normalizedQuotientInclusionZeroIso P).hom.app X)).1
-      exact ((quotientExactStructure P).qHom_subsingleton_of_isZero _ _
+      exact (((CategoryTheory.ExactCategory.abelianExactStructure
+        P.isoModSerre.Localization)).qHom_subsingleton_of_isZero _ _
         (isZero_zero _)).elim _ _)) (by
     intro X Y f
     apply StructuredArrow.hom_ext
@@ -64,7 +70,9 @@ def normalizedZeroStructuredCommaClassifyingHomotopyEquiv :
   TheoremA.homotopyEquivWithMap
     ((zeroStructuredCommaClassifyingHomotopyEquiv P).trans
       (equivalenceClassifyingHomotopyEquiv (StructuredArrow.mapNatIso
-        (S := (quotientExactStructure P).qZero) (quotientNormalizedIso P))))
+        (S := ((CategoryTheory.ExactCategory.abelianExactStructure
+          P.isoModSerre.Localization)).qZero) (quotientNormalizedIso
+          P))))
     (classifyingSpaceMap (normalizedSerreToZeroStructuredComma P)).hom
     (by
       have H := classifyingSpaceNaturalTransformationHomotopy
@@ -77,26 +85,30 @@ def normalizedZeroStructuredCommaClassifyingHomotopyEquiv :
 
 @[simp] theorem normalizedSerreToZeroStructuredComma_projection :
     normalizedSerreToZeroStructuredComma P ⋙ StructuredArrow.proj
-      (quotientExactStructure P).qZero (quotientNormalizedQ P) = inclusionNormalizedQ P := rfl
+      ((CategoryTheory.ExactCategory.abelianExactStructure P.isoModSerre.Localization)).qZero
+        (quotientNormalizedQ P) =
+        inclusionNormalizedQ P := rfl
 
 @[simp] theorem normalizedSerreToZeroStructuredComma_transformation :
     Functor.whiskerLeft (normalizedSerreToZeroStructuredComma P)
       (TheoremB.structuredCommaTransformation (quotientNormalizedQ P)
-        (quotientExactStructure P).qZero) = (normalizedQuotientInclusionZeroIso P).inv := rfl
+        ((CategoryTheory.ExactCategory.abelianExactStructure P.isoModSerre.Localization)).qZero) =
+          (normalizedQuotientInclusionZeroIso P).inv := rfl
 
 /-- The source-zero route uses precisely the reversed inverse of the
 normalized natural isomorphism, not a separately chosen nullhomotopy. -/
 theorem normalizedSerreToZeroStructuredComma_nullhomotopy (t : unitInterval)
     (x : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace) :
     TheoremB.structuredCommaNullhomotopy (quotientNormalizedQ P)
-      (quotientExactStructure P).qZero
+      ((CategoryTheory.ExactCategory.abelianExactStructure P.isoModSerre.Localization)).qZero
       (t, classifyingSpaceMap (normalizedSerreToZeroStructuredComma P) x) =
       TheoremB.naturalIsoInverseNullhomotopy (inclusionNormalizedQ P)
-        (quotientNormalizedQ P) (quotientExactStructure P).qZero
+        (quotientNormalizedQ P) ((CategoryTheory.ExactCategory.abelianExactStructure
+          P.isoModSerre.Localization)).qZero
         (normalizedQuotientInclusionZeroIso P) (t, x) := by
   change classifyingSpaceNaturalTransformationHomotopy
     (TheoremB.structuredCommaTransformation (quotientNormalizedQ P)
-      (quotientExactStructure P).qZero)
+      ((CategoryTheory.ExactCategory.abelianExactStructure P.isoModSerre.Localization)).qZero)
     (unitInterval.symm t, classifyingSpaceMap (normalizedSerreToZeroStructuredComma P) x) =
     classifyingSpaceNaturalTransformationHomotopy (normalizedQuotientInclusionZeroIso P).inv
       (unitInterval.symm t, x)
@@ -113,16 +125,17 @@ def normalizedStructuredFiberComparison :
     C((CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace,
       NormalizedLocalizationFiber P) :=
   (TheoremB.structuredFiberComparison (quotientNormalizedQ P)
-    (quotientExactStructure P).qZero).comp
+    ((CategoryTheory.ExactCategory.abelianExactStructure P.isoModSerre.Localization)).qZero).comp
       (classifyingSpaceMap (normalizedSerreToZeroStructuredComma P)).hom
 
 theorem normalizedStructuredFiberComparison_eq_lift :
     normalizedStructuredFiberComparison P =
       HomotopyFiber.lift (classifyingSpaceMap (quotientNormalizedQ P)).hom
-        (quotientExactStructure P).kBasepoint
+        ((CategoryTheory.ExactCategory.abelianExactStructure P.isoModSerre.Localization)).kBasepoint
         (classifyingSpaceMap (inclusionNormalizedQ P)).hom
         (TheoremB.naturalIsoInverseNullhomotopy (inclusionNormalizedQ P)
-          (quotientNormalizedQ P) (quotientExactStructure P).qZero
+          (quotientNormalizedQ P) ((CategoryTheory.ExactCategory.abelianExactStructure
+            P.isoModSerre.Localization)).qZero
           (normalizedQuotientInclusionZeroIso P)) := by
   apply ContinuousMap.ext
   intro x
@@ -130,7 +143,9 @@ theorem normalizedStructuredFiberComparison_eq_lift :
   apply Prod.ext
   · exact ConcreteCategory.congr_hom
       (classifyingSpaceMap_comp (normalizedSerreToZeroStructuredComma P)
-        (StructuredArrow.proj (quotientExactStructure P).qZero (quotientNormalizedQ P))).symm x
+        (StructuredArrow.proj ((CategoryTheory.ExactCategory.abelianExactStructure
+          P.isoModSerre.Localization)).qZero
+          (quotientNormalizedQ P))).symm x
   · apply ContinuousMap.ext
     intro t
     exact normalizedSerreToZeroStructuredComma_nullhomotopy P t x
@@ -140,7 +155,8 @@ with the normalized structured-comma comparison. -/
 def normalizedStructuredFiberComparisonHomotopy :
     (basedLocalizationFiberComparison P).Homotopy (normalizedStructuredFiberComparison P) :=
   (TheoremB.naturalIsoFiberLiftHomotopy (inclusionNormalizedQ P)
-    (quotientNormalizedQ P) (quotientExactStructure P).qZero
+    (quotientNormalizedQ P) ((CategoryTheory.ExactCategory.abelianExactStructure
+      P.isoModSerre.Localization)).qZero
     (normalizedQuotientInclusionZeroIso P)).cast rfl
       (normalizedStructuredFiberComparison_eq_lift P).symm
 
@@ -157,9 +173,12 @@ theorem normalizedStructuredFiberComparisonHomotopy_based (s : unitInterval) :
     intro t
     exact TheoremB.naturalIsoInverseHomotopy_vertex_of_subsingleton
       (normalizedQuotientInclusionZeroIso P).symm
-      (CategoryTheory.ObjectProperty.subcategoryExactStructure P).qZero (quotientExactStructure
-        P).qZero
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure P).qZero
+        ((CategoryTheory.ExactCategory.abelianExactStructure
+        P.isoModSerre.Localization)).qZero
       rfl (normalizedComposite_obj_zero P)
-      (fun Y ↦ (quotientExactStructure P).qHom_subsingleton_of_isZero _ _ (isZero_zero _)) s t
+      (fun Y ↦ ((CategoryTheory.ExactCategory.abelianExactStructure
+        P.isoModSerre.Localization)).qHom_subsingleton_of_isZero
+        _ _ (isZero_zero _)) s t
 
 end Quillen.SerreLocalization

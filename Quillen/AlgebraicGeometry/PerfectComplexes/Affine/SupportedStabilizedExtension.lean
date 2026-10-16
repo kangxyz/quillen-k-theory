@@ -10,7 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.ScalarSupportExt
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedProjectorExtension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StabilizedExtensionTransport
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedZero
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
 /-! # Genuine supported stabilized extension from compact affine opens
 
 An original perfect complex on a compact open W, vanishing on W intersect Z
@@ -40,27 +42,30 @@ specified finite principal part of that open, has a global stabilized strict
 extension vanishing on those same entire principal opens. -/
 lemma locallyPerfect_exists_stabilized_extension_with_principal_support
     (R : CommRingCat.{u}) (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
-    (s : Finset R) (E : Complex W.toScheme) (hE : locallyPerfect W.toScheme E)
-    (hzero : ∀ z ∈ s, IsZero ((toDerived (W ⊓ PrimeSpectrum.basicOpen z).toScheme).obj
+    (s : Finset R) (E : CochainComplex W.toScheme.Modules ℤ) (hE : locallyPerfect W.toScheme E)
+    (hzero : ∀ z ∈ s, IsZero ((DerivedCategory.Q (C :=
+      (W ⊓ PrimeSpectrum.basicOpen z).toScheme.Modules)).obj
       ((restrict ((Spec R).homOfLE (inf_le_left : W ⊓ PrimeSpectrum.basicOpen z ≤ W))).obj E))) :
     ∃ (Q : ModuleComplex R), moduleStrictPerfect R Q ∧
-      Nonempty ((toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj Q)) ≅
-        (toDerived W.toScheme).obj (E ⊞ E⟦(1 : ℤ)⟧)) ∧
+      Nonempty ((DerivedCategory.Q (C := W.toScheme.Modules)).obj
+        ((restrict W.ι).obj ((associatedComplex R).obj Q)) ≅
+        (DerivedCategory.Q (C := W.toScheme.Modules)).obj (E ⊞ E⟦(1 : ℤ)⟧)) ∧
       ∀ z ∈ s, IsZero (DerivedCategory.Q.obj ((localize z (.up ℤ)).obj Q)) := by
   obtain ⟨P, P', hP, hP', g, hg, ⟨eg⟩⟩ :=
     locallyPerfect_exists_stabilized_extension_cone R W hW E hE
   let P₀ := CochainComplex.mappingCone g
   let r₀ : Retract E (E ⊞ E⟦(1 : ℤ)⟧) :=
     { i := biprod.inl, r := biprod.fst, retract := biprod.inl_fst }
-  let r := (r₀.map (toDerived W.toScheme)).trans (Retract.ofIso eg.symm)
+  let r := (r₀.map (DerivedCategory.Q (C := W.toScheme.Modules))).trans (Retract.ofIso eg.symm)
   have hz (z : R) (hz : z ∈ s) :
-      IsZero ((toDerived (W ⊓ PrimeSpectrum.basicOpen z).toScheme).obj
+      IsZero ((DerivedCategory.Q (C := (W ⊓ PrimeSpectrum.basicOpen z).toScheme.Modules)).obj
         ((restrict (W ⊓ PrimeSpectrum.basicOpen z).ι).obj ((associatedComplex R).obj P₀))) := by
     let I := W ⊓ PrimeSpectrum.basicOpen z
     let k := (Spec R).homOfLE (inf_le_left : I ≤ W)
-    let e := (toDerived I.toScheme).mapIso
+    let e := (DerivedCategory.Q (C := I.toScheme.Modules)).mapIso
       (restrictOpenInclusionIso (inf_le_left : I ≤ W) ((associatedComplex R).obj P₀)).symm ≪≫
-        restrictDerivedIso k eg ≪≫ (toDerived I.toScheme).mapIso (restrictStabilizationIso k E)
+        restrictDerivedIso k eg ≪≫ (DerivedCategory.Q (C := I.toScheme.Modules)).mapIso
+          (restrictStabilizationIso k E)
     exact (isZero_toDerived_stabilization_of_isZero (hzero z hz)).of_iso e
   obtain ⟨Q, hQ, i, rQ, hi, hQS, hQO, hQP⟩ :=
     exists_finite_scalar_cone_support R W hW s hg r hz
@@ -74,12 +79,13 @@ lemma isZero_restrict_associated_of_principalUnion (R : CommRingCat.{u})
     (Z : (Spec R).Opens) (s : Finset R)
     (hs : Quillen.SheafCohomology.principalUnion R s = Z) (P : ModuleComplex R)
     (hP : ∀ z ∈ s, IsZero (DerivedCategory.Q.obj ((localize z (.up ℤ)).obj P))) :
-    IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj ((associatedComplex R).obj P))) := by
+    IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj
+      ((restrict Z.ι).obj ((associatedComplex R).obj P))) := by
   have hq (z : R) (hz : z ∈ s) : QuasiIso ((localize z (.up ℤ)).map (0 : P ⟶ P)) := by
     apply (DerivedCategory.isIso_Q_map_iff_quasiIso _ _).mp
     exact (hP z hz).isIso (hP z hz) _
   have hq' := quasiIso_restrict_associated_of_principalUnion R Z s hs (0 : P ⟶ P) hq
-  have hi : IsIso ((toDerived Z.toScheme).map ((restrict Z.ι).map
+  have hi : IsIso ((DerivedCategory.Q (C := Z.toScheme.Modules)).map ((restrict Z.ι).map
       ((associatedComplex R).map (0 : P ⟶ P)))) := inferInstance
   simp only [Functor.map_zero] at hi
   exact (isIsoZero_iff_source_target_isZero _ _).mp hi |>.1
@@ -90,16 +96,18 @@ stabilized extension supported away from that entire second open. -/
 lemma locallyPerfect_exists_stabilized_extension_with_open_support
     (R : CommRingCat.{u}) (W Z : (Spec R).Opens)
     (hW : IsCompact (W : Set (Spec R))) (hZ : IsCompact (Z : Set (Spec R)))
-    (E : Complex W.toScheme) (hE : locallyPerfect W.toScheme E)
-    (hzero : IsZero ((toDerived (W ⊓ Z).toScheme).obj
+    (E : CochainComplex W.toScheme.Modules ℤ) (hE : locallyPerfect W.toScheme E)
+    (hzero : IsZero ((DerivedCategory.Q (C := (W ⊓ Z).toScheme.Modules)).obj
       ((restrict ((Spec R).homOfLE (inf_le_left : W ⊓ Z ≤ W))).obj E))) :
     ∃ (Q : ModuleComplex R), moduleStrictPerfect R Q ∧
-      Nonempty ((toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj Q)) ≅
-        (toDerived W.toScheme).obj (E ⊞ E⟦(1 : ℤ)⟧)) ∧
-      IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj ((associatedComplex R).obj Q))) := by
+      Nonempty ((DerivedCategory.Q (C := W.toScheme.Modules)).obj
+        ((restrict W.ι).obj ((associatedComplex R).obj Q)) ≅
+        (DerivedCategory.Q (C := W.toScheme.Modules)).obj (E ⊞ E⟦(1 : ℤ)⟧)) ∧
+      IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj
+        ((restrict Z.ι).obj ((associatedComplex R).obj Q))) := by
   obtain ⟨s, hs⟩ := exists_finite_principal_cover R Z hZ
   have hz (z : R) (hz : z ∈ s) :
-      IsZero ((toDerived (W ⊓ PrimeSpectrum.basicOpen z).toScheme).obj
+      IsZero ((DerivedCategory.Q (C := (W ⊓ PrimeSpectrum.basicOpen z).toScheme.Modules)).obj
         ((restrict ((Spec R).homOfLE (inf_le_left : W ⊓ PrimeSpectrum.basicOpen z ≤ W))).obj E)) :=
           by
     have hle : PrimeSpectrum.basicOpen z ≤ Z := by

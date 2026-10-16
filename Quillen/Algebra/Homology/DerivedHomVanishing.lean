@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Homology.KProjectiveRepresentatives
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
 public import Quillen.Algebra.Homology.HomotopyPushoutQuasiIso
 
 /-! # Genuine derived null-detection and the affine term-bound leaf -/
@@ -26,7 +26,7 @@ theorem derivedHom_eq_zero_of_disjoint_terms
     (K L : CochainComplex C ℤ) [K.IsKProjective]
     (h : ∀ n, IsZero (K.X n) ∨ IsZero (L.X n))
     (φ : DerivedCategory.Q.obj K ⟶ DerivedCategory.Q.obj L) : φ = 0 := by
-  obtain ⟨f, rfl⟩ := exists_chain_representative_of_isKProjective φ
+  obtain ⟨f, rfl⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective φ
   have hf : f = 0 := by
     ext n
     rcases h n with hn | hn

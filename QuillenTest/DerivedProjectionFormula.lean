@@ -9,6 +9,7 @@ public import Aglib.AlgebraicGeometry.Cohomology.ProjectionFormula.Basic
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalIncidence
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalQuotient
 
+public import Aglib.AlgebraicGeometry.Modules.ProjectionFormula.FiniteLocallyFree
 /-!
 # Original-map consumers of the derived projection formula
 

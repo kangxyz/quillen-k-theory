@@ -7,6 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Flatten
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenDerivedImageRoofs
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-!
 # Flattening the open derived image
@@ -18,6 +19,8 @@ statements retain the degree-zero range and inverse inclusion equation.
 -/
 
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.PerfectComplexes
 open Quillen.PerfectComplexes.OpenDerivedImage

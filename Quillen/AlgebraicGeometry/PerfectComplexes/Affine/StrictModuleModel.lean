@@ -45,11 +45,13 @@ def moduleStrictPerfect (R : CommRingCat.{u}) : ObjectProperty (ModuleComplex R)
     ∀ i, Module.Finite R (K.X i) ∧ Module.Projective R (K.X i)
 
 /-- The actual termwise associated-sheaf functor. -/
-abbrev associatedComplex (R : CommRingCat.{u}) : ModuleComplex R ⥤ Complex (Spec R) :=
+abbrev associatedComplex (R : CommRingCat.{u}) : ModuleComplex R ⥤ CochainComplex
+    (Spec R).Modules ℤ :=
   (tilde.functor R).mapHomologicalComplex (ComplexShape.up ℤ)
 
 /-- Actual affine global sections applied term by term. -/
-abbrev sectionsComplex (R : CommRingCat.{u}) : Complex (Spec R) ⥤ ModuleComplex R :=
+abbrev sectionsComplex (R : CommRingCat.{u}) : CochainComplex (Spec R).Modules ℤ
+    ⥤ ModuleComplex R :=
   (moduleSpecΓFunctor (R := R)).mapHomologicalComplex (ComplexShape.up ℤ)
 
 /-- Finite projective terms give finite locally free associated sheaves. -/
@@ -63,7 +65,7 @@ theorem strictPerfect_associated (R : CommRingCat.{u}) {K : ModuleComplex R}
 
 /-- Global sections of an affine strict-perfect sheaf complex are bounded
 and degreewise finite projective, without a noetherianity assumption. -/
-theorem moduleStrictPerfect_sections (R : CommRingCat.{u}) {K : Complex (Spec R)}
+theorem moduleStrictPerfect_sections (R : CommRingCat.{u}) {K : CochainComplex (Spec R).Modules ℤ}
     (hK : strictPerfect (Spec R) K) : moduleStrictPerfect R ((sectionsComplex R).obj K) := by
   obtain ⟨⟨a, b, hb⟩, hp⟩ := hK
   refine ⟨⟨a, b, fun i hi => moduleSpecΓFunctor.map_isZero (hb i hi)⟩, fun i => ?_⟩
@@ -73,7 +75,8 @@ theorem moduleStrictPerfect_sections (R : CommRingCat.{u}) {K : Complex (Spec R)
 
 /-- The actual counit reconstructs every termwise quasicoherent affine
 sheaf complex from its genuine module complex of global sections. -/
-def associatedSectionsIsoOfQuasicoherent (R : CommRingCat.{u}) (K : Complex (Spec R))
+def associatedSectionsIsoOfQuasicoherent (R : CommRingCat.{u})
+    (K : CochainComplex (Spec R).Modules ℤ)
     (hK : ∀ i, (K.X i).IsQuasicoherent) :
     (associatedComplex R).obj ((sectionsComplex R).obj K) ≅ K := by
   let f : (associatedComplex R).obj ((sectionsComplex R).obj K) ⟶ K :=
@@ -87,7 +90,7 @@ def associatedSectionsIsoOfQuasicoherent (R : CommRingCat.{u}) (K : Complex (Spe
 
 /-- The actual counit reconstructs an affine strict-perfect sheaf complex
 from its genuine bounded finite-projective module complex. -/
-def associatedSectionsIso (R : CommRingCat.{u}) {K : Complex (Spec R)}
+def associatedSectionsIso (R : CommRingCat.{u}) {K : CochainComplex (Spec R).Modules ℤ}
     (hK : strictPerfect (Spec R) K) :
     (associatedComplex R).obj ((sectionsComplex R).obj K) ≅ K :=
   associatedSectionsIsoOfQuasicoherent R K (fun i => by

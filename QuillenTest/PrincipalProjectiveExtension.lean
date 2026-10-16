@@ -8,9 +8,11 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalProjectiveExtension
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Closure
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Closure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedModuleReplacement
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! Semantic consumers of actual projective stabilization and principal extension. -/
 @[expose] public section
 
@@ -28,6 +30,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open Quillen.ModuleComplex Quillen.ModuleComplex.PrincipalLocalization
 open Quillen.PerfectComplexes.Affine
@@ -87,8 +90,9 @@ on the restriction of an original strict object. -/
 theorem actual_derived_split_idempotent (R : CommRingCat.{u}) (r : R)
     (P : StrictPerfect (Spec (.of (Localization.Away r)))) :
     ∃ (Q : StrictPerfect (Spec R))
-      (h : Retract ((toDerived _).obj P.obj)
-        ((toDerived _).obj ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
+      (h : Retract ((DerivedCategory.Q).obj P.obj)
+        ((DerivedCategory.Q).obj
+          ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
           R r)).obj Q.obj))),
       (h.r ≫ h.i) ≫ (h.r ≫ h.i) = h.r ≫ h.i := by
   obtain ⟨Q, ⟨h⟩⟩ := exists_principal_strict_derived_retract R r P

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Homology.KProjectiveRepresentatives
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
 
 /-!
 # Exact representatives of derived isomorphisms between K-projective complexes
@@ -32,10 +32,10 @@ theorem exists_homotopyEquiv_of_derivedIso {P Q : CochainComplex C ℤ}
     [P.IsKProjective] [Q.IsKProjective]
     (e : DerivedCategory.Q.obj P ≅ DerivedCategory.Q.obj Q) :
     ∃ h : HomotopyEquiv P Q, DerivedCategory.Q.map h.hom = e.hom := by
-  obtain ⟨f, hf⟩ := exists_chain_representative_of_isKProjective e.hom
-  obtain ⟨g, hg⟩ := exists_chain_representative_of_isKProjective e.inv
-  refine ⟨⟨f, g, homotopyOfDerivedEqOfIsKProjective _ _ ?_,
-    homotopyOfDerivedEqOfIsKProjective _ _ ?_⟩, hf⟩
+  obtain ⟨f, hf⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective e.hom
+  obtain ⟨g, hg⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective e.inv
+  refine ⟨⟨f, g, _root_.CochainComplex.homotopyOfDerivedEqOfIsKProjective _ _ ?_,
+    _root_.CochainComplex.homotopyOfDerivedEqOfIsKProjective _ _ ?_⟩, hf⟩
   · rw [DerivedCategory.Q.map_comp, hf, hg, e.hom_inv_id, DerivedCategory.Q.map_id]
   · rw [DerivedCategory.Q.map_comp, hg, hf, e.inv_hom_id, DerivedCategory.Q.map_id]
 

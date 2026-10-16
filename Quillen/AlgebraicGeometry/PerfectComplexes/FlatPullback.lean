@@ -11,7 +11,10 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.AlgebraicGeometry.Modules.Pullback.FlatMorphism
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PullbackNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.RestrictionFunctoriality
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.Complex.Pullback
 /-!
 # Genuine flat pullback of locally perfect complexes
 
@@ -23,6 +26,8 @@ K-groups satisfy identity, composition, open restriction, and comparison
 naturality. No global strict representative is required.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 open Quillen
 
 
@@ -36,6 +41,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
@@ -44,45 +50,54 @@ namespace Quillen.PerfectComplexes
 /-- The actual flat termwise pullback, followed by localization, inverts quasi-isomorphisms. -/
 theorem pullback_toDerived_inverts {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
     (HomologicalComplex.quasiIso Y.Modules (ComplexShape.up ℤ)).IsInvertedBy
-      (AlgebraicGeometry.Scheme.Modules.Complex.pullback f ⋙ toDerived X) := by
+      (AlgebraicGeometry.Scheme.Modules.Complex.pullback f ⋙ DerivedCategory.Q
+        (C := X.Modules)) := by
   intro K L s hs
   let : QuasiIso s := hs
-  exact toDerived_map_isIso ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map s)
+  exact (inferInstanceAs (IsIso (DerivedCategory.Q.map
+    ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map s))))
 
 /-- The actual functor on the existing quasi-isomorphism localization. -/
-def derivedFlatPullback {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] : Derived Y ⥤ Derived X :=
-  Localization.Construction.lift (AlgebraicGeometry.Scheme.Modules.Complex.pullback f ⋙ toDerived X)
+def derivedFlatPullback {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] : DerivedCategory Y.Modules
+    ⥤ DerivedCategory X.Modules :=
+  Localization.Construction.lift (AlgebraicGeometry.Scheme.Modules.Complex.pullback f
+    ⋙ DerivedCategory.Q (C := X.Modules))
     (pullback_toDerived_inverts f)
 
 /-- The constructed derived functor retains the original geometric pullback. -/
 theorem toDerived_derivedFlatPullback {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
-    toDerived Y ⋙ derivedFlatPullback f = AlgebraicGeometry.Scheme.Modules.Complex.pullback f ⋙
-      toDerived X :=
+    DerivedCategory.Q (C := Y.Modules) ⋙ derivedFlatPullback f
+      = AlgebraicGeometry.Scheme.Modules.Complex.pullback f ⋙
+      DerivedCategory.Q (C := X.Modules) :=
   Localization.Construction.fac _ _
 
 /-- The factorization through the existing derived localization. -/
 def derivedFlatPullbackFactors {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
-    toDerived Y ⋙ derivedFlatPullback f ≅ AlgebraicGeometry.Scheme.Modules.Complex.pullback f ⋙
-      toDerived X :=
+    DerivedCategory.Q (C := Y.Modules) ⋙ derivedFlatPullback f
+      ≅ AlgebraicGeometry.Scheme.Modules.Complex.pullback f ⋙
+      DerivedCategory.Q (C := X.Modules) :=
   eqToIso (toDerived_derivedFlatPullback f)
 
 /-- Flat geometric pullback of an actual isomorphism in the derived localization. -/
-def flatPullbackDerivedIso {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] {K L : Complex Y}
-    (e : (toDerived Y).obj K ≅ (toDerived Y).obj L) :
-    (toDerived X).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K) ≅
-      (toDerived X).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj L) :=
+def flatPullbackDerivedIso {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
+    {K L : CochainComplex Y.Modules ℤ}
+    (e : (DerivedCategory.Q (C := Y.Modules)).obj K ≅ (DerivedCategory.Q (C := Y.Modules)).obj L) :
+    (DerivedCategory.Q (C := X.Modules)).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback
+      f).obj K) ≅
+      (DerivedCategory.Q (C := X.Modules)).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback
+        f).obj L) :=
   ((derivedFlatPullbackFactors f).app K).symm ≪≫
     (derivedFlatPullback f).mapIso e ≪≫ (derivedFlatPullbackFactors f).app L
 
 /-- Genuine flat pullback preserves the original local derived strict-model condition. -/
 theorem locallyPerfect_flatPullback {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
-    {K : Complex Y} (hK : locallyPerfect Y K) :
+    {K : CochainComplex Y.Modules ℤ} (hK : locallyPerfect Y K) :
     locallyPerfect X ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K) := by
   intro x
   obtain ⟨U, hx, P, ⟨eP⟩⟩ := hK (f x)
   refine ⟨f ⁻¹ᵁ U, hx, ⟨(AlgebraicGeometry.Scheme.Modules.Complex.pullback (f ∣_ U)).obj P.obj,
     strictPerfect_pullback (f ∣_ U) P.property⟩, ?_⟩
-  exact ⟨(toDerived (f ⁻¹ᵁ U).toScheme).mapIso
+  exact ⟨(DerivedCategory.Q (C := (f ⁻¹ᵁ U).toScheme.Modules)).mapIso
     ((AlgebraicGeometry.Scheme.Modules.Complex.pullbackRestrictIso f U).app K) ≪≫
     flatPullbackDerivedIso (f ∣_ U) eP⟩
 
@@ -98,8 +113,10 @@ instance perfectFlatPullback_additive {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] 
 /-- Flat exactness for the original inherited perfect-complex exact structures. -/
 def perfectExactFlatPullback {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
     ExactFunctor
-      (ExactSubcategory.exactStructure (abelianExactStructure (Complex Y)) (locallyPerfect Y))
-      (ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (locallyPerfect X)) where
+      (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex Y.Modules ℤ))
+        (locallyPerfect Y))
+      (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
+        (locallyPerfect X)) where
   toFunctor := perfectFlatPullback f
   map_conflation S hS := by
     change ((S.map (locallyPerfect Y).ι).map (AlgebraicGeometry.Scheme.Modules.Complex.pullback
@@ -117,7 +134,8 @@ theorem perfectFlatPullback_waldhausenExact {X Y : Scheme.{u}} (f : X ⟶ Y) [Fl
     exact AlgebraicGeometry.Scheme.Modules.Complex.pullback_quasiIso f s.hom
   pushout hi h := by
     apply IsPushout.of_map_of_faithful (locallyPerfect X).ι
-    exact (Waldhausen.fullSubcategory_map_pushout (abelianExactStructure (Complex Y))
+    exact (Waldhausen.fullSubcategory_map_pushout (abelianExactStructure
+      (CochainComplex Y.Modules ℤ))
       (locallyPerfect Y) hi h).map (AlgebraicGeometry.Scheme.Modules.Complex.pullback f)
 
 /-- The original perfect K-groups carry the genuine flat geometric pullback K-map. -/
@@ -128,14 +146,14 @@ def perfectKFlatPullback {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] (n : ℕ) :
 def perfectFlatPullbackIdIso (X : Scheme.{u}) :
     perfectFlatPullback (𝟙 X) ≅ 𝟭 (Perfect X) :=
   Functor.fullyFaithfulCancelRight (locallyPerfect X).ι
-    (Functor.isoWhiskerLeft (locallyPerfect X).ι (pullbackComplexIdIso X))
+    (Functor.isoWhiskerLeft (locallyPerfect X).ι (Scheme.Modules.Complex.pullbackIdIso X))
 
 /-- Geometric composition comparison on the original locally-perfect category. -/
 def perfectFlatPullbackCompIso {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
     [Flat f] [Flat g] :
     perfectFlatPullback (f ≫ g) ≅ perfectFlatPullback g ⋙ perfectFlatPullback f :=
   Functor.fullyFaithfulCancelRight (locallyPerfect X).ι
-    (Functor.isoWhiskerLeft (locallyPerfect Z).ι (pullbackComplexCompIso f g))
+    (Functor.isoWhiskerLeft (locallyPerfect Z).ι (Scheme.Modules.Complex.pullbackCompIso f g))
 
 /-- Geometric open restriction agrees with flat pullback on all locally-perfect complexes. -/
 def perfectRestrictIsoFlatPullback {X Y : Scheme.{u}} (j : X ⟶ Y) [IsOpenImmersion j] :

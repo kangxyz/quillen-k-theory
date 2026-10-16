@@ -8,7 +8,10 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.FiniteCover
 public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
 /-! # Genuine finite affine strict models with one lower term bound -/
 @[expose] public section
 
@@ -20,17 +23,19 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes
 attribute [local instance] HasDerivedCategory.standard
-variable {X : Scheme.{u}} {E : Complex X}
+variable {X : Scheme.{u}} {E : CochainComplex X.Modules ℤ}
 
 /-- A local strict model may be restricted to a genuinely affine neighborhood,
 retaining an original derived isomorphism and the actual lower term bound. -/
 theorem locallyPerfect_exists_affine_strict_lower_model
     (hE : locallyPerfect X E) (x : X) :
-    ∃ U : X.Opens, IsAffineOpen U ∧ x ∈ U ∧ ∃ (P : Complex U.toScheme) (b : ℤ),
+    ∃ U : X.Opens, IsAffineOpen U ∧ x ∈ U ∧ ∃ (P : CochainComplex U.toScheme.Modules ℤ) (b : ℤ),
       strictPerfect U.toScheme P ∧ (∀ i, i < b → IsZero (P.X i)) ∧
-      Nonempty ((toDerived U.toScheme).obj ((restrict U.ι).obj E) ≅ (toDerived U.toScheme).obj P) :=
+      Nonempty ((DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj E) ≅
+        (DerivedCategory.Q (C := U.toScheme.Modules)).obj P) :=
         by
   obtain ⟨V, hxV, P, ⟨eP⟩⟩ := hE x
   obtain ⟨U, hU, hxU, hUV⟩ := exists_isAffineOpen_mem_and_subset hxV
@@ -40,7 +45,8 @@ theorem locallyPerfect_exists_affine_strict_lower_model
     strictPerfect_restrict j P.property, ?_, ⟨?_⟩⟩
   · intro i hi
     exact (Scheme.Modules.restrictFunctor j).map_isZero (hb i (Or.inl hi))
-  · exact ((toDerived U.toScheme).mapIso (restrictOpenInclusionIso hUV E)).symm ≪≫
+  · exact ((DerivedCategory.Q (C := U.toScheme.Modules)).mapIso
+      (restrictOpenInclusionIso hUV E)).symm ≪≫
       restrictDerivedIso j eP
 
 /-- Compactness gives actual finite affine strict models with one common lower
@@ -48,9 +54,10 @@ term bound. No global strict representative is asserted. The cover can be empty.
 theorem locallyPerfect_exists_finite_affine_strict_lower_models [CompactSpace X]
     (hE : locallyPerfect X E) :
     ∃ (s : Finset X.Opens) (b : ℤ), s.sup id = ⊤ ∧
-      ∀ U ∈ s, IsAffineOpen U ∧ ∃ P : Complex U.toScheme,
+      ∀ U ∈ s, IsAffineOpen U ∧ ∃ P : CochainComplex U.toScheme.Modules ℤ,
         strictPerfect U.toScheme P ∧ (∀ i, i < b → IsZero (P.X i)) ∧
-        Nonempty ((toDerived U.toScheme).obj ((restrict U.ι).obj E) ≅ (toDerived U.toScheme).obj P)
+        Nonempty ((DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj E) ≅
+          (DerivedCategory.Q (C := U.toScheme.Modules)).obj P)
           := by
   classical
   choose U hU hx P b hP hb he using locallyPerfect_exists_affine_strict_lower_model hE

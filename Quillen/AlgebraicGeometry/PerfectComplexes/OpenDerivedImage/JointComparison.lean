@@ -7,6 +7,7 @@ module
 
 public import Quillen.Waldhausen.Fibration.Rows.OppositeComplexJointMap
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Structure
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-!
 # Original restriction cocylinders in the derived-saturated image
@@ -18,6 +19,8 @@ The target image structures use the explicit genuine derived-roof property;
 no approximation or localization conclusion is assumed here.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.Waldhausen
 

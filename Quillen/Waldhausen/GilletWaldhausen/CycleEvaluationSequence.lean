@@ -10,6 +10,7 @@ public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.GilletWaldhausen.CyclesExact
 public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
+public import Aglib.Algebra.Homology.CochainComplex.Cycles
 
 /-! # The actual cycle-to-term incidence cofibration sequence
 
@@ -94,7 +95,7 @@ theorem boundedAcyclicCycle_comp_zero (n : ℤ) :
     boundedAcyclicCycleInclusion P n ≫ boundedAcyclicCycleProjection P n = 0 := by
   apply NatTrans.ext
   funext K
-  exact ObjectProperty.hom_ext _ (iCycles_toCycles K.obj n)
+  exact ObjectProperty.hom_ext _ (_root_.CochainComplex.iCycles_toCycles K.obj n)
 
 /-- Every component is the original actual cycle short exact sequence. -/
 theorem boundedAcyclicCycleEvaluation_conflation (n : ℤ)
@@ -103,7 +104,7 @@ theorem boundedAcyclicCycleEvaluation_conflation (n : ℤ)
       (ShortComplex.mk ((boundedAcyclicCycleInclusion P n).app K)
         ((boundedAcyclicCycleProjection P n).app K)
         (NatTrans.congr_app (boundedAcyclicCycle_comp_zero P n) K)) :=
-  cycleSequence_shortExact K.obj n (K.property.2.2 (n + 1))
+  _root_.CochainComplex.cycleSequence_shortExact K.obj n (K.property.2.2 (n + 1))
 
 /-- The relative pushout comparison is genuinely admissible, derived from
 exactness of the next-cycle functor rather than assumed. -/

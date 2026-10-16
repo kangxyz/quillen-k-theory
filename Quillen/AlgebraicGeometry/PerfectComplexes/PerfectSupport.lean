@@ -43,7 +43,7 @@ namespace Quillen.PerfectComplexes
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 /-- Actual locally perfect complexes with cohomological support away from U. -/
-def perfectSupported : ObjectProperty (Complex X) := fun K ↦
+def perfectSupported : ObjectProperty (CochainComplex X.Modules ℤ) := fun K ↦
   locallyPerfect X K ∧ ((restrict j).obj K).Acyclic
 
 instance perfectSupported_containsZero : (perfectSupported j).ContainsZero where
@@ -57,19 +57,21 @@ instance perfectSupported_closedUnderIsomorphisms :
     fun n ↦ (hK.2 n).of_iso ((restrict j).mapIso e)⟩
 
 /-- The support condition is stable under actual short exact extensions. -/
-theorem perfectSupported_of_shortExact {S : ShortComplex (Complex X)}
+theorem perfectSupported_of_shortExact {S : ShortComplex (CochainComplex X.Modules ℤ)}
     (hS : S.ShortExact) (h₁ : perfectSupported j S.X₁) (h₃ : perfectSupported j S.X₃) :
     perfectSupported j S.X₂ :=
   ⟨locallyPerfect_of_shortExact hS h₁.1 h₃.1,
     (hS.map_of_exact (restrict j)).acyclic_X₂ h₁.2 h₃.2⟩
 
 instance perfectSupported_extensionClosed :
-    (abelianExactStructure (Complex X)).IsExtensionClosed (perfectSupported j) where
+    (abelianExactStructure (CochainComplex X.Modules ℤ)).IsExtensionClosed
+      (perfectSupported j) where
   prop_middle := perfectSupported_of_shortExact j
 
 instance perfectSupported_closedUnderFiniteProducts :
     (perfectSupported j).IsClosedUnderFiniteProducts :=
-  (abelianExactStructure (Complex X)).extensionClosed_finiteProducts (perfectSupported j)
+  (abelianExactStructure (CochainComplex X.Modules ℤ)).extensionClosed_finiteProducts
+    (perfectSupported j)
 
 /-- The actual Waldhausen structure on supported locally perfect complexes. -/
 def perfectSupportedWaldhausen := Waldhausen.complexSubcategory (perfectSupported j)
@@ -87,8 +89,9 @@ def strictSupportedToPerfectKMap (n : ℕ) : StrictSupportedK j n →* PerfectSu
     (fun _ h ↦ ⟨locallyPerfect_of_strictPerfect h.1, h.2⟩) n
 
 /-- Every supported object restricts to a complex quasi-isomorphic to zero. -/
-theorem perfectSupported_restrict_quasiIso_zero {K : Complex X} (hK : perfectSupported j K) :
-    QuasiIso (0 : (restrict j).obj K ⟶ (0 : Complex U)) := by
+theorem perfectSupported_restrict_quasiIso_zero {K : CochainComplex X.Modules ℤ}
+    (hK : perfectSupported j K) :
+    QuasiIso (0 : (restrict j).obj K ⟶ (0 : CochainComplex U.Modules ℤ)) := by
   rw [quasiIso_iff]
   intro n
   exact (quasiIsoAt_iff_exactAt' _ n

@@ -8,7 +8,7 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalFreeExtension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedModuleReplacement
-public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalRestriction
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalRestriction
 
 /-! Semantic consumers of genuine finite-free principal-open descent. -/
 @[expose] public section

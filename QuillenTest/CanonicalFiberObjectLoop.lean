@@ -6,9 +6,12 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenConeFiberLoop
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-! Consumers retain the original weak diagonal and the actual supported-cone fiber coordinates. -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.PerfectComplexes
 open Quillen.Waldhausen

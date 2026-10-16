@@ -6,7 +6,9 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.CounitCriterion
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Consumers of original basis detection and the actual affine counit -/
 @[expose] public section
 
@@ -18,6 +20,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace QuillenTest.BasisCounitCriterion
 
 /-- Genuine local section exactness solves cycles in every original stalk. -/
@@ -65,7 +68,8 @@ theorem original_composition_cancels {X : Scheme.{u}}
 open Quillen.PerfectComplexes.Affine
 
 /-- The inverse is for the unchanged original affine counit homology map. -/
-theorem original_counit_homology_inverse (R : CommRingCat.{u}) (K : Complex (Spec R))
+theorem original_counit_homology_inverse (R : CommRingCat.{u})
+    (K : CochainComplex (Spec R).Modules ℤ)
     (hK : ∀ r : R, QuasiIso (principalSectionsScalarComplexComparison R r K)) (n : ℤ) :
     ∃ t, HomologicalComplex.homologyMap (associatedSectionsCounit R K) n ≫ t = 𝟙 _ ∧
       t ≫ HomologicalComplex.homologyMap (associatedSectionsCounit R K) n = 𝟙 _ := by
@@ -75,9 +79,10 @@ theorem original_counit_homology_inverse (R : CommRingCat.{u}) (K : Complex (Spe
   exact ⟨inv _, IsIso.hom_inv_id _, IsIso.inv_hom_id _⟩
 
 /-- Both genuine module reconstruction and original QC homology follow from the comparisons. -/
-theorem original_derived_model_and_homology (R : CommRingCat.{u}) (K : Complex (Spec R))
+theorem original_derived_model_and_homology (R : CommRingCat.{u})
+    (K : CochainComplex (Spec R).Modules ℤ)
     (hK : ∀ r : R, QuasiIso (principalSectionsScalarComplexComparison R r K)) :
-    IsIso ((toDerived (Spec R)).map (associatedSectionsCounit R K)) ∧
+    IsIso ((DerivedCategory.Q (C := (Spec R).Modules)).map (associatedSectionsCounit R K)) ∧
       ∀ n : ℤ, (K.homology n).IsQuasicoherent := by
   let := quasiIso_associatedSectionsCounit_of_principalComparisons R K hK
   exact ⟨inferInstance, quasicoherent_homology_of_principalComparisons R K hK⟩

@@ -7,6 +7,8 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.OneChartDenominator
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.RestrictionHom
 
 /-!
 # One-chart denominator regression statements
@@ -39,17 +41,19 @@ theorem original_chain_nullhomotopy (R : CommRingCat.{u})
     {U X : Scheme.{u}} [QuasiSeparatedSpace X] [CompactSpace U]
     (j : U ⟶ X) (k : Spec R ⟶ X) [IsOpenImmersion j] [IsOpenImmersion k]
     (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ Set.range k)
-    {A B : Complex X} (hA : locallyPerfect X A) (n : ℤ) [B.IsGE n]
+    {A B : CochainComplex X.Modules ℤ} (hA : locallyPerfect X A) (n : ℤ) [B.IsGE n]
     (hB : ∀ m, (B.homology m).IsQuasicoherent)
-    (hzB : IsZero ((toDerived U).obj ((restrict j).obj B))) (f : A ⟶ B) :
-    ∃ (P : Complex X) (q : P ⟶ A), locallyPerfect X P ∧
+    (hzB : IsZero ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj B))) (f : A ⟶ B) :
+    ∃ (P : CochainComplex X.Modules ℤ) (q : P ⟶ A), locallyPerfect X P ∧
       QuasiIso ((restrict j).map q) ∧ Nonempty (Homotopy (q ≫ f) 0) := by
   obtain ⟨P, q, hP, hq, hqf⟩ :=
-    exists_perfect_denominator_across_spec_of_qc_target R j k hcover hA n hB hzB ((toDerived X).map
+    exists_perfect_denominator_across_spec_of_qc_target R j k hcover hA n hB hzB
+      ((DerivedCategory.Q (C := X.Modules)).map
       f)
   let : HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
   have he : DerivedCategory.Q.{u+1}.map (q ≫ f) = DerivedCategory.Q.{u+1}.map (0 : P ⟶ B) := by
-    change (toDerived X).map (q ≫ f) = (toDerived X).map 0
+    change (DerivedCategory.Q (C := X.Modules)).map (q ≫ f) =
+      (DerivedCategory.Q (C := X.Modules)).map 0
     simpa only [Functor.map_comp, Functor.map_zero] using hqf
   obtain ⟨M, s, hs, ⟨H⟩⟩ :=
     Quillen.CochainComplex.exists_pre_quasiIso_homotopy_of_derived_eq (q ≫ f) 0 he
@@ -64,13 +68,15 @@ theorem original_factorization_has_supported_first_arrow (R : CommRingCat.{u})
     {U X : Scheme.{u}} [QuasiSeparatedSpace X] [CompactSpace U]
     (j : U ⟶ X) (k : Spec R ⟶ X) [IsOpenImmersion j] [IsOpenImmersion k]
     (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ Set.range k)
-    {A B : Complex X} (hA : locallyPerfect X A) (n : ℤ) [B.IsGE n]
+    {A B : CochainComplex X.Modules ℤ} (hA : locallyPerfect X A) (n : ℤ) [B.IsGE n]
     (hB : ∀ m, (B.homology m).IsQuasicoherent)
-    (hzB : IsZero ((toDerived U).obj ((restrict j).obj B)))
-    (α : (toDerived X).obj A ⟶ (toDerived X).obj B) :
-    ∃ (C : Complex X) (i : A ⟶ C) (γ : (toDerived X).obj C ⟶ (toDerived X).obj B),
-      locallyPerfect X C ∧ IsZero ((toDerived U).obj ((restrict j).obj C)) ∧
-      (toDerived X).map i ≫ γ = α ∧ (toDerived U).map ((restrict j).map i) = 0 := by
+    (hzB : IsZero ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj B)))
+    (α : (DerivedCategory.Q (C := X.Modules)).obj A ⟶ (DerivedCategory.Q (C := X.Modules)).obj B) :
+    ∃ (C : CochainComplex X.Modules ℤ) (i : A ⟶ C)
+      (γ : (DerivedCategory.Q (C := X.Modules)).obj C ⟶ (DerivedCategory.Q (C := X.Modules)).obj B),
+      locallyPerfect X C ∧ IsZero ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj C)) ∧
+      (DerivedCategory.Q (C := X.Modules)).map i ≫ γ = α ∧ (DerivedCategory.Q (C := U.Modules)).map
+        ((restrict j).map i) = 0 := by
   obtain ⟨C, i, γ, hC, hzC, hγ⟩ :=
     exists_perfect_factorization_across_spec_of_qc_target R j k hcover hA n hB hzB α
   exact ⟨C, i, γ, hC, hzC, hγ, hzC.eq_of_tgt _ _⟩
@@ -80,8 +86,9 @@ restriction to the other chart is injective on these original derived maps. -/
 theorem original_restriction_injective {U V X : Scheme.{u}}
     (j : U ⟶ X) (k : V ⟶ X) [IsOpenImmersion j] [IsOpenImmersion k]
     (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ Set.range k)
-    {A B : Complex X} (hzB : IsZero ((toDerived U).obj ((restrict j).obj B)))
-    (α β : (toDerived X).obj A ⟶ (toDerived X).obj B)
+    {A B : CochainComplex X.Modules ℤ} (hzB : IsZero
+      ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj B)))
+    (α β : (DerivedCategory.Q (C := X.Modules)).obj A ⟶ (DerivedCategory.Q (C := X.Modules)).obj B)
     (h : restrictDerivedHom k α = restrictDerivedHom k β) : α = β := by
   apply sub_eq_zero.mp
   apply derivedHom_eq_zero_of_target_zero_and_cover j k hcover hzB

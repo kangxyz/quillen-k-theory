@@ -21,6 +21,8 @@ from Q tensor U and the original base-change target perfection theorem.
 
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.Modules.Godement
 
 open CategoryTheory.ExactCategory
@@ -65,9 +67,11 @@ lemma quotientLeftBounded_isStrictlyGE (K : BoundedBelow.Obj (twoChartLine R))
 
 /-- Exact left tensor retains the actual inherited quotient-bearing sequences. -/
 def quotientLeftBoundedExactFunctor : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (twoChartLine R).Modules ℤ))
       (BoundedBelow.objects (twoChartLine R)))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (twoChartLine R).Modules ℤ))
       (BoundedBelow.objects (twoChartLine R))) where
   toFunctor := quotientLeftBounded R
   map_conflation S hs := by
@@ -126,7 +130,8 @@ lemma source_isStrictlyGE (K : FlasqueBoundedBelow.Obj (twoChartLine R))
     ((sourceBounded R).obj K) a
 
 /-- Literal original left Q tensor of U before total, used for V perfection. -/
-def tensorURaw : FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ Complex (twoChartLine R) :=
+def tensorURaw : FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ CochainComplex
+    (twoChartLine R).Modules ℤ :=
   SelfBaseChange.targetRaw R ⋙ AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft
     (tautologicalQuotientLine R)
 
@@ -196,9 +201,11 @@ lemma VRaw_shortExact (S : ShortComplex (FlasqueBoundedBelow.Obj (twoChartLine R
 short-exact structures on flasque bounded-below perfect complexes.
 -/
 def VExactFunctor : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (twoChartLine R).Modules ℤ))
       (FlasqueBoundedBelow.objects (twoChartLine R)))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (twoChartLine R).Modules ℤ))
       (FlasqueBoundedBelow.objects (twoChartLine R))) where
   toFunctor := V R
   map_conflation S hs := by

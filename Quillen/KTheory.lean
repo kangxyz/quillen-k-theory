@@ -12,6 +12,7 @@ public import Quillen.KTheory.Basic
 public import Quillen.KTheory.Bass.AffineDiagram
 public import Quillen.KTheory.Bass.Contraction
 public import Quillen.KTheory.Bass.DiagramTransport
+public import Quillen.KTheory.Bass.DiagramTransportGroupNaturality
 public import Quillen.KTheory.Bass.DiagramTransportNaturality
 public import Quillen.KTheory.Bass.Iteration
 public import Quillen.KTheory.Bass.IterationExactness
@@ -47,6 +48,7 @@ public import Quillen.KTheory.Bass.StrictDiagramVanishing
 public import Quillen.KTheory.Bass.StrictDiagramZeroMap
 public import Quillen.KTheory.Bass.StrictLaurentSeed
 public import Quillen.KTheory.Bass.StrictLaurentSeedContraction
+public import Quillen.KTheory.Bass.StrictLaurentSeedStable
 public import Quillen.KTheory.Bass.StrictRingDiagram
 public import Quillen.KTheory.Bass.StrictRingSeed
 public import Quillen.KTheory.Bass.StrictUnderDiagram

@@ -19,6 +19,8 @@ transformation transports the proved bounded-bundle calculation through a
 genuine affine derived representative; target terms need not be quasicoherent.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 open Quillen
 
 

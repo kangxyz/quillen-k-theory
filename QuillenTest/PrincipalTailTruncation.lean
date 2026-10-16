@@ -11,6 +11,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedCompariso
 /-! Semantic consumers of actual projective locality and lower-tail cutoff. -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.CochainComplex
 open Quillen.PerfectComplexes
 

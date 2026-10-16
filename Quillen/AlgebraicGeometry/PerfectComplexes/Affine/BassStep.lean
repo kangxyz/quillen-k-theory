@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Basic
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Spectrum.GlobalUnit
 public import Quillen.Topology.Prespectrum.HomotopyPushout
 

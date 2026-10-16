@@ -20,6 +20,8 @@ group equivalence has precisely that unchanged inclusion map as its forward map.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

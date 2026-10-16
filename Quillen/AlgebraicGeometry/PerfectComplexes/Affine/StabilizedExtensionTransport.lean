@@ -8,7 +8,11 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StabilizedExtension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.RestrictionFunctoriality
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 /-!
 # Stabilized extension along arbitrary compact affine open immersions
 
@@ -19,6 +23,8 @@ complex plus its positive shift. The literal restriction, biproduct and integer
 shift are retained. No presentation of the source as a chosen open is supplied.
 -/
 @[expose] public section
+
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.Complex.restrictCommShift
 
 open AlgebraicGeometry.Scheme.Modules.Complex
 
@@ -36,7 +42,7 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 /-- Original restriction preserves the literal stabilization, with the actual
 integer-shift and biproduct comparisons. -/
 def restrictStabilizationIso {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    (E : Complex X) :
+    (E : CochainComplex X.Modules ℤ) :
     (restrict j).obj (E ⊞ E⟦(1 : ℤ)⟧) ≅
       (restrict j).obj E ⊞ ((restrict j).obj E)⟦(1 : ℤ)⟧ := by
   let : PreservesBinaryBiproducts (restrict j) := preservesBinaryBiproducts_of_preservesBiproducts _
@@ -45,10 +51,10 @@ def restrictStabilizationIso {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j
 
 lemma exists_strict_stabilized_extension_into_spec (R : CommRingCat.{u})
     {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j] [CompactSpace U]
-    (E : Complex U) (hE : locallyPerfect U E) :
-    ∃ Q : Complex (Spec R), strictPerfect (Spec R) Q ∧
-      Nonempty ((toDerived U).obj ((restrict j).obj Q) ≅
-        (toDerived U).obj (E ⊞ E⟦(1 : ℤ)⟧)) := by
+    (E : CochainComplex U.Modules ℤ) (hE : locallyPerfect U E) :
+    ∃ Q : CochainComplex (Spec R).Modules ℤ, strictPerfect (Spec R) Q ∧
+      Nonempty ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj Q) ≅
+        (DerivedCategory.Q (C := U.Modules)).obj (E ⊞ E⟦(1 : ℤ)⟧)) := by
   let W := j.opensRange
   have hW : IsCompact (W : Set (Spec R)) := isCompact_range j.continuous
   let E' := (restrict j.isoOpensRange.inv).obj E
@@ -63,18 +69,19 @@ lemma exists_strict_stabilized_extension_into_spec (R : CommRingCat.{u})
     (restrictCompIso j.isoOpensRange.hom j.isoOpensRange.inv ≪≫
       eqToIso (restrict_congr j.isoOpensRange.hom_inv_id) ≪≫ restrictIdIso U).app E
   let eright := restrictStabilizationIso j.isoOpensRange.hom E' ≪≫
-    biprod.mapIso eE ((shiftFunctor (Complex U) (1 : ℤ)).mapIso eE)
-  exact ⟨Q, hQ, ⟨(toDerived U).mapIso eleft ≪≫
-    restrictDerivedIso j.isoOpensRange.hom eQ ≪≫ (toDerived U).mapIso eright⟩⟩
+    biprod.mapIso eE ((shiftFunctor (CochainComplex U.Modules ℤ) (1 : ℤ)).mapIso eE)
+  exact ⟨Q, hQ, ⟨(DerivedCategory.Q (C := U.Modules)).mapIso eleft ≪≫
+    restrictDerivedIso j.isoOpensRange.hom eQ ≪≫ (DerivedCategory.Q
+      (C := U.Modules)).mapIso eright⟩⟩
 
 lemma exists_strict_stabilized_extension_into_affine {U X : Scheme.{u}}
     (j : U ⟶ X) [IsOpenImmersion j] [IsAffine X] [CompactSpace U]
-    (E : Complex U) (hE : locallyPerfect U E) :
-    ∃ Q : Complex X, strictPerfect X Q ∧
-      Nonempty ((toDerived U).obj ((restrict j).obj Q) ≅
-        (toDerived U).obj (E ⊞ E⟦(1 : ℤ)⟧)) := by
+    (E : CochainComplex U.Modules ℤ) (hE : locallyPerfect U E) :
+    ∃ Q : CochainComplex X.Modules ℤ, strictPerfect X Q ∧
+      Nonempty ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj Q) ≅
+        (DerivedCategory.Q (C := U.Modules)).obj (E ⊞ E⟦(1 : ℤ)⟧)) := by
   obtain ⟨Q, hQ, ⟨eQ⟩⟩ := exists_strict_stabilized_extension_into_spec _ (j ≫ X.isoSpec.hom) E hE
   exact ⟨(restrict X.isoSpec.hom).obj Q, strictPerfect_restrict X.isoSpec.hom hQ,
-    ⟨(toDerived U).mapIso ((restrictCompIso j X.isoSpec.hom).app Q) ≪≫ eQ⟩⟩
+    ⟨(DerivedCategory.Q (C := U.Modules)).mapIso ((restrictCompIso j X.isoSpec.hom).app Q) ≪≫ eQ⟩⟩
 
 end Quillen.PerfectComplexes

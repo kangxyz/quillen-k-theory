@@ -10,6 +10,7 @@ public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.BasedFiberComparison
 public import Quillen.Topology.HomotopyFiber.LESTail
 public import Quillen.Topology.Realization.Connectivity
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # Transport from the actual Serre fiber to the canonical K maps
@@ -27,23 +28,27 @@ noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
 /-- The actual fiber connecting map, before transporting to the Serre category. -/
 def fiberConnectingHom (n : ℕ) :
-    (quotientExactStructure P).K (n + 1) →*
+    ((abelianExactStructure P.isoModSerre.Localization)).K (n + 1) →*
       HomotopyGroup.Pi (n + 1) (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P) :=
   HomotopyFiber.connectingHom (classifyingSpaceMap (quotientNormalizedQ P)).hom
-    (quotientExactStructure P).kBasepoint (abelianExactStructure C).kBasepoint
-    (quotientExactFunctor P).normalizedQ_map_point n
+    ((abelianExactStructure P.isoModSerre.Localization)).kBasepoint (abelianExactStructure
+      C).kBasepoint
+    ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+      P.isoModSerre.Q)).normalizedQ_map_point n
 
 /-- The transport formula, whose supplied isomorphism remains a proof obligation. -/
 def connectingHomOfComparison (n : ℕ)
     (e : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).K n ≃*
       HomotopyGroup.Pi (n + 1) (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P)) :
-    (quotientExactStructure P).K (n + 1) →* (CategoryTheory.ObjectProperty.subcategoryExactStructure
+    ((abelianExactStructure P.isoModSerre.Localization)).K (n + 1) →*
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure
       P).K n :=
   e.symm.toMonoidHom.comp (fiberConnectingHom P n)
 
@@ -53,8 +58,10 @@ theorem inclusion_range_eq_quotient_ker_of_comparison_surjective (n : ℕ)
     (Devissage.KMap P n).range = (quotientKMap P n).ker := by
   have ht := HomotopyFiber.piMap_range_projection_eq_ker
     (classifyingSpaceMap (quotientNormalizedQ P)).hom
-    (quotientExactStructure P).kBasepoint (abelianExactStructure C).kBasepoint
-    (quotientExactFunctor P).normalizedQ_map_point n
+    ((abelianExactStructure P.isoModSerre.Localization)).kBasepoint (abelianExactStructure
+      C).kBasepoint
+    ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+      P.isoModSerre.Q)).normalizedQ_map_point n
   change (localizationFiberProjectionHom P n).range = (quotientKMap P n).ker at ht
   rw [← ht, ← localizationFiberComparisonHom_projection P n]
   ext a
@@ -73,8 +80,10 @@ theorem quotient_range_eq_connecting_ker_of_comparison (n : ℕ)
     (quotientKMap P (n + 1)).range = (connectingHomOfComparison P n e).ker := by
   have ht := HomotopyFiber.range_piMap_eq_ker_connectingHom
     (classifyingSpaceMap (quotientNormalizedQ P)).hom
-    (quotientExactStructure P).kBasepoint (abelianExactStructure C).kBasepoint
-    (quotientExactFunctor P).normalizedQ_map_point n
+    ((abelianExactStructure P.isoModSerre.Localization)).kBasepoint (abelianExactStructure
+      C).kBasepoint
+    ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+      P.isoModSerre.Q)).normalizedQ_map_point n
   change (quotientKMap P (n + 1)).range = (fiberConnectingHom P n).ker at ht
   rw [ht]
   ext a
@@ -90,8 +99,10 @@ theorem connecting_range_eq_inclusion_ker_of_comparison (n : ℕ)
     (connectingHomOfComparison P n e).range = (Devissage.KMap P n).ker := by
   have ht := HomotopyFiber.range_connectingHom_eq_ker_projection
     (classifyingSpaceMap (quotientNormalizedQ P)).hom
-    (quotientExactStructure P).kBasepoint (abelianExactStructure C).kBasepoint
-    (quotientExactFunctor P).normalizedQ_map_point n
+    ((abelianExactStructure P.isoModSerre.Localization)).kBasepoint (abelianExactStructure
+      C).kBasepoint
+    ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+      P.isoModSerre.Q)).normalizedQ_map_point n
   change (fiberConnectingHom P n).range = (localizationFiberProjectionHom P n).ker at ht
   have hp : (localizationFiberProjectionHom P n).comp e.toMonoidHom =
       Devissage.KMap P n := by
@@ -121,8 +132,10 @@ theorem quotientKZero_surjective_of_fiber_piZero_subsingleton
   intro a
   have ht := HomotopyFiber.mem_range_piMap_iff_connectingMap_constant
     (classifyingSpaceMap (quotientNormalizedQ P)).hom
-    (quotientExactStructure P).kBasepoint (abelianExactStructure C).kBasepoint
-    (quotientExactFunctor P).normalizedQ_map_point 0 a
+    ((abelianExactStructure P.isoModSerre.Localization)).kBasepoint (abelianExactStructure
+      C).kBasepoint
+    ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+      P.isoModSerre.Q)).normalizedQ_map_point 0 a
   exact ht.mpr (@Subsingleton.elim
     (HomotopyGroup.Pi 0 (NormalizedLocalizationFiber P) (normalizedFiberBasepoint P))
     inferInstance _ _)

@@ -19,6 +19,8 @@ fine component path for the boundary calculation; the final boundary identity is
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 noncomputable section

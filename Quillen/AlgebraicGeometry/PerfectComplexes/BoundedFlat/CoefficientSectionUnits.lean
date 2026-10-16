@@ -9,7 +9,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Coefficient
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalUnitPullback
 public import Quillen.CategoryTheory.Functor.IdentityAutomorphismNaturality
 public import Quillen.CategoryTheory.Functor.IdentityAutomorphismEvaluation
-public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Units
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Units
 public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 
 /-!

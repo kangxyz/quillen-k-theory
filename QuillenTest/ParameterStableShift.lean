@@ -15,6 +15,8 @@ stable-map naturality.
 -/
 @[expose] public section
 
+open CategoryTheory.Limits.SequentialSystem
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -54,19 +56,19 @@ lemma degree_zero_double_loop_sign {X : Type u} [TopologicalSpace X] {x : X}
 
 lemma original_tail_inclusions {C : Type u} [Category.{v} C]
     (F : ℕ ⥤ C) [HasColimit F] (t n : ℕ) :
-    colimit.ι (sequentialShiftFunctor t ⋙ F) n ≫ (sequentialTailColimitIso F t).hom = colimit.ι F
+    colimit.ι (shiftFunctor t ⋙ F) n ≫ (tailColimitIso F t).hom = colimit.ι F
       (t+n) ∧
-    colimit.ι F (t+n) ≫ (sequentialTailColimitIso F t).inv = colimit.ι (sequentialShiftFunctor t ⋙
+    colimit.ι F (t+n) ≫ (tailColimitIso F t).inv = colimit.ι (shiftFunctor t ⋙
       F) n :=
-  ⟨sequentialTailColimitIso_ι_hom F t n,sequentialTailColimitIso_ι_inv F t n⟩
+  ⟨tailColimitIso_ι_hom F t n,tailColimitIso_ι_inv F t n⟩
 
 lemma original_corrected_square {C : Type u} [Category.{v} C] [Preadditive C]
     {F G : ℕ ⥤ C} (e : ∀ n, F.obj n ≅ G.obj n)
     (h : ∀ n, F.map (homOfLE (Nat.le_succ n)) ≫ (e (n+1)).hom =
       -((e n).hom ≫ G.map (homOfLE (Nat.le_succ n)))) (m n : ℕ) (f : m ⟶ n) :
-    F.map f ≫ (sequentialSignCorrectionIso e h).hom.app n =
-      (sequentialSignCorrectionIso e h).hom.app m ≫ G.map f :=
-  (sequentialSignCorrectionIso e h).hom.naturality f
+    F.map f ≫ (signCorrectionIso e h).hom.app n =
+      (signCorrectionIso e h).hom.app m ≫ G.map f :=
+  (signCorrectionIso e h).hom.naturality f
 
 end QuillenTest.CoordinateSign
 

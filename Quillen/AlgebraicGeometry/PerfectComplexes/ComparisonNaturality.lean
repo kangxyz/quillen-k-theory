@@ -22,6 +22,8 @@ with open restriction in every connective degree, including degree zero.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open CategoryTheory.ExactCategory
 
 

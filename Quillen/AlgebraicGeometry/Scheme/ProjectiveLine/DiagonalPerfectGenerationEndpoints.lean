@@ -7,6 +7,7 @@ module
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalDerivedVertexComparisons
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DerivedLinePerfectness
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DerivedSelfBaseChangePerfect
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Genuine original generation endpoints on intrinsic perfect D+
 

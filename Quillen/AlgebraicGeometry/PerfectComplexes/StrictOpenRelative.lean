@@ -7,7 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Restriction
 public import Quillen.Waldhausen.Functoriality.KMap
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Closure
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Closure
 public import Quillen.Waldhausen.Fibration.InverseImageWeak
 public import Quillen.Waldhausen.Fibration.Rows.CoarseJoint
 public import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
@@ -21,6 +21,8 @@ the existing original strict restriction K-map. No approximation or
 cofinality property for an arbitrary open is asserted.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.Waldhausen
 

@@ -8,6 +8,7 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.SupportedDenominatorComposition
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.OneChartRoofs
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-! # Genuine global qcqs supported denominators and original perfect roofs -/
 @[expose] public section
@@ -30,7 +31,7 @@ lemma hasSupportedQCDenominators_of_isIso {U X : Scheme.{u}}
   refine ⟨A, 𝟙 A, hA, ?_, ?_⟩
   · rw [(restrict j).map_id]
     infer_instance
-  · rw [(toDerived X).map_id, Category.id_comp]
+  · rw [(DerivedCategory.Q (C := X.Modules)).map_id, Category.id_comp]
     exact hzB.eq_of_tgt _ _
 
 lemma hasSupportedQCDenominators_finite_affine_union {X : Scheme.{u}}

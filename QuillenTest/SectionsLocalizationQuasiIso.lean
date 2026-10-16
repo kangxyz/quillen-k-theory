@@ -31,7 +31,7 @@ namespace QuillenTest.SectionsLocalizationQuasiIso
 
 open Quillen
 
-variable {R : CommRingCat.{u}} (r q : R) (I : Complex (Spec R)) (a : ℤ)
+variable {R : CommRingCat.{u}} (r q : R) (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
   (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
   (hqc : ∀ n, (((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R q)).obj
     I).homology n).IsQuasicoherent)

@@ -9,6 +9,7 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.Waldhausen.SplitComplexes.Subcategory
 public import Quillen.AlgebraicGeometry.PerfectComplexes.KTheory
+public import Quillen.AlgebraicGeometry.PerfectComplexes.Restriction
 
 /-!
 # Degreewise split K-theory of strict and locally perfect complexes
@@ -76,7 +77,7 @@ def splitStrictToPerfectKMap (X : Scheme.{u}) (n : ℕ) :
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 /-- Open restriction preserves the degreewise splittings themselves. -/
-theorem degreewiseSplitMono_restrict {K L : Complex X} {f : K ⟶ L}
+theorem degreewiseSplitMono_restrict {K L : CochainComplex X.Modules ℤ} {f : K ⟶ L}
     (hf : CochainComplex.degreewiseSplitMono f) :
     CochainComplex.degreewiseSplitMono ((restrict j).map f) := by
   intro n

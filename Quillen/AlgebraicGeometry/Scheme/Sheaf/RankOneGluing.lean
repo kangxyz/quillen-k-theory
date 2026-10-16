@@ -6,7 +6,10 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.StructureSheaf.Sections
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GluingSubobjects
+public import Aglib.AlgebraicGeometry.Modules.Restriction.Overlap
+public import Aglib.AlgebraicGeometry.Modules.Restriction.ZeroMorphisms
+public import Aglib.AlgebraicGeometry.Modules.Subobjects.Gluing
+public import Aglib.CategoryTheory.Limits.Shapes.BinaryProducts
 public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.BinaryProducts
 
 /-!
@@ -36,7 +39,7 @@ namespace AlgebraicGeometry.Scheme.Modules
 /-- Both canonical unit restrictions agree on the original scheme pullback. -/
 lemma restrictUnitIso_overlap {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k] :
-    (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.app
+    (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.app
         (SheafOfModules.unit X.ringCatSheaf) ≫
       (Scheme.Modules.restrictFunctor (pullback.snd j k)).map
         (Scheme.Modules.restrictUnitIso k).hom ≫
@@ -47,7 +50,7 @@ lemma restrictUnitIso_overlap {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
   apply Scheme.Modules.hom_ext
   intro O
   ext x
-  simp only [AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso, Iso.trans_hom,
+  simp only [AlgebraicGeometry.Scheme.Modules.overlapRestrictIso, Iso.trans_hom,
     NatTrans.comp_app, Iso.symm_hom, Scheme.Modules.Hom.comp_app,
     Scheme.Modules.restrictFunctorComp_inv_app_app,
     Scheme.Modules.restrictFunctorCongr_hom_app_app,
@@ -154,7 +157,7 @@ lemma restrictUnitIso_overlap_inv {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ 
     [IsOpenImmersion j] [IsOpenImmersion k] :
     (Scheme.Modules.restrictFunctor (pullback.fst j k)).map
         (Scheme.Modules.restrictUnitIso j).inv ≫
-      (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.app
+      (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.app
         (SheafOfModules.unit X.ringCatSheaf) ≫
       (Scheme.Modules.restrictFunctor (pullback.snd j k)).map
         (Scheme.Modules.restrictUnitIso k).hom ≫
@@ -172,7 +175,7 @@ lemma columns_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     (hs : (pullback.fst j k).appTop.hom s = v)
     (ht : (pullback.snd j k).appTop.hom t = ↑v⁻¹) :
     (Scheme.Modules.restrictFunctor (pullback.fst j k)).map (firstColumn j s) ≫
-      (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.app
+      (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.app
         ((SheafOfModules.unit X.ringCatSheaf : X.Modules) ⨯
           SheafOfModules.unit X.ringCatSheaf) =
     (columnTransition j k v).hom ≫
@@ -194,10 +197,10 @@ lemma columns_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
   apply prod.hom_ext
   · simp only [Category.assoc, prodComparison_fst]
     change (Scheme.Modules.restrictFunctor (pullback.fst j k)).map (firstColumn j s) ≫
-      (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.app _ ≫
+      (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.app _ ≫
         (Scheme.Modules.restrictFunctor (pullback.snd j k)).map
           ((Scheme.Modules.restrictFunctor k).map prod.fst) = _
-    have hn := (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.naturality
+    have hn := (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.naturality
       (show O ⨯ O ⟶ O from prod.fst)
     dsimp only [Functor.comp_map] at hn
     rw [← hn,
@@ -220,10 +223,10 @@ lemma columns_compatible {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     simp [unitMul_one]
   · simp only [Category.assoc, prodComparison_snd]
     change (Scheme.Modules.restrictFunctor (pullback.fst j k)).map (firstColumn j s) ≫
-      (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.app _ ≫
+      (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.app _ ≫
         (Scheme.Modules.restrictFunctor (pullback.snd j k)).map
           ((Scheme.Modules.restrictFunctor k).map prod.snd) = _
-    have hn := (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso j k).hom.naturality
+    have hn := (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.naturality
       (show O ⨯ O ⟶ O from prod.snd)
     dsimp only [Functor.comp_map] at hn
     rw [← hn,

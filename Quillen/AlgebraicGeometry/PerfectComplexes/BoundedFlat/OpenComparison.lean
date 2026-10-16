@@ -7,6 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.KComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFibration
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 public import Quillen.Waldhausen.Approximation.CoarseKEquivalence
 
 /-!

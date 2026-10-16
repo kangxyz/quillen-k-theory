@@ -8,7 +8,7 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.ClosedImmersion.IdealPushforward
-public import Aglib.Algebra.Category.ModuleCat.FiniteLocalization
+public import Aglib.Algebra.Category.FGModuleCat.Localization
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeRestriction
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
@@ -16,6 +16,7 @@ public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Restricti
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.Killed
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.PrincipalLocalization
 public import Quillen.Devissage.CentralEndomorphism
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Support.SmallModel
 
 /-!
 # Actual supported coherent sheaves and their principal image filtrations
@@ -127,12 +128,13 @@ theorem finiteTypeSheavesSupportedAway_iff_uniform (M : FiniteTypeSheaves (Spec 
   rw [finiteTypeSheavesSupportedAway_iff_torsion, torsion_powers_iff_uniform]
 
 /-- The actual small category used by public principal-open localization. -/
-abbrev SmallSupport := (coherentPrincipalSmallSupport R f).FullSubcategory
+abbrev SmallSupport := (AlgebraicGeometry.Scheme.Modules.Coherent.coherentGlobalSmallSupport
+  (principalOpen R f)).FullSubcategory
 
 /-- Actual sheaves represented by the compatible support category, followed
 by their actual finite global-section modules. -/
 abbrev supportRepresentation : SmallSupport R f ⥤ FGModuleCat.{u} R :=
-  (coherentPrincipalSmallSupport R f).ι ⋙
+  (AlgebraicGeometry.Scheme.Modules.Coherent.coherentGlobalSmallSupport (principalOpen R f)).ι ⋙
     (equivSmallModel.{u+1} (FiniteTypeSheaves (Spec R))).inverse ⋙
       (finiteTypeSheavesSpecModuleEquivalence R).functor
 
@@ -154,7 +156,8 @@ theorem supportKilled_iff (M : SmallSupport R f) :
 /-- Nilpotence follows from genuine support and finite generation. -/
 theorem support_power_nilpotent (M : SmallSupport R f) :
     ∃ n : ℕ, power (supportScalar R f) M n = 0 := by
-  have h := (coherentPrincipalSmallSupport_iff R f M.obj).mp M.property
+  have h := (AlgebraicGeometry.Scheme.Modules.Coherent.coherentGlobalSmallSupport_iff
+    (principalOpen R f) M.obj).mp M.property
   obtain ⟨n, hn⟩ := (finiteTypeSheavesSupportedAway_iff_uniform R f _).mp h
   exact ⟨n, ScalarRepresentation.power_eq_zero (supportRepresentation R f) f M n hn⟩
 

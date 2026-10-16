@@ -11,6 +11,8 @@ public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Localization.SmallModel
 public import Quillen.Localization.Serre.LocalizationTarget
+public import Aglib.CategoryTheory.SmallModel.Functor
+public import Aglib.CategoryTheory.SmallModel.Localization
 
 /-!
 # Canonical connective localization on actual small exact models
@@ -66,7 +68,7 @@ variable {C : Type u₁} {D : Type u₂} [Category.{v₁} C] [Category.{v₂} D]
 
 /-- The actual Serre kernel in the chosen source small model. -/
 abbrev supported : ObjectProperty (SmallModel.{w} C) :=
-  (SmallModelLocalization.functor F.toFunctor).kernel
+  (CategoryTheory.SmallModel.functor F.toFunctor).kernel
 
 /-- The genuine supported K-term in the chosen small model. -/
 abbrev SupportedK (n : ℕ) := (CategoryTheory.ObjectProperty.subcategoryExactStructure (supported
@@ -80,12 +82,12 @@ def inclusionKMap (n : ℕ) : SupportedK F n →* (abelianExactStructure C).Smal
 /-- The boundary from the actual target, with the canonical small exact-structure comparison. -/
 def connectingHom (n : ℕ) : (abelianExactStructure D).SmallK (n + 1) →* SupportedK F n :=
   (SerreLocalization.actualConnectingHom (supported F)
-    (SmallModelLocalization.functor F.toFunctor) n).comp
+    (CategoryTheory.SmallModel.functor F.toFunctor) n).comp
       (SmallModelLocalization.standardKEquiv D (n + 1)).toMonoidHom
 
 lemma KMap_comparison (n : ℕ) (x : (abelianExactStructure C).SmallK n) :
     SmallModelLocalization.standardKEquiv D n (F.smallKMap n x) =
-      SerreLocalization.KMap (supported F) (SmallModelLocalization.functor F.toFunctor) n
+      SerreLocalization.KMap (supported F) (CategoryTheory.SmallModel.functor F.toFunctor) n
         (SmallModelLocalization.standardKEquiv C n x) := by
   exact DFunLike.congr_fun (SmallModelLocalization.smallKMap_comparison F n) x
 
@@ -94,7 +96,7 @@ theorem inclusion_range_eq_KMap_ker (n : ℕ) :
     (inclusionKMap F n).range = (F.smallKMap n).ker := by
   apply exact_transport (inclusionKMap F n) (F.smallKMap n)
     (Devissage.KMap (supported F) n)
-    (SerreLocalization.KMap (supported F) (SmallModelLocalization.functor F.toFunctor) n)
+    (SerreLocalization.KMap (supported F) (CategoryTheory.SmallModel.functor F.toFunctor) n)
     (MulEquiv.refl _) (SmallModelLocalization.standardKEquiv C n)
     (SmallModelLocalization.standardKEquiv D n)
   · intro a
@@ -106,9 +108,9 @@ theorem inclusion_range_eq_KMap_ker (n : ℕ) :
 theorem KMap_range_eq_connecting_ker (n : ℕ) :
     (F.smallKMap (n + 1)).range = (connectingHom F n).ker := by
   apply exact_transport (F.smallKMap (n + 1)) (connectingHom F n)
-    (SerreLocalization.KMap (supported F) (SmallModelLocalization.functor F.toFunctor) (n + 1))
+    (SerreLocalization.KMap (supported F) (CategoryTheory.SmallModel.functor F.toFunctor) (n + 1))
     (SerreLocalization.actualConnectingHom (supported F)
-      (SmallModelLocalization.functor F.toFunctor) n)
+      (CategoryTheory.SmallModel.functor F.toFunctor) n)
     (SmallModelLocalization.standardKEquiv C (n + 1))
     (SmallModelLocalization.standardKEquiv D (n + 1)) (MulEquiv.refl _)
   · exact KMap_comparison F (n + 1)
@@ -120,7 +122,7 @@ theorem connecting_range_eq_inclusion_ker (n : ℕ) :
     (connectingHom F n).range = (inclusionKMap F n).ker := by
   apply exact_transport (connectingHom F n) (inclusionKMap F n)
     (SerreLocalization.actualConnectingHom (supported F)
-      (SmallModelLocalization.functor F.toFunctor) n)
+      (CategoryTheory.SmallModel.functor F.toFunctor) n)
     (Devissage.KMap (supported F) n)
     (SmallModelLocalization.standardKEquiv D (n + 1)) (MulEquiv.refl _)
     (SmallModelLocalization.standardKEquiv C n)
@@ -133,7 +135,7 @@ theorem connecting_range_eq_inclusion_ker (n : ℕ) :
 theorem KZero_surjective : Function.Surjective (F.smallKMap 0) := by
   intro y
   obtain ⟨x, hx⟩ := SerreLocalization.actualKZero_surjective (supported F)
-    (SmallModelLocalization.functor F.toFunctor) (SmallModelLocalization.standardKEquiv D 0 y)
+    (CategoryTheory.SmallModel.functor F.toFunctor) (SmallModelLocalization.standardKEquiv D 0 y)
   refine ⟨(SmallModelLocalization.standardKEquiv C 0).symm x,
     (SmallModelLocalization.standardKEquiv D 0).injective ?_⟩
   rw [KMap_comparison, MulEquiv.apply_symm_apply, hx]

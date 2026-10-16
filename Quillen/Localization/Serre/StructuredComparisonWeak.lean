@@ -9,6 +9,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.NormalizedStructuredComma
 public import Quillen.Localization.Serre.LocalizationLESAdapter
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-! Transport from the genuine normalized structured identity comparison to
 the already defined based localization comparison. The missing geometric
@@ -45,13 +46,14 @@ theorem structuredFiberComparison_bijective_of_eq (c : C) (d : D) (h : F.obj c =
 end Quillen.TheoremB
 
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
 theorem quotientNormalized_obj_zero :
     (quotientNormalizedQ P).obj (abelianExactStructure C).qZero =
-      (quotientExactStructure P).qZero := rebaseFunctor_obj_base _ _ _ _
+      ((abelianExactStructure P.isoModSerre.Localization)).qZero := rebaseFunctor_obj_base _ _ _ _
 
 theorem normalizedSerreToZeroStructuredComma_obj_zero :
     (normalizedSerreToZeroStructuredComma P).obj
@@ -67,7 +69,8 @@ theorem normalizedSerreToZeroStructuredComma_obj_zero :
         P).toFunctor.mapZeroObject)
   refine StructuredArrow.obj_ext _ _ hi ?_
   apply (cancel_mono (eqToHom (quotientNormalized_obj_zero P))).1
-  exact ((quotientExactStructure P).qHom_subsingleton_of_isZero _ _ (isZero_zero _)).elim _ _
+  exact (((abelianExactStructure P.isoModSerre.Localization)).qHom_subsingleton_of_isZero _ _
+    (isZero_zero _)).elim _ _
 
 theorem normalizedSerreToZeroStructuredComma_map_basepoint :
     classifyingSpaceMap (normalizedSerreToZeroStructuredComma P)
@@ -99,13 +102,14 @@ theorem basedLocalizationFiberComparison_bijective_of_structured (n : ℕ)
     (normalizedSerreToZeroStructuredComma_map_basepoint P) n
   have h₂ := TheoremB.structuredFiberComparison_bijective_of_eq
     (quotientNormalizedQ P) (abelianExactStructure C).qZero
-    (quotientExactStructure P).qZero (quotientNormalized_obj_zero P) n hb
+    ((abelianExactStructure P.isoModSerre.Localization)).qZero (quotientNormalized_obj_zero P) n hb
   have hcomp := homotopyGroupMap_bijective_comp
     (classifyingSpaceMap (normalizedSerreToZeroStructuredComma P)).hom
-    (TheoremB.structuredFiberComparison (quotientNormalizedQ P) (quotientExactStructure P).qZero)
+    (TheoremB.structuredFiberComparison (quotientNormalizedQ P) ((abelianExactStructure
+      P.isoModSerre.Localization)).qZero)
     (normalizedSerreToZeroStructuredComma_map_basepoint P)
     (TheoremB.structuredFiberComparison_identity_of_eq (quotientNormalizedQ P)
-      (abelianExactStructure C).qZero (quotientExactStructure P).qZero
+      (abelianExactStructure C).qZero ((abelianExactStructure P.isoModSerre.Localization)).qZero
       (quotientNormalized_obj_zero P)) n h₁ h₂
   exact homotopyGroupMap_bijective_of_based_homotopy
     (normalizedStructuredFiberComparison_basepoint P)

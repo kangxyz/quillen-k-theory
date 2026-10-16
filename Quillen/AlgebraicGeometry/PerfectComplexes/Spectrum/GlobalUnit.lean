@@ -19,6 +19,8 @@ retained.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -30,7 +32,7 @@ open Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
 
 /-- Actual degreewise multiplication by a global unit on the original ambient complexes. -/
 def complexGlobalUnitIso (X : Scheme.{u}) (r : (Γ(X, ⊤))ˣ) :
-    𝟭 (Complex X) ≅ 𝟭 (Complex X) :=
+    𝟭 (CochainComplex X.Modules ℤ) ≅ 𝟭 (CochainComplex X.Modules ℤ) :=
   (Functor.mapHomologicalComplexIdIso _ _).symm ≪≫
     NatIso.mapHomologicalComplex (AlgebraicGeometry.Scheme.Modules.globalUnitIso X r) (.up ℤ) ≪≫
       Functor.mapHomologicalComplexIdIso _ _
@@ -49,7 +51,7 @@ def perfectFlatPullbackUnitIso {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
       Functor.rightUnitor _
 
 lemma complexGlobalUnitIso_original_terms (X : Scheme.{u}) (r : (Γ(X, ⊤))ˣ)
-    (K : Complex X) (n : ℤ) :
+    (K : CochainComplex X.Modules ℤ) (n : ℤ) :
     ((complexGlobalUnitIso X r).hom.app K).f n =
       (AlgebraicGeometry.Scheme.Modules.globalUnitIso X r).hom.app (K.X n) := by
   apply SheafOfModules.hom_ext

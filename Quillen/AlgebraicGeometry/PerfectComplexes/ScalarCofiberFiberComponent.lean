@@ -16,6 +16,8 @@ point is exactly the image of its original constant-component transpose.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 open Quillen.Waldhausen
 

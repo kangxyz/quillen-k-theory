@@ -8,6 +8,7 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.ScalarSupportExtension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedProjectorExtension
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-!
 # Source support in affine roofs and stabilized extension
@@ -85,12 +86,16 @@ theorem original_geometric_roof_with_two_supports (R : CommRingCat.{u})
     (r t : R)
     (hr : IsZero (DerivedCategory.Q.obj ((localize r (.up ℤ)).obj P)))
     (ht : IsZero (DerivedCategory.Q.obj ((localize t (.up ℤ)).obj P)))
-    (α : (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj P)) ⟶
-      (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj B))) :
+    (α : (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+      ((restrict W.ι).obj ((associatedComplex R).obj P)) ⟶
+      (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+        ((restrict W.ι).obj ((associatedComplex R).obj B))) :
     ∃ (P' : ModuleComplex R) (_ : moduleStrictPerfect R P') (q : P' ⟶ P) (g : P' ⟶ B),
       QuasiIso ((restrict W.ι).map ((associatedComplex R).map q)) ∧
-      (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map q)) ≫ α =
-        (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map g)) ∧
+      (DerivedCategory.Q (C := W.toScheme.Modules)).map
+        ((restrict W.ι).map ((associatedComplex R).map q)) ≫ α =
+        (DerivedCategory.Q (C := W.toScheme.Modules)).map
+          ((restrict W.ι).map ((associatedComplex R).map g)) ∧
       IsZero (DerivedCategory.Q.obj ((localize r (.up ℤ)).obj P')) ∧
       IsZero (DerivedCategory.Q.obj ((localize t (.up ℤ)).obj P')) := by
   obtain ⟨P', hP', q, g, hq, he, hs⟩ :=
@@ -102,13 +107,15 @@ additional support condition absent from the open denominator cover. -/
 theorem original_retract_stabilizes_with_support (R : CommRingCat.{u})
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
     {P : ModuleComplex R} (hP : moduleStrictPerfect R P)
-    (E : Complex W.toScheme) (hE : locallyPerfect W.toScheme E)
-    (r : Retract ((toDerived W.toScheme).obj E)
-      ((toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj P))))
+    (E : CochainComplex W.toScheme.Modules ℤ) (hE : locallyPerfect W.toScheme E)
+    (r : Retract ((DerivedCategory.Q (C := W.toScheme.Modules)).obj E)
+      ((DerivedCategory.Q (C := W.toScheme.Modules)).obj
+        ((restrict W.ι).obj ((associatedComplex R).obj P))))
     (z : R) (hz : IsZero (DerivedCategory.Q.obj ((localize z (.up ℤ)).obj P))) :
     ∃ (Q : ModuleComplex R), moduleStrictPerfect R Q ∧
-      Nonempty ((toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj Q)) ≅
-        (toDerived W.toScheme).obj (E ⊞ E⟦(1 : ℤ)⟧)) ∧
+      Nonempty ((DerivedCategory.Q (C := W.toScheme.Modules)).obj
+        ((restrict W.ι).obj ((associatedComplex R).obj Q)) ≅
+        (DerivedCategory.Q (C := W.toScheme.Modules)).obj (E ⊞ E⟦(1 : ℤ)⟧)) ∧
       IsZero (DerivedCategory.Q.obj ((localize z (.up ℤ)).obj Q)) := by
   obtain ⟨Q, hQ, eQ, hs⟩ :=
     exists_stabilized_extension_preserving_support_of_retract R W hW hP E hE r
@@ -118,8 +125,9 @@ theorem original_retract_stabilizes_with_support (R : CommRingCat.{u})
 its preceding original arrow vanishes in the derived category. -/
 theorem original_cone_inclusion_split (R : CommRingCat.{u}) {U : Scheme.{u}}
     (j : U ⟶ Spec R) [IsOpenImmersion j] {P B : ModuleComplex R} (f : P ⟶ B)
-    (hf : (toDerived U).map ((restrict j).map ((associatedComplex R).map f)) = 0) :
-    IsSplitMono ((toDerived U).map ((restrict j).map
+    (hf : (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map ((associatedComplex R).map f))
+      = 0) :
+    IsSplitMono ((DerivedCategory.Q (C := U.Modules)).map ((restrict j).map
       ((associatedComplex R).map (CochainComplex.mappingCone.inr f)))) := by
   obtain ⟨ρ, hρ⟩ := exists_retraction_original_cone_inclusion_of_restrict_zero R j f hf
   exact IsSplitMono.mk' ⟨ρ, hρ⟩

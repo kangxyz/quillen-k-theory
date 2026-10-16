@@ -6,7 +6,8 @@ Authors: kangxyz
 module
 
 public import Aglib.Topology.Sheaves.BasisExactness
-public import Aglib.AlgebraicGeometry.Modules.Epimorphisms
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Aglib.Algebra.Category.ModuleCat.Sheaf.Epimorphisms
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Limits
 
 /-!

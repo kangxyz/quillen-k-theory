@@ -19,6 +19,7 @@ public import Quillen.Devissage.FiltrationSubcategory
 public import Quillen.Devissage.FiltrationFunctor
 public import Quillen.Devissage.FiltrationRefinement
 public import Quillen.Devissage.Homotopical
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Support.SmallModel
 
 /-!
 # Actual closed-support dévissage on a noetherian scheme

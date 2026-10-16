@@ -7,6 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.QuasicoherentRepresentative
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativePerfectPushforward
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Actual projective-line direct image on arbitrary intrinsic perfect objects
 
@@ -17,6 +18,8 @@ The strict representative is asserted objectwise; no natural choice of models
 or functorial diagonal-generation statement is inferred from these isomorphisms.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

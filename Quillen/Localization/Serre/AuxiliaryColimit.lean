@@ -10,6 +10,7 @@ public import Quillen.Localization.Serre.AuxiliaryDiagram
 public import Quillen.Localization.Serre.AuxiliaryArrowLift
 public import Quillen.Localization.Serre.AuxiliaryRefinement
 public import Quillen.Topology.FilteredRealization.NerveColimit
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-! # The isomorphism structured comma as a filtered nerve colimit -/
 @[expose] public section
@@ -20,9 +21,10 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
-  (P : ObjectProperty C) [P.IsSerreClass] (V : Quotient P)
+  (P : ObjectProperty C) [P.IsSerreClass] (V : P.isoModSerre.Localization)
 
 /-- The actual diagram of stage nerves. -/
 def quotientAuxiliaryNerveDiagram : QuotientAuxiliaryLift P V ⥤ SSet.{u} :=

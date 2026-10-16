@@ -11,6 +11,7 @@ public import Quillen.CategoryTheory.QConstruction.Abelian.Surjections
 public import Mathlib.CategoryTheory.Comma.Over.Pullback
 public import Mathlib.CategoryTheory.Limits.Constructions.Over.Connected
 public import Mathlib.CategoryTheory.Adjunction.Limits
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # The auxiliary kernel categories for Serre localization
@@ -35,7 +36,8 @@ open scoped ZeroObject
 
 namespace Quillen.SerreLocalization
 
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
 
 /-- Epimorphic underlying maps in the slice. -/

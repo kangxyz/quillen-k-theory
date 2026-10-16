@@ -10,8 +10,12 @@ public import Quillen.Algebra.ModuleComplex.PrincipalProjectiveDescent
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalFreeExtension
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Exact
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Exact
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedMorphisms
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.RestrictionHom
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedMorphisms
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Mathlib.Algebra.Homology.DerivedCategory.Basic
 /-!
 # Actual principal-open strict extension up to a shift
 
@@ -36,6 +40,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.Affine
@@ -96,22 +101,24 @@ strict restriction, with no freeness hypothesis on the original target. -/
 theorem exists_principal_strict_derived_extension_after_shift (R : CommRingCat.{u}) (r : R)
     (P : StrictPerfect (Spec (.of (Localization.Away r)))) :
     ∃ Q : StrictPerfect (Spec R), Nonempty
-      ((toDerived _).obj ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+      ((DerivedCategory.Q).obj
+        ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
         r)).obj Q.obj) ≅
-        (toDerived _).obj (P.obj ⊞ P.obj⟦(1 : ℤ)⟧)) := by
+        (DerivedCategory.Q).obj (P.obj ⊞ P.obj⟦(1 : ℤ)⟧)) := by
   obtain ⟨Q, ⟨e⟩⟩ := exists_principal_strict_extension_after_shift R r P
-  exact ⟨Q, ⟨asIso ((toDerived _).map e.hom)⟩⟩
+  exact ⟨Q, ⟨asIso ((DerivedCategory.Q).map e.hom)⟩⟩
 
 /-- Every original strict target is a retract of an actual restricted strict
 object in the original ambient sheaf derived category. -/
 theorem exists_principal_strict_derived_retract (R : CommRingCat.{u}) (r : R)
     (P : StrictPerfect (Spec (.of (Localization.Away r)))) :
     ∃ Q : StrictPerfect (Spec R), Nonempty
-      (Retract ((toDerived _).obj P.obj)
-        ((toDerived _).obj ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
+      (Retract ((DerivedCategory.Q).obj P.obj)
+        ((DerivedCategory.Q).obj
+          ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
           R r)).obj Q.obj))) := by
   obtain ⟨Q, i, p, ⟨h⟩⟩ := exists_principal_strict_homotopy_retract R r P
-  refine ⟨Q, ⟨⟨(toDerived _).map i, (toDerived _).map p, ?_⟩⟩⟩
-  rw [← Functor.map_comp, toDerived_map_eq_of_homotopy h, CategoryTheory.Functor.map_id]
+  refine ⟨Q, ⟨⟨(DerivedCategory.Q).map i, (DerivedCategory.Q).map p, ?_⟩⟩⟩
+  rw [← Functor.map_comp, DerivedCategory.Q_map_eq_of_homotopy _ h, CategoryTheory.Functor.map_id]
 
 end Quillen.PerfectComplexes.Affine

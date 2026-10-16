@@ -10,6 +10,7 @@ public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.LocalizationComma
 public import Quillen.Localization.Serre.BasedFiberComparison
 public import Quillen.CategoryTheory.TheoremB.FunctorIso
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-! The zero-comma equivalence for the exact normalized functors underlying KMap. -/
 @[expose] public section
@@ -24,15 +25,18 @@ open scoped ZeroObject Topology
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
 /-- The canonical natural isomorphism from the raw quotient to its zero normalization. -/
 def quotientNormalizedIso : quotientMapQ P ≅ quotientNormalizedQ P :=
   rebaseFunctorIso (quotientMapQ P) (abelianExactStructure C).qZero
-    (quotientExactStructure P).qZero
-    ((quotientExactStructure P).qIsoOfIso (quotientExactFunctor P).toFunctor.mapZeroObject)
+    ((abelianExactStructure P.isoModSerre.Localization)).qZero
+    (((abelianExactStructure P.isoModSerre.Localization)).qIsoOfIso
+      ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+      P.isoModSerre.Q)).toFunctor.mapZeroObject)
 
 /-- The canonical natural isomorphism from the raw inclusion to its zero normalization. -/
 def inclusionNormalizedIso : Devissage.mapQ P ≅ inclusionNormalizedQ P :=
@@ -45,7 +49,8 @@ def inclusionNormalizedIso : Devissage.mapQ P ≅ inclusionNormalizedQ P :=
 /-- The costructured-arrow category of Q-arrows from the image of the normalized quotient
 functor to the quotient Q-zero object. -/
 abbrev NormalizedZeroComma :=
-  CostructuredArrow (quotientNormalizedQ P) (quotientExactStructure P).qZero
+  CostructuredArrow (quotientNormalizedQ P) ((abelianExactStructure
+    P.isoModSerre.Localization)).qZero
 
 /-- The normalized nullhomotopy determines the exact normalized zero-comma comparison. -/
 def normalizedSerreToZeroComma :
@@ -58,10 +63,11 @@ def normalizedSerreToZeroComma :
 natural isomorphisms, retaining the normalized structure arrows. -/
 def normalizedSerreToZeroCommaIso :
     serreToZeroComma P ⋙ (CostructuredArrow.mapNatIso
-      (T := (quotientExactStructure P).qZero) (quotientNormalizedIso P)).functor ≅
+      (T := ((abelianExactStructure P.isoModSerre.Localization)).qZero) (quotientNormalizedIso
+        P)).functor ≅
       normalizedSerreToZeroComma P :=
   NatIso.ofComponents (fun X ↦ CostructuredArrow.isoMk ((inclusionNormalizedIso P).app X)
-    (by exact ((quotientExactStructure P).qHom_subsingleton_of_isZero _ _
+    (by exact (((abelianExactStructure P.isoModSerre.Localization)).qHom_subsingleton_of_isZero _ _
       (isZero_zero _)).elim _ _)) (by
     intro X Y f
     apply CostructuredArrow.hom_ext
@@ -88,22 +94,25 @@ def normalizedZeroCommaClassifyingHomotopyEquiv :
 
 @[simp] theorem normalizedSerreToZeroComma_projection :
     normalizedSerreToZeroComma P ⋙ CostructuredArrow.proj (quotientNormalizedQ P)
-      (quotientExactStructure P).qZero = inclusionNormalizedQ P := rfl
+      ((abelianExactStructure P.isoModSerre.Localization)).qZero = inclusionNormalizedQ P := rfl
 
 @[simp] theorem normalizedSerreToZeroComma_transformation :
     Functor.whiskerLeft (normalizedSerreToZeroComma P)
-      (TheoremB.commaTransformation (quotientNormalizedQ P) (quotientExactStructure P).qZero) =
+      (TheoremB.commaTransformation (quotientNormalizedQ P) ((abelianExactStructure
+        P.isoModSerre.Localization)).qZero) =
       (normalizedQuotientInclusionZeroIso P).hom := rfl
 
 /-- The complete normalized comma homotopy is the already-chosen based
 localization nullhomotopy, including every value of its path coordinate. -/
 theorem normalizedSerreToZeroComma_nullhomotopy (t : unitInterval)
     (x : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace) :
-    TheoremB.commaNullhomotopy (quotientNormalizedQ P) (quotientExactStructure P).qZero
+    TheoremB.commaNullhomotopy (quotientNormalizedQ P) ((abelianExactStructure
+      P.isoModSerre.Localization)).qZero
       (t, classifyingSpaceMap (normalizedSerreToZeroComma P) x) =
       normalizedQuotientInclusionHomotopy P (t, x) := by
   change classifyingSpaceNaturalTransformationHomotopy
-    (TheoremB.commaTransformation (quotientNormalizedQ P) (quotientExactStructure P).qZero)
+    (TheoremB.commaTransformation (quotientNormalizedQ P) ((abelianExactStructure
+      P.isoModSerre.Localization)).qZero)
     (t, classifyingSpaceMap (normalizedSerreToZeroComma P) x) =
     classifyingSpaceNaturalTransformationHomotopy (normalizedQuotientInclusionZeroIso P).hom (t, x)
   rw [← classifyingSpaceNaturalTransformationHomotopy_whiskerLeft,
@@ -112,7 +121,8 @@ theorem normalizedSerreToZeroComma_nullhomotopy (t : unitInterval)
 /-- The normalized zero-comma route gives exactly the existing based fiber
 comparison, not merely some homotopic map into the same unbased fiber. -/
 theorem normalizedSerreToZeroComma_fiberComparison :
-    (TheoremB.fiberComparison (quotientNormalizedQ P) (quotientExactStructure P).qZero).comp
+    (TheoremB.fiberComparison (quotientNormalizedQ P) ((abelianExactStructure
+      P.isoModSerre.Localization)).qZero).comp
       (classifyingSpaceMap (normalizedSerreToZeroComma P)).hom =
       basedLocalizationFiberComparison P := by
   apply ContinuousMap.ext
@@ -120,10 +130,12 @@ theorem normalizedSerreToZeroComma_fiberComparison :
   apply Subtype.ext
   apply Prod.ext
   · change classifyingSpaceMap (CostructuredArrow.proj (quotientNormalizedQ P)
-        (quotientExactStructure P).qZero) (classifyingSpaceMap (normalizedSerreToZeroComma P) x) =
+        ((abelianExactStructure P.isoModSerre.Localization)).qZero) (classifyingSpaceMap
+          (normalizedSerreToZeroComma P) x) =
       classifyingSpaceMap (inclusionNormalizedQ P) x
     have h := classifyingSpaceMap_comp (normalizedSerreToZeroComma P)
-      (CostructuredArrow.proj (quotientNormalizedQ P) (quotientExactStructure P).qZero)
+      (CostructuredArrow.proj (quotientNormalizedQ P) ((abelianExactStructure
+        P.isoModSerre.Localization)).qZero)
     exact ConcreteCategory.congr_hom h.symm x
   · apply ContinuousMap.ext
     intro t

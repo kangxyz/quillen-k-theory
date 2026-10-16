@@ -7,6 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Tautological
 public import Mathlib.Data.ZMod.Basic
+public import Aglib.AlgebraicGeometry.Modules.Restriction.Overlap
 
 /-! Actual coordinate projections, transition units and zero-ring tautological consumers. -/
 @[expose] public section
@@ -69,7 +70,7 @@ theorem original_transition_scalar :
         (tautologicalLinePlusIso R).hom ≫
       (Scheme.Modules.restrictUnitIso (pullback.fst (plusChart R) (minusChart R))).hom ≫
       unitMul _ (↑(overlapCoordinateUnit R)) =
-    (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso (plusChart R) (minusChart
+    (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso (plusChart R) (minusChart
       R)).hom.app
         (tautologicalLine R) ≫
       (Scheme.Modules.restrictFunctor (pullback.snd (plusChart R) (minusChart R))).map

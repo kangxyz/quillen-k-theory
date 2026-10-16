@@ -20,6 +20,8 @@ The forward base augmentation is pulled and totalized before applying G0.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.Modules.Godement
 
 open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients

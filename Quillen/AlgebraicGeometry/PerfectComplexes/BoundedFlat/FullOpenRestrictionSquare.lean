@@ -86,7 +86,7 @@ def boundedFlatAffineFullOpenUnit (a : Under R) (r : (Γ(Spec a.right, ⊤))ˣ) 
 
 /-- Actual complex restriction sends the original scalar to that exact target unit. -/
 theorem boundedFlatAffineFullOpenRestriction_scalar (a : Under R)
-    (r : (Γ(Spec a.right, ⊤))ˣ) (K : Complex (Spec a.right)) :
+    (r : (Γ(Spec a.right, ⊤))ˣ) (K : CochainComplex (Spec a.right).Modules ℤ) :
     (restrict (inclusion j a)).map ((complexGlobalScalar (Spec a.right) (↑r)).app K) =
       (complexGlobalUnitIso (openSpace j a) (boundedFlatAffineFullOpenUnit j a r)).hom.app
         ((restrict (inclusion j a)).obj K) :=

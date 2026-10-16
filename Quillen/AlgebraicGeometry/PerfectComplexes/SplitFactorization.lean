@@ -9,7 +9,12 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SplitKTheory
 public import Quillen.Waldhausen.SplitComplexes.FactorizationSubcategory
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Mathlib.Algebra.Homology.DerivedCategory.Basic
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 /-!
 # Actual split-cofibration factorizations of perfect complexes
 
@@ -34,31 +39,11 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry CochainComplex
 
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes
-
-/-- The actual mapping cone of a map between locally-perfect complexes is
-locally perfect. Strict representatives are needed only near each point. -/
-theorem locallyPerfect_mappingCone {X : Scheme.{u}} {K L : Complex X}
-    (hK : locallyPerfect X K) (hL : locallyPerfect X L) (f : K ⟶ L) :
-    locallyPerfect X (mappingCone f) := by
-  apply locallyPerfect_of_openImmersion_models
-  intro x
-  obtain ⟨U, hxU, ⟨P, ⟨eP⟩⟩, ⟨Q, ⟨eQ⟩⟩⟩ := exists_common_strictModels hK hL x
-  let fU := (restrict U.ι).map f
-  let T := (toDerived U.toScheme).mapTriangle.obj (mappingCone.triangle fU)
-  obtain ⟨Y, j, hj, y, hy, h⟩ := exists_local_strictModel_of_triangle T
-    (mappingConeTriangle_distinguished fU) P.property Q.property eP eQ (Iso.refl _) ⟨x, hxU⟩
-  let := hj
-  let e := mappingCone.mapHomologicalComplexIso f (Scheme.Modules.restrictFunctor U.ι)
-  refine ⟨Y, j ≫ U.ι, inferInstance, y, ?_, ?_⟩
-  · change U.ι (j y) = x
-    rw [hy]
-    rfl
-  · exact (h.of_iso ((restrict j).mapIso e.symm)).of_iso
-      ((restrictCompIso j U.ι).app (mappingCone f))
 
 /-- Every map of strict-perfect complexes has the actual split-cofibration
 factorization, with strict-perfect middle object and quotient. -/

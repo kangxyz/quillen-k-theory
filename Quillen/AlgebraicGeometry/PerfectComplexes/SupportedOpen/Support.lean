@@ -133,9 +133,9 @@ theorem perfectSupportedOpenAcyclicToSupported_cofibration
     (perfectSupportedWaldhausen (T ⊔ j.opensRange).ι).cof ((perfectSupportedOpenAcyclicToSupported j
       T).map f) := by
   obtain ⟨Z, hZ, p, hp, hS⟩ :=
-    (ExactSubcategory.inflation_iff (abelianExactStructure (Complex X))
+    (ExactSubcategory.inflation_iff (abelianExactStructure (CochainComplex X.Modules ℤ))
       (perfectSupported T.ι) f.hom).1 hf
-  apply (ExactSubcategory.inflation_iff (abelianExactStructure (Complex X))
+  apply (ExactSubcategory.inflation_iff (abelianExactStructure (CochainComplex X.Modules ℤ))
     (perfectSupported (T ⊔ j.opensRange).ι) ((perfectSupportedOpenAcyclicToSupported j T).map f)).2
   refine ⟨Z, (perfectSupported_sup_opensRange_iff j T Z).mpr ⟨hZ, ?_⟩, p, hp, hS⟩
   have hS' : (ShortComplex.mk f.hom.hom p hp).ShortExact := hS

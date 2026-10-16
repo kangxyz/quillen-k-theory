@@ -19,6 +19,8 @@ constructed vector-bundle S-comparison map; no equivalence is asserted.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 open Quillen.Waldhausen.GilletWaldhausen
 

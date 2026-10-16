@@ -7,8 +7,10 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Flat.Generators
 public import Quillen.Algebra.Homology.RelativeProjectiveFactorization
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.BoundedFlatModels
+public import Aglib.AlgebraicGeometry.Modules.Complex.Flat.Models
+public import Aglib.AlgebraicGeometry.Modules.Complex.Sheafification
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatExtensions
+public import Aglib.AlgebraicGeometry.Modules.Flat.ProjectivePresheaves
 
 /-!
 # Relative flat factorization of original sheaf-complex maps
@@ -105,6 +107,8 @@ theorem exists_boundedAbove_relative_flat_factorization (X : Scheme.{u})
   refine ⟨M, Q, i, p, q, w, ?_, ?_, hS, ?_, ?_, hM, hQ⟩
   · let : QuasiIso p₀ := hp₀
     have : A.PreservesHomology := by dsimp [A]; infer_instance
+    have : A.Additive :=
+      inferInstanceAs (SheafOfModulesOfCommRing.associatedSheaf X.sheaf).Additive
     have : QuasiIso (AH.map p₀) := by
       exact HomologicalComplex.quasiIso_map_of_preservesHomology p₀ A
     dsimp [p]

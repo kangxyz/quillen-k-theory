@@ -8,8 +8,12 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
-public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalTriangles
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalTriangles
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Mathlib.Algebra.Homology.DerivedCategory.ShortExact
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-!
 # Actual extension closure of locally perfect complexes
 
@@ -34,6 +38,7 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open CategoryTheory.Pretriangulated
 
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 
 attribute [local instance] Abelian.hasFiniteBiproducts
 
@@ -41,7 +46,8 @@ namespace Quillen.PerfectComplexes
 
 /-- Local perfectness is closed under actual short exact sequences of sheaf
 complexes. No global strict representative or resolution property is assumed. -/
-theorem locallyPerfect_of_shortExact {X : Scheme.{u}} {S : ShortComplex (Complex X)}
+theorem locallyPerfect_of_shortExact {X : Scheme.{u}}
+    {S : ShortComplex (CochainComplex X.Modules ℤ)}
     (hS : S.ShortExact) (h₁ : locallyPerfect X S.X₁) (h₃ : locallyPerfect X S.X₃) :
     locallyPerfect X S.X₂ := by
   apply locallyPerfect_of_openImmersion_models
@@ -49,13 +55,13 @@ theorem locallyPerfect_of_shortExact {X : Scheme.{u}} {S : ShortComplex (Complex
   obtain ⟨U, hxU, ⟨P, ⟨eP⟩⟩, ⟨Q, ⟨eQ⟩⟩⟩ := exists_common_strictModels h₁ h₃ x
   let SU := S.map (restrict U.ι)
   have hSU : SU.ShortExact := hS.map_of_exact (restrict U.ι)
-  let T := shortExactTriangle hSU
-  let Q' := (shiftFunctor (Complex U.toScheme) (-1)).obj Q.obj
-  let eQ' : T.invRotate.obj₁ ≅ (toDerived U.toScheme).obj Q' :=
-    (shiftFunctor (Derived U.toScheme) (-1)).mapIso eQ ≪≫
-      ((toDerived U.toScheme).commShiftIso (-1)).symm.app Q.obj
+  let T := DerivedCategory.triangleOfSES hSU
+  let Q' := (shiftFunctor (CochainComplex U.toScheme.Modules ℤ) (-1)).obj Q.obj
+  let eQ' : T.invRotate.obj₁ ≅ (DerivedCategory.Q (C := U.toScheme.Modules)).obj Q' :=
+    (shiftFunctor (DerivedCategory U.toScheme.Modules) (-1)).mapIso eQ ≪≫
+      ((DerivedCategory.Q (C := U.toScheme.Modules)).commShiftIso (-1)).symm.app Q.obj
   obtain ⟨Y, j, hj, y, hy, h⟩ := exists_local_strictModel_of_triangle T.invRotate
-    (inv_rot_of_distTriang T (shortExactTriangle_distinguished hSU))
+    (inv_rot_of_distTriang T (DerivedCategory.triangleOfSES_distinguished hSU))
     (strictPerfect_shift Q.property (-1)) P.property eQ' eP (Iso.refl _) ⟨x, hxU⟩
   let := hj
   refine ⟨Y, j ≫ U.ι, inferInstance, y, ?_, ?_⟩
@@ -65,11 +71,12 @@ theorem locallyPerfect_of_shortExact {X : Scheme.{u}} {S : ShortComplex (Complex
   · exact h.of_iso ((restrictCompIso j U.ι).app S.X₂)
 
 instance locallyPerfect_extensionClosed (X : Scheme.{u}) :
-    (abelianExactStructure (Complex X)).IsExtensionClosed (locallyPerfect X) where
+    (abelianExactStructure (CochainComplex X.Modules ℤ)).IsExtensionClosed (locallyPerfect X) where
   prop_middle := locallyPerfect_of_shortExact
 
 instance locallyPerfect_closedUnderFiniteProducts (X : Scheme.{u}) :
     (locallyPerfect X).IsClosedUnderFiniteProducts :=
-  (abelianExactStructure (Complex X)).extensionClosed_finiteProducts (locallyPerfect X)
+  (abelianExactStructure (CochainComplex X.Modules ℤ)).extensionClosed_finiteProducts
+    (locallyPerfect X)
 
 end Quillen.PerfectComplexes

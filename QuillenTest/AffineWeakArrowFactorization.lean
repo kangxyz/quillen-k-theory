@@ -7,6 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.WeakArrowFactorization
 public import Mathlib.Data.ZMod.Basic
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-!
 # Original affine roof and weak-arrow factorization consumers
@@ -16,6 +17,8 @@ comma and factorization equations, actual categorical kernel sequences,
 and the non-domain and empty-spectrum cases.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.PerfectComplexes
 open Quillen.PerfectComplexes.Affine
@@ -46,17 +49,17 @@ lemma original_derived_equality {C : Type u} [Category.{v} C] [Abelian C]
 /-- The original sheaf-derived map from an actual strict complex is represented
 by an actual map into another strict complex over a non-domain. -/
 lemma non_domain_actual_map (P Q : StrictPerfect (Spec (.of (ZMod 6))))
-    (α : (toDerived _).obj P.obj ⟶ (toDerived _).obj Q.obj) :
-    ∃ f : P.obj ⟶ Q.obj, (toDerived _).map f = α :=
+    (α : (DerivedCategory.Q).obj P.obj ⟶ (DerivedCategory.Q).obj Q.obj) :
+    ∃ f : P.obj ⟶ Q.obj, (DerivedCategory.Q).map f = α :=
   exists_strict_chain_representative _ P Q α
 
 /-- The factorization supplies an original quasi-isomorphism cospan whose
 right projection represents the exact original derived inverse formula. -/
 lemma original_derived_fraction (R : CommRingCat.{u})
-    (P : StrictPerfect (Spec R)) (B B' : Complex (Spec R))
+    (P : StrictPerfect (Spec R)) (B B' : CochainComplex (Spec R).Modules ℤ)
     (hB' : locallyPerfect (Spec R) B') (w : P.obj ⟶ B) [QuasiIso w] (b : B' ⟶ B) :
-    ∃ (D : Complex (Spec R)) (v : B' ⟶ D) (d : D ⟶ B) (_ : QuasiIso v),
-      inv ((toDerived _).map v) ≫ (toDerived _).map b = (toDerived _).map d := by
+    ∃ (D : CochainComplex (Spec R).Modules ℤ) (v : B' ⟶ D) (d : D ⟶ B) (_ : QuasiIso v),
+      inv ((DerivedCategory.Q).map v) ≫ (DerivedCategory.Q).map b = (DerivedCategory.Q).map d := by
   obtain ⟨C, D, c, d, u, v, hD, hu, hv, hsq, he, hc, hd, hkc, hkd⟩ :=
     exists_strict_dual_factorization R P B B' hB' w b
   refine ⟨D, v, d, hv, ?_⟩
@@ -65,9 +68,9 @@ lemma original_derived_fraction (R : CommRingCat.{u})
 /-- Both actual component projections are ambient epimorphisms and their
 literal kernel sequences are short exact. -/
 lemma component_kernel_sequences (R : CommRingCat.{u})
-    (P : StrictPerfect (Spec R)) (B B' : Complex (Spec R))
+    (P : StrictPerfect (Spec R)) (B B' : CochainComplex (Spec R).Modules ℤ)
     (hB' : locallyPerfect (Spec R) B') (w : P.obj ⟶ B) [QuasiIso w] (b : B' ⟶ B) :
-    ∃ (C : StrictPerfect (Spec R)) (D : Complex (Spec R))
+    ∃ (C : StrictPerfect (Spec R)) (D : CochainComplex (Spec R).Modules ℤ)
       (c : C.obj ⟶ P.obj) (d : D ⟶ B),
       (ShortComplex.mk (kernel.ι c) c (kernel.condition c)).ShortExact ∧
       (ShortComplex.mk (kernel.ι d) d (kernel.condition d)).ShortExact ∧

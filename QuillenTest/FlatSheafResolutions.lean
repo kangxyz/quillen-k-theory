@@ -6,7 +6,9 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatCochainResolution
+public import Aglib.AlgebraicGeometry.Modules.Flat.Closure
+public import Aglib.AlgebraicGeometry.Modules.Complex.Flat.Resolution
+public import Aglib.AlgebraicGeometry.Modules.Complex.Flat.BoundedPullback
 
 /-! Semantic consumers of actual open-free flat resolutions and arbitrary pullback. -/
 @[expose] public section
@@ -19,7 +21,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open AlgebraicGeometry.Scheme.Modules
 namespace QuillenTest.FlatSheafResolutions
 
-open Quillen
 
 /-- Each original local section is actually hit by its open-free generator. -/
 theorem generator_hits_section (X : Scheme.{u}) (M : X.Modules) (U : X.Opens)

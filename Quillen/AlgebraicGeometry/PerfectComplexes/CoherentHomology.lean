@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Homology
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalRestriction
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Homology
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 
@@ -21,6 +22,8 @@ perfect-to-G K-theory map.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open ModuleCat
 open AlgebraicGeometry.Scheme.Modules.QuasiCoherent
 
@@ -35,7 +38,7 @@ namespace Quillen.PerfectComplexes
 /-- Actual locally perfect complexes have coherent homology on locally
 noetherian schemes, without termwise coherence or a global strict model. -/
 theorem locallyPerfect_coherent_homology {X : Scheme.{u}} [IsLocallyNoetherian X]
-    {K : Complex X} (hK : locallyPerfect X K) (i : ℤ) :
+    {K : CochainComplex X.Modules ℤ} (hK : locallyPerfect X K) (i : ℤ) :
     AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineLocallyFiniteType X (K.homology i) := by
   apply AlgebraicGeometry.Scheme.Modules.Coherent.affineLocallyFiniteType_of_openNeighborhoods
   intro x
@@ -96,7 +99,8 @@ def coherentHomologyRestrictIso {U X : Scheme.{u}}
 /-- Quasi-compactness supplies genuine finite homological support, while
 locally noetherianity supplies coherence in every degree. -/
 theorem locallyPerfect_bounded_coherent_homology {X : Scheme.{u}}
-    [IsLocallyNoetherian X] [CompactSpace X] {K : Complex X} (hK : locallyPerfect X K) :
+    [IsLocallyNoetherian X] [CompactSpace X] {K : CochainComplex X.Modules ℤ}
+      (hK : locallyPerfect X K) :
     (∀ i : ℤ, AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineLocallyFiniteType X (K.homology
       i)) ∧
       ∃ a b : ℤ, ∀ i : ℤ, i < a ∨ b < i → IsZero (K.homology i) :=

@@ -7,11 +7,12 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.Algebra.Homology.Embedding.CochainComplex.TruncGE
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Homology
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OppositeJointData
 public import Quillen.Waldhausen.Fibration.Rows.BaseFactorization
 public import Quillen.Waldhausen.Approximation.GeneralKEquivalence
 public import Quillen.Waldhausen.Duality.SConstruction
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-!
 # Original lower-bounded perfect-complex comparison
@@ -21,6 +22,8 @@ K-map in every degree. This module uses no Godement premise.
 -/
 
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open CategoryTheory.ExactCategory
 
@@ -38,7 +41,7 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.BoundedBelow
 
 /-- The actual original locally perfect complexes with lower-bounded terms. -/
-def objects (X : Scheme.{u}) : ObjectProperty (Complex X) := fun K =>
+def objects (X : Scheme.{u}) : ObjectProperty (CochainComplex X.Modules ℤ) := fun K =>
   locallyPerfect X K ∧ ∃ a : ℤ, K.IsStrictlyGE a
 
 /-- The full subcategory of locally perfect complexes whose terms vanish below some degree. -/
@@ -46,7 +49,7 @@ abbrev Obj (X : Scheme.{u}) := (objects X).FullSubcategory
 
 variable {X : Scheme.{u}}
 
-lemma objects_of_isZero {K : Complex X} (hK : IsZero K) : objects X K := by
+lemma objects_of_isZero {K : CochainComplex X.Modules ℤ} (hK : IsZero K) : objects X K := by
   refine ⟨locallyPerfect_of_strictPerfect (strictPerfect_of_isZero hK), 0, ?_⟩
   exact (CochainComplex.isStrictlyGE_iff _ _).mpr
     (fun n _ => (HomologicalComplex.eval X.Modules (ComplexShape.up ℤ) n).map_isZero hK)
@@ -54,7 +57,7 @@ lemma objects_of_isZero {K : Complex X} (hK : IsZero K) : objects X K := by
 instance containsZero : (objects X).ContainsZero where
   exists_zero := ⟨0, isZero_zero _, objects_of_isZero (isZero_zero _)⟩
 
-lemma objects_of_iso {K L : Complex X} (e : K ≅ L) (hK : objects X K) :
+lemma objects_of_iso {K L : CochainComplex X.Modules ℤ} (e : K ≅ L) (hK : objects X K) :
     objects X L := by
   obtain ⟨hp, a, ha⟩ := hK
   let := ha
@@ -63,7 +66,7 @@ lemma objects_of_iso {K L : Complex X} (e : K ≅ L) (hK : objects X K) :
 instance closedUnderIsomorphisms : (objects X).IsClosedUnderIsomorphisms where
   of_iso e hK := objects_of_iso e hK
 
-lemma objects_of_shortExact {S : ShortComplex (Complex X)} (hS : S.ShortExact)
+lemma objects_of_shortExact {S : ShortComplex (CochainComplex X.Modules ℤ)} (hS : S.ShortExact)
     (h₁ : objects X S.X₁) (h₃ : objects X S.X₃) : objects X S.X₂ := by
   obtain ⟨hp₁, a, ha⟩ := h₁
   obtain ⟨hp₃, b, hb⟩ := h₃
@@ -78,13 +81,14 @@ lemma objects_of_shortExact {S : ShortComplex (Complex X)} (hS : S.ShortExact)
     ((S.X₃.isZero_of_isStrictlyGE b n (by omega)).eq_of_tgt _ _)
 
 instance extensionClosed :
-    (abelianExactStructure (Complex X)).IsExtensionClosed (objects X) where
+    (abelianExactStructure (CochainComplex X.Modules ℤ)).IsExtensionClosed (objects X) where
   prop_middle := objects_of_shortExact
 
 instance closedUnderFiniteProducts : (objects X).IsClosedUnderFiniteProducts :=
-  (abelianExactStructure (Complex X)).extensionClosed_finiteProducts (objects X)
+  (abelianExactStructure (CochainComplex X.Modules ℤ)).extensionClosed_finiteProducts (objects X)
 
-lemma objects_shift {K : Complex X} (hK : objects X K) (n : ℤ) : objects X (K⟦n⟧) := by
+lemma objects_shift {K : CochainComplex X.Modules ℤ} (hK : objects X K) (n : ℤ) : objects X
+    (K⟦n⟧) := by
   obtain ⟨hp, a, ha⟩ := hK
   let := ha
   refine ⟨locallyPerfect_shift hp n, a - n,

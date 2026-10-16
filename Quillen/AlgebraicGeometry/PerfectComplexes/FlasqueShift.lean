@@ -66,11 +66,11 @@ instance identityCone_additive : (identityCone X).Additive where
 def identityConeExactFunctor : CategoryTheory.ExactCategory.ExactFunctor
     (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
       (CategoryTheory.ExactCategory.abelianExactStructure
-      (Complex X))
+      (CochainComplex X.Modules ℤ))
       (objects X))
     (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
       (CategoryTheory.ExactCategory.abelianExactStructure
-      (Complex X))
+      (CochainComplex X.Modules ℤ))
       (objects X)) where
   toFunctor := identityCone X
   map_conflation S hS := by
@@ -119,7 +119,7 @@ lemma coneFirst_second : coneFirst X ≫ coneSecond X = 0 := by
 lemma coneModelSequence_conflation (K : Obj X) :
     (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
       (CategoryTheory.ExactCategory.abelianExactStructure
-      (Complex X))
+      (CochainComplex X.Modules ℤ))
       (objects X)).conflation
       (ShortComplex.mk ((coneFirst X).app K) ((coneSecond X).app K)
         (NatTrans.congr_app (coneFirst_second X) K)) :=
@@ -134,12 +134,13 @@ lemma coneSequence_isCofibrationSequence :
   exactH := modelShift_exact X 1
   cofibration := {
     app_cof K := (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-      (CategoryTheory.ExactCategory.abelianExactStructure (Complex X)) (objects
+      (CategoryTheory.ExactCategory.abelianExactStructure (CochainComplex X.Modules ℤ)) (objects
         X)).inflation_of_conflation
         (coneModelSequence_conflation X K)
     relative_cof {K L} f hf := by
       let E := CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-        (CategoryTheory.ExactCategory.abelianExactStructure (Complex X)) (objects X)
+        (CategoryTheory.ExactCategory.abelianExactStructure (CochainComplex X.Modules ℤ))
+          (objects X)
       let φ := Waldhausen.GilletWaldhausen.exactFunctorSequenceMap
         (coneFirst X) (coneSecond X) (coneFirst_second X) f
       let : HasPushout
@@ -153,7 +154,7 @@ lemma coneSequence_isCofibrationSequence :
   cofiber K := CategoryTheory.Limits.isPushout_of_isColimit_cokernel _
     ((CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
       (CategoryTheory.ExactCategory.abelianExactStructure
-      (Complex X))
+      (CochainComplex X.Modules ℤ))
       (objects X)).cokernel _ (coneModelSequence_conflation X K))
     (waldhausen X).isZero _ _
 

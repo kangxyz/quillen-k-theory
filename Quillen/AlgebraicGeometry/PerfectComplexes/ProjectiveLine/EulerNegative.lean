@@ -6,9 +6,12 @@ Authors: kangxyz, Codex
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerFunctors
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Actual negative Euler coefficients vanish after original Godement projection -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open AlgebraicGeometry.Scheme.Modules.Godement
 

@@ -28,6 +28,9 @@ namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueDiagonal
 local instance comparisonStandardDerived (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 
+section
+attribute [local irreducible] godementTotal
+
 /-- The whole original complex equality retains its original total differential and zero terms. -/
 lemma E_obj (R : CommRingCat.{u}) (v : Vertex)
     (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
@@ -61,6 +64,8 @@ lemma quotient_original (R : CommRingCat.{u})
         ((godementTotal (relativeSquare R)).map
           (((diagonalCoefficientMap R (diagonalQuotientMap R)).mapCochainComplexPlus.app
             ((FlasqueCoefficients.toPlus (twoChartLine R)).obj K)).hom)) := rfl
+
+end
 
 /-- Forgetting a full-subcategory lift retains its entire original functor. -/
 def liftUnderlyingIso {C D : Type*} [Category C] [Category D]
@@ -155,7 +160,10 @@ lemma EDerivedIso_hom_app (R : CommRingCat.{u}) (v : Vertex)
       (asIso (godementTotalDerivedAugmentation (relativeSecond R))).inv.app
         ((coefficient R v).mapCochainComplexPlus.obj
           ((FlasqueCoefficients.toPlus (twoChartLine R)).obj K)) := by
-  simp [EDerivedIso, rawDerivedIso, rawPlus, godementTotalDerivedPushforwardIso,
-    godementTotalDerivedUnit]
+  simp only [EDerivedIso, rawDerivedIso, rawPlus, godementTotalDerivedPushforwardIso,
+    godementTotalDerivedUnit, Iso.trans_hom, Iso.symm_hom, NatTrans.comp_app,
+    Functor.isoWhiskerRight_hom, Functor.isoWhiskerLeft_hom, Functor.whiskerRight_app,
+    Functor.whiskerLeft_app, Functor.associator_hom_app, Functor.associator_inv_app,
+    asIso_hom, Category.id_comp]
 
 end Quillen.PerfectComplexes.ProjectiveLine.FlasqueDiagonal

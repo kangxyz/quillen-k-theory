@@ -9,6 +9,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.FiberComparison
 public import Quillen.KTheory.Map.Functoriality
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-! # A basepoint-compatible Serre-localization fiber comparison
 
@@ -28,7 +29,8 @@ open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject unitInterval
 
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
@@ -37,27 +39,30 @@ to send the chosen Q-zero object exactly to the ambient Q-zero object. -/
 abbrev inclusionNormalizedQ := (CategoryTheory.ObjectProperty.exactInclusion P).normalizedQ
 /-- The Q-functor induced by the exact Serre quotient functor, normalized to send the ambient
 chosen Q-zero object exactly to the quotient Q-zero object. -/
-abbrev quotientNormalizedQ := (quotientExactFunctor P).normalizedQ
+abbrev quotientNormalizedQ := ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+  P.isoModSerre.Q)).normalizedQ
 
 /-- The normalized quotient/inclusion composite is naturally isomorphic to zero. -/
 def normalizedQuotientInclusionZeroIso :
     inclusionNormalizedQ P ⋙ quotientNormalizedQ P ≅
       (Functor.const (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory).obj
-        (quotientExactStructure P).qZero :=
+        ((abelianExactStructure P.isoModSerre.Localization)).qZero :=
   (rebaseFunctorCompRightIso (Devissage.mapQ P) (quotientMapQ P)
     (CategoryTheory.ObjectProperty.subcategoryExactStructure P).qZero (abelianExactStructure
       C).qZero
-    (quotientExactStructure P).qZero
+    ((abelianExactStructure P.isoModSerre.Localization)).qZero
     ((abelianExactStructure C).qIsoOfIso (CategoryTheory.ObjectProperty.exactInclusion
       P).toFunctor.mapZeroObject)
-    ((quotientExactStructure P).qIsoOfIso (quotientExactFunctor P).toFunctor.mapZeroObject)).symm ≪≫
+    (((abelianExactStructure P.isoModSerre.Localization)).qIsoOfIso
+      ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+      P.isoModSerre.Q)).toFunctor.mapZeroObject)).symm ≪≫
       quotientInclusionZeroIso P
 
 /-- The normalized composite sends the source zero exactly to the target zero. -/
 theorem normalizedComposite_obj_zero :
     (inclusionNormalizedQ P ⋙ quotientNormalizedQ P).obj
-      (CategoryTheory.ObjectProperty.subcategoryExactStructure P).qZero = (quotientExactStructure
-        P).qZero :=
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure P).qZero =
+        ((abelianExactStructure P.isoModSerre.Localization)).qZero :=
   rebaseFunctor_comp_obj_base _ _ _ _ _ _ _
 
 /-- Its comparison at zero is the identity after the exact displayed equality. -/
@@ -65,14 +70,14 @@ theorem normalizedZeroIso_hom_base :
     (normalizedQuotientInclusionZeroIso P).hom.app
       (CategoryTheory.ObjectProperty.subcategoryExactStructure P).qZero =
         eqToHom (normalizedComposite_obj_zero P) :=
-  ((quotientExactStructure P).qHom_subsingleton_of_isZero _ _
-    (isZero_zero (Quotient P))).elim _ _
+  (((abelianExactStructure P.isoModSerre.Localization)).qHom_subsingleton_of_isZero _ _
+    (isZero_zero (P.isoModSerre.Localization))).elim _ _
 
 /-- The actual relative topological nullhomotopy for the normalized maps. -/
 def normalizedQuotientInclusionHomotopy :
     ((classifyingSpaceMap (quotientNormalizedQ P)).hom.comp
       (classifyingSpaceMap (inclusionNormalizedQ P)).hom).HomotopyRel
-      (ContinuousMap.const _ (quotientExactStructure P).kBasepoint)
+      (ContinuousMap.const _ ((abelianExactStructure P.isoModSerre.Localization)).kBasepoint)
       {(CategoryTheory.ObjectProperty.subcategoryExactStructure P).kBasepoint} :=
   (classifyingSpaceNaturalTransformationBasedHomotopy
     (normalizedQuotientInclusionZeroIso P).hom
@@ -85,7 +90,7 @@ def normalizedQuotientInclusionHomotopy :
 theorem normalizedQuotientInclusionHomotopy_based (t : I) :
     normalizedQuotientInclusionHomotopy P
       (t, (CategoryTheory.ObjectProperty.subcategoryExactStructure P).kBasepoint) =
-        (quotientExactStructure P).kBasepoint := by
+        ((abelianExactStructure P.isoModSerre.Localization)).kBasepoint := by
   have hh := (normalizedQuotientInclusionHomotopy P).prop t
     (CategoryTheory.ObjectProperty.subcategoryExactStructure P).kBasepoint (Set.mem_singleton _)
   exact hh.trans (by
@@ -93,14 +98,15 @@ theorem normalizedQuotientInclusionHomotopy_based (t : I) :
       (classifyingSpaceMap (inclusionNormalizedQ P)
         (CategoryTheory.ObjectProperty.subcategoryExactStructure P).kBasepoint) = _
     rw [(CategoryTheory.ObjectProperty.exactInclusion P).normalizedQ_map_point,
-      (quotientExactFunctor P).normalizedQ_map_point])
+      ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+        P.isoModSerre.Q)).normalizedQ_map_point])
 
 /-- The localization comparison into the fiber of precisely the normalized
 map that defines the quotient's K-group homomorphisms. -/
 def basedLocalizationFiberComparison :
     C((CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace,
       HomotopyFiber (classifyingSpaceMap (quotientNormalizedQ P)).hom
-        (quotientExactStructure P).kBasepoint) :=
+        ((abelianExactStructure P.isoModSerre.Localization)).kBasepoint) :=
   HomotopyFiber.lift _ _ (classifyingSpaceMap (inclusionNormalizedQ P)).hom
     (normalizedQuotientInclusionHomotopy P).toHomotopy
 
@@ -109,8 +115,10 @@ theorem basedLocalizationFiberComparison_basepoint :
     basedLocalizationFiberComparison P (CategoryTheory.ObjectProperty.subcategoryExactStructure
       P).kBasepoint =
       HomotopyFiber.basepoint (classifyingSpaceMap (quotientNormalizedQ P)).hom
-        (quotientExactStructure P).kBasepoint (abelianExactStructure C).kBasepoint
-        (quotientExactFunctor P).normalizedQ_map_point := by
+        ((abelianExactStructure P.isoModSerre.Localization)).kBasepoint (abelianExactStructure
+          C).kBasepoint
+        ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+          P.isoModSerre.Q)).normalizedQ_map_point := by
   apply Subtype.ext
   apply Prod.ext
   · exact (CategoryTheory.ObjectProperty.exactInclusion P).normalizedQ_map_point
@@ -121,12 +129,13 @@ theorem basedLocalizationFiberComparison_basepoint :
 /-- The normalized path-space fiber used by the canonical K-map. -/
 abbrev NormalizedLocalizationFiber :=
   HomotopyFiber (classifyingSpaceMap (quotientNormalizedQ P)).hom
-    (quotientExactStructure P).kBasepoint
+    ((abelianExactStructure P.isoModSerre.Localization)).kBasepoint
 
 /-- Its chosen constant-path basepoint. -/
 def normalizedFiberBasepoint : NormalizedLocalizationFiber P :=
   HomotopyFiber.basepoint _ _ (abelianExactStructure C).kBasepoint
-    (quotientExactFunctor P).normalizedQ_map_point
+    ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+      P.isoModSerre.Q)).normalizedQ_map_point
 
 /-- The based comparison induces a genuine homomorphism into the fiber's
 homotopy groups. No assertion that it is an isomorphism is made. -/
@@ -157,7 +166,8 @@ set_option backward.isDefEq.respectTransparency false in
 This follows from the actual based nullhomotopy, not the still-open fiber-equivalence theorem. -/
 theorem quotientKMap_comp_inclusion (n : ℕ) :
     (quotientKMap P n).comp (Devissage.KMap P n) = 1 := by
-  change ((quotientExactFunctor P).KMap n).comp ((CategoryTheory.ObjectProperty.exactInclusion
+  change (((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P P.isoModSerre.Q)).KMap
+    n).comp ((CategoryTheory.ObjectProperty.exactInclusion
     P).KMap n) = 1
   rw [CategoryTheory.ExactCategory.ExactFunctor.KMap_eq_piMap,
     CategoryTheory.ExactCategory.ExactFunctor.KMap_eq_piMap,

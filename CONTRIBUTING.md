@@ -8,6 +8,11 @@ owners; [scope](docs/reference/Scope.md) records the remaining comparisons.
 
 ## Adding mathematics
 
+New general theory intended for Aglib belongs in the
+[local candidate subtree](Quillen/Aglib/README.md). Its native namespaces and
+general dependency closure prepare a later upstream move; application adapters
+keep their ordinary Quillen owners.
+
 Place source in the nearest mathematical owner under `Quillen/`. Add a subject
 or subdirectory when it has actual source and a useful consumer. Split modules
 by mathematical objects or reusable interfaces; comparisons should depend on
@@ -27,6 +32,11 @@ Implementation modules import their precise dependencies. Whole-topic and
 whole-library facades serve clients. Importing a broad facade from an
 implementation can create a cycle or an unnecessary dependency closure.
 Library source must not import `QuillenTest`, tools, or downstream clients.
+
+Use `attribute [local instance] ...` to enable an existing canonical structure
+locally. Repeated anonymous local instances in sibling modules can generate
+the same declaration name and break aggregate imports. Validate the affected
+aggregate import when adding or changing instance declarations.
 
 After adding or moving modules, regenerate imports:
 

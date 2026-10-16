@@ -187,6 +187,15 @@ theorem boundedFlatCoefficientSupportedFullOpenPerfectKEquiv_grothendieck [Compa
       (boundedFlatCoefficientSupportedFullOpenPerfectEvaluation f T a)
       (boundedFlatCoefficientSupportedFullOpenPerfectEvaluation_exact f T a) S).symm
 
+private theorem toMultiplicative_comp_of_lift
+    {A B G H : Type*} [AddCommGroup A] [AddCommGroup B] [AddCommGroup G] [_root_.Group H]
+    {l : A →+ G} {q : B →+ G} {m : A →+ B}
+    {e : H →* Multiplicative A} {k : H →* Multiplicative B}
+    (hl : l = q.comp m) (hk : k = m.toMultiplicative.comp e) :
+    l.toMultiplicative.comp e = q.toMultiplicative.comp k := by
+  rw [hl, hk]
+  rfl
+
 /-- The original q followed by its actual coarse value is the raw quotient after evaluation. -/
 theorem boundedFlatCoefficientSupportedOpenKZeroValueMap_comp_grading [CompactSpace P.left]
     (a : Under R) :
@@ -207,15 +216,10 @@ theorem boundedFlatCoefficientSupportedOpenKZeroValueMap_comp_grading [CompactSp
     (boundedFlatCoefficientSupportedSectionJointData
       (boundedFlatCoefficientOpenSupportOpen f T a).ι).reflexiveSmallModel.sourceFactorization).comp
       _ = _
-  rw [Cofinality.Grading.coarseKZeroValueMap_comp_changeWeak,
-    boundedFlatCoefficientSupportedFullOpenGrading_lift]
-  exact congrArg (fun k ↦ (QuotientAddGroup.mk'
-    (AlgebraicGrothendieck.map (perfectSupportedOpenWeakWaldhausen (schemeMap f a)
-      (boundedFlatCoefficientSupportOpen Q T a))
-      (perfectSupportedRestrict (schemeMap f a) (boundedFlatCoefficientSupportOpen Q T a))
-      (perfectSupportedOpenRestrict_waldhausenExact (schemeMap f a)
-        (boundedFlatCoefficientSupportOpen Q T a))).range).toMultiplicative.comp k)
-    (boundedFlatCoefficientSupportedFullOpenPerfectKEquiv_grothendieck f T a).symm
+  rw [Cofinality.Grading.coarseKZeroValueMap_comp_changeWeak]
+  exact toMultiplicative_comp_of_lift
+    (boundedFlatCoefficientSupportedFullOpenGrading_lift f T a)
+    (boundedFlatCoefficientSupportedFullOpenPerfectKEquiv_grothendieck f T a)
 
 /-- The unchanged actual q map is surjective on K-zero; only the original open is compact. -/
 theorem boundedFlatCoefficientSupportedOpenGrading_KMap_zero_surjective [CompactSpace P.left]

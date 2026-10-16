@@ -9,6 +9,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Waldhausen.GilletWaldhausen.TruncationExact
+public import Aglib.Algebra.Homology.CochainComplex.Cycles
 
 /-!
 # Exactness of the actual acyclic truncation quotient
@@ -64,7 +65,7 @@ theorem truncationQuotientBoundaryIso_projection (K : CochainComplex A ℤ) (n :
     (K.shortComplexTruncLE n).g.f n ≫ (truncationQuotientBoundaryIso K n hK).hom =
       K.toCycles n (n + 1) :=
   (truncationDegree_shortExact K n n).gIsCokernel.comp_coconePointUniqueUpToIso_hom
-    (isCokernelEpiComp (cycleSequence_shortExact K n hK).gIsCokernel
+    (isCokernelEpiComp (_root_.CochainComplex.cycleSequence_shortExact K n hK).gIsCokernel
       (K.truncLEXIsoCycles n).hom (truncLE_inclusion_boundary K n).symm)
     WalkingParallelPair.one
 

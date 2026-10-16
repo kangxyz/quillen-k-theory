@@ -20,6 +20,8 @@ asserted flasque before Godement totalization.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.Products
 open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
 
@@ -42,8 +44,8 @@ namespace Quillen.PerfectComplexes.ProjectiveLine.P5NativeCoefficients
 open FlasqueCoefficients
 
 /-- Original K tensor L remains locally perfect by the actual tensor symmetry. -/
-lemma rightTensor_locallyPerfect (X : QuasiCompactSchemes.{u}) {K : Complex
-    (nativeLineFunctor.obj X).obj}
+lemma rightTensor_locallyPerfect (X : QuasiCompactSchemes.{u})
+    {K : CochainComplex (nativeLineFunctor.obj X).obj.Modules ℤ}
     (hK : locallyPerfect (nativeLineFunctor.obj X).obj K) :
     locallyPerfect (nativeLineFunctor.obj X).obj
       ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight
@@ -55,8 +57,9 @@ lemma rightTensor_locallyPerfect (X : QuasiCompactSchemes.{u}) {K : Complex
       (nativeChart X) (nativeChart_cover X) (nativeLineChartIso X) hK)
 
 /-- Right tensor preserves a specified strict lower bound. -/
-lemma rightTensor_isStrictlyGE (X : QuasiCompactSchemes.{u}) (K : Complex (nativeLineFunctor.obj
-    X).obj)
+lemma rightTensor_isStrictlyGE (X : QuasiCompactSchemes.{u})
+    (K : CochainComplex (nativeLineFunctor.obj
+    X).obj.Modules ℤ)
     (a : ℤ) [K.IsStrictlyGE a] :
     ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (nativeTautologicalLine X)).obj
       K).IsStrictlyGE a := by
@@ -96,9 +99,11 @@ instance rightTensor_additive (X : QuasiCompactSchemes.{u}) : (rightTensor X).Ad
 
 /-- Right tensor preserves the actual inherited short exact sequences. -/
 def rightTensorExactFunctor (X : QuasiCompactSchemes.{u}) : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (nativeLineFunctor.obj X).obj))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (nativeLineFunctor.obj X).obj.Modules ℤ))
       (FlasqueBoundedBelow.objects (nativeLineFunctor.obj X).obj))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (nativeLineFunctor.obj X).obj))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (nativeLineFunctor.obj X).obj.Modules ℤ))
       (BoundedBelow.objects (nativeLineFunctor.obj X).obj)) where
   toFunctor := rightTensor X
   map_conflation S hS := by

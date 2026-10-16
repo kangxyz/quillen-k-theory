@@ -45,7 +45,7 @@ def extensionByZeroBaseChangeIso
 
 /-- The actual original base-change mate satisfies its chain-level counit identity. -/
 @[reassoc]
-theorem extensionByZeroBaseChange_counit (M : Complex X) :
+theorem extensionByZeroBaseChange_counit (M : CochainComplex X.Modules ℤ) :
     (extensionByZeroBaseChange a b j k h).app ((restrict j).obj M) ≫
       (restrict k).map ((extensionByZeroAdjunction j).counit.app M) =
     (extensionByZero b).map ((openSquareRestrictIso a b j k h).hom.app M) ≫

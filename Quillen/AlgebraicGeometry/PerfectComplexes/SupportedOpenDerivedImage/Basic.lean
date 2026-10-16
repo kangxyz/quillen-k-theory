@@ -8,7 +8,10 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Restriction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalSupportedDensity
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
 /-!
 # Original derived restriction image with prescribed support
 
@@ -33,18 +36,20 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.SupportedOpenDerivedImage
 attribute [local instance] HasDerivedCategory.standard Abelian.hasFiniteBiproducts
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens)
 
 /-- The actual restriction image of globally perfect complexes with the
 specified support, saturated in the original derived category only. -/
-def complexObjects : ObjectProperty (Complex U) := fun E =>
-  ∃ P : Complex X, perfectSupported T.ι P ∧
-    Nonempty ((toDerived U).obj ((restrict j).obj P) ≅ (toDerived U).obj E)
+def complexObjects : ObjectProperty (CochainComplex U.Modules ℤ) := fun E =>
+  ∃ P : CochainComplex X.Modules ℤ, perfectSupported T.ι P ∧
+    Nonempty ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj P) ≅
+      (DerivedCategory.Q (C := U.Modules)).obj E)
 
-lemma complexObjects_iff_of_derivedIso {E E' : Complex U}
-    (e : (toDerived U).obj E ≅ (toDerived U).obj E') :
+lemma complexObjects_iff_of_derivedIso {E E' : CochainComplex U.Modules ℤ}
+    (e : (DerivedCategory.Q (C := U.Modules)).obj E ≅ (DerivedCategory.Q (C := U.Modules)).obj E') :
     complexObjects j T E ↔ complexObjects j T E' := by
   constructor
   · rintro ⟨P, hP, ⟨eP⟩⟩
@@ -52,13 +57,13 @@ lemma complexObjects_iff_of_derivedIso {E E' : Complex U}
   · rintro ⟨P, hP, ⟨eP⟩⟩
     exact ⟨P, hP, ⟨eP ≪≫ e.symm⟩⟩
 
-lemma complexObjects_iff_of_quasiIso {E E' : Complex U} (f : E ⟶ E') [QuasiIso f] :
+lemma complexObjects_iff_of_quasiIso {E E' : CochainComplex U.Modules ℤ} (f : E ⟶ E') [QuasiIso f] :
     complexObjects j T E ↔ complexObjects j T E' :=
-  complexObjects_iff_of_derivedIso j T (asIso ((toDerived U).map f))
+  complexObjects_iff_of_derivedIso j T (asIso ((DerivedCategory.Q (C := U.Modules)).map f))
 
 /-- Every actual saturated-image object retains genuine support after
 restriction along the original inverse-image support inclusion. -/
-lemma perfectSupported_of_mem {E : Complex U} (hE : complexObjects j T E) :
+lemma perfectSupported_of_mem {E : CochainComplex U.Modules ℤ} (hE : complexObjects j T E) :
     perfectSupported (j ⁻¹ᵁ T).ι E := by
   obtain ⟨P, hP, ⟨e⟩⟩ := hE
   have hP' := perfectSupported_restrict j T hP
@@ -81,13 +86,14 @@ lemma obj_mem (P : (perfectSupported T.ι).FullSubcategory) :
 both summands retain the original support on the overlap. -/
 lemma exists_supported_perfect_complement [CompactSpace X] [QuasiSeparatedSpace X]
     [CompactSpace U] (hT : IsCompact (T : Set X))
-    (E : Complex U) (hE : perfectSupported (j ⁻¹ᵁ T).ι E) :
-    ∃ C : Complex U, perfectSupported (j ⁻¹ᵁ T).ι C ∧ complexObjects j T (C ⊞ E) := by
+    (E : CochainComplex U.Modules ℤ) (hE : perfectSupported (j ⁻¹ᵁ T).ι E) :
+    ∃ C : CochainComplex U.Modules ℤ, perfectSupported (j ⁻¹ᵁ T).ι C ∧ complexObjects j T
+      (C ⊞ E) := by
   obtain ⟨P, C, hP, hC, ⟨e⟩, hPT⟩ :=
     locallyPerfect_exists_global_supported_perfect_complement_of_openImmersion j E hE.1 T hT
       ((isZero_toDerived_iff_acyclic _).mpr hE.2)
   have hP' : perfectSupported T.ι P := ⟨hP, (isZero_toDerived_iff_acyclic _).mp hPT⟩
-  have hsum : IsZero ((toDerived (j ⁻¹ᵁ T).toScheme).obj
+  have hsum : IsZero ((DerivedCategory.Q (C := (j ⁻¹ᵁ T).toScheme.Modules)).obj
       ((restrict (j ⁻¹ᵁ T).ι).obj (E ⊞ C))) :=
     (isZero_restrict_preimage_of_isZero j T P hPT).of_iso
       (restrictDerivedIso (j ⁻¹ᵁ T).ι e).symm
@@ -95,11 +101,11 @@ lemma exists_supported_perfect_complement [CompactSpace X] [QuasiSeparatedSpace 
     refine ⟨hC, (isZero_toDerived_iff_acyclic _).mp ?_⟩
     let r : Retract C (E ⊞ C) :=
       { i := biprod.inr, r := biprod.snd, retract := biprod.inr_snd }
-    let r' := r.map (restrict (j ⁻¹ᵁ T).ι ⋙ toDerived (j ⁻¹ᵁ T).toScheme)
+    let r' := r.map (restrict (j ⁻¹ᵁ T).ι ⋙ DerivedCategory.Q (C := (j ⁻¹ᵁ T).toScheme.Modules))
     rw [IsZero.iff_id_eq_zero]
     calc
       _ = r'.i ≫ r'.r := r'.retract.symm
       _ = 0 := by rw [hsum.eq_of_tgt r'.i 0, zero_comp]
-  exact ⟨C, hC', P, hP', ⟨e ≪≫ (toDerived U).mapIso (biprod.braiding E C)⟩⟩
+  exact ⟨C, hC', P, hP', ⟨e ≪≫ (DerivedCategory.Q (C := U.Modules)).mapIso (biprod.braiding E C)⟩⟩
 
 end Quillen.PerfectComplexes.SupportedOpenDerivedImage

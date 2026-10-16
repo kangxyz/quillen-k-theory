@@ -10,6 +10,7 @@ public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.CategoryTheory.TheoremB.StructuredTransitionCalculus
 public import Quillen.CategoryTheory.QConstruction.Abelian.SpanFactorization
 public import Quillen.Localization.Serre.AuxiliaryLift
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-! # Reduction of all Serre quotient transitions to mapped monos and epis
 
@@ -27,7 +28,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
@@ -64,10 +66,11 @@ theorem structuredTransitions_of_mapped_mono_epi
   let M := L.objPreimage e.obj.of
   let β : (quotientMapQ P).obj (Q.of (abelianExactStructure C).deflation
       (abelianExactStructure C).inflation M) ≅ e :=
-    (quotientExactStructure P).qIsoOfIso (L.objObjPreimageIso e.obj.of)
+    ((abelianExactStructure P.isoModSerre.Localization)).qIsoOfIso (L.objObjPreimageIso e.obj.of)
   obtain ⟨X, g, a, h⟩ := exists_qHom_lift L P (M := M) (V := d.obj.of) (f ≫ β.inv)
   let α : (quotientMapQ P).obj (Q.of (abelianExactStructure C).deflation
-      (abelianExactStructure C).inflation X) ≅ d := (quotientExactStructure P).qIsoOfIso a
+      (abelianExactStructure C).inflation X) ≅ d := ((abelianExactStructure
+        P.isoModSerre.Localization)).qIsoOfIso a
   have hg : (quotientMapQ P).map g = α.hom ≫ (f ≫ β.inv) := h
   have hf : f = α.inv ≫ (quotientMapQ P).map g ≫ β.hom := by rw [hg]; simp
   rw [hf]

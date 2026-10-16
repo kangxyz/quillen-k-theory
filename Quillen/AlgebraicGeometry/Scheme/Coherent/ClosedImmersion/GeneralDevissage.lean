@@ -14,6 +14,8 @@ public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Aglib.CategoryTheory.SmallModel.Abelian
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralSupportDevissage
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Localization.Equivalence
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Support.SmallModel
 
 /-!
 # Geometric closed-support dévissage
@@ -207,7 +209,7 @@ theorem closedSupportGEquiv_pushforward (n : ℕ) :
       (CategoryTheory.ObjectProperty.exactInclusion (supportKilled i))).comp
       (CategoryTheory.ObjectProperty.exactInclusion (coherentGlobalSmallSupport (openMap i))) =
     (CategoryTheory.ExactCategory.ExactFunctor.smallModel.{u+1} (coherentPushforwardExact i)).comp
-      (SmallModelLocalization.standardExactFunctor.{u+1} (FiniteTypeSheaves X)) := by rfl
+      (CategoryTheory.SmallModel.abelianExactComparison.{u+1} (FiniteTypeSheaves X)) := by rfl
   have hk := congrArg (fun F ↦ F.KMap n) h
   simp only [CategoryTheory.ExactCategory.ExactFunctor.KMap_comp] at hk
   ext x

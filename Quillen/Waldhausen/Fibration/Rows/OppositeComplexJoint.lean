@@ -8,6 +8,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Duality.ComplexSubcategory
 public import Quillen.Waldhausen.Fibration.Rows.EquivalenceJoint
+public import Aglib.Algebra.Homology.CochainComplex.OppositeQuasiIso
 
 /-!
 # Actual joint cocylinders through the opposite cochain equivalence
@@ -68,7 +69,7 @@ lemma oppositePropertyEquivalence_functor_exact : IsExact
     exact ⟨T.X₁, hZ, T.f, T.zero, hT⟩
   weak f hf := by
     have : QuasiIso f.hom := hf
-    exact quasiIso_cochain_opEquivalence_inverse_map f.hom
+    exact _root_.CochainComplex.quasiIso_cochain_opEquivalence_inverse_map f.hom
   pushout _ h := by
     let := (oppositePropertyEquivalence P).isEquivalence_functor
     exact h.map _

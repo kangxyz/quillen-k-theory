@@ -66,7 +66,7 @@ theorem original_coarse_square {U X : Scheme.{u}} (j : U ⟶ X)
 
 /-- Actual supported mapping cones retain acyclicity on the open. -/
 theorem actual_supported_cone {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    {K L : Complex X} (hK : boundedFlatPerfectSupported j K)
+    {K L : CochainComplex X.Modules ℤ} (hK : boundedFlatPerfectSupported j K)
     (hL : boundedFlatPerfectSupported j L) (f : K ⟶ L) :
     ((restrict j).obj (CochainComplex.mappingCone f)).Acyclic :=
   (boundedFlatPerfectSupported_mappingCone j hK hL f).2

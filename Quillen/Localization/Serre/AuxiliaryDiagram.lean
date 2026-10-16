@@ -10,6 +10,7 @@ public import Quillen.Localization.Serre.AuxiliaryBaseChange
 public import Quillen.Localization.Serre.AuxiliaryLift
 public import Quillen.Localization.Serre.AuxiliaryIsoComma
 public import Quillen.Localization.Serre.AuxiliaryPostcompose
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-! # The strict diagram of auxiliary categories over ordinary quotient lifts -/
 @[expose] public section
@@ -43,7 +44,8 @@ theorem fullSubcategoryFunctor_ext
     ObjectProperty.eqToHom_hom] using Functor.congr_hom h f
 
 namespace SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
 
 @[simp]
@@ -89,7 +91,8 @@ lemma auxiliaryPostcompose_comp {M N R : C} (f : M ⟶ N) (g : N ⟶ R)
 
 /-- The actual strict Cat-valued diagram of auxiliary categories indexed by
 ordinary lifts of one quotient object. -/
-def quotientAuxiliaryDiagram (V : Quotient P) : QuotientAuxiliaryLift P V ⥤ Cat.{u,u} where
+def quotientAuxiliaryDiagram (V : P.isoModSerre.Localization) : QuotientAuxiliaryLift P V ⥤
+  Cat.{u,u} where
   obj A := Cat.of (AuxiliaryKernel P A.obj.left)
   map f := (auxiliaryPostcompose P f.hom.left
     (auxiliaryLift_hom_isoModSerre P.isoModSerre.Q V P f)).toCatHom
@@ -104,9 +107,12 @@ def quotientAuxiliaryDiagram (V : Quotient P) : QuotientAuxiliaryLift P V ⥤ Ca
 
 
 /-- The comparison cocone into the actual isomorphism structured comma. -/
-def quotientAuxiliaryCocone (V : Quotient P) : Cocone (quotientAuxiliaryDiagram P V) where
+def quotientAuxiliaryCocone (V : P.isoModSerre.Localization) : Cocone (quotientAuxiliaryDiagram
+  P V) where
   pt := Cat.of (IsoStructuredComma P
-    (Q.of (quotientExactStructure P).deflation (quotientExactStructure P).inflation V))
+    (Q.of ((CategoryTheory.ExactCategory.abelianExactStructure
+      P.isoModSerre.Localization)).deflation ((CategoryTheory.ExactCategory.abelianExactStructure
+      P.isoModSerre.Localization)).inflation V))
   ι :=
     { app A := (auxiliaryToIsoStructuredWithBase P (asIso A.obj.hom)).toCatHom
       naturality A B f := by
@@ -117,7 +123,7 @@ def quotientAuxiliaryCocone (V : Quotient P) : Cocone (quotientAuxiliaryDiagram 
           (asIso A.obj.hom) (asIso B.obj.hom) (CostructuredArrow.w f.hom) }
 
 /-- Every actual transition in the ordinary-lift diagram is a homotopy equivalence. -/
-def quotientAuxiliaryTransitionHomotopyEquiv {V : Quotient P}
+def quotientAuxiliaryTransitionHomotopyEquiv {V : P.isoModSerre.Localization}
     {A B : QuotientAuxiliaryLift P V} (f : A ⟶ B) :
     ContinuousMap.HomotopyEquiv
       (ClassifyingSpace ((quotientAuxiliaryDiagram P V).obj A))
@@ -126,7 +132,7 @@ def quotientAuxiliaryTransitionHomotopyEquiv {V : Quotient P}
     (auxiliaryLift_hom_isoModSerre P.isoModSerre.Q V P f)
 
 @[simp]
-theorem quotientAuxiliaryTransitionHomotopyEquiv_toFun {V : Quotient P}
+theorem quotientAuxiliaryTransitionHomotopyEquiv_toFun {V : P.isoModSerre.Localization}
     {A B : QuotientAuxiliaryLift P V} (f : A ⟶ B) :
     (quotientAuxiliaryTransitionHomotopyEquiv P f).toFun =
       (classifyingSpaceMap ((quotientAuxiliaryDiagram P V).map f).toFunctor).hom := rfl

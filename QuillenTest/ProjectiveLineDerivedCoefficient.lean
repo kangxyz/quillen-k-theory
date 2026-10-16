@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.DerivedPushforwardVectorBundle
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Original derived projective-line coefficient consumers
 
@@ -14,6 +15,8 @@ the original connecting arrow, the explicit cone shift and the actual model map.
 The nonreduced and zero-ring cases require only finite local freeness.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.PerfectComplexes
 open Quillen.PerfectComplexes.ProjectiveLine

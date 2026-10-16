@@ -11,6 +11,7 @@ public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.AffineReflection
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
 /-!
 # Actual affine closed-unit kernels lower ideal-power exponents
 
@@ -41,8 +42,8 @@ open FiniteModuleLocalization.IdealClosedSupport
 variable {Z : Scheme.{u}} [IsLocallyNoetherian Z]
   (R : CommRingCat.{u}) [IsNoetherianRing R]
   (i : Z ⟶ Spec R) [IsClosedImmersion i]
-  (I : Ideal R) (e : Z ≅ Spec (Ideal.closedRing R I))
-  (hi : i = e.hom ≫ Ideal.closedMap R I)
+  (I : Ideal R) (e : Z ≅ Spec (Pushforward.ClosedImmersion.Ideal.closedRing R I))
+  (hi : i = e.hom ≫ Pushforward.ClosedImmersion.Ideal.closedMap R I)
 
 omit [IsNoetherianRing R] in
 /-- Maps into the actual closed essential image factor through the genuine

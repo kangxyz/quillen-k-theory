@@ -13,23 +13,25 @@ Bass-recursion interfaces are in [SpectraAndBass.md](SpectraAndBass.md);
 scheme K/G and generic sheaf geometry are in [SchemeKTheory.md](SchemeKTheory.md).
 Full nonconnective
 Thomason–Trobaugh localization remains open; see [Scope.md](../reference/Scope.md#spectra-and-bass-groups).
-All declaration names below belong to `Quillen.PerfectComplexes` unless another
+The K-theory declarations below belong to `Quillen.PerfectComplexes` unless another
 namespace is specified. Their source is under
-`Quillen.AlgebraicGeometry.PerfectComplexes`.
+`Quillen.AlgebraicGeometry.PerfectComplexes`. The general sheaf-complex interfaces
+come from Aglib's `AlgebraicGeometry.Scheme.Modules.Complex` namespace.
 
 ## Complexes and support
 
-For `X : AlgebraicGeometry.Scheme.{u}`, `Complex X` is the category of
-integer-indexed cochain complexes of module sheaves. `strictPerfect X` requires
+For `X : AlgebraicGeometry.Scheme.{u}`, the ambient category is
+`CochainComplex X.Modules ℤ`. In the Aglib namespace, `strictPerfect X` requires
 globally bounded terms, each finite locally free. `StrictPerfect X` is the
 corresponding full category.
 
-`Derived X` localizes complexes at quasi-isomorphisms. `locallyPerfect X`
-requires an isomorphism in that localization, near each point, to a strict
-perfect complex on the neighborhood; `Perfect X` is its full category. These
-objects need not be termwise quasi-coherent or globally bounded.
-See [Strict.lean](../../Quillen/AlgebraicGeometry/PerfectComplexes/Strict.lean) and
-[Local.lean](../../Quillen/AlgebraicGeometry/PerfectComplexes/Local.lean).
+The standard native `DerivedCategory X.Modules` localizes complexes at
+quasi-isomorphisms. `locallyPerfect X` requires an isomorphism in that localization,
+near each point, to a strict perfect complex on the neighborhood. `Perfect X` is
+the full category of cochain complexes and chain maps satisfying this property.
+These complexes need not be termwise quasi-coherent or globally bounded.
+See Aglib's [Strict.lean](https://github.com/kangxyz/aglib/blob/40af743ab794d607f566cec0c5417d8e4d02a735/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/Strict.lean) and
+[Local.lean](https://github.com/kangxyz/aglib/blob/40af743ab794d607f566cec0c5417d8e4d02a735/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/Local.lean).
 
 `StrictK X n` and `PerfectK X n`, for `n : ℕ`, are the connective S-construction
 groups in `Type (u + 1)`. Their ambient-monomorphism cofibrations have quotients

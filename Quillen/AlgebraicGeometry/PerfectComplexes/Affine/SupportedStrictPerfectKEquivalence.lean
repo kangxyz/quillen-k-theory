@@ -26,6 +26,8 @@ no termwise quasicoherence or quasi-compactness of the open is assumed.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 
@@ -85,8 +87,7 @@ lemma supportedStrictToPerfect_target_hasDualApproximation (R : CommRingCat.{u})
       (fun i => by have := hd i; infer_instance)
     constructor
     · apply (CategoryTheory.ExactCategory.ExactSubcategory.deflation_iff
-      (CategoryTheory.ExactCategory.abelianExactStructure (Complex
-        (Spec R)))
+      (CategoryTheory.ExactCategory.abelianExactStructure (CochainComplex (Spec R).Modules ℤ))
         (strictSupported j) f.hom.left).mpr
       refine ⟨kernel f.hom.left.hom, hkc, kernel.ι f.hom.left.hom,
         kernel.condition f.hom.left.hom, ?_⟩
@@ -94,8 +95,7 @@ lemma supportedStrictToPerfect_target_hasDualApproximation (R : CommRingCat.{u})
               mono_f := inferInstance
               epi_g := inferInstance }
     · apply (CategoryTheory.ExactCategory.ExactSubcategory.deflation_iff
-      (CategoryTheory.ExactCategory.abelianExactStructure (Complex
-        (Spec R)))
+      (CategoryTheory.ExactCategory.abelianExactStructure (CochainComplex (Spec R).Modules ℤ))
         (perfectSupported j) f.hom.right).mpr
       refine ⟨kernel f.hom.right.hom, hkd, kernel.ι f.hom.right.hom,
         kernel.condition f.hom.right.hom, ?_⟩

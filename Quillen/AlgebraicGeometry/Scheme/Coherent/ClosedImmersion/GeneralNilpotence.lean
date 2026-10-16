@@ -13,6 +13,7 @@ public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.AffineKe
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralSupport
 public import Quillen.Devissage.KernelIteration
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
 /-!
 # Finite ideal-kernel nilpotence on a noetherian scheme
 
@@ -63,8 +64,8 @@ zero-locus image, with its genuine source isomorphism accounted for. -/
 theorem affinePresentation_range {Z : Scheme.{u}}
     (R : CommRingCat.{u})
     (i : Z ⟶ Spec R)
-    (I : Ideal R) (e : Z ≅ Spec (Ideal.closedRing R I))
-    (hi : i = e.hom ≫ Ideal.closedMap R I) :
+    (I : Ideal R) (e : Z ≅ Spec (Pushforward.ClosedImmersion.Ideal.closedRing R I))
+    (hi : i = e.hom ≫ Pushforward.ClosedImmersion.Ideal.closedMap R I) :
     Set.range i = PrimeSpectrum.zeroLocus (I : Set R) := by
   have hs : Function.Surjective e.hom := by
     intro x
@@ -73,7 +74,7 @@ theorem affinePresentation_range {Z : Scheme.{u}}
     rw [e.inv_hom_id]
     rfl
   rw [hi]
-  change Set.range ((Ideal.closedMap R I) ∘ e.hom) = _
+  change Set.range ((Pushforward.ClosedImmersion.Ideal.closedMap R I) ∘ e.hom) = _
   rw [Set.range_comp, Set.range_eq_univ.mpr hs, Set.image_univ, Ideal.closedMap_range]
 
 /-- Actual affine support gives eventual vanishing of genuine unit-kernel

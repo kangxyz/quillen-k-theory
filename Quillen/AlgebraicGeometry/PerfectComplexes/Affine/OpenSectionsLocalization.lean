@@ -48,12 +48,12 @@ local instance modulesSpecToSheaf_additive (R : CommRingCat.{u}) :
   map_add := by intros; rfl
 
 /-- The original affine module-sheaf complex with its constant R-module coefficients. -/
-abbrev affineUnderlyingSheafComplex (R : CommRingCat.{u}) (I : Complex (Spec R)) :=
+abbrev affineUnderlyingSheafComplex (R : CommRingCat.{u}) (I : CochainComplex (Spec R).Modules ℤ) :=
   (modulesSpecToSheaf (R := R)).mapHomologicalComplex (.up ℤ) |>.obj I
 
 /-- Actual section squares remain pullbacks with any equal choices of their union and intersection.
 -/
-lemma affineSectionsComplex_isPullback (R : CommRingCat.{u}) (I : Complex (Spec R))
+lemma affineSectionsComplex_isPullback (R : CommRingCat.{u}) (I : CochainComplex (Spec R).Modules ℤ)
     {U V W T : (Spec R).Opens} (hW : U ⊔ V = W) (hT : U ⊓ V = T)
     (hU : U ≤ W) (hV : V ≤ W) (hTU : T ≤ U) (hTV : T ≤ V) :
     IsPullback (affineSectionsComplexRestriction R hU I) (affineSectionsComplexRestriction R hV I)
@@ -63,7 +63,8 @@ lemma affineSectionsComplex_isPullback (R : CommRingCat.{u}) (I : Complex (Spec 
   exact TopCat.Sheaf.sectionsComplex_isPullback (affineUnderlyingSheafComplex R I) U V
 
 /-- Injective sheaf terms give actual epic section restriction chain maps. -/
-lemma epi_affineSectionsComplexRestriction (R : CommRingCat.{u}) (I : Complex (Spec R))
+lemma epi_affineSectionsComplexRestriction (R : CommRingCat.{u})
+    (I : CochainComplex (Spec R).Modules ℤ)
     (hinj : ∀ n, Injective (I.X n)) {U V : (Spec R).Opens} (h : U ≤ V) :
     Epi (affineSectionsComplexRestriction R h I) := by
   apply HomologicalComplex.epi_of_epi_f
@@ -77,7 +78,7 @@ lemma epi_affineSectionsComplexRestriction (R : CommRingCat.{u}) (I : Complex (S
 /-- The original localized comparison is weak on a union if it is weak on both opens
 and their actual intersection. This is genuine pullback gluing of section complexes. -/
 lemma quasiIso_sectionsLocalizationComplexComparison_sup {R : CommRingCat.{u}} (r : R)
-    (I : Complex (Spec R)) (hinj : ∀ n, Injective (I.X n)) (U V : (Spec R).Opens)
+    (I : CochainComplex (Spec R).Modules ℤ) (hinj : ∀ n, Injective (I.X n)) (U V : (Spec R).Opens)
     [QuasiIso (sectionsLocalizationComplexComparison R r U I)]
     [QuasiIso (sectionsLocalizationComplexComparison R r V I)]
     [QuasiIso (sectionsLocalizationComplexComparison R r (U ⊓ V) I)] :
@@ -113,7 +114,8 @@ lemma quasiIso_sectionsLocalizationComplexComparison_sup {R : CommRingCat.{u}} (
 
 /-- Empty-open localization is an actual isomorphism between zero complexes. -/
 lemma isIso_sectionsLocalizationComplexComparison_bot (R : CommRingCat.{u}) (r : R)
-    (I : Complex (Spec R)) : IsIso (sectionsLocalizationComplexComparison R r ⊥ I) := by
+    (I : CochainComplex (Spec R).Modules ℤ) : IsIso
+      (sectionsLocalizationComplexComparison R r ⊥ I) := by
   have h0 : IsZero (affineSectionsComplex R ⊥ I) :=
     isZero_sectionsComplex_bot (affineUnderlyingSheafComplex R I)
   have ht : IsZero (affineSectionsComplex R (⊥ ⊓ PrimeSpectrum.basicOpen r) I) := by
@@ -123,7 +125,7 @@ lemma isIso_sectionsLocalizationComplexComparison_bot (R : CommRingCat.{u}) (r :
 /-- Genuine finite-union induction for the literal localization comparison.
 Every principal leaf premise is about the same original map. -/
 lemma quasiIso_sectionsLocalizationComplexComparison_principalUnion {R : CommRingCat.{u}} (r : R)
-    (I : Complex (Spec R)) (hinj : ∀ n, Injective (I.X n)) (W : (Spec R).Opens)
+    (I : CochainComplex (Spec R).Modules ℤ) (hinj : ∀ n, Injective (I.X n)) (W : (Spec R).Opens)
     (hlocal : ∀ q : R, PrimeSpectrum.basicOpen q ≤ W →
       QuasiIso (sectionsLocalizationComplexComparison R r (PrimeSpectrum.basicOpen q) I))
     (s : Finset R) (hs : principalUnion R s ≤ W) :
@@ -162,7 +164,7 @@ lemma quasiIso_sectionsLocalizationComplexComparison_principalUnion {R : CommRin
 
 /-- A genuine finite principal cover extends original localization weakness to the compact open. -/
 lemma quasiIso_sectionsLocalizationComplexComparison_of_isCompact {R : CommRingCat.{u}} (r : R)
-    (I : Complex (Spec R)) (hinj : ∀ n, Injective (I.X n)) (W : (Spec R).Opens)
+    (I : CochainComplex (Spec R).Modules ℤ) (hinj : ∀ n, Injective (I.X n)) (W : (Spec R).Opens)
     (hW : IsCompact (W : Set (Spec R)))
     (hlocal : ∀ q : R, PrimeSpectrum.basicOpen q ≤ W →
       QuasiIso (sectionsLocalizationComplexComparison R r (PrimeSpectrum.basicOpen q) I)) :
@@ -185,7 +187,7 @@ lemma quasiIso_sectionsLocalizationComplexComparison_of_isCompact {R : CommRingC
 /-- Genuine compact-open section localization for an actual lower-bounded injective complex.
 Quasicoherent homology is required only on the selected open. -/
 lemma quasiIso_sectionsLocalizationComplexComparison_of_quasicoherent_on_open
-    {R : CommRingCat.{u}} (r : R) (I : Complex (Spec R)) (a : ℤ)
+    {R : CommRingCat.{u}} (r : R) (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
     (hqc : ∀ n, (((restrict W.ι).obj I).homology n).IsQuasicoherent) :

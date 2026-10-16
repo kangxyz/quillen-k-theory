@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Homology
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.BasisQuasiIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalSections
@@ -41,7 +42,7 @@ local instance (R : CommRingCat.{u}) (r : R) :
 
 
 lemma quasiIso_of_affineSections_on_principals (R : CommRingCat.{u})
-    {K L : Complex (Spec R)} (f : K ⟶ L)
+    {K L : CochainComplex (Spec R).Modules ℤ} (f : K ⟶ L)
     (hf : ∀ r : R, QuasiIso
       (((affineSectionsAt R (PrimeSpectrum.basicOpen r)).mapHomologicalComplex (.up ℤ)).map f)) :
     QuasiIso f := by
@@ -53,7 +54,7 @@ lemma quasiIso_of_affineSections_on_principals (R : CommRingCat.{u})
   infer_instance
 
 lemma quasiIso_associatedSectionsCounit_of_principalComparisons (R : CommRingCat.{u})
-    (K : Complex (Spec R))
+    (K : CochainComplex (Spec R).Modules ℤ)
     (hK : ∀ r : R, QuasiIso (principalSectionsScalarComplexComparison R r K)) :
     QuasiIso (associatedSectionsCounit R K) := by
   apply quasiIso_of_affineSections_on_principals R
@@ -79,13 +80,13 @@ lemma quasiIso_associatedSectionsCounit_of_principalComparisons (R : CommRingCat
   exact hε
 
 lemma quasicoherent_homology_of_principalComparisons (R : CommRingCat.{u})
-    (K : Complex (Spec R))
+    (K : CochainComplex (Spec R).Modules ℤ)
     (hK : ∀ r : R, QuasiIso (principalSectionsScalarComplexComparison R r K)) (n : ℤ) :
     (K.homology n).IsQuasicoherent := by
   let := quasiIso_associatedSectionsCounit_of_principalComparisons R K hK
   have : IsIso (HomologicalComplex.homologyMap (associatedSectionsCounit R K) n) :=
     (quasiIsoAt_iff_isIso_homologyMap _ _).mp inferInstance
-  have hqc := AlgebraicGeometry.Scheme.Modules.Coherent.quasicoherent_homology
+  have hqc := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.quasicoherent_homology
     ((associatedComplex R).obj ((sectionsComplex R).obj K)) (fun i => by
       change ((tilde.functor R).obj _).IsQuasicoherent
       infer_instance) n

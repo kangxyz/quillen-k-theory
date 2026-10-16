@@ -10,6 +10,7 @@ public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.CategoryTheory.ExactCategory.Subcategory
 public import Quillen.Devissage.Filtration
+public import Aglib.CategoryTheory.ExactCategory.KernelClosed
 
 /-!
 # Finite admissible resolutions
@@ -183,12 +184,6 @@ lemma resolutionHypothesis_iff_union (P : C → Prop) :
   · intro h X
     obtain ⟨n, R, _⟩ := h X
     exact ⟨R⟩
-
-/-- Kernel closure required in Quillen's resolution theorem. Both the middle
-and quotient are required to be resolving objects. This is weaker than closure
-under arbitrary admissible subobjects in the ambient exact category. -/
-class IsKernelClosed (P : ObjectProperty C) : Prop where
-  prop_kernel : ∀ {S : ShortComplex C}, E.conflation S → P S.X₂ → P S.X₃ → P S.X₁
 
 end CategoryTheory.ExactCategory.ExactStructure
 

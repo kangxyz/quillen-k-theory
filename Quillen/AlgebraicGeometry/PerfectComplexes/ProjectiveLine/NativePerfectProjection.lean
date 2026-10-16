@@ -7,10 +7,12 @@ module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.NativeBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TwoOpenDerivedBaseChange
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPerfect
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Homology
 public import Quillen.Algebra.Homology.DerivedCategory.BoundedComparison
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Canonical native projection base change on arbitrary perfect objects
 
 The original derived flat-base-change mate for the native projective line is
@@ -22,6 +24,8 @@ projective-line K-equivalence.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.Products
 open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
 
@@ -32,6 +36,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open scoped ZeroObject
 open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.Modules
@@ -93,9 +98,9 @@ private theorem isIso_on_perfect_of_quasicoherent_single
     intro i hi
     rw [HomologicalComplex.exactAt_iff_isZero_homology]
     exact hab i (Or.inr hi)
-  have : DerivedCategory.IsGE (C := U.Modules) ((toDerived U).obj L.obj) a :=
+  have : DerivedCategory.IsGE (C := U.Modules) ((DerivedCategory.Q (C := U.Modules)).obj L.obj) a :=
     inferInstanceAs ((DerivedCategory.Q.obj L.obj).IsGE a)
-  have : DerivedCategory.IsLE (C := U.Modules) ((toDerived U).obj L.obj) b :=
+  have : DerivedCategory.IsLE (C := U.Modules) ((DerivedCategory.Q (C := U.Modules)).obj L.obj) b :=
     inferInstanceAs ((DerivedCategory.Q.obj L.obj).IsLE b)
   have : (DerivedCategory.Plus.ι.obj K).IsGE a :=
     DerivedCategory.TStructure.t.isGE_of_iso eL a
@@ -193,7 +198,7 @@ def nativePerfectToDerivedPlus (X : QuasiCompactSchemes.{u}) :
       DerivedCategory.Plus (nativeLineFunctor.obj X).obj.Modules :=
   DerivedCategory.TStructure.t.plus.lift
     ((locallyPerfect (nativeLineFunctor.obj X).obj).ι ⋙
-      toDerived (nativeLineFunctor.obj X).obj) (fun K => by
+      DerivedCategory.Q (C := (nativeLineFunctor.obj X).obj.Modules)) (fun K => by
     obtain ⟨a, b, hab⟩ := locallyPerfect_homology_bounded K.property
     have : K.obj.IsGE a := by
       rw [CochainComplex.isGE_iff]
@@ -206,7 +211,7 @@ def nativePerfectToDerivedPlus (X : QuasiCompactSchemes.{u}) :
 def nativePerfectToDerivedPlusFactors (X : QuasiCompactSchemes.{u}) :
     nativePerfectToDerivedPlus X ⋙ DerivedCategory.Plus.ι ≅
       (locallyPerfect (nativeLineFunctor.obj X).obj).ι ⋙
-        toDerived (nativeLineFunctor.obj X).obj := Iso.refl _
+        DerivedCategory.Q (C := (nativeLineFunctor.obj X).obj.Modules) := Iso.refl _
 
 /-- The canonical native projection base-change isomorphism on the original category of all
 locally perfect complexes. Its forward map is the installed derived flat-base-change mate. -/

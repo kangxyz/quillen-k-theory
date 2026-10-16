@@ -7,7 +7,11 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedExtensionByZero
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.RestrictionHom
 /-!
 # Actual derived restriction along a scheme isomorphism
 
@@ -20,6 +24,8 @@ original chain-derived arrows retain zero reflection, including shifted sources.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules (derivedRestrict derivedRestrictFactors)
+
 open AlgebraicGeometry.Scheme.Modules.Complex
 
 
@@ -27,6 +33,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 namespace Quillen.PerfectComplexes
 variable {U X : Scheme.{u}}
@@ -43,7 +50,7 @@ def moduleRestrictEquivalenceOfIso (e : U ≅ X) : X.Modules ≌ U.Modules :=
 variable (j : U ⟶ X) [IsIso j] [IsOpenImmersion j]
 
 /-- The equivalence retains the literal original complex restriction functor. -/
-def restrictEquivalenceOfIso : Complex X ≌ Complex U :=
+def restrictEquivalenceOfIso : CochainComplex X.Modules ℤ ≌ CochainComplex U.Modules ℤ :=
   (moduleRestrictEquivalenceOfIso (asIso j)).mapHomologicalComplex (.up ℤ)
 
 local instance restrictIsEquivalenceOfIso : (restrict j).IsEquivalence :=
@@ -55,12 +62,12 @@ instance extensionByZero_counit_isIso_of_isIso : IsIso (extensionByZeroAdjunctio
 
 /-- The derived counit is invertible on every ambient derived object, using original localization.
 -/
-instance derivedExtensionByZero_counit_app_isIso_of_isIso (L : Derived X) :
+instance derivedExtensionByZero_counit_app_isIso_of_isIso (L : DerivedCategory X.Modules) :
     IsIso ((derivedExtensionByZeroAdjunction j).counit.app L) := by
-  let : (toDerived X).EssSurj := Localization.essSurj _
+  let : (DerivedCategory.Q (C := X.Modules)).EssSurj := Localization.essSurj _
     (HomologicalComplex.quasiIso X.Modules (.up ℤ))
   rw [← NatTrans.isIso_app_iff_of_iso (derivedExtensionByZeroAdjunction j).counit
-    ((toDerived X).objObjPreimageIso L)]
+    ((DerivedCategory.Q (C := X.Modules)).objObjPreimageIso L)]
   rw [derivedExtensionByZeroAdjunction_counit_app]
   infer_instance
 
@@ -76,14 +83,14 @@ instance derivedRestrict_faithful_of_isIso : (derivedRestrict j).Faithful :=
   (derivedRestrictFullyFaithfulOfIsIso j).faithful
 
 /-- Zero reflection holds for every ambient derived map, including arbitrary shifted endpoints. -/
-lemma derivedRestrict_map_eq_zero_iff {K L : Derived X} (φ : K ⟶ L) :
+lemma derivedRestrict_map_eq_zero_iff {K L : DerivedCategory X.Modules} (φ : K ⟶ L) :
     (derivedRestrict j).map φ = 0 ↔ φ = 0 := by
   rw [← (derivedRestrict j).map_zero]
   exact (derivedRestrict j).map_injective.eq_iff
 
 /-- The normalized original localization endpoints retain the same zero reflection. -/
-lemma restrictDerivedHom_eq_zero_iff {K L : Complex X}
-    (φ : (toDerived X).obj K ⟶ (toDerived X).obj L) :
+lemma restrictDerivedHom_eq_zero_iff {K L : CochainComplex X.Modules ℤ}
+    (φ : (DerivedCategory.Q (C := X.Modules)).obj K ⟶ (DerivedCategory.Q (C := X.Modules)).obj L) :
     restrictDerivedHom j φ = 0 ↔ φ = 0 := by
   rw [restrictDerivedHom, ← cancel_epi ((derivedRestrictFactors j).hom.app K)]
   simp only [Iso.hom_inv_id_app_assoc, comp_zero]

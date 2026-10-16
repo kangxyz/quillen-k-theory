@@ -11,6 +11,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedOp
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.PairPullback
 public import Quillen.Waldhausen.Fibration.ConnectingNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PairRestriction
+public import Aglib.AlgebraicGeometry.Modules.Complex.Pullback
 
 /-!
 # Actual bounded-flat supported boundary and restriction naturality
@@ -154,9 +155,9 @@ def boundedFlatPerfectSupportedOpenPairIso :
         boundedFlatPerfectSupportedPullback (supportedPairTargetSquare j' j f g w) :=
   Functor.fullyFaithfulCancelRight (boundedFlatPerfectSupported (j' ⁻¹ᵁ S).ι).ι
     (Functor.isoWhiskerLeft (boundedFlatPerfectSupported T.ι).ι
-      ((pullbackComplexCompIso j' f.hom.right).symm ≪≫
+      ((Scheme.Modules.Complex.pullbackCompIso j' f.hom.right).symm ≪≫
         eqToIso (congrArg AlgebraicGeometry.Scheme.Modules.Complex.pullback w) ≪≫
-          pullbackComplexCompIso g j))
+          Scheme.Modules.Complex.pullbackCompIso g j))
 
 lemma boundedFlatPerfectSupportedOpenKRestrict_pullback (n : ℕ) :
     (boundedFlatPerfectSupportedKPullback (supportedPairTargetSquare j' j f g w) n).comp

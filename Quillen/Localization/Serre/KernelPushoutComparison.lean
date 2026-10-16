@@ -8,6 +8,7 @@ module
 
 public import Quillen.Localization.Serre.KernelPushout
 public import Quillen.CategoryTheory.QConstruction.Abelian.Cospans
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # Ordinary cospans and comparisons of kernel pushouts
@@ -26,7 +27,8 @@ universe u
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
 
 /-- A monomorphism between epimorphisms with fixed quotient is the pushout

@@ -8,6 +8,7 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.AuxiliaryIsoComma
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # Common-base lifting of quotient-isomorphism Q-arrows
@@ -28,7 +29,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
 variable (P : ObjectProperty C) [P.IsSerreClass]
 
@@ -42,7 +44,8 @@ theorem span_isoModSerre_of_quotient_isIso {X Y : C} (s : Q.AbelianSpan X Y)
     [IsIso ((quotientMapQ P).map (Q.mkHom _ _ s))] :
     P.isoModSerre s.l ∧ P.isoModSerre s.r := by
   let t : Q.AbelianSpan (P.isoModSerre.Q.obj X) (P.isoModSerre.Q.obj Y) :=
-    (quotientExactFunctor P).toQCompatibleFunctor.mapSpan s
+    ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+      P.isoModSerre.Q)).toQCompatibleFunctor.mapSpan s
   have : IsIso (Q.mkHom _ _ t) := inferInstanceAs
     (IsIso ((quotientMapQ P).map (Q.mkHom _ _ s)))
   obtain ⟨hl, hr⟩ := Q.isIso_legs_of_isIso t
@@ -99,31 +102,32 @@ theorem exists_auxiliary_arrow_lift {X Y : C}
     inferInstance, inferInstance, auxiliarySpanLift P s hl hr, hs⟩
 
 /-- The ordinary quotient isomorphism underlying a structured Q-isomorphism. -/
-def isoStructuredOrdinaryIso {V : Quotient P}
-    (A : IsoStructuredComma P (Q.of (quotientExactStructure P).deflation
-      (quotientExactStructure P).inflation V)) :
+def isoStructuredOrdinaryIso {V : P.isoModSerre.Localization}
+    (A : IsoStructuredComma P (Q.of ((abelianExactStructure P.isoModSerre.Localization)).deflation
+      ((abelianExactStructure P.isoModSerre.Localization)).inflation V)) :
     V ≅ P.isoModSerre.Q.obj A.obj.right.obj.of :=
   (Q.exists_iso_of_isIso (hf := A.property) A.obj.hom).choose
 
-lemma isoStructuredOrdinaryIso_hom {V : Quotient P}
-    (A : IsoStructuredComma P (Q.of (quotientExactStructure P).deflation
-      (quotientExactStructure P).inflation V)) :
-    ((quotientExactStructure P).qIsoOfIso (isoStructuredOrdinaryIso P A)).hom = A.obj.hom :=
+lemma isoStructuredOrdinaryIso_hom {V : P.isoModSerre.Localization}
+    (A : IsoStructuredComma P (Q.of ((abelianExactStructure P.isoModSerre.Localization)).deflation
+      ((abelianExactStructure P.isoModSerre.Localization)).inflation V)) :
+    (((abelianExactStructure P.isoModSerre.Localization)).qIsoOfIso (isoStructuredOrdinaryIso P
+      A)).hom = A.obj.hom :=
   (Q.exists_iso_of_isIso (hf := A.property) A.obj.hom).choose_spec
 
 /-- A Serre-isomorphic map from the source of a structured object determines
 an ordinary quotient identification of its new base. -/
-def auxiliaryArrowLiftBaseIso {V : Quotient P}
-    (A : IsoStructuredComma P (Q.of (quotientExactStructure P).deflation
-      (quotientExactStructure P).inflation V)) {N : C}
+def auxiliaryArrowLiftBaseIso {V : P.isoModSerre.Localization}
+    (A : IsoStructuredComma P (Q.of ((abelianExactStructure P.isoModSerre.Localization)).deflation
+      ((abelianExactStructure P.isoModSerre.Localization)).inflation V)) {N : C}
     (i : A.obj.right.obj.of ⟶ N) (hi : P.isoModSerre i) : P.isoModSerre.Q.obj N ≅ V := by
   have : IsIso (P.isoModSerre.Q.map i) := Localization.inverts _ _ _ hi
   exact (asIso (P.isoModSerre.Q.map i)).symm ≪≫ (isoStructuredOrdinaryIso P A).symm
 
 /-- This chosen base identification lifts the source object exactly. -/
-theorem auxiliaryArrowLiftBaseIso_obj {V : Quotient P}
-    (A : IsoStructuredComma P (Q.of (quotientExactStructure P).deflation
-      (quotientExactStructure P).inflation V)) {N : C}
+theorem auxiliaryArrowLiftBaseIso_obj {V : P.isoModSerre.Localization}
+    (A : IsoStructuredComma P (Q.of ((abelianExactStructure P.isoModSerre.Localization)).deflation
+      ((abelianExactStructure P.isoModSerre.Localization)).inflation V)) {N : C}
     (i : A.obj.right.obj.of ⟶ N) (hi : P.isoModSerre i) :
     (auxiliaryToIsoStructuredWithBase P (auxiliaryArrowLiftBaseIso P A i hi)).obj
       (auxiliaryOverMk P i hi) = A := by
@@ -135,16 +139,16 @@ theorem auxiliaryArrowLiftBaseIso_obj {V : Quotient P}
   have : IsIso (P.isoModSerre.Q.map i) := Localization.inverts _ _ _ hi
   have he : asIso (P.isoModSerre.Q.map i) ≪≫ auxiliaryArrowLiftBaseIso P A i hi =
       (isoStructuredOrdinaryIso P A).symm := by simp [auxiliaryArrowLiftBaseIso]
-  change ((quotientExactStructure P).qIsoOfIso
+  change (((abelianExactStructure P.isoModSerre.Localization)).qIsoOfIso
     (asIso (P.isoModSerre.Q.map i) ≪≫ auxiliaryArrowLiftBaseIso P A i hi)).inv = A.obj.hom
   rw [he]
   exact isoStructuredOrdinaryIso_hom P A
 
 /-- Every single arrow in the quotient isomorphism comma lifts, with both
 endpoints and its exact triangle, to one ordinary auxiliary category. -/
-theorem exists_isoStructured_arrow_lift {V : Quotient P}
-    {A B : IsoStructuredComma P (Q.of (quotientExactStructure P).deflation
-      (quotientExactStructure P).inflation V)} (f : A ⟶ B) :
+theorem exists_isoStructured_arrow_lift {V : P.isoModSerre.Localization}
+    {A B : IsoStructuredComma P (Q.of ((abelianExactStructure P.isoModSerre.Localization)).deflation
+      ((abelianExactStructure P.isoModSerre.Localization)).inflation V)} (f : A ⟶ B) :
     ∃ (N : C) (φ : P.isoModSerre.Q.obj N ≅ V) (X Y : AuxiliaryKernel P N) (g : X ⟶ Y)
       (hX : (auxiliaryToIsoStructuredWithBase P φ).obj X = A)
       (hY : (auxiliaryToIsoStructuredWithBase P φ).obj Y = B),

@@ -157,7 +157,8 @@ lemma naturalSequence_whiskered_shortExact {A B C D : Type*}
 
 /-- The literal original coefficient sequence, retaining all original chain differentials. -/
 def coefficientSequenceFunctor (R : CommRingCat.{u}) :
-    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ ShortComplex (Complex (relativeSquare R)) :=
+    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ ShortComplex
+      (CochainComplex (relativeSquare R).Modules ℤ) :=
   naturalSequence
     (Functor.whiskerLeft (FlasqueBoundedBelow.objects (twoChartLine R)).ι
       (NatTrans.mapHomologicalComplex (diagonalCoefficientMap R (diagonalIncidence R)) (.up ℤ)))
@@ -193,26 +194,52 @@ lemma rawIncidence_quotient (R : CommRingCat.{u}) : rawIncidence R ≫ rawQuotie
 
 /-- The original raw sequence is expressed by its actual original natural maps. -/
 def rawSequenceFunctor (R : CommRingCat.{u}) :
-    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ ShortComplex (Complex (twoChartLine R)) :=
+    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ ShortComplex
+      (CochainComplex (twoChartLine R).Modules ℤ) :=
   naturalSequence (rawIncidence R) (rawQuotient R) (rawIncidence_quotient R)
+
+private theorem naturalSequence_whiskered_shortExact_named_sequences
+    {A B C D E : Type*} [Category A] [Category B] [Category C] [Category D] [Category E]
+    [Abelian C] [Abelian D] [Abelian E]
+    (I : A ⥤ B) {F G H : B ⥤ C} (a : F ⟶ G) (b : G ⟶ H)
+    (T : C ⥤ D) (P : D ⥤ E) [T.Additive] [P.Additive]
+    (h₁ : Functor.whiskerLeft I a ≫ Functor.whiskerLeft I b = 0)
+    (a' : I ⋙ F ⋙ (T ⋙ P) ⟶ I ⋙ G ⋙ (T ⋙ P))
+    (b' : I ⋙ G ⋙ (T ⋙ P) ⟶ I ⋙ H ⋙ (T ⋙ P))
+    (h₂ : a' ≫ b' = 0)
+    (ha : a' = Functor.whiskerLeft I (Functor.whiskerRight a (T ⋙ P)))
+    (hb : b' = Functor.whiskerLeft I (Functor.whiskerRight b (T ⋙ P))) (K : A)
+    (S : ShortComplex C) (U : ShortComplex E)
+    (hSdef : S = (naturalSequence (Functor.whiskerLeft I a)
+      (Functor.whiskerLeft I b) h₁).obj K)
+    (hUdef : U = (naturalSequence a' b' h₂).obj K)
+    (hS : ((S.map T).map P).ShortExact) : U.ShortExact := by
+  subst a'
+  subst b'
+  subst S
+  subst U
+  apply naturalSequence_whiskered_shortExact I a b (T ⋙ P) h₁ h₂ K
+  simpa only [ShortComplex.map_comp] using hS
 
 /-- Actual all-coefficient exactness, literal total exactness and the original flasque kernel. -/
 lemma rawSequence_shortExact (R : CommRingCat.{u})
     (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     ((rawSequenceFunctor R).obj K).ShortExact := by
-  apply naturalSequence_whiskered_shortExact
+  have hc := coefficientSequence_shortExact R K
+  have ht := godementTotal_shortExact hc
+  have hp := pushforwardComplex_shortExact_of_flasque_kernel (relativeSecond R) ht
+    (totalCoefficient_flasque R .first K)
+  exact naturalSequence_whiskered_shortExact_named_sequences
     (FlasqueBoundedBelow.objects (twoChartLine R)).ι
     (NatTrans.mapHomologicalComplex (diagonalCoefficientMap R (diagonalIncidence R)) (.up ℤ))
     (NatTrans.mapHomologicalComplex (diagonalCoefficientMap R (diagonalQuotientMap R)) (.up ℤ))
-    (godementTotal (relativeSquare R) ⋙
-      (Scheme.Modules.pushforward (relativeSecond R)).mapHomologicalComplex (.up ℤ))
+    (godementTotal (relativeSquare R))
+    ((Scheme.Modules.pushforward (relativeSecond R)).mapHomologicalComplex (.up ℤ))
     (whiskerLeftNatTrans_zero _ _ _
       (mapComplexNatTrans_zero _ _ (coefficientIncidence_quotient R)))
-    (rawIncidence_quotient R) K
-  simp only [ShortComplex.map_comp]
-  exact pushforwardComplex_shortExact_of_flasque_kernel (relativeSecond R)
-    (godementTotal_shortExact (coefficientSequence_shortExact R K))
-    (totalCoefficient_flasque R .first K)
+    (rawIncidence R) (rawQuotient R) (rawIncidence_quotient R) rfl rfl K
+    ((coefficientSequenceFunctor R).obj K)
+    ((rawSequenceFunctor R).obj K) rfl rfl hp
 
 /-- Lift a literal sequence using the supplied membership proofs without changing any maps. -/
 def liftedSequence {A B : Type*} [Category A] [Category B] [Preadditive B]

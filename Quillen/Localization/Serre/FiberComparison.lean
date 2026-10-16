@@ -13,6 +13,7 @@ public import Aglib.CategoryTheory.Abelian.SerreClass.FiniteProducts
 public import Quillen.Localization.Serre.Localization
 public import Quillen.Devissage.Setup
 public import Quillen.CategoryTheory.QConstruction.ZeroFunctor
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-! # The categorical nullhomotopy data for Serre localization
 
@@ -28,7 +29,8 @@ universe u
 open CategoryTheory CategoryTheory.Limits
 
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
@@ -37,8 +39,9 @@ inclusion of the Serre class. -/
 def quotientInclusionZeroIso :
     Devissage.mapQ P ⋙ quotientMapQ P ≅
       (Functor.const (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory).obj
-        (quotientExactStructure P).qZero :=
-  (quotientExactStructure P).qFunctorIsoConstZero _ (fun X =>
+        ((CategoryTheory.ExactCategory.abelianExactStructure P.isoModSerre.Localization)).qZero :=
+  ((CategoryTheory.ExactCategory.abelianExactStructure
+    P.isoModSerre.Localization)).qFunctorIsoConstZero _ (fun X =>
     (quotient_isZero_obj_iff P X.obj.of.obj).2 X.obj.of.property)
 
 /-- Realizing the categorical zero comparison gives an actual nullhomotopy
@@ -46,7 +49,8 @@ of the quotient map composed with the inclusion map. -/
 def quotientInclusionNullhomotopy :
     ((classifyingSpaceMap (quotientMapQ P)).hom.comp
       (classifyingSpaceMap (Devissage.mapQ P)).hom).Homotopy
-      (ContinuousMap.const _ (quotientExactStructure P).kBasepoint) :=
+      (ContinuousMap.const _ ((CategoryTheory.ExactCategory.abelianExactStructure
+        P.isoModSerre.Localization)).kBasepoint) :=
   (classifyingSpaceNaturalTransformationHomotopy (quotientInclusionZeroIso P).hom).cast
     (by simp only [classifyingSpaceMap_comp, TopCat.hom_comp])
     (by rw [classifyingSpaceMap_const_direct]; rfl)
@@ -57,7 +61,8 @@ homotopical localization theorem. -/
 def localizationFiberComparison :
     C((CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace,
       HomotopyFiber (classifyingSpaceMap (quotientMapQ P)).hom
-        (quotientExactStructure P).kBasepoint) :=
+        ((CategoryTheory.ExactCategory.abelianExactStructure
+          P.isoModSerre.Localization)).kBasepoint) :=
   HomotopyFiber.lift _ _ (classifyingSpaceMap (Devissage.mapQ P)).hom
     (quotientInclusionNullhomotopy P)
 
@@ -65,7 +70,9 @@ def localizationFiberComparison :
 @[simp]
 theorem localizationFiberComparison_projection :
     (HomotopyFiber.projection (classifyingSpaceMap (quotientMapQ P)).hom
-      (quotientExactStructure P).kBasepoint).comp (localizationFiberComparison P) =
+      ((CategoryTheory.ExactCategory.abelianExactStructure
+        P.isoModSerre.Localization)).kBasepoint).comp
+        (localizationFiberComparison P) =
       (classifyingSpaceMap (Devissage.mapQ P)).hom :=
   HomotopyFiber.projection_lift _ _ _ _
 

@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Aglib.Algebra.Category.ModuleCat.Finite
+public import Aglib.Algebra.Category.FGModuleCat.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Regular.LocalLowDimension
 public import Mathlib.RingTheory.LocalProperties.ProjectiveDimension

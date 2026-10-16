@@ -98,11 +98,11 @@ def coefficientResolutionMap :
       (squareTensor R).mapCochainComplexPlus
 
 /-- Literal C before forgetting its strict lower-bound witness. -/
-def CRaw : FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ Complex (relativeSquare R) :=
+def CRaw : FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ CochainComplex (relativeSquare R).Modules ℤ :=
   CPlus R ⋙ CochainComplex.Plus.ι (relativeSquare R).Modules
 
 /-- Literal V before any outer total, forgetting only the strict lower-bound witness. -/
-def VRaw : FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ Complex (twoChartLine R) :=
+def VRaw : FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ CochainComplex (twoChartLine R).Modules ℤ :=
   VPlus R ⋙ CochainComplex.Plus.ι (twoChartLine R).Modules
 
 /-- Original resolved-coefficient naturality in the actual original chain category. -/

@@ -11,11 +11,12 @@ public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.GlobalSections
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.ClosedImmersion.IdealPushforward
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Pushforward
-public import Aglib.Algebra.Category.ModuleCat.IdealClosedSupport
+public import Aglib.Algebra.Category.FGModuleCat.IdealClosedSupport
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.ComparisonGTheory
 public import Quillen.CategoryTheory.SmallModel.Functoriality
 public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
 /-!
 # Actual coherent pushforward from an arbitrary affine closed subscheme
 
@@ -60,7 +61,8 @@ variable (I : Ideal R)
 
 /-- The canonical closed pushforward on the public global G-groups. -/
 def coherentPushforwardGMap (n : ℕ) :
-    AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec (closedRing R I)) n →*
+    AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec
+      (Pushforward.ClosedImmersion.Ideal.closedRing R I)) n →*
       AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec R) n :=
   CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (coherentPushforwardExact R I) n
 
@@ -70,17 +72,20 @@ theorem coherentPushforwardGMap_square (n : ℕ) :
     (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (globalSectionsExact R) n).comp
       (coherentPushforwardGMap R I n) =
     (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (closedRestrictionExact I) n).comp
-      (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (globalSectionsExact (closedRing R
+      (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (globalSectionsExact
+        (Pushforward.ClosedImmersion.Ideal.closedRing R
         I)) n) := by
   have h := CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u+1}
     (F := (coherentPushforwardExact R I).comp (globalSectionsExact R))
-    (G := (globalSectionsExact (closedRing R I)).comp (closedRestrictionExact I))
+    (G := (globalSectionsExact (Pushforward.ClosedImmersion.Ideal.closedRing R I)).comp
+      (closedRestrictionExact I))
     (coherentPushforwardSquare R I) n
   simpa only [CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, coherentPushforwardGMap]
     using h
 
 /-- The same actual pushforward on the proved lowest-universe affine G-groups. -/
-def specPushforwardGMap (n : ℕ) : SpecG (closedRing R I) n →* SpecG R n :=
+def specPushforwardGMap (n : ℕ) : SpecG (Pushforward.ClosedImmersion.Ideal.closedRing R I) n →*
+  SpecG R n :=
   (coherentPushforwardExact R I).smallKMap n
 
 /-- The affine G-comparison is precisely the canonical global-sections K-map. -/
@@ -95,11 +100,12 @@ of scalars under the proved affine G-theory equivalences. -/
 theorem specPushforwardGMap_square (n : ℕ) :
     (specGRingEquiv R n).toMonoidHom.comp (specPushforwardGMap R I n) =
       ((closedRestrictionExact I).smallKMap n).comp
-        (specGRingEquiv (closedRing R I) n).toMonoidHom := by
+        (specGRingEquiv (Pushforward.ClosedImmersion.Ideal.closedRing R I) n).toMonoidHom := by
   rw [specGRingEquiv_eq_globalSections, specGRingEquiv_eq_globalSections]
   have h := CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u}
     (F := (coherentPushforwardExact R I).comp (globalSectionsExact R))
-    (G := (globalSectionsExact (closedRing R I)).comp (closedRestrictionExact I))
+    (G := (globalSectionsExact (Pushforward.ClosedImmersion.Ideal.closedRing R I)).comp
+      (closedRestrictionExact I))
     (coherentPushforwardSquare R I) n
   simpa only [CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, specPushforwardGMap] using h
 

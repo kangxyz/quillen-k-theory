@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Homology.BoundedProjectiveReplacement
+public import Aglib.Algebra.Homology.CochainComplex.OppositeQuasiIso
+public import Aglib.Algebra.Homology.CochainComplex.BoundedAbove.ProjectiveReplacement
 
 /-!
 # Genuine relative projective factorization

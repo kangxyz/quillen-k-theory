@@ -7,7 +7,9 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenPushforwardCounit
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Consumers of the original qc-open injective pushforward counit -/
 @[expose] public section
 
@@ -23,10 +25,11 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 open Quillen.PerfectComplexes.Affine
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace QuillenTest.OpenPushforwardCounit
 
 variable {R : CommRingCat.{u}} (W : (Spec R).Opens)
-  (hW : IsCompact (W : Set (Spec R))) (I : Complex W.toScheme) (a : ℤ)
+  (hW : IsCompact (W : Set (Spec R))) (I : CochainComplex W.toScheme.Modules ℤ) (a : ℤ)
   (hb : ∀ n, n < a → IsZero (I.X n)) (hi : ∀ n, Injective (I.X n))
   (hq : ∀ n, (I.homology n).IsQuasicoherent)
 
@@ -55,14 +58,14 @@ theorem original_open_reconstruction :
 include hW hb hi hq in
 /-- The actual original derived reconstruction has QC target homology, with no upper bound. -/
 theorem original_derived_reconstruction_and_qc :
-    IsIso ((toDerived (Spec R)).map
+    IsIso ((DerivedCategory.Q (C := (Spec R).Modules)).map
         (associatedSectionsCounit R ((pushforwardComplex W.ι).obj I))) ∧
       ∀ n : ℤ, (((pushforwardComplex W.ι).obj I).homology n).IsQuasicoherent := by
   let := quasiIso_openPushforward_associatedSectionsCounit W hW I a hb hi hq
   exact ⟨inferInstance, openPushforward_quasicoherent_homology W hW I a hb hi hq⟩
 
 /-- Reconstruction retains naturality for the literal direct image of every chain map. -/
-theorem original_counit_naturality {I J : Complex W.toScheme} (f : I ⟶ J) :
+theorem original_counit_naturality {I J : CochainComplex W.toScheme.Modules ℤ} (f : I ⟶ J) :
     (associatedComplex R).map ((sectionsComplex R).map ((pushforwardComplex W.ι).map f)) ≫
         associatedSectionsCounit R ((pushforwardComplex W.ι).obj J) =
       associatedSectionsCounit R ((pushforwardComplex W.ι).obj I) ≫

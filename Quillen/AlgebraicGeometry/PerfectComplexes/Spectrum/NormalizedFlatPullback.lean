@@ -18,6 +18,8 @@ normalization is compared, through its genuine transformation triangle, with the
 isomorphism. Both constructions retain the original spectrum maps and full homotopy tracks.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

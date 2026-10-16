@@ -7,7 +7,7 @@ module
 
 public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.KTheory.Bass.ModelDiagramTwoChartStableSequence
-public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.PolynomialLaurent
+public import Aglib.AlgebraicGeometry.BaseChange.Coefficients.PolynomialLaurent
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedBassTower
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenBassTower
 

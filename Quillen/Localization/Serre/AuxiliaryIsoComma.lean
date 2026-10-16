@@ -8,6 +8,7 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.AuxiliaryBaseChange
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # The actual comparison from an auxiliary category to an isomorphism comma
@@ -27,7 +28,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
 variable (P : ObjectProperty C) [P.IsSerreClass]
 
@@ -42,9 +44,11 @@ instance auxiliary_quotient_structure_isIso {N : C} (X : AuxiliaryKernel P N) :
 /-- The quotient of an auxiliary object is canonically identified with the base. -/
 def auxiliaryQuotientObjIso {N : C} (X : AuxiliaryKernel P N) :
     (quotientMapQ P).obj ((auxiliaryForgetQ P N).obj X) ≅
-      Q.of (quotientExactStructure P).deflation (quotientExactStructure P).inflation
+      Q.of ((abelianExactStructure P.isoModSerre.Localization)).deflation
+        ((abelianExactStructure P.isoModSerre.Localization)).inflation
         (P.isoModSerre.Q.obj N) :=
-  (quotientExactStructure P).qIsoOfIso (asIso (P.isoModSerre.Q.map X.obj.obj.of.hom))
+  ((abelianExactStructure P.isoModSerre.Localization)).qIsoOfIso (asIso (P.isoModSerre.Q.map
+    X.obj.obj.of.hom))
 
 /-- A span over the base intertwines these actual quotient identifications. -/
 theorem auxiliaryQuotientObjIso_naturality {N : C} {X Y : AuxiliaryKernel P N} (f : X ⟶ Y) :
@@ -67,13 +71,13 @@ theorem auxiliaryQuotientObjIso_naturality {N : C} {X Y : AuxiliaryKernel P N} (
   have : IsIso (L.map s.r.left) := IsIso.of_isIso_comp_right _ (L.map Y.obj.obj.of.hom)
   change (quotientMapQ P).map ((overForgetQ N).map f.hom) ≫ _ = _
   rw [← hs]
-  let t := (quotientExactFunctor P).toQCompatibleFunctor.mapSpan ((overForgetCompatible N).mapSpan
+  let t := ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+    P.isoModSerre.Q)).toQCompatibleFunctor.mapSpan ((overForgetCompatible N).mapSpan
     s)
   change Q.mkHom _ _ t ≫ Q.inflationArrow (L.map Y.obj.obj.of.hom) =
     Q.inflationArrow (L.map X.obj.obj.of.hom)
   have : IsIso t.l := inferInstanceAs (IsIso (L.map s.l.left))
   have : IsIso t.r := inferInstanceAs (IsIso (L.map s.r.left))
-  dsimp only [quotientExactStructure] at t ⊢
   rw [Q.mkHom_eq_qIsoOfIso]
   change Q.inflationArrow (inv (L.map s.l.left) ≫ L.map s.r.left) ≫
       Q.inflationArrow (L.map Y.obj.obj.of.hom) = Q.inflationArrow (L.map X.obj.obj.of.hom)
@@ -85,7 +89,8 @@ theorem auxiliaryQuotientObjIso_naturality {N : C} {X Y : AuxiliaryKernel P N} (
 /-- The canonical fixed-base comparison into the quotient isomorphism comma. -/
 def auxiliaryToIsoStructured (N : C) :
     AuxiliaryKernel P N ⥤ IsoStructuredComma P
-      (Q.of (quotientExactStructure P).deflation (quotientExactStructure P).inflation
+      (Q.of ((abelianExactStructure P.isoModSerre.Localization)).deflation
+        ((abelianExactStructure P.isoModSerre.Localization)).inflation
         (P.isoModSerre.Q.obj N)) where
   obj X := ⟨StructuredArrow.mk (Y := (auxiliaryForgetQ P N).obj X)
     (auxiliaryQuotientObjIso P X).inv, by
@@ -113,14 +118,15 @@ theorem auxiliaryToIsoStructured_forget (N : C) :
 
 /-- A specified quotient identification gives the actual source identification
 for each auxiliary object. -/
-def auxiliaryQuotientObjIsoWithBase {N : C} {V : Quotient P}
+def auxiliaryQuotientObjIsoWithBase {N : C} {V : P.isoModSerre.Localization}
     (φ : P.isoModSerre.Q.obj N ≅ V) (X : AuxiliaryKernel P N) :
     (quotientMapQ P).obj ((auxiliaryForgetQ P N).obj X) ≅
-      Q.of (quotientExactStructure P).deflation (quotientExactStructure P).inflation V :=
-  (quotientExactStructure P).qIsoOfIso
+      Q.of ((abelianExactStructure P.isoModSerre.Localization)).deflation
+        ((abelianExactStructure P.isoModSerre.Localization)).inflation V :=
+  ((abelianExactStructure P.isoModSerre.Localization)).qIsoOfIso
     (asIso (P.isoModSerre.Q.map X.obj.obj.of.hom) ≪≫ φ)
 
-lemma auxiliaryQuotientObjIsoWithBase_naturality {N : C} {V : Quotient P}
+lemma auxiliaryQuotientObjIsoWithBase_naturality {N : C} {V : P.isoModSerre.Localization}
     (φ : P.isoModSerre.Q.obj N ≅ V) {X Y : AuxiliaryKernel P N} (f : X ⟶ Y) :
     (quotientMapQ P).map ((auxiliaryForgetQ P N).map f) ≫
         (auxiliaryQuotientObjIsoWithBase P φ Y).hom =
@@ -132,10 +138,11 @@ lemma auxiliaryQuotientObjIsoWithBase_naturality {N : C} {V : Quotient P}
   exact congrArg (· ≫ Q.inflationArrow φ.hom) (auxiliaryQuotientObjIso_naturality P f)
 
 /-- The comparison for an arbitrary chosen identification of the quotient base. -/
-def auxiliaryToIsoStructuredWithBase {N : C} {V : Quotient P}
+def auxiliaryToIsoStructuredWithBase {N : C} {V : P.isoModSerre.Localization}
     (φ : P.isoModSerre.Q.obj N ≅ V) :
     AuxiliaryKernel P N ⥤ IsoStructuredComma P
-      (Q.of (quotientExactStructure P).deflation (quotientExactStructure P).inflation V) where
+      (Q.of ((abelianExactStructure P.isoModSerre.Localization)).deflation
+        ((abelianExactStructure P.isoModSerre.Localization)).inflation V) where
   obj X := ⟨StructuredArrow.mk (Y := (auxiliaryForgetQ P N).obj X)
     (auxiliaryQuotientObjIsoWithBase P φ X).inv, by
       change IsIso (auxiliaryQuotientObjIsoWithBase P φ X).inv
@@ -154,14 +161,14 @@ def auxiliaryToIsoStructuredWithBase {N : C} {V : Quotient P}
     exact (auxiliaryForgetQ P N).map_comp f g
 
 @[simp]
-theorem auxiliaryToIsoStructuredWithBase_forget {N : C} {V : Quotient P}
+theorem auxiliaryToIsoStructuredWithBase_forget {N : C} {V : P.isoModSerre.Localization}
     (φ : P.isoModSerre.Q.obj N ≅ V) :
     auxiliaryToIsoStructuredWithBase P φ ⋙ isoStructuredInclusion P _ ⋙
       StructuredArrow.proj _ (quotientMapQ P) = auxiliaryForgetQ P N := rfl
 
 /-- Compatibility with a morphism between chosen ordinary quotient lifts is
 an actual natural isomorphism with identity ambient components. -/
-def auxiliaryToIsoStructuredWithBasePostcomposeIso {M N : C} {V : Quotient P}
+def auxiliaryToIsoStructuredWithBasePostcomposeIso {M N : C} {V : P.isoModSerre.Localization}
     (i : M ⟶ N) (hi : P.isoModSerre i)
     (φ : P.isoModSerre.Q.obj M ≅ V) (ψ : P.isoModSerre.Q.obj N ≅ V)
     (h : P.isoModSerre.Q.map i ≫ ψ.hom = φ.hom) :
@@ -180,7 +187,8 @@ def auxiliaryToIsoStructuredWithBasePostcomposeIso {M N : C} {V : Quotient P}
         change P.isoModSerre.Q.map (X.obj.obj.of.hom ≫ i) ≫ ψ.hom =
           P.isoModSerre.Q.map X.obj.obj.of.hom ≫ φ.hom
         rw [Functor.map_comp, Category.assoc, h]
-      exact congrArg (fun e => ((quotientExactStructure P).qIsoOfIso e).inv) he))) (by
+      exact congrArg (fun e => (((abelianExactStructure P.isoModSerre.Localization)).qIsoOfIso
+        e).inv) he))) (by
     intro X Y f
     apply ObjectProperty.hom_ext
     apply StructuredArrow.hom_ext
@@ -193,7 +201,7 @@ def auxiliaryToIsoStructuredWithBasePostcomposeIso {M N : C} {V : Quotient P}
 
 /-- The identity-component comparison is strict equality of functors,
 providing the naturality equation of the filtered auxiliary cocone. -/
-theorem auxiliaryToIsoStructuredWithBase_postcompose {M N : C} {V : Quotient P}
+theorem auxiliaryToIsoStructuredWithBase_postcompose {M N : C} {V : P.isoModSerre.Localization}
     (i : M ⟶ N) (hi : P.isoModSerre i)
     (φ : P.isoModSerre.Q.obj M ≅ V) (ψ : P.isoModSerre.Q.obj N ≅ V)
     (h : P.isoModSerre.Q.map i ≫ ψ.hom = φ.hom) :

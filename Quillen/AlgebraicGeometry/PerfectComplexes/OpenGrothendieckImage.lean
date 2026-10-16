@@ -20,6 +20,8 @@ original relative-open image quotient; it does not replace that grading.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 

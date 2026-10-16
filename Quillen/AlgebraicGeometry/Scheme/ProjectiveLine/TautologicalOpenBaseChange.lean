@@ -10,6 +10,8 @@ public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OpenBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Tautological
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneRestriction
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TwistMinusUnit
+public import Aglib.AlgebraicGeometry.Modules.Restriction.ZeroMorphisms
+public import Aglib.AlgebraicGeometry.Modules.Subobjects.Gluing
 
 /-!
 # The original tautological line under open coefficient change
@@ -103,7 +105,8 @@ lemma tautologicalOpenInclusion_obstruction :
       twistMinusObstruction S (SheafOfModules.unit (twoChartLine S).ringCatSheaf) = 0 := by
   apply prod.hom_ext
   · simp only [twistMinusObstruction, Category.assoc, prod.lift_fst, zero_comp]
-    apply eq_zero_of_restrict_map_eq_zero (plusChart S) _ ⟨_, ⟨Iso.refl _⟩⟩
+    apply AlgebraicGeometry.Scheme.Modules.eq_zero_of_restrict_map_eq_zero (plusChart S) _ ⟨_,
+      ⟨Iso.refl _⟩⟩
     rw [Functor.map_comp, tautologicalOpenInclusion_plus]
     have hc := moduleFirstColumn_unit (plusChart S) (polynomialCoordinate S)
     have he : firstColumn (plusChart S) (polynomialCoordinate S) =
@@ -111,10 +114,12 @@ lemma tautologicalOpenInclusion_obstruction :
           moduleFirstColumn (plusChart S)
             (SheafOfModules.unit (twoChartLine S).ringCatSheaf) (polynomialCoordinate S) := by
       rw [hc, Iso.inv_hom_id_assoc]
-    rw [he, Category.assoc, Category.assoc, subobjectObstruction_local_zero, comp_zero,
+    rw [he, Category.assoc, Category.assoc,
+      AlgebraicGeometry.Scheme.Modules.subobjectObstruction_local_zero, comp_zero,
       comp_zero]
   · simp only [twistMinusObstruction, Category.assoc, prod.lift_snd, zero_comp]
-    apply eq_zero_of_restrict_map_eq_zero (minusChart S) _ ⟨_, ⟨Iso.refl _⟩⟩
+    apply AlgebraicGeometry.Scheme.Modules.eq_zero_of_restrict_map_eq_zero (minusChart S) _ ⟨_,
+      ⟨Iso.refl _⟩⟩
     rw [Functor.map_comp, tautologicalOpenInclusion_minus]
     have hc := moduleSecondColumn_unit (minusChart S) (polynomialCoordinate S)
     have he : secondColumn (minusChart S) (polynomialCoordinate S) =
@@ -122,7 +127,8 @@ lemma tautologicalOpenInclusion_obstruction :
           moduleSecondColumn (minusChart S)
             (SheafOfModules.unit (twoChartLine S).ringCatSheaf) (polynomialCoordinate S) := by
       rw [hc, Iso.inv_hom_id_assoc]
-    rw [he, Category.assoc, Category.assoc, subobjectObstruction_local_zero, comp_zero,
+    rw [he, Category.assoc, Category.assoc,
+      AlgebraicGeometry.Scheme.Modules.subobjectObstruction_local_zero, comp_zero,
       comp_zero]
 
 /-- The original restricted inclusion factored through the canonical twist kernel. -/

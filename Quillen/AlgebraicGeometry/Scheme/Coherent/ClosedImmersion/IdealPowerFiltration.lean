@@ -6,8 +6,8 @@ Authors: kangxyz
 
 module
 
-public import Aglib.Algebra.Category.ModuleCat.Finite
-public import Aglib.Algebra.Category.ModuleCat.IdealClosedSupport
+public import Aglib.Algebra.Category.FGModuleCat.Basic
+public import Aglib.Algebra.Category.FGModuleCat.IdealClosedSupport
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Exact
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic

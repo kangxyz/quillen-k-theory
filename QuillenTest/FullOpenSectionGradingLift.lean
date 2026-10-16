@@ -13,6 +13,8 @@ actual raw restriction image and original perfect evaluation, without replacing 
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 open Quillen.Waldhausen
 

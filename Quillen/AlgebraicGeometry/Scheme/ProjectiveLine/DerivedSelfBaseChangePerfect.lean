@@ -8,6 +8,7 @@ public import Aglib.Algebra.Homology.DerivedCategory.Plus.BoundedComparison
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DerivedFlatBaseChange
 public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PushforwardSection
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.IntrinsicPerfectPushforward
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Original projective-line base-change mate on intrinsic perfect D+
 

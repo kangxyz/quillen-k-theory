@@ -56,7 +56,7 @@ theorem original_open_lift_unique (R : CommRingCat.{u}) (r : R) (V : (Spec R).Op
 
 /-- The full original restriction chain map factors through its actual localization numerator. -/
 theorem original_unit_factorization (R : CommRingCat.{u}) (r : R) (V : (Spec R).Opens)
-    (I : Complex (Spec R)) :
+    (I : CochainComplex (Spec R).Modules ℤ) :
     (NatTrans.mapHomologicalComplex (scalarLocalizeUnit R r) (.up ℤ)).app
         (affineSectionsComplex R V I) ≫ sectionsLocalizationComplexComparison R r V I =
       affineSectionsComplexRestriction R (inf_le_left : V ⊓ PrimeSpectrum.basicOpen r ≤ V) I :=
@@ -64,7 +64,7 @@ theorem original_unit_factorization (R : CommRingCat.{u}) (r : R) (V : (Spec R).
 
 /-- Shrinking arbitrary opens preserves the whole original chain-map square. -/
 theorem original_shrinking_square (R : CommRingCat.{u}) (r : R)
-    {U V : (Spec R).Opens} (h : U ≤ V) (I : Complex (Spec R)) :
+    {U V : (Spec R).Opens} (h : U ≤ V) (I : CochainComplex (Spec R).Modules ℤ) :
     ((scalarLocalize R r).mapHomologicalComplex (.up ℤ)).map
         (affineSectionsComplexRestriction R h I) ≫ sectionsLocalizationComplexComparison R r U I =
     sectionsLocalizationComplexComparison R r V I ≫
@@ -72,7 +72,8 @@ theorem original_shrinking_square (R : CommRingCat.{u}) (r : R)
   sectionsLocalizationComplexComparison_restrict R r h I
 
 /-- Both original homology inverse laws survive localization at zero as well. -/
-theorem original_zero_localization_homology (R : CommRingCat.{u}) (I : Complex (Spec R))
+theorem original_zero_localization_homology (R : CommRingCat.{u})
+    (I : CochainComplex (Spec R).Modules ℤ)
     (a n : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent) :
     ∃ p, homologyMap (principalSectionsScalarComplexComparison R 0 I) n ≫ p = 𝟙 _ ∧
@@ -82,7 +83,7 @@ theorem original_zero_localization_homology (R : CommRingCat.{u}) (I : Complex (
 
 /-- The generic actual localization map is weak at affine top, with an honest negative lower bound.
   -/
-theorem original_affine_top (R : CommRingCat.{u}) (r : R) (I : Complex (Spec R))
+theorem original_affine_top (R : CommRingCat.{u}) (r : R) (I : CochainComplex (Spec R).Modules ℤ)
     (hbound : ∀ n, n < -7 → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent) :
     QuasiIso (sectionsLocalizationComplexComparison R r ⊤ I) :=

@@ -41,7 +41,7 @@ namespace Quillen.PerfectComplexes.Affine
 strict affine source/witness and any termwise quasicoherent target. -/
 theorem exists_principal_geometric_map_factorization (R : CommRingCat.{u}) (r : R)
     (A E : StrictPerfect (Spec R))
-    {B : Complex (Spec (.of (Localization.Away r)))}
+    {B : CochainComplex (Spec (.of (Localization.Away r))).Modules ℤ}
     (hB : ∀ i, (B.X i).IsQuasicoherent)
     (q : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj E.obj ⟶
       B) [QuasiIso q]

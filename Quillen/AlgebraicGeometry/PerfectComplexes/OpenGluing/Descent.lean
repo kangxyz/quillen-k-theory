@@ -26,7 +26,8 @@ namespace Quillen.PerfectComplexes.OpenHomotopyGluing
 variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
   [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]
   (h : a ≫ j = b ≫ k)
-  {K : Complex W} {A : Complex U} {B : Complex V} {L : Complex X}
+  {K : CochainComplex W.Modules ℤ} {A : CochainComplex U.Modules ℤ} {B : CochainComplex V.Modules ℤ}
+    {L : CochainComplex X.Modules ℤ}
   (α : K ⟶ (restrict a).obj A) (β : K ⟶ (restrict b).obj B)
   (p : A ⟶ (restrict j).obj L) (q : B ⟶ (restrict k).obj L)
 

@@ -46,7 +46,6 @@ public import Quillen.CategoryTheory.ExactCategory.ExtensionTotal
 public import Quillen.CategoryTheory.ExactCategory.ExtensionTotalIsomorphism
 public import Quillen.CategoryTheory.ExactCategory.ExtensionZeroQuotient
 public import Quillen.CategoryTheory.ExactCategory.Functor
-public import Quillen.CategoryTheory.ExactCategory.FunctorPushout
 public import Quillen.CategoryTheory.ExactCategory.KernelComposition
 public import Quillen.CategoryTheory.ExactCategory.MatrixInflation
 public import Quillen.CategoryTheory.ExactCategory.ObscureAxiom
@@ -188,11 +187,7 @@ public import Quillen.CategoryTheory.Limits.NatTransProduct
 public import Quillen.CategoryTheory.Limits.SequentialEventuallyIso
 public import Quillen.CategoryTheory.Limits.SequentialExactness
 public import Quillen.CategoryTheory.Limits.SequentialInterleaving
-public import Quillen.CategoryTheory.Limits.SequentialIsoColimit
-public import Quillen.CategoryTheory.Limits.SequentialSignCorrection
-public import Quillen.CategoryTheory.Limits.SequentialTailColimit
 public import Quillen.CategoryTheory.Limits.SplitColumnCokernel
-public import Quillen.CategoryTheory.Localization.Approximation
 public import Quillen.CategoryTheory.Localization.CharacterExtension
 public import Quillen.CategoryTheory.Localization.RightReachable
 public import Quillen.CategoryTheory.Localization.RightRoofs
@@ -358,7 +353,6 @@ public import Quillen.CategoryTheory.TheoremB.VertexWeakAssembly
 public import Quillen.CategoryTheory.TheoremB.WeakComparison
 public import Quillen.CategoryTheory.TheoremB.WeakTransitionComparison
 public import Quillen.CategoryTheory.TheoremB.WeakVertexComparison
-public import Quillen.CategoryTheory.Triangulated.EndpointTransport
 public import Quillen.CategoryTheory.Triangulated.HomComparison
 
 /-!

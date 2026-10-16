@@ -12,6 +12,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PolynomialScalar
 /-! # Original fiber-prefix and specified component-translation consumers -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.PolynomialLaurent
 open Quillen.PerfectComplexes
 open Quillen.Waldhausen

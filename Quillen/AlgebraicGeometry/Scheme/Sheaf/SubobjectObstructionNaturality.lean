@@ -5,7 +5,10 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GluingSubobjects
+public import Aglib.AlgebraicGeometry.Modules.Restriction.Overlap
+public import Aglib.AlgebraicGeometry.Modules.Restriction.ZeroMorphisms
+public import Aglib.AlgebraicGeometry.Modules.Subobjects.Gluing
+public import Aglib.CategoryTheory.Limits.Shapes.BinaryProducts
 
 /-!
 # Naturality of open-subobject obstructions
@@ -29,19 +32,21 @@ lemma subobjectObstruction_naturality {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenIm
     {M N : X.Modules} {A B : U.Modules} (i : A ⟶ M.restrict j) (k : B ⟶ N.restrict j)
     (p : A ⟶ B) (f : M ⟶ N)
     (w : i ≫ (Scheme.Modules.restrictFunctor j).map f = p ≫ k) :
-    f ≫ subobjectObstruction j k = subobjectObstruction j i ≫
+    f ≫ AlgebraicGeometry.Scheme.Modules.subobjectObstruction j k =
+      AlgebraicGeometry.Scheme.Modules.subobjectObstruction j i ≫
       (Scheme.Modules.pushforward j).map
         (cokernel.map i k p ((Scheme.Modules.restrictFunctor j).map f) w) := by
   apply sub_eq_zero.mp
-  apply eq_zero_of_restrict_map_eq_zero j _ ⟨_, ⟨Iso.refl _⟩⟩
+  apply AlgebraicGeometry.Scheme.Modules.eq_zero_of_restrict_map_eq_zero j _ ⟨_, ⟨Iso.refl _⟩⟩
   apply (cancel_mono ((Scheme.Modules.restrictAdjunction j).counit.app (cokernel k))).mp
   simp only [Functor.map_sub, Functor.map_comp, Preadditive.sub_comp,
     Category.assoc, zero_comp]
-  rw [subobjectObstruction_counit]
+  rw [AlgebraicGeometry.Scheme.Modules.subobjectObstruction_counit]
   have hn := (Scheme.Modules.restrictAdjunction j).counit.naturality
     (cokernel.map i k p ((Scheme.Modules.restrictFunctor j).map f) w)
   dsimp only [Functor.comp_map, Functor.id_map] at hn
-  rw [hn, ← Category.assoc, subobjectObstruction_counit, cokernel.π_desc]
+  rw [hn, ← Category.assoc, AlgebraicGeometry.Scheme.Modules.subobjectObstruction_counit,
+    cokernel.π_desc]
   exact sub_self _
 
 end AlgebraicGeometry.Scheme.Modules.Coherent

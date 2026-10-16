@@ -4,11 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalGenerationEndpoints
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalCoefficientFunctors
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineTensor
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPerfect
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Original tautological tensor preserves intrinsic perfect D+
 
@@ -17,6 +18,7 @@ No global strict model or quasicoherent representative is selected here.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
 open Quillen.PerfectComplexes
 
 open Quillen
@@ -35,7 +37,7 @@ variable (R : CommRingCat.{u})
 
 /-- Actual right tensor with the original tautological line preserves local perfection. -/
 theorem locallyPerfect_original_tautologicalRightTensor
-    (K : Quillen.PerfectComplexes.Complex (twoChartLine R))
+    (K : CochainComplex (twoChartLine R).Modules ℤ)
     (hK : locallyPerfect (twoChartLine R) K) :
     locallyPerfect (twoChartLine R)
       (((moduleTensorRightFunctor (twoChartLine R)

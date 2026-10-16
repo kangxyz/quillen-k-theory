@@ -7,7 +7,8 @@ module
 
 public import Quillen.Algebra.Homology.DerivedCategory.BoundedComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedSingleComparison
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Homology
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-!
 # The bounded affine derived equivalence
@@ -25,6 +26,8 @@ hypotheses on the original complex. Finite-projective strictification and an
 unbounded derived equivalence are separate theorems and are not asserted here.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 
 noncomputable section
@@ -53,7 +56,7 @@ attribute [local instance] standardDerivedModules standardDerivedSheaves
 /-- The affine associated-sheaf derived functor restricted to cohomologically bounded objects of
 the module derived category. -/
 abbrev associatedBoundedDerived (R : CommRingCat.{u}) :
-    DerivedCategory.Bounded (ModuleCat.{u} R) ⥤ Derived (Spec R) :=
+    DerivedCategory.Bounded (ModuleCat.{u} R) ⥤ DerivedCategory (Spec R).Modules :=
   DerivedCategory.Bounded.ι ⋙ associatedDerived R
 
 instance (R : CommRingCat.{u}) : (associatedBoundedDerived R).Full where
@@ -89,7 +92,8 @@ lemma associatedBoundedDerived_essImage_single (R : CommRingCat.{u})
 /-- Bounded QC homology suffices for reconstruction in the ambient derived category of all sheaves.
 -/
 lemma associatedBoundedDerived_essImage_of_quasicoherent_homology
-    (R : CommRingCat.{u}) (K : Derived (Spec R)) (a b : ℤ) [DerivedCategory.IsGE (C := (Spec
+    (R : CommRingCat.{u}) (K : DerivedCategory (Spec R).Modules) (a b : ℤ)
+      [DerivedCategory.IsGE (C := (Spec
       R).Modules) K a] [DerivedCategory.IsLE (C := (Spec R).Modules) K b]
     (hK : ∀ i, ((DerivedCategory.homologyFunctor (Spec R).Modules i).obj K).IsQuasicoherent) :
     (associatedBoundedDerived R).essImage K := by
@@ -108,7 +112,8 @@ lemma associatedBoundedDerived_essImage_of_quasicoherent_homology
 
 
 /-- The bounded essential image is exactly bounded quasicoherent homology, over any ring. -/
-lemma associatedBoundedDerived_essImage_iff (R : CommRingCat.{u}) (K : Derived (Spec R)) :
+lemma associatedBoundedDerived_essImage_iff (R : CommRingCat.{u})
+    (K : DerivedCategory (Spec R).Modules) :
     (associatedBoundedDerived R).essImage K ↔
       (∃ a : ℤ, DerivedCategory.IsGE (C := (Spec R).Modules) K a) ∧
       (∃ b : ℤ, DerivedCategory.IsLE (C := (Spec R).Modules) K b) ∧
@@ -130,7 +135,8 @@ lemma associatedBoundedDerived_essImage_iff (R : CommRingCat.{u}) (K : Derived (
 
 
 /-- The actual bounded, quasicoherent-homology part of the ambient derived category. -/
-def boundedQuasicoherentObjects (R : CommRingCat.{u}) : ObjectProperty (Derived (Spec R)) :=
+def boundedQuasicoherentObjects (R : CommRingCat.{u}) : ObjectProperty
+    (DerivedCategory (Spec R).Modules) :=
   fun K => (∃ a : ℤ, DerivedCategory.IsGE (C := (Spec R).Modules) K a) ∧
     (∃ b : ℤ, DerivedCategory.IsLE (C := (Spec R).Modules) K b) ∧
     ∀ i, ((DerivedCategory.homologyFunctor (Spec R).Modules i).obj K).IsQuasicoherent
@@ -201,12 +207,13 @@ def boundedDerivedEquivalenceFactors (R : CommRingCat.{u}) :
 /-- Reconstruct a module complex with the exact requested term bounds and an actual
   original-localization isomorphism. -/
 lemma exists_bounded_module_representative_of_quasicoherent_homology
-    (R : CommRingCat.{u}) (K : Derived (Spec R)) (a b : ℤ)
+    (R : CommRingCat.{u}) (K : DerivedCategory (Spec R).Modules) (a b : ℤ)
     [DerivedCategory.IsGE (C := (Spec R).Modules) K a]
     [DerivedCategory.IsLE (C := (Spec R).Modules) K b]
     (hK : ∀ i, ((DerivedCategory.homologyFunctor (Spec R).Modules i).obj K).IsQuasicoherent) :
     ∃ (L : ModuleComplex R), L.IsStrictlyGE a ∧ L.IsStrictlyLE b ∧
-      Nonempty ((toDerived (Spec R)).obj ((associatedComplex R).obj L) ≅ K) := by
+      Nonempty ((DerivedCategory.Q (C := (Spec R).Modules)).obj ((associatedComplex R).obj L)
+        ≅ K) := by
   obtain ⟨A, ⟨e⟩⟩ := associatedBoundedDerived_essImage_of_quasicoherent_homology R K a b hK
   have hga := (DerivedCategory.TStructure.t (C := (Spec R).Modules)).isGE_of_iso e.symm a
   have hla := (DerivedCategory.TStructure.t (C := (Spec R).Modules)).isLE_of_iso e.symm b
@@ -221,10 +228,10 @@ lemma exists_bounded_module_representative_of_quasicoherent_homology
 /-- An affine locally-perfect complex has a bounded module representative. Finite projectivity of
   the representative is not asserted. -/
 lemma locallyPerfect_exists_bounded_module_representative (R : CommRingCat.{u})
-    {K : Complex (Spec R)} (hK : locallyPerfect (Spec R) K) :
+    {K : CochainComplex (Spec R).Modules ℤ} (hK : locallyPerfect (Spec R) K) :
     ∃ (L : ModuleComplex R) (a b : ℤ), L.IsStrictlyGE a ∧ L.IsStrictlyLE b ∧
-      Nonempty ((toDerived (Spec R)).obj ((associatedComplex R).obj L) ≅
-        (toDerived (Spec R)).obj K) := by
+      Nonempty ((DerivedCategory.Q (C := (Spec R).Modules)).obj ((associatedComplex R).obj L) ≅
+        (DerivedCategory.Q (C := (Spec R).Modules)).obj K) := by
   obtain ⟨a, b, hab⟩ := locallyPerfect_homology_bounded hK
   have : K.IsGE a := by
     rw [CochainComplex.isGE_iff]
@@ -236,12 +243,14 @@ lemma locallyPerfect_exists_bounded_module_representative (R : CommRingCat.{u})
     intro i hi
     rw [HomologicalComplex.exactAt_iff_isZero_homology]
     exact hab i (Or.inr hi)
-  have : DerivedCategory.IsGE (C := (Spec R).Modules) ((toDerived (Spec R)).obj K) a :=
+  have : DerivedCategory.IsGE (C := (Spec R).Modules)
+    ((DerivedCategory.Q (C := (Spec R).Modules)).obj K) a :=
     inferInstanceAs ((DerivedCategory.Q.obj K).IsGE a)
-  have : DerivedCategory.IsLE (C := (Spec R).Modules) ((toDerived (Spec R)).obj K) b :=
+  have : DerivedCategory.IsLE (C := (Spec R).Modules)
+    ((DerivedCategory.Q (C := (Spec R).Modules)).obj K) b :=
     inferInstanceAs ((DerivedCategory.Q.obj K).IsLE b)
   obtain ⟨L, hge, hle, e⟩ := exists_bounded_module_representative_of_quasicoherent_homology
-    R ((toDerived (Spec R)).obj K) a b (fun i =>
+    R ((DerivedCategory.Q (C := (Spec R).Modules)).obj K) a b (fun i =>
       (SheafOfModules.isQuasicoherent (Spec R).ringCatSheaf).prop_of_iso
         ((DerivedCategory.homologyFunctorFactors (Spec R).Modules i).app K).symm
         (locallyPerfect_quasicoherent_homology hK i))

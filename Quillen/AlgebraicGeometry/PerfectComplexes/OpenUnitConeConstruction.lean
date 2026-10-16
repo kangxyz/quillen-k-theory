@@ -5,8 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Homology
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenRestrictionUnitCone
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Constructing the genuine supported restriction-unit cone
 
 A lower-bounded original QC-homology complex supplies an actual injective
@@ -26,6 +29,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes
 /-- The standard upper-universe derived category used to construct injective unit-cone models. -/
 local instance unitConstructionDerived (X : Scheme.{u}) : HasDerivedCategory.{u+1} X.Modules :=
@@ -35,13 +39,13 @@ local instance unitConstructionDerived (X : Scheme.{u}) : HasDerivedCategory.{u+
 without supplying an injective model or a QC target premise. -/
 lemma exists_restrictionUnitCone_model {U X : Scheme.{u}}
     (j : U ⟶ X) [IsOpenImmersion j] [QuasiCompact j]
-    (K : Complex X) (b : ℤ) [K.IsGE b]
+    (K : CochainComplex X.Modules ℤ) (b : ℤ) [K.IsGE b]
     (hK : ∀ n, (K.homology n).IsQuasicoherent) :
-    ∃ (I : Complex U) (q : (restrict j).obj K ⟶ I),
+    ∃ (I : CochainComplex U.Modules ℤ) (q : (restrict j).obj K ⟶ I),
       I.IsStrictlyGE b ∧ (∀ n, Injective (I.X n)) ∧ QuasiIso q ∧
       let C := CochainComplex.mappingCone ((restrictPushforwardComplexAdjunction j).homEquiv K I q)
       (∀ n, (C.homology n).IsQuasicoherent) ∧ C.IsGE (b-1) ∧
-        IsZero ((toDerived U).obj ((restrict j).obj C)) := by
+        IsZero ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj C)) := by
   let E := (restrict j).obj K
   have : E.IsGE b := by
     rw [CochainComplex.isGE_iff]

@@ -9,6 +9,7 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenModuleReconstruction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.Strictification
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FinitePrincipalRemainder
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-!
 # Arbitrarily low actual approximations of original perfect complexes on qc opens
@@ -107,7 +108,8 @@ lemma exists_strict_approximation_on_compact_open (R : CommRingCat.{u})
       let D := (restrict W.ι).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))
       AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree W.toScheme (D.homology c) ∧ D.IsGE c ∧
         D.IsLE c ∧
-        Nonempty ((toDerived W.toScheme).obj D ≅ (toDerived W.toScheme).obj
+        Nonempty ((DerivedCategory.Q (C := W.toScheme.Modules)).obj D ≅
+          (DerivedCategory.Q (C := W.toScheme.Modules)).obj
           ((CochainComplex.singleFunctor W.toScheme.Modules c).obj (D.homology c))) := by
   classical
   obtain ⟨s, hs⟩ := exists_finite_principal_cover R W hW
@@ -167,15 +169,17 @@ roof and global finite-projective approximation, with arbitrarily low original
 vector-bundle remainder. No local-model or splitting premise remains. -/
 lemma locallyPerfect_exists_original_strict_approximation (R : CommRingCat.{u})
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
-    (E : Complex W.toScheme) (hE : locallyPerfect W.toScheme E) (cutoff : ℤ) :
+    (E : CochainComplex W.toScheme.Modules ℤ) (hE : locallyPerfect W.toScheme E) (cutoff : ℤ) :
     ∃ (K : ModuleComplex R) (a b : ℤ) (P : ModuleComplex R) (n : ℤ) (f : P ⟶ K),
       K.IsStrictlyGE a ∧ K.IsStrictlyLE b ∧ moduleStrictPerfect R P ∧ n ≤ cutoff ∧
-      Nonempty ((toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj K)) ≅
-        (toDerived W.toScheme).obj E) ∧
+      Nonempty ((DerivedCategory.Q (C := W.toScheme.Modules)).obj
+        ((restrict W.ι).obj ((associatedComplex R).obj K)) ≅
+        (DerivedCategory.Q (C := W.toScheme.Modules)).obj E) ∧
       let D := (restrict W.ι).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))
       AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree W.toScheme (D.homology n) ∧ D.IsGE n ∧
         D.IsLE n ∧
-        Nonempty ((toDerived W.toScheme).obj D ≅ (toDerived W.toScheme).obj
+        Nonempty ((DerivedCategory.Q (C := W.toScheme.Modules)).obj D ≅
+          (DerivedCategory.Q (C := W.toScheme.Modules)).obj
           ((CochainComplex.singleFunctor W.toScheme.Modules n).obj (D.homology n))) := by
   obtain ⟨K, a, b, hKa, hKb, ⟨eK⟩⟩ :=
     locallyPerfect_exists_bounded_module_open_representative R W hW hE

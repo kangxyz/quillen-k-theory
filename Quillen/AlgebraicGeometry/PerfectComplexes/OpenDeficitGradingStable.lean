@@ -20,6 +20,8 @@ stable equivalence; no coefficient-natural or inherited Laurent seed square is a
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 noncomputable section

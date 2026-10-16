@@ -10,6 +10,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.CoherentHomologyFlatPul
 /-! # Naturality of actual coherent homology under flat perfect pullback -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 
 

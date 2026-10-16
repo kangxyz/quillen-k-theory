@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
-public import Aglib.Algebra.Category.ModuleCat.IdealClosedSupport
+public import Aglib.Algebra.Category.FGModuleCat.IdealClosedSupport
 public import Quillen.Devissage.FiltrationRefinement
 public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
 

@@ -16,6 +16,8 @@ actual canonical fiber loops. This is the full three-parameter transport needed 
 calculation, before any identification with a Laurent-unit boundary.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen.Fibration

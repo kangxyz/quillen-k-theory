@@ -18,6 +18,8 @@ factorizations supply the relative comparison via inverse-image duality.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 

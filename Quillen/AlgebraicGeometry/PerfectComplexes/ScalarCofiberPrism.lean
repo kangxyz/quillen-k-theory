@@ -7,6 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ScalarCofiber
 public import Quillen.Waldhausen.Fibration.CofiberPrismFiber
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-!
 # The original scalar-cofiber prism after open restriction
@@ -17,6 +18,8 @@ cofibration factor is coarse weak. Its original quotient square therefore suppli
 constructed continuous cofiber prism and canonical-fiber face. The source scalar need not be a unit.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.Waldhausen
 open Quillen.Waldhausen.SplitFactorization

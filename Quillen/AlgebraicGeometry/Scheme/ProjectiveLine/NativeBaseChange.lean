@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Native
-public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.BaseChange
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.BaseChange
 
 /-! # Actual native overlap and affine projective-line comparison
 

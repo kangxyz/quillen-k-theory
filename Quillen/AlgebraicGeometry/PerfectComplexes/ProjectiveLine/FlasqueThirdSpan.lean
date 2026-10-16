@@ -5,6 +5,7 @@ Authors: Quillen K-theory contributors
 -/
 module
 
+public import Aglib.Algebra.Homology.ShortComplex.Subcategory
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Carrier
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueThirdTensor
@@ -12,6 +13,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueT
 /-! # Actual original third endpoint span in the flasque perfect model -/
 
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open AlgebraicGeometry.Scheme.Modules.Godement
 
@@ -112,7 +115,7 @@ lemma thirdToCenterPlus_quasiIso (R : CommRingCat.{u})
 
 /-- The literal underlying common complex, retaining all original maps. -/
 def centerRaw (R : CommRingCat.{u}) :
-    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ Complex (twoChartLine R) :=
+    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ CochainComplex (twoChartLine R).Modules ℤ :=
   centerPlus R ⋙ CochainComplex.Plus.ι (twoChartLine R).Modules
 
 /-- The actual common complex is perfect by the actual quasi-isomorphism from T_P(K tensor Q). -/
@@ -254,7 +257,7 @@ lemma centerTotal_flasque (R : CommRingCat.{u})
 
 /-- The original section image of the source total, before product totalization. -/
 def centerSectionRaw (R : CommRingCat.{u}) :
-    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ Complex (relativeSquare R) :=
+    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ CochainComplex (relativeSquare R).Modules ℤ :=
   (FlasqueBoundedBelow.objects (twoChartLine R)).ι ⋙
     (quotientTensor R).mapHomologicalComplex (.up ℤ) ⋙ godementTotal (twoChartLine R) ⋙
       (Scheme.Modules.pushforward (relativeDiagonal R)).mapHomologicalComplex (.up ℤ)
@@ -288,7 +291,7 @@ lemma centerSectionRaw_shortExact (R : CommRingCat.{u})
 
 /-- A product total has a flasque lower-bounded kernel for actual ordinary second pushforward. -/
 lemma centerTotalPush_shortExact (R : CommRingCat.{u})
-    (S : ShortComplex (Complex (relativeSquare R))) (hS : S.ShortExact)
+    (S : ShortComplex (CochainComplex (relativeSquare R).Modules ℤ)) (hS : S.ShortExact)
     (a : ℤ) [S.X₁.IsStrictlyGE a] :
     (S.map (godementTotal (relativeSquare R) ⋙
       (Scheme.Modules.pushforward (relativeSecond R)).mapHomologicalComplex (.up ℤ))).ShortExact :=
@@ -301,7 +304,7 @@ lemma centerTotalPush_shortExact (R : CommRingCat.{u})
 
 /-- The original raw cochain factors of the center, with explicit functor composition. -/
 def centerExplicitRaw (R : CommRingCat.{u}) :
-    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ Complex (twoChartLine R) :=
+    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ CochainComplex (twoChartLine R).Modules ℤ :=
   centerSectionRaw R ⋙ godementTotal (relativeSquare R) ⋙
     (Scheme.Modules.pushforward (relativeSecond R)).mapHomologicalComplex (.up ℤ)
 
@@ -394,8 +397,12 @@ def centerExactFunctor (R : CommRingCat.{u}) :
   toFunctor := center R
   map_conflation S hS := by
     change (S.map (FlasqueBoundedBelow.objects (twoChartLine R)).ι).ShortExact at hS
-    change (S.map (centerRaw R)).ShortExact
-    exact centerRaw_shortExact R S hS
+    exact ShortComplex.shortExact_map_of_comp_iso
+      (FlasqueBoundedBelow.objects (twoChartLine R))
+      (center R) (centerRaw R)
+      (ObjectProperty.liftCompιIso
+        (FlasqueBoundedBelow.objects (twoChartLine R))
+        (centerRaw R) (center_objects R)) S (centerRaw_shortExact R S hS)
 
 /-- The actual quotient-bearing original cofibrations are preserved. -/
 lemma center_cofibration (R : CommRingCat.{u})

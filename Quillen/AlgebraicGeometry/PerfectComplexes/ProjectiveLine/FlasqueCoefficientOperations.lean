@@ -19,6 +19,8 @@ Right tensor by the actual tautological line is exact before Godement total.
 The original shift preserves the flasque model and its inherited exact structure.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 open Quillen
 
 
@@ -76,7 +78,8 @@ def lineChartIso (R : CommRingCat.{u}) (b : Bool) :
   · exact tautologicalLinePlusIso R
 
 /-- Original K tensor L remains locally perfect by the actual tensor symmetry. -/
-lemma rightTensor_locallyPerfect (R : CommRingCat.{u}) {K : Complex (twoChartLine R)}
+lemma rightTensor_locallyPerfect (R : CommRingCat.{u})
+    {K : CochainComplex (twoChartLine R).Modules ℤ}
     (hK : locallyPerfect (twoChartLine R) K) :
     locallyPerfect (twoChartLine R) ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight
       (tautologicalLine R)).obj K) :=
@@ -87,7 +90,7 @@ lemma rightTensor_locallyPerfect (R : CommRingCat.{u}) {K : Complex (twoChartLin
       (lineChart R) (lineChart_cover R) (lineChartIso R) hK)
 
 /-- Right tensor preserves a specified strict lower bound. -/
-lemma rightTensor_isStrictlyGE (R : CommRingCat.{u}) (K : Complex (twoChartLine R))
+lemma rightTensor_isStrictlyGE (R : CommRingCat.{u}) (K : CochainComplex (twoChartLine R).Modules ℤ)
     (a : ℤ) [K.IsStrictlyGE a] :
     ((AlgebraicGeometry.Scheme.Modules.Complex.tensorRight (tautologicalLine R)).obj K).IsStrictlyGE
       a := by
@@ -125,9 +128,11 @@ instance rightTensor_additive (R : CommRingCat.{u}) : (rightTensor R).Additive w
 
 /-- Right tensor preserves the actual inherited short exact sequences. -/
 def rightTensorExactFunctor (R : CommRingCat.{u}) : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (twoChartLine R).Modules ℤ))
       (FlasqueBoundedBelow.objects (twoChartLine R)))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (twoChartLine R).Modules ℤ))
       (BoundedBelow.objects (twoChartLine R))) where
   toFunctor := rightTensor R
   map_conflation S hS := by
@@ -150,7 +155,7 @@ lemma rightTensor_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
   pushout hi h := (rightTensorExactFunctor R).map_isPushout hi h
 
 /-- Original shift preserves the full flasque-perfect object predicate. -/
-lemma shift_objects {X : Scheme.{u}} {K : Complex X}
+lemma shift_objects {X : Scheme.{u}} {K : CochainComplex X.Modules ℤ}
     (hK : FlasqueBoundedBelow.objects X K) (n : ℤ) :
     FlasqueBoundedBelow.objects X (K⟦n⟧) := by
   refine ⟨BoundedBelow.objects_shift hK.1 n, fun i => ?_⟩
@@ -160,27 +165,30 @@ lemma shift_objects {X : Scheme.{u}} {K : Complex X}
 /-- The literal standard original cochain shift, including its differential sign. -/
 def modelShift (X : Scheme.{u}) (n : ℤ) :
     FlasqueBoundedBelow.Obj X ⥤ FlasqueBoundedBelow.Obj X :=
-  ObjectProperty.lift _ ((FlasqueBoundedBelow.objects X).ι ⋙ shiftFunctor (Complex X) n)
+  ObjectProperty.lift _ ((FlasqueBoundedBelow.objects X).ι ⋙ shiftFunctor
+    (CochainComplex X.Modules ℤ) n)
     (fun K => shift_objects K.property n)
 
 instance modelShift_additive (X : Scheme.{u}) (n : ℤ) : (modelShift X n).Additive where
   map_add := by
     intro K L f g
     apply ObjectProperty.hom_ext
-    change (shiftFunctor (Complex X) n).map (f.hom + g.hom) =
-      (shiftFunctor (Complex X) n).map f.hom + (shiftFunctor (Complex X) n).map g.hom
+    change (shiftFunctor (CochainComplex X.Modules ℤ) n).map (f.hom + g.hom) =
+      (shiftFunctor (CochainComplex X.Modules ℤ) n).map f.hom +
+        (shiftFunctor (CochainComplex X.Modules ℤ) n).map g.hom
     exact CategoryTheory.Functor.map_add _
 
 /-- Original shift preserves the inherited actual exact sequences. -/
 def modelShiftExactFunctor (X : Scheme.{u}) (n : ℤ) : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex X))
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
       (FlasqueBoundedBelow.objects X))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex X))
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
       (FlasqueBoundedBelow.objects X)) where
   toFunctor := modelShift X n
   map_conflation S hS := by
     change (S.map (FlasqueBoundedBelow.objects X).ι).ShortExact at hS
-    change ((S.map (FlasqueBoundedBelow.objects X).ι).map (shiftFunctor (Complex X) n)).ShortExact
+    change ((S.map (FlasqueBoundedBelow.objects X).ι).map
+      (shiftFunctor (CochainComplex X.Modules ℤ) n)).ShortExact
     exact hS.map_of_exact _
 
 lemma modelShift_exact (X : Scheme.{u}) (n : ℤ) : Waldhausen.IsExact

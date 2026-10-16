@@ -18,6 +18,8 @@ square, rather than being used to define the pullback map.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 
 

@@ -13,7 +13,7 @@ public import Mathlib.Data.ZMod.Basic
 @[expose] public section
 
 open AlgebraicGeometry.Scheme.ProjectiveLine
-open Quillen.PolynomialBaseChange
+open CommRingCat.PolynomialLaurent
 
 
 open CommRingCat.PolynomialLaurent

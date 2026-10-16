@@ -10,7 +10,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedStabili
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.InjectiveCounit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Models
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRestrictionRoofs
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.RestrictionHom
 /-! # Source-supported roofs to original lower-bounded QC all-sheaf targets
 
 Genuine affine module reconstruction and globally weak common fractions keep
@@ -38,25 +42,25 @@ lower-bounded QC target has actual locally weak global perfect denominators.
 Every original compact-open vanishing condition on the source is retained. -/
 lemma exists_open_roof_to_lowerBounded_quasicoherent_target
     (R : CommRingCat.{u}) (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
-    {A B : Complex (Spec R)} (hA : locallyPerfect (Spec R) A) (b : ℤ) [B.IsGE b]
+    {A B : CochainComplex (Spec R).Modules ℤ} (hA : locallyPerfect (Spec R) A) (b : ℤ) [B.IsGE b]
     (hBqc : ∀ n, (B.homology n).IsQuasicoherent)
-    (α : (toDerived W.toScheme).obj ((restrict W.ι).obj A) ⟶
-      (toDerived W.toScheme).obj ((restrict W.ι).obj B)) :
-    ∃ (M : Complex (Spec R)) (q : M ⟶ A) (g : M ⟶ B),
+    (α : (DerivedCategory.Q (C := W.toScheme.Modules)).obj ((restrict W.ι).obj A) ⟶
+      (DerivedCategory.Q (C := W.toScheme.Modules)).obj ((restrict W.ι).obj B)) :
+    ∃ (M : CochainComplex (Spec R).Modules ℤ) (q : M ⟶ A) (g : M ⟶ B),
       locallyPerfect (Spec R) M ∧ QuasiIso ((restrict W.ι).map q) ∧
-      (toDerived W.toScheme).map ((restrict W.ι).map q) ≫ α =
-        (toDerived W.toScheme).map ((restrict W.ι).map g) ∧
+      (DerivedCategory.Q (C := W.toScheme.Modules)).map ((restrict W.ι).map q) ≫ α =
+        (DerivedCategory.Q (C := W.toScheme.Modules)).map ((restrict W.ι).map g) ∧
       ∀ (Z : (Spec R).Opens), IsCompact (Z : Set (Spec R)) →
-        IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj A)) →
-        IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj M)) := by
+        IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj ((restrict Z.ι).obj A)) →
+        IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj ((restrict Z.ι).obj M)) := by
   obtain ⟨A₀, hA₀, ⟨eA⟩⟩ := locallyPerfect_exists_moduleStrictPerfect_representative R hA
   obtain ⟨B₀, hB₀, ⟨eB⟩⟩ := exists_lowerBounded_module_representative B b hBqc
   let β := (restrictDerivedIso W.ι eA).hom ≫ α ≫ (restrictDerivedIso W.ι eB).inv
   obtain ⟨P, hP, t, a, ht, ha, hsupport⟩ :=
     exists_quasiCompact_open_module_roof_preserving_source_support R W hW hA₀ b β
   obtain ⟨M, s, q, g, hs, hq, hg⟩ := OpenDerivedImage.common_global_right_fraction
-    ((toDerived (Spec R)).map ((associatedComplex R).map t) ≫ eA.hom)
-    ((toDerived (Spec R)).map ((associatedComplex R).map a) ≫ eB.hom)
+    ((DerivedCategory.Q (C := (Spec R).Modules)).map ((associatedComplex R).map t) ≫ eA.hom)
+    ((DerivedCategory.Q (C := (Spec R).Modules)).map ((associatedComplex R).map a) ≫ eB.hom)
   have hM : locallyPerfect (Spec R) M :=
     (locallyPerfect_iff_of_quasiIso s).mpr (locallyPerfect_of_strictPerfect
       (strictPerfect_associated R hP))
@@ -65,29 +69,33 @@ lemma exists_open_roof_to_lowerBounded_quasicoherent_target
   simp only [restrictDerivedHom_comp, restrictDerivedHom_map] at hqr hgr
   have hweak : QuasiIso ((restrict W.ι).map q) := by
     apply (DerivedCategory.isIso_Q_map_iff_quasiIso W.toScheme.Modules _).mp
-    change IsIso ((toDerived W.toScheme).map ((restrict W.ι).map q))
     rw [← hqr]
-    change IsIso ((toDerived W.toScheme).map ((restrict W.ι).map s) ≫
-      (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map t)) ≫
+    change IsIso ((DerivedCategory.Q (C := W.toScheme.Modules)).map ((restrict W.ι).map s) ≫
+      (DerivedCategory.Q (C := W.toScheme.Modules)).map
+        ((restrict W.ι).map ((associatedComplex R).map t)) ≫
         (restrictDerivedIso W.ι eA).hom)
     infer_instance
   refine ⟨M, q, g, hM, hweak, ?_, ?_⟩
   · rw [← hqr, ← hgr]
     simp only [Category.assoc]
-    change (toDerived W.toScheme).map ((restrict W.ι).map s) ≫
-      (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map t)) ≫
+    change (DerivedCategory.Q (C := W.toScheme.Modules)).map ((restrict W.ι).map s) ≫
+      (DerivedCategory.Q (C := W.toScheme.Modules)).map
+        ((restrict W.ι).map ((associatedComplex R).map t)) ≫
         (restrictDerivedIso W.ι eA).hom ≫ α =
-      (toDerived W.toScheme).map ((restrict W.ι).map s) ≫
-        (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map a)) ≫
+      (DerivedCategory.Q (C := W.toScheme.Modules)).map ((restrict W.ι).map s) ≫
+        (DerivedCategory.Q (C := W.toScheme.Modules)).map
+          ((restrict W.ι).map ((associatedComplex R).map a)) ≫
           (restrictDerivedIso W.ι eB).hom
     rw [← ha]
     simp only [β, Category.assoc, Iso.inv_hom_id, Category.comp_id]
   · intro Z hZ hz
-    have hA₀Z : IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj ((associatedComplex R).obj
+    have hA₀Z : IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj
+      ((restrict Z.ι).obj ((associatedComplex R).obj
       A₀))) :=
       hz.of_iso (restrictDerivedIso Z.ι eA)
     obtain ⟨sZ, hsZ⟩ := exists_finite_principal_cover R Z hZ
-    have hpZ : IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj ((associatedComplex R).obj
+    have hpZ : IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj
+      ((restrict Z.ι).obj ((associatedComplex R).obj
       P))) := by
       apply isZero_restrict_associated_of_principalUnion R Z sZ hsZ
       intro r hr
@@ -95,25 +103,28 @@ lemma exists_open_roof_to_lowerBounded_quasicoherent_target
       apply isZero_localize_of_isZero_restrict_associated R Z A₀ hA₀Z r
       rw [← hsZ]
       exact Quillen.SheafCohomology.basicOpen_le_principalUnion R hr
-    exact hpZ.of_iso (asIso ((toDerived Z.toScheme).map ((restrict Z.ι).map s)))
+    exact hpZ.of_iso (asIso ((DerivedCategory.Q (C := Z.toScheme.Modules)).map
+      ((restrict Z.ι).map s)))
 
 lemma exists_immersion_roof_to_lowerBounded_quasicoherent_target
     (R : CommRingCat.{u}) {U : Scheme.{u}} (j : U ⟶ Spec R)
     [IsOpenImmersion j] [CompactSpace U]
-    {A B : Complex (Spec R)} (hA : locallyPerfect (Spec R) A) (b : ℤ) [B.IsGE b]
+    {A B : CochainComplex (Spec R).Modules ℤ} (hA : locallyPerfect (Spec R) A) (b : ℤ) [B.IsGE b]
     (hBqc : ∀ n, (B.homology n).IsQuasicoherent)
-    (α : (toDerived U).obj ((restrict j).obj A) ⟶ (toDerived U).obj ((restrict j).obj B)) :
-    ∃ (M : Complex (Spec R)) (q : M ⟶ A) (g : M ⟶ B),
+    (α : (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj A) ⟶
+      (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj B)) :
+    ∃ (M : CochainComplex (Spec R).Modules ℤ) (q : M ⟶ A) (g : M ⟶ B),
       locallyPerfect (Spec R) M ∧ QuasiIso ((restrict j).map q) ∧
-      (toDerived U).map ((restrict j).map q) ≫ α = (toDerived U).map ((restrict j).map g) ∧
+      (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map q) ≫ α =
+        (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map g) ∧
       ∀ (Z : (Spec R).Opens), IsCompact (Z : Set (Spec R)) →
-        IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj A)) →
-        IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj M)) := by
+        IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj ((restrict Z.ι).obj A)) →
+        IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj ((restrict Z.ι).obj M)) := by
   let W := j.opensRange
   let e := j.isoOpensRange.symm
   let c : restrict j ⋙ restrict e.hom ≅ restrict W.ι :=
     restrictCompIso e.hom j ≪≫ eqToIso (restrict_congr j.isoOpensRange_inv_comp)
-  let Q := toDerived W.toScheme
+  let Q := DerivedCategory.Q (C := W.toScheme.Modules)
   let α' := Q.map (c.inv.app A) ≫ restrictDerivedHom e.hom α ≫ Q.map (c.hom.app B)
   obtain ⟨M, q, g, hM, hq, hg, hs⟩ :=
     exists_open_roof_to_lowerBounded_quasicoherent_target R W (isCompact_range j.continuous)

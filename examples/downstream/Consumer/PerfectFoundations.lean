@@ -8,6 +8,7 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Basic
+public import Quillen.AlgebraicGeometry.PerfectComplexes.SplitFactorization
 public import Quillen.AlgebraicGeometry.Scheme.Comparison.SmallVectorBundleK
 
 /-!
@@ -38,13 +39,13 @@ noncomputable def strict_restriction_map {U X : Scheme.{u}} (j : U ⟶ X)
     [IsOpenImmersion j] (n : ℕ) : StrictK X n →* StrictK U n := strictKRestrict j n
 
 /-- Strict complexes remain strict under actual mapping cones. -/
-theorem strict_mappingCone {X : Scheme.{u}} {P Q : Complex X}
+theorem strict_mappingCone {X : Scheme.{u}} {P Q : CochainComplex X.Modules ℤ}
     (hP : strictPerfect X P) (hQ : strictPerfect X Q) (f : P ⟶ Q) :
     strictPerfect X (CochainComplex.mappingCone f) := strictPerfect_mappingCone hP hQ f
 
 /-- Perfectness is geometric and stable under actual open restriction. -/
 theorem perfect_open_restriction {U X : Scheme.{u}} (j : U ⟶ X)
-    [IsOpenImmersion j] {P : Complex X} (hP : locallyPerfect X P) :
+    [IsOpenImmersion j] {P : CochainComplex X.Modules ℤ} (hP : locallyPerfect X P) :
     locallyPerfect U ((restrict j).obj P) := locallyPerfect_restrict j hP
 /-- Locally-perfect connective K uses actual quasi-isomorphisms. -/
 def perfect_restriction_map {U X : Scheme.{u}} (j : U ⟶ X)

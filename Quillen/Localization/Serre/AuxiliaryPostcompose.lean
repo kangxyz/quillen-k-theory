@@ -8,6 +8,7 @@ module
 
 public import Quillen.Localization.Serre.AuxiliaryBaseChange
 public import Quillen.Localization.Serre.ImageKernelComma
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # Postcomposition equivalences for Serre auxiliary categories
@@ -26,7 +27,8 @@ universe u
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
 
 /-- Every old kernel maps canonically into the kernel of the composite. -/

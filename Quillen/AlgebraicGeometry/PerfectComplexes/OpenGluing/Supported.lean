@@ -11,7 +11,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.AffineExtens
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Restriction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportClosure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportRestriction
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Actual two-open derived gluing retains an auxiliary support -/
 @[expose] public section
 
@@ -24,6 +26,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open scoped ZeroObject
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes
 attribute [local instance] HasDerivedCategory.standard
 
@@ -32,7 +35,7 @@ actual two-open cover. The support need not be termwise zero. -/
 theorem perfectSupported_of_two_openImmersions {U V X : Scheme.{u}}
     (j : U ⟶ X) (k : V ⟶ X) [IsOpenImmersion j] [IsOpenImmersion k]
     (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ Set.range k) (Z : X.Opens)
-    {P : Complex X}
+    {P : CochainComplex X.Modules ℤ}
     (hj : perfectSupported (j ⁻¹ᵁ Z).ι ((restrict j).obj P))
     (hk : perfectSupported (k ⁻¹ᵁ Z).ι ((restrict k).obj P)) :
     perfectSupported Z.ι P := by
@@ -63,15 +66,15 @@ theorem exists_supported_glue_of_openSquare {W U V X : Scheme.{u}}
     (ha : ∀ x : U, j x ∈ Set.range k → x ∈ Set.range a)
     (hb : ∀ x : V, k x ∈ Set.range j → x ∈ Set.range b)
     (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ Set.range k)
-    (Z : X.Opens) (A : Complex U) (B : Complex V)
+    (Z : X.Opens) (A : CochainComplex U.Modules ℤ) (B : CochainComplex V.Modules ℤ)
     (hA : perfectSupported (j ⁻¹ᵁ Z).ι A) (hB : perfectSupported (k ⁻¹ᵁ Z).ι B)
-    (e : (toDerived W).obj ((restrict a).obj A) ≅
-      (toDerived W).obj ((restrict b).obj B)) :
-    ∃ P : Complex X, perfectSupported Z.ι P ∧
+    (e : (DerivedCategory.Q (C := W.Modules)).obj ((restrict a).obj A) ≅
+      (DerivedCategory.Q (C := W.Modules)).obj ((restrict b).obj B)) :
+    ∃ P : CochainComplex X.Modules ℤ, perfectSupported Z.ι P ∧
       ∃ (u : A ⟶ (restrict j).obj P) (v : B ⟶ (restrict k).obj P), QuasiIso u ∧ QuasiIso v := by
   obtain ⟨M,α,β,hα,hβ,_,_⟩ :=
     Quillen.CochainComplex.exists_weak_span_homotopy_of_derived_iso e
-      (0 : _ ⟶ (0 : Complex W)) 0 (by simp)
+      (0 : _ ⟶ (0 : CochainComplex W.Modules ℤ)) 0 (by simp)
   let P := OpenHomotopyGluing.glued a b j k h α β
   let u := OpenHomotopyGluing.first a b j k h α β
   let v := OpenHomotopyGluing.second a b j k h α β

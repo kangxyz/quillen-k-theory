@@ -18,6 +18,8 @@ retained. No scalar invertibility on the original scheme is required.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 noncomputable section

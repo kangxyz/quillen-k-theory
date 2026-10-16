@@ -8,6 +8,7 @@ module
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TwistMinusUnit
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalQuotient
 public import Mathlib.Data.ZMod.Basic
+public import Aglib.AlgebraicGeometry.Modules.Restriction.Overlap
 
 /-! # Consumers of the canonical negative twist and its original maps -/
 @[expose] public section
@@ -60,9 +61,9 @@ theorem original_scalar_transition (R : CommRingCat.{u}) (M : (twoChartLine R).M
     (Scheme.Modules.restrictFunctor (pullback.fst (plusChart R) (minusChart R))).map
         (twistMinusPlusIso R M).hom ≫
       (moduleMulIso _ (overlapCoordinateUnit R)).hom ≫
-      (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso (plusChart R) (minusChart
+      (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso (plusChart R) (minusChart
         R)).hom.app M =
-    (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso (plusChart R) (minusChart
+    (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso (plusChart R) (minusChart
       R)).hom.app
         (twistMinus R M) ≫
       (Scheme.Modules.restrictFunctor (pullback.snd (plusChart R) (minusChart R))).map

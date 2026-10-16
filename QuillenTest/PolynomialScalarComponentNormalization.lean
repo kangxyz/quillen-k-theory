@@ -20,6 +20,8 @@ identify either class with a separate prespectrum Laurent-unit construction.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 open Quillen.Waldhausen
 

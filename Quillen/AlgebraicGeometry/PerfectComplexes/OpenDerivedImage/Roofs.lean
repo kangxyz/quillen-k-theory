@@ -8,7 +8,10 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Basic
 public import Quillen.Algebra.Homology.DerivedEqualityDenominators
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Mathlib.Algebra.Homology.DerivedCategory.Fractions
 /-! # Actual global-model roofs and genuine original weak homotopy roofs
 
 The sole geometric input is the exact locally weak global-model roof property.
@@ -24,6 +27,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.OpenDerivedImage
 attribute [local instance] HasDerivedCategory.standard
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
@@ -31,19 +35,21 @@ variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 /-- The geometric roof input only involves two globally perfect models.
 Its denominator is required weak on the original open, not globally weak. -/
 def HasDerivedRoofs : Prop :=
-  ∀ (A P : Complex X), locallyPerfect X A → locallyPerfect X P →
-    ∀ α : (toDerived U).obj ((restrict j).obj A) ⟶ (toDerived U).obj ((restrict j).obj P),
-      ∃ (A' : Complex X) (q : A' ⟶ A) (a : A' ⟶ P),
+  ∀ (A P : CochainComplex X.Modules ℤ), locallyPerfect X A → locallyPerfect X P →
+    ∀ α : (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj A) ⟶
+      (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj P),
+      ∃ (A' : CochainComplex X.Modules ℤ) (q : A' ⟶ A) (a : A' ⟶ P),
         locallyPerfect X A' ∧ QuasiIso ((restrict j).map q) ∧
-        (toDerived U).map ((restrict j).map q) ≫ α = (toDerived U).map ((restrict j).map a)
+        (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map q) ≫ α =
+          (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map a)
 
 /-- Genuine module/geometric roofs between global models give a complete
 original homotopy roof for arbitrary sheaf-complex targets. The remaining
 all-sheaf denominators are legitimate localization denominators only. -/
 theorem exists_homotopy_roof (hroof : HasDerivedRoofs j)
-    (P : Complex X) (hP : locallyPerfect X P) (B B' : Complex U)
+    (P : CochainComplex X.Modules ℤ) (hP : locallyPerfect X P) (B B' : CochainComplex U.Modules ℤ)
     (hB' : complexObjects j B') (w : (restrict j).obj P ⟶ B) [QuasiIso w] (b : B' ⟶ B) :
-    ∃ (A : Complex X) (M N : Complex U)
+    ∃ (A : CochainComplex X.Modules ℤ) (M N : CochainComplex U.Modules ℤ)
       (a : A ⟶ P) (p : (restrict j).obj A ⟶ M) (t : B' ⟶ M)
       (s : B ⟶ N) (q : M ⟶ N),
       locallyPerfect X A ∧ locallyPerfect U M ∧ locallyPerfect U N ∧
@@ -51,14 +57,19 @@ theorem exists_homotopy_roof (hroof : HasDerivedRoofs j)
       Nonempty (Homotopy (p ≫ q) ((restrict j).map a ≫ w ≫ s)) ∧
       Nonempty (Homotopy (t ≫ q) (b ≫ s)) := by
   obtain ⟨A₀, M, p₀, t, hA₀, hM, hp₀, ht⟩ := exists_weak_cospan j hB'
-  let D := toDerived U
+  let D := DerivedCategory.Q (C := U.Modules)
   let β : D.obj M ⟶ D.obj B := inv (D.map t) ≫ D.map b
   let α : D.obj ((restrict j).obj A₀) ⟶ D.obj ((restrict j).obj P) :=
     D.map p₀ ≫ β ≫ inv (D.map w)
   obtain ⟨A, r, a, hA, hr, ha⟩ := hroof A₀ P hA₀ hP α
   let p := (restrict j).map r ≫ p₀
   have hp : QuasiIso p := inferInstance
-  obtain ⟨N, q, s, hs, he⟩ := toDerived_left_fraction β
+  obtain ⟨N, q, s, hDenIso1, hFac1⟩ := DerivedCategory.left_fac β
+  have hs : QuasiIso s :=
+    (DerivedCategory.isIso_Q_map_iff_quasiIso _ s).1 hDenIso1
+  have he : (β) ≫ DerivedCategory.Q.map s = DerivedCategory.Q.map q := by
+    let := hDenIso1
+    rw [hFac1, Category.assoc, IsIso.inv_hom_id, Category.comp_id]
   have hB : locallyPerfect U B := (locallyPerfect_iff_of_quasiIso w).mp (locallyPerfect_restrict j
     hP)
   have hN : locallyPerfect U N := (locallyPerfect_iff_of_quasiIso s).mp hB

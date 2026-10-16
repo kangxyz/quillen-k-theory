@@ -8,7 +8,7 @@ module
 public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionUnitNaturality
 public import Quillen.AlgebraicGeometry.Scheme.Affine.LaurentUnitImage
-public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Units
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Units
 
 /-!
 # The original Laurent unit on the strict section model

@@ -56,7 +56,6 @@ public import Quillen.Algebra.Category.ModuleCat.MatrixImageTensor
 public import Quillen.Algebra.Category.ModuleCat.ProjectiveAutomorphismAdditivity
 public import Quillen.Algebra.Category.ModuleCat.ProjectiveAutomorphismClass
 public import Quillen.Algebra.Category.ModuleCat.RightScalarExtension
-public import Quillen.Algebra.Category.ModuleCat.Sheaf.TensorRightUnit
 public import Quillen.Algebra.FiniteAdjacentComplex
 public import Quillen.Algebra.FiniteAdjacentSection
 public import Quillen.Algebra.Group.Hom.KernelComparison
@@ -65,12 +64,7 @@ public import Quillen.Algebra.Group.StableElementary
 public import Quillen.Algebra.Group.StableElementaryQuotient
 public import Quillen.Algebra.Group.StableGeneralLinear
 public import Quillen.Algebra.Group.StableQuotientInvariance
-public import Quillen.Algebra.Homology.Adjunction
 public import Quillen.Algebra.Homology.BiprodQuasiIso
-public import Quillen.Algebra.Homology.BoundedAboveComplex
-public import Quillen.Algebra.Homology.BoundedDerivedLocalization
-public import Quillen.Algebra.Homology.BoundedProjectiveHomotopy
-public import Quillen.Algebra.Homology.BoundedProjectiveReplacement
 public import Quillen.Algebra.Homology.CochainComplexPlusShift
 public import Quillen.Algebra.Homology.ConcentratedHomology
 public import Quillen.Algebra.Homology.ConnectingKernel
@@ -92,12 +86,7 @@ public import Quillen.Algebra.Homology.HomotopyPushout
 public import Quillen.Algebra.Homology.HomotopyPushoutMap
 public import Quillen.Algebra.Homology.HomotopyPushoutQuasiIso
 public import Quillen.Algebra.Homology.HomotopySquareStrictification
-public import Quillen.Algebra.Homology.KInjectiveHom
-public import Quillen.Algebra.Homology.KInjectiveMap
-public import Quillen.Algebra.Homology.KInjectiveRepresentatives
-public import Quillen.Algebra.Homology.KProjectiveComparison
 public import Quillen.Algebra.Homology.KProjectiveDerivedIso
-public import Quillen.Algebra.Homology.KProjectiveRepresentatives
 public import Quillen.Algebra.Homology.MappingConeBiprod
 public import Quillen.Algebra.Homology.MappingConeIso
 public import Quillen.Algebra.Homology.MappingConeParametrix

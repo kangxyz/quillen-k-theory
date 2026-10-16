@@ -9,7 +9,10 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRestrictionRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenDerivedImageRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.RestrictionFunctoriality
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Genuine roofs for arbitrary compact open immersions into affine schemes
 
 The original affine-open roof theorem is transported first through the actual
@@ -27,6 +30,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.OpenDerivedImage
 
 /-- The original affine-open theorem applies to every compact open immersion
@@ -46,8 +50,8 @@ lemma affine_hasDerivedRoofs_of_compact {U X : Scheme.{u}}
   let i := X.isoSpec.hom
   let k := j ≫ i
   have hk : HasDerivedRoofs k := spec_hasDerivedRoofs_of_compact _ k
-  let models : ObjectProperty (Complex X) := fun A =>
-    ∃ P : Complex (Spec Γ(X, ⊤)),
+  let models : ObjectProperty (CochainComplex X.Modules ℤ) := fun A =>
+    ∃ P : CochainComplex (Spec Γ(X, ⊤)).Modules ℤ,
       locallyPerfect _ P ∧ A = (restrict i).obj P
   apply hasDerivedRoofs_of_models j models
   · intro A hA
@@ -56,9 +60,10 @@ lemma affine_hasDerivedRoofs_of_compact {U X : Scheme.{u}}
       (restrictCompIso i X.isoSpec.inv ≪≫
         eqToIso (restrict_congr X.isoSpec.hom_inv_id) ≪≫ restrictIdIso X).app A
     exact ⟨(restrict i).obj P,
-      ⟨P, locallyPerfect_restrict X.isoSpec.inv hA, rfl⟩, ⟨(toDerived X).mapIso e⟩⟩
+      ⟨P, locallyPerfect_restrict X.isoSpec.inv hA, rfl⟩,
+        ⟨(DerivedCategory.Q (C := X.Modules)).mapIso e⟩⟩
   · rintro _ _ ⟨A, hA, rfl⟩ ⟨B, hB, rfl⟩ α
-    let Q := toDerived U
+    let Q := DerivedCategory.Q (C := U.Modules)
     let c := restrictCompIso j i
     let α' := Q.map (c.inv.app A) ≫ α ≫ Q.map (c.hom.app B)
     obtain ⟨M, q, g, hM, hq, hg⟩ := hk A B hA hB α'

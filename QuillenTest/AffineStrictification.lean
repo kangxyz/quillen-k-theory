@@ -8,7 +8,11 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.Strictification
 public import Mathlib.Data.ZMod.Basic
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
 /-!
 # Affine strictification regression statements
 
@@ -33,6 +37,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open Quillen.PerfectComplexes.Affine
 attribute [local instance] Quillen.PerfectComplexes.Affine.standardDerivedModules
@@ -44,9 +49,10 @@ open Quillen
 /-- The strict model retains every actual homology object of an arbitrary
 locally-perfect ambient sheaf complex. -/
 theorem actual_strict_model_homology (R : CommRingCat.{u})
-    (K : Complex (Spec R)) (hK : locallyPerfect (Spec R) K) :
+    (K : CochainComplex (Spec R).Modules ℤ) (hK : locallyPerfect (Spec R) K) :
     ∃ P : StrictPerfect (Spec R),
-      Nonempty ((toDerived (Spec R)).obj P.obj ≅ (toDerived (Spec R)).obj K) ∧
+      Nonempty ((DerivedCategory.Q (C := (Spec R).Modules)).obj P.obj ≅
+        (DerivedCategory.Q (C := (Spec R).Modules)).obj K) ∧
       ∀ i, Nonempty (P.obj.homology i ≅ K.homology i) := by
   obtain ⟨P, ⟨e⟩⟩ := locallyPerfect_exists_strictPerfect_representative R hK
   refine ⟨P, ⟨e⟩, fun i => ⟨?_⟩⟩
@@ -57,12 +63,13 @@ theorem actual_strict_model_homology (R : CommRingCat.{u})
 /-- The global model compares under the original geometric restriction,
 including restrictions to empty principal opens. -/
 theorem actual_restricted_strict_model (R : CommRingCat.{u})
-    (K : Complex (Spec R)) (hK : locallyPerfect (Spec R) K) (r : R) :
+    (K : CochainComplex (Spec R).Modules ℤ) (hK : locallyPerfect (Spec R) K) (r : R) :
     ∃ P : StrictPerfect (Spec R),
-      Nonempty ((toDerived _).obj ((restrict
+      Nonempty ((DerivedCategory.Q).obj ((restrict
         (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj P.obj)
         ≅
-        (toDerived _).obj ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
+        (DerivedCategory.Q).obj
+          ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R
           r)).obj K)) := by
   obtain ⟨P, ⟨e⟩⟩ := locallyPerfect_exists_strictPerfect_representative R hK
   exact ⟨P, ⟨restrictDerivedIso _ e⟩⟩
@@ -70,13 +77,14 @@ theorem actual_restricted_strict_model (R : CommRingCat.{u})
 /-- A zero-divisor base is permitted, with literal restriction to the empty
 principal open defined by zero. -/
 theorem actual_zmod_six_empty_restriction
-    (K : Complex (Spec (CommRingCat.of (ZMod 6))))
+    (K : CochainComplex (Spec (CommRingCat.of (ZMod 6))).Modules ℤ)
     (hK : locallyPerfect _ K) :
     ∃ P : StrictPerfect (Spec (CommRingCat.of (ZMod 6))),
-      Nonempty ((toDerived _).obj ((restrict
+      Nonempty ((DerivedCategory.Q).obj ((restrict
         (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
         (CommRingCat.of (ZMod 6)) 0)).obj P.obj) ≅
-        (toDerived _).obj ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
+        (DerivedCategory.Q).obj
+          ((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen
           (CommRingCat.of (ZMod 6)) 0)).obj K)) :=
   actual_restricted_strict_model _ K hK 0
 
@@ -98,7 +106,7 @@ theorem actual_module_chain_model (R : CommRingCat.{u})
     ∃ (P : ModuleComplex R) (f : P ⟶ K), moduleStrictPerfect R P ∧ QuasiIso f := by
   obtain ⟨P, hP, ⟨e⟩⟩ := finiteProjectiveDerived_of_locallyPerfect_associated R K a b hK
   have := isKProjective_of_moduleStrictPerfect R hP
-  obtain ⟨f, hf⟩ := Quillen.CochainComplex.exists_chain_representative_of_isKProjective e.hom
+  obtain ⟨f, hf⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective e.hom
   have : IsIso (DerivedCategory.Q.map f) := by rw [hf]; infer_instance
   exact ⟨P, f, hP, (DerivedCategory.isIso_Q_map_iff_quasiIso (ModuleCat.{u} R) f).mp inferInstance⟩
 

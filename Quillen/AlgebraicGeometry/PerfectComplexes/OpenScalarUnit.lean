@@ -32,7 +32,8 @@ universe u
 namespace Quillen.PerfectComplexes
 
 /-- A scalar which is a unit gives precisely the existing original unit automorphism. -/
-theorem complexGlobalScalar_unit (X : Scheme.{u}) (r : (Γ(X, ⊤))ˣ) (K : Complex X) :
+theorem complexGlobalScalar_unit (X : Scheme.{u}) (r : (Γ(X, ⊤))ˣ)
+    (K : CochainComplex X.Modules ℤ) :
     (complexGlobalScalar X (↑r)).app K = (complexGlobalUnitIso X r).hom.app K := by
   ext n : 1
   exact (complexGlobalUnitIso_original_terms X r K n).symm
@@ -42,7 +43,7 @@ variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 include hq in
 /-- Restriction of the original scalar is the exact preexisting unit automorphism. -/
-theorem restrict_map_complexGlobalScalar_unit (K : Complex X) :
+theorem restrict_map_complexGlobalScalar_unit (K : CochainComplex X.Modules ℤ) :
     (restrict j).map ((complexGlobalScalar X r).app K) =
       (complexGlobalUnitIso U q).hom.app ((restrict j).obj K) := by
   rw [restrict_map_complexGlobalScalar, hq, complexGlobalScalar_unit]

@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Aglib.CategoryTheory.ExactCategory.Basic
-public import Aglib.CategoryTheory.ExactCategory.Functor
+public import Aglib.CategoryTheory.ExactCategory.Small
 public import Quillen.KTheory.Map.Functoriality
 public import Mathlib.Algebra.Category.Grp.Basic
 
@@ -23,56 +23,11 @@ functor, without claiming K₀ commutativity.
 
 open CategoryTheory.ExactCategory
 
-
-
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits
 
-namespace Quillen
-
-/-- A small additive category equipped with a genuine Quillen exact structure. -/
-structure SmallExactCategory : Type (u + 1) where
-  /-- The type of objects of the bundled category, small in the selected universe. -/
-  Obj : Type u
-  [category : Category.{u} Obj]
-  [preadditive : Preadditive Obj]
-  [finiteBiproducts : HasFiniteBiproducts Obj]
-  /-- The Quillen exact structure on the bundled additive category. -/
-  exactStructure : ExactStructure Obj
-
-attribute [instance] SmallExactCategory.category SmallExactCategory.preadditive
-  SmallExactCategory.finiteBiproducts
-
-end Quillen
-
-namespace CategoryTheory.ExactCategory.ExactFunctor
-open Quillen
-
-/-- The proof data of exactness do not alter equality of exact functors. -/
-@[ext]
-theorem ext_toFunctor {C D : Type u} [Category.{u} C] [Category.{u} D]
-    [Preadditive C] [HasFiniteBiproducts C] [Preadditive D] [HasFiniteBiproducts D]
-    {E : ExactStructure C} {E' : ExactStructure D} {F G : ExactFunctor E E'}
-    (h : F.toFunctor = G.toFunctor) : F = G := by
-  cases F
-  cases G
-  cases h
-  rfl
-
-end CategoryTheory.ExactCategory.ExactFunctor
-
-namespace Quillen
-
-namespace SmallExactCategory
-
-instance : Category.{u} SmallExactCategory.{u} where
-  Hom C D := ExactFunctor C.exactStructure D.exactStructure
-  id C := CategoryTheory.ExactCategory.ExactFunctor.id C.exactStructure
-  comp F G := F.comp G
-  id_comp := by intros; apply CategoryTheory.ExactCategory.ExactFunctor.ext_toFunctor; rfl
-  comp_id := by intros; apply CategoryTheory.ExactCategory.ExactFunctor.ext_toFunctor; rfl
-  assoc := by intros; apply CategoryTheory.ExactCategory.ExactFunctor.ext_toFunctor; rfl
+namespace CategoryTheory.ExactCategory.SmallExactCategory
 
 /-- The actual group-valued Quillen K-functor in a fixed nonnegative degree. -/
 def KFunctor (n : ℕ) : SmallExactCategory.{u} ⥤ GrpCat.{u} where
@@ -88,5 +43,4 @@ def KFunctor (n : ℕ) : SmallExactCategory.{u} ⥤ GrpCat.{u} where
     intro x
     exact DFunLike.congr_fun (CategoryTheory.ExactCategory.ExactFunctor.KMap_comp F G n) x
 
-end SmallExactCategory
-end Quillen
+end CategoryTheory.ExactCategory.SmallExactCategory

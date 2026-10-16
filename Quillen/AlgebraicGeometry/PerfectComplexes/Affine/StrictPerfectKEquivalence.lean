@@ -36,6 +36,8 @@ nontrivial-ring hypothesis is imposed.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 
@@ -96,14 +98,16 @@ lemma strictToPerfect_target_hasDualApproximation (R : CommRingCat.{u}) :
     have : Epi f.hom.right.hom := HomologicalComplex.epi_of_epi_f _
       (fun i => by have := hd i; infer_instance)
     constructor
-    · apply (ExactSubcategory.deflation_iff (abelianExactStructure (Complex (Spec R)))
+    · apply (ExactSubcategory.deflation_iff (abelianExactStructure
+        (CochainComplex (Spec R).Modules ℤ))
         (strictPerfect (Spec R)) f.hom.left).mpr
       refine ⟨kernel f.hom.left.hom, hkc, kernel.ι f.hom.left.hom,
         kernel.condition f.hom.left.hom, ?_⟩
       exact { exact := ShortComplex.exact_of_f_is_kernel _ (kernelIsKernel f.hom.left.hom)
               mono_f := inferInstance
               epi_g := inferInstance }
-    · apply (ExactSubcategory.deflation_iff (abelianExactStructure (Complex (Spec R)))
+    · apply (ExactSubcategory.deflation_iff (abelianExactStructure
+        (CochainComplex (Spec R).Modules ℤ))
         (locallyPerfect (Spec R)) f.hom.right).mpr
       refine ⟨kernel f.hom.right.hom, hkd, kernel.ι f.hom.right.hom,
         kernel.condition f.hom.right.hom, ?_⟩

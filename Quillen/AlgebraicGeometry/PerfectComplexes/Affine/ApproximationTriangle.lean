@@ -7,6 +7,8 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedComparison
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Mathlib.Algebra.Homology.DerivedCategory.Basic
 
 /-!
 # Original-target triangles for module approximations on an affine open
@@ -62,40 +64,44 @@ lemma openAssociatedConeIso_inr_inv :
         (restrict j).map ((associatedComplex R).map (CochainComplex.mappingCone.inr f)) := by
   rw [← openAssociatedConeIso_inr R j f, Category.assoc, Iso.hom_inv_id, Category.comp_id]
 
-variable {E : Complex U}
-  (eK : (toDerived U).obj ((restrict j).obj ((associatedComplex R).obj K)) ≅ (toDerived U).obj E)
+variable {E : CochainComplex U.Modules ℤ}
+  (eK : (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj ((associatedComplex R).obj K)) ≅
+    (DerivedCategory.Q (C := U.Modules)).obj E)
 
 /-- The actual approximation arrow with its target transported to the original all-sheaf complex. -/
 def originalApproximationHom :
-    (toDerived U).obj ((restrict j).obj ((associatedComplex R).obj P)) ⟶ (toDerived U).obj E :=
-  (toDerived U).map ((restrict j).map ((associatedComplex R).map f)) ≫ eK.hom
+    (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj ((associatedComplex R).obj P)) ⟶
+      (DerivedCategory.Q (C := U.Modules)).obj E :=
+  (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map ((associatedComplex R).map f)) ≫ eK.hom
 
 /-- The residual arrow retains the original chain cone inclusion and both comparison isomorphisms.
 -/
 def originalApproximationBoundary :
-    (toDerived U).obj E ⟶
-      (toDerived U).obj ((restrict j).obj ((associatedComplex R).obj (CochainComplex.mappingCone
+    (DerivedCategory.Q (C := U.Modules)).obj E ⟶
+      (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj
+        ((associatedComplex R).obj (CochainComplex.mappingCone
         f))) :=
   eK.inv ≫
-    (toDerived U).map (CochainComplex.mappingCone.inr ((restrict j).map ((associatedComplex R).map
+    (DerivedCategory.Q (C := U.Modules)).map (CochainComplex.mappingCone.inr
+      ((restrict j).map ((associatedComplex R).map
       f))) ≫
-      ((toDerived U).mapIso (openAssociatedConeIso R j f)).inv
+      ((DerivedCategory.Q (C := U.Modules)).mapIso (openAssociatedConeIso R j f)).inv
 
 @[reassoc]
 lemma originalApproximationBoundary_eq :
     originalApproximationBoundary R j f eK =
-      eK.inv ≫ (toDerived U).map
+      eK.inv ≫ (DerivedCategory.Q (C := U.Modules)).map
         ((restrict j).map ((associatedComplex R).map (CochainComplex.mappingCone.inr f))) := by
   dsimp [originalApproximationBoundary]
-  rw [← (toDerived U).map_comp, openAssociatedConeIso_inr_inv]
+  rw [← (DerivedCategory.Q (C := U.Modules)).map_comp, openAssociatedConeIso_inr_inv]
 
 /-- The original-E approximation triangle, with the literal restricted module cone as third vertex.
 -/
-def originalApproximationTriangle : Triangle (Derived U) :=
+def originalApproximationTriangle : Triangle (DerivedCategory U.Modules) :=
   Triangle.mk (originalApproximationHom R j f eK)
     (originalApproximationBoundary R j f eK)
-    (((toDerived U).mapIso (openAssociatedConeIso R j f)).hom ≫
-      ((toDerived U).mapTriangle.obj
+    (((DerivedCategory.Q (C := U.Modules)).mapIso (openAssociatedConeIso R j f)).hom ≫
+      ((DerivedCategory.Q (C := U.Modules)).mapTriangle.obj
         (CochainComplex.mappingCone.triangle ((restrict j).map ((associatedComplex R).map
           f)))).mor₃)
 
@@ -103,10 +109,10 @@ def originalApproximationTriangle : Triangle (Derived U) :=
 -/
 def originalApproximationTriangleIso :
     originalApproximationTriangle R j f eK ≅
-      (toDerived U).mapTriangle.obj
+      (DerivedCategory.Q (C := U.Modules)).mapTriangle.obj
         (CochainComplex.mappingCone.triangle ((restrict j).map ((associatedComplex R).map f))) := by
   refine Triangle.isoMk _ _ (Iso.refl _) eK.symm
-    ((toDerived U).mapIso (openAssociatedConeIso R j f)) ?_ ?_ ?_
+    ((DerivedCategory.Q (C := U.Modules)).mapIso (openAssociatedConeIso R j f)) ?_ ?_ ?_
   · dsimp [originalApproximationTriangle, originalApproximationHom]
     simp
   · dsimp [originalApproximationTriangle, originalApproximationBoundary]
@@ -115,9 +121,10 @@ def originalApproximationTriangleIso :
     simp
 
 lemma originalApproximationTriangle_distinguished :
-    originalApproximationTriangle R j f eK ∈ distTriang (Derived U) :=
+    originalApproximationTriangle R j f eK ∈ distTriang (DerivedCategory U.Modules) :=
   isomorphic_distinguished _
-    (mappingConeTriangle_distinguished ((restrict j).map ((associatedComplex R).map f))) _
+    (DerivedCategory.mappingCone_triangle_distinguished
+      ((restrict j).map ((associatedComplex R).map f))) _
     (originalApproximationTriangleIso R j f eK)
 
 @[simp]
@@ -129,13 +136,13 @@ lemma originalApproximationTriangle_mor₂ :
     (originalApproximationTriangle R j f eK).mor₂ = originalApproximationBoundary R j f eK := rfl
 
 variable (n : ℤ)
-  (eD : (toDerived U).obj
+  (eD : (DerivedCategory.Q (C := U.Modules)).obj
       ((restrict j).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))) ≅
-    (toDerived U).obj ((CochainComplex.singleFunctor U.Modules n).obj
+    (DerivedCategory.Q (C := U.Modules)).obj ((CochainComplex.singleFunctor U.Modules n).obj
       (((restrict j).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))).homology n)))
 
 /-- Transport the actual residual vertex to the single on its own homology sheaf. -/
-def originalApproximationSingleTriangle : Triangle (Derived U) :=
+def originalApproximationSingleTriangle : Triangle (DerivedCategory U.Modules) :=
   Triangle.mk (originalApproximationHom R j f eK)
     (originalApproximationBoundary R j f eK ≫ eD.hom)
     (eD.inv ≫ (originalApproximationTriangle R j f eK).mor₃)
@@ -153,7 +160,7 @@ def originalApproximationSingleTriangleIso :
     simp
 
 lemma originalApproximationSingleTriangle_distinguished :
-    originalApproximationSingleTriangle R j f eK n eD ∈ distTriang (Derived U) :=
+    originalApproximationSingleTriangle R j f eK n eD ∈ distTriang (DerivedCategory U.Modules) :=
   isomorphic_distinguished _ (originalApproximationTriangle_distinguished R j f eK) _
     (originalApproximationSingleTriangleIso R j f eK n eD)
 

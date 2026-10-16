@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.Topology.Sheaves.Cech.Cocycles
 public import Aglib.AlgebraicGeometry.Cohomology.Affine.Vanishing
 public import QuillenTest.AffineCechHigher
 

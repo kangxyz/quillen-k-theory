@@ -12,6 +12,7 @@ public import Mathlib.Algebra.Category.ModuleCat.Projective
 public import Mathlib.Algebra.Homology.DerivedCategory.TStructure
 public import Mathlib.Algebra.Homology.ShortComplex.PreservesHomology
 public import Mathlib.RingTheory.Localization.Finiteness
+public import Aglib.Algebra.Homology.CochainComplex.Cycles
 
 /-!
 # Highest homology of finite-projective complexes
@@ -57,8 +58,9 @@ lemma finite_projective_cycles_above_cohomology_bound
     | base => exact top b le_rfl
     | pred j hj ih =>
       have hp : Projective (K.cycles j) := (ih (by omega)).2
-      have hS := cycleSequence_shortExact K (j-1) (by simpa using K.exactAt_of_isLE n j (by omega))
-      have : Projective (cycleSequence K (j-1)).X₃ := by
+      have hS := _root_.CochainComplex.cycleSequence_shortExact K (j-1)
+        (by simpa using K.exactAt_of_isLE n j (by omega))
+      have : Projective (_root_.CochainComplex.cycleSequence K (j-1)).X₃ := by
         change Projective (K.cycles (j-1+1))
         simpa using hp
       let s := hS.splittingOfProjective

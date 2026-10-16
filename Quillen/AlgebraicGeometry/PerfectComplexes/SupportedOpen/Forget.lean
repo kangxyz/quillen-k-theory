@@ -12,6 +12,8 @@ public import Quillen.Waldhausen.Fibration.ConnectingNaturality
 /-! # Original relative support-forgetting functor and boundary square -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 

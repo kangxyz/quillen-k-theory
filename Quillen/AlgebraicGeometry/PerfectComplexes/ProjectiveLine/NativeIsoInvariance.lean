@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeOpenNaturality
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.RestrictionIsoEquivalence
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasquePhiInverse
 
 /-! # Original native Phi under scheme isomorphism and on all affine schemes
@@ -23,21 +24,6 @@ universe u
 open CategoryTheory AlgebraicGeometry
 namespace Quillen.PerfectComplexes.ProjectiveLine
 open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
-
-/-- Original geometric restriction through a scheme isomorphism is an actual K-equivalence. -/
-def perfectKRestrictIsoEquiv {U X : Scheme.{u}} (e : U ≅ X) (n : ℕ) :
-    PerfectK X n ≃* PerfectK U n where
-  toFun := perfectKRestrict e.hom n
-  invFun := perfectKRestrict e.inv n
-  left_inv x := by
-    change ((perfectKRestrict e.inv n).comp (perfectKRestrict e.hom n)) x = x
-    rw [← perfectKRestrict_comp]
-    simp only [e.inv_hom_id, perfectKRestrict_id, MonoidHom.id_apply]
-  right_inv x := by
-    change ((perfectKRestrict e.hom n).comp (perfectKRestrict e.inv n)) x = x
-    rw [← perfectKRestrict_comp]
-    simp only [e.hom_inv_id, perfectKRestrict_id, MonoidHom.id_apply]
-  map_mul' := (perfectKRestrict e.hom n).map_mul
 
 /-- Original native Phi bijectivity transports through the actual geometric scheme isomorphism. -/
 theorem nativeTwoSummandKMap_bijective_of_iso {U X : QuasiCompactSchemes.{u}}

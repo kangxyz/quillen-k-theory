@@ -20,6 +20,8 @@ tensor is asserted, and no Godement/shift comparison is needed.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.Modules.Godement
 
 open CategoryTheory.ExactCategory
@@ -98,7 +100,8 @@ lemma Gamma_locallyPerfect (R : CommRingCat.{u})
 
 /-- The inherited exact structure is the original actual-complex flasque-perfect structure. -/
 abbrev exactStructure (R : CommRingCat.{u}) :=
-  ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+  ExactSubcategory.exactStructure (abelianExactStructure
+    (CochainComplex (twoChartLine R).Modules ℤ))
     (FlasqueBoundedBelow.objects (twoChartLine R))
 
 /-- Actual conflations map through the exact original LEFT tensor and exact totalization. -/

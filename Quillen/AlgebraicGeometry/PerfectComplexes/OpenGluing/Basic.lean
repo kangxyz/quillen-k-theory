@@ -28,7 +28,7 @@ namespace Quillen.PerfectComplexes.OpenHomotopyGluing
 variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
   [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]
   (h : a ≫ j = b ≫ k)
-  {K : Complex W} {A : Complex U} {B : Complex V}
+  {K : CochainComplex W.Modules ℤ} {A : CochainComplex U.Modules ℤ} {B : CochainComplex V.Modules ℤ}
   (α : K ⟶ (restrict a).obj A) (β : K ⟶ (restrict b).obj B)
 
 /-- The original left overlap map between actual extended complexes. -/
@@ -43,7 +43,7 @@ def right : (extensionByZero j).obj ((extensionByZero a).obj K) ⟶
     (extensionByZeroBaseChange b a k j h.symm).app B)
 
 /-- Actual global cone complex; the individual extended terms need not be perfect. -/
-def glued : Complex X := homotopyPushout (left a j α) (right a b j k h β)
+def glued : CochainComplex X.Modules ℤ := homotopyPushout (left a j α) (right a b j k h β)
 
 /-- Actual local first comparison into the restriction of the original global cone. -/
 def first : A ⟶ (restrict j).obj (glued a b j k h α β) :=

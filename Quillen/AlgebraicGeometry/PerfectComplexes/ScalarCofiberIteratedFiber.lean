@@ -19,6 +19,8 @@ with the Laurent-unit loop and the final boundary sign remain separate obligatio
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 noncomputable section

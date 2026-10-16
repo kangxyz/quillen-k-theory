@@ -36,13 +36,14 @@ universe u
 namespace Quillen.PerfectComplexes
 
 lemma extensionByZero_acyclic {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    {K : Complex U} (hK : K.Acyclic) : ((extensionByZero j).obj K).Acyclic := by
-  have hq : QuasiIso (0 : K ⟶ (0 : Complex U)) := by
+    {K : CochainComplex U.Modules ℤ} (hK : K.Acyclic) : ((extensionByZero j).obj K).Acyclic := by
+  have hq : QuasiIso (0 : K ⟶ (0 : CochainComplex U.Modules ℤ)) := by
     rw [quasiIso_iff]
     intro n
     exact (quasiIsoAt_iff_exactAt' _ n (acyclic_of_isZero _ (isZero_zero _) n)).mpr (hK n)
   intro n
-  exact (exactAt_iff_of_quasiIsoAt ((extensionByZero j).map (0 : K ⟶ (0 : Complex U))) n).mpr
+  exact (exactAt_iff_of_quasiIsoAt ((extensionByZero j).map
+    (0 : K ⟶ (0 : CochainComplex U.Modules ℤ))) n).mpr
     (acyclic_of_isZero _ ((extensionByZero j).map_isZero (isZero_zero _)) n)
 
 /-- The actual base-change mate identifies restriction to the auxiliary open
@@ -62,7 +63,7 @@ def extensionByZeroSupportBaseChangeIso {U X : Scheme.{u}}
       exact hy)
 
 lemma extensionByZero_restrictAcyclic {U X : Scheme.{u}}
-    (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens) {K : Complex U}
+    (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens) {K : CochainComplex U.Modules ℤ}
     (hK : ((restrict (j ⁻¹ᵁ T).ι).obj K).Acyclic) :
     ((restrict T.ι).obj ((extensionByZero j).obj K)).Acyclic := by
   intro n
@@ -74,7 +75,7 @@ original perfect source and an acyclic complex on the auxiliary open. -/
 lemma perfectSupported_extensionByZero_of_cover {U X : Scheme.{u}}
     (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens)
     (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ T)
-    {K : Complex U} (hK : perfectSupported (j ⁻¹ᵁ T).ι K) :
+    {K : CochainComplex U.Modules ℤ} (hK : perfectSupported (j ⁻¹ᵁ T).ι K) :
     perfectSupported T.ι ((extensionByZero j).obj K) := by
   have hT := extensionByZero_restrictAcyclic j T hK.2
   refine ⟨locallyPerfect_of_two_openImmersions j T.ι ?_ ?_ ?_,hT⟩
@@ -83,12 +84,13 @@ lemma perfectSupported_extensionByZero_of_cover {U X : Scheme.{u}}
     · exact Or.inl hx
     · exact Or.inr ⟨⟨x,hx⟩,rfl⟩
   · exact locallyPerfect_of_iso ((extensionByZeroRestrictIso j).app K).symm hK.1
-  · have hq : QuasiIso (0 : (0 : Complex T.toScheme) ⟶ (restrict T.ι).obj ((extensionByZero j).obj
+  · have hq : QuasiIso (0 : (0 : CochainComplex T.toScheme.Modules ℤ) ⟶ (restrict T.ι).obj
+      ((extensionByZero j).obj
     K)) := by
       rw [quasiIso_iff]
       intro n
       exact (quasiIsoAt_iff_exactAt _ n (acyclic_of_isZero _ (isZero_zero _) n)).mpr (hT n)
-    exact (locallyPerfect_iff_of_quasiIso (0 : (0 : Complex T.toScheme) ⟶ _)).mp
+    exact (locallyPerfect_iff_of_quasiIso (0 : (0 : CochainComplex T.toScheme.Modules ℤ) ⟶ _)).mp
       (locallyPerfect_of_strictPerfect (strictPerfect_of_isZero (isZero_zero _)))
 
 /-- The original global counit is genuinely weak on supported complexes,
@@ -96,7 +98,7 @@ by actual restriction to the two covering opens. -/
 lemma extensionByZero_supported_counit_quasiIso {U X : Scheme.{u}}
     (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens)
     (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ T)
-    {K : Complex X} (hK : perfectSupported T.ι K) :
+    {K : CochainComplex X.Modules ℤ} (hK : perfectSupported T.ι K) :
     QuasiIso ((extensionByZeroAdjunction j).counit.app K) := by
   let V : Bool → Scheme.{u} := fun b => if b then U else T.toScheme
   let f : ∀ b, V b ⟶ X := fun b => by

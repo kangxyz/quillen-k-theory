@@ -5,9 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
 public import Quillen.Waldhausen.Fibration.Rows.ReflexiveFactorization
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Basic
-public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFibration
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
+public import Aglib.AlgebraicGeometry.Modules.Flat.Closure
 
 /-!
 # Actual shifts, cones and joint cylinders in the bounded-flat model
@@ -19,7 +21,6 @@ Waldhausen model, without an added cylinder hypothesis.
 -/
 @[expose] public section
 
-open Quillen.CochainComplex
 
 
 
@@ -32,22 +33,22 @@ open AlgebraicGeometry.Scheme.Modules
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
 
-theorem boundedFlatPerfect_shift {X : Scheme.{u}} {K : Complex X}
+theorem boundedFlatPerfect_shift {X : Scheme.{u}} {K : CochainComplex X.Modules ℤ}
     (hK : boundedFlatPerfect X K) (n : ℤ) :
-    boundedFlatPerfect X ((shiftFunctor (Complex X) n).obj K) := by
+    boundedFlatPerfect X ((shiftFunctor (CochainComplex X.Modules ℤ) n).obj K) := by
   obtain ⟨hp, ⟨b, hb⟩, hf⟩ := hK
-  refine ⟨locallyPerfect_shift hp n,
+  refine ⟨Complex.locallyPerfect_shift hp n,
     ⟨b-n, (CochainComplex.isStrictlyLE_iff _ _).mpr ?_⟩, fun i => hf (i+n)⟩
   intro i hi
   change IsZero (K.X (i+n))
   exact K.isZero_of_isStrictlyLE b (i+n) (by omega)
 
-theorem boundedFlatPerfect_mappingCone {X : Scheme.{u}} {K L : Complex X}
+theorem boundedFlatPerfect_mappingCone {X : Scheme.{u}} {K L : CochainComplex X.Modules ℤ}
     (hK : boundedFlatPerfect X K) (hL : boundedFlatPerfect X L) (f : K ⟶ L) :
     boundedFlatPerfect X (CochainComplex.mappingCone f) := by
   obtain ⟨hpK, ⟨b, hb⟩, hfK⟩ := hK
   obtain ⟨hpL, ⟨c, hc⟩, hfL⟩ := hL
-  refine ⟨locallyPerfect_mappingCone hpK hpL f,
+  refine ⟨Complex.locallyPerfect_mappingCone hpK hpL f,
     ⟨max (b-1) c, (CochainComplex.isStrictlyLE_iff _ _).mpr ?_⟩, ?_⟩
   · intro n hn
     exact (CochainComplex.mappingCone.isZero_X_iff f n).mpr

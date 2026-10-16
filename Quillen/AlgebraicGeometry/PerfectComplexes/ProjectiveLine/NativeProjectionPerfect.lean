@@ -12,6 +12,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineTens
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.NativeBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChangeOpen
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedIsomorphismFunctors
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Perfection of the original native projective-line direct image
 
@@ -20,6 +21,8 @@ isomorphism and descended along an actual affine open cover. All comparisons
 use the installed derived units and original cartesian base-change mate.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open AlgebraicGeometry.Scheme.ProjectiveLine
 

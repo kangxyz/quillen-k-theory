@@ -6,9 +6,13 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.BoundedFlatReplacement
+public import Aglib.Algebra.Category.ModuleCat.Sheaf.TensorAdditive
+public import Aglib.AlgebraicGeometry.Modules.Complex.Sheafification
+public import Aglib.AlgebraicGeometry.Modules.Complex.Flat.BoundedAboveReplacement
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ReducedFlatCover
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.BoundedFlatPullback
+public import Aglib.AlgebraicGeometry.Modules.Flat.Closure
+public import Aglib.AlgebraicGeometry.Modules.Complex.Flat.BoundedPullback
+public import Aglib.AlgebraicGeometry.Modules.Flat.ProjectivePresheaves
 
 /-! Semantic consumers of genuine bounded-above flat replacements. -/
 @[expose] public section
@@ -21,7 +25,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 open AlgebraicGeometry.Scheme.Modules
 namespace QuillenTest.BoundedFlatReplacements
 
-open Quillen
 
 /-- A bounded-above complex of arbitrary sheaves has a replacement with exactly its original bound.
   -/

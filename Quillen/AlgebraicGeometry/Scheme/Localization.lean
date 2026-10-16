@@ -10,6 +10,7 @@ public import Quillen.CategoryTheory.SmallModel.Exact
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.GTheory
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.GlobalLocalization
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Support.SmallModel
 
 /-!
 # Canonical supported G-localization on noetherian schemes

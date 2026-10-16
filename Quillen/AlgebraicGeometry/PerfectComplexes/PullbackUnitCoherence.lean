@@ -7,6 +7,7 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PullbackCoherence
+public import Aglib.AlgebraicGeometry.Modules.Complex.Pullback
 
 /-! The original termwise pullback identity comparisons satisfy the genuine geometric unit laws. -/
 @[expose] public section
@@ -19,29 +20,29 @@ namespace Quillen.PerfectComplexes
 
 /-- Left unitality retains the actual identity and composition comparisons. -/
 lemma pullbackComplexCompIso_left_unitality {X Y : Scheme.{u}} (f : X ⟶ Y) :
-    (pullbackComplexCompIso f (𝟙 Y)).hom ≫
-      Functor.whiskerRight (pullbackComplexIdIso Y).hom
+    (Scheme.Modules.Complex.pullbackCompIso f (𝟙 Y)).hom ≫
+      Functor.whiskerRight (Scheme.Modules.Complex.pullbackIdIso Y).hom
         (AlgebraicGeometry.Scheme.Modules.Complex.pullback f) ≫
       (Functor.leftUnitor _).hom = eqToHom (by simp) := by
   apply NatTrans.ext
   funext K
   apply HomologicalComplex.hom_ext
   intro n
-  simpa [pullbackComplexCompIso, pullbackComplexIdIso,
+  simpa [Scheme.Modules.Complex.pullbackCompIso, Scheme.Modules.Complex.pullbackIdIso,
     AlgebraicGeometry.Scheme.Modules.Complex.pullback] using
     congrArg (fun η => η.app (K.X n)) (Scheme.Modules.pseudofunctor_left_unitality f)
 
 /-- Right unitality retains the actual identity and composition comparisons. -/
 lemma pullbackComplexCompIso_right_unitality {X Y : Scheme.{u}} (f : X ⟶ Y) :
-    (pullbackComplexCompIso (𝟙 X) f).hom ≫
+    (Scheme.Modules.Complex.pullbackCompIso (𝟙 X) f).hom ≫
       Functor.whiskerLeft (AlgebraicGeometry.Scheme.Modules.Complex.pullback f)
-        (pullbackComplexIdIso X).hom ≫
+        (Scheme.Modules.Complex.pullbackIdIso X).hom ≫
       (Functor.rightUnitor _).hom = eqToHom (by simp) := by
   apply NatTrans.ext
   funext K
   apply HomologicalComplex.hom_ext
   intro n
-  simpa [pullbackComplexCompIso, pullbackComplexIdIso,
+  simpa [Scheme.Modules.Complex.pullbackCompIso, Scheme.Modules.Complex.pullbackIdIso,
     AlgebraicGeometry.Scheme.Modules.Complex.pullback] using
     congrArg (fun η => η.app (K.X n)) (Scheme.Modules.pseudofunctor_right_unitality f)
 

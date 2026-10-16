@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPushforwardComparison
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPerfect
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.Strictification
 
 /-! # Actual bounded-below finite-flat direct image of affine-source perfect objects
@@ -16,6 +16,8 @@ faithfulness of the bounded-below inclusion lifts that isomorphism, and the orig
 identifies its direct image with the established strict finite-flat direct image.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
@@ -29,10 +31,10 @@ local instance finiteFlatDerivedStandard (X : Scheme.{u}) :
 /-- Intrinsic perfectness on an affine scheme supplies an original global strict model in D⁺. -/
 theorem exists_strictToDerivedPlus_iso (R : CommRingCat.{u})
     (K : DerivedCategory.Plus (Spec R).Modules)
-    (hK : perfectDerivedObjects (Spec R) (DerivedCategory.Plus.ι.obj K)) :
+    (hK : Scheme.Modules.perfectDerivedObjects (Spec R) (DerivedCategory.Plus.ι.obj K)) :
     ∃ P : StrictPerfect (Spec R), Nonempty ((strictToDerivedPlus (Spec R)).obj P ≅ K) := by
   obtain ⟨L, ⟨eL⟩⟩ :=
-    (perfectDerivedObjects_iff_exists_representative (Spec R) _).mp hK
+    (Scheme.Modules.perfectDerivedObjects_iff_exists_representative (Spec R) _).mp hK
   obtain ⟨P, ⟨eP⟩⟩ := locallyPerfect_exists_strictPerfect_representative R L.property
   exact ⟨P, ⟨DerivedCategory.Plus.ι.preimageIso (eP ≪≫ eL)⟩⟩
 
@@ -40,15 +42,15 @@ theorem exists_strictToDerivedPlus_iso (R : CommRingCat.{u})
 theorem perfectDerivedObjects_derivedPushforwardPlus {R : CommRingCat.{u}} {X : Scheme.{u}}
     (f : Spec R ⟶ X) [IsFinite f] [Flat f] [IsLocallyNoetherian X]
     (K : DerivedCategory.Plus (Spec R).Modules)
-    (hK : perfectDerivedObjects (Spec R) (DerivedCategory.Plus.ι.obj K)) :
-    perfectDerivedObjects X
+    (hK : Scheme.Modules.perfectDerivedObjects (Spec R) (DerivedCategory.Plus.ι.obj K)) :
+    Scheme.Modules.perfectDerivedObjects X
       (DerivedCategory.Plus.ι.obj ((AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlus f).obj
         K)) := by
   obtain ⟨P, ⟨eP⟩⟩ := exists_strictToDerivedPlus_iso R K hK
   let e := (strictFiniteFlatDerivedPushforwardIso f).app P ≪≫
     (AlgebraicGeometry.Scheme.Modules.derivedPushforwardPlus f).mapIso eP
-  apply (perfectDerivedObjects X).prop_of_iso (DerivedCategory.Plus.ι.mapIso e)
-  exact (perfectDerivedObjects_toDerived_iff X _).mpr
+  apply (Scheme.Modules.perfectDerivedObjects X).prop_of_iso (DerivedCategory.Plus.ι.mapIso e)
+  exact (Scheme.Modules.perfectDerivedObjects_toDerived_iff X _).mpr
     (locallyPerfect_of_strictPerfect ((strictFiniteFlatPushforward f).obj P).property)
 
 end Quillen.PerfectComplexes.Affine

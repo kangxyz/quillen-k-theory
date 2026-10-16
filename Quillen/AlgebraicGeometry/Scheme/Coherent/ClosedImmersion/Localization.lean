@@ -14,6 +14,8 @@ public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.Devissage
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Localization.Principal
 /-!
 # Geometric principal closed–open localization for public scheme G-theory
 
@@ -83,7 +85,7 @@ local instance : (coherentRestrictionExact (principalOpen R f)).toFunctor.IsLoca
 by the proved geometric dévissage and exact small-presentation comparisons. -/
 def closedSupportedGEquiv (n : ℕ) :
     AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec
-      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+      (Pushforward.ClosedImmersion.Ideal.closedRing R
       (Ideal.span {f}))) n ≃* SupportedG
       (principalOpen R f) n :=
   (closedSupportGEquiv R f n).trans (coherentPrincipalSupportedGEquiv R f n).symm
@@ -106,7 +108,7 @@ def closedConnectingHom (n : ℕ) :
     AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec (CommRingCat.of (Localization.Away f))) (n +
       1) →*
       AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec
-        (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+        (Pushforward.ClosedImmersion.Ideal.closedRing R
         (Ideal.span {f}))) n :=
   (closedSupportedGEquiv R f n).symm.toMonoidHom.comp (globalPrincipalConnectingHom R f n)
 

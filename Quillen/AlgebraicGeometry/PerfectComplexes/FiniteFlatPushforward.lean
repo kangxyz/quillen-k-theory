@@ -22,6 +22,8 @@ representatives is asserted.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open CategoryTheory.ExactCategory
 
 
@@ -60,7 +62,7 @@ def strictToCoherentComplex (Y : Scheme.{u}) :
 
 omit [IsLocallyNoetherian Z] in
 /-- The actual termwise direct image preserves strict perfectness. -/
-theorem strictPerfect_pushforward {K : Complex Z} (hK : strictPerfect Z K) :
+theorem strictPerfect_pushforward {K : CochainComplex Z.Modules ℤ} (hK : strictPerfect Z K) :
     strictPerfect X ((pushforwardComplex f).obj K) := by
   obtain ⟨⟨a, b, hb⟩, hv⟩ := hK
   refine ⟨⟨a, b, fun n hn ↦ (Scheme.Modules.pushforward f).map_isZero (hb n hn)⟩,

@@ -14,6 +14,8 @@ public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 /-! # Original Waldhausen additivity for the natural Euler short exact sequence -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
 
 noncomputable section
@@ -77,7 +79,8 @@ def boundedModelSequence (A : StrictPerfect (Spec R)) :
 
 lemma boundedModelSequence_conflation (A : StrictPerfect (Spec R)) :
     (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-      (CategoryTheory.ExactCategory.abelianExactStructure (Complex (twoChartLine R)))
+      (CategoryTheory.ExactCategory.abelianExactStructure
+        (CochainComplex (twoChartLine R).Modules ℤ))
       (BoundedBelow.objects (twoChartLine R))).conflation (boundedModelSequence R A) :=
   coefficientSequence_shortExact R A
 
@@ -89,7 +92,7 @@ def projectedModelSequence (A : StrictPerfect (Spec R)) :
 lemma projectedModelSequence_conflation (A : StrictPerfect (Spec R)) :
     (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
       (CategoryTheory.ExactCategory.abelianExactStructure
-      (Complex (Spec R)))
+      (CochainComplex (Spec R).Modules ℤ))
       (FlasqueBoundedBelow.objects (Spec R))).conflation (projectedModelSequence R A) :=
   ((FlasqueBoundedBelow.totalExactFunctor (twoChartLine R)).comp (G0ExactFunctor R)).map_conflation
     _ (boundedModelSequence_conflation R A)
@@ -98,7 +101,7 @@ lemma projectedModelSequence_conflation (A : StrictPerfect (Spec R)) :
 def E0ExactFunctor : CategoryTheory.ExactCategory.ExactFunctor (strictExactStructure (Spec R))
     (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
       (CategoryTheory.ExactCategory.abelianExactStructure
-      (Complex (Spec R)))
+      (CochainComplex (Spec R).Modules ℤ))
       (FlasqueBoundedBelow.objects (Spec R))) :=
   (endpointBoundedExactFunctor R (sequence R).X₃ (unitEndpoint_strictPerfect R)).comp
     ((FlasqueBoundedBelow.totalExactFunctor (twoChartLine R)).comp (G0ExactFunctor R))
@@ -114,7 +117,8 @@ lemma strictFlasqueSequence_isCofibrationSequence {X Y : Scheme.{u}}
     (hH : Waldhausen.IsExact (strictWaldhausen X).cof (strictWaldhausen X).weq
       (FlasqueBoundedBelow.waldhausen Y).cof (FlasqueBoundedBelow.waldhausen Y).weq H)
     (hc : ∀ A, (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-      (CategoryTheory.ExactCategory.abelianExactStructure (Complex Y)) (FlasqueBoundedBelow.objects
+      (CategoryTheory.ExactCategory.abelianExactStructure (CochainComplex Y.Modules ℤ))
+        (FlasqueBoundedBelow.objects
         Y)).conflation
       (ShortComplex.mk (a.app A) (b.app A) (NatTrans.congr_app w A))) :
     Waldhausen.Additivity.IsCofibrationSequence (strictWaldhausen X)
@@ -124,11 +128,11 @@ lemma strictFlasqueSequence_isCofibrationSequence {X Y : Scheme.{u}}
   exactH := hH
   cofibration := {
     app_cof A := (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-      (CategoryTheory.ExactCategory.abelianExactStructure (Complex Y))
+      (CategoryTheory.ExactCategory.abelianExactStructure (CochainComplex Y.Modules ℤ))
       (FlasqueBoundedBelow.objects Y)).inflation_of_conflation (hc A)
     relative_cof {A B} f hf := by
       let E := CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-        (CategoryTheory.ExactCategory.abelianExactStructure (Complex Y))
+        (CategoryTheory.ExactCategory.abelianExactStructure (CochainComplex Y.Modules ℤ))
           (FlasqueBoundedBelow.objects Y)
       let φ := Waldhausen.GilletWaldhausen.exactFunctorSequenceMap a b w f
       let : HasPushout (Waldhausen.GilletWaldhausen.exactFunctorSequenceAt a b w A).f φ.τ₁ :=
@@ -139,7 +143,7 @@ lemma strictFlasqueSequence_isCofibrationSequence {X Y : Scheme.{u}}
   cofiber A := CategoryTheory.Limits.isPushout_of_isColimit_cokernel _
     ((CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
       (CategoryTheory.ExactCategory.abelianExactStructure
-      (Complex Y))
+      (CochainComplex Y.Modules ℤ))
       (FlasqueBoundedBelow.objects Y)).cokernel _ (hc A))
     (FlasqueBoundedBelow.waldhausen Y).isZero _ _
 

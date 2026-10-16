@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Relative
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Relative
 public import Aglib.AlgebraicGeometry.Products.IntegerBase
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.BaseChangeGluing
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.ChartAffineness

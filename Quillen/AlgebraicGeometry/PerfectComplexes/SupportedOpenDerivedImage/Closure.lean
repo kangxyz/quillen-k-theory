@@ -9,8 +9,13 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportCone
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpenDerivedImage.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.SupportedRoofs
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPerfect
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Mathlib.Algebra.Homology.DerivedCategory.Basic
+public import Mathlib.Algebra.Homology.DerivedCategory.ShortExact
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 /-!
 # Genuine triangulated closure of the supported restriction image
 
@@ -23,6 +28,8 @@ lemmas; its qcqs geometric proof is provided by the imported SupportedRoofs.
 -/
 @[expose] public section
 
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.Complex.restrictCommShift
+
 open AlgebraicGeometry.Scheme.Modules.Complex
 
 
@@ -33,17 +40,19 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
 open scoped ZeroObject
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.SupportedOpenDerivedImage
 attribute [local instance] HasDerivedCategory.standard
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens)
 
 /-- The same actual restriction image on original ambient derived objects. -/
-def derivedObjects : ObjectProperty (Derived U) := fun E =>
-  ∃ P : Complex X, perfectSupported T.ι P ∧
-    Nonempty ((toDerived U).obj ((restrict j).obj P) ≅ E)
+def derivedObjects : ObjectProperty (DerivedCategory U.Modules) := fun E =>
+  ∃ P : CochainComplex X.Modules ℤ, perfectSupported T.ι P ∧
+    Nonempty ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj P) ≅ E)
 
-@[simp] theorem derivedObjects_toDerived_iff (E : Complex U) :
-    derivedObjects j T ((toDerived U).obj E) ↔ complexObjects j T E := Iff.rfl
+@[simp] theorem derivedObjects_toDerived_iff (E : CochainComplex U.Modules ℤ) :
+    derivedObjects j T ((DerivedCategory.Q (C := U.Modules)).obj E) ↔ complexObjects j T E
+      := Iff.rfl
 
 instance : (derivedObjects j T).IsClosedUnderIsomorphisms where
   of_iso e := by
@@ -51,16 +60,16 @@ instance : (derivedObjects j T).IsClosedUnderIsomorphisms where
     exact ⟨P, hP, ⟨eP ≪≫ e⟩⟩
 
 instance : (derivedObjects j T).ContainsZero where
-  exists_zero := ⟨(toDerived U).obj ((restrict j).obj 0),
-    (toDerived U).map_isZero ((restrict j).map_isZero (isZero_zero _)),
+  exists_zero := ⟨(DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj 0),
+    (DerivedCategory.Q (C := U.Modules)).map_isZero ((restrict j).map_isZero (isZero_zero _)),
     0, (perfectSupported T.ι).prop_zero, ⟨Iso.refl _⟩⟩
 
 instance : (derivedObjects j T).IsStableUnderShift ℤ where
   isStableUnderShiftBy n := ⟨by
     rintro E ⟨P, hP, ⟨eP⟩⟩
     exact ⟨P⟦n⟧, perfectSupported_shift T.ι hP n,
-      ⟨(toDerived U).mapIso (((restrict j).commShiftIso n).app P) ≪≫
-        ((toDerived U).commShiftIso n).app ((restrict j).obj P) ≪≫
+      ⟨(DerivedCategory.Q (C := U.Modules)).mapIso (((restrict j).commShiftIso n).app P) ≪≫
+        ((DerivedCategory.Q (C := U.Modules)).commShiftIso n).app ((restrict j).obj P) ≪≫
         (shiftFunctor _ n).mapIso eP⟩⟩⟩
 
 /-- The actual cone of the supplied global numerator represents the third
@@ -73,13 +82,14 @@ theorem triangulatedClosed₃ (hroof : OpenDerivedImage.HasSupportedDerivedRoofs
     ((isZero_toDerived_iff_acyclic _).mpr hP.2)
     ((isZero_toDerived_iff_acyclic _).mpr hK.2) α
   have hP'S : perfectSupported T.ι P' := ⟨hP', (isZero_toDerived_iff_acyclic _).mp hzP'⟩
-  let eP' := asIso ((toDerived U).map ((restrict j).map q)) ≪≫ eP
+  let eP' := asIso ((DerivedCategory.Q (C := U.Modules)).map ((restrict j).map q)) ≪≫ eP
   refine ⟨CochainComplex.mappingCone g, perfectSupported_mappingCone T.ι hP'S hK g, ⟨?_⟩⟩
-  refine (toDerived U).mapIso (CochainComplex.mappingCone.mapHomologicalComplexIso g
+  refine (DerivedCategory.Q (C := U.Modules)).mapIso
+    (CochainComplex.mappingCone.mapHomologicalComplexIso g
       (Scheme.Modules.restrictFunctor j)) ≪≫ ?_
   exact Triangle.π₃.mapIso (isoTriangleOfIso₁₂ _ Δ
-    (mappingConeTriangle_distinguished ((restrict j).map g)) hΔ eP' eK (by
-      change (toDerived U).map ((restrict j).map g) ≫ eK.hom = _
+    (DerivedCategory.mappingCone_triangle_distinguished ((restrict j).map g)) hΔ eP' eK (by
+      change (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map g) ≫ eK.hom = _
       rw [← hg]
       simp only [α, eP', Iso.trans_hom, asIso_hom, Category.assoc,
         Iso.inv_hom_id, Category.comp_id]
@@ -100,30 +110,30 @@ theorem triangulatedClosed₁ (hroof : OpenDerivedImage.HasSupportedDerivedRoofs
 
 /-- The genuine original ambient short exact sequence supplies extension closure. -/
 theorem complexObjects_of_shortExact (hroof : OpenDerivedImage.HasSupportedDerivedRoofs j T)
-    {S : ShortComplex (Complex U)} (hS : S.ShortExact)
+    {S : ShortComplex (CochainComplex U.Modules ℤ)} (hS : S.ShortExact)
     (h₁ : complexObjects j T S.X₁) (h₃ : complexObjects j T S.X₃) :
     complexObjects j T S.X₂ := by
   let := triangulatedClosed₂ j T hroof
-  exact (derivedObjects j T).ext_of_isTriangulatedClosed₂ (shortExactTriangle hS)
-    (shortExactTriangle_distinguished hS) h₁ h₃
+  exact (derivedObjects j T).ext_of_isTriangulatedClosed₂ (DerivedCategory.triangleOfSES hS)
+    (DerivedCategory.triangleOfSES_distinguished hS) h₁ h₃
 
 /-- The actual cofiber, not a replacement object, belongs to the image. -/
 theorem complexObjects_quotient_of_shortExact (hroof : OpenDerivedImage.HasSupportedDerivedRoofs j
   T)
-    {S : ShortComplex (Complex U)} (hS : S.ShortExact)
+    {S : ShortComplex (CochainComplex U.Modules ℤ)} (hS : S.ShortExact)
     (h₁ : complexObjects j T S.X₁) (h₂ : complexObjects j T S.X₂) :
     complexObjects j T S.X₃ := by
   let := triangulatedClosed₃ j T hroof
-  exact (derivedObjects j T).ext_of_isTriangulatedClosed₃ (shortExactTriangle hS)
-    (shortExactTriangle_distinguished hS) h₁ h₂
+  exact (derivedObjects j T).ext_of_isTriangulatedClosed₃ (DerivedCategory.triangleOfSES hS)
+    (DerivedCategory.triangleOfSES_distinguished hS) h₁ h₂
 
 /-- The actual kernel endpoint belongs to the image when the other endpoints do. -/
 theorem complexObjects_kernel_of_shortExact (hroof : OpenDerivedImage.HasSupportedDerivedRoofs j T)
-    {S : ShortComplex (Complex U)} (hS : S.ShortExact)
+    {S : ShortComplex (CochainComplex U.Modules ℤ)} (hS : S.ShortExact)
     (h₂ : complexObjects j T S.X₂) (h₃ : complexObjects j T S.X₃) :
     complexObjects j T S.X₁ := by
   let := triangulatedClosed₁ j T hroof
-  exact (derivedObjects j T).ext_of_isTriangulatedClosed₁ (shortExactTriangle hS)
-    (shortExactTriangle_distinguished hS) h₂ h₃
+  exact (derivedObjects j T).ext_of_isTriangulatedClosed₁ (DerivedCategory.triangleOfSES hS)
+    (DerivedCategory.triangleOfSES_distinguished hS) h₂ h₃
 
 end Quillen.PerfectComplexes.SupportedOpenDerivedImage

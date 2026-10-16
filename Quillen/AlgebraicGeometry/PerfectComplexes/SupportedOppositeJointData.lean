@@ -19,6 +19,7 @@ No affine or quasi-compact hypothesis is needed for these structures.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
 open Quillen.Waldhausen
 
 

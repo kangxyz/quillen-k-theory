@@ -9,6 +9,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedModuleRep
 public import Mathlib.RingTheory.Finiteness.Prod
 public import Mathlib.Algebra.Category.ModuleCat.Biproducts
 public import Quillen.Algebra.Homology.DerivedCategory.BoundedComparison
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
 
 /-!
 # Actual derived closure of bounded finite-projective module models
@@ -85,7 +86,7 @@ lemma exists_moduleStrictPerfect_cone_model (R : CommRingCat.{u})
       Nonempty (DerivedCategory.Q.obj (CochainComplex.mappingCone f) ≅ DerivedCategory.Q.obj C) :=
         by
   have := isKProjective_of_moduleStrictPerfect R hP
-  obtain ⟨g, hg⟩ := Quillen.CochainComplex.exists_chain_representative_of_isKProjective
+  obtain ⟨g, hg⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective
     (DerivedCategory.Q.map f ≫ e.hom)
   refine ⟨CochainComplex.mappingCone g, moduleStrictPerfect_mappingCone R hP hL g, ⟨?_⟩⟩
   exact Triangle.π₃.mapIso (isoTriangleOfIso₁₂ _ _
@@ -112,7 +113,7 @@ instance (R : CommRingCat.{u}) : (finiteProjectiveDerivedObjects R).IsTriangulat
   .mk' (by
     rintro T hT ⟨P, hP, ⟨eP⟩⟩ ⟨K, hK, ⟨eK⟩⟩
     have := isKProjective_of_moduleStrictPerfect R hP
-    obtain ⟨f, hf⟩ := Quillen.CochainComplex.exists_chain_representative_of_isKProjective
+    obtain ⟨f, hf⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective
       (eP.hom ≫ T.mor₁ ≫ eK.inv)
     refine ⟨CochainComplex.mappingCone f, moduleStrictPerfect_mappingCone R hP hK f, ⟨?_⟩⟩
     exact Triangle.π₃.mapIso (isoTriangleOfIso₁₂ _ T

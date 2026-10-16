@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Homology.KProjectiveComparison
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Comparison
 public import Mathlib.Algebra.Homology.Embedding.CochainComplex
 public import Mathlib.Algebra.Category.ModuleCat.Projective
 public import Mathlib.RingTheory.Finiteness.Basic

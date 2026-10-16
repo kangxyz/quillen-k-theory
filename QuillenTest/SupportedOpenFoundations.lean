@@ -7,7 +7,9 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpenDerivedImage.Structure
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Original-map consumers of supported restriction and image foundations -/
 @[expose] public section
 
@@ -20,6 +22,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace QuillenTest.SupportedOpenFoundations
 
 open Quillen
@@ -44,7 +47,7 @@ theorem original_supported_K_forget_square {U X : Scheme.{u}}
 
 /-- The literal numerator cone has original restricted homology zero in every degree. -/
 theorem original_supported_cone_homology {U X : Scheme.{u}}
-    (j : U ⟶ X) [IsOpenImmersion j] {P Q : Complex X}
+    (j : U ⟶ X) [IsOpenImmersion j] {P Q : CochainComplex X.Modules ℤ}
     (hP : perfectSupported j P) (hQ : perfectSupported j Q) (f : P ⟶ Q) (n : ℤ) :
     IsZero (((restrict j).obj (CochainComplex.mappingCone f)).homology n) :=
   ((perfectSupported_mappingCone j hP hQ f).2 n).isZero_homology
@@ -54,10 +57,11 @@ prescribed support and the original derived inverse equations. -/
 theorem original_supported_complement {U X : Scheme.{u}}
     [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace U]
     (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens) (hT : IsCompact (T : Set X))
-    (E : Complex U) (hE : perfectSupported (j ⁻¹ᵁ T).ι E) :
-    ∃ (P : Complex X) (C : Complex U), perfectSupported T.ι P ∧
+    (E : CochainComplex U.Modules ℤ) (hE : perfectSupported (j ⁻¹ᵁ T).ι E) :
+    ∃ (P : CochainComplex X.Modules ℤ) (C : CochainComplex U.Modules ℤ), perfectSupported T.ι P ∧
       perfectSupported (j ⁻¹ᵁ T).ι C ∧
-      ∃ e : (toDerived U).obj ((restrict j).obj P) ≅ (toDerived U).obj (C ⊞ E),
+      ∃ e : (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj P) ≅
+        (DerivedCategory.Q (C := U.Modules)).obj (C ⊞ E),
         e.hom ≫ e.inv = 𝟙 _ ∧ e.inv ≫ e.hom = 𝟙 _ := by
   obtain ⟨C, hC, P, hP, ⟨e⟩⟩ :=
     SupportedOpenDerivedImage.exists_supported_perfect_complement j T hT E hE
@@ -68,7 +72,7 @@ sequence, with the supported geometric roof supplied by its proved qcqs theorem.
 theorem original_supported_image_quotient {U X : Scheme.{u}}
     [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace U]
     (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens) (hT : IsCompact (T : Set X))
-    {S : ShortComplex (Complex U)} (hS : S.ShortExact)
+    {S : ShortComplex (CochainComplex U.Modules ℤ)} (hS : S.ShortExact)
     (hA : SupportedOpenDerivedImage.complexObjects j T S.X₁)
     (hB : SupportedOpenDerivedImage.complexObjects j T S.X₂) :
     SupportedOpenDerivedImage.complexObjects j T S.X₃ :=

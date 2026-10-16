@@ -20,6 +20,8 @@ surjectivity, without any assertion that full-open restriction is surjective on 
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 noncomputable section

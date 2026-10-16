@@ -62,9 +62,11 @@ instance instAdditivePerfectSupportedExtensionByZero : (perfectSupportedExtensio
 
 /-- The exact functor on supported perfect objects induced by extension by zero. -/
 def perfectSupportedExactExtensionByZero : CategoryTheory.ExactCategory.ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex U)) (perfectSupported (j ⁻¹ᵁ
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex U.Modules ℤ))
+      (perfectSupported (j ⁻¹ᵁ
       T).ι))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (perfectSupported T.ι))
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
+      (perfectSupported T.ι))
       where
   toFunctor := perfectSupportedExtensionByZero j T hcover
   map_conflation S hS := by
@@ -80,7 +82,7 @@ lemma perfectSupportedExtensionByZero_exact : IsExact
   weak f hf := by have : QuasiIso f.hom := hf; exact extensionByZero_quasiIso j f.hom
   pushout hi h := by
     apply IsPushout.of_map_of_faithful (perfectSupported T.ι).ι
-    exact (fullSubcategory_map_pushout (abelianExactStructure (Complex U))
+    exact (fullSubcategory_map_pushout (abelianExactStructure (CochainComplex U.Modules ℤ))
       (perfectSupported (j ⁻¹ᵁ T).ι) hi h).map (extensionByZero j)
 
 /-- The original adjunction unit, with no change to its underlying chain map. -/

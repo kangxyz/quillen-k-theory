@@ -9,6 +9,7 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.ModulePerfectClosure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedComparison
 public import Quillen.Waldhausen.Approximation.WeakImage
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
 
 /-!
 # The actual principal derived image and strict weak witnesses
@@ -98,7 +99,7 @@ with a genuine one-arrow weak restriction witness from an original strict
 complex. Both directions retain the original affine reconstruction. -/
 lemma exists_principal_strict_quasiIso_iff_moduleDerivedImage
     (R : CommRingCat.{u}) (r : R)
-    (B : Complex (Spec (.of (Localization.Away r))))
+    (B : CochainComplex (Spec (.of (Localization.Away r))).Modules ℤ)
     (hB : ∀ i, (B.X i).IsQuasicoherent) :
     (∃ (E : StrictPerfect (Spec R))
       (q : (restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj E.obj ⟶
@@ -125,7 +126,7 @@ lemma exists_principal_strict_quasiIso_iff_moduleDerivedImage
   · rintro ⟨P, hP, ⟨eP⟩⟩
     have : CochainComplex.IsKProjective (L.obj P) :=
       isKProjective_of_moduleStrictPerfect S (moduleStrictPerfect_localize R r hP)
-    obtain ⟨f, hf⟩ := Quillen.CochainComplex.exists_chain_representative_of_isKProjective eP.hom
+    obtain ⟨f, hf⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective eP.hom
     have : IsIso (DerivedCategory.Q.map f) := by rw [hf]; infer_instance
     have : QuasiIso f := (DerivedCategory.isIso_Q_map_iff_quasiIso _ f).mp inferInstance
     have : QuasiIso (G.map f) := (quasiIso_associated_iff S f).mpr inferInstance

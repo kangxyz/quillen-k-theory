@@ -14,6 +14,8 @@ The comparison is the original derived unit on the original complex. Finite flat
 locally noetherian target supplies the previously established strict-perfect direct image.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

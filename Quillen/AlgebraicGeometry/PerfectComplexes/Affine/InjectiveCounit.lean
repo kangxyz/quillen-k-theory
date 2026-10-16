@@ -8,8 +8,10 @@ module
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineInjectiveCohomology
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenInjectiveModel
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-!
 # The original affine counit on lower-bounded injective complexes
 
@@ -32,19 +34,20 @@ or upper bounds for an open direct image.
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
-universe u
+universe u v
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 namespace Quillen.PerfectComplexes.Affine
 
 /-- The literal affine adjunction counit on arbitrary complexes of module sheaves. -/
-def associatedSectionsCounit (R : CommRingCat.{u}) (K : Complex (Spec R)) :
+def associatedSectionsCounit (R : CommRingCat.{u}) (K : CochainComplex (Spec R).Modules ℤ) :
     (associatedComplex R).obj ((sectionsComplex R).obj K) ⟶ K where
   f i := (K.X i).fromTildeΓ
   comm' i j _ := (Scheme.Modules.fromTildeΓNatTrans.naturality (K.d i j)).symm
 
 @[reassoc]
 lemma associatedSectionsCounit_naturality (R : CommRingCat.{u})
-    {K L : Complex (Spec R)} (f : K ⟶ L) :
+    {K L : CochainComplex (Spec R).Modules ℤ} (f : K ⟶ L) :
     (associatedComplex R).map ((sectionsComplex R).map f) ≫ associatedSectionsCounit R L =
       associatedSectionsCounit R K ≫ f := by
   ext i : 1
@@ -53,7 +56,7 @@ lemma associatedSectionsCounit_naturality (R : CommRingCat.{u})
 /-- The actual reconstruction composite preserves right homology of a lower-bounded
 injective complex with quasicoherent cohomology. -/
 lemma associatedSections_preservesRightHomology {R : CommRingCat.{u}}
-    (I : Complex (Spec R)) (a : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent) (n : ℤ) :
@@ -70,7 +73,7 @@ lemma associatedSections_preservesRightHomology {R : CommRingCat.{u}}
 /-- The literal affine counit is a quasi-isomorphism on a lower-bounded injective
 all-sheaf complex with quasicoherent cohomology. No termwise quasicoherence is required. -/
 lemma quasiIso_associatedSectionsCounit {R : CommRingCat.{u}}
-    (I : Complex (Spec R)) (a : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent) :
@@ -96,7 +99,7 @@ lemma quasiIso_associatedSectionsCounit {R : CommRingCat.{u}}
 /-- Original global sections preserve and reflect weak maps between actual lower-bounded
 injective complexes with quasicoherent cohomology. Their bounds may be different. -/
 lemma quasiIso_sections_iff_of_injective {R : CommRingCat.{u}}
-    {I J : Complex (Spec R)} (a b : ℤ)
+    {I J : CochainComplex (Spec R).Modules ℤ} (a b : ℤ)
     (hIa : ∀ n, n < a → IsZero (I.X n)) (hJb : ∀ n, n < b → IsZero (J.X n))
     (hI : ∀ n, Injective (I.X n)) (hJ : ∀ n, Injective (J.X n))
     (hqcI : ∀ n, (I.homology n).IsQuasicoherent)
@@ -111,15 +114,15 @@ lemma quasiIso_sections_iff_of_injective {R : CommRingCat.{u}}
 
 /-- On termwise quasicoherent input this is the already established original counit. -/
 lemma associatedSectionsCounit_eq_of_quasicoherent (R : CommRingCat.{u})
-    (K : Complex (Spec R)) (hK : ∀ n, (K.X n).IsQuasicoherent) :
+    (K : CochainComplex (Spec R).Modules ℤ) (hK : ∀ n, (K.X n).IsQuasicoherent) :
     associatedSectionsCounit R K = (associatedSectionsIsoOfQuasicoherent R K hK).hom := rfl
 
 /-- A cohomologically lower-bounded complex with quasicoherent homology has an actual
 injective replacement and the original affine counit into that same replacement. -/
 lemma exists_injective_associatedSectionsCounit {R : CommRingCat.{u}}
-    (K : Complex (Spec R)) (a : ℤ) [K.IsGE a]
+    (K : CochainComplex (Spec R).Modules ℤ) (a : ℤ) [K.IsGE a]
     (hqc : ∀ n, (K.homology n).IsQuasicoherent) :
-    ∃ (I : Complex (Spec R)) (q : K ⟶ I),
+    ∃ (I : CochainComplex (Spec R).Modules ℤ) (q : K ⟶ I),
       I.IsStrictlyGE a ∧ (∀ n, Injective (I.X n)) ∧ QuasiIso q ∧
       (∀ n, (I.homology n).IsQuasicoherent) ∧ QuasiIso (associatedSectionsCounit R I) := by
   let : HasDerivedCategory.{u + 1} (Spec R).Modules := HasDerivedCategory.standard _
@@ -139,17 +142,18 @@ lemma exists_injective_associatedSectionsCounit {R : CommRingCat.{u}}
 /-- Genuine lower-bounded affine module reconstruction in the original ambient derived category.
 The module complex retains the requested lower term bound. -/
 lemma exists_lowerBounded_module_representative {R : CommRingCat.{u}}
-    (K : Complex (Spec R)) (a : ℤ) [K.IsGE a]
+    [HasDerivedCategory.{v} (Spec R).Modules]
+    (K : CochainComplex (Spec R).Modules ℤ) (a : ℤ) [K.IsGE a]
     (hqc : ∀ n, (K.homology n).IsQuasicoherent) :
     ∃ P : ModuleComplex R, P.IsStrictlyGE a ∧
-      Nonempty ((toDerived (Spec R)).obj ((associatedComplex R).obj P) ≅
-        (toDerived (Spec R)).obj K) := by
+      Nonempty ((DerivedCategory.Q (C := (Spec R).Modules)).obj ((associatedComplex R).obj P) ≅
+        (DerivedCategory.Q (C := (Spec R).Modules)).obj K) := by
   obtain ⟨I, q, hIa, hI, hq, hqcI, hε⟩ := exists_injective_associatedSectionsCounit K a hqc
   let := hIa
   let := hq
   let := hε
   refine ⟨(sectionsComplex R).obj I, inferInstance, ⟨?_⟩⟩
-  exact asIso ((toDerived (Spec R)).map (associatedSectionsCounit R I)) ≪≫
-    (asIso ((toDerived (Spec R)).map q)).symm
+  exact asIso ((DerivedCategory.Q (C := (Spec R).Modules)).map (associatedSectionsCounit R I)) ≪≫
+    (asIso ((DerivedCategory.Q (C := (Spec R).Modules)).map q)).symm
 
 end Quillen.PerfectComplexes.Affine

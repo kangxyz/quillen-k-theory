@@ -6,11 +6,12 @@ Authors: kangxyz
 
 module
 
-public import Aglib.Algebra.Category.ModuleCat.IdealClosedSupport
+public import Aglib.Algebra.Category.FGModuleCat.IdealClosedSupport
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.AffineKernel
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
 /-!
 # The genuine closed-unit kernel is exactly ideal multiplication
 
@@ -40,8 +41,8 @@ open FiniteModuleLocalization.IdealClosedSupport
 variable {Z : Scheme.{u}} [IsLocallyNoetherian Z]
   (R : CommRingCat.{u}) [IsNoetherianRing R]
   (i : Z ⟶ Spec R) [IsClosedImmersion i]
-  (I : Ideal R) (e : Z ≅ Spec (Ideal.closedRing R I))
-  (hi : i = e.hom ≫ Ideal.closedMap R I)
+  (I : Ideal R) (e : Z ≅ Spec (Pushforward.ClosedImmersion.Ideal.closedRing R I))
+  (hi : i = e.hom ≫ Pushforward.ClosedImmersion.Ideal.closedMap R I)
 
 include e hi in
 /-- On actual finite global sections, the image of the genuine unit-kernel

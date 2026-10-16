@@ -7,8 +7,12 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.OpenUnion
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.RestrictionHom
 /-!
 # Genuine finite-cover derived nilpotence
 
@@ -39,6 +43,7 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
   HomologicalComplex
 universe u v w
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.CochainComplex
 variable {C : Type u} [Category.{v} C] [Abelian C] [HasDerivedCategory.{w} C]
 attribute [local instance] Abelian.hasFiniteBiproducts
@@ -71,14 +76,15 @@ attribute [local instance] HasDerivedCategory.standard
 variable {W U V X : Scheme.{u}} (a : W ⟶ U) (b : W ⟶ V) (j : U ⟶ X) (k : V ⟶ X)
   [IsOpenImmersion a] [IsOpenImmersion b] [IsOpenImmersion j] [IsOpenImmersion k]
   (h : a ≫ j = b ≫ k)
-  {K : Complex W} {A : Complex U} {B : Complex V}
+  {K : CochainComplex W.Modules ℤ} {A : CochainComplex U.Modules ℤ} {B : CochainComplex V.Modules ℤ}
   (α : K ⟶ (restrict a).obj A) (β : K ⟶ (restrict b).obj B)
 
 /-- A map locally zero on both pieces followed by a map zero on the first
 piece is zero on the genuine original cone glue. -/
-theorem derivedHom_glued_comp_eq_zero {L M : Complex X}
-    (φ : (toDerived X).obj (glued a b j k h α β) ⟶ (toDerived X).obj L)
-    (ψ : (toDerived X).obj L ⟶ (toDerived X).obj M)
+theorem derivedHom_glued_comp_eq_zero {L M : CochainComplex X.Modules ℤ}
+    (φ : (DerivedCategory.Q (C := X.Modules)).obj (glued a b j k h α β) ⟶
+      (DerivedCategory.Q (C := X.Modules)).obj L)
+    (ψ : (DerivedCategory.Q (C := X.Modules)).obj L ⟶ (DerivedCategory.Q (C := X.Modules)).obj M)
     (hj : restrictDerivedHom j φ = 0) (hk : restrictDerivedHom k φ = 0)
     (hψ : restrictDerivedHom j ψ = 0) : φ ≫ ψ = 0 := by
   refine derivedHom_homotopyPushout_comp_eq_zero (left a j α) (right a b j k h β) φ ψ ?_ ?_ ?_
@@ -104,9 +110,9 @@ theorem derivedHom_comp_eq_zero_of_openSquare
     (hja : ∀ x : U, j x ∈ Set.range k → x ∈ Set.range a)
     (hkb : ∀ x : V, k x ∈ Set.range j → x ∈ Set.range b)
     (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ Set.range k)
-    {E L M : Complex X}
-    (φ : (toDerived X).obj E ⟶ (toDerived X).obj L)
-    (ψ : (toDerived X).obj L ⟶ (toDerived X).obj M)
+    {E L M : CochainComplex X.Modules ℤ}
+    (φ : (DerivedCategory.Q (C := X.Modules)).obj E ⟶ (DerivedCategory.Q (C := X.Modules)).obj L)
+    (ψ : (DerivedCategory.Q (C := X.Modules)).obj L ⟶ (DerivedCategory.Q (C := X.Modules)).obj M)
     (hU : restrictDerivedHom j φ = 0) (hV : restrictDerivedHom k φ = 0)
     (hψ : restrictDerivedHom j ψ = 0) : φ ≫ ψ = 0 := by
   let e := openSquareRestrictIso b a k j h.symm
@@ -133,12 +139,12 @@ theorem derivedHom_comp_eq_zero_of_openSquare
       cases t with
       | false => exact desc_restrict_second_quasiIso a b j k h α β (𝟙 _) (𝟙 _) H hkb
       | true => exact desc_restrict_first_quasiIso a b j k h α β (𝟙 _) (𝟙 _) H hja
-  have hz : ((toDerived X).map d ≫ φ) ≫ ψ = 0 := by
+  have hz : ((DerivedCategory.Q (C := X.Modules)).map d ≫ φ) ≫ ψ = 0 := by
     apply derivedHom_glued_comp_eq_zero a b j k h α β
     · rw [restrictDerivedHom_comp, hU, comp_zero]
     · rw [restrictDerivedHom_comp, hV, comp_zero]
     · exact hψ
-  apply (cancel_epi ((toDerived X).map d)).mp
+  apply (cancel_epi ((DerivedCategory.Q (C := X.Modules)).map d)).mp
   simpa only [Category.assoc, comp_zero] using hz
 end Quillen.PerfectComplexes
 
@@ -148,31 +154,33 @@ attribute [local instance] HasDerivedCategory.standard
 /-- Zero of an original chain map is unchanged by the actual composition
 comparison for inclusions of opens. -/
 lemma toDerived_restrict_openInclusion_eq_zero_iff {X : Scheme.{u}}
-    {U V : X.Opens} (h : U ≤ V) {E L : Complex X} (f : E ⟶ L) :
-    (toDerived U.toScheme).map ((restrict (X.homOfLE h)).map ((restrict V.ι).map f)) = 0 ↔
-      (toDerived U.toScheme).map ((restrict U.ι).map f) = 0 := by
+    {U V : X.Opens} (h : U ≤ V) {E L : CochainComplex X.Modules ℤ} (f : E ⟶ L) :
+    (DerivedCategory.Q (C := U.toScheme.Modules)).map
+      ((restrict (X.homOfLE h)).map ((restrict V.ι).map f)) = 0 ↔
+      (DerivedCategory.Q (C := U.toScheme.Modules)).map ((restrict U.ι).map f) = 0 := by
   let e := restrictCompIso (X.homOfLE h) V.ι ≪≫
     (eqToIso (restrict_congr (Scheme.homOfLE_ι X h)))
-  have hn := congrArg ((toDerived U.toScheme).map) (e.hom.naturality f)
+  have hn := congrArg ((DerivedCategory.Q (C := U.toScheme.Modules)).map) (e.hom.naturality f)
   simp only [Functor.map_comp, Functor.comp_map] at hn
   constructor
   · intro hf
     rw [hf, zero_comp] at hn
-    apply (cancel_epi ((toDerived U.toScheme).map (e.hom.app E))).mp
+    apply (cancel_epi ((DerivedCategory.Q (C := U.toScheme.Modules)).map (e.hom.app E))).mp
     simpa only [comp_zero] using hn.symm
   · intro hf
     rw [hf, comp_zero] at hn
-    apply (cancel_mono ((toDerived U.toScheme).map (e.hom.app L))).mp
+    apply (cancel_mono ((DerivedCategory.Q (C := U.toScheme.Modules)).map (e.hom.app L))).mp
     simpa only [zero_comp] using hn
 
 /-- The literal original maps on a union obey the genuine MV composition
 criterion. No perfectness, compactness or cohomology bounds are needed. -/
 theorem toDerived_restrict_comp_eq_zero_on_openUnion {X : Scheme.{u}}
-    {E L M : Complex X} (f : E ⟶ L) (g : L ⟶ M) (U V : X.Opens)
-    (hU : (toDerived U.toScheme).map ((restrict U.ι).map f) = 0)
-    (hV : (toDerived V.toScheme).map ((restrict V.ι).map f) = 0)
-    (hψ : (toDerived U.toScheme).map ((restrict U.ι).map g) = 0) :
-    (toDerived (U ⊔ V).toScheme).map ((restrict (U ⊔ V).ι).map (f ≫ g)) = 0 := by
+    {E L M : CochainComplex X.Modules ℤ} (f : E ⟶ L) (g : L ⟶ M) (U V : X.Opens)
+    (hU : (DerivedCategory.Q (C := U.toScheme.Modules)).map ((restrict U.ι).map f) = 0)
+    (hV : (DerivedCategory.Q (C := V.toScheme.Modules)).map ((restrict V.ι).map f) = 0)
+    (hψ : (DerivedCategory.Q (C := U.toScheme.Modules)).map ((restrict U.ι).map g) = 0) :
+    (DerivedCategory.Q (C := (U ⊔ V).toScheme.Modules)).map ((restrict (U ⊔ V).ι).map (f ≫ g))
+      = 0 := by
   let a := X.homOfLE (inf_le_left : U ⊓ V ≤ U)
   let b := X.homOfLE (inf_le_right : U ⊓ V ≤ V)
   let j := X.homOfLE (le_sup_left : U ≤ U ⊔ V)
@@ -208,23 +216,27 @@ theorem toDerived_restrict_comp_eq_zero_on_openUnion {X : Scheme.{u}}
     exact (toDerived_restrict_openInclusion_eq_zero_iff le_sup_left g).mpr hψ
 
 /-- Actual derived nilpotence of an original chain endomorphism on an open. -/
-def DerivedNilpotentOn {X : Scheme.{u}} {E : Complex X} (f : End E) (U : X.Opens) : Prop :=
-  ∃ n : ℕ, (toDerived U.toScheme).map ((restrict U.ι).map (f ^ n)) = 0
+def DerivedNilpotentOn {X : Scheme.{u}} {E : CochainComplex X.Modules ℤ} (f : End E)
+    (U : X.Opens) : Prop :=
+  ∃ n : ℕ, (DerivedCategory.Q (C := U.toScheme.Modules)).map ((restrict U.ι).map (f ^ n)) = 0
 
-lemma derivedNilpotentOn_union {X : Scheme.{u}} {E : Complex X} (f : End E) (U V : X.Opens)
+lemma derivedNilpotentOn_union {X : Scheme.{u}} {E : CochainComplex X.Modules ℤ} (f : End E)
+    (U V : X.Opens)
     (hU : DerivedNilpotentOn f U) (hV : DerivedNilpotentOn f V) :
     DerivedNilpotentOn f (U ⊔ V) := by
   obtain ⟨n, hn⟩ := hU
   obtain ⟨m, hm⟩ := hV
-  have hU' : (toDerived U.toScheme).map ((restrict U.ι).map (f ^ (n+m))) = 0 := by
+  have hU' : (DerivedCategory.Q (C := U.toScheme.Modules)).map ((restrict U.ι).map (f ^ (n+m)))
+    = 0 := by
     rw [pow_add, End.mul_def, Functor.map_comp, Functor.map_comp, hn, comp_zero]
-  have hV' : (toDerived V.toScheme).map ((restrict V.ι).map (f ^ (n+m))) = 0 := by
+  have hV' : (DerivedCategory.Q (C := V.toScheme.Modules)).map ((restrict V.ι).map (f ^ (n+m)))
+    = 0 := by
     rw [pow_add, End.mul_def, Functor.map_comp, Functor.map_comp, hm, zero_comp]
   refine ⟨(n+m)+(n+m), ?_⟩
   rw [pow_add, End.mul_def]
   exact toDerived_restrict_comp_eq_zero_on_openUnion (f ^ (n+m)) (f ^ (n+m)) U V hU' hV' hU'
 
-lemma derivedNilpotentOn_bot {X : Scheme.{u}} {E : Complex X} (f : End E) :
+lemma derivedNilpotentOn_bot {X : Scheme.{u}} {E : CochainComplex X.Modules ℤ} (f : End E) :
     DerivedNilpotentOn f ⊥ := by
   have hE : IsZero ((restrict (⊥ : X.Opens).ι).obj E) := by
     rw [IsZero.iff_id_eq_zero]
@@ -234,11 +246,11 @@ lemma derivedNilpotentOn_bot {X : Scheme.{u}} {E : Complex X} (f : End E) :
       intro x
       exact False.elim x.property
     exact hz.eq_of_src _ _
-  exact ⟨0, ((toDerived (⊥ : X.Opens).toScheme).map_isZero hE).eq_of_src _ _⟩
+  exact ⟨0, ((DerivedCategory.Q (C := (⊥ : X.Opens).toScheme.Modules)).map_isZero hE).eq_of_src _ _⟩
 
 /-- Genuine finite-cover nilpotence; local nullity alone is never substituted
 for global nullity. The finite MV induction supplies a new exponent. -/
-lemma derivedNilpotentOn_finite_union {X : Scheme.{u}} {E : Complex X} (f : End E)
+lemma derivedNilpotentOn_finite_union {X : Scheme.{u}} {E : CochainComplex X.Modules ℤ} (f : End E)
     (s : Finset X.Opens) (hs : ∀ U ∈ s, DerivedNilpotentOn f U) :
     DerivedNilpotentOn f (s.sup id) := by
   classical

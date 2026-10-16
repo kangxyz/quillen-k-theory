@@ -13,6 +13,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalCofinality
 /-! # Original K-zero image reflection on a genuine covering pair -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 

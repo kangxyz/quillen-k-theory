@@ -11,6 +11,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.GrothendieckComparison
 category and literal PerfectK, with its original open restriction. -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 
 

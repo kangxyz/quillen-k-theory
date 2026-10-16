@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.AlgebraicGeometry.PerfectComplexes.KTheory
 public import Quillen.Waldhausen.Fibration.Rows.OppositeComplexJointInclusion
-public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFibration
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-!
 # Coherent actual cocylinders for strict and locally perfect complexes
@@ -21,6 +22,8 @@ No affine, quasi-compact, termwise-quasicoherent, or global-bound hypothesis is
 needed for these structural constructions. No K-equivalence is asserted here.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.Waldhausen
 

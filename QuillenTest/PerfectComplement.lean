@@ -7,7 +7,9 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PerfectComplement
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Original perfect-target, empty-open and projection consumers -/
 @[expose] public section
 
@@ -22,6 +24,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace QuillenTest.PerfectComplement
 open Quillen.PerfectComplexes.Affine
 attribute [local instance] HasDerivedCategory.standard
@@ -31,20 +34,22 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 quasicoherent single; no strict original source is required. -/
 theorem original_perfect_low_single_subsingleton {X : Scheme.{u}} [CompactSpace X]
     [IsAffineHom (pullback.diagonal (terminal.from X))]
-    (E : Complex X) (hE : locallyPerfect X E) :
+    (E : CochainComplex X.Modules ℤ) (hE : locallyPerfect X E) :
     ∃ c : ℤ, ∀ (M : X.Modules) [M.IsQuasicoherent], ∀ a : ℤ, a ≤ c →
-      Subsingleton ((toDerived X).obj E ⟶
-        (toDerived X).obj ((CochainComplex.singleFunctor X.Modules a).obj M)) := by
+      Subsingleton ((DerivedCategory.Q (C := X.Modules)).obj E ⟶
+        (DerivedCategory.Q (C := X.Modules)).obj ((CochainComplex.singleFunctor X.Modules a).obj M))
+          := by
   obtain ⟨c, hc⟩ := locallyPerfect_exists_uniform_low_single_vanishing E hE
   exact ⟨c, fun M _ a ha => ⟨fun φ ψ => (hc M a ha φ).trans (hc M a ha ψ).symm⟩⟩
 
 /-- Even an arbitrary all-sheaf complex on the empty open has an actual global
 strict retract; no nonempty ring or cover premise is added. -/
 theorem empty_open_original_global_strict_retract (R : CommRingCat.{u})
-    (E : Complex (⊥ : (Spec R).Opens).toScheme) :
-    ∃ Q : Complex (Spec R), strictPerfect (Spec R) Q ∧
-      Nonempty (Retract ((toDerived (⊥ : (Spec R).Opens).toScheme).obj E)
-        ((toDerived (⊥ : (Spec R).Opens).toScheme).obj ((restrict (⊥ : (Spec R).Opens).ι).obj Q)))
+    (E : CochainComplex (⊥ : (Spec R).Opens).toScheme.Modules ℤ) :
+    ∃ Q : CochainComplex (Spec R).Modules ℤ, strictPerfect (Spec R) Q ∧
+      Nonempty (Retract ((DerivedCategory.Q (C := (⊥ : (Spec R).Opens).toScheme.Modules)).obj E)
+        ((DerivedCategory.Q (C := (⊥ : (Spec R).Opens).toScheme.Modules)).obj
+          ((restrict (⊥ : (Spec R).Opens).ι).obj Q)))
           := by
   apply locallyPerfect_exists_global_strict_retract R ⊥ (by simp) E
   intro x
@@ -53,14 +58,18 @@ theorem empty_open_original_global_strict_retract (R : CommRingCat.{u})
 /-- The section is a section of the literal original f after associated sheaves,
 restriction and the original derived target identification. -/
 theorem original_projection_section (R : CommRingCat.{u}) (W : (Spec R).Opens)
-    (hW : IsCompact (W : Set (Spec R))) (E : Complex W.toScheme) (hE : locallyPerfect W.toScheme E)
+    (hW : IsCompact (W : Set (Spec R))) (E : CochainComplex W.toScheme.Modules ℤ)
+      (hE : locallyPerfect W.toScheme E)
       :
     ∃ (K P : ModuleComplex R) (_ : moduleStrictPerfect R P) (f : P ⟶ K)
-      (eK : (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj K)) ≅
-        (toDerived W.toScheme).obj E)
-      (σ : (toDerived W.toScheme).obj E ⟶
-        (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj P))),
-      σ ≫ (toDerived W.toScheme).map ((restrict W.ι).map ((associatedComplex R).map f)) ≫ eK.hom = 𝟙
+      (eK : (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+        ((restrict W.ι).obj ((associatedComplex R).obj K)) ≅
+        (DerivedCategory.Q (C := W.toScheme.Modules)).obj E)
+      (σ : (DerivedCategory.Q (C := W.toScheme.Modules)).obj E ⟶
+        (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+          ((restrict W.ι).obj ((associatedComplex R).obj P))),
+      σ ≫ (DerivedCategory.Q (C := W.toScheme.Modules)).map
+        ((restrict W.ι).map ((associatedComplex R).map f)) ≫ eK.hom = 𝟙
         _ := by
   obtain ⟨K, P, hP, f, eK, _, σ, hσ⟩ :=
     locallyPerfect_exists_original_strict_derived_retract R W hW E hE
@@ -68,12 +77,15 @@ theorem original_projection_section (R : CommRingCat.{u}) (W : (Spec R).Opens)
 
 /-- The original approximation projection detects every outgoing derived map. -/
 theorem original_projection_precomposition_injective (R : CommRingCat.{u}) (W : (Spec R).Opens)
-    (hW : IsCompact (W : Set (Spec R))) (E : Complex W.toScheme) (hE : locallyPerfect W.toScheme E)
+    (hW : IsCompact (W : Set (Spec R))) (E : CochainComplex W.toScheme.Modules ℤ)
+      (hE : locallyPerfect W.toScheme E)
       :
     ∃ (K P : ModuleComplex R) (_ : moduleStrictPerfect R P) (f : P ⟶ K)
-      (eK : (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj K)) ≅
-        (toDerived W.toScheme).obj E),
-      ∀ L : Derived W.toScheme, Function.Injective (fun φ : (toDerived W.toScheme).obj E ⟶ L =>
+      (eK : (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+        ((restrict W.ι).obj ((associatedComplex R).obj K)) ≅
+        (DerivedCategory.Q (C := W.toScheme.Modules)).obj E),
+      ∀ L : DerivedCategory W.toScheme.Modules, Function.Injective
+        (fun φ : (DerivedCategory.Q (C := W.toScheme.Modules)).obj E ⟶ L =>
         originalApproximationHom R W.ι f eK ≫ φ) := by
   obtain ⟨K, P, hP, f, eK, _, σ, hσ⟩ :=
     locallyPerfect_exists_original_strict_derived_retract R W hW E hE
@@ -84,16 +96,20 @@ theorem original_projection_precomposition_injective (R : CommRingCat.{u}) (W : 
 /-- The explicit actual complex complement is strict, the ambient model is
 strict, and the inverse derived isomorphism preserves the actual chain projection. -/
 theorem actual_complement_inverse_projection (R : CommRingCat.{u}) (W : (Spec R).Opens)
-    (hW : IsCompact (W : Set (Spec R))) (E : Complex W.toScheme) (hE : locallyPerfect W.toScheme E)
+    (hW : IsCompact (W : Set (Spec R))) (E : CochainComplex W.toScheme.Modules ℤ)
+      (hE : locallyPerfect W.toScheme E)
       :
     ∃ (K P : ModuleComplex R) (_ : moduleStrictPerfect R P) (f : P ⟶ K)
-      (eK : (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj K)) ≅
-        (toDerived W.toScheme).obj E) (C : Complex W.toScheme),
+      (eK : (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+        ((restrict W.ι).obj ((associatedComplex R).obj K)) ≅
+        (DerivedCategory.Q (C := W.toScheme.Modules)).obj E)
+          (C : CochainComplex W.toScheme.Modules ℤ),
       strictPerfect W.toScheme C ∧
-      ∃ e : (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj P)) ≅
-          (toDerived W.toScheme).obj (C ⊞ E),
+      ∃ e : (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+        ((restrict W.ι).obj ((associatedComplex R).obj P)) ≅
+          (DerivedCategory.Q (C := W.toScheme.Modules)).obj (C ⊞ E),
         e.inv ≫ originalApproximationHom R W.ι f eK =
-          (toDerived W.toScheme).map (biprod.snd : C ⊞ E ⟶ E) := by
+          (DerivedCategory.Q (C := W.toScheme.Modules)).map (biprod.snd : C ⊞ E ⟶ E) := by
   obtain ⟨K, P, n, hP, f, eK, _, _, hC, _, e, he⟩ :=
     locallyPerfect_exists_actual_perfect_complement R W hW E hE 0
   refine ⟨K, P, hP, f, eK, _, hC, e, ?_⟩
@@ -102,7 +118,8 @@ theorem actual_complement_inverse_projection (R : CommRingCat.{u}) (W : (Spec R)
 /-- The actual vector-bundle complement is concentrated in term degree n+1,
 recording the sign of the genuine inverse rotation. -/
 theorem original_complement_term_degree (R : CommRingCat.{u}) (W : (Spec R).Opens)
-    (hW : IsCompact (W : Set (Spec R))) (E : Complex W.toScheme) (hE : locallyPerfect W.toScheme E)
+    (hW : IsCompact (W : Set (Spec R))) (E : CochainComplex W.toScheme.Modules ℤ)
+      (hE : locallyPerfect W.toScheme E)
     (cutoff : ℤ) :
     ∃ (K P : ModuleComplex R) (n : ℤ) (_ : moduleStrictPerfect R P) (f : P ⟶ K),
       n ≤ cutoff ∧

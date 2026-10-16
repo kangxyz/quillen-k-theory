@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Homology.KProjectiveRepresentatives
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
 public import Mathlib.Algebra.Homology.DerivedCategory.Fractions
 
 /-!

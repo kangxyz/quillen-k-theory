@@ -19,6 +19,8 @@ calculation; it does not assert the Laurent-unit boundary identity.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 noncomputable section

@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGammaCarrierComparisons
-public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PlusQuasiIso
+public import Aglib.AlgebraicGeometry.Modules.Complex.PlusQuasiIso
 
 /-! # Typed arbitrary precomposition of the actual original right contraction weak law -/
 @[expose] public section

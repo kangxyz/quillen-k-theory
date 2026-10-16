@@ -27,6 +27,8 @@ flatness, affine-scheme, regularity or noetherian hypothesis is used.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 noncomputable section

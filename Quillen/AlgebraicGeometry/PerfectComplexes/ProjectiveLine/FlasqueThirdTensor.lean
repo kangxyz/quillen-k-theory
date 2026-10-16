@@ -16,6 +16,8 @@ public import Aglib.AlgebraicGeometry.Cohomology.Godement.Section.Span
 
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open CategoryTheory.ExactCategory
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -41,7 +43,7 @@ instance quotientTensor_preservesFiniteColimits (R : CommRingCat.{u}) :
 
 /-- The prescribed original order K tensor Q, retaining each original chain map. -/
 def rightQRaw (R : CommRingCat.{u}) :
-    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ Complex (twoChartLine R) :=
+    FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ CochainComplex (twoChartLine R).Modules ℤ :=
   (FlasqueBoundedBelow.objects (twoChartLine R)).ι ⋙
     (quotientTensor R).mapHomologicalComplex (.up ℤ)
 
@@ -91,7 +93,8 @@ instance rightQ_additive (R : CommRingCat.{u}) : (rightQ R).Additive where
 /-- Exact finite-line tensor preserves the actual inherited original sequences. -/
 def rightQExactFunctor (R : CommRingCat.{u}) : ExactFunctor
     (FlasqueDiagonal.modelExactStructure R)
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (twoChartLine R).Modules ℤ))
       (BoundedBelow.objects (twoChartLine R))) where
   toFunctor := rightQ R
   map_conflation S hS := by

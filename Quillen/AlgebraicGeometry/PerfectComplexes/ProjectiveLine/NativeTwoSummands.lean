@@ -22,6 +22,8 @@ nonnegative degree, including zero. Bijectivity is not asserted.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.Products
 open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
 

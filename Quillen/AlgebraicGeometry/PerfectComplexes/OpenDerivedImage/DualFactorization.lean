@@ -10,7 +10,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Closur
 public import Quillen.AlgebraicGeometry.PerfectComplexes.KernelClosure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.HomotopyPullback
 public import Quillen.Algebra.Homology.HomotopyPullbackQuasiIso
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Literal dual weak-arrow factorization on the original saturated image
 
 The only geometric input is an actual derived roof between globally perfect
@@ -31,6 +33,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.OpenDerivedImage
 attribute [local instance] HasDerivedCategory.standard
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
@@ -39,9 +42,9 @@ variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 split epis and genuine kernel membership in the corresponding source/target.
 The input roof property concerns only globally perfect models. -/
 theorem exists_dual_factorization (hroof : HasDerivedRoofs j)
-    (P : Complex X) (hP : locallyPerfect X P) (B B' : Complex U)
+    (P : CochainComplex X.Modules ℤ) (hP : locallyPerfect X P) (B B' : CochainComplex U.Modules ℤ)
     (hB' : complexObjects j B') (w : (restrict j).obj P ⟶ B) [QuasiIso w] (b : B' ⟶ B) :
-    ∃ (C : Complex X) (D : Complex U)
+    ∃ (C : CochainComplex X.Modules ℤ) (D : CochainComplex U.Modules ℤ)
       (c : C ⟶ P) (d : D ⟶ B) (u : (restrict j).obj C ⟶ D) (v : B' ⟶ D),
       locallyPerfect X C ∧ complexObjects j D ∧ QuasiIso u ∧ QuasiIso v ∧
       u ≫ d = (restrict j).map c ≫ w ∧ v ≫ d = b ∧
@@ -73,8 +76,8 @@ theorem exists_dual_factorization (hroof : HasDerivedRoofs j)
   have hu : QuasiIso u := quasiIso_homotopyPullbackLift q s
     ((restrict j).map cA ≫ p) ((restrict j).map c ≫ w) H
   have hv : QuasiIso v := quasiIso_homotopyPullbackLift q s t b H₂
-  have hD : complexObjects j D := ⟨C, hC, ⟨asIso ((toDerived U).map u)⟩⟩
-  have hB : complexObjects j B := ⟨P, hP, ⟨asIso ((toDerived U).map w)⟩⟩
+  have hD : complexObjects j D := ⟨C, hC, ⟨asIso ((DerivedCategory.Q (C := U.Modules)).map u)⟩⟩
+  have hB : complexObjects j B := ⟨P, hP, ⟨asIso ((DerivedCategory.Q (C := U.Modules)).map w)⟩⟩
   have hc (i : ℤ) : IsSplitEpi (c.f i) :=
     IsSplitEpi.mk' (homotopyPullbackSndSplitEpi a (𝟙 P) i)
   have hd (i : ℤ) : IsSplitEpi (d.f i) :=

@@ -129,14 +129,16 @@ end
 /-- The left forget identity is literally identity on every original evaluated complex. -/
 theorem boundedFlatAffineSupportedReindexEvaluation_forget_eqToHom
     (s : BoundedFlatAffineSupportedSections j) :
-    eqToHom (congrArg (fun K : BoundedFlatAffineSupportedSections j ⥤ Complex (Spec S) ↦ K.obj s)
+    eqToHom (congrArg (fun K : BoundedFlatAffineSupportedSections j ⥤ CochainComplex
+      (Spec S).Modules ℤ ↦ K.obj s)
       (boundedFlatAffineSupportedReindexEvaluation_forget j j' f l h)) =
       𝟙 (((boundedFlatAffineOriginalEvaluation S).obj
         ((boundedFlatAffineSectionsMap f).obj s.obj)).obj) := rfl
 /-- The inverse right forget identity is identity on the original pulled-back complex. -/
 theorem boundedFlatAffineSupportedEvaluationPullback_forget_eqToHom
     (s : BoundedFlatAffineSupportedSections j) :
-    eqToHom (congrArg (fun K : BoundedFlatAffineSupportedSections j ⥤ Complex (Spec S) ↦ K.obj s)
+    eqToHom (congrArg (fun K : BoundedFlatAffineSupportedSections j ⥤ CochainComplex
+      (Spec S).Modules ℤ ↦ K.obj s)
       (boundedFlatAffineSupportedEvaluationPullback_forget j j' f l h).symm) =
       𝟙 (((boundedFlatPerfectPullback (Spec.map f)).obj
         ((boundedFlatAffineOriginalEvaluation R).obj s.obj)).obj) := rfl

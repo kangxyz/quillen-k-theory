@@ -21,8 +21,9 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
 namespace Quillen.PerfectComplexes.OpenHomotopyGluing
 variable {X : Scheme.{u}} (U V : X.Opens)
-  {K : Complex (pullback U.ι V.ι)} {A : Complex U.toScheme} {B : Complex V.toScheme}
-  {L : Complex X}
+  {K : CochainComplex (pullback U.ι V.ι).Modules ℤ} {A : CochainComplex U.toScheme.Modules ℤ}
+    {B : CochainComplex V.toScheme.Modules ℤ}
+  {L : CochainComplex X.Modules ℤ}
   (α : K ⟶ (restrict (pullback.fst U.ι V.ι)).obj A)
   (β : K ⟶ (restrict (pullback.snd U.ι V.ι)).obj B)
   (p : A ⟶ (restrict U.ι).obj L) (q : B ⟶ (restrict V.ι).obj L)
@@ -76,7 +77,7 @@ an original perfect source with strict triangles; no target-map weakness is requ
 theorem exists_perfect_glue_with_target_map (hUV : U ⊔ V = ⊤)
     (hA : locallyPerfect U.toScheme A) (hB : locallyPerfect V.toScheme B)
     [QuasiIso α] [QuasiIso β] :
-    ∃ P : Complex X, locallyPerfect X P ∧
+    ∃ P : CochainComplex X.Modules ℤ, locallyPerfect X P ∧
       ∃ (u : A ⟶ (restrict U.ι).obj P) (v : B ⟶ (restrict V.ι).obj P) (d : P ⟶ L),
         QuasiIso u ∧ QuasiIso v ∧
         u ≫ (restrict U.ι).map d = p ∧ v ≫ (restrict V.ι).map d = q :=
@@ -91,7 +92,7 @@ The only compatibility input is the displayed chain homotopy on the actual overl
 theorem exists_perfect_glue_over_target (hUV : U ⊔ V = ⊤)
     (hA : locallyPerfect U.toScheme A) (hB : locallyPerfect V.toScheme B)
     [QuasiIso α] [QuasiIso β] [QuasiIso p] [QuasiIso q] :
-    ∃ P : Complex X, locallyPerfect X P ∧
+    ∃ P : CochainComplex X.Modules ℤ, locallyPerfect X P ∧
       ∃ (u : A ⟶ (restrict U.ι).obj P) (v : B ⟶ (restrict V.ι).obj P) (d : P ⟶ L),
         QuasiIso u ∧ QuasiIso v ∧ QuasiIso d ∧
         u ≫ (restrict U.ι).map d = p ∧ v ≫ (restrict V.ι).map d = q :=

@@ -6,7 +6,8 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.SplitFactorization
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
+public import Quillen.AlgebraicGeometry.PerfectComplexes.SplitKTheory
 public import Quillen.Waldhausen.Approximation.SplitKEquivalence
 
 /-!
@@ -23,6 +24,8 @@ categories. It does not identify strict-perfect with locally-perfect
 K-theory, nor impose uniform Tor-amplitude on non-quasi-compact schemes.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 noncomputable section
 

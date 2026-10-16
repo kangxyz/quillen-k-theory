@@ -9,6 +9,7 @@ module
 public import Quillen.AlgebraicGeometry.Scheme.GTheory
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.IdealLocalization
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
 /-! Public affine closed–open G-localization for an arbitrary ideal. -/
 @[expose] public section
 
@@ -27,7 +28,7 @@ variable (R : CommRingCat.{u}) [IsNoetherianRing R] (I : Ideal R)
 
 /-- The actual affine closed subscheme Spec(R/I). -/
 abbrev closedScheme := Spec
-  (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R I)
+  (Pushforward.ClosedImmersion.Ideal.closedRing R I)
 
 /-- The actual open complement of V(I), which need not be affine. -/
 abbrev openScheme :=

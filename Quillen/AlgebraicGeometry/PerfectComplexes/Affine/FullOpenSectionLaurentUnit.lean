@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionUnit
-public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Units
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Units
 public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 
 /-!

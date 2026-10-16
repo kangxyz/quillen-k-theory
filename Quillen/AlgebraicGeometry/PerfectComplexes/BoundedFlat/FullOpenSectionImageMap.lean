@@ -18,6 +18,8 @@ and the original bounded-flat representative. Arbitrary coefficient arrows are
 allowed; compactness is proved for their actual pulled-back opens.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 noncomputable section
 open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen.AlgebraicGrothendieck

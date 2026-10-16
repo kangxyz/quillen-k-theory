@@ -9,6 +9,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.OverQArrows
 public import Quillen.Localization.Serre.KernelPushoutComparison
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-! # Base change for the auxiliary kernel categories -/
 @[expose] public section
@@ -54,7 +55,8 @@ theorem span_naturality_of_pullback {X Y X' Y' : C}
 end Quillen.Q
 
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
 
 @[reassoc (attr := simp)]

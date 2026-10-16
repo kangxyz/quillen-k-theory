@@ -7,7 +7,7 @@ module
 
 public import Quillen.Topology.Prespectrum.StableStabilization
 public import Quillen.Topology.Prespectrum.TelescopeStableColimit
-public import Quillen.CategoryTheory.Limits.SequentialIsoColimit
+public import Aglib.CategoryTheory.Limits.Shapes.SequentialSystem.IsoColimit
 public import Quillen.Topology.Path.Separation
 
 /-!
@@ -80,7 +80,7 @@ instance loopTailStableDiagram_succ_isIso (d : ℤ) (n : ℕ) :
 /-- The comparison is assembled from the actual initial-stage and telescope-colimit maps. -/
 def loopTailReplacementStableHomotopyIso (d : ℤ) :
     stableHomotopyGroup E d ≅ stableHomotopyGroup (loopTailReplacement E) d :=
-  (SequentialIsoColimit.colimitIsoOfSucc
+  (SequentialSystem.colimitIsoOfSucc
     (Telescope.stageStableDiagram (loopTailIterate E) (loopTailTransition E) d)).symm ≪≫
       Telescope.stableColimitIso (loopTailIterate E) (loopTailTransition E) d
 
@@ -90,11 +90,11 @@ theorem loopTailReplacementStableHomotopyIso_hom (d : ℤ) :
     (loopTailReplacementStableHomotopyIso E d).hom =
       (stableHomotopyFunctor d).map (loopTailReplacementInclusion E) := by
   let D := Telescope.stageStableDiagram (loopTailIterate E) (loopTailTransition E) d
-  have hi : (SequentialIsoColimit.colimitIsoOfSucc D).inv = colimit.ι D 0 := by
-    apply (cancel_mono (SequentialIsoColimit.colimitIsoOfSucc D).hom).mp
-    rw [Iso.inv_hom_id, SequentialIsoColimit.ι_colimitIsoOfSucc_hom]
+  have hi : (SequentialSystem.colimitIsoOfSucc D).inv = colimit.ι D 0 := by
+    apply (cancel_mono (SequentialSystem.colimitIsoOfSucc D).hom).mp
+    rw [Iso.inv_hom_id, SequentialSystem.ι_colimitIsoOfSucc_hom]
     rfl
-  change (SequentialIsoColimit.colimitIsoOfSucc D).inv ≫
+  change (SequentialSystem.colimitIsoOfSucc D).inv ≫
     (Telescope.stableColimitIso (loopTailIterate E) (loopTailTransition E) d).hom = _
   rw [hi]
   exact Telescope.stableColimitIso_ι_hom (loopTailIterate E) (loopTailTransition E) d 0

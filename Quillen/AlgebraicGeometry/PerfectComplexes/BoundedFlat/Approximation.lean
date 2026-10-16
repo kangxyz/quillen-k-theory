@@ -5,11 +5,13 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Homology
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Cylinder
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RelativeFlatFactorization
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Replacement
 public import Quillen.Waldhausen.Approximation.Basic
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-!
 # Genuine approximation by the bounded-flat perfect model
@@ -22,6 +24,8 @@ mapping-cone-to-quotient quasi-isomorphism. Quasi-compactness supplies the
 uniform cohomology bound; no approximation or K-equivalence is assumed.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.CochainComplex
 
@@ -65,7 +69,7 @@ theorem boundedFlatPerfect_relative_factorization_of_bound {X : Scheme.{u}}
   let i' : K ⟶ M' := ObjectProperty.homMk i
   let p' : (boundedFlatPerfectInclusion X).obj M' ⟶ L := ObjectProperty.homMk p
   refine ⟨M', i', p', ?_, hp, ?_⟩
-  · exact (ExactSubcategory.inflation_iff (abelianExactStructure (Complex X))
+  · exact (ExactSubcategory.inflation_iff (abelianExactStructure (CochainComplex X.Modules ℤ))
       (boundedFlatPerfect X) i').mpr ⟨Q, ⟨hQp, ⟨b + 1, hbQ⟩, hQflat⟩, q, w, hS⟩
   · apply ObjectProperty.hom_ext
     change i ≫ (p₀ ≫ L.obj.ιTruncLE b) = f.hom

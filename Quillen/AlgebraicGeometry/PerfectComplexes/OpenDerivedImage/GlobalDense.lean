@@ -7,7 +7,9 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalDensity
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Dense
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-!
 # Genuine global qcqs density in the original derived image
 
@@ -19,6 +21,8 @@ unchanged perfect-complex category. The complement itself uses no roof premise.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 
@@ -28,6 +32,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.OpenDerivedImage
 open Waldhausen
 attribute [local instance] HasDerivedCategory.standard Abelian.hasFiniteBiproducts
@@ -36,11 +41,12 @@ variable {U X : Scheme.{u}} [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpa
 
 /-- Genuine global qcqs complement geometry supplies the original saturated
 image complement, before imposing any derived morphism roof hypothesis. -/
-theorem exists_global_perfect_complement (E : Complex U) (hE : locallyPerfect U E) :
-    ∃ C : Complex U, locallyPerfect U C ∧ complexObjects j (C ⊞ E) := by
+theorem exists_global_perfect_complement (E : CochainComplex U.Modules ℤ)
+    (hE : locallyPerfect U E) :
+    ∃ C : CochainComplex U.Modules ℤ, locallyPerfect U C ∧ complexObjects j (C ⊞ E) := by
   obtain ⟨P, C, hP, hC, ⟨e⟩⟩ :=
     locallyPerfect_exists_global_perfect_complement_of_openImmersion j E hE
-  exact ⟨C, hC, P, hP, ⟨e ≪≫ (toDerived U).mapIso (biprod.braiding E C)⟩⟩
+  exact ⟨C, hC, P, hP, ⟨e ≪≫ (DerivedCategory.Q (C := U.Modules)).mapIso (biprod.braiding E C)⟩⟩
 
 /-- Actual chosen coproduct density for the original perfect category. -/
 theorem global_complement [HasBinaryCoproducts (Perfect U)] (A : Perfect U) :

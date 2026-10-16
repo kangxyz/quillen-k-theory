@@ -15,13 +15,11 @@ classes and the original object generators and conflation relations. -/
 
 open CategoryTheory.ExactCategory
 
-
 noncomputable section
 universe u v
-open CategoryTheory CategoryTheory.Limits Quillen
+open CategoryTheory CategoryTheory.Limits
 namespace QuillenTest.GrothendieckComparison
 
-open Quillen
 variable {C D : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   [Category.{v} D] [Preadditive D] [HasFiniteBiproducts D]
   (E : ExactStructure C) (ED : ExactStructure D)
@@ -64,7 +62,8 @@ theorem actual_kZero_hom_ext {A : Type*} [Group A] (f g : E.K 0 →* A)
   exact DFunLike.congr_fun he a
 
 /-- The bundled natural-isomorphism triangle holds on arbitrary genuine K₀ elements. -/
-theorem bundled_inverse_triangle (B : SmallExactCategory.{u}) (x : B.exactStructure.K 0) :
+theorem bundled_inverse_triangle (B : SmallExactCategory.{u})
+    (x : B.exactStructure.K 0) :
     (SmallExactCategory.grothendieckKZeroIso.hom.app B)
       ((SmallExactCategory.grothendieckKZeroIso.inv.app B) x) = x := by
   exact DFunLike.congr_fun B.exactStructure.grothendieckToKZero_comp_retraction x

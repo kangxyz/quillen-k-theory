@@ -10,7 +10,7 @@ public import Aglib.AlgebraicGeometry.Cohomology.Godement.Contraction
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OriginalLineContractionComplexes
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.Tensor
 public import Aglib.CategoryTheory.NatTrans.Unit
-public import Aglib.AlgebraicGeometry.Cohomology.Functoriality.PlusQuasiIso
+public import Aglib.AlgebraicGeometry.Modules.Complex.PlusQuasiIso
 
 /-! # Natural weak original line contractions after Godement totalization
 
@@ -69,17 +69,28 @@ def originalLeftLineGodementContractionMap :=
 def originalRightLineGodementContractionMap :=
   godementContractionMap _ _ (originalRightLineContractionIso R)
 
+private theorem contractionWeak_named
+    {X : Scheme.{u}} (F : X.Modules ⥤ X.Modules) [F.Additive] (E : X.Modules)
+    [IsFiniteLocallyFree X E] (e : F ⋙ moduleTensorLeftFunctor X E ≅ 𝟭 X.Modules)
+    (α : godementTotalPlus X ⟶ godementContractionResolved X F E)
+    (hα : α = godementContractionMap F E e) (K : CochainComplex.Plus X.Modules) :
+    QuasiIso (α.app K).hom := by
+  subst α
+  exact godementContractionMap_quasiIso F E e K
+
 /-- The actual original left comparison is weak on every Plus input, including zero-ring inputs.
 -/
 theorem originalLeftLineGodementContractionMap_quasiIso
     (K : CochainComplex.Plus (twoChartLine R).Modules) :
     QuasiIso ((originalLeftLineGodementContractionMap R).app K).hom :=
-  godementContractionMap_quasiIso _ _ (originalLeftLineContractionIso R) K
+  contractionWeak_named _ _ (originalLeftLineContractionIso R)
+    (originalLeftLineGodementContractionMap R) rfl K
 
 /-- The actual original right comparison is weak on every Plus input. -/
 theorem originalRightLineGodementContractionMap_quasiIso
     (K : CochainComplex.Plus (twoChartLine R).Modules) :
     QuasiIso ((originalRightLineGodementContractionMap R).app K).hom :=
-  godementContractionMap_quasiIso _ _ (originalRightLineContractionIso R) K
+  contractionWeak_named _ _ (originalRightLineContractionIso R)
+    (originalRightLineGodementContractionMap R) rfl K
 
 end AlgebraicGeometry.Scheme.ProjectiveLine

@@ -10,6 +10,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.FiniteFlatPushforwardNa
 /-! Consumers of actual strict-perfect finite flat direct image and its K-comparison. -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 
 noncomputable section

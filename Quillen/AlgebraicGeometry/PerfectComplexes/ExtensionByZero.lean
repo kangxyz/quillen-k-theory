@@ -25,7 +25,7 @@ namespace Quillen.PerfectComplexes
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 /-- Apply genuine module-sheaf extension by zero in each original cochain degree. -/
-def extensionByZero : Complex U ⥤ Complex X :=
+def extensionByZero : CochainComplex U.Modules ℤ ⥤ CochainComplex X.Modules ℤ :=
   (AlgebraicGeometry.Scheme.Modules.extensionByZero j).mapHomologicalComplex (.up ℤ)
 
 instance extensionByZero_additive : (extensionByZero j).Additive := by
@@ -64,7 +64,7 @@ def extensionByZeroAdjunction : extensionByZero j ⊣ restrict j where
     exact (AlgebraicGeometry.Scheme.Modules.extensionByZeroRestrictAdjunction
       j).right_triangle_components (K.X n)
 
-instance extensionByZero_unit_app_isIso (K : Complex U) :
+instance extensionByZero_unit_app_isIso (K : CochainComplex U.Modules ℤ) :
     IsIso ((extensionByZeroAdjunction j).unit.app K) := by
   let : ∀ n, IsIso (((extensionByZeroAdjunction j).unit.app K).f n) := fun n =>
     inferInstanceAs (IsIso ((AlgebraicGeometry.Scheme.Modules.extensionByZeroRestrictAdjunction
@@ -79,38 +79,42 @@ def extensionByZeroRestrictIso : extensionByZero j ⋙ restrict j ≅ 𝟭 _ :=
   (asIso (extensionByZeroAdjunction j).unit).symm
 
 /-- A local chain map gives its actual global adjoint chain map. -/
-def extensionByZeroMap {K : Complex U} {L : Complex X} (f : K ⟶ (restrict j).obj L) :
+def extensionByZeroMap {K : CochainComplex U.Modules ℤ} {L : CochainComplex X.Modules ℤ}
+    (f : K ⟶ (restrict j).obj L) :
     (extensionByZero j).obj K ⟶ L :=
   ((extensionByZeroAdjunction j).homEquiv K L).symm f
 
 /-- The adjoint uses precisely the original mapped arrow followed by the original counit. -/
-theorem extensionByZeroMap_eq {K : Complex U} {L : Complex X}
+theorem extensionByZeroMap_eq {K : CochainComplex U.Modules ℤ} {L : CochainComplex X.Modules ℤ}
     (f : K ⟶ (restrict j).obj L) : extensionByZeroMap j f =
       (extensionByZero j).map f ≫ (extensionByZeroAdjunction j).counit.app L := rfl
 
 /-- Adjoint maps retain original source precomposition exactly. -/
 @[reassoc]
-theorem extensionByZeroMap_precomp {K K' : Complex U} {L : Complex X}
+theorem extensionByZeroMap_precomp {K K' : CochainComplex U.Modules ℤ}
+    {L : CochainComplex X.Modules ℤ}
     (a : K' ⟶ K) (f : K ⟶ (restrict j).obj L) :
     (extensionByZero j).map a ≫ extensionByZeroMap j f = extensionByZeroMap j (a ≫ f) :=
   ((extensionByZeroAdjunction j).homEquiv_naturality_left_symm a f).symm
 
 /-- Adjoint maps retain original target postcomposition exactly. -/
 @[reassoc]
-theorem extensionByZeroMap_postcomp {K : Complex U} {L L' : Complex X}
+theorem extensionByZeroMap_postcomp {K : CochainComplex U.Modules ℤ}
+    {L L' : CochainComplex X.Modules ℤ}
     (f : K ⟶ (restrict j).obj L) (b : L ⟶ L') :
     extensionByZeroMap j f ≫ b = extensionByZeroMap j (f ≫ (restrict j).map b) :=
   ((extensionByZeroAdjunction j).homEquiv_naturality_right_symm f b).symm
 
 /-- The original local map is recovered by the actual unit and restricted adjoint. -/
 @[reassoc (attr := simp)]
-theorem extensionByZeroMap_restrict {K : Complex U} {L : Complex X}
+theorem extensionByZeroMap_restrict {K : CochainComplex U.Modules ℤ}
+    {L : CochainComplex X.Modules ℤ}
     (f : K ⟶ (restrict j).obj L) :
     (extensionByZeroAdjunction j).unit.app K ≫ (restrict j).map (extensionByZeroMap j f) = f :=
   ((extensionByZeroAdjunction j).homEquiv K L).apply_symm_apply f
 
 /-- Restricting the actual counit gives an isomorphism of original complexes. -/
-instance restrict_extensionByZero_counit_isIso (L : Complex X) :
+instance restrict_extensionByZero_counit_isIso (L : CochainComplex X.Modules ℤ) :
     IsIso ((restrict j).map ((extensionByZeroAdjunction j).counit.app L)) := by
   let : ∀ n, IsIso (((restrict j).map ((extensionByZeroAdjunction j).counit.app L)).f n) := fun n =>
     inferInstanceAs (IsIso ((Scheme.Modules.restrictFunctor j).map
@@ -118,7 +122,7 @@ instance restrict_extensionByZero_counit_isIso (L : Complex X) :
   exact _root_.HomologicalComplex.Hom.isIso_of_components _
 
 /-- Actual extension by zero preserves all quasi-isomorphisms of sheaf complexes. -/
-instance extensionByZero_quasiIso {K L : Complex U} (f : K ⟶ L) [QuasiIso f] :
+instance extensionByZero_quasiIso {K L : CochainComplex U.Modules ℤ} (f : K ⟶ L) [QuasiIso f] :
     QuasiIso ((extensionByZero j).map f) := by
   let : (AlgebraicGeometry.Scheme.Modules.extensionByZero j).PreservesHomology :=
     Functor.preservesHomology_of_preservesMonos_and_cokernels _
@@ -126,7 +130,7 @@ instance extensionByZero_quasiIso {K L : Complex U} (f : K ⟶ L) [QuasiIso f] :
   infer_instance
 
 /-- Specified local homotopies give genuine global homotopies of the actual adjoint maps. -/
-def extensionByZeroMapHomotopy {K : Complex U} {L : Complex X}
+def extensionByZeroMapHomotopy {K : CochainComplex U.Modules ℤ} {L : CochainComplex X.Modules ℤ}
     {f g : K ⟶ (restrict j).obj L} (H : Homotopy f g) :
     Homotopy (extensionByZeroMap j f) (extensionByZeroMap j g) :=
   ((AlgebraicGeometry.Scheme.Modules.extensionByZero j).mapHomotopy H).compRight

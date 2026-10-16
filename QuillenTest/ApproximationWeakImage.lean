@@ -10,6 +10,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenWeakImage
 /-! # Actual weak-image and original relative-open comparison consumers -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 open Quillen.Waldhausen
 

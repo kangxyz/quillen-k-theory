@@ -9,6 +9,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Localization.Serre.AuxiliaryColimit
 public import Quillen.Localization.Serre.StructuredTransitionAssembly
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # Exact-map assembly from filtered stage equivalences to localization transitions
@@ -28,11 +29,12 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 variable
-  (E : ∀ (V : Quotient P) (A : QuotientAuxiliaryLift P V),
+  (E : ∀ (V : P.isoModSerre.Localization) (A : QuotientAuxiliaryLift P V),
     ContinuousMap.HomotopyEquiv
       (SSet.toTop.obj ((quotientAuxiliaryNerveDiagram P V).obj A))
       (SSet.toTop.obj (quotientAuxiliaryNerveCocone P V).pt))

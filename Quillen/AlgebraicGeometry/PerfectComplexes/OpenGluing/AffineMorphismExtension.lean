@@ -12,6 +12,9 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.ImmersionDerived
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Roofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.DerivedTarget
 public import Mathlib.AlgebraicGeometry.Morphisms.QuasiSeparated
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.RestrictionHom
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-! # Extending original derived morphisms across an affine chart
 
@@ -39,20 +42,23 @@ actual overlap roof, without changing the prescribed local derived source. -/
 lemma exists_perfect_target_glue_of_overlap_roof {X : Scheme.{u}}
     (U V : X.Opens) (hUV : U ⊔ V = ⊤)
     (hroof : OpenDerivedImage.HasDerivedRoofs (pullback.snd U.ι V.ι))
-    {A : Complex U.toScheme} {B : Complex V.toScheme} {L : Complex X}
+    {A : CochainComplex U.toScheme.Modules ℤ} {B : CochainComplex V.toScheme.Modules ℤ}
+      {L : CochainComplex X.Modules ℤ}
     (hA : locallyPerfect U.toScheme A) (hB : locallyPerfect V.toScheme B)
     (hL : locallyPerfect X L)
-    (e : (toDerived (pullback U.ι V.ι)).obj ((restrict (pullback.fst U.ι V.ι)).obj A) ≅
-      (toDerived (pullback U.ι V.ι)).obj ((restrict (pullback.snd U.ι V.ι)).obj B))
-    (φ : (toDerived U.toScheme).obj A ⟶
-      (toDerived U.toScheme).obj ((restrict U.ι).obj L)) :
-    ∃ (P : Complex X), locallyPerfect X P ∧
-      ∃ (u : (toDerived U.toScheme).obj A ≅
-          (toDerived U.toScheme).obj ((restrict U.ι).obj P)) (d : P ⟶ L),
-        u.hom ≫ (toDerived U.toScheme).map ((restrict U.ι).map d) = φ := by
+    (e : (DerivedCategory.Q (C := (pullback U.ι V.ι).Modules)).obj
+      ((restrict (pullback.fst U.ι V.ι)).obj A) ≅
+      (DerivedCategory.Q (C := (pullback U.ι V.ι).Modules)).obj
+        ((restrict (pullback.snd U.ι V.ι)).obj B))
+    (φ : (DerivedCategory.Q (C := U.toScheme.Modules)).obj A ⟶
+      (DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj L)) :
+    ∃ (P : CochainComplex X.Modules ℤ), locallyPerfect X P ∧
+      ∃ (u : (DerivedCategory.Q (C := U.toScheme.Modules)).obj A ≅
+          (DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj P)) (d : P ⟶ L),
+        u.hom ≫ (DerivedCategory.Q (C := U.toScheme.Modules)).map ((restrict U.ι).map d) = φ := by
   let a := pullback.fst U.ι V.ι
   let b := pullback.snd U.ι V.ι
-  let Q := toDerived (pullback U.ι V.ι)
+  let Q := DerivedCategory.Q (C := (pullback U.ι V.ι).Modules)
   let c := openSquareRestrictIso b a V.ι U.ι pullback.condition.symm
   let γ := e.inv ≫ restrictDerivedHom a φ ≫ Q.map (c.inv.app L)
   obtain ⟨B', q, p, hB', hq, hp⟩ :=
@@ -60,7 +66,7 @@ lemma exists_perfect_target_glue_of_overlap_roof {X : Scheme.{u}}
   change Q.map ((restrict b).map q) ≫ γ = Q.map ((restrict b).map p) at hp
   let e' := e ≪≫ (asIso (Q.map ((restrict b).map q))).symm
   have he' : restrictDerivedHom a φ =
-      e'.hom ≫ restrictDerivedHom b ((toDerived V.toScheme).map p) ≫
+      e'.hom ≫ restrictDerivedHom b ((DerivedCategory.Q (C := V.toScheme.Modules)).map p) ≫
         Q.map (c.hom.app L) := by
     rw [restrictDerivedHom_map]
     change _ = (e.hom ≫ inv (Q.map ((restrict b).map q))) ≫ _ ≫ _
@@ -70,7 +76,7 @@ lemma exists_perfect_target_glue_of_overlap_roof {X : Scheme.{u}}
     erw [CategoryTheory.Functor.map_id, Category.comp_id]
   obtain ⟨P, hP, u, v, d, hu, hv, he⟩ :=
     OpenHomotopyGluing.exists_perfect_glue_of_derived_target U V hUV hA hB'
-      e' φ ((toDerived V.toScheme).map p) he'
+      e' φ ((DerivedCategory.Q (C := V.toScheme.Modules)).map p) he'
   exact ⟨P, hP, u, d, hu⟩
 
 /-- A stabilized source extends over an affine attachment together with its
@@ -79,15 +85,16 @@ the original projection onto the unshifted summand. -/
 lemma exists_stabilized_target_extension_across_affine_chart {X : Scheme.{u}}
     [QuasiSeparatedSpace X] (U V : X.Opens) (hU : IsCompact (U : Set X))
     (hV : IsAffineOpen V) (hUV : U ⊔ V = ⊤)
-    {E : Complex U.toScheme} {L : Complex X}
+    {E : CochainComplex U.toScheme.Modules ℤ} {L : CochainComplex X.Modules ℤ}
     (hE : locallyPerfect U.toScheme E) (hL : locallyPerfect X L)
-    (φ : (toDerived U.toScheme).obj E ⟶
-      (toDerived U.toScheme).obj ((restrict U.ι).obj L)) :
-    ∃ (P : Complex X), locallyPerfect X P ∧
-      ∃ (u : (toDerived U.toScheme).obj (E ⊞ E⟦(1 : ℤ)⟧) ≅
-          (toDerived U.toScheme).obj ((restrict U.ι).obj P)) (d : P ⟶ L),
-        u.hom ≫ (toDerived U.toScheme).map ((restrict U.ι).map d) =
-          (toDerived U.toScheme).map (biprod.fst : E ⊞ E⟦(1 : ℤ)⟧ ⟶ E) ≫ φ := by
+    (φ : (DerivedCategory.Q (C := U.toScheme.Modules)).obj E ⟶
+      (DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj L)) :
+    ∃ (P : CochainComplex X.Modules ℤ), locallyPerfect X P ∧
+      ∃ (u : (DerivedCategory.Q (C := U.toScheme.Modules)).obj (E ⊞ E⟦(1 : ℤ)⟧) ≅
+          (DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj P)) (d : P ⟶ L),
+        u.hom ≫ (DerivedCategory.Q (C := U.toScheme.Modules)).map ((restrict U.ι).map d) =
+          (DerivedCategory.Q (C := U.toScheme.Modules)).map (biprod.fst : E ⊞ E⟦(1 : ℤ)⟧ ⟶ E)
+            ≫ φ := by
   let : CompactSpace U.toScheme := isCompact_iff_compactSpace.mp hU
   let : IsAffine V.toScheme := hV
   let a := pullback.fst U.ι V.ι
@@ -95,13 +102,15 @@ lemma exists_stabilized_target_extension_across_affine_chart {X : Scheme.{u}}
   obtain ⟨B, hB, ⟨eB⟩⟩ := exists_strict_stabilized_extension_into_affine b
     ((restrict a).obj E) (locallyPerfect_restrict a hE)
   have hA : locallyPerfect U.toScheme (E ⊞ E⟦(1 : ℤ)⟧) :=
-    (abelianExactStructure (Complex U.toScheme)).prop_biprod (locallyPerfect U.toScheme)
+    (abelianExactStructure (CochainComplex U.toScheme.Modules ℤ)).prop_biprod
+      (locallyPerfect U.toScheme)
       hE (locallyPerfect_shift hE 1)
-  let e := (toDerived (pullback U.ι V.ι)).mapIso (restrictStabilizationIso a E) ≪≫ eB.symm
+  let e := (DerivedCategory.Q (C := (pullback U.ι V.ι).Modules)).mapIso
+    (restrictStabilizationIso a E) ≪≫ eB.symm
   exact exists_perfect_target_glue_of_overlap_roof U V hUV
     (OpenDerivedImage.affine_hasDerivedRoofs_of_compact b) hA
     (locallyPerfect_of_strictPerfect hB) hL e
-    ((toDerived U.toScheme).map biprod.fst ≫ φ)
+    ((DerivedCategory.Q (C := U.toScheme.Modules)).map biprod.fst ≫ φ)
 
 /-- The original local derived source is an explicit summand of the extended
 source, and the global chain map restricts to the prescribed original morphism
@@ -109,17 +118,17 @@ on that same summand. -/
 lemma exists_retract_target_extension_across_affine_chart {X : Scheme.{u}}
     [QuasiSeparatedSpace X] (U V : X.Opens) (hU : IsCompact (U : Set X))
     (hV : IsAffineOpen V) (hUV : U ⊔ V = ⊤)
-    {E : Complex U.toScheme} {L : Complex X}
+    {E : CochainComplex U.toScheme.Modules ℤ} {L : CochainComplex X.Modules ℤ}
     (hE : locallyPerfect U.toScheme E) (hL : locallyPerfect X L)
-    (φ : (toDerived U.toScheme).obj E ⟶
-      (toDerived U.toScheme).obj ((restrict U.ι).obj L)) :
-    ∃ (P : Complex X), locallyPerfect X P ∧
-      ∃ (r : Retract ((toDerived U.toScheme).obj E)
-          ((toDerived U.toScheme).obj ((restrict U.ι).obj P))) (d : P ⟶ L),
-        r.i ≫ (toDerived U.toScheme).map ((restrict U.ι).map d) = φ := by
+    (φ : (DerivedCategory.Q (C := U.toScheme.Modules)).obj E ⟶
+      (DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj L)) :
+    ∃ (P : CochainComplex X.Modules ℤ), locallyPerfect X P ∧
+      ∃ (r : Retract ((DerivedCategory.Q (C := U.toScheme.Modules)).obj E)
+          ((DerivedCategory.Q (C := U.toScheme.Modules)).obj ((restrict U.ι).obj P))) (d : P ⟶ L),
+        r.i ≫ (DerivedCategory.Q (C := U.toScheme.Modules)).map ((restrict U.ι).map d) = φ := by
   obtain ⟨P, hP, u, d, hu⟩ :=
     exists_stabilized_target_extension_across_affine_chart U V hU hV hUV hE hL φ
-  let Q := toDerived U.toScheme
+  let Q := DerivedCategory.Q (C := U.toScheme.Modules)
   let r : Retract (Q.obj E) (Q.obj ((restrict U.ι).obj P)) :=
     { i := Q.map biprod.inl ≫ u.hom
       r := u.inv ≫ Q.map biprod.fst

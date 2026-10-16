@@ -5,7 +5,7 @@ Authors: kangxyz, Codex
 -/
 module
 
-public import Aglib.AlgebraicGeometry.Modules.BaseChange.Coefficients.Naturality
+public import Aglib.AlgebraicGeometry.BaseChange.Coefficients.Naturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCoherence
 public import Quillen.Topology.Prespectrum.HomotopySquareBoundary
 

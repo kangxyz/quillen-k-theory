@@ -5,8 +5,10 @@ Authors: kangxyz
 -/
 module
 
-public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.ZeroSection
-public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeGlobalBundle
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.ZeroSection
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeAffineBase
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeTwoSummands
+public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.NativeBaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPullback
 
 /-! # Actual affine chart and evaluation maps for the positive Bass row
@@ -127,6 +129,11 @@ instance positiveOpen_compactSpace : CompactSpace (positiveOpen R).toScheme :=
 
 instance overlapOpen_compactSpace : CompactSpace (overlapOpen R).toScheme :=
   (AlgebraicGeometry.Scheme.homeoOfIso (overlapOpenIso R)).compactSpace
+
+/-- Compactness of the overlap in its native chart-preimage presentation. -/
+instance affineNativeChartOverlap_compactSpace :
+    CompactSpace (affineNativeChart R false ⁻¹ᵁ positiveOpen R).toScheme :=
+  overlapOpen_compactSpace R
 
 theorem positiveOpen_isCompact :
     IsCompact (positiveOpen R : Set (nativeLineFunctor.obj (affineBase R)).obj) :=

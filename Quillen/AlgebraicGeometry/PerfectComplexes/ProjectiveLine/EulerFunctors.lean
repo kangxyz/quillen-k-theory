@@ -13,6 +13,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerSeq
 /-! # The literal Euler endpoint exact functors on strict-perfect coefficients -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
 
 noncomputable section
@@ -57,7 +59,7 @@ instance middle_finiteLocallyFree : IsFiniteLocallyFree (twoChartLine R) (sequen
 lemma tensor_strictPerfect_of_charts (M : (twoChartLine R).Modules)
     (e : ∀ b, M.restrict (lineChart R b) ≅
       SheafOfModules.unit (Spec (CommRingCat.of (Polynomial R))).ringCatSheaf)
-    (K : Complex (twoChartLine R)) (hK : strictPerfect (twoChartLine R) K) :
+    (K : CochainComplex (twoChartLine R).Modules ℤ) (hK : strictPerfect (twoChartLine R) K) :
     strictPerfect (twoChartLine R) ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft M).obj K)
       := by
   obtain ⟨⟨a, b, hab⟩, hf⟩ := hK
@@ -95,7 +97,7 @@ lemma middleEndpoint_strictPerfect (A : StrictPerfect (Spec R)) :
     (squareEndpoint_strictPerfect R A) (unitEndpoint_strictPerfect R A)
 
 /-- Strict boundedness supplies an actual term lower bound. -/
-lemma boundedBelow_of_strictPerfect {X : Scheme.{u}} {K : Complex X}
+lemma boundedBelow_of_strictPerfect {X : Scheme.{u}} {K : CochainComplex X.Modules ℤ}
     (hK : strictPerfect X K) : BoundedBelow.objects X K := by
   obtain ⟨a, b, hab⟩ := hK.1
   exact ⟨locallyPerfect_of_strictPerfect hK, a,
@@ -122,7 +124,8 @@ def endpointBoundedExactFunctor (M : (twoChartLine R).Modules)
     (hM : ∀ A, strictPerfect (twoChartLine R) ((endpointComplex R M).obj A)) :
     CategoryTheory.ExactCategory.ExactFunctor (strictExactStructure (Spec R))
       (CategoryTheory.ExactCategory.ExactSubcategory.exactStructure
-        (CategoryTheory.ExactCategory.abelianExactStructure (Complex (twoChartLine R)))
+        (CategoryTheory.ExactCategory.abelianExactStructure
+          (CochainComplex (twoChartLine R).Modules ℤ))
         (BoundedBelow.objects (twoChartLine R))) where
   toFunctor := endpointBounded R M hM
   map_conflation S hS := by

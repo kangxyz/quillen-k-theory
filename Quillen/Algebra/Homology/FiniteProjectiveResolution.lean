@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Aglib.Algebra.Category.ModuleCat.Finite
+public import Aglib.Algebra.Category.FGModuleCat.Basic
 public import Quillen.Resolution.Finite
 public import Mathlib.Algebra.Category.ModuleCat.ProjectiveDimension
 public import Mathlib.CategoryTheory.Abelian.Exact

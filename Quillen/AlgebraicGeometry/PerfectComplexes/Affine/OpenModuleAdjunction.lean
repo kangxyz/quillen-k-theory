@@ -9,6 +9,7 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.InjectivePushforwardAdjunction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenPushforwardCounit
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineInjectiveResolution
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-!
 # The original module adjunction over an affine open
@@ -42,7 +43,8 @@ def associatedSectionsComplexAdjunction (R : CommRingCat.{u}) :
     associatedComplex R ⊣ sectionsComplex R :=
   (tilde.adjunction (R := R)).mapHomologicalComplex (.up ℤ)
 
-lemma associatedSectionsComplexAdjunction_counit (R : CommRingCat.{u}) (J : Complex (Spec R)) :
+lemma associatedSectionsComplexAdjunction_counit (R : CommRingCat.{u})
+    (J : CochainComplex (Spec R).Modules ℤ) :
     (associatedSectionsComplexAdjunction R).counit.app J = associatedSectionsCounit R J := by
   ext n : 1
   rfl
@@ -55,26 +57,26 @@ def openModuleComplexAdjunction :
   (associatedSectionsComplexAdjunction R).comp (restrictPushforwardComplexAdjunction j)
 
 /-- The actual composite counit, without any derived-model replacement. -/
-def openModuleComplexCounit (I : Complex U) :
+def openModuleComplexCounit (I : CochainComplex U.Modules ℤ) :
     (restrict j).obj ((associatedComplex R).obj ((sectionsComplex R).obj
       ((pushforwardComplex j).obj I))) ⟶ I :=
   (restrict j).map (associatedSectionsCounit R ((pushforwardComplex j).obj I)) ≫
     (pushforwardComplexRestrictIso j).hom.app I
 
-lemma openModuleComplexAdjunction_counit (I : Complex U) :
+lemma openModuleComplexAdjunction_counit (I : CochainComplex U.Modules ℤ) :
     (openModuleComplexAdjunction R j).counit.app I = openModuleComplexCounit R j I := by
   rw [openModuleComplexAdjunction, Adjunction.comp_counit_app,
     associatedSectionsComplexAdjunction_counit, restrictPushforwardComplexAdjunction_counit]
   rfl
 
 /-- The genuine module transpose of the original open chain map. -/
-def openModuleChainAdjoint {P : ModuleComplex R} {I : Complex U}
+def openModuleChainAdjoint {P : ModuleComplex R} {I : CochainComplex U.Modules ℤ}
     (q : (restrict j).obj ((associatedComplex R).obj P) ⟶ I) :
     P ⟶ (sectionsComplex R).obj ((pushforwardComplex j).obj I) :=
   (openModuleComplexAdjunction R j).homEquiv P I q
 
 @[reassoc]
-lemma openModuleChainAdjoint_counit {P : ModuleComplex R} {I : Complex U}
+lemma openModuleChainAdjoint_counit {P : ModuleComplex R} {I : CochainComplex U.Modules ℤ}
     (q : (restrict j).obj ((associatedComplex R).obj P) ⟶ I) :
     (restrict j).map ((associatedComplex R).map (openModuleChainAdjoint R j q)) ≫
       openModuleComplexCounit R j I = q := by
@@ -82,7 +84,7 @@ lemma openModuleChainAdjoint_counit {P : ModuleComplex R} {I : Complex U}
   exact ((openModuleComplexAdjunction R j).homEquiv P I).symm_apply_apply q
 
 lemma quasiIso_openModuleComplexCounit (W : (Spec R).Opens)
-    (hW : IsCompact (W : Set (Spec R))) (I : Complex W.toScheme) (a : ℤ)
+    (hW : IsCompact (W : Set (Spec R))) (I : CochainComplex W.toScheme.Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent) :
     QuasiIso (openModuleComplexCounit R W.ι I) := by
@@ -93,7 +95,8 @@ lemma quasiIso_openModuleComplexCounit (W : (Spec R).Opens)
 /-- The actual module unit induced by a local injective-resolution arrow is
 weak after the original associated-sheaf restriction. -/
 lemma quasiIso_restrict_associated_openModuleChainAdjoint (W : (Spec R).Opens)
-    (hW : IsCompact (W : Set (Spec R))) {B : ModuleComplex R} {I : Complex W.toScheme}
+    (hW : IsCompact (W : Set (Spec R))) {B : ModuleComplex R}
+      {I : CochainComplex W.toScheme.Modules ℤ}
     (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent)
     (q : (restrict W.ι).obj ((associatedComplex R).obj B) ⟶ I) [QuasiIso q] :
@@ -104,20 +107,21 @@ lemma quasiIso_restrict_associated_openModuleChainAdjoint (W : (Spec R).Opens)
 
 /-- Every original open derived arrow into the chosen injective model has an
 actual module chain transpose with the exact original counit equation. -/
-lemma exists_openModuleChainAdjoint (P : ModuleComplex R) (I : Complex U) (a : ℤ)
+lemma exists_openModuleChainAdjoint (P : ModuleComplex R) (I : CochainComplex U.Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
-    (α : (toDerived U).obj ((restrict j).obj ((associatedComplex R).obj P)) ⟶ (toDerived U).obj I) :
+    (α : (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj ((associatedComplex R).obj P)) ⟶
+      (DerivedCategory.Q (C := U.Modules)).obj I) :
     ∃ f : P ⟶ (sectionsComplex R).obj ((pushforwardComplex j).obj I),
-      (toDerived U).map ((restrict j).map ((associatedComplex R).map f)) ≫
-        (toDerived U).map (openModuleComplexCounit R j I) = α := by
+      (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map ((associatedComplex R).map f)) ≫
+        (DerivedCategory.Q (C := U.Modules)).map (openModuleComplexCounit R j I) = α := by
   have := isKInjective_of_lowerBounded_injective I a hbound hinj
-  obtain ⟨q, hq⟩ := Quillen.CochainComplex.exists_chain_representative_of_isKInjective α
+  obtain ⟨q, hq⟩ := _root_.CochainComplex.exists_chain_representative_of_isKInjective α
   refine ⟨openModuleChainAdjoint R j q, ?_⟩
-  rw [← (toDerived U).map_comp, openModuleChainAdjoint_counit]
+  rw [← (DerivedCategory.Q (C := U.Modules)).map_comp, openModuleChainAdjoint_counit]
   exact hq
 
 /-- The actual open/module transpose preserves an original chain homotopy. -/
-def openModuleChainAdjointHomotopy {P : ModuleComplex R} {I : Complex U}
+def openModuleChainAdjointHomotopy {P : ModuleComplex R} {I : CochainComplex U.Modules ℤ}
     {f g : (restrict j).obj ((associatedComplex R).obj P) ⟶ I} (H : Homotopy f g) :
     Homotopy (openModuleChainAdjoint R j f) (openModuleChainAdjoint R j g) := by
   simp only [openModuleChainAdjoint, Adjunction.homEquiv_unit]
@@ -125,7 +129,7 @@ def openModuleChainAdjointHomotopy {P : ModuleComplex R} {I : Complex U}
     ((openModuleComplexAdjunction R j).unit.app P)
 
 @[reassoc]
-lemma openModuleChainAdjoint_precomp {P B : ModuleComplex R} {I : Complex U}
+lemma openModuleChainAdjoint_precomp {P B : ModuleComplex R} {I : CochainComplex U.Modules ℤ}
     (f : P ⟶ B) (q : (restrict j).obj ((associatedComplex R).obj B) ⟶ I) :
     openModuleChainAdjoint R j ((restrict j).map ((associatedComplex R).map f) ≫ q) =
       f ≫ openModuleChainAdjoint R j q :=
@@ -134,18 +138,19 @@ lemma openModuleChainAdjoint_precomp {P B : ModuleComplex R} {I : Complex U}
 /-- An original open derived equality becomes an actual module homotopy after
 the same genuine transpose of the target's injective-resolution arrow. -/
 def openModuleChainAdjointCompHomotopyOfDerivedEq
-    {P B : ModuleComplex R} (I : Complex U) (a : ℤ)
+    {P B : ModuleComplex R} (I : CochainComplex U.Modules ℤ) (a : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (q : (restrict j).obj ((associatedComplex R).obj B) ⟶ I) (f g : P ⟶ B)
-    (hfg : (toDerived U).map ((restrict j).map ((associatedComplex R).map f)) =
-      (toDerived U).map ((restrict j).map ((associatedComplex R).map g))) :
+    (hfg : (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map ((associatedComplex R).map f))
+      =
+      (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map ((associatedComplex R).map g))) :
     Homotopy (f ≫ openModuleChainAdjoint R j q) (g ≫ openModuleChainAdjoint R j q) := by
   have := isKInjective_of_lowerBounded_injective I a hbound hinj
-  let H := Quillen.CochainComplex.homotopyOfDerivedEqOfIsKInjective
+  let H := _root_.CochainComplex.homotopyOfDerivedEqOfIsKInjective
     ((restrict j).map ((associatedComplex R).map f) ≫ q)
     ((restrict j).map ((associatedComplex R).map g) ≫ q) (by
-      change (toDerived U).map _ = (toDerived U).map _
-      rw [(toDerived U).map_comp, (toDerived U).map_comp, hfg])
+      rw [(DerivedCategory.Q (C := U.Modules)).map_comp,
+        (DerivedCategory.Q (C := U.Modules)).map_comp, hfg])
   rw [← openModuleChainAdjoint_precomp, ← openModuleChainAdjoint_precomp]
   exact openModuleChainAdjointHomotopy R j H
 

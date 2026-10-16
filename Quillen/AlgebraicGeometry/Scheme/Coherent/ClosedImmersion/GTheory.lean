@@ -10,7 +10,7 @@ public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.GlobalSections
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.ClosedImmersion.IdealPushforward
 public import Quillen.CategoryTheory.SmallModel.Exact
-public import Aglib.Algebra.Category.ModuleCat.Finite
+public import Aglib.Algebra.Category.FGModuleCat.Basic
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Comparison
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Exact
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Exact
@@ -20,6 +20,7 @@ public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.Principa
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.ComparisonGTheory
 public import Quillen.CategoryTheory.SmallModel.Functoriality
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
 /-!
 # Canonical G-maps of actual principal closed pushforward
 
@@ -62,7 +63,7 @@ variable (f : R)
 /-- The canonical principal closed pushforward on the public global G-groups. -/
 def coherentPushforwardGMap (n : ℕ) :
     AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec
-      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+      (Pushforward.ClosedImmersion.Ideal.closedRing R
       (Ideal.span {f}))) n →*
       AlgebraicGeometry.Scheme.Modules.Coherent.G (Spec R) n :=
   CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1}
@@ -78,13 +79,13 @@ theorem coherentPushforwardGMap_square (n : ℕ) :
     (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1} (closedRestrictionExact f) n).comp
       (CategoryTheory.ExactCategory.ExactFunctor.smallKMap.{u+1}
         (AlgebraicGeometry.Scheme.Modules.Coherent.globalSectionsExact
-        (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+        (Pushforward.ClosedImmersion.Ideal.closedRing R
         (Ideal.span {f}))) n) := by
   have h := CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u+1}
     (F := (Modules.Coherent.Pushforward.ClosedImmersion.Ideal.coherentPushforwardExact R (Ideal.span
       {f})).comp (AlgebraicGeometry.Scheme.Modules.Coherent.globalSectionsExact R))
     (G := (AlgebraicGeometry.Scheme.Modules.Coherent.globalSectionsExact
-      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+      (Pushforward.ClosedImmersion.Ideal.closedRing R
       (Ideal.span {f}))).comp (closedRestrictionExact f))
     (coherentPushforwardSquare R f) n
   simpa only [CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, coherentPushforwardGMap]
@@ -92,7 +93,7 @@ theorem coherentPushforwardGMap_square (n : ℕ) :
 
 /-- The same actual pushforward on the proved lowest-universe affine G-groups. -/
 def specPushforwardGMap (n : ℕ) : SpecG
-  (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+  (Pushforward.ClosedImmersion.Ideal.closedRing R
   (Ideal.span {f})) n →* SpecG R n :=
   (Modules.Coherent.Pushforward.ClosedImmersion.Ideal.coherentPushforwardExact R (Ideal.span
     {f})).smallKMap n
@@ -112,14 +113,14 @@ theorem specPushforwardGMap_square (n : ℕ) :
     (specGRingEquiv R n).toMonoidHom.comp (specPushforwardGMap R f n) =
       ((closedRestrictionExact f).smallKMap n).comp
         (specGRingEquiv
-          (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+          (Pushforward.ClosedImmersion.Ideal.closedRing R
           (Ideal.span {f})) n).toMonoidHom := by
   rw [specGRingEquiv_eq_globalSections, specGRingEquiv_eq_globalSections]
   have h := CategoryTheory.ExactCategory.ExactFunctor.smallKMap_eq_of_natIso.{u}
     (F := (Modules.Coherent.Pushforward.ClosedImmersion.Ideal.coherentPushforwardExact R (Ideal.span
       {f})).comp (AlgebraicGeometry.Scheme.Modules.Coherent.globalSectionsExact R))
     (G := (AlgebraicGeometry.Scheme.Modules.Coherent.globalSectionsExact
-      (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal.closedRing R
+      (Pushforward.ClosedImmersion.Ideal.closedRing R
       (Ideal.span {f}))).comp (closedRestrictionExact f))
     (coherentPushforwardSquare R f) n
   simpa only [CategoryTheory.ExactCategory.ExactFunctor.smallKMap_comp, specPushforwardGMap] using h

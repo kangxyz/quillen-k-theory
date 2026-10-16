@@ -7,7 +7,7 @@ module
 
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.PullbackPushforward
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.OpenBaseChange
-public import Aglib.AlgebraicGeometry.Cohomology.Locality.QuasiIso
+public import Aglib.AlgebraicGeometry.Modules.Complex.Locality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.P5PositiveUnitModel
 
 /-! # The canonical native positive unit and its actual weak model transformation
@@ -17,6 +17,8 @@ then lifted by literal underlying maps into the original flasque-perfect model,
 where the natural weak unit gives the original positive coefficient K-map.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open AlgebraicGeometry.Scheme.ProjectiveLine
 

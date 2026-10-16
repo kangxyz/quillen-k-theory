@@ -11,7 +11,7 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassP
 /-! The genuine coefficient Bass boundary, with original maps and prescribed associations. -/
 @[expose] public section
 
-open Quillen.PolynomialBaseChange
+open CommRingCat.PolynomialLaurent
 
 
 open CommRingCat.PolynomialLaurent

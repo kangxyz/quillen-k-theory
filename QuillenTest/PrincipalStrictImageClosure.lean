@@ -7,6 +7,7 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalImageExtensions
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
 
 /-! Semantic consumers of genuine principal strict weak-image closure. -/
 @[expose] public section
@@ -48,7 +49,7 @@ theorem actual_local_cone_extension (R : CommRingCat.{u}) (r : R)
   obtain ⟨N, hN, ⟨e⟩⟩ := h
   have : CochainComplex.IsKProjective ((localize r (.up ℤ)).obj N) :=
     isKProjective_of_moduleStrictPerfect _ (moduleStrictPerfect_localize R r hN)
-  obtain ⟨q, hq⟩ := Quillen.CochainComplex.exists_chain_representative_of_isKProjective e.hom
+  obtain ⟨q, hq⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective e.hom
   have : IsIso (DerivedCategory.Q.map q) := by rw [hq]; infer_instance
   exact ⟨N, hN, q, (DerivedCategory.isIso_Q_map_iff_quasiIso _ q).mp inferInstance⟩
 

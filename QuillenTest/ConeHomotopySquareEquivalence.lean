@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Spectrum.ConeHomotopyComparison
-public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Basic
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Basic
 
 /-! Consumers check the actual polynomial/Laurent cone comparisons, the unchanged square-track
 midpoint, and cancellation of a whole arrow homotopy on the original signed stable groups. -/

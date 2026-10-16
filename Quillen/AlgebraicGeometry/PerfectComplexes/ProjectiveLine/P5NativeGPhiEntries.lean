@@ -200,10 +200,10 @@ preservation of degreewise short exact sequences.
 -/
 def boundedRightTensorExactFunctor : ExactFunctor
     (ExactSubcategory.exactStructure (abelianExactStructure
-      (Complex (nativeLineFunctor.obj X).obj)) (BoundedBelow.objects
+      (CochainComplex (nativeLineFunctor.obj X).obj.Modules ℤ)) (BoundedBelow.objects
         (nativeLineFunctor.obj X).obj))
     (ExactSubcategory.exactStructure (abelianExactStructure
-      (Complex (nativeLineFunctor.obj X).obj)) (BoundedBelow.objects
+      (CochainComplex (nativeLineFunctor.obj X).obj.Modules ℤ)) (BoundedBelow.objects
         (nativeLineFunctor.obj X).obj)) where
   toFunctor := boundedRightTensor X
   map_conflation S hS := by

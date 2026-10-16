@@ -3,32 +3,27 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
-
 module
 
-public import Aglib.CategoryTheory.ExactCategory.Abelian
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Exact
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Strict
 public import Quillen.Waldhausen.PointedFunctor
 
-/-!
-# The degree-zero vector-bundle comparison map
+/-! # The vector-bundle inclusion on Waldhausen K-theory
 
-The inclusion sends a vector bundle to its degree-zero complex. We prove
-that it preserves all ambient exact sequences and is Waldhausen-exact. It
-therefore gives a genuine S-construction K-map. Neither the Quillen Q/S
-comparison nor the Gillet–Waldhausen equivalence is asserted here.
+The native degree-zero inclusion and inherited exactness come from Aglib. Its
+Waldhausen exactness gives the actual S-construction comparison map below.
 -/
+
 @[expose] public section
 
-open CategoryTheory.ExactCategory
-
-
 noncomputable section
-
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
+open CategoryTheory.ExactCategory
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 universe u
 
@@ -37,27 +32,6 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
 
 variable (X : Scheme.{u})
-
-/-- The actual inherited exact structure on strict perfect complexes. -/
-abbrev strictExactStructure : CategoryTheory.ExactCategory.ExactStructure (StrictPerfect X) :=
-  ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (strictPerfect X)
-
-instance vectorBundleInclusion_additive : (vectorBundleInclusion X).Additive := by
-  unfold vectorBundleInclusion
-  infer_instance
-
-/-- Placing vector bundles in degree zero preserves every ambient conflation,
-including sequences which split only locally. -/
-def vectorBundleExactInclusion :
-    CategoryTheory.ExactCategory.ExactFunctor
-      (AlgebraicGeometry.Scheme.Modules.vectorBundleExactStructure X)
-      (strictExactStructure X) where
-  toFunctor := vectorBundleInclusion X
-  map_conflation S hS := by
-    have hs : (S.map (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree X).ι).ShortExact := hS
-    let := hs.mono_f
-    let := hs.epi_g
-    exact hs.map (HomologicalComplex.single X.Modules (ComplexShape.up ℤ) 0)
 
 /-- The degree-zero inclusion is exact for the actual Waldhausen structures:
 vector-bundle isomorphisms map to quasi-isomorphisms, and cofibration pushouts

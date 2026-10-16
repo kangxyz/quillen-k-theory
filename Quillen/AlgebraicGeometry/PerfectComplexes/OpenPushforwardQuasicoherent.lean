@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Homology
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenPushforwardCounit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenPushforwardBaseChange
@@ -41,7 +42,7 @@ namespace Quillen.PerfectComplexes
 /-- The original affine theorem transported through the genuine open-image isomorphism. -/
 lemma spec_openPushforward_quasicoherent_homology {R : CommRingCat.{u}}
     {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j] [CompactSpace U]
-    (I : Complex U) (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))
+    (I : CochainComplex U.Modules ℤ) (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n)) (hqc : ∀ n, (I.homology n).IsQuasicoherent) (n : ℤ) :
     (((pushforwardComplex j).obj I).homology n).IsQuasicoherent := by
   let e := j.isoOpensRange
@@ -66,7 +67,7 @@ lemma spec_openPushforward_quasicoherent_homology {R : CommRingCat.{u}}
 has QC homology on any ambient scheme. -/
 lemma openPushforward_quasicoherent_homology {U X : Scheme.{u}}
     (j : U ⟶ X) [IsOpenImmersion j] [QuasiCompact j]
-    (I : Complex U) (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))
+    (I : CochainComplex U.Modules ℤ) (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n)) (hqc : ∀ n, (I.homology n).IsQuasicoherent) (n : ℤ) :
     (((pushforwardComplex j).obj I).homology n).IsQuasicoherent := by
   let J := (pushforwardComplex j).obj I
@@ -99,7 +100,7 @@ lemma openPushforward_quasicoherent_homology {U X : Scheme.{u}}
 /-- A compact open source and quasi-separated target supply quasi-compactness of the map. -/
 lemma compact_openPushforward_quasicoherent_homology {U X : Scheme.{u}}
     (j : U ⟶ X) [IsOpenImmersion j] [QuasiSeparatedSpace X] [CompactSpace U]
-    (I : Complex U) (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))
+    (I : CochainComplex U.Modules ℤ) (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n)) (hqc : ∀ n, (I.homology n).IsQuasicoherent) (n : ℤ) :
     (((pushforwardComplex j).obj I).homology n).IsQuasicoherent :=
   openPushforward_quasicoherent_homology j I a hbound hinj hqc n

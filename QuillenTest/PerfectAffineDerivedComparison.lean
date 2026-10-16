@@ -6,10 +6,15 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedComparison
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Homology
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
 /-! # Consumers of actual affine derived comparison and perfect homology -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules (derivedRestrict)
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.PerfectComplexes
 

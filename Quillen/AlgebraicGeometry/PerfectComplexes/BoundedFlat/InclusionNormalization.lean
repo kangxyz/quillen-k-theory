@@ -17,6 +17,8 @@ categorical compatibility. These are equalities of actual natural transformation
 whole prespectrum tracks are realized.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

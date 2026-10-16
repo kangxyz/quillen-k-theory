@@ -7,6 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Localization.Serre.AuxiliaryKernel
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # Pushing out an auxiliary epimorphism along its kernel
@@ -25,7 +26,8 @@ universe u
 open CategoryTheory CategoryTheory.Limits
 open scoped ZeroObject
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
 
 /-- The pullback model has its actual kernel inclusion. -/

@@ -17,6 +17,8 @@ therefore sends the forward scalar loop to its original supported cofiber class.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 open Quillen.Waldhausen
 

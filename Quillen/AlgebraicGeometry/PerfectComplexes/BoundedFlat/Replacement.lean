@@ -6,7 +6,9 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlatPullback
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Homology
+public import Aglib.Algebra.Homology.CochainComplex.BoundedAbove.Basic
+public import Aglib.AlgebraicGeometry.Modules.Complex.Flat.BoundedAboveReplacement
 
 /-!
 # Bounded-flat replacements of cohomologically bounded perfect complexes
@@ -19,7 +21,8 @@ exactly through target good truncation. No global strict model is asserted.
 -/
 @[expose] public section
 
-open Quillen.CochainComplex
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 
 
 
@@ -34,13 +37,13 @@ namespace Quillen.PerfectComplexes
 /-- Cohomologically bounded-above locally perfect complexes admit genuine
 bounded-above flat locally perfect replacements with actual augmentations. -/
 theorem exists_flat_perfect_replacement_of_homology_bound {X : Scheme.{u}}
-    (K : Complex X) (hK : locallyPerfect X K) (b : ℤ)
+    (K : CochainComplex X.Modules ℤ) (hK : locallyPerfect X K) (b : ℤ)
     (hb : ∀ n, b < n → IsZero (K.homology n)) :
-    ∃ (P : Complex X) (p : P ⟶ K), QuasiIso p ∧ locallyPerfect X P ∧
+    ∃ (P : CochainComplex X.Modules ℤ) (p : P ⟶ K), QuasiIso p ∧ locallyPerfect X P ∧
       P.IsStrictlyLE b ∧ ∀ n, stalkwiseFlat X (P.X n) := by
   have : K.IsLE b := (CochainComplex.isLE_iff K b).mpr (fun n hn =>
     (exactAt_iff_isZero_homology _ _).mpr (hb n hn))
-  let T : BoundedAboveComplex X.Modules := ⟨K.truncLE b, b, inferInstance⟩
+  let T : _root_.CochainComplex.BoundedAboveComplex X.Modules := ⟨K.truncLE b, b, inferInstance⟩
   obtain ⟨P, p, hp, hflat, hbound⟩ :=
     exists_boundedAbove_flat_complex_replacement X T.obj b
   let : QuasiIso p := hp
@@ -51,8 +54,8 @@ theorem exists_flat_perfect_replacement_of_homology_bound {X : Scheme.{u}}
 /-- Quasi-compactness supplies the honest global cohomology bound needed here. -/
 theorem exists_flat_perfect_replacement_of_quasiCompact {X : Scheme.{u}} [CompactSpace X]
     (K : Perfect X) :
-    ∃ (P : Complex X) (p : P ⟶ K.obj), QuasiIso p ∧ locallyPerfect X P ∧
-      boundedAbove X.Modules P ∧ ∀ n, stalkwiseFlat X (P.X n) := by
+    ∃ (P : CochainComplex X.Modules ℤ) (p : P ⟶ K.obj), QuasiIso p ∧ locallyPerfect X P ∧
+      _root_.CochainComplex.boundedAbove X.Modules P ∧ ∀ n, stalkwiseFlat X (P.X n) := by
   obtain ⟨a, b, hb⟩ := locallyPerfect_homology_bounded K.property
   obtain ⟨P, p, hp, hP, hbP, hflat⟩ :=
     exists_flat_perfect_replacement_of_homology_bound K.obj K.property b
@@ -61,12 +64,12 @@ theorem exists_flat_perfect_replacement_of_quasiCompact {X : Scheme.{u}} [Compac
 
 /-- A map from an actually upper-bounded source factors exactly through good
 truncation of its target at that bound, rather than merely in the derived category. -/
-def mapToGoodTruncation {X : Scheme.{u}} {K L : Complex X} (f : K ⟶ L)
+def mapToGoodTruncation {X : Scheme.{u}} {K L : CochainComplex X.Modules ℤ} (f : K ⟶ L)
     (b : ℤ) [K.IsStrictlyLE b] : K ⟶ L.truncLE b :=
   inv (K.ιTruncLE b) ≫ CochainComplex.truncLEMap f b
 
 @[reassoc]
-theorem mapToGoodTruncation_comp {X : Scheme.{u}} {K L : Complex X} (f : K ⟶ L)
+theorem mapToGoodTruncation_comp {X : Scheme.{u}} {K L : CochainComplex X.Modules ℤ} (f : K ⟶ L)
     (b : ℤ) [K.IsStrictlyLE b] : mapToGoodTruncation f b ≫ L.ιTruncLE b = f := by
   dsimp [mapToGoodTruncation]
   rw [Category.assoc, CochainComplex.ιTruncLE_naturality]

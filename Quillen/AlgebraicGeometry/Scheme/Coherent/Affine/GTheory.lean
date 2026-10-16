@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.CategoryTheory.SmallModel.Exact
-public import Aglib.Algebra.Category.ModuleCat.Finite
+public import Aglib.Algebra.Category.FGModuleCat.Basic
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.Basic
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeCategory
 public import Aglib.CategoryTheory.ExactCategory.Abelian

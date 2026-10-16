@@ -45,7 +45,8 @@ theorem empty_open (X : Scheme.{u}) (M : X.Modules) (h : stalkwiseFlat X M) :
   stalkwiseFlat_restrict _ h
 
 /-- The original strict-perfect terms meet the actual flat-replacement comparison hypotheses. -/
-theorem strict_perfect_terms (X : Scheme.{u}) (K : PerfectComplexes.StrictPerfect X) :
+theorem strict_perfect_terms (X : Scheme.{u})
+    (K : AlgebraicGeometry.Scheme.Modules.Complex.StrictPerfect X) :
     ∀ n, stalkwiseFlat X (K.obj.X n) := by
   intro n
   let := K.property.2 n

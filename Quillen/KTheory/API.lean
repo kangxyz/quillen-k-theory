@@ -8,6 +8,7 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Aglib.CategoryTheory.ExactCategory.Functor
+public import Aglib.CategoryTheory.ExactCategory.Small
 public import Quillen.KTheory.Functor
 public import Quillen.KTheory.Equivalence
 public import Quillen.KTheory.Map.CommonAmbient
@@ -26,19 +27,11 @@ for the group-valued `SmallExactCategory.KFunctor` without new mathematical data
 
 open CategoryTheory.ExactCategory
 
-
-
 noncomputable section
 universe u
 open CategoryTheory CategoryTheory.Limits
 
-namespace Quillen.SmallExactCategory
-
-/-- Bundle an existing small exact category for the group-valued K-functor. -/
-def ofExactStructure {C : Type u} [Category.{u} C] [Preadditive C]
-    [HasFiniteBiproducts C] (E : ExactStructure C) : SmallExactCategory.{u} where
-  Obj := C
-  exactStructure := E
+namespace CategoryTheory.ExactCategory.SmallExactCategory
 
 /-- The K-groups of a bundled small exact category. -/
 abbrev K (C : SmallExactCategory.{u}) (n : ℕ) := C.exactStructure.K n
@@ -57,11 +50,9 @@ abbrev K (C : SmallExactCategory.{u}) (n : ℕ) := C.exactStructure.K n
     GrpCat.Hom.hom (X := GrpCat.of (C.K n)) (Y := GrpCat.of (D.K n))
       ((KFunctor n).map F) = F.KMap n := rfl
 
-
-end Quillen.SmallExactCategory
+end CategoryTheory.ExactCategory.SmallExactCategory
 
 namespace CategoryTheory.ExactCategory.ExactFunctor
-open Quillen
 
 variable {C D T : Type u} [Category.{u} C] [Category.{u} D] [Category.{u} T]
   [Preadditive C] [HasFiniteBiproducts C] [Preadditive D] [HasFiniteBiproducts D]

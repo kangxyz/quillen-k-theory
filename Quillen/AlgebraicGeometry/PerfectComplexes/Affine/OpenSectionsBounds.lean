@@ -9,8 +9,9 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Mathlib.Algebra.Category.ModuleCat.FilteredColimits
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FinitePrincipalCohomologicalDimension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalSections
-public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalRestriction
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalRestriction
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
 /-!
 # Geometric bounds for original sections on compact affine opens
 
@@ -54,7 +55,7 @@ local instance openSectionsBoundsGlobalSections_additive (R : CommRingCat.{u}) (
 
 /-- The actual affine counit reflects the upper cohomology bound to original sections. -/
 lemma isLE_sections_of_injective {R : CommRingCat.{u}}
-    (I : Complex (Spec R)) (a b : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a b : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n))
     (hqc : ∀ n, (I.homology n).IsQuasicoherent) [I.IsLE b] :
@@ -77,7 +78,8 @@ lemma isFlasque_modulesSpecToSheaf {R : CommRingCat.{u}} (M : (Spec R).Modules)
 
 /-- Original R-module sections on a principal open inherit the genuine bound
 of the restricted sheaf complex by affine acyclicity. -/
-lemma isLE_principalSections_of_injective {R : CommRingCat.{u}} (I : Complex (Spec R))
+lemma isLE_principalSections_of_injective {R : CommRingCat.{u}}
+    (I : CochainComplex (Spec R).Modules ℤ)
     (a b : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n)) (r : R)
     (hqc : ∀ n, (((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj
@@ -111,7 +113,7 @@ lemma isLE_principalSections_of_injective {R : CommRingCat.{u}} (I : Complex (Sp
 /-- Quasicoherent homology on an arbitrary open survives restriction to each
 contained principal chart, without any cohomological bound. -/
 lemma principalRestriction_quasicoherent_of_open {R : CommRingCat.{u}}
-    (I : Complex (Spec R)) (W : (Spec R).Opens)
+    (I : CochainComplex (Spec R).Modules ℤ) (W : (Spec R).Opens)
     (hqc : ∀ n, (((restrict W.ι).obj I).homology n).IsQuasicoherent)
     (r : R) (hr : PrimeSpectrum.basicOpen r ≤ W) (n : ℤ) :
     (((restrict (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.principalOpen R r)).obj I).homology
@@ -135,7 +137,7 @@ lemma principalRestriction_quasicoherent_of_open {R : CommRingCat.{u}}
 /-- On every principal contained in W, the actual restricted complex inherits
 both its homology bound and quasicoherence from the original restriction to W. -/
 lemma principalRestriction_bounds_of_open {R : CommRingCat.{u}}
-    (I : Complex (Spec R)) (W : (Spec R).Opens) (b : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (W : (Spec R).Opens) (b : ℤ)
     [((restrict W.ι).obj I).IsLE b]
     (hqc : ∀ n, (((restrict W.ι).obj I).homology n).IsQuasicoherent)
     (r : R) (hr : PrimeSpectrum.basicOpen r ≤ W) :
@@ -168,7 +170,7 @@ lemma principalRestriction_bounds_of_open {R : CommRingCat.{u}}
 complex. Quasicoherence and the upper bound are required only after restricting
 to W; no principal-section acyclicity premise remains. -/
 lemma isLE_sections_finitePrincipal_of_injective {R : CommRingCat.{u}}
-    (I : Complex (Spec R)) (a b : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a b : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (W : (Spec R).Opens) [((restrict W.ι).obj I).IsLE b]
     (hqc : ∀ n, (((restrict W.ι).obj I).homology n).IsQuasicoherent)
@@ -189,7 +191,7 @@ lemma isLE_sections_finitePrincipal_of_injective {R : CommRingCat.{u}}
 /-- Actual R-module sections on a compact open are cohomologically bounded
 above when the original restricted injective complex has bounded QC homology. -/
 lemma exists_isLE_sections_compactOpen_of_injective {R : CommRingCat.{u}}
-    (I : Complex (Spec R)) (a b : ℤ)
+    (I : CochainComplex (Spec R).Modules ℤ) (a b : ℤ)
     (hbound : ∀ n, n < a → IsZero (I.X n)) (hinj : ∀ n, Injective (I.X n))
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
     [((restrict W.ι).obj I).IsLE b]
@@ -212,9 +214,9 @@ This retains the original weak map into its restriction and the exact lower
 term bound; it does not yet assert an associated-sheaf comparison on the open. -/
 lemma exists_open_injective_model_with_bounded_sections (R : CommRingCat.{u})
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
-    (E : Complex W.toScheme) (a b : ℤ) [E.IsGE a] [E.IsLE b]
+    (E : CochainComplex W.toScheme.Modules ℤ) (a b : ℤ) [E.IsGE a] [E.IsLE b]
     (hqc : ∀ n, (E.homology n).IsQuasicoherent) :
-    ∃ (I : Complex (Spec R)) (q : E ⟶ (restrict W.ι).obj I) (c : ℤ),
+    ∃ (I : CochainComplex (Spec R).Modules ℤ) (q : E ⟶ (restrict W.ι).obj I) (c : ℤ),
       I.IsStrictlyGE a ∧ (∀ n, Injective (I.X n)) ∧ QuasiIso q ∧
       CochainComplex.IsStrictlyGE
         (((affineSectionsAt R W).mapHomologicalComplex (.up ℤ)).obj I) a ∧

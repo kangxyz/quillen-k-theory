@@ -7,6 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalQuotient
 public import Mathlib.Data.ZMod.Basic
+public import Aglib.AlgebraicGeometry.Modules.Restriction.Overlap
 
 /-! Original quotient rows, cokernel factorization, inverse transition and zero-ring consumers. -/
 @[expose] public section
@@ -69,7 +70,7 @@ theorem original_transition_scalar :
         (tautologicalQuotientPlusIso R).hom ≫
       (Scheme.Modules.restrictUnitIso (pullback.fst (plusChart R) (minusChart R))).hom ≫
       unitMul _ (↑(overlapCoordinateUnit R)⁻¹) =
-    (AlgebraicGeometry.Scheme.Modules.Coherent.overlapRestrictIso (plusChart R) (minusChart
+    (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso (plusChart R) (minusChart
       R)).hom.app
         (tautologicalQuotientLine R) ≫
       (Scheme.Modules.restrictFunctor (pullback.snd (plusChart R) (minusChart R))).map

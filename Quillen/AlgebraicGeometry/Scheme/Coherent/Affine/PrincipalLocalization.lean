@@ -10,6 +10,7 @@ public import Quillen.CategoryTheory.SmallModel.Exact
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Affine.RestrictionExact
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.PrincipalSupport
 public import Quillen.GTheory.SmallModelLocalization
+public import Aglib.AlgebraicGeometry.Modules.Coherent.Localization.Principal
 
 /-!
 # Genuine G-theory localization for a principal open of a noetherian affine scheme

@@ -59,11 +59,11 @@ and [public API reference](docs/reference/API.md).
 
 ## Quick start
 
-The **0.7.0 source-integration version** uses Lean **4.34.1** and the mathlib revision
+The **0.8.0 source-integration version** uses Lean **4.34.1** and the mathlib revision
 pinned in [lakefile.toml](lakefile.toml). General algebra, exact categories,
 scheme modules and cohomology are implemented once in
 [Aglib](https://github.com/kangxyz/aglib), pinned to
-`419bd685cee21ac408756fbfe99565be19d186fd`. Quillen imports its precise modules
+`40af743ab794d607f566cec0c5417d8e4d02a735`. Quillen imports its precise modules
 and native mathematical namespaces, and owns the Q/K/G constructions and
 application maps. The transferred general Quillen modules and aliases are removed.
 Install

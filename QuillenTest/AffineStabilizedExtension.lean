@@ -8,6 +8,8 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StabilizedExtension
 public import Mathlib.Data.ZMod.Basic
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-! Original cones, inclusions, shifts and empty-open consumers for stabilized extension. -/
 @[expose] public section
@@ -68,17 +70,18 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 
 lemma original_geometric_cone_inclusion (R : CommRingCat.{u})
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
-    {P : ModuleComplex R} (hP : moduleStrictPerfect R P) (C E : Complex W.toScheme)
-    (e : (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj P)) ≅
-      (toDerived W.toScheme).obj (C ⊞ E)) :
+    {P : ModuleComplex R} (hP : moduleStrictPerfect R P) (C E : CochainComplex W.toScheme.Modules ℤ)
+    (e : (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+      ((restrict W.ι).obj ((associatedComplex R).obj P)) ≅
+      (DerivedCategory.Q (C := W.toScheme.Modules)).obj (C ⊞ E)) :
     ∃ (P' : ModuleComplex R) (_ : moduleStrictPerfect R P') (t g : P' ⟶ P),
       QuasiIso ((restrict W.ι).map ((associatedComplex R).map t)) ∧
-      ∃ eCone : (toDerived W.toScheme).obj
+      ∃ eCone : (DerivedCategory.Q (C := W.toScheme.Modules)).obj
         ((restrict W.ι).obj ((associatedComplex R).obj (CochainComplex.mappingCone g))) ≅
-          (toDerived W.toScheme).obj (E ⊞ E⟦(1 : ℤ)⟧),
-        (toDerived W.toScheme).map ((restrict W.ι).map
+          (DerivedCategory.Q (C := W.toScheme.Modules)).obj (E ⊞ E⟦(1 : ℤ)⟧),
+        (DerivedCategory.Q (C := W.toScheme.Modules)).map ((restrict W.ι).map
           ((associatedComplex R).map (CochainComplex.mappingCone.inr g))) =
-            e.hom ≫ (toDerived W.toScheme).map
+            e.hom ≫ (DerivedCategory.Q (C := W.toScheme.Modules)).map
               ((biprod.snd : C ⊞ E ⟶ E) ≫ (biprod.inl : E ⟶ E ⊞ E⟦(1 : ℤ)⟧)) ≫ eCone.inv := by
   obtain ⟨P', hP', t, g, ht, _, _, eCone, heCone⟩ :=
     exists_stabilized_extension_cone_of_complement R W hW hP C E e
@@ -87,23 +90,25 @@ lemma original_geometric_cone_inclusion (R : CommRingCat.{u})
 
 lemma every_original_integer_shift (R : CommRingCat.{u})
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
-    (E : Complex W.toScheme) (hE : locallyPerfect W.toScheme E) (n : ℤ) :
-    ∃ (Q : Complex (Spec R)), strictPerfect (Spec R) Q ∧
-      Nonempty ((toDerived W.toScheme).obj ((restrict W.ι).obj Q) ≅
-        (toDerived W.toScheme).obj (E⟦n⟧ ⊞ (E⟦n⟧)⟦(1 : ℤ)⟧)) :=
+    (E : CochainComplex W.toScheme.Modules ℤ) (hE : locallyPerfect W.toScheme E) (n : ℤ) :
+    ∃ (Q : CochainComplex (Spec R).Modules ℤ), strictPerfect (Spec R) Q ∧
+      Nonempty ((DerivedCategory.Q (C := W.toScheme.Modules)).obj ((restrict W.ι).obj Q) ≅
+        (DerivedCategory.Q (C := W.toScheme.Modules)).obj (E⟦n⟧ ⊞ (E⟦n⟧)⟦(1 : ℤ)⟧)) :=
   locallyPerfect_exists_global_strict_stabilized_extension R W hW (E⟦n⟧) (locallyPerfect_shift hE n)
 
 lemma empty_zero_ring_original_extension
-    (E : Complex (⊥ : (Spec (CommRingCat.of (ZMod 1))).Opens).toScheme)
+    (E : CochainComplex (⊥ : (Spec (CommRingCat.of (ZMod 1))).Opens).toScheme.Modules ℤ)
     (hE : locallyPerfect (⊥ : (Spec (CommRingCat.of (ZMod 1))).Opens).toScheme E) :
     ∃ (P P' : ModuleComplex (CommRingCat.of (ZMod 1)))
       (_ : moduleStrictPerfect (CommRingCat.of (ZMod 1)) P)
       (_ : moduleStrictPerfect (CommRingCat.of (ZMod 1)) P') (g : P' ⟶ P),
       moduleStrictPerfect (CommRingCat.of (ZMod 1)) (CochainComplex.mappingCone g) ∧
-      Nonempty ((toDerived (⊥ : (Spec (CommRingCat.of (ZMod 1))).Opens).toScheme).obj
+      Nonempty ((DerivedCategory.Q (C := (⊥ : (Spec
+        (CommRingCat.of (ZMod 1))).Opens).toScheme.Modules)).obj
         ((restrict (⊥ : (Spec (CommRingCat.of (ZMod 1))).Opens).ι).obj
           ((associatedComplex (CommRingCat.of (ZMod 1))).obj (CochainComplex.mappingCone g))) ≅
-        (toDerived (⊥ : (Spec (CommRingCat.of (ZMod 1))).Opens).toScheme).obj (E ⊞ E⟦(1 : ℤ)⟧)) :=
+        (DerivedCategory.Q (C := (⊥ : (Spec (CommRingCat.of (ZMod 1))).Opens).toScheme.Modules)).obj
+          (E ⊞ E⟦(1 : ℤ)⟧)) :=
   locallyPerfect_exists_stabilized_extension_cone (CommRingCat.of (ZMod 1)) ⊥ (by simp) E hE
 
 end QuillenTest.AffineStabilizedExtension

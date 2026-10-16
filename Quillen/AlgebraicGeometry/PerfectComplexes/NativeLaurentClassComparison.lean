@@ -6,13 +6,15 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ScalarLaurentClassComparison
-public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Relative
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Relative
 
 /-! The actual relative Laurent-unit K-one comparison over every base scheme.
 Both schemes are the original products over the integral terminal scheme. The coordinate
 and unit come from their second projections; no affine replacement of the base is used. -/
 
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
 

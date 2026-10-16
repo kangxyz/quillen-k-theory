@@ -14,6 +14,7 @@ public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralR
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.IdealSupport
 public import Mathlib.AlgebraicGeometry.PullbackCarrier
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
 /-! # Genuine closed support and its affine/open base-change identifications -/
 @[expose] public section
 
@@ -35,7 +36,8 @@ namespace AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.
 variable (R : CommRingCat.{u}) (I : Ideal R)
 
 /-- The actual quotient closed immersion has precisely the zero-locus image. -/
-theorem closedMap_range : Set.range (closedMap R I) = PrimeSpectrum.zeroLocus (I : Set R) := by
+theorem closedMap_range : Set.range (Pushforward.ClosedImmersion.Ideal.closedMap R I) =
+  PrimeSpectrum.zeroLocus (I : Set R) := by
   change Set.range (PrimeSpectrum.comap (Ideal.Quotient.mk I)) = _
   rw [range_comap_of_surjective _ _ Ideal.Quotient.mk_surjective,
     Ideal.mk_ker]

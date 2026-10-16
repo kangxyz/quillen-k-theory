@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Local
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 public import Quillen.AlgebraicGeometry.Scheme.Sheaf.GlobalScalarRestriction
 
 /-! The actual global scalar acts termwise on the original ambient and perfect complexes. -/
@@ -22,7 +22,8 @@ universe u
 namespace Quillen.PerfectComplexes
 
 /-- Original multiplication by a global scalar in each degree of the unchanged complex. -/
-def complexGlobalScalar (X : Scheme.{u}) (r : Γ(X, ⊤)) : 𝟭 (Complex X) ⟶ 𝟭 (Complex X) where
+def complexGlobalScalar (X : Scheme.{u}) (r : Γ(X, ⊤)) : 𝟭 (CochainComplex X.Modules ℤ) ⟶ 𝟭
+    (CochainComplex X.Modules ℤ) where
   app K := {
     f n := (AlgebraicGeometry.Scheme.Modules.globalScalar X r).app (K.X n)
     comm' i j _ := ((AlgebraicGeometry.Scheme.Modules.globalScalar X r).naturality (K.d i j)).symm }
@@ -44,7 +45,7 @@ theorem perfectGlobalScalar_original (X : Scheme.{u}) (r : Γ(X, ⊤)) (K : Perf
 
 /-- The original open restriction preserves the scalar in every original cochain degree. -/
 theorem restrict_map_complexGlobalScalar {U X : Scheme.{u}} (j : U ⟶ X)
-    [IsOpenImmersion j] (r : Γ(X, ⊤)) (K : Complex X) :
+    [IsOpenImmersion j] (r : Γ(X, ⊤)) (K : CochainComplex X.Modules ℤ) :
     (restrict j).map ((complexGlobalScalar X r).app K) =
       (complexGlobalScalar U (j.appTop r)).app ((restrict j).obj K) := by
   ext n : 1

@@ -20,6 +20,8 @@ perfect coefficients are separate obligations.
 
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 section
 
 noncomputable section

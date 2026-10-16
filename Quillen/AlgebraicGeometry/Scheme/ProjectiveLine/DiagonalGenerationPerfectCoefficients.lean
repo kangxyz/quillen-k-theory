@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalPerfectGenerationRotation
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.IntrinsicPerfectPushforward
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Intrinsic perfection of the actual G0/G1 generation coefficients
 

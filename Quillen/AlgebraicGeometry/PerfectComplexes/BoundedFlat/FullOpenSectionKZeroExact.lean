@@ -18,6 +18,8 @@ equivalences are used to choose witnesses; restriction is not assumed surjective
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.Waldhausen
 
 noncomputable section

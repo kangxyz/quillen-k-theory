@@ -8,8 +8,8 @@ module
 
 public import Quillen.Topology.Prespectrum.ParameterLooping
 public import Quillen.Topology.HomotopyGroups.Loop.TransposeSign
-public import Quillen.CategoryTheory.Limits.SequentialSignCorrection
-public import Quillen.CategoryTheory.Limits.SequentialTailColimit
+public import Aglib.CategoryTheory.Limits.Shapes.SequentialSystem.SignCorrection
+public import Aglib.CategoryTheory.Limits.Shapes.SequentialSystem.TailColimit
 public import Quillen.Topology.Prespectrum.StableHomotopy
 
 /-!
@@ -77,7 +77,8 @@ theorem parameterStableStageIso_anticomm (E : LoopPrespectrum.{u}) (d : ℤ) (n 
 from the parameter-loop stable diagram to the shifted original diagram. -/
 def parameterStableSystemIso (E : LoopPrespectrum.{u}) (d : ℤ) :
     stableSystem (parameterLooping E) d ≅ shiftedStableSystem E d :=
-  sequentialSignCorrectionIso (parameterStableStageIso E d) (parameterStableStageIso_anticomm E d)
+  SequentialSystem.signCorrectionIso (parameterStableStageIso E d)
+    (parameterStableStageIso_anticomm E d)
 
 /-- The actual colimit comparison before identifying the integer-degree indexing. -/
 def parameterStableShiftedColimitIso (E : LoopPrespectrum.{u}) (d : ℤ) :
@@ -120,17 +121,17 @@ lemma parameterStable_level (d : ℤ) (n : ℕ) :
 /-- The integer reindexing retains the original spectrum level and homotopy degree. -/
 def shiftedStableReindexIso (E : LoopPrespectrum.{u}) (d : ℤ) (n : ℕ) :
     (shiftedStableSystem E d).obj n ≅
-      (sequentialShiftFunctor (parameterStableOffset d) ⋙ stableSystem E (d+1)).obj n :=
+      (SequentialSystem.shiftFunctor (parameterStableOffset d) ⋙ stableSystem E (d+1)).obj n :=
   (degreeLevelPiAddEquiv E (parameterStable_degree d n) (parameterStable_level d n)).toAddCommGrpIso
 
 lemma shiftedStableReindexIso_naturality (E : LoopPrespectrum.{u}) (d : ℤ) (n : ℕ) :
     (shiftedStableSystem E d).map (homOfLE (Nat.le_succ n)) ≫
         (shiftedStableReindexIso E d (n+1)).hom =
       (shiftedStableReindexIso E d n).hom ≫
-        (sequentialShiftFunctor (parameterStableOffset d) ⋙ stableSystem E (d+1)).map
+        (SequentialSystem.shiftFunctor (parameterStableOffset d) ⋙ stableSystem E (d+1)).map
           (homOfLE (Nat.le_succ n)) := by
   simp only [shiftedStableSystem, stableSystem, Functor.comp_map,
-    sequentialShiftFunctor, Monotone.functor]
+    SequentialSystem.shiftFunctor, Monotone.functor]
   simp only [Functor.ofSequence_map_homOfLE_succ]
   apply AddCommGrpCat.ext
   intro a
@@ -139,10 +140,10 @@ lemma shiftedStableReindexIso_naturality (E : LoopPrespectrum.{u}) (d : ℤ) (n 
 /-- The shifted actual diagram is the original diagram in degree d+1 after its
 proved finite tail, without changing any transition map. -/
 def shiftedStableSystemIso (E : LoopPrespectrum.{u}) (d : ℤ) :
-    shiftedStableSystem E d ≅ sequentialShiftFunctor (parameterStableOffset d) ⋙ stableSystem E
-      (d+1) := by
+    shiftedStableSystem E d ≅
+      SequentialSystem.shiftFunctor (parameterStableOffset d) ⋙ stableSystem E (d+1) := by
   let η : shiftedStableSystem E d ⟶
-      sequentialShiftFunctor (parameterStableOffset d) ⋙ stableSystem E (d+1) :=
+      SequentialSystem.shiftFunctor (parameterStableOffset d) ⋙ stableSystem E (d+1) :=
     NatTrans.ofSequence (fun n ↦ (shiftedStableReindexIso E d n).hom)
       (shiftedStableReindexIso_naturality E d)
   exact NatIso.ofComponents (shiftedStableReindexIso E d) (fun {_ _} f ↦ η.naturality f)
@@ -153,7 +154,7 @@ def parameterStableHomotopyIso (E : LoopPrespectrum.{u}) (d : ℤ) :
     stableHomotopyGroup (parameterLooping E) d ≅ stableHomotopyGroup E (d+1) :=
   parameterStableShiftedColimitIso E d ≪≫
     HasColimit.isoOfNatIso (shiftedStableSystemIso E d) ≪≫
-    sequentialTailColimitIso (stableSystem E (d+1)) (parameterStableOffset d)
+    SequentialSystem.tailColimitIso (stableSystem E (d+1)) (parameterStableOffset d)
 
 end Quillen.LoopPrespectrum
 
@@ -171,17 +172,17 @@ namespace Quillen.LoopPrespectrum
 including its displayed sign and actual reindexing. -/
 @[reassoc] theorem parameterStableHomotopyIso_ι_hom (E : LoopPrespectrum.{u}) (d : ℤ) (n : ℕ) :
     stableHomotopyι (parameterLooping E) d n ≫ (parameterStableHomotopyIso E d).hom =
-      (alternatingIso n (parameterStableStageIso E d n)).hom ≫
+      (SequentialSystem.alternatingIso n (parameterStableStageIso E d n)).hom ≫
         (shiftedStableReindexIso E d n).hom ≫
           stableHomotopyι E (d+1) (parameterStableOffset d+n) := by
   simp [parameterStableHomotopyIso, parameterStableShiftedColimitIso,
     stableHomotopyι, parameterStableSystemIso, shiftedStableSystemIso,
-    sequentialSignCorrectionIso]
+    SequentialSystem.signCorrectionIso]
 
 /-- The reverse comparison retains the same original stage map, rather than an
 unspecified stable equivalence. -/
 @[reassoc] theorem parameterStableHomotopyIso_ι_inv (E : LoopPrespectrum.{u}) (d : ℤ) (n : ℕ) :
-    (alternatingIso n (parameterStableStageIso E d n)).hom ≫
+    (SequentialSystem.alternatingIso n (parameterStableStageIso E d n)).hom ≫
       (shiftedStableReindexIso E d n).hom ≫
         stableHomotopyι E (d+1) (parameterStableOffset d+n) ≫
           (parameterStableHomotopyIso E d).inv = stableHomotopyι (parameterLooping E) d n := by
@@ -230,16 +231,19 @@ lemma shiftedStableReindexIso_map {E F : LoopPrespectrum.{u}} (f : E ⟶ F) (d :
 @[reassoc] lemma parameterStable_correctedStage_map {E F : LoopPrespectrum.{u}}
     (f : E ⟶ F) (d : ℤ) (n : ℕ) :
     (stableSystemMap (parameterLoopingMap f) d).app n ≫
-        (alternatingIso n (parameterStableStageIso F d n)).hom ≫ (shiftedStableReindexIso F d n).hom
+        (SequentialSystem.alternatingIso n (parameterStableStageIso F d n)).hom ≫
+          (shiftedStableReindexIso F d n).hom
           =
-      (alternatingIso n (parameterStableStageIso E d n)).hom ≫ (shiftedStableReindexIso E d n).hom ≫
+      (SequentialSystem.alternatingIso n (parameterStableStageIso E d n)).hom ≫
+        (shiftedStableReindexIso E d n).hom ≫
         (stableSystemMap f (d+1)).app (parameterStableOffset d+n) := by
   have h : (stableSystemMap (parameterLoopingMap f) d).app n ≫
       (parameterStableStageIso F d n).hom ≫ (shiftedStableReindexIso F d n).hom =
     (parameterStableStageIso E d n).hom ≫ (shiftedStableReindexIso E d n).hom ≫
       (stableSystemMap f (d+1)).app (parameterStableOffset d+n) := by
     rw [← Category.assoc, parameterStableStageIso_map, Category.assoc, shiftedStableReindexIso_map]
-  simpa only [alternatingIso_hom, Preadditive.comp_zsmul, Preadditive.zsmul_comp] using
+  simpa only [SequentialSystem.alternatingIso_hom, Preadditive.comp_zsmul,
+    Preadditive.zsmul_comp] using
     congrArg (fun h ↦ (-1 : ℤ)^n • h) h
 
 /-- Naturality is for the unchanged original stable-group maps in all integer degrees. -/

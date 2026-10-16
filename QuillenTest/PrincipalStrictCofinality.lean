@@ -10,6 +10,8 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalStrictC
 /-! # Actual principal strict cofinality and honest original K-zero image consumers -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 open Quillen.Waldhausen
 

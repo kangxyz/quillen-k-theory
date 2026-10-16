@@ -23,6 +23,8 @@ Godement total. Native affine-target correspondence is a separate geometry step.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open CategoryTheory.ExactCategory
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -54,9 +56,9 @@ instance boundedPullback_additive {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
 
 /-- Original flat pullback preserves inherited actual exact sequences. -/
 def boundedPullbackExactFunctor {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex Y))
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex Y.Modules ℤ))
       (BoundedBelow.objects Y))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex X))
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
       (BoundedBelow.objects X)) where
   toFunctor := boundedPullback f
   map_conflation S hs := by
@@ -108,9 +110,11 @@ instance boundedNegativeTwist_additive (R : CommRingCat.{u}) :
 preservation of degreewise short exact sequences.
 -/
 def boundedNegativeTwistExactFunctor (R : CommRingCat.{u}) : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (twoChartLine R).Modules ℤ))
       (BoundedBelow.objects (twoChartLine R)))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex (twoChartLine R)))
+    (ExactSubcategory.exactStructure (abelianExactStructure
+      (CochainComplex (twoChartLine R).Modules ℤ))
       (BoundedBelow.objects (twoChartLine R))) where
   toFunctor := boundedNegativeTwist R
   map_conflation S hs := by

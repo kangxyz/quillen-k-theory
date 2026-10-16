@@ -8,6 +8,7 @@ module
 public import Aglib.Algebra.Homology.HomotopyCategory.Plus.BoundedComparison
 public import Quillen.Algebra.Homology.HomotopyCategory.BoundedProperty
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.DerivedPushforwardVectorBundle
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Derived direct images of bounded projective-line vector-bundle complexes
 
@@ -65,12 +66,9 @@ theorem perfect_derivedPushforward_of_bounded_vectorBundle_terms
       (J.mapIso ((DerivedCategory.Plus.quotientCompQhIso (twoChartLine R).Modules).app
         (CochainComplex.singlePlus (K.obj.X n) n))).symm
       (perfect_derivedPushforward_vectorBundle_single R (K.obj.X n) n)
-  let : (perfectDerivedObjects (Spec R)).ContainsZero :=
-    instContainsZeroDerivedPerfectDerivedObjects (Spec R)
-  let : (perfectDerivedObjects (Spec R)).IsTriangulatedClosed₂ :=
-    instIsTriangulatedClosed₂DerivedPerfectDerivedObjects (Spec R)
-  let : (perfectDerivedObjects (Spec R)).IsClosedUnderIsomorphisms :=
-    instIsClosedUnderIsomorphismsDerivedPerfectDerivedObjects (Spec R)
+  let : (perfectDerivedObjects (Spec R)).ContainsZero := by infer_instance
+  let : (perfectDerivedObjects (Spec R)).IsTriangulatedClosed₂ := by infer_instance
+  let : (perfectDerivedObjects (Spec R)).IsClosedUnderIsomorphisms := by infer_instance
   have h := HomotopyCategory.Plus.property_obj_of_term_bounds F
     (perfectDerivedObjects (Spec R)) K a b hl hu hs
   exact (perfectDerivedObjects (Spec R)).prop_of_iso

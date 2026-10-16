@@ -15,6 +15,7 @@ public import Quillen.Devissage.FullyFaithful
 public import Quillen.Topology.ClassifyingSpace.Equivalence
 public import Quillen.CategoryTheory.TheoremB.Naturality
 public import Quillen.CategoryTheory.TheoremA.ContractibleComma
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # The zero comma category of a Serre quotient
@@ -420,7 +421,8 @@ end Quillen.Q
 
 namespace Quillen.SerreLocalization
 
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
@@ -444,13 +446,15 @@ theorem arrowUpper_quotientMapQ {X M : C}
   exact (subobjectMap_spanUpper P.isoModSerre.Q P s).symm
 
 /-- The genuine target-zero comma category for the canonical quotient Q-map. -/
-abbrev ZeroComma := CostructuredArrow (quotientMapQ P) (quotientExactStructure P).qZero
+abbrev ZeroComma := CostructuredArrow (quotientMapQ P) ((abelianExactStructure
+  P.isoModSerre.Localization)).qZero
 
 /-- Every source object occurring in the zero comma category belongs to the
 Serre class. This is a consequence of the epi/mono legs of its structure arrow. -/
 theorem zeroComma_object_mem (X : ZeroComma P) : P X.left.obj.of :=
   (quotient_isZero_obj_iff P X.left.obj.of).1
-    ((quotientExactStructure P).isZero_source_of_qHom X.hom (isZero_zero _))
+    (((abelianExactStructure P.isoModSerre.Localization)).isZero_source_of_qHom X.hom
+      (isZero_zero _))
 
 /-- The canonical zero comparison lifts the Q-inclusion to the zero comma
 category. The components are exactly the ones used in the localization
@@ -465,7 +469,7 @@ def serreToZeroComma : (CategoryTheory.ObjectProperty.subcategoryExactStructure 
 @[simp]
 theorem serreToZeroComma_projection :
     serreToZeroComma P ⋙ CostructuredArrow.proj (quotientMapQ P)
-      (quotientExactStructure P).qZero = Devissage.mapQ P := rfl
+      ((abelianExactStructure P.isoModSerre.Localization)).qZero = Devissage.mapQ P := rfl
 
 instance serreToZeroComma_faithful : (serreToZeroComma P).Faithful where
   map_injective h := (Devissage.mapQ P).map_injective
@@ -482,7 +486,7 @@ instance serreToZeroComma_essSurj : (serreToZeroComma P).EssSurj where
     let Y : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory :=
       Q.of _ _ ⟨X.left.obj.of, zeroComma_object_mem P X⟩
     refine ⟨Y, ⟨CostructuredArrow.isoMk (Iso.refl _) ?_⟩⟩
-    exact ((quotientExactStructure P).qHom_subsingleton_of_isZero _ _
+    exact (((abelianExactStructure P.isoModSerre.Localization)).qHom_subsingleton_of_isZero _ _
       (isZero_zero _)).elim _ _
 
 /-- The canonical lift of the inclusion is a genuine categorical equivalence. -/
@@ -509,12 +513,12 @@ theorem zeroCommaClassifyingHomotopyEquiv_apply
 @[simp]
 theorem zeroCommaClassifying_projection :
     (classifyingSpaceMap (CostructuredArrow.proj (quotientMapQ P)
-      (quotientExactStructure P).qZero)).hom.comp
+      ((abelianExactStructure P.isoModSerre.Localization)).qZero)).hom.comp
       (classifyingSpaceMap (serreToZeroComma P)).hom =
     (classifyingSpaceMap (Devissage.mapQ P)).hom := by
   change (classifyingSpaceMap (serreToZeroComma P) ≫
     classifyingSpaceMap (CostructuredArrow.proj (quotientMapQ P)
-      (quotientExactStructure P).qZero)).hom = _
+      ((abelianExactStructure P.isoModSerre.Localization)).qZero)).hom = _
   rw [← classifyingSpaceMap_comp, serreToZeroComma_projection]
 
 /-- The comma structure transformation restricts to precisely the canonical
@@ -522,18 +526,21 @@ natural zero comparison, so no new choice of nullhomotopy is introduced. -/
 @[simp]
 theorem serreToZeroComma_transformation :
     Functor.whiskerLeft (serreToZeroComma P)
-      (TheoremB.commaTransformation (quotientMapQ P) (quotientExactStructure P).qZero) =
+      (TheoremB.commaTransformation (quotientMapQ P) ((abelianExactStructure
+        P.isoModSerre.Localization)).qZero) =
       (quotientInclusionZeroIso P).hom := rfl
 
 /-- The canonical comma homotopy restricts pointwise to the chosen quotient
 nullhomotopy, including its complete path coordinate. -/
 theorem serreToZeroComma_nullhomotopy (t : unitInterval)
     (x : (CategoryTheory.ObjectProperty.subcategoryExactStructure P).KSpace) :
-    TheoremB.commaNullhomotopy (quotientMapQ P) (quotientExactStructure P).qZero
+    TheoremB.commaNullhomotopy (quotientMapQ P) ((abelianExactStructure
+      P.isoModSerre.Localization)).qZero
       (t, classifyingSpaceMap (serreToZeroComma P) x) =
       quotientInclusionNullhomotopy P (t, x) := by
   change classifyingSpaceNaturalTransformationHomotopy
-    (TheoremB.commaTransformation (quotientMapQ P) (quotientExactStructure P).qZero)
+    (TheoremB.commaTransformation (quotientMapQ P) ((abelianExactStructure
+      P.isoModSerre.Localization)).qZero)
     (t, classifyingSpaceMap (serreToZeroComma P) x) =
     classifyingSpaceNaturalTransformationHomotopy (quotientInclusionZeroIso P).hom (t, x)
   rw [← classifyingSpaceNaturalTransformationHomotopy_whiskerLeft,
@@ -544,7 +551,8 @@ theorem serreToZeroComma_nullhomotopy (t : unitInterval)
 recovers the existing localization-fiber map strictly, both in its projection
 and in its path coordinate. -/
 theorem serreToZeroComma_fiberComparison :
-    (TheoremB.fiberComparison (quotientMapQ P) (quotientExactStructure P).qZero).comp
+    (TheoremB.fiberComparison (quotientMapQ P) ((abelianExactStructure
+      P.isoModSerre.Localization)).qZero).comp
       (classifyingSpaceMap (serreToZeroComma P)).hom = localizationFiberComparison P := by
   apply ContinuousMap.ext
   intro x
@@ -557,20 +565,23 @@ theorem serreToZeroComma_fiberComparison :
 
 /-- The source-zero comma category used in Quillen's original localization
 proof. It is distinct from the target-zero comma category above. -/
-abbrev ZeroStructuredComma := StructuredArrow (quotientExactStructure P).qZero (quotientMapQ P)
+abbrev ZeroStructuredComma := StructuredArrow ((abelianExactStructure
+  P.isoModSerre.Localization)).qZero (quotientMapQ P)
 
 /-- The Serre inclusion lifted to the structured comma category using the
 inverse of the same canonical categorical zero comparison. -/
 def serreToZeroStructuredComma :
     (CategoryTheory.ObjectProperty.subcategoryExactStructure P).QCategory ⥤ ZeroStructuredComma P :=
-  (Devissage.mapQ P).toStructuredArrow (quotientExactStructure P).qZero (quotientMapQ P)
+  (Devissage.mapQ P).toStructuredArrow ((abelianExactStructure
+    P.isoModSerre.Localization)).qZero (quotientMapQ P)
     (fun X => (quotientInclusionZeroIso P).inv.app X) (fun f => by
       simpa using ((quotientInclusionZeroIso P).inv.naturality f).symm)
 
 @[simp]
 theorem serreToZeroStructuredComma_projection :
     serreToZeroStructuredComma P ⋙ StructuredArrow.proj
-      (quotientExactStructure P).qZero (quotientMapQ P) = Devissage.mapQ P := rfl
+      ((abelianExactStructure P.isoModSerre.Localization)).qZero (quotientMapQ P) =
+        Devissage.mapQ P := rfl
 
 /-- Lift categories of arbitrary quotient intervals admit the same concrete
 join contraction, as soon as the specified endpoints are nested. -/
@@ -582,7 +593,7 @@ theorem subobjectIntervalLift_contractible (M : C)
 
 /-- The quotient structure arrow associated to an ambient Serre layer. -/
 def layerStructureArrow {M : C} (A : Devissage.Layer P M) :
-    (quotientExactStructure P).qZero ⟶
+    ((abelianExactStructure P.isoModSerre.Localization)).qZero ⟶
       (quotientMapQ P).obj (Q.of (abelianExactStructure C).deflation
         (abelianExactStructure C).inflation M) :=
   (quotientInclusionZeroIso P).inv.app A.comma.left ≫ (quotientMapQ P).map A.comma.hom
@@ -592,9 +603,10 @@ theorem layerStructureArrow_subobject {M : C} (A : Devissage.Layer P M) :
     Q.zeroArrowSubobject (layerStructureArrow P A) =
       subobjectMap P.isoModSerre.Q P M A.upper := by
   let e := ((quotient_isZero_obj_iff P A.quotient).2 A.property).iso
-    (isZero_zero (Quotient P))
+    (isZero_zero (P.isoModSerre.Localization))
   exact Q.zeroArrowSubobject_comp_iso e.symm
-    ((quotientExactFunctor P).toQCompatibleFunctor.mapSpan A.span)
+    (((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+      P.isoModSerre.Q)).toQCompatibleFunctor.mapSpan A.span)
 
 /-- Lifts of a fixed quotient subobject by ambient Serre layers. This is the
 concrete poset occurring in the structured zero-comma comparison. -/
@@ -755,37 +767,38 @@ theorem zeroStructuredCommaClassifyingHomotopyEquiv_toFun :
       (classifyingSpaceMap (serreToZeroStructuredComma P)).hom := rfl
 
 /-- The isomorphism objects in a quotient structured comma category. -/
-def isoStructureProperty (V : (quotientExactStructure P).QCategory) :
+def isoStructureProperty (V : ((abelianExactStructure P.isoModSerre.Localization)).QCategory) :
     ObjectProperty (StructuredArrow V (quotientMapQ P)) := fun X => IsIso X.hom
 
 /-- The full subcategory of arrows from `V` to `quotientMapQ P` whose structure Q-arrow is an
 isomorphism. -/
-abbrev IsoStructuredComma (V : (quotientExactStructure P).QCategory) :=
+abbrev IsoStructuredComma (V : ((abelianExactStructure P.isoModSerre.Localization)).QCategory) :=
   (isoStructureProperty P V).FullSubcategory
 
-instance isoStructure_arrow_isIso {V : (quotientExactStructure P).QCategory}
+instance isoStructure_arrow_isIso {V : ((abelianExactStructure
+  P.isoModSerre.Localization)).QCategory}
     (A : IsoStructuredComma P V) : IsIso A.obj.hom := A.property
 
 /-- Inclusion of the objects whose structure Q-arrow is invertible. -/
 @[implicit_reducible]
-def isoStructuredInclusion (V : (quotientExactStructure P).QCategory) :
+def isoStructuredInclusion (V : ((abelianExactStructure P.isoModSerre.Localization)).QCategory) :
     IsoStructuredComma P V ⥤ StructuredArrow V (quotientMapQ P) :=
   (isoStructureProperty P V).ι
 
 /-- The costructured-arrow category of maps from isomorphism objects to a fixed quotient
 structured-comma object `X`; this is the comma fiber of `isoStructuredInclusion P V` over
 `X`. -/
-abbrev IsoStructuredFiber {V : (quotientExactStructure P).QCategory}
+abbrev IsoStructuredFiber {V : ((abelianExactStructure P.isoModSerre.Localization)).QCategory}
     (X : StructuredArrow V (quotientMapQ P)) := CostructuredArrow (isoStructuredInclusion P V) X
 
 /-- The concrete interval-lift model for the comma fiber over `X`. -/
-abbrev IsoFiberIntervals {V : (quotientExactStructure P).QCategory}
+abbrev IsoFiberIntervals {V : ((abelianExactStructure P.isoModSerre.Localization)).QCategory}
     (X : StructuredArrow V (quotientMapQ P)) :=
   SubobjectIntervalLift P.isoModSerre.Q P X.right.obj.of
     (Q.arrowLower X.hom) (Q.arrowUpper X.hom)
 
 /-- A lifted interval defines its ordinary quotient-to-ambient layer. -/
-def isoFiberIntervalLayer {V : (quotientExactStructure P).QCategory}
+def isoFiberIntervalLayer {V : ((abelianExactStructure P.isoModSerre.Localization)).QCategory}
     {X : StructuredArrow V (quotientMapQ P)} (A : IsoFiberIntervals P X) :
     Devissage.Layer (⊤ : ObjectProperty C) X.right.obj.of where
   lower := A.lower
@@ -794,25 +807,27 @@ def isoFiberIntervalLayer {V : (quotientExactStructure P).QCategory}
   property := trivial
 
 /-- The actual ambient Q-arrow associated to a lifted interval. -/
-def isoFiberIntervalArrow {V : (quotientExactStructure P).QCategory}
+def isoFiberIntervalArrow {V : ((abelianExactStructure P.isoModSerre.Localization)).QCategory}
     {X : StructuredArrow V (quotientMapQ P)} (A : IsoFiberIntervals P X) :
     Q.of (abelianExactStructure C).deflation (abelianExactStructure C).inflation
       (isoFiberIntervalLayer P A).quotient ⟶ X.right :=
   Q.mkHom _ _ (isoFiberIntervalLayer P A).span
 
 @[simp]
-theorem isoFiberIntervalArrow_lower {V : (quotientExactStructure P).QCategory}
+theorem isoFiberIntervalArrow_lower {V : ((abelianExactStructure
+  P.isoModSerre.Localization)).QCategory}
     {X : StructuredArrow V (quotientMapQ P)} (A : IsoFiberIntervals P X) :
     Q.arrowLower (isoFiberIntervalArrow P A) = A.lower := Q.arrowLower_layerSpan _
 
 @[simp]
-theorem isoFiberIntervalArrow_upper {V : (quotientExactStructure P).QCategory}
+theorem isoFiberIntervalArrow_upper {V : ((abelianExactStructure
+  P.isoModSerre.Localization)).QCategory}
     {X : StructuredArrow V (quotientMapQ P)} (A : IsoFiberIntervals P X) :
     Q.arrowUpper (isoFiberIntervalArrow P A) = A.upper := Q.arrowUpper_layerSpan _
 
 /-- Completeness of the layer invariant identifies the localized source
 with the required base object. This is an actual Q-isomorphism. -/
-def isoFiberIntervalSourceIso {V : (quotientExactStructure P).QCategory}
+def isoFiberIntervalSourceIso {V : ((abelianExactStructure P.isoModSerre.Localization)).QCategory}
     {X : StructuredArrow V (quotientMapQ P)} (A : IsoFiberIntervals P X) :
     (quotientMapQ P).obj (Q.of (abelianExactStructure C).deflation
       (abelianExactStructure C).inflation (isoFiberIntervalLayer P A).quotient) ≅ V :=
@@ -821,7 +836,8 @@ def isoFiberIntervalSourceIso {V : (quotientExactStructure P).QCategory}
     (by erw [arrowUpper_quotientMapQ, isoFiberIntervalArrow_upper]; exact A.map_upper)).choose
 
 /-- The chosen source identification commutes with the structure arrow. -/
-lemma isoFiberIntervalSourceIso_hom_comp {V : (quotientExactStructure P).QCategory}
+lemma isoFiberIntervalSourceIso_hom_comp {V : ((abelianExactStructure
+  P.isoModSerre.Localization)).QCategory}
     {X : StructuredArrow V (quotientMapQ P)} (A : IsoFiberIntervals P X) :
     (isoFiberIntervalSourceIso P A).hom ≫ X.hom =
       (quotientMapQ P).map (isoFiberIntervalArrow P A) :=
@@ -830,7 +846,7 @@ lemma isoFiberIntervalSourceIso_hom_comp {V : (quotientExactStructure P).QCatego
     (by erw [arrowUpper_quotientMapQ, isoFiberIntervalArrow_upper]; exact A.map_upper)).choose_spec
 
 /-- An interval lift gives an object of the actual isomorphism-inclusion comma fiber. -/
-def isoFiberIntervalObj {V : (quotientExactStructure P).QCategory}
+def isoFiberIntervalObj {V : ((abelianExactStructure P.isoModSerre.Localization)).QCategory}
     {X : StructuredArrow V (quotientMapQ P)} (A : IsoFiberIntervals P X) :
     IsoStructuredFiber P X := by
   let Y : IsoStructuredComma P V :=
@@ -845,7 +861,8 @@ def isoFiberIntervalObj {V : (quotientExactStructure P).QCategory}
       simp))
 
 /-- In the actual fiber, the Q-arrow into the fixed target determines every morphism. -/
-instance isoStructuredFiber_thin {V : (quotientExactStructure P).QCategory}
+instance isoStructuredFiber_thin {V : ((abelianExactStructure
+  P.isoModSerre.Localization)).QCategory}
     (X : StructuredArrow V (quotientMapQ P)) : Quiver.IsThin (IsoStructuredFiber P X) := by
   intro A B
   constructor
@@ -860,19 +877,19 @@ instance isoStructuredFiber_thin {V : (quotientExactStructure P).QCategory}
 set_option backward.isDefEq.respectTransparency false in
 /-- An actual ambient Q-factorization uniquely lifts to a morphism of the
 isomorphism-inclusion comma fibers. Its structure triangle follows by monicity. -/
-def isoStructuredFiberHomMk {V : (quotientExactStructure P).QCategory}
+def isoStructuredFiberHomMk {V : ((abelianExactStructure P.isoModSerre.Localization)).QCategory}
     {X : StructuredArrow V (quotientMapQ P)} {A B : IsoStructuredFiber P X}
     (k : A.left.obj.right ⟶ B.left.obj.right) (hk : k ≫ B.hom.right = A.hom.right) : A ⟶ B :=
   CostructuredArrow.homMk (ObjectProperty.homMk (StructuredArrow.homMk k (by
     have : Mono ((quotientMapQ P).map B.hom.right) :=
-      Q.abelianQ_mono (C := Quotient P) _
+      Q.abelianQ_mono (C := P.isoModSerre.Localization) _
     apply (cancel_mono ((quotientMapQ P).map B.hom.right)).1
     rw [Category.assoc, ← Functor.map_comp, hk]
     exact (StructuredArrow.w A.hom).trans (StructuredArrow.w B.hom).symm)))
     (by apply StructuredArrow.hom_ext; exact hk)
 
 /-- A compatible source Q-isomorphism gives an actual isomorphism of comma fibers. -/
-def isoStructuredFiberIsoMk {V : (quotientExactStructure P).QCategory}
+def isoStructuredFiberIsoMk {V : ((abelianExactStructure P.isoModSerre.Localization)).QCategory}
     {X : StructuredArrow V (quotientMapQ P)} {A B : IsoStructuredFiber P X}
     (k : A.left.obj.right ≅ B.left.obj.right) (hk : k.hom ≫ B.hom.right = A.hom.right) : A ≅ B where
   hom := isoStructuredFiberHomMk P k.hom hk
@@ -882,7 +899,8 @@ def isoStructuredFiberIsoMk {V : (quotientExactStructure P).QCategory}
 
 /-- The concrete interval comparison, using the actual Q-factorizations
 classified by interval inequalities. -/
-def intervalToIsoStructuredFiber {V : (quotientExactStructure P).QCategory}
+def intervalToIsoStructuredFiber {V : ((abelianExactStructure
+  P.isoModSerre.Localization)).QCategory}
     (X : StructuredArrow V (quotientMapQ P)) : IsoFiberIntervals P X ⥤ IsoStructuredFiber P X where
   obj := isoFiberIntervalObj P
   map {A B} h := isoStructuredFiberHomMk P
@@ -895,11 +913,13 @@ def intervalToIsoStructuredFiber {V : (quotientExactStructure P).QCategory}
   map_id _ := Subsingleton.elim _ _
   map_comp _ _ := Subsingleton.elim _ _
 
-instance intervalToIsoStructuredFiber_faithful {V : (quotientExactStructure P).QCategory}
+instance intervalToIsoStructuredFiber_faithful {V : ((abelianExactStructure
+  P.isoModSerre.Localization)).QCategory}
     (X : StructuredArrow V (quotientMapQ P)) : (intervalToIsoStructuredFiber P X).Faithful where
   map_injective _ := Subsingleton.elim _ _
 
-instance intervalToIsoStructuredFiber_full {V : (quotientExactStructure P).QCategory}
+instance intervalToIsoStructuredFiber_full {V : ((abelianExactStructure
+  P.isoModSerre.Localization)).QCategory}
     (X : StructuredArrow V (quotientMapQ P)) : (intervalToIsoStructuredFiber P X).Full where
   map_surjective {A B} f := by
     have h := Q.endpoints_order_of_fac (isoFiberIntervalArrow P A) (isoFiberIntervalArrow P B)
@@ -910,7 +930,8 @@ instance intervalToIsoStructuredFiber_full {V : (quotientExactStructure P).QCate
     exact ⟨homOfLE hab, Subsingleton.elim _ _⟩
 
 set_option backward.isDefEq.respectTransparency false in
-instance intervalToIsoStructuredFiber_essSurj {V : (quotientExactStructure P).QCategory}
+instance intervalToIsoStructuredFiber_essSurj {V : ((abelianExactStructure
+  P.isoModSerre.Localization)).QCategory}
     (X : StructuredArrow V (quotientMapQ P)) : (intervalToIsoStructuredFiber P X).EssSurj where
   mem_essImage Y := by
     let : IsIso Y.left.obj.hom := Y.left.property
@@ -939,20 +960,23 @@ instance intervalToIsoStructuredFiber_essSurj {V : (quotientExactStructure P).QC
       (isoFiberIntervalArrow_lower P A) (isoFiberIntervalArrow_upper P A)
     exact ⟨A, ⟨isoStructuredFiberIsoMk P e he⟩⟩
 
-instance intervalToIsoStructuredFiber_isEquivalence {V : (quotientExactStructure P).QCategory}
+instance intervalToIsoStructuredFiber_isEquivalence {V : ((abelianExactStructure
+  P.isoModSerre.Localization)).QCategory}
     (X : StructuredArrow V (quotientMapQ P)) : (intervalToIsoStructuredFiber P X).IsEquivalence
       where
 
 /-- The actual fiber of the inclusion of isomorphism objects is equivalent
 to the concrete join-semilattice of ambient interval lifts. -/
-def isoStructuredFiberEquivalence {V : (quotientExactStructure P).QCategory}
+def isoStructuredFiberEquivalence {V : ((abelianExactStructure
+  P.isoModSerre.Localization)).QCategory}
     (X : StructuredArrow V (quotientMapQ P)) :
     IsoFiberIntervals P X ≌ IsoStructuredFiber P X :=
   (intervalToIsoStructuredFiber P X).asEquivalence
 
 /-- Every actual comma fiber of the isomorphism-object inclusion is
 contractible by an explicit join contraction. -/
-theorem isoStructuredFiber_contractible {V : (quotientExactStructure P).QCategory}
+theorem isoStructuredFiber_contractible {V : ((abelianExactStructure
+  P.isoModSerre.Localization)).QCategory}
     (X : StructuredArrow V (quotientMapQ P)) :
     ContractibleSpace (ClassifyingSpace (IsoStructuredFiber P X)) := by
   let := subobjectIntervalLift_contractible P X.right.obj.of
@@ -963,7 +987,8 @@ theorem isoStructuredFiber_contractible {V : (quotientExactStructure P).QCategor
 /-- The inclusion of isomorphism objects into any quotient structured comma
 category is a genuine homotopy equivalence. This is the first auxiliary lemma
 of Quillen's localization proof, with its prescribed inclusion as forward map. -/
-def isoStructuredInclusionClassifyingHomotopyEquiv (V : (quotientExactStructure P).QCategory) :
+def isoStructuredInclusionClassifyingHomotopyEquiv (V : ((abelianExactStructure
+  P.isoModSerre.Localization)).QCategory) :
     ContinuousMap.HomotopyEquiv (ClassifyingSpace (IsoStructuredComma P V))
       (ClassifyingSpace (StructuredArrow V (quotientMapQ P))) :=
   TheoremA.contractibleCommaClassifyingHomotopyEquiv (isoStructuredInclusion P V)
@@ -971,7 +996,7 @@ def isoStructuredInclusionClassifyingHomotopyEquiv (V : (quotientExactStructure 
 
 @[simp]
 theorem isoStructuredInclusionClassifyingHomotopyEquiv_toFun
-    (V : (quotientExactStructure P).QCategory) :
+    (V : ((abelianExactStructure P.isoModSerre.Localization)).QCategory) :
     (isoStructuredInclusionClassifyingHomotopyEquiv P V).toFun =
       (classifyingSpaceMap (isoStructuredInclusion P V)).hom := rfl
 

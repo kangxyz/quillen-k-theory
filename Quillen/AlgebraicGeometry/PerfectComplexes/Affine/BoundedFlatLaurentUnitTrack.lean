@@ -9,7 +9,7 @@ public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.UnitTrack
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassStep
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedFlatBassPasting
-public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.Units
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Units
 public import Quillen.Topology.Prespectrum.RelativeHomotopyIntertwining
 
 /-! Actual Laurent-unit tracks commute relatively with the original coefficient square. -/

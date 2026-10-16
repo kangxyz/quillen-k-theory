@@ -7,6 +7,7 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Tensor.Restriction
 
+public import Aglib.AlgebraicGeometry.Modules.Restriction.Sheafification
 /-!
 # Original-map consumers of tensor restriction
 

@@ -32,9 +32,9 @@ namespace Quillen.PerfectComplexes.Affine
 quasi-isomorphisms. Actual restricted short exactness retains both kernels. -/
 lemma exists_supported_strict_dual_factorization (R : CommRingCat.{u})
     {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]
-    (P : (strictSupported j).FullSubcategory) (B B' : Complex (Spec R))
+    (P : (strictSupported j).FullSubcategory) (B B' : CochainComplex (Spec R).Modules ℤ)
     (hB' : perfectSupported j B') (w : P.obj ⟶ B) [QuasiIso w] (b : B' ⟶ B) :
-    ∃ (C : (strictSupported j).FullSubcategory) (D : Complex (Spec R))
+    ∃ (C : (strictSupported j).FullSubcategory) (D : CochainComplex (Spec R).Modules ℤ)
       (c : C.obj ⟶ P.obj) (d : D ⟶ B) (u : C.obj ⟶ D) (v : B' ⟶ D),
       perfectSupported j D ∧ QuasiIso u ∧ QuasiIso v ∧
       u ≫ d = c ≫ w ∧ v ≫ d = b ∧

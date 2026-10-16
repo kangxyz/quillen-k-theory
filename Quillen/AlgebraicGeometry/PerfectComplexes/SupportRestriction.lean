@@ -9,7 +9,11 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRestrictionIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.RestrictionFunctoriality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.OpenUnion
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
 /-!
 # Original support restrictions and coverwise vanishing
 
@@ -22,6 +26,8 @@ restriction and zero-detection statements.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules (derivedRestrict derivedRestrictFactors)
+
 open AlgebraicGeometry.Scheme.Modules.Complex
 
 
@@ -31,14 +37,16 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes
 attribute [local instance] HasDerivedCategory.standard
 
 /-- Original derived zero objects are detected under restriction along an
 actual scheme isomorphism. -/
 lemma isZero_toDerived_restrict_iff_of_isIso {U X : Scheme.{u}}
-    (j : U ⟶ X) [IsIso j] [IsOpenImmersion j] (E : Complex X) :
-    IsZero ((toDerived U).obj ((restrict j).obj E)) ↔ IsZero ((toDerived X).obj E) := by
+    (j : U ⟶ X) [IsIso j] [IsOpenImmersion j] (E : CochainComplex X.Modules ℤ) :
+    IsZero ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj E)) ↔ IsZero
+      ((DerivedCategory.Q (C := X.Modules)).obj E) := by
   constructor
   · intro hz
     have hF := hz.of_iso ((derivedRestrictFactors j).app E)
@@ -83,12 +91,14 @@ def supportImageRestrictionNatIso {X Y : Scheme.{u}} (f : X ⟶ Y) [IsOpenImmers
 /-- Vanishing on the actual image is exactly vanishing of the original
 restricted complex on the original support open. -/
 lemma isZero_restrict_supportImage_iff {X Y : Scheme.{u}}
-    (f : X ⟶ Y) [IsOpenImmersion f] (Z : X.Opens) (E : Complex Y) :
-    IsZero ((toDerived (supportImageOpen f Z).toScheme).obj
+    (f : X ⟶ Y) [IsOpenImmersion f] (Z : X.Opens) (E : CochainComplex Y.Modules ℤ) :
+    IsZero ((DerivedCategory.Q (C := (supportImageOpen f Z).toScheme.Modules)).obj
       ((restrict (supportImageOpen f Z).ι).obj E)) ↔
-    IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj ((restrict f).obj E))) := by
+    IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj
+      ((restrict Z.ι).obj ((restrict f).obj E))) := by
   rw [← isZero_toDerived_restrict_iff_of_isIso (supportImageIso f Z).hom]
-  exact ((toDerived Z.toScheme).mapIso ((supportImageRestrictionNatIso f Z).app E)).isZero_iff
+  exact ((DerivedCategory.Q (C := Z.toScheme.Modules)).mapIso
+    ((supportImageRestrictionNatIso f Z).app E)).isZero_iff
 end Quillen.PerfectComplexes
 
 namespace Quillen.PerfectComplexes
@@ -111,7 +121,7 @@ lemma supportImageIso_hom_inclusion {X Y : Scheme.{u}}
 /-- Original restriction of the source after changing only its presentation
 as the image open. -/
 def supportImageSourceRestrictionIso {X Y : Scheme.{u}}
-    (f : X ⟶ Y) [IsOpenImmersion f] (Z : X.Opens) (E : Complex X) :
+    (f : X ⟶ Y) [IsOpenImmersion f] (Z : X.Opens) (E : CochainComplex X.Modules ℤ) :
     (restrict (supportImageIso f Z).hom).obj
       ((restrict (Y.homOfLE (supportImageOpen_le_opensRange f Z))).obj
         ((restrict f.isoOpensRange.inv).obj E)) ≅ (restrict Z.ι).obj E :=
@@ -123,13 +133,14 @@ def supportImageSourceRestrictionIso {X Y : Scheme.{u}}
     rw [supportImageIso_hom_inclusion, Category.assoc, Iso.hom_inv_id, Category.comp_id]))).app E
 
 lemma isZero_restrict_image_source_iff {X Y : Scheme.{u}}
-    (f : X ⟶ Y) [IsOpenImmersion f] (Z : X.Opens) (E : Complex X) :
-    IsZero ((toDerived (supportImageOpen f Z).toScheme).obj
+    (f : X ⟶ Y) [IsOpenImmersion f] (Z : X.Opens) (E : CochainComplex X.Modules ℤ) :
+    IsZero ((DerivedCategory.Q (C := (supportImageOpen f Z).toScheme.Modules)).obj
       ((restrict (Y.homOfLE (supportImageOpen_le_opensRange f Z))).obj
         ((restrict f.isoOpensRange.inv).obj E))) ↔
-    IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj E)) := by
+    IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj ((restrict Z.ι).obj E)) := by
   rw [← isZero_toDerived_restrict_iff_of_isIso (supportImageIso f Z).hom]
-  exact ((toDerived Z.toScheme).mapIso (supportImageSourceRestrictionIso f Z E)).isZero_iff
+  exact ((DerivedCategory.Q (C := Z.toScheme.Modules)).mapIso
+    (supportImageSourceRestrictionIso f Z E)).isZero_iff
 end Quillen.PerfectComplexes
 
 namespace Quillen.PerfectComplexes
@@ -137,18 +148,18 @@ attribute [local instance] HasDerivedCategory.standard
 
 /-- Original derived zero objects are detected by any actual covering family
 of open immersions. -/
-lemma isZero_toDerived_of_openImmersionCover {X : Scheme.{u}} (E : Complex X)
+lemma isZero_toDerived_of_openImmersionCover {X : Scheme.{u}} (E : CochainComplex X.Modules ℤ)
     {ι : Type*} (U : ι → Scheme.{u}) (j : ∀ i, U i ⟶ X) [∀ i, IsOpenImmersion (j i)]
     (hcover : ∀ x : X, ∃ i, ∃ y, j i y = x)
-    (hz : ∀ i, IsZero ((toDerived (U i)).obj ((restrict (j i)).obj E))) :
-    IsZero ((toDerived X).obj E) := by
+    (hz : ∀ i, IsZero ((DerivedCategory.Q (C := (U i).Modules)).obj ((restrict (j i)).obj E))) :
+    IsZero ((DerivedCategory.Q (C := X.Modules)).obj E) := by
   have hq : QuasiIso (0 : E ⟶ E) := by
     apply quasiIso_of_openImmersionCover _ U j hcover
     intro i
     apply (DerivedCategory.isIso_Q_map_iff_quasiIso (U i).Modules _).mp
     exact (hz i).isIso (hz i) _
-  have hi : IsIso ((toDerived X).map (0 : E ⟶ E)) := inferInstance
-  rw [(toDerived X).map_zero] at hi
+  have hi : IsIso ((DerivedCategory.Q (C := X.Modules)).map (0 : E ⟶ E)) := inferInstance
+  rw [(DerivedCategory.Q (C := X.Modules)).map_zero] at hi
   exact (isIsoZero_iff_source_target_isZero _ _).mp hi |>.1
 
 /-- The genuine restricted morphism of an open immersion is an open immersion. -/
@@ -163,7 +174,7 @@ instance supportResLE_isOpenImmersion {X Y : Scheme.{u}}
 /-- Actual restriction on the inverse-image support open, with the genuine
 restricted scheme map. -/
 def supportPreimageRestrictionIso {X Y : Scheme.{u}}
-    (f : X ⟶ Y) [IsOpenImmersion f] (Z : Y.Opens) (E : Complex Y) :
+    (f : X ⟶ Y) [IsOpenImmersion f] (Z : Y.Opens) (E : CochainComplex Y.Modules ℤ) :
     (restrict (f ⁻¹ᵁ Z).ι).obj ((restrict f).obj E) ≅
       (restrict (f.resLE Z (f ⁻¹ᵁ Z) le_rfl)).obj ((restrict Z.ι).obj E) :=
   (restrictCompIso (f ⁻¹ᵁ Z).ι f).app E ≪≫
@@ -173,24 +184,27 @@ def supportPreimageRestrictionIso {X Y : Scheme.{u}}
 /-- Vanishing on a fixed support open descends through actual geometric
 restriction to its inverse image. -/
 lemma isZero_restrict_preimage_of_isZero {X Y : Scheme.{u}}
-    (f : X ⟶ Y) [IsOpenImmersion f] (Z : Y.Opens) (E : Complex Y)
-    (hz : IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj E))) :
-    IsZero ((toDerived (f ⁻¹ᵁ Z).toScheme).obj
+    (f : X ⟶ Y) [IsOpenImmersion f] (Z : Y.Opens) (E : CochainComplex Y.Modules ℤ)
+    (hz : IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj ((restrict Z.ι).obj E))) :
+    IsZero ((DerivedCategory.Q (C := (f ⁻¹ᵁ Z).toScheme.Modules)).obj
       ((restrict (f ⁻¹ᵁ Z).ι).obj ((restrict f).obj E))) := by
   let q := f.resLE Z (f ⁻¹ᵁ Z) le_rfl
-  have hq : IsZero ((toDerived (f ⁻¹ᵁ Z).toScheme).obj ((restrict q).obj ((restrict Z.ι).obj E))) :=
+  have hq : IsZero ((DerivedCategory.Q (C := (f ⁻¹ᵁ Z).toScheme.Modules)).obj
+    ((restrict q).obj ((restrict Z.ι).obj E))) :=
     ((derivedRestrict q).map_isZero hz).of_iso
       ((derivedRestrictFactors q).app ((restrict Z.ι).obj E)).symm
-  exact hq.of_iso ((toDerived (f ⁻¹ᵁ Z).toScheme).mapIso (supportPreimageRestrictionIso f Z E))
+  exact hq.of_iso ((DerivedCategory.Q (C := (f ⁻¹ᵁ Z).toScheme.Modules)).mapIso
+    (supportPreimageRestrictionIso f Z E))
 
 /-- Coverwise vanishing on the actual inverse-image support opens detects
 vanishing on the original global support open. -/
-lemma isZero_restrict_of_openImmersionCover {X : Scheme.{u}} (E : Complex X) (Z : X.Opens)
+lemma isZero_restrict_of_openImmersionCover {X : Scheme.{u}} (E : CochainComplex X.Modules ℤ)
+    (Z : X.Opens)
     {ι : Type*} (U : ι → Scheme.{u}) (j : ∀ i, U i ⟶ X) [∀ i, IsOpenImmersion (j i)]
     (hcover : ∀ x : X, ∃ i, ∃ y, j i y = x)
-    (hz : ∀ i, IsZero ((toDerived (j i ⁻¹ᵁ Z).toScheme).obj
+    (hz : ∀ i, IsZero ((DerivedCategory.Q (C := (j i ⁻¹ᵁ Z).toScheme.Modules)).obj
       ((restrict (j i ⁻¹ᵁ Z).ι).obj ((restrict (j i)).obj E)))) :
-    IsZero ((toDerived Z.toScheme).obj ((restrict Z.ι).obj E)) := by
+    IsZero ((DerivedCategory.Q (C := Z.toScheme.Modules)).obj ((restrict Z.ι).obj E)) := by
   let V (i : ι) := (j i ⁻¹ᵁ Z).toScheme
   let q (i : ι) := (j i).resLE Z (j i ⁻¹ᵁ Z) le_rfl
   have : ∀ i, IsOpenImmersion (q i) := by intro i; dsimp [q]; infer_instance
@@ -207,5 +221,6 @@ lemma isZero_restrict_of_openImmersionCover {X : Scheme.{u}} (E : Complex X) (Z 
     rw [Scheme.Hom.resLE_comp_ι]
     exact hy
   · intro i
-    exact (hz i).of_iso ((toDerived (V i)).mapIso (supportPreimageRestrictionIso (j i) Z E)).symm
+    exact (hz i).of_iso ((DerivedCategory.Q (C := (V i).Modules)).mapIso
+      (supportPreimageRestrictionIso (j i) Z E)).symm
 end Quillen.PerfectComplexes

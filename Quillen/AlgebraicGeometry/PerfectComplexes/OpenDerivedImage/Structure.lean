@@ -9,7 +9,9 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Closure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OppositeJointData
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Actual Waldhausen structures on the derived-saturated image
 
 The image is an extension-closed full subcategory of actual complexes. Its
@@ -33,33 +35,39 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex Opposite
 open scoped ZeroObject
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.OpenDerivedImage
 open Waldhausen Fibration
 attribute [local instance] HasDerivedCategory.standard Abelian.hasFiniteBiproducts
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 instance complexObjects_closedUnderIsomorphisms : (complexObjects j).IsClosedUnderIsomorphisms where
-  of_iso e h := (complexObjects_iff_of_derivedIso j ((toDerived U).mapIso e)).mp h
+  of_iso e h := (complexObjects_iff_of_derivedIso j
+    ((DerivedCategory.Q (C := U.Modules)).mapIso e)).mp h
 
 instance complexObjects_containsZero : (complexObjects j).ContainsZero where
   exists_zero := ⟨0, isZero_zero _,
-    (derivedObjects j).prop_of_isZero ((toDerived U).map_isZero (isZero_zero _))⟩
+    (derivedObjects j).prop_of_isZero ((DerivedCategory.Q (C := U.Modules)).map_isZero
+      (isZero_zero _))⟩
 
 /-- The original shifted complex stays in the actual derived image. -/
-theorem complexObjects_shift {E : Complex U} (hE : complexObjects j E) (n : ℤ) :
+theorem complexObjects_shift {E : CochainComplex U.Modules ℤ} (hE : complexObjects j E) (n : ℤ) :
     complexObjects j (E⟦n⟧) := by
-  have h : derivedObjects j (((toDerived U).obj E)⟦n⟧) := (derivedObjects j).le_shift _ _ hE
-  exact (derivedObjects j).prop_of_iso (((toDerived U).commShiftIso n).app E).symm h
+  have h : derivedObjects j (((DerivedCategory.Q (C := U.Modules)).obj E)⟦n⟧) :=
+    (derivedObjects j).le_shift _ _ hE
+  exact (derivedObjects j).prop_of_iso (((DerivedCategory.Q
+    (C := U.Modules)).commShiftIso n).app E).symm h
 
 variable [Fact (HasDerivedRoofs j)]
 
 instance complexObjects_extensionClosed :
-    (abelianExactStructure (Complex U)).IsExtensionClosed (complexObjects j) where
+    (abelianExactStructure (CochainComplex U.Modules ℤ)).IsExtensionClosed (complexObjects j) where
   prop_middle := complexObjects_of_shortExact j (Fact.out : HasDerivedRoofs j)
 
 instance complexObjects_closedUnderFiniteProducts : (complexObjects j).IsClosedUnderFiniteProducts
   :=
-  (abelianExactStructure (Complex U)).extensionClosed_finiteProducts (complexObjects j)
+  (abelianExactStructure (CochainComplex U.Modules ℤ)).extensionClosed_finiteProducts
+    (complexObjects j)
 
 /-- The actual full subcategory with one underlying chain-complex wrapper. -/
 abbrev ComplexObj := (complexObjects j).FullSubcategory
@@ -90,9 +98,11 @@ theorem inclusion_cof_iff {A B : ComplexObj j} (f : A ⟶ B) :
     (perfectWaldhausen U).cof ((inclusion j).map f) ↔ (complexWaldhausen j).cof f := by
   constructor
   · intro hf
-    obtain ⟨Z, hZ, p, hp, hS⟩ := (ExactSubcategory.inflation_iff (abelianExactStructure (Complex U))
+    obtain ⟨Z, hZ, p, hp, hS⟩ := (ExactSubcategory.inflation_iff
+      (abelianExactStructure (CochainComplex U.Modules ℤ))
       (locallyPerfect U) ((inclusion j).map f)).mp hf
-    apply (ExactSubcategory.inflation_iff (abelianExactStructure (Complex U)) (complexObjects j)
+    apply (ExactSubcategory.inflation_iff (abelianExactStructure (CochainComplex U.Modules ℤ))
+      (complexObjects j)
       f).mpr
     exact ⟨Z, complexObjects_quotient_of_shortExact j (Fact.out : HasDerivedRoofs j)
       hS A.property B.property, p, hp, hS⟩
@@ -110,8 +120,9 @@ instance complexCorestrict_additive : (complexCorestrict j).Additive := by
 /-- The genuine actual exact-subcategory restriction functor. -/
 def exactCorestrict : CategoryTheory.ExactCategory.ExactFunctor (ExactSubcategory.exactStructure
   (abelianExactStructure
-  (Complex X)) (locallyPerfect X))
-    (ExactSubcategory.exactStructure (abelianExactStructure (Complex U)) (complexObjects j)) where
+  (CochainComplex X.Modules ℤ)) (locallyPerfect X))
+    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex U.Modules ℤ))
+      (complexObjects j)) where
   toFunctor := complexCorestrict j
   map_conflation S hS := by
     change ((S.map (locallyPerfect X).ι).map (restrict j)).ShortExact
@@ -127,7 +138,7 @@ theorem complexCorestrict_exact : IsExact (perfectWaldhausen X).cof (perfectWald
     exact restrict_quasiIso j f.hom
   pushout hi h := by
     apply IsPushout.of_map_of_faithful (complexObjects j).ι
-    exact (fullSubcategory_map_pushout (abelianExactStructure (Complex X))
+    exact (fullSubcategory_map_pushout (abelianExactStructure (CochainComplex X.Modules ℤ))
       (locallyPerfect X) hi h).map (restrict j)
 
 /-- The unchanged restriction is exact on the actual opposite structures. -/

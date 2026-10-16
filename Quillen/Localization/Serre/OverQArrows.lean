@@ -8,6 +8,7 @@ module
 
 public import Quillen.Localization.Serre.AuxiliaryKernel
 public import Quillen.CategoryTheory.QConstruction.Abelian.CospanComposition
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-! # Ordinary mono and reversed epi arrows in the auxiliary Q-category -/
 @[expose] public section
@@ -18,7 +19,8 @@ set_option backward.defeqAttrib.useBackward true
 universe u
 open CategoryTheory CategoryTheory.Limits
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
 
 /-- The Q-arrow of an ordinary monomorphism over the fixed quotient. -/

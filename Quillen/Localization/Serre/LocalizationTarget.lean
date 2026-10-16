@@ -11,6 +11,7 @@ public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.Localization.Serre.LocalizationTheorem
 public import Quillen.KTheory.Equivalence
 public import Quillen.KTheory.Map.Functoriality
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # Localization sequences with the actual target category
@@ -36,14 +37,15 @@ universe u
 open CategoryTheory CategoryTheory.Limits
 
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C D : Type u} [Category.{u} C] [Category.{u} D]
   [Abelian C] [Abelian D] (P : ObjectProperty C) [P.IsSerreClass]
   (L : C ⥤ D) [L.IsLocalization P.isoModSerre] [L.Additive]
 
 /-- The actual functor from the formal quotient, constructed from the
 localization universal property. -/
-def targetLift : Quotient P ⥤ D :=
+def targetLift : P.isoModSerre.Localization ⥤ D :=
   Localization.Construction.lift L (Localization.inverts L P.isoModSerre)
 
 omit [Abelian D] [L.Additive] in
@@ -63,18 +65,24 @@ instance targetLift_additive : (targetLift P L).Additive := by
 /-- The equivalence to the actual target is exact for the standard abelian
 exact structures. -/
 def targetLiftExactFunctor :
-    ExactFunctor (quotientExactStructure P) (abelianExactStructure D) where
+    ExactFunctor ((abelianExactStructure P.isoModSerre.Localization)) (abelianExactStructure D)
+      where
   toFunctor := targetLift P L
   map_conflation _ hS := hS.map_of_exact _
 
 /-- Equality of the underlying functors gives strict equality of these exact
 functors, since the remaining fields express properties. -/
 theorem quotient_comp_targetLift :
-    (quotientExactFunctor P).comp (targetLiftExactFunctor P L) = exactFunctor P L := by
-  have h : ((quotientExactFunctor P).comp (targetLiftExactFunctor P L)).toFunctor =
-      (exactFunctor P L).toFunctor := targetLift_fac P L
-  generalize (quotientExactFunctor P).comp (targetLiftExactFunctor P L) = F at *
-  generalize exactFunctor P L = G at *
+    ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P P.isoModSerre.Q)).comp
+      (targetLiftExactFunctor P L) = CategoryTheory.ExactCategory.ExactFunctor.serreLocalization
+      P L := by
+  have h : (((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+    P.isoModSerre.Q)).comp (targetLiftExactFunctor P L)).toFunctor =
+      (CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P L).toFunctor :=
+        targetLift_fac P L
+  generalize ((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P
+    P.isoModSerre.Q)).comp (targetLiftExactFunctor P L) = F at *
+  generalize CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P L = G at *
   have h' : F.toFunctor = G.toFunctor := h
   cases F
   cases G
@@ -98,12 +106,13 @@ instance targetLiftExactFunctor_mapQ_isEquivalence :
 /-- The genuine categorical equivalence induces this K-equivalence. Its
 forward map is precisely the canonical K-map of the quotient lift. -/
 def targetKEquiv (n : ℕ) :
-    (quotientExactStructure P).K n ≃* (abelianExactStructure D).K n :=
+    ((abelianExactStructure P.isoModSerre.Localization)).K n ≃* (abelianExactStructure D).K n :=
   (targetLiftExactFunctor P L).KEquivOfMapQIsEquivalence n
 
 /-- The underlying monoid homomorphism of this K-equivalence. -/
 @[simp] theorem targetKEquiv_coe (n : ℕ) :
-    (↑(targetKEquiv P L n) : (quotientExactStructure P).K n →* (abelianExactStructure D).K n) =
+    (↑(targetKEquiv P L n) : ((abelianExactStructure P.isoModSerre.Localization)).K n →*
+      (abelianExactStructure D).K n) =
         (targetLiftExactFunctor P L).KMap n := rfl
 
 
@@ -111,7 +120,8 @@ def targetKEquiv (n : ℕ) :
 quotient map with the K-map of the original localization functor. -/
 theorem targetKEquiv_comp_quotientKMap (n : ℕ) :
     (targetKEquiv P L n).toMonoidHom.comp (quotientKMap P n) = KMap P L n := by
-  change ((targetLiftExactFunctor P L).KMap n).comp ((quotientExactFunctor P).KMap n) = _
+  change ((targetLiftExactFunctor P L).KMap n).comp
+    (((CategoryTheory.ExactCategory.ExactFunctor.serreLocalization P P.isoModSerre.Q)).KMap n) = _
   rw [← CategoryTheory.ExactCategory.ExactFunctor.KMap_comp, quotient_comp_targetLift]
   rfl
 

@@ -9,6 +9,10 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.QCSupportedDenominators
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.ImmersionDerivedTarget
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedHom.Nilpotence
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Mathlib.Algebra.Homology.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.RestrictionHom
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-! # Genuine global supported denominators across one affine chart
 
@@ -33,14 +37,16 @@ lemma derivedHom_eq_zero_of_target_zero_and_cover
     {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
     [IsOpenImmersion j] [IsOpenImmersion k]
     (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ Set.range k)
-    {A B : Complex X} (hzB : IsZero ((toDerived U).obj ((restrict j).obj B)))
-    (α : (toDerived X).obj A ⟶ (toDerived X).obj B)
+    {A B : CochainComplex X.Modules ℤ} (hzB : IsZero
+      ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj B)))
+    (α : (DerivedCategory.Q (C := X.Modules)).obj A ⟶ (DerivedCategory.Q (C := X.Modules)).obj B)
     (hk : restrictDerivedHom k α = 0) : α = 0 := by
   have h := derivedHom_comp_eq_zero_of_openSquare (pullback.fst j k) (pullback.snd j k) j k
     pullback.condition
     (by intro x hx; rw [IsOpenImmersion.range_pullbackFst]; exact hx)
     (by intro x hx; rw [IsOpenImmersion.range_pullbackSnd]; exact hx)
-    hcover α (𝟙 ((toDerived X).obj B)) (hzB.eq_of_tgt _ _) hk (hzB.eq_of_tgt _ _)
+    hcover α (𝟙 ((DerivedCategory.Q (C := X.Modules)).obj B)) (hzB.eq_of_tgt _ _) hk
+      (hzB.eq_of_tgt _ _)
   simpa only [Category.comp_id] using h
 
 /-- With one affine chart outside the zero-target open, the original global
@@ -49,15 +55,15 @@ lemma exists_perfect_denominator_across_spec_of_qc_target
     (R : CommRingCat.{u}) {U X : Scheme.{u}} [QuasiSeparatedSpace X] [CompactSpace U]
     (j : U ⟶ X) (k : Spec R ⟶ X) [IsOpenImmersion j] [IsOpenImmersion k]
     (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ Set.range k)
-    {A B : Complex X} (hA : locallyPerfect X A) (n : ℤ) [B.IsGE n]
+    {A B : CochainComplex X.Modules ℤ} (hA : locallyPerfect X A) (n : ℤ) [B.IsGE n]
     (hBqc : ∀ m, (B.homology m).IsQuasicoherent)
-    (hzB : IsZero ((toDerived U).obj ((restrict j).obj B)))
-    (α : (toDerived X).obj A ⟶ (toDerived X).obj B) :
-    ∃ (P : Complex X) (q : P ⟶ A), locallyPerfect X P ∧
-      QuasiIso ((restrict j).map q) ∧ (toDerived X).map q ≫ α = 0 := by
+    (hzB : IsZero ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj B)))
+    (α : (DerivedCategory.Q (C := X.Modules)).obj A ⟶ (DerivedCategory.Q (C := X.Modules)).obj B) :
+    ∃ (P : CochainComplex X.Modules ℤ) (q : P ⟶ A), locallyPerfect X P ∧
+      QuasiIso ((restrict j).map q) ∧ (DerivedCategory.Q (C := X.Modules)).map q ≫ α = 0 := by
   let a := pullback.fst j k
   let b := pullback.snd j k
-  let Q := toDerived (pullback j k)
+  let Q := DerivedCategory.Q (C := (pullback j k).Modules)
   let c := openSquareRestrictIso b a k j pullback.condition.symm
   have hBn : ((restrict k).obj B).IsGE n := by
     rw [CochainComplex.isGE_iff]
@@ -70,8 +76,10 @@ lemma exists_perfect_denominator_across_spec_of_qc_target
       (locallyPerfect_restrict k hA) n (Affine.quasicoherent_homology_restrict k B hBqc)
       hzBb (restrictDerivedHom k α)
   let e := (Q.mapIso (c.app A)).symm ≪≫ (asIso (Q.map ((restrict b).map q))).symm
-  have he : restrictDerivedHom a (𝟙 ((toDerived U).obj ((restrict j).obj A))) =
-      e.hom ≫ restrictDerivedHom b ((toDerived (Spec R)).map q) ≫ Q.map (c.hom.app A) := by
+  have he : restrictDerivedHom a (𝟙 ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj A)))
+    =
+      e.hom ≫ restrictDerivedHom b ((DerivedCategory.Q (C := (Spec R).Modules)).map q) ≫ Q.map
+        (c.hom.app A) := by
     rw [restrictDerivedHom_id, restrictDerivedHom_map]
     change 𝟙 _ = (Q.map (c.inv.app A) ≫ inv (Q.map ((restrict b).map q))) ≫
       Q.map ((restrict b).map q) ≫ Q.map (c.hom.app A)
@@ -80,11 +88,12 @@ lemma exists_perfect_denominator_across_spec_of_qc_target
     exact (CategoryTheory.Functor.map_id _ _).symm
   obtain ⟨P, hP, u, v, d, hu, hv, _⟩ :=
     OpenHomotopyGluing.exists_perfect_glue_of_derived_target_immersions j k hcover
-      (locallyPerfect_restrict j hA) hC e (𝟙 _) ((toDerived (Spec R)).map q) he
+      (locallyPerfect_restrict j hA) hC e (𝟙 _) ((DerivedCategory.Q
+        (C := (Spec R).Modules)).map q) he
   have hdj : QuasiIso ((restrict j).map d) := by
     apply (DerivedCategory.isIso_Q_map_iff_quasiIso U.Modules _).mp
-    change IsIso ((toDerived U).map ((restrict j).map d))
-    have : IsIso (u.hom ≫ (toDerived U).map ((restrict j).map d)) := by rw [hu]; infer_instance
+    have : IsIso (u.hom ≫ (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map d))
+      := by rw [hu]; infer_instance
     exact IsIso.of_isIso_comp_left u.hom _
   refine ⟨P, d, hP, hdj, ?_⟩
   apply derivedHom_eq_zero_of_target_zero_and_cover j k hcover hzB
@@ -98,25 +107,26 @@ lemma exists_perfect_factorization_across_spec_of_qc_target
     (R : CommRingCat.{u}) {U X : Scheme.{u}} [QuasiSeparatedSpace X] [CompactSpace U]
     (j : U ⟶ X) (k : Spec R ⟶ X) [IsOpenImmersion j] [IsOpenImmersion k]
     (hcover : ∀ x : X, x ∈ Set.range j ∨ x ∈ Set.range k)
-    {A B : Complex X} (hA : locallyPerfect X A) (n : ℤ) [B.IsGE n]
+    {A B : CochainComplex X.Modules ℤ} (hA : locallyPerfect X A) (n : ℤ) [B.IsGE n]
     (hBqc : ∀ m, (B.homology m).IsQuasicoherent)
-    (hzB : IsZero ((toDerived U).obj ((restrict j).obj B)))
-    (α : (toDerived X).obj A ⟶ (toDerived X).obj B) :
-    ∃ (C : Complex X) (i : A ⟶ C)
-      (γ : (toDerived X).obj C ⟶ (toDerived X).obj B),
-      locallyPerfect X C ∧ IsZero ((toDerived U).obj ((restrict j).obj C)) ∧
-      (toDerived X).map i ≫ γ = α := by
+    (hzB : IsZero ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj B)))
+    (α : (DerivedCategory.Q (C := X.Modules)).obj A ⟶ (DerivedCategory.Q (C := X.Modules)).obj B) :
+    ∃ (C : CochainComplex X.Modules ℤ) (i : A ⟶ C)
+      (γ : (DerivedCategory.Q (C := X.Modules)).obj C ⟶ (DerivedCategory.Q (C := X.Modules)).obj B),
+      locallyPerfect X C ∧ IsZero ((DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj C)) ∧
+      (DerivedCategory.Q (C := X.Modules)).map i ≫ γ = α := by
   obtain ⟨M, q, hM, hq, hqα⟩ :=
     exists_perfect_denominator_across_spec_of_qc_target R j k hcover hA n hBqc hzB α
   obtain ⟨γ, hγ⟩ := CategoryTheory.Pretriangulated.Triangle.yoneda_exact₂ _
-    (mappingConeTriangle_distinguished q) α hqα
+    (DerivedCategory.mappingCone_triangle_distinguished q) α hqα
   refine ⟨CochainComplex.mappingCone q, CochainComplex.mappingCone.inr q, γ,
     locallyPerfect_mappingCone hM hA q, ?_, hγ.symm⟩
   exact (CategoryTheory.Pretriangulated.Triangle.isZero₃_of_isIso₁ _
-    (mappingConeTriangle_distinguished ((restrict j).map q)) (by
-      change IsIso ((toDerived U).map ((restrict j).map q))
+    (DerivedCategory.mappingCone_triangle_distinguished ((restrict j).map q)) (by
+      change IsIso ((DerivedCategory.Q (C := U.Modules)).map ((restrict j).map q))
       infer_instance)).of_iso
-      ((toDerived U).mapIso (CochainComplex.mappingCone.mapHomologicalComplexIso q
+      ((DerivedCategory.Q (C := U.Modules)).mapIso
+        (CochainComplex.mappingCone.mapHomologicalComplexIso q
         (Scheme.Modules.restrictFunctor j)))
 
 end Quillen.PerfectComplexes

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Homology.KInjectiveRepresentatives
+public import Aglib.Algebra.Homology.DerivedCategory.KInjective.Representatives
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.InjectiveCounit
 
 /-!
@@ -19,7 +19,7 @@ lower-bounded injective complexes by scheme pushforward and affine global sectio
 
 @[expose] public section
 
-open Quillen.CochainComplex
+open _root_.CochainComplex
 
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -52,7 +52,7 @@ theorem original_representatives_homotopic
 
 /-- Any original scheme direct image preserves weak maps between actual injective models. -/
 theorem original_scheme_pushforward {U X : Scheme.{u}} (j : U ⟶ X)
-    {I J : Quillen.PerfectComplexes.Complex U} (a b : ℤ)
+    {I J : CochainComplex U.Modules ℤ} (a b : ℤ)
     (hI : ∀ n, n < a → IsZero (I.X n)) (hJ : ∀ n, n < b → IsZero (J.X n))
     (iI : ∀ n, Injective (I.X n)) (iJ : ∀ n, Injective (J.X n))
     (f : I ⟶ J) [QuasiIso f] :
@@ -61,7 +61,7 @@ theorem original_scheme_pushforward {U X : Scheme.{u}} (j : U ⟶ X)
 
 /-- Actual affine global sections preserve these original weak maps with no QC-homology premise. -/
 theorem original_sections_without_qc (R : CommRingCat.{u})
-    {I J : Quillen.PerfectComplexes.Complex (Spec R)} (a b : ℤ)
+    {I J : CochainComplex (Spec R).Modules ℤ} (a b : ℤ)
     (hI : ∀ n, n < a → IsZero (I.X n)) (hJ : ∀ n, n < b → IsZero (J.X n))
     (iI : ∀ n, Injective (I.X n)) (iJ : ∀ n, Injective (J.X n))
     (f : I ⟶ J) [QuasiIso f] :

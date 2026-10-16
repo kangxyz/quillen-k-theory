@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Aglib.Algebra.Category.ModuleCat.IdealClosedSupport
+public import Aglib.Algebra.Category.FGModuleCat.IdealClosedSupport
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pushforward
@@ -15,6 +15,7 @@ public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralP
 public import Quillen.Devissage.ReflectorFiltration
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.IdealPowerFiltration
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
 /-!
 # The actual closed reflector on an affine ambient scheme
 
@@ -85,21 +86,25 @@ omit [IsLocallyNoetherian Z] [IsNoetherianRing R] in
 /-- The actual essential image is exactly annihilation by the ideal in an
 actual quotient presentation of the closed immersion. -/
 theorem coherentPushforward_essImage_iff (I : Ideal R)
-    (e : Z ≅ Spec (Ideal.closedRing R I)) (hi : i = e.hom ≫ Ideal.closedMap R I)
+    (e : Z ≅ Spec (Pushforward.ClosedImmersion.Ideal.closedRing R I)) (hi : i = e.hom ≫
+      Pushforward.ClosedImmersion.Ideal.closedMap R I)
     (M : FiniteTypeSheaves (Spec R)) :
     (finiteTypePushforward i).essImage M ↔ Ideal.finiteTypeSheavesKilledBy R I M := by
   let ER := finiteTypeSheavesSpecModuleEquivalence R
-  let ES := finiteTypeSheavesSpecModuleEquivalence (Ideal.closedRing R I)
+  let ES := finiteTypeSheavesSpecModuleEquivalence (Pushforward.ClosedImmersion.Ideal.closedRing
+    R I)
   let F := coherentIsoEquivalence e
-  let q : R ⟶ Ideal.closedRing R I := CommRingCat.ofHom (Ideal.Quotient.mk I)
+  let q : R ⟶ Pushforward.ClosedImmersion.Ideal.closedRing R I := CommRingCat.ofHom
+    (Ideal.Quotient.mk I)
   have hq : q.hom.Finite := by
     apply (AlgebraicGeometry.IsFinite.SpecMap_iff q).mp
-    change AlgebraicGeometry.IsFinite (Ideal.closedMap R I)
+    change AlgebraicGeometry.IsFinite (Pushforward.ClosedImmersion.Ideal.closedMap R I)
     infer_instance
   let c : finiteTypePushforward i ≅
-      F.functor ⋙ finiteTypePushforward (Ideal.closedMap R I) :=
-    finiteTypePushforwardAffinePresentationComparison R (Ideal.closedRing R I) i q hq e hi
-  let sq : finiteTypePushforward (Ideal.closedMap R I) ⋙ ER.functor ≅
+      F.functor ⋙ finiteTypePushforward (Pushforward.ClosedImmersion.Ideal.closedMap R I) :=
+    finiteTypePushforwardAffinePresentationComparison R
+      (Pushforward.ClosedImmersion.Ideal.closedRing R I) i q hq e hi
+  let sq : finiteTypePushforward (Pushforward.ClosedImmersion.Ideal.closedMap R I) ⋙ ER.functor ≅
       ES.functor ⋙ closedRestriction I :=
     finiteTypePushforwardSpecSquare q hq
   change (finiteTypePushforward i).essImage M ↔ killedBy I (ER.functor.obj M)
@@ -115,7 +120,8 @@ theorem coherentPushforward_essImage_iff (I : Ideal R)
     let L := ES.inverse.obj P
     refine ⟨F.inverse.obj L, ⟨?_⟩⟩
     exact c.app (F.inverse.obj L) ≪≫
-      (finiteTypePushforward (Ideal.closedMap R I)).mapIso (F.counitIso.app L) ≪≫
+      (finiteTypePushforward (Pushforward.ClosedImmersion.Ideal.closedMap R I)).mapIso
+        (F.counitIso.app L) ≪≫
       ER.fullyFaithfulFunctor.preimageIso
         (sq.app L ≪≫
           (closedRestriction I).mapIso (ES.counitIso.app P) ≪≫

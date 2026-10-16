@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FinitePrincipalRoofs
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
 
 /-! # Genuine denominator roofs preserve the source support
 
@@ -43,7 +44,7 @@ lemma exists_perfect_supported_factorization_preserving_source_support (R : Comm
   | @insert r s hr ih =>
     obtain ⟨C, hC, i, γ, hγ, hs, hsource⟩ := ih (fun q hq => hM q (Finset.mem_insert_of_mem hq))
     have := isKProjective_of_moduleStrictPerfect R hC
-    obtain ⟨g, hg⟩ := Quillen.CochainComplex.exists_chain_representative_of_isKProjective γ
+    obtain ⟨g, hg⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective γ
     have heq : DerivedCategory.Q.map ((localize r (.up ℤ)).map g) =
         DerivedCategory.Q.map ((localize r (.up ℤ)).map (0 : C ⟶ M)) :=
       (hM r (Finset.mem_insert_self _ _)).eq_of_tgt _ _
@@ -147,7 +148,7 @@ lemma exists_finite_principal_derived_roof_preserving_source_support (R : CommRi
   change DerivedCategory.Q.obj P' ⟶ DerivedCategory.Q.obj B at γ
   change DerivedCategory.Q.map q ≫ α = γ ≫ DerivedCategory.Q.map η at hγ
   have := isKProjective_of_moduleStrictPerfect R hP'
-  obtain ⟨g, hg⟩ := Quillen.CochainComplex.exists_chain_representative_of_isKProjective γ
+  obtain ⟨g, hg⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective γ
   exact ⟨P', hP', q, g, by rw [hg]; exact hγ.symm, hlocal, hsource⟩
 
 /-- A genuine locally weak denominator equalizes the original derived maps without enlarging source
@@ -196,7 +197,7 @@ lemma exists_finite_principal_chain_roof_preserving_source_support (R : CommRing
       (DerivedCategory.Q.map a)
   have := isKProjective_of_moduleStrictPerfect R hP'
   exact ⟨P', hP', q, g,
-    ⟨Quillen.CochainComplex.homotopyOfDerivedEqOfIsKProjective (g ≫ η) (q ≫ a)
+    ⟨_root_.CochainComplex.homotopyOfDerivedEqOfIsKProjective (g ≫ η) (q ≫ a)
       (by simpa only [CategoryTheory.Functor.map_comp] using hg)⟩, hq, hsource⟩
 
 end Quillen.PerfectComplexes.Affine

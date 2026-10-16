@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Aglib.Algebra.Category.ModuleCat.IdealClosedSupport
+public import Aglib.Algebra.Category.FGModuleCat.IdealClosedSupport
 public import Aglib.AlgebraicGeometry.Modules.Pushforward.Stalk
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeComparison
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Basic
@@ -17,6 +17,7 @@ public import Quillen.AlgebraicGeometry.Scheme.Coherent.Restriction
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Support
 public import Mathlib.RingTheory.Finiteness.Ideal
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.ClosedImmersion
 /-!
 # The support bridge for an arbitrary affine closed subscheme
 
@@ -128,17 +129,18 @@ theorem finiteTypeSheavesKilledBy_le_supportedAway :
 
 omit [IsNoetherianRing R] in
 /-- Actual quotient closed pushforward is supported on its closed subset. -/
-theorem coherentPushforward_supported (M : FiniteTypeSheaves (Spec (closedRing R I))) :
+theorem coherentPushforward_supported (M : FiniteTypeSheaves (Spec
+  (Pushforward.ClosedImmersion.Ideal.closedRing R I))) :
     finiteTypeSheavesSupportedAway (openMap R I)
-      ((finiteTypePushforward (closedMap R I)).obj M) := by
+      ((finiteTypePushforward (Pushforward.ClosedImmersion.Ideal.closedMap R I)).obj M) := by
   apply (finiteTypeSheavesSupportedAway_iff_support_subset (openMap R I) _).mpr
   rw [openMap_range_compl]
   change Scheme.Modules.support
-      ((Scheme.Modules.pushforward (closedMap R I)).obj M.obj) ⊆
+      ((Scheme.Modules.pushforward (Pushforward.ClosedImmersion.Ideal.closedMap R I)).obj M.obj) ⊆
     PrimeSpectrum.zeroLocus (I : Set R)
   intro x hx
   by_contra hxi
-  have hnot : x ∉ Set.range (closedMap R I) := by
+  have hnot : x ∉ Set.range (Pushforward.ClosedImmersion.Ideal.closedMap R I) := by
     rintro ⟨y, rfl⟩
     apply hxi
     intro r hr
@@ -146,9 +148,10 @@ theorem coherentPushforward_supported (M : FiniteTypeSheaves (Spec (closedRing R
     rw [Ideal.Quotient.eq_zero_iff_mem.mpr hr]
     exact y.asIdeal.zero_mem
   have hz := Scheme.Modules.isZero_closedImmersion_moduleStalk_of_not_mem
-    (closedMap R I) x hnot M.obj
+    (Pushforward.ClosedImmersion.Ideal.closedMap R I) x hnot M.obj
   have hzAb := (forget₂ (ModuleCat ((Spec R).presheaf.stalk x)) AddCommGrpCat.{u}).map_isZero hz
   exact hx (hzAb.of_iso ((Scheme.Modules.moduleStalkForgetIso (Spec R) x).app
-    ((Scheme.Modules.pushforward (closedMap R I)).obj M.obj)).symm)
+    ((Scheme.Modules.pushforward (Pushforward.ClosedImmersion.Ideal.closedMap R I)).obj
+      M.obj)).symm)
 
 end AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.Ideal

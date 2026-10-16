@@ -8,6 +8,7 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.ApproximationTriangle
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PerfectOpenApproximation
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-!
 # Affine approximation triangle regression statements
@@ -37,16 +38,18 @@ namespace QuillenTest.AffineApproximationTriangle
 open Quillen
 
 variable (R : CommRingCat.{u}) {U : Scheme.{u}} (j : U ⟶ Spec R) [IsOpenImmersion j]
-  {P K : ModuleComplex R} (f : P ⟶ K) {E : Complex U}
-  (eK : (toDerived U).obj ((restrict j).obj ((associatedComplex R).obj K)) ≅ (toDerived U).obj E)
+  {P K : ModuleComplex R} (f : P ⟶ K) {E : CochainComplex U.Modules ℤ}
+  (eK : (DerivedCategory.Q (C := U.Modules)).obj ((restrict j).obj ((associatedComplex R).obj K)) ≅
+    (DerivedCategory.Q (C := U.Modules)).obj E)
 
 theorem original_approximation_map :
     (originalApproximationTriangle R j f eK).mor₁ =
-      (toDerived U).map ((restrict j).map ((associatedComplex R).map f)) ≫ eK.hom := rfl
+      (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map ((associatedComplex R).map f))
+        ≫ eK.hom := rfl
 
 theorem original_residual_map :
     (originalApproximationTriangle R j f eK).mor₂ =
-      eK.inv ≫ (toDerived U).map
+      eK.inv ≫ (DerivedCategory.Q (C := U.Modules)).map
         ((restrict j).map ((associatedComplex R).map (CochainComplex.mappingCone.inr f))) :=
   originalApproximationBoundary_eq R j f eK
 
@@ -58,31 +61,34 @@ theorem original_cone_comparison :
 
 theorem original_roof_cone_equation :
     eK.hom ≫ (originalApproximationTriangle R j f eK).mor₂ =
-      (toDerived U).map ((restrict j).map
+      (DerivedCategory.Q (C := U.Modules)).map ((restrict j).map
         ((associatedComplex R).map (CochainComplex.mappingCone.inr f))) := by
   rw [original_residual_map]
   simp
 
 theorem original_distinguished :
-    originalApproximationTriangle R j f eK ∈ distTriang (Derived U) :=
+    originalApproximationTriangle R j f eK ∈ distTriang (DerivedCategory U.Modules) :=
   originalApproximationTriangle_distinguished R j f eK
 
 theorem original_input_arbitrary_cutoff (W : (Spec R).Opens)
     (hW : IsCompact (W : Set (Spec R)))
-    (E : Complex W.toScheme) (hE : locallyPerfect W.toScheme E) (cutoff : ℤ) :
+    (E : CochainComplex W.toScheme.Modules ℤ) (hE : locallyPerfect W.toScheme E) (cutoff : ℤ) :
     ∃ (K P : ModuleComplex R) (n : ℤ) (f : P ⟶ K)
-      (eK : (toDerived W.toScheme).obj ((restrict W.ι).obj ((associatedComplex R).obj K)) ≅
-        (toDerived W.toScheme).obj E)
-      (eD : (toDerived W.toScheme).obj ((restrict W.ι).obj
+      (eK : (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+        ((restrict W.ι).obj ((associatedComplex R).obj K)) ≅
+        (DerivedCategory.Q (C := W.toScheme.Modules)).obj E)
+      (eD : (DerivedCategory.Q (C := W.toScheme.Modules)).obj ((restrict W.ι).obj
           ((associatedComplex R).obj (CochainComplex.mappingCone f))) ≅
-        (toDerived W.toScheme).obj ((CochainComplex.singleFunctor W.toScheme.Modules n).obj
+        (DerivedCategory.Q (C := W.toScheme.Modules)).obj
+          ((CochainComplex.singleFunctor W.toScheme.Modules n).obj
           (((restrict W.ι).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))).homology
             n))),
       moduleStrictPerfect R P ∧ n ≤ cutoff ∧
         AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree W.toScheme
           (((restrict W.ι).obj ((associatedComplex R).obj (CochainComplex.mappingCone f))).homology
             n) ∧
-        originalApproximationSingleTriangle R W.ι f eK n eD ∈ distTriang (Derived W.toScheme) := by
+        originalApproximationSingleTriangle R W.ι f eK n eD ∈ distTriang
+          (DerivedCategory W.toScheme.Modules) := by
   obtain ⟨K, a, b, P, n, f, hKa, hKb, hP, hn, ⟨eK⟩, hD, hDa, hDb, ⟨eD⟩⟩ :=
     locallyPerfect_exists_original_strict_approximation R W hW E hE cutoff
   exact ⟨K, P, n, f, eK, eD, hP, hn, hD,

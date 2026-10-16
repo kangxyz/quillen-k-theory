@@ -12,6 +12,7 @@ public import Quillen.Waldhausen.GilletWaldhausen.FiniteCycleKEquivalence
 public import Quillen.Waldhausen.GilletWaldhausen.FiniteTermEvaluation
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsAcyclic
 public import Quillen.Waldhausen.GilletWaldhausen.CycleEvaluationSequence
+public import Aglib.Algebra.Homology.CochainComplex.Cycles
 
 /-! # The original finite-stratum acyclic inclusion has adjacent-cycle incidence
 
@@ -91,7 +92,7 @@ omit [P.ContainsZero] [(abelianExactStructure A).IsExtensionClosed P] in
     finiteCycleTermInclusion P a b n ≫ finiteCycleTermProjection P a b n = 0 := by
   apply NatTrans.ext
   funext K
-  exact ObjectProperty.hom_ext _ (iCycles_toCycles K.obj.obj n)
+  exact ObjectProperty.hom_ext _ (_root_.CochainComplex.iCycles_toCycles K.obj.obj n)
 
 /-- Its component is precisely the original actual cycle short exact sequence. -/
 theorem finiteCycleTerm_conflation (a b n : ℤ)
@@ -100,7 +101,7 @@ theorem finiteCycleTerm_conflation (a b n : ℤ)
       (ShortComplex.mk ((finiteCycleTermInclusion P a b n).app K)
         ((finiteCycleTermProjection P a b n).app K)
         (NatTrans.congr_app (finiteCycleTerm_comp_zero P a b n) K)) :=
-  cycleSequence_shortExact K.obj.obj n (K.obj.property.2.2 (n + 1))
+  _root_.CochainComplex.cycleSequence_shortExact K.obj.obj n (K.obj.property.2.2 (n + 1))
 
 /-- The actual incidence sequence has the genuine relative cofibration property. -/
 theorem finiteCycleTerm_isCofibrationSequence (a b n : ℤ) :

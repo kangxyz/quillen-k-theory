@@ -7,7 +7,9 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.Derived
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Semantic original-derived-overlap consumers -/
 @[expose] public section
 
@@ -22,6 +24,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u v w
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace QuillenTest.DerivedOpenPerfectGluing
 section Denominator
 variable {C : Type u} [Category.{v} C] [Abelian C] [HasDerivedCategory.{w} C]
@@ -54,48 +57,57 @@ end Denominator
 open Quillen.PerfectComplexes.OpenHomotopyGluing
 section Geometric
 variable {X : Scheme.{u}} (U V : X.Opens)
-  {A : Complex U.toScheme} {B : Complex V.toScheme} {L : Complex X}
+  {A : CochainComplex U.toScheme.Modules ℤ} {B : CochainComplex V.toScheme.Modules ℤ}
+    {L : CochainComplex X.Modules ℤ}
   (hUV : U ⊔ V = ⊤) (hA : locallyPerfect U.toScheme A) (hB : locallyPerfect V.toScheme B)
-  (e : (toDerived (pullback U.ι V.ι)).obj ((restrict (pullback.fst U.ι V.ι)).obj A) ≅
-    (toDerived (pullback U.ι V.ι)).obj ((restrict (pullback.snd U.ι V.ι)).obj B))
+  (e : (DerivedCategory.Q (C := (pullback U.ι V.ι).Modules)).obj
+    ((restrict (pullback.fst U.ι V.ι)).obj A) ≅
+    (DerivedCategory.Q (C := (pullback U.ι V.ι).Modules)).obj
+      ((restrict (pullback.snd U.ι V.ι)).obj B))
 
 include hUV hA hB in
 /-- The gluing realizes the entire original derived transition, recovered from its actual
   comparisons. -/
 theorem original_transition_recovered :
-    ∃ P : Complex X, locallyPerfect X P ∧
+    ∃ P : CochainComplex X.Modules ℤ, locallyPerfect X P ∧
       ∃ (a : A ⟶ (restrict U.ι).obj P) (b : B ⟶ (restrict V.ι).obj P),
         QuasiIso a ∧ QuasiIso b ∧
-        ∃ eb : (toDerived (pullback U.ι V.ι)).obj ((restrict (pullback.snd U.ι V.ι)).obj B) ≅
-            (toDerived (pullback U.ι V.ι)).obj ((restrict (pullback.fst U.ι V.ι)).obj ((restrict
+        ∃ eb : (DerivedCategory.Q (C := (pullback U.ι V.ι).Modules)).obj
+          ((restrict (pullback.snd U.ι V.ι)).obj B) ≅
+            (DerivedCategory.Q (C := (pullback U.ι V.ι).Modules)).obj
+              ((restrict (pullback.fst U.ι V.ι)).obj ((restrict
               U.ι).obj P)),
-          eb.hom = (toDerived (pullback U.ι V.ι)).map
+          eb.hom = (DerivedCategory.Q (C := (pullback U.ι V.ι).Modules)).map
             ((restrict (pullback.snd U.ι V.ι)).map b ≫
               (openSquareRestrictIso (pullback.snd U.ι V.ι) (pullback.fst U.ι V.ι)
                 V.ι U.ι pullback.condition.symm).hom.app P) ∧
-          e.hom = (toDerived (pullback U.ι V.ι)).map ((restrict (pullback.fst U.ι V.ι)).map a) ≫
+          e.hom = (DerivedCategory.Q (C := (pullback U.ι V.ι).Modules)).map
+            ((restrict (pullback.fst U.ι V.ι)).map a) ≫
             eb.inv := by
   obtain ⟨P, hP, a, b, ha, hb, he⟩ := exists_perfect_glue_of_derived_iso U V hUV hA hB e
   let c := (restrict (pullback.snd U.ι V.ι)).map b ≫
     (openSquareRestrictIso (pullback.snd U.ι V.ι) (pullback.fst U.ι V.ι)
       V.ι U.ι pullback.condition.symm).hom.app P
   have : QuasiIso c := by dsimp [c]; infer_instance
-  refine ⟨P, hP, a, b, ha, hb, asIso ((toDerived (pullback U.ι V.ι)).map c), rfl, ?_⟩
-  change e.hom = (toDerived (pullback U.ι V.ι)).map ((restrict (pullback.fst U.ι V.ι)).map a) ≫
-    inv ((toDerived (pullback U.ι V.ι)).map c)
-  change _ = e.hom ≫ (toDerived (pullback U.ι V.ι)).map c at he
+  refine ⟨P, hP, a, b, ha, hb, asIso ((DerivedCategory.Q
+    (C := (pullback U.ι V.ι).Modules)).map c), rfl, ?_⟩
+  change e.hom = (DerivedCategory.Q (C := (pullback U.ι V.ι).Modules)).map
+    ((restrict (pullback.fst U.ι V.ι)).map a) ≫
+    inv ((DerivedCategory.Q (C := (pullback U.ι V.ι).Modules)).map c)
+  change _ = e.hom ≫ (DerivedCategory.Q (C := (pullback U.ι V.ι).Modules)).map c at he
   rw [he, Category.assoc, IsIso.hom_inv_id, Category.comp_id]
 
 include hUV hA hB in
 /-- Arbitrary target maps remain the original strict triangles after deriving overlap data. -/
 theorem original_target_equations
     (p : A ⟶ (restrict U.ι).obj L) (q : B ⟶ (restrict V.ι).obj L)
-    (he : (toDerived (pullback U.ι V.ι)).map ((restrict (pullback.fst U.ι V.ι)).map p) =
-      e.hom ≫ (toDerived (pullback U.ι V.ι)).map
+    (he : (DerivedCategory.Q (C := (pullback U.ι V.ι).Modules)).map
+      ((restrict (pullback.fst U.ι V.ι)).map p) =
+      e.hom ≫ (DerivedCategory.Q (C := (pullback U.ι V.ι).Modules)).map
         ((restrict (pullback.snd U.ι V.ι)).map q ≫
           (openSquareRestrictIso (pullback.snd U.ι V.ι) (pullback.fst U.ι V.ι)
             V.ι U.ι pullback.condition.symm).hom.app L)) :
-    ∃ (P : Complex X) (_ : locallyPerfect X P)
+    ∃ (P : CochainComplex X.Modules ℤ) (_ : locallyPerfect X P)
       (a : A ⟶ (restrict U.ι).obj P) (b : B ⟶ (restrict V.ι).obj P) (d : P ⟶ L),
       QuasiIso a ∧ QuasiIso b ∧ a ≫ (restrict U.ι).map d = p ∧ b ≫ (restrict V.ι).map d = q := by
   obtain ⟨P, hP, a, b, d, ha, hb, hp, hq, _⟩ :=

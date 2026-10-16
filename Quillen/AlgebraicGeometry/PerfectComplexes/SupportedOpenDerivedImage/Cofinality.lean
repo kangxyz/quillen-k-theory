@@ -11,7 +11,9 @@ public import Quillen.CategoryTheory.Abelian.ZeroPushout
 public import Quillen.Waldhausen.Cofinality.GeneralDense
 public import Quillen.Waldhausen.Functoriality.ExactEquivalence
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpenDerivedImage.Approximation
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-!
 # Genuine supported image density and cofinality
 
@@ -36,6 +38,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes.SupportedOpenDerivedImage
 open Waldhausen
 attribute [local instance] HasDerivedCategory.standard Abelian.hasFiniteBiproducts
@@ -47,7 +50,7 @@ abbrev Obj := (objects j T).FullSubcategory
 
 /-- The actual chosen supported zero belongs to the supported restriction image. -/
 lemma zero_mem : objects j T (perfectSupportedWaldhausen (j ⁻¹ᵁ T).ι).zero :=
-  (derivedObjects j T).prop_of_isZero ((toDerived U).map_isZero
+  (derivedObjects j T).prop_of_isZero ((DerivedCategory.Q (C := U.Modules)).map_isZero
     ((perfectSupported (j ⁻¹ᵁ T).ι).ι.map_isZero
       (perfectSupportedWaldhausen (j ⁻¹ᵁ T).ι).isZero))
 
@@ -84,7 +87,8 @@ theorem quotient_mem (hroof : OpenDerivedImage.HasSupportedDerivedRoofs j T)
 categorical coproduct through its genuine colimit comparison. -/
 theorem coprod_complement_of_complex_complement [HasBinaryCoproducts ((perfectSupported (j ⁻¹ᵁ
   T).ι).FullSubcategory)]
-    (A : (perfectSupported (j ⁻¹ᵁ T).ι).FullSubcategory) (C : Complex U) (hC : perfectSupported (j
+    (A : (perfectSupported (j ⁻¹ᵁ T).ι).FullSubcategory) (C : CochainComplex U.Modules ℤ)
+      (hC : perfectSupported (j
       ⁻¹ᵁ T).ι C)
     (hAC : complexObjects j T (C ⊞ A.obj)) :
     ∃ B : (perfectSupported (j ⁻¹ᵁ T).ι).FullSubcategory, objects j T (A ⨿ B) := by
@@ -109,9 +113,10 @@ theorem coprod_complement_of_complex_complement [HasBinaryCoproducts ((perfectSu
       · exact (congrArg (fun k => k.hom) hn).trans (biprod.inr_desc _ _).symm
   let e : A ⨿ B ≅ BSum := (coprodIsCoprod A B).coconePointUniqueUpToIso ht
   have hT : complexObjects j T BSum.obj := (complexObjects_iff_of_derivedIso j T
-    ((toDerived U).mapIso (biprod.braiding A.obj C))).mpr hAC
+    ((DerivedCategory.Q (C := U.Modules)).mapIso (biprod.braiding A.obj C))).mpr hAC
   exact ⟨B, (complexObjects_iff_of_derivedIso j T
-    ((toDerived U).mapIso ((perfectSupported (j ⁻¹ᵁ T).ι).ι.mapIso e))).mpr hT⟩
+    ((DerivedCategory.Q (C := U.Modules)).mapIso ((perfectSupported
+      (j ⁻¹ᵁ T).ι).ι.mapIso e))).mpr hT⟩
 
 /-- Actual supported global complements provide coproduct density with
 no further extension or strictification premise. -/

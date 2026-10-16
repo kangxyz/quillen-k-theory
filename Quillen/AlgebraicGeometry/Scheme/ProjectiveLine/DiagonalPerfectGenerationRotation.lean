@@ -94,13 +94,13 @@ def diagonalRotatedThirdIso :
 /-- The actual natural triangle p*G0(K) to K to L tensor p*G1(K), with original maps. -/
 def diagonalRotatedGenerationTriangleFunctor :
     OriginalPerfectPlus R ⥤ Triangle (DerivedCategory.Plus (twoChartLine R).Modules) :=
-  Quillen.TriangleTransport.functor (diagonalOriginalLineRotatedFunctor R)
+  Triangle.transportEndpoints (diagonalOriginalLineRotatedFunctor R)
     (diagonalRotatedFirstIso R) (diagonalRotatedMiddleIso R) (diagonalRotatedThirdIso R)
 
 /-- The final triangle retains the actual exact-L tensor and signed original rotation. -/
 def diagonalRotatedGenerationToOriginalIso :
     diagonalRotatedGenerationTriangleFunctor R ≅ diagonalOriginalLineRotatedFunctor R :=
-  Quillen.TriangleTransport.iso (diagonalOriginalLineRotatedFunctor R)
+  Triangle.transportEndpointsIso (diagonalOriginalLineRotatedFunctor R)
     (diagonalRotatedFirstIso R) (diagonalRotatedMiddleIso R) (diagonalRotatedThirdIso R)
 
 /-- The final actual generation triangle at the original intrinsic-perfect derived object. -/

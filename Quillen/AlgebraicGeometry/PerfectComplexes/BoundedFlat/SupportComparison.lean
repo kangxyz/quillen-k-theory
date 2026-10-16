@@ -9,6 +9,7 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.OpenComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenSupport
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-!
 # Bounded-flat models for original supported perfect K-groups
@@ -20,6 +21,8 @@ induces the original K-equivalence, including K0. The actual support-forgetting
 maps commute with the bounded-flat comparison square.
 -/
 @[expose] public section
+
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.Complex.restrictCommShift
 
 open AlgebraicGeometry.Scheme.Modules.Complex
 
@@ -38,7 +41,7 @@ variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 /-- The property of bounded-above, stalkwise-flat locally perfect complexes on `X` whose
 restriction along `j` is acyclic. -/
-def boundedFlatPerfectSupported : ObjectProperty (Complex X) := fun K =>
+def boundedFlatPerfectSupported : ObjectProperty (CochainComplex X.Modules ℤ) := fun K =>
   boundedFlatPerfect X K ∧ ((restrict j).obj K).Acyclic
 
 instance boundedFlatPerfectSupported_containsZero : (boundedFlatPerfectSupported j).ContainsZero
@@ -52,18 +55,20 @@ instance boundedFlatPerfectSupported_closedUnderIsomorphisms :
     fun n => (hK.2 n).of_iso ((restrict j).mapIso e)⟩
 
 instance boundedFlatPerfectSupported_extensionClosed :
-    (abelianExactStructure (Complex X)).IsExtensionClosed (boundedFlatPerfectSupported j) where
+    (abelianExactStructure (CochainComplex X.Modules ℤ)).IsExtensionClosed
+      (boundedFlatPerfectSupported j) where
   prop_middle {_S} hS h₁ h₃ :=
     ⟨boundedFlatPerfect_of_shortExact hS h₁.1 h₃.1,
       (hS.map_of_exact (restrict j)).acyclic_X₂ h₁.2 h₃.2⟩
 
 instance boundedFlatPerfectSupported_closedUnderFiniteProducts :
     (boundedFlatPerfectSupported j).IsClosedUnderFiniteProducts :=
-  (abelianExactStructure (Complex X)).extensionClosed_finiteProducts (boundedFlatPerfectSupported j)
+  (abelianExactStructure (CochainComplex X.Modules ℤ)).extensionClosed_finiteProducts
+    (boundedFlatPerfectSupported j)
 
-theorem boundedFlatPerfectSupported_shift {K : Complex X}
+theorem boundedFlatPerfectSupported_shift {K : CochainComplex X.Modules ℤ}
     (hK : boundedFlatPerfectSupported j K) (n : ℤ) :
-    boundedFlatPerfectSupported j ((shiftFunctor (Complex X) n).obj K) := by
+    boundedFlatPerfectSupported j ((shiftFunctor (CochainComplex X.Modules ℤ) n).obj K) := by
   refine ⟨boundedFlatPerfect_shift hK.1 n, ?_⟩
   intro i
   have hi : (((restrict j).obj K)⟦n⟧).ExactAt i := by
@@ -73,7 +78,7 @@ theorem boundedFlatPerfectSupported_shift {K : Complex X}
         ((restrict j).obj K))
   exact hi.of_iso (((restrict j).commShiftIso n).app K).symm
 
-theorem boundedFlatPerfectSupported_mappingCone {K L : Complex X}
+theorem boundedFlatPerfectSupported_mappingCone {K L : CochainComplex X.Modules ℤ}
     (hK : boundedFlatPerfectSupported j K) (hL : boundedFlatPerfectSupported j L) (f : K ⟶ L) :
     boundedFlatPerfectSupported j (CochainComplex.mappingCone f) := by
   refine ⟨boundedFlatPerfect_mappingCone hK.1 hL.1 f, ?_⟩
@@ -129,7 +134,7 @@ theorem boundedFlatPerfectSupportedInclusion_approximation [CompactSpace X] :
     have hMa : ((restrict j).obj M.obj).Acyclic := fun n =>
       (exactAt_iff_of_quasiIsoAt ((restrict j).map p.hom) n).mpr (L.property.2 n)
     obtain ⟨Q, hQ, q, w, hS⟩ := (ExactSubcategory.inflation_iff
-      (abelianExactStructure (Complex X)) (boundedFlatPerfect X) i).mp hi
+      (abelianExactStructure (CochainComplex X.Modules ℤ)) (boundedFlatPerfect X) i).mp hi
     have hQa : ((restrict j).obj Q).Acyclic := by
       have hSi : QuasiIso ((restrict j).map i.hom) := by
         rw [quasiIso_iff]
@@ -140,7 +145,7 @@ theorem boundedFlatPerfectSupportedInclusion_approximation [CompactSpace X] :
     let i' : K ⟶ M' := ObjectProperty.homMk i.hom
     let p' : (boundedFlatPerfectSupportedInclusion j).obj M' ⟶ L := ObjectProperty.homMk p.hom
     refine ⟨M', i', p', ?_, hp, ?_⟩
-    · exact (ExactSubcategory.inflation_iff (abelianExactStructure (Complex X))
+    · exact (ExactSubcategory.inflation_iff (abelianExactStructure (CochainComplex X.Modules ℤ))
         (boundedFlatPerfectSupported j) i').mpr ⟨Q, ⟨hQ, hQa⟩, q, w, hS⟩
     · apply ObjectProperty.hom_ext
       exact congrArg (fun s => s.hom) hfac

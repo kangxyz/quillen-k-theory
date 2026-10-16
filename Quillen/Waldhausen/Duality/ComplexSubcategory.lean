@@ -9,6 +9,7 @@ public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Algebra.Homology.OppositeSubcategory
 public import Quillen.Waldhausen.Duality.ExactCategory
 public import Quillen.CategoryTheory.ExactCategory.Functor
+public import Aglib.Algebra.Homology.CochainComplex.OppositeQuasiIso
 
 /-!
 # Genuine opposite Waldhausen structures on complex subcategories
@@ -53,7 +54,7 @@ lemma quasiIso_cochain_opEquivalence_functor_map_iff {K L : CochainComplex C ℤ
   constructor
   · intro h
     let := h
-    have := quasiIso_cochain_opEquivalence_inverse_map
+    have := _root_.CochainComplex.quasiIso_cochain_opEquivalence_inverse_map
       ((CochainComplex.opEquivalence C).functor.map f.op)
     let e := CochainComplex.opEquivalence C
     have he : f = (e.unitIso.app (op K)).inv.unop ≫

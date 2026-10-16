@@ -8,7 +8,9 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.MayerVietoris
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-! # Supported Mayer–Vietoris consumers -/
 @[expose] public section
 
@@ -24,6 +26,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace QuillenTest.SupportedMayerVietoris
 open Quillen.PerfectComplexes.SupportedMayerVietoris
 local instance (Y : Scheme.{u}) (A : Y.Opens) (n : ℕ) : CommGroup (PerfectSupportedK A.ι n) :=
@@ -114,12 +117,15 @@ omit [CompactSpace X] [QuasiSeparatedSpace X] [CompactSpace V] in
 include hcover in
 /-- The geometric input returns a genuine perfect complex vanishing on the
 prescribed auxiliary open from a specified actual overlap isomorphism. -/
-theorem specified_supported_overlap_extension (E : Complex T.toScheme) (B : Complex V)
+theorem specified_supported_overlap_extension (E : CochainComplex T.toScheme.Modules ℤ)
+    (B : CochainComplex V.Modules ℤ)
     (hE : perfectSupported (T.ι ⁻¹ᵁ Z).ι E) (hB : perfectSupported (j ⁻¹ᵁ Z).ι B)
-    (e : (toDerived (j ⁻¹ᵁ T).toScheme).obj ((restrict (j ⁻¹ᵁ T).ι).obj B) ≅
-      (toDerived (j ⁻¹ᵁ T).toScheme).obj ((restrict (j.resLE T (j ⁻¹ᵁ T) le_rfl)).obj E)) :
-    ∃ P : Complex X, perfectSupported Z.ι P ∧
-      Nonempty ((toDerived T.toScheme).obj ((restrict T.ι).obj P) ≅ (toDerived T.toScheme).obj E) :=
+    (e : (DerivedCategory.Q (C := (j ⁻¹ᵁ T).toScheme.Modules)).obj ((restrict (j ⁻¹ᵁ T).ι).obj B) ≅
+      (DerivedCategory.Q (C := (j ⁻¹ᵁ T).toScheme.Modules)).obj
+        ((restrict (j.resLE T (j ⁻¹ᵁ T) le_rfl)).obj E)) :
+    ∃ P : CochainComplex X.Modules ℤ, perfectSupported Z.ι P ∧
+      Nonempty ((DerivedCategory.Q (C := T.toScheme.Modules)).obj ((restrict T.ι).obj P) ≅
+        (DerivedCategory.Q (C := T.toScheme.Modules)).obj E) :=
   (SupportedOpenDerivedImage.complexObjects_cover_iff j T Z hcover E hE).mpr ⟨B,hB,⟨e⟩⟩
 
 include hT hcover in

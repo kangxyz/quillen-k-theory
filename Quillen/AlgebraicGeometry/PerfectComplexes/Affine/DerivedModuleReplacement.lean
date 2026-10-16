@@ -7,7 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.StrictModuleModel
 public import Mathlib.Algebra.Category.ModuleCat.Projective
-public import Quillen.Algebra.Homology.KProjectiveRepresentatives
+public import Aglib.Algebra.Homology.DerivedCategory.KProjective.Representatives
 
 /-!
 # Principal-open derived replacement for bounded finite-projective modules
@@ -58,7 +58,7 @@ theorem exists_principal_derived_module_fraction (R : CommRingCat.{u}) (r : R)
         DerivedCategory.Q.map ((localize r (ComplexShape.up ℤ)).map g) := by
   have : CochainComplex.IsKProjective ((localize r (ComplexShape.up ℤ)).obj K) :=
     isKProjective_of_moduleStrictPerfect _ (moduleStrictPerfect_localize R r hK)
-  obtain ⟨f, rfl⟩ := Quillen.CochainComplex.exists_chain_representative_of_isKProjective α
+  obtain ⟨f, rfl⟩ := _root_.CochainComplex.exists_chain_representative_of_isKProjective α
   obtain ⟨n, g, hn, hg⟩ := exists_moduleStrictPerfect_fraction R r hK f
   refine ⟨n, g, hn, ?_⟩
   rw [← DerivedCategory.Q.map_comp, hg]
@@ -75,7 +75,7 @@ theorem exists_principal_derived_module_equality (R : CommRingCat.{u}) (r : R)
         DerivedCategory.Q.map ((r ^ n • 𝟙 K) ≫ g) := by
   have : CochainComplex.IsKProjective ((localize r (ComplexShape.up ℤ)).obj K) :=
     isKProjective_of_moduleStrictPerfect _ (moduleStrictPerfect_localize R r hK)
-  let H := Quillen.CochainComplex.homotopyOfDerivedEqOfIsKProjective
+  let H := _root_.CochainComplex.homotopyOfDerivedEqOfIsKProjective
     ((localize r (ComplexShape.up ℤ)).map f) ((localize r (ComplexShape.up ℤ)).map g) h
   obtain ⟨⟨s, hs⟩, hfp⟩ := moduleStrictPerfect_denominator_inputs R hK
   obtain ⟨n, H', _⟩ := exists_homotopy_denominator r s hs hfp f g H

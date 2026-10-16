@@ -16,6 +16,8 @@ attachment edge, a proper zero-divisor family, and empty opens are tested.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes
 
 

@@ -13,7 +13,11 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.FlatPullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.LocalDescent
 public import Aglib.AlgebraicGeometry.Cohomology.ProjectionFormula.TensorPushforward
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Tensor.Exact
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
 /-! # Exact tensor with an actually trivialized line on locally perfect complexes
 
 Degreewise tensor uses the original sheafified tensor functor. Actual line
@@ -35,6 +39,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u v
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
@@ -42,7 +47,7 @@ open AlgebraicGeometry.Scheme.Modules
 open CategoryTheory.MonoidalCategory
 
 /-- Local perfection descends along actual open-immersion covers. -/
-theorem locallyPerfect_of_openImmersionCover {X : Scheme.{u}} {K : Complex X}
+theorem locallyPerfect_of_openImmersionCover {X : Scheme.{u}} {K : CochainComplex X.Modules ℤ}
     {ι : Type v} (Y : ι → Scheme.{u}) (j : ∀ i, Y i ⟶ X)
     [∀ i, IsOpenImmersion (j i)] (hc : ∀ x : X, ∃ i y, j i y = x)
     (hK : ∀ i, locallyPerfect (Y i) ((restrict (j i)).obj K)) : locallyPerfect X K := by
@@ -57,7 +62,8 @@ theorem locallyPerfect_of_openImmersionCover {X : Scheme.{u}} {K : Complex X}
       eqToIso (restrict_congr ((j i).isoImage_inv_ι V))
   exact ⟨O, ⟨y, hy, rfl⟩, ⟨(restrict e.inv).obj P.obj,
     strictPerfect_restrict _ P.property⟩,
-    ⟨(toDerived O.toScheme).mapIso (ec.app K).symm ≪≫ restrictDerivedIso e.inv eP⟩⟩
+    ⟨(DerivedCategory.Q (C := O.toScheme.Modules)).mapIso
+      (ec.app K).symm ≪≫ restrictDerivedIso e.inv eP⟩⟩
 
 instance moduleTensor_preservesFiniteLimits {X : Scheme.{u}} (L : X.Modules)
     [IsFiniteLocallyFree X L] : PreservesFiniteLimits (moduleTensorLeftFunctor X L) :=
@@ -111,7 +117,7 @@ variable {X : Scheme.{u}} (L : X.Modules) {ι : Type v}
 include hc e
 
 /-- Actual chartwise trivial tensor preserves arbitrary locally perfect input. -/
-theorem locallyPerfect_tensorByLine {K : Complex X} (hK : locallyPerfect X K) :
+theorem locallyPerfect_tensorByLine {K : CochainComplex X.Modules ℤ} (hK : locallyPerfect X K) :
     locallyPerfect X ((AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft L).obj K) := by
   apply locallyPerfect_of_openImmersionCover Y j hc
   intro i
@@ -140,8 +146,10 @@ variable [IsFiniteLocallyFree X L]
 /-- Actual line tensor preserves the inherited exact structure. -/
 def perfectExactTensorByLine :
     ExactFunctor
-      (ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (locallyPerfect X))
-      (ExactSubcategory.exactStructure (abelianExactStructure (Complex X)) (locallyPerfect X)) where
+      (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
+        (locallyPerfect X))
+      (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
+        (locallyPerfect X)) where
   toFunctor := perfectTensorByLine L Y j hc e
   map_conflation S hS := by
     change ((S.map (locallyPerfect X).ι).map (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft
@@ -159,7 +167,8 @@ theorem perfectTensorByLine_waldhausenExact :
     exact AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft_quasiIso L s.hom
   pushout hi h := by
     apply IsPushout.of_map_of_faithful (locallyPerfect X).ι
-    exact (Waldhausen.fullSubcategory_map_pushout (abelianExactStructure (Complex X))
+    exact (Waldhausen.fullSubcategory_map_pushout (abelianExactStructure
+      (CochainComplex X.Modules ℤ))
       (locallyPerfect X) hi h).map (AlgebraicGeometry.Scheme.Modules.Complex.tensorLeft L)
 
 end Quillen.PerfectComplexes

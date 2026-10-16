@@ -18,6 +18,8 @@ restriction image. The actual source and all canonical maps are retained.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open Quillen.PerfectComplexes.OpenDerivedImage
 open Quillen.Waldhausen
 

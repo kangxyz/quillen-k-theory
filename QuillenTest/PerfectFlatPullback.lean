@@ -7,7 +7,9 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlatPullbackFunctor
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
 /-!
 # Consumers of actual flat pullback on locally-perfect K-theory
 
@@ -15,6 +17,8 @@ These exercise arbitrary ambient complexes and genuinely local perfectness,
 then identity/composition/open squares and the original public comparisons.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.PerfectComplexes
 
@@ -25,19 +29,23 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace QuillenTest.PerfectFlatPullback
 
 /-- Quasi-isomorphism preservation is ambient, with no perfectness or QC premise. -/
 theorem arbitraryQuasiIso {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
-    {K L : Complex Y} (s : K ⟶ L) [QuasiIso s] : QuasiIso
+    {K L : CochainComplex Y.Modules ℤ} (s : K ⟶ L) [QuasiIso s] : QuasiIso
       ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).map s) :=
   inferInstance
 
 /-- An actual derived local model pulls back using genuine flatness alone. -/
 def actualDerivedIso {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
-    {K L : Complex Y} (e : (toDerived Y).obj K ≅ (toDerived Y).obj L) :
-    (toDerived X).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj K) ≅
-      (toDerived X).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback f).obj L) :=
+    {K L : CochainComplex Y.Modules ℤ} (e : (DerivedCategory.Q (C := Y.Modules)).obj K ≅
+      (DerivedCategory.Q (C := Y.Modules)).obj L) :
+    (DerivedCategory.Q (C := X.Modules)).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback
+      f).obj K) ≅
+      (DerivedCategory.Q (C := X.Modules)).obj ((AlgebraicGeometry.Scheme.Modules.Complex.pullback
+        f).obj L) :=
         flatPullbackDerivedIso f e
 
 /-- The input is a genuinely locally-perfect complex, with no global strict model. -/

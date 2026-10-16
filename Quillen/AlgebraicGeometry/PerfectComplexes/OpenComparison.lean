@@ -5,11 +5,14 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFibration
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OppositeJointData
 public import Quillen.AlgebraicGeometry.PerfectComplexes.StrictOpenRelative
 
 /-! # Original relative-open strict-to-perfect comparison and dual restriction -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.Waldhausen
 

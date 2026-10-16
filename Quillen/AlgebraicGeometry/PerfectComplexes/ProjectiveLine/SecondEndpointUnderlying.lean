@@ -49,7 +49,8 @@ instance VRaw_additive (R : CommRingCat.{u}) : (VRaw R).Additive := by
 variable (R : CommRingCat.{u})
 
 /-- The original first pullback and total in the plain complex carrier. -/
-def CNative : FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ Complex (relativeSquare R) :=
+def CNative : FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ CochainComplex
+    (relativeSquare R).Modules ℤ :=
   (FlasqueBoundedBelow.objects (twoChartLine R)).ι ⋙
     (Scheme.Modules.pullback (relativeFirst R)).mapHomologicalComplex (.up ℤ) ⋙
       godementTotal (relativeSquare R)
@@ -59,7 +60,8 @@ instance CNative_additive : (CNative R).Additive := by
   infer_instance
 
 /-- The original V expression in the plain complex carrier. -/
-def VNative : FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ Complex (twoChartLine R) :=
+def VNative : FlasqueBoundedBelow.Obj (twoChartLine R) ⥤ CochainComplex
+    (twoChartLine R).Modules ℤ :=
   CRaw R ⋙ (squareTensor R).mapHomologicalComplex (.up ℤ) ⋙
     godementTotal (relativeSquare R) ⋙
       (Scheme.Modules.pushforward (relativeSecond R)).mapHomologicalComplex (.up ℤ)

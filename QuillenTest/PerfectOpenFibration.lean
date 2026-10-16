@@ -7,6 +7,7 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenLongExactSequence
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-! Semantic consumers for actual local shifts, relative weak classes, unchanged
 joint cylinders, the original fiber map and the coarse-only connective sequence. -/
@@ -30,10 +31,10 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
 
 -- Arbitrary integer, with no strict-global model or scheme finiteness hypothesis.
-example {K : Complex X} (hK : locallyPerfect X K) (n : ℤ) :
+example {K : CochainComplex X.Modules ℤ} (hK : locallyPerfect X K) (n : ℤ) :
     locallyPerfect X (K⟦n⟧) := locallyPerfect_shift hK n
 
-example {K : Complex X} (hK : locallyPerfect X K) :
+example {K : CochainComplex X.Modules ℤ} (hK : locallyPerfect X K) :
     locallyPerfect X (K⟦(-37 : ℤ)⟧) := locallyPerfect_shift hK (-37)
 
 example : (perfectOpenWeakWaldhausen j).cof = (perfectWaldhausen X).cof := rfl

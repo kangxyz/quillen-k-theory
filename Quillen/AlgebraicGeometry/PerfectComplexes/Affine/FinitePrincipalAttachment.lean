@@ -5,8 +5,11 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Coherent.Localization.AffineApproximation
+public import Aglib.Algebra.Category.ModuleCat.Localization.Submodule
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.Isomorphisms
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Extension.Affine
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalPerfectDescent
+public import Aglib.Algebra.Module.LocalizedModule.FiniteSubmodule
 
 /-!
 # Actual finite-free attachments on finite principal families
@@ -51,7 +54,7 @@ lemma exists_finiteFree_epi_on_principals (M : ModuleCat.{u} R) (s : Finset R)
       ∀ r : s, Epi ((ModuleCat.localizedModuleFunctor (Submonoid.powers r.val)).map g) := by
   let := hfinite
   obtain ⟨N, hN, htop⟩ :=
-    AlgebraicGeometry.Scheme.Modules.Coherent.exists_fg_submodule_localized_eq_top_finite
+    IsLocalizedModule.exists_fg_submodule_localized_eq_top_finite
     (fun r : s => Submonoid.powers r.val) (fun r => Localization.Away r.val)
     (fun r => M.localizedModule (Submonoid.powers r.val))
     (fun r => M.localizedModuleMkLinearMap (Submonoid.powers r.val))
@@ -64,7 +67,7 @@ lemma exists_finiteFree_epi_on_principals (M : ModuleCat.{u} R) (s : Finset R)
   refine ⟨m, q' ≫ i, fun r => ?_⟩
   let F := ModuleCat.localizedModuleFunctor (Submonoid.powers r.val)
   have : IsIso (F.map i) :=
-    AlgebraicGeometry.Scheme.Modules.Coherent.isIso_localized_subtype_of_eq_top
+    ModuleCat.isIso_localized_subtype_of_eq_top
       (CommRingCat.of R) (Submonoid.powers r.val) M N (htop r)
   change Epi (F.map (q' ≫ i))
   rw [F.map_comp]

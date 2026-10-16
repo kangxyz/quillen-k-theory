@@ -10,6 +10,7 @@ public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.CategoryTheory.TheoremB.StructuredWeakComparison
 public import Quillen.Localization.Serre.StructuredTransitions
 public import Quillen.Localization.Serre.LocalizationEndpoint
+public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
 
 /-!
 # The canonical connective Serre localization sequence
@@ -37,7 +38,8 @@ universe u
 open CategoryTheory CategoryTheory.Limits
 
 namespace Quillen.SerreLocalization
-attribute [local instance] Abelian.hasFiniteBiproducts quotientAbelian
+attribute [local instance] Abelian.hasFiniteBiproducts
+attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
   (P : ObjectProperty C) [P.IsSerreClass]
 
@@ -75,7 +77,8 @@ def localizationFiberEquiv (n : ℕ) :
 /-- The localization boundary Kₙ₊₁(C/P) → Kₙ(P), obtained from the actual
 path-space connecting homomorphism and the canonical comparison inverse. -/
 def connectingHom (n : ℕ) :
-    (quotientExactStructure P).K (n + 1) →* (CategoryTheory.ObjectProperty.subcategoryExactStructure
+    ((abelianExactStructure P.isoModSerre.Localization)).K (n + 1) →*
+      (CategoryTheory.ObjectProperty.subcategoryExactStructure
       P).K n :=
   connectingHomOfComparison P n (localizationFiberEquiv P n)
 

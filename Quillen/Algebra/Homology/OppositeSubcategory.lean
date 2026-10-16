@@ -6,7 +6,8 @@ Authors: kangxyz
 module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
-public import Quillen.Algebra.Homology.BoundedProjectiveReplacement
+public import Aglib.Algebra.Homology.CochainComplex.OppositeQuasiIso
+public import Aglib.Algebra.Homology.CochainComplex.BoundedAbove.ProjectiveReplacement
 public import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
 public import Mathlib.CategoryTheory.ObjectProperty.Equivalence
 public import Mathlib.CategoryTheory.ObjectProperty.Opposite

@@ -8,6 +8,7 @@ module
 
 public import Quillen.Waldhausen.GilletWaldhausen.FixedBounds
 public import Quillen.Waldhausen.GilletWaldhausen.IdentityDisk
+public import Aglib.Algebra.Homology.CochainComplex.Cycles
 
 /-! # Actual interior cycles of an acyclic finite-term stratum
 
@@ -31,7 +32,8 @@ variable {A : Type u} [Category.{v} A] [Abelian A]
 theorem cycles_isZero_of_prev_isZero (K : CochainComplex A ℤ) (n : ℤ)
     (hn : K.ExactAt n) (hz : IsZero (K.X (n - 1))) : IsZero (K.cycles n) := by
   let : Epi (K.toCycles (n - 1) ((n - 1) + 1)) :=
-    epi_toCycles_of_exactAt K (n - 1) (by simpa only [sub_add_cancel] using hn)
+    _root_.CochainComplex.epi_toCycles_of_exactAt K (n - 1) (by simpa only [sub_add_cancel]
+      using hn)
   simpa only [sub_add_cancel] using IsZero.of_epi (K.toCycles (n - 1) ((n - 1) + 1)) hz
 
 /-- The lower-end cycle, and every earlier cycle, really is zero. -/

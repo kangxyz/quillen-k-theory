@@ -8,12 +8,17 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedRoofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Single
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Homology
+public import Aglib.AlgebraicGeometry.Modules.Complex.Homology
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Homology
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Charts
 public import Quillen.Algebra.ModuleComplex.FiniteFreeAttachment
 public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.KernelClosure
 public import Quillen.Waldhausen.GilletWaldhausen.AcyclicCycles
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
+public import Mathlib.Algebra.Homology.DerivedCategory.Basic
 
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.Algebra.Homology.CochainComplex.Cycles
 /-! # Finite attachments with an explicit local lower bound
 
 The actual cone of an attachment strictly above a local lower term bound
@@ -33,6 +38,7 @@ noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 universe u
+attribute [local instance] AlgebraicGeometry.Scheme.Modules.standardHasDerivedCategory
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Pretriangulated AlgebraicGeometry
 open HomologicalComplex
 open AlgebraicGeometry.Scheme.ProjectiveLine AlgebraicGeometry.Scheme.Modules
@@ -45,7 +51,7 @@ local instance finiteAttachmentStandard (X : Scheme.{u}) :
 /-- Above the cohomological upper bound, cycles of a bounded vector-bundle
 complex are finite locally free. The argument uses local kernel closure,
 without treating a vector bundle as a projective object of all sheaves. -/
-theorem finiteLocallyFree_cycles_above_bound {X : Scheme.{u}} (K : Complex X)
+theorem finiteLocallyFree_cycles_above_bound {X : Scheme.{u}} (K : CochainComplex X.Modules ℤ)
     (n b : ℤ) [K.IsLE n] (hbound : ∀ i, b < i → IsZero (K.X i))
     (hterms : ∀ i, IsFiniteLocallyFree X (K.X i)) (i : ℤ) (hi : n ≤ i) :
     IsFiniteLocallyFree X (K.cycles i) := by
@@ -59,12 +65,12 @@ theorem finiteLocallyFree_cycles_above_bound {X : Scheme.{u}} (K : Complex X)
     | pred j hj ih =>
       have := ih (by omega)
       have : IsFiniteLocallyFree X
-          (Quillen.Waldhausen.GilletWaldhausen.cycleSequence K (j - 1)).X₂ := hterms (j - 1)
-      have hS := Quillen.Waldhausen.GilletWaldhausen.cycleSequence_shortExact K (j - 1)
+          (_root_.CochainComplex.cycleSequence K (j - 1)).X₂ := hterms (j - 1)
+      have hS := _root_.CochainComplex.cycleSequence_shortExact K (j - 1)
         (by simpa using K.exactAt_of_isLE n j (by omega))
       have : IsFiniteLocallyFree X
-          (Quillen.Waldhausen.GilletWaldhausen.cycleSequence K (j - 1)).X₃ := by
-        simpa only [Quillen.Waldhausen.GilletWaldhausen.cycleSequence, sub_add_cancel]
+          (_root_.CochainComplex.cycleSequence K (j - 1)).X₃ := by
+        simpa only [_root_.CochainComplex.cycleSequence, sub_add_cancel]
           using (ih (by omega))
       exact finiteLocallyFree_kernel_of_shortExact hS
   · exact top i (by omega)
@@ -94,39 +100,44 @@ theorem strictPerfect_truncLE_window {X : Scheme.{u}} (P : StrictPerfect X)
   exact ⟨⟨⟨a, b, hbnd⟩, hterms⟩, hbnd, inferInstance⟩
 
 /-- A genuine affine strict model with its lower term bound retained explicitly. -/
-def affineStrictLowerModel (R : CommRingCat.{u}) (K : Complex (Spec R)) (a : ℤ) : Prop :=
+def affineStrictLowerModel (R : CommRingCat.{u}) (K : CochainComplex (Spec R).Modules ℤ)
+    (a : ℤ) : Prop :=
   ∃ P : StrictPerfect (Spec R), (∀ i, i < a → IsZero (P.obj.X i)) ∧
-    Nonempty ((toDerived (Spec R)).obj K ≅ (toDerived (Spec R)).obj P.obj)
+    Nonempty ((DerivedCategory.Q (C := (Spec R).Modules)).obj K ≅
+      (DerivedCategory.Q (C := (Spec R).Modules)).obj P.obj)
 
 /-- An actual attachment from a strict source preserves the local lower term bound;
 only the affine source of the derived comparison is used for chain realization. -/
 theorem affineStrictLowerModel_mappingCone (R : CommRingCat.{u})
-    {K : Complex (Spec R)} (P : StrictPerfect (Spec R)) (f : P.obj ⟶ K) (a : ℤ)
+    {K : CochainComplex (Spec R).Modules ℤ} (P : StrictPerfect (Spec R)) (f : P.obj ⟶ K) (a : ℤ)
     (hP : ∀ i, i < a + 1 → IsZero (P.obj.X i))
     (hK : affineStrictLowerModel R K a) :
     affineStrictLowerModel R (CochainComplex.mappingCone f) a := by
   obtain ⟨L, hL, ⟨e⟩⟩ := hK
   obtain ⟨g, hg⟩ := Affine.exists_strict_chain_representative R P L
-    ((toDerived (Spec R)).map f ≫ e.hom)
+    ((DerivedCategory.Q (C := (Spec R).Modules)).map f ≫ e.hom)
   refine ⟨⟨CochainComplex.mappingCone g,
     strictPerfect_mappingCone P.property L.property g⟩, ?_, ⟨?_⟩⟩
   · intro i hi
     exact (CochainComplex.mappingCone.isZero_X_iff g i).mpr
       ⟨hP (i + 1) (by omega), hL i hi⟩
   · exact Triangle.π₃.mapIso (isoTriangleOfIso₁₂ _ _
-      (mappingConeTriangle_distinguished f) (mappingConeTriangle_distinguished g)
+      (DerivedCategory.mappingCone_triangle_distinguished f)
+        (DerivedCategory.mappingCone_triangle_distinguished g)
       (Iso.refl _) e (by simpa using hg.symm))
 
 /-- A local lower model and the actual upper cohomological bound give an
 actual strict model in the stated closed interval, not just homology vanishing. -/
 theorem affineStrictLowerModel_exists_window (R : CommRingCat.{u})
-    (K : Complex (Spec R)) (a b : ℤ) (hab : a ≤ b) [K.IsLE b]
+    (K : CochainComplex (Spec R).Modules ℤ) (a b : ℤ) (hab : a ≤ b) [K.IsLE b]
     (hK : affineStrictLowerModel R K a) :
     ∃ P : StrictPerfect (Spec R),
       (∀ i, i < a ∨ b < i → IsZero (P.obj.X i)) ∧
-      Nonempty ((toDerived (Spec R)).obj K ≅ (toDerived (Spec R)).obj P.obj) := by
+      Nonempty ((DerivedCategory.Q (C := (Spec R).Modules)).obj K ≅
+        (DerivedCategory.Q (C := (Spec R).Modules)).obj P.obj) := by
   obtain ⟨P, hP, ⟨e⟩⟩ := hK
-  have : DerivedCategory.IsLE (C := (Spec R).Modules) ((toDerived (Spec R)).obj K) b :=
+  have : DerivedCategory.IsLE (C := (Spec R).Modules)
+    ((DerivedCategory.Q (C := (Spec R).Modules)).obj K) b :=
     inferInstanceAs ((DerivedCategory.Q.obj K).IsLE b)
   have : P.obj.IsLE b := by
     rw [← DerivedCategory.isLE_Q_obj_iff]
@@ -134,13 +145,13 @@ theorem affineStrictLowerModel_exists_window (R : CommRingCat.{u})
   obtain ⟨hstrict, hwindow, hq⟩ := strictPerfect_truncLE_window P a b hab hP
   have : QuasiIso (P.obj.ιTruncLE b) := hq
   exact ⟨⟨P.obj.truncLE b, hstrict⟩, hwindow,
-    ⟨e ≪≫ (asIso ((toDerived (Spec R)).map (P.obj.ιTruncLE b))).symm⟩⟩
+    ⟨e ≪≫ (asIso ((DerivedCategory.Q (C := (Spec R).Modules)).map (P.obj.ιTruncLE b))).symm⟩⟩
 
 /-- Restricting an actual cone to a specified affine chart preserves the same local
 lower term bound, using the original cone/restriction comparison. -/
 theorem affineStrictLowerModel_restrict_mappingCone
     {R : CommRingCat.{u}} {X : Scheme.{u}} (j : Spec R ⟶ X) [IsOpenImmersion j]
-    {K : Complex X} (P : StrictPerfect X) (f : P.obj ⟶ K) (a : ℤ)
+    {K : CochainComplex X.Modules ℤ} (P : StrictPerfect X) (f : P.obj ⟶ K) (a : ℤ)
     (hP : ∀ i, i < a + 1 → IsZero (P.obj.X i))
     (hK : affineStrictLowerModel R ((restrict j).obj K) a) :
     affineStrictLowerModel R ((restrict j).obj (CochainComplex.mappingCone f)) a := by
@@ -148,13 +159,13 @@ theorem affineStrictLowerModel_restrict_mappingCone
     ⟨(restrict j).obj P.obj, strictPerfect_restrict j P.property⟩
   obtain ⟨C, hC, ⟨eC⟩⟩ := affineStrictLowerModel_mappingCone R P' ((restrict j).map f) a
     (fun i hi => (Scheme.Modules.restrictFunctor j).map_isZero (hP i hi)) hK
-  exact ⟨C, hC, ⟨(toDerived (Spec R)).mapIso
+  exact ⟨C, hC, ⟨(DerivedCategory.Q (C := (Spec R).Modules)).mapIso
     (CochainComplex.mappingCone.mapHomologicalComplexIso f
       (Scheme.Modules.restrictFunctor j)) ≪≫ eC⟩⟩
 
 /-- The two original polynomial charts have genuine strict derived models with one
 common lower term bound. No global strict model is included in this predicate. -/
-def twoChartStrictLowerModels (R : CommRingCat.{u}) (K : Complex (twoChartLine R))
+def twoChartStrictLowerModels (R : CommRingCat.{u}) (K : CochainComplex (twoChartLine R).Modules ℤ)
     (a : ℤ) : Prop :=
   affineStrictLowerModel (.of (Polynomial R))
     ((restrict (plusChart R)).obj K) a ∧
@@ -164,7 +175,7 @@ def twoChartStrictLowerModels (R : CommRingCat.{u}) (K : Complex (twoChartLine R
 /-- Every original locally perfect object on the two-chart line has one common
 lower term bound for genuine models on both whole polynomial charts. -/
 theorem exists_twoChartStrictLowerModels (R : CommRingCat.{u})
-    {K : Complex (twoChartLine R)} (hK : locallyPerfect (twoChartLine R) K) :
+    {K : CochainComplex (twoChartLine R).Modules ℤ} (hK : locallyPerfect (twoChartLine R) K) :
     ∃ a : ℤ, twoChartStrictLowerModels R K a := by
   obtain ⟨P, ⟨eP⟩⟩ := Affine.locallyPerfect_exists_strictPerfect_representative
     (.of (Polynomial R)) (locallyPerfect_restrict (plusChart R) hK)
@@ -177,7 +188,7 @@ theorem exists_twoChartStrictLowerModels (R : CommRingCat.{u})
     ⟨eN.symm⟩⟩⟩
 
 private theorem restrict_isLE {R : CommRingCat.{u}} {X : Scheme.{u}}
-    (j : Spec R ⟶ X) [IsOpenImmersion j] (K : Complex X) (b : ℤ) [K.IsLE b] :
+    (j : Spec R ⟶ X) [IsOpenImmersion j] (K : CochainComplex X.Modules ℤ) (b : ℤ) [K.IsLE b] :
     ((restrict j).obj K).IsLE b := by
   rw [CochainComplex.isLE_iff]
   intro i hi
@@ -198,7 +209,7 @@ theorem epi_globalSections_of_quasicoherent (R : CommRingCat.{u})
 finite over the base ring. This does not claim finiteness of lower homology
 over a noncoherent ring. -/
 theorem finite_top_homology_sections (R : CommRingCat.{u})
-    (K : Complex (Spec R)) (a b : ℤ) (hab : a ≤ b) [K.IsLE b]
+    (K : CochainComplex (Spec R).Modules ℤ) (a b : ℤ) (hab : a ≤ b) [K.IsLE b]
     (hK : affineStrictLowerModel R K a) :
     Module.Finite R (moduleSpecΓFunctor.obj (K.homology b)) := by
   obtain ⟨P, hP, ⟨eP⟩⟩ := affineStrictLowerModel_exists_window R K a b hab hK
@@ -208,7 +219,7 @@ theorem finite_top_homology_sections (R : CommRingCat.{u})
     let := P.property.2 b
     exact finiteLocallyFree_of_iso e.symm
   have : (P.obj.homology b).IsQuasicoherent :=
-    AlgebraicGeometry.Scheme.Modules.Coherent.quasicoherent_homology P.obj (fun i => by
+    AlgebraicGeometry.Scheme.Modules.QuasiCoherent.quasicoherent_homology P.obj (fun i => by
       let := P.property.2 i
       infer_instance) b
   have : Epi (moduleSpecΓFunctor.map (P.obj.homologyπ b)) :=
@@ -225,7 +236,7 @@ theorem finite_top_homology_sections (R : CommRingCat.{u})
 homology sheaf to be a vector bundle. Cohomological concentration alone
 would not give this conclusion. -/
 theorem finiteLocallyFree_homology_of_affineStrictLowerModel
-    (R : CommRingCat.{u}) (K : Complex (Spec R)) (a : ℤ) [K.IsLE a]
+    (R : CommRingCat.{u}) (K : CochainComplex (Spec R).Modules ℤ) (a : ℤ) [K.IsLE a]
     (hK : affineStrictLowerModel R K a) :
     IsFiniteLocallyFree (Spec R) (K.homology a) := by
   obtain ⟨P, hP, ⟨eP⟩⟩ := affineStrictLowerModel_exists_window R K a a le_rfl hK
@@ -240,7 +251,7 @@ theorem finiteLocallyFree_homology_of_affineStrictLowerModel
 /-- The genuine local lower models make the terminal homology a global
 finite locally free sheaf on the original projective line. -/
 theorem finiteLocallyFree_homology_of_twoChartStrictLowerModels
-    (R : CommRingCat.{u}) (K : Complex (twoChartLine R)) (a : ℤ) [K.IsLE a]
+    (R : CommRingCat.{u}) (K : CochainComplex (twoChartLine R).Modules ℤ) (a : ℤ) [K.IsLE a]
     (hK : twoChartStrictLowerModels R K a) :
     IsFiniteLocallyFree (twoChartLine R) (K.homology a) := by
   let j : Bool → (Spec (.of (Polynomial R)) ⟶ twoChartLine R) :=
@@ -266,7 +277,7 @@ theorem finiteLocallyFree_homology_of_twoChartStrictLowerModels
 bound and decreases the upper cohomological bound by one. The epimorphism is an
 explicit input; constructing it globally is a separate geometric obligation. -/
 theorem twoChartStrictLowerModels_mappingCone_single
-    (R : CommRingCat.{u}) (K : Complex (twoChartLine R))
+    (R : CommRingCat.{u}) (K : CochainComplex (twoChartLine R).Modules ℤ)
     (V : (twoChartLine R).Modules)
     [AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree (twoChartLine R) V]
     (a b : ℤ) (hab : a < b) [K.IsLE b]
@@ -289,7 +300,7 @@ theorem twoChartStrictLowerModels_mappingCone_single
 closed interval [a,b-1] on each original chart. This is the finite decreasing
 amplitude assertion needed by induction. -/
 theorem twoChartStrictLowerModels_mappingCone_single_windows
-    (R : CommRingCat.{u}) (K : Complex (twoChartLine R))
+    (R : CommRingCat.{u}) (K : CochainComplex (twoChartLine R).Modules ℤ)
     (V : (twoChartLine R).Modules) [IsFiniteLocallyFree (twoChartLine R) V]
     (a b : ℤ) (hab : a < b) [K.IsLE b] (hK : twoChartStrictLowerModels R K a)
     (f : (CochainComplex.singleFunctor _ b).obj V ⟶ K) [Epi (homologyMap f b)]
@@ -297,8 +308,8 @@ theorem twoChartStrictLowerModels_mappingCone_single_windows
     (hj : j = plusChart R ∨ j = minusChart R) :
       ∃ P : StrictPerfect (Spec (.of (Polynomial R))),
         (∀ i, i < a ∨ b - 1 < i → IsZero (P.obj.X i)) ∧
-        Nonempty ((toDerived _).obj ((restrict j).obj (CochainComplex.mappingCone f)) ≅
-          (toDerived _).obj P.obj) := by
+        Nonempty ((DerivedCategory.Q).obj ((restrict j).obj (CochainComplex.mappingCone f)) ≅
+          (DerivedCategory.Q).obj P.obj) := by
   obtain ⟨hupper, hmodels⟩ := twoChartStrictLowerModels_mappingCone_single R K V a b hab hK f
   have : (CochainComplex.mappingCone f).IsLE (b - 1) := hupper
   rcases hj with rfl | rfl
@@ -309,12 +320,12 @@ theorem twoChartStrictLowerModels_mappingCone_single_windows
 
 /-- A map from the original cycle sheaf, placed in its original degree,
 to the original complex. Its only nonzero component is the cycle inclusion. -/
-def singleCyclesMap {X : Scheme.{u}} (K : Complex X) (a : ℤ) :
+def singleCyclesMap {X : Scheme.{u}} (K : CochainComplex X.Modules ℤ) (a : ℤ) :
     (CochainComplex.singleFunctor X.Modules a).obj (K.cycles a) ⟶ K :=
   mkHomFromSingle (K.iCycles a) (by intro j hj; simp)
 
 /-- The single-cycle map induces exactly the original cycle-to-homology map. -/
-theorem singleCyclesMap_homology {X : Scheme.{u}} (K : Complex X) (a : ℤ) :
+theorem singleCyclesMap_homology {X : Scheme.{u}} (K : CochainComplex X.Modules ℤ) (a : ℤ) :
     (singleObjHomologySelfIso (.up ℤ) a (K.cycles a)).inv ≫
       homologyMap (singleCyclesMap K a) a = K.homologyπ a := by
   have hc : (singleObjCyclesSelfIso (.up ℤ) a (K.cycles a)).inv ≫
@@ -328,7 +339,7 @@ theorem singleCyclesMap_homology {X : Scheme.{u}} (K : Complex X) (a : ℤ) :
 
 /-- When the original complex starts at its sole cohomological degree, the
 actual cycle inclusion is a quasi-isomorphism from a single complex. -/
-theorem singleCyclesMap_quasiIso {X : Scheme.{u}} (K : Complex X) (a : ℤ)
+theorem singleCyclesMap_quasiIso {X : Scheme.{u}} (K : CochainComplex X.Modules ℤ) (a : ℤ)
     [K.IsStrictlyGE a] [K.IsLE a] : QuasiIso (singleCyclesMap K a) := by
   have : IsIso (K.homologyπ a) := by
     change IsIso ((K.isoHomologyπ (a - 1) a (by simp)
@@ -354,7 +365,7 @@ theorem singleCyclesMap_quasiIso {X : Scheme.{u}} (K : Complex X) (a : ℤ)
 quasi-isomorphism into the original representative. No global projectivity
 of that vector bundle is assumed. -/
 theorem terminal_single_vectorBundle_model
-    (R : CommRingCat.{u}) (K : Complex (twoChartLine R)) (a : ℤ)
+    (R : CommRingCat.{u}) (K : CochainComplex (twoChartLine R).Modules ℤ) (a : ℤ)
     [K.IsStrictlyGE a] [K.IsLE a] (hK : twoChartStrictLowerModels R K a) :
     IsFiniteLocallyFree (twoChartLine R) (K.cycles a) ∧
       QuasiIso (singleCyclesMap K a) := by

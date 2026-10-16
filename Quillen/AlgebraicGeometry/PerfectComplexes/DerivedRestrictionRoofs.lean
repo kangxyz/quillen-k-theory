@@ -8,7 +8,12 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Roofs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedRestrictionIso
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.RestrictionHom
 /-! # Derived roof transport along an original scheme isomorphism
 
 The original normalized derived restriction is injective along an isomorphism,
@@ -18,6 +23,8 @@ chain arrows and the original local derived square.
 -/
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules (derivedRestrict derivedRestrictFactors)
+
 open AlgebraicGeometry.Scheme.Modules.Complex
 
 
@@ -26,11 +33,12 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry HomologicalComplex
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes
 
 /-- Original normalized restriction reflects equality along a scheme isomorphism. -/
 lemma restrictDerivedHom_injective_of_isIso {U X : Scheme.{u}}
-    (j : U ⟶ X) [IsIso j] [IsOpenImmersion j] {K L : Complex X} :
+    (j : U ⟶ X) [IsIso j] [IsOpenImmersion j] {K L : CochainComplex X.Modules ℤ} :
     Function.Injective (restrictDerivedHom j (K := K) (L := L)) := by
   intro φ ψ h
   apply (derivedRestrict j).map_injective
@@ -40,7 +48,7 @@ lemma restrictDerivedHom_injective_of_isIso {U X : Scheme.{u}}
 
 /-- Actual complex restriction reflects quasi-isomorphisms along a scheme isomorphism. -/
 lemma quasiIso_restrict_iff_of_isIso {U X : Scheme.{u}}
-    (j : U ⟶ X) [IsIso j] [IsOpenImmersion j] {K L : Complex X} (f : K ⟶ L) :
+    (j : U ⟶ X) [IsIso j] [IsOpenImmersion j] {K L : CochainComplex X.Modules ℤ} (f : K ⟶ L) :
     QuasiIso ((restrict j).map f) ↔ QuasiIso f := by
   let : (Scheme.Modules.restrictFunctor j).IsEquivalence :=
     (moduleRestrictEquivalenceOfIso (asIso j)).isEquivalence_functor
@@ -57,7 +65,7 @@ lemma hasDerivedRoofs_of_sourceIso {U V X : Scheme.{u}}
   let c : restrict j ⋙ restrict e.hom ≅ restrict k :=
     restrictCompIso e.hom j ≪≫ eqToIso (restrict_congr h)
   intro A B hA hB α
-  let Q := toDerived V
+  let Q := DerivedCategory.Q (C := V.Modules)
   let α' := Q.map (c.inv.app A) ≫ restrictDerivedHom e.hom α ≫ Q.map (c.hom.app B)
   obtain ⟨M, q, g, hM, hq, hg⟩ := hk A B hA hB α'
   have hq' : QuasiIso ((restrict e.hom).map ((restrict j).map q)) :=

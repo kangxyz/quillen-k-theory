@@ -8,7 +8,7 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Aglib.CategoryTheory.ExactCategory.Functor
-public import Quillen.CategoryTheory.ExactCategory.FunctorPushout
+public import Aglib.CategoryTheory.ExactCategory.FunctorPushout
 public import Quillen.Waldhausen.ExactCategory
 public import Quillen.Waldhausen.Functor
 

@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Aglib.AlgebraicGeometry.AffineSpace.PolynomialLaurent.BaseChange
+public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.BaseChange
 public import Quillen.KTheory.Bass.PolynomialLaurent
 
 /-!

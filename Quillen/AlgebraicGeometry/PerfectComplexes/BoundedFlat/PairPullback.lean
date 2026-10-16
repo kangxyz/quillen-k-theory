@@ -9,6 +9,8 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportComparison
 public import Quillen.AlgebraicGeometry.Scheme.OpenPairs
+public import Aglib.AlgebraicGeometry.Modules.Complex.Flat.BoundedPullback
+public import Aglib.AlgebraicGeometry.Modules.Complex.Pullback
 
 /-!
 # Actual bounded-flat pullback on arbitrary open-pair squares
@@ -42,13 +44,13 @@ def pullbackComplexOpenPairIso (f : A ⟶ B) :
     AlgebraicGeometry.Scheme.Modules.Complex.pullback f.hom.right ⋙ restrict A.obj.hom ≅
       restrict B.obj.hom ⋙ AlgebraicGeometry.Scheme.Modules.Complex.pullback f.hom.left :=
   Functor.isoWhiskerLeft _ (restrictIsoPullbackComplex A.obj.hom) ≪≫
-    (pullbackComplexCompIso A.obj.hom f.hom.right).symm ≪≫
+    (Complex.pullbackCompIso A.obj.hom f.hom.right).symm ≪≫
     eqToIso (congrArg AlgebraicGeometry.Scheme.Modules.Complex.pullback (Arrow.w f.hom).symm) ≪≫
-    pullbackComplexCompIso f.hom.left B.obj.hom ≪≫
+    Complex.pullbackCompIso f.hom.left B.obj.hom ≪≫
     Functor.isoWhiskerRight (restrictIsoPullbackComplex B.obj.hom).symm _
 
 theorem boundedFlatPerfectSupported_pairPullback (f : A ⟶ B)
-    {K : Complex B.obj.right} (hK : boundedFlatPerfectSupported B.obj.hom K) :
+    {K : CochainComplex B.obj.right.Modules ℤ} (hK : boundedFlatPerfectSupported B.obj.hom K) :
     boundedFlatPerfectSupported A.obj.hom ((AlgebraicGeometry.Scheme.Modules.Complex.pullback
       f.hom.right).obj K) := by
   refine ⟨boundedFlatPerfect_pullback f.hom.right hK.1, ?_⟩
@@ -79,9 +81,11 @@ instance boundedFlatPerfectSupportedPullback_additive (f : A ⟶ B) :
 complexes with their inherited exact structures. -/
 def boundedFlatPerfectSupportedExactPullback (f : A ⟶ B) :
     CategoryTheory.ExactCategory.ExactFunctor
-      (ExactSubcategory.exactStructure (abelianExactStructure (Complex B.obj.right))
+      (ExactSubcategory.exactStructure (abelianExactStructure
+        (CochainComplex B.obj.right.Modules ℤ))
         (boundedFlatPerfectSupported B.obj.hom))
-      (ExactSubcategory.exactStructure (abelianExactStructure (Complex A.obj.right))
+      (ExactSubcategory.exactStructure (abelianExactStructure
+        (CochainComplex A.obj.right.Modules ℤ))
         (boundedFlatPerfectSupported A.obj.hom)) where
   toFunctor := boundedFlatPerfectSupportedPullback f
   map_conflation S hS := by
@@ -109,12 +113,13 @@ theorem boundedFlatPerfectSupportedPullback_exact (f : A ⟶ B) :
       (fun n hn => L.obj.isZero_of_isStrictlyLE c n hn) p.hom
   pushout hi h := by
     apply IsPushout.of_map_of_faithful (boundedFlatPerfectSupported A.obj.hom).ι
-    exact (Waldhausen.fullSubcategory_map_pushout (abelianExactStructure (Complex B.obj.right))
+    exact (Waldhausen.fullSubcategory_map_pushout (abelianExactStructure
+      (CochainComplex B.obj.right.Modules ℤ))
       (boundedFlatPerfectSupported B.obj.hom) hi h).map
         (AlgebraicGeometry.Scheme.Modules.Complex.pullback f.hom.right)
 
 theorem boundedFlatPerfect_pairPullback_quasiIso (f : A ⟶ B)
-    {K L : Complex B.obj.right} (hK : boundedFlatPerfect B.obj.right K)
+    {K L : CochainComplex B.obj.right.Modules ℤ} (hK : boundedFlatPerfect B.obj.right K)
     (hL : boundedFlatPerfect B.obj.right L) (p : K ⟶ L)
     [QuasiIso ((restrict B.obj.hom).map p)] :
     QuasiIso ((restrict A.obj.hom).map ((AlgebraicGeometry.Scheme.Modules.Complex.pullback
@@ -176,7 +181,7 @@ def boundedFlatPerfectSupportedPullbackIdIso (A : AlgebraicGeometry.Scheme.OpenP
       A.obj.hom).FullSubcategory :=
   Functor.fullyFaithfulCancelRight (boundedFlatPerfectSupported A.obj.hom).ι
     (Functor.isoWhiskerLeft (boundedFlatPerfectSupported A.obj.hom).ι
-      (pullbackComplexIdIso A.obj.right))
+      (Complex.pullbackIdIso A.obj.right))
 
 /-- The natural isomorphism identifying supported bounded-flat pullback along `f ≫ g` with pullback
 first along `g` and then along `f`. -/
@@ -185,7 +190,7 @@ def boundedFlatPerfectSupportedPullbackCompIso (f : A ⟶ B) (g : B ⟶ C) :
       boundedFlatPerfectSupportedPullback g ⋙ boundedFlatPerfectSupportedPullback f :=
   Functor.fullyFaithfulCancelRight (boundedFlatPerfectSupported A.obj.hom).ι
     (Functor.isoWhiskerLeft (boundedFlatPerfectSupported C.obj.hom).ι
-      (pullbackComplexCompIso f.hom.right g.hom.right))
+      (Complex.pullbackCompIso f.hom.right g.hom.right))
 
 @[simp] theorem boundedFlatPerfectSupportedKPullback_id (A : AlgebraicGeometry.Scheme.OpenPairs.{u})
   (n : ℕ) :

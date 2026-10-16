@@ -9,7 +9,11 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.GlobalLocalization
 public import Quillen.Waldhausen.Fibration.ConnectingNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.RestrictionComparison
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
+public import Aglib.AlgebraicGeometry.Modules.Complex.Restriction
+public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic
+public import Aglib.AlgebraicGeometry.Modules.Complex.Pullback
 /-!
 # Original auxiliary-support naturality
 
@@ -39,6 +43,7 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry TopologicalSpace
 universe u
+attribute [local instance] Scheme.Modules.standardHasDerivedCategory
 namespace Quillen.PerfectComplexes
 open Waldhausen Fibration
 attribute [local instance] HasDerivedCategory.standard
@@ -53,7 +58,7 @@ lemma perfectSupported_antitone {X : Scheme.{u}} {S T : X.Opens} (h : S ≤ T) :
     restrictCompIso _ _ ≪≫ eqToIso (restrict_congr (Scheme.homOfLE_ι X h))
   exact (isZero_toDerived_restrict_of_isZero (X.homOfLE h)
     ((isZero_toDerived_iff_acyclic _).mpr hK.2)).of_iso
-      ((toDerived S.toScheme).mapIso (c.app K)).symm
+      ((DerivedCategory.Q (C := S.toScheme.Modules)).mapIso (c.app K)).symm
 
 /-- The original supported inclusion, with only the acyclicity open weakened. -/
 def perfectSupportedChangeOpenKMap {X : Scheme.{u}} {S T : X.Opens}
@@ -213,7 +218,8 @@ def boundedFlatPerfectSupportedChangeOpenIso :
       boundedFlatPerfectSupportedPullback (supportChangeOpenPair h) ⋙
         boundedFlatPerfectSupportedInclusion S.ι :=
   Functor.fullyFaithfulCancelRight (perfectSupported S.ι).ι
-    (Functor.isoWhiskerLeft (boundedFlatPerfectSupported T.ι).ι (pullbackComplexIdIso X).symm)
+    (Functor.isoWhiskerLeft (boundedFlatPerfectSupported T.ι).ι
+      (Scheme.Modules.Complex.pullbackIdIso X).symm)
 
 lemma perfectSupportedChangeOpenKMap_comp_boundedFlat (n : ℕ) :
     (perfectSupportedChangeOpenKMap h n).comp

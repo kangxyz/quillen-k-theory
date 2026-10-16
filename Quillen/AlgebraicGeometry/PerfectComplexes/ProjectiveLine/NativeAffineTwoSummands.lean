@@ -8,6 +8,7 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueTwoSummandComparison
+public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeAffineBase
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.NativeAffineTautological
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.PullbackTensorCompatibility
 
@@ -18,6 +19,8 @@ The actual affine geometry and tautological-line identification compare the
 existing native O/O(-1) summands with the actual original two-chart summands.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open AlgebraicGeometry.Scheme.Products
 open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
@@ -33,9 +36,6 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
 
-/-- The same original compact affine base used by nativeTwoSummands. -/
-abbrev affineBase (R : CommRingCat.{u}) : AlgebraicGeometry.Scheme.QuasiCompactSchemes.{u} :=
-  ⟨Spec R, inferInstance⟩
 
 /-- Actual geometric transport from the native product line to the original two-chart line. -/
 def nativeTransport (R : CommRingCat.{u}) :

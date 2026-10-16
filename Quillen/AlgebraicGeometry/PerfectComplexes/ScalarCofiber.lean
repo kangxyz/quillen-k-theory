@@ -7,6 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenScalarUnit
 public import Quillen.Waldhausen.SplitComplexes.FactorizationCofiber
+public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-!
 # The actual perfect scalar extension and its supported cofiber
@@ -16,6 +17,8 @@ is invertible on the original open, its actual cofiber is canonically the previo
 supported mapping cone, with the original quotient map and cone sign retained.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 
 open Quillen.Waldhausen
 open Quillen.Waldhausen.SplitFactorization

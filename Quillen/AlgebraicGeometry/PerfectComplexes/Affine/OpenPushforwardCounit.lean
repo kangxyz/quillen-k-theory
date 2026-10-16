@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Homology
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.CounitCriterion
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenSectionsLocalization
@@ -45,7 +46,7 @@ universe u
 namespace Quillen.PerfectComplexes.Affine
 
 lemma isIso_affineSectionsComplexRestriction_pushforward {R : CommRingCat.{u}}
-    {Y : Scheme.{u}} (j : Y ⟶ Spec R) (I : Complex Y)
+    {Y : Scheme.{u}} (j : Y ⟶ Spec R) (I : CochainComplex Y.Modules ℤ)
     {U V : (Spec R).Opens} (h : U ≤ V) (heq : j ⁻¹ᵁ U = j ⁻¹ᵁ V) :
     IsIso (affineSectionsComplexRestriction R h ((pushforwardComplex j).obj I)) := by
   have hcomp (n : ℤ) : IsIso
@@ -55,7 +56,7 @@ lemma isIso_affineSectionsComplexRestriction_pushforward {R : CommRingCat.{u}}
   exact HomologicalComplex.Hom.isIso_of_components _
 
 lemma quasiIso_principalComparison_pushforward_of_openComparison {R : CommRingCat.{u}}
-    (W : (Spec R).Opens) (I : Complex W.toScheme) (r : R)
+    (W : (Spec R).Opens) (I : CochainComplex W.toScheme.Modules ℤ) (r : R)
     (h : QuasiIso (sectionsLocalizationComplexComparison R r W
       ((pushforwardComplex W.ι).obj I))) :
     QuasiIso (principalSectionsScalarComplexComparison R r ((pushforwardComplex W.ι).obj I)) := by
@@ -84,7 +85,7 @@ lemma quasiIso_principalComparison_pushforward_of_openComparison {R : CommRingCa
   infer_instance
 
 lemma quasiIso_pushforward_counit_of_openComparisons {R : CommRingCat.{u}}
-    (W : (Spec R).Opens) (I : Complex W.toScheme)
+    (W : (Spec R).Opens) (I : CochainComplex W.toScheme.Modules ℤ)
     (h : ∀ r : R, QuasiIso (sectionsLocalizationComplexComparison R r W
       ((pushforwardComplex W.ι).obj I))) :
     QuasiIso (associatedSectionsCounit R ((pushforwardComplex W.ι).obj I)) :=
@@ -94,7 +95,7 @@ lemma quasiIso_pushforward_counit_of_openComparisons {R : CommRingCat.{u}}
 
 lemma quasiIso_openPushforward_associatedSectionsCounit {R : CommRingCat.{u}}
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
-    (I : Complex W.toScheme) (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))
+    (I : CochainComplex W.toScheme.Modules ℤ) (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n)) (hqc : ∀ n, (I.homology n).IsQuasicoherent) :
     QuasiIso (associatedSectionsCounit R ((pushforwardComplex W.ι).obj I)) := by
   let J := (pushforwardComplex W.ι).obj I
@@ -113,14 +114,14 @@ lemma quasiIso_openPushforward_associatedSectionsCounit {R : CommRingCat.{u}}
 
 lemma openPushforward_quasicoherent_homology {R : CommRingCat.{u}}
     (W : (Spec R).Opens) (hW : IsCompact (W : Set (Spec R)))
-    (I : Complex W.toScheme) (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))
+    (I : CochainComplex W.toScheme.Modules ℤ) (a : ℤ) (hbound : ∀ n, n < a → IsZero (I.X n))
     (hinj : ∀ n, Injective (I.X n)) (hqc : ∀ n, (I.homology n).IsQuasicoherent) (n : ℤ) :
     (((pushforwardComplex W.ι).obj I).homology n).IsQuasicoherent := by
   let J := (pushforwardComplex W.ι).obj I
   let := quasiIso_openPushforward_associatedSectionsCounit W hW I a hbound hinj hqc
   have : IsIso (HomologicalComplex.homologyMap (associatedSectionsCounit R J) n) :=
     (quasiIsoAt_iff_isIso_homologyMap _ _).mp inferInstance
-  have h := AlgebraicGeometry.Scheme.Modules.Coherent.quasicoherent_homology
+  have h := AlgebraicGeometry.Scheme.Modules.QuasiCoherent.quasicoherent_homology
     ((associatedComplex R).obj ((sectionsComplex R).obj J)) (fun i => by
       change ((tilde.functor R).obj _).IsQuasicoherent
       infer_instance) n

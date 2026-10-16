@@ -14,6 +14,8 @@ The actual coproduct inclusion comparison and original weak total augmentation
 compare original K-maps. Native affine geometry is supplied in the next leaf.
 -/
 @[expose] public section
+
+open AlgebraicGeometry.Scheme.Modules.Complex
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true

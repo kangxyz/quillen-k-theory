@@ -17,6 +17,8 @@ retained. The base ring may be nonreduced or the zero ring.
 
 @[expose] public section
 
+open AlgebraicGeometry.Scheme.Modules.Complex
+
 open AlgebraicGeometry.Scheme.PolynomialLaurent
 open Quillen.PerfectComplexes
 open Quillen.PerfectComplexes.ProjectiveLine

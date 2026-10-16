@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Aglib.CategoryTheory.Limits.Shapes.SequentialSystem.IsoColimit
 public import Quillen.Topology.Prespectrum.StableOmega
 public import Quillen.Topology.Prespectrum.StableEquivalence
 public import Quillen.Topology.Prespectrum.HomotopyStructure
@@ -37,12 +38,12 @@ theorem stableHomotopyι_isIso_of_isOmega (E : LoopPrespectrum.{u}) (hE : E.IsOm
   let (n : ℕ) : IsIso ((stableSystem E d).map (homOfLE (Nat.le_succ n))) :=
     stableSystem_succ_isIso E hE d n
   have he : stableHomotopyι E d i =
-      (Quillen.SequentialIsoColimit.toZeroIso
+      (SequentialSystem.toZeroIso
         (fun n ↦ (stableSystem E d).map (homOfLE (Nat.le_succ n))) i).hom ≫
           (stableHomotopyStageZeroIso E hE d).inv := by
     apply (cancel_mono (stableHomotopyStageZeroIso E hE d).hom).mp
     rw [Category.assoc, Iso.inv_hom_id, Category.comp_id]
-    exact Quillen.SequentialIsoColimit.ι_colimitIsoOfSucc_hom (stableSystem E d) i
+    exact SequentialSystem.ι_colimitIsoOfSucc_hom (stableSystem E d) i
   rw [he]
   infer_instance
 
