@@ -29,6 +29,8 @@ open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
 open AlgebraicGeometry.Scheme.Products
 open AlgebraicGeometry.Scheme.PolynomialLaurent.Relative
 
+/-- The commutative group structure on connective perfect K-theory supplied by Waldhausen
+additivity. -/
 local instance (Y : Scheme.{u}) (n : ℕ) : CommGroup (PerfectK Y n) :=
   Waldhausen.Additivity.KCommGroup (perfectWaldhausen Y) n
 

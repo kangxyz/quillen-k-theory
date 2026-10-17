@@ -48,7 +48,9 @@ variable {a c : Under R}
 
 /-- Source data adds only the composite arrow and its exact geometric proof fields. -/
 structure SeedGeometry where
+  /-- The polynomial and coefficient totals, with their chart compatibility. -/
   carrier : Geometry P (a := a) (c := c)
+  /-- The composite coefficient arrow from `a` to `c`. -/
   arrow : a ⟶ c
   h0Reference : (Geometry.laurentRef P carrier).functor =
     (BassH0Diagram.reference P arrow).functor
@@ -59,36 +61,46 @@ structure SeedGeometry where
 namespace SeedGeometry
 variable (D : SeedGeometry P (a := a) (c := c))
 
+/-- The inclusion of the Laurent reference space into the geometric two-tip carrier. -/
 abbrev includeLaurent := CutOpenCarrier.laurentInclusion
   (Geometry.polyRef P D.carrier) (chartMap P (c := c)) (Geometry.laurentRef P D.carrier)
   (Geometry.ordinary P D.carrier) (Geometry.shifted P D.carrier)
+/-- The ordinary polynomial cylinder, with cylinder time in the second coordinate. -/
 abbrev minusCylinder := CutOpenCarrier.cylinderMinus
   (Geometry.polyRef P D.carrier) (chartMap P (c := c)) (Geometry.laurentRef P D.carrier)
   (Geometry.ordinary P D.carrier) (Geometry.shifted P D.carrier)
+/-- The shifted polynomial cylinder, with cylinder time in the second coordinate. -/
 abbrev plusCylinder := CutOpenCarrier.cylinderPlus
   (Geometry.polyRef P D.carrier) (chartMap P (c := c)) (Geometry.laurentRef P D.carrier)
   (Geometry.ordinary P D.carrier) (Geometry.shifted P D.carrier)
 
+/-- The H0 diagram nodes reanchored to the geometric Laurent reference. -/
 def h0Nodes := ModelSimplex.reanchorNodes
   (F₀ := Geometry.laurentRef P D.carrier) (F₁ := BassH0Diagram.reference P D.arrow)
   (eqToIso D.h0Reference) (BassH0Diagram.nodes P D.arrow)
 
+/-- A Laurent parameter in the carrier, with forward unit reanchoring when `e` is `true`. -/
 def laurentPoint (e : Bool)
     (z : |nerve (Codiscrete (Node (Geometry.laurentRef P D.carrier)))|) :=
   includeLaurent P D (if e then mapParameter
     (BassH0Merge.anchorNode (Geometry.unit P D.carrier)) z else z)
 
+/-- The three-node H0 projection path at its original binary time `s`. -/
 def projectionParameter (s : I) :=
   parameter (Geometry.laurentRef P D.carrier)
     (fun i : Fin 3 ↦ h0Nodes P D (BassH0Diagram.plusFace.toOrderHom
       (DoubleSquareMergedSimplex.lastFace.toOrderHom (BassH0Merge.rightIndex i))))
     (binaryPath (k := 2) 0 1 2 s)
 
+/-- The H0 projection path in the ordinary (`false`) or shifted (`true`) sheet. -/
 def projection (e : Bool) (s : I) := laurentPoint P D e (projectionParameter P D s)
 
+/-- A point of the H0 characteristic simplex in the ordinary (`false`) or shifted (`true`)
+sheet. -/
 def h0Point (e : Bool) (t : StdSimplex ℝ (Fin 31)) :=
   laurentPoint P D e (parameter (Geometry.laurentRef P D.carrier) (h0Nodes P D) t)
 
+/-- The ten-node forward-unit characteristic map reanchored to the geometric Laurent reference. -/
 def unitPoint (t : StdSimplex ℝ (Fin 10)) := includeLaurent P D
   (mapParameter (BassH0Merge.anchorNode (eqToIso D.h0Reference))
     (parameter (CoefficientLaurentUnitTenNodes.source P D.arrow)
@@ -106,10 +118,12 @@ def polynomialNode : Node (Geometry.polyRef P D.carrier) :=
         (BassH0Merge.normalizedMap f ≫
           BassH0Merge.normalizedMap (polynomialProjection P c)).functor) D.coefficientEq)⟩
 
+/-- The C0 source-null polynomial node at cylinder time `s`, using the tip selected by `e`. -/
 def c0Cylinder (e : Bool) (s : I) :=
   if e then plusCylinder P D (nodePoint _ (polynomialNode P D), s)
   else minusCylinder P D (nodePoint _ (polynomialNode P D), s)
 
+/-- The polynomial reference node at cylinder time `s`, using the tip selected by `e`. -/
 def c1Cylinder (e : Bool) (s : I) :=
   if e then plusCylinder P D
     (nodePoint (Geometry.polyRef P D.carrier) ⟨Geometry.polyRef P D.carrier, Iso.refl _⟩, s)

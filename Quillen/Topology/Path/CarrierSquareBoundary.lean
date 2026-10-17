@@ -27,6 +27,8 @@ variable {X : Type u} [TopologicalSpace X] {a₀ b₀ a₁ b₁ : X}
 /-- A carrier-valued square with its four literal path boundaries. -/
 structure Square (p₀ : Path a₀ b₀) (p₁ : Path a₁ b₁)
     (l : Path a₀ a₁) (m : Path b₀ b₁) where
+  /-- The continuous square, with first coordinate varying from `p₀` to `p₁` and second
+  coordinate tracing each path. -/
   parameter : C(unitInterval × unitInterval, X)
   at_zero (s : unitInterval) : parameter (0, s) = p₀ s
   at_one (s : unitInterval) : parameter (1, s) = p₁ s

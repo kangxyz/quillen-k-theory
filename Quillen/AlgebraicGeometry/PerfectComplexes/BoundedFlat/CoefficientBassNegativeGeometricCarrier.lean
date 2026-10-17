@@ -23,8 +23,10 @@ variable {a c : Under R}
 
 /-- Only the two geometric totals and their original chart equation enter the carrier. -/
 structure Geometry where
+  /-- The total geometric map between the polynomial coefficient fibers. -/
   polynomial : space (op P, (polynomialUnderFunctor R).obj c) ⟶
     space (op P, (polynomialUnderFunctor R).obj a)
+  /-- The total geometric map between the underlying coefficient fibers. -/
   coefficient : space (op P, c) ⟶ space (op P, a)
   comm : (laurentPlus P c ≫ polynomial) ≫ polynomialProjection P a =
     laurentProjection P c ≫ coefficient
@@ -67,6 +69,7 @@ abbrev evaluate (n : ℕ) := CommonReferenceNerve.CutOpenCarrier.nativeEval
 /-- The ordinary and shifted tips are still distinct. -/
 abbrev minusTip := CommonReferenceNerve.CutOpenCarrier.tipMinus
   (polyRef P D) (chartMap P (c := c)) (laurentRef P D) (ordinary P D) (shifted P D)
+/-- The tip of the polynomial attachment defined by the shifted anchor. -/
 abbrev plusTip := CommonReferenceNerve.CutOpenCarrier.tipPlus
   (polyRef P D) (chartMap P (c := c)) (laurentRef P D) (ordinary P D) (shifted P D)
 

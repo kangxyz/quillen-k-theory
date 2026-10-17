@@ -154,7 +154,7 @@
       "source_sha256": "09bf3cb00e152c4d5c9138eb2b9c477242b2b0440613ef7caf316cfac82e17d9",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeActualLeftRoute.lean",
-      "adopted_sha256": "ed1ea0f8b65ecbbd340a3461d388f08f830084adef9dc07a0af5065d8c7d96d9"
+      "adopted_sha256": "19f23dd08011c01fda48519560e15c079eaf8d99cc35b8475f93becf108bc5ec"
     },
     {
       "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassNegativeActualMixedFiller",
@@ -170,7 +170,7 @@
       "source_sha256": "9fc07fd253424162a7d3462d0b706b8c244eda546a97fa28a73c4382b7842718",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeActualRightRoute.lean",
-      "adopted_sha256": "2660c9c2c98dbc19df1065033c264cf98b8662d6ec780b6f5f4a1e746429514c"
+      "adopted_sha256": "cfa8836779958ce3d70053e24ec7231b0b85a9c125551a17e92a2832c5be700b"
     },
     {
       "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassNegativeC0CarrierSeedNative",
@@ -202,7 +202,7 @@
       "source_sha256": "b0f5ddeac786506f31dce8c58ea696f5973bda158826246113b9c6aee007ec41",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeGeometricCarrier.lean",
-      "adopted_sha256": "84eb56afd4f4879550cdd42608ca6d13134866e18c9b36b3073b435fc424c2ea"
+      "adopted_sha256": "8a0606a78976c64dd8ec5a0f8241b218a8e9e301dff63294a1f6538df36431e5"
     },
     {
       "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassNegativeMixedRoutes",
@@ -234,7 +234,7 @@
       "source_sha256": "ea4b441a896beba9b8639ebf33bdcda780811d9f41ce21688b3bb77431df37bc",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeSeedReferenceRails.lean",
-      "adopted_sha256": "d6701c5a002c10083196a5861d4fae169e3ee4d9f498cbddd97cf56853f7502e"
+      "adopted_sha256": "6ecf63e365e3c25f0844e0e2bf7f95d91570217d05028e4e0fd05a67ea8888fd"
     },
     {
       "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveActualLeftRoute",
@@ -290,7 +290,7 @@
       "source_sha256": "6056e42eb83ff152144f180a7e275ae99830cda221708af47c04dfdc7bee7704",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/rails-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0CarrierRails.lean",
-      "adopted_sha256": "0d007dc1d79c5394e18b7e9fe2db12a5efed5374b637a23607e82c36b052cd85"
+      "adopted_sha256": "e7cd1987727ce6c31e2b9deb19841b976eb55be0f1ce0d42681a556455ca8df4"
     },
     {
       "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC0CarrierSeed",
@@ -298,7 +298,7 @@
       "source_sha256": "2f4d6f110e4714521269a12f1cd4553831fee77a39083d0e805205c320b2ae7a",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/carrier-seed-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0CarrierSeed.lean",
-      "adopted_sha256": "3bce130801d6089154654f33a2c2325ffb598b6b532d5f08d3a6dacf4ea1c655"
+      "adopted_sha256": "3541a4a0874b6daa4a81a2c451f252a2d573ac65d6640be421647a0941b6bf84"
     },
     {
       "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC0CarrierSeedNative",
@@ -306,7 +306,7 @@
       "source_sha256": "51ec6dc0e01e2cf0a5d1cb47ea24a7d32d0e3f4c99ddd018122d75515780e616",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0CarrierSeedNative.lean",
-      "adopted_sha256": "a4f2e845e83dbf1dafb019f30e5de4579657bde71bd69822da9f46b6f793a0e5"
+      "adopted_sha256": "6e3c09f0416459b923b6575d49210399f2ef580dfe96f2db327eb441e0e502d6"
     },
     {
       "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC0PolynomialEndpoints",
@@ -730,7 +730,7 @@
       "source_sha256": "d37d204d8568733793b169418249cfb56dca5a4550ca6d17c8c9deab65ffee63",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftCellParameters.lean",
-      "adopted_sha256": "610cea7136c277e17835d38d04cd2ee689f3e286ab0f0e7a5f8671a1934ebd1f"
+      "adopted_sha256": "d5a46e9f403638d7e8294a153b7ad963bb8e8597ffb2b1c24e66102423f4ae35"
     },
     {
       "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftComparisonNative",
@@ -770,7 +770,7 @@
       "source_sha256": "41551ffa5cd03256949829ce8e6c29fa1edcf681b3c84c1a27a8b7f65541de74",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftConeSquares.lean",
-      "adopted_sha256": "c87f624a15021975d5f6ff2c45a80584c1f8604438dc56d8967ff60af604ad69"
+      "adopted_sha256": "42d1d7b3754ce6d30b204205d7a71f56e259796fd67f27e16d56ae69a34df452"
     },
     {
       "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftFirstRailsNative",
@@ -826,7 +826,7 @@
       "source_sha256": "d2058db34a6e0d29ee98dc8b7e7dbf05d340949dc9363596b61a7c2c3dff9dce",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftNativePostcomp.lean",
-      "adopted_sha256": "73b5072c62b7e5758fc9bc5d3b3fd3ae388506e975e0842712acbe9bd1b86a02"
+      "adopted_sha256": "ccbb572d5705541a9514f9fb0eee1f15679b71a490b0acf50eaa1e0aea0106f7"
     },
     {
       "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftPairedNull",
@@ -890,7 +890,7 @@
       "source_sha256": "8bc66a41b94c5c564527ca8e45346c4b5df9ea1282e570041fd90f35bbce18cc",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftStartingSeed.lean",
-      "adopted_sha256": "15d21579029e28611ab97b17d9863b0f6f4260b1034af03e9e46e1d76f3245c4"
+      "adopted_sha256": "266226052501629302c8481848adda3e099249330c03ff9484547d14e3129a63"
     },
     {
       "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftTerminalNull",
@@ -938,7 +938,7 @@
       "source_sha256": "fe163fb07e9314176b065d422b6901117cd691d3e9cba54c008bfccc56bbf19b",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftUnitPasting.lean",
-      "adopted_sha256": "8ffb0baa93a9d5768544c574a2db4e85830c3a0456669c1b73e84d0a9d230c2a"
+      "adopted_sha256": "84f3c1c70e412fc5e9dfe3ba6580009a89b0db55131147a5b6c15747a5ce560a"
     },
     {
       "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftUnitRailsNative",
@@ -1050,7 +1050,7 @@
       "source_sha256": "2b16283da3f2776bbef0e9b809f067d9f9b58f54519b556d1b7fe5960fd45972",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeBassCharts.lean",
-      "adopted_sha256": "49aeaa71553d6d29e5bb372dfb2ac6005ba38a08623dbca0f70c5b61f93c6a3a"
+      "adopted_sha256": "0149a4202a927e20c7696476ae5422e5b8fae0003de0a301398fcaa9d3b70138"
     },
     {
       "module": "Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeCoefficientCoordinate",
@@ -1090,7 +1090,7 @@
       "source_sha256": "e4e652ce46014e904823cec2d707bacb02ff6b1224d682609f9d3de8dcaf483d",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-carrier-boundary-validation-v01/raw-validation01/source/Quillen/Topology/Path/CarrierSquareBoundary.lean",
-      "adopted_sha256": "e4e652ce46014e904823cec2d707bacb02ff6b1224d682609f9d3de8dcaf483d"
+      "adopted_sha256": "1fc07bcdfbd7921d6fde82efd0152f4c7cec0175929b3bca8f7d53b8225ac3fd"
     },
     {
       "module": "Quillen.Topology.Path.CarrierSquareBoundaryEvaluation",
@@ -1290,7 +1290,7 @@
       "source_sha256": "9a4016e6d81ca3002fe11b7b04b12d85594718be5acb4a99cc034c0f25c2a268",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "current-modules/Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenRelativeExtension.lean",
-      "adopted_sha256": "9a4016e6d81ca3002fe11b7b04b12d85594718be5acb4a99cc034c0f25c2a268"
+      "adopted_sha256": "94b3fa1293d9ee23f36f61787b7eb36affc8e150ff101cf837f46a74718eafd6"
     },
     {
       "module": "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenSurfaceBoundary",
@@ -1298,7 +1298,7 @@
       "source_sha256": "97509e55a303f6a3380305fe3216a15d7db5fd3937dd973cde832b9139dae437",
       "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
       "archive_path": "current-modules/Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenSurfaceBoundary.lean",
-      "adopted_sha256": "97509e55a303f6a3380305fe3216a15d7db5fd3937dd973cde832b9139dae437"
+      "adopted_sha256": "43e2d5e283449ffdb6fd6dd4d421f53a98afd447e0dfe2de7b3a7f3fb9b09e91"
     },
     {
       "module": "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveDependentTransport",
@@ -1349,21 +1349,25 @@
       "source_hashes_stable": true,
       "new_budget_overrides": 0,
       "source_hash_manifest_sha256": "49718ebe88f96becde0103350b6fc32aaa3fba6b797f771b53af3ddf5079155d",
-      "command_record_sha256": "e7c789662fdf257f202ee360837a83ffc504c016b0db6378f791640f88cdaeee"
+      "command_record_sha256": "e7c789662fdf257f202ee360837a83ffc504c016b0db6378f791640f88cdaeee",
+      "basis": "Original accepted 159-source admission snapshot, before the comment-only CI documentation repair.",
+      "current_correspondence": "All original mathematical source bytes are preserved after removing the 96 added docstrings. The 16 edited modules have separate successful incremental build coverage."
     },
     "independent_mathematical_review": {
       "status": "accepted",
       "kind": "ordinary mathematical and source-correspondence review",
       "review_snapshot_sha256": "a94b70ac91470ec55bd0d9c61cba39a53ac13a2de5768d993645606810bbc56f",
       "review_record_sha256": "3648cfa762332edf9a13ac245ba82c616306515ecda1544f549bc44d5d666541",
-      "source_hashes_match_strict_build": 159,
       "conclusion": "Both actual mixed fillers, actual two-chart seed descent, objectwise first-to-second cone/loop step, and selected bounded additional interfaces preserve their original maps, parameters and hypotheses. No remaining mathematical repair found.",
       "native_geometry_conditions": "Chart exactness requires qcqs; coordinate and coefficient-cone constructions require quasi-compact bases.",
-      "execution_basis": "The user selected incremental verification: successful strict25-root build,159-source native text-style check and the recorded transitive foundation-axiom audit. The global pipeline was stopped and is not claimed passed."
+      "execution_basis": "The user selected incremental verification: successful strict25-root build,159-source native text-style check and the recorded transitive foundation-axiom audit. The global pipeline was stopped and is not claimed passed.",
+      "reviewed_source_hashes_match_original_strict_build": 159,
+      "comment_only_repair_correspondence": "The 16 documentation repairs preserve every original source byte after removing the recorded comment insertions; mathematical review remains applicable."
     },
     "native_text_style": {
       "status": "passed",
-      "sources": 159
+      "sources": 159,
+      "coverage": "143 unchanged admitted sources plus the 16 newly checked documentation-repair modules."
     },
     "integration_pipeline": {
       "status": "stopped_by_user",
@@ -1388,7 +1392,31 @@
       ],
       "qualification": "Audit executed during the subsequently interrupted global build; no completed full-pipeline or explicit audit replay is claimed."
     },
-    "selected_scope": "Incremental only, per user instruction."
+    "selected_scope": "Incremental only, per user instruction.",
+    "ci_documentation_repair": {
+      "failed_run": "https://github.com/kangxyz/quillen-k-theory/actions/runs/39039275400",
+      "failure": "96 missing definition/field docstrings reported by Batteries docBlame; library/test build and test invocation had succeeded.",
+      "edited_modules": 16,
+      "docstrings_added": 96,
+      "mathematical_source_bytes_preserved": true,
+      "incremental_build": "passed",
+      "environment_lint": {
+        "status": "passed",
+        "defining_modules": 16,
+        "declarations": 657,
+        "default_linters_including_slow": 15
+      },
+      "native_text_lint": {
+        "status": "passed",
+        "defining_modules": 16,
+        "scoped_tool_source": "passed"
+      },
+      "negative_regression": "The scoped runner reproduced exactly the 96 CI errors from the pre-repair compiled artifacts.",
+      "scoped_tool": "Tools/LintScoped.lean",
+      "scoped_tool_controls": "Documented API example passes; an empty module list exits with status 2 instead of selecting a broad default.",
+      "reused_test_and_trust_coverage": "The failed CI run had completed the 9548-job library/test build, test invocation and 61051-origin foundation-axiom audit. Only documentation changes in production mathematics; compatible unaffected test, trust and lint coverage is retained.",
+      "unchanged_mathematics_commit": "46b10cd7df77f10c43e7a3d7a3a6bb3cdc454d1f"
+    }
   },
   "open_boundaries": [
     "Second-stage positive and negative relative-pasting fillers and higher coefficient coherence.",

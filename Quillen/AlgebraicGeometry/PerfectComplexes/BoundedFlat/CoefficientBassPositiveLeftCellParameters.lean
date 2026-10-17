@@ -39,13 +39,17 @@ variable {a b c : Under R} (p : a ⟶ b) (q : b ⟶ c)
 def sheetNode (e : Bool) : Node (laurentReference P p q) → Node (laurentReference P p q) :=
   if e then anchorNode (LaurentUnitReferenceSpecialization.commonUnit P p q) else id
 
+/-- The ordinary attachment for `false` and the `commonUnit` attachment for `true`. -/
 def attach (e : Bool) : Node (polynomialReference P p q) → Node (laurentReference P p q) :=
   if e then shiftedAttachNode P p q else ordinaryAttachNode P p q
 
+/-- The 25 product-chart nodes in the ordinary (`false`) or common-unit shifted (`true`) sheet. -/
 abbrev productNodes (e : Bool) := fun i ↦ sheetNode P p q e
   (BassH1References.chartNodes P p q (underToLaurent R) (laurentPlus_projection P b) i)
+/-- The first rectangle nodes in the ordinary (`false`) or common-unit shifted (`true`) sheet. -/
 abbrev firstRectangleNodes (e : Bool) := fun i ↦ sheetNode P p q e
   (BassH1References.firstNodes P p q i)
+/-- The middle rectangle nodes in the ordinary (`false`) or common-unit shifted (`true`) sheet. -/
 abbrev middleRectangleNodes (e : Bool) := fun i ↦ sheetNode P p q e
   (BassH1References.middleNodes P p q i)
 
@@ -56,14 +60,17 @@ def Z (e : Bool) : C(I × I, |nerve (Codiscrete (Node (laurentReference P p q)))
       (NativeSquareFiveSimplex.parameter z.1, NativeSquareFiveSimplex.parameter z.2)),
     by fun_prop⟩
 
+/-- The first rectangle polynomial boundary path in the sheet selected by `e`. -/
 def firstMovement (e : Bool) : C(I, |nerve (Codiscrete (Node (laurentReference P p q)))|) :=
   (parameter (laurentReference P p q) (firstRectangleNodes P p q e)).comp
     (ProjectionRectangleParameters.Ppath BassH0Diagram.plusFace).toContinuousMap
 
+/-- The middle rectangle polynomial boundary path in the sheet selected by `e`. -/
 def secondMovement (e : Bool) : C(I, |nerve (Codiscrete (Node (laurentReference P p q)))|) :=
   (parameter (laurentReference P p q) (middleRectangleNodes P p q e)).comp
     (ProjectionRectangleParameters.Ppath BassH0Diagram.plusFace).toContinuousMap
 
+/-- The middle rectangle positive-chart boundary path in the sheet selected by `e`. -/
 def middleChart (e : Bool) : C(I, |nerve (Codiscrete (Node (laurentReference P p q)))|) :=
   (parameter (laurentReference P p q) (middleRectangleNodes P p q e)).comp
     (ProjectionRectangleParameters.L BassH0Diagram.plusFace).toContinuousMap

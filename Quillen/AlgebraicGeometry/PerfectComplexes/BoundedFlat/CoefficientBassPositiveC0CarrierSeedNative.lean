@@ -56,15 +56,19 @@ private theorem native_trans_apply {E F : LoopPrespectrum.{u}} {f g h : E ⟶ F}
 variable {R : CommRingCat.{u}} (P : Over (Spec R))
 variable {a b c : Under R} (p : a ⟶ b) (q : b ⟶ c)
 
+/-- Evaluate a C0 carrier point at native degree `n`, retaining the original prespectrum input. -/
 abbrev evaluate (n : ℕ) := CutOpenCarrier.nativeEval
   (polynomialReference P p q) (chartMap P (c := c)) (laurentReference P p q)
   (ordinaryAnchor P p q) (LaurentUnitReferenceSpecialization.shiftedAnchor P p q) n
 
+/-- The original positive-chart homotopy followed by mapping-cone inclusion. -/
 abbrev originalProjection := (boundedFlatCoefficientLaurentPlusHomotopy P c).postcomp
   (mappingConeInclusion (boundedFlatPerfectPrespectrumMap (laurentPlus P c)))
+/-- The mapping-cone contraction precomposed with the polynomial projection at `c`. -/
 abbrev originalContraction := Homotopy.precomp
   (boundedFlatPerfectPrespectrumMap (polynomialProjection P c))
   (mappingConeHomotopy (boundedFlatPerfectPrespectrumMap (laurentPlus P c)))
+/-- The original Laurent-unit homotopy followed by mapping-cone inclusion. -/
 abbrev originalUnit := (boundedFlatCoefficientLaurentUnitHomotopy P c).postcomp
   (mappingConeInclusion (boundedFlatPerfectPrespectrumMap (laurentPlus P c)))
 

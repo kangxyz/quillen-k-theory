@@ -32,31 +32,43 @@ open CoefficientBassPositiveC0TenNodes
 variable {R : CommRingCat.{u}} (P : Over (Spec R))
 variable {a b c : Under R} (p : a ⟶ b) (q : b ⟶ c)
 
+/-- The two-tip carrier with the ordinary and forward-unit shifted polynomial attachments. -/
 abbrev Carrier := CutOpenCarrier.space (polynomialReference P p q) (chartMap P (c := c))
   (laurentReference P p q) (ordinaryAnchor P p q)
   (LaurentUnitReferenceSpecialization.shiftedAnchor P p q)
+/-- The continuous inclusion of the Laurent reference into the two-tip carrier. -/
 abbrev includeLaurent := CutOpenCarrier.laurentInclusion
   (polynomialReference P p q) (chartMap P (c := c)) (laurentReference P p q)
   (ordinaryAnchor P p q) (LaurentUnitReferenceSpecialization.shiftedAnchor P p q)
+/-- The ordinary polynomial cylinder, from its Laurent attachment at time zero to its tip at
+time one. -/
 abbrev minusCylinder := CutOpenCarrier.cylinderMinus
   (polynomialReference P p q) (chartMap P (c := c)) (laurentReference P p q)
   (ordinaryAnchor P p q) (LaurentUnitReferenceSpecialization.shiftedAnchor P p q)
+/-- The shifted polynomial cylinder, from its Laurent attachment at time zero to its tip at time
+one. -/
 abbrev plusCylinder := CutOpenCarrier.cylinderPlus
   (polynomialReference P p q) (chartMap P (c := c)) (laurentReference P p q)
   (ordinaryAnchor P p q) (LaurentUnitReferenceSpecialization.shiftedAnchor P p q)
+/-- The terminal point of the ordinary polynomial cylinder. -/
 abbrev minusTip := CutOpenCarrier.tipMinus
   (polynomialReference P p q) (chartMap P (c := c)) (laurentReference P p q)
   (ordinaryAnchor P p q) (LaurentUnitReferenceSpecialization.shiftedAnchor P p q)
+/-- The terminal point of the shifted polynomial cylinder. -/
 abbrev plusTip := CutOpenCarrier.tipPlus
   (polynomialReference P p q) (chartMap P (c := c)) (laurentReference P p q)
   (ordinaryAnchor P p q) (LaurentUnitReferenceSpecialization.shiftedAnchor P p q)
 
+/-- The ordinary projection at seed time zero, parameterized by coefficient time. -/
 def ordinaryStart : C(I, Carrier P p q) :=
   ⟨fun r ↦ includeLaurent P p q (positiveProjectionParameter P p q (r, 0)), by fun_prop⟩
+/-- The ordinary projection at seed time one, parameterized by coefficient time. -/
 def ordinaryEnd : C(I, Carrier P p q) :=
   ⟨fun r ↦ includeLaurent P p q (positiveProjectionParameter P p q (r, 1)), by fun_prop⟩
+/-- The shifted projection at seed time zero, parameterized by coefficient time. -/
 def shiftedStart : C(I, Carrier P p q) :=
   ⟨fun r ↦ includeLaurent P p q (shiftedProjectionParameter P p q (r, 0)), by fun_prop⟩
+/-- The shifted projection at seed time one, parameterized by coefficient time. -/
 def shiftedEnd : C(I, Carrier P p q) :=
   ⟨fun r ↦ includeLaurent P p q (shiftedProjectionParameter P p q (r, 1)), by fun_prop⟩
 

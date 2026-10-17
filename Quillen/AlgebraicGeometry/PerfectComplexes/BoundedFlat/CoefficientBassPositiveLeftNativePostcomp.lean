@@ -42,20 +42,28 @@ theorem zero_postcomp {E F G : LoopPrespectrum.{u}} (j : F ⟶ G) :
 variable {R : CommRingCat.{u}} (P : Over (Spec R))
 variable {a b c : Under R} (p : a ⟶ b) (q : b ⟶ c)
 
+/-- The positive Bass cone map induced by the coefficient arrow `q`. -/
 abbrev coneMap := boundedFlatCoefficientBassPositiveConeMap P q
 
+/-- The old positive-leg homotopy for `p`, postcomposed with the positive cone map of `q`. -/
 abbrev oldPositive :=
   (CoefficientBassPositiveNullTrack.oldPositive P p).postcomp (coneMap P q)
+/-- The positive coefficient-square homotopy for `p`, postcomposed with the cone map of `q`. -/
 abbrev positiveMovement :=
   (CoefficientBassPositiveNullTrack.positiveMovement P p).postcomp (coneMap P q)
+/-- The polynomial coefficient-square homotopy for `p`, postcomposed with the cone map of `q`. -/
 abbrev polynomialMovement :=
   (CoefficientBassPositiveNullTrack.polynomialMovement P p).postcomp (coneMap P q)
+/-- The Laurent coefficient-square homotopy for `p`, postcomposed with the cone map of `q`. -/
 abbrev laurentMovement :=
   (CoefficientBassPositiveNullTrack.laurentMovement P p).postcomp (coneMap P q)
+/-- The new positive-leg homotopy for `p`, postcomposed with the positive cone map of `q`. -/
 abbrev newPositive :=
   (CoefficientBassPositiveNullTrack.newPositive P p).postcomp (coneMap P q)
+/-- The old polynomial-leg cone contraction for `p`, postcomposed with the cone map of `q`. -/
 abbrev oldCone :=
   (CoefficientBassPositiveNullTrack.oldCone P p).postcomp (coneMap P q)
+/-- The new polynomial-leg cone contraction for `p`, postcomposed with the cone map of `q`. -/
 abbrev newCone :=
   (CoefficientBassPositiveNullTrack.newCone P p).postcomp (coneMap P q)
 
@@ -212,8 +220,10 @@ theorem originalNullComparison_mapped (n : ℕ)
   simp only [Homotopy.RelHomotopy.ofLevels_apply]
   exact pastedNullComparison_mapped P p q n x r s
 
+/-- The old Laurent-unit loop for `p`, postcomposed with the positive cone map of `q`. -/
 abbrev oldUnit :=
   (CoefficientBassPositiveTransitionTrack.oldUnit P p).postcomp (coneMap P q)
+/-- The new Laurent-unit loop for `p`, postcomposed with the positive cone map of `q`. -/
 abbrev newUnit :=
   (CoefficientBassPositiveTransitionTrack.newUnit P p).postcomp (coneMap P q)
 

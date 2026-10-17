@@ -22,16 +22,27 @@ open CoefficientBassPositiveLeftComparisons CoefficientBassPositiveActualLeftRou
 open CoefficientBassPositiveLeftComparisonNative
 variable {R : CommRingCat.{u}} (P : Over (Spec R)) (d : Under R)
 
+/-- The coefficient inclusion from `d` into its polynomial extension. -/
 abbrev pArrow := (polynomialUnderCoefficient R).app d
+/-- The inverse-coordinate map from the polynomial extension of `d` to its Laurent extension. -/
 abbrev qArrow := (underToLaurentInvert R).app d
+/-- The polynomial reference for the inverse-coordinate coefficient factorization. -/
 abbrev polyRef := polynomialReference P (pArrow d) (qArrow d)
+/-- The Laurent reference for the inverse-coordinate coefficient factorization. -/
 abbrev laurentRef := laurentReference P (pArrow d) (qArrow d)
+/-- The chart map at the terminal Laurent coefficient object. -/
 abbrev chart := chartMap P (c := (laurentUnderFunctor R).obj d)
+/-- The reference isomorphism from the Laurent reference to the polynomial reference followed by
+the chart. -/
 abbrev ordinary := ordinaryAnchor P (pArrow d) (qArrow d)
+/-- The ordinary anchor preceded by the forward Laurent-unit automorphism. -/
 abbrev shifted := LaurentUnitReferenceSpecialization.shiftedAnchor P (pArrow d) (qArrow d)
+/-- The two-tip carrier for the inverse-coordinate coefficient factorization. -/
 abbrev Carrier := CoefficientBassPositiveC0CarrierSeed.Carrier P (pArrow d) (qArrow d)
+/-- The tip of the ordinary polynomial attachment. -/
 abbrev minusTip := CutOpenCarrier.tipMinus (polyRef P d) (chart P d) (laurentRef P d)
   (ordinary P d) (shifted P d)
+/-- The tip of the Laurent-unit shifted polynomial attachment. -/
 abbrev plusTip := CutOpenCarrier.tipPlus (polyRef P d) (chart P d) (laurentRef P d)
   (ordinary P d) (shifted P d)
 

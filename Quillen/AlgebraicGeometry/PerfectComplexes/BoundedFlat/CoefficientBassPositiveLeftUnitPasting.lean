@@ -167,11 +167,15 @@ def middleUnitMap : C(StdSimplex ℝ (Fin 10), Carrier P p q) :=
       (parameter (CoefficientLaurentUnitTenNodes.source P q)
         (CoefficientLaurentUnitTenNodes.nodes P q)))
 
+/-- The original old unit edge `V` mapped into the carrier using the first transport. -/
 abbrev firstOldUnitRaw := CoefficientLaurentUnitTenNodes.V.map (firstUnitMap P p q).continuous
+/-- The original new unit edge `W` mapped into the carrier using the first transport. -/
 abbrev firstNewUnitRaw := CoefficientLaurentUnitTenNodes.W.map (firstUnitMap P p q).continuous
+/-- The ordinary first Laurent boundary word `C0.symm.trans D0`, mapped into the carrier. -/
 abbrev firstLower :=
   (CoefficientLaurentUnitTenNodes.C0.symm.trans CoefficientLaurentUnitTenNodes.D0).map
     (firstUnitMap P p q).continuous
+/-- The shifted first Laurent boundary word `C1.symm.trans D1`, mapped into the carrier. -/
 abbrev firstUpper :=
   (CoefficientLaurentUnitTenNodes.C1.symm.trans CoefficientLaurentUnitTenNodes.D1).map
     (firstUnitMap P p q).continuous
@@ -182,11 +186,15 @@ def firstUnitComparisonRaw : ((firstOldUnitRaw P p q).trans (firstUpper P p q)).
   (CoefficientLaurentUnitPastingLift.parameter.map (firstUnitMap P p q)).cast
     (by simp only [Path.map_trans]) (by simp only [Path.map_trans])
 
+/-- The original old unit edge `V` mapped into the carrier using the middle transport. -/
 abbrev middleOldUnitRaw := CoefficientLaurentUnitTenNodes.V.map (middleUnitMap P p q).continuous
+/-- The original new unit edge `W` mapped into the carrier using the middle transport. -/
 abbrev middleNewUnitRaw := CoefficientLaurentUnitTenNodes.W.map (middleUnitMap P p q).continuous
+/-- The ordinary middle Laurent boundary word `C0.symm.trans D0`, mapped into the carrier. -/
 abbrev middleLower :=
   (CoefficientLaurentUnitTenNodes.C0.symm.trans CoefficientLaurentUnitTenNodes.D0).map
     (middleUnitMap P p q).continuous
+/-- The shifted middle Laurent boundary word `C1.symm.trans D1`, mapped into the carrier. -/
 abbrev middleUpper :=
   (CoefficientLaurentUnitTenNodes.C1.symm.trans CoefficientLaurentUnitTenNodes.D1).map
     (middleUnitMap P p q).continuous

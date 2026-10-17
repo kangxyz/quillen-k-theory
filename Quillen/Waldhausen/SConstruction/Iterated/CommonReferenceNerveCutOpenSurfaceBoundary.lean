@@ -20,9 +20,13 @@ variable {V W T : Model.{u}} (F : V ⟶ W) (J : W ⟶ T) (G : V ⟶ T)
 
 /-- Two complete route surfaces share whole endpoint paths and retain separate seed tips. -/
 structure RouteSurfaces where
+  /-- The left route surface, with route time first and seed time second. -/
   left : C(I × I, space F J G ε₀ ε₁)
+  /-- The right route surface, with route time first and seed time second. -/
   right : C(I × I, space F J G ε₀ ε₁)
+  /-- The shared seed path at route time zero. -/
   start : C(I, space F J G ε₀ ε₁)
+  /-- The shared seed path at route time one. -/
   finish : C(I, space F J G ε₀ ε₁)
   left_start (t : I) : left (0, t) = start t
   left_finish (t : I) : left (1, t) = finish t

@@ -24,9 +24,12 @@ variable {V W T : Model.{u}} (F : V ⟶ W) (J : W ⟶ T) (G : V ⟶ T)
 
 /-- Six whole carrier faces, with all twelve full geometric edge equalities. -/
 structure RelativeBoundary where
+  /-- The six carrier-valued faces, indexed by coordinate and by `false`/`true` for zero/one. -/
   faces : ∀ a : Fin 3 × Bool, C(face a, space F J G ε₀ ε₁)
   compatible : EdgeCompatible (fun a ↦ faces a)
+  /-- The seed path fixed on the route-time-zero face, independently of comparison time. -/
   start : C(I, space F J G ε₀ ε₁)
+  /-- The seed path fixed on the route-time-one face, independently of comparison time. -/
   finish : C(I, space F J G ε₀ ε₁)
   route_zero (z : face (1, false)) : faces (1, false) z = start (z.val.val 2)
   route_one (z : face (1, true)) : faces (1, true) z = finish (z.val.val 2)

@@ -36,6 +36,7 @@ variable {a b c : Under R} (p : a ⟶ b) (q : b ⟶ c)
 /-- Each sheet has its own continuous polynomial cylinder and its own tip. -/
 def cylinder (e : Bool) : C(|nerve (Codiscrete (Node (polynomialReference P p q)))| × I,
     Carrier P p q) := if e then plusCylinder P p q else minusCylinder P p q
+/-- The ordinary cylinder tip for `false`, and the shifted cylinder tip for `true`. -/
 def tip (e : Bool) : Carrier P p q := if e then plusTip P p q else minusTip P p q
 
 theorem cylinder_zero (e : Bool)
@@ -56,11 +57,14 @@ theorem cylinder_one (e : Bool)
 theorem tips_distinct : tip P p q false ≠ tip P p q true :=
   CutOpenCarrier.tips_ne _ _ _ _ _
 
+/-- The product chart in the carrier at chart time zero, as polynomial time varies. -/
 def chartStart (e : Bool) : C(I, Carrier P p q) :=
   ⟨fun t ↦ includeLaurent P p q (Z P p q e (t, 0)), by fun_prop⟩
+/-- The product chart in the carrier at chart time one, as polynomial time varies. -/
 def chartEnd (e : Bool) : C(I, Carrier P p q) :=
   ⟨fun t ↦ includeLaurent P p q (Z P p q e (t, 1)), by fun_prop⟩
 
+/-- The product chart as a homotopy in chart time, with polynomial time as the map input. -/
 def chartHomotopy (e : Bool) : (chartStart P p q e).Homotopy (chartEnd P p q e) where
   toFun z := includeLaurent P p q (Z P p q e (z.2, z.1))
   continuous_toFun := by fun_prop
@@ -85,11 +89,16 @@ def A (e : Bool) : C(I × I, Carrier P p q) :=
 def B (e : Bool) : C(I × I, Carrier P p q) :=
   ⟨fun z ↦ cylinder P p q e (secondParameter P p q z.1, z.2), by fun_prop⟩
 
+/-- The ordinary-sheet square pasting the product chart to the first polynomial cylinder. -/
 abbrev Aminus := A P p q false
+/-- The shifted-sheet square pasting the product chart to the first polynomial cylinder. -/
 abbrev Aplus := A P p q true
+/-- The ordinary-sheet square given by the second polynomial family and its cylinder time. -/
 abbrev Bminus := B P p q false
+/-- The shifted-sheet square given by the second polynomial family and its cylinder time. -/
 abbrev Bplus := B P p q true
 
+/-- The chart-time path from `chartStart` to `chartEnd` at fixed polynomial time `t`. -/
 def chartPath (e : Bool) (t : I) :
     Path (chartStart P p q e t) (chartEnd P p q e t) where
   toFun s := includeLaurent P p q (Z P p q e (t, s))
@@ -97,6 +106,7 @@ def chartPath (e : Bool) (t : I) :
   source' := rfl
   target' := rfl
 
+/-- The first polynomial cylinder path from `chartEnd` to the selected tip at fixed `t`. -/
 def firstCylinderPath (e : Bool) (t : I) :
     Path (chartEnd P p q e t) (tip P p q e) where
   toFun s := cylinder P p q e (firstParameter P p q t, s)
@@ -104,6 +114,7 @@ def firstCylinderPath (e : Bool) (t : I) :
   source' := (firstContraction P p q e).apply_zero t
   target' := cylinder_one P p q e _
 
+/-- The chart path followed by the first cylinder path, with the original half-time cut. -/
 def APath (e : Bool) (t : I) : Path (chartStart P p q e t) (tip P p q e) :=
   (chartPath P p q e t).trans (firstCylinderPath P p q e t)
 
@@ -144,6 +155,7 @@ theorem B_left (e : Bool) (t : I) : B P p q e (t, 0) =
 theorem B_right (e : Bool) (t : I) : B P p q e (t, 1) = tip P p q e :=
   cylinder_one P p q e _
 
+/-- The lower boundary of the first cone square, parameterized by polynomial time. -/
 def firstLowerPath (e : Bool) :
     Path (chartStart P p q e 0) (chartStart P p q e 1) where
   toFun t := chartStart P p q e t
@@ -161,6 +173,7 @@ def ASquare (e : Bool) : Quillen.CarrierPathSquare.Square
   left t := (A_path P p q e t 0).trans (APath P p q e t).source
   right := A_right P p q e
 
+/-- The second polynomial cylinder at fixed `t`, from its Laurent attachment to its sheet tip. -/
 def BPath (e : Bool) (t : I) :
     Path (includeLaurent P p q (secondMovement P p q e t)) (tip P p q e) where
   toFun s := B P p q e (t, s)
@@ -168,6 +181,7 @@ def BPath (e : Bool) (t : I) :
   source' := B_left P p q e t
   target' := B_right P p q e t
 
+/-- The second rectangle polynomial movement in the Laurent part of the carrier. -/
 def secondLowerPath (e : Bool) :
     Path (includeLaurent P p q (secondMovement P p q e 0))
       (includeLaurent P p q (secondMovement P p q e 1)) where
@@ -192,6 +206,7 @@ theorem middle_attachment (e : Bool) :
   rw [← Z_target_middle_chart, Z_attach_first, polynomial_time_seam]
   exact (cylinder_zero P p q e (secondParameter P p q 0)).symm
 
+/-- The middle rectangle chart path included in the selected carrier sheet. -/
 def middleChartPath (e : Bool) :
     Path (includeLaurent P p q (middleChart P p q e 0))
       (includeLaurent P p q (middleChart P p q e 1)) where
@@ -200,6 +215,7 @@ def middleChartPath (e : Bool) :
   source' := rfl
   target' := rfl
 
+/-- The cylinder on `secondParameter` at polynomial time zero, following the middle chart path. -/
 def middleCylinderPath (e : Bool) :
     Path (includeLaurent P p q (middleChart P p q e 1)) (tip P p q e) where
   toFun s := B P p q e (0, s)

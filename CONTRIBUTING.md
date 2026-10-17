@@ -76,6 +76,20 @@ consumers:
 lake build Quillen.KTheory.API
 ```
 
+Incremental validation also covers the applicable environment and text linters
+and relevant tests. During the task's final validation, after building the
+changed defining modules, run CI's default environment and native text linters
+on those modules with:
+
+```sh
+lake env lean --run Tools/LintScoped.lean Quillen.KTheory.API
+```
+
+Pass additional defining module names as needed. The scoped runner includes
+the slow default checks and generated declarations; it reads existing artifacts
+without starting builds. Reuse compatible lint and test coverage outside the
+affected scope, and run the relevant tests for the changed inputs.
+
 A merge, commit, branch switch, checkout, version bump, or publication does not
 by itself require a whole-target build, fresh dependency replay, full audit, or
 Python/source suite. Complete release coverage may combine compatible existing

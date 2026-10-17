@@ -106,10 +106,12 @@ def targetProjectionNodes (i : Fin 3) : Node (laurentReference P p q) :=
   BassH1References.middleNodes P p q (BassH0Diagram.plusFace.toOrderHom
     (DoubleSquareMergedSimplex.lastFace.toOrderHom (rightIndex i)))
 
+/-- The H0 source projection row traversed with the original three-node binary path. -/
 def sourceProjectionParameter : C(I, |nerve (Codiscrete (Node (laurentReference P p q)))|) :=
   (parameter (laurentReference P p q) (sourceProjectionNodes P p q)).comp
     (binaryPath (k := 2) 0 1 2).toContinuousMap
 
+/-- The H1 target projection row traversed with the original three-node binary path. -/
 def targetProjectionParameter : C(I, |nerve (Codiscrete (Node (laurentReference P p q)))|) :=
   (parameter (laurentReference P p q) (targetProjectionNodes P p q)).comp
     (binaryPath (k := 2) 0 1 2).toContinuousMap

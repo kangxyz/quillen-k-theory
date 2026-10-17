@@ -71,6 +71,7 @@ theorem shifted_positive (s : I) :
       projectionPlus P p q (s, 1) := by
   rw [target_projection_shifted, positive_parameter]; rfl
 
+/-- The initial point of the new positive path for `q` on the ordinary or shifted sheet. -/
 def newStart (e : Bool) : Carrier P p q :=
   includeLaurent P p q (newPositiveParameter P p q e 0)
 
@@ -144,6 +145,8 @@ theorem unit_target : includeLaurent P p q (newUnitParameter P p q 1) =
   exact congrArg (fun N ↦ includeLaurent P p q (nodePoint (laurentReference P p q) N))
     (upper_reference P p q).symm
 
+/-- The forward Laurent-unit path for `q`, precomposed by `p`, between the two `newStart`
+points. -/
 def newUnit : Path (newStart P p q false) (newStart P p q true) where
   toFun s := includeLaurent P p q (newUnitParameter P p q s)
   continuous_toFun := by fun_prop

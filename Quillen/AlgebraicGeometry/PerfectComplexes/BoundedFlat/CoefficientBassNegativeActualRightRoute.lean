@@ -43,10 +43,12 @@ def transport : C(CoefficientBassPositiveC0CarrierSeed.Carrier P
   CoefficientBassNegativeCarrierReference.transport P (pArrow d) ((underToLaurent R).app d)
     (pArrow d) (qArrow d) (composite_eq d)
 
+/-- The transported new J0 conjugate word, joining the two carrier tips. -/
 def targetWord : C(I, Carrier P d) :=
   ⟨fun s ↦ transport P d (CoefficientBassPositiveJ0Conjugation.targetWord P d s),
     by fun_prop⟩
 
+/-- The transported old J0 conjugate word, joining the two carrier tips. -/
 def sourceWord : C(I, Carrier P d) :=
   ⟨fun s ↦ transport P d (CoefficientBassPositiveJ0Conjugation.sourceWord P d s),
     by fun_prop⟩
