@@ -6,6 +6,10 @@
   Include applicable compilation, declaration/text-style lint, affected
   `QuillenTest` and client tests, and source/trust checks; build success alone
   does not supply separate lint or test coverage.
+  Develop with incremental compilation and its diagnostics. Run independent
+  lint and tests only at the task's final validation before delivery;
+  helper returns, internal commits and merges do not trigger them. Reuse valid
+  evidence and rerun only failed or newly affected checks after final-check repairs.
   Follow the affected-scope checks in
   [CONTRIBUTING.md](CONTRIBUTING.md#tests-and-checks); a phase transition alone
   does not request the complete check pipeline or a whole-library rebuild.

@@ -42,6 +42,8 @@ for development, merge, and publication. `bash scripts/check.sh --rehash` is an
 explicit comprehensive diagnostic and CI pipeline, not a normal local acceptance
 step. All normal workflows must use incremental checks, including applicable
 compilation, lint, affected library/client tests and source/trust checks.
+Develop with incremental compilation and its diagnostics; independent lint and
+tests run only in the task's final validation before delivery.
 
 ## License
 

@@ -99,8 +99,12 @@ modules do not re-execute audit commands.
 
 Incremental validation includes applicable compilation, declaration/text-style
 lint, affected `QuillenTest` and client tests, and source/trust checks. Cover the
-relevant categories for each coherent maintained change, reusing compatible
-evidence. Compilation alone does not supply separate lint or test coverage.
+relevant categories in the task's final validation before delivery, reusing
+compatible evidence. During development use incremental compilation and its
+diagnostics; independent lint and tests run only at final validation.
+Helper returns, internal commits and merges do not trigger them. After repairs,
+rerun only failed or newly affected checks. Compilation alone does not supply
+separate lint or test coverage.
 
 Normal authoring, maintenance, documentation, review, merge, integration, and
 publication must use incremental checks, reusing trusted caches and compatible
