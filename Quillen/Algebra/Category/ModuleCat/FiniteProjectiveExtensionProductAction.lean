@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveExtensionAction
-public import Quillen.CategoryTheory.ExactCategory.ExtensionProductKernel
+public import Quillen.Aglib.CategoryTheory.ExactCategory.Extensions.ProductKernel
 
 /-! # Compatibility of fixed-quotient pullback multiplication with direct sum -/
 @[expose] public section

@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveMonoidal
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveExtensions
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveMonoidal
 public import Quillen.CategoryTheory.ExactCategory.ExtensionTotal
 public import Aglib.CategoryTheory.ExactCategory.Isomorphisms
 public import Mathlib.CategoryTheory.Monoidal.Action.Basic
@@ -21,24 +22,6 @@ namespace Quillen.FiniteProjectiveModule
 variable (R : Type u) [Ring R]
 attribute [local instance] categoryDirectSumMonoidal categoryDirectSumSymmetric
 attribute [local instance] directSumMonoidal directSumSymmetric
-
-/-- Adding an unchanged first summand preserves admissible monomorphisms. -/
-theorem inflation_coprod_map_id {A B : Category.{u, u} R} (S : Category.{u, u} R)
-    (f : A ⟶ B) (hf : (exactStructure R).inflation f) :
-    (exactStructure R).inflation (coprod.map (𝟙 S) f) := by
-  have sq : IsPushout (coprod.inr : A ⟶ S ⨿ A) f
-      (coprod.map (𝟙 S) f) (coprod.inr : B ⟶ S ⨿ B) := by
-    refine IsPushout.mk' (by simp) ?_ ?_
-    · intro T a b hab hfb
-      apply coprod.hom_ext
-      · simpa using congrArg (fun m => coprod.inl ≫ m) hab
-      · exact hfb
-    · intro T a b hab
-      refine ⟨coprod.desc (coprod.inl ≫ a) b, ?_, by simp⟩
-      apply coprod.hom_ext
-      · simp
-      · simpa using hab.symm
-  exact (exactStructure R).inflation.of_isPushout sq hf
 
 /-- Direct sum acts on the actual category of admissible inflations. -/
 @[instance_reducible]

@@ -7,7 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionWaldhausen
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionWaldhausen
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionForgetEvaluation
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SupportedSectionForgetEvaluation
 
 /-!
 # Exactness of original supported section inclusion

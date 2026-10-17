@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineDerivedBaseChange
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Derived.Affine
 
 /-! # Consumers of the original derived flat base-change map -/
 

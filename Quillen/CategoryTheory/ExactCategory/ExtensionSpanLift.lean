@@ -7,7 +7,7 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionBaseChange
-public import Quillen.CategoryTheory.ExactCategory.KernelComposition
+public import Quillen.Aglib.CategoryTheory.ExactCategory.KernelComposition
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionCokernelComparison
 public import Quillen.CategoryTheory.QConstruction.SpanIsoNaturality
 

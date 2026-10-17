@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.SubdivisionInitial
+public import Quillen.Aglib.CategoryTheory.Subdivision.Initial
 public import Quillen.Topology.ClassifyingSpace.Equivalence
 
 /-!

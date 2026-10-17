@@ -7,7 +7,7 @@ module
 
 public import Quillen.Topology.Prespectrum.StableEquivalence
 public import Quillen.Topology.HomotopyGroups.Connectivity.Basic
-public import Quillen.CategoryTheory.Limits.SequentialEventuallyIso
+public import Quillen.Aglib.CategoryTheory.Limits.Shapes.SequentialSystem.EventuallyIso
 
 /-!
 # Stabilization of growing finite bounds on the original prespectrum map

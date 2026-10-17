@@ -7,7 +7,7 @@ module
 
 public import Quillen.CategoryTheory.GroupCompletion.ActedFunctorComposition
 public import Quillen.CategoryTheory.GroupCompletion.Translation
-public import Quillen.CategoryTheory.Monoidal.Action.RightTensorLinear
+public import Quillen.Aglib.CategoryTheory.Monoidal.Action.RightTensorLinear
 
 /-! # Actual completed iterates and their original associator lineators -/
 

@@ -5,7 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.Monoidal.RightIterationFactorization
+public import Quillen.Aglib.CategoryTheory.Monoidal.TensorFunctor.Iteration
+public import Quillen.Aglib.CategoryTheory.Monoidal.TensorFunctor.Factorization
 public import Mathlib.CategoryTheory.Groupoid
 
 /-!
@@ -21,20 +22,6 @@ open CategoryTheory MonoidalCategory
 universe u v
 namespace Quillen.TranslationTelescope
 variable {C : Type u} [Groupoid.{v} C] [MonoidalCategory C]
-
-/-- The original associator interchanges left and right translation. -/
-def leftRightCommutationIso (P Q : C) : tensorLeft P ⋙ tensorRight Q ≅
-    tensorRight Q ⋙ tensorLeft P :=
-  NatIso.ofComponents (fun X ↦ asIso ((leftStep Q P).app X))
-    (fun {_ _} f ↦ (leftStep Q P).naturality f)
-
-/-- The original iterated associator intertwines left translation and stabilization. -/
-def leftIterateCommutationIso (e P : C) (k : ℕ) :
-    tensorLeft P ⋙ EndofunctorTelescope.iterate (tensorRight e) k ≅
-      EndofunctorTelescope.iterate (tensorRight e) k ⋙ tensorLeft P :=
-  NatIso.ofComponents
-    (fun X ↦ asIso ((EndofunctorTelescope.commuteIterate (leftStep e P) k).app X))
-    (fun {_ _} f ↦ (EndofunctorTelescope.commuteIterate (leftStep e P) k).naturality f)
 
 /-- Apply the original factorization first and then the distinguished left translation. -/
 def factorizationUpperTrack (e P Q : C) (k : ℕ)
@@ -52,11 +39,6 @@ def factorizationLowerTrack (e P Q : C) (k : ℕ)
   (leftIterateCommutationIso e P k).symm ≪≫
     Functor.isoWhiskerLeft (tensorLeft P) G ≪≫
       Functor.isoWhiskerRight (leftRightCommutationIso P Q) (tensorLeft P)
-
-/-- At a finite stage the original braiding is genuinely a natural isomorphism. -/
-def rightLeftBraidingIso [BraidedCategory C] (P : C) : tensorRight P ≅ tensorLeft P :=
-  NatIso.ofComponents (fun X ↦ β_ X P)
-    (fun {_ _} f ↦ BraidedCategory.braiding_naturality_left f P)
 
 /-- The upper track uses exactly the left translate of the chosen factorization component. -/
 theorem factorizationUpperTrack_hom_app (e P Q : C) (k : ℕ)

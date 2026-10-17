@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Algebra.ModuleComplex.LaurentModuleCech
+public import Quillen.Aglib.Algebra.Homology.ModuleCat.LaurentModuleCech
 public import Mathlib.Data.ZMod.Basic
 
 /-! # Original finite-projective Laurent chart complexes

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 public import Quillen.CategoryTheory.GroupCompletion.IteratedComma
-public import Quillen.CategoryTheory.FiberCocartesianComma
+public import Quillen.Aglib.CategoryTheory.FiberedCategory.CocartesianComma
 
 /-! # The genuine strict-fiber/comma adjunction for the iterated projection -/
 @[expose] public section

@@ -4,8 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChangeShift
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineDerivedBaseChange
+public import Aglib.AlgebraicGeometry.Cohomology.BaseChange.Derived.Shift
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Derived.Affine
 
 /-! # Original shifted derived base-change consumers -/
 

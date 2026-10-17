@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.VectorBundleComplexDirectImage
-public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPushforwardComparison
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPushforwardComparison
 public import Mathlib.Data.ZMod.Basic
 
 /-! # Consumers of original strict-complex projection and negative-twist maps -/

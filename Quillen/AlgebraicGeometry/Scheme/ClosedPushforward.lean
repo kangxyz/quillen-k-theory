@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Morphisms.ClosedImmersion.Category
+
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.PushforwardFunctoriality
 public import Mathlib.CategoryTheory.Widesubcategory
@@ -32,23 +34,6 @@ universe u
 open CategoryTheory AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace AlgebraicGeometry.Scheme
-
-/-- Schemes with their genuine closed-immersion morphisms. -/
-abbrev ClosedImmersionSchemes :=
-  WideSubcategory (@IsClosedImmersion : MorphismProperty AlgebraicGeometry.Scheme.{u})
-
-instance closedImmersionSchemes_isClosedImmersion {X Y : ClosedImmersionSchemes.{u}}
-    (f : X ⟶ Y) : IsClosedImmersion f.hom := f.property
-
-/-- Locally noetherian schemes among the genuine closed-immersion category. -/
-abbrev locallyNoetherianClosedSchemeProperty : ObjectProperty ClosedImmersionSchemes.{u} :=
-  fun X => IsLocallyNoetherian X.obj
-
-/-- Locally noetherian schemes with actual closed immersions as morphisms. -/
-abbrev LocallyNoetherianClosedSchemes := locallyNoetherianClosedSchemeProperty.{u}.FullSubcategory
-
-instance locallyNoetherianClosedSchemes_isLocallyNoetherian
-    (X : LocallyNoetherianClosedSchemes.{u}) : IsLocallyNoetherian X.obj.obj := X.property
 
 /-- Genuine covariant coherent G-theory on locally noetherian closed immersions. -/
 def GClosedPushforwardFunctor (n : ℕ) : LocallyNoetherianClosedSchemes.{u} ⥤ GrpCat.{u + 1} where

@@ -8,7 +8,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpenDerivedImage.KZeroCover
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Excision
-public import Quillen.Algebra.Group.MayerVietoris
+public import Quillen.Aglib.Algebra.Group.MayerVietoris
 public import Quillen.Waldhausen.Additivity.GroupFormula
 
 /-! # Original two-open Mayer–Vietoris with an auxiliary closed support -/

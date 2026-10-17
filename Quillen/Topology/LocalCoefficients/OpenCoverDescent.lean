@@ -7,7 +7,7 @@ module
 
 public import Quillen.Topology.LocalCoefficients.SmallChainExcision
 public import Quillen.Topology.LocalCoefficients.SmallChainFunctoriality
-public import Quillen.Algebra.Homology.BiprodQuasiIso
+public import Quillen.Aglib.Algebra.Homology.HomologicalComplex.BiprodQuasiIso
 
 /-!
 # Two-open-cover descent for actual twisted homology maps

@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Aglib.CategoryTheory.ExactCategory.Basic
+public import Quillen.Aglib.CategoryTheory.ExactCategory.Filtration.Basic
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.KTheory.GrothendieckGroup.Map
 public import Mathlib.Algebra.BigOperators.Group.List.Basic
@@ -43,52 +43,9 @@ open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
-/-- A finite admissible filtration with chosen successive factors satisfying `P`.
-The base may be any zero object, so there is no dependence on a particular choice
-of zero object. In a step the previous filtered object is the first object of a
-conflation and the new final object is its middle object. -/
-inductive Filtration (P : C → Prop) : C → Type (max u v)
-  | zero {X : C} (hX : IsZero X) : Filtration P X
-  | step (S : ShortComplex C) (hS : E.conflation S)
-      (previous : Filtration P S.X₁) (factor_mem : P S.X₃) : Filtration P S.X₂
-
 variable {E} {P : C → Prop}
 
 namespace Filtration
-
-/-- The successive factors, listed from the zero object towards the final object. -/
-def factors {X : C} : E.Filtration P X → List C
-  | .zero _ => []
-  | .step S _ previous _ => previous.factors ++ [S.X₃]
-
-/-- The number of conflations in this finite extension tower. -/
-def length {X : C} (F : E.Filtration P X) : ℕ := F.factors.length
-
-@[simp] lemma factors_zero {X : C} (hX : IsZero X) :
-    (Filtration.zero (E := E) (P := P) hX).factors = [] := rfl
-
-@[simp] lemma factors_step (S : ShortComplex C) (hS : E.conflation S)
-    (previous : E.Filtration P S.X₁) (hP : P S.X₃) :
-    (Filtration.step S hS previous hP).factors = previous.factors ++ [S.X₃] := rfl
-
-@[simp] lemma length_zero {X : C} (hX : IsZero X) :
-    (Filtration.zero (E := E) (P := P) hX).length = 0 := rfl
-
-@[simp] lemma length_step (S : ShortComplex C) (hS : E.conflation S)
-    (previous : E.Filtration P S.X₁) (hP : P S.X₃) :
-    (Filtration.step S hS previous hP).length = previous.length + 1 := by
-  simp [length]
-
-/-- Every recorded factor satisfies the filtration predicate. -/
-lemma mem_factors {X : C} (F : E.Filtration P X) {Y : C}
-    (hY : Y ∈ F.factors) : P Y := by
-  induction F with
-  | zero hX => simp at hY
-  | step S hS previous hP ih =>
-    simp only [factors_step, List.mem_append, List.mem_singleton] at hY
-    rcases hY with hY | rfl
-    · exact ih hY
-    · exact hP
 
 /-- Telescoping of classes along an actual finite admissible filtration. -/
 theorem class_eq_sum {X : C} (F : E.Filtration P X) :
@@ -98,13 +55,6 @@ theorem class_eq_sum {X : C} (F : E.Filtration P X) :
   | step S hS previous hP ih =>
     rw [E.grothendieckClass_additive hS, ih]
     simp
-
-/-- The analogous telescoping formula for every conflation-additive invariant. -/
-theorem additiveInvariant_eq_sum {A : Type w} [AddCommGroup A] (f : C → A)
-    (hf : E.IsAdditiveInvariant f) {X : C} (F : E.Filtration P X) :
-    f X = (F.factors.map f).sum := by
-  have h := congrArg (E.grothendieckLift f hf) F.class_eq_sum
-  simpa [map_list_sum, List.map_map, Function.comp_def] using h
 
 /-- Filtration classes belong to any additive subgroup containing their factors. -/
 theorem class_mem {X : C} (F : E.Filtration P X)

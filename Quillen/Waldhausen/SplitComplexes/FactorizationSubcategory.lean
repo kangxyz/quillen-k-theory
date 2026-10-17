@@ -6,8 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.Subcategory
 public import Aglib.CategoryTheory.ExactCategory.Abelian
-public import Quillen.Waldhausen.SplitComplexes.FactorizationQuotient
+public import Quillen.Waldhausen.SplitComplexes.ExactSequences
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.FactorizationQuotient
 
 /-!
 # Split-cofibration factorizations inside cone-closed subcategories
@@ -46,12 +48,6 @@ variable {A : Type u} [Category.{v} A] [Abelian A]
     ∀ f : K ⟶ L, P (mappingCone f))
 
 include hcone
-
-omit [P.ContainsZero] [P.IsClosedUnderIsomorphisms] [P.IsClosedUnderFiniteProducts] in
-/-- The explicit factorization object stays in a cone-closed subcategory. -/
-theorem middle_property {K L : CochainComplex A ℤ} (hK : P K) (hL : P L) (f : K ⟶ L) :
-    P (middle f) :=
-  (abelianExactStructure (CochainComplex A ℤ)).prop_biprod P (hcone hK hK (𝟙 K)) hL
 
 /-- Every map in the full subcategory factors as an actual split cofibration
 followed by an actual quasi-isomorphism in the same category. Its cofibration

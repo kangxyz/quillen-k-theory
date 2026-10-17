@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Waldhausen.QuillenComparison.FlagReindexing
-public import Quillen.Waldhausen.QuillenComparison.FlagExtension
+public import Quillen.Aglib.CategoryTheory.ExactCategory.Filtration.FlagExtension
 public import Quillen.Waldhausen.QuillenComparison.PullbackQuotients
 
 /-! # Exact rows reconstructed by pullback and two endpoint extensions -/

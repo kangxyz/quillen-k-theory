@@ -5,10 +5,13 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.CoefficientFiberInclusion
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedOpenKZeroExact
 public import Quillen.Waldhausen.SConstruction.Iterated.DiagramZeroNull
 public import Quillen.Waldhausen.Fibration.Rows.JointRetarget
-public import Quillen.CategoryTheory.ObjectProperty.LiftInclusion
+public import Quillen.Aglib.CategoryTheory.ObjectProperty.LiftInclusion
 public import Quillen.Waldhausen.SmallModel.Composition
 public import Quillen.Waldhausen.SConstruction.Iterated.ExactModelEquivalence
 public import Quillen.Waldhausen.Fibration.ConeComparison
@@ -50,49 +53,6 @@ variable {R : CommRingCat.{u}} {P Q : Over (Spec R)} (f : P ⟶ Q)
   [IsOpenImmersion f.left] (T : Q.left.Opens)
 attribute [local irreducible] boundedFlatCoefficientOriginalEvaluation
   boundedFlatCoefficientSupportedEvaluation boundedFlatCoefficientSupportedSectionEquivalence
-
-/-- Original intersection support implies the unchanged auxiliary support. -/
-theorem boundedFlatCoefficientFiberSupport_le (a : Under R) :
-    boundedFlatCoefficientSectionSupported (boundedFlatCoefficientFiberSupportOpen f T a).ι ≤
-      boundedFlatCoefficientSectionSupported (boundedFlatCoefficientSupportOpen Q T a).ι := by
-  intro S hS
-  exact ((restrictAcyclic_sup_iff (boundedFlatCoefficientSupportOpen Q T a)
-    (schemeMap f a).opensRange
-    ((boundedFlatCoefficientOriginalEvaluation (op Q, a)).obj S).obj).mp hS).1
-
-/-- Forget only the additional closed fiber support, keeping the actual native section. -/
-def boundedFlatCoefficientSupportedFiberForget (a : Under R) :
-    BoundedFlatCoefficientSupportedFiberSections f T a ⥤
-      BoundedFlatCoefficientSupportedAmbientSections (Q := Q) T a :=
-  ObjectProperty.ιOfLE (boundedFlatCoefficientFiberSupport_le f T a)
-
-private theorem propertyEvaluation_forget {C D : Type*} [Category* C] [Category* D]
-    (P Q : ObjectProperty C) (hPQ : P ≤ Q) (A B : ObjectProperty D) (hAB : A ≤ B)
-    (E : C ⥤ D) (hEA : ∀ X : P.FullSubcategory, A (E.obj X.obj))
-    (hEB : ∀ X : Q.FullSubcategory, B (E.obj X.obj)) :
-    A.lift (P.ι ⋙ E) hEA ⋙ ObjectProperty.ιOfLE hAB =
-      ObjectProperty.ιOfLE hPQ ⋙ B.lift (Q.ι ⋙ E) hEB := rfl
-
-/-- Original intersection support inclusion after evaluation keeps the actual complex. -/
-theorem boundedFlatCoefficientSupportedFiberEvaluation_forget (a : Under R) :
-    boundedFlatCoefficientSupportedEvaluation (boundedFlatCoefficientFiberSupportOpen f T a).ι ⋙
-      ObjectProperty.ιOfLE
-        (show boundedFlatPerfectSupported (boundedFlatCoefficientFiberSupportOpen f T a).ι ≤
-          boundedFlatPerfectSupported (boundedFlatCoefficientSupportOpen Q T a).ι from
-          fun K hK ↦ ((boundedFlatPerfectSupported_sup_opensRange_iff (schemeMap f a)
-            (boundedFlatCoefficientSupportOpen Q T a) K).mp hK).1) =
-      boundedFlatCoefficientSupportedFiberForget f T a ⋙
-        boundedFlatCoefficientSupportedEvaluation (boundedFlatCoefficientSupportOpen Q T a).ι := by
-  unfold boundedFlatCoefficientSupportedEvaluation
-  dsimp only [boundedFlatCoefficientSupportedFiberForget]
-  exact propertyEvaluation_forget _ _ _ _ _ _ _ _ _
-
-private theorem supportLift_congr {C D : Type*} [Category* C] [Category* D]
-    (P : ObjectProperty D) {F G : C ⥤ D} (h : F = G)
-    (hF : ∀ X, P (F.obj X)) (hG : ∀ X, P (G.obj X)) :
-    P.lift F hF = P.lift G hG := by
-  subst h
-  rfl
 
 /-- The identity coefficient reindexing square forgets only the extra support open. -/
 theorem boundedFlatCoefficientSupportedFiberForget_exact (a : Under R) :

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.PullbackRankOne
+public import Quillen.Aglib.AlgebraicGeometry.Modules.RankOne.Pullback
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalQuotient
 
 /-! # Pullback charts of the original tautological and quotient lines

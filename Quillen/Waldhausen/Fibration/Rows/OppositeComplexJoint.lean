@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
+
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.Duality.ComplexSubcategory
 public import Quillen.Waldhausen.Fibration.Rows.EquivalenceJoint

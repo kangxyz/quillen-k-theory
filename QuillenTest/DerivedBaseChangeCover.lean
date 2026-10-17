@@ -4,8 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChangeOpenCover
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChangeVertical
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Derived.OpenCover
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Derived.Vertical
 
 /-! # Original derived homology, cover, and vertical mate consumers -/
 

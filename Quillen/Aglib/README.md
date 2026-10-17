@@ -22,5 +22,30 @@ Once an accepted upstream revision is pinned, retarget the consumers and remove
 the local implementation; avoid duplicate implementations and default legacy
 facades.
 
-No candidate implementation is enrolled yet. This guide establishes the entry
-point for future general-theory development without reserving empty subjects.
+Existing general-theory implementations are staged here before admission to
+Aglib. Specialized applications remain in their mathematical host families and
+import the focused candidate leaves. Mixed files separate their general
+constructions from their curve, arithmetic or K-theory endpoints.
+
+The candidate module prefix records the temporary implementation owner. Source
+relocation preserves existing declaration names, objects, hypotheses and chosen
+comparison maps; it does not by itself redesign the public mathematical API.
+Future upstream admission selects canonical native namespaces and removes the
+accepted local implementation together with its old imports.
+
+## Mathematical interfaces and results
+
+| Family | Interfaces and main results |
+| --- | --- |
+| [Module constructions](Algebra/Module/README.md) | Finite-projective retracts, finite defect parametrices, matrix presentations and balanced scalar extension |
+| [Module complexes](Algebra/Homology/ModuleCat/README.md) | Ordinary complex, tensor, exactness and homology interfaces |
+| [Exact-category filtrations](CategoryTheory/ExactCategory/Filtration/README.md) | Actual filtrations, factors and additive-invariant formulas under their conflation hypotheses |
+| [Displayed colimits](CategoryTheory/Limits/README.md) | Lower-ideal gluing and pointwise pushout interchange |
+| [Regular-local algebra](RingTheory/RegularLocalRing/README.md) | Local algebra and finite projective-dimension bounds with the original hypotheses |
+| [Scheme module sheaves](AlgebraicGeometry/Modules/README.md) | Coherent/quasicoherent operations, ordinary and derived complexes, and intrinsic perfect-complex theory |
+| [Polynomial/Laurent spectra](AlgebraicGeometry/Spec/PolynomialLaurent/README.md) | Canonical affine schemes, ring maps, coordinates, base-change squares and open immersions |
+
+Public import entry: `Quillen.Aglib`. Prefer the focused leaves described in the
+family guides for implementation dependencies. Existing public mathematical
+namespaces are preserved; original Q/K/G/S, Waldhausen, spectrum and specialized
+curve/projective-line constructions remain in their application owners.

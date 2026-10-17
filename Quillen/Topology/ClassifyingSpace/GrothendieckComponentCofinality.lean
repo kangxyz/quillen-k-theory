@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.Grothendieck.GroupoidRightFactors
+public import Quillen.Aglib.CategoryTheory.Grothendieck.GroupoidRightFactors
 public import Quillen.Topology.ClassifyingSpace.CofinalSequence
 public import Mathlib.CategoryTheory.Comma.StructuredArrow.Basic
 

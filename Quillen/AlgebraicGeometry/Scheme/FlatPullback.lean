@@ -5,6 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.PullbackCoherent
+
+public import Quillen.Aglib.AlgebraicGeometry.Morphisms.Flat.Category
+
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.FiniteType.Pullback
 public import Quillen.CategoryTheory.SmallModel.Exact
 public import Aglib.AlgebraicGeometry.Modules.Coherent.FlatPullback
@@ -79,15 +83,6 @@ theorem pullbackG_eq_restrictG (j : X ⟶ Y) [IsOpenImmersion j] (n : ℕ) :
     (G := AlgebraicGeometry.Scheme.Modules.Coherent.coherentRestrictionExact j)
     (AlgebraicGeometry.Scheme.Modules.Coherent.coherentRestrictionIsoPullback j).symm n
 
-omit [IsLocallyNoetherian X] in
-/-- The actual bundle-to-coherent inclusion commutes with arbitrary pullback
-as a functor, before flatness is needed for the coherent exact structure. -/
-theorem vectorBundleToCoherent_pullback (f : X ⟶ Y) :
-    AlgebraicGeometry.Scheme.Modules.vectorBundleToCoherent Y ⋙
-      AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypePullback f =
-      AlgebraicGeometry.Scheme.Modules.vectorBundlePullback f ⋙
-        AlgebraicGeometry.Scheme.Modules.vectorBundleToCoherent X := rfl
-
 /-- Naturality of the original canonical K-to-G map for actual flat pullback. -/
 theorem KToG_pullback (f : X ⟶ Y) [Flat f] (n : ℕ) :
     (pullbackG f n).comp (KToG Y n) = (KToG X n).comp (pullbackK f n) := by
@@ -103,21 +98,6 @@ theorem KToG_pullback (f : X ⟶ Y) [Flat f] (n : ℕ) :
 theorem KToG_pullback_apply (f : X ⟶ Y) [Flat f] (n : ℕ) (x : K Y n) :
     pullbackG f n (KToG Y n x) = KToG X n (pullbackK f n x) :=
   DFunLike.congr_fun (KToG_pullback f n) x
-
-/-- Schemes with genuinely flat scheme morphisms. -/
-abbrev FlatSchemes := WideSubcategory (@Flat : MorphismProperty AlgebraicGeometry.Scheme.{u})
-
-instance flatSchemes_flat {X Y : FlatSchemes.{u}} (f : X ⟶ Y) : Flat f.hom := f.property
-
-/-- The actual locally noetherian object property on flat schemes. -/
-abbrev locallyNoetherianFlatSchemeProperty : ObjectProperty FlatSchemes.{u} :=
-  fun X => IsLocallyNoetherian X.obj
-
-/-- Locally noetherian schemes with flat morphisms. -/
-abbrev LocallyNoetherianFlatSchemes := locallyNoetherianFlatSchemeProperty.{u}.FullSubcategory
-
-instance locallyNoetherianFlatSchemes_isLocallyNoetherian
-    (X : LocallyNoetherianFlatSchemes.{u}) : IsLocallyNoetherian X.obj.obj := X.property
 
 /-- Vector-bundle K-theory restricted to flat maps of locally noetherian schemes. -/
 def KLocallyNoetherianFlatFunctor (n : ℕ) :

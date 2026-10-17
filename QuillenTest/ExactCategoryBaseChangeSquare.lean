@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 import Aglib.CategoryTheory.ExactCategory.Basic
-import Quillen.CategoryTheory.ExactCategory.BaseChangeSquare
+import Quillen.Aglib.CategoryTheory.ExactCategory.BaseChangeSquare
 
 open CategoryTheory.ExactCategory
 
@@ -17,7 +17,6 @@ kernel map by lifting the original kernel and the zero map into that square.
 -/
 noncomputable section
 open CategoryTheory CategoryTheory.Limits
-open Quillen
 universe v u
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : ExactStructure C) {S : ShortComplex C}

@@ -12,15 +12,14 @@ mathematical interfaces and hypotheses belong to the [topic guides](../README.md
 
 ## Vector-bundle instance inference
 
-An October 2026 profile of
-[VectorBundle.Basic](../../Quillen/AlgebraicGeometry/Scheme/VectorBundle/Basic.lean)
+An October 2026 profile of the former `VectorBundle.Basic` module
 identified repeated inference of sheafification and locally bijective classes
 on over-sites. Finite-type transport through an isomorphism also reconstructed
 the finiteness of an unchanged generator index.
 
-The implementation now binds the existing universal proof instances locally
-and passes the existing finite-index witness directly. The transported local
-basis, its cover and generators agree with the previous construction by `rfl`.
+The profiled change bound the existing universal proof instances locally
+and passed the existing finite-index witness directly. The transported local
+basis, its cover and generators agreed with the previous construction by `rfl`.
 Declaration types, maps and mathematical hypotheses are unchanged.
 
 Three matched unprofiled compilations used Lean 4.34.1, the committed mathlib
@@ -85,10 +84,11 @@ The four application types and five generic interfaces pass the pinned
 `checkType` at the unchanged default budget. This is a bounded checker result;
 no whole-module timing improvement is claimed.
 
-The complete local native `bash scripts/check.sh --ci --rehash` route passes:
+At the `f521b87e` checkpoint, the complete local native
+`bash scripts/check.sh --ci --rehash` route passed:
 91 script tests, the library/test build, declaration and text-style lint,
 58,560 project declarations in the root axiom audit, and the independent
-client build and its 462-declaration audit. It reuses native cache artifacts.
+client build and its 462-declaration audit. That run reused native cache artifacts.
 CI axiom audits select the capped Lean executable explicitly because Lake can
 prepend its native toolchain directory to `PATH`; the observed audit command
 retains `-j2 -M12800`, the 13824 MiB group RSS cutoff and one frontend.

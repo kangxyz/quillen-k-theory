@@ -5,9 +5,15 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.ScalarRestrictionPerfect
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.RankOne
+
+
 public import Quillen.Waldhausen.AutomorphismKOne
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ScalarCofiberKOneNormalization
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Single
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Single
 
 /-! Restriction of the original forward scalar square to an independent fine unit K-one class.
 The fine class is built from the actual global-unit automorphism. The old source component,
@@ -43,15 +49,6 @@ theorem perfectGlobalUnitKOneClass_iso (X : Scheme.{u}) (q : (Γ(X, ⊤))ˣ)
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
   (K : Perfect X) (r : Γ(X, ⊤)) (q : (Γ(U, ⊤))ˣ) (hq : j.appTop r = ↑q)
 
-include hq in
-/-- The original relative scalar arrow restricts to the actual independent fine unit arrow. -/
-theorem perfectRestrict_scalar_eq_globalUnit :
-    (perfectRestrict j).map ((perfectGlobalScalar X r).app K) =
-      (perfectGlobalUnitIso U q).hom.app ((perfectRestrict j).obj K) := by
-  apply (locallyPerfect U).ι.map_injective
-  rw [perfectGlobalUnitIso, Functor.fullyFaithfulCancelRight_hom_app, Functor.map_preimage]
-  exact restrict_map_complexGlobalScalar_unit j r q hq K.obj
-
 /-- The normalized forward scalar square maps to the independent unit class through the original
 public restriction K-map, retaining its canonical zero rebase and object-component transport. -/
 theorem perfectScalarForwardKOneClass_restrict :
@@ -69,24 +66,6 @@ theorem perfectScalarCofiberBoundaryKOneClass_restrict :
       (perfectGlobalUnitKOneClass U q ((perfectRestrict j).obj K))⁻¹ := by
   rw [perfectScalarCofiberBoundaryKOneClass_eq_inv, map_inv,
     perfectScalarForwardKOneClass_restrict]
-
-/-- The genuine rank-one structure sheaf, as its original degree-zero perfect complex. -/
-def rankOnePerfect (X : Scheme.{u}) : Perfect X := by
-  let M := SheafOfModules.unit X.ringCatSheaf
-  letI : AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X M := by
-    let e : SheafOfModules.free (R := X.ringCatSheaf) (ULift.{u} Unit) ≅ M :=
-      coproductUniqueIso _
-    exact AlgebraicGeometry.Scheme.Modules.finiteLocallyFree_of_iso e
-  exact ⟨(CochainComplex.singleFunctor X.Modules 0).obj M,
-    locallyPerfect_of_strictPerfect (single_strictPerfect_int M 0)⟩
-
-/-- The original open restriction of the structure single is canonically the structure single. -/
-def rankOnePerfectRestrictIso : (perfectRestrict j).obj (rankOnePerfect X) ≅ rankOnePerfect U :=
-  (locallyPerfect U).isoMk
-    (((HomologicalComplex.singleMapHomologicalComplex
-      (Scheme.Modules.restrictFunctor j) (.up ℤ) 0).app
-        (SheafOfModules.unit X.ringCatSheaf)) ≪≫
-      (CochainComplex.singleFunctor U.Modules 0).mapIso (Scheme.Modules.restrictUnitIso j))
 
 /-- Rank one uses the actual structure sheaf on the open, not a chosen matrix presentation. -/
 theorem perfectScalarForwardKOneClass_restrict_rankOne :

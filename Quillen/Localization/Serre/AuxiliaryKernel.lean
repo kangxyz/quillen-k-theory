@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.Abelian.SerreClass.OverKernel
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.CategoryTheory.QConstruction.Abelian.Surjections
 public import Mathlib.CategoryTheory.Comma.Over.Pullback
@@ -39,22 +40,6 @@ namespace Quillen.SerreLocalization
 attribute [local instance] Abelian.hasFiniteBiproducts
 attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
-
-/-- Epimorphic underlying maps in the slice. -/
-abbrev overDeflation (N : C) : MorphismProperty (Over N) :=
-  (MorphismProperty.epimorphisms C).inverseImage (Over.forget N)
-
-/-- Monomorphic underlying maps in the slice. -/
-abbrev overInflation (N : C) : MorphismProperty (Over N) :=
-  (MorphismProperty.monomorphisms C).inverseImage (Over.forget N)
-
-instance overDeflation_baseChange (N : C) : (overDeflation N).IsStableUnderBaseChange where
-  of_isPullback sq h := MorphismProperty.of_isPullback
-    (P := MorphismProperty.epimorphisms C) (sq.map (Over.forget N)) h
-
-instance overInflation_baseChange (N : C) : (overInflation N).IsStableUnderBaseChange where
-  of_isPullback sq h := MorphismProperty.of_isPullback
-    (P := MorphismProperty.monomorphisms C) (sq.map (Over.forget N)) h
 
 /-- The actual Q-style category of ambient epi/mono spans over `N`. -/
 abbrev OverQ (N : C) := Q (overDeflation N) (overInflation N)
@@ -90,29 +75,6 @@ instance overForgetQ_faithful (N : C) : (overForgetQ N).Faithful where
     · apply Over.OverMorphism.ext
       exact hr
 
-/-- Kernel as the actual base change along `0 → N`, followed by forgetting the
-map to zero. Its objects are canonically kernels, represented by pullbacks. -/
-@[implicit_reducible]
-def overKernel (N : C) : Over N ⥤ C :=
-  Over.pullback (0 : (0 : C) ⟶ N) ⋙ Over.forget (0 : C)
-
-instance overKernel_preservesPullbacks (N : C) :
-    PreservesLimitsOfShape WalkingCospan (overKernel N) := by
-  dsimp [overKernel]
-  infer_instance
-
-/-- The kernel map is the actual pullback of the ambient map along the target
-kernel inclusion. Thus epi and mono legs remain epi and mono. -/
-theorem overKernel_map_isPullback {N : C} {X Y : Over N} (f : X ⟶ Y) :
-    IsPullback ((overKernel N).map f) (pullback.fst X.hom (0 : (0 : C) ⟶ N))
-      (pullback.fst Y.hom (0 : (0 : C) ⟶ N)) f.left := by
-  apply IsPullback.of_right (t := (IsPullback.of_hasPullback Y.hom (0 : (0 : C) ⟶ N)).flip)
-  · dsimp only [overKernel, Functor.comp_map, Over.forget_map, Over.pullback_map_left]
-    erw [pullback.lift_snd, Over.w f]
-    exact (IsPullback.of_hasPullback X.hom (0 : (0 : C) ⟶ N)).flip
-  · dsimp only [overKernel, Functor.comp_map, Over.forget_map, Over.pullback_map_left]
-    exact pullback.lift_fst _ _ _
-
 /-- Kernel supplies a genuine Q-compatible functor on the slice. -/
 @[implicit_reducible]
 def overKernelCompatible (N : C) :
@@ -131,31 +93,6 @@ def overKernelCompatible (N : C) :
 def overKernelQ (N : C) : OverQ N ⥤ (abelianExactStructure C).QCategory :=
   (overKernelCompatible N).mapQ
 
-/-- A monomorphism of epimorphisms over the same base is invertible when
-its map on kernels is invertible. The proof is an explicit epi-desc argument. -/
-theorem over_isIso_of_mono_of_kernel_isIso {N : C} {X Y : Over N} (f : X ⟶ Y)
-    [Epi X.hom] [Epi Y.hom] [Mono f.left] [IsIso ((overKernel N).map f)] : IsIso f := by
-  have : Epi f.left := by
-    rw [Preadditive.epi_iff_cancel_zero]
-    intro T g hg
-    have hkg : pullback.fst Y.hom (0 : (0 : C) ⟶ N) ≫ g = 0 := by
-      apply (cancel_epi ((overKernel N).map f)).1
-      rw [← Category.assoc, (overKernel_map_isPullback f).w, Category.assoc,
-        hg, comp_zero, comp_zero]
-    let b := pullback.lift (f := Y.hom) (g := (0 : (0 : C) ⟶ N)) (kernel.ι Y.hom) (0 : kernel Y.hom
-      ⟶ (0 : C)) (by simp)
-    have hb : b ≫ pullback.fst Y.hom (0 : (0 : C) ⟶ N) = kernel.ι Y.hom :=
-      pullback.lift_fst _ _ _
-    have hg0 : kernel.ι Y.hom ≫ g = 0 := by rw [← hb, Category.assoc, hkg, comp_zero]
-    let d := Abelian.epiDesc Y.hom g hg0
-    have hd : Y.hom ≫ d = g := Abelian.comp_epiDesc _ _ _
-    have hXd : X.hom ≫ d = 0 := by rw [← Over.w f, Category.assoc, hd, hg]
-    have hd0 : d = 0 := (cancel_epi X.hom).1 (by simpa using hXd)
-    rw [← hd, hd0, comp_zero]
-  have : IsIso f.left := isIso_of_mono_of_epi _
-  let : IsIso ((Over.forget N).map f) := inferInstanceAs (IsIso f.left)
-  exact isIso_of_reflects_iso f (Over.forget N)
-
 variable (P : ObjectProperty C) [P.IsSerreClass]
 
 /-- The auxiliary objects whose ambient map to `N` is a Serre isomorphism. -/
@@ -166,21 +103,6 @@ def auxiliaryKernelProperty (N : C) : ObjectProperty (OverQ N) :=
 /-- Quillen's auxiliary category: Serre-isomorphisms into `N`, with actual
 Q-spans commuting over `N` as morphisms. -/
 abbrev AuxiliaryKernel (N : C) := (auxiliaryKernelProperty P N).FullSubcategory
-
-/-- The kernel of an auxiliary object genuinely belongs to the Serre class. -/
-theorem overKernel_mem {N : C} (X : Over N) (hX : P.isoModSerre X.hom) :
-    P ((overKernel N).obj X) := by
-  let L := P.isoModSerre.Q
-  let := ObjectProperty.SerreClassLocalization.preservesFiniteLimits L P
-  have : IsIso (L.map X.hom) := Localization.inverts L P.isoModSerre X.hom hX
-  have hs : IsIso (L.map (pullback.snd X.hom (0 : (0 : C) ⟶ N))) :=
-    ((IsPullback.of_hasPullback X.hom (0 : (0 : C) ⟶ N)).map L).isIso_snd_of_isIso
-  apply (quotient_isZero_obj_iff P _).1
-  have hz : IsZero (L.obj (0 : C)) :=
-    (quotient_isZero_obj_iff P _).2 (P.prop_of_isZero (isZero_zero C))
-  apply (IsZero.iff_id_eq_zero _).2
-  apply (cancel_mono (L.map (pullback.snd X.hom (0 : (0 : C) ⟶ N)))).1
-  exact hz.eq_of_tgt _ _
 
 /-- The actual kernel functor on Quillen's auxiliary category, landing in
 `Q(P)`. Arrow maps are lifted through the proved fully faithful Q-inclusion. -/
@@ -238,14 +160,6 @@ def epiAuxiliaryKernelFunctor (N : C) :
 /-- The identity epimorphism, the distinguished object in the auxiliary category. -/
 def epiAuxiliaryBase (N : C) : EpiAuxiliaryKernel P N :=
   ⟨Q.of _ _ (Over.mk (𝟙 N)), P.isoModSerre.id_mem N, inferInstanceAs (Epi (𝟙 N))⟩
-
-/-- The kernel of the identity is an actual zero object. -/
-theorem overKernel_identity_isZero (N : C) : IsZero ((overKernel N).obj (Over.mk (𝟙 N))) := by
-  have : IsIso (pullback.snd (𝟙 N) (0 : (0 : C) ⟶ N)) :=
-    (IsPullback.of_hasPullback (𝟙 N) (0 : (0 : C) ⟶ N)).isIso_snd_of_isIso
-  apply (IsZero.iff_id_eq_zero _).2
-  apply (cancel_mono (pullback.snd (𝟙 N) (0 : (0 : C) ⟶ N))).1
-  exact (isZero_zero C).eq_of_tgt _ _
 
 /-- The distinguished auxiliary object has zero kernel within the actual
 Serre subcategory, not merely after quotienting. -/

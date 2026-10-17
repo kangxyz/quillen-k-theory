@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.CategoryTheory.GroupCompletion.ActedFunctoriality
-public import Quillen.CategoryTheory.Monoidal.Action.LinearComposition
+public import Quillen.Aglib.CategoryTheory.Monoidal.Action.LinearComposition
 
 /-! # Localization retains the specified composition of linear functors -/
 

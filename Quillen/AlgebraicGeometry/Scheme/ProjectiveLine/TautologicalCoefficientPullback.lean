@@ -8,8 +8,8 @@ module
 public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalOpenBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalPullback
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.PullbackSquare
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.PullbackRankOne
+public import Quillen.Aglib.AlgebraicGeometry.Modules.RankOne.PullbackSquare
+public import Quillen.Aglib.AlgebraicGeometry.Modules.RankOne.Pullback
 public import Aglib.AlgebraicGeometry.Modules.Restriction.ZeroMorphisms
 public import Aglib.AlgebraicGeometry.Modules.Subobjects.Gluing
 
@@ -48,8 +48,8 @@ def tautologicalCoefficientPlusPullbackIso :
     (Scheme.Modules.pullback (plusChart S)).obj
         ((Scheme.Modules.pullback (coefficientMap f)).obj (tautologicalLine R)) ≅
       SheafOfModules.unit (Spec (CommRingCat.of (Polynomial S))).ringCatSheaf :=
-  (pullbackSquareIso (plusChart S) (coefficientMap f) (Spec.map (polynomialMap f))
-      (plusChart R) (plusChart_coefficientMap f)).app _ ≪≫
+  (pullbackSquareIso (Spec.map (polynomialMap f)) (plusChart S) (plusChart R)
+      (coefficientMap f) (plusChart_coefficientMap f).symm).app _ ≪≫
     (Scheme.Modules.pullback (Spec.map (polynomialMap f))).mapIso
       (tautologicalPullbackPlusIso R) ≪≫ pullbackUnitIso (Spec.map (polynomialMap f))
 
@@ -58,8 +58,8 @@ def tautologicalCoefficientMinusPullbackIso :
     (Scheme.Modules.pullback (minusChart S)).obj
         ((Scheme.Modules.pullback (coefficientMap f)).obj (tautologicalLine R)) ≅
       SheafOfModules.unit (Spec (CommRingCat.of (Polynomial S))).ringCatSheaf :=
-  (pullbackSquareIso (minusChart S) (coefficientMap f) (Spec.map (polynomialMap f))
-      (minusChart R) (minusChart_coefficientMap f)).app _ ≪≫
+  (pullbackSquareIso (Spec.map (polynomialMap f)) (minusChart S) (minusChart R)
+      (coefficientMap f) (minusChart_coefficientMap f).symm).app _ ≪≫
     (Scheme.Modules.pullback (Spec.map (polynomialMap f))).mapIso
       (tautologicalPullbackMinusIso R) ≪≫ pullbackUnitIso (Spec.map (polynomialMap f))
 

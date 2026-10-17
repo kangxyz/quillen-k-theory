@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.KTheory.Bass.PolynomialLaurent
+public import Quillen.Aglib.Algebra.Category.CommRingCat.PolynomialLaurentFunctor
 public import Mathlib.Algebra.Category.Grp.Abelian
 public import Mathlib.Algebra.Category.Grp.Biproducts
 public import Mathlib.CategoryTheory.Limits.Shapes.Kernels

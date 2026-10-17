@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveExtensions
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveExtensionPullbackLinearIso
 public import Mathlib.CategoryTheory.Monoidal.Action.LinearFunctor
 
@@ -19,26 +20,7 @@ open scoped MonoidalLeftAction
 namespace Quillen.FiniteProjectiveModule
 variable (R : Type u) [Ring R]
 attribute [local instance] categoryDirectSumMonoidal directSumMonoidal extensionFiberDirectSumAction
-
-local instance pullbackLinearExists {X Y : Category.{u, u} R} (f : X ⟶ Y)
-    (p : (exactStructure R).ExtensionOver Y) : HasPullback p.obj.hom f :=
-  (exactStructure R).deflation.hasPullback f p.property
-
-/-- The genuine pullback functor preserves the first projection square. -/
-@[reassoc (attr := simp)]
-theorem extensionFiberPullback_map_fst {X Y : Category.{u, u} R} (f : X ⟶ Y)
-    {p q : (exactStructure R).ExtensionFiber Y} (g : p ⟶ q) :
-    (((exactStructure R).extensionFiberPullback f).map g).iso.hom.hom.left ≫
-      pullback.fst q.of.obj.hom f = pullback.fst p.of.obj.hom f ≫ g.iso.hom.hom.left :=
-  pullback.lift_fst _ _ _
-
-/-- The genuine pullback functor fixes the projection to the new quotient. -/
-@[reassoc (attr := simp)]
-theorem extensionFiberPullback_map_snd {X Y : Category.{u, u} R} (f : X ⟶ Y)
-    {p q : (exactStructure R).ExtensionFiber Y} (g : p ⟶ q) :
-    (((exactStructure R).extensionFiberPullback f).map g).iso.hom.hom.left ≫
-      pullback.snd q.of.obj.hom f = pullback.snd p.of.obj.hom f :=
-  pullback.lift_snd _ _ _
+attribute [local instance] pullbackLinearExists
 
 /-- The pullback lineator is natural in the acting projective isomorphism. -/
 theorem extensionPullbackAdd_naturality_left {X Y : Category.{u, u} R} (f : X ⟶ Y)

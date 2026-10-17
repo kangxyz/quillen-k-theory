@@ -6,6 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.Resolution.SmallModel
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.Resolution.FiniteProjectiveDimension
+
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Coherent
 public import Quillen.AlgebraicGeometry.Scheme.Regular.SmallComparison
 public import Quillen.Resolution.Theorem
@@ -38,24 +42,6 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace AlgebraicGeometry.Scheme.Modules
 variable (X : AlgebraicGeometry.Scheme.{u}) [IsLocallyNoetherian X]
 
-/-- Objectwise actual finite resolutions pass to the chosen small model;
-no uniform bound is introduced. -/
-theorem coherentSmallResolutionHypothesis
-    (h : (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure X).ResolutionHypothesis
-      (coherentVectorBundle X)) :
-    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
-      X).smallModel.ResolutionHypothesis
-      (coherentSmallVectorBundle X) := by
-  intro M
-  let E := equivSmallModel.{u+1} (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.FiniteTypeSheaves
-    X)
-  obtain ⟨T⟩ := h (E.inverse.obj M)
-  let T' := (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure
-    X).originalToSmallModel.mapFiniteResolution
-    (P' := coherentSmallVectorBundle X)
-    (fun N hN => (coherentVectorBundle X).prop_of_iso (E.unitIso.app N) hN) T
-  exact ⟨T'.ofIso (E.counitIso.app M)⟩
-
 /-- The original canonical scheme K-to-G map is bijective when coherent
 sheaves admit genuine finite vector-bundle resolutions. This theorem uses
 the proved Quillen theorem rather than accepting it as an input field. -/
@@ -73,22 +59,5 @@ theorem schemeKToG_bijective_of_finite_resolutions
   change Function.Bijective ((vectorBundleToCoherentExact X).smallModel.KMap n)
   rw [← vectorBundleSmall_factor X, CategoryTheory.ExactCategory.ExactFunctor.KMap_comp]
   exact h₂.comp h₁
-
-/-- Objectwise Ext-defined finite projective dimension produces the actual
-affine finite-vector-bundle-resolution hypothesis. This is a homological
-intermediate statement, not a substituted regularity assumption. -/
-theorem coherentResolutionHypothesis_of_finite_projectiveDimension
-    (R : CommRingCat.{u}) [IsNoetherianRing R]
-    (h : ∀ M : ModuleCat.FiniteModule.{u, u} R,
-      projectiveDimension M.obj ≠ ⊤) :
-    (AlgebraicGeometry.Scheme.Modules.Coherent.coherentExactStructure (Spec R)).ResolutionHypothesis
-      (coherentVectorBundle (Spec R)) := by
-  intro M
-  let N := (AlgebraicGeometry.Scheme.Modules.QuasiCoherent.finiteTypeSheavesSpecModuleEquivalence
-    R).functor.obj M
-  obtain ⟨n, hn⟩ := (projectiveDimension_ne_top_iff N.obj).mp (h N)
-  have := hn
-  obtain ⟨T, _⟩ := coherentResolution_length_le_of_projectiveDimensionLE R n M
-  exact ⟨T⟩
 
 end AlgebraicGeometry.Scheme.Modules

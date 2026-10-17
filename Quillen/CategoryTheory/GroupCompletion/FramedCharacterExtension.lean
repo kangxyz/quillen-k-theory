@@ -8,9 +8,9 @@ module
 public import Quillen.CategoryTheory.GroupCompletion.FramedCharacterCancellation
 public import Quillen.CategoryTheory.GroupCompletion.FramedCommonSquares
 public import Quillen.CategoryTheory.GroupCompletion.UnitRoofs
-public import Quillen.CategoryTheory.Localization.CharacterExtension
-public import Quillen.CategoryTheory.Localization.RightReachable
-public import Quillen.CategoryTheory.ObjectProperty.ExtensionByConstant
+public import Quillen.Aglib.CategoryTheory.Localization.CharacterExtension
+public import Quillen.Aglib.CategoryTheory.Localization.RightReachable
+public import Quillen.Aglib.CategoryTheory.ObjectProperty.ExtensionByConstant
 
 /-!
 # Extending the actual framed character to the completion category

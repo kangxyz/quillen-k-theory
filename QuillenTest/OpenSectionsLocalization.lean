@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenSectionsLocalization
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Complex.Affine.OpenSectionsLocalization
 
 /-! # Actual pullback and compact-open localization consumers -/
 @[expose] public section

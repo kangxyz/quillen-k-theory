@@ -8,7 +8,7 @@ module
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveExtensionQuotient
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionGeometry
 public import Quillen.CategoryTheory.QConstruction.SpanIsoNaturality
-public import Quillen.CategoryTheory.SubdivisionAction
+public import Quillen.Aglib.CategoryTheory.Subdivision.Action
 
 /-! # Naturality of the quotient isomorphisms under the actual direct-sum action -/
 @[expose] public section

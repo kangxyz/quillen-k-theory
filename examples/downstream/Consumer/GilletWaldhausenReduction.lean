@@ -8,7 +8,7 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.Waldhausen.GilletWaldhausen.GlobalEulerReduction
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.KernelClosure
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.KernelClosure
 
 /-! Original-map finite and global fine-model K-class reductions. -/
 @[expose] public section

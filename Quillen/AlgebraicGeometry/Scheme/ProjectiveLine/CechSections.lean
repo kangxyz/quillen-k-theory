@@ -7,9 +7,9 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.ModuleChartSections
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineChartSections
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TwoOpenSheafSequence
-public import Quillen.Algebra.Category.ModuleCat.CartesianProduct
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Restriction.AffineChartSections
+public import Quillen.Aglib.AlgebraicGeometry.Cohomology.MayerVietoris.SheafSequence
+public import Quillen.Aglib.Algebra.Category.ModuleCat.CartesianProduct
 public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.BinaryProducts
 
 /-! # The original sheaf Cech difference in affine chart coordinates

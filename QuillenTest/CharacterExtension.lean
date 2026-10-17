@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.CategoryTheory.Localization.CharacterExtension
+public import Quillen.Aglib.CategoryTheory.Localization.CharacterExtension
 
 /-! Nontrivial groupoid consumers of the character extension and its comparison. -/
 @[expose] public section

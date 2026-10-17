@@ -6,8 +6,8 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlatPullback
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatExtensions
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlatPullback
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Flat.Extensions
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic

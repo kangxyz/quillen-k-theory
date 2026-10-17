@@ -7,7 +7,7 @@ module
 public import Quillen.CategoryTheory.ExactCategory.ExtensionDeflationEntry
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveExtensionAction
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveExtensionLinear
-public import Quillen.CategoryTheory.Monoidal.Action.IsoFiber
+public import Quillen.Aglib.CategoryTheory.Monoidal.Action.IsoFiber
 
 /-! # Direct-sum equivariance of the actual fixed-deflation entry -/
 @[expose] public section

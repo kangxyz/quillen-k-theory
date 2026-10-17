@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.FiberedCategory.CocartesianEvaluationNormalization
+public import Quillen.Aglib.CategoryTheory.FiberedCategory.CocartesianEvaluationNormalization
 public import Quillen.Waldhausen.SmallModel.Whiskering
 
 /-!

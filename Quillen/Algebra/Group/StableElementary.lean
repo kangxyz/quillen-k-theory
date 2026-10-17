@@ -5,9 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.LinearAlgebra.Matrix.GeneralLinearGroup.ElementaryStabilization
 public import Quillen.Algebra.Group.StableGeneralLinear
-public import Quillen.Algebra.Matrix.BlockWhitehead
-public import Quillen.Algebra.Matrix.ElementaryReindex
+public import Quillen.Aglib.LinearAlgebra.Matrix.BlockWhitehead
+public import Quillen.Aglib.LinearAlgebra.Matrix.ElementaryReindex
 
 /-!
 # The stable elementary subgroup
@@ -51,16 +52,6 @@ lemma of_mem_elementary {n : ℕ} {g : GL R n}
     (hg : g ∈ ElementaryMatrix.subgroup (Fin n) R) : of R n g ∈ elementary R :=
   of_elementary_le R n (Subgroup.mem_map_of_mem (of R n) hg)
 
-/-- Stabilization preserves the original positions of an elementary matrix. -/
-lemma step_unit (n : ℕ) (i j : Fin n) (hij : i ≠ j) (a : R) :
-    step R n (ElementaryMatrix.unit i j hij a) =
-      ElementaryMatrix.unit i.castSucc j.castSucc (by simpa using hij) a := by
-  change ElementaryMatrix.reindex finSumFinEquiv
-    (ElementaryMatrix.blockSum (ElementaryMatrix.unit i j hij a)
-      (1 : (Matrix (Fin 1) (Fin 1) R)ˣ)) = _
-  rw [ElementaryMatrix.blockSum_unit_one, ElementaryMatrix.reindex_unit]
-  rfl
-
 lemma of_unit_succ (n : ℕ) (i j : Fin n) (hij : i ≠ j) (a : R) :
     of R (n + 1) (ElementaryMatrix.unit i.castSucc j.castSucc (by simpa using hij) a) =
       of R n (ElementaryMatrix.unit i j hij a) := by
@@ -93,14 +84,6 @@ instance elementary_isPerfect : _root_.Group.IsPerfect (elementary R) := by
 lemma elementary_le_commutator : elementary R ≤ commutator (Group R) := by
   rw [← Subgroup.commutator_eq_self (H := elementary R), commutator_def]
   exact Subgroup.commutator_mono le_top le_top
-
-/-- The concrete transition is the relabelled block sum with an identity. -/
-lemma transition_eq_reindex_blockSum (n m : ℕ) (g : GL R n) :
-    transition R n (n + m) (Nat.le_add_right n m) g =
-      ElementaryMatrix.reindex finSumFinEquiv
-        (ElementaryMatrix.blockSum g (1 : GL R m)) := by
-  apply Units.ext
-  exact transition_val_fromBlocks R n m g
 
 /-- The stable image of each finite-stage commutator is elementary. -/
 lemma of_commutator_mem_elementary (n : ℕ) (g h : GL R n) :

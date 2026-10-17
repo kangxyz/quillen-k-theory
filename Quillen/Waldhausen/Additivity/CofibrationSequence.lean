@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.Functor.PointwiseCoproduct
 public import Quillen.Waldhausen.Additivity.CofiberEndpoint
 public import Quillen.Waldhausen.Additivity.PushoutCofibrations
 
@@ -78,14 +79,6 @@ structure IsCofibrationSequence (a : F ⟶ G) (b : G ⟶ H) : Prop where
     (b.app X) (W.isZero.to_ (H.obj X))
 
 variable [HasBinaryCoproducts D]
-
-/-- The actual split endpoint, quotient at the first object and subobject
-at the second object. -/
-def splitEndpoint (H F : C ⥤ D) : C × C ⥤ D where
-  obj X := H.obj X.1 ⨿ F.obj X.2
-  map f := coprod.map (H.map f.1) (F.map f.2)
-  map_id X := by apply coprod.hom_ext <;> simp
-  map_comp f g := by apply coprod.hom_ext <;> simp [Category.assoc]
 
 variable (a : F ⟶ G) (b : G ⟶ H) (h : IsCofibrationSequence V W a b)
 

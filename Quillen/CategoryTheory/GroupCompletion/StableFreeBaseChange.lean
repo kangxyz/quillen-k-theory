@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.CategoryTheory.GroupCompletion.StableFreeDiagram
-public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeFreeCoherence
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeFreeCoherence
 
 /-!
 # Change of rings on the original reversal-aligned free sequence

@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.Algebra.Homology.DerivedCategory.KInjective.Representatives
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.InjectiveCounit
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Complex.Affine.InjectiveCounit
 
 /-!
 # K-injective representative regression statements

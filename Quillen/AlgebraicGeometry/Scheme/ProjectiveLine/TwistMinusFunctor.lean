@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TwistMinus
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.SubobjectObstructionNaturality
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Restriction.SubobjectObstructionNaturality
 public import Aglib.AlgebraicGeometry.Modules.Locality.Exactness
 public import Aglib.AlgebraicGeometry.Modules.Restriction.Overlap
 

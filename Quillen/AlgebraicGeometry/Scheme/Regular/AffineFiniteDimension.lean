@@ -6,8 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.RingTheory.RegularLocalRing.AffineProjectiveDimension
+
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
-public import Quillen.Algebra.RegularLocal.ProjectiveDimension
+public import Quillen.Aglib.RingTheory.RegularLocalRing.ProjectiveDimension
 public import Quillen.AlgebraicGeometry.Scheme.Regular.GeneralComparison
 public import Mathlib.RingTheory.LocalProperties.ProjectiveDimension
 
@@ -35,22 +37,6 @@ open scoped ModuleCat.Algebra
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace AlgebraicGeometry.Scheme.Modules.Coherent
-
-/-- A uniform dimension bound on an actual regular ring bounds the projective
-dimension of all finite modules, by the proved regular-local theorem. -/
-theorem hasProjectiveDimensionLE_of_regular_dimension_le
-    (R : Type u) [CommRing R] [IsRegularRing R] (d : ℕ) (hd : ringKrullDim R ≤ (d : ℕ))
-    (M : ModuleCat.{u} R) [Module.Finite R M] : HasProjectiveDimensionLE M d := by
-  apply (ModuleCat.hasProjectiveDimensionLE_iff_forall_primeSpectrum d M).mpr
-  intro p
-  have hd' : ringKrullDim (Localization.AtPrime p.asIdeal) ≤ (d : ℕ) := by
-    rw [IsLocalization.AtPrime.ringKrullDim_eq_height p.asIdeal (Localization.AtPrime p.asIdeal)]
-    exact Ideal.height_le_ringKrullDim_of_isPrime.trans hd
-  have : Module.Finite (Localization.AtPrime p.asIdeal) (M.localizedModule p.asIdeal.primeCompl) :=
-    Module.Finite.of_isLocalizedModule p.asIdeal.primeCompl
-      (M.localizedModuleMkLinearMap p.asIdeal.primeCompl)
-  exact RegularLocal.hasProjectiveDimensionLE_of_regularLocal_dimension_le
-    (Localization.AtPrime p.asIdeal) d hd' (M.localizedModule p.asIdeal.primeCompl)
 
 end AlgebraicGeometry.Scheme.Modules.Coherent
 

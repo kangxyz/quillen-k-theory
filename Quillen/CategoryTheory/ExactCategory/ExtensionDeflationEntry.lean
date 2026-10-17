@@ -5,10 +5,10 @@ Authors: kangxyz
 -/
 module
 public import Aglib.CategoryTheory.ExactCategory.Basic
-public import Quillen.CategoryTheory.ExactCategory.ExtensionFiber
+public import Quillen.Aglib.CategoryTheory.ExactCategory.Extensions.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionTotalIsomorphism
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionConservative
-public import Quillen.CategoryTheory.IsoFiber
+public import Quillen.Aglib.CategoryTheory.FiberedCategory.IsoFiber.Basic
 
 /-! # Actual deflations enter the original total extension category -/
 @[expose] public section

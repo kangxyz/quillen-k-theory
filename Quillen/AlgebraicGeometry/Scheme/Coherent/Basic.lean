@@ -17,19 +17,11 @@ public import Aglib.CategoryTheory.SmallModel.Abelian
 public import Mathlib.AlgebraicGeometry.Noetherian
 
 /-!
-# Affine-locally quasicoherent sheaves of finite type
+# Coherent G-theory on locally noetherian schemes
 
-The predicate is imposed on every actual affine open chart: its restriction
-is quasicoherent with finite global sections. All affine charts are tested;
-no noetherianity condition is used to filter the charts. When the ambient
-scheme is locally noetherian, chart rings are proved noetherian, and closure
-under ambient finite limits and colimits follows from the affine theorem.
-
-Under local noetherianity, the resulting full category is abelian and its
-exact sequences are actual sheaf exact sequences. The initial G-theory definition uses a small model
-  in
-the upper universe `u+1`; lowest-universe essential smallness and comparison
-with the earlier affine small model are separate results.
+The actual affine-local finite-type category, its abelian structure and its ambient exact
+structure come from Aglib. This downstream leaf forms its Quillen G-groups in the explicitly
+enlarged universe u + 1.
 -/
 @[expose] public section
 

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionsLocalization
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Complex.Affine.SectionsLocalization
 
 /-! # Exact-map consumers of principal and arbitrary-open section localization -/
 @[expose] public section

@@ -8,7 +8,7 @@ module
 
 public import Quillen.Waldhausen.Fibration.MixedNerves.ChainCategories
 public import Quillen.Waldhausen.Fibration.TrivialCofibrations.Category
-public import Quillen.CategoryTheory.ArrowDiagrams
+public import Quillen.Aglib.CategoryTheory.ArrowDiagrams
 
 /-! # The actual cylinder on original fine-weak chains
 

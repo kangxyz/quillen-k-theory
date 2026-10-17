@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.VectorBundleRestriction
+
+
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.QuillenComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.RestrictionFunctoriality
@@ -35,16 +38,6 @@ universe u
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes
-
-/-- The degree-zero inclusion commutes with genuine termwise restriction. -/
-def vectorBundleInclusionRestrictIso {U X : Scheme.{u}}
-    (j : U ⟶ X) [IsOpenImmersion j] :
-    vectorBundleInclusion X ⋙ strictRestrict j ≅
-      AlgebraicGeometry.Scheme.Modules.vectorBundleRestrict j ⋙ vectorBundleInclusion U :=
-  Functor.fullyFaithfulCancelRight (strictPerfect U).ι
-    (Functor.isoWhiskerLeft (AlgebraicGeometry.Scheme.Modules.finiteLocallyFree X).ι
-      (HomologicalComplex.singleMapHomologicalComplex
-        (Scheme.Modules.restrictFunctor j) (ComplexShape.up ℤ) 0))
 
 /-- Naturality of the original degree-zero S-construction comparison. -/
 theorem vectorBundleSComparison_restrict {U X : Scheme.{u}}

@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.CategoryTheory.Monoidal.TensorFunctor.Associativity
 public import Quillen.CategoryTheory.Monoidal.TranslationTelescope
-public import Quillen.CategoryTheory.Grothendieck.EndofunctorTelescopeComposition
+public import Quillen.Aglib.CategoryTheory.Grothendieck.EndofunctorTelescopeComposition
 
 /-! # Original unit and composition isomorphisms for telescope translations -/
 @[expose] public section
@@ -30,10 +31,6 @@ def originalUnitIso (e : C) :
       rw [leftUnitor_tensor_hom]
       simp) ≪≫
     eqToIso (EndofunctorTelescope.map_identity (tensorRight e))
-
-/-- The original associator, as an isomorphism of left tensor functors. -/
-def leftTensorIso (P Q : C) : tensorLeft (P ⊗ Q) ≅ tensorLeft Q ⋙ tensorLeft P :=
-  NatIso.ofComponents (fun X => α_ P Q X) (by intro X Y f; dsimp; simp)
 
 /-- Telescope translation composition is governed by the original pentagon. -/
 def originalTensorIso (e P Q : C) :

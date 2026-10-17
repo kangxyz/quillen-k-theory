@@ -5,6 +5,8 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Morphisms.Finite.Category
+
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Finite.Functoriality
 public import Mathlib.CategoryTheory.Widesubcategory
@@ -30,23 +32,6 @@ universe u
 open CategoryTheory AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace AlgebraicGeometry.Scheme
-
-/-- Schemes with their genuine finite morphisms. -/
-abbrev FiniteSchemes :=
-  WideSubcategory (@AlgebraicGeometry.IsFinite : MorphismProperty AlgebraicGeometry.Scheme.{u})
-
-instance finiteSchemes_isFinite {X Y : FiniteSchemes.{u}}
-    (f : X ⟶ Y) : AlgebraicGeometry.IsFinite f.hom := f.property
-
-/-- Locally noetherian schemes among the genuine finite-morphism category. -/
-abbrev locallyNoetherianFiniteSchemeProperty : ObjectProperty FiniteSchemes.{u} :=
-  fun X => IsLocallyNoetherian X.obj
-
-/-- Locally noetherian schemes with actual finite morphisms as morphisms. -/
-abbrev LocallyNoetherianFiniteSchemes := locallyNoetherianFiniteSchemeProperty.{u}.FullSubcategory
-
-instance locallyNoetherianFiniteSchemes_isLocallyNoetherian
-    (X : LocallyNoetherianFiniteSchemes.{u}) : IsLocallyNoetherian X.obj.obj := X.property
 
 /-- Genuine covariant coherent G-theory on locally noetherian finite morphisms. -/
 def GFinitePushforwardFunctor (n : ℕ) :

@@ -6,10 +6,10 @@ Authors: kangxyz
 module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
-public import Quillen.Waldhausen.SplitComplexes.FactorizationSign
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.FactorizationSign
 public import Quillen.Waldhausen.SplitComplexes.FunctorialFactorization
 public import Quillen.Waldhausen.ExtensionCategory.Cofiber
-public import Quillen.CategoryTheory.Limits.CokernelPushout
+public import Quillen.Aglib.CategoryTheory.Limits.Shapes.CokernelPushout
 
 /-!
 # The original scalar-factorization cofiber as its literal mapping cone

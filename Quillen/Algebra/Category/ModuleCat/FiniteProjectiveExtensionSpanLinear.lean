@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveExtensionPullbackLinear
-public import Quillen.CategoryTheory.Monoidal.Action.LinearComposition
+public import Quillen.Aglib.CategoryTheory.Monoidal.Action.LinearComposition
 
 /-! # Genuine direct-sum equivariance of the original Q-span extension transport -/
 @[expose] public section

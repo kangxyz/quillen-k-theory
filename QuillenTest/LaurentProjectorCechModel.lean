@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Algebra.ModuleComplex.LaurentProjectorCech
+public import Quillen.Aglib.Algebra.Homology.ModuleCat.LaurentProjectorCech
 public import Mathlib.Data.ZMod.Basic
 
 /-! # Consumers of actual projector-image Laurent Cech models

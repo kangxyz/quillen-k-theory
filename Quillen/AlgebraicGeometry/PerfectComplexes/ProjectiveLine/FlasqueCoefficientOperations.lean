@@ -5,6 +5,12 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlasqueBoundedBelow.Shift
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.TensorByLineRightExact
+
+
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
@@ -35,20 +41,6 @@ open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
-
-instance rightLineModule_preservesFiniteLimits {X : Scheme.{u}} (L : X.Modules)
-    [IsFiniteLocallyFree X L] : PreservesFiniteLimits (moduleTensorByLineRight L) :=
-  preservesFiniteLimits_of_natIso (moduleTensorByLineSymmetry L)
-
-instance rightLineModule_preservesFiniteColimits {X : Scheme.{u}} (L : X.Modules)
-    [IsFiniteLocallyFree X L] : PreservesFiniteColimits (moduleTensorByLineRight L) :=
-  preservesFiniteColimits_of_natIso (moduleTensorByLineSymmetry L)
-
-instance rightLineModule_preservesHomology {X : Scheme.{u}} (L : X.Modules)
-    [IsFiniteLocallyFree X L] : (moduleTensorByLineRight L).PreservesHomology :=
-  ((CategoryTheory.Functor.exact_tfae (moduleTensorByLineRight L)).out 1 3).mp
-    (fun (S : ShortComplex X.Modules) (hs : S.ShortExact) =>
-      hs.map_of_exact (moduleTensorByLineRight L))
 
 /-- The actual original two charts of the projective line. -/
 def lineChart (R : CommRingCat.{u}) (b : Bool) :
@@ -153,43 +145,6 @@ lemma rightTensor_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
     let := hf
     exact AlgebraicGeometry.Scheme.Modules.Complex.tensorRight_quasiIso (tautologicalLine R) f.hom
   pushout hi h := (rightTensorExactFunctor R).map_isPushout hi h
-
-/-- Original shift preserves the full flasque-perfect object predicate. -/
-lemma shift_objects {X : Scheme.{u}} {K : CochainComplex X.Modules ℤ}
-    (hK : FlasqueBoundedBelow.objects X K) (n : ℤ) :
-    FlasqueBoundedBelow.objects X (K⟦n⟧) := by
-  refine ⟨BoundedBelow.objects_shift hK.1 n, fun i => ?_⟩
-  let : TopCat.Presheaf.IsFlasque (K.X (i + n)).presheaf := hK.2 (i + n)
-  exact flasque_of_iso (K.shiftFunctorObjXIso n i (i + n) rfl).symm
-
-/-- The literal standard original cochain shift, including its differential sign. -/
-def modelShift (X : Scheme.{u}) (n : ℤ) :
-    FlasqueBoundedBelow.Obj X ⥤ FlasqueBoundedBelow.Obj X :=
-  ObjectProperty.lift _ ((FlasqueBoundedBelow.objects X).ι ⋙ shiftFunctor
-    (CochainComplex X.Modules ℤ) n)
-    (fun K => shift_objects K.property n)
-
-instance modelShift_additive (X : Scheme.{u}) (n : ℤ) : (modelShift X n).Additive where
-  map_add := by
-    intro K L f g
-    apply ObjectProperty.hom_ext
-    change (shiftFunctor (CochainComplex X.Modules ℤ) n).map (f.hom + g.hom) =
-      (shiftFunctor (CochainComplex X.Modules ℤ) n).map f.hom +
-        (shiftFunctor (CochainComplex X.Modules ℤ) n).map g.hom
-    exact CategoryTheory.Functor.map_add _
-
-/-- Original shift preserves the inherited actual exact sequences. -/
-def modelShiftExactFunctor (X : Scheme.{u}) (n : ℤ) : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
-      (FlasqueBoundedBelow.objects X))
-    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
-      (FlasqueBoundedBelow.objects X)) where
-  toFunctor := modelShift X n
-  map_conflation S hS := by
-    change (S.map (FlasqueBoundedBelow.objects X).ι).ShortExact at hS
-    change ((S.map (FlasqueBoundedBelow.objects X).ι).map
-      (shiftFunctor (CochainComplex X.Modules ℤ) n)).ShortExact
-    exact hS.map_of_exact _
 
 lemma modelShift_exact (X : Scheme.{u}) (n : ℤ) : Waldhausen.IsExact
     (FlasqueBoundedBelow.waldhausen X).cof (FlasqueBoundedBelow.waldhausen X).weq

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeUniversal
+import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeUniversal
 
 /-! Arbitrary ambient targets test the actual scalar-extension universal property. -/
 noncomputable section

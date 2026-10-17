@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Pseudofunctor
-public import Quillen.CategoryTheory.FiberedCategory.CocartesianEvaluationCoherence
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.Pseudofunctor
+public import Quillen.Aglib.CategoryTheory.FiberedCategory.CocartesianEvaluationCoherence
 
 /-!
 # Original bounded-flat coefficient evaluation coherence

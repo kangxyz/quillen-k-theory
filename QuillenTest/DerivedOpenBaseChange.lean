@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedOpenBaseChange
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Derived.OpenRestriction
 
 /-! Consumers retain the actual module base-change map, both original units, and derived arrows. -/
 @[expose] public section

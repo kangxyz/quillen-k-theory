@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.BoundedDerivedComparison
+public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Affine.BoundedComparison
 public import Mathlib.Data.ZMod.Basic
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 

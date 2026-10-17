@@ -5,10 +5,10 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.PseudofunctorCoherence
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.PseudofunctorCoherence
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NormalizedPullbackCoherence
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionSpectrumNaturality
-public import Quillen.CategoryTheory.FiberedCategory.CocartesianEvaluationNormalization
+public import Quillen.Aglib.CategoryTheory.FiberedCategory.CocartesianEvaluationNormalization
 
 /-!
 # Actual normalized geometric comparisons for section evaluation

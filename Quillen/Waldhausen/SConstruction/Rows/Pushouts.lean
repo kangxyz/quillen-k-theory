@@ -9,7 +9,7 @@ module
 public import Quillen.Waldhausen.SConstruction.Rows.Basic
 public import Quillen.Waldhausen.SConstruction.Rows.PointwisePushouts
 public import Quillen.Waldhausen.SConstruction.Rows.RelativePushout
-public import Quillen.Waldhausen.Additivity.PushoutInterchange
+public import Quillen.Aglib.CategoryTheory.Limits.PointwisePushoutInterchange
 
 /-! # Genuine pushouts of quotient rows
 

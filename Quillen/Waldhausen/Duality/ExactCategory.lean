@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.CategoryTheory.ExactCategory.Basic
-public import Quillen.CategoryTheory.ExactCategory.ZeroSquare
+public import Quillen.Aglib.CategoryTheory.ExactCategory.ZeroSquare
 public import Quillen.Waldhausen.Duality.Basic
 public import Aglib.CategoryTheory.ExactCategory.Isomorphisms
 

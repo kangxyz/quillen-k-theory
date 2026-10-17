@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineDerivedBaseChangeCoordinates
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Derived.AffineCoordinates
 public import Mathlib.Data.ZMod.Basic
 
 /-! # Original affine derived mate and coordinate consumers -/

@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedBelow.FlatPullback
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
@@ -35,46 +38,6 @@ open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.SelfBaseChange
-
-/-- Literal flat pullback with the original existential strict lower bound. -/
-def boundedFlatPullback {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
-    BoundedBelow.Obj Y ⥤ BoundedBelow.Obj X :=
-  ObjectProperty.lift _ ((BoundedBelow.objects Y).ι ⋙
-    AlgebraicGeometry.Scheme.Modules.Complex.pullback f) (fun K => by
-    obtain ⟨hp, a, ha⟩ := K.property
-    let := ha
-    refine ⟨locallyPerfect_flatPullback f hp, a, ?_⟩
-    apply (CochainComplex.isStrictlyGE_iff _ a).mpr
-    intro n hn
-    exact (Scheme.Modules.pullback f).map_isZero
-      (CochainComplex.isZero_of_isStrictlyGE K.obj a n hn))
-
-instance boundedFlatPullback_additive {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
-    (boundedFlatPullback f).Additive := by
-  unfold boundedFlatPullback
-  infer_instance
-
-/-- Every specified original lower bound is retained by flat pullback. -/
-lemma boundedFlatPullback_isStrictlyGE {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
-    (K : BoundedBelow.Obj Y) (a : ℤ) [K.obj.IsStrictlyGE a] :
-    ((boundedFlatPullback f).obj K).obj.IsStrictlyGE a := by
-  apply (CochainComplex.isStrictlyGE_iff _ a).mpr
-  intro n hn
-  exact (Scheme.Modules.pullback f).map_isZero
-    (CochainComplex.isZero_of_isStrictlyGE K.obj a n hn)
-
-/-- Flat pullback preserves the inherited actual short exact sequences. -/
-def boundedFlatPullbackExactFunctor {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] : ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex Y.Modules ℤ))
-      (BoundedBelow.objects Y))
-    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
-      (BoundedBelow.objects X)) where
-  toFunctor := boundedFlatPullback f
-  map_conflation S hs := by
-    change (S.map (BoundedBelow.objects Y).ι).ShortExact at hs
-    change ((S.map (BoundedBelow.objects Y).ι).map
-      (AlgebraicGeometry.Scheme.Modules.Complex.pullback f)).ShortExact
-    exact hs.map_of_exact _
 
 lemma boundedFlatPullback_exact {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] : Waldhausen.IsExact
     (BoundedBelow.waldhausen Y).cof (BoundedBelow.waldhausen Y).weq

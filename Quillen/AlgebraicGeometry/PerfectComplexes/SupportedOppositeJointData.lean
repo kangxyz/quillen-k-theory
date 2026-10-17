@@ -5,8 +5,12 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportClosure
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.Inclusion
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.Closure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OppositeJointData
+public import Quillen.AlgebraicGeometry.PerfectComplexes.PerfectSupport
 
 /-!
 # Coherent actual cocylinders for supported perfect complexes
@@ -33,11 +37,6 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
 open Waldhausen Fibration
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-
-/-- Literal original supported inclusion underlying the already public K-map. -/
-def strictSupportedToPerfect : (strictSupported j).FullSubcategory ⥤
-    (perfectSupported j).FullSubcategory :=
-  ObjectProperty.ιOfLE (fun _ h => ⟨locallyPerfect_of_strictPerfect h.1, h.2⟩)
 
 lemma strictSupportedToPerfect_exact : IsExact
     (strictSupportedWaldhausen j).cof (strictSupportedWaldhausen j).weq

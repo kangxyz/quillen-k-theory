@@ -88,6 +88,7 @@ public import Consumer.PointRelativeHomology
 public import Consumer.PosetLoop
 public import Consumer.ProjectiveCompletionLoopNaturality
 public import Consumer.ProjectiveCompletionLoops
+public import Consumer.PublicLibraries
 public import Consumer.QLoopComponentProduct
 public import Consumer.RealizationDomination
 public import Consumer.RealizationWhitehead

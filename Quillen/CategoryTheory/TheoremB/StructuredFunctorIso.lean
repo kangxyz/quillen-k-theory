@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.Comma.Transitions
 public import Quillen.CategoryTheory.TheoremB.FunctorIso
 public import Quillen.CategoryTheory.TheoremB.StructuredComparison
 
@@ -20,17 +21,6 @@ set_option backward.isDefEq.respectTransparency false
 namespace Quillen.TheoremB
 variable {C D : Type u} [SmallCategory C] [SmallCategory D]
   {F G : C ⥤ D}
-
-/-- The natural isomorphism expressing compatibility of structured-comma transition along `f : d ⟶
-d'` with transport across `e : F ≅ G`. -/
-def structuredCommaIsoTransitionIso (e : F ≅ G) {d d' : D} (f : d ⟶ d') :
-    (StructuredArrow.mapNatIso (S := d') e).functor ⋙ structuredTransition G f ≅
-      structuredTransition F f ⋙ (StructuredArrow.mapNatIso (S := d) e).functor :=
-  NatIso.ofComponents (fun X ↦ StructuredArrow.isoMk (Iso.refl _)
-    (by simp [structuredTransition])) (by
-    intro X Y a
-    apply StructuredArrow.hom_ext
-    simp)
 
 theorem structuredTransitionHomotopyEquivalences_of_natIso (e : F ≅ G)
     (h : StructuredTransitionHomotopyEquivalences F) :

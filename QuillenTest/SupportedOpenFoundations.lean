@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
+public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Restriction
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpenDerivedImage.Structure
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 

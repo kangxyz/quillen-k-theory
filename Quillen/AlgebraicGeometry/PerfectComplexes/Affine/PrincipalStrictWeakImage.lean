@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.StrictOpenRelative
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalMapFactorization
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.PrincipalMapFactorization
 public import Quillen.Waldhausen.Approximation.WeakImageKEquivalence
 
 /-! # Genuine principal strict approximation onto the witnessed restriction image

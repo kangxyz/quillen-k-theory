@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.OpenCone
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenSupport
 public import Quillen.Waldhausen.Fibration.CanonicalFiberObjectLoop
@@ -34,19 +37,6 @@ universe u
 namespace Quillen.PerfectComplexes
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
   {K L : Perfect X} (f : K ⟶ L) (hf : (perfectOpenWeakWaldhausen j).weq f)
-
-include hf in
-/-- The original mapping cone of an open-weak perfect morphism is genuinely supported. -/
-theorem perfectOpenWeak_mappingCone_supported :
-    perfectSupported j (CochainComplex.mappingCone f.hom) := by
-  refine ⟨locallyPerfect_mappingCone K.property L.property f.hom, ?_⟩
-  let : QuasiIso ((restrict j).map f.hom) :=
-    (perfectOpenWeakWaldhausen_weq_iff j f).mp hf
-  intro n
-  exact (CochainComplex.mappingCone_acyclic_of_quasiIso
-    ((restrict j).map f.hom) n).of_iso
-    (CochainComplex.mappingCone.mapHomologicalComplexIso f.hom
-      (Scheme.Modules.restrictFunctor j)).symm
 
 /-- The actual original relative-acyclic object, with unchanged mapping-cone complex. -/
 def perfectOpenMappingConeAcyclic : AcyclicCategory (perfectOpenNested j) :=

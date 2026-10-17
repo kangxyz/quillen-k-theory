@@ -6,9 +6,12 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Restriction
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Extension
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Extension
 public import Quillen.AlgebraicGeometry.PerfectComplexes.VectorBundleInclusion
 public import Quillen.Waldhausen.SubcategoryInclusion
 
@@ -70,21 +73,6 @@ def vectorBundleToPerfectSMap (X : Scheme.{u}) (n : ℕ) :
   (strictToPerfectKMap X n).comp (vectorBundleSComparison X n)
 
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-
-instance perfectRestrict_additive : (perfectRestrict j).Additive := by
-  unfold perfectRestrict
-  infer_instance
-
-/-- Exactness of actual restriction for the inherited exact structures. -/
-def perfectExactRestrict : CategoryTheory.ExactCategory.ExactFunctor
-    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex X.Modules ℤ))
-      (locallyPerfect X))
-    (ExactSubcategory.exactStructure (abelianExactStructure (CochainComplex U.Modules ℤ))
-      (locallyPerfect U)) where
-  toFunctor := perfectRestrict j
-  map_conflation S hS := by
-    change ((S.map (locallyPerfect X).ι).map (restrict j)).ShortExact
-    exact hS.map_of_exact _
 
 /-- Actual open restriction is Waldhausen-exact for locally perfect complexes. -/
 theorem perfectRestrict_waldhausenExact :

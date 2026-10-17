@@ -225,7 +225,7 @@ noncommutative and zero-ring examples.
 
 ## Literal balanced tensor and the original scalar extension
 
-`Quillen.Algebra.Module.RightScalarExtension` defines `RightScalarExtension.Tensor`
+`Quillen.Aglib.Algebra.Module.RightScalarExtension` defines `RightScalarExtension.Tensor`
 as the literal quotient of `S ⊗[ℤ] M` by the balancing relations
 `(f r * s) ⊗ m - s ⊗ (op r • m)`. It proves that the right-submodule relation
 span equals the integer span, constructs pure tensors, and proves balanced
@@ -234,7 +234,7 @@ carrier universes are independent; no commutativity or flatness is assumed.
 [`Consumer.BalancedRightTensor`](../../examples/downstream/Consumer/BalancedRightTensor.lean)
 checks the public universal-property interface.
 
-`Quillen.Algebra.Category.ModuleCat.RightScalarExtension` gives the actual
+`Quillen.Aglib.Algebra.Category.ModuleCat.RightScalarExtension` gives the actual
 additive tensor functor, source naturality, identity and composition linear
 equivalences, and the triple-composition equality `compEquiv_assoc` on literal
 carriers. The original scalar-extension universal property constructs

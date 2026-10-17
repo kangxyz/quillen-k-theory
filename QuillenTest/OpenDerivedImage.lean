@@ -8,8 +8,8 @@ module
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Structure
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.Dense
-public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDerivedImage.DualFactorization
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenDerivedImageRoofs
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.OpenDerivedImage.DualFactorization
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.OpenDerivedImageRoofs
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic

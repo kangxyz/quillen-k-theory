@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeMonoidal
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeMonoidal
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveInflationAction
 public import Quillen.CategoryTheory.ExactCategory.ExtensionFunctorProjection
 public import Quillen.CategoryTheory.GroupCompletion.ActorChange

@@ -6,8 +6,8 @@ Authors: kangxyz
 module
 
 public import Aglib.Algebra.Polynomial.Laurent.BaseChange
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionUnitNaturality
-public import Quillen.AlgebraicGeometry.Scheme.Affine.LaurentUnitImage
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SectionUnitNaturality
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.UnitImage
 public import Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Units
 
 /-!

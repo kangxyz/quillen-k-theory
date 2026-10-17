@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.Algebra.Category.ModuleCat.MatrixImageScalarExtension
+public import Quillen.Aglib.Algebra.Category.ModuleCat.MatrixImageScalarExtension
 public import Mathlib.Data.ZMod.Basic
 
 /-! # Actual arbitrary-target scalar-extension consumers for matrix images -/

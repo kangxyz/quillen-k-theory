@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.ExactCategory.KernelPullback
 public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.KTheory.GrothendieckComparison.Edges
 public import Mathlib.CategoryTheory.SingleObj
@@ -33,48 +34,6 @@ namespace CategoryTheory.ExactCategory.ExactStructure
 open Quillen
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
-
-/-- Any chosen kernel of an admissible quotient belongs to its conflation. -/
-lemma conflation_of_deflation_of_isKernel {S : ShortComplex C}
-    (hg : E.deflation S.g) (hf : IsLimit (KernelFork.ofι S.f S.zero)) :
-    E.conflation S := by
-  obtain ⟨K, i, hi, hT⟩ := hg
-  let hTf := E.kernel (ShortComplex.mk i S.g hi) hT
-  let e := hTf.conePointUniqueUpToIso hf
-  let eS : ShortComplex.mk i S.g hi ≅ S :=
-    ShortComplex.isoMk e (Iso.refl _) (Iso.refl _) (by
-      simpa using hTf.conePointUniqueUpToIso_hom_comp hf WalkingParallelPair.zero) (by simp)
-  exact E.iso_closed eS hT
-
-/-- Pulling back an admissible quotient gives a conflation with the same
-kernel object, using the genuine pullback universal property. -/
-lemma conflation_pullback_same_kernel {S : ShortComplex C} (hS : E.conflation S)
-    {A P : C} {a : P ⟶ A} {b : P ⟶ S.X₂} {i : A ⟶ S.X₃}
-    (sq : IsPullback a b i S.g) :
-    E.conflation (ShortComplex.mk (sq.lift 0 S.f (by simp [S.zero])) a (by simp)) := by
-  let k := sq.lift 0 S.f (by simp [S.zero])
-  have hk : k ≫ a = 0 := by simp [k]
-  have ha : E.deflation a := E.deflation.of_isPullback sq.flip (E.deflation_of_conflation hS)
-  apply E.conflation_of_deflation_of_isKernel ha
-  refine KernelFork.IsLimit.ofι k hk
-    (fun {W} g hg => (E.kernel S hS).lift
-      (KernelFork.ofι (g ≫ b) (by rw [Category.assoc, ← sq.w, ← Category.assoc, hg]; simp)))
-    ?_ ?_
-  · intro W g hg
-    apply sq.hom_ext
-    · simp [Category.assoc, k, hg]
-    · simpa [k] using (E.kernel S hS).fac
-        (KernelFork.ofι (g ≫ b)
-          (by rw [Category.assoc, ← sq.w, ← Category.assoc, hg]; simp))
-        WalkingParallelPair.zero
-  · intro W g hg m hm
-    apply Fork.IsLimit.hom_ext (E.kernel S hS)
-    have hmk : m ≫ k ≫ b = g ≫ b := by rw [← Category.assoc, hm]
-    simpa [k] using hmk.trans
-      ((E.kernel S hS).fac
-        (KernelFork.ofι (g ≫ b)
-          (by rw [Category.assoc, ← sq.w, ← Category.assoc, hg]; simp))
-          WalkingParallelPair.zero).symm
 
 /-- The Grothendieck classes in a pullback along an admissible quotient satisfy
 the expected additive square relation. -/

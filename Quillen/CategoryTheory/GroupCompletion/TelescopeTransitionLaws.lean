@@ -7,7 +7,7 @@ module
 
 public import Quillen.CategoryTheory.GroupCompletion.TelescopeTransitions
 public import Quillen.CategoryTheory.GroupCompletion.FixedFirstEntry
-public import Quillen.CategoryTheory.Grothendieck.FiberTransitions
+public import Quillen.Aglib.CategoryTheory.Grothendieck.FiberTransitions
 
 /-! # Coherence of the actual localized stage transitions -/
 

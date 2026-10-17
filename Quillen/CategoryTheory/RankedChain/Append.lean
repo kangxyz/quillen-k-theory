@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.CategoryTheory.RankedChain.Order
-public import Quillen.CategoryTheory.ComposableArrows.Append
+public import Quillen.Aglib.CategoryTheory.ComposableArrows.Append
 
 /-!
 # Strict append and extension into an existing terminal vertex

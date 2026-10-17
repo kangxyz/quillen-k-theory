@@ -176,7 +176,7 @@ quasi-isomorphism preservation using exact coherent direct image, and defines
 `FiniteFlatPushforwardNaturality` preserves `vectorBundleToStrictKMap` in every
 nonnegative degree. `DerivedPushforwardComparison` identifies strict direct
 image with installed D+ direct image. The theorem
-[`Affine.perfectDerivedObjects_derivedPushforwardPlus`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/DerivedFiniteFlatPushforward.lean)
+[`Affine.perfectDerivedObjects_derivedPushforwardPlus`](../../Quillen/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/Affine/DerivedFiniteFlatPushforward.lean)
 preserves intrinsic D+ perfectness for affine source and a finite flat map to
 a locally noetherian target; general-source preservation is separate.
 
@@ -190,15 +190,15 @@ is invertible, while retaining the original augmentations and units:
 | Module under `Scheme.Sheaf` | Conditions and conclusion |
 | --- | --- |
 | [Aglib.AlgebraicGeometry.Cohomology.Affine.PushforwardAcyclicity](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/Affine/PushforwardAcyclicity.lean), `AffineDerivedPushforward` | Every quasicoherent sheaf is acyclic for an affine morphism; the unit on its degree-zero single is invertible |
-| [`AffineBoundedDerivedPushforward`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/AffineBoundedDerivedPushforward.lean) | Explicit lower and upper term bounds and degreewise quasicoherence give the same installed-unit comparison |
+| [`AffineBoundedDerivedPushforward`](../../Quillen/Aglib/AlgebraicGeometry/Modules/DerivedCategory/Pushforward/AffineBounded.lean) | Explicit lower and upper term bounds and degreewise quasicoherence give the same installed-unit comparison |
 | [Aglib.AlgebraicGeometry.Cohomology.Flasque.Pushforward](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/Flasque/Pushforward.lean), `FlasqueDerivedPushforward`, `FlasqueComplex`, `FlasqueComplexDerivedPushforward` | For every scheme map, flasque sheaves are acyclic and the unit is invertible on bounded-below flasque-term complexes, with no upper bound |
 | [Aglib.AlgebraicGeometry.Cohomology.Godement.First](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/Godement/First.lean) | On every scheme and all module sheaves, the actual product of stalk skyscrapers is an exact flasque-valued functor with a natural monic germ unit |
 | [Aglib.AlgebraicGeometry.Cohomology.Godement.Resolution](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/Godement/Resolution.lean) | Actual natural augmented flasque sheaf resolution from the exact cokernel iteration, with the original germ augmentation quasi-isomorphism and preservation of short exact sequences |
 | [Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Basic](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/Godement/TotalComplex/Basic.lean), `GodementTotalExact` | Actual natural totalization retains the lower bound and has flasque terms, preserving short exact sequences and degreewise monomorphisms |
 | [Aglib.AlgebraicGeometry.Cohomology.Flasque.Extensions](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/Flasque/Extensions.lean), `FlasquePushforwardExact` | Actual flasque extension closure and direct-image short-exact preservation with flasque first terms; the complex direct-image statement requires no bound |
 | [Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.QuasiIso](https://github.com/kangxyz/aglib/blob/a7ebd6f6455c0f05e53e83248372ef53967b0103/Aglib/AlgebraicGeometry/Cohomology/Godement/TotalComplex/QuasiIso.lean), `GodementTotalDerivedComparison` | Original total augmentation is a quasi-isomorphism for every Plus input; genuine weak maps are preserved, and Q(f_*T(K))≅Rf_*(Q(K)) is natural for every scheme map |
-| [`FlatInjectivePushforward`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/FlatInjectivePushforward.lean) | Flat direct image preserves injectives; the derived-Hom adjunction retains a bounded-below injective target complex |
-| [`AffineCompositeDerivedPushforward`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/AffineCompositeDerivedPushforward.lean) | The unit on `j_*M` is invertible when `j` and `j ≫ f` are affine and `M` is quasicoherent |
+| [`FlatInjectivePushforward`](../../Quillen/Aglib/AlgebraicGeometry/Modules/DerivedCategory/Pushforward/FlatInjective.lean) | Flat direct image preserves injectives; the derived-Hom adjunction retains a bounded-below injective target complex |
+| [`AffineCompositeDerivedPushforward`](../../Quillen/Aglib/AlgebraicGeometry/Modules/DerivedCategory/Pushforward/AffineComposite.lean) | The unit on `j_*M` is invertible when `j` and `j ≫ f` are affine and `M` is quasicoherent |
 
 Affine acyclicity has no finite, flat, or noetherian assumption. For arbitrary
 maps, the general flasque argument uses that direct images of injectives are
@@ -296,8 +296,8 @@ composite units. The scope of invertibility is:
 
 | Module under `Scheme.Sheaf` | Invertibility proved |
 | --- | --- |
-| [`DerivedOpenBaseChange`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/DerivedOpenBaseChange.lean), `CartesianOpenBaseChangeMate`, `DerivedFlatBaseChangeOpen` | Every bounded-below complex for an open base leg and arbitrary scheme map; the installed open comparison is the same canonical mate |
-| [`AffineDerivedBaseChange`](../../Quillen/AlgebraicGeometry/Scheme/Sheaf/AffineDerivedBaseChange.lean), `AffineDerivedBaseChangeCoordinates`, `AffineDerivedBaseChangeLocal` | Quasicoherent singles and their integer shifts for affine morphisms and flat base change, including nonaffine ambient schemes |
+| [`DerivedOpenBaseChange`](../../Quillen/Aglib/AlgebraicGeometry/Modules/BaseChange/Derived/OpenRestriction.lean), `CartesianOpenBaseChangeMate`, `DerivedFlatBaseChangeOpen` | Every bounded-below complex for an open base leg and arbitrary scheme map; the installed open comparison is the same canonical mate |
+| [`AffineDerivedBaseChange`](../../Quillen/Aglib/AlgebraicGeometry/Modules/BaseChange/Derived/Affine.lean), `AffineDerivedBaseChangeCoordinates`, `AffineDerivedBaseChangeLocal` | Quasicoherent singles and their integer shifts for affine morphisms and flat base change, including nonaffine ambient schemes |
 
 `DerivedFlatBaseChangeShift`, `DerivedFlatBaseChangeHorizontal`,
 `DerivedFlatBaseChangeVertical`, and `DerivedFlatBaseChangeLocalization` retain
@@ -404,10 +404,10 @@ rings are included, with no noetherian, regular, nonzero, or reduced hypothesis.
 
 The finite model comes from Laurent cutoff bounds, finite-free retractions
 of the polynomial chart modules, and rectangular projector transition matrices.
-[`LaurentProjectorFiniteDefects`](../../Quillen/Algebra/Polynomial/LaurentProjectorFiniteDefects.lean)
+[`LaurentProjectorFiniteDefects`](../../Quillen/Aglib/Algebra/Polynomial/Laurent/ProjectorFiniteDefects.lean)
 factors both parametrix defects through actual finite coefficient modules.
 The algebraic step in
-[`FiniteParametrix`](../../Quillen/Algebra/Module/FiniteParametrix.lean)
+[`FiniteParametrix`](../../Quillen/Aglib/Algebra/Module/FiniteParametrix.lean)
 takes `d : A → B` and `s : B → A` with factorizations
 `d s + t r = id_B` through `F` and `s d + u v = id_A` through `G`.
 If `A` and `F` are projective and `F` and `G` finite, the enlarged split map
@@ -558,7 +558,7 @@ and general projective-bundle comparisons retain separate scope.
 The Čech cone comparison concerns quasicoherent
 singles; general bounded-below flat base change is not inferred.
 The older
-[`FiniteCoefficientRetract`](../../Quillen/Algebra/Module/FiniteCoefficientRetract.lean)
+[`FiniteCoefficientRetract`](../../Quillen/Aglib/Algebra/Module/FiniteCoefficientRetract.lean)
 criterion retains its projectivity, splitting, and uniform-window premises;
 the finite-defect proof above supplies a different sufficient criterion.
 Proper pushforward, general-source derived perfect preservation, and

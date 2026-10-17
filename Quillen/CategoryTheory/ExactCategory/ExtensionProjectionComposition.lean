@@ -7,7 +7,7 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionGeometry
-public import Quillen.CategoryTheory.ExactCategory.BaseChangeSquare
+public import Quillen.Aglib.CategoryTheory.ExactCategory.BaseChangeSquare
 
 /-! # The genuine pullback apex of composite extension quotient spans -/
 @[expose] public section

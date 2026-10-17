@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AcyclicDerivedPushforward
+public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Pushforward.Acyclic
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.StructureSheafDirectImage
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalDirectImage
 

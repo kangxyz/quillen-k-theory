@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TwistMinusFunctor
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.ModuleColumns
+public import Quillen.Aglib.AlgebraicGeometry.Modules.RankOne.Columns
 public import Aglib.AlgebraicGeometry.Modules.Restriction.ZeroMorphisms
 public import Aglib.AlgebraicGeometry.Modules.Subobjects.Gluing
 

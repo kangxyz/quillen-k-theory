@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Morphisms.ClosedImmersion.SourceAndComplement
+
 public import Quillen.AlgebraicGeometry.Scheme.Localization
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralLocalization
 
@@ -34,23 +36,6 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 namespace AlgebraicGeometry.Scheme.Closed
 variable {Z X : AlgebraicGeometry.Scheme.{u}} [IsNoetherian X]
   (i : Z ⟶ X) [IsClosedImmersion i]
-
-include i in
-/-- A closed subscheme of a noetherian scheme is locally noetherian. -/
-theorem source_locallyNoetherian : IsLocallyNoetherian Z :=
-  AlgebraicGeometry.Scheme.closedSource_isLocallyNoetherian i
-
-include i in
-/-- The stronger global noetherianity conclusion is also derived. -/
-theorem source_noetherian : IsNoetherian Z :=
-  AlgebraicGeometry.Scheme.closedSource_isNoetherian i
-
-/-- The actual open complement of the closed image. -/
-abbrev openScheme :=
-  (AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.openComplement i).toScheme
-
-/-- Its actual geometric open immersion. -/
-abbrev openMap := AlgebraicGeometry.Scheme.Modules.Coherent.Pushforward.ClosedImmersion.openMap i
 
 /-- The canonical map of the original exact coherent sheaf pushforward. -/
 abbrev pushforwardG (n : ℕ) : @G Z (source_locallyNoetherian i) n →* G X n := by

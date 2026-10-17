@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.KTheory.Plus.ProjectiveTelescope
-public import Quillen.CategoryTheory.Monoidal.RightIterationFactorization
+public import Quillen.Aglib.CategoryTheory.Monoidal.TensorFunctor.Factorization
 
 /-! # Genuine finite-stage factorization for projective telescope translations -/
 

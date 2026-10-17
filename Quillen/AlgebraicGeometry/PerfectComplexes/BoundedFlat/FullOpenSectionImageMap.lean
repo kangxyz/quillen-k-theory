@@ -7,7 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenImagePullback
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionGrading
-public import Quillen.AlgebraicGeometry.Scheme.Affine.OpenPairCompactness
+public import Quillen.Aglib.AlgebraicGeometry.Morphisms.OpenImmersion.Pair.Compactness
 
 /-!
 # Actual coefficient action on the original full-open section grades

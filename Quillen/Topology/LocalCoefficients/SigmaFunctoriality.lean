@@ -9,7 +9,7 @@ public import Quillen.Topology.LocalCoefficients.SigmaChains
 public import Quillen.Topology.LocalCoefficients.MapSquares
 public import Quillen.Topology.LocalCoefficients.Abelian
 public import Quillen.Topology.Realization.Coproduct
-public import Quillen.Algebra.Category.ModuleCat.CoproductHomology
+public import Quillen.Aglib.Algebra.Category.ModuleCat.CoproductHomology
 
 /-!
 # Original twisted maps on topological disjoint unions

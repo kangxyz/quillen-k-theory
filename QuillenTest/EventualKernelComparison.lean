@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Homology.EventualKernelComparison
+public import Quillen.Aglib.Algebra.Homology.HomologicalComplex.EventualKernelComparison
 
 /-! # Consumers of actual eventual kernel annihilation -/
 @[expose] public section

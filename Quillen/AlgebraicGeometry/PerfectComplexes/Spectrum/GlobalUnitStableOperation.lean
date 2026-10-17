@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.GlobalUnitComponents
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalUnitKOneInversion
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Spectrum.GlobalUnit
 public import Quillen.Waldhausen.SConstruction.Iterated.ExactSelfTrackStableOperation
@@ -17,17 +20,6 @@ set_option backward.defeqAttrib.useBackward true
 open CategoryTheory AlgebraicGeometry Quillen.Waldhausen.IteratedS
 universe u
 namespace Quillen.PerfectComplexes
-
-/-- Inverting the unit inverts the same actual natural automorphism of flat pullback. -/
-theorem perfectFlatPullbackUnitIso_inv {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f]
-    (q : (Γ(X, ⊤))ˣ) :
-    perfectFlatPullbackUnitIso f q⁻¹ = (perfectFlatPullbackUnitIso f q).symm := by
-  apply Iso.ext
-  apply NatTrans.ext
-  funext K
-  have h := congrArg Iso.hom
-    (perfectGlobalUnitIso_app_inv X q ((perfectFlatPullback f).obj K))
-  simpa [perfectFlatPullbackUnitIso] using h
 
 /-- The actual inverse-unit track negates the original operation in every integer degree. -/
 theorem perfectFlatUnitHomotopy_stableOperation_inv {X Y : Scheme.{u}}

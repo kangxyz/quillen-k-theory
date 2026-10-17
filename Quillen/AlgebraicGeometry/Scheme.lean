@@ -8,7 +8,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.DerivedPullbackFunctor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PairRestriction
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.KernelClosure
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.KernelClosure
 public import Quillen.AlgebraicGeometry.Scheme.ClosedGTheory
 public import Quillen.AlgebraicGeometry.Scheme.Regular
 public import Quillen.AlgebraicGeometry.Scheme.AffineClosedGTheory

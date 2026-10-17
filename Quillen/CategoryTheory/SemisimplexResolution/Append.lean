@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.CategoryTheory.SemisimplexResolution.Basic
-public import Quillen.CategoryTheory.ComposableArrows.Append
+public import Quillen.Aglib.CategoryTheory.ComposableArrows.Append
 
 /-!
 # Appending the common target of a strict semisimplex face

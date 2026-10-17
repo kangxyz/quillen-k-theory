@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.KTheory.Plus.ProjectiveZeroFiberEquivalence
-public import Quillen.CategoryTheory.IsoFiberStructureMap
+public import Quillen.Aglib.CategoryTheory.FiberedCategory.IsoFiber.StructureMap
 
 /-! # Compatibility of the original zero-fiber entry with the total projection -/
 

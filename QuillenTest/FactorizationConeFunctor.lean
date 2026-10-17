@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.Waldhausen.SplitComplexes.FactorizationConeFunctor
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.FactorizationConeFunctor
 /-! Original signed quotient and exactness clients. -/
 @[expose] public section
 set_option warningAsError true

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TwoOpenSheafSequence
+public import Quillen.Aglib.AlgebraicGeometry.Cohomology.MayerVietoris.SheafSequence
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Charts
 
 /-!

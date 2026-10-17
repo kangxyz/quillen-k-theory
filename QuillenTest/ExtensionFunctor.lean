@@ -7,7 +7,7 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.CategoryTheory.ExactCategory.ExtensionFunctorProjection
-public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeExact
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeExact
 
 open CategoryTheory.ExactCategory
 

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TwoOpenSectionLifting
+public import Quillen.Aglib.AlgebraicGeometry.Cohomology.MayerVietoris.SectionLifting
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalQuotient
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalCohomology
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.StructureSheafCohomology

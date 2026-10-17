@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeExact
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeExact
 public import Quillen.KTheory.Map.NaturalIso
 
 /-!

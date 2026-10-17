@@ -5,6 +5,12 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.CategoryTheory.Functor.CoproductPostcompose
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.CoproductInclusion
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenFunctorNaturality
 public import Quillen.Waldhausen.Additivity.GroupFormula
 
@@ -33,29 +39,6 @@ open Waldhausen Waldhausen.ExtensionCategory
 
 variable {U X V Y : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ Y)
   [IsOpenImmersion j] [IsOpenImmersion k]
-
-/-- The actual full-subcategory inclusion forgetting support. -/
-def supportInclusion : (perfectSupported j).FullSubcategory ⥤ Perfect X :=
-  ObjectProperty.ιOfLE (show perfectSupported j ≤ locallyPerfect X from fun _ h => h.1)
-
-instance supportInclusion_additive : (supportInclusion j).Additive := by
-  unfold supportInclusion
-  infer_instance
-
-instance supportInclusion_preservesBinaryCoproducts :
-    PreservesColimitsOfShape (Discrete WalkingPair) (supportInclusion j) := by
-  let : PreservesBinaryBiproducts (supportInclusion j) :=
-    preservesBinaryBiproducts_of_preservesBiproducts _
-  exact preservesBinaryCoproducts_of_preservesBinaryBiproducts _
-
-/-- Canonical postcomposition comparison for the original selected coproducts. -/
-def coproductPostcomposeIso {C : Type v} [Category C] {D E : Type w} [Category D] [Category E]
-    [HasBinaryCoproducts D] [HasBinaryCoproducts E] (H F : C ⥤ D) (J : D ⥤ E)
-    [PreservesColimitsOfShape (Discrete WalkingPair) J] :
-    Additivity.sumFunctor H F ⋙ J ≅ Additivity.sumFunctor (H ⋙ J) (F ⋙ J) :=
-  (NatIso.ofComponents
-    (fun K => asIso (coprodComparison J (H.obj K) (F.obj K)))
-    (fun f => (coprodComparison_natural J (H.map f) (F.map f)).symm)).symm
 
 namespace ExactRestrictionSquare
 variable {j k} (D E : ExactRestrictionSquare j k)

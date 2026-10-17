@@ -8,7 +8,7 @@ module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.Excision
-public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.DerivedExcision
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.DerivedExcision
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.RestrictionComparison
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 

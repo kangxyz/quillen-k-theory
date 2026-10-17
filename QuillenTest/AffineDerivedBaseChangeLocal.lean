@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineDerivedBaseChangeLocal
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Derived.AffineLocal
 
 /-! # Original affine-morphism mate and installed single-pullback unit consumers -/
 

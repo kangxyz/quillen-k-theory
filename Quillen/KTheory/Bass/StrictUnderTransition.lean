@@ -7,7 +7,7 @@ module
 
 public import Quillen.KTheory.Bass.StrictUnderDiagram
 public import Quillen.KTheory.Bass.StrictDiagramMap
-public import Quillen.CategoryTheory.Functor.CommutingTransition
+public import Quillen.Aglib.CategoryTheory.Functor.CommutingTransition
 
 /-!
 # Original Bass transitions under restriction and seed maps

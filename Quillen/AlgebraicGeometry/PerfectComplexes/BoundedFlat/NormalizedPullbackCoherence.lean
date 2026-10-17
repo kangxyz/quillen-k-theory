@@ -5,7 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.PullbackCoherence
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Pullback
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.PullbackCoherence
 public import Quillen.Waldhausen.SConstruction.Iterated.NormalizationPasting
 
 /-! The actual canonical normalization of geometric pullback retains its original associativity. -/

@@ -6,10 +6,11 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.JointSubcategory
 public import Aglib.CategoryTheory.ExactCategory.Abelian
-public import Quillen.Waldhausen.Cylinder.ComplexQuotient
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.ComplexQuotient
 public import Quillen.Waldhausen.SplitComplexes.FunctorialFactorization
-public import Quillen.CategoryTheory.ExactCategory.SubcategoryCokernel
+public import Quillen.Aglib.CategoryTheory.ExactCategory.SubcategoryCokernel
 
 /-! # Joint and relative cylinder cofibrations in actual complex subcategories
 
@@ -39,16 +40,6 @@ variable {A : Type u} [Category.{v} A] [Abelian A]
   (hcone : ∀ {K L : CochainComplex A ℤ}, P K → P L →
     ∀ f : K ⟶ L, P (mappingCone f))
   (hshift : ∀ K, P K → P (K⟦(1 : ℤ)⟧))
-
-/-- The two actual endpoints as an inherited object. -/
-def subcategoryJointSource (f : Arrow P.FullSubcategory) : P.FullSubcategory :=
-  ⟨f.left.obj ⊞ f.right.obj,
-    (abelianExactStructure (CochainComplex A ℤ)).prop_biprod P f.left.property f.right.property⟩
-
-/-- Both original endpoints into the original factorization object. -/
-def subcategoryJointInclusion (f : Arrow P.FullSubcategory) :
-    subcategoryJointSource P f ⟶ (subcategoryMiddleFunctor P hcone).obj f :=
-  P.homMk (jointInclusion f.hom.hom)
 
 include hshift in
 /-- Joint endpoints form an actual inherited split cofibration. -/

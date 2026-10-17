@@ -6,8 +6,8 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Algebra.Module.MatrixBaseChange
-public import Quillen.Algebra.Polynomial.LaurentMatrixProjector
+public import Quillen.Aglib.Algebra.Module.MatrixBaseChange
+public import Quillen.Aglib.Algebra.Polynomial.Laurent.MatrixProjector
 
 /-! # Original matrix presentations and the two Laurent scalar maps
 

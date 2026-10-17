@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveMonoidal
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveMonoidal
 public import Quillen.CategoryTheory.Monoidal.TranslationTelescope
 
 /-! # The precompletion telescope of finite projective right modules

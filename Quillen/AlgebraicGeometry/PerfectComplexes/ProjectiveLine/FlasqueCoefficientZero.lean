@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlasqueBoundedBelow.Plus
+
+
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlasqueBoundedBelow
@@ -37,31 +40,7 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueCoefficients
 
-/-- The standard derived-category instance for sheaves of modules on `X`. -/
-local instance standardDerived (X : Scheme.{u}) :
-    HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
-
-/-- Forget only the perfect/flasque proofs, retaining the original lower-bounded complex. -/
-def toPlus (X : Scheme.{u}) : FlasqueBoundedBelow.Obj X ⥤ CochainComplex.Plus X.Modules :=
-  ObjectProperty.lift _ (FlasqueBoundedBelow.objects X).ι (fun K => K.property.1.2)
-
-/-- The actual installed direct-image unit, naturally restricted to the flasque model. -/
-def derivedUnit {X Y : Scheme.{u}} (f : X ⟶ Y) :
-    toPlus X ⋙ (Scheme.Modules.pushforward f).mapCochainComplexPlus ⋙
-        DerivedCategory.Plus.Q ⟶
-      toPlus X ⋙ DerivedCategory.Plus.Q ⋙ derivedPushforwardPlus f :=
-  CategoryTheory.Functor.whiskerLeft (toPlus X) (derivedPushforwardPlusUnit f)
-
-instance derivedUnit_isIso {X Y : Scheme.{u}} (f : X ⟶ Y) : IsIso (derivedUnit f) := by
-  apply (NatTrans.isIso_iff_isIso_app _).mpr
-  intro K
-  exact isIso_derivedPushforwardPlusUnit_of_flasque f ((toPlus X).obj K) K.property.2
-
-/-- Natural derived comparison using the original installed unit, with no chosen models. -/
-def derivedPushforwardIso {X Y : Scheme.{u}} (f : X ⟶ Y) :
-    toPlus X ⋙ (Scheme.Modules.pushforward f).mapCochainComplexPlus ⋙
-        DerivedCategory.Plus.Q ≅
-      toPlus X ⋙ DerivedCategory.Plus.Q ⋙ derivedPushforwardPlus f := asIso (derivedUnit f)
+attribute [local instance] standardDerived
 
 /-- The underlying zero coefficient is the literal original degreewise direct image. -/
 def G0Raw (R : CommRingCat.{u}) :

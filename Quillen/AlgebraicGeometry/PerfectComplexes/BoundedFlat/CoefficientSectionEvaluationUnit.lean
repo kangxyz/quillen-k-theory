@@ -5,9 +5,12 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.CategoryTheory.Functor.IdentityAutomorphismRebase
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionEvaluationNaturality
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSectionUnits
-public import Quillen.CategoryTheory.Functor.IdentityAutomorphismSquare
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.CoefficientSectionUnits
+public import Quillen.Aglib.CategoryTheory.Functor.IdentityAutomorphismSquare
 
 /-!
 # The actual normalized joint evaluation and original geometric unit
@@ -60,13 +63,6 @@ private theorem sectionSmallEquivalence_unit_preserves (i : Index R)
       (AsSmall.up.obj ((boundedFlatCoefficientOriginalEvaluation i).obj S)))
   rw [boundedFlatCoefficientSmallUnitIso, map_lift_hom]
   exact boundedFlatCoefficientSectionUnitIso_evaluation_hom i r S
-
-private theorem rebase_preserves {C D : Type u₁} [Category.{v₁} C] [Category.{v₁} D]
-    (F : C ⥤ D) (x : C) (y : D) (e : F.obj x ≅ y)
-    (α : 𝟭 C ≅ 𝟭 C) (β : 𝟭 D ≅ 𝟭 D) (h : Preserves F α β) :
-    Preserves (Quillen.rebaseFunctor F x y e) α β :=
-  map_hom_eq_of_iso (Quillen.rebaseFunctor F x y e) F
-    (Quillen.rebaseFunctorIso F x y e).symm α β h
 
 /-- The original evaluated forward unit survives both universe lifting and actual zero rebasing. -/
 theorem boundedFlatCoefficientSectionEvaluation_unit_preserves (i : Index R)

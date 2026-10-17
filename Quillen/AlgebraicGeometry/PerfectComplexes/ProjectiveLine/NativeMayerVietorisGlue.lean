@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.Algebra.Group.MulExactProduct
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeMayerVietorisNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeIsoInvariance
 public import Mathlib.Algebra.FiveLemma
@@ -24,28 +27,6 @@ universe u v
 open CategoryTheory AlgebraicGeometry
 namespace Quillen.PerfectComplexes.ProjectiveLine.NativeMayerVietoris
 open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.ProjectiveLine
-
-/-- Explicit rearrangement of the two original T-first local pairs into pairs of coefficients. -/
-def localPairShuffle (A : Type u) (B : Type v) [Group A] [Group B] :
-    (A × B) × (A × B) ≃* (A × A) × (B × B) where
-  toFun x := ((x.1.1, x.2.1), (x.1.2, x.2.2))
-  invFun x := ((x.1.1, x.2.1), (x.1.2, x.2.2))
-  left_inv _ := rfl
-  right_inv _ := rfl
-  map_mul' _ _ := rfl
-
-/-- Two copies of an actual exact group row remain exact. -/
-theorem mulExact_prodMap {A B C : Type*} [Group A] [Group B] [Group C]
-    (f : A →* B) (g : B →* C) (h : Function.MulExact f g) :
-    Function.MulExact (f.prodMap f) (g.prodMap g) := by
-  intro x
-  constructor
-  · intro hx
-    obtain ⟨a, ha⟩ := (h x.1).mp (congrArg _root_.Prod.fst hx)
-    obtain ⟨b, hb⟩ := (h x.2).mp (congrArg _root_.Prod.snd hx)
-    exact ⟨(a, b), Prod.ext ha hb⟩
-  · rintro ⟨a, rfl⟩
-    exact Prod.ext (h.apply_apply_eq_one a.1) (h.apply_apply_eq_one a.2)
 
 variable {V X : QuasiCompactSchemes.{u}} (f : V ⟶ X) [IsOpenImmersion f.hom]
   [QuasiSeparatedSpace X.obj] (T : X.obj.Opens) [CompactSpace T.toScheme]

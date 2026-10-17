@@ -5,14 +5,38 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Complex.RestrictionBounds
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Complex.SingleCycleLift
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteFreeLift
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.SectionDenominators
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Restriction.UnitSections
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Restriction.GraphGluing
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Reassembly
+
+
+public import Quillen.Aglib.Algebra.Homology.DerivedCategory.TopSingleRepresentative
+
+
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Homology
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Mathlib.Algebra.Homology.DerivedCategory.FullyFaithful
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalRestriction
 public import Mathlib.Algebra.Homology.DerivedCategory.ShortExact
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Single
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Single
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Closure
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneGluing
+public import Quillen.Aglib.AlgebraicGeometry.Modules.RankOne.Gluing
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Locality
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Tautological
 public import Aglib.AlgebraicGeometry.Modules.StructureSheaf.Sections
@@ -55,180 +79,7 @@ open AlgebraicGeometry.Scheme.Modules AlgebraicGeometry.Scheme.Modules.Coherent
 namespace Quillen.PerfectComplexes.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
 
-/-- A derived map from a complex supported at most n to a single in degree n
-has an actual chain representative. The degree condition is essential; no
-projectivity of the source terms is asserted. -/
-theorem exists_chain_to_top_single
-    {C : Type u} [Category.{v} C] [Abelian C] [HasDerivedCategory.{w} C]
-    (K : CochainComplex C ℤ) (n : ℤ) [K.IsStrictlyLE n] (M : C)
-    (α : DerivedCategory.Q.obj K ⟶
-      DerivedCategory.Q.obj ((CochainComplex.singleFunctor C n).obj M)) :
-    ∃ f : K ⟶ (CochainComplex.singleFunctor C n).obj M, DerivedCategory.Q.map f = α := by
-  obtain ⟨L, _, _, g, s, hs, hα⟩ :=
-    DerivedCategory.left_fac_of_isStrictlyLE_of_isStrictlyGE n n α
-  have : IsIso (DerivedCategory.Q.map s) := hs
-  obtain ⟨N, ⟨e⟩⟩ := L.exists_iso_single n
-  obtain ⟨φ, hφ⟩ := (CochainComplex.singleFunctor C n).map_surjective (s ≫ e.hom)
-  have : IsIso ((DerivedCategory.singleFunctor C n).map φ) := by
-    change IsIso (DerivedCategory.Q.map ((CochainComplex.singleFunctor C n).map φ))
-    rw [hφ, Functor.map_comp]
-    infer_instance
-  have : IsIso φ := isIso_of_reflects_iso φ (DerivedCategory.singleFunctor C n)
-  have : IsIso (s ≫ e.hom) := by rw [← hφ]; infer_instance
-  have : IsIso s := IsIso.of_isIso_comp_right _ e.hom
-  refine ⟨g ≫ inv s, ?_⟩
-  rw [Functor.map_comp, Functor.map_inv, hα]
-
-/-- The standard derived category of module sheaves, used for strict-model reassembly. -/
-local instance reassemblyStandard (X : Scheme.{u}) :
-    HasDerivedCategory.{u+1} X.Modules := HasDerivedCategory.standard _
-
-/-- A strict model of the cone of a top-degree vector-bundle attachment
-reassembles to a strict model of the original object in the exact interval.
-Only maps to the top single are realized by chain maps. -/
-theorem strict_model_of_top_attachment {X : Scheme.{u}} (K : CochainComplex X.Modules ℤ)
-    (V : X.Modules) [AlgebraicGeometry.Scheme.Modules.IsFiniteLocallyFree X V]
-    (a b : ℤ) (hab : a ≤ b)
-    (f : (CochainComplex.singleFunctor X.Modules b).obj V ⟶ K)
-    (P : StrictPerfect X)
-    (hP : ∀ i, i < a ∨ b - 1 < i → IsZero (P.obj.X i))
-    (eP : (DerivedCategory.Q (C := X.Modules)).obj (CochainComplex.mappingCone f) ≅
-      (DerivedCategory.Q (C := X.Modules)).obj P.obj) :
-    ∃ S : StrictPerfect X, (∀ i, i < a ∨ b < i → IsZero (S.obj.X i)) ∧
-      Nonempty ((DerivedCategory.Q (C := X.Modules)).obj S.obj ≅
-        (DerivedCategory.Q (C := X.Modules)).obj K) := by
-  let A := (CochainComplex.singleFunctor X.Modules b).obj V
-  let B := (CochainComplex.singleFunctor X.Modules (b - 1)).obj V
-  let T := (DerivedCategory.Q (C := X.Modules)).mapTriangle.obj
-    (CochainComplex.mappingCone.triangle f)
-  let eV : ((DerivedCategory.Q (C := X.Modules)).obj A)⟦(1 : ℤ)⟧ ≅
-    (DerivedCategory.Q (C := X.Modules)).obj B :=
-    ((DerivedCategory.singleFunctors X.Modules).shiftIso 1 (b - 1) b (by omega)).app V
-  have : P.obj.IsStrictlyLE (b - 1) :=
-    (CochainComplex.isStrictlyLE_iff _ _).mpr (fun i hi => hP i (Or.inr hi))
-  let α : (DerivedCategory.Q (C := X.Modules)).obj P.obj ⟶
-    (DerivedCategory.Q (C := X.Modules)).obj B :=
-    eP.inv ≫ T.mor₃ ≫ eV.hom
-  obtain ⟨g, hg⟩ := exists_chain_to_top_single P.obj (b - 1) V α
-  change (DerivedCategory.Q (C := X.Modules)).map g = α at hg
-  have hT : T ∈ distTriang _ := DerivedCategory.mappingCone_triangle_distinguished f
-  have hcomm : (DerivedCategory.Q (C := X.Modules)).map g ≫ eV.inv = eP.inv
-    ≫ T.rotate.rotate.mor₁ := by
-    change (DerivedCategory.Q (C := X.Modules)).map g ≫ eV.inv = eP.inv ≫ T.mor₃
-    rw [hg]
-    simp [α]
-  let eC : (DerivedCategory.Q (C := X.Modules)).obj (CochainComplex.mappingCone g) ≅
-      ((DerivedCategory.Q (C := X.Modules)).obj K)⟦(1 : ℤ)⟧ :=
-    Triangle.π₃.mapIso (isoTriangleOfIso₁₂ _ T.rotate.rotate
-      (DerivedCategory.mappingCone_triangle_distinguished g)
-      (rot_of_distTriang _ (rot_of_distTriang _ hT)) eP.symm eV.symm hcomm)
-  let S : StrictPerfect X := ⟨(CochainComplex.mappingCone g)⟦(-1 : ℤ)⟧,
-    strictPerfect_shift
-      (strictPerfect_mappingCone P.property (single_strictPerfect_int V (b - 1)) g) (-1)⟩
-  refine ⟨S, ?_, ⟨?_⟩⟩
-  · intro i hi
-    change IsZero ((CochainComplex.mappingCone g).X (i + -1))
-    apply (CochainComplex.mappingCone.isZero_X_iff g (i + -1)).mpr
-    constructor
-    · apply hP
-      rcases hi with hi | hi
-      · exact Or.inl (by omega)
-      · exact Or.inr (by omega)
-    · exact HomologicalComplex.isZero_single_obj_X _ _ _ _ (by rcases hi with hi | hi <;> omega)
-  · change (DerivedCategory.Q (C := X.Modules)).obj ((CochainComplex.mappingCone g)⟦(-1 : ℤ)⟧) ≅ _
-    exact ((DerivedCategory.Q (C := X.Modules)).commShiftIso (-1)).app
-      (CochainComplex.mappingCone g) ≪≫
-      (shiftFunctor (DerivedCategory X.Modules) (-1)).mapIso eC ≪≫
-      (shiftFunctorCompIsoId (DerivedCategory X.Modules) (1 : ℤ) (-1) (by omega)).app
-        ((DerivedCategory.Q (C := X.Modules)).obj K)
-
-
-/-- A pair of chart maps into two ambient sheaves, viewed as a chart map
-into their actual ambient product. -/
-def restrictionGraph {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    {A : U.Modules} {G M : X.Modules} (i : A ⟶ G.restrict j) (f : A ⟶ M.restrict j) :
-    A ⟶ (G ⨯ M).restrict j :=
-  prod.lift i f ≫ inv (prodComparison (Scheme.Modules.restrictFunctor j) G M)
-
-@[reassoc (attr := simp)]
-theorem restrictionGraph_fst {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    {A : U.Modules} {G M : X.Modules} (i : A ⟶ G.restrict j) (f : A ⟶ M.restrict j) :
-    restrictionGraph j i f ≫ (Scheme.Modules.restrictFunctor j).map prod.fst = i := by
-  simp [restrictionGraph, Category.assoc, inv_prodComparison_map_fst]
-
-@[reassoc (attr := simp)]
-theorem restrictionGraph_snd {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    {A : U.Modules} {G M : X.Modules} (i : A ⟶ G.restrict j) (f : A ⟶ M.restrict j) :
-    restrictionGraph j i f ≫ (Scheme.Modules.restrictFunctor j).map prod.snd = f := by
-  simp [restrictionGraph, Category.assoc, inv_prodComparison_map_snd]
-
-instance restrictionGraph_mono {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
-    {A : U.Modules} {G M : X.Modules} (i : A ⟶ G.restrict j) (f : A ⟶ M.restrict j)
-    [Mono i] : Mono (restrictionGraph j i f) := by
-  have : Mono (restrictionGraph j i f ≫ (Scheme.Modules.restrictFunctor j).map prod.fst) := by
-    rw [restrictionGraph_fst]
-    infer_instance
-  exact mono_of_mono (restrictionGraph j i f)
-    ((Scheme.Modules.restrictFunctor j).map (prod.fst : G ⨯ M ⟶ G))
-
-/-- Compatible chart graph maps give an actual global source and morphism,
-with both original chart maps retained by the supplied trivializations. -/
-theorem exists_glued_graph_map {U V X : Scheme.{u}} (j : U ⟶ X) (k : V ⟶ X)
-    [IsOpenImmersion j] [IsOpenImmersion k]
-    {A : U.Modules} {B : V.Modules} {G M : X.Modules}
-    (i : A ⟶ G.restrict j) (l : B ⟶ G.restrict k) [Mono i] [Mono l]
-    (f : A ⟶ M.restrict j) (g : B ⟶ M.restrict k)
-    (e : A.restrict (pullback.fst j k) ≅ B.restrict (pullback.snd j k))
-    (hG : (Scheme.Modules.restrictFunctor (pullback.fst j k)).map i ≫
-        (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.app G =
-      e.hom ≫ (Scheme.Modules.restrictFunctor (pullback.snd j k)).map l)
-    (hM : (Scheme.Modules.restrictFunctor (pullback.fst j k)).map f ≫
-        (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.app M =
-      e.hom ≫ (Scheme.Modules.restrictFunctor (pullback.snd j k)).map g) :
-    ∃ (N : X.Modules) (h : N ⟶ M),
-      ∃ (eU : N.restrict j ≅ A) (eV : N.restrict k ≅ B),
-        (Scheme.Modules.restrictFunctor j).map h = eU.hom ≫ f ∧
-        (Scheme.Modules.restrictFunctor k).map h = eV.hom ≫ g := by
-  have hc : (Scheme.Modules.restrictFunctor (pullback.fst j k)).map
-        (restrictionGraph j i f) ≫ (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j
-          k).hom.app (G ⨯ M) =
-      e.hom ≫ (Scheme.Modules.restrictFunctor (pullback.snd j k)).map
-        (restrictionGraph k l g) := by
-    let F := Scheme.Modules.restrictFunctor k ⋙
-      Scheme.Modules.restrictFunctor (pullback.snd j k)
-    apply (cancel_mono (prodComparison F G M)).mp
-    apply prod.hom_ext
-    · simp only [Category.assoc, prodComparison_fst]
-      change (Scheme.Modules.restrictFunctor (pullback.fst j k)).map
-          (restrictionGraph j i f) ≫ (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j
-            k).hom.app (G ⨯ M) ≫
-          (Scheme.Modules.restrictFunctor (pullback.snd j k)).map
-            ((Scheme.Modules.restrictFunctor k).map prod.fst) = _
-      have hn := (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.naturality
-        (show G ⨯ M ⟶ G from prod.fst)
-      dsimp only [Functor.comp_map] at hn
-      dsimp only [F, Functor.comp_map]
-      rw [← hn, ← Category.assoc, ← Functor.map_comp, restrictionGraph_fst]
-      rw [← Functor.map_comp, restrictionGraph_fst]
-      exact hG
-    · simp only [Category.assoc, prodComparison_snd]
-      change (Scheme.Modules.restrictFunctor (pullback.fst j k)).map
-          (restrictionGraph j i f) ≫ (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j
-            k).hom.app (G ⨯ M) ≫
-          (Scheme.Modules.restrictFunctor (pullback.snd j k)).map
-            ((Scheme.Modules.restrictFunctor k).map prod.snd) = _
-      have hn := (AlgebraicGeometry.Scheme.Modules.overlapRestrictIso j k).hom.naturality
-        (show G ⨯ M ⟶ M from prod.snd)
-      dsimp only [Functor.comp_map] at hn
-      dsimp only [F, Functor.comp_map]
-      rw [← hn, ← Category.assoc, ← Functor.map_comp, restrictionGraph_snd]
-      rw [← Functor.map_comp, restrictionGraph_snd]
-      exact hM
-  obtain ⟨N, h, _, eU, eV, hU, hV⟩ := AlgebraicGeometry.Scheme.Modules.exists_glued_subobject j k
-    (restrictionGraph j i f) (restrictionGraph k l g) e hc
-  refine ⟨N, h ≫ prod.snd, eU, eV, ?_, ?_⟩
-  · rw [Functor.map_comp, hU, Category.assoc, restrictionGraph_snd]
-  · rw [Functor.map_comp, hV, Category.assoc, restrictionGraph_snd]
+attribute [local instance] reassemblyStandard
 
 /-- A compatible pair of actual chart sections, with transition T^n, is
 realized by a genuine global map from a finite locally free rank-one sheaf.
@@ -290,149 +141,6 @@ theorem exists_vectorBundle_map_of_compatible_chart_maps
     · exact finiteLocallyFree_of_iso eV.symm
     · exact finiteLocallyFree_of_iso eU.symm
 
-
-/-- A section on the whole scheme, with all of its actual restrictions. -/
-def moduleTopSection {X : Scheme.{u}} (M : X.Modules) (s : Γ(M, ⊤)) : M.sections :=
-  PresheafOfModules.sectionsMk (fun U =>
-    (M.presheaf.map (homOfLE (show U.unop ≤ ⊤ from le_top)).op).hom s) (by
-      intro U V f
-      change (M.presheaf.map f).hom
-        ((M.presheaf.map (homOfLE (show U.unop ≤ ⊤ from le_top)).op).hom s) = _
-      rw [← AddCommGrpCat.comp_apply, ← Functor.map_comp]
-      rfl)
-
-/-- The actual map from the unit module determined by a global section. -/
-def unitMapOfTopSection {X : Scheme.{u}} (M : X.Modules) (s : Γ(M, ⊤)) :
-    (SheafOfModules.unit X.ringCatSheaf) ⟶ M :=
-  M.unitHomEquiv.symm (moduleTopSection M s)
-
-/-- The unit map acts by the original scalar action on restricted sections. -/
-theorem unitMapOfTopSection_app {X : Scheme.{u}} (M : X.Modules) (s : Γ(M, ⊤))
-    (U : X.Opens) (r : Γ(X, U)) :
-    Scheme.Modules.Hom.app (unitMapOfTopSection M s) U r =
-      r • (M.presheaf.map (homOfLE (show U ≤ ⊤ from le_top)).op).hom s := rfl
-
-/-- Maps from the actual unit sheaf are determined by their original global section. -/
-theorem unit_hom_ext_top {X : Scheme.{u}} {M : X.Modules}
-    {f g : (SheafOfModules.unit X.ringCatSheaf) ⟶ M}
-    (h : Scheme.Modules.Hom.app f ⊤ (1 : Γ(X, ⊤)) =
-      Scheme.Modules.Hom.app g ⊤ (1 : Γ(X, ⊤))) : f = g := by
-  apply M.unitHomEquiv.injective
-  apply PresheafOfModules.sections_ext
-  intro U
-  have hf := PresheafOfModules.sections_property (M.unitHomEquiv f)
-    (homOfLE (show U.unop ≤ ⊤ from le_top)).op
-  have hg := PresheafOfModules.sections_property (M.unitHomEquiv g)
-    (homOfLE (show U.unop ≤ ⊤ from le_top)).op
-  rw [← hf, ← hg]
-  exact congrArg (fun x => (M.presheaf.map (homOfLE le_top).op).hom x) h
-
-/-- Scalar multiplication of a section is literal precomposition with the
-original structure-module scalar map. -/
-theorem unitMapOfTopSection_smul {X : Scheme.{u}} (M : X.Modules)
-    (r : Γ(X, ⊤)) (s : Γ(M, ⊤)) :
-    unitMapOfTopSection M (r • s) = unitMul X r ≫ unitMapOfTopSection M s := by
-  apply unit_hom_ext_top
-  change Scheme.Modules.Hom.app (unitMapOfTopSection M (r • s)) ⊤ (1 : Γ(X, ⊤)) =
-    Scheme.Modules.Hom.app (unitMapOfTopSection M s) ⊤
-      (Scheme.Modules.Hom.app (unitMul X r) ⊤ (1 : Γ(X, ⊤)))
-  simp [unitMapOfTopSection_app, unitMul_app]
-
-/-- The original restriction of a global module section to the image of an open immersion. -/
-def restrictedTopSection {X Y : Scheme.{u}} (j : X ⟶ Y) [IsOpenImmersion j]
-    (M : Y.Modules) (s : Γ(M, ⊤)) : Γ(M.restrict j, ⊤) :=
-  (M.presheaf.map (homOfLE (show j ''ᵁ ⊤ ≤ ⊤ from le_top)).op).hom s
-
-/-- The original unit-restriction comparison carries the section map to the
-map defined by its actual restricted global section. -/
-theorem unitMapOfTopSection_restrict {X Y : Scheme.{u}} (j : X ⟶ Y)
-    [IsOpenImmersion j] (M : Y.Modules) (s : Γ(M, ⊤)) :
-    (Scheme.Modules.restrictUnitIso j).inv ≫
-        (Scheme.Modules.restrictFunctor j).map (unitMapOfTopSection M s) =
-      unitMapOfTopSection (M.restrict j) (restrictedTopSection j M s) := by
-  apply unit_hom_ext_top
-  change Scheme.Modules.Hom.app (unitMapOfTopSection M s) (j ''ᵁ ⊤)
-      ((j.appIso ⊤).inv.hom (1 : Γ(X, ⊤))) =
-    Scheme.Modules.Hom.app (unitMapOfTopSection (M.restrict j)
-      (restrictedTopSection j M s)) ⊤ (1 : Γ(X, ⊤))
-  simp [unitMapOfTopSection_app, restrictedTopSection]
-
-/-- Every section on a genuine principal affine open has a numerator after
-multiplication by a power of the original coordinate-ring element. -/
-theorem affine_section_denominator (R : CommRingCat.{u}) (M : (Spec R).Modules)
-    [M.IsQuasicoherent] (r : R) (s : Γ(M, PrimeSpectrum.basicOpen r)) :
-    ∃ (n : ℕ) (t : Γ(M, ⊤)),
-      M.presheaf.map (PrimeSpectrum.basicOpen r).leTop.op t = r ^ n • s := by
-  have h : IsLocalizedModule.Away r
-      ((modulesSpecToSheaf.obj M).obj.map (PrimeSpectrum.basicOpen r).leTop.op).hom :=
-    (isIso_fromTildeΓ_iff_isLocalizing M).mp inferInstance r
-  obtain ⟨n, t, ht⟩ := h.surj _ _ s
-  exact ⟨n, t, ht.symm⟩
-
-/-- Recover an arbitrary unit-sheaf map from its actual value at the global unit section. -/
-theorem unitMapOfTopSection_of_map {X : Scheme.{u}} {M : X.Modules}
-    (f : (SheafOfModules.unit X.ringCatSheaf) ⟶ M) :
-    unitMapOfTopSection M (Scheme.Modules.Hom.app f ⊤ (1 : Γ(X, ⊤))) = f := by
-  apply unit_hom_ext_top
-  simp [unitMapOfTopSection_app]
-
-/-- The actual affine coordinate action agrees with the action after restricting
-along an arbitrary open immersion, through the original section comparison. -/
-theorem affine_scalar_restrict_section {R : CommRingCat.{u}} {X : Scheme.{u}}
-    (j : X ⟶ Spec R) [IsOpenImmersion j] (M : (Spec R).Modules)
-    (r : R) (s : Γ(M.restrict j, ⊤)) :
-    (M.restrictAppIso j ⊤).hom (j.appTop.hom ((Scheme.ΓSpecIso R).inv.hom r) • s) =
-      r • (M.restrictAppIso j ⊤).hom s := by
-  rw [Scheme.Modules.smul_restrictAppIso_hom_apply, Scheme.Modules.smul_Spec_def]
-  have he : j.appTop ≫ (j.appIso ⊤).inv =
-      (Spec R).presheaf.map (homOfLE (show j ''ᵁ ⊤ ≤ ⊤ from le_top)).op := by
-    simpa [Scheme.Hom.appTop, Scheme.Hom.appLE] using
-      j.appLE_appIso_inv (U := ⊤) (V := ⊤) (by simp)
-  exact congrArg (fun c => c • (M.restrictAppIso j ⊤).hom s)
-    (congrArg (fun f => CommRingCat.Hom.hom f ((Scheme.ΓSpecIso R).inv.hom r)) he)
-
-/-- An actual unit-sheaf map on a principal affine open extends after a power
-of the original coordinate. The equation retains the original restriction
-unit, scalar map, and local morphism. -/
-theorem exists_unit_map_denominator {R : CommRingCat.{u}} {X : Scheme.{u}}
-    (j : X ⟶ Spec R) [IsOpenImmersion j] (M : (Spec R).Modules) [M.IsQuasicoherent]
-    (r : R) (himage : j ''ᵁ ⊤ = PrimeSpectrum.basicOpen r)
-    (f : (SheafOfModules.unit X.ringCatSheaf) ⟶ M.restrict j) :
-    ∃ (n : ℕ) (g : (SheafOfModules.unit (Spec R).ringCatSheaf) ⟶ M),
-      (Scheme.Modules.restrictUnitIso j).inv ≫ (Scheme.Modules.restrictFunctor j).map g =
-        unitMul X (j.appTop.hom ((Scheme.ΓSpecIso R).inv.hom (r ^ n))) ≫ f := by
-  let N := (modulesSpecToSheaf.obj M).obj
-  let e : N.obj (op (j ''ᵁ ⊤)) ≅ N.obj (op (PrimeSpectrum.basicOpen r)) :=
-    (N.mapIso (eqToIso himage).op).symm
-  let x : Γ(M.restrict j, ⊤) := Scheme.Modules.Hom.app f ⊤ (1 : Γ(X, ⊤))
-  obtain ⟨n, t, ht⟩ := affine_section_denominator R M r
-    (e.hom ((M.restrictAppIso j ⊤).hom x))
-  have he : N.map (homOfLE (show j ''ᵁ ⊤ ≤ ⊤ from le_top)).op ≫ e.hom =
-      N.map (PrimeSpectrum.basicOpen r).leTop.op := by
-    dsimp only [e, Iso.symm_hom, Functor.mapIso_inv]
-    rw [← N.map_comp]
-    congr 1
-  have hsec : restrictedTopSection j M t =
-      j.appTop.hom ((Scheme.ΓSpecIso R).inv.hom (r ^ n)) • x := by
-    apply (ConcreteCategory.bijective_of_isIso (M.restrictAppIso j ⊤).hom).1
-    rw [affine_scalar_restrict_section]
-    apply e.toLinearEquiv.injective
-    change e.hom.hom (M.presheaf.map
-        (homOfLE (show j ''ᵁ ⊤ ≤ ⊤ from le_top)).op t) =
-      e.hom.hom (r ^ n • (M.restrictAppIso j ⊤).hom x)
-    rw [_root_.map_smul]
-    have he' := congrArg (fun q => (q : N.obj (op ⊤) ⟶
-      N.obj (op (PrimeSpectrum.basicOpen r))) t) he
-    change e.hom.hom (M.presheaf.map
-      (homOfLE (show j ''ᵁ ⊤ ≤ ⊤ from le_top)).op t) =
-        M.presheaf.map (PrimeSpectrum.basicOpen r).leTop.op t at he'
-    rw [he']
-    exact ht
-  refine ⟨n, unitMapOfTopSection M t, ?_⟩
-  rw [unitMapOfTopSection_restrict, hsec, unitMapOfTopSection_smul]
-  change _ ≫ unitMapOfTopSection (M.restrict j)
-      (Scheme.Modules.Hom.app f ⊤ (1 : Γ(X, ⊤))) = _
-  rw [unitMapOfTopSection_of_map]
 
 /-- Every actual map from the positive-chart unit into a quasicoherent sheaf
 extends from a genuine global vector bundle, preserving that exact chart map. -/
@@ -518,41 +226,6 @@ theorem exists_vectorBundle_lift_minus (R : CommRingCat.{u})
   obtain ⟨V, h, hV, _, eV, _, hV'⟩ :=
     exists_vectorBundle_map_of_compatible_chart_maps R M n f g hfg
   exact ⟨V, h, hV, eV, hV'⟩
-
-/-- A sheaf epimorphism onto a finite quasicoherent affine target admits
-finitely many actual unit-sheaf lifts jointly generating that target. -/
-theorem exists_finite_free_lift_of_affine_epi (R : CommRingCat.{u})
-    {M H : (Spec R).Modules} [M.IsQuasicoherent] [H.IsQuasicoherent]
-    (q : M ⟶ H) [Epi q] [Module.Finite R (moduleSpecΓFunctor.obj H)] :
-    ∃ I : Type u, Finite I ∧
-      ∃ l : SheafOfModules.free (R := (Spec R).ringCatSheaf) I ⟶ M, Epi (l ≫ q) := by
-  obtain ⟨G, hG⟩ :=
-    AlgebraicGeometry.Scheme.Modules.QuasiCoherent.affineFiniteSheaf_exists_generatingSections R
-    (M := H) ⟨inferInstance, inferInstance⟩
-  have : G.IsFiniteType := hG
-  have : Epi (moduleSpecΓFunctor.map q) := epi_globalSections_of_quasicoherent R q
-  have hsurj := (ModuleCat.epi_iff_surjective (moduleSpecΓFunctor.map q)).mp inferInstance
-  have hlift (i : G.I) : ∃ t : Γ(M, ⊤),
-      Scheme.Modules.Hom.app q ⊤ t = Scheme.Modules.Hom.app
-        (SheafOfModules.ιFree i ≫ G.π) ⊤ (1 : Γ(Spec R, ⊤)) := by
-    exact hsurj (Scheme.Modules.Hom.app
-      (SheafOfModules.ιFree i ≫ G.π) ⊤ (1 : Γ(Spec R, ⊤)))
-  choose t ht using hlift
-  let u (i : G.I) := unitMapOfTopSection M (t i)
-  have hu (i : G.I) : u i ≫ q = SheafOfModules.ιFree i ≫ G.π := by
-    apply unit_hom_ext_top
-    change Scheme.Modules.Hom.app q ⊤
-      (Scheme.Modules.Hom.app (unitMapOfTopSection M (t i)) ⊤ (1 : Γ(Spec R, ⊤))) = _
-    have hx : Scheme.Modules.Hom.app (unitMapOfTopSection M (t i)) ⊤
-        (1 : Γ(Spec R, ⊤)) = t i := by simp [unitMapOfTopSection_app]
-    rw [hx]
-    exact ht i
-  let l : SheafOfModules.free (R := (Spec R).ringCatSheaf) G.I ⟶ M := Sigma.desc u
-  have he : l ≫ q = G.π := by
-    apply Sigma.hom_ext
-    intro i
-    simpa [l, SheafOfModules.ιFree] using hu i
-  exact ⟨G.I, inferInstance, l, by rw [he]; exact G.epi⟩
 
 /-- A quasicoherent epimorphism onto a target finite on the two original
 charts admits a finite locally free global source. The source maps into M,
@@ -641,35 +314,6 @@ theorem exists_vectorBundle_lift_of_finite_twoChart_epi
     · exact hAepi
   exact (isZero_cokernel_of_epi ((Scheme.Modules.restrictFunctor (c b)).map (f ≫ q))).of_iso
     (PreservesCokernel.iso (Scheme.Modules.restrictFunctor (c b)) (f ≫ q))
-
-/-- An actual morphism into the cycle sheaf gives the corresponding original
-single-complex chain map, without a projectivity hypothesis. -/
-def singleCycleLift {X : Scheme.{u}} (K : CochainComplex X.Modules ℤ) (b : ℤ)
-    (V : X.Modules) (v : V ⟶ K.cycles b) :
-    (CochainComplex.singleFunctor X.Modules b).obj V ⟶ K :=
-  HomologicalComplex.mkHomFromSingle (v ≫ K.iCycles b) (by intro j hj; simp)
-
-/-- The original homology map of the cycle lift is its specified map to homology. -/
-theorem singleCycleLift_homology {X : Scheme.{u}} (K : CochainComplex X.Modules ℤ) (b : ℤ)
-    (V : X.Modules) (v : V ⟶ K.cycles b) :
-    (HomologicalComplex.singleObjHomologySelfIso (.up ℤ) b V).inv ≫
-      HomologicalComplex.homologyMap (singleCycleLift K b V v) b = v ≫ K.homologyπ b := by
-  have hc : (HomologicalComplex.singleObjCyclesSelfIso (.up ℤ) b V).inv ≫
-      HomologicalComplex.cyclesMap (singleCycleLift K b V v) b = v := by
-    rw [← cancel_mono (K.iCycles b), Category.assoc, HomologicalComplex.cyclesMap_i]
-    dsimp only [singleCycleLift]
-    rw [HomologicalComplex.mkHomFromSingle_f, ← Category.assoc,
-      HomologicalComplex.singleObjCyclesSelfIso_inv_iCycles]
-    simp
-  rw [← HomologicalComplex.singleObjCyclesSelfIso_inv_homologyπ, Category.assoc,
-    HomologicalComplex.homologyπ_naturality, ← Category.assoc, hc]
-
-private theorem restriction_isLE {R : CommRingCat.{u}} {X : Scheme.{u}}
-    (j : Spec R ⟶ X) [IsOpenImmersion j] (K : CochainComplex X.Modules ℤ) (b : ℤ) [K.IsLE b] :
-    ((restrict j).obj K).IsLE b := by
-  rw [CochainComplex.isLE_iff]
-  intro i hi
-  exact (K.exactAt_of_isLE b i hi).map (Scheme.Modules.restrictFunctor j)
 
 /-- Actual top cycles of a termwise quasicoherent complex admit a finite
 locally free attachment onto top homology over every base ring. The given

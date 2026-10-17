@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.SmallModel
+
 public import Aglib.AlgebraicGeometry.Modules.Exact
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Basic
 public import Aglib.CategoryTheory.ExactCategory.Basic
@@ -43,27 +45,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace AlgebraicGeometry.Scheme.Modules
-
-/-- The actual vector-bundle category is essentially small in `u + 1`. -/
-instance vectorBundle_essentiallySmall (X : Scheme.{u}) :
-    EssentiallySmall.{u + 1} (FiniteLocallyFree X) := by
-  infer_instance
-
-/-- A genuine small category equivalent to finite locally free sheaves. -/
-abbrev SmallVectorBundle (X : Scheme.{u}) : Type (u + 1) :=
-  SmallModel.{u + 1} (FiniteLocallyFree X)
-
-/-- The exact structure transported to the actual categorical small model. -/
-abbrev smallVectorBundleExactStructure (X : Scheme.{u}) :
-    ExactStructure (SmallVectorBundle X) :=
-  CategoryTheory.ExactCategory.ExactStructure.smallModel.{u + 1} (vectorBundleExactStructure X)
-
-/-- The exact realization of small-model objects as actual vector bundles. -/
-def smallVectorBundleToSheaves (X : Scheme.{u}) :
-    ExactFunctor (smallVectorBundleExactStructure X) (sheafExactStructure X) :=
-  (CategoryTheory.ExactCategory.ExactStructure.smallModelToOriginal.{u + 1}
-    (vectorBundleExactStructure X)).comp
-    (vectorBundleExactInclusion X)
 
 /-- Genuine scheme K-theory, formed from finite locally free sheaves and their
 ambient short exact sequences in the explicitly enlarged small universe. -/

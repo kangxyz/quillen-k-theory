@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 
-import Quillen.Algebra.Matrix.BlockWhitehead
+import Quillen.Aglib.LinearAlgebra.Matrix.BlockWhitehead
 
 /-! Whitehead factorizations must apply to arbitrary, not just elementary, units. -/
 

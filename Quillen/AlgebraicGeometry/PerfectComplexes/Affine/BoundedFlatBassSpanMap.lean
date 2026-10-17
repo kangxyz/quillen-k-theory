@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.Algebra.Polynomial.Laurent.BaseChange
-public import Quillen.AlgebraicGeometry.Scheme.Affine.PolynomialLaurentFlat
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Flat
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Spectrum.BoundedFlatPullback
 public import Quillen.Topology.Prespectrum.PushoutHomotopySquare
 

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineBaseChange
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Affine.QuasiCoherent
 public import Mathlib.Data.ZMod.Basic
 public import Mathlib.AlgebraicGeometry.Pullbacks
 
@@ -39,7 +39,7 @@ open scoped TensorProduct ChangeOfRings in
 include h in
 /-- The scalar map sends every pure tensor through the original coefficient map. -/
 theorem original_pure_tensor (M : ModuleCat A) (s : S) (m : M) :
-    (ModuleCat.scalarBaseChangeMap R S A B).app M (s ⊗ₜ[R, algebraMap R S] m) =
+    (ModuleCat.scalarBaseChangeNatTrans R S A B).app M (s ⊗ₜ[R, algebraMap R S] m) =
       algebraMap S B s ⊗ₜ[A, algebraMap A B] m := by
   have := isPushout_of_affineCartesian R S A B h
   exact ModuleCat.scalarBaseChangeMap_tmul R S A B M s m

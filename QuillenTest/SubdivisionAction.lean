@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.SubdivisionAction
+public import Quillen.Aglib.CategoryTheory.Subdivision.Action
 public import Quillen.CategoryTheory.GroupCompletion.Functoriality
 public import Mathlib.CategoryTheory.Monoidal.Discrete
 public import Mathlib.Algebra.Group.Nat.Defs

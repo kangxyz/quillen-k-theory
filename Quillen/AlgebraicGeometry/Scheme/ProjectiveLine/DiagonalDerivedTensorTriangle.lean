@@ -8,7 +8,7 @@ module
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.QuotientTensor
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalSupportedTensorTriangle
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalClosedImmersion
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineDerivedPushforward
+public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Pushforward.Affine
 
 /-!
 # The actual derived diagonal term in the tensor triangle

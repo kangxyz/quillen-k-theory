@@ -5,9 +5,12 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Stabilization
+
+
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenWeakImage
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.PrincipalProjectiveExtension
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.PrincipalProjectiveExtension
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 
 /-! # Actual stabilization density in the principal-open witnessed image
@@ -36,21 +39,6 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes.OpenWeakImage
-
-/-- The actual original shifted sum, as a locally perfect complex. -/
-def shiftSum {X : Scheme.{u}} (P : Perfect X) : Perfect X :=
-  ⟨P.obj ⊞ P.obj⟦(1 : ℤ)⟧,
-    (abelianExactStructure _).prop_biprod _ P.property (locallyPerfect_shift P.property 1)⟩
-
-/-- The original block-diagonal map, with the literal shift of the original map. -/
-def shiftSumMap {X : Scheme.{u}} {P Q : Perfect X} (f : P ⟶ Q) : shiftSum P ⟶ shiftSum Q :=
-  ObjectProperty.homMk (biprod.map f.hom (f.hom⟦(1 : ℤ)⟧'))
-
-/-- Actual weak strict comparisons remain weak after the original stabilization. -/
-theorem shiftSumMap_weak {X : Scheme.{u}} {P Q : Perfect X} (f : P ⟶ Q)
-    (hf : (perfectWaldhausen X).weq f) : (perfectWaldhausen X).weq (shiftSumMap f) := by
-  let : QuasiIso f.hom := hf
-  exact Waldhausen.quasiIso_biprod_map f.hom (f.hom⟦(1 : ℤ)⟧')
 
 /-- Stabilized strict targets belong to the actual witnessed restriction image,
 without a geometric map-factorization assumption. -/

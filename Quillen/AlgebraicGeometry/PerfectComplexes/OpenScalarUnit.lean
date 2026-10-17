@@ -5,8 +5,11 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.ScalarRestriction
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.PerfectComplexes.GlobalScalar
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.GlobalScalar
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Spectrum.GlobalUnit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenConeFiberLoop
 
@@ -31,31 +34,8 @@ open Quillen.Waldhausen.Fibration
 universe u
 namespace Quillen.PerfectComplexes
 
-/-- A scalar which is a unit gives precisely the existing original unit automorphism. -/
-theorem complexGlobalScalar_unit (X : Scheme.{u}) (r : (Γ(X, ⊤))ˣ)
-    (K : CochainComplex X.Modules ℤ) :
-    (complexGlobalScalar X (↑r)).app K = (complexGlobalUnitIso X r).hom.app K := by
-  ext n : 1
-  exact (complexGlobalUnitIso_original_terms X r K n).symm
-
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
   (r : Γ(X, ⊤)) (q : (Γ(U, ⊤))ˣ) (hq : j.appTop r = ↑q)
-
-include hq in
-/-- Restriction of the original scalar is the exact preexisting unit automorphism. -/
-theorem restrict_map_complexGlobalScalar_unit (K : CochainComplex X.Modules ℤ) :
-    (restrict j).map ((complexGlobalScalar X r).app K) =
-      (complexGlobalUnitIso U q).hom.app ((restrict j).obj K) := by
-  rw [restrict_map_complexGlobalScalar, hq, complexGlobalScalar_unit]
-
-include hq in
-/-- The original endomorphism is genuinely weak after restriction to the specified open. -/
-theorem perfectGlobalScalar_openWeak (K : Perfect X) :
-    (perfectOpenWeakWaldhausen j).weq ((perfectGlobalScalar X r).app K) := by
-  rw [perfectOpenWeakWaldhausen_weq_iff]
-  change QuasiIso ((restrict j).map ((complexGlobalScalar X r).app K.obj))
-  rw [restrict_map_complexGlobalScalar, hq, complexGlobalScalar_unit]
-  infer_instance
 
 /-- The actual scalar cylinder is the original change-of-weak-equivalences transformation track.
 -/

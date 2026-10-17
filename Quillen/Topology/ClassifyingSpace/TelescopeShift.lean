@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.CategoryTheory.Grothendieck.TelescopeShift
+public import Quillen.Aglib.CategoryTheory.Grothendieck.TelescopeShift
 public import Quillen.Topology.ClassifyingSpace.Equivalence
 
 /-!

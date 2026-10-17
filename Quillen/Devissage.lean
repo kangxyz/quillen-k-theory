@@ -10,17 +10,11 @@ module
 public import Quillen.Devissage.CentralEndomorphism
 public import Quillen.Devissage.CommaLayers
 public import Quillen.Devissage.Filtration
-public import Quillen.Devissage.FiltrationFunctor
-public import Quillen.Devissage.FiltrationRefinement
-public import Quillen.Devissage.FiltrationSubcategory
 public import Quillen.Devissage.FiniteCentralFamily
 public import Quillen.Devissage.FullyFaithful
 public import Quillen.Devissage.Grothendieck
 public import Quillen.Devissage.Homotopical
-public import Quillen.Devissage.KernelIteration
 public import Quillen.Devissage.LayerContraction
-public import Quillen.Devissage.Layers
-public import Quillen.Devissage.ReflectorFiltration
 public import Quillen.Devissage.Setup
 public import Quillen.Devissage.SpanLayers
 

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Module.RightScalarExtension
+public import Quillen.Aglib.Algebra.Module.RightScalarExtension
 
 /-!
 # Arbitrarily universed balanced tensor consumers

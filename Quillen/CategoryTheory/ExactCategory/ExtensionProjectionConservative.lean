@@ -9,7 +9,7 @@ public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionFunctor
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionGeometry
 public import Quillen.CategoryTheory.QConstruction.Core
-public import Quillen.CategoryTheory.SubdivisionAction
+public import Quillen.Aglib.CategoryTheory.Subdivision.Action
 
 /-! # The original extension projection reflects isomorphisms -/
 @[expose] public section

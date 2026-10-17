@@ -8,6 +8,7 @@ module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.CategoryTheory.QConstruction.Abelian.Surjections
+public import Quillen.Aglib.CategoryTheory.Abelian.Bicartesian
 
 /-!
 # Cospan representatives for abelian Q-arrows
@@ -32,12 +33,6 @@ namespace Quillen
 attribute [local instance] Abelian.hasFiniteBiproducts
 variable {C : Type u} [Category.{v} C] [Abelian C]
 
-/-- An abelian pullback along an epimorphism is also a pushout. -/
-theorem isPushout_of_isPullback_epi {A B D E : C}
-    {f : A ⟶ B} {g : A ⟶ D} {i : B ⟶ E} {j : D ⟶ E}
-    (sq : IsPullback f g i j) [Epi j] : IsPushout f g i j := by
-  exact (isPullback_of_isPushout_mono sq.flip.op).unop.flip
-
 namespace Q
 
 /-- The actual admissible pullback span of a mono-epi cospan. -/
@@ -57,25 +52,6 @@ theorem mkHom_cospanSpan {X Y U : C} (i : X ⟶ U) (p : Y ⟶ U)
   · exact Iso.refl (pullback i p)
   · simp [cospanSpan, Span.comp]
   · simp [cospanSpan, Span.comp]
-
-/-- A map out of the codomain of a mono-epi cospan descends uniquely from
-compatible maps on its legs. -/
-def cospanDesc {X Y U V : C} (i : X ⟶ U) (p : Y ⟶ U) [Epi p]
-    (a : X ⟶ V) (b : Y ⟶ V)
-    (w : pullback.fst i p ≫ a = pullback.snd i p ≫ b) : U ⟶ V :=
-  (isPushout_of_isPullback_epi (IsPullback.of_hasPullback i p)).desc a b w
-
-@[reassoc (attr := simp)]
-theorem cospanDesc_left {X Y U V : C} (i : X ⟶ U) (p : Y ⟶ U) [Epi p]
-    (a : X ⟶ V) (b : Y ⟶ V)
-    (w : pullback.fst i p ≫ a = pullback.snd i p ≫ b) :
-    i ≫ cospanDesc i p a b w = a := by simp [cospanDesc]
-
-@[reassoc (attr := simp)]
-theorem cospanDesc_right {X Y U V : C} (i : X ⟶ U) (p : Y ⟶ U) [Epi p]
-    (a : X ⟶ V) (b : Y ⟶ V)
-    (w : pullback.fst i p ≫ a = pullback.snd i p ≫ b) :
-    p ≫ cospanDesc i p a b w = b := by simp [cospanDesc]
 
 /-- Equality of cospan arrows supplies a compatible codomain isomorphism. -/
 theorem exists_cospanIso_of_eq {X Y U V : C}

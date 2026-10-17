@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 public import Quillen.KTheory.Plus.ProjectiveCompletionRetraction
 public import Quillen.CategoryTheory.GroupCompletion.TelescopeUnit
-public import Quillen.CategoryTheory.Grothendieck.EndofunctorTelescopeCoconeNaturality
+public import Quillen.Aglib.CategoryTheory.Grothendieck.EndofunctorTelescopeCoconeNaturality
 
 /-! # The original telescope unit and the original completion map -/
 @[expose] public section

@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveInflationAction
-public import Quillen.CategoryTheory.Limits.CoproductCokernel
+public import Quillen.Aglib.CategoryTheory.Limits.Shapes.CoproductCokernel
 
 /-!
 # Direct-sum invariance of extension quotients

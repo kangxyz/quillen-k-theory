@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.AffineDerivedPushforward
+public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Pushforward.Affine
 
 /-! Actual resolution augmentations and the original degree-zero derived unit. -/
 @[expose] public section

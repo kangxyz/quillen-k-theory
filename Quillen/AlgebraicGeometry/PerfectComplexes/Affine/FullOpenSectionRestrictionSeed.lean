@@ -7,9 +7,9 @@ module
 
 public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionRestrictionDiagram
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionUnit
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionFullOpenUnit
-public import Quillen.CategoryTheory.Functor.IdentityAutomorphismEvaluation
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.FullOpenSectionUnit
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SectionFullOpenUnit
+public import Quillen.Aglib.CategoryTheory.Functor.IdentityAutomorphismEvaluation
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionOpenBassSeed
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FullOpenSectionBassSeed
 

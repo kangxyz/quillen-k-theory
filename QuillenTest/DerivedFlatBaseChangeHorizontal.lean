@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.DerivedFlatBaseChangeLocalization
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Derived.Localization
 
 /-! # Original-map consumers of horizontal derived flat base change -/
 

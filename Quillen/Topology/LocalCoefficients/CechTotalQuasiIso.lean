@@ -7,7 +7,7 @@ module
 
 public import Quillen.Topology.LocalCoefficients.CechSplitRows
 public import Quillen.Topology.LocalCoefficients.SmallChainQuasiIso
-public import Quillen.Algebra.Homology.TotalRowContraction
+public import Quillen.Aglib.Algebra.Homology.TotalComplex.RowContraction
 
 /-!
 # The actual twisted Čech total augmentation is a quasi-isomorphism

@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.CounitCriterion
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Complex.Affine.CounitCriterion
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Basic

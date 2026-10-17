@@ -5,8 +5,8 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionFullOpenCoefficient
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionFullOpenUnit
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SectionFullOpenCoefficient
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SectionFullOpenUnit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionFullOpenZero
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionSpectrumNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SectionLaurentUnit

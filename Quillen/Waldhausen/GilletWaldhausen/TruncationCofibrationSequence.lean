@@ -6,9 +6,12 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Waldhausen.ComplexSubcategory
+
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.TruncationTransformations
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Aglib.CategoryTheory.ExactCategory.Functor
-public import Quillen.Waldhausen.GilletWaldhausen.QuotientExact
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.QuotientExact
 public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 
 /-!
@@ -39,25 +42,6 @@ variable {A : Type u} [Category.{v} A] [Abelian A]
 variable (P : ObjectProperty A) [P.ContainsZero] [P.IsClosedUnderIsomorphisms]
   [(abelianExactStructure A).IsKernelClosed P]
 
-/-- The canonical inclusion, as an actual natural transformation. -/
-def boundedAcyclicTruncationInclusion (n : ℤ) :
-    boundedAcyclicTruncLEFunctor P n ⟶ 𝟭 (boundedAcyclic P).FullSubcategory where
-  app K := ((acyclicTruncationSequenceFunctor P n).obj K).f
-  naturality _ _ f := ((acyclicTruncationSequenceFunctor P n).map f).comm₁₂
-
-/-- The canonical quotient projection, as an actual natural transformation. -/
-def boundedAcyclicTruncationProjection (n : ℤ) :
-    𝟭 (boundedAcyclic P).FullSubcategory ⟶ boundedAcyclicQuotientFunctor P n where
-  app K := ((acyclicTruncationSequenceFunctor P n).obj K).g
-  naturality _ _ f := ((acyclicTruncationSequenceFunctor P n).map f).comm₂₃
-
-@[reassoc]
-theorem boundedAcyclicTruncation_comp_zero (n : ℤ) :
-    boundedAcyclicTruncationInclusion P n ≫ boundedAcyclicTruncationProjection P n = 0 := by
-  apply NatTrans.ext
-  funext K
-  exact ((acyclicTruncationSequenceFunctor P n).obj K).zero
-
 variable [(abelianExactStructure A).IsExtensionClosed P]
 
 /-- The actual truncation sequence satisfies the ordinary relative-cofibration
@@ -81,16 +65,6 @@ theorem boundedAcyclicTruncation_isCofibrationSequence (n : ℤ) :
     (boundedAcyclicTruncLEExactFunctor P n) (CategoryTheory.ExactCategory.ExactFunctor.id
       (boundedAcyclicExactStructure P))
     (boundedAcyclicQuotientExactFunctor P n) rfl rfl rfl
-
-omit [P.ContainsZero] [P.IsClosedUnderIsomorphisms]
-    [(abelianExactStructure A).IsKernelClosed P]
-    [(abelianExactStructure A).IsExtensionClosed P] in
-/-- Every actual map of acyclic complexes is a genuine quasi-isomorphism. -/
-theorem boundedAcyclic_map_quasiIso {K L : (boundedAcyclic P).FullSubcategory} (f : K ⟶ L) :
-    QuasiIso f.hom := by
-  rw [quasiIso_iff]
-  intro i
-  exact (quasiIsoAt_iff_exactAt' f.hom i (L.property.2.2 i)).2 (K.property.2.2 i)
 
 omit [(abelianExactStructure A).IsKernelClosed P] in
 /-- Exactness also holds with genuine quasi-isomorphisms, since these are

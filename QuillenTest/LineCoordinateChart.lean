@@ -9,7 +9,7 @@ public import Aglib.AlgebraicGeometry.Modules.Complex.TensorToUnit
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineCoordinateChart
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.TensorToUnitCharts
 public import QuillenTest.LineCoordinateTensor
 
 /-! The original scalar chart comparison retains arbitrary coefficient complexes. -/

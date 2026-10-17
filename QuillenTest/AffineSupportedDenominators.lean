@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FinitePrincipalRoofs
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.FinitePrincipalRoofs
 public import Mathlib.Data.ZMod.Basic
 
 /-! Original-map consumers for finite principal supported denominators and roofs. -/

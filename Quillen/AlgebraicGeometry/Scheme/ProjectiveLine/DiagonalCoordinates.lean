@@ -5,9 +5,10 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.AffinePlane
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalIncidence
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TautologicalPullback
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.PullbackSquare
+public import Quillen.Aglib.AlgebraicGeometry.Modules.RankOne.PullbackSquare
 
 /-! # Four original affine coordinates of diagonal incidence
 
@@ -30,15 +31,6 @@ attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open AlgebraicGeometry.Scheme.Modules PolynomialLaurent
-/-- The original affine-line fiber square over the base ring. -/
-def polynomialSquare (R : CommRingCat.{u}) : Scheme.{u} :=
-  pullback (polynomialProjection R) (polynomialProjection R)
-/-- The original first polynomial projection. -/
-def polynomialFirst (R : CommRingCat.{u}) : polynomialSquare R ⟶ Spec (.of (Polynomial R)) :=
-  pullback.fst _ _
-/-- The original second polynomial projection. -/
-def polynomialSecond (R : CommRingCat.{u}) : polynomialSquare R ⟶ Spec (.of (Polynomial R)) :=
-  pullback.snd _ _
 variable (R : CommRingCat.{u})
     (j k : Spec (.of (Polynomial R)) ⟶ twoChartLine R)
     (hj : j ≫ projection R = polynomialProjection R)
@@ -65,8 +57,8 @@ def rectangleLineIso
     (AlgebraicGeometry.Scheme.Modules.pullback (rectangleMap R j k hj hk)).obj
         ((AlgebraicGeometry.Scheme.Modules.pullback (relativeFirst R)).obj (tautologicalLine R)) ≅
       SheafOfModules.unit (polynomialSquare R).ringCatSheaf :=
-  (pullbackSquareIso (rectangleMap R j k hj hk) (relativeFirst R) (polynomialFirst R) j
-      (rectangleMap_first R j k hj hk)).app _ ≪≫
+  (pullbackSquareIso (polynomialFirst R) (rectangleMap R j k hj hk) j
+      (relativeFirst R) (rectangleMap_first R j k hj hk).symm).app _ ≪≫
     (AlgebraicGeometry.Scheme.Modules.pullback (polynomialFirst R)).mapIso e ≪≫
       pullbackUnitIso (polynomialFirst R)
 /-- The second original chart's quotient trivialization on the actual rectangle. -/
@@ -76,8 +68,8 @@ def rectangleQuotientIso
     (AlgebraicGeometry.Scheme.Modules.pullback (rectangleMap R j k hj hk)).obj
         ((AlgebraicGeometry.Scheme.Modules.pullback (relativeSecond R)).obj
           (tautologicalQuotientLine R)) ≅ SheafOfModules.unit (polynomialSquare R).ringCatSheaf :=
-  (pullbackSquareIso (rectangleMap R j k hj hk) (relativeSecond R) (polynomialSecond R) k
-      (rectangleMap_second R j k hj hk)).app _ ≪≫
+  (pullbackSquareIso (polynomialSecond R) (rectangleMap R j k hj hk) k
+      (relativeSecond R) (rectangleMap_second R j k hj hk).symm).app _ ≪≫
     (AlgebraicGeometry.Scheme.Modules.pullback (polynomialSecond R)).mapIso e ≪≫
       pullbackUnitIso (polynomialSecond R)
 /-- Actual rectangle transport retains a given original chart column. -/
@@ -123,11 +115,13 @@ theorem rectangleQuotient_row
       (AlgebraicGeometry.Scheme.Modules.pullback (rectangleMap R j k hj hk)).map
         (pullbackUnitSquareIso (relativeSecond R)).hom ≫
       (pullbackUnitSquareIso (rectangleMap R j k hj hk)).hom ≫ D := by
-  change _ ≫ (pullbackSquareIso (rectangleMap R j k hj hk) (relativeSecond R)
-      (polynomialSecond R) k (rectangleMap_second R j k hj hk)).hom.app _ ≫
+  change _ ≫ (pullbackSquareIso (polynomialSecond R) (rectangleMap R j k hj hk) k
+      (relativeSecond R) (rectangleMap_second R j k hj hk).symm).hom.app _ ≫
       (AlgebraicGeometry.Scheme.Modules.pullback (polynomialSecond R)).map e.hom ≫
         (pullbackUnitIso (polynomialSecond R)).hom = _
-  rw [pullbackSquareIso_map_from_unitSquare, he, Functor.map_comp, Category.assoc, hC]
+  rw [pullbackSquareIso_map_from_unitSquare (rectangleMap R j k hj hk) (relativeSecond R)
+    (polynomialSecond R) k (rectangleMap_second R j k hj hk), he, Functor.map_comp,
+    Category.assoc, hC]
   have h := congrArg (fun z => z ≫ D)
     (pullbackSquareIso_unitSquare (rectangleMap R j k hj hk) (relativeSecond R)
       (polynomialSecond R) k (rectangleMap_second R j k hj hk))
@@ -170,12 +164,6 @@ end AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 open AlgebraicGeometry.Scheme.Modules PolynomialLaurent
-/-- The actual first polynomial coordinate on the affine rectangle. -/
-def rectangleFirstCoordinate (R : CommRingCat.{u}) : Γ(polynomialSquare R, ⊤) :=
-  (polynomialFirst R).appTop.hom (polynomialCoordinate R)
-/-- The actual second polynomial coordinate on the affine rectangle. -/
-def rectangleSecondCoordinate (R : CommRingCat.{u}) : Γ(polynomialSquare R, ⊤) :=
-  (polynomialSecond R).appTop.hom (polynomialCoordinate R)
 /-- The literal incidence scalar on the plus-plus rectangle. -/
 theorem diagonalIncidence_plus_plus (R : CommRingCat.{u}) :
     (AlgebraicGeometry.Scheme.Modules.pullback

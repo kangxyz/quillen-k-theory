@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Aglib.CategoryTheory.ExactCategory.Basic
-public import Quillen.CategoryTheory.ExactCategory.SpecialFractions
+public import Quillen.Aglib.CategoryTheory.ExactCategory.SpecialFractions
 public import Quillen.KTheory.Map.CoherenceData
 public import Mathlib.CategoryTheory.Core
 

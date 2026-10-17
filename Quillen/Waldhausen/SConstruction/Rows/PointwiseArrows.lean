@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.CategoryTheory.ArrowDiagrams
+public import Quillen.Aglib.CategoryTheory.ArrowDiagrams
 public import Quillen.Waldhausen.SConstruction.Rows.Functoriality
 public import Quillen.Waldhausen.ArrowCategory.Structure
 public import Quillen.Waldhausen.ExtensionCategory.PostcomposeDetection

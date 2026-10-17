@@ -7,7 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ScalarConeFunctor
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ScalarCofiberPrism
-public import Quillen.Waldhausen.SplitComplexes.FactorizationConeFunctor
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.FactorizationConeFunctor
 public import Quillen.Waldhausen.GilletWaldhausen.ExactFunctorSequence
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.LocalClosure
 

@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenGluing.AffineQCTarget
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.OpenGluing.AffineQCTarget
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-!

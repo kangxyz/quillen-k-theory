@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 
-import Quillen.Algebra.Category.ModuleCat.IdempotentMatrix
+import Quillen.Aglib.Algebra.Category.ModuleCat.IdempotentMatrix
 import Mathlib.Algebra.Ring.PUnit
 
 /-! Right-module matrix action and actual projective images work over arbitrary rings. -/

@@ -6,8 +6,8 @@ Authors: kangxyz
 module
 
 public import Aglib.Algebra.Polynomial.Laurent.UnderSquare
-public import Quillen.CategoryTheory.Functor.IdentityAutomorphismEvaluation
-public import Quillen.CategoryTheory.Functor.IdentityAutomorphismSquare
+public import Quillen.Aglib.CategoryTheory.Functor.IdentityAutomorphismEvaluation
+public import Quillen.Aglib.CategoryTheory.Functor.IdentityAutomorphismSquare
 public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumIsoNaturality
 public import Quillen.Topology.Prespectrum.StrictSquareNull
 public import Quillen.Topology.Prespectrum.NullLoopNaturality

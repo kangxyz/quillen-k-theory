@@ -7,7 +7,7 @@ Authors: kangxyz
 module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
-public import Quillen.Waldhausen.GilletWaldhausen.BoundedTermsStrata
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.BoundedTermsStrata
 public import Quillen.Waldhausen.GilletWaldhausen.BoundedSSet
 
 /-! # Actual bounded-term S-grids lift into their exact strata

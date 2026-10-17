@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.OpenPairs.PolynomialZeroSection
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.OpenPairZeroSection
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Bass.SupportedGroups
 
 /-!

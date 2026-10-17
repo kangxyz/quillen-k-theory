@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedBelow.InclusionProperties
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueTwoSummands
 
 /-!
@@ -79,20 +82,6 @@ lemma inputInclusion_exact (R : CommRingCat.{u}) : Waldhausen.IsExact
       (FlasqueBoundedBelow.perfectInclusion_exact (Spec R)))
     ((Waldhausen.ExtensionCategory.snd_exact _ _).comp
       (FlasqueBoundedBelow.perfectInclusion_exact (Spec R)))
-
-instance boundedInclusion_additive (X : Scheme.{u}) :
-    (BoundedBelow.inclusion X).Additive := by
-  unfold BoundedBelow.inclusion
-  infer_instance
-
-instance boundedInclusion_preservesBinaryBiproducts (X : Scheme.{u}) :
-    PreservesBinaryBiproducts (BoundedBelow.inclusion X) := by
-  let : PreservesFiniteBiproducts (BoundedBelow.inclusion X) := inferInstance
-  exact preservesBinaryBiproducts_of_preservesBiproducts _
-
-instance boundedInclusion_preservesBinaryCoproducts (X : Scheme.{u}) :
-    PreservesColimitsOfShape (Discrete WalkingPair) (BoundedBelow.inclusion X) :=
-  preservesBinaryCoproducts_of_preservesBinaryBiproducts _
 
 /-- The actual categorical coproduct comparison, without replacing either selected sum. -/
 def boundedSumInclusionIso {C : Type v} [Category C] (X : Scheme.{u})

@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.CategoryTheory.ExactCategory.Abelian
-public import Quillen.Waldhausen.Cylinder.AdditiveMap
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.SplitFactorization.AdditiveMap
 public import Quillen.Waldhausen.Fibration.Rows.OppositeComplexJoint
 
 /-!

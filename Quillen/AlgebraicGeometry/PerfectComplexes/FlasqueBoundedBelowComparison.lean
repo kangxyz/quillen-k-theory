@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlasqueBoundedBelow.PerfectInclusion
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.FlasqueBoundedBelow
 public import Quillen.Waldhausen.Functoriality.KMap
 
@@ -73,10 +76,6 @@ theorem total_KMap_rightInverse (X : Scheme.{u}) (n : ℕ) :
 theorem inclusion_KMap_bijective (X : Scheme.{u}) (n : ℕ) :
     Function.Bijective (Waldhausen.KMap (inclusion_exact X) n) :=
   ⟨(total_KMap_leftInverse X n).injective, (total_KMap_rightInverse X n).surjective⟩
-
-/-- The literal original full inclusion into all locally perfect complexes. -/
-def perfectInclusion (X : Scheme.{u}) : Obj X ⥤ Perfect X :=
-  inclusion X ⋙ BoundedBelow.inclusion X
 
 /-- This same literal composite inclusion is Waldhausen-exact. -/
 lemma perfectInclusion_exact (X : Scheme.{u}) : Waldhausen.IsExact

@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlasqueBoundedBelow.Carriers
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Tensor
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Carrier
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasqueGammaThirdSpan
@@ -57,31 +60,6 @@ lemma liftPlusModelNatTrans_weak {C : Type*} [Category C] (X : Scheme.{u})
   let : QuasiIso (a.app K).hom := ha K
   change QuasiIso (eF.hom.app K ≫ (a.app K).hom ≫ eG.inv.app K)
   infer_instance
-
-/-- The original bounded object with only its original bound proof forgotten to Plus. -/
-def boundedToPlus (X : Scheme.{u}) : BoundedBelow.Obj X ⥤ CochainComplex.Plus X.Modules :=
-  ObjectProperty.lift _ (BoundedBelow.objects X).ι (fun K => K.property.2)
-
-/-- The natural identification of the underlying complex after lifting a bounded-below perfect
-object to the Plus category.
--/
-def boundedToPlusCarrierIso (X : Scheme.{u}) :
-    boundedToPlus X ⋙ CochainComplex.Plus.ι X.Modules ≅ (BoundedBelow.objects X).ι :=
-  ObjectProperty.liftCompιIso _ _ _
-
-/-- This uses the generic lift carrier, leaving the entire actual total functor opaque. -/
-def totalCarrierIso (X : Scheme.{u}) :
-    FlasqueBoundedBelow.total X ⋙ (FlasqueBoundedBelow.objects X).ι ≅
-      (BoundedBelow.objects X).ι ⋙ godementTotal X := by
-  unfold FlasqueBoundedBelow.total
-  exact ObjectProperty.liftCompιIso _ _ _
-
-/-- The natural identification of the underlying complex after forgetting flasqueness. -/
-def inclusionCarrierIso (X : Scheme.{u}) :
-    FlasqueBoundedBelow.inclusion X ⋙ (BoundedBelow.objects X).ι ≅
-      (FlasqueBoundedBelow.objects X).ι := by
-  unfold FlasqueBoundedBelow.inclusion
-  exact Iso.refl _
 
 /-- The natural identification of the underlying negative twist with left tensor by the tautological
 line.

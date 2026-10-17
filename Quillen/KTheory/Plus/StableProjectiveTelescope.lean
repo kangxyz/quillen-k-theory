@@ -7,7 +7,7 @@ module
 
 public import Quillen.CategoryTheory.GroupCompletion.StableGeneralLinearMap
 public import Quillen.KTheory.Plus.ProjectiveTelescope
-public import Quillen.CategoryTheory.Grothendieck.GroupoidRightFactors
+public import Quillen.Aglib.CategoryTheory.Grothendieck.GroupoidRightFactors
 
 /-!
 # Original finite matrix maps into the right projective telescope

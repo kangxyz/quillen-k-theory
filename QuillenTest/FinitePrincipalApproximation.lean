@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.FinitePrincipalApproximation
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.FinitePrincipalApproximation
 public import Mathlib.Data.ZMod.Basic
 
 /-! # Original finite-principal approximation consumers

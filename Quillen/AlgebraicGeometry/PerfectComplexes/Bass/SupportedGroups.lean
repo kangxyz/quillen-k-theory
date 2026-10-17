@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.OpenPairs.BassProduct
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.OpenPairs
 public import Quillen.AlgebraicGeometry.PerfectComplexes.PairPullback
 public import Quillen.KTheory.Bass.TwoChart
 public import Quillen.Waldhausen.Additivity.GroupFormula

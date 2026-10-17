@@ -6,6 +6,9 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.PairSquares
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedOpenComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.RestrictionComparison
 
@@ -33,13 +36,6 @@ variable {U' X' U X : Scheme.{u}} (j' : U' ⟶ X') (j : U ⟶ X)
   [IsOpenImmersion j'] [IsOpenImmersion j] {S : X'.Opens} {T : X.Opens}
   (f : supportOpenPair S ⟶ supportOpenPair T) (g : U' ⟶ U)
   (w : j' ≫ f.hom.right = g ≫ j)
-
-/-- The second actual square, involving the original localization opens. -/
-def supportedOpenRestrictionSquare :
-    (⟨Arrow.mk j', (by change IsOpenImmersion j'; infer_instance)⟩ :
-      AlgebraicGeometry.Scheme.OpenPairs.{u}) ⟶
-      ⟨Arrow.mk j, (by change IsOpenImmersion j; infer_instance)⟩ :=
-  ObjectProperty.homMk (Arrow.homMk g f.hom.right w.symm)
 
 include g w in
 /-- Genuine bounded-flat pullback preserves the original supported relative weak class
@@ -92,13 +88,6 @@ lemma perfectSupportedOpenKPullback_comp_boundedFlat (n : ℕ) :
         (boundedFlatPerfectSupportedOpenKEquiv j T n x))) = _
   rw [MulEquiv.symm_apply_apply]
   rfl
-
-/-- The same original support square in the existing compact-base pair category. -/
-def qcSupportedBaseSquare :
-    (⟨supportOpenPair S, (by change CompactSpace X'; infer_instance)⟩ :
-      AlgebraicGeometry.Scheme.QuasiCompactOpenPairs.{u}) ⟶
-      ⟨supportOpenPair T, (by change CompactSpace X; infer_instance)⟩ :=
-  ObjectProperty.homMk f
 
 /-- The original change-of-weak map retains the public supported pair-pullback square. -/
 lemma perfectSupportedOpenKPullback_comp_changeWeak (n : ℕ) :
@@ -176,13 +165,6 @@ variable {U'' X'' : Scheme.{u}} (j'' : U'' ⟶ X'') [IsOpenImmersion j'']
   {R : X''.Opens} (f₀ : supportOpenPair R ⟶ supportOpenPair S)
   (g₀ : U'' ⟶ U') (w₀ : j'' ≫ f₀.hom.right = g₀ ≫ j')
 
-omit [IsOpenImmersion j''] [IsOpenImmersion j'] [IsOpenImmersion j] in
-include w₀ w in
-lemma supportedOpenSquare_comp :
-    j'' ≫ (f₀ ≫ f).hom.right = (g₀ ≫ g) ≫ j := by
-  change j'' ≫ (f₀.hom.right ≫ f.hom.right) = (g₀ ≫ g) ≫ j
-  rw [← Category.assoc, w₀, Category.assoc, w, Category.assoc]
-
 lemma boundedFlatPerfectSupportedOpenKPullback_comp (n : ℕ) :
     boundedFlatPerfectSupportedOpenKPullback j'' j (f₀ ≫ f) (g₀ ≫ g)
       (supportedOpenSquare_comp j' j f g w j'' f₀ g₀ w₀) n =
@@ -223,49 +205,6 @@ variable {U' X' U X : Scheme.{u}} (j' : U' ⟶ X') (j : U ⟶ X)
   [IsOpenImmersion j'] [IsOpenImmersion j] {S : X'.Opens} {T : X.Opens}
   (f : supportOpenPair S ⟶ supportOpenPair T) (g : U' ⟶ U)
   (w : j' ≫ f.hom.right = g ≫ j)
-
-lemma supportPair_le_preimage : S ≤ f.hom.right ⁻¹ᵁ T := by
-  intro x hx
-  let y : T := f.hom.left ⟨x,hx⟩
-  have he : y.val = f.hom.right x :=
-    congrArg (fun k : S.toScheme ⟶ X => k ⟨x,hx⟩) (Arrow.w f.hom)
-  change f.hom.right x ∈ T
-  exact he ▸ y.property
-
-omit [IsOpenImmersion j'] [IsOpenImmersion j] in
-include w in
-lemma supportedPair_target_le_preimage : j' ⁻¹ᵁ S ≤ g ⁻¹ᵁ (j ⁻¹ᵁ T) := by
-  intro x hx
-  have he := congrArg (fun k : U' ⟶ X => k x) w
-  change f.hom.right (j' x) = j (g x) at he
-  change j (g x) ∈ T
-  rw [← he]
-  exact supportPair_le_preimage f hx
-
-/-- The induced square on the inverse-image supports of the given open square. -/
-def supportedPairTargetSquare : supportOpenPair (j' ⁻¹ᵁ S) ⟶ supportOpenPair (j ⁻¹ᵁ T) :=
-  ObjectProperty.homMk (Arrow.homMk
-    (g.resLE (j ⁻¹ᵁ T) (j' ⁻¹ᵁ S) (supportedPair_target_le_preimage j' j f g w)) g
-    (g.resLE_comp_ι (supportedPair_target_le_preimage j' j f g w)))
-
-include w in
-lemma supportedPair_union_le_preimage :
-    S ⊔ j'.opensRange ≤ f.hom.right ⁻¹ᵁ (T ⊔ j.opensRange) := by
-  intro x hx
-  rcases hx with hx | hx
-  · exact Or.inl (supportPair_le_preimage f hx)
-  · rcases hx with ⟨y, rfl⟩
-    right
-    refine ⟨g y, ?_⟩
-    exact (congrArg (fun k : U' ⟶ X => k y) w).symm
-
-/-- The induced square on supports enlarged by the corresponding open ranges. -/
-def supportedPairUnionSquare : supportOpenPair (S ⊔ j'.opensRange) ⟶ supportOpenPair (T ⊔
-  j.opensRange) :=
-  ObjectProperty.homMk (Arrow.homMk
-    (f.hom.right.resLE (T ⊔ j.opensRange) (S ⊔ j'.opensRange)
-      (supportedPair_union_le_preimage j' j f g w)) f.hom.right
-    (f.hom.right.resLE_comp_ι (supportedPair_union_le_preimage j' j f g w)))
 
 end Quillen.PerfectComplexes
 

@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.Algebra.Category.ModuleCat.MatrixAutomorphisms
 public import Quillen.Algebra.Matrix.IdempotentAutomorphismClass
 
 /-!
@@ -22,33 +23,6 @@ universe u
 open CategoryTheory CategoryTheory.Idempotents
 namespace Quillen.RightMatrix
 variable {R : Type u} [Ring R]
-
-/-- A retract inside another matrix summand has its actual composite idempotent presentation. -/
-def retractPresentation {P Q : ProjectiveMatrices R} (i : P ⟶ Q) (r : Q ⟶ P)
-    (hr : i ≫ r = 𝟙 P) : ProjectiveMatrices R where
-  X := Q.X
-  p := homMatrix i * homMatrix r
-  idem := by
-    have h : homMatrix r * homMatrix i = idempotentMatrix P := congrArg homMatrix hr
-    have hi : homMatrix i * idempotentMatrix P = homMatrix i := Karoubi.p_comp i
-    change (homMatrix i * homMatrix r) * (homMatrix i * homMatrix r) = _
-    rw [Matrix.mul_assoc, ← Matrix.mul_assoc (homMatrix r), h, ← Matrix.mul_assoc, hi]
-
-/-- The original retract maps identify it with its composite-idempotent image. -/
-def retractPresentationIso {P Q : ProjectiveMatrices R} (i : P ⟶ Q) (r : Q ⟶ P)
-    (hr : i ≫ r = 𝟙 P) : P ≅ retractPresentation i r hr := by
-  have h : homMatrix r * homMatrix i = idempotentMatrix P := congrArg homMatrix hr
-  have hi : homMatrix i * idempotentMatrix P = homMatrix i := Karoubi.p_comp i
-  have hr' : idempotentMatrix P * homMatrix r = homMatrix r := Karoubi.comp_p r
-  refine ⟨⟨i.f, ?_⟩, ⟨r.f, ?_⟩, ?_, ?_⟩
-  · change ((homMatrix i * homMatrix r) * homMatrix i) * idempotentMatrix P = homMatrix i
-    rw [Matrix.mul_assoc (homMatrix i) (homMatrix r) (homMatrix i), h, hi, hi]
-  · change (idempotentMatrix P * homMatrix r) * (homMatrix i * homMatrix r) = homMatrix r
-    rw [hr', ← Matrix.mul_assoc, h, hr']
-  · apply Karoubi.Hom.ext
-    exact h
-  · apply Karoubi.Hom.ext
-    rfl
 
 /-- Identity extension along a genuine retract preserves the stable automorphism class. -/
 theorem automorphismClass_splitExtension {P Q : ProjectiveMatrices R}

@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Coherent.Affine.SmallModelEquivalence
+
 public import Quillen.CategoryTheory.SmallModel.Exact
 public import Aglib.AlgebraicGeometry.Modules.Coherent.Exact
 public import Aglib.AlgebraicGeometry.Modules.QuasiCoherent.Affine.FiniteTypeCategory
@@ -58,13 +60,6 @@ abbrev SpecG (n : ℕ) : Type u :=
 /-- The canonical K-map induced by the identity-on-sheaves comparison. -/
 def specGToAffineG (n : ℕ) : SpecG R n →* AffineG R n :=
   (coherentToAffineExact R).smallKMap n
-
-instance coherentToAffineSmall_isEquivalence :
-    ((coherentToAffineExact R).smallModel).toFunctor.IsEquivalence := by
-  change (((equivSmallModel.{u} (FiniteTypeSheaves (Spec R))).inverse ⋙
-    (finiteTypeSheavesAffineEquivalence R).functor) ⋙
-    (equivSmallModel.{u} (AffineFiniteType R)).functor).IsEquivalence
-  infer_instance
 
 instance coherentToAffineSmall_mapQ_isEquivalence :
     ((coherentToAffineExact R).smallModel).mapQ.IsEquivalence := by

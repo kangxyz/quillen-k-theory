@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.CategoryTheory.Monoidal.TranslationTelescopeTransitions
-public import Quillen.CategoryTheory.Grothendieck.FiberTransitions
+public import Quillen.Aglib.CategoryTheory.Grothendieck.FiberTransitions
 public import Mathlib.CategoryTheory.Functor.EpiMono
 
 /-! # Exact original-stage factorization in the translation telescope -/

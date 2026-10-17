@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedComparison
+public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Affine.Comparison
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Homology
 
 public import Aglib.AlgebraicGeometry.Modules.DerivedCategory.Restriction

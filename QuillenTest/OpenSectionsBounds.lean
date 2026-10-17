@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.OpenSectionsBounds
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Complex.Affine.OpenSectionsBounds
 
 /-! Original-map and endpoint consumers of geometric finite-open section bounds. -/
 @[expose] public section

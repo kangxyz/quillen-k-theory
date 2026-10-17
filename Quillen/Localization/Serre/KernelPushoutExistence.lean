@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.Abelian.SerreClass.KernelPushoutMonomorphism
 public import Quillen.Localization.Serre.KernelPushoutComparison
 public import Quillen.Localization.Serre.OverQArrows
 public import Aglib.CategoryTheory.Abelian.SerreClass.Exact
@@ -22,10 +23,6 @@ namespace Quillen.SerreLocalization
 attribute [local instance] Abelian.hasFiniteBiproducts
 attribute [local instance] Quillen.SerreLocalization.canonicalQuotientAbelian
 variable {C : Type u} [Category.{u} C] [Abelian C]
-
-instance kernelPushoutOverHom_mono {N : C} (X : Over N) {U : C}
-    (i : (overKernel N).obj X ⟶ U) [Mono i] : Mono (kernelPushoutOverHom X i).left :=
-  inferInstanceAs (Mono (pushout.inl (overKernelι X) i))
 
 /-- A kernel-comma arrow to a surjective object extends across the actual
 kernel pushout. Both the slice Q-triangle and the prescribed kernel triangle

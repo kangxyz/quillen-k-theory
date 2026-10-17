@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.VectorBundle.StalkFlat
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.StalkFlat
 public import Quillen.AlgebraicGeometry.PerfectComplexes.Strict
 
 /-! # Actual vector-bundle flat-stalk consumers

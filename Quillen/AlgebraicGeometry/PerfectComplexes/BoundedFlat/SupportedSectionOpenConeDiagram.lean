@@ -7,7 +7,7 @@ module
 
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionOpenNullCoefficient
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedSectionOpenConeComparison
-public import Quillen.CategoryTheory.ArrowDiagrams
+public import Quillen.Aglib.CategoryTheory.ArrowDiagrams
 
 /-!
 # The actual coefficient-natural supported-section cone descent

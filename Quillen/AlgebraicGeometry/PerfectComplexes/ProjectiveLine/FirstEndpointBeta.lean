@@ -5,6 +5,12 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Complex.NaturalTransformationQuasiIso
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlasqueBoundedBelow.Carriers
+
+
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.PushforwardQuasiIso
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FirstEndpointCoefficient
@@ -103,10 +109,6 @@ def coefficientRawMap :
       pulledResolvedPlus R ⋙ CochainComplex.Plus.ι (relativeSquare R).Modules :=
   CategoryTheory.Functor.whiskerRight (coefficientMap R)
     (CochainComplex.Plus.ι (relativeSquare R).Modules)
-
-/-- Forget only the original Plus proof, before applying a total functor. -/
-def modelToPlusEraseIso (X : Scheme.{u}) :
-    toPlus X ⋙ CochainComplex.Plus.ι X.Modules ≅ (FlasqueBoundedBelow.objects X).ι := Iso.refl _
 
 /-- Native exact coefficient erasure before any totalization. -/
 def coefficientEraseIso :
@@ -247,16 +249,6 @@ lemma betaRawMap_quasiIso (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
   have : QuasiIso g.hom := coefficientActualRawMap_quasiIso R K
   rw [betaRawMap_app]
   exact AlgebraicGeometry.Scheme.Modules.Godement.totalPushforwardPlus_quasiIso (relativeSecond R) g
-
-private lemma quasiIso_triple_app {D : Type*} [Category D] (X : Scheme.{u})
-    {F G H I : D ⥤ CochainComplex X.Modules ℤ} (f : F ⟶ G) (g : G ⟶ H) (h : H ⟶ I) (K : D)
-    (hf : QuasiIso (f.app K)) (hg : QuasiIso (g.app K)) (hh : QuasiIso (h.app K)) :
-    QuasiIso ((f ≫ g ≫ h).app K) := by
-  let := hf
-  let := hg
-  let := hh
-  change QuasiIso (f.app K ≫ g.app K ≫ h.app K)
-  infer_instance
 
 lemma betaUnderlying_quasiIso (K : FlasqueBoundedBelow.Obj (twoChartLine R)) :
     QuasiIso ((betaUnderlying R).app K) :=

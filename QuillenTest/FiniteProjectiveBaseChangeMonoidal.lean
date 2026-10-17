@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeMonoidal
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeMonoidal
 public import Mathlib.Data.ZMod.Basic
 
 /-!

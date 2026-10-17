@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.Waldhausen.Approximation.ReedyLifting
-public import Quillen.CategoryTheory.ArrowDiagrams
+public import Quillen.Aglib.CategoryTheory.ArrowDiagrams
 
 /-!
 # Functorial factorization on genuine Reedy cofibration arrows

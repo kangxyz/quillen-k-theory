@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TwoOpenDerivedTriangle
+public import Quillen.Aglib.AlgebraicGeometry.Cohomology.MayerVietoris.DerivedTriangle
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.ChartAffineness
 
 /-!

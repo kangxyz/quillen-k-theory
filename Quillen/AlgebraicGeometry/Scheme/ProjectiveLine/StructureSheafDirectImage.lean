@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.UnitProperties
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OpenBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.StructureSheafCohomology
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.GlobalSections
@@ -58,12 +59,6 @@ end AlgebraicGeometry.Scheme.ProjectiveLine
 
 namespace AlgebraicGeometry.Scheme.ProjectiveLine
 variable {R S : CommRingCat.{u}} (f : R ⟶ S) [IsOpenImmersion (Spec.map f)]
-
-private lemma gammaIsoTop_inv {X Y : Scheme.{u}} (j : X ⟶ Y) [IsOpenImmersion j] :
-    (IsOpenImmersion.ΓIsoTop j).inv = j.appLE j.opensRange ⊤ (by simp) := by
-  simp only [IsOpenImmersion.ΓIsoTop, Iso.trans_inv, Functor.mapIso_inv,
-    Iso.op_inv, eqToIso.inv, eqToHom_op, Iso.symm_inv,
-    Scheme.Hom.appIso_hom', Scheme.Hom.map_appLE]
 
 lemma projection_open_sections_square :
     (projection R).appLE (Spec.map f).opensRange (coefficientMap f).opensRange

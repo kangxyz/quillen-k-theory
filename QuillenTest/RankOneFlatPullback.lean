@@ -4,7 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.PerfectComplexes.RankOneFlatPullback
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.RankOneFlatPullback
+public import Quillen.AlgebraicGeometry.PerfectComplexes.FlatPullback
 public import Quillen.Waldhausen.GrothendieckComparison.ObjectNaturality
 
 /-! The actual flat K-map retains the original rank-one object class. -/

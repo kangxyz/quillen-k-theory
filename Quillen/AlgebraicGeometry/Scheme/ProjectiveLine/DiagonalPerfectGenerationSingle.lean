@@ -8,7 +8,7 @@ public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalPerfectGenerationRotation
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalComplexSingleComparison
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalLineRotation
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Single
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Single
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.DerivedPerfect
 
 /-! # Explicit recovery of the original bundle-single generation and rotation triangles

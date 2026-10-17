@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.Closure
+
+
 public import Quillen.Waldhausen.Fibration.Rows.ComplexRelativeJoint
 public import Quillen.Waldhausen.Fibration.Rows.ReflexiveFactorization
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Basic
@@ -32,31 +35,6 @@ open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 open AlgebraicGeometry.Scheme.Modules
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
-
-theorem boundedFlatPerfect_shift {X : Scheme.{u}} {K : CochainComplex X.Modules ℤ}
-    (hK : boundedFlatPerfect X K) (n : ℤ) :
-    boundedFlatPerfect X ((shiftFunctor (CochainComplex X.Modules ℤ) n).obj K) := by
-  obtain ⟨hp, ⟨b, hb⟩, hf⟩ := hK
-  refine ⟨Complex.locallyPerfect_shift hp n,
-    ⟨b-n, (CochainComplex.isStrictlyLE_iff _ _).mpr ?_⟩, fun i => hf (i+n)⟩
-  intro i hi
-  change IsZero (K.X (i+n))
-  exact K.isZero_of_isStrictlyLE b (i+n) (by omega)
-
-theorem boundedFlatPerfect_mappingCone {X : Scheme.{u}} {K L : CochainComplex X.Modules ℤ}
-    (hK : boundedFlatPerfect X K) (hL : boundedFlatPerfect X L) (f : K ⟶ L) :
-    boundedFlatPerfect X (CochainComplex.mappingCone f) := by
-  obtain ⟨hpK, ⟨b, hb⟩, hfK⟩ := hK
-  obtain ⟨hpL, ⟨c, hc⟩, hfL⟩ := hL
-  refine ⟨Complex.locallyPerfect_mappingCone hpK hpL f,
-    ⟨max (b-1) c, (CochainComplex.isStrictlyLE_iff _ _).mpr ?_⟩, ?_⟩
-  · intro n hn
-    exact (CochainComplex.mappingCone.isZero_X_iff f n).mpr
-      ⟨K.isZero_of_isStrictlyLE b (n+1) (by omega), L.isZero_of_isStrictlyLE c n (by omega)⟩
-  · intro n
-    exact (stalkwiseFlat X).prop_of_iso
-      (HomologicalComplex.homotopyCofiber.XIsoBiprod f n (n+1) rfl).symm
-      (stalkwiseFlat_biprod X (hfK (n+1)) (hfL n))
 
 /-- The genuine exact joint-cylinder data required by approximation is constructed
 on the original bounded-flat category, not assumed as an enhancement premise. -/

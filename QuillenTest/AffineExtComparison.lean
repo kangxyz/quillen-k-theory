@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.DerivedSingleComparison
+public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Affine.SingleComparison
 public import QuillenTest.AffineCechHigher
 
 /-!
@@ -38,19 +38,19 @@ lemma arbitrary_injective_global_sections {R : CommRingCat.{u}}
 lemma original_resolution_terms_and_differentials {R : CommRingCat.{u}}
     (M : (Spec R).Modules) [M.IsQuasicoherent]
     (I : CategoryTheory.InjectiveResolution M) (i j : ℕ) :
-    (globalSectionsInjectiveResolution M I).cocomplex.X i =
+    (globalSectionsInjectiveResolution (M := M) I).cocomplex.X i =
       moduleSpecΓFunctor.obj (I.cocomplex.X i) ∧
-    (globalSectionsInjectiveResolution M I).cocomplex.d i j =
+    (globalSectionsInjectiveResolution (M := M) I).cocomplex.d i j =
       moduleSpecΓFunctor.map (I.cocomplex.d i j) := ⟨rfl, rfl⟩
 
 lemma original_augmentation_degree_zero {R : CommRingCat.{u}}
     (M : (Spec R).Modules) (I : CategoryTheory.InjectiveResolution M) :
-    (globalSectionsResolutionAugmentation M I).f 0 = moduleSpecΓFunctor.map (I.ι.f 0) :=
-  globalSectionsResolutionAugmentation_f_zero M I
+    (globalSectionsAugmentation (M := M) I).f 0 = moduleSpecΓFunctor.map (I.ι.f 0) :=
+  globalSectionsAugmentation_f_zero (M := M) I
 
 lemma original_augmentation_quasiIso {R : CommRingCat.{u}}
     (M : (Spec R).Modules) [M.IsQuasicoherent] (I : CategoryTheory.InjectiveResolution M) :
-    QuasiIso (globalSectionsResolutionAugmentation M I) := inferInstance
+    QuasiIso (globalSectionsAugmentation (M := M) I) := inferInstance
 
 lemma original_Ext_map_independent_universes {R : CommRingCat.{u}}
     [HasExt.{w} (ModuleCat.{u} R)] [HasExt.{w'} (Spec R).Modules]

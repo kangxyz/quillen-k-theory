@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.Comma.Transitions
 public import Quillen.CategoryTheory.TheoremB.Conditions
 public import Quillen.CategoryTheory.TheoremA.Conclusion
 public import Quillen.Topology.ClassifyingSpace.Opposite
@@ -28,13 +29,6 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 namespace Quillen.TheoremB
 variable {C D : Type u} [SmallCategory C] [SmallCategory D] (F : C ⥤ D)
-
-/-- The structure arrows in `(d ↓ F)`. -/
-@[simps]
-def structuredCommaTransformation (d : D) :
-    (Functor.const (StructuredArrow d F)).obj d ⟶ StructuredArrow.proj d F ⋙ F where
-  app X := X.hom
-  naturality X Y f := by simp
 
 /-- Reverse the structure-arrow homotopy to agree with the path-space fiber
 convention `F(x) → d`. -/
@@ -79,13 +73,6 @@ basepoint of the genuine homotopy fiber. -/
       (structuredCommaTransformation F (F.obj c)) (StructuredArrow.mk (𝟙 (F.obj c))) rfl rfl).eq_snd
       (unitInterval.symm t) rfl |>.trans (classifyingSpaceMap_point _ _)
 
-/-- Precomposition is contravariant in the object defining the structured comma. -/
-abbrev structuredTransition {d e : D} (f : d ⟶ e) :
-    StructuredArrow e F ⥤ StructuredArrow d F := StructuredArrow.map f
-
-@[simp] theorem structuredTransition_projection {d e : D} (f : d ⟶ e) :
-    structuredTransition F f ⋙ StructuredArrow.proj d F = StructuredArrow.proj e F := rfl
-
 /-- The exact realized precomposition map. -/
 def structuredTransitionMap {d e : D} (f : d ⟶ e) :
     C(ClassifyingSpace (StructuredArrow e F), ClassifyingSpace (StructuredArrow d F)) :=
@@ -107,14 +94,6 @@ def structuredTransitionHomotopyEquiv (h : StructuredTransitionHomotopyEquivalen
   invFun := (h f).choose
   left_inv := (h f).choose_spec.1
   right_inv := (h f).choose_spec.2
-
-/-- Opposite structured commas have exactly the correct costructured transitions. -/
-theorem structuredOppositeTransition {d e : D} (f : d ⟶ e) :
-    (structuredArrowOpEquivalence F e).functor ⋙ transition F.op f.op =
-      (structuredTransition F f).op ⋙ (structuredArrowOpEquivalence F d).functor := by
-  refine CategoryTheory.Functor.hext (fun X ↦ rfl) ?_
-  intro X Y a
-  rfl
 
 /-- The actual structured comma realization and the opposite-functor
 costructured comma realization are homotopy equivalent. -/

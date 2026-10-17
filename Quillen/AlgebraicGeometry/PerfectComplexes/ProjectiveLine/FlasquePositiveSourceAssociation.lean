@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedBelow.FlatPullbackComparison
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.SelfBaseChangeSpan
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.FlasquePhiColumns
 
@@ -19,10 +22,6 @@ open AlgebraicGeometry.Scheme.ProjectiveLine
 attribute [local instance] Abelian.hasFiniteBiproducts
 
 namespace Quillen.PerfectComplexes.ProjectiveLine.FlasqueGammaEndpoints
-
-/-- These two actual model wrappers have the same original flat pullback and chain maps. -/
-lemma boundedFlatPullback_eq_native {X Y : Scheme.{u}} (f : X ⟶ Y) [Flat f] :
-    SelfBaseChange.boundedFlatPullback f = FlasqueTwoSummands.boundedPullback f := rfl
 
 /-- Original source association is proved BEFORE the chosen total is applied. -/
 def sourcePositiveInputIso (R : CommRingCat.{u}) :

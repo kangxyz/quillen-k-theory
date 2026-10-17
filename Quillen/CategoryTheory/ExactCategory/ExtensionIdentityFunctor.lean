@@ -8,11 +8,11 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionIdentityQuotient
 public import Aglib.CategoryTheory.ExactCategory.Isomorphisms
-public import Quillen.CategoryTheory.SubdivisionAction
+public import Quillen.Aglib.CategoryTheory.Subdivision.Action
 public import Mathlib.CategoryTheory.Core
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjectionFunctor
 public import Quillen.CategoryTheory.QConstruction.ZeroEndomorphisms
-public import Quillen.CategoryTheory.IsoFiber
+public import Quillen.Aglib.CategoryTheory.FiberedCategory.IsoFiber.Basic
 
 /-!
 # Identity extensions and the zero fiber

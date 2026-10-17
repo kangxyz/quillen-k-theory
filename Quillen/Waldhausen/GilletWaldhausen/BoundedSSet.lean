@@ -6,8 +6,11 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.Functor.FullSubcategoryExt
 public import Aglib.CategoryTheory.ExactCategory.Abelian
-public import Quillen.Waldhausen.GilletWaldhausen.BoundedStrata
+public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.BoundedStrata
+public import Quillen.Waldhausen.Functor
+public import Aglib.CategoryTheory.ExactCategory.FunctorPushout
 
 /-! # Actual finite S-grids lift into bounded exact strata
 
@@ -29,18 +32,6 @@ open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Simplicial
 universe v u w w'
 namespace Quillen.Waldhausen.GilletWaldhausen
-
-/-- Postcomposition by an actual full-subcategory inclusion is injective on functors. -/
-theorem fullSubcategory_postcomp_injective {C : Type u} [Category.{v} C]
-    (Q : ObjectProperty C) {D : Type w} [Category.{w'} D] :
-    Function.Injective (fun F : D ⥤ Q.FullSubcategory ↦ F ⋙ Q.ι) := by
-  intro F G h
-  refine CategoryTheory.Functor.ext (fun X ↦ ObjectProperty.FullSubcategory.ext
-    (Functor.congr_obj h X)) ?_
-  intro X Y f
-  apply Q.ι.map_injective
-  simpa only [Functor.map_comp, eqToHom_map, Functor.comp_map, Functor.comp_obj] using
-    Functor.congr_hom h f
 
 attribute [local instance] Abelian.hasFiniteBiproducts
 variable {A : Type u} [Category.{v} A] [Abelian A]

@@ -6,8 +6,8 @@ Authors: kangxyz
 module
 
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.ScalarSupportExtension
-public import Quillen.AlgebraicGeometry.PerfectComplexes.Affine.SupportedProjectorExtension
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.ScalarSupportExtension
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Affine.SupportedProjectorExtension
 public import Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Local
 
 /-!

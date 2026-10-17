@@ -282,14 +282,14 @@ individual lower bounds `(B i).IsGE (b i)`. The target hypotheses apply at every
 index of the given family, including indices outside the selected finite set.
 Empty finite families are included. Infinite families and higher coherence are
 not asserted.
-See [FiniteSupportedRoofs.lean](../../Quillen/AlgebraicGeometry/PerfectComplexes/OpenDerivedImage/FiniteSupportedRoofs.lean)
-and [FiniteSupportedEquality.lean](../../Quillen/AlgebraicGeometry/PerfectComplexes/OpenDerivedImage/FiniteSupportedEquality.lean).
+See [FiniteSupportedRoofs.lean](../../Quillen/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/OpenDerivedImage/FiniteSupportedRoofs.lean)
+and [FiniteSupportedEquality.lean](../../Quillen/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/OpenDerivedImage/FiniteSupportedEquality.lean).
 
 Supported density extends a locally perfect `E` on `U`, acyclic on `U ∩ T`,
 to a derived retract of a global perfect `P` acyclic on `T`. A constructed
 perfect complement `C` gives `P|U ≅ E ⊕ C`. No fixed self-shift stabilization
 is imposed.
-See [GlobalSupportedDensity.lean](../../Quillen/AlgebraicGeometry/PerfectComplexes/GlobalSupportedDensity.lean).
+See [GlobalSupportedDensity.lean](../../Quillen/Aglib/AlgebraicGeometry/Modules/PerfectComplexes/GlobalSupportedDensity.lean).
 
 ## Auxiliary support and its naturality
 
@@ -619,7 +619,7 @@ finite transition stable. This self-comparison alone does not identify classical
 negative groups of the telescope.
 
 For `j : U ⟶ Spec R` with `[IsOpenImmersion j]`,
-`Quillen.AlgebraicGeometry.Scheme.Affine.OpenPairBaseChange` chooses one actual
+`Quillen.Aglib.AlgebraicGeometry.Morphisms.OpenImmersion.Pair.AffineBaseChange` chooses one actual
 pullback of `j` for each object of `Under R`. The projection equations and strict
 coefficient laws use those same endpoints; the identity-algebra projection is
 an isomorphism to `j`, rather than equality of chosen opens.
@@ -708,10 +708,10 @@ specializes to the global polynomial `X`, restricting to Laurent unit `T`:
 its actual termwise scalar map is weak on that open. `ScalarCofiber` identifies
 the original categorical cofiber with this supported cone and transports the
 relative-acyclic K₀ class equality through the unchanged canonical fiber map.
-`Quillen.CategoryTheory.Limits.CokernelPushout` retains the displayed zero;
+`Quillen.Aglib.CategoryTheory.Limits.Shapes.CokernelPushout` retains the displayed zero;
 `Quillen.Waldhausen.SplitComplexes.FactorizationCofiber` retains the genuine
 factorization extension object, quotient, and target inclusion.
-`Quillen.Algebra.Homology.MappingConeSign` identifies `Cone(-f)` with `Cone(f)`
+`Quillen.Aglib.Algebra.Homology.MappingCone.Sign` identifies `Cone(-f)` with `Cone(f)`
 by negating only the shifted source and fixing the target, and
 `SplitComplexes.FactorizationSign` uses that exact sign isomorphism.
 

@@ -6,10 +6,13 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SupportUnion
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Aglib.CategoryTheory.ExactCategory.Abelian
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedOpenComparison
-public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportUnion
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.Union
 public import Quillen.Waldhausen.Functoriality.ExactEquivalence
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.LongExactSequence
 
@@ -41,14 +44,6 @@ set_option backward.defeqAttrib.useBackward true
 attribute [local instance] Abelian.hasFiniteBiproducts
 namespace Quillen.PerfectComplexes
 open Waldhausen Fibration
-lemma boundedFlatPerfectSupported_sup_opensRange_iff {U X : Scheme.{u}}
-    (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens) (A : CochainComplex X.Modules ℤ) :
-    boundedFlatPerfectSupported (T ⊔ j.opensRange).ι A ↔
-      boundedFlatPerfectSupported T.ι A ∧ ((restrict j).obj A).Acyclic := by
-  change (boundedFlatPerfect X A ∧ _) ↔ (boundedFlatPerfect X A ∧ _) ∧ _
-  rw [restrictAcyclic_sup_iff, restrictAcyclic_opensRange_iff]
-  tauto
-
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j] (T : X.Opens)
 
 /-- Relative coarse acyclicity is the actual support predicate, in every degree. -/

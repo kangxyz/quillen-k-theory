@@ -6,6 +6,12 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.RestrictedPairs
+
+
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.Support.RestrictionOfLE
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.AuxiliaryNaturality
 public import Quillen.AlgebraicGeometry.PerfectComplexes.SupportedOpen.PairNaturality
 
@@ -24,11 +30,6 @@ namespace Quillen.PerfectComplexes
 open Waldhausen
 variable {U X : Scheme.{u}} (j : U ⟶ X) [IsOpenImmersion j]
   (S : U.Opens) (T : X.Opens) (h : S ≤ j ⁻¹ᵁ T)
-
-/-- Only the actual support predicate is weakened after original restriction. -/
-def perfectSupportedRestrictOfLE : (perfectSupported T.ι).FullSubcategory ⥤
-    (perfectSupported S.ι).FullSubcategory :=
-  perfectSupportedRestrict j T ⋙ ObjectProperty.ιOfLE (perfectSupported_antitone h)
 
 /-- Exactness uses original supported restriction and the genuine inherited inclusion. -/
 theorem perfectSupportedRestrictOfLE_exact : IsExact
@@ -49,36 +50,6 @@ lemma perfectSupportedKRestrictOfLE_eq_comp (n : ℕ) :
   (Quillen.Waldhausen.KMap_comp_KMap (perfectSupportedRestrict_exact j T)
     (subcategoryInclusion_exact (perfectSupported (j ⁻¹ᵁ T).ι) (perfectSupported S.ι)
       (perfectSupported_antitone h)) n).symm
-
-/-- The actual pair square underlying this supported restriction. -/
-def supportRestrictedPair : supportOpenPair S ⟶ supportOpenPair T :=
-  supportChangeOpenPair h ≫ supportRestrictionPair j T
-
-omit [IsOpenImmersion j] in
-@[simp] theorem supportRestrictedPair_right :
-    (supportRestrictedPair j S T h).hom.right = j := by
-  change 𝟙 U ≫ j = j
-  simp
-
-omit [IsOpenImmersion j] in
-/-- Both original support inclusions remain the actual maps of the pair square. -/
-theorem supportRestrictedPair_left :
-    (supportRestrictedPair j S T h).hom.left = j.resLE T S h := by
-  apply (cancel_mono T.ι).mp
-  have hw : (supportRestrictedPair j S T h).hom.left ≫ T.ι =
-      S.ι ≫ (supportRestrictedPair j S T h).hom.right := (supportRestrictedPair j S T h).hom.w
-  rw [hw, j.resLE_comp_ι h, supportRestrictedPair_right]
-
-/-- The right map determines a morphism of the actual open-pair category. -/
-theorem supportOpenPair_hom_ext {U X : Scheme.{u}} {S : U.Opens} {T : X.Opens}
-    {f g : supportOpenPair S ⟶ supportOpenPair T} (he : f.hom.right = g.hom.right) : f = g := by
-  apply ObjectProperty.hom_ext
-  apply Arrow.hom_ext
-  · apply (cancel_mono T.ι).mp
-    have hf : f.hom.left ≫ T.ι = S.ι ≫ f.hom.right := f.hom.w
-    have hg : g.hom.left ≫ T.ι = S.ι ≫ g.hom.right := g.hom.w
-    rw [hf, hg, he]
-  · exact he
 
 variable [CompactSpace U] [CompactSpace X]
 

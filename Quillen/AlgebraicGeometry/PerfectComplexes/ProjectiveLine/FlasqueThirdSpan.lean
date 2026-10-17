@@ -5,6 +5,9 @@ Authors: Quillen K-theory contributors
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.FlasqueBoundedBelow.PlusAdditive
+
+
 public import Aglib.Algebra.Homology.ShortComplex.Subcategory
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Aglib.AlgebraicGeometry.Cohomology.Godement.TotalComplex.Carrier
@@ -211,29 +214,11 @@ lemma totalToCenter_weak (R : CommRingCat.{u})
     (FlasqueBoundedBelow.waldhausen (twoChartLine R)).weq ((totalToCenter R).app K) :=
   totalToCenterPlus_quasiIso R K
 
-local instance toPlus_additive (X : Scheme.{u}) : (FlasqueCoefficients.toPlus X).Additive where
-  map_add := by
-    intro K L f g
-    apply ObjectProperty.hom_ext
-    rfl
+attribute [local instance] toPlus_additive
 
-local instance totalPlus_additive (X : Scheme.{u}) : (godementTotalPlus X).Additive where
-  map_add := by
-    intro K L f g
-    apply ObjectProperty.hom_ext
-    change (godementTotal X).map (f.hom + g.hom) =
-      (godementTotal X).map f.hom + (godementTotal X).map g.hom
-    exact (godementTotal X).map_add
+attribute [local instance] totalPlus_additive
 
-local instance plusMap_additive {X Y : Scheme.{u}} (F : X.Modules ⥤ Y.Modules)
-    [F.Additive] : F.mapCochainComplexPlus.Additive where
-  map_add := by
-    intro K L f g
-    apply ObjectProperty.hom_ext
-    change (F.mapHomologicalComplex (.up ℤ)).map (f.hom + g.hom) =
-      (F.mapHomologicalComplex (.up ℤ)).map f.hom +
-        (F.mapHomologicalComplex (.up ℤ)).map g.hom
-    exact (F.mapHomologicalComplex (.up ℤ)).map_add
+attribute [local instance] plusMap_additive
 
 instance centerRaw_additive (R : CommRingCat.{u}) : (centerRaw R).Additive := by
   dsimp [centerRaw, centerPlus, rightQPlus, sectionRepeatedTotalImage, sectionTotalImage]

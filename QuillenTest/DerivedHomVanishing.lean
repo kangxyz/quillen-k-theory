@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Homology.DerivedHomVanishing
+public import Quillen.Aglib.Algebra.Homology.DerivedCategory.HomVanishing
 
 /-! # Original derived-map consumers for source bounds and cone null-detection -/
 @[expose] public section

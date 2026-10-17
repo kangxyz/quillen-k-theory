@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.CoefficientPerfectEvaluation
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientOpenSections
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenDeficitGrading
 public import Quillen.AlgebraicGeometry.PerfectComplexes.OpenImagePullback
@@ -48,12 +51,6 @@ attribute [local irreducible] boundedFlatCoefficientOriginalEvaluation
 abbrev BoundedFlatCoefficientOpenImageQuotient (a : Under R) :=
   ImageQuotient (perfectOpenWeakWaldhausen (schemeMap f a))
     (perfectRestrict (schemeMap f a)) (perfectOpenRestrict_waldhausenExact (schemeMap f a))
-
-/-- Native open identity evaluation followed by the original bounded-flat perfect inclusion. -/
-def boundedFlatCoefficientFullOpenPerfectEvaluation (_f : P ⟶ Q) (a : Under R) :
-    BoundedFlatCoefficientSections (op P, a) ⥤ Perfect (space (op P, a)) :=
-  boundedFlatCoefficientOriginalEvaluation (op P, a) ⋙
-    boundedFlatPerfectInclusion (space (op P, a))
 
 omit [IsOpenImmersion f.left] in
 /-- The displayed original perfect evaluation is genuinely exact. -/

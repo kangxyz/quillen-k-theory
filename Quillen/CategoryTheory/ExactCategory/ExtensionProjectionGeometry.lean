@@ -8,8 +8,8 @@ module
 public import Aglib.CategoryTheory.ExactCategory.Basic
 public import Quillen.CategoryTheory.ExactCategory.ExtensionProjection
 public import Quillen.CategoryTheory.ExactCategory.ExtensionQuotientSpanCharacterization
-public import Quillen.CategoryTheory.Limits.CokernelSquare
-public import Quillen.CategoryTheory.ExactCategory.Bicartesian
+public import Quillen.Aglib.CategoryTheory.Limits.Shapes.CokernelSquare
+public import Quillen.Aglib.CategoryTheory.ExactCategory.Bicartesian
 
 /-! # The actual quotient maps and bicartesian squares of the extension projection -/
 @[expose] public section

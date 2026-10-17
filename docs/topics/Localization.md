@@ -189,7 +189,7 @@ the same G₀ endpoint.
 [`IdealClosedSupport`](../../Quillen/GTheory/FiniteModules/IdealClosedSupport.lean)
 also constructs the actual equivalence between finite `R/I`-modules and
 modules killed by `I`.
-[`idealPowerFiltration`](../../Quillen/GTheory/FiniteModules/IdealPowerFiltration.lean)
+[`idealPowerFiltration`](../../Quillen/Aglib/Algebra/Category/FGModuleCat/IdealPowerFiltration.lean)
 produces a finite filtration when a stated power of `I` annihilates the module.
 The general geometric closed/open sequence, including a potentially nonaffine
 open complement, is described in

@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.CategoryTheory.Monoidal.Action.IsoFiber
+public import Quillen.Aglib.CategoryTheory.Monoidal.Action.IsoFiber
 public import Quillen.CategoryTheory.GroupCompletion.LocalizationFunctoriality
 public import Quillen.CategoryTheory.GroupCompletion.TrivialAction
 

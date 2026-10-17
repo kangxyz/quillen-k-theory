@@ -8,7 +8,7 @@ module
 public import Aglib.Algebra.Polynomial.Laurent.BaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.OpenBaseChange
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.Tautological
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.RankOneRestriction
+public import Quillen.Aglib.AlgebraicGeometry.Modules.RankOne.Restriction
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.TwistMinusUnit
 public import Aglib.AlgebraicGeometry.Modules.Restriction.ZeroMorphisms
 public import Aglib.AlgebraicGeometry.Modules.Subobjects.Gluing

@@ -7,7 +7,7 @@ module
 
 public import Quillen.Topology.Prespectrum.Looping
 public import Quillen.Topology.Prespectrum.StableEquivalence
-public import Quillen.CategoryTheory.Limits.SequentialInterleaving
+public import Quillen.Aglib.CategoryTheory.Limits.Shapes.SequentialSystem.Interleaving
 
 /-!
 # The original loop-tail stabilization preserves stable groups

@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 
-import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeFree
+import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeFree
 import Mathlib.Algebra.Ring.PUnit
 
 /-! The actual free-module identification retains the original matrix and stable actions. -/

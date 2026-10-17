@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.CategoryTheory.Comma.UniverseLift
 public import Quillen.CategoryTheory.TheoremA.ContractibleComma
 public import Quillen.Topology.ClassifyingSpace.UniverseHomotopy
 
@@ -28,19 +29,6 @@ universe u₁ v₁ u₂ v₂
 namespace Quillen.TheoremA
 
 variable {C : Type u₁} [Category.{v₁} C] {D : Type u₂} [Category.{v₂} D]
-
-/-- Put a functor's source and target into one common small-category universe. -/
-def asSmallFunctor (F : C ⥤ D) :
-    AsSmall.{max u₁ v₁ u₂ v₂} C ⥤ AsSmall.{max u₁ v₁ u₂ v₂} D :=
-  AsSmall.down ⋙ F ⋙ AsSmall.up
-
-/-- The lifted comma category is equivalent to the original comma category. -/
-def asSmallCommaEquivalence (F : C ⥤ D) (d : AsSmall.{max u₁ v₁ u₂ v₂} D) :
-    CostructuredArrow (asSmallFunctor F) d ≌ CostructuredArrow F (ULift.down d) := by
-  let eC : C ≌ AsSmall.{max u₁ v₁ u₂ v₂} C := AsSmall.equiv
-  let eD : D ≌ AsSmall.{max u₁ v₁ u₂ v₂} D := AsSmall.equiv
-  exact (CostructuredArrow.pre eC.inverse (F ⋙ eD.functor) d).asEquivalence |>.trans
-    (CostructuredArrow.post F eD.functor (ULift.down d)).asEquivalence.symm
 
 /-- Contractibility of the original comma spaces passes to the common-universe model. -/
 theorem asSmallComma_contractible (F : C ⥤ D)

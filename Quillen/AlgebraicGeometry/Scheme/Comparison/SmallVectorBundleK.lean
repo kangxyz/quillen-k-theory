@@ -6,6 +6,8 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.LocallyFree.SmallModel
+
 public import Aglib.AlgebraicGeometry.Modules.LocallyFree.Exact
 public import Aglib.CategoryTheory.ExactCategory.Functor
 public import Quillen.AlgebraicGeometry.Scheme.KTheory
@@ -35,12 +37,6 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 
 namespace AlgebraicGeometry.Scheme.Modules
-
-/-- The actual exact functor from the public small model to vector bundles. -/
-abbrev smallVectorBundleToOriginal (X : Scheme.{u}) :
-    ExactFunctor (smallVectorBundleExactStructure X) (vectorBundleExactStructure X) :=
-  CategoryTheory.ExactCategory.ExactStructure.smallModelToOriginal.{u + 1}
-    (vectorBundleExactStructure X)
 
 /-- Public scheme K-theory maps canonically to the actual vector-bundle Q-model. -/
 def smallVectorBundleKMap (X : Scheme.{u}) (n : ℕ) :

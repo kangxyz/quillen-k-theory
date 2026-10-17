@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 module
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.TwoOpenDerivedBaseChange
+public import Quillen.Aglib.AlgebraicGeometry.Modules.BaseChange.Derived.TwoOpen
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.ChartAffineness
 public import Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.DiagonalIncidence
 /-! # Actual flat base change of the two-chart projective-line projection

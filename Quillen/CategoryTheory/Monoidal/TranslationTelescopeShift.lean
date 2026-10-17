@@ -6,7 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.CategoryTheory.Monoidal.TranslationTelescope
-public import Quillen.CategoryTheory.Grothendieck.TelescopeShift
+public import Quillen.Aglib.CategoryTheory.Grothendieck.TelescopeShift
 
 /-! # Right stabilization and index shift on the monoidal translation telescope -/
 

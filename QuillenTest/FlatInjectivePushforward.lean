@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.Scheme.Sheaf.FlatInjectivePushforward
+public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Pushforward.FlatInjective
 
 /-! Consumers of the original flat geometric adjunction on bounded injective targets. -/
 @[expose] public section

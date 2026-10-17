@@ -5,6 +5,9 @@ Authors: kangxyz, Codex
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.DerivedCategory.Plus.Additive
+
+
 public import Aglib.AlgebraicGeometry.Modules.Complex.Basic
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.EulerNegative
 
@@ -34,10 +37,7 @@ variable (R : CommRingCat.{u})
 local instance eulerMiddleStandard (X : Scheme.{u}) :
     HasDerivedCategory.{u + 1} X.Modules := HasDerivedCategory.standard _
 
-local instance derivedPlusQ_additive (X : Scheme.{u}) :
-    (DerivedCategory.Plus.Q (C := X.Modules)).Additive := by
-  dsimp [DerivedCategory.Plus.Q]
-  infer_instance
+attribute [local instance] derivedPlusQ_additive
 
 local instance derivedProjection_additive :
     (derivedPushforwardPlus (projection R)).Additive := by

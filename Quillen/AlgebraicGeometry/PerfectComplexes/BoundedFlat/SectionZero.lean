@@ -5,8 +5,9 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SectionEquivalence
-public import Quillen.CategoryTheory.FiberedCategory.GrothendieckZeroSections
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.BoundedFlat.SectionEquivalence
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.Basic
+public import Quillen.Aglib.CategoryTheory.FiberedCategory.GrothendieckZeroSections
 
 /-!
 # The original chosen zeros form a strictly reindexed bounded-flat section

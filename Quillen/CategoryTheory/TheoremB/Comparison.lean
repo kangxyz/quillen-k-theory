@@ -6,6 +6,7 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.Comma.Transitions
 public import Quillen.Topology.ClassifyingSpace.Constant
 public import Quillen.Topology.Realization.HomotopyBridge
 public import Quillen.Topology.HomotopyFiber.Basic
@@ -37,13 +38,6 @@ namespace Quillen.TheoremB
 
 variable {C D : Type u} [SmallCategory C] [SmallCategory D] (F : C ⥤ D)
 
-/-- The structure arrows of `(F ↓ d)` form the canonical transformation to `d`. -/
-@[simps]
-def commaTransformation (d : D) :
-    CostructuredArrow.proj F d ⋙ F ⟶ (Functor.const (CostructuredArrow F d)).obj d where
-  app X := X.hom
-  naturality X Y f := by simp
-
 /-- The structure-arrow transformation realizes to an actual nullhomotopy. -/
 def commaNullhomotopy (d : D) :
     ((classifyingSpaceMap F).hom.comp
@@ -73,15 +67,6 @@ theorem fiberComparison_projection (d : D) :
 theorem fiberComparison_path (d : D) (x : ClassifyingSpace (CostructuredArrow F d))
     (t : unitInterval) :
     (fiberComparison F d x).1.2 t = commaNullhomotopy F d (t, x) := rfl
-
-/-- Postcomposition in the comma category, covariant in the target object. -/
-abbrev transition {d e : D} (f : d ⟶ e) :
-    CostructuredArrow F d ⥤ CostructuredArrow F e := CostructuredArrow.map f
-
-/-- The postcomposition functor leaves the underlying source object unchanged. -/
-@[simp]
-theorem transition_projection {d e : D} (f : d ⟶ e) :
-    transition F f ⋙ CostructuredArrow.proj F e = CostructuredArrow.proj F d := rfl
 
 /-- The continuous transition map in Theorem B's hypothesis. -/
 def transitionMap {d e : D} (f : d ⟶ e) :

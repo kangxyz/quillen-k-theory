@@ -5,6 +5,7 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveExtensions
 public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveExtensionProductAction
 public import Quillen.CategoryTheory.GroupCompletion.Monoidal
 
@@ -24,24 +25,6 @@ variable (R : Type u) [Ring R]
 attribute [local instance] categoryDirectSumMonoidal categoryDirectSumSymmetric
 attribute [local instance] directSumMonoidal directSumSymmetric extensionFiberDirectSumAction
 open GroupCompletion ActionLocalization
-
-/-- The first projection of a product map is the original first map. -/
-@[reassoc (attr := simp)]
-theorem extensionFiberProduct_map_fst {C : Category.{u, u} R}
-    {p p' q q' : (exactStructure R).ExtensionFiber C} (f : p ⟶ p') (g : q ⟶ q') :
-    (((exactStructure R).extensionFiberProduct C).map (Prod.mkHom f g)).iso.hom.hom.left ≫
-      pullback.fst p'.of.obj.hom q'.of.obj.hom =
-    pullback.fst p.of.obj.hom q.of.obj.hom ≫ f.iso.hom.hom.left :=
-  pullback.lift_fst _ _ _
-
-/-- The second projection of a product map is the original second map. -/
-@[reassoc (attr := simp)]
-theorem extensionFiberProduct_map_snd {C : Category.{u, u} R}
-    {p p' q q' : (exactStructure R).ExtensionFiber C} (f : p ⟶ p') (g : q ⟶ q') :
-    (((exactStructure R).extensionFiberProduct C).map (Prod.mkHom f g)).iso.hom.hom.left ≫
-      pullback.snd p'.of.obj.hom q'.of.obj.hom =
-    pullback.snd p.of.obj.hom q.of.obj.hom ≫ g.iso.hom.hom.left :=
-  pullback.lift_snd _ _ _
 
 /-- Multiply translated extension maps using the direct sum of their translating
 objects and the actual pullback distributivity isomorphism. -/

@@ -6,7 +6,7 @@ Authors: kangxyz
 
 module
 
-public import Quillen.Algebra.ModuleComplex.FiniteParametrix
+public import Quillen.Aglib.Algebra.Homology.ModuleCat.FiniteParametrix
 public import Mathlib.Data.ZMod.Basic
 
 /-! # Consumers of the original finite-parametrix replacement

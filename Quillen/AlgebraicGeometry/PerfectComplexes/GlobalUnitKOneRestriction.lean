@@ -5,6 +5,9 @@ Authors: kangxyz
 -/
 module
 
+public import Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.GlobalUnitRestriction
+
+
 public import Quillen.AlgebraicGeometry.PerfectComplexes.ScalarLaurentClassComparison
 
 /-!
@@ -26,25 +29,6 @@ open CategoryTheory AlgebraicGeometry
 open Quillen.Waldhausen
 universe u
 namespace Quillen.PerfectComplexes
-
-/-- The original perfect scalar of a unit is exactly its existing unit automorphism. -/
-theorem perfectGlobalScalar_unit (X : Scheme.{u}) (q : (Γ(X, ⊤))ˣ) (K : Perfect X) :
-    (perfectGlobalScalar X (↑q)).app K = (perfectGlobalUnitIso X q).hom.app K := by
-  apply (locallyPerfect X).ι.map_injective
-  rw [perfectGlobalUnitIso, Functor.fullyFaithfulCancelRight_hom_app, Functor.map_preimage]
-  exact complexGlobalScalar_unit X q K.obj
-
-/-- The actual restricted automorphism is multiplication by the literal pulled-back unit. -/
-theorem perfectRestrict_globalUnitIso_app {U X : Scheme.{u}}
-    (j : U ⟶ X) [IsOpenImmersion j] (q : (Γ(X, ⊤))ˣ) (K : Perfect X) :
-    (perfectRestrict j).mapIso ((perfectGlobalUnitIso X q).app K) =
-      (perfectGlobalUnitIso U (Units.map j.appTop.hom.toMonoidHom q)).app
-        ((perfectRestrict j).obj K) := by
-  apply Iso.ext
-  change (perfectRestrict j).map ((perfectGlobalUnitIso X q).hom.app K) = _
-  rw [← perfectGlobalScalar_unit X q K]
-  exact perfectRestrict_scalar_eq_globalUnit j K (↑q)
-    (Units.map j.appTop.hom.toMonoidHom q) rfl
 
 /-- The original K-map, with its canonical zero rebase, preserves the actual unit class. -/
 theorem perfectGlobalUnitKOneClass_restrict {U X : Scheme.{u}}

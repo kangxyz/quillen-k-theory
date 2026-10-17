@@ -5,7 +5,7 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveMonoidal
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveMonoidal
 public import Quillen.CategoryTheory.GroupCompletion.DiagonalAction
 public import Quillen.KTheory.GrothendieckGroup.Basic
 public import Mathlib.CategoryTheory.Discrete.Basic

@@ -3,7 +3,7 @@ Copyright (c) 2026 Quillen K-theory contributors. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
-import Quillen.Algebra.Matrix.RightAutomorphismsLeft
+import Quillen.Aglib.LinearAlgebra.Matrix.RightAutomorphismsLeft
 
 /-! Regression tests for explicit basis reversal and the actual left free sequence. -/
 

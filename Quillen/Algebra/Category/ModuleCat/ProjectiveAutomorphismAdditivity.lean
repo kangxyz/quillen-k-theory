@@ -7,7 +7,7 @@ module
 
 public import Quillen.Algebra.Category.ModuleCat.ProjectiveAutomorphismClass
 public import Quillen.Algebra.Matrix.IdempotentSplitExtension
-public import Quillen.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeExact
+public import Quillen.Aglib.Algebra.Category.ModuleCat.FiniteProjectiveBaseChangeExact
 
 /-!
 # Additivity of actual projective automorphism classes

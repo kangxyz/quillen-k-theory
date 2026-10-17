@@ -6,9 +6,10 @@ Authors: kangxyz
 
 module
 
+public import Quillen.Aglib.CategoryTheory.ExactCategory.HasCokernel
 public import Aglib.CategoryTheory.Limits.Shapes.CokernelPushout
 public import Quillen.Waldhausen.QuillenComparison.RowGroupoid
-public import Quillen.Waldhausen.QuillenComparison.QuotientCalculus
+public import Quillen.Aglib.CategoryTheory.Limits.Shapes.CompositeCokernel
 
 /-! # Completing admissible flags by their actual cokernels
 
@@ -31,11 +32,6 @@ namespace Quillen.Waldhausen.QuillenComparison
 variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
 variable (E : CategoryTheory.ExactCategory.ExactStructure C)
 variable {n : SimplexCategory}
-
-/-- An inflation has an actual cokernel, supplied by its defining conflation. -/
-theorem hasCokernel_of_inflation {X Y : C} (f : X ⟶ Y) (hf : E.inflation f) : HasCokernel f := by
-  obtain ⟨Z, p, w, h⟩ := hf
-  exact ⟨⟨CokernelCofork.ofπ p w, E.cokernel _ h⟩⟩
 
 variable (A : Fin (n.len + 1) ⥤ C)
 variable (hA : ∀ {i j} (f : i ⟶ j), E.inflation (A.map f))
