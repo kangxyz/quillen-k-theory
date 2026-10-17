@@ -66,13 +66,38 @@ Use `examples/downstream/Consumer/` for client proofs compiled in a separate Lak
 package. Choose a meaningful property or public use rather than a list of
 names or a test that merely repeats its implementation.
 
-For iteration, build the changed module and its relevant clients:
+Normal authoring, maintenance, documentation, review, merge, integration, and
+release must use incremental checks and reuse trusted build artifacts and
+compatible validation evidence. Reconcile the combined changes,
+then build only changed or missing required leaf modules and their affected
+consumers:
 
 ```sh
 lake build Quillen.KTheory.API
 ```
 
-Run the complete pipeline before handing back a release candidate:
+A merge, commit, branch switch, checkout, version bump, or publication does not
+by itself require a whole-target build, fresh dependency replay, full audit, or
+Python/source suite. Complete release coverage may combine compatible existing
+evidence with new checks of the affected scope, including trust checks when
+their inputs or coverage changed. Record the inputs and closure that each
+piece of evidence covers.
+
+Preserve caches. A missing artifact or receipt, or a different checkout, first
+calls for matching available artifacts and evidence. Compile the missing
+required closure only after checking for a usable matching cache. Toolchain,
+dependency-pin, and global-option changes require matching caches and an
+assessment of actual invalidation; they do not automatically assign a complete
+library recompile. Missing coverage calls for checks of the uncovered affected
+scope, not a blanket rebuild. Whole-library rebuilding is fault recovery outside
+the normal workflow: diagnose incompatible, corrupt, or untrustworthy artifacts
+throughout that closure and the absence of a usable matching cache first. A user
+may explicitly request a literal full rebuild or replay; honor its exact scope
+without assuming broader work.
+
+The complete pipeline below remains available for explicit comprehensive
+diagnostics and declared CI coverage. It is not a normal local acceptance step
+and does not itself request a clean rebuild:
 
 ```sh
 bash scripts/check.sh --rehash
@@ -160,7 +185,10 @@ hypotheses to fit a coherent specialization.
 Ordinary checks use the committed toolchain and manifests. Run `lake update`
 when resolving a new consumer dependency or intentionally changing dependency
 pins. For an upgrade, update the root and downstream toolchains and manifests
-together, obtain the matching cache, and run the full pipeline. Explain affected
-interfaces and theorem hypotheses.
+together, obtain matching caches, and validate the actually affected modules,
+consumers, and trust boundary using compatible prior evidence where applicable.
+Explain affected interfaces and theorem hypotheses. A pin or toolchain change
+alone does not require fresh compilation of unaffected libraries; normal local
+acceptance remains incremental.
 
 Contributions are licensed under Apache-2.0.

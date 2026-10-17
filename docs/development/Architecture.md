@@ -90,33 +90,46 @@ extension rules.
 
 ## Trust checks
 
-`scripts/check.sh` builds the library and tests, runs the configured lint
-checks, and builds the separate downstream package. It explicitly replays
+`scripts/check.sh` provides explicit comprehensive diagnostics and declared CI
+coverage; it is not a normal local acceptance step. It builds the library and
+tests, runs the configured lint checks, and builds the separate downstream
+package. It explicitly replays
 `QuillenTest/Axioms.lean` and the downstream `Audit.lean`, because cached compiled
 modules do not re-execute audit commands.
 
-CI caches the complete root and downstream `.lake/build` directories across
-runs. Versioned keys separate operating systems, architectures, and both
-packages' toolchains, manifests, and Lake configurations. The v2 configuration
-hash (`scripts/cache_key.py`, Python 3.11+) parses both `lakefile.toml` files,
-removes only their top-level package `version`, and canonicalizes the remaining
-typed configuration. Pure package version changes reuse the same configuration
-hash; compiler options, targets, metadata, and nested dependency versions remain
-part of it. Toolchain and manifest files are hashed raw with their paths;
-optional `lakefile.lean` files are conservatively hashed raw, including version
-text and file presence. Missing required inputs, malformed TOML, and unsupported
-TOML scalars (dates/times or nonfinite floats) fail the hash step visibly.
+Normal authoring, maintenance, documentation, review, merge, integration, and
+publication must use incremental checks, reusing trusted caches and compatible
+existing evidence with new checks for changed or missing required
+modules, affected consumers, and changed trust-check inputs. Reconcile combined
+changes before reusing coverage. The phase, commit identity, a missing receipt,
+or a different checkout alone does not require complete compilation, fresh
+dependency replay, or rerunning every audit and source suite. See
+[the validation policy](../../CONTRIBUTING.md#tests-and-checks) for cache recovery
+and the exceptional fault-recovery conditions for a whole-library rebuild.
+Missing coverage alone calls for the uncovered affected checks. Outside fault
+recovery, a literal full rebuild or replay requires an explicit user request
+with that exact scope.
 
-A hash of the project Lean sources permits exact hits for documentation-only
-changes. A source-independent v2 prefix restores successful builds with the
-same normalized configuration after source changes. During migration, the
-second restore prefix is the legacy v1 key with the exact current raw
-configuration hash, including package versions; it never crosses configuration
-boundaries to restore an older incompatible build.
-`bash scripts/check.sh --rehash` always runs: Lake validates restored traces
-against current content and incrementally rebuilds missing or stale modules,
-including dependents of changed imports. Both lints and both explicit audits
-run even on exact cache hits. Only successful jobs publish new build caches.
+CI restores root, downstream, and pinned Aglib build outputs and shared native
+Lake artifacts. Versioned keys distinguish platform, toolchains, manifests, and
+normalized Lake configurations. The configuration hash (`scripts/cache_key.py`,
+Python 3.11+) omits only the top-level `version`, `enableArtifactCache`, and
+`restoreAllArtifacts` fields of each TOML package configuration. Compiler
+options, targets, metadata, and nested dependency versions remain part of it.
+Toolchains, manifests, and optional executable Lake configurations are hashed
+raw; invalid or missing required configuration fails visibly. A configuration
+key change selects matching artifacts and actual invalidation; it is not a
+local instruction to recompile every library.
+
+Project source hashes and source-independent prefixes permit restoration after
+source changes. The configured CI job runs `bash scripts/check.sh --ci --rehash`:
+Lake validates restored traces against current content and incrementally builds
+missing or stale modules and affected dependents. The complete CI checks include
+lints and both explicit audits even on exact cache hits. This CI coverage does
+not make that command the local merge or publication default. CI saves partial
+build progress, while publishing checked native artifacts only after successful
+checks. Publication of the native cache consumes those checked artifacts rather
+than requiring a fresh proof build.
 
 The exhaustive library audit uses legacy imports to expose transitive private
 module declarations. It discovers imported module inventories and local

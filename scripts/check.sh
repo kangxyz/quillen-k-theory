@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Check source structure, build library/tests, and replay both kernel trust checks.
+# Comprehensive diagnostics / declared CI: source checks, library/tests, trust checks.
+# Normal local acceptance must use incremental affected-scope checks (CONTRIBUTING.md).
+# This command retains build artifacts; --rehash validates traces without cleaning.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 lake_args=()
@@ -76,7 +78,8 @@ fi
 safe test lake ${lake_args[@]+"${lake_args[@]}"} test
 safe declaration-lint lake ${lake_args[@]+"${lake_args[@]}"} lint
 safe style lake ${lake_args[@]+"${lake_args[@]}"} exe lint-style
-# Replay explicitly: cached olean files do not re-execute run_cmd trust tests.
+# This explicit broad pipeline replays audits: cached olean files do not rerun run_cmd.
+# Compatible prior audit evidence remains reusable for scoped local validation.
 safe axioms lake env lean -j2 QuillenTest/Axioms.lean
 consumer="$PWD/examples/downstream"
 mkdir -p "$consumer/.lake"

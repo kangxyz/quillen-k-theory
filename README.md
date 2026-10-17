@@ -16,7 +16,8 @@ git = "https://github.com/kangxyz/quillen-k-theory.git"
 rev = "main"
 ```
 
-Run `lake update quillen-k-theory`, then `lake build`. Use a specific commit
+Run `lake update quillen-k-theory`, obtain matching dependency artifacts, then
+build the required client target and its affected dependencies. Use a specific commit
 instead of `main` and retain `lake-manifest.json` for reproducible builds.
 
 Import `Quillen.KTheory.API` for the K-theory interface, or `Quillen` for the
@@ -28,14 +29,18 @@ Start with the [documentation map](docs/README.md).
 [Mathematical scope](docs/reference/Scope.md) records hypotheses, coverage and
 remaining comparisons; constructed interfaces do not supply their required inputs.
 
-From the library checkout, run:
+From the library checkout, fetch matching Mathlib artifacts when needed, then
+build the required leaf and its affected consumers:
 
 ```sh
 bash scripts/cache.sh
-bash scripts/check.sh --rehash
+lake build Quillen.KTheory.API
 ```
 
-[Contributing](CONTRIBUTING.md) explains focused builds and verification.
+[Contributing](CONTRIBUTING.md#tests-and-checks) explains incremental validation
+for development, merge, and publication. `bash scripts/check.sh --rehash` is an
+explicit comprehensive diagnostic and CI pipeline, not a normal local acceptance
+step. All normal workflows must use incremental checks.
 
 ## License
 
