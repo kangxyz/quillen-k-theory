@@ -5,9 +5,12 @@ nonnegative stable groups additively with the original Waldhausen K-groups,
 including K₀. Its negative stable groups vanish. Bass negative groups are
 separately defined by polynomial-to-Laurent cokernels. A strict spectral Bass
 tower realizes each recursive group as the bottom stable group of its finite
-stage and gives natural maps to the actual telescope. Bijectivity of these
-telescope maps and identification with classical nonconnective K-theory remain
-separate comparisons.
+stage. For qcqs ambient schemes, the actual fine transition and inclusion at
+stage `i` are isomorphisms in every degree `d ≥ -i`. The original negative
+class maps are therefore natural isomorphisms to this fine telescope; the
+supported result also assumes a quasi-compact removed open. Identification
+with the original raw all-stage tower and classical nonconnective K-theory
+remains separate.
 
 For a quasi-compact open of an affine scheme, a separate quotient-graded Bass
 telescope has zero stable groups in every integer degree. Its constructed
@@ -365,13 +368,17 @@ original Laurent quotient through the genuine polynomial/Laurent product
 isomorphisms.
 [`CoefficientBassOriginalNegativeNaturality`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassOriginalNegativeNaturality.lean)
 also preserves the original scheme pullback for every map over the fixed base
-between compact endpoints. Supported comparisons and transition stabilization
-remain separate.
+between compact endpoints. The supported finite comparison is supplied by
+`CoefficientSupportedNegativeBottomComparison` for an open immersion with
+compact ambient scheme; it does not require the removed open to be compact.
+`CoefficientSupportedNegativeForgetComparison` preserves the original
+support-forgetting map at every finite bottom under the same hypotheses.
 
 [`boundedFlatCoefficientAmbientBassNegativeMap`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeMap.lean)
 then sends each original native class through that comparison and the original
 stage inclusion into the ambient coefficient telescope. Its Laurent quotient
-equation retains the successor-stage inclusion, without a bijectivity claim.
+equation retains the successor-stage inclusion. The fine comparison below
+proves this same map invertible for qcqs ambient schemes.
 The geometric
 [`CoefficientPolynomialLaurentSchemeNaturality`](../../Quillen/AlgebraicGeometry/Scheme/CoefficientPolynomialLaurentSchemeNaturality.lean)
 squares also preserve both products and both charts under arbitrary scheme-over-base
@@ -382,16 +389,16 @@ The resulting actual telescope map retains every original inclusion/cylinder
 and its identity/composition laws.
 [`CoefficientBassNegativeMapNaturality`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeMapNaturality.lean)
 identifies the original negative-class restriction square with that same map
-when both endpoints are compact. This proves naturality, without bijectivity
-or stabilization.
+when both endpoints are compact. These naturality statements retain their
+weaker hypotheses independently of the qcqs stabilization theorem below.
 
 [`boundedFlatAffineSectionBassNegativeMap`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Affine/SectionBassNegativeMap.lean)
 composes the finite bottom isomorphism with the original stage inclusion into
 `boundedFlatAffineSectionBassTelescope`. It is coefficient-natural and retains
-the Laurent quotient and next-stage cylinder formulas, without injectivity,
-surjectivity, or fixed-degree transition stabilization. The natural localized
-initial map `affinePerfectBassTelescopeInitial` likewise asserts no nonnegative
-group isomorphism. Bass/telescope commutation and the tail map construct
+the Laurent quotient and next-stage cylinder formulas. This older ring-indexed
+section construction is distinct from the specified native coefficient Model
+rows in the fine theorem below; no identification of their telescope maps is
+asserted here. Bass/telescope commutation and the tail map construct
 `boundedFlatAffineSectionBassTelescopeBassMap`, a stable map from this actual
 telescope to its own Bass image in every integer degree. Its initial face is
 the original Laurent seed followed by Bass of the original initial inclusion;
@@ -408,6 +415,63 @@ At the identity algebra the chosen open is related to `j` by its projection
 isomorphism. The geometric support/localization endpoint and its remaining
 Laurent-boundary obligations are described in
 [PerfectComplexes.md](PerfectComplexes.md).
+
+## Fine stabilization and original localization groups
+
+The fine theorem concerns the unchanged strict coefficient Model stages,
+not a replacement raw tower. For qcqs `P.left`,
+[`CoefficientBassFineRangeInvertibility`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassFineRangeInvertibility.lean)
+proves `boundedFlatCoefficientAmbientBassTransition_isIso_of_le`: at every
+stage `i : ℕ`, coefficient `a : Under R` and signed degree `d ≥ -i`, the
+original transition induces an isomorphism. The equality case `d = -i` is
+included. The proof uses the original connective seed, inter-stage spectral
+row, recursive middle exactness and bottom chart exactness.
+
+[`CoefficientBassFineTelescopeComparison`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassFineTelescopeComparison.lean)
+proves the same range for the actual stage inclusion. Its
+`boundedFlatCoefficientAmbientNegativeKTelescopeComparison i` is exactly the
+original finite-bottom comparison followed by that inclusion, and preserves
+the original Laurent quotient. `CoefficientBassConnectiveTelescopeComparison`
+uses the original connective evaluation and stage-zero inclusion. Both are
+natural isomorphisms on the full coefficient category.
+
+For an open immersion `f : P ⟶ Q` with compact `P.left` and qcqs `Q.left`,
+`CoefficientSupportedFineRangeInvertibility`,
+`CoefficientSupportedFineTelescopeComparison` and
+`CoefficientSupportedConnectiveTelescopeComparison` give the same statements
+for the actual supported stages and telescope. The original negative and
+connective degree-zero comparison maps agree literally.
+`CoefficientSupportedNegativeTelescopeForget` proves the whole original
+support-forgetting square, retaining its recursive Laurent representative.
+
+`CoefficientFullOpenBassRestriction` identifies the full-open fine Model row,
+Laurent action, seed and telescope definitionally with the ambient construction
+on the open scheme. For an open immersion, the constructed telescope
+localization map is the original scheme restriction on every cylinder; this
+identity itself needs no compactness premise.
+`CoefficientNegativeLocalizationExactness` and
+`CoefficientNegativeLocalizationBoundary` then transport the same-null signed
+cone sequence through the original ambient/supported isomorphisms. At the
+identity coefficient, `Bass.SupportedLocalizationExactness` and
+`Bass.SupportedLocalizationBoundary` give the original open-pair sequence in
+every nonpositive degree under compactness of the removed open and qcqs of
+the ambient scheme. Restriction and support forgetting are the original maps.
+The positive geometric K₁-to-supported-K₀ boundary joins this sequence by
+exactness at the literal K₀ groups. Equality of that boundary with the fine
+boundary and arbitrary-pair pullback naturality of the transported boundary
+remain separate obligations. See [PerfectComplexes.md](PerfectComplexes.md#original-nonpositive-localization-sequence)
+for the exact group row.
+
+The fine stabilization and group identifications do not construct the original
+raw all-stage geometric tower. The actual raw first stage has whole identity
+and composition laws in `CoefficientBassUnitCubeConsumers` and
+`MWholeCubeConsumers`. Parameterized pushout/cone descent, its whole-family
+recovery, and the constructed Laurent and polynomial native cells retain
+specified fillers and clocks. The complete compatible overlap four-cube,
+its eight faces, their whole intersections including the original half-height
+midpoint, and all quotient attachments must still be supplied before
+actual second-projection pasting and coherent raw iteration. These raw
+interfaces are described in [PerfectComplexes.md](PerfectComplexes.md#raw-identity-and-second-stage-coherence).
 
 ## The quotient-graded full-open Bass telescope
 
@@ -481,10 +545,10 @@ stable with its explicit universe lift and chosen-zero normalization;
 evaluation through the seeds, iterates and telescope remains separate.
 See the [TT localization roadmap](../development/TTLocalization.md).
 
-For the ambient and supported ungraded telescopes above, fixed-degree
-stabilization, classical negative identification, and full all-iterate comparison
-with the original raw geometric towers remain open; the ambient negative-class
-maps still have no bijectivity assertion. Native global C/F/G Models now have
+For the fine ambient and supported telescopes, the original-group
+identifications and finite-stage ranges are now supplied under the hypotheses
+above. Full all-iterate comparison with the original raw geometric towers and
+classical nonconnective identification remain open. Native global C/F/G Models now have
 their original Laurent seeds, canonical nulls, actual finite/telescope maps and
 graded contraction. The original coarse-to-fine completion restriction is
 stable for qcqs ambient schemes and quasi-compact opens. Basic global supported
@@ -504,9 +568,11 @@ The connective S-spectrum comparison does not settle these questions.
 The conditional `Bass.TwoChartStableSpan` and `TwoChartStableSequence` now
 provide the signed span quotient, natural all-degree Bass short exact row,
 and actual cycles/image right-term identification. Their original plus
-retraction and cone/collapse stability inputs still need native geometric
-realization; recursive chart middle exactness and the original initial seed
-are not proved by this structural interface.
+retraction and cone/collapse stability inputs are realized for the actual
+finite coefficient Models by `CoefficientTwoChartStableSequence`. The original
+ambient and supported middle rows, connective seeds and full fine transition
+ranges have their additional geometric proofs; the generic structural
+interface alone does not imply them.
 See [Scope.md](../reference/Scope.md) for the global frontier and
 [Architecture.md](../development/Architecture.md#trust-checks) for the foundation
 audit boundary. Compilation and axiom audits concern encoded proofs; they do

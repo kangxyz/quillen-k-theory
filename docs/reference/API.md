@@ -291,6 +291,10 @@ endpoints until the corresponding comparison is applied.
 | `KTheory.Bass.TwoChartAdditive` | Additive two-chart contraction and preservation of split exact sequences |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassActualSeedComparison` | Constructed whole seed square on the original two-chart pushout |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassSeedIteration` | Objectwise first-to-second Bass map with literal inclusion, cylinder and loop-coordinate formulas |
+| `Topology.Prespectrum.PushoutConeFamily`, `Topology.Prespectrum.PushoutConeFamilyRecovery` | Locally compact parameter descent through the original pushout and reduced cone, strict restriction/looping and recovery of entire chosen families |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassUnitNativeCube`, `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassUnitCubeConsumers` | Actual six-face original identity cube and whole comparison/cone/step identities |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassRaw1PolynomialCommonPastingNative` | Native evaluation of the selected six-face polynomial three-cube with original inputs and independent structure time |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassRaw1LaurentNativeCell`, `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassRaw1PolynomialNativeCells`, `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassRaw1PolynomialNativeAttachments` | Full-target Laurent/polynomial cells and both entire native height-zero attachments through original source chart maps |
 | `KTheory.Bass.StrictLaurentSeedStable` | Transparent `Track.SeedStableFactorization` and `SeedStableFormula` for an actual track and supplied seed |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedBassSeedStable` | Original supported and ambient seed factorizations through the actual cone inclusion |
 | `AlgebraicGeometry.PerfectComplexes.Affine.SectionBassNegativeMap` | Finite-stage bottom comparison and natural negative-class maps |
@@ -357,6 +361,27 @@ also requires compact `T`. These owners supply the corresponding constructed
 coarse-to-fine restriction, supported fiber and signed boundary. The graded
 Model definitions retain their own compactness conditions on `P.left` and
 `Q.left`. No coefficient flatness or noetherian assumption is added.
+
+The fine ambient completion for qcqs `P.left` has its original transition and
+stage inclusion invertible in degree `d ≥ -i`:
+
+| Import after `Quillen.AlgebraicGeometry.PerfectComplexes.` | Principal interface |
+| --- | --- |
+| `BoundedFlat.CoefficientBassFineRangeInvertibility` | `boundedFlatCoefficientAmbientBassTransition_isIso_of_le` |
+| `BoundedFlat.CoefficientBassFineTelescopeComparison` | Original inclusion range and `boundedFlatCoefficientAmbientNegativeKTelescopeComparison` |
+| `BoundedFlat.CoefficientBassConnectiveTelescopeComparison` | `boundedFlatCoefficientAmbientKTelescopeComparison` through original stage-zero evaluation/inclusion |
+| `BoundedFlat.CoefficientSupportedNegativeBottomComparison`, `BoundedFlat.CoefficientSupportedNegativeForgetComparison` | Finite-bottom supported comparison and original forget square with only compact ambient scheme |
+| `BoundedFlat.CoefficientSupportedFineRangeInvertibility`, `BoundedFlat.CoefficientSupportedFineTelescopeComparison`, `BoundedFlat.CoefficientSupportedConnectiveTelescopeComparison` | Supported range and original negative/connective fine-telescope isomorphisms; open immersion, compact removed open and qcqs ambient |
+| `BoundedFlat.CoefficientSupportedNegativeTelescopeForget` | Original forget-support square and Laurent quotient through the actual inclusions |
+| `BoundedFlat.CoefficientFullOpenBassRestriction` | Definitional full-open row/action/seed/telescope and cylinder-wise equality with original restriction |
+| `Bass.SupportedLocalizationExactness`, `Bass.SupportedLocalizationBoundary` | Original nonpositive open-pair localization sequence and fixed fine connecting map; geometric positive boundary joins by exactness at literal K₀ |
+
+These comparison maps retain the original recursive quotient and the actual
+stage inclusions; the connective and negative supported maps at zero coincide.
+The nonpositive localization sequence assumes compact removed open and qcqs
+ambient. It does not identify the fine connecting map with the geometric
+K₁-to-K₀ map, prove arbitrary-pair pullback naturality of that transported
+boundary, or identify the original raw classical model.
 
 The raw all-iterate and telescope comparisons and identification with classical
 nonconnective K-theory remain open; completed geometric evaluation is separate. The

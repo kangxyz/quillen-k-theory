@@ -1,10 +1,13 @@
 # Thomason–Trobaugh continuation handoff
 
-Prepared on 2026-10-15 for another agent to continue after P1–P5. The
-projective-line phase is complete at the scope below. Classical
-Thomason–Trobaugh localization still has the remaining comparisons listed
-here. The delivery checkpoint is the Git commit containing this document;
-the actual push result is reported in the accompanying task response.
+Current handoff: the selected archive on baseline
+`492454b306a1a1a26d5701d0503f5aaf127b9367`, integrated with the unchanged pins.
+The projective-line P1–P5 phase and constructed fine localization are preserved.
+The fine transition range, original-group telescope comparisons and fixed
+nonpositive localization sequence now have their stated scope below. Classical
+Thomason–Trobaugh identification remains open. Source correspondence, ordinary
+review and current validation are separated in
+[the integration evidence](evidence/TTFineCompletionAndRawPasting.json).
 
 ## Objective and handoff boundary
 
@@ -20,13 +23,14 @@ The auxiliary-support version uses a closed support `Z` whose complement is
 quasi-compact and retains the original support enlargement, restriction,
 whole nullhomotopy and signed boundary. The already constructed section
 completion has these localization comparisons. Its identification with the
-classical objects and preservation of their original nonnegative groups are
-separate mathematical obligations.
+classical objects is a separate mathematical obligation. Preservation of the
+original negative and nonnegative groups in the actual fine completion is now
+supplied for qcqs ambient schemes, with compact removed open for the supported
+telescope and localization sequence.
 
-The user asked to finish P1–P5, commit and push, and hand subsequent work to
-other agents. The current thread stops at this checkpoint; a receiving
-agent can use the assignments below when asked to continue. Existing
-downstream results are preserved at their stated scope.
+A receiving assignment should select an exact remaining consumer below and
+retain its original maps, conditions and evidence boundary. This handoff does
+not itself record the result of a commit or push.
 
 ## Projective-line phase
 
@@ -87,8 +91,10 @@ homotopy/loop/structure times. The generic filler is owned by
 `Topology/Realization/SimplexCubeExtension` and `SimplexCubeFaces`. These are
 actual finite-stage coherence results; they do not by themselves prove the
 whole raw iterate/telescope comparison or identify the classical seed.
-The separate six-face **unit/identity** cube remains open; the completed
-cube proves composition.
+The separate actual six-face unit cube is also constructed by
+`BoundedFlat/CoefficientBassUnitNativeCube.interiorCube`. Its
+`CoefficientBassUnitCubeConsumers` gives the whole comparison, cone identity
+and parameter-looped `stepIdentity`, with no caller-supplied filler.
 
 The positive Bass row is proved on `K_m(S) := PerfectK(Spec S, m)` for every
 commutative ring, including zero, and every `n ≥ 0`:
@@ -122,6 +128,40 @@ Independent complex ordinary review and canonical native checks accept this
 relative theorem. The fine Laurent positive Bass boundary and its final
 O/O(-1) sign remain open.
 
+The actual fine stage-i transitions and inclusions are isomorphisms in each
+degree `d ≥ -i`, including the bottom degree, for qcqs ambient schemes.
+For supported towers the removed open is compact. The original negative-group
+comparison is exactly the finite-bottom comparison followed by the original
+inclusion; the connective comparison uses original evaluation and stage zero.
+All are natural on the full coefficient category and retain the Laurent
+quotient. The supported negative/connective zero maps agree, and original
+support forgetting commutes with these comparisons. The finite-bottom
+supported comparison and forget square require only compact ambient scheme.
+Entry owners are `CoefficientBassFineRangeInvertibility`,
+`CoefficientBassFineTelescopeComparison`, `CoefficientBassConnectiveTelescopeComparison`
+and their supported counterparts.
+
+`CoefficientFullOpenBassRestriction` proves the full-open fine row, action,
+seed and telescope definitionally the ambient constructions on the open scheme,
+and the localization map equals original scheme restriction on every cylinder
+using only the open immersion. `Bass/SupportedLocalizationExactness` and
+`Bass/SupportedLocalizationBoundary` give the recurring original nonpositive
+sequence for compact removed open in a qcqs ambient scheme. Its boundary is
+the fixed signed same-null fine boundary. The existing geometric positive
+K₁-to-supported-K₀ boundary joins by exactness at literal K₀ groups; its equality
+with the fine boundary and arbitrary-pair boundary naturality remain open.
+
+The reusable raw descent is `Topology/Prespectrum/PushoutConeFamily` and
+`PushoutConeFamilyRecovery`: it retains complete supplied families under
+parameter restriction and independent looping. The actual Laurent and both
+polynomial native cells now lie in the original full target cone. The selected
+polynomial three-cube has all six scalar faces, its original eighteen-node
+Laurent bottom and unreduced tip, based values and independent structure time.
+`CoefficientBassRaw1PolynomialNativeAttachments` proves both whole height-zero
+faces equal to the Laurent family after the actual source chart maps. The
+remaining overlap four-cube and complete L/P/O attachments are distinct from
+these supplied polynomial faces.
+
 ## Recommended next assignments
 
 1. **Finish the original Laurent `[T]` terminal boundary and splitting.**
@@ -149,28 +189,38 @@ O/O(-1) sign remain open.
    Retain the original `[T]` operation and its proved sign, including
    `K₁ → K₀`; keep Nil contributions in the chart quotient.
 
-2. **Use the fixed cube for the original raw seed/iterate comparison.**
-   Consume `MWholeCubeConsumers` rather than rebuilding M or requesting a
-   caller-supplied composition cube. Construct the separate unit cube
-   required by `CoefficientBassUnitInteriorCube`, retaining the already
-   proved polynomial-span unit and both original Laurent chart unit
-   squares. Extend the actual normalized fine-to-raw chart
-   comparison, original cone/source-null/one-step seed, raw iteration and
-   telescope comparison to the ambient, open and auxiliary-supported rows
-   needed by the final diagram. Preserve the original Laurent tracks,
-   zeros and independent coordinates. Acceptance: the actual comparison
-   commutes with the original seeds and stage/telescope inclusions, not
-   merely with an abstract isomorphic spectrum.
+2. **Assemble the original raw second-projection cells.**
+   Reuse the actual identity/composition cubes, Laurent native cell,
+   polynomial native cells and their entire height-zero attachments. Construct
+   the overlap O four-cube with comparison, route, cone-height and overlap
+   coordinates. Retain all eight three-faces and whole chosen earlier fillers;
+   verify their intersections, including the original half-height midpoint,
+   and every quotient attachment. Assemble `PushoutConeFamily (I × I)`, recover
+   both entire cone routes and loop to actual `PlusPasting`/`MinusPasting` for
+   `CoefficientBassSecondCoefficientProjection`. Retain genuine arbitrary
+   polynomial/Laurent input domains, reference isomorphisms, unreduced tips,
+   based values and independent clocks. Then prove second-stage
+   identity/composition and whole seed naturality, and extend to all raw stages.
+   Acceptance is the actual original comparison with each specified whole
+   prior filler retained. The chosen-chart augmentation preserves all four
+   sides of the earlier chart square; `CoefficientBassSeedChosenSquareRange`
+   preserves a supplied range condition and leaves the concrete boundary-range
+   proof as a separate obligation.
 
-3. **Advance the original groups and lowest transitions.**
-   Follow B2-C/G in the maintained roadmap. Prove recursive chart middle
-   exactness with mixed polynomial/Laurent variables and the original
-   quotient maps. The positive splitting is a prerequisite; right
-   exactness alone is insufficient. Extend original negative-group
-   comparisons through support forget/enlargement and scheme/open maps.
-   Then prove B2-D's actual initial seed, B2-E's transition in the boundary
-   degree `d = −i`, and B2-F's original stage-i colimit leg. Stability only
-   from stage `i+1` does not prove the required canonical leg.
+3. **Identify original boundaries and auxiliary group diagrams.**
+   Reuse the proved fine transition range and canonical original telescope
+   legs; they are not remaining obligations. Prove arbitrary-pair naturality
+   of the transported negative boundary and identify it with the original
+   geometric boundary through the actual stable/K connecting compatibility.
+   `Bass/SupportedEnlargement` already supplies original enlargement maps,
+   their identity/composition and forget compatibility. Identify those maps
+   and original restrictions with the T, T∪U and T∩U auxiliary section towers
+   and their exact localization diagram. Retain qcqs ambient, compact removed
+   open, and compact auxiliary acyclicity open for the final auxiliary fine
+   comparison. Neither the existence of an enlargement map nor exactness at
+   literal K₀ by itself supplies the required whole-null boundary square.
+
+
 
 The final B3 task identifies the original raw classical model and transports
 the same-null auxiliary-support diagram. It must retain the three actual
@@ -187,11 +237,10 @@ execution/formalization/review contracts; reconcile recovered claims with
 the live worktree. In a standalone clone, follow
 [CONTRIBUTING](../../CONTRIBUTING.md).
 
-The original delivery checkout is the independent Git repository at
-`tmp/output/quillen-library-release/quillen-k-theory` inside the parent
-research workspace. Run library Git commands from this checkout. The parent
-workspace also has separately owned elliptic-integral notes and bibliography
-changes; those are outside this handoff's staging and push scope.
+Use the active standalone Quillen checkout selected by the receiving task.
+The mathematical source identity is the baseline and selected source recorded
+above; a scratch path or a historical checkout location is not its authority.
+Keep changes outside the assigned consumer read-only.
 
 The source integration uses Lean **4.34.1** and mathlib
 `d13f23b723b8a846827a245b89c10fc7d3f11612`. Keep the committed pins. For a
@@ -201,6 +250,9 @@ fresh source build, choose the exact needed module, for example:
 lake build Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeGlobalBundle
 lake build Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.BassPositiveFundamental
 lake build Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MWholeCubeConsumers
+lake build Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedFineTelescopeComparison
+lake build Quillen.AlgebraicGeometry.PerfectComplexes.Bass.SupportedLocalizationBoundary
+lake build Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassRaw1PolynomialNativeAttachments
 python3 scripts/generate_imports.py --check
 python3 scripts/check_library_layout.py
 ```
@@ -214,14 +266,11 @@ coverage. A partial `Quillen` prefix can shadow later search roots: use a
 coherent complete first-hit closure. Do not copy compiled artifacts into
 the committed handoff.
 
-For optional same-host acceleration, the final checked descriptor is
-`/private/tmp/r5-investigations/quillen-tt-resume3-20261014/p5_final_inverse_admission/runtime.json`
-(SHA-256 `4ed8856972b4e9a290dde8cf0d604f769a753741a903a00d821667c763d8f687`).
-Its sibling `final-ready-guard.json`, `sources.json` and `actual-input-basis.json`
-locate the exact outputs and checks. Reuse requires matching source, pins,
-outputs and first-hit routing. The descriptor retains its check-time
-source-only HEAD; the final Git commit alone does not change identical
-compiled source bytes. A standalone clone builds from the committed source.
+Same-host compiled artifacts are optional acceleration. Reuse requires matching
+source, pins, outputs and a coherent first-hit module closure; the historical
+compiler path or a result JSON alone does not reconstruct a dependency snapshot.
+The current source-only integration deliberately excludes archived binaries
+and unvalidated drafts. A standalone clone builds from committed source.
 
 Final classical closure has the separate full-library boundary:
 
@@ -237,13 +286,12 @@ separate stronger review gate.
 
 ## Checkpoint and evidence
 
-Earlier local checkpoints are `9dcb8112` (P3/foundations), `41e7da1f`
-(original affine GPhi and exact additivity prerequisites), `ecd519b3`
-(both original affine inverses), `6b41b95d` (native coefficients/support),
-and `a364b7f7` (original qcqs/support Phi bijections). The commit containing
-this handoff adds the final P5 inverse sources, preserved downstream
-source and updated scope. Use `git log -1 -- docs/development/TTContinuationHandoff.md`
-to resolve its exact identity in the delivered checkout.
+The current archive starts from `492454b306a1a1a26d5701d0503f5aaf127b9367`.
+Use the delivered repository history to resolve subsequent integration commits;
+this handoff makes no push or release assertion. The new
+[fine completion and raw-pasting evidence](evidence/TTFineCompletionAndRawPasting.json)
+records the selected source identity, exclusions, ordinary review coverage,
+historical evidence limits and current affected-scope validation.
 
 The compact [continuation checks](evidence/TTContinuationChecks.json) and
 [Bass cube evidence](evidence/TTBassCube.json) identify delivered relative

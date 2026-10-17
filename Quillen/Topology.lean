@@ -741,6 +741,7 @@ public import Quillen.Topology.Path.Separation
 public import Quillen.Topology.Path.SimplexCollapsedBoundary
 public import Quillen.Topology.Path.SimplexCollapsedEdges
 public import Quillen.Topology.Path.SquareProjectionReturn
+public import Quillen.Topology.Path.TwoSheetConjugationEvaluation
 public import Quillen.Topology.PathSpace.Metric
 public import Quillen.Topology.PathSubdivision.FiniteIteration
 public import Quillen.Topology.PathSubdivision.FiniteStep
@@ -801,6 +802,7 @@ public import Quillen.Topology.Prespectrum.ConeStableCokernel
 public import Quillen.Topology.Prespectrum.ConeStableDetection
 public import Quillen.Topology.Prespectrum.ConeStableExactness
 public import Quillen.Topology.Prespectrum.ConeStableNaturality
+public import Quillen.Topology.Prespectrum.ConeStableRangeDetection
 public import Quillen.Topology.Prespectrum.ConeStableVanishing
 public import Quillen.Topology.Prespectrum.DiagramNullHomotopy
 public import Quillen.Topology.Prespectrum.FiberConnectivity
@@ -854,12 +856,15 @@ public import Quillen.Topology.Prespectrum.ParameterLoopingHomotopy
 public import Quillen.Topology.Prespectrum.ParameterLoopingPointHEP
 public import Quillen.Topology.Prespectrum.ParameterLoopingStableEquivalence
 public import Quillen.Topology.Prespectrum.ParameterLoopingWeakEquivalence
+public import Quillen.Topology.Prespectrum.ParameterizedDescent
 public import Quillen.Topology.Prespectrum.Point
 public import Quillen.Topology.Prespectrum.PositiveLevelEquivalence
 public import Quillen.Topology.Prespectrum.ProjectionStraighten
 public import Quillen.Topology.Prespectrum.PushoutArrowHomotopy
 public import Quillen.Topology.Prespectrum.PushoutCollapseNaturality
 public import Quillen.Topology.Prespectrum.PushoutConeCollapse
+public import Quillen.Topology.Prespectrum.PushoutConeFamily
+public import Quillen.Topology.Prespectrum.PushoutConeFamilyRecovery
 public import Quillen.Topology.Prespectrum.PushoutConeInterchange
 public import Quillen.Topology.Prespectrum.PushoutConeRebracketing
 public import Quillen.Topology.Prespectrum.PushoutHomotopy
@@ -925,6 +930,7 @@ public import Quillen.Topology.Prespectrum.SelfTrackSuccessorPositive
 public import Quillen.Topology.Prespectrum.SelfTrackSuccessorRepresentative
 public import Quillen.Topology.Prespectrum.SelfTrackSuccessorSign
 public import Quillen.Topology.Prespectrum.SelfTrackTimeOperations
+public import Quillen.Topology.Prespectrum.SpanReassociationEvaluation
 public import Quillen.Topology.Prespectrum.SquareCone
 public import Quillen.Topology.Prespectrum.StableConnectivity
 public import Quillen.Topology.Prespectrum.StableEquivalence

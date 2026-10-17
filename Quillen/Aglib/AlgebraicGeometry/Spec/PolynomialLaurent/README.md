@@ -17,6 +17,12 @@ identities; `Flat` retains coefficient flatness. `OpenPairs` and
 zero-section interfaces. `ZeroSection` retains genuine zero-section projection
 triangles. Their original additional hypotheses remain at the declarations.
 
+`OpenPairInterchange` lifts the literal independent-variable swap to both entries
+of the original open pair. It preserves the actual product projection and maps
+of either fixed factor, hence both polynomial/Laurent charts. Only the ambient
+entry is required compact; the fixed product legs are quasi-compact. Its current
+consumer is the original supported Bass product-contraction transport.
+
 `NativeCoordinates` gives the actual relative polynomial and Laurent schemes
 over an arbitrary base scheme, the positive Laurent open immersion, and the
 second-projection coordinate and Laurent unit. The coordinate pulls back to

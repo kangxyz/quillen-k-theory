@@ -1,0 +1,1281 @@
+{
+  "scope": "Original ambient and supported fine Bass comparisons and localization groups, with selected raw Laurent, polynomial, reference-carrier and parameterized-descent interfaces. No all-stage raw coherence or classical TT completion claim.",
+  "owners": [
+    "docs/topics/PerfectComplexes.md",
+    "docs/topics/SpectraAndBass.md",
+    "docs/development/TTLocalization.md"
+  ],
+  "base_head": "492454b306a1a1a26d5701d0503f5aaf127b9367",
+  "archive": {
+    "file": "quillen-tt-new492454-current-sources-20261017T2225Z.zip",
+    "sha256": "a881340431bac0fc3ad9a7e125c050467434bb022d14357b99215aaa22958da3",
+    "manifest_verified_files": 9015,
+    "canonical_root": "source/"
+  },
+  "selection": {
+    "new_library_modules": 449,
+    "refactored_library_modules": 1,
+    "new_tests": 12,
+    "generated_facades": [
+      "Quillen.lean",
+      "Quillen/Aglib.lean",
+      "Quillen/AlgebraicGeometry.lean",
+      "Quillen/AlgebraicGeometry/PerfectComplexes.lean",
+      "Quillen/KTheory.lean",
+      "Quillen/Topology.lean",
+      "Quillen/Waldhausen.lean",
+      "QuillenTest.lean"
+    ],
+    "checked_overlay_count": 17,
+    "checked_draft_additions": 2,
+    "unvalidated_drafts_excluded": 4
+  },
+  "additional_sources": [
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentCompositionReference.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/laurent-composition-reference-next492454-draft-v05/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentCompositionReference.lean",
+      "sha256": "d07f7f4a90080f8e74cbac4644aed53f901d75d1276de4e06dea2bc8545a37b1",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentNaturalityCarrier.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/laurent-naturality-carrier-next492454-draft-v01/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentNaturalityCarrier.lean",
+      "sha256": "354c964c668bcb23eea1790a814fdb5761f9f6bc1f8dea138ba1a90b346c08fa",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentNaturalityReference.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/laurent-naturality-reference-next492454-draft-v03/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentNaturalityReference.lean",
+      "sha256": "97c4614f838f8ba538a2a06000e4df44f7d86350137ff51a0631b285027ac689",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionBoundary.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/laurent-projection-boundary-next492454-draft-v04/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionBoundary.lean",
+      "sha256": "f1a834167009a88895a6286b5232da89b016e29fa295605de69e8e210df9ae30",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionRouteBridge.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/laurent-projection-route-bridge-next492454-draft-v03/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionRouteBridge.lean",
+      "sha256": "a6f2bd7dd1a65641ec02b182b93bdcdd6584f5536e4a9f628a1e0234c45574ed",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionRoutes.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/laurent-projection-routes-next492454-draft-v02/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionRoutes.lean",
+      "sha256": "6344f5ed6a4348232482054f7d6b1bad3395e7330bcb4c3ab92fa0e90e72eb0e",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionScalarNative.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/laurent-projection-scalar-native-next492454-draft-v01/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionScalarNative.lean",
+      "sha256": "8b3f1339a9fe44027092697b0401cce2705d58c6b13d652cbbf77bdcfb5cc452",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionTripleFamilies.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/laurent-projection-triples-next492454-draft-v01/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionTripleFamilies.lean",
+      "sha256": "249333e4d1812fa88e33e5bb275386a771b398d9e98c33709d3d94b7af4db948",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentTripleCanonicalFamily.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/laurent-triple-canonical-family-next492454-draft-v01/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentTripleCanonicalFamily.lean",
+      "sha256": "cf6db8bd67803112285e0d296a51cdaf0cb53bc917a84152a8f29b9dd78712d5",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentTripleCarrier.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/laurent-triple-carrier-next492454-draft-v06/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentTripleCarrier.lean",
+      "sha256": "c21e70ba96fb2ee6f6b162f1b07fe9f85e84f768c9704f454a7d22db2a34aa5c",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentTripleReference.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/laurent-triple-reference-next492454-draft-v06/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentTripleReference.lean",
+      "sha256": "9f7618947799725849390b7586f85f72fe5d17b6e348bb2c48137ea26dca8f2d",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1LaurentComparison.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/raw1-laurent-comparison-next492454-draft-v03/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1LaurentComparison.lean",
+      "sha256": "37be5d786cb790d74239386ba0dfd82a295a7378016fe87a29a48e0b91ee5d22",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1LaurentFamily.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/raw1-laurent-family-next492454-draft-v02/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1LaurentFamily.lean",
+      "sha256": "34d1e7de9deea0d51885ad3f4aff8770aaf3abe46da59416bcf7f2300c8dc88b",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialConeBoundary.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/raw1-polynomial-cone-boundary-next492454-draft-v01/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialConeBoundary.lean",
+      "sha256": "b3325dc06eefed27e51cafce31a37fdc77bb3299e92e23c591bf162787a9ee70",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialConeNative.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/raw1-polynomial-cone-native-next492454-draft-v01/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialConeNative.lean",
+      "sha256": "ab296cebc6c7ca8c3bf794a522969df1aa7d4f0ca4366daabcd0273f68e647e8",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCone.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/raw1-polynomial-cone-next492454-draft-v02/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCone.lean",
+      "sha256": "0434723a08ea3dd85cd5f2b4f8538b08fac05d2f6de8d4dcf3ec25cf7fe25183",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSecondConeProjectionRoutes.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/second-cone-projection-routes-next492454-draft-v06/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSecondConeProjectionRoutes.lean",
+      "sha256": "6863af296f4dabeb695b36c892bfc7081757d2aa9c334e123cb7a3409767323a",
+      "selection": "checked_overlay"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChosenChartAugmentation.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/seed-chosen-chart-augmentation-new492454-draft-v01/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChosenChartAugmentation.lean",
+      "sha256": "321d58f54e9f4cfc7a56a9fef53a6ad274a498837dcdec66d9a48339faf1d1ad",
+      "selection": "checked_pending_addition"
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChosenSquareRange.lean",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/seed-chosen-square-range-new492454-draft-v02/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChosenSquareRange.lean",
+      "sha256": "3f6ea72d0a23a373c7ce036306cdd08c40fb48aeb3628c30e27c9bcf0f790549",
+      "selection": "checked_pending_addition"
+    }
+  ],
+  "excluded_unvalidated_drafts": [
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputIdentityOverlap.lean",
+      "sha256": "a2bfe6f102c08b7b48ce50b2128620c2ab14d29885df8dd222dd093f96b6a2e7",
+      "reason": "Separate unvalidated draft; not adopted as production source."
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputMidpoint.lean",
+      "sha256": "879efc55b893dbffb06966901c9d38e22019a9df65b911bfa1c7cb4ea3936d65",
+      "reason": "Separate unvalidated draft; not adopted as production source."
+    },
+    {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputCap.lean",
+      "sha256": "6412b38b2e446684b6c49852da0e2628d3d1bead8800ca4c79df196efd74d36a",
+      "reason": "Separate unvalidated draft; not adopted as production source."
+    },
+    {
+      "path": "Quillen/Topology/Prespectrum/NativeParameterEvaluation.lean",
+      "sha256": "fbc28aef1dec09f0c0120cd1923d786690d0746724a84a4d373215a862440d3c",
+      "reason": "Separate unvalidated draft; not adopted as production source."
+    }
+  ],
+  "sources": {
+    "Quillen/Aglib/Algebra/Polynomial/Laurent/UnderZero.lean": "17ed81dbb73cde7b8a7c8fba6d56f5bffacf76c62013ec20b42de9c8442a9874",
+    "Quillen/Aglib/AlgebraicGeometry/Spec/PolynomialLaurent/OpenPairInterchange.lean": "6a36520af6786a05e39f7acde74e0cb010bd5fa77ea7cb8752b0671d28ac2b95",
+    "Quillen/Aglib/Topology/Path/EvaluationOperations.lean": "3f78f58465d493a25b941464a65ce3b73f98e936d012897b58012f2c57c564a6",
+    "Quillen/Aglib/Topology/Path/SpanReassociation.lean": "b1ab7cdda7d8cc0068bfb337e7c8d493916bde50c929be51a959cf370cede777",
+    "Quillen/Aglib/Topology/Path/SpanReassociationNaturality.lean": "5976369ac4dc648ebda8642a591e97ff6ebaa66d1b2718ddab1130f9936abf53",
+    "Quillen/Aglib/Topology/Path/ThreeRadialSquares.lean": "67ac0b698fd9439e29da12932307682e767455594231ba0698d367d8f97a41f2",
+    "Quillen/Aglib/Topology/Path/ThreeRadialSquaresEvaluation.lean": "92c6e36bf41a9628674927f39357689b767685422aec804665b9003a287f6b26",
+    "Quillen/Aglib/Topology/Path/ThreeRadialSquaresMapEvaluation.lean": "44cc4d4b93ea8a430f2e4a89e0eda5c3c744a842236c182dadce510ef1f53099",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/Bass/SupportedKGroups.lean": "2cb36324be3701786746003135d1def3d7e09091b159c0572ce043936a6bfbe5",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/Bass/SupportedLocalizationBoundary.lean": "f6cdf7a0bd96412e85fa28ae9fb92a152fd841dfb636ff6a68e1201ae4ace346",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/Bass/SupportedLocalizationExactness.lean": "efc12b483aa100494bd33c13b8b618be39759f8b437a0513122d2c6a1a4c33ee",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassCutOpenAugmentationEvaluation.lean": "a2161f4eecc0ae4351f1d4a7a598d26f0ff041cb09e6cfffb2366b0eaf2ca4cf",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassCutOpenAugmentationRecovery.lean": "7c4d29fbf6a375c568130d0d30a04f7f09d643c29983b57a412c1e83600568b7",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassH0ChartBoundaryRows.lean": "1cbb6af2b1a68932958a6644320576639c0ef8357e98b63089bcf7a149cdfeeb",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeConeEvaluation.lean": "59dbff546232c8dc8a32bdfab7336ccd1faf6a248749b9771960b6f4e57e580b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeConeLaws.lean": "c27443d74769e7589658a4fdac147a7a5ade5ec1c795d1dd664b993be2980c02",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeMap.lean": "bbbea309dfa57531db5efb76040eb8f21af0cde27cd19c516ade182f986d8a34",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeNative.lean": "baf4afb814e819ccd092ecf381275156248f3fd8f55b784aa9a78497d6607902",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeOverlap.lean": "44f40dad9ffe14a9b720d1e5e75bb3f8f13d22ab81e8a29451c11e52946799c9",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgePrecompBeta.lean": "1e4f96c6db9be7e6cf1947faf0cec88fe250ad80069bd05cb303e64bdccc44f8",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgePrecompCone.lean": "c5da1f37ccc2bef7824fa6fc0e478572ee6cecec98bf6277e12590716236e590",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgePrecompMap.lean": "36d2eabc9dda05c6c9ee1a2bb5fa9912c179d054876d47cb067cbd10859b6968",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgePrecompNative.lean": "1d1e26dde1cd9f23c21a08c26ad006e1805ab10a095063016695d4dc0bc6c86e",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgePrecompRealization.lean": "3077bbc710a46f62149df99dd08207039dde796d40fc7802330f92c0122d7096",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgePrecompReferences.lean": "9c112064c1ba2e4b867f7148a90c8e904f19907ead89ba82de771d23d22f9027",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeRealization.lean": "4d2f6aa3711277ca51f4c2ce70a1e33b1e8908bd4633ca0eaeb641c61bab15cb",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeReanchorBeta.lean": "0d423a05a7786a8a3e98a3ca077e30698453cdbab85a308457d103c2eb9285f1",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeReanchorCone.lean": "54d14280aefe828fefb1473a864bc7ba7c9ff9c52f2e213aeee46f6bfd956932",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeReanchorMap.lean": "5d62994ccc8564e8c6baa7c0b8018ae81e8033c3e17d4e784090d3cd22a81ff0",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeReanchorNative.lean": "be1251037841e27be037a56ac6615b1c46d40fda8916068ad6759553896c0509",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeReanchorRealization.lean": "3ae456ba6f1d1d53b129e748e08678382082d84b27795dd7f4ca48541f081fe2",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeReanchorReferences.lean": "7ab52e1d359687d7fb32db3e59be9ea4cb09f4f38ca72ba23d610a66b7befcf7",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetCells.lean": "f12ea3f866c3173cdc60d53ffee631f0dc7ee6b623fa916494bdddb98d73d8b5",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetCharts.lean": "fa9c1f34bb4fff0d42f414314cf30d1ce90eaf557bde5d732648d83bab0dfdc9",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetConeMap.lean": "92c6f68e11b1ed61ae475d65002881d285b886b582b70569785f847f18fd8f40",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetConeNative.lean": "8aee244b8bca4b7e0de5fd1736515dc181b520f48959c0829eaaeb38282ef95b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetConeReference.lean": "a286791c1d7cdf60b8ffeb7a0f7e8938c4247586d48ccd5e91b505bf439bbdf5",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetDescent.lean": "70d369b20d548b6207c99a653103617e027f1e93478649965387d87671183753",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetLaurentNormalization.lean": "bed6582eee20adf2073b3fa39b6618b3450497d779f4445d0bdbabb58853beb9",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetNative.lean": "cd0758c795fdf637b3888ef978c3626feef3a88baa82dc4266b34dd8a30d3db7",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetOverlap.lean": "63690c48b1e052277ccc0ff4e19d54d6cbb3f3bdc32158961b730f7c76996b6f",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetSource.lean": "7adae28851498a89847c6d72407a604632e42a1b35188db62956646b051846c4",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetSourceBeta.lean": "266e9680e4e29980eb4f8bb48fea1c653e2deae9dc790fd23bd48c9060585b30",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetSourceBoundary.lean": "6f60f8f1e95ad3215f41eb3de9cb5ff2f5c7e98f91c0b4230cd9ea9609bc456b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetSourceRows.lean": "31ddb0f982015b4a0545d16aaaccdbedb412b8c125bb49df468261ad6ca958e1",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetSpanCells.lean": "d7ebee3fb8f56458d2d48f3f7ca77bae20d0a9019635a4818bbca0f4d0b0ff41",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetSpanDescent.lean": "456c780c353c41566976473d6cb2b56e2fc32dadc018f7ec4d1b75dd8ed53cd0",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetSpanNative.lean": "29f3119574f2a97eac968f63e146f9559818c3c561fe5b9b8a9a9663f523c9a7",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetSpanPolynomial.lean": "256db1df9dd554673dd59606799bc5bdd818b2bb94f02a2821b3a901d70fbadc",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetSpanPolynomialNative.lean": "7149fe83fd6f4b9234b0d69a11da20830d2b15a5221e33f628cfd272c054f8c6",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetTerminal.lean": "e32e4553a5da752f539383fb838de78c48c65719fa21fbc2101dd35d7c79a1ed",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetTerminalBetaEdges.lean": "c1543edc52dbb26aed393c7a45e0cfd46d7df37b6665f434975aeb6ec06d8d9d",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetTerminalBoundary.lean": "7dc077bf2a030d79eb1525edc3565943ca5772705c42fd208e8e0c06fde0d9f7",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetTerminalCharts.lean": "fb52a136e4800ccf66a123674c0c19819dc583112cddd1ddc6f66115e5edb15e",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetTerminalPolynomialNodes.lean": "233ab13e472bb9ae5658f52ab0012c15ccec7ffb028c5cc32ad8f5f6ffa7558c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetTerminalPolynomialParameter.lean": "b00222ebabd136a1f84d3ca2afd6e7549abae089a2a0e0e4b743f5baec299114",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetTerminalPolynomialRows.lean": "8c079d3c5456656cf462b943a70f3c4d01821861435a7ddf8f5cae7332748df8",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetTerminalReference.lean": "af5ba6642bc2ff49fcecc8a62643bad03adf86e71ac3f6b4f0ce6b66f2a57f9e",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetTerminalRows.lean": "774227a88d87cf77bdd47289d51351b6b2966ebe4fb1851c2fbea99f4e83317b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionPathQuarters.lean": "89388b34956c732d154701c5aafb9dd8c4779461d2b9b7aa012f69b4b9453ef7",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionWholeReference.lean": "259eec96006c9b684dad88200b8d583b695f6dae69ebe63da070e577107588c5",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionWholeReferenceAttachments.lean": "381479e3469c6f56f100ffae6bad133fbd667a2d2df6b880cc4f41741c71b837",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionWholeReferencePointwise.lean": "6b18d8817c2d51aee04ceddb3639a2458c94c7ce86d77ef8130fb06be0a5e732",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassAdditiveMiddleExactness.lean": "97f17d14c348856bdab10b83c17abb1513b8a2885cd3ad62bc019922bc9d3a81",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassBottomChartExactness.lean": "0a2849c700ebb61aae67bfa5eb32a2ea9b16f615652c19bca15e1f977c3500fa",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassBoundary.lean": "44a11707bc404216602254a8768e3f2e5830cfde6cd29d9d8180b6f016cc3ea6",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCapChartTripleWord.lean": "0a8158c00e2d68df28feb47ceb11feb765a1605db6a63d18ca74b5cdd2e476a9",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassChartComparison.lean": "a6539e0161a9d49985de5902eddc11aa35556b0acca20a123727aad49af76037",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeActualLeftNative.lean": "2f632623831f1b8c42126219f1d6dfc010e90083c8de079a000aba0848106498",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeActualLeftRoute.lean": "7746f4c29f9a41b00e015cc97bd2f14dcbe45fbe95f98896612d65fe077e77fb",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeActualMixedFiller.lean": "a3c31869e8950b8caeb7a79f57e9249fa5b899f573940b275a98ec2939336553",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeActualRightRoute.lean": "450f47dab49b68d3bc33642051d28d8ee9d8c5af8992bc091778d50175ea0cbf",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeC1OldInitialPasteSeam.lean": "c2c117a5e980cd48ff8b3cf73c70ac7ea0936cf41a50f9cffc40498a46afa240",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeC1OldSourceRails.lean": "0a8edf9557393120c5d5904205671283daa825036b7b42e68d03d93ac3621799",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeC1PolynomialSourceReference.lean": "ee0be02454ba341f0b477662aed820dbf90ce2474877b53c7d2cd4b817a8cbc5",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeC1WholeOldSeedSeam.lean": "fb85e0df032c0548db47aebcd878504a56a2d98cf398eeb04a8e7ca8f1e73884",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0C0ContractionSeam.lean": "9f27928f923842adedd1f6dbfbe8e6186418d02114ac2566b09e4b97fa3e308d",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0C0ProjectionSeam.lean": "888c95a300cbe6571efa3bc6b793226e39d59767041ae7c77625db9f2bc8608e",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0C0SeedAlignment.lean": "19aea7555135bd3dbd3c6c9d93d7647b5d8e9c4fcd616896968eca3df61e1e09",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0C0SeedSeam.lean": "fbd4134b68ee61378507aba8229ab257bff2c058c7062c63d6b59380e85f42a5",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0ConeBoundaries.lean": "31b54f9148ded4d6200f3d9a7dfbeb4a7b1262f14907186fb05b67153502dff4",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0ConePasting.lean": "9de92a2804ea1478ee0297d086a3c331d06c597813a9f1055d7b70e575fc04b5",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0ConeTransport.lean": "b2494c54f271763cf3bfd2a3a5e6afc375a4c67adbeb7f5abb8c8df0ce60e126",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0Conjugation.lean": "b9bcf4e21149f56c300659f2b233a69f56cb9a3a2a83130e5aa26bcec94ccd67",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0ConjugationTransport.lean": "09bb497ef1aff49fb241e1999f6f182714d1fb463371037898f90dccb775d69b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0FullNullNative.lean": "05d882523d7e15a40fdfc62febfe90747fa598f60932377d3d18f57956c51d1c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0NullTransport.lean": "a0687b8cd34b74fab39ab8ff3a7c15ddcbeda0d7baf5c01863181e1924239b54",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0PairedNull.lean": "bb81ea508ee40d3d9f0c596eecc7dd7aa6cd20022c8a4cfac255193bf9c6b66a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0PairedNullNative.lean": "0c0607733dbdee97d70b142e569776d0bda6f387541ab4a085e6c9a69537ad87",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0PolynomialTransport.lean": "86184bf0733d335e9e3b0dc399a0df70128b88266ab6a408cd11135f59601a1b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0PositiveRailsNative.lean": "1f9fb435991475ea1828cc25f884096647c1bbf13a536cc7a42be8f0d3f7e388",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0RailTransport.lean": "bb47002de7c93e42737c26179d004833b0239edbedf8385fa04e8313f34ffe77",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0RectangleNative.lean": "a8499825f5b63ad879007041b9c75d5866cd524e7d6cc2d7da5eb82d21ef2396",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0RectangleRails.lean": "13fe7e8e63c9adc152af8a4094bea1152719093c94abf42a7145f7edf3acfb81",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0Rectangles.lean": "63d88f57e49c6f98187857cd35b3819512f4966b9e480e33cdd030de06d5a98f",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0TypedUnitRails.lean": "5723f40465d2ba056f87060f2c3163c1cf003258bec62a955ceaceea7f1d6fae",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0UnitPasting.lean": "79ccb3b5cee2695f4fc480a954cce4e65ad575184c5350081e236ed81c3a9a65",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeMixedRoutes.lean": "a703cded1f07e6887ef4953fb854b5388c3fddfe04937eb168fa834cbd1c9ea1",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositionCellDescent.lean": "6dfba5887cabaa40ec328bee7e09a97bfe99ba1e21d97b9ba4ad898c99c39b00",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassConnectiveInvertibility.lean": "7cffc60f4210653ba31e825aa8e6c0303757c583d3de449a34891e91880356b9",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassConnectiveTelescopeComparison.lean": "dd2482382650cf0b4f30869efdc02234fe3d913c615c852fc36779644ccc301b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCornerComplex.lean": "72e1f0708d97d6fc6bbb9502affde2cc21fae534c461343fc7a70eef559ade3a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCutOpenAugmentation.lean": "b92496e3fe4e87fb051a218076cceb6a67280005f352ad97f99c132206aa0af6",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCutOpenAugmentationTopology.lean": "c1cef976ae7eba07c44fdb02e432438d2bae553587646de214702b33776fb73a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCutOpenPrecompAttachments.lean": "fb0bca38a8942ae549b2855866a48937e9096289d783bc673551577403a0d2c4",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCutOpenPrecompMap.lean": "837b81f6ab94af1f60c1c7f3b2bd73aa3442da71714b9a5e4c6d2833ac4b0d89",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCutOpenPrecompNative.lean": "3c5f61846f96560101cafb28a5793f7f4aa89fdfaf2baa053db4651563538318",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassFineConnectiveInvertibility.lean": "00b1bcfb1fd495a2fa3e1ff63ebe22d92609ebe7a296ffef9b75d0eca19d2d28",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassFineRangeInvertibility.lean": "e75336a56353d3c05bdd44bfab7f82362e4e6fe8eaf5be147f7440bb9061c1f6",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassFineTelescopeComparison.lean": "a05362cbdb2b7fb13dd4fb8fd623efba44d21109cfae88db9fc908c6dd63b0a0",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassFiniteSourceSheetNative.lean": "f2b704063840819f304ebbcd5dc32ff5b2264f9ea7b32e25dda8d07ebd01db41",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassForwardQuotient.lean": "00d6e56ee2ab485a33c3c5c0f20e6561d0b1c54895a1622472fd935aa2333635",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentCompositionCarrier.lean": "e7140d0bcf5232c897d9d4d087545b2355e5c469e7b2f4acd36788ab3b6cc034",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentCompositionReference.lean": "a57f474b4cee77a967023c758aca3b0a3be7cfe21648bceb6fd32bfebf24a2d2",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentNaturalityCarrier.lean": "5db828e93e54dc16ac7d1bbfb1ce52c4d854c11efa273e71c2fd65610079c183",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentNaturalityReference.lean": "b0a381764057509ad737f2fb10e85e902eba1fbcf70ca1190d1718843365aec8",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionBoundary.lean": "f1a834167009a88895a6286b5232da89b016e29fa295605de69e8e210df9ae30",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionRouteBridge.lean": "a6f2bd7dd1a65641ec02b182b93bdcdd6584f5536e4a9f628a1e0234c45574ed",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionRoutes.lean": "10fa6a0002a4d5c33103bb16139e972efea9371f7e55275f0412b33508ceb28d",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionScalar.lean": "2566f5e3043db812f6821e8d5e68bdece63e66d525db6103b35f7cee60979bf9",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionScalarNative.lean": "8b3f1339a9fe44027092697b0401cce2705d58c6b13d652cbbf77bdcfb5cc452",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionTripleFamilies.lean": "9bdd3a03aa7198fe17504aefaedd53222cd055298e4e2ac87a13ea2483dd1bb8",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentTripleCanonicalFamily.lean": "4d412c1bd4d980c30b634c3f68f97bd59468751fb4a505e3f09d5e627c686904",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentTripleCarrier.lean": "12d8f698953c4cb9408941da16e6abd51704b852675ecf11a75e27154e527fdd",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentTripleReference.lean": "066d87760d9202caad1d8156853caca330d7eabfd26d7c88d9fd09870db10af0",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassMiddleExactness.lean": "ab645aae3adc7e718cd98b098c5f0156bf0d17087cff416a2e61e658e7cefe82",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassMiddleIteration.lean": "f3d7c2c6ea59a5722f7330b97bddaea9b7924fb43a03fce8325290239da8ecd0",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassMiddleTransport.lean": "712b4fc8e407e300f0fe057de289d0ae3a24b148291e28140d86f236203f19c0",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeConeSupport.lean": "ed09b8866fd466d16466da3bbcd489ccffb41dd1e374b1653dc48ce9efe078fd",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeMapInvertibility.lean": "8d2bc3991143b6ec11928c40506deb94a7997d4f076062f2c916e1215b4b4d9c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeMiddleExactness.lean": "9ed7ec3a441549ef5de99d38bf45194a7e6f33c8611318adf7e92eb6db7ff757",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeSupportMap.lean": "3878cebb93a724d1ad0806cd9086e5d8c44c8411df84f131f8c441a8a6e60955",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeTargetCanonicalAnchor.lean": "39963a56dcfc4365678e7a3c371d1f474422c061e21065f95265f7acdc248769",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeTargetChartAttachment.lean": "938db399c10e603262fdd160d70549c2d6de649b8b65392b61296d88641a4b22",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeTargetChartNative.lean": "c7512b1974146ff7619e9ae82edb40c04f358b65942165a373674ed9b0edde89",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeTargetFirstMap.lean": "49c048a7e6779d5cfc32374806683d9a108b032cdd186ad83a63d8cfdff346ce",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeTargetFirstNative.lean": "ee976c7849a056043b31a882100671998e8313258f8b2b857e72aa4ae17ed667",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeTargetSingleFactor.lean": "de507a6891f0c6be7ba418bec459bbe3c3e98596b23156beac6a74265a3d2b68",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeTargetSingleSheet.lean": "97de370be0c62afdc757bbff3a4240f4ff7bc10d8053ab76c86268646beffcc9",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPolynomialSheetNormalization.lean": "4a4c1e69acff0b885f628f31ee762abff9dc45c6a84c40d7ebcd441672af9078",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPolynomialSheetNormalizationComposition.lean": "91401353ff081dc6f21862c46ec98e12e1680c5d174d04d1a770de90314cc7a3",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPolynomialSheetNormalizationNative.lean": "7131a524650cce7ccec79ab556c3a6031fe2b9befcd3adbe742a221c8687383e",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveTargetSingleFactor.lean": "84833bed80ff6bd8946029aa56c7f5c1fc18a7e35351010d388c5fb13fed64a2",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveTargetSingleSheet.lean": "41a49132530928e02cf8c5b38b0e3649dc311dceb11217cdfb1d9d274f58d816",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassQuotientIso.lean": "e801800c43de63ac945bb148b1f0a32f998738d4ce9497da046633896dc63e74",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1ChartCompositionCells.lean": "677f6eb8c0fc2cf268d3b186905b98c017f895843f1dea65ba51cb54882918cf",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1ChartCompositionEndpoints.lean": "e6b555c300c53de2b2ae0e25ae1ef1f5097443aabf8ffbbc1feaa4dc832d6beb",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1ChartCompositionProduct.lean": "b89aab14114fa5809ecd06828dca00caf5dfd94559c62471690c07f6082ebdbf",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1LaurentChartRestriction.lean": "e1f55c745ff6ab80c8f7f40714a8d58dcb49f87520795e649a84e475f72843ff",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1LaurentComparison.lean": "37be5d786cb790d74239386ba0dfd82a295a7378016fe87a29a48e0b91ee5d22",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1LaurentFamily.lean": "781a6f56963683c162a0d691e62b9b44eb280f0dd5ad24d9f078745c3d7ee3ab",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1LaurentNativeCell.lean": "d8a7774258424a94df3ab1b51d77c05b3c37f59fcded593a0a4eef757323ad55",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialBoundaryRows.lean": "fd095a428cc675b70976f055ec2790c91391d5c479a6e1d2a510159e437f60c1",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCapLowerFaces.lean": "846812fdd7942216bcb8aa5c58f482f3acef11a2386fa1579f4456719b53ca22",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCommonPasting.lean": "5004aea5bbde95ee33261fa84ba615d3a8060b1534cf7f0e83fe9c7bf7526bf2",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCommonPastingBottom.lean": "e887894a02aa18155d9a266ebcafcfe7b67fd275f5e6de20deb0b1bde8447cb6",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCommonPastingBottomPaths.lean": "5870fda1ae806b2172c6a423323494c8f2997ba679df8897978d8bb419f1ac78",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCommonPastingBottomSquares.lean": "5f23173a7c4c7dbfea93fe93a59b2c2807d2430892894a8b5f10bf7a79700df5",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCommonPastingLaurentFace.lean": "0e770f332abc4a5afba9d243d8afe7885e7e65a5dfc335ffe667c438f5e64894",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCommonPastingNative.lean": "d97b717ac0001ae50fc739097baf7c7212bbe633a2f60541abf8b1260ee2dd34",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCommonPastingPaths.lean": "05bd1192bf7c3b47156e871c3095cd45939901cdbfb028dbe51f364f2e551331",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCommonPastingSides.lean": "8cb6898dd1c47c1f9531ce6bdf6a235fcc6df42318250baf9c48b49b7b1c06be",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCommonPastingTop.lean": "7e2ab5836d1c3e6f1d3372e88b9750d54f329a6fc626cca8e91b691cac0a5c25",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCommonRadialCaps.lean": "307e4177937d2fa72693696dd499908c8f4a04586ad2dd335ab9127b7098d41c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCommonRadialSeams.lean": "02d408cf22d72c2a34d063a39e397e5f2460a46f5c34f7fd3ab374dd3823a3f0",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCommonSheet.lean": "5188123b4ec9edcc309f4b7d8882437f4d9dcdc9f297fd6325c49738f3a48b5d",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCompositeActionNodes.lean": "0bac343a44584e02c33d6df588e68ac207dad55b01d531787ed827f876ef0c35",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCompositeEndpoint.lean": "6b600b985bb1ef543480248fb0787a36ad015d63795b2cb1799efa7dcd6f218f",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCompositePathCells.lean": "74f14ee8f32d1c6157f0ed3cf141e41a16026f5e02fdef09dc14de62446242d8",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCompositePolynomialEndpoint.lean": "270991be2d7a9b8a07ea0d891b974705ca5f7884613d3468d9cb7c21e86b5b39",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCompositeReferenceAnchor.lean": "3b05e3934119acfef7d1489c7ec44ed78f2cbb61ea0fcf5f45f71c6631401a09",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCone.lean": "3d80e736ad39db81931bba84ffcb71b3b812fdeab8de14148db740cf009379b3",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialConeBoundary.lean": "b3325dc06eefed27e51cafce31a37fdc77bb3299e92e23c591bf162787a9ee70",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialConeNative.lean": "ab296cebc6c7ca8c3bf794a522969df1aa7d4f0ca4366daabcd0273f68e647e8",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialDirectActionNodes.lean": "6b81007c01b76c78de87423320416c0b16b75efaab7960cbae8444c2a1e920af",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialDirectIdentityNodes.lean": "04c9575c0008e0e3259fabc5318aa39cb7aba2a7d28a352c583a0fbf5abfeaa2",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialDirectPathCells.lean": "d64a73354e497efd37bb94716d7555a309a183fb166a19529dc16b7b27049012",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialDirectPolynomialEndpoint.lean": "1144fce3aa902c0666a1656e13943038dd9f49e3f9d2cc7c688b5a50832bf6f1",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialDirectSquareReference.lean": "c0c8626848d88ecdf8e7dd34d904f7b4116a8e29193eb905b6b4b3f8c81b8526",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialInputAnchor.lean": "d804fdec2e5415c3c2668bd7f1254f7c16ba3db45067de51fbba4abf359513e9",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialInputBoundaryWord.lean": "5e4284073596aa0aed610757e4c0d3dbf1b2b766b1880b11c6648ab604bf1868",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialInputCap.lean": "f9f9aeef6c40e88be38023548369483e67939f14fa384d10c0de8ff2ccf2bbe9",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialInputEndpointCells.lean": "a69472e47fd792a170a7e1423df8ba6d9214df42df0b196c9f33107626e20861",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialInputEndpointWord.lean": "f74f58557183fbb5b8717f0080e4f1885aefa1ae9c4f3278fbdf9849f2fc18bc",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialInputEvaluation.lean": "51898c8deb1d69703003693a454bad901570127da6eedd8fd234baa8734113a8",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialInputFirstEndpointRow.lean": "b737df113fcdee780ee18596ccb1f96cb9287e5f5bc03693c7aec732de4dcd01",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialInputLowerNodes.lean": "7a985a2f42e8b924d3bac80559db5953a7e49b73c14242ebb677bace477132f3",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialInputNative.lean": "ef2310b1de979b0088d22b837bc86bd4a46b8478ee2778facf251df3982eb888",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialInputPlacement.lean": "b4c2870302c6b7ef2880924844e3cd5d3acec6daf44ef92a07b40bca82612b26",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialInputPolynomialEndpoint.lean": "f511898f0d894c30421c51e350180b01763bae32f73d6193335e15d2d5487d47",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialInputRadialSeam.lean": "b57b22926645424f505ec189f94032d86f465a3d7ded7c888a87438161c89f03",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialInputSecondEndpointRow.lean": "915c8e2348cc4939394eccabbd95901afab96e10170a12ca6faf102a56b2aa4c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialLowerAttachment.lean": "b0d17ea528cdb4afcaefc6d89cd0c761b8400d9916d5f41541699a45551a06b4",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialLowerNormalization.lean": "ae62a3df1f2bf59d136600fe06a67bb0e37df2521f513a01c151c652c1e3f543",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialNativeAttachments.lean": "b73a04693ee75c56c297d15505abdbf1f48b3aaa8461c95510d4064e1ae07acd",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialNativeCells.lean": "128d089bf5fb5985494dcaf99f1863439d7d535dc0b96adfaa5bac0188492441",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialNativeLower.lean": "1897e8f94e4f476bffb2e98403a7c5bd2151d5b165cccedd8c1a93d93456c50c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialOrdinaryMap.lean": "fe452ffe8d26d21180f5cf68e37ab002fd1a56a063df9a6b0626912c2c3aa51a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialOrdinaryNative.lean": "6e43620955930b80a451c9bb95d9c5d4ccd2191e0ee10566b34b38dfb1802fdf",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialOrdinaryNativeCells.lean": "0aa5158f4e863ba94fd479fce64db95ad31e7fc6f85019d8b8d7ca6843c3de11",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairCells.lean": "a681e66bfd50d8ca53175a328a967ee47bb99111e2e19772a7a73597c5957e32",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairCone.lean": "1437a7e75d6f29d37b592e6e9de452afedcb2a2d621f5ec9b9a4d1894bf83676",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairCorrected.lean": "fb9e3110260982ce211b7772d6849196f8c4e63f84a3cd2ad589e8065ed23230",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairCorrectedNative.lean": "96ff6910a25805e952df754ba463abdb1b9a3f564baa0c68f78a2611b1552e04",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairDirectAction.lean": "3b844f00da3bcb0a5bdf15579ad440a44539da33baf7fc6f99b2fc0040c93fb4",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairEndpointCells.lean": "1dcd9a22e0ef1c953dad0d7b0f7bb4f15ac6ed5ed26bb63fc3a6533ade42121e",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairEndpointReferences.lean": "7fb9f6cf2afb0f747af6124ddf77bcaf043c36f560bcf0fc782ad170ef5a097f",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairEndpointRows.lean": "bf57906a56e3db7e1975ff33c13e4a134037b3f114341f797b34eef4766bc65f",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairInitial.lean": "c46f945136d776914e8ce637281cdd3d614e08cc444a335077632c9c6d335421",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairInitialNative.lean": "e32f89cf6bb67623f214232ec333a5b4dde13ce7f3a2e75e8dc4d478b543c490",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairNative.lean": "045b1537ac5aa23a7a48dd11fe547549b73916a9e0147c3ba048206dbed31a3e",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPausedChart.lean": "0f2315e0916da94d5cc9313cbda1546371667f17392365061546b89fb32cf78b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPostcomp.lean": "fd6399589702fc65fac289bb6bd74439bc44834ec7ec66089aba9e38e670c8bb",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPostcompAnchor.lean": "1befa4a9e7fd49955631ccbced0f4988e3c4fdcca2b5dcc3f627a0fd4591c10c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPostcompCells.lean": "a558e7ef49c68148356ea72770a0e82880bf8a16ce1bef6b2081accbcdae3c4a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPostcompInputEndpoint.lean": "032d47d9ddceb133bde96bbbcce933b5dd84ca8a0b0344442bcbeeb0a701a3ff",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPostcompInputFirstCell.lean": "374a4907fe841e247043c418ba0cfc1c11e52803ab71cc7beb4c0ef85dc847eb",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPostcompInputSecondCell.lean": "de75b124adca178700b40f93234966f3cfb5ba87c61917b088757548499620ad",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPostcompLowerFamily.lean": "8c5fa9c6f28ee23b0e8adf8a60b5c104bb83a4dd31946ac052e8441f6596324a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPostcompLowerNodes.lean": "8551a65720542df53cecd2582e16bcab2d1557ee0daaf05fd97c519ab2872740",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPostcompNative.lean": "c328927db5148abe1b25cc81af532d04a1e528fff48e1872ca123b3785719fda",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPostcompRadialEndpoint.lean": "f6c068c5a8a7ac72122ddb0e907c50352807d4f0ce54fcceb5835ca1d17ff367",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialRadialCaps.lean": "561736d46ea40dcb1b52074732476c7e15c8016e1d9d1c493a2e0531068c577e",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialRadialDirectSeam.lean": "ffd4367b553a8c32051f8e509eed5c7bcab49f38a1fdbbacf6d96280dba14e5a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialRadialLowerFaces.lean": "d82f284314f5d6dda93159a2bcac65c17161d64fd12f9fe4560d1b8fa7ec86ed",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialRectangle.lean": "a47f65ab1efc65db09305741ca32f4d06ded4dc222e0a1cd1366e40f54c511ba",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialReference.lean": "05391e80cef6bd338e420eabc2b01b7d0dd7384932f6147ee95fefeabd58d232",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialSourceAttachment.lean": "1e9091a798918497a3f872225add4436a5e530975b0e3f8321f2dbc90144ccb3",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialSourceCylinder.lean": "cdeb7d96840f326d24d7b6a0c22c7fbdfc0343c2668bc5a212bc47e6f8773759",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialSourceNative.lean": "698e675440ba1f29db6cae03b8b556e299a889c8b215c83052136ba43e917b75",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialSourceProjection.lean": "3437a1a40ca8e89e16159a5a380432a8b0eeb8b12ad64a6886bb1e295767cb2d",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialTipFaces.lean": "6e942d96e6a658f04c858b4752409c65977a4668a09a93bd96a381df0d74c5ee",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialTripleAnchor.lean": "c64e5dc40533d95b3a81039c367507625e9c7297d93a74626ecaea679437252f",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialTripleBottom.lean": "6f6663a1541c9d3d31a9139304efdd1aeddf6473270ab651d7b3411f85b2ef3e",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialTripleBottomEdges.lean": "dbadfc3b829d8a8ada5fabb4182c5879a94e31928f926b0af3a25c71ca087b65",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialTripleBoundary.lean": "21397253d9c815b9bcc4a0b5f5c3b0252e6eb308ab5dbe13b6a1177986ecc946",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialTripleCommonBottom.lean": "0279f8a1322c18317a7f26427bac5a7a8df973de843383d32aea92ed3cd49258",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialTripleFiller.lean": "911546d7d63d2f2fee55377e9d9e688c8239b9e120d022ba28d53a2d3c8e99ed",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialTripleFillerFaces.lean": "2e6d53b4ef1b51c111eb950bb0c4a0b4981cbcb2eb3039b700df894bd2ad9d6c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialTripleLowerFaces.lean": "95005c303784cc3506522222a1944172ae211c8318054a5ca7dc29630d1c4c5a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialTriplePathHomotopy.lean": "1b0cdcd309b735f465e650f24e10c91552ba4734a47a2760210b633742cd396c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialTripleRoutes.lean": "169ee92a2c4f8433130bd67b88668aa66ce024f11c4789faa2c1a6537b3929f4",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialTripleSheet.lean": "7b8aad8b2edce7b500da03f4d779ae166da45348dc65cfbd0cbcf61caf1bf65c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassReverseFiniteProduct.lean": "7f290cd8a30446a616d4a46841eae31b2aa359c014a07a99ec011e2140dbb816",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSecondConeProjectionRoutes.lean": "8fbf0497a8f45bbe8d54ab55d2e17b5fed1f84c89ea2c931556b11c2de15ac86",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedCarrierAugmentation.lean": "8e5fdcc4d317958e7bb6fb1c95910a2bb1c3d31b30993ed55b5b855a0ddb5d51",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedCarrierAugmentationCells.lean": "f4ae4b7ae5cd5ad63286040542ba0fe60e02f013567503e40eb8d1dfd4426614",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedCarrierLaurentReference.lean": "904243778f63f3f6a82279a979500a6c928054f3cf95f6184c21bac0324b2247",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedCarrierNativeEvaluation.lean": "816a7f01d02cb7b2797a4bd364b74ad9cb0bcf97471bfbd09bdb9dfa30951a4b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChartLaurentEdge.lean": "377b82f8f05dca6111e471d9db56b1b827e03e1a05fa07f8847d9ba5c83cb31c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChosenChartAugmentation.lean": "321d58f54e9f4cfc7a56a9fef53a6ad274a498837dcdec66d9a48339faf1d1ad",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChosenChartEdge.lean": "8bac666af4529e6f981d28fc83d3122ff1af8586d84c1c230122941f68fa0dee",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChosenChartSquare.lean": "e50c604b3dd8700ad1e477e00aa2a931fc3dc783b5ff8e57bffdfac8040c26b1",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChosenCubeLifts.lean": "35c191da283837ddf67fe6c499eac9046a85e6e2ebef6498b59512f4b71eba53",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChosenCubeNative.lean": "12de4054be695be1f8942f5e7c25bba637166609b6bc027af42db71afc1d69b5",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChosenJ0Face.lean": "a42c0139b6c771dc0a740b10ceb90feee1959f788dfdd71b8d85549f27866312",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChosenPathCube.lean": "ce50d35d3d14ebfc54f509d3e35538212f0b9c4dcbd61b4555956860eaf7c3ac",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChosenPathTransport.lean": "71659a283e21c0ab022f3b4c1c99be509b8b6fc3102437bfd307d0eafa80c745",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChosenProjectionPaste.lean": "bcf8f24e17a8a36fec7a65bcc13880f9ea12b2fd4db2909c078777aeee92cc04",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChosenSquareRange.lean": "3f6ea72d0a23a373c7ce036306cdd08c40fb48aeb3628c30e27c9bcf0f790549",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedCoefficientAugmentation.lean": "e801e648084d8ac9ffdc360a0ddf307751c4a8488fd9d948093adb20ea6bb633",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedCoefficientCubeFaces.lean": "456bba1e60e09630079faf7b3cc44898614fba30f3806c8bb7acfd8d2bad054a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedCoefficientPrecomp.lean": "0313d344f222463a927109dac689017dc322c5bddc40dc6607b50580b1e1e7f8",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedComparisonFaces.lean": "cbebcabe08235f769414f3ed9096ffba997fb8358cb7d52c439de75e5b01a9f2",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedOriginalAnchorMap.lean": "159b123fdf23dbca9a60b74cd0a453f7085771217fbdc393468156c88f053f89",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedOriginalAnchorNodes.lean": "865db87210b54443d342d02e9c0c57c67e44a42f9b602d75d3014e5bad062b84",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedOriginalAnchorNormalization.lean": "e8f3de82b7e37299192ab36659ef9841e480f77b47e435fc077ad7624508d45f",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedOriginalH0Reference.lean": "abc1a2eae1101ec268b3209322489e8364d00985e79ca36166e6aba9fdb87c41",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedReferenceProjectionSeam.lean": "c4bfb120044d050fae8e20d4dd5eb39110020fe63aaf7688a7d6c4da836b97cb",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedSpanBoundary.lean": "033126eff11e311f8bfec283fd4a61d2b41197766334b2d6feed95758d7c7fc9",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedSpanCast.lean": "4fa36bca89dae106ce87ed2c674b259540651c58397fa4890ec04a69a58d577c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedSpanMoving.lean": "a2851c898d5d6368c3f00c3d41f7616b1315025dcd52a39c2c92ff7f239db2ba",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedSpanNaturality.lean": "36666846970aa9b1f28e87786366acd1cb03ab3350310bdeeac4ab0d5d456d9f",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedSpanSquare.lean": "e3afcdc73162c615444144197a94ed9351d7b0e13d5744046771d3b9d45f2ca7",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetCanonicalAnchor.lean": "d86932cd256fd165087cb587f3eafd617fb8e547d4496bc5f4d811d3aa85b6a6",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetCanonicalNodes.lean": "6f9fa5e8d972eab517e8181ec8db3ac9e2c19751feed4cb8d9a287946b40a527",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetChartAttachment.lean": "36fcb46f5bb4d801ddabcb1705b72c943ad4a443b4cbc553c0b63b8421c9035e",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetChartNative.lean": "5ce980c5562bd4cd07f4c2c21bdd4eeae454911dcc7625279389d5f99b38312a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetCylinderMap.lean": "df6dde252d3aa9e2f1cf442c56d15a99f7c9d1465570008191391cc8ab4c3cda",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetCylinderNative.lean": "7083f31b74432e462cfc082ef3e3f36e56e6c2c3398755a52392b4ef55ec9358",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetH0Chart.lean": "7b8d2457071a4ea87361617ea2d8344d19310caf05e5ee32453800e6eeb2a278",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetH0Reference.lean": "370c526de6cd2178ec99a14dcfed4264aaa1983d9d1e558ef4aa78e7f2038907",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetLaurentAction.lean": "900ba5f729995c78e6ee7271891e17274f4d03a046a7f0b516f0f4ec001ba5a3",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetMovingNormalization.lean": "fbed8c107ee4b02843936f44c47fe36ebffba56a2c1ba83489f5f5d36c2037f8",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetReferenceTransport.lean": "bade5b50389fecaf447a2c4598b193c90aa9c70603c1c83fdc87550610b522f9",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetUnitReference.lean": "53ef00bc5e9a111461d2a0d7b886c728e93b4ccc869a5d7f67ec088b5a27579a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalAttachmentMap.lean": "170c7885c9567a7dab06c99969241255d2d2e91f37c5bc5fce6eec947b79973d",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalAttachmentNative.lean": "0c1c1a6d7b55de5d3e276dd4fa2c732133d6afc01ca87d2f7dfb225718b5ef3b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalAttachmentNodes.lean": "1d01b2fd7845ec1db6a9714e8bece21ead9937c7efd5858f33672994c28dcbc5",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalAttachmentTriangle.lean": "1c1e35c2387ddb4ca13f024907395b22cedbf58cb9a9f2bf05483f25d2b09a70",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalBaseTriangle.lean": "45b3aaced83f5d4e595a13f390ad153a321977196496c8d5286b441d24a0a461",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalCarrierMap.lean": "09525410a1b07de690299f8b302b5e553ea2d053e62c69abff2625b33420c111",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalChartJoin.lean": "abb4b99af6a50d9923cbe3134852e896ca98d3e72ac6b378f0d577204d54fe8d",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalChosenCubes.lean": "0d2fd129fb3fa976ebf57deda7247bb74a3a832ca82e2dcba8508b98e1d53e2b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalInputReference.lean": "dcdc8fd53762b44062b534a39443f2595e91afbb193f79521e8c92cbf4c70345",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalInputTriangle.lean": "ce859daae324321ba68189f596dd22a5dcf068bdd86349ffdba7de6698f42ab6",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalLaurentReference.lean": "81cdd5c823ccf0b584bb5278e1707058faafb91f55d608fdcb92ae8b5b145953",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalOrdinaryTriangle.lean": "56356d7aa2874a24619465f8641e8a2635eb568779a507696454d6942af9a647",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalPolynomialReference.lean": "5139ae09b07e082b17603c05ac1165de94665e44ab3de8f461b6fed68461e8f1",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalProjectionTriangle.lean": "ab6596fc2305b0e3bff0038a0a548ba69dd2402b123c93e7eadc5337986b360a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalShiftedTriangle.lean": "81fd9c8374247df0b467335db5adb799ed24416f6b55b56cd750f735dd60924d",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalTargetTriangle.lean": "a7508129fd49f30ed5b17e5b7b723c23c02ddfaa9109be5a736a8d02cd4ebc31",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTerminalWhiskeredTriangle.lean": "8001f2b8d9f5c30cd4d1e6191cd52481f2ea7aa102f0ea06fb2dbe46176a7e43",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSpanCompositionBeta.lean": "fed40e64c88fa868c2a5ccfa2f69f654d8f9ed6803ac6b9247751b03126b97bd",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSpanCompositionLift.lean": "19a8524c5497201e134b72184f904172c5321042a3e621b47aed9725982ba72c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSpanCompositionReference.lean": "a1335d999fa7af5eb9800866864aa290c99c1327b054beb73ec07e642f4071a1",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSpanCompositionTerminal.lean": "c3f3bd8de06d0d95c16c9bb4a3cfc0a7d90485d88cad09d8cb0f59e675c5de9e",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSpanCompositionTree.lean": "6f2a515690c6f8422b90051a9dfcff9ea84eea5ac01aa587a0445c21448c7e50",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSpanCompositionVertexBeta.lean": "416149cadafed454f1bb9a7308fce9695afadef934dd0d34b0048d1517f18dc7",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSpanMReference.lean": "e5651735d312b1d9e73cf97df2a77a78e94e52c613fd338218d3fe6ae292885a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSplitExact.lean": "e52186aa0cc48f27e28f1b470fb791585a9a10581e500be298787f7bab343dd6",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSplitMaps.lean": "b885f145aac6cff9dccc37c598815393b5dca58ef9748c8a3f2d6054e32e6628",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassStableChartExactness.lean": "8e330cf6b4a7b1839f11e3b58aa9476ba504c610343e54d0ae3a1c5661b3ae03",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassTransitionKOperation.lean": "8b25a7d8ba12d7fb0b20a7a87273a7385c45ad21420f9aa8cefacc13344e9257",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientContractionTransportFunctor.lean": "974b895e7ddba3533b81bad5453b3aae0d74478fa1e213de764bcab82e93ca0f",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientFullOpenBassRestriction.lean": "b4da0556f4201fa337617794185f6260c95c52ce80d2543e7e7a9d58528c453e",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientGradedOpenBassPositiveVanishing.lean": "6596597e31c8a2134e1c2356836b57e42e53f378bbc311dafa690d086a595da3",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientKStableComparison.lean": "7ab0c51cf6356226472706ade73991dc9b12d5fdc7d0814d75bec329006212c0",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientLaurentKOperation.lean": "78c81a852449fe2fd045e8a9f8c91661caf7f775e6287604b0a59d641fa12f3c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientNativeBoundaryCoordinates.lean": "7bb87bb5d30b119ccc3be45a174ca840715062d7dd190a06bc30cdba777107a5",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientNativeKCharts.lean": "12331fc0313d4a14f3c93bd7988647568c62000018514794b8226deb732a40fc",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientNativeUnitOperation.lean": "ada133254efc68c914754f5718d58778951b07da71e8324e3471c1aee30cebe5",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientNegativeLocalizationBoundary.lean": "4cac83dc33fd0d1b02c8dac2f883e94469bd69cd20bf97a3e2e92e47ac539859",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientNegativeLocalizationExactness.lean": "f38f31e2cc93f745b67334ea659cbb467fe0aa22d0d88428ab16d8d49c069385",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientOpenConnectiveInvertibility.lean": "fe8c492573f14212fef2667de784d7d2fc54d8fa0d647ddcd317f8bfb6da6868",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedBottomChartExactness.lean": "be8813c81328a152776338aa10d11d1df902de9b16561cc1d8e40b539d9a3c28",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedConnectiveInvertibility.lean": "fd08725e16c070bb2e679851a1133ed4e82a4377231e8302e7a465b06b5bc669",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedConnectiveTelescopeComparison.lean": "5850165c7fee8c304a7f840cf6aa26b9e2f94b7ab451c7675047561be7d99362",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedContractionForget.lean": "aad2ba93280e9e174bd9036611e1a26e3b45431ba0b5d204c464feae4ef9f940",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedContractionTransportFunctor.lean": "2e789f9889fee8822fe72d7104a7d7dd9f05592d7c7b5ecf466d088f32d0231b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedFineRangeInvertibility.lean": "8bf087fe1575f64635ad3f2ec28e3bacce3fb2385b2af11124d9d8863d633adc",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedFineTelescopeComparison.lean": "96710ed2e118905e119dfd10b41b94d34f67948f77d780367144bef7951b2c23",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedKStableComparison.lean": "8a08ffbba4abb46d34363e5b721a886333be98529416358f22eef367df7be1e8",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedKStableNaturality.lean": "2efe0e84ded6a4484a9dd4555b2a0386bcd36b37cf9e24f0d9612ef02974cee4",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedKZeroComparison.lean": "e1cdefcce45ffba079163849e698fa7e7d0d1d5b0c97f1e45b9194b2f9f68686",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedKZeroForgetComparison.lean": "55919a2ae2b3d8e5407d4b7d09025dc4320221424f8eb90f40606413bfbd9705",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedMiddleIteration.lean": "fb9149894944fec05f408a67a176cf51e8320a519189778d148cab19e6efb18d",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedMiddleTransport.lean": "b77f5a9a6ee87a48eb200725783ab37f0a46ce1150e95a9081a6eec17768ba0f",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedNegativeBottomComparison.lean": "df01b7d687892fd2fdc2a4cad6f43de0d1bdd1ead8b0904746585dd5f90b7249",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedNegativeForgetComparison.lean": "3ca87596dba6e4bb6f0e71a0c4ebc26b1ba1e1ea07e643b06a8ba6905b699d2a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedNegativeMiddleExactness.lean": "08d463827c90730a61eae364f47fd096895453d99e907077f1fe6d30e9c61d36",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedNegativeTelescopeForget.lean": "4e2a96d2069aa48c64902c0b9c13d6d407364811c5f822e070fa984a71d42972",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedPolynomialLaurentTransport.lean": "77028c0004dc945147658858480e304cbee3a7f11f54027c3ff58552e426c819",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedSplitExact.lean": "2ecf7b921fd46d2ca7172ed567bb9e06b52a7baa95eb1494a81da4f982a082f7",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedUnitQuotient.lean": "3b31ff6c76908c04e827a93fb1423cc9fdc2a5d2184f9b3f7487775ce3584743",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalUnitInclusionOperation.lean": "c8104ae4f47666b69deb7d488bc1a62f06c44a502f83d90b59d4c11195c7af1d",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalUnitKOperation.lean": "cca54dae01259ada7392de668547dfb2fd5cf289a292ec113712e999e89b0cae",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalUnitKZeroComparison.lean": "1d6fda4e2f16984ec59aecb29ee5d329960f6df51345e682148b4bdcc66c98db",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeCorrectedFaces.lean": "8f2680e018c782aa752d413ee1d07bf4a1488c9fd46df8f30d36f39ff836e174",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeCorrectedNative.lean": "b1b61f0549ec65ab0d03be0e3c10f5a79d679ecc7798e1c4ab8a74b99d1c306e",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeCorrectedSquare.lean": "aac7575c0ae5e96eba9ae31973e586286cac4229fbef290222e5060b8ab71ccd",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeFaces.lean": "ce8fff2e7e815d5caef3de78034be2e393cfa9d296cbd6c8cca97fa4fc8938db",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInitialSquare.lean": "3ca47976e46f0403a74cbfa737439dd1fc9c98a79e95e71555f277572775e8c0",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputActualFirst.lean": "c98889fad4e135c45797e53d5b2710874bc8c7cfde3540ceee0d1ed378296cb3",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputCentral.lean": "9039aac961793b39f464d0e640ad7b21fc9b61bdbf32cf43c0453f63e3953d93",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputCentralBottom.lean": "5adb133a2094327c7238bdc208908c2bba7fea976045d398b87444936a647ce2",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputCentralParameter.lean": "c1299799e8d3c5d6e24cbfb72884f93f18405c6b882f386efe1b708a681802f4",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputFirst.lean": "48c4a401e905eaad1e122c5382446f4ebf49f3115fc6a9fbaf71aac06a43ad27",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputIdentityChart.lean": "1d3902ba963e667a001ab2eb79e31e04a6fe7b032ef9750518e0a074d576b1ed",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputIdentityParameters.lean": "3cb1e1df663e9aea2cbddabfcd95a301c8d6a2cf22ce8b19b2b004fa71194dd6",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputIdentityProduct.lean": "a6bd32cb1d10d7230d7ae11ac3350e210c0f11b183725071eef1a6015cdabacb",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputLaurentNodes.lean": "c2d317eddcdb42d2a4480f97361d37e29b87444dc220681a6975779c7ac26fc9",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputLaurentPlacement.lean": "d26d2ca4cea8ef15f1dc0d0a01ff2b8d599313d6d6d890296145027772a642df",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputLaurentProduct.lean": "7c103461518dacecccb7a1f42ffc7b5968f32e1ff0a5478267e5659b49568b07",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputLowerAnchor.lean": "06265da3a6ca9f68242b0cdc704afa7e0ae632a09e0d996738e2761af458529b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputLowerParameter.lean": "96aba2a07a0fb08d1d294fcfb502c4c89a9a1219520a1520ab29b15297537a3b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputPolynomial.lean": "992d72e508382bc195c9d33ca970b15f8a381c11a3d01c0fa6fe1ce4935b1b07",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputPolynomialLower.lean": "ef97cf03772f6f85a86efff5c78852f5024c8724ec82f6ddf6ec88b84bebe9c8",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputPolynomialNative.lean": "59a73a05ca8fc5776cc257b91cbe99ba1ca5572b034db9d4e1a38a9c2516599a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputPolynomialNodes.lean": "070e42075cb70876cd43c46eabf0a27a43c23c91838b8ab7853e87aee33169a3",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputPolynomialPlacement.lean": "119c4f54a4fac4bb93d53ea756ac9e51b184f6526a48b6ca944a57f4d9fbb360",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputProjectionWord.lean": "c5a00bef4ae8a7d53a169b4241a632b04f70ff3ed2ef0381ed2099091baa1f13",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputSecond.lean": "04512d98eec5263b6fde1a030bb824ab2229db7b7e301588d14e983065a9326c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputSecondNative.lean": "991758ff230ed3673c72dd2cb299c0f2568aff7d3fd6e75df1c81f8a71ab5458",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputSourceMaps.lean": "5ec9753a0406c9e73c6ccb30e2b45cdbcc1c019d05c5213027b81242f8e42666",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputSourceParameters.lean": "3af74dd6b04d2e1c67f9a803213e89f3313c0af8d5dd60d261fe7ca5641f0796",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputSurfaceCells.lean": "9d622f44df31e133f01e92380daba5cf97a8f5e574dca8aa6a9cd1c5809444db",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeMovingPieces.lean": "fae67414733cf205edff6dfdb7e1bb9e46b44a105b62d7d07ec046dfec255a05",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConePairChartFaces.lean": "5332278992358c9dee8c1866528dfff5aafaee7b502b019f5e98a8a1f82f558a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConePairCorrected.lean": "87c6f4d42a733e49fcfef7e7955f02c73c73f45cee3a31a4195fbbe9a7be2f35",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConePairLowerReference.lean": "b2530dd1bde6a826c86558d9d42b057443ff62e64033adfbd1f3f2d3ec6c93af",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConePairMap.lean": "f9ea4060484977b279d778c1dad3f684abc91248678138942edf10928fce5f34",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConePairPaths.lean": "dbfc43b2f2710a7e4b34672126f9cad2a8aa7e3522341247f43b1c013d3a039c",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConePairProjectedReference.lean": "4a4a68a5dab9ba8af5bf4b8af98ea045a4b02ad24404b7e70cc7d8557b1ff379",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConePairProjection.lean": "00d261b57b21bcfd71adebb3175a7e3d3abe5069762ab7abeaa438c9d4db9594",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConePostcompAnchor.lean": "b79e33bf0090cf4b7e6c8f4bc7854d30f499e4877f61a9b4be5008ef8e74d2c1",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConePostcompCap.lean": "00a2f05211329fe52354b2f4c7bd6b92b1eee4e7a23ec2860d4f30d16fea3a12",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConePostcompNative.lean": "5980af645e14733e5260b256c6583943a619d8d54e554fac60b523af6fbe8b50",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConePostcompNodes.lean": "d48277d011e4e98ad34ec111a095488c2cf6e8ccffb57a446c6fc1887ef5d95a",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConePostcompReferenceWord.lean": "d2e0afb93072a7751ee044c9b3d4254d1ea9a84b96ca9ae568bb27274cb52f22",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeReference.lean": "0251d824c31e44a9df2f7bb4927da42a495721e5b7bfe497218880ad54fd74c3",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeTripleLaurentAnchor.lean": "7d396cf2eaac476aee373058f83cef8e17276823addb9fdda95dd0f56e4dd7cc",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeTriplePrecompNodes.lean": "629c5f849ce11d25f1154b1d4e820e15d56e066e453f9326156bf452d3918f56",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/NativeReferenceWordCoherence.lean": "729b7376bde2362afaa01b414c7b57c7cea71db7e157ca13d89c57c6f28919ec",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/NativeSquareModelNormalization.lean": "3019202100fb39916e91e97eea2de335afaac4bcf28d4c131f797b3a7da6a40d",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeBassBoundary.lean": "f34aed9a22d3f8242201c2bc3108c37d9476133c660e94332b246f5d363d554d",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeBassExactSequence.lean": "a356ca65fe367496ffa27432745a0feecfc4a8825458f28506d23fd89a7a6138",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeBassFundamental.lean": "e25c637e813f6fbf840ed6b1db680a8c3830a26899c5cced27d9cd94293ec4df",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeBassMiddleExactness.lean": "21b580d8d52a5a3c03b3da711304c38dcc71964e9dfbbf16775f7295e4b545db",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeCoefficientConeFunctor.lean": "9aa81cb8b17a87747ad841cc902afd9bb24817bbeefc0964c5178a25ec40a0c7",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeCoefficientConeRestriction.lean": "3b401ee0220b80ae0daa0ac8bc7dba532ca2722682e6b25f3ec89a4484c51b97",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeCoefficientKZeroConeClass.lean": "d0aed65be20191622c69befacd41f54eef67b36170533010161aad674d4f2221",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeCoefficientObjectBoundary.lean": "dd754f66e803695d416d482dad5821beef0588cb8ffef46813021d7fdfc724dc",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeGlobalBoundaryCoordinates.lean": "918ddab92d1864f57d39ad9cc5107d0453a323ef9d0ccbeb0118da5f39570c9b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeGlobalCoefficientConeAdditivity.lean": "f1d5c457de4c16efba6c4f68fe965040c8400c06241d777ce46c78e30a7983bb",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeGlobalCoefficientSelfTrackBoundary.lean": "1965442748cc529be1a6c72fefe4288e5295361e0e8023b059324cc0b5b07b74",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeGlobalUnitProjection.lean": "fded013517a820ce7d690dfb2750f62985cb01ea89f02ef100ea3f994ecbc56b",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeKZeroBoundaryCoordinates.lean": "179611a3b1dd406c19d1190a786f4c57be14de0ba892865cd82b999397a64504",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeOverlapUnitBoundary.lean": "0b88db3d12b96cf179a3fc68f2cde86e7f80820b9fcece77202af0789d184a56",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeOverlapUnitOperation.lean": "5b781a126fda1a342dd30bd91f7e97a750ffa624f5e4271d6cec059a9ba576e5",
+    "Quillen/AlgebraicGeometry/PerfectComplexes/Spectrum/GlobalUnitFlatComposition.lean": "0703354652afa84ffced90159c506bb1784d68c7cb4aa07edc3c8850a6cf56a2",
+    "Quillen/KTheory/Bass/ModelDiagramTransitionSequence.lean": "062259c1e7a0861146a76b6d9dbff6567915cb7a21dfaa374f7cb09d5772e182",
+    "Quillen/KTheory/Bass/OpenPairContractionMiddle.lean": "b49ad919ccfd66a53d20d7daa7d46b7d53416a2f3343cb230819b983b392f5aa",
+    "Quillen/KTheory/Bass/OpenPairProductTransport.lean": "3a6429aa89d88e5bf40558c06afee1cb7d3605992c71993842c8ea832cb719cf",
+    "Quillen/KTheory/Bass/SchemeContractionCorner.lean": "03fc05e660a9df99a3e4a0c0f609c7b14552c65a3a10492c6fc43f460714e798",
+    "Quillen/KTheory/Bass/SchemeContractionMiddle.lean": "f87438b15f1452a84ab2739fe021c967be93155b5454b39cf85b07d02629a20a",
+    "Quillen/KTheory/Bass/SchemeMiddleComparison.lean": "be2ad0bc2dc06c16c1f41106aca33cacbfa3fc23004dbb79ba07c145646b9943",
+    "Quillen/KTheory/Bass/SchemeProductTransport.lean": "8a8df9d9e55f3590887bcc583c83392c84490e63e26cbcb499cb1d6868769ee1",
+    "Quillen/KTheory/Bass/StrictLaurentInverseAction.lean": "0d4a048bc3ecb69ad5a4b405722820621a12c7d64234603e444aa303c27ee392",
+    "Quillen/KTheory/Bass/StrictLaurentUnitQuotient.lean": "5203e12c34e8c7e3eefd0e648756d778b528c9a5d8d673fc77eb580322d9db94",
+    "Quillen/KTheory/Bass/TwoChartIteration.lean": "b170c169509d3e6bc3dc2a592790f27200689eb305bbe779a769429f0449de52",
+    "Quillen/KTheory/Bass/TwoChartMiddle.lean": "cb0c03e384b283a8ef1959c9231f2d99d04d5ea2065b125975f7268ba2ed1f4e",
+    "Quillen/KTheory/Bass/TwoChartMiddleBiproduct.lean": "1b6c88b5ea6840225aba4803b108252c1514c0b4806ad4cb68e8508e232a759a",
+    "Quillen/KTheory/Bass/TwoChartSplitExact.lean": "52abfd19c7677148861c86fc0cdb34f9b8baf232d0eb15c5a26e1d9447927939",
+    "Quillen/KTheory/Bass/TwoChartStableMapInvertibility.lean": "4bdcaa615c1177c5a57e67540678a9fd3e069d9c301613e822e1b2d4d84385f8",
+    "Quillen/KTheory/Bass/TwoChartStableVanishing.lean": "c63ada247605130d2bcaa76593ca4aa92ed0bd31750907b04cf0e76799e70ad2",
+    "Quillen/Topology/Path/NullWordEvaluation.lean": "70b76b72c36017ff80cb505624ee081a15a0ae8883f06049739bd01f80d1033f",
+    "Quillen/Topology/Path/TwoSheetConjugationEvaluation.lean": "2d8fd90e18ecd12d91be0c75112b9b943f0ccee8f4d20da245bb5b9ce0265233",
+    "Quillen/Topology/Prespectrum/ConeStableRangeDetection.lean": "559d6d044c86b59576d0f6923f813dd563253af9bef1c8d8031d858486385187",
+    "Quillen/Topology/Prespectrum/ParameterizedDescent.lean": "028500d3e057583b7709b7e11928a7a1f92e04e16f3c584a0d51aa3d6ea96feb",
+    "Quillen/Topology/Prespectrum/PushoutConeFamily.lean": "4e79fe022cc9100639570783435d2693ccbddf38fc52f353ae9926ed4c5f6965",
+    "Quillen/Topology/Prespectrum/PushoutConeFamilyRecovery.lean": "50887c76803dbf0b0c55a300c74e5c67451be0d30f1ccfb27e06df5d98e8c9b4",
+    "Quillen/Topology/Prespectrum/SpanReassociationEvaluation.lean": "d32e5a808950354fbdb4067dfdd6e80f08bd9c11e112cf7023af579efbfd3e89",
+    "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenMap.lean": "901939ce4c37a52d63dc5de213e16cb3165384c3eb590c8c88cc92dee8c5159e",
+    "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFiniteEdge.lean": "9bc77edb0515273e190e2edb3b99ae5c2af0874afe235a6c4958b42a76a941f5",
+    "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFiniteParameter.lean": "0b97f00c49ad02b5432dac85f556da03eab7e749d950b8a55c7900872e0cc6d9",
+    "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFiniteSourceSheetAction.lean": "37edafae401c15f738c1241adbf8495322b35e93ec6a33e30f6cfa7cb7754967",
+    "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFiniteSourceSheetParameters.lean": "caecde6e09d717620962ad19718a3aea1d84088e068d2ed693c4c7a78377380e",
+    "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFourEdgeCompactFamily.lean": "ad8e77cafb19e49d63c4992410dd43dbd54f81fc914292fa2acad2fc21a57701",
+    "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFourEdgeCone.lean": "b1adff84ef4a18e4e80335064dc3ed42ff46e8dac74d8a2c3c1c80fd761bd2e7",
+    "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFourEdgeEvaluation.lean": "488c7c2123de1695508e162e979d2142f6da9744c6dcce14c31582f5530fc436",
+    "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFourEdgeEvaluationCells.lean": "36edd4e77c55b0658b11da6fb33fff305c9f5868b5b4e9b6ec008681541f1a1e",
+    "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFourEdgeExt.lean": "65c8bb6365efc5199d8d67b2e4886176403b9d5ad69c559d4934d76ebe8e571a",
+    "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFourEdgeLaws.lean": "31a8bf7786013417a8191549a4551645833314756bfc243bac0e13f9142d3410",
+    "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFourEdgeMovingSquare.lean": "c5153d4c5cb1a731640e202669b0cfe64cb58c24eda6863c36f6112562b2e420",
+    "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFourEdgePath.lean": "7f52c9573f2976fa95312d718c40d98a506dc49c9307b4290151889d807c0625",
+    "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFourEdgeSpanComposition.lean": "6555ff6230d8bb11c8bcb516f000f2296f829ab6caa587fe67657159cf2e27f3",
+    "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFourEdgeTree.lean": "57e7214021027a4d9a73d7875ddcabb9152e23a8d3ab4252f664d3d30f2c5702",
+    "Quillen/Waldhausen/SConstruction/Iterated/ModelSelfTrackStableOperation.lean": "39dabf11cf29962478d324e97764eb8977bfadacf47cb56b5b85cc683e0282a8",
+    "Quillen/Waldhausen/SConstruction/Iterated/ModelStableHomotopy.lean": "67991295067d41fa2bb7e96dee91712a4c0f1631303c931a54fa1e91179d3301",
+    "QuillenTest/FullOpenBassRestriction.lean": "b1e8570a9d54c8bf9cb4fc51507851830faeb9d6e7e1d2df9684d799dd668032",
+    "QuillenTest/NegativeLocalizationExactness.lean": "f80ca4359a3027e5f62238f87da3ad09a55ca36bf1d9d2f22ff624eab04f8499",
+    "QuillenTest/OpenPairContractionInterchange.lean": "7bf915dd92c8a4d7b6a04cc9cc5ece79176e703984810508873cd9ea19b38b41",
+    "QuillenTest/PathEvaluationCoherence.lean": "aeda03eaa6de3d249bfcb2f9b8f5c00a106bf2b4fd709838c92fdce113aecbcd",
+    "QuillenTest/PushoutConeFamily.lean": "26668821db96d10b4358b50e4c633c95b99ebd8e3f057ad0697587e6d52b540f",
+    "QuillenTest/Raw1PolynomialPasting.lean": "00b791a06247901adc647ce76f409b8f575297132b702506877eefa6839a2a8c",
+    "QuillenTest/SupportedConnectiveSeed.lean": "d9bb6b16336073f0235aa735f206c18b01b945f061c105624e598648e60968db",
+    "QuillenTest/SupportedFineCompletion.lean": "cfbc003978cfc4a1348a18bb09b53f7af15ce0926360104fb4e1114b37041740",
+    "QuillenTest/SupportedLocalizationBoundary.lean": "633ed646786d305e7749ad3cdd6260e1df6e4206c6e72be8d9a6cfaab3e2cee4",
+    "QuillenTest/SupportedLocalizationExactness.lean": "ea9813598b3bc9a03a4c85e1aabe0db4d6a268c17ac3e476c4071a9fc0b82663",
+    "QuillenTest/SupportedNegativeForgetComparison.lean": "a5df2109474a06c7895bb31bc1bc57770431bb99d5face9654eba3f852c21bc8",
+    "QuillenTest/SupportedUnitSplit.lean": "dc3724a2222bbce0dcb056c06af9fa09ee792aaa6f517efeb77c2cf55ca47797"
+  },
+  "pin_files_sha256": {
+    "lean-toolchain": "d5edba4e4b8faad9c1baeadb265716d20d03be4d1a2647dc5e35b0c0325bea7b",
+    "lakefile.toml": "b12444714879dee3f63745b5a8d315eef61cf1f760876e601aefe0a81d878bf4",
+    "lake-manifest.json": "6c483bef7086c87a8d77f25be2f4a2d0c00f787ecafa11b2305a99dddcd3389d"
+  },
+  "dependency_pins": {
+    "mathlib": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+    "Aglib": "25c37780264f0da94f5bb6bd31cc089d26f2da80"
+  },
+  "validation_scope": "Defining modules are source keys under Quillen/, tests are source keys under QuillenTest/. Compatible 492454 CI library, downstream and exhaustive trust coverage is retained for unchanged sources. Generated import enrollment is checked separately.",
+  "prior_ci": "https://github.com/kangxyz/quillen-k-theory/actions/runs/39042572616",
+  "historical_evidence_boundary": {
+    "completed_archive_checks": 1273,
+    "reported_passes": 683,
+    "failed_or_stopped_attempts": 590,
+    "statement": "Archive run receipts and selected owner hashes are provenance. Missing transitive source snapshots prevent treating every historical pass as a current replay; current selected-source checks are recorded below."
+  },
+  "verification": {
+    "state": "passed",
+    "compilation": {
+      "command_prefix": [
+        "lake",
+        "--rehash",
+        "build"
+      ],
+      "targets": "450 defining modules selected by the Quillen/ entries in sources",
+      "exit_code": 0,
+      "elapsed_seconds": 2244.729,
+      "selected_modules_rebuilt": 450,
+      "unchanged_required_consumers_rebuilt": 42,
+      "unexpected_rebuilds": 0,
+      "source_hash_guard": "All 462 owned Lean files and 42 unchanged consumers remained unchanged."
+    },
+    "source_structure": {
+      "imports": {
+        "command": [
+          "/Users/kang/Applications/SageMath-10-8.app/Contents/Frameworks/Sage.framework/Versions/10.8/local/bin/python3",
+          "scripts/generate_imports.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "sources_unchanged": true
+      },
+      "layout": {
+        "command": [
+          "/Users/kang/Applications/SageMath-10-8.app/Contents/Frameworks/Sage.framework/Versions/10.8/local/bin/python3",
+          "scripts/check_library_layout.py"
+        ],
+        "exit_code": 0,
+        "sources_unchanged": true
+      },
+      "placeholders": {
+        "command": [
+          "/Users/kang/Applications/SageMath-10-8.app/Contents/Frameworks/Sage.framework/Versions/10.8/local/bin/python3",
+          "scripts/check_placeholders.py"
+        ],
+        "exit_code": 0,
+        "sources_unchanged": true
+      }
+    },
+    "documentation_links": {
+      "new_relative_links_checked": 18,
+      "errors": []
+    },
+    "initial_tests": {
+      "command_prefix": [
+        "lake",
+        "--rehash",
+        "build"
+      ],
+      "scope": "The 12 QuillenTest entries in sources.",
+      "exit_code": 0,
+      "modules": 12,
+      "elapsed_seconds": 43.13,
+      "basis": "Original adopted source; compatible evidence retained after verified comment-only and bijective internal-identifier repairs. No external source references to either renamed helper existed."
+    },
+    "initial_trust": {
+      "scope": "450 exact defining modules, including private and generated declarations.",
+      "exit_code": 0,
+      "declarations": 6953,
+      "foundations": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "basis": "Original imported source; current named-binding compatibility is checked after repair."
+    },
+    "comment_and_name_repair_build": {
+      "exit_code": 0,
+      "elapsed_seconds": 275.67,
+      "sources_unchanged": true,
+      "modules_rebuilt": 63,
+      "extra_builds": 0
+    },
+    "simp_registration_repair_build": {
+      "exit_code": 0,
+      "elapsed_seconds": 10.95,
+      "sources_unchanged": true,
+      "modules_rebuilt": 1,
+      "extra_builds": 0
+    },
+    "environment_and_native_text_lint": {
+      "exit_code": 0,
+      "elapsed_seconds": 33.59,
+      "sources_unchanged": true,
+      "defining_modules": 450,
+      "declarations": 6953,
+      "default_environment_linters": 15,
+      "native_text_modules": 450
+    },
+    "simp_consumer_build": {
+      "exit_code": 0,
+      "elapsed_seconds": 16.17,
+      "sources_unchanged": true,
+      "modules_rebuilt": 3,
+      "extra_builds": 0
+    },
+    "scoped_runner_regression": {
+      "exact_origin_inventory_matches_original_predicate": 6953,
+      "exhausted_parent_control": {
+        "old_timeouts": 8,
+        "fixed_timeouts": 0
+      },
+      "failure_aggregation": {
+        "cases": 129,
+        "batches": 3,
+        "all_errors_retained": true
+      },
+      "native_text_tool": "passed",
+      "default_heartbeat_limit_unchanged": 200000
+    },
+    "final_trust": {
+      "exit_code": 0,
+      "elapsed_seconds": 10.76,
+      "sources_unchanged": true,
+      "declarations": 6953,
+      "defining_modules": 450,
+      "includes_private_helpers": true,
+      "allowed_foundations": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    "structure_reuse_basis": "Subsequent repairs change only comments, two internal identifiers, two simp registrations and the standalone linter implementation. Imports, enrollment, paths, pins, proof placeholders and heartbeat settings retain their checked inputs.",
+    "scoped_lint_driver_sha256": "8980b027e274a5896d60edbe8b5f6e30cfb638369d9f199fccd87bc8f55aabef"
+  },
+  "mathematical_review": {
+    "kind": "Independent ordinary milestone reviews; no established-status decision.",
+    "basis": "Selected immutable archive mathematics is preserved. Removing the 302 inserted doccomments, reversing the two lowerCamelCase identifier renames, and restoring the two simp registrations recovers the exact input bytes for all 462 adopted Lean files. Mathematical definitions, hypotheses, formulas and proofs are preserved.",
+    "fine": {
+      "verdict": "Supported in the assigned group-level scope; no blocker found.",
+      "coverage": [
+        "Actual ambient and supported fine transition/inclusion isomorphisms in degree d >= -i.",
+        "Original negative-group comparisons with the actual fine telescopes, preserving quotient, forget and restriction maps.",
+        "Original nonpositive localization exactness with a fixed same-null signed boundary, and an exact splice to the existing geometric K1-to-K0 boundary."
+      ],
+      "hypotheses": "The respective hypotheses remain explicit: qcqs ambient and compact removed open for telescope/localization conclusions; finite-bottom forget and full-open identities have the weaker hypotheses stated in their sources. Levelwise T1 is proved."
+    },
+    "raw": {
+      "verdict": "Bounded descent, original M recovery, unit, full-reference/chosen-face and Laurent/polynomial milestones supported; no concrete contradiction in covered scope.",
+      "coverage": [
+        "Locally compact external-parameter descent with arbitrary native inputs and exact original quotient relations.",
+        "Recovery of whole chosen M-composition families and their original clocks.",
+        "Actual unit cube and parameter-looped identity producer.",
+        "Full reference-node and isomorphism attachment equations, distinct tips and transported chosen J0/chart faces.",
+        "Whole Laurent comparisons and polynomial six-face pasting, full-target native cells and height-zero attachments.",
+        "Two promoted checked additions preserve supplied chart and range data."
+      ],
+      "limits": "Public milestone statements, source correspondence and principal boundary arguments were reviewed. The reviews do not claim a fresh proof audit of every dependency or every selected declaration."
+    }
+  },
+  "open_boundaries": [
+    "Actual four-coordinate overlap family and all eight prescribed three-face intersections, including the original height-half midpoint seam.",
+    "Compatible whole L/P/O application of PushoutConeFamily, recovery of both original routes and actual Raw1 PlusPasting/MinusPasting.",
+    "Coherent all-stage raw construction/evaluation, raw telescope comparison and classical TT identification.",
+    "Arbitrary-pair naturality of the transported negative boundary and identification with the geometric positive boundary.",
+    "Auxiliary support-tower identifications and original support enlargement/restriction squares; the group enlargement maps themselves already exist."
+  ],
+  "relocation_correspondence": [
+    {
+      "name": "Path.Evaluation.path_trans",
+      "old_owner": "Quillen.Topology.Path.NullWordEvaluation",
+      "new_owner": "Quillen.Aglib.Topology.Path.EvaluationOperations",
+      "statement_and_proof_text_identical": true
+    },
+    {
+      "name": "Path.Evaluation.path_symm",
+      "old_owner": "Quillen.Topology.Path.NullWordEvaluation",
+      "new_owner": "Quillen.Aglib.Topology.Path.EvaluationOperations",
+      "statement_and_proof_text_identical": true
+    },
+    {
+      "name": "Path.Evaluation.comparison_symm",
+      "old_owner": "Quillen.Topology.Path.NullWordEvaluation",
+      "new_owner": "Quillen.Aglib.Topology.Path.EvaluationOperations",
+      "statement_and_proof_text_identical": true
+    },
+    {
+      "name": "Path.Evaluation.comparison_trans",
+      "old_owner": "Quillen.Topology.Path.NullWordEvaluation",
+      "new_owner": "Quillen.Aglib.Topology.Path.EvaluationOperations",
+      "statement_and_proof_text_identical": true
+    },
+    {
+      "name": "Path.Evaluation.comparison_hcomp",
+      "old_owner": "Quillen.Topology.Path.NullWordEvaluation",
+      "new_owner": "Quillen.Aglib.Topology.Path.EvaluationOperations",
+      "statement_and_proof_text_identical": true
+    },
+    {
+      "name": "Path.Evaluation.transAssoc",
+      "old_owner": "Quillen.Topology.Path.NullWordEvaluation",
+      "new_owner": "Quillen.Aglib.Topology.Path.EvaluationOperations",
+      "statement_and_proof_text_identical": true
+    }
+  ],
+  "dependency_worktree_boundary": {
+    "Aglib_preexisting_tooling_or_documentation_changes": [
+      " M AGENTS.md",
+      " M doc/DEVELOPMENT.md",
+      " M doc/WORK_PLAN.md",
+      " M scripts/README.md",
+      " M scripts/check.sh",
+      " M scripts/check_kernel.py",
+      " M scripts/prepare_build_cache.py",
+      " M scripts/test_ci_cache.py",
+      " M scripts/test_kernel.py"
+    ],
+    "changed_Lean_sources": [],
+    "action": "Pre-existing dependency edits preserved; no dependency mathematical sources or pins changed.",
+    "compiler_cap_helper_sha256": "d8a17817fb612923fc8edae53956715cf517286bf2e5c4fa9ef4e4613c8c98a3"
+  },
+  "documentation_integration": "The archive plans are consolidated into the maintained English TT roadmap, continuation handoff and subject guides; no parallel plan tree or historical work directory is adopted.",
+  "integration_adjustments": {
+    "docstrings": {
+      "count": 302,
+      "files": [
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetOverlap.lean",
+          "before_sha256": "93dbe40752b359b31b75131a33786b285b37e474794c3d80f6b0185b8239ef0f",
+          "after_sha256": "63690c48b1e052277ccc0ff4e19d54d6cbb3f3bdc32158961b730f7c76996b6f",
+          "insertions": 4
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetSpanDescent.lean",
+          "before_sha256": "c9cee34a9c972ddc9bccb55a9611b0d9fe39cfbc6e1aa9b0ebe3fd04a5ba8b0f",
+          "after_sha256": "456c780c353c41566976473d6cb2b56e2fc32dadc018f7ec4d1b75dd8ed53cd0",
+          "insertions": 5
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeActualLeftRoute.lean",
+          "before_sha256": "e86316a0e660ded7c54caee0ccdfea2a4457ec09cb5cfab400a1d43fcf7417df",
+          "after_sha256": "7746f4c29f9a41b00e015cc97bd2f14dcbe45fbe95f98896612d65fe077e77fb",
+          "insertions": 8
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCutOpenAugmentation.lean",
+          "before_sha256": "26f696cd7ab175468596a6f864b3e0a980fe85b8551f91148a869a1fbf4ecaf7",
+          "after_sha256": "b92496e3fe4e87fb051a218076cceb6a67280005f352ad97f99c132206aa0af6",
+          "insertions": 6
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentCompositionCarrier.lean",
+          "before_sha256": "224e262d3803399c79cde6a8bec97e2d06b7d3833dff0fc11fca4647b59d0894",
+          "after_sha256": "e7140d0bcf5232c897d9d4d087545b2355e5c469e7b2f4acd36788ab3b6cc034",
+          "insertions": 5
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentCompositionReference.lean",
+          "before_sha256": "d07f7f4a90080f8e74cbac4644aed53f901d75d1276de4e06dea2bc8545a37b1",
+          "after_sha256": "a57f474b4cee77a967023c758aca3b0a3be7cfe21648bceb6fd32bfebf24a2d2",
+          "insertions": 3
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionRoutes.lean",
+          "before_sha256": "6344f5ed6a4348232482054f7d6b1bad3395e7330bcb4c3ab92fa0e90e72eb0e",
+          "after_sha256": "10fa6a0002a4d5c33103bb16139e972efea9371f7e55275f0412b33508ceb28d",
+          "insertions": 2
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionScalar.lean",
+          "before_sha256": "f834c81573a91a2048cb8f42f25f95026e10324bdffbc72f84aff492ae8a9ff9",
+          "after_sha256": "2566f5e3043db812f6821e8d5e68bdece63e66d525db6103b35f7cee60979bf9",
+          "insertions": 9
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentTripleCarrier.lean",
+          "before_sha256": "c21e70ba96fb2ee6f6b162f1b07fe9f85e84f768c9704f454a7d22db2a34aa5c",
+          "after_sha256": "12d8f698953c4cb9408941da16e6abd51704b852675ecf11a75e27154e527fdd",
+          "insertions": 3
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeTargetChartAttachment.lean",
+          "before_sha256": "52ce5d53fb560ac5534e74129c916a450a260816a11b25a7d00300777e3f9ef5",
+          "after_sha256": "938db399c10e603262fdd160d70549c2d6de649b8b65392b61296d88641a4b22",
+          "insertions": 7
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeTargetFirstMap.lean",
+          "before_sha256": "f82c93f66f47eaaa6cfa1dbca675dc17b987b31e870afff98dd9ef5569871645",
+          "after_sha256": "49c048a7e6779d5cfc32374806683d9a108b032cdd186ad83a63d8cfdff346ce",
+          "insertions": 10
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPolynomialSheetNormalizationNative.lean",
+          "before_sha256": "29653938782298a657c7300aaea2ad808c2ba80819cef94e1cc1871f610d403a",
+          "after_sha256": "7131a524650cce7ccec79ab556c3a6031fe2b9befcd3adbe742a221c8687383e",
+          "insertions": 2
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveTargetSingleSheet.lean",
+          "before_sha256": "783511257b5290666084894a59f323fcebc84ad425cd5605ec70841e4c3e627a",
+          "after_sha256": "41a49132530928e02cf8c5b38b0e3649dc311dceb11217cdfb1d9d274f58d816",
+          "insertions": 9
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1LaurentFamily.lean",
+          "before_sha256": "34d1e7de9deea0d51885ad3f4aff8770aaf3abe46da59416bcf7f2300c8dc88b",
+          "after_sha256": "781a6f56963683c162a0d691e62b9b44eb280f0dd5ad24d9f078745c3d7ee3ab",
+          "insertions": 3
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCone.lean",
+          "before_sha256": "0434723a08ea3dd85cd5f2b4f8538b08fac05d2f6de8d4dcf3ec25cf7fe25183",
+          "after_sha256": "3d80e736ad39db81931bba84ffcb71b3b812fdeab8de14148db740cf009379b3",
+          "insertions": 4
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairCone.lean",
+          "before_sha256": "f1363ca13e3ef909da90cafaf86adfe836625369481c43b114d4be3394703ecd",
+          "after_sha256": "1437a7e75d6f29d37b592e6e9de452afedcb2a2d621f5ec9b9a4d1894bf83676",
+          "insertions": 1
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairCorrectedNative.lean",
+          "before_sha256": "286742741ce0ccbd9e2268f3b5d0f2662011eb3f82a9c806590057a0055ae763",
+          "after_sha256": "96ff6910a25805e952df754ba463abdb1b9a3f564baa0c68f78a2611b1552e04",
+          "insertions": 2
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPostcomp.lean",
+          "before_sha256": "4e98626cf4e140f626405b77b540ac75cc219221424a04bff27cd69370cc9081",
+          "after_sha256": "fd6399589702fc65fac289bb6bd74439bc44834ec7ec66089aba9e38e670c8bb",
+          "insertions": 4
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialSourceProjection.lean",
+          "before_sha256": "1aa83005358979a4be03bb8453d60bb7f0bf6a22a305060adc706938837b3d0f",
+          "after_sha256": "3437a1a40ca8e89e16159a5a380432a8b0eeb8b12ad64a6886bb1e295767cb2d",
+          "insertions": 4
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialTripleAnchor.lean",
+          "before_sha256": "f06b5b4a15229906211638492ec905a4052a34d9fdfa303f3868503ff7517cd1",
+          "after_sha256": "c64e5dc40533d95b3a81039c367507625e9c7297d93a74626ecaea679437252f",
+          "insertions": 7
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedCarrierAugmentation.lean",
+          "before_sha256": "5c6c530245d0c8aad8e81ad3a8870a8fed01d47a15c71c8a723d6edfb5725cdb",
+          "after_sha256": "8e5fdcc4d317958e7bb6fb1c95910a2bb1c3d31b30993ed55b5b855a0ddb5d51",
+          "insertions": 1
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedCarrierAugmentationCells.lean",
+          "before_sha256": "16cb7f040806ed589a75cdeec294ebd81895ebd07f6c792c7dfa2b969b5c1f18",
+          "after_sha256": "f4ae4b7ae5cd5ad63286040542ba0fe60e02f013567503e40eb8d1dfd4426614",
+          "insertions": 5
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedChosenCubeLifts.lean",
+          "before_sha256": "59e63912b6eae82416d9219f67a943a93513ee367576edff8255c633a5ebaa96",
+          "after_sha256": "35c191da283837ddf67fe6c499eac9046a85e6e2ebef6498b59512f4b71eba53",
+          "insertions": 3
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetLaurentAction.lean",
+          "before_sha256": "400752fdc82d2ba9b5e7eb3113892f049977a074dac54052f1995e208cd57ce2",
+          "after_sha256": "900ba5f729995c78e6ee7271891e17274f4d03a046a7f0b516f0f4ec001ba5a3",
+          "insertions": 1
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputPolynomial.lean",
+          "before_sha256": "0069d0129c21a53ced27e8e8049fabedf08cb5361f50f758d28088919de0f2c9",
+          "after_sha256": "992d72e508382bc195c9d33ca970b15f8a381c11a3d01c0fa6fe1ce4935b1b07",
+          "insertions": 5
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputPolynomialPlacement.lean",
+          "before_sha256": "bec3bab3220418dfba62835dffec6daab1cd882c3e74afdc679fbf0c30cfaa42",
+          "after_sha256": "119c4f54a4fac4bb93d53ea756ac9e51b184f6526a48b6ca944a57f4d9fbb360",
+          "insertions": 3
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputSecond.lean",
+          "before_sha256": "d32e89357bd345804a275e9a80595f79246e63d65ee312e7bd33e9d894ef650e",
+          "after_sha256": "04512d98eec5263b6fde1a030bb824ab2229db7b7e301588d14e983065a9326c",
+          "insertions": 2
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConePairProjection.lean",
+          "before_sha256": "ada954e8bd4564eb538363b535621af4d122b247a6aec33d232215b2b3f0f935",
+          "after_sha256": "00d261b57b21bcfd71adebb3175a7e3d3abe5069762ab7abeaa438c9d4db9594",
+          "insertions": 4
+        },
+        {
+          "path": "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFourEdgeEvaluation.lean",
+          "before_sha256": "f359bf189b747d52b7936099cd55911f6fddee350944fd7422300b9d1cc35542",
+          "after_sha256": "488c7c2123de1695508e162e979d2142f6da9744c6dcce14c31582f5530fc436",
+          "insertions": 8
+        },
+        {
+          "path": "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFourEdgeTree.lean",
+          "before_sha256": "edd14918449588fac49f443a6b3cc5949affd938c60771f3cdbec00cc172406c",
+          "after_sha256": "57e7214021027a4d9a73d7875ddcabb9152e23a8d3ab4252f664d3d30f2c5702",
+          "insertions": 21
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassCutOpenAugmentationEvaluation.lean",
+          "before_sha256": "7786b46b94f5d824b579d42bfffbe80e7929f8a070ea972534f1815aa18984f9",
+          "after_sha256": "a2161f4eecc0ae4351f1d4a7a598d26f0ff041cb09e6cfffb2366b0eaf2ca4cf",
+          "insertions": 1
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeConeEvaluation.lean",
+          "before_sha256": "a536a6a74562575fa622d4dd552887b1e9ccd8ed8b452ac57ec3e16ee6b809a7",
+          "after_sha256": "59dbff546232c8dc8a32bdfab7336ccd1faf6a248749b9771960b6f4e57e580b",
+          "insertions": 4
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgePrecompRealization.lean",
+          "before_sha256": "c3159e364582aad82c687dcc5f28493aae5428cd2d7830cd12e6e159f2830d5d",
+          "after_sha256": "3077bbc710a46f62149df99dd08207039dde796d40fc7802330f92c0122d7096",
+          "insertions": 2
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeReanchorRealization.lean",
+          "before_sha256": "8d29b3e54fd87bab386701d9287358158ba19d5d742f1bc1666a75dcb9305e3a",
+          "after_sha256": "3ae456ba6f1d1d53b129e748e08678382082d84b27795dd7f4ca48541f081fe2",
+          "insertions": 2
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCutOpenAugmentationTopology.lean",
+          "before_sha256": "2bf20dc9729bc429861cf865560345900e886fd367e79be0064e2c07e0558db9",
+          "after_sha256": "c1cef976ae7eba07c44fdb02e432438d2bae553587646de214702b33776fb73a",
+          "insertions": 5
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentNaturalityCarrier.lean",
+          "before_sha256": "354c964c668bcb23eea1790a814fdb5761f9f6bc1f8dea138ba1a90b346c08fa",
+          "after_sha256": "5db828e93e54dc16ac7d1bbfb1ce52c4d854c11efa273e71c2fd65610079c183",
+          "insertions": 7
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentNaturalityReference.lean",
+          "before_sha256": "97c4614f838f8ba538a2a06000e4df44f7d86350137ff51a0631b285027ac689",
+          "after_sha256": "b0a381764057509ad737f2fb10e85e902eba1fbcf70ca1190d1718843365aec8",
+          "insertions": 4
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentProjectionTripleFamilies.lean",
+          "before_sha256": "249333e4d1812fa88e33e5bb275386a771b398d9e98c33709d3d94b7af4db948",
+          "after_sha256": "9bdd3a03aa7198fe17504aefaedd53222cd055298e4e2ac87a13ea2483dd1bb8",
+          "insertions": 6
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentTripleCanonicalFamily.lean",
+          "before_sha256": "cf6db8bd67803112285e0d296a51cdaf0cb53bc917a84152a8f29b9dd78712d5",
+          "after_sha256": "4d412c1bd4d980c30b634c3f68f97bd59468751fb4a505e3f09d5e627c686904",
+          "insertions": 3
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassLaurentTripleReference.lean",
+          "before_sha256": "9f7618947799725849390b7586f85f72fe5d17b6e348bb2c48137ea26dca8f2d",
+          "after_sha256": "066d87760d9202caad1d8156853caca330d7eabfd26d7c88d9fd09870db10af0",
+          "insertions": 2
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeTargetFirstNative.lean",
+          "before_sha256": "eaf07dfbb56013341636a8667b516e82c3ef64d24903a308c435bf4d776c5aba",
+          "after_sha256": "ee976c7849a056043b31a882100671998e8313258f8b2b857e72aa4ae17ed667",
+          "insertions": 3
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeTargetSingleSheet.lean",
+          "before_sha256": "3fc1c522817e7f997d193c965659ea882a0fa80a6d624e31465eebd7e0b0b8bd",
+          "after_sha256": "97de370be0c62afdc757bbff3a4240f4ff7bc10d8053ab76c86268646beffcc9",
+          "insertions": 9
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialCommonSheet.lean",
+          "before_sha256": "1067e887dcb86e9ec252cadd43043ddc69a401fab2836b6458ef2df64bf13d2e",
+          "after_sha256": "5188123b4ec9edcc309f4b7d8882437f4d9dcdc9f297fd6325c49738f3a48b5d",
+          "insertions": 2
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialInputCap.lean",
+          "before_sha256": "d8c24eae075591d5c592d6cde073b7703f142328f7d8093f8cb38893ec56c3ff",
+          "after_sha256": "f9f9aeef6c40e88be38023548369483e67939f14fa384d10c0de8ff2ccf2bbe9",
+          "insertions": 4
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairCells.lean",
+          "before_sha256": "b6efa926db3e9996f422266b3c09fb06404528962802d08442739844ccee6438",
+          "after_sha256": "a681e66bfd50d8ca53175a328a967ee47bb99111e2e19772a7a73597c5957e32",
+          "insertions": 3
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairCorrected.lean",
+          "before_sha256": "7a19bd7d4eddab431a93f567cfea556fa9ef25d47b49ca36c102714302a4cefe",
+          "after_sha256": "fb9e3110260982ce211b7772d6849196f8c4e63f84a3cd2ad589e8065ed23230",
+          "insertions": 11
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairEndpointReferences.lean",
+          "before_sha256": "41172ffac615f078737bb7c24b523ad60d0e1219c4cd25a2fc4b3bcf427e86b1",
+          "after_sha256": "7fb9f6cf2afb0f747af6124ddf77bcaf043c36f560bcf0fc782ad170ef5a097f",
+          "insertions": 7
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairInitial.lean",
+          "before_sha256": "72feab344c15c5ecfb2df30b3d4d22ee9e774afc03bd95b92c17fdb1bbbf4e83",
+          "after_sha256": "c46f945136d776914e8ce637281cdd3d614e08cc444a335077632c9c6d335421",
+          "insertions": 5
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialPairInitialNative.lean",
+          "before_sha256": "9721a40cf1d1d97a30cb91e2c1645e04d516c4b02adea6910d0a100930b27c1e",
+          "after_sha256": "e32f89cf6bb67623f214232ec333a5b4dde13ce7f3a2e75e8dc4d478b543c490",
+          "insertions": 1
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassRaw1PolynomialRadialCaps.lean",
+          "before_sha256": "8cc6e25fe54969210d2bbddf0e7c1bd48f9d339a2ddc317473340f28ab680403",
+          "after_sha256": "561736d46ea40dcb1b52074732476c7e15c8016e1d9d1c493a2e0531068c577e",
+          "insertions": 4
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSecondConeProjectionRoutes.lean",
+          "before_sha256": "6863af296f4dabeb695b36c892bfc7081757d2aa9c334e123cb7a3409767323a",
+          "after_sha256": "8fbf0497a8f45bbe8d54ab55d2e17b5fed1f84c89ea2c931556b11c2de15ac86",
+          "insertions": 2
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedCoefficientAugmentation.lean",
+          "before_sha256": "1f3597a1c384a39214c45803300c60f20fdc276c024400a130ef69e3a2126ee6",
+          "after_sha256": "e801e648084d8ac9ffdc360a0ddf307751c4a8488fd9d948093adb20ea6bb633",
+          "insertions": 1
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedCoefficientPrecomp.lean",
+          "before_sha256": "f495aba0aa3ea6161e0e0fcd7a916c656de833c334944e1fdea7fd2304fdf37f",
+          "after_sha256": "0313d344f222463a927109dac689017dc322c5bddc40dc6607b50580b1e1e7f8",
+          "insertions": 9
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetChartAttachment.lean",
+          "before_sha256": "c66377646f6c1feea755369b74b9c9f0caee664314a2faf58a81a91f6a9695ca",
+          "after_sha256": "36fcb46f5bb4d801ddabcb1705b72c943ad4a443b4cbc553c0b63b8421c9035e",
+          "insertions": 7
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetCylinderMap.lean",
+          "before_sha256": "aff3c53e178c2cd7651e17908600ea00378f114a5fdc0ac66ab6a3d6fc623ed5",
+          "after_sha256": "df6dde252d3aa9e2f1cf442c56d15a99f7c9d1465570008191391cc8ab4c3cda",
+          "insertions": 10
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedTargetCylinderNative.lean",
+          "before_sha256": "492f1b88d197243e7b579362d21293dd05ef79916202cb36a0d7eba94b889771",
+          "after_sha256": "7083f31b74432e462cfc082ef3e3f36e56e6c2c3398755a52392b4ef55ec9358",
+          "insertions": 3
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeCorrectedNative.lean",
+          "before_sha256": "23d2c0125fad5fb3b4c70be86a84f72c142735e3907f5a54156434f8f75d9843",
+          "after_sha256": "b1b61f0549ec65ab0d03be0e3c10f5a79d679ecc7798e1c4ab8a74b99d1c306e",
+          "insertions": 8
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeCorrectedSquare.lean",
+          "before_sha256": "f991abc9671e7028ffbbe29ac9d32d8f72b8f32a219511749ec16e5f383ce24d",
+          "after_sha256": "aac7575c0ae5e96eba9ae31973e586286cac4229fbef290222e5060b8ab71ccd",
+          "insertions": 12
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInitialSquare.lean",
+          "before_sha256": "00acda71cf092fd7c12a5b9e3ad5ee26a82e1392ec610df4009c03d3b59220f7",
+          "after_sha256": "3ca47976e46f0403a74cbfa737439dd1fc9c98a79e95e71555f277572775e8c0",
+          "insertions": 5
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeInputPolynomialNative.lean",
+          "before_sha256": "685229787d0c8002747ded271a9014e6c0d2ea5db679c27cad941c35e58866d6",
+          "after_sha256": "59a73a05ca8fc5776cc257b91cbe99ba1ca5572b034db9d4e1a38a9c2516599a",
+          "insertions": 4
+        },
+        {
+          "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeReference.lean",
+          "before_sha256": "859cc5449d102a42331f6e5c3818df478be1e413b603a43215180561855e2e3c",
+          "after_sha256": "0251d824c31e44a9df2f7bb4927da42a495721e5b7bfe497218880ad54fd74c3",
+          "insertions": 1
+        },
+        {
+          "path": "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveFourEdgeCone.lean",
+          "before_sha256": "95fd87d378bfed48ac7a7fb1d40fa1b0486cc354c1eab8e35b32b73eb55d2b7e",
+          "after_sha256": "b1adff84ef4a18e4e80335064dc3ed42ff46e8dac74d8a2c3c1c80fd761bd2e7",
+          "insertions": 4
+        }
+      ],
+      "identity": "Deleting only the recorded inserted comments restores all original archive bytes."
+    },
+    "naming": {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassMiddleIteration.lean",
+      "before_sha256": "496ff2771748616015e435feef31eec958f3594c8e19f0e1ae3bdca3f5bee22d",
+      "after_sha256": "f3d7c2c6ea59a5722f7330b97bddaea9b7924fb43a03fce8325290239da8ecd0",
+      "mapping": {
+        "boundedFlatCoefficientRestrictedMiddle_contractionIso": "boundedFlatCoefficientRestrictedMiddleContractionIso",
+        "boundedFlatCoefficientRestrictedMiddle_iteratedIso": "boundedFlatCoefficientRestrictedMiddleIteratedIso"
+      },
+      "roundtrip_exact": true,
+      "external_source_references": []
+    },
+    "scoped_lint_runner": {
+      "path": "Tools/LintScoped.lean",
+      "change": "Select declarations from exact defining-module inventories and run independent batches of 64, so earlier scheduling does not exhaust later checks. The default 200,000 heartbeat limit, all 15 linters, generated declarations, exclusions and native text checks are retained."
+    },
+    "simp_registration": {
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientNativeKCharts.lean",
+      "before_sha256": "a7cf1c131948f3b70ebd6564add3e9792e1d8a74e5a319bb4a937073522e9a61",
+      "after_sha256": "12331fc0313d4a14f3c93bd7988647568c62000018514794b8226deb732a40fc",
+      "changes": [
+        {
+          "declaration": "boundedFlatCoefficientNativePolynomialKEquiv_hom",
+          "removed_attribute": "simp"
+        },
+        {
+          "declaration": "boundedFlatCoefficientNativeLaurentKEquiv_hom",
+          "removed_attribute": "simp"
+        }
+      ],
+      "definitions_statements_and_proofs_unchanged": true,
+      "reason": "The generic MulEquiv.toMonoidHom_eq_coe rule normalizes each left-hand side. Keep the exact forward-map formulas available for explicit rewriting, including their existing local consumers."
+    }
+  }
+}

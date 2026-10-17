@@ -184,6 +184,7 @@ public import Quillen.Aglib.Algebra.Polynomial.Laurent.ModuleCech
 public import Quillen.Aglib.Algebra.Polynomial.Laurent.ProjectorCech
 public import Quillen.Aglib.Algebra.Polynomial.Laurent.ProjectorFiniteDefects
 public import Quillen.Aglib.Algebra.Polynomial.Laurent.Pullback
+public import Quillen.Aglib.Algebra.Polynomial.Laurent.UnderZero
 public import Quillen.Aglib.AlgebraicGeometry.Cohomology.Affine.ExtComparison
 public import Quillen.Aglib.AlgebraicGeometry.Cohomology.Affine.FinitePrincipalDimension
 public import Quillen.Aglib.AlgebraicGeometry.Cohomology.Affine.InjectiveComplex
@@ -677,6 +678,7 @@ public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Flat
 public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.LaurentHyperbola
 public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.NativeCoordinates
 public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.NaturalDiagram
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.OpenPairInterchange
 public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.OpenPairZeroSection
 public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.OpenPairs
 public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.OppositeMixedEvaluation
@@ -871,10 +873,16 @@ public import Quillen.Aglib.RingTheory.RegularLocalRing.ProjectiveDimension
 public import Quillen.Aglib.RingTheory.RegularLocalRing.QuotientLifting
 public import Quillen.Aglib.Topology.Path.CarrierHalfPaths
 public import Quillen.Aglib.Topology.Path.EvaluationFactorExtraction
+public import Quillen.Aglib.Topology.Path.EvaluationOperations
 public import Quillen.Aglib.Topology.Path.HomotopyEvaluationTrans
 public import Quillen.Aglib.Topology.Path.HomotopyPathSlice
 public import Quillen.Aglib.Topology.Path.MappedProjectionRectangle
 public import Quillen.Aglib.Topology.Path.RetypedUnitComparison
+public import Quillen.Aglib.Topology.Path.SpanReassociation
+public import Quillen.Aglib.Topology.Path.SpanReassociationNaturality
+public import Quillen.Aglib.Topology.Path.ThreeRadialSquares
+public import Quillen.Aglib.Topology.Path.ThreeRadialSquaresEvaluation
+public import Quillen.Aglib.Topology.Path.ThreeRadialSquaresMapEvaluation
 public import Quillen.Aglib.Topology.Path.TwoSheetConjugation
 
 /-!

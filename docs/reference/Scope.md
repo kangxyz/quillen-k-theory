@@ -37,7 +37,8 @@ interface or a successful compilation does not supply an additional comparison.
 | Finite homotopy excision | All-point connectivity, finite cube HELP, original double-cylinder gap bound, and S-model/finite Bass-stage stable cone sequences |
 | Telescopes and Ω replacement | T1 finite-stage representatives and stable colimits, strict cone/pushout interchange, track-defined maps, and loop-tail Ω replacement |
 | Bass groups and finite stages | Affine/scheme/supported cokernel recursions, strict Laurent seed and iterates, raw one-step comparisons, an objectwise first-to-second seed map, and natural finite-stage bottom-group isomorphisms |
-| Ambient and supported Bass telescopes | Actual towers, natural negative-class maps, signed coefficient cone sequences, stable Bass self-maps, and the support-forgetting square |
+| Ambient and supported Bass telescopes | Fine transitions and original inclusions invertible for d ≥ −i on qcqs ambient schemes; original negative/connective group isomorphisms and support-forgetting squares, with compact removed open for the supported telescope |
+| Original nonpositive localization | Recurring exact original ambient/supported Bass groups for qcqs ambient and compact removed open, fixed same-null fine boundary, and the geometric positive boundary joined at literal K₀ by exactness |
 | Full-open coefficient models | Original restriction/null diagrams, signed finite cone comparisons, fine and graded Bass towers/telescopes, pointwise geometric evaluation and graded telescope vanishing |
 
 The subject guides cover [exact categories](../topics/ExactCategories.md),
@@ -160,10 +161,15 @@ Laurent quotient. Its finite comparison and original negative-class telescope
 map are natural under scheme restriction between compact endpoints. The actual
 ambient seed/telescope restriction needs no compactness premise and preserves
 all original cylinder/inclusion faces and identity/composition. Supported
-original-group comparisons remain separate. Affine and compact native ambient
-telescope inclusions give original natural class maps without proved bijectivity or stabilization
-claim. The ambient and supported telescopes have their own stable Bass
-self-comparisons; these do not identify them with the classical nonconnective
+finite-bottom comparisons require only compact ambient scheme, retain the
+original Laurent quotient and commute with support forgetting. For qcqs
+ambient schemes, every original fine transition and inclusion at stage i is
+invertible in degrees d ≥ −i. With compact removed open, the same holds for
+the supported fine tower. Original negative and connective group maps into
+these actual telescopes are coefficient-natural isomorphisms. The supported
+negative/connective degree-zero maps agree, and the original forget-support
+square is retained. The ambient and supported telescopes have their own stable
+Bass self-comparisons; these do not identify them with the classical nonconnective
 geometric theory. Fixed-open constructions retain their actual `Under R`
 domains and support-forgetting squares.
 
@@ -213,8 +219,9 @@ positive identity and negative polynomial-scalar chart formulas over
 quasi-compact bases; the cone is supported outside the positive range.
 The forgotten cone K-class and terminal boundary identification remain separate.
 Actual native/pair polynomial
-zero evaluation also splits the original common corner in all recursive Bass
-degrees, without supplying its middle exactness or seed stabilization.
+zero evaluation splits the original common corner in all recursive Bass
+degrees. The additional native ambient/supported middle-row and seed proofs
+now give the fine stabilization above; splitting alone would not imply it.
 Original native section/span evaluation now has levelwise equivalence and
 literal span/cone/loop HEP/T1. The P¹ line/quotient determinant pairing and
 canonical tautological pullback-tensor comparison are proved over arbitrary
@@ -233,14 +240,16 @@ supply the original two-chart seed comparison, with no mixed-comparison input
 left to the caller. `CoefficientBassSeedIteration.stepMap` constructs the
 objectwise first-to-second raw Bass map with its original cone inclusion,
 cylinder and loop-coordinate formulas. Second-stage coefficient compatibility,
-coherent all-iterate/telescope comparisons and initial-seed invertibility
-remain open. The composite polynomial attachments and native precomposed and
+coherent all-iterate raw/telescope comparisons remain open. The original
+raw initial seed is connective-invertible on qcqs coefficient schemes; its
+whole one-step evaluation transports that result to the fine seed. The composite polynomial attachments and native precomposed and
 postcomposed cube evaluations give additional fixed faces, without a global
 categorical coherence theorem.
 The original polynomial coefficient unit square and whole original-span unit
 are now constructed, with exact chart tracks and cylinder parameterization.
-Both Laurent chart unit squares are supplied; the whole Bass identity still
-requires its missing six-face cube or another complete original comparison.
+Both Laurent chart unit squares and the actual six-face identity cube are
+supplied by `CoefficientBassUnitNativeCube`; `CoefficientBassUnitCubeConsumers`
+gives the whole original comparison/cone/step identity with no supplied filler.
 One eight-slot split-normalization simplex and its six displayed-component
 triangle lifts are constructed. Their assembled evaluation is now proved
 equal to the exported original triple track on all levels and parameters,
@@ -262,8 +271,8 @@ independent structure time. `MWholeCubeConsumers` gives the original
 comparison, cone and parameter-looped step composition without a supplied
 cube or compatibility premise. Independent review and fresh canonical
 checks cover all 1,619 defining origins, including 54 private names; ROOT
-and full-private coverage agree. The separate unit cube, raw tower,
-telescope and classical identification remain open. The first Godement functor on
+and full-private coverage agree. The raw all-stage tower, its telescope
+comparison and classical identification remain open. The first Godement functor on
 all scheme module sheaves is exact, flasque-valued and has its original natural
 monic germ unit. Its exact cokernel iteration now supplies the natural augmented
 flasque sheaf resolution and original augmentation quasi-isomorphism, preserving
@@ -353,8 +362,30 @@ The signed Bass span quotient and natural short exact row are realized for
 the actual ambient, open, supported and auxiliary-supported coefficient Model
 families at every finite stage and in every integer degree. Polynomial zero
 evaluation and finite Model geometry construct their original retraction,
-excision and collapse data. The original family hypotheses remain; recursive
-chart middle exactness and original seed preservation remain open.
+excision and collapse data. The original family hypotheses remain. Native
+ambient/supported recursive middle exactness and original connective-seed
+invertibility additionally give the fine transition range and telescope
+identifications described above.
+
+For a compact removed open in a qcqs ambient scheme, the original negative
+support-forgetting and scheme restriction maps form the recurring exact
+nonpositive sequence in `Bass.SupportedLocalizationExactness` and
+`Bass.SupportedLocalizationBoundary`. The boundary is the fixed signed fine
+same-null cone boundary transported through the actual original-group
+comparisons. The existing geometric positive K₁-to-supported-K₀ map joins at
+literal K₀ groups by exactness; equality with the fine connecting map and
+arbitrary-pair pullback naturality of the transported boundary remain open.
+
+For raw second-projection pasting, generic locally compact parameter descent
+and whole-family recovery are supplied. The actual Laurent cell and both
+polynomial native cells lie in the original full target cone. The selected
+polynomial three-cube has all six scalar faces, including its eighteen-node
+Laurent bottom and unreduced tip; both complete height-zero native faces
+attach to the Laurent family after the actual source chart maps. The overlap
+four-cube with eight prescribed faces, their whole intersections including the
+original half-height midpoint, and the complete compatible L/P/O attachments
+are still needed for actual `PlusPasting`/`MinusPasting` and a
+coherent raw tower.
 These constructions do not identify classical Kᴮ. The current dependency plan is in the
 [TT localization roadmap](../development/TTLocalization.md).
 
@@ -389,9 +420,9 @@ tracks and a natural chosen inverse remain separate. See
 ## Remaining comparisons
 
 
-- Fixed-degree finite Bass-transition stabilization, bijectivity of the natural negative-class maps into the telescope, and classical telescope negative-group identification.
+- Identification of the constructed fine completion with the original raw all-stage geometric tower and classical nonconnective groups. Fine ambient/supported stabilization and bijectivity of the original negative-class maps are supplied under the stated qcqs/compact-open hypotheses.
 - Full all-iterate comparison with the original geometric Bass tower, the Laurent splitting and original fine [T] terminal boundary, including the zero-section class and possible Nil terms. The positive exact row on PerfectK(Spec R) and the original relative scalar-to-cofiber boundary are proved; they do not close these remaining comparisons.
-- Complete original raw iterate/telescope evaluation and classical Thomason–Trobaugh identification, retaining the original K₀ image and signed boundary. Normalized geometric chart-composition, original cone/null/one-step seed comparison, basic global supported localization and auxiliary-supported section-completion localization are proved.
+- Complete original raw iterate/telescope evaluation and classical Thomason–Trobaugh identification, retaining the original K₀ image and signed boundary. The native overlap four-cube and complete L/P/O descent remain open. Equality of the fine and geometric boundaries and arbitrary-pair boundary naturality are separate. Existing support-enlargement maps must be identified with the auxiliary T, T∪U and T∩U towers and their localization sequence. Normalized one-step evaluation and basic/auxiliary-supported constructed section localization are supplied.
 - Proj identification, the full twisting-sheaf family, and the general projective-bundle formula. Intrinsic-perfect D+ generation and both actual affine model K-map inverse laws are supplied over every commutative ring. Both actual native qcqs model inverse laws and identification of geometric G with the EXISTING native inverse are supplied, together with original compact-open supported Phi bijectivity, in every natural degree including zero. Literal forward maps, signs and product normalization are retained. Native projection perfection and exact coefficient/support preservation hold on general quasi-compact bases. The separate specialized endpoint-unit/connecting and arbitrary-base-map comparisons remain open.
 - General-source perfect preservation by derived direct image, unrestricted unbounded derived pushforward, and general bounded-below flat-base-change invertibility.
 - Strict/local equivalence on arbitrary nonaffine schemes and perfect pullback on arbitrary non-quasi-compact schemes.

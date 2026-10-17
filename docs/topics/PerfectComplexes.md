@@ -5,7 +5,9 @@ complexes, vector-bundle comparisons, derived pullback, localization, support
 excision, and Mayer–Vietoris. The original restriction maps and relative
 homotopy-fiber boundaries remain the public maps. Localization has an exact
 image endpoint in degree zero. Separate functorial Bass groups are defined by
-cokernel recursion.
+cokernel recursion. For a quasi-compact open of a qcqs scheme, these original
+nonpositive groups now have a recurring localization sequence transported
+from the same-null fine completion; its maps and boundary are described below.
 
 This guide owns the perfect objects, supported/relative models, and their
 connective geometric localization comparisons. The generic spectrum and
@@ -541,28 +543,106 @@ span generation in degree `-i`. `SectionBassSuccessor`,
 and `SectionBassBottomComparison` give, for every natural `i`, a natural
 isomorphism from existing `negativeKFunctor i` to degree `-i` of actual finite
 stage `i`. They retain the original recursive Laurent quotient, both chart signs,
-coefficient maps, and stage-zero evaluation. These are diagonal bottom groups;
-no fixed-degree later-stage stabilization follows. Comparison with the earlier
-evaluation-based first-stage isomorphism is also separate.
+coefficient maps, and stage-zero evaluation. These are diagonal bottom groups.
+Their construction alone does not imply
+later-stage stabilization; the fine range and telescope theorems below supply
+that additional result under their stated hypotheses. Comparison with the
+earlier evaluation-based first-stage isomorphism remains separate.
 
 The native ambient extension
 [`CoefficientBassOriginalNegativeComparison`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassOriginalNegativeComparison.lean)
-uses the original scheme Bass recursion on the actual coefficient fibers of
-any compact scheme over `Spec R`. For every `i`, it gives the degree `-i`
-finite-stage isomorphism, naturally in coefficient arrows, preserving the
-original perfect K₀ evaluation and Laurent quotient. The actual native
-polynomial and Laurent products supply both chart transport squares.
-The finite comparison preserves original scheme restriction between compact
-endpoints through `CoefficientBassOriginalNegativeNaturality`. Supported groups
-and seed/transition invertibility remain separate.
-[`CoefficientBassNegativeMap`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeMap.lean)
-composes it with the original native telescope inclusion, preserving the
-successor Laurent representative. This class map is natural in coefficient
-arrows. `CoefficientBassSchemeRestrictionTelescope` preserves the actual
-Laurent action, seed, transitions and every telescope face under arbitrary
-scheme restriction. `CoefficientBassNegativeMapNaturality` gives the original
-class-map square for compact endpoints. Bijectivity and fixed-degree
-stabilization remain unproved.
+identifies the original scheme Bass recursion on each coefficient fiber of a
+compact `P : Over (Spec R)` with degree `-i` of its actual finite stage `i`.
+It is natural in coefficient arrows, preserves the original perfect K₀
+evaluation and Laurent quotient, and uses the genuine native polynomial and
+Laurent products. `CoefficientBassOriginalNegativeNaturality` retains scheme
+restriction between compact endpoints.
+
+For an open immersion `f : P ⟶ Q`,
+[`CoefficientSupportedNegativeBottomComparison`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedNegativeBottomComparison.lean)
+gives the corresponding supported finite-bottom isomorphism. Only `Q.left`
+needs to be compact for this finite comparison. The actual support-forgetting
+square, including its Laurent representative, is retained by
+`CoefficientSupportedNegativeForgetComparison` under that same hypothesis;
+compactness of the removed open is not needed here.
+
+`CoefficientBassNegativeMap` composes the original ambient finite comparison
+with the actual stage inclusion. `CoefficientBassSchemeRestrictionTelescope`
+retains the original Laurent action, seed, transitions and every telescope
+cylinder under arbitrary scheme restriction.
+`CoefficientBassNegativeMapNaturality` gives the original negative-class
+restriction square between compact endpoints.
+
+### Fine transition ranges and original groups in the completion
+
+For qcqs `P.left`,
+[`CoefficientBassFineConnectiveInvertibility`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassFineConnectiveInvertibility.lean)
+transports connective invertibility of the original raw seed through the
+constructed whole one-step evaluation to the unchanged fine seed. The original
+signed forward-unit quotient and native chart exactness supply the raw
+connective calculation in `CoefficientBassConnectiveInvertibility`.
+Neither calculation requires an all-stage raw comparison.
+
+Write `E_i(a)` for the ambient fine coefficient stage at `a : Under R`.
+[`CoefficientBassFineRangeInvertibility`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassFineRangeInvertibility.lean)
+and [`CoefficientBassFineTelescopeComparison`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassFineTelescopeComparison.lean)
+prove that the original transition `E_i(a) → E_(i+1)(a)` and the original
+inclusion `E_i(a) → E_∞(a)` induce isomorphisms in every degree `d ≥ -i`.
+The negative comparison is exactly the original finite-bottom comparison
+followed by this inclusion; it is coefficient-natural and preserves the
+original recursive Laurent quotient. `CoefficientBassConnectiveTelescopeComparison`
+likewise identifies every original connective K-group with the fine telescope
+through the original evaluation and stage-zero inclusion.
+
+For an open immersion `f : P ⟶ Q` with compact `P.left` and qcqs `Q.left`,
+`CoefficientSupportedConnectiveInvertibility`,
+`CoefficientSupportedNegativeMiddleExactness` and
+`CoefficientSupportedBottomChartExactness` supply the supported seed and
+bottom-row inputs. `CoefficientSupportedFineRangeInvertibility` proves the
+same range `d ≥ -i` for every unchanged supported transition.
+`CoefficientSupportedFineTelescopeComparison` and
+`CoefficientSupportedConnectiveTelescopeComparison` identify the original
+negative and connective supported groups with this same fine completion,
+naturally on all of `Under R`. Their degree-zero forward maps agree literally.
+`CoefficientSupportedNegativeTelescopeForget` preserves the original
+support-forgetting maps and Laurent representatives through the actual
+ambient and supported inclusions. These are identifications with the
+constructed fine completion; the original raw all-stage tower and its
+classical interpretation remain separate.
+
+### Original nonpositive localization sequence
+
+Let `A : QuasiCompactOpenPairs`, with removed open `U`, ambient scheme `X`,
+compact `U` and qcqs `X`. Write `N_i(X)` and `N_i(X on X−U)` for the original
+ambient and supported Bass recursions, where `i : ℕ` denotes degree `-i`.
+[`Bass/SupportedLocalizationExactness`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Bass/SupportedLocalizationExactness.lean)
+and [`Bass/SupportedLocalizationBoundary`](../../Quillen/AlgebraicGeometry/PerfectComplexes/Bass/SupportedLocalizationBoundary.lean)
+give the recurring exact positions
+
+```text
+N_i(X on X−U) → N_i(X) → N_i(U)
+  → N_(i+1)(X on X−U) → N_(i+1)(X) → N_(i+1)(U).
+```
+
+The arrows at the ambient groups are the original `supportedNegativeKForget`
+and `negativeKPullback`. `supportedNegativeLocalizationConnecting` is the
+fixed signed same-null fine cone boundary transported through the actual
+comparison isomorphisms and both identity-coefficient projection legs.
+The degree-zero restriction is the original `perfectKRestrict`.
+`supportedLocalization_zeroTail` joins the existing geometric
+`qcqsPerfectConnectingHom` from K₁(U) to supported K₀ by exactness at the
+literal K₀ groups. It does not identify that geometric connecting map with
+the fine connecting map. Arbitrary-pair pullback naturality of the transported
+boundary and identification with the classical raw boundary remain open.
+The coefficient-level owners are `CoefficientFullOpenBassRestriction`,
+`CoefficientNegativeLocalizationExactness` and
+`CoefficientNegativeLocalizationBoundary`. The full-open fine row, action,
+seed and telescope are definitionally the ambient ones on the open scheme;
+the telescope localization map equals original scheme restriction on every
+cylinder using only the open-immersion hypothesis. The final group comparisons
+use the compactness and separation hypotheses stated above.
+
+### Raw identity and second-stage coherence
 
 The original Raw1 polynomial-span unit is supplied by
 [`CoefficientPolynomialUnit`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientPolynomialUnit.lean)
@@ -570,8 +650,12 @@ and `CoefficientPolynomialSpanUnit`: both original inclusion tracks keep their
 exact times, and the whole identity cylinder is retained. `NormalizedUnitCoherence`,
 `NormalizedUnitTrack`, `NormalizedUnitRoutes` and `OriginalUnitSquare` derive it
 from the genuine geometric units and actual chosen-zero normalization.
-`CoefficientBassUnitCharts` supplies the two original Laurent chart squares;
-the six-face Bass identity cube and hence the whole Bass identity remain open.
+`CoefficientBassUnitCharts` supplies the two original Laurent chart squares.
+[`CoefficientBassUnitNativeCube`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassUnitNativeCube.lean)
+constructs the actual six-face identity cube, and `CoefficientBassUnitCubeConsumers`
+gives the whole comparison square, cone identity and parameter-looped step identity.
+The original inputs, chart tracks, basepoints and independent times are retained;
+no cube filler is supplied by the caller.
 
 The original coefficient seed now has both actual mixed comparisons.
 [`CoefficientBassPositiveActualMixedFiller`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveActualMixedFiller.lean)
@@ -594,8 +678,9 @@ map `stepMap : boundedFlatCoefficientBassStep P a ⟶
 boundedFlatCoefficientBassSecondStep P a`. The cone inclusion, entire cylinder
 and independent output-loop coordinate have explicit formulas. This is the
 objectwise application of Bass to the original seed. A functorial second
-coefficient stage, coherent all-iterate tower, initial-seed invertibility and
-classical telescope identification remain separate obligations.
+coefficient stage, coherent all-iterate raw tower and classical telescope
+identification remain separate obligations. The fine initial seed and its
+connective telescope comparison have the scope stated above.
 
 `CoefficientBassSecondCoefficientProjection` constructs the actual polynomial
 and Laurent coefficient squares and span map; its two relative-pasting types
@@ -629,8 +714,49 @@ level-zero input. `MWholeCubeConsumers` gives the whole original comparison
 square, cone composition and parameter-looped step composition, retaining
 the literal Laurent inclusion track. Independent reviews and fresh native
 canonical builds, ROOT clients, style and complete 1,619-origin kernel
-coverage passed. The separate unit cube and raw tower remain open. The [TT roadmap](../development/TTLocalization.md#e-compare-to-the-original-raw-geometric-completion-e2)
+coverage passed. The unit cube is constructed by the separate unit owners
+above; the raw tower remains open. The [TT roadmap](../development/TTLocalization.md#e-compare-to-the-original-raw-geometric-completion-e2)
 records their exact role in genuine Raw2 and all-level geometric evaluation.
+
+The raw second-projection problem now has reusable parameterized descent in
+[`Topology/Prespectrum/PushoutConeFamily`](../../Quillen/Topology/Prespectrum/PushoutConeFamily.lean)
+and `PushoutConeFamilyRecovery`. The four supplied families (Laurent, two
+polynomial cylinders, and overlap cylinder) descend through the original
+pushout and reduced cone for any locally compact external parameter.
+Restriction along any continuous map commutes strictly with descent and
+independent parameter looping.
+The recovery theorem retains an entire already chosen family; the actual
+`BassMWhole.compositionCells` consumer recovers the existing cone and step
+composition with its original clocks.
+
+`CoefficientBassRaw1LaurentFamily` constructs the whole Laurent comparison.
+The polynomial `CoefficientBassRaw1PolynomialCommonPasting` family is an actual
+three-cube with all six scalar faces: its two complete comparison words, fixed
+source/target faces, original eighteen-node Laurent bottom and unreduced tip.
+`CoefficientBassRaw1PolynomialCommonPastingNative` retains genuine polynomial
+inputs, based values and independent structure time. The stronger native
+`CoefficientBassRaw1LaurentNativeCell` and `CoefficientBassRaw1PolynomialNativeCells`
+place the Laurent and both polynomial cells in the original full target Bass
+cone. `CoefficientBassRaw1PolynomialNativeAttachments` identifies both entire
+height-zero polynomial faces with the Laurent family after the actual source
+chart map; height one is the original cone point. No scalar P-face-intersection
+obligation remains for this selected three-cube.
+
+The remaining source-cell problem is the compatible overlap family: its
+four coordinates are comparison time, route time, cone height and overlap
+time. Its eight three-dimensional faces must have all whole intersections,
+including the original half-height midpoint and chosen earlier fillers.
+Complete Laurent/polynomial/overlap attachment equations and actual
+`PlusPasting`/`MinusPasting` must still be assembled before the generic descent
+produces the second coefficient map. The assembled `PushoutConeFamily (I × I)`
+must recover both entire cone routes before parameter looping yields the
+actual pasting. This does not yet give second-stage
+identity/composition, seed naturality, or a coherent raw all-stage tower.
+The selected carrier-augmentation and chosen-chart range modules preserve
+specified earlier cubes and chart squares as entire faces. In particular,
+`CoefficientBassSeedChosenSquareRange` preserves a supplied range condition;
+it does not prove the concrete chosen-boundary range. These interfaces do not
+supply the missing recursive closure.
 
 ### Telescope, localization map, and supported self-comparison
 
@@ -988,8 +1114,8 @@ in the [TT localization roadmap](../development/TTLocalization.md).
 ## Remaining obligations
 
 - Complete the Laurent-unit connecting-map and zero-section class formulas and retain possible Nil contributions; the normalized forward scalar K₁ comparison is proved.
-- Establish fixed-degree stabilization of the finite seed transitions and bijectivity of the natural negative-class maps into the telescope. The finite-bottom isomorphisms and stable Bass self-comparisons do not discharge these obligations.
-- Compare all iterates with the complete original geometric Bass tower, identify classical telescope negative groups, and prove the original Laurent splitting, negative localization boundaries, and nonconnective descent. The positive Bass exact row on PerfectK(Spec R) and relative scalar-to-cofiber boundary are supplied; the fine [T] terminal boundary and its O/O(-1) sign remain open.
+- Extend the proved fine ambient/supported range and original-group identifications through the remaining auxiliary-support tower comparisons. Existing support-enlargement maps must be identified with the actual T, T∪U and T∩U section towers and their exact localization maps.
+- Compare all iterates with the complete original raw geometric Bass tower and identify its classical groups and signed localization boundary. The original nonpositive groups already have the same-null fine localization sequence above. Its equality with the geometric boundary, arbitrary-pair boundary naturality, the Laurent [T] terminal formula and O/O(-1) sign, classical Laurent splitting and nonconnective descent remain open; retain possible Nil terms.
 - Identify the separate natural projected-diagonal endpoint comparisons and establish the general projective-bundle formula, Proj identification, and full twisting-sheaf family. Both actual native qcqs inverse laws and geometric G identification are proved, and the compact-open supported Phi bijection retains its original forward map. Intrinsic-perfect native projection perfection, original open K-map naturality and exact coefficient/support preservation hold on every quasi-compact base. Arbitrary-base-map naturality remains separate. The older finite-coefficient retract criterion retains its own uniform-window premises.
 - Extend perfect preservation to the claimed general-source/unbounded direct-image scope, and establish general bounded-below flat-base-change invertibility beyond the available QC-single and open specializations.
 - Extend strict/local equivalence to arbitrary nonaffine schemes and perfect pullback to arbitrary non-quasi-compact schemes; compare the Waldhausen and triangulated-derived Grothendieck presentations.

@@ -1,0 +1,256 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSquareFamilies
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionWholeReferenceAttachments
+
+/-!
+# The original polynomial square in the target polynomial reference
+
+The entire coefficient reference nerve is paired with the unchanged five-node polynomial
+naturality square and its original reversed-binary parameter. The full target anchor contains
+both binary normalization and the geometric equality transport. Its initial endpoint is the
+anchored polynomial coefficient map on arbitrary genuine source-polynomial nodes; its final
+endpoint is the literal coefficient map followed by target polynomial attachment. All claims
+are on full dependent nodes or whole reference nerves, without a global native evaluator.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite Convexity
+open CommRingCat.PolynomialLaurent AlgebraicGeometry.Scheme.BaseChange.Coefficients
+open Quillen.Waldhausen.IteratedS
+open scoped Simplicial Topology unitInterval
+universe u
+
+namespace Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge.TargetSpan
+open BassH0Merge CommonReferenceNerve
+
+private theorem product_total_node {V W T : Model.{u}}
+    (F : V ⟶ T) (D : V ⟶ W) (H G : W ⟶ T)
+    (γ : F.functor ≅ (D ≫ H).functor) (δ : H.functor ≅ G.functor)
+    (N : CommonReferenceNerve.Node D) :
+    CommonReferenceProduct.node F D H γ N ⟨G, δ⟩ =
+      CommonReferenceProduct.postNode F G (γ ≪≫ isoWhiskerLeft D.functor δ) N := by
+  have hp : (Functor.uncurry.obj (whiskeringLeft _ _ _)).mapIso (N.2.prod δ) =
+      isoWhiskerLeft D.functor δ ≪≫ isoWhiskerRight N.2 G.functor := by
+    apply Iso.ext
+    ext X
+    exact δ.hom.naturality (N.2.hom.app X)
+  change (⟨N.1 ≫ G, γ ≪≫ _⟩ : CommonReferenceNerve.Node F) =
+    ⟨N.1 ≫ G, (γ ≪≫ isoWhiskerLeft D.functor δ) ≪≫ isoWhiskerRight N.2 G.functor⟩
+  rw [hp, Iso.trans_assoc]
+
+private theorem product_total_postcomp {V W W' T : Model.{u}}
+    (F : V ⟶ T) (D : V ⟶ W) (H : W ⟶ T) (J : W ⟶ W') (K : W' ⟶ T)
+    (γ : F.functor ≅ (D ≫ H).functor) (δ : H.functor ≅ (J ≫ K).functor)
+    (N : CommonReferenceNerve.Node D) :
+    CommonReferenceProduct.node F D H γ N ⟨J ≫ K, δ⟩ =
+      CommonReferenceProduct.postNode F K
+        ((γ ≪≫ isoWhiskerLeft D.functor δ) ≪≫
+          (Functor.associator D.functor J.functor K.functor).symm)
+        (postcompNode J N) := by
+  rw [product_total_node]
+  dsimp only [CommonReferenceProduct.postNode, CommonReferenceProduct.reanchor, postcompNode]
+  apply Sigma.ext (Category.assoc N.1 J K).symm
+  apply heq_of_eq
+  apply Iso.ext
+  ext X
+  change (γ.hom.app X ≫ δ.hom.app (D.functor.obj X)) ≫
+      K.functor.map (J.functor.map (N.2.hom.app X)) =
+    ((γ.hom.app X ≫ δ.hom.app (D.functor.obj X)) ≫ 𝟙 _) ≫
+      K.functor.map (J.functor.map (N.2.hom.app X))
+  rw [Category.comp_id]
+
+private theorem whiskered_cancel {V W T : Model.{u}}
+    (E : V ⟶ W) {F G H : W ⟶ T} {K : V ⟶ T}
+    (α : K.functor ≅ (E ≫ H).functor) (h : F.functor ≅ H.functor)
+    (k : G.functor ≅ F.functor) :
+    ((α ≪≫ isoWhiskerLeft E.functor (h.symm ≪≫ k.symm)) ≪≫
+      isoWhiskerLeft E.functor (k ≪≫ h)) ≪≫ α.symm = Iso.refl _ := by
+  simp only [isoWhiskerLeft_trans, ← isoWhiskerLeft_symm, Iso.trans_assoc,
+    Iso.symm_self_id_assoc, Iso.self_symm_id]
+
+private theorem mapParameter_comp {V W V' W' V'' W'' : Model.{u}}
+    {F : V ⟶ W} {G : V' ⟶ W'} {H : V'' ⟶ W''}
+    (h : CommonReferenceNerve.Node F → CommonReferenceNerve.Node G)
+    (g : CommonReferenceNerve.Node G → CommonReferenceNerve.Node H)
+    (y : |nerve (Codiscrete (CommonReferenceNerve.Node F))|) :
+    mapParameter (fun N ↦ g (h N)) y = mapParameter g (mapParameter h y) := by
+  obtain ⟨k, N, z, rfl⟩ := exists_parameter F y
+  simp only [mapParameter_parameter]
+
+variable {R : CommRingCat.{u}} (P : Over (Spec R)) {a b : Under R} (f : a ⟶ b)
+variable {V : Model.{u + 1}}
+  (E : V ⟶ modelOf (boundedFlatPerfectWaldhausen (space (op P, a))))
+
+/-- The literal normalized coefficient map. -/
+abbrev coefficientPost := normalizedMap (coefficientMap P f)
+
+/-- The source coefficient-to-polynomial attachment. -/
+abbrev sourceProjection (_f : a ⟶ b) := normalizedMap (polynomialProjection P a)
+
+/-- The target coefficient-to-polynomial attachment. -/
+abbrev targetProjection (_f : a ⟶ b) := normalizedMap (polynomialProjection P b)
+
+/-- The normalized polynomial coefficient map, before any attachment restriction. -/
+abbrev polynomialPost := normalizedMap (coefficientMap P ((polynomialUnderFunctor R).map f))
+
+/-- The entire coefficient reference after the original coefficient map. -/
+abbrev input := E ≫ coefficientPost P f
+
+/-- The target polynomial reference uses the literal coefficient-then-projection association. -/
+abbrev polynomialReference := input P f E ≫ targetProjection P f
+
+/-- The full inverse target normalization followed by the original geometric equality transport. -/
+def polynomialSquareBaseAnchor :
+    (coefficientPost P f ≫ targetProjection P f).functor ≅
+      (CoefficientSquareFamilies.polynomialSource P f).functor :=
+  (BinaryNormalizationSimplex.total (polynomialProjection P b) (coefficientMap P f)).symm ≪≫
+    (NativeSquareFiveSimplex.sourceIso
+      (coefficientMap P ((polynomialUnderFunctor R).map f)) (polynomialProjection P a)
+      (polynomialProjection P b) (coefficientMap P f)
+      (coefficientMap_naturality P (polynomialUnderCoefficient R) f)).symm
+
+/-- The entire input reference is whiskered into the original five-node polynomial square. -/
+def polynomialSquareAnchor : (polynomialReference P f E).functor ≅
+    (E ≫ CoefficientSquareFamilies.polynomialSource P f).functor :=
+  Functor.associator E.functor (coefficientPost P f).functor (targetProjection P f).functor ≪≫
+    isoWhiskerLeft E.functor (polynomialSquareBaseAnchor P f)
+
+/-- The complete target-oriented polynomial anchor retains both explicit associations. -/
+def polynomialMapAnchor : (polynomialReference P f E).functor ≅
+    (WholeReference.polynomialReference P a E ≫ polynomialPost P f).functor :=
+  (polynomialSquareAnchor P f E ≪≫ isoWhiskerLeft E.functor
+    (BinaryNormalizationSimplex.total
+      (coefficientMap P ((polynomialUnderFunctor R).map f)) (polynomialProjection P a))) ≪≫
+    (Functor.associator E.functor (sourceProjection P f).functor
+      (polynomialPost P f).functor).symm
+
+/-- The target-oriented map accepts every genuine source-polynomial reference node. -/
+def polynomialMapNode
+    (N : CommonReferenceNerve.Node (WholeReference.polynomialReference P a E)) :
+    CommonReferenceNerve.Node (polynomialReference P f E) :=
+  CommonReferenceProduct.postNode (polynomialReference P f E) (polynomialPost P f)
+    (polynomialMapAnchor P f E) N
+
+/-- The entire genuine polynomial nerve is carried to the target polynomial reference. -/
+def polynomialMap :
+    C(|nerve (Codiscrete (CommonReferenceNerve.Node (WholeReference.polynomialReference P a E)))|,
+      |nerve (Codiscrete (CommonReferenceNerve.Node (polynomialReference P f E)))|) :=
+  mapParameter (polynomialMapNode P f E)
+
+/-- Every input node is paired with each of the five unchanged original polynomial-square nodes. -/
+def polynomialSquareNodes (N : CommonReferenceNerve.Node E) (i : Fin 5) :
+    CommonReferenceNerve.Node (polynomialReference P f E) :=
+  CommonReferenceProduct.node (polynomialReference P f E) E
+    (CoefficientSquareFamilies.polynomialSource P f) (polynomialSquareAnchor P f E) N
+    (CoefficientSquareFamilies.polynomialNodes P f i)
+
+/-- The original square parameter is unchanged on the entire coefficient reference nerve. -/
+def polynomialSquare : C(|nerve (Codiscrete (CommonReferenceNerve.Node E))| × I,
+    |nerve (Codiscrete (CommonReferenceNerve.Node (polynomialReference P f E)))|) :=
+  (FiniteParameter.parameter E (polynomialReference P f E) (polynomialSquareNodes P f E)).comp
+    ⟨fun z ↦ (z.1, NativeSquareFiveSimplex.parameter z.2), by fun_prop⟩
+
+/-- Every original coefficient simplex retains the complete five-node product grid. -/
+theorem polynomialSquare_characteristic {k : ℕ}
+    (N : Fin (k + 1) → CommonReferenceNerve.Node E)
+    (z : StdSimplex ℝ (Fin (k + 1))) (s : I) :
+    polynomialSquare P f E (CommonReferenceNerve.parameter E N z, s) =
+      CommonReferenceNerve.parameter (polynomialReference P f E)
+        (FiniteParameter.gridNodes E (polynomialReference P f E) (polynomialSquareNodes P f E) N)
+        (SimplexGrid.parameter.{u + 1} k 4 (z, NativeSquareFiveSimplex.parameter s)) :=
+  FiniteParameter.parameter_characteristic E (polynomialReference P f E)
+    (polynomialSquareNodes P f E) N z (NativeSquareFiveSimplex.parameter s)
+
+/-- The initial full node is the anchored polynomial map after the source attachment. -/
+theorem polynomialSquare_zero_node (N : CommonReferenceNerve.Node E) :
+    polynomialSquareNodes P f E N 2 =
+      polynomialMapNode P f E (postcompNode (sourceProjection P f) N) := by
+  have hs : CoefficientSquareFamilies.polynomialNodes P f 2 =
+      (⟨sourceProjection P f ≫ polynomialPost P f,
+        BinaryNormalizationSimplex.total
+          (coefficientMap P ((polynomialUnderFunctor R).map f)) (polynomialProjection P a)⟩ :
+        CommonReferenceNerve.Node (CoefficientSquareFamilies.polynomialSource P f)) := by
+    apply Sigma.ext (Model.Hom.ext rfl)
+    apply heq_of_eq
+    rfl
+  unfold polynomialSquareNodes
+  rw [hs]
+  exact product_total_postcomp (polynomialReference P f E) E
+    (CoefficientSquareFamilies.polynomialSource P f) (sourceProjection P f) (polynomialPost P f)
+    (polynomialSquareAnchor P f E) _ N
+
+/-- The terminal anchor cancels only the full explicit square reference, before realization. -/
+theorem polynomialSquare_terminal_anchor :
+    (polynomialSquareAnchor P f E ≪≫ isoWhiskerLeft E.functor
+      (NativeSquareFiveSimplex.sourceIso
+        (coefficientMap P ((polynomialUnderFunctor R).map f)) (polynomialProjection P a)
+        (polynomialProjection P b) (coefficientMap P f)
+        (coefficientMap_naturality P (polynomialUnderCoefficient R) f) ≪≫
+        BinaryNormalizationSimplex.total (polynomialProjection P b) (coefficientMap P f))) ≪≫
+      (Functor.associator E.functor (coefficientPost P f).functor
+        (targetProjection P f).functor).symm = Iso.refl _ := by
+  unfold polynomialSquareAnchor polynomialSquareBaseAnchor
+  exact whiskered_cancel E
+    (F := BinaryNormalizationSimplex.sourceMap
+      (polynomialProjection P b) (coefficientMap P f))
+    (G := CoefficientSquareFamilies.polynomialSource P f)
+    (H := coefficientPost P f ≫ targetProjection P f)
+    (K := polynomialReference P f E)
+    (Functor.associator E.functor (coefficientPost P f).functor (targetProjection P f).functor)
+    (BinaryNormalizationSimplex.total (polynomialProjection P b) (coefficientMap P f))
+    (NativeSquareFiveSimplex.sourceIso
+      (coefficientMap P ((polynomialUnderFunctor R).map f)) (polynomialProjection P a)
+      (polynomialProjection P b) (coefficientMap P f)
+      (coefficientMap_naturality P (polynomialUnderCoefficient R) f))
+
+/-- The terminal full node is the literal coefficient map followed by target attachment. -/
+theorem polynomialSquare_one_node (N : CommonReferenceNerve.Node E) :
+    polynomialSquareNodes P f E N 4 =
+      postcompNode (targetProjection P f) (postcompNode (coefficientPost P f) N) := by
+  have hs : CoefficientSquareFamilies.polynomialNodes P f 4 =
+      (⟨coefficientPost P f ≫ targetProjection P f,
+        NativeSquareFiveSimplex.sourceIso
+          (coefficientMap P ((polynomialUnderFunctor R).map f)) (polynomialProjection P a)
+          (polynomialProjection P b) (coefficientMap P f)
+          (coefficientMap_naturality P (polynomialUnderCoefficient R) f) ≪≫
+          BinaryNormalizationSimplex.total (polynomialProjection P b) (coefficientMap P f)⟩ :
+        CommonReferenceNerve.Node (CoefficientSquareFamilies.polynomialSource P f)) := by
+    apply Sigma.ext (Model.Hom.ext rfl)
+    apply heq_of_eq
+    rfl
+  unfold polynomialSquareNodes
+  rw [hs, product_total_postcomp, polynomialSquare_terminal_anchor]
+  simp only [CommonReferenceProduct.postNode, CommonReferenceProduct.reanchor, Iso.refl_trans]
+
+/-- The initial whole-nerve endpoint is the genuine target-oriented polynomial map. -/
+theorem polynomialSquare_zero (y : |nerve (Codiscrete (CommonReferenceNerve.Node E))|) :
+    polynomialSquare P f E (y, 0) =
+      polynomialMap P f E (mapParameter (postcompNode (sourceProjection P f)) y) := by
+  change FiniteParameter.parameter E (polynomialReference P f E)
+    (polynomialSquareNodes P f E) (y, NativeSquareFiveSimplex.parameter 0) = _
+  rw [Path.source, FiniteParameter.parameter_vertex]
+  rw [funext (polynomialSquare_zero_node P f E)]
+  exact mapParameter_comp (postcompNode (sourceProjection P f)) (polynomialMapNode P f E) y
+
+/-- The terminal whole-nerve endpoint keeps the coefficient and target attachment maps separate. -/
+theorem polynomialSquare_one (y : |nerve (Codiscrete (CommonReferenceNerve.Node E))|) :
+    polynomialSquare P f E (y, 1) =
+      mapParameter (postcompNode (targetProjection P f))
+        (mapParameter (postcompNode (coefficientPost P f)) y) := by
+  change FiniteParameter.parameter E (polynomialReference P f E)
+    (polynomialSquareNodes P f E) (y, NativeSquareFiveSimplex.parameter 1) = _
+  rw [Path.target, FiniteParameter.parameter_vertex]
+  rw [funext (polynomialSquare_one_node P f E)]
+  exact mapParameter_comp (postcompNode (coefficientPost P f))
+    (postcompNode (targetProjection P f)) y
+
+end Quillen.PerfectComplexes.BassProjectionPath.WholeReference.FourEdge.TargetSpan

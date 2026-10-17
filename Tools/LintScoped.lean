@@ -33,6 +33,37 @@ def readExclusions : IO (Array (Name × Name)) := do
   let parsed ← IO.ofExcept (Json.parse json)
   IO.ofExcept (fromJson? parsed)
 
+/-- Select every declaration with one of the exact defining origins, including generated ones. -/
+def definingDecls (env : Environment) (modules : Array Name) : Array Name := Id.run do
+  let origins := modules.foldl (init := ({} : NameSet)) fun names name => names.insert name
+  let selected (name : Name) := match env.getModuleIdxFor? name with
+    | some index => origins.contains env.header.moduleNames[index.toNat]!
+    | none => false
+  let mut names : NameSet := {}
+  for i in [:env.header.moduleNames.size] do
+    if origins.contains env.header.moduleNames[i]! then
+      for name in env.header.moduleData[i]!.constNames do
+        if selected name then
+          names := names.insert name
+  names := env.constants.foldStage2 (fun names name _ =>
+    if selected name then names.insert name else names) names
+  return names.toArray
+
+/-- Run independent bounded batches without charging earlier scheduling work to later tests. -/
+def lintBatches (decls : Array Name) (linters : Array NamedLinter) :
+    CoreM (Array (NamedLinter × Std.HashMap Name MessageData)) := do
+  let mut results := linters.map fun linter =>
+    (linter, ({} : Std.HashMap Name MessageData))
+  for start in [0:decls.size:64] do
+    -- `lintCore`'s async tasks inherit their parent's elapsed heartbeats. Each batch
+    -- starts a fresh context with the unchanged default per-test heartbeat limit.
+    let batch ← withCurrHeartbeats <|
+      lintCore (decls.extract start (start + 64)) linters (inIO := true)
+    results := results.zipWith (fun (linter, previous) (_, failures) =>
+      (linter, failures.fold (fun messages name message => messages.insert name message)
+        previous)) batch
+  return results
+
 /-- Apply CI's default environment and native text checks to the named defining modules. -/
 unsafe def run (modules : Array Name) : IO Unit := do
   initSearchPath (← findSysroot)
@@ -45,19 +76,17 @@ unsafe def run (modules : Array Name) : IO Unit := do
   let ctx : Core.Context := { fileName := "", fileMap := default, options := {} }
   let state : Core.State := { env }
   let action : CoreM Unit := do
-    let decls := (← getAllDecls).filter fun name =>
-      match env.getModuleIdxFor? name with
-      | some index => modules.contains env.header.moduleNames[index.toNat]!
-      | none => false
+    let decls := definingDecls env modules
     if decls.isEmpty then
       throwError "Selected modules define no declarations; specify defining leaf modules"
-    let linters ← getChecks (slow := true) (runOnly := none) (runAlways := none)
-    let results ← lintCore decls linters (inIO := true)
+    let linters ← withCurrHeartbeats <|
+      getChecks (slow := true) (runOnly := none) (runAlways := none)
+    let results ← lintBatches decls linters
     let results := results.map fun (linter, failures) =>
       (linter, exclusions.foldl (init := failures) fun failures (name, decl) =>
         if name == linter.name then failures.erase decl else failures)
     if results.any (!·.2.isEmpty) then
-      let message ← formatLinterResults results decls
+      let message ← withCurrHeartbeats <| formatLinterResults results decls
         (groupByFilename := true) (useErrorFormat := true)
         "in selected defining modules" (runSlowLinters := true) .medium linters.size
       throwError "{message}"

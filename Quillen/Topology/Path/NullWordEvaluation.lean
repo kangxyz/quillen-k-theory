@@ -5,8 +5,16 @@ Authors: OpenAI
 -/
 module
 public import Quillen.Topology.Path.RetypedConeNullComparison
+public import Quillen.Aglib.Topology.Path.EvaluationOperations
 
-/-! Pointwise evaluation preserves the literal path operations without assuming continuity. -/
+/-!
+# Evaluation of the prescribed positive null words
+
+The shared literal path operations come from `Path.Evaluation` in
+`Quillen.Aglib.Topology.Path.EvaluationOperations`. This module retains the selected
+straightening and pasted-null comparisons and their specialized evaluation proofs.
+The evaluation function is arbitrary; neither comparison nor path time is changed.
+-/
 @[expose] public section
 noncomputable section
 set_option autoImplicit false
@@ -16,64 +24,10 @@ namespace Path.Evaluation
 variable {X : Type u} {Y : Type v} [TopologicalSpace X] [TopologicalSpace Y]
   {a b c d e t : X} {a' b' c' d' e' t' : Y}
 
-/-- Whole concatenation retains its original half cut under any pointwise evaluator. -/
-theorem path_trans (f : X → Y) (p : Path a b) (q : Path b c)
-    (p' : Path a' b') (q' : Path b' c')
-    (hp : ∀ s, f (p s) = p' s) (hq : ∀ s, f (q s) = q' s) (s : I) :
-    f ((p.trans q) s) = (p'.trans q') s := by
-  rw [Path.trans_apply, Path.trans_apply]
-  split_ifs
-  · exact hp _
-  · exact hq _
-
-/-- Path reversal changes only the original path coordinate. -/
-theorem path_symm (f : X → Y) (p : Path a b) (p' : Path a' b')
-    (hp : ∀ s, f (p s) = p' s) (s : I) : f (p.symm s) = p'.symm s := hp _
-
 /-- A constant comparison retains the complete supplied path. -/
 theorem comparison_refl (f : X → Y) (p : Path a b) (p' : Path a' b')
     (hp : ∀ s, f (p s) = p' s) (r s : I) :
     f (Path.Homotopy.refl p (r, s)) = Path.Homotopy.refl p' (r, s) := hp s
-
-/-- Comparison reversal does not reverse path time. -/
-theorem comparison_symm (f : X → Y) {p q : Path a b} {p' q' : Path a' b'}
-    (J : p.Homotopy q) (J' : p'.Homotopy q')
-    (hJ : ∀ r s, f (J (r, s)) = J' (r, s)) (r s : I) :
-    f (J.symm (r, s)) = J'.symm (r, s) := hJ _ s
-
-/-- Vertical pasting changes comparison time at exactly the original half cut. -/
-theorem comparison_trans (f : X → Y) {p q w : Path a b} {p' q' w' : Path a' b'}
-    (J : p.Homotopy q) (K : q.Homotopy w)
-    (J' : p'.Homotopy q') (K' : q'.Homotopy w')
-    (hJ : ∀ r s, f (J (r, s)) = J' (r, s))
-    (hK : ∀ r s, f (K (r, s)) = K' (r, s)) (r s : I) :
-    f (J.trans K (r, s)) = J'.trans K' (r, s) := by
-  rw [Path.Homotopy.trans_apply, Path.Homotopy.trans_apply]
-  split_ifs
-  · exact hJ _ s
-  · exact hK _ s
-
-/-- Horizontal pasting changes path time only, leaving comparison time independent. -/
-theorem comparison_hcomp (f : X → Y)
-    {p q : Path a b} {w z : Path b c} {p' q' : Path a' b'} {w' z' : Path b' c'}
-    (J : p.Homotopy q) (K : w.Homotopy z)
-    (J' : p'.Homotopy q') (K' : w'.Homotopy z')
-    (hJ : ∀ r s, f (J (r, s)) = J' (r, s))
-    (hK : ∀ r s, f (K (r, s)) = K' (r, s)) (r s : I) :
-    f (J.hcomp K (r, s)) = J'.hcomp K' (r, s) := by
-  rw [Path.Homotopy.hcomp_apply, Path.Homotopy.hcomp_apply]
-  split_ifs
-  · exact hJ r _
-  · exact hK r _
-
-/-- The literal associator uses the same reparameterized nested path on both sides. -/
-theorem transAssoc (f : X → Y) (p : Path a b) (q : Path b c) (w : Path c d)
-    (p' : Path a' b') (q' : Path b' c') (w' : Path c' d')
-    (hp : ∀ s, f (p s) = p' s) (hq : ∀ s, f (q s) = q' s)
-    (hw : ∀ s, f (w s) = w' s) (r s : I) :
-    f (Path.Homotopy.transAssoc p q w (r, s)) =
-      Path.Homotopy.transAssoc p' q' w' (r, s) :=
-  path_trans f p (q.trans w) p' (q'.trans w') hp (path_trans f q w q' w' hq hw) _
 
 /-- The inverse-pair contraction retains its actual scalar formula. -/
 theorem reflTransSymm (f : X → Y) (p : Path a b) (p' : Path a' b')
