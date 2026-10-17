@@ -406,8 +406,15 @@ not supply vertical lifting. Keep the stated hypotheses when composing interface
 ## Verification
 
 The pinned environment is Lean `v4.34.1` and mathlib revision
-`d13f23b723b8a846827a245b89c10fc7d3f11612`. From the library checkout, run
-`bash scripts/check.sh --rehash`. The complete pipeline checks import
+`d13f23b723b8a846827a245b89c10fc7d3f11612`. All normal workflows must use
+incremental checks of the changed or missing required modules and their affected
+consumers, reusing trusted artifacts and compatible validation evidence under
+[the validation policy](../../CONTRIBUTING.md#tests-and-checks). Complete coverage
+may combine that retained evidence with new affected-scope checks; merge,
+integration, or release alone does not require the complete pipeline.
+
+For explicit comprehensive diagnostics and declared CI coverage,
+`bash scripts/check.sh --rehash` checks import
 generation, module layout, placeholders, script tests, library and maintained
 test builds, environment and text lint, the independently configured client,
 and explicit replay of both transitive axiom audits including private project

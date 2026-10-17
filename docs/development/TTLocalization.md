@@ -948,9 +948,13 @@ failed probes in scratch; admit complete useful proofs into their natural source
 owners incrementally. No placeholders, new axioms or hidden localization inputs.
 
 Each substantial milestone needs exact source/statement correspondence and
-independent ordinary review. Check affected modules and meaningful clients;
-run the complete pipeline at the integration boundary. Compiler success and
-foundation audits do not identify a construction with classical Kᴮ.
+independent ordinary review. At integration as throughout normal work, use
+incremental checks of changed or missing required modules and affected meaningful
+clients, reusing trusted artifacts and compatible validation evidence under
+[the validation policy](../../CONTRIBUTING.md#tests-and-checks). Reconcile combined
+changes and check the affected scope; integration alone does not request the
+complete pipeline. Compiler success and foundation audits do not identify a
+construction with classical Kᴮ.
 
 Update the [perfect-complex guide](../topics/PerfectComplexes.md),
 [spectrum guide](../topics/SpectraAndBass.md) and
