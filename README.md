@@ -40,7 +40,8 @@ lake build Quillen.KTheory.API
 [Contributing](CONTRIBUTING.md#tests-and-checks) explains incremental validation
 for development, merge, and publication. `bash scripts/check.sh --rehash` is an
 explicit comprehensive diagnostic and CI pipeline, not a normal local acceptance
-step. All normal workflows must use incremental checks.
+step. All normal workflows must use incremental checks, including applicable
+compilation, lint, affected library/client tests and source/trust checks.
 
 ## License
 

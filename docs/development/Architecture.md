@@ -97,6 +97,11 @@ package. It explicitly replays
 `QuillenTest/Axioms.lean` and the downstream `Audit.lean`, because cached compiled
 modules do not re-execute audit commands.
 
+Incremental validation includes applicable compilation, declaration/text-style
+lint, affected `QuillenTest` and client tests, and source/trust checks. Cover the
+relevant categories for each coherent maintained change, reusing compatible
+evidence. Compilation alone does not supply separate lint or test coverage.
+
 Normal authoring, maintenance, documentation, review, merge, integration, and
 publication must use incremental checks, reusing trusted caches and compatible
 existing evidence with new checks for changed or missing required
