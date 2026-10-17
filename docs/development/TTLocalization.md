@@ -1,17 +1,18 @@
 # Thomason–Trobaugh localization roadmap
 
-Continuation source basis: locally checkpointed
-`9398bbaa072dee2486e9eb1a8872d0eb46acf7d6`, Lean 4.34.1 and the pinned
-dependencies, with the identified 0.7.0 source integration and uncommitted
-mathematical leaves. The checkpoint includes `QuillenTest`, native
-auxiliary-supported completion localization and intrinsic-perfect P¹
-strictification/pushforward. The native spectral-row leaves have separate
-matched source review and strict-build coverage.
-The current continuation was reconciled on 2026-10-14 against the entry
-research rules at `080a7cd38b9be40fce85191cc3b2304bc3c4a662`.
-This roadmap records
-proof obligations and their actual consumers. Planned assertions are not library
-theorems until their source proofs and corresponding interfaces are accepted.
+Current integration basis: `db5f75ff068fe14b605a5b4fe2dd5bc67fb773dc`,
+Lean 4.34.1 and the pinned mathlib/Aglib dependencies, with the selected
+2026-10-17 coefficient-seed sources. The
+[seed-iteration evidence](evidence/TTBassSeedIteration.json) records their
+archive identities, recovered omissions and current verification boundary.
+Earlier checkpoints retain their separately scoped native localization,
+intrinsic-perfect P¹ and spectral-row results. This integration was reconciled
+on 2026-10-17 against the entry research rules at
+`88e891d1204892eceefed2cdf1c1bc3ea1446ad5`.
+
+This roadmap records proof obligations and their actual consumers. Planned
+assertions are not library theorems until their source proofs and corresponding
+interfaces are accepted.
 
 ## Target and current distance
 
@@ -328,7 +329,7 @@ independently checked spacing/line wrapping. Its exact strong native build,
 | E2-N: original source null | Accepted actual whole-square cone map C and `Nold ≃ L ⋆ Nnew`, where Nold is the fine source null postcomposed with C, Nnew the original raw source null precomposed with e, and L the existing Laurent evaluation movement. | `CoefficientSectionEvaluationSeedComparison` constructs C's literal inclusion/cylinder faces and relative null pasting from the positive-chart composition and original source-leg contraction. The original positive source leg and split track are retained. |
 | E2-S: original one-step seed | Accepted whole pointed homotopy `seedFine; loop(C) ≃ e; seedRaw`. | The same leaf combines actual null pasting with the original Laurent unit square and conjugation naturality. It proves the loop-coordinate equation with independent comparison, loop and structure times; no initial-seed invertibility is asserted. |
 | E2-W: actual levelwise equivalences | Accepted original e level homotopy equivalence, actual span evaluation completely weak/stable, literal span/cone/loop point HEP/T1 and levelwise weakness of the original cone evaluation C. | `CoefficientSectionEvaluationTopology` preserves the exact forward evaluation map; `CoefficientSectionEvaluationSeedComparison` applies the whole-square cone theorem to the constructed C and Hc. All-iterate equivalence still needs the genuine raw producer. |
-| E2-I: coherent raw iterates | Raw_0 and Raw_1 remain the existing raw objects. Construct Raw_2 with its original coefficient/chart maps, then an all-n producer of Raw_n, raw transitions, E_n and transition homotopies J_n. | First establish the full second-stage moving-square/composition faces. Then prove preservation of the required finite coherent diagram under span/cone/loop operations. Determine and realize the higher faces actually needed; a structure merely assuming them does not close this step. |
+| E2-I: coherent raw iterates | Raw_2 is constructed objectwise, and `CoefficientBassSeedIteration.stepMap` gives the actual first-to-second seed map. Construct compatible second-stage coefficient maps, then an all-n producer of Raw_n, raw transitions, E_n and transition homotopies J_n. | Both actual mixed fillers supply the original two-chart seed square and its cone/loop map. `CoefficientBassSecondCoefficientProjection` constructs coefficient squares and the span map, but its relative-pasting types remain obligations. Establish those full moving-square/composition faces and the higher coherence preserved by span/cone/loop operations; naming the required fillers does not supply them. |
 | E2-T: telescope and boundary | The original fine-to-raw telescope map, all stage/initial/cylinder equations, coefficient/restriction naturality and the signed boundary comparison. | Apply `Telescope.mapOfHomotopies` to the proved E_n/J_n; use stagewise equivalences and actual T1 to prove all-signed stability. Moving-square and relative-transition faces from E2-I supply naturality/boundary. |
 
 Independent ordinary review accepts the original cone/null/seed leaf at its
@@ -436,11 +437,29 @@ Thus the whole original Bass comparison/cone/step identity remains open,
 even though its polynomial-span unit premise and the composition cube are
 now supplied.
 
-The current raw native API has a one-step cone and seed, without a whole raw
-tower. `strictDiagramIterate` requires a literal prespectrum-valued functor and
-strict transformations; raw geometric pullbacks instead have prescribed
-comparison tracks. It cannot be applied directly to these raw maps. Naming the
-strict section tower as the raw tower would change the comparison target.
+The raw native API now has the original second object and a genuine
+objectwise first-to-second seed map. The positive and negative
+`CoefficientBass*ActualMixedFiller.originalComparison` constructions retain
+the original route surfaces and recover their native values at all levels.
+`CoefficientBassActualSeedComparison.comparison` descends them on the actual
+two-chart pushout. `CoefficientBassSeedIteration` then supplies the chosen
+cone-square null, cone map and parameter-looped `stepMap`, with literal
+Laurent-inclusion, full-cylinder and output-loop formulas. No affineness,
+compactness or flatness premise on `P : Over (Spec R)` is added.
+
+`CoefficientBassSecondCoefficientProjection` gives the four coefficient
+naturality squares and polynomial span map; its positive and negative
+relative-pasting types remain open. Composite-J0 attachments,
+`MWholeConeCylinder` and `MWholeNerveTripleCompactNative` retain further
+specified polynomial and cube faces. A functorial second stage and whole raw
+tower still need their coherence proofs. `strictDiagramIterate` requires a
+literal prespectrum-valued functor and strict transformations; the raw
+geometric maps carry prescribed comparison tracks. It cannot be applied
+directly to these raw maps. Naming the strict section tower as the raw tower
+would change the comparison target.
+
+The imported source selection and its exact archive/recovery boundaries are
+recorded in [the seed-iteration evidence](evidence/TTBassSeedIteration.json).
 
 The bounded-flat evaluation/composition and actual fine seed/tower signatures
 retain arbitrary `f : P → Q`: Lean omits the unused open-immersion instance.

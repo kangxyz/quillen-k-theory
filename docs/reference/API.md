@@ -288,6 +288,9 @@ endpoints until the corresponding comparison is applied.
 | `Topology.Prespectrum.TelescopeStableColimit` | T1 telescope stable-colimit comparison |
 | `Topology.Prespectrum.LoopTailReplacementFiberEquivalence` | Ω replacement and fiber comparison |
 | `KTheory.Bass.StrictRingDiagram` | Strict spectral Bass endofunctor and supplied-seed transitions |
+| `KTheory.Bass.TwoChartAdditive` | Additive two-chart contraction and preservation of split exact sequences |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassActualSeedComparison` | Constructed whole seed square on the original two-chart pushout |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassSeedIteration` | Objectwise first-to-second Bass map with literal inclusion, cylinder and loop-coordinate formulas |
 | `KTheory.Bass.StrictLaurentSeedStable` | Transparent `Track.SeedStableFactorization` and `SeedStableFormula` for an actual track and supplied seed |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedBassSeedStable` | Original supported and ambient seed factorizations through the actual cone inclusion |
 | `AlgebraicGeometry.PerfectComplexes.Affine.SectionBassNegativeMap` | Finite-stage bottom comparison and natural negative-class maps |

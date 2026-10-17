@@ -1,0 +1,1446 @@
+{
+  "scope": "Original positive and negative mixed comparisons, original two-chart seed square and objectwise first-to-second raw Bass step, with the selected current composite-attachment, cube-evaluation, native-coordinate and additive interfaces.",
+  "base_head": "db5f75ff068fe14b605a5b4fe2dd5bc67fb773dc",
+  "toolchain": "leanprover/lean4:v4.34.1",
+  "dependency_pins": {
+    "Aglib": "25c37780264f0da94f5bb6bd31cc089d26f2da80",
+    "mathlib": "d13f23b723b8a846827a245b89c10fc7d3f11612"
+  },
+  "inputs": [
+    {
+      "archive": "quillen-negative-seed-iteration-source-delta-20261017T1305Z.zip",
+      "sha256": "653131ca2c5bcb39475f27047818b6ae1daef345049831c2c0c62ecc8512c54f",
+      "verified_manifest_entries": 23
+    },
+    {
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "sha256": "97e0732ab3479e72c045e2fe9b0a4f3bfb2bb6db8946c7ce76a6a59b951cb447",
+      "verified_manifest_entries": 5973
+    }
+  ],
+  "source_selection": {
+    "new_sources": 159,
+    "retained_direct_providers": 95,
+    "current_provider_migrations": 4,
+    "pending_sources_selected": 0,
+    "original_seven_match_full_current": true,
+    "retained_provider_hashes_unchanged": 99
+  },
+  "recovered_omissions": [
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0C0ContractionSeam",
+      "sha256": "839154016a4009f79364b5901a100f76cf17f7d2dfa93ebcc3dc059ba07bde00",
+      "archive": "part-001-of-003(5).zip",
+      "archive_sha256": "3d6519a30e5e90eaa00807d244349694647355d2c33daa7489b86f014fb182b8",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-c0-contraction-seam-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0C0ContractionSeam.lean",
+      "qualification": "Exact successful historical validation source; source hash bound by preflight and postflight exit0/unchanged-input report. Legacy binary/source alias not newly recertified. Bytes missing from FULL1317; supplemented from assigned split archives."
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0C0ProjectionSeam",
+      "sha256": "a6ca72d7006804c7dbc9b47a6df1c7ca0b7b25ddfdc9d980435f6a64a3b89b62",
+      "archive": "part-003-of-003(5).zip",
+      "archive_sha256": "bc7893a1e1e3b1fc9a22ed5a6063a185536065ef57bb3f65a2ff6ef4917b5f98",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-c0-projection-seam-validation-v03/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0C0ProjectionSeam.lean",
+      "qualification": "Exact successful historical validation source; source hash bound by preflight and postflight exit0/unchanged-input report. Legacy binary/source alias not newly recertified. Bytes missing from FULL1317; supplemented from assigned split archives."
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0C0SeedAlignment",
+      "sha256": "bff45b16ddce890b85965f06450cb40326920c22bdab5ee8ac2f91a26a831593",
+      "archive": "part-001-of-003(5).zip",
+      "archive_sha256": "3d6519a30e5e90eaa00807d244349694647355d2c33daa7489b86f014fb182b8",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-c0-seed-alignment-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0C0SeedAlignment.lean",
+      "qualification": "Exact successful historical validation source; source hash bound by preflight and postflight exit0/unchanged-input report. Legacy binary/source alias not newly recertified. Bytes missing from FULL1317; supplemented from assigned split archives."
+    }
+  ],
+  "sources": [
+    {
+      "module": "Quillen.Aglib.Topology.Path.CarrierHalfPaths",
+      "path": "Quillen/Aglib/Topology/Path/CarrierHalfPaths.lean",
+      "source_sha256": "68380218926d57b7a3860d76aad24e74049ce9012daa6fa7ea1644a712d12a7c",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-carrier-half-paths-validation-v01/raw-validation01/source/Quillen/Topology/Path/CarrierHalfPaths.lean",
+      "original_module": "Quillen.Topology.Path.CarrierHalfPaths",
+      "adopted_sha256": "ce108272f0b6e720873744b490f37d9c8a3558c89545a601bb2a38e7650cebb5"
+    },
+    {
+      "module": "Quillen.Aglib.Topology.Path.EvaluationFactorExtraction",
+      "path": "Quillen/Aglib/Topology/Path/EvaluationFactorExtraction.lean",
+      "source_sha256": "bdaebf0b473e45448b52569baa67d32a026db3433e482258ff2a8d27cd4722f8",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-factor-extraction-validation-v02/raw-validation01/source/Quillen/Topology/Path/EvaluationFactorExtraction.lean",
+      "original_module": "Quillen.Topology.Path.EvaluationFactorExtraction",
+      "adopted_sha256": "bee031c2fbaad665ad130bdca4eabb9c31cfe4a229da2b3b8a23232eec4c0c68"
+    },
+    {
+      "module": "Quillen.Aglib.Topology.Path.HomotopyEvaluationTrans",
+      "path": "Quillen/Aglib/Topology/Path/HomotopyEvaluationTrans.lean",
+      "source_sha256": "a7cd5cdd94ec48682a3d9a03e24729b3e9ea9cca61d3a3fbc3f8a928b4da44a0",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-homotopy-evaluation-trans-validation-v01/raw-validation01/source/Quillen/Topology/Path/HomotopyEvaluationTrans.lean",
+      "original_module": "Quillen.Topology.Path.HomotopyEvaluationTrans",
+      "adopted_sha256": "9932afb874ef3722da1353e0edaef15b0096c389bfda71a09673e00bff185736"
+    },
+    {
+      "module": "Quillen.Aglib.Topology.Path.HomotopyPathSlice",
+      "path": "Quillen/Aglib/Topology/Path/HomotopyPathSlice.lean",
+      "source_sha256": "24a71ebdf618ad8c8f291d091a1eaab7f5ce266200850387cd1f8b191ecc1d87",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-homotopy-path-slice-validation-v01/raw-validation01/source/Quillen/Topology/Path/HomotopyPathSlice.lean",
+      "original_module": "Quillen.Topology.Path.HomotopyPathSlice",
+      "adopted_sha256": "5348ff926ab4d584ffec64d3f66b294a4407a805ee61fa49058cd860a2dc496f"
+    },
+    {
+      "module": "Quillen.Aglib.Topology.Path.MappedProjectionRectangle",
+      "path": "Quillen/Aglib/Topology/Path/MappedProjectionRectangle.lean",
+      "source_sha256": "28b8bc2c117f5d62d9861f25d54bf8a0d340d38f2ff7008cc71c34bdac6dcf55",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-mapped-projection-rectangle-validation-v01/raw-validation01/source/Quillen/Topology/Path/MappedProjectionRectangle.lean",
+      "original_module": "Quillen.Topology.Path.MappedProjectionRectangle",
+      "adopted_sha256": "4808f2705397e9774b114f8f3a169bd61551c9988b3bc05dd2c76ce21a23dce9"
+    },
+    {
+      "module": "Quillen.Aglib.Topology.Path.RetypedUnitComparison",
+      "path": "Quillen/Aglib/Topology/Path/RetypedUnitComparison.lean",
+      "source_sha256": "0ca5eba3ac28f04dcef58deabcae05bb1b45140b45c021862d7ba9f408626cdd",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-retyped-unit-comparison-validation-v02/raw-validation01/source/Quillen/Topology/Path/RetypedUnitComparison.lean",
+      "original_module": "Quillen.Topology.Path.RetypedUnitComparison",
+      "adopted_sha256": "752151eff32d21fdb737b68ecc0cd58cc382ad2192a6d0ec3db46714c301900d"
+    },
+    {
+      "module": "Quillen.Aglib.Topology.Path.TwoSheetConjugation",
+      "path": "Quillen/Aglib/Topology/Path/TwoSheetConjugation.lean",
+      "source_sha256": "c5d8fdb2ba47f09e15bfebef8abad61338f2ec72cc1c4e77498e6df53ec870f5",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-two-sheet-conjugation-validation-v02/raw-validation01/source/Quillen/Topology/Path/TwoSheetConjugation.lean",
+      "original_module": "Quillen.Topology.Path.TwoSheetConjugation",
+      "adopted_sha256": "8a0d47406571b2d06af21b79b66439bc89afe3c7051819b2a5fac1db74823592"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassActualSeedComparison",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassActualSeedComparison.lean",
+      "source_sha256": "e7d20ee49b8dee2486dac24f5ca9d8ef9da8dcf7e13a1d7b09c8f216ddc57647",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassActualSeedComparison.lean",
+      "adopted_sha256": "75d7778b52c527de017728c622e8d10b7630af2bc59a14bb7687f36b818b59f4"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCompositeJ0Attachment",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0Attachment.lean",
+      "source_sha256": "046908d5e4e1fc6daca19cca903a34d61a22c55cae7a85cc0dab3eb0a802c016",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0Attachment.lean",
+      "adopted_sha256": "958098bec96a53ea2f7079fd4b5612ee5724e5e548f20c32c31eb1f51f9da64c"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCompositeJ0Polynomial",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0Polynomial.lean",
+      "source_sha256": "790630e16757c56756601b799434e5c63f04343c970bfe44c26b0d6f80ba7e43",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0Polynomial.lean",
+      "adopted_sha256": "1a19921b3ff2f8c0ce8072fffe53cdd4ecbd09fa60c68c5b7ba2e9f536d2e079"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassCompositeJ0ShiftedPolynomial",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0ShiftedPolynomial.lean",
+      "source_sha256": "2055a354afaa72059b23d29290f7ae89ad45a8e78ce7a18a0615d5446c892cbb",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassCompositeJ0ShiftedPolynomial.lean",
+      "adopted_sha256": "c2e20f85c0d7e64afa0feba8f5d335d90b0e425ab18f7abb9f27557d585f92b8"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassNegativeActualLeftRoute",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeActualLeftRoute.lean",
+      "source_sha256": "09bf3cb00e152c4d5c9138eb2b9c477242b2b0440613ef7caf316cfac82e17d9",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeActualLeftRoute.lean",
+      "adopted_sha256": "ed1ea0f8b65ecbbd340a3461d388f08f830084adef9dc07a0af5065d8c7d96d9"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassNegativeActualMixedFiller",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeActualMixedFiller.lean",
+      "source_sha256": "78231b71a4831d1272916613599f34e7e47a62b7c3e65a1d0d8533ac54acdcc8",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeActualMixedFiller.lean",
+      "adopted_sha256": "593980a5852b2a7fbc80476f0460d87ac16b24cccfad45778da96cc26339c543"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassNegativeActualRightRoute",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeActualRightRoute.lean",
+      "source_sha256": "9fc07fd253424162a7d3462d0b706b8c244eda546a97fa28a73c4382b7842718",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeActualRightRoute.lean",
+      "adopted_sha256": "2660c9c2c98dbc19df1065033c264cf98b8662d6ec780b6f5f4a1e746429514c"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassNegativeC0CarrierSeedNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeC0CarrierSeedNative.lean",
+      "source_sha256": "6ce32c42f2d541c2e3a7008437551c2d42da5a2927e61ba53807c597d93476b8",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeC0CarrierSeedNative.lean",
+      "adopted_sha256": "f8f87e2567c1cfdee6df21f4316cc25fb0271afa31146140fdbabc61d684bac0"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassNegativeC1CarrierSeedNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeC1CarrierSeedNative.lean",
+      "source_sha256": "9435c0d309c589e197446ca9840f9af953f54a66771fbdf55d07fcfb36e4f977",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeC1CarrierSeedNative.lean",
+      "adopted_sha256": "7cc3499d10b63d69d5b9fe51bee12920c40713a20c467a87017e871bf9a4cc45"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassNegativeCarrierReference",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeCarrierReference.lean",
+      "source_sha256": "96718c07e92af1530177ba628220f3cef5e364048684161f4f24aaba9069c1c6",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeCarrierReference.lean",
+      "adopted_sha256": "11e1ab697a13363c2badee8b4a0a4a8362cd939b7989b820305b72a5391c4fe7"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassNegativeGeometricCarrier",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeGeometricCarrier.lean",
+      "source_sha256": "b0f5ddeac786506f31dce8c58ea696f5973bda158826246113b9c6aee007ec41",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeGeometricCarrier.lean",
+      "adopted_sha256": "84eb56afd4f4879550cdd42608ca6d13134866e18c9b36b3073b435fc424c2ea"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassNegativeMixedRoutes",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeMixedRoutes.lean",
+      "source_sha256": "cae838f373b654626ce948239158a64ec2a9f8ca0620f5fad6ee952de94f37c2",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeMixedRoutes.lean",
+      "adopted_sha256": "68a2dd9280adfe46067155a97376938d21244a0fbedf29bafdc559d86c0ed525"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassNegativeSeedEndpointHEq",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeSeedEndpointHEq.lean",
+      "source_sha256": "5b887a95f249dfcffd278518b9de40677c4230f8a1f102c034135f58b70a8c60",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeSeedEndpointHEq.lean",
+      "adopted_sha256": "b285bf2eeac30e1b4a3816cf6281a2d626ab46c77b37db3417bdde94f87bab0c"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassNegativeSeedReference",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeSeedReference.lean",
+      "source_sha256": "37bb1a3de6889e5ad16989b323d1d43be2495be7866d69a44343a99ba6e3859c",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeSeedReference.lean",
+      "adopted_sha256": "37bb1a3de6889e5ad16989b323d1d43be2495be7866d69a44343a99ba6e3859c"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassNegativeSeedReferenceRails",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeSeedReferenceRails.lean",
+      "source_sha256": "ea4b441a896beba9b8639ebf33bdcda780811d9f41ce21688b3bb77431df37bc",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeSeedReferenceRails.lean",
+      "adopted_sha256": "d6701c5a002c10083196a5861d4fae169e3ee4d9f498cbddd97cf56853f7502e"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveActualLeftRoute",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveActualLeftRoute.lean",
+      "source_sha256": "c0c26abe9df040201525274b1974e6ed595bae029c6d78c8182068f78e3d9c0c",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveActualLeftRoute.lean",
+      "adopted_sha256": "8b71162b28d8faa6ef06aa01741580c27751c750fc11caf0d4c112e94b560c3c"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveActualLeftRouteNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveActualLeftRouteNative.lean",
+      "source_sha256": "9c3df501054def295290008408104d8e459df44a6078785742929bc11574b416",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveActualLeftRouteNative.lean",
+      "adopted_sha256": "7417ef26ef2345198596cbc68392fcfef40fddb7d4676d7f33c21238cf33d2c6"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveActualMixedFiller",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveActualMixedFiller.lean",
+      "source_sha256": "ad5686fbb8a18af97e9940239249fed040941048198347d3e48199605d378889",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveActualMixedFiller.lean",
+      "adopted_sha256": "bd528457a05aec00d13c6fb3dbdec4396ae511bf1be220725ac713a87de76475"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveActualRightRoute",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveActualRightRoute.lean",
+      "source_sha256": "2fc2b522b65a6fe64aa7fa6afa3f424a46c82d46c79a06076243afab66004e45",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveActualRightRoute.lean",
+      "adopted_sha256": "6100b3ceb2af67cf511d0d16bd97d4f45e53bd849d263f41c0843ec6cf2de69d"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC0CarrierAttachment",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0CarrierAttachment.lean",
+      "source_sha256": "210bf8090641731058c2b66ad23d7563a83729ce0b888ade8cde80665f663aa6",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/validation-v05/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0CarrierAttachment.lean",
+      "adopted_sha256": "7b2c1c60a72b768b99ce63e01c6e636497f6e68d854e199f0a6b3e9f24531b10"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC0CarrierNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0CarrierNative.lean",
+      "source_sha256": "df98be3f44af2de1631f97dff33e58adebfe0111ccc14582492b712600062096",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0CarrierNative.lean",
+      "adopted_sha256": "3c55ac6406c2b0fef4faca3c5f6e8cef6f0eed71a51541404561630b09bfdedb"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC0CarrierRails",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0CarrierRails.lean",
+      "source_sha256": "6056e42eb83ff152144f180a7e275ae99830cda221708af47c04dfdc7bee7704",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/rails-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0CarrierRails.lean",
+      "adopted_sha256": "0d007dc1d79c5394e18b7e9fe2db12a5efed5374b637a23607e82c36b052cd85"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC0CarrierSeed",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0CarrierSeed.lean",
+      "source_sha256": "2f4d6f110e4714521269a12f1cd4553831fee77a39083d0e805205c320b2ae7a",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/carrier-seed-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0CarrierSeed.lean",
+      "adopted_sha256": "3bce130801d6089154654f33a2c2325ffb598b6b532d5f08d3a6dacf4ea1c655"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC0CarrierSeedNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0CarrierSeedNative.lean",
+      "source_sha256": "51ec6dc0e01e2cf0a5d1cb47ea24a7d32d0e3f4c99ddd018122d75515780e616",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0CarrierSeedNative.lean",
+      "adopted_sha256": "a4f2e845e83dbf1dafb019f30e5de4579657bde71bd69822da9f46b6f793a0e5"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC0PolynomialEndpoints",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0PolynomialEndpoints.lean",
+      "source_sha256": "b7f9286cc1efb4c9f84532552145a018b806759e6f70eaa36c32880f6c96545e",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/polynomial-endpoints-validation-v03/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0PolynomialEndpoints.lean",
+      "adopted_sha256": "cc68ae3be6b43dd9c5241563fe70ed01f4b9d86e857d8e7726e986ea4b16b396"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC0TenNodes",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0TenNodes.lean",
+      "source_sha256": "ba547d127249c1ad6fe52c02422f29fdbcfcc3d54f9d3a52ea82d3ac4de74574",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/tennodes-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0TenNodes.lean",
+      "adopted_sha256": "18f4cc40cfaf4c598c24c467654eb6c544ba566532706874f2e9a35a968461cd"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC0UnitNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0UnitNative.lean",
+      "source_sha256": "04cdc23f870abcf1d3e66a491ef57e4a85fd485c2837a7a851f824dac9182907",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/unit-native-validation-v03/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0UnitNative.lean",
+      "adopted_sha256": "015fe084db97f095ef6e03ba4eb5dcef7fdeb5061632107298b9f60403aabcbe"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC0UnitStrip",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0UnitStrip.lean",
+      "source_sha256": "84747909cb01e6f58dde90bbc10d15a564eaa8cfee8e3bf21c4e616f00952dbd",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/unit-strip-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC0UnitStrip.lean",
+      "adopted_sha256": "97e80b27fabe7977a6a19fe3a4c604b03cab4ec5a9455f88ab640f8af8398e0d"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1BoundaryLift",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1BoundaryLift.lean",
+      "source_sha256": "bb551ac2b410b04ef302f75a459e02e0c8aedeb7d99302528c79798e8b32c2f6",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c1-boundary-lift-prototype/upper-validation-v01/jobs/producer01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1BoundaryLift.lean",
+      "adopted_sha256": "abd3a5bbfaeec6c4060642d5aea1aab8d31f53112eef86ab49a33bbbe38ffda5"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1BoundarySeam",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1BoundarySeam.lean",
+      "source_sha256": "2265e6483f8dbddb0d0c2c53b7f1238090918c3812581e51b7f851f2c4c4efb5",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c1-boundary-lift-prototype/lower-validation-plan-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1BoundarySeam.lean",
+      "adopted_sha256": "233f430e148e50e912164160a19b89a0cda4c004d1178499bac6beac8b999016"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1CorrectedBoundary",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1CorrectedBoundary.lean",
+      "source_sha256": "7db3c2f09f4c67d5956b994c3f6a03612f27315bb4730d6908bdbfdf7a6f0499",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-ordinary-corrected-boundary-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1CorrectedBoundary.lean",
+      "adopted_sha256": "f23e3d121b00bf7d67663065182b9f4dc3c44e93a5f413a55182248508d04105"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1CorrectedNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1CorrectedNative.lean",
+      "source_sha256": "f5f7083c248f34723e46e3335696ad24736277c5ca27b9eb1a2a3e200cd710aa",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-ordinary-corrected-native-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1CorrectedNative.lean",
+      "adopted_sha256": "9524cb1efea560c244ef9dc7e4ccd7f17cbdd856aa7729ad47644b4869c256b2"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1InitialMovingNull",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1InitialMovingNull.lean",
+      "source_sha256": "483ece51eb84c689d4c86c4a3a9238d6d493f4ccf3caccc2af726a1834be2508",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-initial-moving-null-validation-v04/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1InitialMovingNull.lean",
+      "adopted_sha256": "557c9ce8cc53fa7b4dccbe09eb139393c2f69ad8e9199a0a546c212c63aabc0b"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1OldChartClockedRail",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1OldChartClockedRail.lean",
+      "source_sha256": "37c701bd2c55b953b409256643cbd15e36169a853a70e0c1ee2d2e25934c8f45",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1OldChartClockedRail.lean",
+      "adopted_sha256": "baece555b4d9080796b0f258553c36aa55194cf11069280b31dcaf9bf42acc8d"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1OldInitialPasteSeam",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1OldInitialPasteSeam.lean",
+      "source_sha256": "8ab100afa866e2277539ed657fdaea04456a5d8dc99587cca396da0698dca235",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1OldInitialPasteSeam.lean",
+      "adopted_sha256": "7584180e423ad62a7eb0227fb07d5c607d2d711bf0b33e4cf9f2b374e2de29a9"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1OldPolynomialCylinderRail",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1OldPolynomialCylinderRail.lean",
+      "source_sha256": "c60c472c13063f6c2f55bf9b015a43245d7d96bc1a1bf2f39b1d27517828c352",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-old-polynomial-cylinder-rail-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1OldPolynomialCylinderRail.lean",
+      "adopted_sha256": "48c6c3ab20e1b15db38a3f3eaf2527137445814ca7b967ea1e8f3299145221d6"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1OldPositiveSourceRails",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1OldPositiveSourceRails.lean",
+      "source_sha256": "91825af50b0bfdeb07ca28d1ca0e92758dfcf7a656383fff0f0418899ac72fdd",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "/private/tmp/r5-investigations/quillen-seed-delta-20261017/root/full1317/recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-old-positive-source-rails-draft-v04/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1OldPositiveSourceRails.lean",
+      "adopted_sha256": "78a73e8eda00b99390872e37596d92365f56177960704305a55170d8978e9a84"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1OldSeedChartZero",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1OldSeedChartZero.lean",
+      "source_sha256": "682438cdab0097797b7e44cb05643bc1ee44cc38f79ce97a4141af27313f32f7",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-old-seed-chart-zero-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1OldSeedChartZero.lean",
+      "adopted_sha256": "364a8b5671b63cdaa05e7992749ee89a027ea55743d96b1d8fd7a4ae1db73d66"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1OldUnitSourceRail",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1OldUnitSourceRail.lean",
+      "source_sha256": "d6202087c143314562db5642d848e15b299ab00b47fa956472e9338c574601da",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-old-unit-source-rail-validation-v03/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1OldUnitSourceRail.lean",
+      "adopted_sha256": "2b94d2ae34e14776b8e1f5b0820da0d4ee17f7f70e1567c21962e71b19bcd95b"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1PolynomialSourceReference",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1PolynomialSourceReference.lean",
+      "source_sha256": "6c24014ef47be05c3be3d66ac9485a0a337d487cc6b340fc67c63bed06b87f49",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-polynomial-source-reference-validation-v04/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1PolynomialSourceReference.lean",
+      "adopted_sha256": "3bd79e1184150b45433a731ef293cbe889f71f407cd9d6ad85651a59dd8285c0"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1ReassociationPieces",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1ReassociationPieces.lean",
+      "source_sha256": "596acf07cc18179d80f8a3fad8335f3f2af2ddda3487a2104b26c1ba76d0c53a",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-reassociation-pieces-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1ReassociationPieces.lean",
+      "adopted_sha256": "545b3b44e98138f84c5c5640ca1e0440bb6d32a2d28f64e5b4996bc6f91006d9"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1SeedFace",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1SeedFace.lean",
+      "source_sha256": "5040488918e2e0342e7770ee3c74c9052ecdb64adb41967dcd7e2060feb7c669",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-five-branch-seed-face-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1SeedFace.lean",
+      "adopted_sha256": "81dfef11063e10b4849419553141e0681bc9479b381575a2fd93c14309d69844"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1SeedFaceLoopFamily",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1SeedFaceLoopFamily.lean",
+      "source_sha256": "a0a976e336ba3775e4aac4c0d6146640fc617b0c9db1002fe6aab0c197b72c55",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1SeedFaceLoopFamily.lean",
+      "adopted_sha256": "8a0fcea7b19494f949878f48a2fe4d9a87969c8cc62bd42d3f339980c69fad72"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1SeedFaceNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1SeedFaceNative.lean",
+      "source_sha256": "9bd1354c9a561c116e2ba457afc9602be72b4c9e6abacd4d78c89e908a15ac97",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-five-branch-seed-face-native-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1SeedFaceNative.lean",
+      "adopted_sha256": "9c4d169f303a2c6796ae7c8b62f5c222751698037a4cdd54084b1c9d04db8ff0"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1ShiftedAttachment",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1ShiftedAttachment.lean",
+      "source_sha256": "bf45f6b06429151852001cda04e341bc93813df3d708cd949693bb814bd86981",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-shifted-attachment-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1ShiftedAttachment.lean",
+      "adopted_sha256": "ff3c9eb816fee8592c536615576b0091fc6ee76ceea9311346a67971f36fca8e"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1ShiftedCorrectedBoundary",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1ShiftedCorrectedBoundary.lean",
+      "source_sha256": "3aa66c10c78f8d7663b6549ab10f5e646734833bace4fe924b8a2b634e55d4a6",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-shifted-corrected-boundary-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1ShiftedCorrectedBoundary.lean",
+      "adopted_sha256": "f9e6b2dab9b6a48673b45a2d89a759877724d914f08779562ca2c766bafbf56b"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1ShiftedCorrectedNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1ShiftedCorrectedNative.lean",
+      "source_sha256": "857cb9a4c6692b3c3aaee23afe7219b632b77d9833918cd30e6f1b263993025e",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-shifted-corrected-native-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1ShiftedCorrectedNative.lean",
+      "adopted_sha256": "e0fedb794df25b68fe7f08abf3c92248c45998389ee227f8f447b8369962f753"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1ShiftedInitialMovingNull",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1ShiftedInitialMovingNull.lean",
+      "source_sha256": "172543fe7ff5b8a8ee33c115638042860cd675105d4ab5208f72b0503b5fff34",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-shifted-initial-moving-null-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1ShiftedInitialMovingNull.lean",
+      "adopted_sha256": "491d4ac9f598a905b64cd8259ab7c4e0fe032d0e29b26a684957da6c6e6adad1"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1ShiftedReassociationPieces",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1ShiftedReassociationPieces.lean",
+      "source_sha256": "f91c83a23efe2e3c75a1560504081d8552e3a402d501dc2f283ce2f64e5a290b",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-shifted-reassociation-pieces-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1ShiftedReassociationPieces.lean",
+      "adopted_sha256": "6926be8d34ec6e57e90ddd86fbe0172d3ebd3cc6ed3e1323c0a1430353f0ef90"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1SourceProductNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1SourceProductNative.lean",
+      "source_sha256": "1e4cb7720c44c2acf56d57310c346d15500c628fbcaa8059a77915d93157e6a8",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-source-product-native-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1SourceProductNative.lean",
+      "adopted_sha256": "3ae455642671ac9172af31c7527a274d6d49e67fb570d15d7120d92afc5e3c93"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1SourceProductStrips",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1SourceProductStrips.lean",
+      "source_sha256": "800c20281479162dee5961652f014fcd9531ccdbfeb868dae8f6c875371ea273",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-source-product-strips-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1SourceProductStrips.lean",
+      "adopted_sha256": "f597e551748d694e5ccb68cd75d073e09653faffe01580305abb8f3e291ed717"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1SourceUnitProduct",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1SourceUnitProduct.lean",
+      "source_sha256": "697166c2cca880427e9d52c081459b08df0241fa87a256cd642a30cf1c6c6b5b",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-source-unit-product-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1SourceUnitProduct.lean",
+      "adopted_sha256": "02113c3dd9f201ffcb057df009e169e11f8ff9425a26ada9ea23bb13d3e05cae"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveC1WholeOldSeedSeam",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1WholeOldSeedSeam.lean",
+      "source_sha256": "eee8926dfc59f4a9292b197742cc49d9a2bc26e7a5b1ca9846aba63a9b86bbc6",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveC1WholeOldSeedSeam.lean",
+      "adopted_sha256": "4cdb047bd155e12c4f15827eca64e93040cd31baf4232c5da35f9526e8d873b7"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0C0ContractionSeam",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0C0ContractionSeam.lean",
+      "source_sha256": "839154016a4009f79364b5901a100f76cf17f7d2dfa93ebcc3dc059ba07bde00",
+      "archive": "part-001-of-003(5).zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-c0-contraction-seam-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0C0ContractionSeam.lean",
+      "adopted_sha256": "3f9a81d8bce191a70a59d91b1a09bbcb6b9f91d2722a44104d167749790bc698"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0C0ProjectionSeam",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0C0ProjectionSeam.lean",
+      "source_sha256": "a6ca72d7006804c7dbc9b47a6df1c7ca0b7b25ddfdc9d980435f6a64a3b89b62",
+      "archive": "part-003-of-003(5).zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-c0-projection-seam-validation-v03/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0C0ProjectionSeam.lean",
+      "adopted_sha256": "60dca18f83689bb13512c54131ddd80d85e132654d3bf6ceb0aa61d10be34360"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0C0SeedAlignment",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0C0SeedAlignment.lean",
+      "source_sha256": "bff45b16ddce890b85965f06450cb40326920c22bdab5ee8ac2f91a26a831593",
+      "archive": "part-001-of-003(5).zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-c0-seed-alignment-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0C0SeedAlignment.lean",
+      "adopted_sha256": "377fa400c9900a29d60c6ac7d324885c8ce854fa110012813bda9c5974ea4bff"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0C0SeedSeam",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0C0SeedSeam.lean",
+      "source_sha256": "57228f2b480af2da17b844625eefdc96b202689c55c0221721a24cb65fd29964",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0C0SeedSeam.lean",
+      "adopted_sha256": "5bb7aaf9212f7b8dd590799eeacec81f31d506bb5ac18c1ccadb130e58bca9c8"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0ConeBoundaries",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0ConeBoundaries.lean",
+      "source_sha256": "e18978e1bc33033f73be86ed886a4117b329cf1b4652fd979451b8eb8c986bf5",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-actual-cone-boundaries-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0ConeBoundaries.lean",
+      "adopted_sha256": "6c0fe4cf42605f42cf6113fda9d3d22643ad583f6c1fb32049313f077734d5ec"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0ConePasting",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0ConePasting.lean",
+      "source_sha256": "757c3e62f8db05231b66919aab02234c17a34c47b62401bbd09cea756c7bca47",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-cone-pasting-identification-validation-v03/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0ConePasting.lean",
+      "adopted_sha256": "19cf40660992008108c7f8cd9b1c7dbf3b1bddbc4e64ee25319e50cb40c28508"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0Conjugation",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0Conjugation.lean",
+      "source_sha256": "cfe1c7fdfab97315a24a98d1e95cf58d3e4545dc959aaa27c1fe4ca9b30fe988",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-actual-two-sheet-conjugation-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0Conjugation.lean",
+      "adopted_sha256": "bac5a47ca8bd85db61440faf764bf22cc48435ffcac547b3e001fd5ab9cf8c5a"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0DirectUnit",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0DirectUnit.lean",
+      "source_sha256": "a2dd551c2c30beabef9a00a2b1fa4df8a43424ee9316bbe3bbb5f1abfebccbff",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-direct-unit-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0DirectUnit.lean",
+      "adopted_sha256": "8acfd8b85b53945b39e6ff50075841d6777ad77cff2282d1514b3dc279b40404"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0FullNullNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0FullNullNative.lean",
+      "source_sha256": "4dd2823cc9763511525ec94acee5cc9c5c0e1c8b849327d484a34e01aae98b0b",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-full-null-native-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0FullNullNative.lean",
+      "adopted_sha256": "8628f1c90ab66ac224f06656e21d39a26c959632e22643c2e5ace922ffacfe9a"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0OuterBridge",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0OuterBridge.lean",
+      "source_sha256": "483f61ba3aa8a7195697e1a4a2bebba676aa15a15beef4e14ae8b8905a185ce7",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-outer-validation-v03/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0OuterBridge.lean",
+      "adopted_sha256": "bc4f86a82ee06bcb568a77710e0c82f2c35decbe9bfef2e4b56d1e17a5747d8a"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0PairedNull",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0PairedNull.lean",
+      "source_sha256": "16009190e216147296329eb6c4a6ef92fea2b97a0d6e3ca37e286c8ab632df5e",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-paired-null-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0PairedNull.lean",
+      "adopted_sha256": "77b23fc15605fc9eefda5db241f8103d0fa7c75434d575e41c77caeb3e6ba8ef"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0PairedNullNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0PairedNullNative.lean",
+      "source_sha256": "7c95a158ec12d73a78a151ef69cb6d149ff3ea72efb7b99f84e56318525b0816",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-paired-null-native-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0PairedNullNative.lean",
+      "adopted_sha256": "46e43b7b6a2a132ebc6d176ca72a07912798f2bbb071d1190a9ecc92d694f7b9"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0PolynomialAttachment",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0PolynomialAttachment.lean",
+      "source_sha256": "acc6f8a807d50827678d8bfd47a9b9a56563a72c8bee2f5e0cd100a12a4ec8b2",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-polynomial-attachment-validation-v04/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0PolynomialAttachment.lean",
+      "adopted_sha256": "d6b25454498c62646fc1236b6ee0053c49b89971281a314cf23c50bcefac83b7"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0PolynomialEndpoints",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0PolynomialEndpoints.lean",
+      "source_sha256": "bb63c901510675c5bb34e18e7a5a399af0995e12e418d7988cd0a3489e8ebc57",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-polynomial-endpoint-bridge-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0PolynomialEndpoints.lean",
+      "adopted_sha256": "590e28fe1232bede13ad0aa2296d358eba3381b1c3658d64577f4af68d910219"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0PolynomialMovement",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0PolynomialMovement.lean",
+      "source_sha256": "cf5ca258aedaebb2398e0c05c03a52321a80951a5948f505870a8734e08d0665",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-polynomial-movement-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0PolynomialMovement.lean",
+      "adopted_sha256": "6d73281873e3f646fdad6b09d5cb309d66b75ea8c0fc6bebe7f915fc2661c444"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0PositiveRailsNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0PositiveRailsNative.lean",
+      "source_sha256": "6b152205f2c7d59c7ef3fe9f19d8c68bdab6f5de0e6171c17ca8aa376bd6fc66",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-positive-rails-native-validation-v03/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0PositiveRailsNative.lean",
+      "adopted_sha256": "9b1a29dac044dbcbaceeeb6812b6521bdbca57087687cb288747bdab43ad370c"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0RectangleNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0RectangleNative.lean",
+      "source_sha256": "a27bca8957c946e39eb1eff4e0c4d287eaa723127c2d2ce614bfe0b304662b87",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-rectangle-native-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0RectangleNative.lean",
+      "adopted_sha256": "31e39d7d2e7d7e3ff7cc04b35c86b8052c9cf9773a83e8066b271b246ddabed1"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0RectangleRails",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0RectangleRails.lean",
+      "source_sha256": "718a602fd34b4a31d222a6d4080a7a15446733bc751ee2705426d9f574eee22e",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-rectangle-rails-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0RectangleRails.lean",
+      "adopted_sha256": "62e26a174e0c653edfb6f1927007c96d57c8db977b9573158bebde95dc2ef34a"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0Rectangles",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0Rectangles.lean",
+      "source_sha256": "701fd08f56dcbd733d942e3168f056549c26fed3416da9f96be1887614524892",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-positive-rectangles-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0Rectangles.lean",
+      "adopted_sha256": "26f4417621ff5d6792661c5a966aae7743237cc7b37e905de106b8ff512141f4"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0ShiftedBridge",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0ShiftedBridge.lean",
+      "source_sha256": "6fda09e859f54f0eecfb9085bda83cf2d346024a955e3142c4157dd148b9d998",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-shifted-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0ShiftedBridge.lean",
+      "adopted_sha256": "f731f23a0efc4a60156eaab54d4853841d966dbe81b34980b595932b43e95ea3"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0ShiftedPolynomial",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0ShiftedPolynomial.lean",
+      "source_sha256": "dfb8826533e3b54144c558f3b68cb782398dd9aca7c6d10e59677396552c7cd4",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-shifted-polynomial-validation-v02/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0ShiftedPolynomial.lean",
+      "adopted_sha256": "ab485a73e9f043236923bb406c083823f37b6d49e600c96c35ea4d5980cb541f"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0TypedUnitRails",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0TypedUnitRails.lean",
+      "source_sha256": "b007e5a142ecc1dead8879141652950c64b5d72d3146bfb7da6e44e18524a31b",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-typed-unit-rails-validation-v05/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0TypedUnitRails.lean",
+      "adopted_sha256": "e8a78f38a6386f4662822a4c74d1322797eb4f81fb7eab35ced4227da585ebb0"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveJ0UnitPasting",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0UnitPasting.lean",
+      "source_sha256": "b999577fae08db1221f786e7d0745fd8d8d9ee5f5881c3fe3a16ba9e49ae42ea",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-direct-unit-pasting-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveJ0UnitPasting.lean",
+      "adopted_sha256": "13424a52169b2146d277849906e8e3160cea7a1aa345eb70caabc92b63ab0b7c"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftCellParameters",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftCellParameters.lean",
+      "source_sha256": "d37d204d8568733793b169418249cfb56dca5a4550ca6d17c8c9deab65ffee63",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftCellParameters.lean",
+      "adopted_sha256": "610cea7136c277e17835d38d04cd2ee689f3e286ab0f0e7a5f8671a1934ebd1f"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftComparisonNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftComparisonNative.lean",
+      "source_sha256": "04a36bb5474a8dca6f1cea5519a853c61447aec0f872ef8f7662b623e34043a3",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftComparisonNative.lean",
+      "adopted_sha256": "a0c2d7f0cc185307c91ba3d5b1d7b33c9e5d759f3b657db516ef3fa21f5d6669"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftComparisons",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftComparisons.lean",
+      "source_sha256": "ab4b74380c1ef56a679dd8e0acc7cade5db57d165cbadc4e9df5b97225fa8c19",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftComparisons.lean",
+      "adopted_sha256": "c916af66dcd55344cfee3dfc8333be5d206b9bbac603d707ffcf186352a05cf0"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftConeComparisonNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftConeComparisonNative.lean",
+      "source_sha256": "56bd9c30a725dc36b6f68a63025a201f25900faea0b9366503db0c2cb4bcaf82",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftConeComparisonNative.lean",
+      "adopted_sha256": "701b4e68ec115ee88d914c694523b63178effb0f63949330a100471ecc3c9531"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftConeSquareNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftConeSquareNative.lean",
+      "source_sha256": "9b0cc0220a9ce540319b87dc75a57cabe4e4a2acd234c1a6de3d0648f1588396",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftConeSquareNative.lean",
+      "adopted_sha256": "b4e0d299a7416ca9a7b622c9c253382fb8c16f90ea6a53ff7822f9d8159072f3"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftConeSquares",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftConeSquares.lean",
+      "source_sha256": "41551ffa5cd03256949829ce8e6c29fa1edcf681b3c84c1a27a8b7f65541de74",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftConeSquares.lean",
+      "adopted_sha256": "c87f624a15021975d5f6ff2c45a80584c1f8604438dc56d8967ff60af604ad69"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftFirstRailsNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftFirstRailsNative.lean",
+      "source_sha256": "fb575912e15da564e3e283a36bc95d43154d9237a7437d95f5b87a17306c04db",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftFirstRailsNative.lean",
+      "adopted_sha256": "aa7876a61321454cae2ab7859e1a2785e0a9429829d23da3268aefa72fa4b998"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftFullNullNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftFullNullNative.lean",
+      "source_sha256": "25903d78cf4a6f5a0a5aad6d2a14bddf44dbbb684a3e726623a1b56be2ee3192",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftFullNullNative.lean",
+      "adopted_sha256": "45f3be1359afd42bb8d7548aa20b84358d5443ec3b91479531d89c49653773d0"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftMiddleRailsNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftMiddleRailsNative.lean",
+      "source_sha256": "d8dc9c8078c87e28050d899a03f813fb1e2928b65356560d435e582aa56ae163",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftMiddleRailsNative.lean",
+      "adopted_sha256": "c3b3dda769fd11d94db8b2ee00efe445a2fcd10c15b33b32924e0497deae60f6"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftMidpointSeed",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftMidpointSeed.lean",
+      "source_sha256": "eabcbfdfcb3c3b8dcb3b673f4f6e81ff85b2c2e91f4572be8834eef62e385c4a",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftMidpointSeed.lean",
+      "adopted_sha256": "69a2bfc0e1acd422b0cd7ab93ddab6a6c1b9bee346d75a1be194703e25c0b538"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftMidpointUnit",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftMidpointUnit.lean",
+      "source_sha256": "569ebeb51cbd9a71a260a1590f2f67e44ad81c0e0126c2d806b0b65c6da50d88",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftMidpointUnit.lean",
+      "adopted_sha256": "f6f2c882b09ee567f2a50b848c7e0f18303478ad02fc9b5943f77ace63ce03b9"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftNativeFamilies",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftNativeFamilies.lean",
+      "source_sha256": "f0672af4b0097105c39cd5c5d21834a08121e1e945e5669724842e75225fdb07",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftNativeFamilies.lean",
+      "adopted_sha256": "e98f507b89654cec5d0de8b23448ad1f7e29fa0888996f83e02b75b66b4aa30c"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftNativePostcomp",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftNativePostcomp.lean",
+      "source_sha256": "d2058db34a6e0d29ee98dc8b7e7dbf05d340949dc9363596b61a7c2c3dff9dce",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftNativePostcomp.lean",
+      "adopted_sha256": "73b5072c62b7e5758fc9bc5d3b3fd3ae388506e975e0842712acbe9bd1b86a02"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftPairedNull",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftPairedNull.lean",
+      "source_sha256": "b549ee4681b2931a69e3171e053bd7f0da0da541a720c08d5b165845f48c72ec",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftPairedNull.lean",
+      "adopted_sha256": "bb844426f962a986dc1f6389f0bbf983c9071a43801df3459bfddde1fffcdb5e"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftPolynomialNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftPolynomialNative.lean",
+      "source_sha256": "1aaa42c8587a9675d6c098ab46b039b166b4ac40e5d47db656487e1818f62622",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftPolynomialNative.lean",
+      "adopted_sha256": "aa709092c4933c483f9f063deff7ec5308ae44d06526add7ac12e9e38cdf8123"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftPolynomialNodes",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftPolynomialNodes.lean",
+      "source_sha256": "b630f6f1a66e1510f5b39a77a817323a4e5ae52935e38b4a07d508cf0a7d2bf8",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftPolynomialNodes.lean",
+      "adopted_sha256": "7473fc22c6649f53e43f7d2575c4003290241cba6e1bde4f6fe039f6a570c319"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftPolynomialParameters",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftPolynomialParameters.lean",
+      "source_sha256": "4ad44c5610706afc8d2a3bb058b48b1aa962c7430be72248c98f0c9e2f865c36",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftPolynomialParameters.lean",
+      "adopted_sha256": "87e69b6103409011978efb24892ff467e63b9323affe04e5f78186a6298fd597"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftPositiveRailsNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftPositiveRailsNative.lean",
+      "source_sha256": "25a25f87c2fc2eeb82ce0757d34316f1f3eded52a912309520590d2400b64977",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftPositiveRailsNative.lean",
+      "adopted_sha256": "27cbfa862b41617d2e5db421a08404fe238177ffc50347d4e03213763a453b5a"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftRectangleNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftRectangleNative.lean",
+      "source_sha256": "f84253121dff4303949d9906323b445b052eceaf557649ca2c75a93c5d0cbd1b",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftRectangleNative.lean",
+      "adopted_sha256": "ddc89e8e11ab207bf7286e294a0ea1e8c2931960408c641f0b636697bcb1d49d"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftRectangles",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftRectangles.lean",
+      "source_sha256": "6d5b3b2da5bd36fff481577fd2d7087a7d6a9f35483783acb81b90de8889a643",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftRectangles.lean",
+      "adopted_sha256": "2ced5edafd2b25f7d49e7eb45f79d05b3aa5665919a258e58a02bd368c324d5b"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftStartingSeed",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftStartingSeed.lean",
+      "source_sha256": "8bc66a41b94c5c564527ca8e45346c4b5df9ea1282e570041fd90f35bbce18cc",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftStartingSeed.lean",
+      "adopted_sha256": "15d21579029e28611ab97b17d9863b0f6f4260b1034af03e9e46e1d76f3245c4"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftTerminalNull",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftTerminalNull.lean",
+      "source_sha256": "437c9e7f542150022e92341ece05d890d03d420abd566a568d49194c17de6c60",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftTerminalNull.lean",
+      "adopted_sha256": "6cda9f06bc8f501f2cc4b0e8b072d446640e2d868ca67fb1daf2bdb438b7fd7f"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftTerminalParameters",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftTerminalParameters.lean",
+      "source_sha256": "c4300d622fb9cfe1ea5c3a88ed230963e2baf6fa7c7d54de5467352d29b0ecdc",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftTerminalParameters.lean",
+      "adopted_sha256": "b371a095a935a6a991a40757da07149709249453c55750f219927d66cde20de9"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftTerminalSeed",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftTerminalSeed.lean",
+      "source_sha256": "a2b7262aaa9f1974b165cd80dd70374c3b2086f1ae0b82ea5ab4e107425d5c71",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftTerminalSeed.lean",
+      "adopted_sha256": "cf2280bfe2f14e54430c23fba3d17bb1bd83c6643c3f4f57b81179b63c167002"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftTerminalUnit",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftTerminalUnit.lean",
+      "source_sha256": "72dd300c71bf3329396b2b36b0b0ba5b4f036fb41c21b9ae439925566b645c4b",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftTerminalUnit.lean",
+      "adopted_sha256": "2c0e23d6a97c3f0e90a67e692f9a4517ddadbdbc53bc032af4b5793832534198"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftUnitNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftUnitNative.lean",
+      "source_sha256": "a545cc0f3d8e120fd0d373168cd56636999bf15e80c93e31a15c5640dc415050",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftUnitNative.lean",
+      "adopted_sha256": "6c48d313b84dea66128863558d9689a12d851ebaca1a8f497f6ce889cbb13ded"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftUnitPasting",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftUnitPasting.lean",
+      "source_sha256": "fe163fb07e9314176b065d422b6901117cd691d3e9cba54c008bfccc56bbf19b",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftUnitPasting.lean",
+      "adopted_sha256": "8ffb0baa93a9d5768544c574a2db4e85830c3a0456669c1b73e84d0a9d230c2a"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftUnitRailsNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftUnitRailsNative.lean",
+      "source_sha256": "b107c52d863f5b145c24c571c184b2d57b11bb4981b4e06d397a8c57db887578",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftUnitRailsNative.lean",
+      "adopted_sha256": "199cb0e23525fc5f0b0b6b5edad31a161decc843e8fa661415da1b26d2d4ed20"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveLeftUnitReferences",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftUnitReferences.lean",
+      "source_sha256": "dcd7fb06c50a48e6bd9b3137b74e8ca005527f515500b86f9a23a5920c443770",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveLeftUnitReferences.lean",
+      "adopted_sha256": "c4de14f165bbb48af111813e4ac40880f921e390fd0e2ba1dafe02e0fbd6b5c8"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassPositiveMixedAssembly",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveMixedAssembly.lean",
+      "source_sha256": "826a8c89fc6c0abd15c3ed8212275d015b918652ba43a907dbaa546d5e8bd240",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveMixedAssembly.lean",
+      "adopted_sha256": "b796492f86cea0f21f690dc0011aa55c4d6eed7d0f1381cf2b659eefad2e5bd9"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassSecondCoefficientProjection",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSecondCoefficientProjection.lean",
+      "source_sha256": "9fcc7d4801f698d898f6c1a8cdf9f0be8e1c3996d893eb25c40582a939dbad21",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSecondCoefficientProjection.lean",
+      "adopted_sha256": "9fa72da367890ef54b7a40c88c02620500dc1bcf14f8710bb8d388b86e6df0a1"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassSeedIteration",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedIteration.lean",
+      "source_sha256": "4500d8bd0415080435222c66f2f362e487a645676b085ed03016f20209036e8d",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedIteration.lean",
+      "adopted_sha256": "6f2988f2e2622b398b4a5ac36afc33267b7ef883e907701f4c2a202a05d7e93b"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassSeedPushoutComparison",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedPushoutComparison.lean",
+      "source_sha256": "e38298d8c40a0206d1e36af2807716853f7d8053bf720acbbaf363201a3e3a8b",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedPushoutComparison.lean",
+      "adopted_sha256": "68d5ebd41e3896eae069620c194bc6a53b5524e974fda8986d851d81ff625f15"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientLaurentUnitPastingLift",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientLaurentUnitPastingLift.lean",
+      "source_sha256": "8da8e2f898b07c1b2d804a7690bcc91e8fd2fc0ad5cf61b2e0c2b340f9c02064",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/chosen-unit-pasting-prototype/source-v01/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientLaurentUnitPastingLift.lean",
+      "adopted_sha256": "15b68cde63d6a0e6cc7f043a31d6690b870be43d91b757120246c4264f9f0411"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalUnitReferenceNaturality",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalUnitReferenceNaturality.lean",
+      "source_sha256": "290fbf0074d4cb6d7c3dd48816af3e778151772f0b34603575e9bf09ed364849",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/global-unit-reference-prototype/source-v04/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalUnitReferenceNaturality.lean",
+      "adopted_sha256": "fc25d5c819a7c0891891edf13bc3144ada53f10777796bc159804881068fcc63"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.LaurentUnitReferenceCore",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/LaurentUnitReferenceCore.lean",
+      "source_sha256": "622200966540f45e93b2a89938b04c6250d4a1d32a53ee54d1c705e07ae5651f",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/laurent-unit-reference-specialization-prototype/source-v02/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/LaurentUnitReferenceCore.lean",
+      "adopted_sha256": "c257c71b8f401f31fa7cf4f405421da92a390cb3acc79306f389a583b53798fa"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.LaurentUnitReferenceSpecialization",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/LaurentUnitReferenceSpecialization.lean",
+      "source_sha256": "7941eb4325948f445e280c5d48df55b5f3873468f34ebe510c0acdc1443ea14d",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/laurent-unit-reference-specialization-prototype/upper-source-v03/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/LaurentUnitReferenceSpecialization.lean",
+      "adopted_sha256": "5b2dfb44db34990d225b8c122ef8d2ccf9f17670accc35c698dbcfdb52068e55"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MWholeConeCylinder",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeCylinder.lean",
+      "source_sha256": "a30dff788cc9988b69281479bb7cbb9705bcc42a69e8aef588e7713045130a87",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeConeCylinder.lean",
+      "adopted_sha256": "0c299c41b10ca3978354a51f3dfcef7b6e160507727c7da1e53cf721642ee54f"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MWholeNerveTripleCompactNative",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeNerveTripleCompactNative.lean",
+      "source_sha256": "53660734c5d100e0348efee57ec1dc11cd65cbcc17bf9bf57e105928d3695095",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/MWholeNerveTripleCompactNative.lean",
+      "adopted_sha256": "e3cd78a356dc636fd92929881c45d733b358d93bea7113f82ebed2f3188424c6"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.NativeSquareReferenceCancellation",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/NativeSquareReferenceCancellation.lean",
+      "source_sha256": "a82f71c5cf76f0df453fb6f4898f4d6bd5c42b1b1c0eb4fe8cf3c3f28c054e88",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-native-square-reference-cancellation-validation-v01/raw-validation01/source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/NativeSquareReferenceCancellation.lean",
+      "adopted_sha256": "a82f71c5cf76f0df453fb6f4898f4d6bd5c42b1b1c0eb4fe8cf3c3f28c054e88"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeBassCharts",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeBassCharts.lean",
+      "source_sha256": "2b16283da3f2776bbef0e9b809f067d9f9b58f54519b556d1b7fe5960fd45972",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeBassCharts.lean",
+      "adopted_sha256": "49aeaa71553d6d29e5bb372dfb2ac6005ba38a08623dbca0f70c5b61f93c6a3a"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.NativeCoefficientCoordinate",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeCoefficientCoordinate.lean",
+      "source_sha256": "16673bb4c4811406a2b0c9464884ae1ff10f9606474edc97bae222f1a1ee6136",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeCoefficientCoordinate.lean",
+      "adopted_sha256": "6de59d9734ea804a25dd569fe8336aede6723133599f5d2f7b8b166f2510b0b6"
+    },
+    {
+      "module": "Quillen.AlgebraicGeometry.Scheme.ProjectiveLine.NativeCoordinate",
+      "path": "Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/NativeCoordinate.lean",
+      "source_sha256": "cf6b2672b4de469b38d92b3b6b717c5e412f2f8734762aebbd53d3a0f0ace729",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/NativeCoordinate.lean",
+      "adopted_sha256": "1872ed3388c6bf9bbf5262c9b7e753332ba3ae30cdbf4ef874ec0cdacfcc3111"
+    },
+    {
+      "module": "Quillen.KTheory.Bass.TwoChartAdditive",
+      "path": "Quillen/KTheory/Bass/TwoChartAdditive.lean",
+      "source_sha256": "43ba8c617e903d22b8b8be32330d979d8d620bdd7945f2eddcb221ea1c1c366e",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/KTheory/Bass/TwoChartAdditive.lean",
+      "adopted_sha256": "43ba8c617e903d22b8b8be32330d979d8d620bdd7945f2eddcb221ea1c1c366e"
+    },
+    {
+      "module": "Quillen.Topology.DoubleMappingCylinder.Contractible",
+      "path": "Quillen/Topology/DoubleMappingCylinder/Contractible.lean",
+      "source_sha256": "cbd1d435f5ac5553f20ec88df30e1fb84c813e5b398fbb7b49f25289596879a8",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/cut-open-carrier-prototype/source-v06/Quillen/Topology/DoubleMappingCylinder/Contractible.lean",
+      "adopted_sha256": "cbd1d435f5ac5553f20ec88df30e1fb84c813e5b398fbb7b49f25289596879a8"
+    },
+    {
+      "module": "Quillen.Topology.Path.CarrierSquareBoundary",
+      "path": "Quillen/Topology/Path/CarrierSquareBoundary.lean",
+      "source_sha256": "e4e652ce46014e904823cec2d707bacb02ff6b1224d682609f9d3de8dcaf483d",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-carrier-boundary-validation-v01/raw-validation01/source/Quillen/Topology/Path/CarrierSquareBoundary.lean",
+      "adopted_sha256": "e4e652ce46014e904823cec2d707bacb02ff6b1224d682609f9d3de8dcaf483d"
+    },
+    {
+      "module": "Quillen.Topology.Path.CarrierSquareBoundaryEvaluation",
+      "path": "Quillen/Topology/Path/CarrierSquareBoundaryEvaluation.lean",
+      "source_sha256": "a17c75b3d35833fbe8ccf037ba65150d28db571ddd84c31069d2411f2a0f0e2c",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-carrier-boundary-evaluation-validation-v01/raw-validation01/source/Quillen/Topology/Path/CarrierSquareBoundaryEvaluation.lean",
+      "adopted_sha256": "a17c75b3d35833fbe8ccf037ba65150d28db571ddd84c31069d2411f2a0f0e2c"
+    },
+    {
+      "module": "Quillen.Topology.Path.CarrierSquareDescent",
+      "path": "Quillen/Topology/Path/CarrierSquareDescent.lean",
+      "source_sha256": "e5f6e0e383cc716e537231e07ffe03144b08e294b7b56300e9797147e6cc1d63",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-carrier-square-descent-validation-v02/raw-validation01/source/Quillen/Topology/Path/CarrierSquareDescent.lean",
+      "adopted_sha256": "e5f6e0e383cc716e537231e07ffe03144b08e294b7b56300e9797147e6cc1d63"
+    },
+    {
+      "module": "Quillen.Topology.Path.NullWordEvaluation",
+      "path": "Quillen/Topology/Path/NullWordEvaluation.lean",
+      "source_sha256": "42cdf40c5bef5be70df30e2b5819336bf0e617e65676f9c251e51f81e235a817",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-null-word-evaluation-validation-v01/raw-validation01/source/Quillen/Topology/Path/NullWordEvaluation.lean",
+      "adopted_sha256": "c72d257e6f3c657ee53f49429e84bb9deebdd4ff0afee3cefadbf4d5fea73aa5"
+    },
+    {
+      "module": "Quillen.Topology.Path.RetypedConeNullComparison",
+      "path": "Quillen/Topology/Path/RetypedConeNullComparison.lean",
+      "source_sha256": "21610072214f81708cf437beae72badf396ef15dbede52435d068fce810ec6f6",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-retyped-cone-null-validation-v01/raw-validation01/source/Quillen/Topology/Path/RetypedConeNullComparison.lean",
+      "adopted_sha256": "21610072214f81708cf437beae72badf396ef15dbede52435d068fce810ec6f6"
+    },
+    {
+      "module": "Quillen.Topology.Prespectrum.CarrierCorrectedBoundaryEvaluation",
+      "path": "Quillen/Topology/Prespectrum/CarrierCorrectedBoundaryEvaluation.lean",
+      "source_sha256": "6b4a136156895c45f52e7a31785f1c4d433e0d015a3049cdea3c117b80cede09",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-carrier-corrected-boundary-evaluation-validation-v01/raw-validation01/source/Quillen/Topology/Prespectrum/CarrierCorrectedBoundaryEvaluation.lean",
+      "adopted_sha256": "5e373b422d6fecad1b49e30e614f35eb38106e166ec534d267a1e74322a15f4a"
+    },
+    {
+      "module": "Quillen.Topology.Prespectrum.CarrierSquareDescentEvaluation",
+      "path": "Quillen/Topology/Prespectrum/CarrierSquareDescentEvaluation.lean",
+      "source_sha256": "4686f01906b992fed2c3aff64a0d0fe592d453f30a95d2305b2346b71384f3ec",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-carrier-square-descent-native-validation-v01/raw-validation01/source/Quillen/Topology/Prespectrum/CarrierSquareDescentEvaluation.lean",
+      "adopted_sha256": "4686f01906b992fed2c3aff64a0d0fe592d453f30a95d2305b2346b71384f3ec"
+    },
+    {
+      "module": "Quillen.Topology.Prespectrum.ConeCompositionCorrectionEvaluation",
+      "path": "Quillen/Topology/Prespectrum/ConeCompositionCorrectionEvaluation.lean",
+      "source_sha256": "8cc812c1597ac0c71c780750cdcc02b01cbf6b46d0ef421dfc368bcebdc87572",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-cone-composition-correction-evaluation-validation-v02/raw-validation01/source/Quillen/Topology/Prespectrum/ConeCompositionCorrectionEvaluation.lean",
+      "adopted_sha256": "8cc812c1597ac0c71c780750cdcc02b01cbf6b46d0ef421dfc368bcebdc87572"
+    },
+    {
+      "module": "Quillen.Topology.Prespectrum.ConeCompositionPieces",
+      "path": "Quillen/Topology/Prespectrum/ConeCompositionPieces.lean",
+      "source_sha256": "7ccb7976a87f9d6a4b7a6b35eb481f5a73b6f91f90524f3953121d33a6237ebc",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-cone-composition-pieces-validation-v01/raw-validation01/source/Quillen/Topology/Prespectrum/ConeCompositionPieces.lean",
+      "adopted_sha256": "7ccb7976a87f9d6a4b7a6b35eb481f5a73b6f91f90524f3953121d33a6237ebc"
+    },
+    {
+      "module": "Quillen.Topology.Prespectrum.ConeSquareMovingNullEvaluation",
+      "path": "Quillen/Topology/Prespectrum/ConeSquareMovingNullEvaluation.lean",
+      "source_sha256": "d960ba2f193417ccbf2e2daca3b515df5d8991a2893237827403d8469abab246",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-moving-null-evaluation-validation-v02/raw-validation01/source/Quillen/Topology/Prespectrum/ConeSquareMovingNullEvaluation.lean",
+      "adopted_sha256": "d960ba2f193417ccbf2e2daca3b515df5d8991a2893237827403d8469abab246"
+    },
+    {
+      "module": "Quillen.Topology.Prespectrum.RelativeHomotopyAssociatorEvaluation",
+      "path": "Quillen/Topology/Prespectrum/RelativeHomotopyAssociatorEvaluation.lean",
+      "source_sha256": "604702b1abd032961c59dd93b3a8585d8bc9d0b6d179d833ac7d8f37fc59f6d9",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-native-associator-evaluation-validation-v02/raw-validation01/source/Quillen/Topology/Prespectrum/RelativeHomotopyAssociatorEvaluation.lean",
+      "adopted_sha256": "604702b1abd032961c59dd93b3a8585d8bc9d0b6d179d833ac7d8f37fc59f6d9"
+    },
+    {
+      "module": "Quillen.Topology.Prespectrum.RelativeHomotopyConjugationEvaluation",
+      "path": "Quillen/Topology/Prespectrum/RelativeHomotopyConjugationEvaluation.lean",
+      "source_sha256": "d6fc9f22be75f7f891224d8eb540374b84dc1428017ca350b4215321999326c8",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-conjugation-operation-evaluation-validation-v01/raw-validation01/source/Quillen/Topology/Prespectrum/RelativeHomotopyConjugationEvaluation.lean",
+      "adopted_sha256": "d6fc9f22be75f7f891224d8eb540374b84dc1428017ca350b4215321999326c8"
+    },
+    {
+      "module": "Quillen.Topology.Prespectrum.RelativeHomotopyEndpointEvaluation",
+      "path": "Quillen/Topology/Prespectrum/RelativeHomotopyEndpointEvaluation.lean",
+      "source_sha256": "51f80f2ce24eccc60d356eab7f0d4b3aafed7c3232bc4dc9d908308bf28def39",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-endpoint-evaluation-validation-v01/raw-validation01/source/Quillen/Topology/Prespectrum/RelativeHomotopyEndpointEvaluation.lean",
+      "adopted_sha256": "51f80f2ce24eccc60d356eab7f0d4b3aafed7c3232bc4dc9d908308bf28def39"
+    },
+    {
+      "module": "Quillen.Topology.Prespectrum.RelativeHomotopyFactorEvaluation",
+      "path": "Quillen/Topology/Prespectrum/RelativeHomotopyFactorEvaluation.lean",
+      "source_sha256": "7a1e0bbe9b1d2add4b5385b9cbb00971672a45f7880ae577aebd20fb08f8bc6c",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-native-factor-evaluation-validation-v01/raw-validation01/source/Quillen/Topology/Prespectrum/RelativeHomotopyFactorEvaluation.lean",
+      "adopted_sha256": "31cde988a1cb65f0b0c37609be8e8e5e2b916c89f66dd98da3c1b2c7851f9100"
+    },
+    {
+      "module": "Quillen.Topology.Prespectrum.RelativeHomotopyNullWordEvaluation",
+      "path": "Quillen/Topology/Prespectrum/RelativeHomotopyNullWordEvaluation.lean",
+      "source_sha256": "9820e5a44e7d0bc0f9b664f68c1d2db29690d09d280457b2512cc42de6b94e0c",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-native-null-word-evaluation-validation-v01/raw-validation01/source/Quillen/Topology/Prespectrum/RelativeHomotopyNullWordEvaluation.lean",
+      "adopted_sha256": "11e911b34845e5b13fcdc44638f434205a47f7543520a40322bb9c180f5181c1"
+    },
+    {
+      "module": "Quillen.Topology.Prespectrum.RelativeHomotopyOperationEvaluation",
+      "path": "Quillen/Topology/Prespectrum/RelativeHomotopyOperationEvaluation.lean",
+      "source_sha256": "ceaa6401f98417ded43d1bf8a041270d0ee1934cb07e15c12dd9ffec8c845175",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-native-operation-evaluation-validation-v02/raw-validation01/source/Quillen/Topology/Prespectrum/RelativeHomotopyOperationEvaluation.lean",
+      "adopted_sha256": "ceaa6401f98417ded43d1bf8a041270d0ee1934cb07e15c12dd9ffec8c845175"
+    },
+    {
+      "module": "Quillen.Topology.Prespectrum.RelativeHomotopyTerminalEvaluation",
+      "path": "Quillen/Topology/Prespectrum/RelativeHomotopyTerminalEvaluation.lean",
+      "source_sha256": "8313932860bebc9fb299fa5b5fa93c4b9b07dd96eb20295084223963edd3d393",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-native-terminal-evaluation-validation-v01/raw-validation01/source/Quillen/Topology/Prespectrum/RelativeHomotopyTerminalEvaluation.lean",
+      "adopted_sha256": "8313932860bebc9fb299fa5b5fa93c4b9b07dd96eb20295084223963edd3d393"
+    },
+    {
+      "module": "Quillen.Topology.Prespectrum.RelativeHomotopyTwoSheetConjugationEvaluation",
+      "path": "Quillen/Topology/Prespectrum/RelativeHomotopyTwoSheetConjugationEvaluation.lean",
+      "source_sha256": "d7d555f0df51aa3c81641466982e50a0997885c812140a6b8de2a91e3f5bd5bf",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-native-two-sheet-conjugation-validation-v01/raw-validation01/source/Quillen/Topology/Prespectrum/RelativeHomotopyTwoSheetConjugationEvaluation.lean",
+      "adopted_sha256": "35165e2fe8f3ca3ac89311cfd6ab5dbbb11e717546de9635ab46f35adcf5b0fc"
+    },
+    {
+      "module": "Quillen.Topology.Realization.CompactFamilyContinuity",
+      "path": "Quillen/Topology/Realization/CompactFamilyContinuity.lean",
+      "source_sha256": "a3dbf1197e85173736db45a43fb3fe9e8f19184949e253ff288a7af807a4dc48",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/compact-family-continuity-prototype/source-v02/Quillen/Topology/Realization/CompactFamilyContinuity.lean",
+      "adopted_sha256": "a3dbf1197e85173736db45a43fb3fe9e8f19184949e253ff288a7af807a4dc48"
+    },
+    {
+      "module": "Quillen.Topology.Realization.DoubleCylinderSimplexCoverage",
+      "path": "Quillen/Topology/Realization/DoubleCylinderSimplexCoverage.lean",
+      "source_sha256": "4c27432239525e79cfc1ba9218a57bd0fc8430d3073865751b765db1c1c268f9",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/simplicial-cylinder-coverage-prototype/source-v01/Quillen/Topology/Realization/DoubleCylinderSimplexCoverage.lean",
+      "adopted_sha256": "4c27432239525e79cfc1ba9218a57bd0fc8430d3073865751b765db1c1c268f9"
+    },
+    {
+      "module": "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCompactAttachment",
+      "path": "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCompactAttachment.lean",
+      "source_sha256": "b248a307a1d6ba19433528c4f08fe8b076b5dd4111f001fd70fbec1ae03f9b39",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/compact-attachment-prototype/source-v01/Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCompactAttachment.lean",
+      "adopted_sha256": "b248a307a1d6ba19433528c4f08fe8b076b5dd4111f001fd70fbec1ae03f9b39"
+    },
+    {
+      "module": "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCubeExtension",
+      "path": "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCubeExtension.lean",
+      "source_sha256": "603ab6015268604f73159cbbc5e5a8f136c7a52c841403596b807319a448c9c0",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/carrier-prototype/source-v02/Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCubeExtension.lean",
+      "adopted_sha256": "603ab6015268604f73159cbbc5e5a8f136c7a52c841403596b807319a448c9c0"
+    },
+    {
+      "module": "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenCarrier",
+      "path": "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenCarrier.lean",
+      "source_sha256": "241b53d064e4724072327be14b5477ed8b0aaedaa51cb3e570f8f8bb23e72f4d",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/two-tip-carrier-prototype/source-v02/Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenCarrier.lean",
+      "adopted_sha256": "241b53d064e4724072327be14b5477ed8b0aaedaa51cb3e570f8f8bb23e72f4d"
+    },
+    {
+      "module": "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenCompactFamily",
+      "path": "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenCompactFamily.lean",
+      "source_sha256": "30cc1e764927843d9947331338a3b219fac3bdfe63c91e1e25e2e362c59eb893",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/two-tip-native-compact-family-prototype/source-v02/Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenCompactFamily.lean",
+      "adopted_sha256": "30cc1e764927843d9947331338a3b219fac3bdfe63c91e1e25e2e362c59eb893"
+    },
+    {
+      "module": "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenEvaluation",
+      "path": "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenEvaluation.lean",
+      "source_sha256": "f5f26d6b0e9682172565f9e993474cf4e7c91a46139fb5df406e7d399233a507",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/two-tip-native-evaluator-prototype/source-v04/Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenEvaluation.lean",
+      "adopted_sha256": "f5f26d6b0e9682172565f9e993474cf4e7c91a46139fb5df406e7d399233a507"
+    },
+    {
+      "module": "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenRelativeExtension",
+      "path": "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenRelativeExtension.lean",
+      "source_sha256": "9a4016e6d81ca3002fe11b7b04b12d85594718be5acb4a99cc034c0f25c2a268",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenRelativeExtension.lean",
+      "adopted_sha256": "9a4016e6d81ca3002fe11b7b04b12d85594718be5acb4a99cc034c0f25c2a268"
+    },
+    {
+      "module": "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutOpenSurfaceBoundary",
+      "path": "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenSurfaceBoundary.lean",
+      "source_sha256": "97509e55a303f6a3380305fe3216a15d7db5fd3937dd973cde832b9139dae437",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "current-modules/Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveCutOpenSurfaceBoundary.lean",
+      "adopted_sha256": "97509e55a303f6a3380305fe3216a15d7db5fd3937dd973cde832b9139dae437"
+    },
+    {
+      "module": "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveDependentTransport",
+      "path": "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveDependentTransport.lean",
+      "source_sha256": "492049a8628de447e6773700e168f3701f2d225bb55e7b1d3fbae530be370153",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-dependent-transport-validation-v01/raw-validation01/source/Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveDependentTransport.lean",
+      "adopted_sha256": "492049a8628de447e6773700e168f3701f2d225bb55e7b1d3fbae530be370153"
+    },
+    {
+      "module": "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNervePointwiseFamily",
+      "path": "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNervePointwiseFamily.lean",
+      "source_sha256": "7727be1dff214b581ad99ca581f840cfa4463362aa4ac9b28aa98461c9813f6c",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/two-tip-native-evaluator-prototype/source-pointwise-v03/Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNervePointwiseFamily.lean",
+      "adopted_sha256": "7727be1dff214b581ad99ca581f840cfa4463362aa4ac9b28aa98461c9813f6c"
+    },
+    {
+      "module": "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveReanchorFamily",
+      "path": "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveReanchorFamily.lean",
+      "source_sha256": "8cc485efda74b38f822b9015f5c341a43fb47d4802044e23496684e19dced319",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/j0-reanchor-family-validation-v01/raw-validation01/source/Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceNerveReanchorFamily.lean",
+      "adopted_sha256": "8cc485efda74b38f822b9015f5c341a43fb47d4802044e23496684e19dced319"
+    },
+    {
+      "module": "Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceReanchorAttachment",
+      "path": "Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceReanchorAttachment.lean",
+      "source_sha256": "0d101c973c70d879139e5afac9645e5315d8959a8c8e4cef9201f32dcbcc9c4d",
+      "archive": "quillen-tt-complete-current-sources-20261017T1317Z.zip",
+      "archive_path": "recovery_work/unit_nodes/actual-c0-carrier-attachment-prototype/c1-shifted-attachment-generic-validation-v01/raw-validation01/source/Quillen/Waldhausen/SConstruction/Iterated/CommonReferenceReanchorAttachment.lean",
+      "adopted_sha256": "0d101c973c70d879139e5afac9645e5315d8959a8c8e4cef9201f32dcbcc9c4d"
+    }
+  ],
+  "verification": {
+    "archive_checksums": "passed",
+    "source_layout": {
+      "status": "passed",
+      "production_modules": 4151,
+      "trust_test_modules": 1033,
+      "missing_imports": 0,
+      "import_cycles": 0
+    },
+    "strict_build": {
+      "status": "passed",
+      "target_count": 25,
+      "completed_jobs": 6176,
+      "source_hashes_stable": true,
+      "new_budget_overrides": 0,
+      "source_hash_manifest_sha256": "49718ebe88f96becde0103350b6fc32aaa3fba6b797f771b53af3ddf5079155d",
+      "command_record_sha256": "e7c789662fdf257f202ee360837a83ffc504c016b0db6378f791640f88cdaeee"
+    },
+    "independent_mathematical_review": {
+      "status": "accepted",
+      "kind": "ordinary mathematical and source-correspondence review",
+      "review_snapshot_sha256": "a94b70ac91470ec55bd0d9c61cba39a53ac13a2de5768d993645606810bbc56f",
+      "review_record_sha256": "3648cfa762332edf9a13ac245ba82c616306515ecda1544f549bc44d5d666541",
+      "source_hashes_match_strict_build": 159,
+      "conclusion": "Both actual mixed fillers, actual two-chart seed descent, objectwise first-to-second cone/loop step, and selected bounded additional interfaces preserve their original maps, parameters and hypotheses. No remaining mathematical repair found.",
+      "native_geometry_conditions": "Chart exactness requires qcqs; coordinate and coefficient-cone constructions require quasi-compact bases.",
+      "execution_basis": "The user selected incremental verification: successful strict25-root build,159-source native text-style check and the recorded transitive foundation-axiom audit. The global pipeline was stopped and is not claimed passed."
+    },
+    "native_text_style": {
+      "status": "passed",
+      "sources": 159
+    },
+    "integration_pipeline": {
+      "status": "stopped_by_user",
+      "reason": "Incremental verification selected by the user.",
+      "exit_code": 130,
+      "command": [
+        "bash",
+        "scripts/check.sh",
+        "--rehash"
+      ],
+      "completed_tool_tests": 91,
+      "full_pipeline_pass_claimed": false
+    },
+    "transitive_axioms": {
+      "status": "passed_in_build",
+      "project_declarations": 61051,
+      "includes_private_helpers": true,
+      "allowed_foundations": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "qualification": "Audit executed during the subsequently interrupted global build; no completed full-pipeline or explicit audit replay is claimed."
+    },
+    "selected_scope": "Incremental only, per user instruction."
+  },
+  "open_boundaries": [
+    "Second-stage positive and negative relative-pasting fillers and higher coefficient coherence.",
+    "The separate whole Bass unit cube, a coherent all-iterate raw tower and its telescope comparison.",
+    "Initial-seed invertibility, canonical negative-class telescope identification and classical TT localization.",
+    "The separate identification of the forgotten native coefficient cone K-class and original terminal boundary."
+  ],
+  "historical_evidence_boundary": "Archive compiler logs and owner/alias records describe their original snapshots. They are not current build, replay or mathematical-acceptance evidence; current verification is recorded separately above.",
+  "pin_files_sha256": {
+    "lean-toolchain": "d5edba4e4b8faad9c1baeadb265716d20d03be4d1a2647dc5e35b0c0325bea7b",
+    "lakefile.toml": "b12444714879dee3f63745b5a8d315eef61cf1f760876e601aefe0a81d878bf4",
+    "lake-manifest.json": "6c483bef7086c87a8d77f25be2f4a2d0c00f787ecafa11b2305a99dddcd3389d"
+  },
+  "namespace_relocations": {
+    "module_paths": {
+      "Quillen.Topology.Path.CarrierHalfPaths": "Quillen.Aglib.Topology.Path.CarrierHalfPaths",
+      "Quillen.Topology.Path.EvaluationFactorExtraction": "Quillen.Aglib.Topology.Path.EvaluationFactorExtraction",
+      "Quillen.Topology.Path.HomotopyEvaluationTrans": "Quillen.Aglib.Topology.Path.HomotopyEvaluationTrans",
+      "Quillen.Topology.Path.HomotopyPathSlice": "Quillen.Aglib.Topology.Path.HomotopyPathSlice",
+      "Quillen.Topology.Path.MappedProjectionRectangle": "Quillen.Aglib.Topology.Path.MappedProjectionRectangle",
+      "Quillen.Topology.Path.RetypedUnitComparison": "Quillen.Aglib.Topology.Path.RetypedUnitComparison",
+      "Quillen.Topology.Path.TwoSheetConjugation": "Quillen.Aglib.Topology.Path.TwoSheetConjugation"
+    },
+    "declaration_namespaces": {
+      "Quillen.CarrierHalfPaths": "Path.CarrierHalfPaths",
+      "Quillen.PathEvaluation": "Path.Evaluation",
+      "Quillen.HomotopyEvaluation": "ContinuousMap.Homotopy.Evaluation",
+      "Quillen.HomotopyPathSlice": "ContinuousMap.Homotopy.PathSlice",
+      "Quillen.RetypedUnitComparison": "Path.RetypedUnitComparison",
+      "Quillen.TwoSheetConjugation": "Path.Homotopy.TwoSheetConjugation",
+      "Quillen.Scheme.ProjectiveLine": "AlgebraicGeometry.Scheme.ProjectiveLine",
+      "Quillen.SchemeSheaf": "AlgebraicGeometry.Scheme.Modules",
+      "Quillen.Scheme.Bass": "AlgebraicGeometry.Scheme.PolynomialLaurent.Relative"
+    },
+    "existing_import_migrations": {
+      "Quillen.Algebra.Homology.MappingConeIso": "Quillen.Aglib.Algebra.Homology.MappingCone.Iso",
+      "Quillen.AlgebraicGeometry.PerfectComplexes.ProjectiveLine.LineCoordinateChart": "Quillen.Aglib.AlgebraicGeometry.Modules.PerfectComplexes.TensorToUnitCharts",
+      "Quillen.AlgebraicGeometry.Scheme.Sheaf.PullbackRankOne": "Quillen.Aglib.AlgebraicGeometry.Modules.RankOne.Pullback",
+      "Quillen.AlgebraicGeometry.Scheme.Sheaf.PullbackUnit": "Aglib.AlgebraicGeometry.Modules.Pullback.Unit",
+      "Quillen.Topology.Path.CarrierHalfPaths": "Quillen.Aglib.Topology.Path.CarrierHalfPaths",
+      "Quillen.Topology.Path.EvaluationFactorExtraction": "Quillen.Aglib.Topology.Path.EvaluationFactorExtraction",
+      "Quillen.Topology.Path.HomotopyEvaluationTrans": "Quillen.Aglib.Topology.Path.HomotopyEvaluationTrans",
+      "Quillen.Topology.Path.HomotopyPathSlice": "Quillen.Aglib.Topology.Path.HomotopyPathSlice",
+      "Quillen.Topology.Path.MappedProjectionRectangle": "Quillen.Aglib.Topology.Path.MappedProjectionRectangle",
+      "Quillen.Topology.Path.RetypedUnitComparison": "Quillen.Aglib.Topology.Path.RetypedUnitComparison",
+      "Quillen.Topology.Path.TwoSheetConjugation": "Quillen.Aglib.Topology.Path.TwoSheetConjugation"
+    },
+    "native_api_notes": [
+      "Legacy Quillen.Scheme opens split into AlgebraicGeometry.Scheme.Products and AlgebraicGeometry.Scheme.PolynomialLaurent.Relative where required.",
+      "The selected files do not use Quillen.PolynomialBaseChange.polynomialMap_flat or laurentMap_flat; the unused old flatness namespace open was removed.",
+      "Legacy Complex X arguments in NativeCoefficientCoordinate are the original CochainComplex X.Modules \u2124; restriction uses AlgebraicGeometry.Scheme.Modules.Complex.restrict.",
+      "NativeCoefficientCoordinate uses Scheme.Modules.Complex.tensorLeft and tensorToUnit; the current chart wrapper lemmas retain their existing names."
+    ]
+  }
+}

@@ -221,6 +221,20 @@ complete 377-origin checked-kernel coverage passed. Full-private and ROOT
 coverage agree. The [handoff](../development/TTContinuationHandoff.md)
 records the exact remaining Laurent/seed/TT comparisons.
 
+[`NativeBassCharts`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeBassCharts.lean)
+identifies the original two polynomial charts and signed Laurent difference;
+on a qcqs base, the range of the actual restriction pair is its kernel in
+every nonnegative degree, including zero.
+[`NativeCoordinate`](../../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/NativeCoordinate.lean)
+constructs the original global first coordinate with identity on the positive
+chart and the original polynomial scalar on the negative chart.
+[`NativeCoefficientCoordinate`](../../Quillen/AlgebraicGeometry/PerfectComplexes/ProjectiveLine/NativeCoefficientCoordinate.lean)
+tensors it with any perfect coefficient, constructs its literal signed cone
+supported outside the positive native range, and identifies its negative
+restriction with the polynomial scalar cone. These coordinate constructions
+need only a quasi-compact base. Identifying the forgotten cone K-class and the
+original terminal boundary remains separate.
+
 `strictKPullback` accepts every scheme map. `perfectKPullback` accepts arbitrary
 maps between quasi-compact schemes, uses bounded-above flat representatives,
 and gives `PerfectKFunctor`. Its identity, composition, restriction, and
@@ -558,6 +572,41 @@ exact times, and the whole identity cylinder is retained. `NormalizedUnitCoheren
 from the genuine geometric units and actual chosen-zero normalization.
 `CoefficientBassUnitCharts` supplies the two original Laurent chart squares;
 the six-face Bass identity cube and hence the whole Bass identity remain open.
+
+The original coefficient seed now has both actual mixed comparisons.
+[`CoefficientBassPositiveActualMixedFiller`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassPositiveActualMixedFiller.lean)
+and [`CoefficientBassNegativeActualMixedFiller`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassNegativeActualMixedFiller.lean)
+construct the whole relative homotopies between their respective original
+mixed routes. Their continuous carrier surfaces retain the separate tips,
+original concatenation times and native evaluation in every level, including
+zero. These constructions apply to every commutative ring `R`, every
+`P : Over (Spec R)` and every coefficient object `a : Under R`.
+
+[`CoefficientBassSeedPushoutComparison`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedPushoutComparison.lean)
+descends the two mixed comparisons to the actual two-chart seed square.
+[`CoefficientBassActualSeedComparison.comparison`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassActualSeedComparison.lean)
+supplies its negative comparison input from the constructed filler. Thus the
+original comparison followed by the Laurent seed is homotopic to the actual
+polynomial-span seed map followed by the second comparison.
+[`CoefficientBassSeedIteration`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedIteration.lean)
+uses this chosen whole square to construct `coneMap` and its parameter-looped
+map `stepMap : boundedFlatCoefficientBassStep P a ⟶
+boundedFlatCoefficientBassSecondStep P a`. The cone inclusion, entire cylinder
+and independent output-loop coordinate have explicit formulas. This is the
+objectwise application of Bass to the original seed. A functorial second
+coefficient stage, coherent all-iterate tower, initial-seed invertibility and
+classical telescope identification remain separate obligations.
+
+`CoefficientBassSecondCoefficientProjection` constructs the actual polynomial
+and Laurent coefficient squares and span map; its two relative-pasting types
+name remaining obligations and contain no supplied fillers.
+`CoefficientBassCompositeJ0Polynomial`, `CoefficientBassCompositeJ0Attachment`
+and `CoefficientBassCompositeJ0ShiftedPolynomial` retain the original composite
+polynomial movement and its ordinary and shifted attachments.
+`MWholeConeCylinder` records the complete moving null square of the chosen
+cone-composition homotopy, and `MWholeNerveTripleCompactNative` gives native
+evaluation of the precomposed and postcomposed cubes. These additional faces
+do not assert higher categorical coherence.
 
 [`SplitTripleSimplex`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/SplitTripleSimplex.lean)
 and `SplitTripleParameters` place the normalized triple and all four binary

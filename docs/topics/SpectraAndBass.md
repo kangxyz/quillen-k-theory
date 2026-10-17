@@ -279,6 +279,11 @@ every nonpositive degree, with literal original K₀ at zero.
 [`IterationExactness`](../../Quillen/KTheory/Bass/IterationExactness.lean)
 preserve pointwise right exact sequences and cokernels through contraction
 and every ring-indexed iterate. They supply no negative localization boundary.
+[`TwoChartAdditive`](../../Quillen/KTheory/Bass/TwoChartAdditive.lean) proves that
+the induced cokernel map preserves sums of natural transformations. The
+contraction endofunctor is therefore additive and preserves split exact
+sequences, without an additive coefficient functor or surjective chart
+difference as an extra premise.
 
 The actual native zero section and its pair analogue now split polynomial
 projection pullback in every recursive negative degree and every nonnegative
@@ -305,6 +310,16 @@ relative comparison before the native three-side square descent. The native
 polynomial producer supplies that square in `CoefficientPolynomialSpanUnit`.
 This span identity does not supply the missing whole Bass comparison identity
 or coherent raw iteration.
+
+The separate original coefficient construction now has both actual mixed
+fillers and the two-chart seed comparison. Its
+[`CoefficientBassSeedIteration.stepMap`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientBassSeedIteration.lean)
+is the objectwise first-to-second Bass map obtained by parameter looping the
+chosen comparison-cone map. It preserves the original Laurent inclusion and
+has formulas on the full cylinder and each output-loop time. The raw maps
+still need their second-stage coefficient compatibility and higher coherence
+before the strict diagram iteration machinery applies. The
+[perfect-complex guide](PerfectComplexes.md) records these geometric interfaces.
 
 Cocartesian bounded-flat sections rectify coefficient pullback to the strict
 diagram `boundedFlatAffineSectionPrespectrumFunctor`. Objects and morphisms

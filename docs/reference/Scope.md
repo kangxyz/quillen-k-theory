@@ -36,7 +36,7 @@ interface or a successful compilation does not supply an additional comparison.
 | Spectra and stable localization | Iterated S Ω-spectrum, additive K-comparison, signed looping, stable fiber sequence, coherent-homotopy quotient, and categorical stable localization |
 | Finite homotopy excision | All-point connectivity, finite cube HELP, original double-cylinder gap bound, and S-model/finite Bass-stage stable cone sequences |
 | Telescopes and Ω replacement | T1 finite-stage representatives and stable colimits, strict cone/pushout interchange, track-defined maps, and loop-tail Ω replacement |
-| Bass groups and finite stages | Affine/scheme/supported cokernel recursions, strict Laurent seed and iterates, raw one-step comparisons, and natural finite-stage bottom-group isomorphisms |
+| Bass groups and finite stages | Affine/scheme/supported cokernel recursions, strict Laurent seed and iterates, raw one-step comparisons, an objectwise first-to-second seed map, and natural finite-stage bottom-group isomorphisms |
 | Ambient and supported Bass telescopes | Actual towers, natural negative-class maps, signed coefficient cone sequences, stable Bass self-maps, and the support-forgetting square |
 | Full-open coefficient models | Original restriction/null diagrams, signed finite cone comparisons, fine and graded Bass towers/telescopes, pointwise geometric evaluation and graded telescope vanishing |
 
@@ -206,7 +206,13 @@ projective-line K-equivalence or initial-seed preservation claim. The canonical
 native flat-base-change mate now covers all intrinsic perfect inputs, and
 affine perfect coefficients have an objectwise chosen positive projection
 isomorphism and actual O(−1) vanishing. The intrinsic-perfect pushforward producer described below supplies the
-objectwise P¹ result; natural projective generation remains separate. Actual native/pair polynomial
+objectwise P¹ result; natural projective generation remains separate. For qcqs bases the actual native polynomial restriction pair has the kernel
+of the original signed Laurent difference in every nonnegative degree.
+The native first coordinate and its coefficient cone have the original
+positive identity and negative polynomial-scalar chart formulas over
+quasi-compact bases; the cone is supported outside the positive range.
+The forgotten cone K-class and terminal boundary identification remain separate.
+Actual native/pair polynomial
 zero evaluation also splits the original common corner in all recursive Bass
 degrees, without supplying its middle exactness or seed stabilization.
 Original native section/span evaluation now has levelwise equivalence and
@@ -222,8 +228,15 @@ supplied replacement or noetherian premise. Naturality and an exact
 Waldhausen roof model remain separate. Normalized evaluation/composition and
 chart/cylinder pasting, the original whole-track cone evaluation and positive
 source-null/one-step seed comparison have independent mathematical acceptance.
-The cone evaluation is weak at every level. All raw iterate/telescope
-comparisons and initial-seed invertibility remain open.
+The cone evaluation is weak at every level. Both actual mixed fillers now
+supply the original two-chart seed comparison, with no mixed-comparison input
+left to the caller. `CoefficientBassSeedIteration.stepMap` constructs the
+objectwise first-to-second raw Bass map with its original cone inclusion,
+cylinder and loop-coordinate formulas. Second-stage coefficient compatibility,
+coherent all-iterate/telescope comparisons and initial-seed invertibility
+remain open. The composite polynomial attachments and native precomposed and
+postcomposed cube evaluations give additional fixed faces, without a global
+categorical coherence theorem.
 The original polynomial coefficient unit square and whole original-span unit
 are now constructed, with exact chart tracks and cylinder parameterization.
 Both Laurent chart unit squares are supplied; the whole Bass identity still
