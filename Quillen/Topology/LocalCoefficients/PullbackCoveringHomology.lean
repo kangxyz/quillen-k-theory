@@ -7,6 +7,7 @@ module
 
 public import Quillen.Topology.LocalCoefficients.RegularFunctoriality
 public import Quillen.Topology.Covering.SingularSimplices
+public import Quillen.Topology.Covering.Pullback
 public import Quillen.Topology.LocalCoefficients.UniverseLift
 public import Mathlib.Algebra.Homology.QuasiIso
 
@@ -166,15 +167,15 @@ variable {E B X : Type u} [TopologicalSpace E] [TopologicalSpace B] [Topological
   {q : E → B} (hq : IsCoveringMap q) (f : C(X, B))
 
 /-- The literal matching-pair subtype, with its original product/subspace topology. -/
-abbrev Pullback := {z : X × E // f z.1 = q z.2}
+abbrev Pullback := Covering.Pullback.Space f q
 
 /-- The original first projection of the literal pullback. -/
 def pullbackProjection : C(Pullback (q := q) f, X) :=
-  ⟨fun z => z.1.1, continuous_fst.comp continuous_subtype_val⟩
+  Covering.Pullback.projection f q
 
 /-- The original second projection of the literal pullback. -/
 def pullbackLift : C(Pullback (q := q) f, E) :=
-  ⟨fun z => z.1.2, continuous_snd.comp continuous_subtype_val⟩
+  Covering.Pullback.lift f q
 
 /-- Its fiber is exactly the original covering fiber over the mapped point. -/
 def pullbackFiberEquiv (x : X) :

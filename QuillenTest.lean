@@ -298,6 +298,7 @@ import QuillenTest.FiniteConeStrength
 import QuillenTest.FiniteConeTopology
 import QuillenTest.FiniteConnectivityHELP
 import QuillenTest.FiniteDomination
+import QuillenTest.FiniteFieldKTwo
 import QuillenTest.FiniteFlatPushforward
 import QuillenTest.FiniteLoopWordSlide
 import QuillenTest.FiniteLoopWords
@@ -322,6 +323,7 @@ import QuillenTest.FiniteProjectiveExtensionQuotient
 import QuillenTest.FiniteProjectiveInflationAction
 import QuillenTest.FiniteProjectiveModules
 import QuillenTest.FiniteProjectiveScalarExtensionUniversal
+import QuillenTest.FiniteResidueLocalization
 import QuillenTest.FiniteSchemePushforward
 import QuillenTest.FiniteSimplexStraightening
 import QuillenTest.FiniteSupportedRoofs

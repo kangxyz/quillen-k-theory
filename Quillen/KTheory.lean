@@ -189,9 +189,12 @@ public import Quillen.KTheory.Bass.TwoChartStableVanishing
 public import Quillen.KTheory.Bass.WholeSeedCospan
 public import Quillen.KTheory.Equivalence
 public import Quillen.KTheory.Field.ElementaryProjectiveKOne
+public import Quillen.KTheory.Field.FiniteFieldKTwo
 public import Quillen.KTheory.Field.FiniteModuleRingEquivalence
 public import Quillen.KTheory.Field.MatrixCubeComparison
 public import Quillen.KTheory.Field.MatrixTransport
+public import Quillen.KTheory.Field.MilnorKTwoComparison
+public import Quillen.KTheory.Field.MilnorKTwoSurjectivity
 public import Quillen.KTheory.Field.ModuleDeterminant
 public import Quillen.KTheory.Field.ProjectiveDeterminant
 public import Quillen.KTheory.Field.ProjectiveFiniteModules
@@ -223,10 +226,12 @@ public import Quillen.KTheory.GrothendieckComparison.Retraction
 public import Quillen.KTheory.GrothendieckGroup.Basic
 public import Quillen.KTheory.GrothendieckGroup.Map
 public import Quillen.KTheory.LowDegreeScalarAction.DvrSymbols
+public import Quillen.KTheory.LowDegreeScalarAction.DvrUnitBoundary
 public import Quillen.KTheory.LowDegreeScalarAction.ExactNaturality
 public import Quillen.KTheory.LowDegreeScalarAction.FieldSymbols
 public import Quillen.KTheory.LowDegreeScalarAction.IdentityAutomorphism
 public import Quillen.KTheory.LowDegreeScalarAction.ObjectClass
+public import Quillen.KTheory.LowDegreeScalarAction.PrincipalUnitBoundary
 public import Quillen.KTheory.LowDegreeScalarAction.ScalarUnit
 public import Quillen.KTheory.LowDegreeScalarAction.SerreBoundary
 public import Quillen.KTheory.LowDegreeScalarAction.SmallModelBoundary
@@ -252,6 +257,7 @@ public import Quillen.KTheory.Plus.ProjectiveCompletionBaseChangeNullhomotopy
 public import Quillen.KTheory.Plus.ProjectiveCompletionBasedUnit
 public import Quillen.KTheory.Plus.ProjectiveCompletionBasepoint
 public import Quillen.KTheory.Plus.ProjectiveCompletionComponents
+public import Quillen.KTheory.Plus.ProjectiveCompletionCover
 public import Quillen.KTheory.Plus.ProjectiveCompletionFiberFormula
 public import Quillen.KTheory.Plus.ProjectiveCompletionFiberNaturality
 public import Quillen.KTheory.Plus.ProjectiveCompletionGradeNaturality
@@ -306,12 +312,14 @@ public import Quillen.KTheory.Plus.ProjectiveZeroFiberEntry
 public import Quillen.KTheory.Plus.ProjectiveZeroFiberEquivalence
 public import Quillen.KTheory.Plus.StableCompletionBaseChangeNaturality
 public import Quillen.KTheory.Plus.StableCompletionBasedRingNaturality
+public import Quillen.KTheory.Plus.StableFiberPerfectness
 public import Quillen.KTheory.Plus.StableGeneralLinearPlus
 public import Quillen.KTheory.Plus.StableProjectiveCompletion
 public import Quillen.KTheory.Plus.StableProjectiveLocalHomology
 public import Quillen.KTheory.Plus.StableProjectiveSource
 public import Quillen.KTheory.Plus.StableProjectiveTelescope
 public import Quillen.KTheory.Plus.StableProjectiveZeroComponent
+public import Quillen.KTheory.Plus.StableZeroFiberHomology
 public import Quillen.KTheory.QHomotopy
 public import Quillen.KTheory.SpaceAction
 

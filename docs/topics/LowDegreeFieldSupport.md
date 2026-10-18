@@ -185,11 +185,76 @@ Finite-module transport must be a subsequent explicit composition.
 [`SteinbergFiberNaturality`](../../Quillen/KTheory/Field/SteinbergFiberNaturality.lean)
 proves the exact original field-extension square.
 [`SteinbergFiberSurjectivity`](../../Quillen/KTheory/Field/SteinbergFiberSurjectivity.lean)
-proves surjectivity under explicit perfectness of the actual fiber group.
+proves surjectivity under actual fiber perfectness. The later
+[`StableFiberPerfectness`](../../Quillen/KTheory/Plus/StableFiberPerfectness.lean)
+supplies that input as a proved theorem on the existing field-fiber alias.
 [`StableSteinbergRankTwo`](../../Quillen/Algebra/Group/StableSteinbergRankTwo.lean)
-identifies the defect subgroup with the original rank-two kernel. Full kernel
-containment in that stage, Milnor-map injectivity, actual fiber perfectness,
-comparison isomorphism and positive product marking remain open.
+identifies the defect subgroup with the original rank-two kernel.
+[`StableSteinbergKernelGeneration`](../../Quillen/Algebra/Group/StableSteinbergKernelGeneration.lean)
+now proves all-rank descent, equality with the full original kernel and
+surjectivity of the unchanged ordered-symbol Milnor map. Its actual parabolic
+and `B V B` source-word proof includes zero pivots and fields of orders two
+and three; it assumes no unstable Steinberg-stage injectivity.
+[`MilnorKTwoComparison`](../../Quillen/KTheory/Field/MilnorKTwoComparison.lean)
+composes this existing Milnor map with the original right-projective K2
+comparison and then explicitly with the upper finite-module equivalence.
+Both endpoints retain their original field-extension squares and literal
+ordered-defect values.
+[`MilnorKTwoSurjectivity`](../../Quillen/KTheory/Field/MilnorKTwoSurjectivity.lean)
+discharges the stage-containment input. The proved fiber perfectness then gives
+surjectivity onto these Quillen groups. Milnor-map injectivity, injectivity of
+the original Steinberg/fiber comparison, comparison
+isomorphism and equality with the positive scalar-operation product remain open.
+
+[`FiniteFieldKTwo`](../../Quillen/KTheory/Field/FiniteFieldKTwo.lean) proves the
+unconditional finite-field consequence. For every `[Field F] [Finite F]`,
+the original right-projective K2, actual upper finite-module K2, original lower
+finite-module G2 and literal public coherent G2 of `Spec F` have one element.
+The lower/public transports are the canonical universe and affine G comparisons.
+F2/F3/F5 and general finite-field consumers are checked. This theorem needs
+neither Matsumoto injectivity nor positive product marking.
+
+[`FiniteResidueLocalization`](../../Quillen/GTheory/Dedekind/FiniteResidueLocalization.lean)
+then proves original native/public generic G2 injectivity over a Dedekind domain
+whose actual height-one residue fields are finite. Its public pullback retains
+the algebra map to a supplied fraction field. Integer and Spec Q to Spec Z
+consumers use actual finite quotients; generic G1 injectivity is separate.
+
+## Original covering and fiber homology
+
+[`Covering.Pullback`](../../Quillen/Topology/Covering/Pullback.lean) and
+[`PullbackFiber`](../../Quillen/Topology/Covering/PullbackFiber.lean) use the
+same literal matching-pair subtype in independent space universes. A simply
+connected total cover gives the original first-projection kernel equivalence
+and the actual mapAt fiber-pi1 equivalence, retaining projection and connecting
+equations. Path connectedness follows under the stated source path-connectedness
+and raw-pi1-surjectivity hypotheses.
+
+The original covering-fiber chain comparison uses this shared subtype.
+[`PullbackCoveringHomologyUniverseLift`](../../Quillen/Topology/LocalCoefficients/PullbackCoveringHomologyUniverseLift.lean)
+extends it to source `Type u` and target/cover `Type (max u v)` by lifting only
+the source. Its successor specialization retains the original mixed chain
+map, integral coefficient object and second projection.
+
+[`ProjectiveCompletionCover`](../../Quillen/KTheory/Plus/ProjectiveCompletionCover.lean)
+constructs an actual surjective simply connected cover of the original
+`ZeroComponent R` from the categorical component-cover theorem.
+[`StableZeroFiberHomology`](../../Quillen/KTheory/Plus/StableZeroFiberHomology.lean)
+then supplies, for every ring, a path-connected literal pullback with perfect
+pi1, the original integral-chain quasi-isomorphism and the actual equivalence
+to the original stable-fiber pi1.
+
+[`H2CapDescent`](../../Quillen/Topology/LocalCoefficients/H2CapDescent.lean)
+constructs the marked finite-cycle/commutator argument for injective maps.
+[`H2Perfectness`](../../Quillen/Topology/HomotopyFiber/H2Perfectness.lean)
+then uses the original LES and genuine mapping-cylinder transport: a
+path-connected space with perfect pi1 mapping to a simply connected target
+has perfect actual fiber pi1 when its original integral H2 map is surjective.
+The theorem assumes neither CW structure nor simply connected source.
+[`StableFiberPerfectness`](../../Quillen/KTheory/Plus/StableFiberPerfectness.lean)
+applies it to the constructed covering data and transfers the result by the
+original fiber-pi1 bijection. The literal original stable-zero fiber is
+therefore perfect over every ring, at its canonical constant-path basepoint.
 
 ## Low-degree identity-automorphism operations
 
@@ -244,7 +309,18 @@ classes and proves bilinearity and actual tensor-extension naturality.
 [`DvrSymbols`](../../Quillen/KTheory/LowDegreeScalarAction/DvrSymbols.lean)
 proves its unit-unit boundary is neutral for the original localization,
 principal, fraction and local-DVR maps, explicitly lowering the upper model.
-The unit-uniformizer value, Steinberg relation and comparison with the
+[`PrincipalUnitBoundary`](../../Quillen/KTheory/LowDegreeScalarAction/PrincipalUnitBoundary.lean)
+computes the ordered unit/principal value: the original closed boundary of
+the canonically lowered product is the literal lower positive rank-one
+quotient scalar cube. The boundary inverse and object-class inverse cancel.
+Only a Noetherian commutative ring and regular principal element are required;
+units and the zero quotient are included.
+[`DvrUnitBoundary`](../../Quillen/KTheory/LowDegreeScalarAction/DvrUnitBoundary.lean)
+transports the ordered formula through the original local-DVR boundary square.
+Its value is the positive lower native residue cube, and canonical promotion
+followed by the original determinant gives the positive reduced unit. The
+given-fraction-field version retains the exact original inverse restriction
+map. The reversed input, Steinberg relation and comparison with the
 Milnor/Steinberg map remain separate obligations.
 
 ## DVR tame kernel and split residue
@@ -273,8 +349,8 @@ existing diagram constructor.
 
 ## Remaining boundary
 
-Q1 and Q2 achieve the first native milestone. Matsumoto and positive symbol
-marking, actual finite-field Quillen G2 vanishing, unit-uniformizer residue,
+Q1--Q3 and unconditional finite-field K2/G2 vanishing achieve the stated native
+milestones. Matsumoto and positive symbol marking, the reversed ordered residue,
 ordered Quillen boundary compatibility, origin-DVR Quillen unit
 generation remain open. R5's distinct sheaf-stalk transport and the first and
 third affine localization consequences have a separately validated proposal.

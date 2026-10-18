@@ -38,8 +38,11 @@ public import Quillen.Algebra.Group.StableFieldDeterminant
 public import Quillen.Algebra.Group.StableGeneralLinear
 public import Quillen.Algebra.Group.StableQuotientInvariance
 public import Quillen.Algebra.Group.StableSteinberg
+public import Quillen.Algebra.Group.StableSteinbergBruhat
 public import Quillen.Algebra.Group.StableSteinbergCentrality
+public import Quillen.Algebra.Group.StableSteinbergKernelGeneration
 public import Quillen.Algebra.Group.StableSteinbergNaturality
+public import Quillen.Algebra.Group.StableSteinbergParabolic
 public import Quillen.Algebra.Group.StableSteinbergRankTwo
 public import Quillen.Algebra.Group.StableSteinbergSymbols
 public import Quillen.Algebra.Group.StableSteinbergTorus
