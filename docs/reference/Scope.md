@@ -389,6 +389,46 @@ coherent raw tower.
 These constructions do not identify classical Kᴮ. The current dependency plan is in the
 [TT localization roadmap](../development/TTLocalization.md).
 
+Actual global bounded-flat sections now restrict to the existing
+coefficient-first Models through [GlobalSectionChangeIndex](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionChangeIndex.lean).
+Restriction retains literal evaluation, one global chosen zero and the
+original Laurent actions. The ambient, supported and coarse rows have stable
+finite-stage and actual telescope restrictions, preserving their original
+`B^i(seed)` transitions, inclusions and whole cylinders. The same original
+zero-to-supported-section null gives the global coarse fiber lift; its
+stability needs only the open immersion. The corresponding full-open fiber
+stability requires compact source and ambient schemes and quasi-separated
+ambient scheme. These compare constructions against the already available
+fine localization result.
+
+The finite interchange interfaces `κ`, `ρ` and `χ` retain their original
+loop, overlap, cone and source-null parameters and are stable on actual finite
+Model stages. Normalized stage maps `B^i F → Ω^i C^i F` are stable for Model
+input. The fixed cyclic/reversal loop words and the new-loop slide retain
+their actual evaluation formulas and independent residual Bass loop.
+The geometric two-cone permutation has all sixteen cell formulas,
+involutivity and naturality in both diagrams and scheme maps. The strict
+square/pushout and four-dimensional double-square totalizations supply their
+actual quotient targets. General product braid and external-factor track
+equations preserve the specified nested pullbacks.
+
+The finite whole-seed cospan uses the specified induced `bassTrack`.
+`currentTransition_stageMap` compares the current-stage seed, with its
+association cast, to the loop of the current unlooped-cone seed. It does not
+identify that transition with the `B^i(seed)` transitions of the existing
+telescopes. Adjacent-transition identification, the required external
+Laurent-action equivariance of the geometric permutation, and fixed cone-word
+compatibility remain prerequisites for an all-stage normalized comparison.
+The double-Laurent face equations do not settle the unrestricted relationship
+between the geometric and cone-loop comparisons. Square-map invertibility
+also retains its actual index-induced target.
+The geometric four-dimensional permutation is distinct from the still-open
+raw O four-cube with eight prescribed faces and chosen earlier fillers.
+The [finite-interchange guide](../topics/SpectraAndBass.md#finite-bass-interchange-and-normalized-stages)
+records the exact interfaces and conditions; the
+[recovered-comparison evidence](../development/evidence/TTRecoveredComparisons.json)
+separates their source correspondence and validation coverage.
+
 ## Ring plus construction
 
 For every unital ring `R : Type u`, including noncommutative rings and the
@@ -420,6 +460,7 @@ tracks and a natural chosen inverse remain separate. See
 ## Remaining comparisons
 
 
+- Equality of the natural current-stage seed with the actual `B^i(seed)` transition, external Laurent-action equivariance of the geometric two-cone permutation, the required whole-map relation of geometric and cone-loop comparisons, and fixed cone-word compatibility needed to assemble a normalized all-stage comparison. Finite stable stage maps, the induced seed cospan, loop-word identities and restricted double-Laurent face formulas do not supply these inputs.
 - Identification of the constructed fine completion with the original raw all-stage geometric tower and classical nonconnective groups. Fine ambient/supported stabilization and bijectivity of the original negative-class maps are supplied under the stated qcqs/compact-open hypotheses.
 - Full all-iterate comparison with the original geometric Bass tower, the Laurent splitting and original fine [T] terminal boundary, including the zero-section class and possible Nil terms. The positive exact row on PerfectK(Spec R) and the original relative scalar-to-cofiber boundary are proved; they do not close these remaining comparisons.
 - Complete original raw iterate/telescope evaluation and classical Thomason–Trobaugh identification, retaining the original K₀ image and signed boundary. The native overlap four-cube and complete L/P/O descent remain open. Equality of the fine and geometric boundaries and arbitrary-pair boundary naturality are separate. Existing support-enlargement maps must be identified with the auxiliary T, T∪U and T∩U towers and their localization sequence. Normalized one-step evaluation and basic/auxiliary-supported constructed section localization are supplied.

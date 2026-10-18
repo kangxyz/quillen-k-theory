@@ -388,6 +388,56 @@ nonconnective K-theory remain open; completed geometric evaluation is separate. 
 [perfect-complex guide](../topics/PerfectComplexes.md) and
 [spectrum guide](../topics/SpectraAndBass.md) record these distinct endpoints.
 
+## Global sections and finite Bass interchange
+
+Within each row below, short module names share the first entry's directory.
+
+| Import after `Quillen.` | Principal interface |
+| --- | --- |
+| `Aglib.CategoryTheory.FiberedCategory.SectionChangeIndex`, `SectionChangeIndexLaws`, `SectionChangeIndexZero`, `SectionChangeIndexUnit` | `CategoryTheory.SectionChangeIndex.underFunctor`, literal evaluation/reindexing, same chosen zero and lifted identity actions |
+| `Waldhausen.SConstruction.Iterated.SectionChangeIndexModel`, `SectionChangeIndexLargeModel`, `SectionChangeIndexMixedModel` | Evaluation-transported `sectionWaldhausen`, `sectionModel`, `restrictionModel` and exact categorical inverse |
+| `KTheory.Bass.SectionChangeIndexStable` | `restrictionModel_iterate_isStableEquivalence` for the small finite Model interface |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSectionChangeIndex`, `GlobalSectionChangeIndexLaws`, `GlobalSectionUnit`, `GlobalSectionLaurentAction` | Actual all-scheme `globalModel`, coefficient restriction, literal evaluation and original forward units |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedModels`, `GlobalOpenModels`, `GlobalFullOpenModels` | Actual supported/coarse/fine global rows, same zero and exact restriction squares |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSectionTelescope`, `GlobalSupportedTelescope`, `GlobalOpenTelescope` | Stable finite/telescope restriction preserving actual `B^i(seed)` transitions and cylinder faces |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSectionCoarseFiber`, `GlobalSectionFullOpenFiber` | Actual same-null coarse/full-open `fiberMap`, its restriction equation and all-integer stability |
+
+The generic small Model adapter uses small index categories and
+`Cat.{u,u}` fibers. The large and mixed adapters retain their respective
+`Model.{max u v}` and `Model.{max u v w}` bounds, detailed in the
+[fibered-category guide](../../Quillen/Aglib/CategoryTheory/FiberedCategory/README.md#change-of-index).
+The global scheme application lives in `Model.{u+1}`. Its ambient restriction
+has no compactness premise. Supported/coarse restrictions and the coarse
+same-null fiber use the open immersion; full-open fiber stability additionally
+requires compact `P.left`, compact `Q.left` and quasi-separated `Q.left`.
+
+| Import after `Quillen.` | Principal interface |
+| --- | --- |
+| `KTheory.Bass.LoopStrength`, `LoopFactor`, `LoopStable` | Actual `κ : B(ΩF) → Ω(BF)`, its cone-loop/transpose factorization and finite Model stability |
+| `KTheory.Bass.PushoutStrength`, `PushoutCofiberSquare`, `PushoutStable` | Forward `rho`, whole overlap formula, positive cofiber square and finite Model stability |
+| `KTheory.Bass.SquareConeStrength`, `SquareConeStable` | Forward `chi`, cone/source-null formulas and `modelSquare_chi_isStableEquivalence` |
+| `KTheory.Bass.NormalizedStageMap`, `IteratedLoopStrength` | Fixed-order iterated `κ` and stable `stageMap : B^i F → Ω^i C^i F` for Model input |
+| `Topology.Prespectrum.LoopTranspose` | `Quillen.LoopPrespectrum.FiniteParameterLooping.loops`, `loopDiagram` and their object/association equations |
+| `Topology.Prespectrum.FiniteLoopWords`, `FiniteLoopWordSlide` | Finite loop evaluation, cyclic/reversal natural isomorphisms and the new-loop slide |
+| `KTheory.Bass.FiniteLoopStrengthWords` | Fixed loop words through actual iterated strength, retaining the residual Bass loop |
+| `Topology.Prespectrum.StrictSquarePushout`, `StrictDoubleSquareCone` and their Naturality/Cells leaves | Actual square-cone/pushout and four-dimensional double-square isomorphisms and quotient formulas |
+| `KTheory.Bass.GeometricConeTarget`, `GeometricConeCells`, `GeometricConeInvolution` and Naturality/SchemeNaturality leaves | Actual geometric two-cone `permutation`, all sixteen cells, involution and natural isomorphisms |
+| `KTheory.Bass.DoubleLaurentInclusion` | Geometric and cone-loop value equations after the displayed double inclusion, with the original swap distinction |
+| `KTheory.Bass.WholeSeedCospan`, `GeometricSeedCospan` | Whole null/unit/null seed word and finite cospan for the specified induced `bassTrack` |
+| `KTheory.Bass.SchemeCurrentStageSquare` | `currentTransition_stageMap` for the explicitly defined current and normalized seed transitions |
+| `Topology.Prespectrum.NativeParameterEvaluation` | Conditional whole-value `PathLift`/`HomotopyLift` operation laws for an arbitrary evaluator |
+
+These are forward finite comparisons. Their Model specializations discharge
+the stated topology and growth inputs; the generic growth versions keep those
+inputs. `currentTransition_stageMap` does not identify `currentTransition`
+with `strictDiagramTransition = B^i(seed A)`. External Laurent-action
+equivariance of the geometric permutation, the required whole-map geometric/
+cone-loop comparison relation, fixed cone-word compatibility and
+the normalized all-stage/telescope comparison remain separate.
+The [spectrum guide](../topics/SpectraAndBass.md#finite-bass-interchange-and-normalized-stages)
+and [perfect-complex guide](../topics/PerfectComplexes.md#global-sections-and-coefficient-restriction)
+give the objects, exact conditions and distinct raw O four-cube boundary.
+
 ## Ring plus and scalar extension
 
 The selected public facade is `Quillen.KTheory.Plus`. Names below are relative

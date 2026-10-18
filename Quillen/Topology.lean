@@ -814,6 +814,8 @@ public import Quillen.Topology.Prespectrum.FiberParameterLooping
 public import Quillen.Topology.Prespectrum.FiberSequence
 public import Quillen.Topology.Prespectrum.FiberSquareDetection
 public import Quillen.Topology.Prespectrum.FiberWeakEquivalence
+public import Quillen.Topology.Prespectrum.FiniteLoopWordSlide
+public import Quillen.Topology.Prespectrum.FiniteLoopWords
 public import Quillen.Topology.Prespectrum.Homotopy
 public import Quillen.Topology.Prespectrum.HomotopyFiber
 public import Quillen.Topology.Prespectrum.HomotopyLoop
@@ -841,6 +843,7 @@ public import Quillen.Topology.Prespectrum.LoopTailReplacementFunctor
 public import Quillen.Topology.Prespectrum.LoopTailReplacementHomotopy
 public import Quillen.Topology.Prespectrum.LoopTailReplacementStableNaturality
 public import Quillen.Topology.Prespectrum.LoopTailStageStructure
+public import Quillen.Topology.Prespectrum.LoopTranspose
 public import Quillen.Topology.Prespectrum.Looping
 public import Quillen.Topology.Prespectrum.MPostmappedLift
 public import Quillen.Topology.Prespectrum.MappingCone
@@ -848,6 +851,7 @@ public import Quillen.Topology.Prespectrum.MappingConeWeakEquivalence
 public import Quillen.Topology.Prespectrum.NativeH1CellOps
 public import Quillen.Topology.Prespectrum.NativeHomotopyCells
 public import Quillen.Topology.Prespectrum.NativeMovingSquareCells
+public import Quillen.Topology.Prespectrum.NativeParameterEvaluation
 public import Quillen.Topology.Prespectrum.NullLoopNaturality
 public import Quillen.Topology.Prespectrum.Omega
 public import Quillen.Topology.Prespectrum.OmegaConnectivity
@@ -872,7 +876,11 @@ public import Quillen.Topology.Prespectrum.PushoutHomotopySquare
 public import Quillen.Topology.Prespectrum.PushoutHomotopySquareEquivalence
 public import Quillen.Topology.Prespectrum.PushoutHomotopySquareStableEquivalence
 public import Quillen.Topology.Prespectrum.PushoutIdentityFromUnitSquare
+public import Quillen.Topology.Prespectrum.PushoutInterchange
+public import Quillen.Topology.Prespectrum.PushoutInterchangeIso
 public import Quillen.Topology.Prespectrum.PushoutLinearExcision
+public import Quillen.Topology.Prespectrum.PushoutLooping
+public import Quillen.Topology.Prespectrum.PushoutLoopingStable
 public import Quillen.Topology.Prespectrum.PushoutMapHomotopy
 public import Quillen.Topology.Prespectrum.PushoutMovingHomotopy
 public import Quillen.Topology.Prespectrum.PushoutPointCone
@@ -946,6 +954,10 @@ public import Quillen.Topology.Prespectrum.StableSelfTrack
 public import Quillen.Topology.Prespectrum.StableShift
 public import Quillen.Topology.Prespectrum.StableStabilization
 public import Quillen.Topology.Prespectrum.StableVanishing
+public import Quillen.Topology.Prespectrum.StrictDoubleSquareCone
+public import Quillen.Topology.Prespectrum.StrictDoubleSquareConeCells
+public import Quillen.Topology.Prespectrum.StrictDoubleSquareConeNaturality
+public import Quillen.Topology.Prespectrum.StrictSquareCellInduction
 public import Quillen.Topology.Prespectrum.StrictSquareCofiberComparison
 public import Quillen.Topology.Prespectrum.StrictSquareCofiberDescent
 public import Quillen.Topology.Prespectrum.StrictSquareCone
@@ -953,6 +965,9 @@ public import Quillen.Topology.Prespectrum.StrictSquareConeInterchange
 public import Quillen.Topology.Prespectrum.StrictSquareConeInterchangeNaturality
 public import Quillen.Topology.Prespectrum.StrictSquareMapHomotopy
 public import Quillen.Topology.Prespectrum.StrictSquareNull
+public import Quillen.Topology.Prespectrum.StrictSquarePushout
+public import Quillen.Topology.Prespectrum.StrictSquarePushoutCells
+public import Quillen.Topology.Prespectrum.StrictSquarePushoutNaturality
 public import Quillen.Topology.Prespectrum.StrictSquareSeedHomotopy
 public import Quillen.Topology.Prespectrum.StrictSquareStableEquivalence
 public import Quillen.Topology.Prespectrum.StrictSquareTopology

@@ -41,10 +41,12 @@ accepted local implementation together with its old imports.
 | [Module complexes](Algebra/Homology/ModuleCat/README.md) | Ordinary complex, tensor, exactness and homology interfaces |
 | [Exact-category filtrations](CategoryTheory/ExactCategory/Filtration/README.md) | Actual filtrations, factors and additive-invariant formulas under their conflation hypotheses |
 | [Displayed colimits](CategoryTheory/Limits/README.md) | Lower-ideal gluing and pointwise pushout interchange |
+| [Fibers and cocartesian sections](CategoryTheory/FiberedCategory/README.md) | Literal change of index, evaluation, reindexing and preservation of one chosen-zero family |
 | [Paths and homotopies](Topology/Path/README.md) | Whole path reconstruction, pointwise evaluation and exact homotopy pasting for coefficient Bass carriers |
 | [Regular-local algebra](RingTheory/RegularLocalRing/README.md) | Local algebra and finite projective-dimension bounds with the original hypotheses |
 | [Scheme module sheaves](AlgebraicGeometry/Modules/README.md) | Coherent/quasicoherent operations, ordinary and derived complexes, and intrinsic perfect-complex theory |
-| [Polynomial/Laurent spectra](AlgebraicGeometry/Spec/PolynomialLaurent/README.md) | Canonical affine schemes, ring maps, coordinates, base-change squares and open immersions |
+| [Scheme products](AlgebraicGeometry/Products/README.md) | Independent-factor swaps, their braid equation, scalar pullback and external-factor transport |
+| [Polynomial/Laurent spectra](AlgebraicGeometry/Spec/PolynomialLaurent/README.md) | Canonical affine schemes, ring maps, coordinates, base-change squares, open immersions and the arbitrary-scheme index square |
 
 Public import entry: `Quillen.Aglib`. Prefer the focused leaves described in the
 family guides for implementation dependencies. Existing public mathematical

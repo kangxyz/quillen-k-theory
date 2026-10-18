@@ -1,13 +1,16 @@
 # Thomason–Trobaugh continuation handoff
 
-Current handoff: the selected archive on baseline
-`492454b306a1a1a26d5701d0503f5aaf127b9367`, integrated with the unchanged pins.
-The projective-line P1–P5 phase and constructed fine localization are preserved.
-The fine transition range, original-group telescope comparisons and fixed
-nonpositive localization sequence now have their stated scope below. Classical
-Thomason–Trobaugh identification remains open. Source correspondence, ordinary
-review and current validation are separated in
-[the integration evidence](evidence/TTFineCompletionAndRawPasting.json).
+Current handoff: the selected comparison package on baseline
+`16cc1d011ef6d9c28b045879be10617411a0c2b4`, integrated with the unchanged pins.
+The projective-line P1–P5 phase, constructed fine localization, fine transition
+range, original-group telescope comparisons and fixed nonpositive localization
+sequence were already present on this baseline. Global-section restriction and
+finite interchange now have the exact interfaces below. Classical
+Thomason–Trobaugh identification remains open. Source correspondence,
+independent review and validation are separated in
+[the recovered-comparison evidence](evidence/TTRecoveredComparisons.json).
+The [fine-completion record](evidence/TTFineCompletionAndRawPasting.json)
+retains its earlier baseline-492454 scope.
 
 ## Objective and handoff boundary
 
@@ -162,6 +165,54 @@ faces equal to the Laurent family after the actual source chart maps. The
 remaining overlap four-cube and complete L/P/O attachments are distinct from
 these supplied polynomial faces.
 
+## Global restriction and finite comparison interfaces
+
+The global section owner is [GlobalSectionChangeIndex](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionChangeIndex.lean).
+It uses the original geometric pseudofunctor over all schemes and one chosen
+zero, then restricts to the actual coefficient-first Models. The generic
+change-index construction retains literal evaluation/reindexing and explicit
+Model universe bounds. Global ambient, supported and coarse restrictions
+commute with their original `B^i(seed)` transitions and give stable maps at
+every finite stage and on the actual quotient telescopes. Supported/coarse
+rows retain the open immersion; ambient restriction has no compactness premise.
+
+[GlobalSectionCoarseFiber](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionCoarseFiber.lean) gives the global coarse fiber
+lift with the exact original null and only the open-immersion hypothesis.
+[GlobalSectionFullOpenFiber](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionFullOpenFiber.lean) compares the postcomposed
+same-null lift to the existing full-open fiber. Final stability requires
+compact P,Q and quasi-separated Q. The whole-null, restriction, inclusion and
+cylinder equations retain only the open immersion. This transfers the
+already available coefficient localization comparison to the global-section
+construction.
+
+The finite normalization owner is [NormalizedStageMap](../../Quillen/KTheory/Bass/NormalizedStageMap.lean):
+the actual loop/pushout/cone strengths `κ,ρ,χ` produce stable maps
+`B^i F → Ω^i C^i F` for Model input, preserving association transports.
+Fixed cyclic/reversal loop words and the new-loop slide retain their exact
+evaluation formulas and the independent residual Bass loop. The geometric
+permutation in [GeometricConeTarget](../../Quillen/KTheory/Bass/GeometricConeTarget.lean) has sixteen
+point-set cell formulas, involutivity and naturality in diagrams and schemes.
+Its generic strict-square and four-dimensional double-square quotient
+arguments preserve the actual target and all independent cell parameters.
+The product braid and external-factor/track transport are separate generic
+equations on the original nested products.
+
+The finite seed cospan uses the specified induced `bassTrack`; the actual
+global forward Laurent unit instantiates its natural source track.
+`currentTransition_stageMap` compares the current-stage seed plus association
+cast to the loop of the current unlooped-cone seed. It does not identify that
+transition with the existing telescope's `B^i(seed A)` transition. Required
+external Laurent-action equivariance of the geometric permutation and fixed
+cone-word compatibility remain open. None of these finite point-set results
+constructs the older raw O four-cube with its prescribed earlier fillers.
+The double-Laurent inclusion formulas retain their face restriction and do not
+settle the whole-map geometric/cone-loop relation. Invertibility of the
+index-induced square map is distinct from the strength comparison.
+
+The [roadmap](TTLocalization.md#global-restriction-and-finite-interchange) and
+[spectrum guide](../topics/SpectraAndBass.md#finite-bass-interchange-and-normalized-stages)
+give the declaration-level route and conditions.
+
 ## Recommended next assignments
 
 1. **Finish the original Laurent `[T]` terminal boundary and splitting.**
@@ -189,7 +240,25 @@ these supplied polynomial faces.
    Retain the original `[T]` operation and its proved sign, including
    `K₁ → K₀`; keep Nil contributions in the chart quotient.
 
-2. **Assemble the original raw second-projection cells.**
+2. **Assemble the normalized comparison against the actual seed tower.**
+   Start from `currentTransition_stageMap` with its literal current and
+   normalized seed definitions. Identify the current-stage seed and
+   association cast with the existing `strictDiagramTransition = B^i(seed A)`
+   used by the global/coefficient telescopes. Preserve the chosen forward
+   unit action, the complete null/unit/null word and independent loop times.
+   Prove the required external Laurent-action equivariance of the geometric
+   two-cone permutation; product braid and external-track transport alone do
+   not identify this action. Resolve the required whole-map relation between
+   the geometric and cone-loop comparisons on their actual targets, retaining
+   the distinction between the two restricted double-Laurent face formulas.
+   Supply fixed cone-word compatibility in the
+   selected source closure. Acceptance is a genuine all-stage transition
+   square for the existing tower, followed by the actual telescope comparison
+   with its original inclusions and cylinder formulas. The finite induced
+   `bassTrack` cospan and stable `stageMap` are accepted inputs at their stated
+   scope, rather than all-stage compatibility premises.
+
+3. **Assemble the original raw second-projection cells.**
    Reuse the actual identity/composition cubes, Laurent native cell,
    polynomial native cells and their entire height-zero attachments. Construct
    the overlap O four-cube with comparison, route, cone-height and overlap
@@ -207,7 +276,7 @@ these supplied polynomial faces.
    preserves a supplied range condition and leaves the concrete boundary-range
    proof as a separate obligation.
 
-3. **Identify original boundaries and auxiliary group diagrams.**
+4. **Identify original boundaries and auxiliary group diagrams.**
    Reuse the proved fine transition range and canonical original telescope
    legs; they are not remaining obligations. Prove arbitrary-pair naturality
    of the transported negative boundary and identify it with the original
@@ -253,14 +322,20 @@ lake build Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.MWholeCubeCons
 lake build Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientSupportedFineTelescopeComparison
 lake build Quillen.AlgebraicGeometry.PerfectComplexes.Bass.SupportedLocalizationBoundary
 lake build Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassRaw1PolynomialNativeAttachments
+lake build Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSectionFullOpenFiber
+lake build Quillen.KTheory.Bass.GeometricConeSchemeNaturality
+lake build Quillen.KTheory.Bass.SchemeCurrentStageSquare
 python3 scripts/generate_imports.py --check
 python3 scripts/check_library_layout.py
 ```
 
-The handoff's native checks are scoped builds, meaningful typed consumers,
-style and complete defining-origin kernel/foundation audits of the new
-families, plus exact reuse of unchanged pinned dependencies. They are not a
-fresh whole-library proof replay. Preserve source, module origin, actual
+Each evidence record names its own source family and validation scope. Retained
+native coverage comprises scoped builds, meaningful typed consumers, style and
+defining-origin kernel/foundation audits, together with exact reuse of unchanged
+pinned dependencies. Current recovered-comparison coverage belongs to its
+[own record](evidence/TTRecoveredComparisons.json); earlier fine-completion
+coverage keeps its historical source identity. Neither is a fresh whole-library
+proof replay. Preserve source, module origin, actual
 compiler options, logs and all six output companions when reusing local
 coverage. A partial `Quillen` prefix can shadow later search roots: use a
 coherent complete first-hit closure. Do not copy compiled artifacts into
@@ -286,12 +361,22 @@ separate stronger review gate.
 
 ## Checkpoint and evidence
 
-The current archive starts from `492454b306a1a1a26d5701d0503f5aaf127b9367`.
-Use the delivered repository history to resolve subsequent integration commits;
-this handoff makes no push or release assertion. The new
-[fine completion and raw-pasting evidence](evidence/TTFineCompletionAndRawPasting.json)
-records the selected source identity, exclusions, ordinary review coverage,
-historical evidence limits and current affected-scope validation.
+The current selected package starts from
+`16cc1d011ef6d9c28b045879be10617411a0c2b4`. Use the delivered repository
+history to resolve subsequent integration commits; this handoff makes no push
+or release assertion. The
+[recovered-comparison evidence](evidence/TTRecoveredComparisons.json) records
+the selected source mapping, exclusions, independent review coverage and
+validation. It distinguishes new reconstructions from original archived bytes
+and retains earlier checks under their actual baseline. It does not claim
+historical byte recovery for reconstructed sources.
+
+The three original O drafts remain uncompiled and excluded. The unselected
+fixed-cone-word candidate has a strict compile pass, but no selected final
+lint/axiom acceptance. `NativeParameterEvaluation` is selected with its original
+bytes and separate checked evidence. The earlier
+[fine-completion and raw-pasting record](evidence/TTFineCompletionAndRawPasting.json)
+retains its baseline-492454 scope.
 
 The compact [continuation checks](evidence/TTContinuationChecks.json) and
 [Bass cube evidence](evidence/TTBassCube.json) identify delivered relative
