@@ -48,11 +48,13 @@ public import Quillen.Aglib.Algebra.Category.Ring.Finite
 public import Quillen.Aglib.Algebra.Group.ExactTransport
 public import Quillen.Aglib.Algebra.Group.FiniteAdjacentComplex
 public import Quillen.Aglib.Algebra.Group.FiniteAdjacentSection
+public import Quillen.Aglib.Algebra.Group.Hom.CentralKernel
 public import Quillen.Aglib.Algebra.Group.Hom.CentralLifts
 public import Quillen.Aglib.Algebra.Group.Hom.Exact
 public import Quillen.Aglib.Algebra.Group.Hom.KernelComparison
 public import Quillen.Aglib.Algebra.Group.MayerVietoris
 public import Quillen.Aglib.Algebra.Group.MulExactProduct
+public import Quillen.Aglib.Algebra.Group.Perm.AdjacentPresentation.Presentation
 public import
   Quillen.Aglib.Algebra.Homology.CochainComplex.BoundedAbove.RelativeProjectiveFactorization
 public import Quillen.Aglib.Algebra.Homology.CochainComplex.ExactSubcategory.AcyclicCycles
@@ -888,10 +890,17 @@ public import Quillen.Aglib.CategoryTheory.Triangulated.HomComparison
 public import Quillen.Aglib.KTheory.MilnorK.K2.DVR.TameKernel
 public import Quillen.Aglib.KTheory.MilnorK.K2.FiniteField
 public import Quillen.Aglib.LinearAlgebra.Matrix.BlockWhitehead
+public import Quillen.Aglib.LinearAlgebra.Matrix.Bruhat.Coordinates
+public import Quillen.Aglib.LinearAlgebra.Matrix.Bruhat.Decomposition
+public import Quillen.Aglib.LinearAlgebra.Matrix.Bruhat.Distinct
+public import Quillen.Aglib.LinearAlgebra.Matrix.Bruhat.Opposite
+public import Quillen.Aglib.LinearAlgebra.Matrix.Bruhat.Reduction
+public import Quillen.Aglib.LinearAlgebra.Matrix.Bruhat.RootUpdate
 public import Quillen.Aglib.LinearAlgebra.Matrix.Elementary
 public import Quillen.Aglib.LinearAlgebra.Matrix.ElementaryReindex
 public import Quillen.Aglib.LinearAlgebra.Matrix.GeneralLinearGroup.BlockOperations
 public import Quillen.Aglib.LinearAlgebra.Matrix.GeneralLinearGroup.ElementaryStabilization
+public import Quillen.Aglib.LinearAlgebra.Matrix.GeneralLinearGroup.SignedSection.Basic
 public import Quillen.Aglib.LinearAlgebra.Matrix.GeneralLinearGroup.Stabilization
 public import Quillen.Aglib.LinearAlgebra.Matrix.RightAutomorphisms
 public import Quillen.Aglib.LinearAlgebra.Matrix.RightAutomorphismsLeft

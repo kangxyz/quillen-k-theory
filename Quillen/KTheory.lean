@@ -194,6 +194,7 @@ public import Quillen.KTheory.Field.FiniteModuleRingEquivalence
 public import Quillen.KTheory.Field.MatrixCubeComparison
 public import Quillen.KTheory.Field.MatrixTransport
 public import Quillen.KTheory.Field.MilnorKTwoComparison
+public import Quillen.KTheory.Field.MilnorKTwoEquivalence
 public import Quillen.KTheory.Field.MilnorKTwoSurjectivity
 public import Quillen.KTheory.Field.ModuleDeterminant
 public import Quillen.KTheory.Field.PositiveSymbolMarking
@@ -238,6 +239,7 @@ public import Quillen.KTheory.LowDegreeScalarAction.ExactNaturality
 public import Quillen.KTheory.LowDegreeScalarAction.FieldSymbols
 public import Quillen.KTheory.LowDegreeScalarAction.IdentityAutomorphism
 public import Quillen.KTheory.LowDegreeScalarAction.MilnorDvrBoundary
+public import Quillen.KTheory.LowDegreeScalarAction.MilnorNormalization
 public import Quillen.KTheory.LowDegreeScalarAction.MixedProjectiveNaturality
 public import Quillen.KTheory.LowDegreeScalarAction.ObjectClass
 public import Quillen.KTheory.LowDegreeScalarAction.PrincipalUnitBoundary
@@ -245,6 +247,7 @@ public import Quillen.KTheory.LowDegreeScalarAction.ScalarUnit
 public import Quillen.KTheory.LowDegreeScalarAction.SerreBoundary
 public import Quillen.KTheory.LowDegreeScalarAction.SmallModelBoundary
 public import Quillen.KTheory.LowDegreeScalarAction.SpecUnitPairNaturality
+public import Quillen.KTheory.LowDegreeScalarAction.SpecUnitPairNormalization
 public import Quillen.KTheory.LowDegreeScalarAction.SpecUnitPairs
 public import Quillen.KTheory.LowDegreeScalarAction.UniverseNaturality
 public import Quillen.KTheory.Map.Basic

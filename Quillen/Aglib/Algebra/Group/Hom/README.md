@@ -12,3 +12,20 @@ These local general-theory candidates preserve the existing declaration namespac
 - [`Exact.lean`](Exact.lean)
 - [`KernelComparison.lean`](KernelComparison.lean)
 - [`CentralLifts.lean`](CentralLifts.lean)
+
+## Central kernel helpers
+
+`CentralKernel.lean` supplies lift-independent commutators for a group
+homomorphism with central kernel. Surjectivity is not required. Its `Doubling`
+namespace supplies uniqueness and commutation arguments under the explicitly
+stated simultaneous conjugation/squaring equations. The chain theorem also
+takes the stated commutation of the first and output roots.
+
+The native namespaces are `MonoidHom.CentralKernel` and
+`MonoidHom.CentralKernel.Doubling`. The intended upstream owner is
+`Aglib.Algebra.Group.Hom.CentralKernel`. The existing `CentralLifts` provider
+remains the owner of its earlier public API; it is an import, not duplicated here.
+The current consumers are `FiniteRootLifting` and `DetectorTransfer` in the
+Matsumoto application family.
+
+- [`CentralKernel.lean`](CentralKernel.lean)

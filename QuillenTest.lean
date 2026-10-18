@@ -47,6 +47,9 @@ import QuillenTest.AffineStrictification
 import QuillenTest.AffineSupportedDenominators
 import QuillenTest.AffineSupportedStrictPerfect
 import QuillenTest.AffineWeakArrowFactorization
+import QuillenTest.Algebra.Group.StableSteinberg.Matsumoto.FiniteRootLifting
+import QuillenTest.Algebra.Group.StableSteinberg.Matsumoto.RootSections
+import QuillenTest.Algebra.Group.StableSteinberg.Matsumoto.WeylTransporter
 import QuillenTest.ApproximationCoarseKEquivalence
 import QuillenTest.ApproximationCoherentCylinder
 import QuillenTest.ApproximationFinitePoset

@@ -74,7 +74,9 @@ public import Consumer.MetricOrderLoops
 public import Consumer.MetricOrderRealization
 public import Consumer.MetricOrderReconstruction
 public import Consumer.MilnorDvrBoundary
+public import Consumer.MilnorDvrNormalization
 public import Consumer.MilnorInterfaces
+public import Consumer.MilnorKTwoEquivalence
 public import Consumer.MixedComparison
 public import Consumer.N4Cancellation
 public import Consumer.N4RestrictedComparison
