@@ -45,6 +45,9 @@ The independent `Consumer.PublicLibraries` imports both complete public roots to
 | `Quillen.Algebra.Group.StableSteinberg`, `StableSteinbergNaturality` | Finite-rank stable Steinberg presentation, actual elementary-group surjection, perfectness and field-map squares |
 | `Quillen.Algebra.Group.StableSteinbergCentrality` | Centrality of the actual elementary-map kernel by bounded-rank fresh-column/row conjugation, every field |
 | `Quillen.Algebra.Group.StableSteinbergTorus` | Literal Weyl/torus words, actual rank-two matrix images and a field-natural ordered defect in the original kernel |
+| `Quillen.Algebra.Group.StableSteinbergUniversal` | Unique lift into every actual surjective central extension of the original elementary group, with independent extension-group universe |
+| `Quillen.Algebra.Group.StableSteinbergSymbols` | Literal bilinear Steinberg symbols, positive torus commutator and canonical Aglib Milnor-to-kernel map with original field-map square |
+| `Quillen.KTheory.Field.SteinbergFiberComparison` | Actual plus-map fiber central extension, Steinberg lift and kernel-to-original-finite-module-K2 map; no comparison isomorphism or positive product marking is asserted |
 | `Quillen.KTheory.Field.ProjectiveDeterminant` | Original projective-Q K1 determinant and actual base-change square |
 | `Quillen.KTheory.Field.ModuleDeterminant` | Upper finite-module K1 determinant with literal tensor-extension naturality |
 | `Quillen.KTheory.Field.MatrixCubeComparison` | `moduleDetEquiv_matrix_cube` on the literal upper-small positive matrix cube, every field and rank including zero |
@@ -72,6 +75,10 @@ The independent `Consumer.PublicLibraries` imports both complete public roots to
 | `Quillen.KTheory.LowDegreeScalarAction.SmallModelBoundary` | Actual standard-model action transports and the original finite-module signed scalar-boundary formula |
 | `Quillen.KTheory.LowDegreeScalarAction.ObjectClass` | Original object-class/cube calibration and upper field-module scalar determinant `(r^n)^-1`, including rank zero |
 | `Quillen.Topology.HomotopyGroups.SelfTrackLoopShift`, `Quillen.Topology.HomotopyFiber.SelfHomotopy` | Signed loop-shift formula and original path-space connecting/self-track compatibility |
+| `Quillen.Topology.HomotopyFiber.LoopCentrality` | Actual right loop concatenation and centrality of the original connecting image and fiber-projection kernel, without connectivity assumptions |
+| `Quillen.Topology.HomotopyFiber.SourceContractionBoundary` | Original connecting map computed from actual source-coordinate contraction, based cancellation and the inverse loop-shift formula |
+| `Quillen.Topology.ClassifyingSpace.NaturalTransformationLoopCancellation` | Whole jointly continuous cancellation prism for composed natural-transformation tracks, preserving the actual endpoints |
+| `Quillen.Aglib.Algebra.Category.FGModuleCat.PrincipalRankOne` | Literal principal rank-one quotient/cokernel and actual localization/scalar-GL comparisons; regularity gives monicity, Noetherianity gives short exactness and conflations |
 | `Quillen.KTheory.Plus` | Standard ring plus/Q homotopy equivalences, original K₀–plus product and component interfaces |
 | `Quillen.Topology.PlusConstruction.ClassicalCWUniqueness` | Automatic comparison and ordinary uniqueness for original plus maps on actual same-universe Hausdorff CW spaces |
 | `Quillen.Topology.PlusConstruction.ClassicalCWUniquenessUniverseLift` | Mixed-universe comparison and ordinary uniqueness on the original actual CW spaces |

@@ -13,6 +13,7 @@ public import Quillen.Aglib.Algebra.Category.FGModuleCat.IdealPowerFiltration
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrimaryDecomposition
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrimarySmallModel
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrincipalClosedSupport
+public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrincipalRankOne
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrincipalSupportSmallModel
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.ScalarMatrices
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.ScalarRepresentation

@@ -38,3 +38,11 @@ in `Quillen.GTheory.Dedekind`.
 `ScalarMatrices` sends linear automorphisms to actual finite-module
 isomorphisms. Its commutative-ring matrix action is the original ordinary
 `g.val.mulVec`, used by the field matrix-transport comparison.
+
+`PrincipalRankOne` retains the literal `Fin 1 → R` multiplication-to-principal-quotient
+sequence and its categorical cokernel, together with the actual localization
+comparison and scalar GL(Fin 1) action at the original localized coefficient.
+These module and map comparisons hold for commutative rings; regularity supplies
+monicity, while noetherianity gives the standard short-exact and conflation
+statements. It uses the existing quotient restriction and finite-module
+localization functors.

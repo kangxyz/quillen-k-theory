@@ -14,6 +14,7 @@ public import Quillen.Aglib.Algebra.Category.FGModuleCat.IdealPowerFiltration
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrimaryDecomposition
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrimarySmallModel
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrincipalClosedSupport
+public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrincipalRankOne
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrincipalSupportSmallModel
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.ScalarMatrices
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.ScalarRepresentation
@@ -932,7 +933,9 @@ public import Quillen.Algebra.Group.StableQuotientInvariance
 public import Quillen.Algebra.Group.StableSteinberg
 public import Quillen.Algebra.Group.StableSteinbergCentrality
 public import Quillen.Algebra.Group.StableSteinbergNaturality
+public import Quillen.Algebra.Group.StableSteinbergSymbols
 public import Quillen.Algebra.Group.StableSteinbergTorus
+public import Quillen.Algebra.Group.StableSteinbergUniversal
 public import Quillen.Algebra.Matrix.IdempotentAutomorphismClass
 public import Quillen.Algebra.Matrix.IdempotentSplitExtension
 public import Quillen.AlgebraicGeometry
@@ -3266,6 +3269,7 @@ public import Quillen.KTheory.Field.ProjectiveFiniteModules
 public import Quillen.KTheory.Field.ScalarExtensionComparison
 public import Quillen.KTheory.Field.StableMatrixLoop
 public import Quillen.KTheory.Field.StableMatrixMarking
+public import Quillen.KTheory.Field.SteinbergFiberComparison
 public import Quillen.KTheory.FiniteSupport.Decomposition
 public import Quillen.KTheory.FiniteSupport.FilteredStages
 public import Quillen.KTheory.FiniteSupport.FiniteProduct
@@ -3497,6 +3501,7 @@ public import Quillen.Topology.ClassifyingSpace.LocalizationTelescopeHomotopyEqu
 public import Quillen.Topology.ClassifyingSpace.LoopDomination
 public import Quillen.Topology.ClassifyingSpace.MonoidalDiagonal
 public import Quillen.Topology.ClassifyingSpace.MonoidalFundamentalGroup
+public import Quillen.Topology.ClassifyingSpace.NaturalTransformationLoopCancellation
 public import Quillen.Topology.ClassifyingSpace.NaturalTransformationTracks
 public import Quillen.Topology.ClassifyingSpace.NerveGraphData
 public import Quillen.Topology.ClassifyingSpace.OpenLoopComponents
@@ -3785,6 +3790,7 @@ public import Quillen.Topology.HomotopyFiber.LES
 public import Quillen.Topology.HomotopyFiber.LESNaturality
 public import Quillen.Topology.HomotopyFiber.LESTail
 public import Quillen.Topology.HomotopyFiber.Loop
+public import Quillen.Topology.HomotopyFiber.LoopCentrality
 public import Quillen.Topology.HomotopyFiber.LoopComparisonHomotopy
 public import Quillen.Topology.HomotopyFiber.LoopComparisonNaturality
 public import Quillen.Topology.HomotopyFiber.LoopComponentTransport
@@ -3802,6 +3808,7 @@ public import Quillen.Topology.HomotopyFiber.SelfHomotopy
 public import Quillen.Topology.HomotopyFiber.Separation
 public import Quillen.Topology.HomotopyFiber.Sequence
 public import Quillen.Topology.HomotopyFiber.SourceContraction
+public import Quillen.Topology.HomotopyFiber.SourceContractionBoundary
 public import Quillen.Topology.HomotopyFiber.SourceEquivalence
 public import Quillen.Topology.HomotopyFiber.SquareEquivalence
 public import Quillen.Topology.HomotopyFiber.StrictWeakTransport

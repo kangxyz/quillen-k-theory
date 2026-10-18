@@ -93,6 +93,7 @@ public import Quillen.KTheory.Field.ProjectiveFiniteModules
 public import Quillen.KTheory.Field.ScalarExtensionComparison
 public import Quillen.KTheory.Field.StableMatrixLoop
 public import Quillen.KTheory.Field.StableMatrixMarking
+public import Quillen.KTheory.Field.SteinbergFiberComparison
 public import Quillen.KTheory.FiniteSupport.Decomposition
 public import Quillen.KTheory.FiniteSupport.FilteredStages
 public import Quillen.KTheory.FiniteSupport.FiniteProduct

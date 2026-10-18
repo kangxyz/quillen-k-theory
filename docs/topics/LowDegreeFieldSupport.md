@@ -135,8 +135,11 @@ localization for every Noetherian ring and element, including G1 to G0.
 [`Dedekind.PrincipalDvrBoundaryComparison`](../../Quillen/GTheory/Dedekind/PrincipalDvrBoundaryComparison.lean)
 identifies this boundary with the original native local-DVR boundary, retaining
 any specified fraction field and the actual generic/closed pullbacks.
-The separate R5 sheaf-stalk boundary still needs its specific ring-isomorphism
-boundary transport.
+A separate, unapplied R5 proposal now transports its literal sheaf-stalk
+boundary through the actual stalk, residue and generic isomorphisms. Its
+original generic-G2 kernel intersection and finite residue-G1 family lift
+are independently accepted; the latter retains original generic-G1
+injectivity as an explicit premise.
 
 For geometric support, the general candidate
 [`FiniteClosed`](../../Quillen/Aglib/AlgebraicGeometry/Modules/Coherent/Support/FiniteClosed.lean)
@@ -169,6 +172,19 @@ The additional candidate
 under exactly `[Field k] [Finite k]`, including orders two and three. Quillen
 keeps no duplicate Milnor foundational implementation or old module aliases.
 
+[`StableSteinbergUniversal`](../../Quillen/Algebra/Group/StableSteinbergUniversal.lean)
+proves unique lifting into an arbitrary surjective central extension of the
+original elementary group. The actual ordered torus defect in
+[`StableSteinbergSymbols`](../../Quillen/Algebra/Group/StableSteinbergSymbols.lean)
+is bilinear and Steinberg, yielding `milnorToKernel` directly from Aglib's
+supplied interfaces with its original field-map square.
+[`SteinbergFiberComparison`](../../Quillen/KTheory/Field/SteinbergFiberComparison.lean)
+constructs the actual plus-map fiber central extension and the resulting
+map from the Steinberg kernel to original finite-module K2. Kernel symbol
+generation, Milnor-map injectivity, fiber perfectness, comparison isomorphism,
+field naturality of the topological comparison and positive product marking
+remain separate obligations.
+
 ## Low-degree identity-automorphism operations
 
 [`IdentityAutomorphism`](../../Quillen/KTheory/LowDegreeScalarAction/IdentityAutomorphism.lean)
@@ -197,6 +213,17 @@ identifies the action on the original object class with `automorphismClass`,
 hence the inverse positive cube. Its upper free rank-n field-module determinant
 is `(r^n)^-1`, including rank zero. Principal K0 boundary calibration and
 ordered symbol marking remain separate.
+
+The source-coordinate contraction formula in
+[`SourceContractionBoundary`](../../Quillen/Topology/HomotopyFiber/SourceContractionBoundary.lean)
+and the whole cancellation prism in
+[`NaturalTransformationLoopCancellation`](../../Quillen/Topology/ClassifyingSpace/NaturalTransformationLoopCancellation.lean)
+supply boundary geometry without assuming a calibration equation.
+[`PrincipalRankOne`](../../Quillen/Aglib/Algebra/Category/FGModuleCat/PrincipalRankOne.lean)
+retains the literal multiplication/quotient maps and actual localized scalar
+automorphism. Regularity supplies monicity; Noetherianity supplies the
+categorical short-exact and conflation statements. These providers do not
+close the remaining principal K0 boundary calibration.
 
 ## DVR tame kernel and split residue
 
@@ -227,7 +254,8 @@ existing diagram constructor.
 Q1 and Q2 achieve the first native milestone. Matsumoto and positive symbol
 marking, actual finite-field Quillen G2 vanishing, principal K0 boundary
 calibration, ordered Quillen boundary compatibility, origin-DVR Quillen unit
-generation, and R5's distinct sheaf-stalk boundary transport remain open.
+generation remain open. R5's distinct sheaf-stalk transport and the first and
+third affine localization consequences have a separately validated proposal.
 R5 retarget patches are unapplied. The field-determinant and closed-support
 bridges passed strict checks, scoped audits and independent mathematical review;
 their compatible source projections do not certify full installed R5 CI.

@@ -62,11 +62,11 @@ finite-family model. Quillen must never import R5.
 | Q2 | `Quillen.FiniteSupport.decompositionKEquiv` in every positive degree, original evaluation/inclusion laws and finite-sum inverse; independent mathematical review accepted | Retain scoped final checks at the delivered source identity; no K0 decomposition is claimed |
 | Q3, Dedekind modules | Native SmallModel primary transport, all-degree point dévissage, positive `residueFieldAssemblyKEquiv` and original support/ambient pushforwards; independently accepted | R5's actual sheaf-stalk boundary transport remains separate |
 | Q3, finite closed support | Locally Noetherian finite-S splitting and finite-family equivalence; on Noetherian schemes, actual upper coherent support and public field-scheme assembly in every positive degree, with original pushforwards; accepted and normally compiled | Application-specific R5 integration remains unapplied |
-| Q4 | Direct Aglib Milnor interfaces; finite-rank stable Steinberg presentation, perfect central extension onto the original elementary group, field-map naturality, and the literal ordered torus defect in its kernel; independently accepted | Universal lifting, kernel symbol generation and relations, actual degree-two topological comparison, injectivity and positive marking |
+| Q4 | Direct Aglib Milnor interfaces; universal central lifting for the original stable Steinberg group; bilinear Steinberg symbols and a canonical Milnor-to-kernel map; central actual plus-map fiber and a kernel-to-original-K2 comparison; independently accepted | Kernel symbol generation and injectivity, perfectness of the actual fiber group, comparison isomorphism, field naturality and positive marking |
 | Q5, identity operations | Original K0-to-K1 and K1-to-K2 operations, both variable laws, scalar-unit realization, original SmallModel/finite-module boundary formula, and signed object-class determinant calibration; independently accepted | Principal K0 boundary calibration, concrete residue/support identifications and ordered product marking |
 | Q5, DVRs | Actual-DVR Milnor tame kernel equals the unit-symbol span on supplied Aglib objects, including the canonical uniform residue; split-residue DVR generic G-map injectivity; actual-origin section and trait G/K injectivity proposal independently accepted | Quillen unit-pair generation still needs marked comparison and boundary compatibility |
 | Q6 | Integral Milnor K2 vanishes over every finite field, including the smallest fields, on both supplied Aglib presentations; port and canonical uniform transport independently accepted | A symbol-preserving surjection to actual Quillen G2, or an independent actual-G2 vanishing proof |
-| Q7, native modules and schemes | Original local/global residue-coordinate boundary square and its localization consequences; original principal scheme boundary agrees with finite-module localization and the native local-DVR boundary in all degrees, including any given fraction field; independently accepted | Actual R5 sheaf-stalk transport and finite-field Quillen G2 vanishing |
+| Q7, native modules and schemes | Original local/global residue-coordinate boundary square and localization consequences; principal scheme/native local-DVR comparison in all degrees; separately validated, unapplied R5 proposal gives literal sheaf-stalk kernel intersections and finite-family lifting | R5 integration remains unapplied; finite-field Quillen G2 vanishing and arithmetic generic-G1 injectivity remain separate |
 
 The Q2 validation includes strict changed-leaf compilation, 15 scoped environment
 linters and native text lint on its nine defining modules (including stable
@@ -126,6 +126,17 @@ lint evidence and independent ordinary mathematical acceptance. Together
 the current stage covers 23 disjoint defining origins and 1039 declarations;
 the additional independent Milnor client has five checked declarations.
 This is combined scoped coverage, not a newly run whole-library audit.
+The next seven defining origins add 325 audited declarations: universal
+Steinberg lifting (82), actual fiber centrality (19), Steinberg symbols (81),
+the original fiber/K2 comparison (60), source-contraction boundary geometry
+(10), natural-transformation loop cancellation (18), and principal rank-one
+module comparisons (55). Each has normal focused compilation, scoped
+environment/text lint and independent ordinary mathematical acceptance at
+its delivered source identity. The combined current coverage is therefore
+30 disjoint origins and 1364 declarations, with the independent five-declaration
+Milnor client checked separately. These seven providers were also compiled
+together under the updated pins. No perfectness or isomorphism claim for
+the actual fiber group follows from these checks.
 A whole-root incremental attempt was stopped when the changed upstream
 tensor leaf expanded into unrelated projective-line developments; its
 partial cache progress is retained and no new whole-root pass is claimed.
@@ -176,9 +187,10 @@ statements are appropriate only when the same proof supplies them.
 | Exact equivalences | `KTheory.Equivalence` | Actual finite-stage, finite-module and upper coherent-model comparisons |
 
 The initial source inspection found elementary matrix commutator relations.
-The new finite-rank stable Steinberg presentation and its elementary quotient
-are now constructed. A universal-central-extension comparison with actual K2
-and an applicable degree-two homotopy/homology theorem remain missing. The Coxeter
+The finite-rank stable Steinberg presentation, its universal central lifting
+property and a canonical map from its kernel to actual K2 are now constructed.
+The comparison isomorphism and the required low-degree homotopy/homology
+argument remain missing. The Coxeter
 Matsumoto name in mathlib is unrelated. Hurewicz *fibration* APIs do not supply
 a degree-two Hurewicz isomorphism.
 
@@ -492,22 +504,30 @@ images are the Weyl matrix and `diag(a,a^-1)`. The exact ordered defect
 kernel. Matrix multiplicativity does not assert multiplicativity of `h` in
 the presented group. This construction is independently accepted.
 
-The remaining algebraic track proves the universal lifting property of this
-perfect central extension. A bounded next route lifts roots into an arbitrary
-central extension by fresh-index commutators, proving independence, all defining
-relations and stabilization before using perfectness for uniqueness.
-For the field case prove that this kernel has precisely the bilinear
-Steinberg-symbol presentation. Kernel generation and relations are both
-required for an equivalence; generation alone supplies only a surjection.
+`StableSteinbergUniversal` proves the universal lifting property for every
+surjective central extension onto the actual elementary group, with an
+independent universe for the extension group. Fresh-index commutator lifts
+satisfy all defining relations and stabilization; Steinberg perfectness gives
+uniqueness. The theorem does not assert surjectivity onto an arbitrary central
+extension.
 
-The topological track must identify that kernel with
-`pi2(ZeroComponent F)`, naturally under field maps. One route constructs the
-universal central extension of `E(F)` from the homotopy fiber of the actual
-plus map and proves its kernel is pi2; another constructs a degree-two
-Hurewicz/group-homology comparison on the relevant simply connected cover.
-Either route needs new mathematics beyond the existing perfectness and
-commutator lemmas. Determine a bounded construction before expanding the
-topology library. A record assuming this comparison would leave Q4 open.
+`StableSteinbergSymbols` proves that the literal ordered defect is bilinear
+and satisfies the Steinberg relation. Its rank-three torus commutator
+calculation preserves the positive ordered symbol. The canonical
+`milnorToKernel` uses Aglib's supplied tensor symbol lift and the forward
+`MilnorK.twoEquiv`; the actual field-map square and smallest-field clients
+are checked. Kernel generation and injectivity of this map remain open.
+
+`HomotopyFiber.LoopCentrality` constructs the actual right loop concatenation
+and proves centrality of the original connecting-map image and projection
+kernel, without connectivity hypotheses. `Field.SteinbergFiberComparison`
+applies this to the actual fiber of `stableZeroMap F`. Its fundamental group
+is a central extension onto the original elementary group. Universal lifting
+gives a Steinberg-to-fiber homomorphism. BGL asphericity identifies the fiber
+projection kernel with the original target pi2; the original basepoint path
+then gives a map from the Steinberg kernel to original finite-module K2.
+Perfectness of the fiber group, surjectivity or injectivity of this comparison,
+its field naturality and positive product marking are still unproved.
 
 Compose the two tracks with the existing positive K2 Q comparison, opposite
 and finite-module transports. Prove naturality and the positive marking of
@@ -518,7 +538,7 @@ A smaller route can suffice for Q6. The actual homotopy-fiber LES, the
 asphericity of BGL and the proved stable pi1 kernel give a short exact
 sequence from `pi2(ZeroComponent R)` into the fundamental group `H` of the
 actual fiber of `stableZeroMap R`, with quotient the actual elementary group.
-The loop action on that fiber gives a bounded route to centrality. If `H` is
+The actual loop action now proves centrality of that extension. If `H` is
 proved perfect, a genuine Steinberg lift onto that central extension is
 surjective; its kernel then surjects onto the original pi2. This avoids proving
 that `H` is universal, but does not make perfectness automatic.
@@ -723,9 +743,16 @@ original Spec ring-isomorphism pullback and the inverse scalar-restriction map.
 quotient and fraction-field identifications, retaining any supplied fraction
 field and including G1 to G0. These native statements and the literal R5
 `Localization.AtPrime p` boundary proposal have independent ordinary acceptance.
-R5's distinct sheaf-stalk boundary still requires its particular canonical
-stalk, residue and generic triangles and a base-ring-isomorphism boundary
-square; the ambient affine equivalence alone does not discharge that join.
+R5's distinct sheaf-stalk boundary uses its particular canonical
+stalk, residue and generic triangles. A separate, unapplied R5 proposal now
+supplies those actual triangles through the canonical stalk and residue-field
+isomorphisms. It identifies the literal `boundaryAtG` with the native local-DVR
+boundary, proves the original generic G2 image is the intersection of all
+literal boundary kernels, and lifts every finite residue-G1 family under the
+explicit original generic-G1-injectivity premise. The extended proposal passed
+strict compilation, a full 237-declaration origin audit, patch applicability
+and independent ordinary review on the updated native/Aglib basis. It does not
+prove arithmetic G1 injectivity or finite-field Quillen G2 vanishing.
 
 ## Construction dependencies
 
@@ -769,7 +796,9 @@ For each accepted milestone report its exact public statements and hypotheses,
 owned paths and local source identity, pins, review boundary, commands and
 reusable evidence, original-map downstream adapter, and remaining gap. Commit
 completed owned source and fixed evidence at a deliberate local boundary;
-exclude caches and exploratory output. Do not push.
+exclude caches and exploratory output. The user's subsequent instruction
+authorizes merging and pushing the completed native results; the R5 proposals
+remain separate and unapplied.
 
 The R5 retarget proposals remain unapplied. A strict foreign-style replay
 failed on older long lines; a separate fresh kernel-compatibility replay of

@@ -77,6 +77,7 @@ public import Quillen.Topology.ClassifyingSpace.LocalizationTelescopeHomotopyEqu
 public import Quillen.Topology.ClassifyingSpace.LoopDomination
 public import Quillen.Topology.ClassifyingSpace.MonoidalDiagonal
 public import Quillen.Topology.ClassifyingSpace.MonoidalFundamentalGroup
+public import Quillen.Topology.ClassifyingSpace.NaturalTransformationLoopCancellation
 public import Quillen.Topology.ClassifyingSpace.NaturalTransformationTracks
 public import Quillen.Topology.ClassifyingSpace.NerveGraphData
 public import Quillen.Topology.ClassifyingSpace.OpenLoopComponents
@@ -365,6 +366,7 @@ public import Quillen.Topology.HomotopyFiber.LES
 public import Quillen.Topology.HomotopyFiber.LESNaturality
 public import Quillen.Topology.HomotopyFiber.LESTail
 public import Quillen.Topology.HomotopyFiber.Loop
+public import Quillen.Topology.HomotopyFiber.LoopCentrality
 public import Quillen.Topology.HomotopyFiber.LoopComparisonHomotopy
 public import Quillen.Topology.HomotopyFiber.LoopComparisonNaturality
 public import Quillen.Topology.HomotopyFiber.LoopComponentTransport
@@ -382,6 +384,7 @@ public import Quillen.Topology.HomotopyFiber.SelfHomotopy
 public import Quillen.Topology.HomotopyFiber.Separation
 public import Quillen.Topology.HomotopyFiber.Sequence
 public import Quillen.Topology.HomotopyFiber.SourceContraction
+public import Quillen.Topology.HomotopyFiber.SourceContractionBoundary
 public import Quillen.Topology.HomotopyFiber.SourceEquivalence
 public import Quillen.Topology.HomotopyFiber.SquareEquivalence
 public import Quillen.Topology.HomotopyFiber.StrictWeakTransport
