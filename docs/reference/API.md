@@ -47,7 +47,7 @@ The independent `Consumer.PublicLibraries` imports both complete public roots to
 | `Quillen.Algebra.Group.StableSteinbergTorus` | Literal Weyl/torus words, actual rank-two matrix images and a field-natural ordered defect in the original kernel |
 | `Quillen.Algebra.Group.StableSteinbergUniversal` | Unique lift into every actual surjective central extension of the original elementary group, with independent extension-group universe |
 | `Quillen.Algebra.Group.StableSteinbergSymbols` | Literal bilinear Steinberg symbols, positive torus commutator and canonical Aglib Milnor-to-kernel map with original field-map square |
-| `Quillen.KTheory.Field.SteinbergFiberComparison` | Actual plus-map fiber central extension, Steinberg lift and kernel-to-original-finite-module-K2 map; no comparison isomorphism or positive product marking is asserted |
+| `Quillen.KTheory.Field.SteinbergFiberComparison` | Actual plus-map fiber central extension, Steinberg lift and kernel-to-original-finite-projective-right-module-K2 map; no comparison isomorphism or positive product marking is asserted |
 | `Quillen.KTheory.Field.ProjectiveDeterminant` | Original projective-Q K1 determinant and actual base-change square |
 | `Quillen.KTheory.Field.ModuleDeterminant` | Upper finite-module K1 determinant with literal tensor-extension naturality |
 | `Quillen.KTheory.Field.MatrixCubeComparison` | `moduleDetEquiv_matrix_cube` on the literal upper-small positive matrix cube, every field and rank including zero |

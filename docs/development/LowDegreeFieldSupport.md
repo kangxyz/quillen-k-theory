@@ -62,7 +62,7 @@ finite-family model. Quillen must never import R5.
 | Q2 | `Quillen.FiniteSupport.decompositionKEquiv` in every positive degree, original evaluation/inclusion laws and finite-sum inverse; independent mathematical review accepted | Retain scoped final checks at the delivered source identity; no K0 decomposition is claimed |
 | Q3, Dedekind modules | Native SmallModel primary transport, all-degree point dévissage, positive `residueFieldAssemblyKEquiv` and original support/ambient pushforwards; independently accepted | R5's actual sheaf-stalk boundary transport remains separate |
 | Q3, finite closed support | Locally Noetherian finite-S splitting and finite-family equivalence; on Noetherian schemes, actual upper coherent support and public field-scheme assembly in every positive degree, with original pushforwards; accepted and normally compiled | Application-specific R5 integration remains unapplied |
-| Q4 | Direct Aglib Milnor interfaces; universal central lifting for the original stable Steinberg group; bilinear Steinberg symbols and a canonical Milnor-to-kernel map; central actual plus-map fiber and a kernel-to-original-K2 comparison; independently accepted | Kernel symbol generation and injectivity, perfectness of the actual fiber group, comparison isomorphism, field naturality and positive marking |
+| Q4 | Direct Aglib Milnor interfaces; universal central lifting for the original stable Steinberg group; bilinear Steinberg symbols and a canonical Milnor-to-kernel map; central actual plus-map fiber and a kernel-to-original-projective-K2 comparison; independently accepted | Kernel symbol generation and injectivity, perfectness of the actual fiber group, comparison isomorphism, explicit finite-module transport, field naturality and positive marking |
 | Q5, identity operations | Original K0-to-K1 and K1-to-K2 operations, both variable laws, scalar-unit realization, original SmallModel/finite-module boundary formula, and signed object-class determinant calibration; independently accepted | Principal K0 boundary calibration, concrete residue/support identifications and ordered product marking |
 | Q5, DVRs | Actual-DVR Milnor tame kernel equals the unit-symbol span on supplied Aglib objects, including the canonical uniform residue; split-residue DVR generic G-map injectivity; actual-origin section and trait G/K injectivity proposal independently accepted | Quillen unit-pair generation still needs marked comparison and boundary compatibility |
 | Q6 | Integral Milnor K2 vanishes over every finite field, including the smallest fields, on both supplied Aglib presentations; port and canonical uniform transport independently accepted | A symbol-preserving surjection to actual Quillen G2, or an independent actual-G2 vanishing proof |
@@ -150,6 +150,11 @@ Regenerated import roots, library layout and source-token checks passed for
 4914 production and 1113 trust-test modules. Existing scoped proof evidence
 is retained at the unchanged implementation identities; this integration
 check is not a new whole-root compilation or audit.
+An independent source-only inventory also finds that none of the incoming
+224 production or 65 test implementation roots reaches any of the four
+changed pre-existing Aglib implementation leaves. It finds no duplicate
+upstream path among the nineteen new candidates and no incoming package,
+pin or toolchain changes.
 
 The subsequent native Dedekind construction retains the exact
 `smallTorsion R⁰` localization term. Its categorical transport, point dévissage,
@@ -535,7 +540,9 @@ applies this to the actual fiber of `stableZeroMap F`. Its fundamental group
 is a central extension onto the original elementary group. Universal lifting
 gives a Steinberg-to-fiber homomorphism. BGL asphericity identifies the fiber
 projection kernel with the original target pi2; the original basepoint path
-then gives a map from the Steinberg kernel to original finite-module K2.
+then gives a map from the Steinberg kernel to original finite-projective
+right-module K2, explicitly `(FiniteProjectiveModule.exactStructure Fᵐᵒᵖ).K 2`.
+The subsequent finite-module transport must remain an explicit composition.
 Perfectness of the fiber group, surjectivity or injectivity of this comparison,
 its field naturality and positive product marking are still unproved.
 

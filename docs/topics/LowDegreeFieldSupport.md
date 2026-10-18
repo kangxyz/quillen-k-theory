@@ -180,7 +180,8 @@ is bilinear and Steinberg, yielding `milnorToKernel` directly from Aglib's
 supplied interfaces with its original field-map square.
 [`SteinbergFiberComparison`](../../Quillen/KTheory/Field/SteinbergFiberComparison.lean)
 constructs the actual plus-map fiber central extension and the resulting
-map from the Steinberg kernel to original finite-module K2. Kernel symbol
+map from the Steinberg kernel to original finite-projective right-module K2.
+Finite-module transport must be a subsequent explicit composition. Kernel symbol
 generation, Milnor-map injectivity, fiber perfectness, comparison isomorphism,
 field naturality of the topological comparison and positive product marking
 remain separate obligations.
