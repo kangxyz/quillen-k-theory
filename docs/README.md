@@ -1,51 +1,33 @@
-# Documentation
+# Documentation and reading routes
 
-The topic guides explain the library's mathematical objects, principal results,
-canonical maps, and retained assumptions. Each guide ends at its own comparison
-boundary. The [API reference](reference/API.md) gives focused imports and public
-names; [mathematical scope](reference/Scope.md) summarizes coverage across topics.
-Lean declarations specify the actual statements and proof inputs.
+The [source-family guides](../Quillen/README.md) own mathematical results,
+focused imports and API/interfaces, with exact hypotheses, canonical maps and
+remaining comparisons. This directory provides concise reading routes,
+cross-family status summaries and global operational guidance. Lean declarations
+specify the actual statements; documentation and green checks do not supply a
+missing mathematical premise.
 
 ## Mathematical topics
 
-| Topic | Guide |
-| --- | --- |
-| Exact structures, Quillen's Q-construction, canonical K-maps, and classical K₀ | [Exact categories](topics/ExactCategories.md) |
-| Stable field determinant, original projective-Q comparison, and positive finite-support decomposition | [Field and support foundations](topics/LowDegreeFieldSupport.md) |
-| S-construction, additivity, approximation, cofinality, fibration, and Q/S comparisons | [Waldhausen theory](topics/Waldhausen.md) |
-| Finite-filtration dévissage, finite admissible resolutions, Serre localization, and finite-module G-theory | [Dévissage, resolution, and localization](topics/Localization.md) |
-| Vector bundles, coherent sheaves, scheme K/G maps, finite direct image, and derived sheaf geometry | [Scheme K/G-theory](topics/SchemeKTheory.md) |
-| Strict and locally perfect complexes, support, relative localization, degree-zero image, and Mayer–Vietoris | [Perfect-complex localization](topics/PerfectComplexes.md) |
-| Connective spectra, stable maps and fibers, Bass recursions, finite stages, and telescopes | [Spectra and Bass groups](topics/SpectraAndBass.md) |
-| Independent ring plus model, exact standard Q-loop equivalence, original K₀–plus product, and balanced scalar extension | [Ring plus construction](topics/PlusConstruction.md) |
-| Comparison and ordinary uniqueness for original plus maps on actual Hausdorff CW spaces, with explicit universe transport | [Classical CW plus comparisons](topics/ClassicalCWPlus.md) |
-| Homological weak Whitehead, supplied and constructed covers, metric realization, loop geometry, and numerable domination | [Homotopy foundations](topics/HomotopyFoundations.md) |
-
-Start with the topic containing the objects you need. Follow its source links
-for exact declarations and its client links for public use. For example, a
-geometric localization question starts with perfect complexes, while a question
-about identifying Bass cokernels with telescope groups starts with spectra and
-Bass groups. The classical CW guide records comparison and ordinary
-uniqueness for actual CW spaces; the homotopy guide records the underlying
-homological and geometric constructions. Follow the focused import reference
-for their source owners.
+- [ExactCategories](topics/ExactCategories.md): [Q-construction](../Quillen/CategoryTheory/QConstruction/README.md), [canonical K-theory](../Quillen/KTheory/README.md), [K0 comparison](../Quillen/KTheory/GrothendieckComparison/README.md).
+- [Waldhausen](topics/Waldhausen.md): [Waldhausen theory](../Quillen/Waldhausen/README.md).
+- [Localization](topics/Localization.md): [dévissage](../Quillen/Devissage/README.md), [resolution](../Quillen/Resolution/README.md), [Serre localization](../Quillen/Localization/Serre/README.md), [finite-module G-theory](../Quillen/GTheory/FiniteModules/README.md).
+- [LowDegreeFieldSupport](topics/LowDegreeFieldSupport.md): [field comparisons](../Quillen/KTheory/Field/README.md), [finite support](../Quillen/KTheory/FiniteSupport/README.md), [Dedekind support](../Quillen/GTheory/Dedekind/README.md), [scalar actions and normalization](../Quillen/KTheory/LowDegreeScalarAction/README.md), [DVR generation](../Quillen/GTheory/DVR/README.md).
+- [PlusConstruction](topics/PlusConstruction.md): [ring plus and original Q comparison](../Quillen/KTheory/Plus/README.md), [standard map and sign](../Quillen/KTheory/Plus/StandardComparison.md).
+- [ClassicalCWPlus](topics/ClassicalCWPlus.md): [actual classical CW comparisons](../Quillen/Topology/PlusConstruction/ClassicalCW.md), [constructed CW covers](../Quillen/Topology/CWComplex/README.md).
+- [HomotopyFoundations](topics/HomotopyFoundations.md): [topological source families](../Quillen/Topology/README.md).
+- [SchemeKTheory](topics/SchemeKTheory.md): [scheme K/G-theory](../Quillen/AlgebraicGeometry/Scheme/README.md), [projective-line geometry](../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/README.md).
+- [PerfectComplexes](topics/PerfectComplexes.md): [perfect-complex K-theory](../Quillen/AlgebraicGeometry/PerfectComplexes/README.md), [localization](../Quillen/AlgebraicGeometry/PerfectComplexes/Localization.md), [coefficient Bass comparisons](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassComparison.md).
+- [SpectraAndBass](topics/SpectraAndBass.md): [stable topology](../Quillen/Topology/Prespectrum/README.md), [iterated S-spectrum](../Quillen/Waldhausen/SConstruction/Iterated/README.md), [Bass constructions](../Quillen/KTheory/Bass/README.md), [geometric comparisons](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassComparison.md).
 
 ## Shared references and development
 
-| Document | Responsibility |
-| --- | --- |
-| [API reference](reference/API.md) | Import paths, canonical namespaces and maps, universes, and client entrypoints |
-| [Standard comparison normalization](reference/StandardSignMigration.md) | Public standard sign, original-map equations, basepoint tracks, and component labels |
-| [Mathematical scope](reference/Scope.md) | Cross-topic coverage, retained hypotheses, degree conventions, and unproved comparisons |
-| [Architecture](development/Architecture.md) | Mathematical source ownership, import direction, and trust-check implementation |
-| [Typechecking performance](development/Performance.md) | Reproducible measurements and their source/runtime scope |
-| [TT localization roadmap](development/TTLocalization.md) | Audited endpoints, precise remaining comparisons, proof dependencies and current parallel milestones |
-| [Low-degree field and support plan](development/LowDegreeFieldSupport.md) | Field determinant, finite-support assembly, original-map proof obligations and parallel implementation boundaries |
-| [TT continuation handoff](development/TTContinuationHandoff.md) | Closed P1–P5 scope, preserved downstream results, exact next assignments and portable checked-source basis |
-| [Contributing](../CONTRIBUTING.md) | Source and documentation changes, builds, checks, and dependency policy |
-
-Topic guides develop results in context. The API reference locates interfaces;
-the scope reference records their collective boundary. Architecture and
-performance describe development facts and do not supply mathematical premises.
-Proofs and hypotheses have their source owners under `Quillen/`; documentation
-does not create a second implementation or a stronger theorem.
+- [API index](reference/API.md): focused family entrypoints.
+- [Scope summary](reference/Scope.md): coverage and explicit frontier routes.
+- [Standard comparison compatibility](reference/StandardSignMigration.md).
+- [Architecture](development/Architecture.md): source ownership and trust operations.
+- [Performance](development/Performance.md): measured source/runtime evidence.
+- [Low-degree status](development/LowDegreeFieldSupport.md).
+- [Matsumoto status](development/MatsumotoCompletion.md).
+- [TT localization route](development/TTLocalization.md) and [continuation](development/TTContinuationHandoff.md).
+- [Contributing](../CONTRIBUTING.md): source changes, incremental checks and dependency policy.

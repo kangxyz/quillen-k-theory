@@ -1,4 +1,6 @@
-# Affine perfect models and extension
+# Affine perfect-complex candidates
+
+## Local candidate interfaces
 
 The original associated-sheaf and sections interfaces use bounded finite-projective module
 complexes over arbitrary commutative rings. The implementations supply strictification, the

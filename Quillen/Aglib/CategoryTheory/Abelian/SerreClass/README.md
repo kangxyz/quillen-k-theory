@@ -18,3 +18,9 @@ comparison isomorphisms, and their original epi/mono hypotheses.
 Source/target universes and original declaration namespaces are unchanged.
 The actual Q-valued auxiliary categories, Q/comma/span comparisons, topological
 contractions and K/G localization sequence stay downstream.
+
+## Imports
+
+| Import | Interface |
+| --- | --- |
+| `Quillen.Aglib.CategoryTheory.Abelian.SerreClass.Annihilation` | Annihilated objects and the canonical quotient by a Serre class |

@@ -26,7 +26,7 @@ Three matched unprofiled compilations used Lean 4.34.1, the committed mathlib
 revision, identical strict options and the same compiled dependencies:
 
 | Complete module | Before | After |
-| --- | ---: | ---: |
+| --- | --- | --- |
 | Run 1 | 17.790 s | 11.470 s |
 | Run 2 | 16.455 s | 11.820 s |
 | Run 3 | 17.084 s | 11.155 s |

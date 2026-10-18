@@ -19,3 +19,9 @@ files retain their original signed chart maps and actual model equivalences.
 `FiniteProjectiveResolution` separately assumes a noetherian coefficient ring;
 its admissible resolutions use the general exact-category resolution interface,
 with projective-dimension bounds or the stated PID specialization.
+
+## Imports
+
+| Import | Interface |
+| --- | --- |
+| `Quillen.Aglib.Algebra.Homology.ModuleCat.FiniteProjectiveResolution` | Actual finite-projective resolutions and finite-free PID resolutions |

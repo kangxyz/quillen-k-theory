@@ -13,3 +13,9 @@ When `C` is essentially small, `smallModelScalarNatAut` lifts the same
 scalar automorphism through the original chosen-model realization using full
 faithfulness. The realization and chosen-model functor equations retain that
 original scalar. No linear structure on the model or K-theory data is required.
+
+## Imports
+
+| Import | Interface |
+| --- | --- |
+| `Quillen.Aglib.CategoryTheory.Linear.ScalarAutomorphism` | Canonical scalar natural automorphisms and actual chosen-model descent through full faithfulness |

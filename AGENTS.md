@@ -16,3 +16,7 @@
 - For new general theory intended for Aglib, follow the
   [candidate convention](Quillen/Aglib/README.md) before choosing an implementation
   owner; keep application adapters outside that subtree.
+- Keep package-wide summaries, navigation and operational guidance in `docs/`.
+  Source-family READMEs and focused guides under `Quillen/` own mathematical
+  results, API/interfaces, exact hypotheses and remaining inputs. Maintain one
+  authority and update inbound links when moving content.

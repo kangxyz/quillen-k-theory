@@ -20,3 +20,9 @@ which instantiates these words with the actual unlooped Bass cone functor and
 its geometric square isomorphism. Its scalar-action, seed and telescope
 comparisons remain in the Bass application; they are not hypotheses or
 results of this general candidate.
+
+## Global sections and finite Bass interchange
+
+| Import after `Quillen.` | Principal interface |
+| --- | --- |
+| `Aglib.CategoryTheory.Endofunctor.FixedWords` | `CategoryTheory.Functor.FixedWords.power`, `beta`, `fixedWord` and their specified recursion; no word-independence or braid premise |

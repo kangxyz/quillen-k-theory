@@ -21,13 +21,14 @@ build the required client target and its affected dependencies. Use a specific c
 instead of `main` and retain `lake-manifest.json` for reproducible builds.
 
 Import `Quillen.KTheory.API` for the K-theory interface, or `Quillen` for the
-complete library. The [API reference](docs/reference/API.md) lists focused imports.
+complete library. The [source-family guides](Quillen/README.md) describe focused imports and actual interfaces.
 
 ## Documentation and checks
 
 Start with the [documentation map](docs/README.md).
-[Mathematical scope](docs/reference/Scope.md) records hypotheses, coverage and
-remaining comparisons; constructed interfaces do not supply their required inputs.
+[Mathematical scope](docs/reference/Scope.md) summarizes coverage and remaining
+comparisons; exact hypotheses and API authority live with source families.
+Constructed interfaces do not supply their required inputs.
 
 From the library checkout, fetch matching Mathlib artifacts when needed, then
 build the required leaf and its affected consumers:

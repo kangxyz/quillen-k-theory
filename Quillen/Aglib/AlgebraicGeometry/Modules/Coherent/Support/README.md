@@ -1,4 +1,6 @@
-# Support candidates
+# Coherent sheaves with finite closed support
+
+## Local candidate interfaces
 
 Closedness of support is detected on the original finite affine local models. On a noetherian spectrum, the principal affine supported small model is an exact categorical presentation of coherent sheaves supported on the complement.
 
@@ -34,3 +36,14 @@ Their downstream consumer
 supplies upper-small coherent support assembly from public field-scheme
 G-theory in every positive degree, with the original closed pushforwards.
 That K-theory adapter remains outside the general candidate subtree.
+
+The exact coherent splitting does not prove the supported stalk quotient, its fullness, or its essential surjectivity. The downstream R5 label `J2` denotes a second-support K₁ stratum, not degree two. These are separate from the finite-support categorical equivalences above.
+
+## Declaration locators
+
+These additional names use the same objects, hypotheses, and original maps as the linked construction sections. They are locators within those interfaces, not stronger comparison statements.
+
+| Declaration / module | Construction and conditions |
+| --- | --- |
+| `closedSupportGEquiv` | [Local candidate interfaces](#local-candidate-interfaces) |
+| `Quillen.Aglib.AlgebraicGeometry.Modules.Coherent.Support.FiniteClosed` | [Local candidate interfaces](#local-candidate-interfaces) |

@@ -158,35 +158,43 @@ Reuse existing objects and canonical maps when extending a model. Give distinct
 constructions distinct interfaces and state exact hypotheses for comparisons.
 Module paths and declaration namespaces should reflect mathematical ownership.
 Use one canonical interface for each construction, with minimal necessary
-hypotheses and mathlib naming conventions. Update the
-[API reference](docs/reference/API.md) when imports or interfaces change.
+hypotheses and mathlib naming conventions. Update the relevant source-family README or focused mathematical/API guide
+when imports or interfaces change. Keep the [API index](docs/reference/API.md)
+concise and link to that authority, preserving hypotheses and canonical maps.
 
 The library uses `0.x` versions. Breaking import or API changes require a minor
 version bump and concise release notes; compatible corrections use patch
 releases. Consumers should pin a release tag or commit. Update
 [scope](docs/reference/Scope.md) when mathematical coverage changes and the
-relevant [topic guide](docs/README.md#mathematical-topics) when its objects,
+relevant source-family guide linked by the [documentation map](docs/README.md#mathematical-topics) when its objects,
 theorem inputs, canonical maps, or comparison boundary change.
 
 ## Documentation
 
-The [documentation map](docs/README.md) owns topic navigation. Mathematical
-guides live in `docs/topics/`, the shared API and scope references in
-`docs/reference/`, and architecture and measured performance in
-`docs/development/`. Extend the natural owner rather than duplicating a chapter
-or adding a topic without existing mathematics and a reader.
+The [documentation map](docs/README.md) owns package-wide navigation. Global
+`docs/` files contain concise summaries, reading routes, status/compatibility
+indexes and operational guidance. Mathematical content and API/interfaces live
+in their occupied source families under `Quillen/`, in a README or focused guide
+linked from it. Reuse the natural owner; do not duplicate a mathematical chapter
+or create empty future structure. Retain the existing `docs/` spelling.
 
-Describe actual objects before their comparisons. Link focused Lean modules
-and existing client proofs, retain all named data and hypotheses, and distinguish
-positive-degree equivalences from degree-zero image or tail statements. A
-constructed interface with conditional inputs does not realize those inputs
-for every proposed application. Keep open comparisons in the relevant guide
-and the cross-topic scope reference.
+Describe actual objects before comparisons. Link focused Lean modules and
+existing client proofs; retain named data, hypotheses, canonical maps, degrees,
+universes, source identities and citation locators. Distinguish proved results,
+conditional interfaces and open comparisons. Keep each boundary with its family;
+the global scope summary links to it. A constructed interface does not supply
+its unresolved application inputs.
 
-After moving documentation, update its internal links and the documentation
-map. Check local paths and heading fragments, and compile any new Lean examples
-against the pinned package. Documentation-only changes preserve existing proof
-build evidence when source, dependencies, and runtime are unchanged.
+Convert completed proof plans into current proof/interface exposition where
+they retain maintained value. Preserve useful source locators and evidence
+boundaries; omit obsolete dispatch/phase chronology explicitly rather than
+copying it wholesale into source guides.
+
+After moving documentation, update internal and inbound links, heading fragments
+and the documentation map, including references and footnotes after splits.
+Compile new or modified Lean examples against the pinned package. A text-only
+move preserves compatible proof build evidence when Lean sources, dependencies
+and runtime are unchanged; it does not request a full rebuild or audit replay.
 
 ## Dependency updates
 

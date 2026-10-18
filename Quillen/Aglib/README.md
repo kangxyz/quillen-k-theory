@@ -54,3 +54,31 @@ Public import entry: `Quillen.Aglib`. Prefer the focused leaves described in the
 family guides for implementation dependencies. Existing public mathematical
 namespaces are preserved; original Q/K/G/S, Waldhausen, spectrum and specialized
 curve/projective-line constructions remain in their application owners.
+
+## Local Aglib candidates in 0.9.0
+
+General algebraic geometry and its algebraic, categorical and homological
+prerequisites awaiting upstream admission live below `Quillen.Aglib`. Import
+their precise mathematical leaves from the [candidate tree](README.md).
+Existing public declaration namespaces and chosen comparison maps are preserved;
+this change reorganizes implementation ownership and splits mixed sources.
+
+The source modules for moved general implementations use the new candidate
+paths. Application modules keep their existing paths and import their lower
+candidate prerequisites. No duplicate implementation or default forwarding
+module is retained for a moved source. Q/K/G/S, Waldhausen, spectra and the
+specialized projective-line applications remain in their mathematical owners.
+
+
+Current native affine/derived compatibility is recorded in the
+[derived-category guide](AlgebraicGeometry/Modules/DerivedCategory/README.md#native-affine-and-derived-compatibility),
+and the retired copied shift interface is documented with
+[derived base change](AlgebraicGeometry/Modules/BaseChange/Derived/README.md#native-shift-interface).
+The [scheme coherent guide](../AlgebraicGeometry/Scheme/Coherent/README.md#finite-type-interfaces-and-coherent-specialization)
+distinguishes lower finite-type interfaces from coherent specializations.
+The [module-category guide](Algebra/Category/ModuleCat/README.md)
+owns the actual scalar-base-change transformation and its unit equation.
+
+Supplied upstream interfaces use precise native Aglib leaves; local candidates
+retain their general source families and application constructions remain in
+Quillen. See the occupied family guides above for actual hypotheses and maps.

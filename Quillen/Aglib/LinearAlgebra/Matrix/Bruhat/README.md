@@ -25,3 +25,19 @@ supplier modules are not compatibility imports. Existing finite GL and
 stabilization objects retain their precise declaration origin
 `Quillen.Aglib.LinearAlgebra.Matrix.GeneralLinearGroup.Stabilization` and their
 existing public names.
+
+## Matrix reduction and branch coverage
+
+For the actual matrix `g` with monomial factor `m = v(g)`, the reduction gives
+upper-unitriangular remainders `U0,V0` and parameters `u,v` such that
+`g = U0 * (X_i(u) * M(m) * X_k(v)) * V0`, with the two relevant adjacent
+entries zero. The signed-Weyl conjugates of the remainders remain upper
+unitriangular. The same witnesses therefore preserve the original monomial
+factors of `g`, `W_i(1)g`, `gW_k(-1)` and `W_i(1)gW_k(-1)`.
+Zero parameters, equal indices and characteristic two add no hypothesis.
+The opposite-root branch separately covers zero and vanishing crossing
+denominators; a nondegenerate symbol identity alone does not cover these cases.
+
+This is pure matrix geometry over every field. The Milnor-valued faithful
+normalizer and the full lifted left/right state actions have their authority in
+the [Matsumoto construction](../../../../Algebra/Group/StableSteinberg/Matsumoto/README.md#lifted-bruhat-states-and-the-complete-extension).

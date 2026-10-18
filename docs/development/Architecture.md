@@ -16,9 +16,9 @@ reader guides and references.
 | `QuillenTest/` | Maintained tests and exhaustive library axiom audit |
 | `examples/downstream/` | Independently configured client package and audit |
 | `Tools/` and `scripts/` | Lint, source discovery, generation, cache, and checks |
-| `docs/topics/` | Mathematical guides organized by objects and comparison families |
-| `docs/reference/` | Shared API and mathematical scope references |
-| `docs/development/` | Source architecture and measured typechecking performance |
+| `Quillen/**/README.md` and focused family guides | Mathematical results, API/interfaces, exact hypotheses, consumers and remaining inputs at source owners |
+| `docs/` | Concise global summaries, navigation, compatibility/status indexes and operational guidance |
+| `docs/development/` | Global architecture, build/trust operations and measured performance |
 
 QuillenTest, tools, and clients depend on the library. Implementation source imports
 individual dependencies, avoiding broad facades. The structural checker rejects
@@ -70,7 +70,7 @@ sheaf interfaces, rather than repeated in their applications.
 A module's path records its owner. Its declaration namespace should describe
 the mathematical construction and need not mirror the path. Geometric interfaces
 use `AlgebraicGeometry.Scheme` and `Quillen.PerfectComplexes`; generic constructions have
-their own canonical namespaces. See [the API reference](../reference/API.md#module-paths-and-namespaces).
+their own canonical namespaces. See the [source-family guides](../../Quillen/README.md) for actual namespaces and interfaces.
 
 ## Import generation and extension
 

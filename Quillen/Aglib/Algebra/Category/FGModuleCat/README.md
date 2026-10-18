@@ -46,3 +46,9 @@ These module and map comparisons hold for commutative rings; regularity supplies
 monicity, while noetherianity gives the standard short-exact and conflation
 statements. It uses the existing quotient restriction and finite-module
 localization functors.
+
+## Imports
+
+| Import | Interface |
+| --- | --- |
+| `Quillen.Aglib.Algebra.Category.FGModuleCat.PrincipalRankOne` | Literal principal rank-one quotient/cokernel and actual localization/scalar-GL comparisons; regularity gives monicity, Noetherianity gives short exactness and conflations |

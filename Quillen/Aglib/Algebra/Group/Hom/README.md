@@ -29,3 +29,9 @@ The current consumers are `FiniteRootLifting` and `DetectorTransfer` in the
 Matsumoto application family.
 
 - [`CentralKernel.lean`](CentralKernel.lean)
+
+## Imports
+
+| Import | Interface |
+| --- | --- |
+| `Quillen.Aglib.Algebra.Group.Hom.CentralLifts` | Central-kernel lifting contains the target commutator subgroup; a perfect target gives surjectivity, in independent group universes |

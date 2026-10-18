@@ -53,3 +53,9 @@ The small adapter uses `C,D : Type u` with small categories and
 [SectionChangeIndexStable](../../../KTheory/Bass/SectionChangeIndexStable.lean) applies the small adapter to
 actual finite Bass stages. The geometric global application and its larger
 section categories remain in the perfect-complex owners.
+
+## Global sections and finite Bass interchange
+
+| Import after `Quillen.` | Principal interface |
+| --- | --- |
+| `Aglib.CategoryTheory.FiberedCategory.SectionChangeIndex`, `SectionChangeIndexLaws`, `SectionChangeIndexZero`, `SectionChangeIndexUnit` | `CategoryTheory.SectionChangeIndex.underFunctor`, literal evaluation/reindexing, same chosen zero and lifted identity actions |
