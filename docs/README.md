@@ -11,6 +11,7 @@ Lean declarations specify the actual statements and proof inputs.
 | Topic | Guide |
 | --- | --- |
 | Exact structures, Quillen's Q-construction, canonical K-maps, and classical K₀ | [Exact categories](topics/ExactCategories.md) |
+| Stable field determinant, original projective-Q comparison, and positive finite-support decomposition | [Field and support foundations](topics/LowDegreeFieldSupport.md) |
 | S-construction, additivity, approximation, cofinality, fibration, and Q/S comparisons | [Waldhausen theory](topics/Waldhausen.md) |
 | Finite-filtration dévissage, finite admissible resolutions, Serre localization, and finite-module G-theory | [Dévissage, resolution, and localization](topics/Localization.md) |
 | Vector bundles, coherent sheaves, scheme K/G maps, finite direct image, and derived sheaf geometry | [Scheme K/G-theory](topics/SchemeKTheory.md) |
@@ -39,6 +40,7 @@ for their source owners.
 | [Architecture](development/Architecture.md) | Mathematical source ownership, import direction, and trust-check implementation |
 | [Typechecking performance](development/Performance.md) | Reproducible measurements and their source/runtime scope |
 | [TT localization roadmap](development/TTLocalization.md) | Audited endpoints, precise remaining comparisons, proof dependencies and current parallel milestones |
+| [Low-degree field and support plan](development/LowDegreeFieldSupport.md) | Field determinant, finite-support assembly, original-map proof obligations and parallel implementation boundaries |
 | [TT continuation handoff](development/TTContinuationHandoff.md) | Closed P1–P5 scope, preserved downstream results, exact next assignments and portable checked-source basis |
 | [Contributing](../CONTRIBUTING.md) | Source and documentation changes, builds, checks, and dependency policy |
 

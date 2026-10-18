@@ -19,3 +19,11 @@ annihilation/scalar correspondence through the stated fully faithful additive
 finite-module representation. Original objects, namespaces, maps, hypotheses
 and universe bounds are preserved. G/K groups and localization/devissage
 K-equivalences remain downstream.
+
+`PrimaryDecomposition` works over a commutative Dedekind domain. It identifies
+the actual finite torsion-module category with the canonical finite-support
+family of primary-module categories by an exact equivalence. Annihilator
+factors bound support; the reconstruction uses actual primary-submodule
+inclusions and summation. The self-coordinate inclusion is naturally the
+identity and distinct-prime coordinates are naturally zero. Chosen small-model
+transport and residue-field dévissage remain separate downstream steps.

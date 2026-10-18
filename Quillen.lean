@@ -11,6 +11,7 @@ public import Quillen.Aglib
 public import Quillen.Aglib.Algebra.Category.CommRingCat.PolynomialLaurentFunctor
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.ClosedSupportSmallModel
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.IdealPowerFiltration
+public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrimaryDecomposition
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrincipalClosedSupport
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrincipalSupportSmallModel
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.ScalarRepresentation
@@ -737,6 +738,7 @@ public import Quillen.Aglib.CategoryTheory.ExactCategory.KernelComposition
 public import Quillen.Aglib.CategoryTheory.ExactCategory.KernelPullback
 public import Quillen.Aglib.CategoryTheory.ExactCategory.MatrixInflation
 public import Quillen.Aglib.CategoryTheory.ExactCategory.ObscureAxiom
+public import Quillen.Aglib.CategoryTheory.ExactCategory.Product
 public import Quillen.Aglib.CategoryTheory.ExactCategory.PullbackQuotient
 public import Quillen.Aglib.CategoryTheory.ExactCategory.Quotient.Basic
 public import Quillen.Aglib.CategoryTheory.ExactCategory.Quotient.Cokernels
@@ -846,6 +848,9 @@ public import Quillen.Aglib.CategoryTheory.ObjectProperty.ExtensionByConstant
 public import Quillen.Aglib.CategoryTheory.ObjectProperty.LiftComposition
 public import Quillen.Aglib.CategoryTheory.ObjectProperty.LiftInclusion
 public import Quillen.Aglib.CategoryTheory.ObjectProperty.NestedEquivalence
+public import Quillen.Aglib.CategoryTheory.Pi.Abelian
+public import Quillen.Aglib.CategoryTheory.Pi.FiniteStages
+public import Quillen.Aglib.CategoryTheory.Pi.FiniteSupport
 public import Quillen.Aglib.CategoryTheory.ShortComplex.MapComposition
 public import Quillen.Aglib.CategoryTheory.ShortComplex.NaturalSequence
 public import Quillen.Aglib.CategoryTheory.SmallModel.LocalizationSupport
@@ -913,6 +918,7 @@ public import Quillen.Algebra.Category.ModuleCat.ProjectiveAutomorphismAdditivit
 public import Quillen.Algebra.Category.ModuleCat.ProjectiveAutomorphismClass
 public import Quillen.Algebra.Group.StableElementary
 public import Quillen.Algebra.Group.StableElementaryQuotient
+public import Quillen.Algebra.Group.StableFieldDeterminant
 public import Quillen.Algebra.Group.StableGeneralLinear
 public import Quillen.Algebra.Group.StableQuotientInvariance
 public import Quillen.Algebra.Matrix.IdempotentAutomorphismClass
@@ -3144,6 +3150,9 @@ public import Quillen.GTheory.FiniteModules.SmallModelLocalization
 public import Quillen.GTheory.SmallModelLocalization
 public import Quillen.KTheory
 public import Quillen.KTheory.API
+public import Quillen.KTheory.Automorphism.Class
+public import Quillen.KTheory.Automorphism.Cube
+public import Quillen.KTheory.Automorphism.Naturality
 public import Quillen.KTheory.Basic
 public import Quillen.KTheory.Bass.AffineDiagram
 public import Quillen.KTheory.Bass.Contraction
@@ -3211,6 +3220,15 @@ public import Quillen.KTheory.Bass.TwoChartStableSequence
 public import Quillen.KTheory.Bass.TwoChartStableSpan
 public import Quillen.KTheory.Bass.TwoChartStableVanishing
 public import Quillen.KTheory.Equivalence
+public import Quillen.KTheory.Field.ElementaryProjectiveKOne
+public import Quillen.KTheory.Field.FiniteModuleRingEquivalence
+public import Quillen.KTheory.Field.ModuleDeterminant
+public import Quillen.KTheory.Field.ProjectiveDeterminant
+public import Quillen.KTheory.Field.ProjectiveFiniteModules
+public import Quillen.KTheory.Field.ScalarExtensionComparison
+public import Quillen.KTheory.FiniteSupport.Decomposition
+public import Quillen.KTheory.FiniteSupport.FilteredStages
+public import Quillen.KTheory.FiniteSupport.FiniteProduct
 public import Quillen.KTheory.Functor
 public import Quillen.KTheory.GrothendieckComparison.Basic
 public import Quillen.KTheory.GrothendieckComparison.Cocycle
@@ -3591,6 +3609,7 @@ public import Quillen.Topology.FiberwiseMappingPath.Restriction
 public import Quillen.Topology.FilteredRealization.BasedGroups
 public import Quillen.Topology.FilteredRealization.Compact
 public import Quillen.Topology.FilteredRealization.CompactHELP
+public import Quillen.Topology.FilteredRealization.FullNerveColimit
 public import Quillen.Topology.FilteredRealization.HELP
 public import Quillen.Topology.FilteredRealization.Homotopy
 public import Quillen.Topology.FilteredRealization.HomotopyEquivalence

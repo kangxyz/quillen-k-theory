@@ -8,6 +8,9 @@ Authors: OpenAI, kangxyz
 module
 
 public import Quillen.KTheory.API
+public import Quillen.KTheory.Automorphism.Class
+public import Quillen.KTheory.Automorphism.Cube
+public import Quillen.KTheory.Automorphism.Naturality
 public import Quillen.KTheory.Basic
 public import Quillen.KTheory.Bass.AffineDiagram
 public import Quillen.KTheory.Bass.Contraction
@@ -75,6 +78,15 @@ public import Quillen.KTheory.Bass.TwoChartStableSequence
 public import Quillen.KTheory.Bass.TwoChartStableSpan
 public import Quillen.KTheory.Bass.TwoChartStableVanishing
 public import Quillen.KTheory.Equivalence
+public import Quillen.KTheory.Field.ElementaryProjectiveKOne
+public import Quillen.KTheory.Field.FiniteModuleRingEquivalence
+public import Quillen.KTheory.Field.ModuleDeterminant
+public import Quillen.KTheory.Field.ProjectiveDeterminant
+public import Quillen.KTheory.Field.ProjectiveFiniteModules
+public import Quillen.KTheory.Field.ScalarExtensionComparison
+public import Quillen.KTheory.FiniteSupport.Decomposition
+public import Quillen.KTheory.FiniteSupport.FilteredStages
+public import Quillen.KTheory.FiniteSupport.FiniteProduct
 public import Quillen.KTheory.Functor
 public import Quillen.KTheory.GrothendieckComparison.Basic
 public import Quillen.KTheory.GrothendieckComparison.Cocycle

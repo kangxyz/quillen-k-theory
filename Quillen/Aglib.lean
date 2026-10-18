@@ -10,6 +10,7 @@ module
 public import Quillen.Aglib.Algebra.Category.CommRingCat.PolynomialLaurentFunctor
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.ClosedSupportSmallModel
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.IdealPowerFiltration
+public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrimaryDecomposition
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrincipalClosedSupport
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrincipalSupportSmallModel
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.ScalarRepresentation
@@ -736,6 +737,7 @@ public import Quillen.Aglib.CategoryTheory.ExactCategory.KernelComposition
 public import Quillen.Aglib.CategoryTheory.ExactCategory.KernelPullback
 public import Quillen.Aglib.CategoryTheory.ExactCategory.MatrixInflation
 public import Quillen.Aglib.CategoryTheory.ExactCategory.ObscureAxiom
+public import Quillen.Aglib.CategoryTheory.ExactCategory.Product
 public import Quillen.Aglib.CategoryTheory.ExactCategory.PullbackQuotient
 public import Quillen.Aglib.CategoryTheory.ExactCategory.Quotient.Basic
 public import Quillen.Aglib.CategoryTheory.ExactCategory.Quotient.Cokernels
@@ -845,6 +847,9 @@ public import Quillen.Aglib.CategoryTheory.ObjectProperty.ExtensionByConstant
 public import Quillen.Aglib.CategoryTheory.ObjectProperty.LiftComposition
 public import Quillen.Aglib.CategoryTheory.ObjectProperty.LiftInclusion
 public import Quillen.Aglib.CategoryTheory.ObjectProperty.NestedEquivalence
+public import Quillen.Aglib.CategoryTheory.Pi.Abelian
+public import Quillen.Aglib.CategoryTheory.Pi.FiniteStages
+public import Quillen.Aglib.CategoryTheory.Pi.FiniteSupport
 public import Quillen.Aglib.CategoryTheory.ShortComplex.MapComposition
 public import Quillen.Aglib.CategoryTheory.ShortComplex.NaturalSequence
 public import Quillen.Aglib.CategoryTheory.SmallModel.LocalizationSupport

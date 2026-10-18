@@ -60,6 +60,7 @@ public import Consumer.KGroupAdditivity
 public import Consumer.Localization
 public import Consumer.LoopComponentProduct
 public import Consumer.LoopReversal
+public import Consumer.LowDegreeFieldSupport
 public import Consumer.MappingCylinderAcyclicity
 public import Consumer.MetricCoverRadius
 public import Consumer.MetricOrderCutoff

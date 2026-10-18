@@ -509,6 +509,7 @@ import QuillenTest.LoopTailOmega
 import QuillenTest.LoopTailReplacementFiber
 import QuillenTest.LoopTailReplacementFunctor
 import QuillenTest.LoopWeakEquivalence
+import QuillenTest.LowDegreeFieldSupport
 import QuillenTest.MWholeNerveCompositionPrisms
 import QuillenTest.MWholeNerveCompositionReferences
 import QuillenTest.MWholeNerveHZero

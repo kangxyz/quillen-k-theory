@@ -34,6 +34,7 @@ public import Quillen.Algebra.Category.ModuleCat.ProjectiveAutomorphismAdditivit
 public import Quillen.Algebra.Category.ModuleCat.ProjectiveAutomorphismClass
 public import Quillen.Algebra.Group.StableElementary
 public import Quillen.Algebra.Group.StableElementaryQuotient
+public import Quillen.Algebra.Group.StableFieldDeterminant
 public import Quillen.Algebra.Group.StableGeneralLinear
 public import Quillen.Algebra.Group.StableQuotientInvariance
 public import Quillen.Algebra.Matrix.IdempotentAutomorphismClass

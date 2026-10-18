@@ -18,6 +18,7 @@ interface or a successful compilation does not supply an additional comparison.
 | Exact categories and Q-construction | Exact structures, restricted spans, composition, exact functors, and canonical K-maps |
 | Waldhausen theory | S-construction, additivity, Q/S comparison, and approximation/cofinality/fibration with their stated input data |
 | Classical K₀ | Exact and Waldhausen object presentations, original object classes, inverse identities, and all-class exact-functor naturality |
+| Field determinant and finite support | Actual stable field determinant and elementary kernel; unmarked original projective-Q K1 comparison; all positive finite-support K-groups with original evaluation/inclusion equations, including K1 and K2 |
 | Ring plus comparison | Independent homological stable-BGL model, exact standard zero-component Q-loop homotopy equivalence, original K₀-times-plus product, and ordinary forward-map ring-change naturality |
 | Finite-projective scalar extension | Matrix-image change of rings, additive Hom universal property and literal noncommutative balanced-tensor identification with exact finite-projective base change |
 | Classical CW plus comparison | Constructed comparison homotopy equivalences and ordinary uniqueness for original plus maps on actual Hausdorff CW spaces, with an explicit common coefficient universe for mixed spaces |

@@ -243,6 +243,7 @@ public import Quillen.Topology.FiberwiseMappingPath.Restriction
 public import Quillen.Topology.FilteredRealization.BasedGroups
 public import Quillen.Topology.FilteredRealization.Compact
 public import Quillen.Topology.FilteredRealization.CompactHELP
+public import Quillen.Topology.FilteredRealization.FullNerveColimit
 public import Quillen.Topology.FilteredRealization.HELP
 public import Quillen.Topology.FilteredRealization.Homotopy
 public import Quillen.Topology.FilteredRealization.HomotopyEquivalence

@@ -41,6 +41,9 @@ The independent `Consumer.PublicLibraries` imports both complete public roots to
 | `Quillen.Aglib.CategoryTheory.Abelian.SerreClass.Annihilation` | Annihilated objects and the canonical quotient by a Serre class |
 | `Quillen.CategoryTheory.QConstruction.Basic` | Quillen's Q-construction |
 | `Quillen.KTheory.API` | Exact-category K-groups, canonical maps, equivalences, and small models |
+| `Quillen.Algebra.Group.StableFieldDeterminant` | Actual stable determinant, field elementary kernel, and quotient determinant equivalence |
+| `Quillen.KTheory.Field.ProjectiveDeterminant` | Unmarked original projective-Q K1 determinant and actual base-change square |
+| `Quillen.KTheory.FiniteSupport.Decomposition` | Positive finite-support K-equivalence by original evaluations and finite sums of original inclusions |
 | `Quillen.KTheory.Plus` | Standard ring plus/Q homotopy equivalences, original K₀–plus product and component interfaces |
 | `Quillen.Topology.PlusConstruction.ClassicalCWUniqueness` | Automatic comparison and ordinary uniqueness for original plus maps on actual same-universe Hausdorff CW spaces |
 | `Quillen.Topology.PlusConstruction.ClassicalCWUniquenessUniverseLift` | Mixed-universe comparison and ordinary uniqueness on the original actual CW spaces |
