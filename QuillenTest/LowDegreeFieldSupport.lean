@@ -5,9 +5,9 @@ Authors: kangxyz
 -/
 
 import Quillen.Algebra.Group.StableFieldDeterminant
-import Quillen.KTheory.Field.ModuleDeterminant
+import Quillen.KTheory.Field.MatrixCubeComparison
 import Quillen.KTheory.FiniteSupport.Decomposition
-import Mathlib.Data.ZMod.Basic
+import Mathlib.Algebra.Field.ZMod
 
 /-! Small-field and sparse-family regression properties on the original maps. -/
 
@@ -37,6 +37,48 @@ theorem threeElementUnit_nontrivial : unitClass (ZMod 3) (-1) ≠ 1 := by
   exact (by decide : (-1 : ZMod 3) ≠ 1) h''
 
 universe u v
+
+/-- The actual positive cube uses the same standard matrix and upper SmallModel as its consumer. -/
+private def standardMatrixCube (F : Type u) [Field F] (n : ℕ)
+    (g : Quillen.StableGeneralLinear.GL F n) :
+    (ModuleCat.finiteModuleExactStructure.{u, u} F).SmallK.{u + 1} 1 :=
+  Quotient.mk' (Quillen.Automorphism.Cube.automorphismFirstCube
+    (ModuleCat.finiteModuleExactStructure.{u, u} F).smallModel.{u + 1}
+    ((equivSmallModel.{u + 1} (FGModuleCat.{u} F)).functor.obj
+      (FGModuleCat.of F (Fin n → F)))
+    ((equivSmallModel.{u + 1} (FGModuleCat.{u} F)).functor.mapIso
+      (FGModuleCat.matrixToAut F n g)))
+
+/-- The literal rank-zero cube is trivial in the original upper finite-module K1. -/
+theorem rankZeroCube (F : Type u) [Field F] (g : Quillen.StableGeneralLinear.GL F 0) :
+    standardMatrixCube F 0 g = 1 := by
+  apply (Quillen.Field.moduleDetEquiv F).injective
+  rw [map_one]
+  change Quillen.Field.moduleDetEquiv F
+    (Quotient.mk' (Quillen.Automorphism.Cube.automorphismFirstCube _ _ _)) = 1
+  rw [Quillen.Field.moduleDetEquiv_matrix_cube]
+  apply Units.ext
+  exact Matrix.det_fin_zero
+
+private instance : Fact (Nat.Prime 5) := ⟨by decide⟩
+
+/-- Over F5 the positive rank-one cube has value 2, whose inverse is different. -/
+theorem fiveElementCubeOrientation :
+    Quillen.Field.moduleDetEquiv (ZMod 5)
+        (standardMatrixCube (ZMod 5) 1
+          (Matrix.GeneralLinearGroup.scalar (Fin 1) (Units.mk0 (2 : ZMod 5) (by decide)))) =
+      Units.mk0 (2 : ZMod 5) (by decide) ∧
+      (Units.mk0 (2 : ZMod 5) (by decide))⁻¹ ≠ Units.mk0 (2 : ZMod 5) (by decide) := by
+  constructor
+  · change Quillen.Field.moduleDetEquiv (ZMod 5)
+      (Quotient.mk' (Quillen.Automorphism.Cube.automorphismFirstCube _ _ _)) = _
+    rw [Quillen.Field.moduleDetEquiv_matrix_cube, Matrix.GeneralLinearGroup.det_scalar]
+    simp
+  · intro h
+    have hmul := mul_inv_cancel (Units.mk0 (2 : ZMod 5) (by decide))
+    rw [h] at hmul
+    have hval := congrArg (fun a : (ZMod 5)ˣ => (a : ZMod 5)) hmul
+    exact (by decide : (2 : ZMod 5) * 2 ≠ 1) hval
 
 /-- Literal tensor extension preserves determinant on the transported matrix representative. -/
 theorem tensorMatrixDet {F L : Type u} [Field F] [Field L] (f : F →+* L)

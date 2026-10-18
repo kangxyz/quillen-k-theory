@@ -230,6 +230,7 @@ import QuillenTest.CubeThinSupport
 import QuillenTest.CubicalBoundaryAddition
 import QuillenTest.CubicalBoundaryInduction
 import QuillenTest.CylinderAttachmentGeometry
+import QuillenTest.DedekindResidueSupport
 import QuillenTest.DenseSubcategoryCofinality
 import QuillenTest.DerivedBaseChangeCover
 import QuillenTest.DerivedExtensionByZero
@@ -888,6 +889,7 @@ import QuillenTest.SourceSupportRoofs
 import QuillenTest.SphericalHomotopyAddition
 import QuillenTest.SphericalSimplex
 import QuillenTest.SplitPivot
+import QuillenTest.SplitResidueDvr
 import QuillenTest.SquareProjectionReturn
 import QuillenTest.StableCompletionBaseChangeNaturality
 import QuillenTest.StableCompletionBasedRingNaturality

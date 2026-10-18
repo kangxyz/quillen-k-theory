@@ -1834,11 +1834,14 @@ public import Quillen.AlgebraicGeometry.Scheme.ClosedPushforward
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.ClosedDevissage
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.ComparisonGTheory
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.GTheory
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.LocalizationNaturality
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.PrincipalLocalization
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.PrincipalSupport
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Support
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.UniverseComparison
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.Devissage
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.FinitePointAssembly
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GTheory
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralDevissage
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.GeneralLocalization

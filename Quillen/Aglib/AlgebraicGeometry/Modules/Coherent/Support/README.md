@@ -6,3 +6,31 @@ These local general-theory candidates preserve the existing declaration namespac
 
 - [`Locality.lean`](Locality.lean)
 - [`PrincipalAffineSmallModel.lean`](PrincipalAffineSmallModel.lean)
+- [`FiniteClosed.lean`](FiniteClosed.lean)
+- [`FiniteClosedFamilies.lean`](FiniteClosedFamilies.lean)
+
+`FiniteClosed` works on a locally Noetherian scheme with a finite set `S` whose
+points are closed. `finiteSupportEquivalence` has the original finite sum of
+singleton-supported inclusions forward and is exact in both directions. Its
+components use actual restriction and extension by zero; the sum of their
+original counits is a stalkwise isomorphism, and explicit retracts prove
+coherence. `singletonSumIso` and the exact evaluation isomorphisms preserve
+the original inclusions, including arbitrary zero objects off-coordinate and
+empty `S`.
+
+`FiniteClosedFamilies.reconstructionEquivalence` identifies the canonical
+finite-support family of actual singleton-supported categories with coherent
+sheaves of finite support in an injective closed-point family, on a locally
+Noetherian scheme. Its original coproduct reconstruction is exact in both
+directions and retains singleton and evaluation equations. On a Noetherian
+scheme, `finitePointSupport_iff_support_subset` identifies its predicate with
+ordinary support containment in the family's range.
+
+The intended upstream paths are
+`Aglib.AlgebraicGeometry.Modules.Coherent.Support.FiniteClosed` and
+`Aglib.AlgebraicGeometry.Modules.Coherent.Support.FiniteClosedFamilies`.
+Their downstream consumer
+[`FinitePointAssembly`](../../../../../AlgebraicGeometry/Scheme/Coherent/ClosedImmersion/FinitePointAssembly.lean)
+supplies upper-small coherent support assembly from public field-scheme
+G-theory in every positive degree, with the original closed pushforwards.
+That K-theory adapter remains outside the general candidate subtree.

@@ -11,8 +11,10 @@ public import Quillen.Aglib.Algebra.Category.CommRingCat.PolynomialLaurentFuncto
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.ClosedSupportSmallModel
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.IdealPowerFiltration
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrimaryDecomposition
+public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrimarySmallModel
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrincipalClosedSupport
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.PrincipalSupportSmallModel
+public import Quillen.Aglib.Algebra.Category.FGModuleCat.ScalarMatrices
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.ScalarRepresentation
 public import Quillen.Aglib.Algebra.Category.FGModuleCat.SmallModelLocalization
 public import Quillen.Aglib.Algebra.Category.ModuleCat.CartesianBaseChange
@@ -254,6 +256,8 @@ public import Quillen.Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.Close
 public import
   Quillen.Aglib.AlgebraicGeometry.Modules.Coherent.Pushforward.ClosedImmersion.UnitBaseChange
 public import Quillen.Aglib.AlgebraicGeometry.Modules.Coherent.RestrictionFunctoriality
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Coherent.Support.FiniteClosed
+public import Quillen.Aglib.AlgebraicGeometry.Modules.Coherent.Support.FiniteClosedFamilies
 public import Quillen.Aglib.AlgebraicGeometry.Modules.Coherent.Support.Locality
 public import Quillen.Aglib.AlgebraicGeometry.Modules.Coherent.Support.PrincipalAffineSmallModel
 public import Quillen.Aglib.AlgebraicGeometry.Modules.Complex.Affine.CounitCriterion
@@ -848,6 +852,7 @@ public import Quillen.Aglib.CategoryTheory.ObjectProperty.LiftComposition
 public import Quillen.Aglib.CategoryTheory.ObjectProperty.LiftInclusion
 public import Quillen.Aglib.CategoryTheory.ObjectProperty.NestedEquivalence
 public import Quillen.Aglib.CategoryTheory.Pi.Abelian
+public import Quillen.Aglib.CategoryTheory.Pi.Equivalence
 public import Quillen.Aglib.CategoryTheory.Pi.FiniteStages
 public import Quillen.Aglib.CategoryTheory.Pi.FiniteSupport
 public import Quillen.Aglib.CategoryTheory.ShortComplex.MapComposition

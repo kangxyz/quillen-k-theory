@@ -1,8 +1,9 @@
 # Low-degree field and finite-support foundations
 
 This is the implementation and proof plan for the arithmetic-curve request
-prepared on 2026-10-18. It describes obligations, rather than asserting their
-completion. The first application milestone is the conjunction of Q1 and Q2.
+prepared on 2026-10-18. It records the native constructions and the remaining
+proof routes.
+Q1 and Q2 now achieve the first native application milestone.
 The algebraic determinant, a product comparison, or a conditional adapter alone
 does not close that milestone. Q4 is a separate substantial phase.
 
@@ -46,10 +47,14 @@ finite-family model. Quillen must never import R5.
 | Target | Supported current result | Remaining acceptance or mathematics |
 | --- | --- | --- |
 | Q1a | Actual all-field stable determinant, elementary kernel, quotient equivalence and ring naturality; independent mathematical review accepted | Original matrix-cube marking belongs to Q1b |
-| Q1b | Canonical quotient-to-projective-Q and upper finite-module comparisons, determinant and literal scalar-extension squares; independent unmarked-package review accepted | The native completion representative must still be identified with the literal positive cube |
+| Q1b | All-field original upper finite-module determinant, literal scalar-extension square and `moduleDetEquiv_matrix_cube`, including rank zero; normally compiled and independently accepted | The validated original R5 consumer patch remains unapplied; full R5 integration is separate |
 | Q2 | `Quillen.FiniteSupport.decompositionKEquiv` in every positive degree, original evaluation/inclusion laws and finite-sum inverse; independent mathematical review accepted | Retain scoped final checks at the delivered source identity; no K0 decomposition is claimed |
-| Q3 | Exact equivalence of actual finite torsion modules with finite-support primary families, canonical summation and inclusion coordinates; independent categorical review accepted | SmallModel transport, residue dévissage and the actual support K-group assembly |
-| Q4--Q7 | Detailed dependency and original-map proof routes below | These endpoints are not supplied by the Q1/Q2 constructions |
+| Q3, Dedekind modules | Native SmallModel primary transport, all-degree point dévissage, positive `residueFieldAssemblyKEquiv` and original support/ambient pushforwards; independently accepted | Scheme localization-boundary comparison remains separate |
+| Q3, finite closed support | Locally Noetherian finite-S splitting and finite-family equivalence; on Noetherian schemes, actual upper coherent support and public field-scheme assembly in every positive degree, with original pushforwards; accepted and normally compiled | Application-specific R5 integration remains unapplied |
+| Q4 | The original Milnor tensor quotient, symbols and field maps are native and definitionally preserve the R5 presentation; independent migration review accepted | Stable Steinberg/kernel mathematics, actual degree-two topological comparison, injectivity and positive symbol marking |
+| Q5 | Actual-DVR Milnor tame kernel equals the unit-symbol span; split-residue DVRs have injective original generic finite-module G map in every degree; accepted and normally compiled | Actual low-degree actions, ordered Quillen boundary/product compatibility, and Quillen unit-pair generation remain open; the smooth-curve origin section is not realized |
+| Q6 | Native integral Milnor K2 vanishes over every finite field, including the smallest fields; independent review accepted | A symbol-preserving surjection to actual Quillen G2, or an independent actual-G2 vanishing proof |
+| Q7, native modules | Original local-DVR boundary after actual generic extension equals the global residue coordinate; image equals the intersection of these kernels; explicit original generic-G1 injectivity gives finite residue-G1 lifting; accepted and normally compiled | Literal `Scheme.boundaryG` comparison and actual finite-field G2 vanishing remain open |
 
 The Q2 validation includes strict changed-leaf compilation, 15 scoped environment
 linters and native text lint on its nine defining modules (including stable
@@ -60,13 +65,39 @@ separate maintained downstream manifest predates the root Aglib pin; its
 standalone client check uses a scratch manifest with the exact root pins,
 without modifying maintained manifests or updating dependencies.
 
-The unmarked Q1 comparison package has matching changed-leaf builds and a
-separate nine-module scoped lint pass. The primary categorical module has its
-own focused build, scoped lint and independent mathematical verdict. Scoped
-audits cover all these defining origins and the semantic tests/client, retaining
-only `propext`, `Classical.choice`, and `Quot.sound`. A coordinated aggregate
-import and generated-source enrollment check complete this source milestone;
-they do not close the marking or residue-assembly frontiers.
+The earlier quotient-to-Q comparison package has its nine-module scoped lint
+pass. The primary categorical module has a focused build, scoped lint and
+independent mathematical verdict. The completed marking and residue extension
+passed scoped environment and native text lint for 33 modules and 1575
+declarations, using all 15 selected linters. Its standard-foundation audit
+checked 1628 declarations from 34 defining origins, including private and
+generated declarations, allowing only `propext`, `Classical.choice`, and
+`Quot.sound`. The additional affine-localization origin and two downstream
+clients passed the same audit for 35 declarations in three origins. Together
+with the earlier audits, these cover every new defining module in this
+milestone. The two clients also passed scoped environment and native text lint.
+
+Normal aggregate `lake build +Quillen:olean` completed successfully, and the
+generated `QuillenTest` aggregate passed strict compilation. Import generation,
+library layout, and source-token checks passed with 4667 production modules
+and 1048 trust-test modules. Regression properties include the literal
+rank-zero positive cube and a rank-one F5 cube with determinant 2, distinct
+from its inverse. The independently configured client retains the literal
+positive cube, original tensor extension and determinant square. Dependency
+pins and maintained downstream manifests were unchanged.
+
+The subsequent native Dedekind construction retains the exact
+`smallTorsion R⁰` localization term. Its categorical transport, point dévissage,
+quotient assembly, canonical residue-field comparison and residue-field
+assembly have separate independent ordinary mathematical acceptance. The
+original module-level
+K-map endpoints use the same native universe. The subsequent same-original-
+category comparison `smallKUniverseEquiv` supplies explicit universe transport;
+`Affine.UniverseComparison` uses it for public scheme G-theory. The native
+Milnor migration was independently
+compared with the actual R5 definitions by transparent tensor/symbol/map
+identities. Its finite-field theorem concerns that quotient, rather than an
+unconstructed Quillen comparison.
 
 ## Fixed mathematical conventions
 
@@ -87,20 +118,17 @@ degrees 1 and 2 for small abelian families in a common universe; in particular
 allow index universe `u` and category/hom universe `u+1`. Broader degree
 statements are appropriate only when the same proof supplies them.
 
-## Audited suppliers and missing content
+## Proof suppliers and constructed comparisons
 
-| Obligation | Existing supplier | Content still to construct |
+| Obligation | Foundational supplier | Native construction using it |
 | --- | --- | --- |
-| Stable quotient | `Quillen.Algebra.Group.StableElementaryQuotient`: `elementary_eq_commutator`, `quotientLift`, `quotientRingMap` | Field determinant and its actual kernel |
-| Quotient to completion pi1 | `StableGeneralLinearCompletionKernel`: `elementaryPiOneEquiv`, `elementaryPiOneEquiv_quotientMap` | Its composite with field determinant |
-| Completion to original Q | `ProjectiveCompletionPositiveK`: `zeroCompletionPositiveKEquiv`; `ProjectiveCompletionPositiveKNaturality`: `zeroCompletionPositiveKEquiv_baseChange` | Module/SmallModel transport and positive-cube equation |
-| Stable ring naturality | `StableCompletionBasedRingNaturality`: `stablePiOneMap_ringMap` | Quotient and determinant naturality through the same tracks |
-| Binary S-product | `Quillen.Waldhausen.Product.KEquivalence`: `KEquiv` | Exact-category Q-product and finite dependent products |
-| Canonical Q/S comparison | `Quillen.Waldhausen.QuillenComparison.Equivalence`: `comparisonKEquiv`; `ExactNaturality`: `comparisonKEquiv_exactFunctor_naturality` | Identification of the original Q projections |
-| Filtered nerves | `Quillen.Topology.FilteredRealization.NerveColimit`: `nerveCoconeIsColimit` | Actual finite-support Q diagram, arrow lifting and eventual object equality |
-| Filtered based groups | `Quillen.Topology.FilteredRealization.BasedGroups`: `piMap_jointlySurjective`, `piMap_eq_eventually` | Compatible vertices and comparison to the original zero-normalized K-maps |
-| Singleton closed support | `GeneralDevissage`: `closedSupportGEquiv`, `closedSupportGEquiv_pushforward` | Finite-point splitting and infinite finite-support assembly |
-| Exact equivalences | `Quillen.KTheory.Equivalence`: `mapQ_faithful_of_fullyFaithful`, `KEquivOfMapQIsEquivalence` | The specific stage equivalences and finite-module equivalence |
+| Stable quotient and determinant | `StableElementaryQuotient` and finite matrix elimination | `StableFieldDeterminant`: actual elementary kernel and quotient determinant |
+| Quotient through completion to original Q | `StableGeneralLinearCompletionKernel`, `ProjectiveCompletionPositiveK` and its naturality | `Field.{ElementaryProjectiveKOne,ProjectiveDeterminant,ModuleDeterminant,MatrixCubeComparison}`: original determinant, scalar square and literal cube equation |
+| Stable ring naturality | `StableCompletionBasedRingNaturality.stablePiOneMap_ringMap` | Quotient and determinant naturality through the original tracks |
+| Finite products | `Waldhausen.Product.KEquivalence` and exact Q/S naturality | `FiniteSupport.FiniteProduct`: equivalence on original Q projections |
+| Filtered nerves and based groups | `FilteredRealization.{NerveColimit,BasedGroups}` | `FiniteSupport` stage diagram, arrow lifting, common vertices and rebasing to original K-maps |
+| Singleton closed support | `GeneralDevissage.closedSupportGEquiv` and its pushforward equation | `FiniteClosed`, `FiniteClosedFamilies` and `ClosedImmersion.FinitePointAssembly`: geometric assembly retaining original field pushforwards |
+| Exact equivalences | `KTheory.Equivalence` | Actual finite-stage, finite-module and upper coherent-model comparisons |
 
 The source inspection found elementary matrix commutator relations, but no
 stable Steinberg presentation, universal-central-extension comparison with
@@ -111,6 +139,8 @@ a degree-two Hurewicz isomorphism.
 ## Q1: determinant on the original field K1
 
 ### Q1a. Stable algebra
+
+The implemented proof in `StableFieldDeterminant` follows this route.
 
 1. Over a commutative ring define `det : StableGeneralLinear.Group R ->* Rˣ`
    with `StableGeneralLinear.lift`, using finite `GeneralLinearGroup.det`.
@@ -136,9 +166,9 @@ a degree-two Hurewicz isomorphism.
    Prove its value on `quotientMap (of F n g)` and its square with
    `quotientRingMap f`. Handle `n=0`, `F2`, and `F3` through the same proof.
 
-Proposed owner: `Quillen/Algebra/Group/StableFieldDeterminant.lean`; isolate a
-new general finite-matrix lemma under the existing Aglib matrix candidate
-owner only if it is needed. This algebraic endpoint is useful but is not Q1.
+Owner: `Quillen/Algebra/Group/StableFieldDeterminant.lean`. The algebraic
+endpoint feeds the original Q-group transport and representative comparison
+below.
 
 ### Q1b. Canonical transport and representative marking
 
@@ -163,14 +193,14 @@ scalar-extension natural isomorphisms. Then transport through
 group used by the client. State the final `D_Q` on that group and prove literal
 scalar-extension naturality.
 
-The remaining marking requires a geometric proof. The R5 module
+The marking uses a geometric proof. The R5 module
 `QuillenSourceFieldConstructors` defines `positiveModuleMatrixCubeClass` as the
 literal coordinate transpose of its capped Q automorphism cube. Its existing
 `positiveModuleMatrixCubeClass_eq_neg` proves a relation to its zero-first
-class, not to the native completion class. Migrate only the needed general
-Q-cylinder/cube construction to a native owner, then compare the mapped
+class, not to the native completion class. The native
+Q-cylinder/cube construction compares the mapped
 stable automorphism loop, the actual completion-to-Q track, the cap, and the
-loop-degree shift. Prove the equality of represented classes before inferring
+loop-degree shift. The equality of represented classes gives
 
 ```text
 D_Q (positiveMatrixCube g) = GeneralLinearGroup.det g.
@@ -178,8 +208,30 @@ D_Q (positiveMatrixCube g) = GeneralLinearGroup.det g.
 
 Inspect the two cube coordinates and the existing inner-loop reversal
 explicitly; the sign cannot be fixed by naming an inverse equivalence.
-Return an R5 adapter identifying its literal cube with the native term. Until
-this is proved, report the quotient-Q determinant as unmarked and Q1 as open.
+`Quillen.Field.moduleDetEquiv_matrix_cube` in `Field.MatrixCubeComparison`
+proves this equation for every field and every finite rank, including zero,
+on the literal `Automorphism.Cube.automorphismFirstCube` of the original
+upper-small finite-module matrix automorphism. Its source SHA-256 is
+`6302dccd9faffdac0a0806e856d8ee119cdf6d70cd030554e58b1c7ceee61554`.
+The theorem has normal build evidence and independent complex acceptance.
+The R5 adapter remains an unapplied integration product.
+
+The implemented `Field.MatrixTransport` uses the actual reversed-coordinate
+free-module basis and maps its isomorphism through the upper SmallModel. Its
+target action is the ordinary `g.val.mulVec` for the same matrix `g`.
+`Automorphism.Isomorphism` transports the represented cube through that
+specified isomorphism. `ProjectiveCompletionAutomorphismCones` identifies the
+unlocalized subdivision contraction arms as actual natural transformations.
+`Automorphism.PositiveNormalization` proves that right translation, its actual
+cancellation cap and one inner-loop reversal represent the positive cube class.
+Its homotopy criterion retains the candidate's original correction path,
+using the proved commutativity of every loop-component fundamental group.
+`Plus.ProjectiveCompletionAutomorphismHomotopy` supplies the actual localized
+finite-stage numerator/denominator homotopy. `Field.StableMatrixMarking`,
+`Automorphism.NormalizationOrder` and `SpaceAction` compare the inverse-first
+and right-cap normalizations through actual loop actions. This proves the
+literal matrix-cube equation without a global completion-to-positive H-map.
+Commutativity alone is not used to interchange the loop-valued cap factors.
 
 ## Q2: finite-support decomposition on evaluation maps
 
@@ -304,9 +356,58 @@ direct-sum inclusion; it identifies the final map with residue pushforward.
 For the surface, separately split coherent sheaves with finite closed support
 into their singleton-supported components in the Aglib candidate owner. Its
 projection/inclusion isomorphisms must be natural and exact. Apply singleton
-`closedSupportGEquiv`, then Q2, only in the needed K1 degree. The supported
+`closedSupportGEquiv`, then Q2, in every positive degree, including K1 and K2. The supported
 stalk quotient and its fullness/essential-surjectivity proofs are separate.
 R5's label `J2` here denotes a second-support stratum in K1, not degree two.
+
+The finite-S step is now supplied by
+`Quillen.Aglib.AlgebraicGeometry.Modules.Coherent.Support.FiniteClosed`.
+`finiteSupportEquivalence` has the original summation functor forward and
+exact directions; its singleton square and self/other evaluation isomorphisms
+cover arbitrary off-coordinate zero objects. Each component is actual
+restriction to the complement of the other points followed by extension by
+zero. The sum of original counits is stalkwise invertible, and its inverse
+gives explicit retracts proving coherence. This uses local noetherianity and
+closedness of each point of S, without a global separation or T1 hypothesis.
+`FiniteClosedFamilies.reconstructionEquivalence` supplies the canonical
+finite-family equivalence on locally Noetherian schemes for an injective
+family of closed points. On a Noetherian scheme ordinary support containment
+in their range already forces finite support.
+
+`ClosedImmersion.FinitePointAssembly.fieldAssemblyKEquiv` then identifies
+the direct sum of public `G (Spec (fields i)) (n+1)` with the actual supported
+subcategory of `SmallModel.{u+1} (FiniteTypeSheaves X)`. It requires
+`X : Scheme.{u}`, `[IsNoetherian X]`, `I : Type u`, an injective closed-point
+family, and closed immersions from the specified field spectra whose images
+are those points. Its singleton, finite-sum and ambient equations retain
+the original pushforwards. Both K1 and K2 specializations are public; this
+geometric native assembly is accepted and normally compiled.
+
+The Dedekind module-level construction is implemented in
+`Quillen.GTheory.Dedekind.PrimarySupport`, `ResidueDevissage`, `ResidueAssembly`,
+`ResidueField` and `ResidueFieldAssembly`. Its public endpoint is
+
+```text
+Quillen.DedekindResidue.residueFieldAssemblyKEquiv R n :
+  (directSum_p Additive (G (p.asIdeal.ResidueField) (n+1)))
+    ≃+ Additive (SupportedG R⁰ (n+1)).
+```
+
+It assumes only a commutative Dedekind domain. The all-degree point theorem
+`residuePrimaryKEquiv` applies actual general-ideal power filtrations, including
+nonprincipal primes. The canonical quotient-to-residue-field algebra map is
+an equivalence by maximality, and its finite-module comparison uses original
+restriction of scalars. `residueFieldAssemblyKEquiv_of`, its finite-sum formula
+and `supportedKMap_comp_residueFieldAssembly` retain the original support and
+ambient pushforwards. The source is finite-module G-theory of
+`Ideal.ResidueField`. `Affine.UniverseComparison.publicSpecGRingEquiv`
+compares public scheme G with native ring G for every Noetherian ring in all
+degrees, through the same original coherent category. Its residue-field
+comparison preserves the original scheme residue pushforward.
+`Affine.LocalizationNaturality.publicSpecGRingEquiv_localization_pullback`
+identifies literal `Scheme.pullbackG` for localization at any submonoid with
+the original finite-module localization map in all degrees. These accepted
+comparisons do not identify `Scheme.boundaryG`.
 
 ## Q4: the characteristic-zero Matsumoto phase
 
@@ -336,6 +437,26 @@ and finite-module transports. Prove naturality and the positive marking of
 the resulting `mu_+` on actual symbols. This is the acceptance boundary for
 Q4, not merely the definition of a Steinberg group.
 
+A smaller route can suffice for Q6. The actual homotopy-fiber LES, the
+asphericity of BGL and the proved stable pi1 kernel give a short exact
+sequence from `pi2(ZeroComponent R)` into the fundamental group `H` of the
+actual fiber of `stableZeroMap R`, with quotient the actual elementary group.
+The loop action on that fiber gives a bounded route to centrality. If `H` is
+proved perfect, a genuine Steinberg lift onto that central extension is
+surjective; its kernel then surjects onto the original pi2. This avoids proving
+that `H` is universal, but does not make perfectness automatic.
+
+The precise smaller topological obligation is: for a connected source and
+simply connected target, perfect source pi1 and surjective actual H2 imply
+perfect pi1 of the actual homotopy fiber. It requires the low-degree homology
+sequence and H1/abelianization, plus an actual regular-coefficient chain
+comparison for the pullback cover of BGL. Existing covering-homology and
+simply-connected-source Whitehead interfaces do not supply that case: the
+pullback cover has pi1 equal to the generally nontrivial elementary group.
+Perfectness of the elementary quotient alone is insufficient, as a product
+with a nonzero abelian kernel shows. This route is an investigated proof plan,
+not a newly formalized theorem.
+
 ## Q5: low-degree actions, signs, and the origin DVR
 
 Construct only the `(1,1)` field/module action and `(0,1)` supported-object
@@ -350,12 +471,23 @@ and the scalar calibration using actual representatives. A free sign choice
 or unrelated automorphism is not an acceptable calibration.
 
 For the actual smooth-curve origin DVR, construct unit-pair classes in its
-original K2 and prove generation. A useful route is unit-symbol generation
-of the tame kernel in its fraction field, together with an independently
-proved injection of the DVR K2 and actual boundary compatibility. This route
+original K2 and prove generation. The algebraic part of a useful route is proved:
+`MilnorK2.DVR.TameKernel.ker_tame_eq_unitSymbolSpan` identifies the Milnor
+tame kernel with the integer span of field symbols of two actual DVR units.
+`MilnorK2.Residue` and `DVR.Basic` construct the actual ordered tame map,
+with `∂{u,π}=ū` and `∂{π,u}=ū⁻¹`, for every DVR and its fraction field.
+Quillen unit generation still needs the marked comparison, an injection of
+the original DVR group, and actual Quillen boundary compatibility. This route
 must discharge that injection rather than assume it from residue vanishing:
 the residue field has characteristic zero and its K2 need not vanish.
-An alternative Dennis--Stein/unit-generation argument must prove the needed
+`GTheory.DVR.SplitResidue.localizationKMap_injective_of_residueSection`
+proves injectivity of the original generic finite-module G map in every
+degree when the actual residue map has a ring section. Equivalently one may
+supply field maps `σ : F →+* R`, `ρ : R →+* F` with `ρ.comp σ = id` and
+`ker ρ` the maximal ideal. The actual `PowerSeries ℚ` test realizes this
+hypothesis; no section for the requested smooth-curve origin is claimed.
+This conditional supplier does not prove a Quillen product or unit-generation
+theorem. An alternative Dennis--Stein/unit-generation argument must prove the needed
 generation theorem and compare its classes to `mu_+`. Keep either unresolved
 generation/injectivity input visible while pursuing the concrete origin case.
 Finally prove generic and closed pullback equations on generators, and extend
@@ -369,6 +501,14 @@ module-Q K2 and transport to `G2(Spec k)`, or prove that latter group zero
 directly. Characteristic-zero Q4 does not supply this surjection in positive
 characteristic. Include the smallest fields without extra cardinality
 hypotheses. This endpoint does not require computation of all higher groups.
+
+The migration is now native in `Quillen.KTheory.MilnorK2.{Basic,Map,Symbols,FiniteField}`,
+with namespace `Quillen.MilnorK2`. `UnitTensor`, the Steinberg span, `K2`,
+`symbol`, `symbolBilinear`, `unitsLinear`, `map` and `mapAdd` preserve the R5
+definitions by transparent comparisons. `k2_eq_zero_of_finite` and
+`finiteField_k2_subsingleton` need exactly `[Field k] [Finite k]`. The separate
+Milnor retarget patch is unapplied and does not certify whole-R5 integration.
+The actual-G2 comparison remains the missing Q6 obligation.
 
 ## Q7: three distinct localization consequences
 
@@ -392,24 +532,39 @@ Return narrow number-ring and origin statements. Stronger R5 background
 records quantify over degrees, fields, or DVRs beyond the proved scope and
 must remain explicitly uninstantiated until their full hypotheses are met.
 
-## Parallel implementation after this plan
+`Quillen.GTheory.Dedekind.Localization` implements the native part using the
+original `localizationKMap`, `connectingHom` and `supportedKMap`.
+`residueFieldBoundary` consists of primary evaluation and the inverse of the
+proved pointwise comparisons. Its kernel-intersection theorem has source
+degree `n+1`, not degree zero. `residueFieldG1_finite_family_lift` retains both
+the original raw boundary equation to the actual assembly and every prescribed
+coordinate under the explicit generic-G1-injectivity premise.
+`FiniteModules.LocalizationNaturality` and
+`Dedekind.{LocalDvrSupport,LocalDvrComparison,LocalDvrBoundaryNaturality}`
+now supply the native scalar-localization comparison. In particular,
+`localDvrBoundary_comp_extension` identifies the original local boundary
+after actual fraction-field tensor extension with the original global
+residue coordinate for `G(n+2) → G(n+1)`.
+`localization_range_eq_iInf_localDvrBoundaryFromGlobal_ker` and
+`localDvrG1_finite_family_lift` give consequences 1 and 3 with those literal
+native boundaries. The finite-family lift retains the original generic-G1
+injectivity hypothesis. The actual scheme localization boundary remains
+open: the proved ambient affine pullback square alone does not imply a
+`Scheme.boundaryG` comparison.
 
-| Branch | Owned scope | First acceptance boundary | Dependencies |
+## Construction dependencies
+
+| Construction | Native owner | Supplied interface | Dependencies |
 | --- | --- | --- | --- |
-| A | `Algebra/Group/StableFieldDeterminant.lean`, any specifically assigned matrix helper | Stable determinant, field kernel, quotient equivalence, naturality | Existing stable algebra and mathlib elimination |
-| B | `Aglib/CategoryTheory/Pi/{Abelian,FiniteSupport,FiniteStages}.lean` and its family guide | Same finite-support object, exact evaluations, stage restriction/extension equivalence | Existing general R5 candidates, read-only |
-| C | Exact-product general candidate and `KTheory/FiniteSupport/FiniteProduct.lean` | Original Q-projection finite-product equivalence, including empty product | Existing Waldhausen product and Q/S exact naturality |
-| D | `KTheory/Field/` positive projective/module comparison leaves | Canonical quotient-Q transport and exact remaining cube-marking obligation | Existing completion comparison; A for determinant endpoint |
-| Principal | This plan, shared facades, consumer integration, and Q2c/Q2d allocation | Actual filtered Q diagram, direct-sum theorem, integrated Q1/Q2 review | B and C; D for marked Q1 |
+| Stable algebra | `Algebra/Group/StableFieldDeterminant.lean` | Stable determinant, field kernel, quotient equivalence and naturality | Stable algebra and finite matrix elimination |
+| Canonical families | `Aglib/CategoryTheory/Pi/{Abelian,FiniteSupport,FiniteStages}.lean` | Exact evaluations and stage restriction/extension equivalence | Pointwise abelian categories |
+| Finite products | `KTheory/FiniteSupport/FiniteProduct.lean` | Original Q-projection equivalence, including the empty product | Waldhausen product and exact Q/S naturality |
+| Marked determinant | `KTheory/Field/` comparison leaves | Canonical quotient-Q transport and literal matrix-cube equation | Stable determinant, completion comparison and actual localized homotopy |
+| Direct sum | `KTheory/FiniteSupport/Decomposition.lean` | Original evaluation map and finite-sum inverse | Canonical families, finite products and actual filtered Q diagram |
 
-Workers may investigate/prove only their assigned branch, with scratch outside
-production for incomplete work. They must not update manifests, shared facades,
-the Git index, or another branch's files. Package/cache writers remain serial;
-coordinate focused compile slots before a missing dependency can trigger a
-shared build. Parallel source authoring does not require parallel Lake writers.
-Q3 starts when its genuine prerequisites are available. Q4 can receive a
-bounded independent derivation after the first branches are underway; it must
-not consume Q1/Q2 execution by rebuilding general higher K-theory.
+These dependencies supply Q1 and Q2 and support the native Q3 assembly. Q4
+remains a separate substantial phase; its new topology must be bounded by
+the actual degree-two comparison needed.
 
 ## Validation, review, and handback
 
@@ -440,6 +595,24 @@ owned paths and local source identity, pins, review boundary, commands and
 reusable evidence, original-map downstream adapter, and remaining gap. Commit
 completed owned source and fixed evidence at a deliberate local boundary;
 exclude caches and exploratory output. Do not push.
+
+The R5 retarget proposals remain unapplied. A strict foreign-style replay
+failed on older long lines; a separate fresh kernel-compatibility replay of
+79 sources using the actual R5 configuration passed. The new
+`NativeClosedSupport` bridge passed strict compilation, a six-declaration
+standard-foundation audit, ordinary source-correspondence review and
+`git apply --check` against R5 revision
+`d34faaf9c80b457a4afe0ee9589acf378b1c8dac`. It proves the original general
+closed-support assembly and second-support K1 corollaries. The separate
+`NativeFieldDeterminant` bridge passed strict compilation, a nine-declaration
+standard-foundation audit and patch applicability checks. Its literal cube,
+same-matrix automorphism and original tensor-functor identities preserve the
+pre-existing determinant constructor, its `T = -D_Q` sign and original scheme
+pullback naturality. Its additional 13 original R5 imports have successful
+fresh kernel compilations. The adapters use the fresh native-compatible source
+projection; they do not certify the different currently installed R5 dependency
+checkouts or full R5 CI. No conclusion here asserts completion of Q1–Q7 or
+established status for the full programme.
 
 ## Classical reference locators
 

@@ -9,13 +9,13 @@ public import Quillen.Algebra.Group.StableFieldDeterminant
 public import Quillen.KTheory.Field.ElementaryProjectiveKOne
 
 /-!
-# The unmarked determinant on original projective Q K₁ over a field
+# The determinant on original projective Q K₁ over a field
 
 The determinant is obtained by inverting the canonical quotient-to-Q composite
 and then applying the proved determinant on the original elementary quotient.
-Its matrix equation concerns the original completion representative. Identifying
-that representative with a separately specified positive Q cube remains a
-geometric obligation; no change of orientation is made in this definition.
+Its matrix equation concerns the original completion representative. The actual
+positive matrix-cube marking is proved in `Field.MatrixCubeComparison`, using
+the finite-stage geometric comparison without changing this determinant.
 -/
 @[expose] public section
 
@@ -46,7 +46,7 @@ theorem projectiveDetEquiv_matrix (n : ℕ) (g : StableGeneralLinear.GL F n) :
       Matrix.GeneralLinearGroup.det g :=
   projectiveDetEquiv_stableGroup F _
 
-/-- The unmarked projective determinant is natural for literal change of coefficient fields. -/
+/-- The projective determinant is natural for literal change of coefficient fields. -/
 theorem projectiveDetEquiv_baseChange {L : Type u} [Field L] (f : F →+* L)
     (a : (exactStructure Fᵐᵒᵖ).K 1) :
     projectiveDetEquiv L ((rightBaseChangeExact f).KMap 1 a) =

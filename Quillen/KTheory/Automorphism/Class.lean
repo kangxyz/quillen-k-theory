@@ -40,7 +40,7 @@ open CategoryTheory CategoryTheory.Limits Quillen
 open scoped ZeroObject Topology unitInterval
 
 namespace Quillen.Automorphism
-variable {C : Type u} [SmallCategory C] [Preadditive C] [HasFiniteBiproducts C]
+variable {C : Type u} [Category.{v} C] [Preadditive C] [HasFiniteBiproducts C]
   (E : ExactStructure C)
 
 /-- The second Q-arrow from zero to A, represented by A with legs A -> 0 and id. -/
@@ -99,6 +99,12 @@ def zeroCone : (Functor.const (Core C)).obj E.qZero ⟶ coreQ E where
 def fullCone : (Functor.const (Core C)).obj E.qZero ⟶ coreQ E where
   app A := fullFromZero E A.of
   naturality {_ _} f := by simpa [coreQ] using (fullFromZero_iso E f.iso).symm
+
+end Quillen.Automorphism
+
+namespace Quillen.Automorphism
+variable {C : Type u} [SmallCategory C] [Preadditive C] [HasFiniteBiproducts C]
+  (E : ExactStructure C)
 
 /-- An actual continuous path from zero to the image of each core-space point. -/
 def conePath (α : (Functor.const (Core C)).obj E.qZero ⟶ coreQ E)

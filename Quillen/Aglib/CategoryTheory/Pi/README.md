@@ -4,7 +4,8 @@ This is the canonical implementation owner for the general category-family
 construction migrated from R5 revision
 `1b7c3945394bcc27a94d1ebf86df702b0291ee18`. The intended upstream modules are
 `Aglib.CategoryTheory.Pi.Abelian`, `Aglib.CategoryTheory.Pi.FiniteSupport`, and
-`Aglib.CategoryTheory.Pi.FiniteStages`. Public declarations use the native
+`Aglib.CategoryTheory.Pi.FiniteStages`, and
+`Aglib.CategoryTheory.Pi.Equivalence`. Public declarations use the native
 `CategoryTheory.Pi` namespace. Current consumers are Quillen's finite-product
 and finite-support K-theory comparisons.
 
@@ -61,3 +62,11 @@ chosen zero object of the functor category.
 The Serre, abelian, and exactness results assume each `C i` is abelian. The
 index set itself need not be finite. These are categorical foundations; the
 Q-construction and K-group comparisons are maintained in their Quillen owners.
+
+[Equivalence.lean](Equivalence.lean) restricts coordinatewise categorical
+equivalences to the original finite-support families. `IsZero` preservation
+retains the actual support predicate. The original inclusion and evaluations
+commute literally, while singleton inclusion has its specified natural
+isomorphism. Additive coordinate equivalences give exact directions. The
+explicit common-universe SmallModel specialization is used by native
+Dedekind primary support; it asserts no cross-universe K-group equality.

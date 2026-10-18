@@ -9,13 +9,14 @@ public import Quillen.KTheory.Field.ProjectiveDeterminant
 public import Quillen.KTheory.Field.ScalarExtensionComparison
 
 /-!
-# The unmarked determinant on the actual upper finite-module Q-group
+# The determinant on the actual upper finite-module Q-group
 
 The comparison retains the original stable elementary quotient, completion,
 projective Q-group, opposite-ring scalar restriction and upper SmallModel.
 Naturality uses literal finite-module tensor extension. The representative
-formula concerns the native completion class; identifying it with the positive
-capped automorphism cube is still a separate geometric obligation.
+formula here concerns the native completion class. `Field.MatrixCubeComparison`
+proves that the literal positive capped matrix cube has the ordinary determinant
+under this same equivalence.
 -/
 @[expose] public section
 
@@ -49,7 +50,7 @@ theorem elementaryUpperModuleKOneEquiv_ringMap {L : Type u} [Field L] (f : F →
   rw [elementaryProjectiveKOneEquiv_ringMap, rightProjectiveUpperModuleKEquiv_baseChange]
   rfl
 
-/-- The unmarked module determinant is the inverse of the canonical composite followed by det. -/
+/-- The module determinant is the inverse of the canonical composite followed by det. -/
 def moduleDetEquiv : (ModuleCat.finiteModuleExactStructure.{u, u} F).SmallK.{u + 1} 1 ≃* Fˣ :=
   (elementaryUpperModuleKOneEquiv F).symm.trans (StableGeneralLinear.quotientDetEquiv F)
 

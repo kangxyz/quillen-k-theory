@@ -35,6 +35,7 @@ public import Quillen.Localization.Serre.LocalizationEndpoint
 public import Quillen.Localization.Serre.LocalizationLESAdapter
 public import Quillen.Localization.Serre.LocalizationTarget
 public import Quillen.Localization.Serre.LocalizationTheorem
+public import Quillen.Localization.Serre.Naturality
 public import Quillen.Localization.Serre.NormalizedComma
 public import Quillen.Localization.Serre.NormalizedStructuredComma
 public import Quillen.Localization.Serre.OverQArrows

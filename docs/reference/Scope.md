@@ -18,7 +18,12 @@ interface or a successful compilation does not supply an additional comparison.
 | Exact categories and Q-construction | Exact structures, restricted spans, composition, exact functors, and canonical K-maps |
 | Waldhausen theory | S-construction, additivity, Q/S comparison, and approximation/cofinality/fibration with their stated input data |
 | Classical K₀ | Exact and Waldhausen object presentations, original object classes, inverse identities, and all-class exact-functor naturality |
-| Field determinant and finite support | Actual stable field determinant and elementary kernel; unmarked original projective-Q K1 comparison; all positive finite-support K-groups with original evaluation/inclusion equations, including K1 and K2 |
+| Field determinant and finite support | Actual stable field determinant and elementary kernel; original projective/finite-module Q K1 determinant with literal positive matrix-cube equation over every field and rank including zero; all positive finite-support K-groups with original evaluation/inclusion equations, including K1 and K2 |
+| Native Dedekind support | Actual primary decomposition, ideal-power residue dévissage and positive residue-field G-assembly; original native boundary coordinates and finite-family lifting under explicit generic-G1 injectivity; actual local-DVR boundaries after generic tensor extension equal global residue coordinates in positive supported degree; the scheme-boundary comparison remains open |
+| Closed-point coherent support | Locally Noetherian finite-S splitting and canonical finite-family reconstruction; Noetherian upper coherent support assembly from public field spectra in all positive degrees, with original pushforwards and an injective closed-point family |
+| Affine public G transport | Same-original-category model-universe equivalence, public scheme residue-pushforward comparison and literal localization pullback square for Noetherian rings and arbitrary submonoids, in all degrees; no scheme-boundary comparison is inferred |
+| Milnor symbols | Original integer tensor quotient, symbols and field maps; all-finite-field Milnor K2 vanishing; actual-DVR ordered tame map and tame kernel equal to the unit-symbol span; actual Quillen-K2 comparison remains open |
+| Split-residue DVR | Original generic finite-module G map injective in every degree under a ring section of the actual residue map; no smooth-curve origin realization or Quillen unit-generation theorem is inferred |
 | Ring plus comparison | Independent homological stable-BGL model, exact standard zero-component Q-loop homotopy equivalence, original K₀-times-plus product, and ordinary forward-map ring-change naturality |
 | Finite-projective scalar extension | Matrix-image change of rings, additive Hom universal property and literal noncommutative balanced-tensor identification with exact finite-projective base change |
 | Classical CW plus comparison | Constructed comparison homotopy equivalences and ordinary uniqueness for original plus maps on actual Hausdorff CW spaces, with an explicit common coefficient universe for mixed spaces |
@@ -420,6 +425,7 @@ tracks and a natural chosen inverse remain separate. See
 
 ## Remaining comparisons
 
+- Field/support programme: Matsumoto and positive symbol marking, actual finite-field Quillen G2 vanishing, low-degree actions and ordered Quillen boundary compatibility, origin-DVR Quillen unit generation, and literal `Scheme.boundaryG` comparison. The original native ring local-DVR boundary square is supplied; its finite-family lifting still assumes original generic-G1 injectivity. R5 retarget proposals remain unapplied.
 
 - Identification of the constructed fine completion with the original raw all-stage geometric tower and classical nonconnective groups. Fine ambient/supported stabilization and bijectivity of the original negative-class maps are supplied under the stated qcqs/compact-open hypotheses.
 - Full all-iterate comparison with the original geometric Bass tower, the Laurent splitting and original fine [T] terminal boundary, including the zero-section class and possible Nil terms. The positive exact row on PerfectK(Spec R) and the original relative scalar-to-cofiber boundary are proved; they do not close these remaining comparisons.

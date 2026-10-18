@@ -114,6 +114,7 @@ public import Quillen.Topology.ClassifyingSpace.TranslationTelescopeComponents
 public import Quillen.Topology.ClassifyingSpace.TranslationTelescopeFinite
 public import Quillen.Topology.ClassifyingSpace.TranslationTelescopeShift
 public import Quillen.Topology.ClassifyingSpace.UnitalDiagonal
+public import Quillen.Topology.ClassifyingSpace.UniversalComposition
 public import Quillen.Topology.ClassifyingSpace.UniverseHomotopy
 public import Quillen.Topology.ClassifyingSpace.UniverseHomotopyTracks
 public import Quillen.Topology.ClassifyingSpace.UniverseLift
@@ -298,6 +299,7 @@ public import Quillen.Topology.HELP.WeakFiberCube
 public import Quillen.Topology.HELP.WeakFinite
 public import Quillen.Topology.HELP.WeakFiniteBased
 public import Quillen.Topology.Homeomorph.SigmaCongr
+public import Quillen.Topology.Homotopy.ConcatenationFamilies
 public import Quillen.Topology.Homotopy.LocallyStationary
 public import Quillen.Topology.Homotopy.SquareBoundaryPaths
 public import Quillen.Topology.Homotopy.ThreeSideSquare
@@ -322,6 +324,7 @@ public import Quillen.Topology.HomotopyEquiv.Fiberwise
 public import Quillen.Topology.HomotopyEquiv.HomotopySquare
 public import Quillen.Topology.HomotopyEquiv.InverseNaturality
 public import Quillen.Topology.HomotopyEquiv.PathComponent
+public import Quillen.Topology.HomotopyFiber.BasedHomotopyConnecting
 public import Quillen.Topology.HomotopyFiber.BasedHomotopySquareMap
 public import Quillen.Topology.HomotopyFiber.BasedLESNaturality
 public import Quillen.Topology.HomotopyFiber.BasedSquareMap
@@ -376,6 +379,7 @@ public import Quillen.Topology.HomotopyFiber.Product
 public import Quillen.Topology.HomotopyFiber.ProjectionFibration
 public import Quillen.Topology.HomotopyFiber.Separation
 public import Quillen.Topology.HomotopyFiber.Sequence
+public import Quillen.Topology.HomotopyFiber.SourceContraction
 public import Quillen.Topology.HomotopyFiber.SourceEquivalence
 public import Quillen.Topology.HomotopyFiber.SquareEquivalence
 public import Quillen.Topology.HomotopyFiber.StrictWeakTransport
@@ -427,6 +431,7 @@ public import Quillen.Topology.HomotopyGroups.GenLoopSelfTrackSpatial
 public import Quillen.Topology.HomotopyGroups.GenLoopSelfTrackSpatialProduct
 public import Quillen.Topology.HomotopyGroups.GenLoopSelfTrackTimeOperations
 public import Quillen.Topology.HomotopyGroups.GenLoopSelfTrackTransport
+public import Quillen.Topology.HomotopyGroups.HSpaceAction
 public import Quillen.Topology.HomotopyGroups.Loop.BasedDetection
 public import Quillen.Topology.HomotopyGroups.Loop.ComponentProduct
 public import Quillen.Topology.HomotopyGroups.Loop.ComponentTranslation

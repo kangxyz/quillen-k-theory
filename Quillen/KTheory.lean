@@ -10,7 +10,12 @@ module
 public import Quillen.KTheory.API
 public import Quillen.KTheory.Automorphism.Class
 public import Quillen.KTheory.Automorphism.Cube
+public import Quillen.KTheory.Automorphism.Isomorphism
 public import Quillen.KTheory.Automorphism.Naturality
+public import Quillen.KTheory.Automorphism.NormalizationOrder
+public import Quillen.KTheory.Automorphism.PositiveNormalization
+public import Quillen.KTheory.Automorphism.ReturnNormalization
+public import Quillen.KTheory.Automorphism.Universal
 public import Quillen.KTheory.Basic
 public import Quillen.KTheory.Bass.AffineDiagram
 public import Quillen.KTheory.Bass.Contraction
@@ -80,10 +85,14 @@ public import Quillen.KTheory.Bass.TwoChartStableVanishing
 public import Quillen.KTheory.Equivalence
 public import Quillen.KTheory.Field.ElementaryProjectiveKOne
 public import Quillen.KTheory.Field.FiniteModuleRingEquivalence
+public import Quillen.KTheory.Field.MatrixCubeComparison
+public import Quillen.KTheory.Field.MatrixTransport
 public import Quillen.KTheory.Field.ModuleDeterminant
 public import Quillen.KTheory.Field.ProjectiveDeterminant
 public import Quillen.KTheory.Field.ProjectiveFiniteModules
 public import Quillen.KTheory.Field.ScalarExtensionComparison
+public import Quillen.KTheory.Field.StableMatrixLoop
+public import Quillen.KTheory.Field.StableMatrixMarking
 public import Quillen.KTheory.FiniteSupport.Decomposition
 public import Quillen.KTheory.FiniteSupport.FilteredStages
 public import Quillen.KTheory.FiniteSupport.FiniteProduct
@@ -114,18 +123,31 @@ public import Quillen.KTheory.Map.NaturalIso
 public import Quillen.KTheory.Map.RebasePath
 public import Quillen.KTheory.Map.RightBaseChange
 public import Quillen.KTheory.Map.RightBaseChangeTensor
+public import Quillen.KTheory.Map.SmallModelUniverse
+public import Quillen.KTheory.Map.UniverseComparison
+public import Quillen.KTheory.MilnorK2.Basic
+public import Quillen.KTheory.MilnorK2.DVR.Basic
+public import Quillen.KTheory.MilnorK2.DVR.TameKernel
+public import Quillen.KTheory.MilnorK2.FiniteField
+public import Quillen.KTheory.MilnorK2.Map
+public import Quillen.KTheory.MilnorK2.Residue
+public import Quillen.KTheory.MilnorK2.Symbols
 public import Quillen.KTheory.Plus
 public import Quillen.KTheory.Plus.ProjectiveCompletedTelescope
 public import Quillen.KTheory.Plus.ProjectiveCompletionAllComponents
+public import Quillen.KTheory.Plus.ProjectiveCompletionAutomorphismCones
+public import Quillen.KTheory.Plus.ProjectiveCompletionAutomorphismHomotopy
 public import Quillen.KTheory.Plus.ProjectiveCompletionBaseChange
 public import Quillen.KTheory.Plus.ProjectiveCompletionBaseChangeNullhomotopy
 public import Quillen.KTheory.Plus.ProjectiveCompletionBasedUnit
+public import Quillen.KTheory.Plus.ProjectiveCompletionBasepoint
 public import Quillen.KTheory.Plus.ProjectiveCompletionComponents
 public import Quillen.KTheory.Plus.ProjectiveCompletionFiberFormula
 public import Quillen.KTheory.Plus.ProjectiveCompletionFiberNaturality
 public import Quillen.KTheory.Plus.ProjectiveCompletionGradeNaturality
 public import Quillen.KTheory.Plus.ProjectiveCompletionKZero
 public import Quillen.KTheory.Plus.ProjectiveCompletionLocalHomology
+public import Quillen.KTheory.Plus.ProjectiveCompletionLocalizedContraction
 public import Quillen.KTheory.Plus.ProjectiveCompletionLoopHomotopyEquiv
 public import Quillen.KTheory.Plus.ProjectiveCompletionLoopKZero
 public import Quillen.KTheory.Plus.ProjectiveCompletionLoopLabels
@@ -181,6 +203,7 @@ public import Quillen.KTheory.Plus.StableProjectiveSource
 public import Quillen.KTheory.Plus.StableProjectiveTelescope
 public import Quillen.KTheory.Plus.StableProjectiveZeroComponent
 public import Quillen.KTheory.QHomotopy
+public import Quillen.KTheory.SpaceAction
 
 /-!
 # KTheory

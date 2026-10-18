@@ -6,6 +6,7 @@ Authors: kangxyz
 module
 
 public import Quillen.KTheory.FiniteSupport.Decomposition
+public import Quillen.KTheory.Field.MatrixCubeComparison
 
 /-!
 # Upper-universe residue-family consumers
@@ -27,6 +28,21 @@ attribute [local instance] Abelian.hasFiniteBiproducts Classical.propDecidable
 universe u
 
 namespace Consumer.LowDegreeFieldSupport
+
+/-- The literal positive standard cube retains determinant after actual tensor extension. -/
+theorem fieldMatrixTensorDet {F L : Type u} [Field F] [Field L] (f : F →+* L)
+    (n : ℕ) (g : Quillen.StableGeneralLinear.GL F n) :
+    Quillen.Field.moduleDetEquiv L
+        ((Quillen.Field.finiteModuleExtensionExact f).smallKMap.{u + 1} 1
+          (Quotient.mk' (Quillen.Automorphism.Cube.automorphismFirstCube
+            (ModuleCat.finiteModuleExactStructure.{u, u} F).smallModel.{u + 1}
+            ((equivSmallModel.{u + 1} (FGModuleCat.{u} F)).functor.obj
+              (FGModuleCat.of F (Fin n → F)))
+            ((equivSmallModel.{u + 1} (FGModuleCat.{u} F)).functor.mapIso
+              (FGModuleCat.matrixToAut F n g))))) =
+      Units.map f.toMonoidHom (Matrix.GeneralLinearGroup.det g) := by
+  exact (Quillen.Field.moduleDetEquiv_scalarExtension F f _).trans
+    (congrArg (Units.map f.toMonoidHom) (Quillen.Field.moduleDetEquiv_matrix_cube F n g))
 
 variable {I : Type u} (C : I → Type (u + 1))
   [∀ i, Category.{u + 1} (C i)] [∀ i, Abelian (C i)]

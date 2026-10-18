@@ -18,7 +18,8 @@ with the standard completion-to-Q equivalence. It therefore keeps the original
 stable matrix map, its basepoint tracks, and the inner-loop reversal already
 present in that comparison. Its target is the actual Q-construction of finite
 projective right modules. Ring naturality uses the original scalar-extension
-exact functor. No equation with a separately constructed matrix cube is asserted.
+exact functor. `Field.StableMatrixMarking` and `Field.MatrixCubeComparison`
+identify its finite-matrix values with the literal positive matrix cubes.
 -/
 @[expose] public section
 

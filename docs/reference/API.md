@@ -42,8 +42,20 @@ The independent `Consumer.PublicLibraries` imports both complete public roots to
 | `Quillen.CategoryTheory.QConstruction.Basic` | Quillen's Q-construction |
 | `Quillen.KTheory.API` | Exact-category K-groups, canonical maps, equivalences, and small models |
 | `Quillen.Algebra.Group.StableFieldDeterminant` | Actual stable determinant, field elementary kernel, and quotient determinant equivalence |
-| `Quillen.KTheory.Field.ProjectiveDeterminant` | Unmarked original projective-Q K1 determinant and actual base-change square |
+| `Quillen.KTheory.Field.ProjectiveDeterminant` | Original projective-Q K1 determinant and actual base-change square |
+| `Quillen.KTheory.Field.ModuleDeterminant` | Upper finite-module K1 determinant with literal tensor-extension naturality |
+| `Quillen.KTheory.Field.MatrixCubeComparison` | `moduleDetEquiv_matrix_cube` on the literal upper-small positive matrix cube, every field and rank including zero |
+| `Quillen.KTheory.Field.MatrixTransport` | Original free-module coordinate isomorphism to the standard action of the same matrix |
 | `Quillen.KTheory.FiniteSupport.Decomposition` | Positive finite-support K-equivalence by original evaluations and finite sums of original inclusions |
+| `Quillen.GTheory.Dedekind.ResidueFieldAssembly` | Native positive-degree residue-field G-assembly into actual torsion support, with original pushforwards |
+| `Quillen.GTheory.Dedekind.Localization` | Original native residue-coordinate kernel intersections and finite-family lifting under explicit generic-G1 injectivity |
+| `Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.FinitePointAssembly` | Public field-scheme G assembly into actual upper coherent support, every positive degree; Noetherian scheme, injective closed-point family and specified field closed immersions |
+| `Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.UniverseComparison` | `publicSpecGRingEquiv` in all degrees over Noetherian rings and original public scheme residue-pushforward comparison |
+| `Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.LocalizationNaturality` | Literal public `Scheme.pullbackG` equals native localization for every Noetherian ring and submonoid, in all degrees |
+| `Quillen.GTheory.Dedekind.LocalDvrBoundaryNaturality` | Original local-DVR boundary after actual generic extension equals global residue coordinates for G(n+2) → G(n+1); kernel intersections and finite-family lifting under original generic-G1 injectivity |
+| `Quillen.GTheory.DVR.SplitResidue` | Original generic finite-module G map injective in all degrees for a DVR whose actual residue map has a ring section |
+| `Quillen.KTheory.MilnorK2.DVR.TameKernel` | Actual-DVR Milnor tame kernel equals the integer span of field symbols of two ring units, with ordered tame signs |
+| `Quillen.KTheory.MilnorK2.FiniteField` | Original Milnor tensor quotient and integral finite-field vanishing; actual Quillen-G2 comparison remains separate |
 | `Quillen.KTheory.Plus` | Standard ring plus/Q homotopy equivalences, original K₀–plus product and component interfaces |
 | `Quillen.Topology.PlusConstruction.ClassicalCWUniqueness` | Automatic comparison and ordinary uniqueness for original plus maps on actual same-universe Hausdorff CW spaces |
 | `Quillen.Topology.PlusConstruction.ClassicalCWUniquenessUniverseLift` | Mixed-universe comparison and ordinary uniqueness on the original actual CW spaces |
