@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Generate the exhaustive library root and optional thematic import facades."""
+"""Generate exhaustive library, test and downstream roots and thematic facades."""
 import argparse
 from pathlib import Path
 import sys
 
-from library_sources import module_name, source_modules, test_modules, uses_module_system
+from library_sources import (downstream_sources, module_name, source_modules, test_modules,
+                             uses_module_system)
 
 ROOT = Path(__file__).resolve().parents[1]
 # Example clients are enrolled at the root without a generated family facade.
@@ -130,6 +131,27 @@ def generated_files(root: Path, modern_library: bool | None = None) -> dict[Path
             authors={name for path in tests
                      if not generator_owned(source := (root / path).read_text())
                      for name in source_authors(source)})
+    client_root = Path('examples/downstream/Consumer.lean')
+    client_directory = client_root.with_suffix('')
+    clients = {path for path in downstream_sources(root)
+               if client_directory in path.parents and path.name != 'Audit.lean'}
+    if clients or (root / client_root).exists():
+        modern_client = (not (root / client_root).exists()
+                         or uses_module_system((root / client_root).read_text()))
+        if modern_client:
+            legacy = sorted(path for path in clients
+                            if not uses_module_system((root / path).read_text()))
+            if legacy:
+                raise ValueError('Modern Consumer facade cannot import legacy sources: '
+                                 + ', '.join(map(str, legacy)))
+        outputs[client_root] = render_imports(
+            [module_name(path.relative_to('examples/downstream')) for path in clients],
+            'Independently compiled downstream consumers of the public library.', modern_client,
+            {name for path in clients
+             if not generator_owned(source := (root / path).read_text())
+             for name in source_authors(source)})
+        if modern_client:
+            outputs[client_root] += '\n@[expose] public section\n'
     return outputs
 
 
@@ -159,7 +181,9 @@ def main() -> int:
     else:
         # Recheck ownership before any writes: another editor may have created
         # or taken over a family facade after discovery.
-        conflicts = [path for path in outputs if path not in {Path('Quillen.lean'), Path('QuillenTest.lean')}
+        exhaustive_roots = {Path('Quillen.lean'), Path('QuillenTest.lean'),
+                            Path('examples/downstream/Consumer.lean')}
+        conflicts = [path for path in outputs if path not in exhaustive_roots
                      and (args.root / path).exists()
                      and not generator_owned((args.root / path).read_text())]
         if conflicts:

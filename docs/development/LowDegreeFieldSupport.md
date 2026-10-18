@@ -6,8 +6,11 @@ proof routes.
 The stated native Q1--Q3 constructions and Q6 finite-field K2/G2 vanishing are
 proved. Q7 supplies the original kernel-intersection and finite-residue generic
 G2-injectivity consequences; finite-family boundary lifting retains its separate
-generic-G1-injectivity hypothesis. Q4 comparison injectivity and positive marking,
-and Q5 origin-DVR unit generation, remain substantial mathematical obligations.
+generic-G1-injectivity hypothesis. The remaining Q4/Q5 mathematical and
+publication boundaries are refined in
+[Remaining field K2 and DVR proofs](MatsumotoCompletion.md). In particular,
+Milnor-to-Steinberg injectivity remains open; the current native non-Matsumoto
+sources are distinguished from the unfinished scratch detector construction.
 
 ## Source basis and execution boundary
 
@@ -69,10 +72,10 @@ finite-family model. Quillen must never import R5.
 | Q2 | `Quillen.FiniteSupport.decompositionKEquiv` in every positive degree, original evaluation/inclusion laws and finite-sum inverse; independent mathematical review accepted | Retain scoped final checks at the delivered source identity; no K0 decomposition is claimed |
 | Q3, Dedekind modules | Native SmallModel primary transport, all-degree point dévissage, positive `residueFieldAssemblyKEquiv` and original support/ambient pushforwards; independently accepted | R5's actual sheaf-stalk boundary transport remains separate |
 | Q3, finite closed support | Locally Noetherian finite-S splitting and finite-family equivalence; on Noetherian schemes, actual upper coherent support and public field-scheme assembly in every positive degree, with original pushforwards; accepted and normally compiled | Application-specific R5 integration remains unapplied |
-| Q4 | Direct Aglib Milnor interfaces; universal central lifting; all-rank generation of the original Steinberg kernel by ordered defects; field-natural surjective canonical Milnor maps to original right-projective and upper finite-module K2, with explicit module transport and proved actual fiber perfectness; independently accepted | Milnor-map injectivity, injectivity of the original Steinberg/fiber comparison, comparison isomorphism and positive product marking |
-| Q4, topology | General actual homotopy-fiber perfectness from path-connected perfect-pi1 source, simply connected target and surjective integral H2; original stable-zero fiber perfect over every ring via constructed covering/homology data; independently accepted | Universality/injectivity of the central-extension comparison is a separate Q4 obligation |
-| Q5, identity operations | Original scalar operations and signed boundaries; positive principal K0 calibration and ordered principal/local-DVR unit-uniformizer formulas, retaining a supplied fraction field; cross-universe action/cube transport, bilinear field products and unit-unit boundary zero; independently accepted | Reversed ordered input, Steinberg relation and Milnor/product marking |
-| Q5, DVRs | Actual-DVR Milnor tame kernel equals the unit-symbol span on supplied Aglib objects, including the canonical uniform residue; split-residue DVR generic G-map injectivity; actual-origin section and trait G/K injectivity proposal independently accepted | Quillen unit-pair generation still needs marked comparison and boundary compatibility |
+| Q4 | Direct Aglib Milnor interfaces; universal central lifting; all-rank original-kernel generation; canonical natural surjective Milnor maps; actual fiber perfectness; positive product marking; original Steinberg/fiber bijectivity and kernel/K2 injectivity; independently accepted and normally built | Milnor-map injectivity and the inverse-equivalence normalization |
+| Q4, topology | General actual homotopy-fiber perfectness from path-connected perfect-pi1 source, simply connected target and surjective integral H2; original stable-zero fiber perfect over every ring via constructed covering/homology data; original all-field Steinberg/fiber comparison injectivity; independently accepted | Milnor-to-Steinberg injectivity remains a separate Q4 obligation |
+| Q5, identity operations | Original scalar operations and signed boundaries; positive principal calibration, supplied-field ordered unit/uniformizer formulas, bilinear field products, unit-unit boundary zero and positive Milnor/product marking; independently accepted and normally built | Negative inverse normalization awaits Matsumoto |
+| Q5, DVRs | Actual Milnor tame-kernel unit span; canonical/supplied-field Quillen boundary equals tame; lower G2 and original Spec(A) K2 unit-pair generation with a residue ring section; original generic/closed pair values; independently accepted and normally built | Negative inverse normalization awaits Matsumoto; R5 application and broader nonsplit records remain separate |
 | Q6 | For every finite field, original right-projective K2, upper/lower finite-module K2/G2 and literal public G2(Spec F) are trivial; independent review, normal builds and F2/F3/F5 clients passed | No higher finite-field groups or Matsumoto injectivity are claimed |
 | Q7, native modules and schemes | Original boundary-coordinate kernel intersections and finite-family lifting under explicit generic-G1 injectivity; finite residue fields give original native/public generic G2 injectivity, retaining supplied fraction fields; principal scheme/local-DVR comparison in all degrees | Arithmetic generic-G1 injectivity remains separate; distinct R5 stalk/application retargets remain unapplied |
 
@@ -553,6 +556,10 @@ comparisons alone do not identify `Scheme.boundaryG`. The subsequent
 `Affine.PrincipalBoundaryComparison` supplies that additional boundary square.
 
 ## Q4: the characteristic-zero Matsumoto phase
+
+The revised [completion plan](MatsumotoCompletion.md) records the primary-source
+investigation, the diagnosed normalizer obstructions, precise remaining
+original-map obligations, and the next disjoint parallel assignments.
 
 Use Aglib's public `MilnorK.K F 2` and its canonical `MilnorK.twoEquiv F` to
 the retained tensor quotient `MilnorK.K2.Group F`. The supplied comparison

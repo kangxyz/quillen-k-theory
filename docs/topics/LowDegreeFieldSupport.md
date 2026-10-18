@@ -202,9 +202,18 @@ Both endpoints retain their original field-extension squares and literal
 ordered-defect values.
 [`MilnorKTwoSurjectivity`](../../Quillen/KTheory/Field/MilnorKTwoSurjectivity.lean)
 discharges the stage-containment input. The proved fiber perfectness then gives
-surjectivity onto these Quillen groups. Milnor-map injectivity, injectivity of
-the original Steinberg/fiber comparison, comparison
-isomorphism and equality with the positive scalar-operation product remain open.
+surjectivity onto these Quillen groups. Milnor-map injectivity remains open.
+[`SteinbergFiberInjectivity`](../../Quillen/KTheory/Field/SteinbergFiberInjectivity.lean)
+proves injectivity of the original kernel-to-right-projective K2 map and
+bijectivity of the original Steinberg-to-stable-fiber map over every field.
+The canonical construction, independent acceptance and normal checks retain
+the original basepoint paths, cover maps and signed torus generators; see the
+[completion plan](../development/MatsumotoCompletion.md).
+[`PositiveSymbolMarking`](../../Quillen/KTheory/Field/PositiveSymbolMarking.lean)
+proves `Field.milnorToUpperModuleKTwo_pair_eq_unitProduct` for every field.
+It identifies the same original Milnor map on ordered pairs with the positive
+scalar-operation product, retaining the forward opposite-unit action and
+original projective-to-module comparison.
 
 [`FiniteFieldKTwo`](../../Quillen/KTheory/Field/FiniteFieldKTwo.lean) proves the
 unconditional finite-field consequence. For every `[Field F] [Finite F]`,
@@ -320,8 +329,7 @@ transports the ordered formula through the original local-DVR boundary square.
 Its value is the positive lower native residue cube, and canonical promotion
 followed by the original determinant gives the positive reduced unit. The
 given-fraction-field version retains the exact original inverse restriction
-map. The reversed input, Steinberg relation and comparison with the
-Milnor/Steinberg map remain separate obligations.
+map. The full marked Milnor comparison below supplies both ordered tame values.
 
 ## DVR tame kernel and split residue
 
@@ -337,6 +345,15 @@ Its uniform-residue kernel is the comap of this span along the supplied
 This is an algebraic Milnor theorem; Quillen products and unit generation
 require their own comparisons.
 
+[`MilnorDvrBoundary`](../../Quillen/KTheory/LowDegreeScalarAction/MilnorDvrBoundary.lean)
+supplies those comparisons for the actual localization of a Dedekind domain at
+a height-one prime. Its lower Milnor map is the original upper map followed
+by canonical same-category universe lowering. The original local boundary,
+canonical residue promotion, and original field determinant equal Aglib's tame
+map on every Milnor class. Both the canonical and any supplied fraction field
+are covered, with no residue-section hypothesis. The resulting ordered values
+are `∂{u,π}=ū` and `∂{π,u}=ū⁻¹`.
+
 [`GTheory.DVR.SplitResidue`](../../Quillen/GTheory/DVR/SplitResidue.lean)
 proves `localizationKMap_injective_of_residueSection` for the original
 generic finite-module G map in every degree when the actual residue map
@@ -347,12 +364,40 @@ pullback injectivity; independent ordinary mathematical review accepted it.
 The genuine-model scheme corollaries retain the normality input of the
 existing diagram constructor.
 
+[`UnitPairGeneration`](../../Quillen/GTheory/DVR/UnitPairGeneration.lean)
+proves `unitPairSpan_eq_top_of_residueSection` for the original lower G2 of the
+actual local ring. The premise is a genuine ring section of its original
+residue map; generic injectivity is derived from that section. No Matsumoto
+injectivity or generic-G1 premise is required. The separate client constructs
+the coefficient section at the affine-line origin over every field, with
+Q/F2/F3 specializations. Projective K2 transport uses a separate actual K/G
+comparison; nonsplit-DVR generation is not asserted.
+
+[`SpecUnitPairs`](../../Quillen/KTheory/LowDegreeScalarAction/SpecUnitPairs.lean)
+constructs genuine scalar/positive-cube unit pairs in original scheme K2.
+Their KToG/affine images are the same lower DVR products. For the actual
+Dedekind localization with a residue ring section, native
+`Scheme.KToGPIDEquiv` reflects generation to `Scheme.K (Spec A) 2`.
+The proof uses the literal rank-one tilde sheaf and its positive automorphism
+cube, rather than defining pairs by an arbitrary inverse equivalence.
+
+[`SpecUnitPairNaturality`](../../Quillen/KTheory/LowDegreeScalarAction/SpecUnitPairNaturality.lean)
+computes the original generic and closed K-pullbacks of these pairs. Under
+target-only KToG/affine transport, their values are the lower Milnor symbols
+of the mapped ordered units; for field targets, the actual scheme pairs also
+agree. The residue case uses exact vector-bundle K-pullback and an ordinary
+sections/tensor isomorphism, with no nonflat coherent G-pullback.
+
 ## Remaining boundary
 
 Q1--Q3 and unconditional finite-field K2/G2 vanishing achieve the stated native
-milestones. Matsumoto and positive symbol marking, the reversed ordered residue,
-ordered Quillen boundary compatibility, origin-DVR Quillen unit
-generation remain open. R5's distinct sheaf-stalk transport and the first and
+milestones. The principal remaining field mathematics is injectivity of the
+original Milnor-to-Steinberg map. Positive marking, all-class ordered tame
+compatibility, and split-residue lower-G2 unit-pair generation now have native
+proofs and independent acceptance, including actual scheme-K2 generation and
+generic/closed pair values. The original Steinberg/fiber comparison has native
+source and normal validation. R5's distinct
+sheaf-stalk transport and the first and
 third affine localization consequences have a separately validated proposal.
 R5 retarget patches are unapplied. The field-determinant and closed-support
 bridges passed strict checks, scoped audits and independent mathematical review;

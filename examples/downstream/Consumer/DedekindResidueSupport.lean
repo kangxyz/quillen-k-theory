@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 
-import Quillen.GTheory.Dedekind.Localization
-import Quillen.GTheory.Dedekind.ResidueFieldAssembly
+module
+
+public import Quillen.GTheory.Dedekind.Localization
+public import Quillen.GTheory.Dedekind.ResidueFieldAssembly
 
 /-! Finite residue-family lifting and the resulting original ambient pushforward relation. -/
+@[expose] public section
 
 noncomputable section
 

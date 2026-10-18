@@ -898,6 +898,10 @@ public import Quillen.Aglib.LinearAlgebra.Matrix.RightAutomorphismsLeft
 public import Quillen.Aglib.LinearAlgebra.Matrix.RightLinear
 public import Quillen.Aglib.LinearAlgebra.Matrix.RightScalarExtension
 public import Quillen.Aglib.LinearAlgebra.Prod
+public import Quillen.Aglib.RepresentationTheory.Homological.GroupHomology.CentralBarLifts
+public import Quillen.Aglib.RepresentationTheory.Homological.GroupHomology.IntegralBar
+public import Quillen.Aglib.RepresentationTheory.Homological.GroupHomology.PerfectBarExtension
+public import Quillen.Aglib.RepresentationTheory.Homological.GroupHomology.Torus
 public import Quillen.Aglib.RingTheory.Polynomial.BivariateRegular
 public import Quillen.Aglib.RingTheory.RegularLocalRing.AffineProjectiveDimension
 public import Quillen.Aglib.RingTheory.RegularLocalRing.GlobalProjectiveDimension

@@ -39,6 +39,7 @@ accepted local implementation together with its old imports.
 | --- | --- |
 | [Module constructions](Algebra/Module/README.md) | Finite-projective retracts, finite defect parametrices, matrix presentations and balanced scalar extension |
 | [Module complexes](Algebra/Homology/ModuleCat/README.md) | Ordinary complex, tensor, exactness and homology interfaces |
+| [Integral bar homology](RepresentationTheory/Homological/GroupHomology/README.md) | Original low-degree bar cocycles, perfect central extensions, integer coefficient restriction and marked torus cycles |
 | [Endofunctor words](CategoryTheory/Endofunctor/README.md) | Specified finite words from a natural square automorphism, with explicit association and recursive component formulas |
 | [Exact-category filtrations](CategoryTheory/ExactCategory/Filtration/README.md) | Actual filtrations, factors and additive-invariant formulas under their conflation hypotheses |
 | [Displayed colimits](CategoryTheory/Limits/README.md) | Lower-ideal gluing and pointwise pushout interchange |

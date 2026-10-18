@@ -44,6 +44,7 @@ public import Quillen.Algebra.Group.StableSteinbergKernelGeneration
 public import Quillen.Algebra.Group.StableSteinbergNaturality
 public import Quillen.Algebra.Group.StableSteinbergParabolic
 public import Quillen.Algebra.Group.StableSteinbergRankTwo
+public import Quillen.Algebra.Group.StableSteinbergSchur
 public import Quillen.Algebra.Group.StableSteinbergSymbols
 public import Quillen.Algebra.Group.StableSteinbergTorus
 public import Quillen.Algebra.Group.StableSteinbergUniversal

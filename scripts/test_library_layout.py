@@ -2,10 +2,13 @@
 """Behavioral regression tests for library boundaries and enrollment."""
 from pathlib import Path
 import tempfile
+import subprocess
+import sys
 import unittest
 
 from check_library_layout import check_layout, import_cycles
-from generate_imports import generated_files
+from generate_imports import generated_files, stale_files
+from library_sources import lean_imports, uses_module_system
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -92,7 +95,9 @@ def s := "import QuillenTest.Bad"
         self.write('Quillen/Algebra/A.lean', 'import Quillen.NoSuchModule\n')
         self.rejected('Unresolved local import')
         self.write('Quillen/Algebra/A.lean', '')
+        self.write('examples/downstream/Consumer.lean', 'import Consumer.Bad\n')
         self.write('examples/downstream/Consumer/Bad.lean', 'import Quillen.NoSuchModule\n')
+        self.generate()
         self.rejected('Unresolved local import')
 
     def test_direct_indirect_and_self_cycles(self):
@@ -187,9 +192,56 @@ def s := "import QuillenTest.Bad"
     def test_downstream_imports_resolve_in_independent_package(self):
         self.write('examples/downstream/Consumer.lean', 'import Consumer.RealClient\n')
         self.write('examples/downstream/Consumer/RealClient.lean', 'import Quillen.Library\n')
+        self.generate()
         self.assertEqual(check_layout(self.root)[0], [])
         self.write('examples/downstream/Consumer/RealClient.lean', 'import Consumer.Missing\n')
         self.rejected('Unresolved local import')
+
+    def test_modern_consumer_rejects_legacy_child_before_build(self):
+        self.write('examples/downstream/Consumer.lean',
+                   'module\npublic import Consumer.Existing\n')
+        self.write('examples/downstream/Consumer/Existing.lean', 'module\n')
+        self.generate()
+        # Even a previously unlisted child must not escape the module guard.
+        self.write('examples/downstream/Consumer/NewClient.lean', 'import Quillen.Library\n')
+        for check in (generated_files, stale_files, check_layout):
+            with self.subTest(check=check.__name__):
+                with self.assertRaisesRegex(ValueError,
+                                            'Modern Consumer.*Consumer/NewClient.lean'):
+                    check(self.root)
+        original = (self.root / 'examples/downstream/Consumer.lean').read_bytes()
+        for arguments in ([], ['--check']):
+            result = subprocess.run(
+                [sys.executable, str(Path(__file__).with_name('generate_imports.py')),
+                 '--root', str(self.root), *arguments], capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn('Consumer/NewClient.lean', result.stderr)
+            self.assertEqual((self.root / 'examples/downstream/Consumer.lean').read_bytes(),
+                             original)
+        self.assertTrue(uses_module_system(original.decode()))
+
+    def test_consumer_enrollment_tracks_added_removed_and_nested_clients(self):
+        facade = Path('examples/downstream/Consumer.lean')
+        self.write(str(facade), 'module\n')
+        self.write('examples/downstream/Consumer/Existing.lean', 'module\n')
+        self.generate()
+        self.write('examples/downstream/Consumer/New/Nested.lean', 'module\n')
+        self.write('examples/downstream/Audit.lean', 'import Consumer\n')
+        self.write('examples/downstream/.lake/Consumer/Cached.lean', '')
+        self.write('examples/downstream/Consumer/Audit.lean', '')
+        self.rejected('missing enrollment')
+        self.generate()
+        self.assertEqual(lean_imports((self.root / facade).read_text()),
+                         ['Consumer.Existing', 'Consumer.New.Nested'])
+        self.assertEqual(check_layout(self.root)[0], [])
+        (self.root / 'examples/downstream/Consumer/Existing.lean').unlink()
+        self.rejected('missing enrollment')
+        self.generate()
+        self.assertEqual(lean_imports((self.root / facade).read_text()),
+                         ['Consumer.New.Nested'])
+        self.assertEqual(check_layout(self.root)[0], [])
+        self.assertFalse(uses_module_system(
+            (self.root / 'examples/downstream/Audit.lean').read_text()))
 
     def test_manual_future_facade_and_leaf_both_enrolled(self):
         self.write('Quillen/Future/A.lean', '')

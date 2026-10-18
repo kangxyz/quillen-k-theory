@@ -8,6 +8,7 @@ Authors: OpenAI, kangxyz
 module
 
 public import Quillen.GTheory.DVR.SplitResidue
+public import Quillen.GTheory.DVR.UnitPairGeneration
 public import Quillen.GTheory.Dedekind.FiniteResidueLocalization
 public import Quillen.GTheory.Dedekind.LocalDvrBoundaryNaturality
 public import Quillen.GTheory.Dedekind.LocalDvrComparison

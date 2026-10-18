@@ -347,6 +347,7 @@ public import Quillen.Topology.HomotopyFiber.CartesianDetection
 public import Quillen.Topology.HomotopyFiber.CartesianTransport
 public import Quillen.Topology.HomotopyFiber.CommonBaseSquare
 public import Quillen.Topology.HomotopyFiber.CommonBaseSquareTransport
+public import Quillen.Topology.HomotopyFiber.CommutingSquareCapping
 public import Quillen.Topology.HomotopyFiber.CompactHELP
 public import Quillen.Topology.HomotopyFiber.CompactLifting
 public import Quillen.Topology.HomotopyFiber.Components
@@ -391,6 +392,7 @@ public import Quillen.Topology.HomotopyFiber.LoopPrefixUnitCoherence
 public import Quillen.Topology.HomotopyFiber.Map
 public import Quillen.Topology.HomotopyFiber.NormalizedCapValue
 public import Quillen.Topology.HomotopyFiber.PathClass
+public import Quillen.Topology.HomotopyFiber.PeriodicConnecting
 public import Quillen.Topology.HomotopyFiber.PointComparison
 public import Quillen.Topology.HomotopyFiber.Product
 public import Quillen.Topology.HomotopyFiber.ProjectionFibration
@@ -481,6 +483,7 @@ public import Quillen.Topology.HomotopyGroups.PathTransportFundamentalGroup
 public import Quillen.Topology.HomotopyGroups.PathTransportGroup
 public import Quillen.Topology.HomotopyGroups.PathTransportHomotopy
 public import Quillen.Topology.HomotopyGroups.PathTransportNaturality
+public import Quillen.Topology.HomotopyGroups.PeriodicLoopFamilies
 public import Quillen.Topology.HomotopyGroups.Product
 public import Quillen.Topology.HomotopyGroups.ProductWeakEquivalence
 public import Quillen.Topology.HomotopyGroups.SelfTrackLoopShift
@@ -635,6 +638,7 @@ public import Quillen.Topology.LocalCoefficients.MarkedSphericalTwoCycle
 public import Quillen.Topology.LocalCoefficients.MayerVietoris
 public import Quillen.Topology.LocalCoefficients.OpenCoverDescent
 public import Quillen.Topology.LocalCoefficients.OpenExcision
+public import Quillen.Topology.LocalCoefficients.PeriodicSquare
 public import Quillen.Topology.LocalCoefficients.PointRelativeEvaluation
 public import Quillen.Topology.LocalCoefficients.PointRelativeHomology
 public import Quillen.Topology.LocalCoefficients.Prism
@@ -656,6 +660,9 @@ public import Quillen.Topology.LocalCoefficients.RelativeHomotopyEquivalence
 public import Quillen.Topology.LocalCoefficients.RelativeOpenRestriction
 public import Quillen.Topology.LocalCoefficients.RelativeSquares
 public import Quillen.Topology.LocalCoefficients.RelativeSubspaceInclusion
+public import Quillen.Topology.LocalCoefficients.SecondHurewicz
+public import Quillen.Topology.LocalCoefficients.SecondHurewiczInjective
+public import Quillen.Topology.LocalCoefficients.SecondHurewiczSquare
 public import Quillen.Topology.LocalCoefficients.SigmaChains
 public import Quillen.Topology.LocalCoefficients.SigmaFunctoriality
 public import Quillen.Topology.LocalCoefficients.SimplexAttachmentExcision
@@ -663,6 +670,8 @@ public import Quillen.Topology.LocalCoefficients.SimplexBoundaryProducts
 public import Quillen.Topology.LocalCoefficients.SimplexProductCoefficients
 public import Quillen.Topology.LocalCoefficients.SimplexProductMaps
 public import Quillen.Topology.LocalCoefficients.SimplexRelativeProducts
+public import Quillen.Topology.LocalCoefficients.SingularBar
+public import Quillen.Topology.LocalCoefficients.SingularBarCalibration
 public import Quillen.Topology.LocalCoefficients.SmallChainDecomposition
 public import Quillen.Topology.LocalCoefficients.SmallChainExcision
 public import Quillen.Topology.LocalCoefficients.SmallChainFunctoriality
@@ -694,6 +703,7 @@ public import Quillen.Topology.LocalCoefficients.TelescopeTransitions
 public import Quillen.Topology.LocalCoefficients.TelescopeTranslation
 public import Quillen.Topology.LocalCoefficients.TelescopeTranslationKernel
 public import Quillen.Topology.LocalCoefficients.TriangleHomology
+public import Quillen.Topology.LocalCoefficients.TrianglePrismComparison
 public import Quillen.Topology.LocalCoefficients.TrianglePullback
 public import Quillen.Topology.LocalCoefficients.TwistedWhiteheadChosenCovers
 public import Quillen.Topology.LocalCoefficients.TwistedWhiteheadSuppliedCovers

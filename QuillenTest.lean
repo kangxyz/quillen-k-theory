@@ -690,6 +690,7 @@ import QuillenTest.PolynomialScalarFineCofiberTrack
 import QuillenTest.PolynomialScalarSourcePath
 import QuillenTest.PolynomialScalarWeakComposition
 import QuillenTest.PosetLoop
+import QuillenTest.PositiveSymbolMarking
 import QuillenTest.PrecompletionTelescopeShift
 import QuillenTest.PrespectrumCofibers
 import QuillenTest.PrespectrumCompositionHomotopy
@@ -985,6 +986,7 @@ import QuillenTest.StableProjectiveZeroComponent
 import QuillenTest.StableQuotientInvariance
 import QuillenTest.StableSelfTrack
 import QuillenTest.StableStabilization
+import QuillenTest.SteinbergFiberInjectivity
 import QuillenTest.StickBreaking
 import QuillenTest.StrictBassDiagram
 import QuillenTest.StrictDiagramCofiberDescent

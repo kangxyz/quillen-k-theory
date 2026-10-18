@@ -4,13 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: kangxyz
 -/
 
-import Quillen.GTheory.FiniteModules.PrincipalObjectBoundary
-import Quillen.KTheory.LowDegreeScalarAction.DvrSymbols
-import Quillen.KTheory.LowDegreeScalarAction.UniverseNaturality
-import Mathlib.RingTheory.PowerSeries.Inverse
+module
+
+public import Quillen.GTheory.FiniteModules.PrincipalObjectBoundary
+public import Quillen.KTheory.LowDegreeScalarAction.DvrSymbols
+public import Quillen.KTheory.LowDegreeScalarAction.UniverseNaturality
+public import Mathlib.RingTheory.PowerSeries.Inverse
 
 /-! Independent client checks for the original boundary and scalar-action lowering interfaces.
 No unit-uniformizer boundary computation or Milnor marking is asserted here. -/
+@[expose] public section
 
 noncomputable section
 
