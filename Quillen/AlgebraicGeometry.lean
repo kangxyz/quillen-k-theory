@@ -1835,8 +1835,10 @@ public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.ClosedDevissage
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.ComparisonGTheory
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.GTheory
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.LocalizationNaturality
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.PrincipalBoundaryComparison
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.PrincipalLocalization
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.PrincipalSupport
+public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.RingIsoNaturality
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.Support
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.UniverseComparison
 public import Quillen.AlgebraicGeometry.Scheme.Coherent.Basic

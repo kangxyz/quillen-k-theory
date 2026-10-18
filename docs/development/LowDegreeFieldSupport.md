@@ -12,10 +12,14 @@ does not close that milestone. Q4 is a separate substantial phase.
 The investigated Quillen baseline is
 `16cc1d011ef6d9c28b045879be10617411a0c2b4`, with Lean `v4.34.1`, mathlib
 `d13f23b723b8a846827a245b89c10fc7d3f11612`, and Aglib
-`25c37780264f0da94f5bb6bd31cc089d26f2da80`. These are the actual dependency
-checkouts as well as the committed pins. The independent Quillen worktree was
-clean before this task. The pinned Aglib checkout has unrelated guidance and
-tooling edits; it is read-only for this work. No dependency update is planned.
+`25c37780264f0da94f5bb6bd31cc089d26f2da80`. The independent Quillen worktree was
+clean before this task. At the user's subsequent request, the root and maintained
+downstream manifests now select Aglib
+`16aa08a90198d76be0bec47dd640b5c992acd9d7`, with the same Lean and mathlib pins.
+The former dependency directory, including its nine unrelated guidance and
+tooling edits, is preserved intact in the task's external scratch backup.
+The new dependency is pristine. Its supplied Milnor interfaces are used directly;
+only the additional finite-field and tame-kernel proofs remain Aglib candidates.
 The relevant existing Quillen comparison artifacts are present locally;
 their presence is a cache candidate, not a substitute for checking source and
 trace compatibility during a focused build.
@@ -24,11 +28,18 @@ Implementation now takes place in the dedicated Git worktree
 `tmp/output/quillen-low-degree-foundations` of the surrounding workspace, on
 `codex/low-degree-field-support`. The previous Quillen worktree is clean on
 `main`. Task-owned source was transferred with matching SHA256 values;
-dependencies and build outputs were cloned independently without changing pins.
+dependencies and build outputs were cloned independently. The later Aglib
+upgrade preserves matching local artifacts and lets current Lake input checks
+select the affected compilation closure.
 
-The originating R5 source baseline is
-`1b7c3945394bcc27a94d1ebf86df702b0291ee18`. Its dependency checkout is a
+The original investigation used R5 source baseline
+`1b7c3945394bcc27a94d1ebf86df702b0291ee18`; the later separately checked
+adapter proposals use the live R5 baseline
+`d34faaf9c80b457a4afe0ee9589acf378b1c8dac`. Its dependency checkout is a
 different Quillen revision, `c73a12d54e59297d8acf3a7f0046fcf87e5f0ebb`.
+The subsequent rule-source update to
+`959fb044206b188c9b7cd66404b2b37b84fad8b0` changes guidance and CLI files only;
+the adapter source files, toolchains and dependency pins retain their identities.
 R5 source, manifests, and its Quillen package checkout remain read-only.
 Downstream retargeting is returned as a separate patch. Source references below
 are exact module/declaration locators, not permission to change their owners.
@@ -49,21 +60,22 @@ finite-family model. Quillen must never import R5.
 | Q1a | Actual all-field stable determinant, elementary kernel, quotient equivalence and ring naturality; independent mathematical review accepted | Original matrix-cube marking belongs to Q1b |
 | Q1b | All-field original upper finite-module determinant, literal scalar-extension square and `moduleDetEquiv_matrix_cube`, including rank zero; normally compiled and independently accepted | The validated original R5 consumer patch remains unapplied; full R5 integration is separate |
 | Q2 | `Quillen.FiniteSupport.decompositionKEquiv` in every positive degree, original evaluation/inclusion laws and finite-sum inverse; independent mathematical review accepted | Retain scoped final checks at the delivered source identity; no K0 decomposition is claimed |
-| Q3, Dedekind modules | Native SmallModel primary transport, all-degree point dévissage, positive `residueFieldAssemblyKEquiv` and original support/ambient pushforwards; independently accepted | Scheme localization-boundary comparison remains separate |
+| Q3, Dedekind modules | Native SmallModel primary transport, all-degree point dévissage, positive `residueFieldAssemblyKEquiv` and original support/ambient pushforwards; independently accepted | R5's actual sheaf-stalk boundary transport remains separate |
 | Q3, finite closed support | Locally Noetherian finite-S splitting and finite-family equivalence; on Noetherian schemes, actual upper coherent support and public field-scheme assembly in every positive degree, with original pushforwards; accepted and normally compiled | Application-specific R5 integration remains unapplied |
-| Q4 | The original Milnor tensor quotient, symbols and field maps are native and definitionally preserve the R5 presentation; independent migration review accepted | Stable Steinberg/kernel mathematics, actual degree-two topological comparison, injectivity and positive symbol marking |
-| Q5 | Actual-DVR Milnor tame kernel equals the unit-symbol span; split-residue DVRs have injective original generic finite-module G map in every degree; accepted and normally compiled | Actual low-degree actions, ordered Quillen boundary/product compatibility, and Quillen unit-pair generation remain open; the smooth-curve origin section is not realized |
-| Q6 | Native integral Milnor K2 vanishes over every finite field, including the smallest fields; independent review accepted | A symbol-preserving surjection to actual Quillen G2, or an independent actual-G2 vanishing proof |
-| Q7, native modules | Original local-DVR boundary after actual generic extension equals the global residue coordinate; image equals the intersection of these kernels; explicit original generic-G1 injectivity gives finite residue-G1 lifting; accepted and normally compiled | Literal `Scheme.boundaryG` comparison and actual finite-field G2 vanishing remain open |
+| Q4 | Direct Aglib Milnor interfaces; finite-rank stable Steinberg presentation, perfect central extension onto the original elementary group, field-map naturality, and the literal ordered torus defect in its kernel; independently accepted | Universal lifting, kernel symbol generation and relations, actual degree-two topological comparison, injectivity and positive marking |
+| Q5, identity operations | Original K0-to-K1 and K1-to-K2 operations, both variable laws, scalar-unit realization, original SmallModel/finite-module boundary formula, and signed object-class determinant calibration; independently accepted | Principal K0 boundary calibration, concrete residue/support identifications and ordered product marking |
+| Q5, DVRs | Actual-DVR Milnor tame kernel equals the unit-symbol span on supplied Aglib objects, including the canonical uniform residue; split-residue DVR generic G-map injectivity; actual-origin section and trait G/K injectivity proposal independently accepted | Quillen unit-pair generation still needs marked comparison and boundary compatibility |
+| Q6 | Integral Milnor K2 vanishes over every finite field, including the smallest fields, on both supplied Aglib presentations; port and canonical uniform transport independently accepted | A symbol-preserving surjection to actual Quillen G2, or an independent actual-G2 vanishing proof |
+| Q7, native modules and schemes | Original local/global residue-coordinate boundary square and its localization consequences; original principal scheme boundary agrees with finite-module localization and the native local-DVR boundary in all degrees, including any given fraction field; independently accepted | Actual R5 sheaf-stalk transport and finite-field Quillen G2 vanishing |
 
 The Q2 validation includes strict changed-leaf compilation, 15 scoped environment
 linters and native text lint on its nine defining modules (including stable
 algebra), a scoped standard-foundation audit, semantic regression properties,
 and an independently configured upper-universe client using the same pins.
 The checked source does not add custom axioms or proof placeholders. The
-separate maintained downstream manifest predates the root Aglib pin; its
-standalone client check uses a scratch manifest with the exact root pins,
-without modifying maintained manifests or updating dependencies.
+earlier standalone client check used a scratch manifest with the exact root
+pins. The subsequent authorized dependency upgrade also aligns the maintained
+downstream manifest with the new root Aglib pin.
 
 The earlier quotient-to-Q comparison package has its nine-module scoped lint
 pass. The primary categorical module has a focused build, scoped lint and
@@ -77,14 +89,46 @@ clients passed the same audit for 35 declarations in three origins. Together
 with the earlier audits, these cover every new defining module in this
 milestone. The two clients also passed scoped environment and native text lint.
 
-Normal aggregate `lake build +Quillen:olean` completed successfully, and the
+At the `8203f54d` milestone with Aglib `25c3778`, normal aggregate
+`lake build +Quillen:olean` completed successfully, and the
 generated `QuillenTest` aggregate passed strict compilation. Import generation,
 library layout, and source-token checks passed with 4667 production modules
 and 1048 trust-test modules. Regression properties include the literal
 rank-zero positive cube and a rank-one F5 cube with determinant 2, distinct
 from its inverse. The independently configured client retains the literal
 positive cube, original tensor extension and determinant square. Dependency
-pins and maintained downstream manifests were unchanged.
+pins and maintained downstream manifests were unchanged at that milestone.
+The Aglib upgrade has a separate validation basis: exact Milnor compatibility
+and DVR residue leaves, the scalar candidate and its K-action consumer passed
+normal focused compilation. Only one modified pre-existing Aglib implementation
+lies in the current Quillen import closure, `Modules.Tensor.Sections`; matching
+unaffected artifacts are retained. This does not assert a full Aglib-root build.
+
+On the updated basis, the fifteen subsequent scalar, homotopy, Steinberg and
+boundary defining origins passed the full standard-foundation audit for 759
+declarations. The seven newly uncovered or refreshed lint scopes passed all
+15 selected environment linters and native text lint (302 declarations), with
+compatible earlier lint evidence retained for the other eight scopes.
+The two direct-Aglib Milnor candidates passed normal compilation, independent
+ordinary mathematical review, 15 scoped linters and native text checks, and
+the complete 33-declaration origin audit. Their old seven-module Quillen
+implementation and README were deleted. The maintained independent client
+`Consumer.MilnorInterfaces` checks both smallest fields, the actual uniform/
+tensor field-map square, the ordered DVR residue and the uniform kernel;
+it and the existing field/support clients passed normal compilation under
+the aligned maintained manifest.
+
+Subsequent independent batches add 141 audited declarations from the Serre,
+base-ring-isomorphism and torus leaves, 40 from actual Steinberg-kernel
+centrality, 36 from object-class calibration, and 30 from SmallModel boundary
+transport. Each batch has matching strict/normal compilation, scoped native
+lint evidence and independent ordinary mathematical acceptance. Together
+the current stage covers 23 disjoint defining origins and 1039 declarations;
+the additional independent Milnor client has five checked declarations.
+This is combined scoped coverage, not a newly run whole-library audit.
+A whole-root incremental attempt was stopped when the changed upstream
+tensor leaf expanded into unrelated projective-line developments; its
+partial cache progress is retained and no new whole-root pass is claimed.
 
 The subsequent native Dedekind construction retains the exact
 `smallTorsion R⁰` localization term. Its categorical transport, point dévissage,
@@ -94,10 +138,11 @@ original module-level
 K-map endpoints use the same native universe. The subsequent same-original-
 category comparison `smallKUniverseEquiv` supplies explicit universe transport;
 `Affine.UniverseComparison` uses it for public scheme G-theory. The native
-Milnor migration was independently
-compared with the actual R5 definitions by transparent tensor/symbol/map
-identities. Its finite-field theorem concerns that quotient, rather than an
-unconstructed Quillen comparison.
+Milnor migration was independently compared with the actual R5 definitions by
+transparent tensor/symbol/map identities. The current direct Aglib reuse preserves
+that tensor quotient as `MilnorK.K2.Group`; `MilnorK.twoEquiv` gives its marked
+comparison with the public uniform group `MilnorK.K F 2`. Finite-field vanishing
+concerns these Milnor groups, rather than an unconstructed Quillen comparison.
 
 ## Fixed mathematical conventions
 
@@ -130,9 +175,10 @@ statements are appropriate only when the same proof supplies them.
 | Singleton closed support | `GeneralDevissage.closedSupportGEquiv` and its pushforward equation | `FiniteClosed`, `FiniteClosedFamilies` and `ClosedImmersion.FinitePointAssembly`: geometric assembly retaining original field pushforwards |
 | Exact equivalences | `KTheory.Equivalence` | Actual finite-stage, finite-module and upper coherent-model comparisons |
 
-The source inspection found elementary matrix commutator relations, but no
-stable Steinberg presentation, universal-central-extension comparison with
-actual K2, or applicable degree-two homotopy/homology theorem. The Coxeter
+The initial source inspection found elementary matrix commutator relations.
+The new finite-rank stable Steinberg presentation and its elementary quotient
+are now constructed. A universal-central-extension comparison with actual K2
+and an applicable degree-two homotopy/homology theorem remain missing. The Coxeter
 Matsumoto name in mathlib is unrelated. Hurewicz *fibration* APIs do not supply
 a degree-two Hurewicz isomorphism.
 
@@ -407,18 +453,49 @@ comparison preserves the original scheme residue pushforward.
 `Affine.LocalizationNaturality.publicSpecGRingEquiv_localization_pullback`
 identifies literal `Scheme.pullbackG` for localization at any submonoid with
 the original finite-module localization map in all degrees. These accepted
-comparisons do not identify `Scheme.boundaryG`.
+comparisons alone do not identify `Scheme.boundaryG`. The subsequent
+`Affine.PrincipalBoundaryComparison` supplies that additional boundary square.
 
 ## Q4: the characteristic-zero Matsumoto phase
 
-Use the same unit tensor quotient as R5's `MilnorK2.Basic` and preserve its
-`symbol` and `map`; migration requires a transparent identification or an
-explicit symbol-preserving comparison. Do not replace it silently by another
-presentation.
+Use Aglib's public `MilnorK.K F 2` and its canonical `MilnorK.twoEquiv F` to
+the retained tensor quotient `MilnorK.K2.Group F`. The supplied comparison
+preserves the ordered symbol and field maps. R5's legacy tensor interface can
+use a transparent alias to `Group`; no Quillen copy or old module alias is
+retained. Keep this marked comparison explicit whenever the two presentations
+meet.
 
-The algebraic track constructs the stable Steinberg group from elementary
-generators and all defining relations, its surjection to the actual stable
-elementary subgroup, centrality of its kernel, and its universal property.
+`Algebra.Group.StableSteinberg` now constructs a presentation with finite-rank
+root generators, root-additivity, disjoint-commutator, ordered-chain-commutator
+and stabilization relations. Its map is onto the original stable elementary
+subgroup, and a fresh index after stabilization proves perfectness, including
+over fields of orders two and three. `StableSteinbergNaturality` maps each
+literal generator by its coefficient field map and proves the squares with
+the original stable GL and elementary maps. Both leaves have independent
+ordinary mathematical acceptance. No identification with a separate infinite-
+index presentation is assumed.
+
+`StableSteinbergCentrality` now proves centrality of this actual kernel.
+Every presented word lies in a finite-rank root subgroup. Commuting fresh-column
+and fresh-row root products give literal matrix conjugation formulas for that
+subgroup. Injectivity of the original finite-stage stable-GL map forces a
+kernel element's matrix to be identity. The fresh-index commutator expression
+then centralizes every original root. A common maximum rank proves the result
+for arbitrary words. This proof uses no injectivity assertion about Steinberg
+stages, and includes rank zero and fields of orders two and three. Independent
+ordinary review accepted the centrality proof.
+
+`StableSteinbergTorus` supplies the literal words
+`w(a)=x01(a)x10(-a^-1)x01(a)` and `h(a)=w(a)w(-1)`. Their actual rank-two
+images are the Weyl matrix and `diag(a,a^-1)`. The exact ordered defect
+`h(a)h(b)h(ab)^-1` is a field-natural element of the original elementary-map
+kernel. Matrix multiplicativity does not assert multiplicativity of `h` in
+the presented group. This construction is independently accepted.
+
+The remaining algebraic track proves the universal lifting property of this
+perfect central extension. A bounded next route lifts roots into an arbitrary
+central extension by fresh-index commutators, proving independence, all defining
+relations and stabilization before using perfectness for uniqueness.
 For the field case prove that this kernel has precisely the bilinear
 Steinberg-symbol presentation. Kernel generation and relations are both
 required for an equivalence; generation alone supplies only a surjection.
@@ -465,6 +542,81 @@ operations where applicable, but prove additivity in the automorphism/unit
 variable and compatibility with the actual localization nullhomotopy.
 Preserve the same `mu_+` and prove its marking on ordered field symbols.
 
+The native identity-automorphism construction is now implemented in
+`KTheory.LowDegreeScalarAction.IdentityAutomorphism`, using generic
+`Topology.HomotopyGroups.LoopNormalizationProduct` and `SelfTrackOperation`.
+For the original exact structure `E` and `u : Aut (Id C)`, its public maps are
+
+```text
+kZeroActionHom E u : E.K 0 ->* E.K 1
+kOneAction E u     : E.K 1 ->* E.K 2.
+```
+
+`kZeroNatAut` and `kOneNatAut` prove the multiplication and identity laws in
+the natural-automorphism variable. Those laws use `C : Type (max u v)` with
+`Category.{v} C`; checked consumers include finite projectives, `FGModuleCat`
+and its actual upper SmallModel. Generic descent retains the original cube
+quotient. Source degree one uses an explicit trivial pi1-action on pi2,
+discharged for the native Q-space by `SpaceAction`; higher source additivity
+uses a distinct spatial coordinate. The whole composition prism is fixed at
+Q-zero. The representative formulas preserve track time first and the inverse
+relative to spatial-first `loopKOneNormalization` in degree zero.
+
+All three leaves passed normal compilation, independent complex mathematical
+review, 15 scoped environment linters, native text checks and the full
+182-declaration standard-foundation audit. The two generic leaves have no
+K-specific inputs or direct KTheory imports. Their inherited transitive import
+debt is unchanged.
+
+`LowDegreeScalarAction.ExactNaturality` proves the whole normalized-Q
+self-homotopy square from ordinary componentwise compatibility of identity
+natural automorphisms under an exact functor. It retains the actual zero rebase.
+The general candidate `CategoryTheory.Linear.ScalarAutomorphism` supplies the
+canonical scalar natural automorphism and lifts it to the actual chosen model
+through full faithfulness. `LowDegreeScalarAction.ScalarUnit` then supplies
+the unit-group homomorphisms into both original K-operations and their actual
+KMap naturality, including independently sized source categories with one
+fixed model universe. Finite-projective consumers need a commutative ring;
+finite-module consumers additionally need Noetherianity. These constructions
+have independent ordinary mathematical acceptance and focused normal builds.
+
+`SelfTrackLoopShift.operation_loopShift` proves the signed loop-shift formula,
+and `HomotopyFiber.SelfHomotopy.connectingHom_operation` proves its consequence
+for the original path-space boundary. In degrees two to one the output is
+inverted: the new track coordinate, curried coordinate and spatial normalizer
+must all be tracked. Both leaves have independent mathematical acceptance.
+`LowDegreeScalarAction.SerreBoundary` now identifies the supported operation
+through the whole original Serre fiber comparison and its fixed epsilon
+nullhomotopy. Thin Q-hom sets at its actual quotient-zero objects prove literal
+double simplicial cylinder equalities; realization gives invariance for every
+homotopy time, epsilon time and source point. The whole stored fiber path is
+therefore preserved. Bijectivity of the original fiber comparison gives
+`delta_1(action_1(a)) = action_0(delta_0(a))^-1` for the formal quotient.
+The actual-target version constructs its formal automorphism through the
+fully faithful canonical target lift. Scalar specialization requires only
+ordinary source, target and localization-functor linearity, with no linear
+structure on the formal quotient. Independent ordinary review accepted these
+statements in their common small categorical universe. The following leaf
+supplies their actual standard SmallModel transport.
+
+`LowDegreeScalarAction.SmallModelBoundary` now proves that standard-model
+transport through the literal exact identity functors, including the separate
+finite-module `smallAbelianKEquiv`. Its `finiteConnectingHom_scalar` uses the
+original finite-module connecting maps for every commutative noetherian ring
+and submonoid. Localization linearity is proved from the original scalar
+extension, and the kernel operation restricts the original lifted scalar
+automorphism. Neither model nor formal quotient is given a new linear instance.
+
+`LowDegreeScalarAction.ObjectClass` fixes the object-class sign. The original
+K0 object loop under the identity operation gives `automorphismClass`, hence
+the inverse of the literal `automorphismFirstCube` class. For the actual upper
+free rank-n field-module object, the determinant is `(r^n)^-1`, with rank zero
+and the chosen-zero object included. The rank-one value is `r^-1`.
+Both subsequent leaves have independent ordinary mathematical acceptance.
+The remaining principal calibration must compute the original K0 connecting
+map on the localized multiplication-by-uniformizer cube; it is not a premise
+supplied by these scalar-operation theorems.
+
 Derive the raw boundary and then its corrected version through the fixed
 `D_Q`, `mu_+`, `T`, and `N`. Check both ordered inputs `{u,pi}` and `{pi,u}`
 and the scalar calibration using actual representatives. A free sign choice
@@ -472,9 +624,9 @@ or unrelated automorphism is not an acceptable calibration.
 
 For the actual smooth-curve origin DVR, construct unit-pair classes in its
 original K2 and prove generation. The algebraic part of a useful route is proved:
-`MilnorK2.DVR.TameKernel.ker_tame_eq_unitSymbolSpan` identifies the Milnor
+`MilnorK.K2.DVR.ker_tame_eq_unitSymbolSpan` identifies the Milnor
 tame kernel with the integer span of field symbols of two actual DVR units.
-`MilnorK2.Residue` and `DVR.Basic` construct the actual ordered tame map,
+The directly supplied Aglib `MilnorK.K2.Residue` and `DVR.Basic` give the ordered tame map,
 with `∂{u,π}=ū` and `∂{π,u}=ū⁻¹`, for every DVR and its fraction field.
 Quillen unit generation still needs the marked comparison, an injection of
 the original DVR group, and actual Quillen boundary compatibility. This route
@@ -485,9 +637,18 @@ proves injectivity of the original generic finite-module G map in every
 degree when the actual residue map has a ring section. Equivalently one may
 supply field maps `σ : F →+* R`, `ρ : R →+* F` with `ρ.comp σ = id` and
 `ker ρ` the maximal ideal. The actual `PowerSeries ℚ` test realizes this
-hypothesis; no section for the requested smooth-curve origin is claimed.
-This conditional supplier does not prove a Quillen product or unit-generation
-theorem. An alternative Dennis--Stein/unit-generation argument must prove the needed
+hypothesis. The separate, unapplied `NativeOriginDvrSection` proposal constructs
+the section for the existing arithmetic diagram and supplied genuine model
+from their geometric triangles. It strictly checks the original trait
+`Scheme.pullbackG` and `Scheme.pullbackK` injectivity in every degree, including
+the existing additive G2/K2 maps. Its 45-declaration standard-foundation audit
+and patch applicability check passed against 52 matching fresh R5 sources;
+independent ordinary mathematical review accepted it. The abstract arithmetic
+diagram supplies its coefficient section directly; the genuine-model scheme
+corollaries retain the normality premise of that model's diagram constructor.
+This does not supply a Quillen
+product or unit-generation theorem. An alternative Dennis--Stein/unit-generation
+argument must prove the needed
 generation theorem and compare its classes to `mu_+`. Keep either unresolved
 generation/injectivity input visible while pursuing the concrete origin case.
 Finally prove generic and closed pullback equations on generators, and extend
@@ -502,12 +663,14 @@ directly. Characteristic-zero Q4 does not supply this surjection in positive
 characteristic. Include the smallest fields without extra cardinality
 hypotheses. This endpoint does not require computation of all higher groups.
 
-The migration is now native in `Quillen.KTheory.MilnorK2.{Basic,Map,Symbols,FiniteField}`,
-with namespace `Quillen.MilnorK2`. `UnitTensor`, the Steinberg span, `K2`,
-`symbol`, `symbolBilinear`, `unitsLinear`, `map` and `mapAdd` preserve the R5
-definitions by transparent comparisons. `k2_eq_zero_of_finite` and
-`finiteField_k2_subsingleton` need exactly `[Field k] [Finite k]`. The separate
-Milnor retarget patch is unapplied and does not certify whole-R5 integration.
+The basis, maps and symbols now come directly from Aglib's precise
+`MilnorK.K2` leaves; Quillen retains only the additional Aglib candidate
+`Quillen.Aglib.KTheory.MilnorK.K2.FiniteField`. Its tensor
+`k2_eq_zero_of_finite` and `finiteField_k2_subsingleton` need exactly
+`[Field k] [Finite k]`. The corresponding uniform degree-two endpoints use
+the injectivity of the supplied `MilnorK.twoEquiv`. The old Quillen-targeting
+Milnor retarget proposal is superseded by direct Aglib retargeting; its patch
+remains unapplied and does not certify whole-R5 integration.
 The actual-G2 comparison remains the missing Q6 obligation.
 
 ## Q7: three distinct localization consequences
@@ -548,9 +711,21 @@ residue coordinate for `G(n+2) → G(n+1)`.
 `localization_range_eq_iInf_localDvrBoundaryFromGlobal_ker` and
 `localDvrG1_finite_family_lift` give consequences 1 and 3 with those literal
 native boundaries. The finite-family lift retains the original generic-G1
-injectivity hypothesis. The actual scheme localization boundary remains
-open: the proved ambient affine pullback square alone does not imply a
-`Scheme.boundaryG` comparison.
+injectivity hypothesis.
+
+`Affine.PrincipalBoundaryComparison.publicSpecGRingEquiv_principalClosed_boundaryG`
+now proves the additional square for the original principal scheme boundary
+over every Noetherian ring and every element, in all degrees. Its proof uses
+the genuine supported global-sections/pushforward natural isomorphism and
+model-universe boundary transport. `Affine.RingIsoNaturality` keeps the
+original Spec ring-isomorphism pullback and the inverse scalar-restriction map.
+`Dedekind.PrincipalDvrBoundaryComparison` combines these with the actual DVR
+quotient and fraction-field identifications, retaining any supplied fraction
+field and including G1 to G0. These native statements and the literal R5
+`Localization.AtPrime p` boundary proposal have independent ordinary acceptance.
+R5's distinct sheaf-stalk boundary still requires its particular canonical
+stalk, residue and generic triangles and a base-ring-isomorphism boundary
+square; the ambient affine equivalence alone does not discharge that join.
 
 ## Construction dependencies
 
@@ -618,7 +793,10 @@ established status for the full programme.
 
 [Weibel, The K-book, chapter III](https://sites.math.rutgers.edu/~weibel/Kbook/Kbook.III.pdf):
 1.1.1--1.2.2 for determinant and field elimination, 5.4--5.5 for universal
-central extensions, 6.1 for the symbol presentation, and 6.1.1 for finite fields.
+central extensions, 5.10.1--5.10.2 for the literal torus words and Steinberg
+word calculation, 5.10.5 for kernel symbol generation, 6.1 for the full symbol
+presentation, and 6.1.1 for finite fields. The algebraic K2 in these chapter-III
+locators still needs comparison with this library's original topological groups.
 
 [Chapter IV](https://sites.math.rutgers.edu/~weibel/Kbook/Kbook.IV.pdf):
 1.7.1 for the classical degree-two comparison, 6.4 for product/filtered-union

@@ -119,6 +119,7 @@ public import Quillen.Topology.ClassifyingSpace.UniverseHomotopy
 public import Quillen.Topology.ClassifyingSpace.UniverseHomotopyTracks
 public import Quillen.Topology.ClassifyingSpace.UniverseLift
 public import Quillen.Topology.ClassifyingSpace.UniverseMap
+public import Quillen.Topology.ClassifyingSpace.UniversePromotion
 public import Quillen.Topology.ClassifyingSpace.ZeroSkeleton
 public import Quillen.Topology.ClassifyingSpace.ZerothHomotopy
 public import Quillen.Topology.Compactness.CountableFinal
@@ -377,6 +378,7 @@ public import Quillen.Topology.HomotopyFiber.PathClass
 public import Quillen.Topology.HomotopyFiber.PointComparison
 public import Quillen.Topology.HomotopyFiber.Product
 public import Quillen.Topology.HomotopyFiber.ProjectionFibration
+public import Quillen.Topology.HomotopyFiber.SelfHomotopy
 public import Quillen.Topology.HomotopyFiber.Separation
 public import Quillen.Topology.HomotopyFiber.Sequence
 public import Quillen.Topology.HomotopyFiber.SourceContraction
@@ -446,6 +448,7 @@ public import Quillen.Topology.HomotopyGroups.Loop.NormalizedSelfTrackNaturality
 public import Quillen.Topology.HomotopyGroups.Loop.Reversal
 public import Quillen.Topology.HomotopyGroups.Loop.TransposeSign
 public import Quillen.Topology.HomotopyGroups.Loop.WeakEquivalence
+public import Quillen.Topology.HomotopyGroups.LoopNormalizationProduct
 public import Quillen.Topology.HomotopyGroups.Map
 public import Quillen.Topology.HomotopyGroups.MovingBasepoint
 public import Quillen.Topology.HomotopyGroups.PathClassBijection
@@ -461,6 +464,8 @@ public import Quillen.Topology.HomotopyGroups.PathTransportHomotopy
 public import Quillen.Topology.HomotopyGroups.PathTransportNaturality
 public import Quillen.Topology.HomotopyGroups.Product
 public import Quillen.Topology.HomotopyGroups.ProductWeakEquivalence
+public import Quillen.Topology.HomotopyGroups.SelfTrackLoopShift
+public import Quillen.Topology.HomotopyGroups.SelfTrackOperation
 public import Quillen.Topology.HomotopyGroups.SphericalFaces
 public import Quillen.Topology.HomotopyGroups.SphericalHomotopyAddition
 public import Quillen.Topology.HomotopyGroups.SphericalSimplex

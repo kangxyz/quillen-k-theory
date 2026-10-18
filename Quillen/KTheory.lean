@@ -114,6 +114,12 @@ public import Quillen.KTheory.GrothendieckComparison.PathPotential
 public import Quillen.KTheory.GrothendieckComparison.Retraction
 public import Quillen.KTheory.GrothendieckGroup.Basic
 public import Quillen.KTheory.GrothendieckGroup.Map
+public import Quillen.KTheory.LowDegreeScalarAction.ExactNaturality
+public import Quillen.KTheory.LowDegreeScalarAction.IdentityAutomorphism
+public import Quillen.KTheory.LowDegreeScalarAction.ObjectClass
+public import Quillen.KTheory.LowDegreeScalarAction.ScalarUnit
+public import Quillen.KTheory.LowDegreeScalarAction.SerreBoundary
+public import Quillen.KTheory.LowDegreeScalarAction.SmallModelBoundary
 public import Quillen.KTheory.Map.Basic
 public import Quillen.KTheory.Map.CoherenceData
 public import Quillen.KTheory.Map.CommonAmbient
@@ -125,13 +131,6 @@ public import Quillen.KTheory.Map.RightBaseChange
 public import Quillen.KTheory.Map.RightBaseChangeTensor
 public import Quillen.KTheory.Map.SmallModelUniverse
 public import Quillen.KTheory.Map.UniverseComparison
-public import Quillen.KTheory.MilnorK2.Basic
-public import Quillen.KTheory.MilnorK2.DVR.Basic
-public import Quillen.KTheory.MilnorK2.DVR.TameKernel
-public import Quillen.KTheory.MilnorK2.FiniteField
-public import Quillen.KTheory.MilnorK2.Map
-public import Quillen.KTheory.MilnorK2.Residue
-public import Quillen.KTheory.MilnorK2.Symbols
 public import Quillen.KTheory.Plus
 public import Quillen.KTheory.Plus.ProjectiveCompletedTelescope
 public import Quillen.KTheory.Plus.ProjectiveCompletionAllComponents

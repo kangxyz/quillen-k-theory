@@ -5,17 +5,23 @@ Authors: kangxyz
 -/
 module
 
-public import Quillen.KTheory.MilnorK2.Symbols
+public import Aglib.KTheory.MilnorK.CompatibilityK2
+public import Aglib.KTheory.MilnorK.K2.Symbols
 public import Mathlib.RingTheory.IntegralDomain
 
 /-!
 # Integral Milnor K₂ of every finite field
 
-Every symbol in the existing tensor quotient vanishes over a finite field,
-so the integral Milnor group is a subsingleton. The proof uses cyclicity of
+Every symbol in Aglib's tensor quotient `MilnorK.K2.Group` vanishes over a
+finite field. The canonical `MilnorK.twoEquiv` gives the same conclusion for
+the uniform public group `MilnorK.K k 2`. The proof uses cyclicity of
 the finite unit group, skew symmetry, and a finite-fibre Steinberg argument.
 It includes characteristic two and the fields with two and three elements.
 No comparison with Quillen K₂ or finite-coefficient vanishing is asserted.
+
+Intended upstream module: `Aglib.KTheory.MilnorK.K2.FiniteField`. The exact
+hypotheses are `[Field k] [Finite k]`. The current consumer is Quillen's
+low-degree field comparison, which uses the uniform Milnor group.
 
 Migrated from `R5Lab/KTheory/MilnorK2/FiniteField.lean` at R5 commit
 `d79a2e5af436f59fdfebdd8770cd27c20f850e27`, source SHA-256
@@ -29,7 +35,7 @@ Finite unit-group cyclicity is supplied by the pinned Mathlib instance in
 
 noncomputable section
 
-namespace Quillen.MilnorK2
+namespace MilnorK.K2
 
 variable {k : Type*} [Field k] [Finite k]
 
@@ -98,15 +104,30 @@ theorem symbol_eq_zero_of_finite (a b : kˣ) : symbol a b = 0 := by
   rw [symbol_pow_left, symbol_pow_right, hs, smul_zero, smul_zero]
 
 /-- Symbols generate the actual tensor quotient, so every Milnor class is zero. -/
-theorem k2_eq_zero_of_finite (z : K2 k) : z = 0 := by
-  have he : (LinearMap.id : K2 k →ₗ[ℤ] K2 k) = 0 := by
+theorem k2_eq_zero_of_finite (z : Group k) : z = 0 := by
+  have he : (LinearMap.id : Group k →ₗ[ℤ] Group k) = 0 := by
     apply linearMap_ext
     intro a b
     simpa using symbol_eq_zero_of_finite a b
-  exact congrArg (fun f : K2 k →ₗ[ℤ] K2 k => f z) he
+  exact congrArg (fun f : Group k →ₗ[ℤ] Group k => f z) he
 
 /-- The actual integral Milnor group of any finite field has one element. -/
-instance finiteField_k2_subsingleton : Subsingleton (K2 k) :=
+instance finiteField_k2_subsingleton : Subsingleton (Group k) :=
   ⟨fun a b => (k2_eq_zero_of_finite a).trans (k2_eq_zero_of_finite b).symm⟩
 
-end Quillen.MilnorK2
+end MilnorK.K2
+
+namespace MilnorK
+
+variable {k : Type*} [Field k] [Finite k]
+
+/-- The uniform integral degree-two Milnor group vanishes over every finite field. -/
+theorem k2_eq_zero_of_finite (z : K k 2) : z = 0 := by
+  apply (twoEquiv k).injective
+  simpa only [map_zero] using K2.k2_eq_zero_of_finite (twoEquiv k z)
+
+/-- The uniform degree-two Milnor group of a finite field has one element. -/
+instance finiteField_k2_subsingleton : Subsingleton (K k 2) :=
+  ⟨fun a b => (k2_eq_zero_of_finite a).trans (k2_eq_zero_of_finite b).symm⟩
+
+end MilnorK

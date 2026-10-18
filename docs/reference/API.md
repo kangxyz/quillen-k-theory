@@ -42,6 +42,9 @@ The independent `Consumer.PublicLibraries` imports both complete public roots to
 | `Quillen.CategoryTheory.QConstruction.Basic` | Quillen's Q-construction |
 | `Quillen.KTheory.API` | Exact-category K-groups, canonical maps, equivalences, and small models |
 | `Quillen.Algebra.Group.StableFieldDeterminant` | Actual stable determinant, field elementary kernel, and quotient determinant equivalence |
+| `Quillen.Algebra.Group.StableSteinberg`, `StableSteinbergNaturality` | Finite-rank stable Steinberg presentation, actual elementary-group surjection, perfectness and field-map squares |
+| `Quillen.Algebra.Group.StableSteinbergCentrality` | Centrality of the actual elementary-map kernel by bounded-rank fresh-column/row conjugation, every field |
+| `Quillen.Algebra.Group.StableSteinbergTorus` | Literal Weyl/torus words, actual rank-two matrix images and a field-natural ordered defect in the original kernel |
 | `Quillen.KTheory.Field.ProjectiveDeterminant` | Original projective-Q K1 determinant and actual base-change square |
 | `Quillen.KTheory.Field.ModuleDeterminant` | Upper finite-module K1 determinant with literal tensor-extension naturality |
 | `Quillen.KTheory.Field.MatrixCubeComparison` | `moduleDetEquiv_matrix_cube` on the literal upper-small positive matrix cube, every field and rank including zero |
@@ -52,10 +55,23 @@ The independent `Consumer.PublicLibraries` imports both complete public roots to
 | `Quillen.AlgebraicGeometry.Scheme.Coherent.ClosedImmersion.FinitePointAssembly` | Public field-scheme G assembly into actual upper coherent support, every positive degree; Noetherian scheme, injective closed-point family and specified field closed immersions |
 | `Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.UniverseComparison` | `publicSpecGRingEquiv` in all degrees over Noetherian rings and original public scheme residue-pushforward comparison |
 | `Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.LocalizationNaturality` | Literal public `Scheme.pullbackG` equals native localization for every Noetherian ring and submonoid, in all degrees |
+| `Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.PrincipalBoundaryComparison` | Original principal scheme boundary equals finite-module localization through the canonical affine G-equivalences, in all degrees |
+| `Quillen.AlgebraicGeometry.Scheme.Coherent.Affine.RingIsoNaturality` | Original Spec ring-isomorphism pullback equals restriction along the inverse ring isomorphism |
 | `Quillen.GTheory.Dedekind.LocalDvrBoundaryNaturality` | Original local-DVR boundary after actual generic extension equals global residue coordinates for G(n+2) → G(n+1); kernel intersections and finite-family lifting under original generic-G1 injectivity |
+| `Quillen.GTheory.Dedekind.PrincipalDvrBoundaryComparison` | Actual principal scheme boundary equals the native local-DVR boundary, retaining the given fraction field and original closed/generic maps |
+| `Quillen.GTheory.SmallModelBoundaryNaturality` | Whole-fiber localization comparison and original connecting-map naturality across exact squares and model-universe promotion |
 | `Quillen.GTheory.DVR.SplitResidue` | Original generic finite-module G map injective in all degrees for a DVR whose actual residue map has a ring section |
-| `Quillen.KTheory.MilnorK2.DVR.TameKernel` | Actual-DVR Milnor tame kernel equals the integer span of field symbols of two ring units, with ordered tame signs |
-| `Quillen.KTheory.MilnorK2.FiniteField` | Original Milnor tensor quotient and integral finite-field vanishing; actual Quillen-G2 comparison remains separate |
+| `Aglib.KTheory.MilnorK.CompatibilityK2` | Canonical ordered-symbol and field-map comparison `MilnorK.K F 2 ≃ₗ[ℤ] MilnorK.K2.Group F` |
+| `Aglib.KTheory.MilnorK.Residue.DVR` | Canonical actual-DVR uniform residue, with its supplied tensor-tame compatibility |
+| `Quillen.Aglib.KTheory.MilnorK.K2.DVR.TameKernel` | Additional actual-DVR tame-kernel/unit-symbol-span proof on Aglib objects, with canonical uniform-residue transport |
+| `Quillen.Aglib.KTheory.MilnorK.K2.FiniteField` | Additional integral finite-field Milnor K2 vanishing on Aglib objects, including uniform degree two; actual Quillen-G2 comparison remains separate |
+| `Quillen.KTheory.LowDegreeScalarAction.IdentityAutomorphism` | Original K0-to-K1 and K1-to-K2 identity-natural-automorphism operations with both variable laws, actual track representatives and explicit consumer universes |
+| `Quillen.Aglib.CategoryTheory.Linear.ScalarAutomorphism` | Canonical scalar natural automorphisms and actual chosen-model descent through full faithfulness |
+| `Quillen.KTheory.LowDegreeScalarAction.ScalarUnit`, `ExactNaturality` | Scalar-unit operations with both variable laws and actual original-KMap naturality, including SmallModels |
+| `Quillen.KTheory.LowDegreeScalarAction.SerreBoundary` | Whole original Serre fiber/action square and signed connecting-map compatibility, including actual scalar-linear localization targets |
+| `Quillen.KTheory.LowDegreeScalarAction.SmallModelBoundary` | Actual standard-model action transports and the original finite-module signed scalar-boundary formula |
+| `Quillen.KTheory.LowDegreeScalarAction.ObjectClass` | Original object-class/cube calibration and upper field-module scalar determinant `(r^n)^-1`, including rank zero |
+| `Quillen.Topology.HomotopyGroups.SelfTrackLoopShift`, `Quillen.Topology.HomotopyFiber.SelfHomotopy` | Signed loop-shift formula and original path-space connecting/self-track compatibility |
 | `Quillen.KTheory.Plus` | Standard ring plus/Q homotopy equivalences, original K₀–plus product and component interfaces |
 | `Quillen.Topology.PlusConstruction.ClassicalCWUniqueness` | Automatic comparison and ordinary uniqueness for original plus maps on actual same-universe Hausdorff CW spaces |
 | `Quillen.Topology.PlusConstruction.ClassicalCWUniquenessUniverseLift` | Mixed-universe comparison and ordinary uniqueness on the original actual CW spaces |

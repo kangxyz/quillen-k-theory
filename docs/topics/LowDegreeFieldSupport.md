@@ -128,8 +128,15 @@ model-universe transport of the same original coherent category. The
 residue-field comparison preserves the original public scheme pushforward.
 [`Affine.LocalizationNaturality`](../../Quillen/AlgebraicGeometry/Scheme/Coherent/Affine/LocalizationNaturality.lean)
 identifies literal `Scheme.pullbackG` for localization at any submonoid with
-original finite-module localization in every degree. The comparison with
-`Scheme.boundaryG` remains open.
+original finite-module localization in every degree.
+[`Affine.PrincipalBoundaryComparison`](../../Quillen/AlgebraicGeometry/Scheme/Coherent/Affine/PrincipalBoundaryComparison.lean)
+also identifies the original principal scheme boundary with finite-module
+localization for every Noetherian ring and element, including G1 to G0.
+[`Dedekind.PrincipalDvrBoundaryComparison`](../../Quillen/GTheory/Dedekind/PrincipalDvrBoundaryComparison.lean)
+identifies this boundary with the original native local-DVR boundary, retaining
+any specified fraction field and the actual generic/closed pullbacks.
+The separate R5 sheaf-stalk boundary still needs its specific ring-isomorphism
+boundary transport.
 
 For geometric support, the general candidate
 [`FiniteClosed`](../../Quillen/Aglib/AlgebraicGeometry/Modules/Coherent/Support/FiniteClosed.lean)
@@ -152,23 +159,56 @@ the forward map with the original public field-scheme pushforwards.
 
 ## Native Milnor symbols
 
-[`MilnorK2.Basic`](../../Quillen/KTheory/MilnorK2/Basic.lean), `Map` and `Symbols`
-preserve the original R5 integer tensor quotient, symbol and field maps in
-`Quillen.MilnorK2`. The separately checked transparent retarget proposal leaves
-the R5 implementation untouched until integration.
-[`FiniteField`](../../Quillen/KTheory/MilnorK2/FiniteField.lean) proves
-`k2_eq_zero_of_finite` and `finiteField_k2_subsingleton` under exactly
-`[Field k] [Finite k]`, including orders two and three.
+Milnor objects, symbols, field maps and residue maps are imported directly from
+Aglib `16aa08a9` through their precise native leaves. Its public group is
+`MilnorK.K F 2`; `MilnorK.twoEquiv` is the canonical ordered-symbol and field-map
+comparison to the retained tensor quotient `MilnorK.K2.Group F`.
+The additional candidate
+[`FiniteField`](../../Quillen/Aglib/KTheory/MilnorK/K2/FiniteField.lean) proves
+`k2_eq_zero_of_finite` and `finiteField_k2_subsingleton` for both presentations
+under exactly `[Field k] [Finite k]`, including orders two and three. Quillen
+keeps no duplicate Milnor foundational implementation or old module aliases.
+
+## Low-degree identity-automorphism operations
+
+[`IdentityAutomorphism`](../../Quillen/KTheory/LowDegreeScalarAction/IdentityAutomorphism.lean)
+defines original `E.K 0 →* E.K 1` and `E.K 1 →* E.K 2` operations for
+`Aut (Id C)`. The group laws in both variables are proved, including identities.
+The natural-automorphism laws use `C : Type (max u v)` and `Category.{v} C`,
+covering native finite-module/projective categories and their upper SmallModel.
+The actual Q-space action theorem supplies source additivity in degree zero.
+Representative equations retain the original track-first cubes and their
+degree-zero inverse relative to spatial-first normalization.
+[`ScalarUnit`](../../Quillen/KTheory/LowDegreeScalarAction/ScalarUnit.lean)
+instantiates these operations for actual scalar units and proves original-KMap
+naturality, including chosen models without a linear-category instance.
+[`ExactNaturality`](../../Quillen/KTheory/LowDegreeScalarAction/ExactNaturality.lean)
+proves the whole normalized-Q homotopy square from ordinary componentwise
+compatibility. The signed loop-shift and path-space boundary formulas are also
+proved.
+[`SerreBoundary`](../../Quillen/KTheory/LowDegreeScalarAction/SerreBoundary.lean)
+proves the whole original Serre fiber/action square and the inverse-sign
+connecting formula. Its
+[`SmallModelBoundary`](../../Quillen/KTheory/LowDegreeScalarAction/SmallModelBoundary.lean)
+transport gives the original finite-module scalar-boundary formula with no
+model or formal-quotient linear instance.
+[`ObjectClass`](../../Quillen/KTheory/LowDegreeScalarAction/ObjectClass.lean)
+identifies the action on the original object class with `automorphismClass`,
+hence the inverse positive cube. Its upper free rank-n field-module determinant
+is `(r^n)^-1`, including rank zero. Principal K0 boundary calibration and
+ordered symbol marking remain separate.
 
 ## DVR tame kernel and split residue
 
-[`MilnorK2.Residue`](../../Quillen/KTheory/MilnorK2/Residue.lean) and
-[`DVR.Basic`](../../Quillen/KTheory/MilnorK2/DVR/Basic.lean) construct the
-actual DVR tame map with ordered convention `∂{u,π}=ū` and
-`∂{π,u}=ū⁻¹`.
-[`DVR.TameKernel`](../../Quillen/KTheory/MilnorK2/DVR/TameKernel.lean) proves
+The provided Aglib `MilnorK.K2.Residue` and `MilnorK.K2.DVR.Basic` supply
+the actual DVR tame map with ordered convention `∂{u,π}=ū` and
+`∂{π,u}=ū⁻¹`; Aglib also supplies the compatible uniform residue.
+The additional candidate
+[`DVR.TameKernel`](../../Quillen/Aglib/KTheory/MilnorK/K2/DVR/TameKernel.lean) proves
 `ker_tame_eq_unitSymbolSpan` for every actual DVR `R` and fraction field `K`:
 the Milnor tame kernel is the integer span of symbols of two units of `R`.
+Its uniform-residue kernel is the comap of this span along the supplied
+`MilnorK.twoEquiv`.
 This is an algebraic Milnor theorem; Quillen products and unit generation
 require their own comparisons.
 
@@ -176,14 +216,20 @@ require their own comparisons.
 proves `localizationKMap_injective_of_residueSection` for the original
 generic finite-module G map in every degree when the actual residue map
 has a ring section. The native test realizes this for `PowerSeries ℚ`.
-No section for the requested smooth-curve origin is asserted.
+A separate, unapplied R5 origin proposal constructs the section from the
+existing geometric triangles and strictly checks its original trait G/K
+pullback injectivity; independent ordinary mathematical review accepted it.
+The genuine-model scheme corollaries retain the normality input of the
+existing diagram constructor.
 
 ## Remaining boundary
 
 Q1 and Q2 achieve the first native milestone. Matsumoto and positive symbol
-marking, actual finite-field Quillen G2 vanishing, low-degree localization
-actions, ordered Quillen boundary compatibility, origin-DVR Quillen unit
-generation, and the literal scheme localization-boundary comparison remain
-open. R5 retarget patches are unapplied, and the new closed-support bridge
-is not yet validated. The complete programme retains the obligations in the
+marking, actual finite-field Quillen G2 vanishing, principal K0 boundary
+calibration, ordered Quillen boundary compatibility, origin-DVR Quillen unit
+generation, and R5's distinct sheaf-stalk boundary transport remain open.
+R5 retarget patches are unapplied. The field-determinant and closed-support
+bridges passed strict checks, scoped audits and independent mathematical review;
+their compatible source projections do not certify full installed R5 CI.
+The complete programme retains the obligations in the
 [implementation plan](../development/LowDegreeFieldSupport.md).

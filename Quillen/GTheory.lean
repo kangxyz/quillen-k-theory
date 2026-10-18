@@ -13,13 +13,16 @@ public import Quillen.GTheory.Dedekind.LocalDvrComparison
 public import Quillen.GTheory.Dedekind.LocalDvrSupport
 public import Quillen.GTheory.Dedekind.Localization
 public import Quillen.GTheory.Dedekind.PrimarySupport
+public import Quillen.GTheory.Dedekind.PrincipalDvrBoundaryComparison
 public import Quillen.GTheory.Dedekind.ResidueAssembly
 public import Quillen.GTheory.Dedekind.ResidueDevissage
 public import Quillen.GTheory.Dedekind.ResidueField
 public import Quillen.GTheory.Dedekind.ResidueFieldAssembly
 public import Quillen.GTheory.FiniteModules.LocalizationNaturality
 public import Quillen.GTheory.FiniteModules.LocalizationSequence
+public import Quillen.GTheory.FiniteModules.PrincipalRingIsoNaturality
 public import Quillen.GTheory.FiniteModules.SmallModelLocalization
+public import Quillen.GTheory.SmallModelBoundaryNaturality
 public import Quillen.GTheory.SmallModelLocalization
 
 /-!

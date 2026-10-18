@@ -830,6 +830,7 @@ public import Quillen.Aglib.CategoryTheory.Limits.Shapes.SequentialSystem.Exactn
 public import Quillen.Aglib.CategoryTheory.Limits.Shapes.SequentialSystem.Interleaving
 public import Quillen.Aglib.CategoryTheory.Limits.Shapes.SplitColumnCokernel
 public import Quillen.Aglib.CategoryTheory.Limits.Shapes.ZeroPushoutCokernel
+public import Quillen.Aglib.CategoryTheory.Linear.ScalarAutomorphism
 public import Quillen.Aglib.CategoryTheory.Localization.CharacterExtension
 public import Quillen.Aglib.CategoryTheory.Localization.RightReachable
 public import Quillen.Aglib.CategoryTheory.Localization.RightRoofs
@@ -863,6 +864,8 @@ public import Quillen.Aglib.CategoryTheory.Subdivision.Basic
 public import Quillen.Aglib.CategoryTheory.Subdivision.Functor
 public import Quillen.Aglib.CategoryTheory.Subdivision.Initial
 public import Quillen.Aglib.CategoryTheory.Triangulated.HomComparison
+public import Quillen.Aglib.KTheory.MilnorK.K2.DVR.TameKernel
+public import Quillen.Aglib.KTheory.MilnorK.K2.FiniteField
 public import Quillen.Aglib.LinearAlgebra.Matrix.BlockWhitehead
 public import Quillen.Aglib.LinearAlgebra.Matrix.Elementary
 public import Quillen.Aglib.LinearAlgebra.Matrix.ElementaryReindex
