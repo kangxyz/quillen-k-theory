@@ -1,16 +1,21 @@
 # Thomason–Trobaugh continuation handoff
 
-Current handoff: the selected comparison package on baseline
-`16cc1d011ef6d9c28b045879be10617411a0c2b4`, integrated with the unchanged pins.
-The projective-line P1–P5 phase, constructed fine localization, fine transition
-range, original-group telescope comparisons and fixed nonpositive localization
-sequence were already present on this baseline. Global-section restriction and
-finite interchange now have the exact interfaces below. Classical
-Thomason–Trobaugh identification remains open. Source correspondence,
-independent review and validation are separated in
-[the recovered-comparison evidence](evidence/TTRecoveredComparisons.json).
-The [fine-completion record](evidence/TTFineCompletionAndRawPasting.json)
-retains its earlier baseline-492454 scope.
+Current handoff: the native current-stage source addition on baseline
+`fd1d66a707d2d658bc5aa556b9f03506e56dee7c`, with unchanged pins.
+The selected source is
+`quillen-tt-complete-buildable-sources-20261018T0354Z.zip`; its exact source
+mapping, review and incremental validation belong to
+[the current-stage evidence](evidence/TTCurrentStageLocalization.json).
+The actual original seed-iterate/current-stage zigzag and same-null basic
+fiber-lift stability are now supplied. The precise classical TT object/null
+identification, auxiliary-support and signed-boundary comparisons retain the
+boundary below.
+
+The [recovered-comparison record](evidence/TTRecoveredComparisons.json) retains
+its earlier baseline-16cc1d0 finite-comparison integration and then-open
+frontier. The [fine-completion record](evidence/TTFineCompletionAndRawPasting.json)
+retains its baseline-492454 scope. Neither historical record is rewritten as
+validation of the new source addition.
 
 ## Objective and handoff boundary
 
@@ -29,7 +34,10 @@ completion has these localization comparisons. Its identification with the
 classical objects is a separate mathematical obligation. Preservation of the
 original negative and nonnegative groups in the actual fine completion is now
 supplied for qcqs ambient schemes, with compact removed open for the supported
-telescope and localization sequence.
+telescope and localization sequence. The new native endpoint proves
+`currentLift f (op integerBase)` stable for an open immersion `f : P ⟶ Q`,
+compact `P,Q` and quasi-separated `Q`; it concerns the original current-stage
+scalar-seed telescope and selected full-open null.
 
 A receiving assignment should select an exact remaining consumer below and
 retain its original maps, conditions and evidence boundary. This handoff does
@@ -197,21 +205,43 @@ arguments preserve the actual target and all independent cell parameters.
 The product braid and external-factor/track transport are separate generic
 equations on the original nested products.
 
-The finite seed cospan uses the specified induced `bassTrack`; the actual
-global forward Laurent unit instantiates its natural source track.
-`currentTransition_stageMap` compares the current-stage seed plus association
-cast to the loop of the current unlooped-cone seed. It does not identify that
-transition with the existing telescope's `B^i(seed A)` transition. Required
-external Laurent-action equivariance of the geometric permutation and fixed
-cone-word compatibility remain open. None of these finite point-set results
-constructs the older raw O four-cube with its prescribed earlier fillers.
-The double-Laurent inclusion formulas retain their face restriction and do not
-settle the whole-map geometric/cone-loop relation. Invertibility of the
-index-induced square map is distinct from the strength comparison.
+The new all-stage route uses the stable zigzag `I → T ← N ← C`:
+original `B^i(seed)` telescope, fixed-word twisted-normalized telescope,
+unpermuted normalized telescope and current-stage telescope.
+[SchemeIteratedSeedTransition](../../Quillen/KTheory/Bass/SchemeIteratedSeedTransition.lean)
+proves `originalTransition_stageMap` for every original seed transition.
+[SchemeCurrentStageTelescope](../../Quillen/KTheory/Bass/SchemeCurrentStageTelescope.lean),
+[SchemeTwistedTelescope](../../Quillen/KTheory/Bass/SchemeTwistedTelescope.lean)
+and [SchemeIteratedSeedTelescope](../../Quillen/KTheory/Bass/SchemeIteratedSeedTelescope.lean)
+preserve the original inclusions and whole cylinders. Their Model
+specializations prove the three comparison maps stable. Current and iterated
+seed transitions remain separately defined; direct equality is not used.
+Whole geometric chi factorization, actual scalar-action equivariance and
+the specified fixed-word seed squares supply the local inputs.
 
-The [roadmap](TTLocalization.md#global-restriction-and-finite-interchange) and
-[spectrum guide](../topics/SpectraAndBass.md#finite-bass-interchange-and-normalized-stages)
-give the declaration-level route and conditions.
+[ParameterFullCurrentNull](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterFullCurrentNull.lean),
+[ParameterFullFiberComparison](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterFullFiberComparison.lean)
+and [ParameterIteratedTwistedFiber](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterIteratedTwistedFiber.lean)
+retain the actual support inclusion, full-open restriction and every slice
+of the original selected null. Integral Spec-row comparisons connect the
+iterated lift to the existing fine localization lift.
+[ParameterCurrentFullFiber](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterCurrentFullFiber.lean)
+then proves
+`Quillen.PerfectComplexes.ParameterFullCurrentNull.currentLift_integer_isStableEquivalence`
+under exactly `[IsOpenImmersion f]`, `[CompactSpace P]`, `[CompactSpace Q]`
+and `[QuasiSeparatedSpace Q]`.
+`currentLift_integer_signed_isIso f d` gives the induced isomorphism for every
+`d : ℤ`. No equivariance or transition-coherence premise is exposed by this
+endpoint. The original projection Model isomorphisms in
+[GlobalParameterIdentityModels](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterIdentityModels.lean)
+preserve both maps at the integer parameter; their all-stage classical
+interpretation is a separate task.
+
+The [roadmap](TTLocalization.md#native-current-stage-localization),
+[spectrum guide](../topics/SpectraAndBass.md#current-stage-and-iterated-seed-telescopes)
+and [perfect-complex guide](../topics/PerfectComplexes.md#native-current-stage-full-open-localization)
+give the exact route. The older raw O four-cube with prescribed earlier
+fillers remains a separate target; it is not a premise of this native endpoint.
 
 ## Recommended next assignments
 
@@ -240,25 +270,22 @@ give the declaration-level route and conditions.
    Retain the original `[T]` operation and its proved sign, including
    `K₁ → K₀`; keep Nil contributions in the chart quotient.
 
-2. **Assemble the normalized comparison against the actual seed tower.**
-   Start from `currentTransition_stageMap` with its literal current and
-   normalized seed definitions. Identify the current-stage seed and
-   association cast with the existing `strictDiagramTransition = B^i(seed A)`
-   used by the global/coefficient telescopes. Preserve the chosen forward
-   unit action, the complete null/unit/null word and independent loop times.
-   Prove the required external Laurent-action equivariance of the geometric
-   two-cone permutation; product braid and external-track transport alone do
-   not identify this action. Resolve the required whole-map relation between
-   the geometric and cone-loop comparisons on their actual targets, retaining
-   the distinction between the two restricted double-Laurent face formulas.
-   Supply fixed cone-word compatibility in the
-   selected source closure. Acceptance is a genuine all-stage transition
-   square for the existing tower, followed by the actual telescope comparison
-   with its original inclusions and cylinder formulas. The finite induced
-   `bassTrack` cospan and stable `stageMap` are accepted inputs at their stated
-   scope, rather than all-stage compatibility premises.
+2. **Identify the intended classical objects and selected null diagram.**
+   Start from the actual current-stage integer-parameter lift and the
+   projection Model isomorphisms, retaining the original supported full
+   subcategory, zero and forward scalar seed. Specify the classical spectrum
+   and construct the complete stage, seed, telescope and null correspondence
+   needed to identify it with these native objects. Reuse the supplied
+   `I → T ← N ← C` comparisons, their input squares and every-time null
+   equations. Scalar-action equivariance, whole chi factorization,
+   fixed-word seed compatibility and the actual seed-iterate transition
+   squares are already supplied. Acceptance is correspondence of the
+   specified objects and maps, not a renamed fine/current-stage completion
+   or a module-count/compile claim.
 
-3. **Assemble the original raw second-projection cells.**
+3. **Continue the older raw second-projection route if selected.**
+   This is an alternative cell-construction target, not a prerequisite of
+   the native current-stage theorem.
    Reuse the actual identity/composition cubes, Laurent native cell,
    polynomial native cells and their entire height-zero attachments. Construct
    the overlap O four-cube with comparison, route, cone-height and overlap
@@ -291,8 +318,10 @@ give the declaration-level route and conditions.
 
 
 
-The final B3 task identifies the original raw classical model and transports
-the same-null auxiliary-support diagram. It must retain the three actual
+The final B3 task identifies the selected classical model through a complete
+object/seed/null correspondence and transports the same-null auxiliary-support
+diagram. A native current-stage identification and the older raw-cell route
+have distinct proof obligations. It must retain the three actual
 acyclicity opens `U∪T`, `T`, `U∩T`, with `T = X−Z`, and the original signed
 boundary. The constructed completion must not simply be renamed `Kᴮ`.
 
@@ -324,7 +353,8 @@ lake build Quillen.AlgebraicGeometry.PerfectComplexes.Bass.SupportedLocalization
 lake build Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientBassRaw1PolynomialNativeAttachments
 lake build Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSectionFullOpenFiber
 lake build Quillen.KTheory.Bass.GeometricConeSchemeNaturality
-lake build Quillen.KTheory.Bass.SchemeCurrentStageSquare
+lake build Quillen.KTheory.Bass.SchemeIteratedSeedTelescope
+lake build Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterCurrentFullFiber
 python3 scripts/generate_imports.py --check
 python3 scripts/check_library_layout.py
 ```
@@ -332,11 +362,12 @@ python3 scripts/check_library_layout.py
 Each evidence record names its own source family and validation scope. Retained
 native coverage comprises scoped builds, meaningful typed consumers, style and
 defining-origin kernel/foundation audits, together with exact reuse of unchanged
-pinned dependencies. Current recovered-comparison coverage belongs to its
-[own record](evidence/TTRecoveredComparisons.json); earlier fine-completion
-coverage keeps its historical source identity. Neither is a fresh whole-library
-proof replay. Preserve source, module origin, actual
-compiler options, logs and all six output companions when reusing local
+pinned dependencies. Current-stage coverage belongs to its
+[own record](evidence/TTCurrentStageLocalization.json); recovered-comparison
+and fine-completion coverage keep their historical source identities. These
+records are not relabelled as fresh whole-library proof replays. Preserve
+source, module origin, actual compiler options, logs and all six output
+companions when reusing local
 coverage. A partial `Quillen` prefix can shadow later search roots: use a
 coherent complete first-hit closure. Do not copy compiled artifacts into
 the committed handoff.
@@ -347,34 +378,39 @@ compiler path or a result JSON alone does not reconstruct a dependency snapshot.
 The current source-only integration deliberately excludes archived binaries
 and unvalidated drafts. A standalone clone builds from committed source.
 
-Final classical closure has the separate full-library boundary:
+Normal integration and release validation are incremental under
+[CONTRIBUTING](../../CONTRIBUTING.md#tests-and-checks). Reconcile the combined
+changes, reuse compatible baseline evidence and trusted artifacts, and check
+new or missing required modules and their affected consumers, including the
+applicable scoped lint, test and trust coverage. Complete release coverage
+can combine those records; a handoff or turn boundary does not require
+`bash scripts/check.sh --rehash`. That command remains available for explicit
+comprehensive diagnostics at its declared scope.
 
-```sh
-bash scripts/check.sh --rehash
-```
-
-That pipeline includes the maintained tests, downstream client and both
-explicit foundation audits. Green checks do not close an absent mathematical
-comparison. Independent ordinary review of new load-bearing mathematics and
-its actual consumers is required; established-status assignment has its
-separate stronger review gate.
+Successful checks concern the encoded statements. Independent review of new
+load-bearing mathematics and correspondence with the actual target remain
+separate; established-status assignment has its own stronger review gate.
 
 ## Checkpoint and evidence
 
 The current selected package starts from
-`16cc1d011ef6d9c28b045879be10617411a0c2b4`. Use the delivered repository
-history to resolve subsequent integration commits; this handoff makes no push
-or release assertion. The
-[recovered-comparison evidence](evidence/TTRecoveredComparisons.json) records
-the selected source mapping, exclusions, independent review coverage and
-validation. It distinguishes new reconstructions from original archived bytes
-and retains earlier checks under their actual baseline. It does not claim
-historical byte recovery for reconstructed sources.
+`fd1d66a707d2d658bc5aa556b9f03506e56dee7c`. Use repository history to
+resolve subsequent integration commits; this handoff makes no push or release
+assertion. The
+[current-stage evidence](evidence/TTCurrentStageLocalization.json) owns the
+new source mapping, source identity, review conclusions and actual validation
+scope. The general `CategoryTheory.Functor.FixedWords` candidate is now
+selected, with a natural
+[family guide](../../Quillen/Aglib/CategoryTheory/Endofunctor/README.md)
+and actual cone-word consumers.
 
-The three original O drafts remain uncompiled and excluded. The unselected
-fixed-cone-word candidate has a strict compile pass, but no selected final
-lint/axiom acceptance. `NativeParameterEvaluation` is selected with its original
-bytes and separate checked evidence. The earlier
+The [recovered-comparison evidence](evidence/TTRecoveredComparisons.json)
+retains the earlier selected mapping, exclusions, independent reviews and
+validation. Its unselected fixed-word frontier is historical; its three raw
+O drafts remain outside this selected source addition. It continues to
+distinguish reconstructions from original archived bytes.
+`NativeParameterEvaluation` retains its original bytes and conditional
+whole-value lift interfaces. The earlier
 [fine-completion and raw-pasting record](evidence/TTFineCompletionAndRawPasting.json)
 retains its baseline-492454 scope.
 

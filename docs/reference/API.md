@@ -396,6 +396,7 @@ Within each row below, short module names share the first entry's directory.
 | --- | --- |
 | `Aglib.CategoryTheory.FiberedCategory.SectionChangeIndex`, `SectionChangeIndexLaws`, `SectionChangeIndexZero`, `SectionChangeIndexUnit` | `CategoryTheory.SectionChangeIndex.underFunctor`, literal evaluation/reindexing, same chosen zero and lifted identity actions |
 | `Waldhausen.SConstruction.Iterated.SectionChangeIndexModel`, `SectionChangeIndexLargeModel`, `SectionChangeIndexMixedModel` | Evaluation-transported `sectionWaldhausen`, `sectionModel`, `restrictionModel` and exact categorical inverse |
+| `Aglib.CategoryTheory.Endofunctor.FixedWords` | `CategoryTheory.Functor.FixedWords.power`, `beta`, `fixedWord` and their specified recursion; no word-independence or braid premise |
 | `KTheory.Bass.SectionChangeIndexStable` | `restrictionModel_iterate_isStableEquivalence` for the small finite Model interface |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSectionChangeIndex`, `GlobalSectionChangeIndexLaws`, `GlobalSectionUnit`, `GlobalSectionLaurentAction` | Actual all-scheme `globalModel`, coefficient restriction, literal evaluation and original forward units |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedModels`, `GlobalOpenModels`, `GlobalFullOpenModels` | Actual supported/coarse/fine global rows, same zero and exact restriction squares |
@@ -425,18 +426,34 @@ requires compact `P.left`, compact `Q.left` and quasi-separated `Q.left`.
 | `KTheory.Bass.DoubleLaurentInclusion` | Geometric and cone-loop value equations after the displayed double inclusion, with the original swap distinction |
 | `KTheory.Bass.WholeSeedCospan`, `GeometricSeedCospan` | Whole null/unit/null seed word and finite cospan for the specified induced `bassTrack` |
 | `KTheory.Bass.SchemeCurrentStageSquare` | `currentTransition_stageMap` for the explicitly defined current and normalized seed transitions |
+| `KTheory.Bass.GeometricConeAction`, `GeometricConeFixedWordAction`, `SchemeTwistedConjugacy` | Actual `permutation_equivariant`, finite-word equivariance, `wordAt_seed_square` and `twisted_adjacent` |
+| `KTheory.Bass.GeometricChiPermutation`, `SchemeSeedRotation`, `SchemeIteratedSeedTransition` | Whole geometric chi factorization, original local seed rotation and `originalTransition_stageMap` for every `B^i(seed)` transition |
+| `KTheory.Bass.SchemeCurrentStageTelescope`, `SchemeTwistedTelescope`, `SchemeIteratedSeedTelescope` | Actual stable zigzag `I → T ← N ← C`, preserving original stage inclusions and cylinders for Model input |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterFullCurrentNull`, `ParameterFullFiberComparison`, `ParameterIteratedTwistedFiber` | Original full-open null and `currentLift`, `normalizedLift`, `twistedLift`; same-null stability equivalences |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterIteratedFullFiber`, `ParameterCurrentFullFiber` | `Quillen.PerfectComplexes.ParameterFullCurrentNull.iteratedLift_spec_isStableEquivalence`, `currentLift_integer_isStableEquivalence` and `currentLift_integer_signed_isIso` |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterIdentityModels` | Original projection Model isomorphisms at the integer parameter, with support-forgetting and full-restriction squares |
 | `Topology.Prespectrum.NativeParameterEvaluation` | Conditional whole-value `PathLift`/`HomotopyLift` operation laws for an arbitrary evaluator |
 
-These are forward finite comparisons. Their Model specializations discharge
-the stated topology and growth inputs; the generic growth versions keep those
-inputs. `currentTransition_stageMap` does not identify `currentTransition`
-with `strictDiagramTransition = B^i(seed A)`. External Laurent-action
-equivariance of the geometric permutation, the required whole-map geometric/
-cone-loop comparison relation, fixed cone-word compatibility and
-the normalized all-stage/telescope comparison remain separate.
-The [spectrum guide](../topics/SpectraAndBass.md#finite-bass-interchange-and-normalized-stages)
-and [perfect-complex guide](../topics/PerfectComplexes.md#global-sections-and-coefficient-restriction)
-give the objects, exact conditions and distinct raw O four-cube boundary.
+The finite Model specializations discharge their stated topology and growth
+inputs; generic growth versions retain those inputs. The all-stage route uses
+separate current and iterated-seed transitions, with the fixed twisted model
+as their common comparison target. It does not assert equality of the two
+transition definitions.
+
+The integer-base localization theorem is declared in
+`Quillen.PerfectComplexes.ParameterFullCurrentNull`, despite the import module
+name `ParameterCurrentFullFiber`. For `f : P ⟶ Q`, it requires
+`[IsOpenImmersion f]`, `[CompactSpace P]`, `[CompactSpace Q]` and
+`[QuasiSeparatedSpace Q]`, and concludes
+`IsStableEquivalence (currentLift f (op integerBase))`.
+`currentLift_integer_signed_isIso f d` gives the induced isomorphism for every
+`d : ℤ`. Its scalar equivariance and same-null comparisons are constructed by
+the source closure; no such input is exposed to the caller.
+The [spectrum guide](../topics/SpectraAndBass.md#current-stage-and-iterated-seed-telescopes)
+and [perfect-complex guide](../topics/PerfectComplexes.md#native-current-stage-full-open-localization)
+give the actual objects and maps. Classical object/null-diagram identification,
+auxiliary-support transport and the older raw O-cell route retain their own
+boundaries in [scope](Scope.md#remaining-comparisons).
 
 ## Ring plus and scalar extension
 

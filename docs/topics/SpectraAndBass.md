@@ -9,8 +9,9 @@ stage. For qcqs ambient schemes, the actual fine transition and inclusion at
 stage `i` are isomorphisms in every degree `d ≥ -i`. The original negative
 class maps are therefore natural isomorphisms to this fine telescope; the
 supported result also assumes a quasi-compact removed open. Identification
-with the original raw all-stage tower and classical nonconnective K-theory
-remains separate.
+with classical nonconnective K-theory remains separate. The original
+iterated-seed and current-stage telescopes now have the actual stable zigzag
+and same-null localization application described below.
 
 For a quasi-compact open of an affine scheme, a separate quotient-graded Bass
 telescope has zero stable groups in every integer degree. Its constructed
@@ -399,7 +400,12 @@ double-Laurent inclusion. One face formula uses the actual opposite scheme
 swap; the other retains the coefficient point without that swap. They
 quantify the original based loop and its independent time. These restricted
 identities establish neither equality nor inequality of the unrestricted
-comparison maps. Their required whole-map relation remains separate.
+comparison maps. The whole relation needed by the new iteration route is
+proved separately in
+[GeometricChiPermutation](../../Quillen/KTheory/Bass/GeometricChiPermutation.lean):
+`GeometricChiPermutation.comparison` factors the actual `chiGeom` through
+`LoopFactor.coneStrength` followed by the parameter loop of the genuine
+geometric permutation.
 
 The generic `loops`, `loopDiagram`, `loopDiagram_obj` and
 `loopDiagram_postcomp` declarations live in
@@ -433,13 +439,63 @@ The exact adjacent-stage statement in
 `seed (stageTrack A i)` and the specified association cast; its
 `normalizedTransition` applies `loopMap i (seed (coneTrack A i))` and its own
 association cast. The theorem intertwines these two maps via `stageMap`.
-It does not identify `currentTransition` with
-`strictDiagramTransition`, the `B^i(seed A)` transition used by the existing
-global and coefficient telescopes. That equality, the required external
-Laurent-action equivariance of the geometric permutation, the required
-whole-map relation of geometric and cone-loop comparisons, fixed cone-word
-compatibility and the resulting all-stage/telescope comparison remain
-separate obligations.
+The original `strictDiagramTransition = B^i(seed A)` has a separate
+comparison to the twisted-normalized transitions below. The all-stage route
+therefore retains both transition definitions rather than identifying them.
+
+## Current-stage and iterated-seed telescopes
+
+For a scheme-indexed Model diagram `M`, put `F = M ⋙ prespectrumFunctor`
+and let `A` be its original Laurent track. Write `C`, `N`, `T` and `I` for
+the following actual telescopes. These are local telescope labels; the unlooped cone functor is described in the preceding
+section.
+
+| Telescope | Objects and transitions | Comparison owner |
+| --- | --- | --- |
+| `C = currentTelescope A` | Original finite Bass objects with the scalar seed formed at each current stage | [SchemeCurrentStageTelescope](../../Quillen/KTheory/Bass/SchemeCurrentStageTelescope.lean) |
+| `N = normalizedTelescope A` | The i-fold parameter loops of the i-fold unlooped cone, with the current cone seed and its association cast | [SchemeCurrentStageTelescope](../../Quillen/KTheory/Bass/SchemeCurrentStageTelescope.lean) |
+| `T = twistedTelescope A` | The same normalized objects with the prescribed cyclic/insertion-word transitions | [SchemeTwistedTelescope](../../Quillen/KTheory/Bass/SchemeTwistedTelescope.lean) |
+| `I = iteratedTelescope A` | Original finite Bass objects with `strictDiagramTransition squareFunctor (seed A)`, namely `B^i(seed A)` | [SchemeIteratedInputNull](../../Quillen/KTheory/Bass/SchemeIteratedInputNull.lean) |
+
+The natural maps form `I → T ← N ← C`. In the native namespace
+`Quillen.KTheory.Bass.SchemeNaturalSeed`, `telescopeMap` gives `C → N`
+and `conjugacyTelescopeMap` gives `N → T`.
+`Quillen.KTheory.Bass.SchemeIteratedSeedTelescope.iteratedTwistedTelescopeMap`
+gives `I → T`. Each owner proves the actual cylinder and inclusion equations;
+its `model_*_stable` theorem gives stability at every scheme parameter for
+genuine Model input. Finite Model topology discharges the T1 and growth
+conditions. No new Model structure on normalized cones is assumed.
+
+The local geometric input is now explicit.
+[GeometricConeAction](../../Quillen/KTheory/Bass/GeometricConeAction.lean) proves
+whole scalar-action equivariance of the original two-cone permutation.
+[GeometricConeFixedWords](../../Quillen/KTheory/Bass/GeometricConeFixedWords.lean)
+instantiates the general
+[fixed-word candidate](../../Quillen/Aglib/CategoryTheory/Endofunctor/README.md),
+and [GeometricConeFixedWordAction](../../Quillen/KTheory/Bass/GeometricConeFixedWordAction.lean)
+proves equivariance of those specified words.
+[SchemeTwistedConjugacy](../../Quillen/KTheory/Bass/SchemeTwistedConjugacy.lean)
+supplies `wordAt_seed_square` and `twisted_adjacent`.
+[SchemeSeedRotation](../../Quillen/KTheory/Bass/SchemeSeedRotation.lean) uses
+the whole chi factorization and original seed cospan; then
+`Quillen.KTheory.Bass.SchemeIteratedSeedTransition.originalTransition_stageMap`
+in [SchemeIteratedSeedTransition](../../Quillen/KTheory/Bass/SchemeIteratedSeedTransition.lean)
+proves every original adjacent square against the unchanged finite `stageMap`.
+The rotation-only induction helper retains its conditional statement; this
+geometric specialization supplies its local inputs.
+
+[SchemeInputTelescope](../../Quillen/KTheory/Bass/SchemeInputTelescope.lean),
+[SchemeTwistedInputMaps](../../Quillen/KTheory/Bass/SchemeTwistedInputMaps.lean)
+and [SchemeInputNull](../../Quillen/KTheory/Bass/SchemeInputNull.lean), with
+their twisted/iterated null owners, preserve actual input maps and every time
+slice of a supplied equivariant whole null. The
+[perfect-complex application](PerfectComplexes.md#native-current-stage-full-open-localization)
+constructs these equivariance equations for the original supported/full-open
+null and proves the integer-base current-stage fiber lift stable under its
+open-immersion, compactness and quasi-separatedness hypotheses. Its
+[current evidence](../development/evidence/TTCurrentStageLocalization.json)
+keeps that result separate from classical TT identification and the older raw
+O-cell route.
 
 ## Finite bottom groups and telescope class maps
 
@@ -665,9 +721,10 @@ foundation coverage. The native auxiliary fiber-forget localization now has
 its actual union-support fiber, original seed/whole-null transfer and telescope
 cone/fiber comparison, including the signed boundary. Final fine stability
 requires compact P,Q,T and quasi-separated Q; the structural identities and
-fiber-to-coarse stability need only the open immersion. Completed geometric
-evaluation and classical nonconnective Thomason–Trobaugh identification remain
-open.
+fiber-to-coarse stability need only the open immersion. The older raw-cell
+evaluation route and classical nonconnective Thomason–Trobaugh identification
+retain their separate boundaries. The native basic-pair current-stage theorem
+is described above.
 The connective S-spectrum comparison does not settle these questions.
 The conditional `Bass.TwoChartStableSpan` and `TwoChartStableSequence` now
 provide the signed span quotient, natural all-degree Bass short exact row,

@@ -671,6 +671,7 @@ public import Quillen.Aglib.AlgebraicGeometry.Morphisms.OpenImmersion.Pair.Basic
 public import Quillen.Aglib.AlgebraicGeometry.Morphisms.OpenImmersion.Pair.Compactness
 public import Quillen.Aglib.AlgebraicGeometry.Morphisms.OpenImmersion.Pair.Functor
 public import Quillen.Aglib.AlgebraicGeometry.Products.IntegerBaseBraid
+public import Quillen.Aglib.AlgebraicGeometry.Products.IntegerBaseCoefficientRow
 public import Quillen.Aglib.AlgebraicGeometry.Products.IntegerBaseExternalFactor
 public import Quillen.Aglib.AlgebraicGeometry.Products.IntegerBaseExternalTrack
 public import Quillen.Aglib.AlgebraicGeometry.Products.IntegerBaseSwapUnits
@@ -681,6 +682,11 @@ public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Coefficient
 public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.Flat
 public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IndexSquare
 public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IndexSquareFactor
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseCanonicalRow
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseLaurentCoefficient
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseLaurentParameter
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseParameterRow
+public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseSpecSquare
 public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.LaurentHyperbola
 public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.NativeCoordinates
 public import Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.NaturalDiagram
@@ -713,6 +719,7 @@ public import Quillen.Aglib.CategoryTheory.Comma.StructuredUniverseLift
 public import Quillen.Aglib.CategoryTheory.Comma.Transitions
 public import Quillen.Aglib.CategoryTheory.Comma.UniverseLift
 public import Quillen.Aglib.CategoryTheory.ComposableArrows.Append
+public import Quillen.Aglib.CategoryTheory.Endofunctor.FixedWords
 public import Quillen.Aglib.CategoryTheory.ExactCategory.AdditiveInvariant
 public import Quillen.Aglib.CategoryTheory.ExactCategory.BaseChangeSquare
 public import Quillen.Aglib.CategoryTheory.ExactCategory.Bicartesian

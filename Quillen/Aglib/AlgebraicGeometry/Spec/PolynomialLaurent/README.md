@@ -40,6 +40,28 @@ is required. The native `AlgebraicGeometry.Scheme.PolynomialLaurent.GlobalIndex`
 namespace records these constructions; finite Bass cone and seed consumers
 remain downstream.
 
+The integral Spec-row interfaces retain the original coefficient algebra,
+fixed scheme, projections and forward Laurent unit. Their hypotheses are
+arbitrary objects over `Spec (CommRingCat.of (ULift.{u} ℤ))` and under
+`CommRingCat.of (ULift.{u} ℤ)`, with their original morphisms; none adds
+compactness or quasi-separatedness.
+
+| Focused leaf | Native interface and result |
+| --- | --- |
+| [IntegerBaseSpecSquare](IntegerBaseSpecSquare.lean) | `AlgebraicGeometry.Scheme.PolynomialLaurent.IntegerSpec.specUnder`, `specSquareIso` and `specSquare` compare all four affine corners and both charts naturally; `nativeLaurentUnit_spec` preserves the original Laurent unit. |
+| [IntegerBaseParameterRow](IntegerBaseParameterRow.lean) | `AlgebraicGeometry.Scheme.BaseChange.Coefficients.IntegerRow.parameterRowIso` compares parameter-first products with the actual coefficient row; `parameterRowIso_scheme` and `rowIso_unit` retain scheme restriction and every global coefficient unit. |
+| [IntegerBaseCanonicalRow](IntegerBaseCanonicalRow.lean) | `canonicalRowIso` and `canonicalParameterRowIso` use the literal canonical integer structure map, preserving both projections, coefficient/scheme arrows and arbitrary coefficient units. |
+| [IntegerBaseLaurentParameter](IntegerBaseLaurentParameter.lean) | `laurentParameterIso` retains the whole Laurent fiber and parameter projection; `laurentParameterIso_unit` preserves the original coefficient `T` unit. |
+| [IntegerBaseLaurentCoefficient](IntegerBaseLaurentCoefficient.lean) | `laurentParameterIso_coefficient` proves the complete original Laurent-projection square on the fixed-factor product. |
+
+Each intended upstream module has the same mathematical suffix under
+`Aglib.AlgebraicGeometry.Spec.PolynomialLaurent`. The product-row prerequisite
+has its [own family owner](../../Products/README.md). The current application
+consumers are the original global ambient/supported coefficient Models and
+parameter Laurent tracks, beginning at
+[GlobalParameterCoefficientModels](../../../../AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientModels.lean).
+Their finite Bass and localization comparisons remain downstream.
+
 Historic declaration namespaces are preserved. The actual projective-line
 chart assembly, tautological and diagonal endpoints, and K/Bass model assembly
 remain downstream.
