@@ -47,7 +47,11 @@ The independent `Consumer.PublicLibraries` imports both complete public roots to
 | `Quillen.Algebra.Group.StableSteinbergTorus` | Literal Weyl/torus words, actual rank-two matrix images and a field-natural ordered defect in the original kernel |
 | `Quillen.Algebra.Group.StableSteinbergUniversal` | Unique lift into every actual surjective central extension of the original elementary group, with independent extension-group universe |
 | `Quillen.Algebra.Group.StableSteinbergSymbols` | Literal bilinear Steinberg symbols, positive torus commutator and canonical Aglib Milnor-to-kernel map with original field-map square |
+| `Quillen.Algebra.Group.StableSteinbergRankTwo` | Ordered defects generate the original rank-two kernel; full Milnor-map surjectivity is equivalent to all-rank kernel containment in that stage |
 | `Quillen.KTheory.Field.SteinbergFiberComparison` | Actual plus-map fiber central extension, Steinberg lift and kernel-to-original-finite-projective-right-module-K2 map; no comparison isomorphism or positive product marking is asserted |
+| `Quillen.KTheory.Field.SteinbergFiberNaturality` | Original projective-right K2 comparison commutes with actual field extension, preserving the original Steinberg map and correction paths |
+| `Quillen.KTheory.Field.SteinbergFiberSurjectivity` | Original lift/kernel/pi2/projective-K2 maps are surjective under explicit perfectness of the actual fiber group; that perfectness remains open |
+| `Quillen.Aglib.Algebra.Group.Hom.CentralLifts` | Central-kernel lifting contains the target commutator subgroup; a perfect target gives surjectivity, in independent group universes |
 | `Quillen.KTheory.Field.ProjectiveDeterminant` | Original projective-Q K1 determinant and actual base-change square |
 | `Quillen.KTheory.Field.ModuleDeterminant` | Upper finite-module K1 determinant with literal tensor-extension naturality |
 | `Quillen.KTheory.Field.MatrixCubeComparison` | `moduleDetEquiv_matrix_cube` on the literal upper-small positive matrix cube, every field and rank including zero |
@@ -63,6 +67,7 @@ The independent `Consumer.PublicLibraries` imports both complete public roots to
 | `Quillen.GTheory.Dedekind.LocalDvrBoundaryNaturality` | Original local-DVR boundary after actual generic extension equals global residue coordinates for G(n+2) → G(n+1); kernel intersections and finite-family lifting under original generic-G1 injectivity |
 | `Quillen.GTheory.Dedekind.PrincipalDvrBoundaryComparison` | Actual principal scheme boundary equals the native local-DVR boundary, retaining the given fraction field and original closed/generic maps |
 | `Quillen.GTheory.SmallModelBoundaryNaturality` | Whole-fiber localization comparison and original connecting-map naturality across exact squares and model-universe promotion |
+| `Quillen.GTheory.FiniteModules.PrincipalObjectBoundary` | Positive original Serre self-conflation boundary and literal principal rank-one quotient calibration over Noetherian commutative rings at regular elements, including zero cokernels and units |
 | `Quillen.GTheory.DVR.SplitResidue` | Original generic finite-module G map injective in all degrees for a DVR whose actual residue map has a ring section |
 | `Aglib.KTheory.MilnorK.CompatibilityK2` | Canonical ordered-symbol and field-map comparison `MilnorK.K F 2 ≃ₗ[ℤ] MilnorK.K2.Group F` |
 | `Aglib.KTheory.MilnorK.Residue.DVR` | Canonical actual-DVR uniform residue, with its supplied tensor-tame compatibility |
@@ -74,9 +79,13 @@ The independent `Consumer.PublicLibraries` imports both complete public roots to
 | `Quillen.KTheory.LowDegreeScalarAction.SerreBoundary` | Whole original Serre fiber/action square and signed connecting-map compatibility, including actual scalar-linear localization targets |
 | `Quillen.KTheory.LowDegreeScalarAction.SmallModelBoundary` | Actual standard-model action transports and the original finite-module signed scalar-boundary formula |
 | `Quillen.KTheory.LowDegreeScalarAction.ObjectClass` | Original object-class/cube calibration and upper field-module scalar determinant `(r^n)^-1`, including rank zero |
+| `Quillen.KTheory.LowDegreeScalarAction.FieldSymbols`, `DvrSymbols` | Bilinear actual field unit products with tensor naturality; original localization/principal/fraction/local-DVR unit-unit boundary zero after explicit universe transport; Milnor marking remains open |
+| `Quillen.KTheory.LowDegreeScalarAction.UniverseNaturality` | Original universal-KMap operation/object naturality and canonical small-model universe transport of scalar actions and positive cubes, without linear instances on the models |
 | `Quillen.Topology.HomotopyGroups.SelfTrackLoopShift`, `Quillen.Topology.HomotopyFiber.SelfHomotopy` | Signed loop-shift formula and original path-space connecting/self-track compatibility |
 | `Quillen.Topology.HomotopyFiber.LoopCentrality` | Actual right loop concatenation and centrality of the original connecting image and fiber-projection kernel, without connectivity assumptions |
 | `Quillen.Topology.HomotopyFiber.SourceContractionBoundary` | Original connecting map computed from actual source-coordinate contraction, based cancellation and the inverse loop-shift formula |
+| `Quillen.Topology.HomotopyFiber.WeakBasePositive`, `HomotopyPiOneNaturality` | Original fiber-pi1 comparison for weak base changes and arbitrary homotopy squares, with mixed space universes and nonstationary vertex tracks |
+| `Quillen.Topology.LocalCoefficients.PullbackCoveringHomology` | Actual covering-fiber local system and original integral pullback-chain arrow comparison, in one common space universe and without connectedness or pi1-map hypotheses |
 | `Quillen.Topology.ClassifyingSpace.NaturalTransformationLoopCancellation` | Whole jointly continuous cancellation prism for composed natural-transformation tracks, preserving the actual endpoints |
 | `Quillen.Aglib.Algebra.Category.FGModuleCat.PrincipalRankOne` | Literal principal rank-one quotient/cokernel and actual localization/scalar-GL comparisons; regularity gives monicity, Noetherianity gives short exactness and conflations |
 | `Quillen.KTheory.Plus` | Standard ring plus/Q homotopy equivalences, original K₀–plus product and component interfaces |

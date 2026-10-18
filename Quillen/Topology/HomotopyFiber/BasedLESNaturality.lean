@@ -21,10 +21,11 @@ set_option backward.isDefEq.respectTransparency false
 set_option backward.defeqAttrib.useBackward true
 open CategoryTheory CategoryTheory.Limits CategoryTheory.Functor MonoidalCategory
 open scoped Simplicial Topology
-universe u v
+universe u v w z
 namespace Quillen.HomotopyFiber
 section Based
-variable {X Y A B : Type u} [TopologicalSpace X] [TopologicalSpace Y]
+variable {X : Type u} {Y : Type v} {A : Type w} {B : Type z}
+    [TopologicalSpace X] [TopologicalSpace Y]
     [TopologicalSpace A] [TopologicalSpace B] {f : C(X, A)} {g : C(Y, B)}
     (p : C(X, Y)) (q : C(A, B)) (sq : q.comp f = g.comp p)
     (x : X) (a : A) (y : Y) (b : B) (h : f x = a) (h' : g y = b)

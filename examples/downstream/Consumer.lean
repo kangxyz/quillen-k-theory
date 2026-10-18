@@ -62,6 +62,7 @@ public import Consumer.LoopComponentProduct
 public import Consumer.LoopReversal
 public import Consumer.LowDegreeFieldSupport
 public import Consumer.MilnorInterfaces
+public import Consumer.PrincipalScalarBoundary
 public import Consumer.MappingCylinderAcyclicity
 public import Consumer.MetricCoverRadius
 public import Consumer.MetricOrderCutoff

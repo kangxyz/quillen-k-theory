@@ -361,6 +361,7 @@ public import Quillen.Topology.HomotopyFiber.GenLoopNormalizedReturn
 public import Quillen.Topology.HomotopyFiber.GenLoopPathTransport
 public import Quillen.Topology.HomotopyFiber.GroupDetection
 public import Quillen.Topology.HomotopyFiber.Homeomorph
+public import Quillen.Topology.HomotopyFiber.HomotopyPiOneNaturality
 public import Quillen.Topology.HomotopyFiber.IteratedFiberPath
 public import Quillen.Topology.HomotopyFiber.LES
 public import Quillen.Topology.HomotopyFiber.LESNaturality
@@ -388,6 +389,7 @@ public import Quillen.Topology.HomotopyFiber.SourceContractionBoundary
 public import Quillen.Topology.HomotopyFiber.SourceEquivalence
 public import Quillen.Topology.HomotopyFiber.SquareEquivalence
 public import Quillen.Topology.HomotopyFiber.StrictWeakTransport
+public import Quillen.Topology.HomotopyFiber.WeakBasePositive
 public import Quillen.Topology.HomotopyFiber.WeakBaseProjection
 public import Quillen.Topology.HomotopyFiber.WeakContractibility
 public import Quillen.Topology.HomotopyFiber.WeakCoproduct
@@ -619,6 +621,7 @@ public import Quillen.Topology.LocalCoefficients.PointRelativeEvaluation
 public import Quillen.Topology.LocalCoefficients.PointRelativeHomology
 public import Quillen.Topology.LocalCoefficients.Prism
 public import Quillen.Topology.LocalCoefficients.ProjectionTranslations
+public import Quillen.Topology.LocalCoefficients.PullbackCoveringHomology
 public import Quillen.Topology.LocalCoefficients.Regular
 public import Quillen.Topology.LocalCoefficients.RegularChains
 public import Quillen.Topology.LocalCoefficients.RegularFunctoriality

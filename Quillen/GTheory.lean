@@ -20,6 +20,7 @@ public import Quillen.GTheory.Dedekind.ResidueField
 public import Quillen.GTheory.Dedekind.ResidueFieldAssembly
 public import Quillen.GTheory.FiniteModules.LocalizationNaturality
 public import Quillen.GTheory.FiniteModules.LocalizationSequence
+public import Quillen.GTheory.FiniteModules.PrincipalObjectBoundary
 public import Quillen.GTheory.FiniteModules.PrincipalRingIsoNaturality
 public import Quillen.GTheory.FiniteModules.SmallModelLocalization
 public import Quillen.GTheory.SmallModelBoundaryNaturality

@@ -41,6 +41,11 @@ The subsequent rule-source update to
 `959fb044206b188c9b7cd66404b2b37b84fad8b0` changes guidance and CLI files only;
 the adapter source files, toolchains and dependency pins retain their identities.
 R5 source, manifests, and its Quillen package checkout remain read-only.
+At resumption, the governing R5 guidance is reconciled with
+`a9236feda5b7c1acdf52d7eda3941b35672c41b4`. Its shared coordination entry is
+`infra/ORCHESTRATION.md`; the relevant formalization, execution and host-routing
+sections are unchanged from the accepted rule source above. This guidance
+identity is separate from the mathematical source and dependency snapshots.
 Downstream retargeting is returned as a separate patch. Source references below
 are exact module/declaration locators, not permission to change their owners.
 
@@ -62,8 +67,8 @@ finite-family model. Quillen must never import R5.
 | Q2 | `Quillen.FiniteSupport.decompositionKEquiv` in every positive degree, original evaluation/inclusion laws and finite-sum inverse; independent mathematical review accepted | Retain scoped final checks at the delivered source identity; no K0 decomposition is claimed |
 | Q3, Dedekind modules | Native SmallModel primary transport, all-degree point dévissage, positive `residueFieldAssemblyKEquiv` and original support/ambient pushforwards; independently accepted | R5's actual sheaf-stalk boundary transport remains separate |
 | Q3, finite closed support | Locally Noetherian finite-S splitting and finite-family equivalence; on Noetherian schemes, actual upper coherent support and public field-scheme assembly in every positive degree, with original pushforwards; accepted and normally compiled | Application-specific R5 integration remains unapplied |
-| Q4 | Direct Aglib Milnor interfaces; universal central lifting for the original stable Steinberg group; bilinear Steinberg symbols and a canonical Milnor-to-kernel map; central actual plus-map fiber and a kernel-to-original-projective-K2 comparison; independently accepted | Kernel symbol generation and injectivity, perfectness of the actual fiber group, comparison isomorphism, explicit finite-module transport, field naturality and positive marking |
-| Q5, identity operations | Original K0-to-K1 and K1-to-K2 operations, both variable laws, scalar-unit realization, original SmallModel/finite-module boundary formula, and signed object-class determinant calibration; independently accepted | Principal K0 boundary calibration, concrete residue/support identifications and ordered product marking |
+| Q4 | Direct Aglib Milnor interfaces; universal central lifting; canonical Milnor-to-kernel map and actual rank-two kernel generation; field-natural kernel-to-original-projective-K2 comparison, surjective under explicit actual-fiber perfectness; independently accepted | All-rank kernel containment, Milnor-map injectivity, actual fiber perfectness, comparison isomorphism, explicit finite-module transport and positive marking |
+| Q5, identity operations | Original scalar operations and signed boundaries; positive principal K0 boundary calibration; original cross-universe action/cube transport; bilinear field unit products and original unit-unit boundary zero; independently accepted | Unit-uniformizer residue formula, concrete residue/support identifications and ordered Milnor/product marking |
 | Q5, DVRs | Actual-DVR Milnor tame kernel equals the unit-symbol span on supplied Aglib objects, including the canonical uniform residue; split-residue DVR generic G-map injectivity; actual-origin section and trait G/K injectivity proposal independently accepted | Quillen unit-pair generation still needs marked comparison and boundary compatibility |
 | Q6 | Integral Milnor K2 vanishes over every finite field, including the smallest fields, on both supplied Aglib presentations; port and canonical uniform transport independently accepted | A symbol-preserving surjection to actual Quillen G2, or an independent actual-G2 vanishing proof |
 | Q7, native modules and schemes | Original local/global residue-coordinate boundary square and localization consequences; principal scheme/native local-DVR comparison in all degrees; separately validated, unapplied R5 proposal gives literal sheaf-stalk kernel intersections and finite-family lifting | R5 integration remains unapplied; finite-field Quillen G2 vanishing and arithmetic generic-G1 injectivity remain separate |
@@ -137,6 +142,26 @@ its delivered source identity. The combined current coverage is therefore
 Milnor client checked separately. These seven providers were also compiled
 together under the updated pins. No perfectness or isomorphism claim for
 the actual fiber group follows from these checks.
+The next accepted batch comprises eleven new defining modules and two existing
+homotopy-fiber modules with generalized universe binders. Principal-object
+calibration contributes 172 audited declarations, central-lift surjectivity six,
+field/DVR unit products 87, rank-two Steinberg reduction 85, pullback-cover
+homology 86, and scalar-universe naturality 56. The five-module field-naturality
+scope has a fresh full audit of 75 declarations in normal Lake artifacts;
+its earlier overlay inventory had 74. Both inventories passed the same
+standard-foundation policy, and the current normal inventory is retained in
+full. All scopes have matching focused builds, scoped lint and independent
+ordinary mathematical acceptance. The changed universe-binder suppliers and
+all five direct Waldhausen/prespectrum consumers passed focused normal builds;
+affected new principal/scalar/fiber providers were also refreshed. This is
+scoped evidence, not a whole-library replay.
+Maintained regression and independent-package consumers retain the literal
+integer-2 positive boundary, the unit-1 zero boundary, the canonical lower
+field-product cube and a power-series scalar-universe instance. Their exact
+normal builds, scoped lint and full six-declaration audit passed. Anonymous
+examples were named without changing statements or proofs so the defining-origin
+lint runner could select them. Generated imports and source/layout checks pass
+for 4925 production and 1114 trust-test modules at this checkpoint.
 A whole-root incremental attempt was stopped when the changed upstream
 tensor leaf expanded into unrelated projective-line developments; its
 partial cache progress is retained and no new whole-root pass is claimed.
@@ -543,8 +568,24 @@ projection kernel with the original target pi2; the original basepoint path
 then gives a map from the Steinberg kernel to original finite-projective
 right-module K2, explicitly `(FiniteProjectiveModule.exactStructure Fᵐᵒᵖ).K 2`.
 The subsequent finite-module transport must remain an explicit composition.
-Perfectness of the fiber group, surjectivity or injectivity of this comparison,
-its field naturality and positive product marking are still unproved.
+`SteinbergFiberNaturality` now proves the exact square with original
+`rightBaseChangeExact f` and the restricted original Steinberg field map,
+for fields in the same universe. Its nonstationary homotopy-fiber transport
+retains both original correction paths. The two existing map/LES suppliers
+are generalized only in their universe binders; their proof bodies and old
+single-universe specializations are unchanged.
+`SteinbergFiberSurjectivity` proves the four original lift/kernel/pi2/projective-K2
+maps surjective under explicit `Group.IsPerfect (StableFiberPiOne F)`.
+`Aglib.Algebra.Group.Hom.CentralLifts` supplies the general central-kernel range
+argument. The required actual-fiber perfectness remains unproved.
+
+`StableSteinbergRankTwo` proves, for every field, that the original ordered
+defects generate exactly `stage F 2 ∩ ker(toElementary F)`. Its two-cell
+Bruhat proof takes place inside the original stable presentation and uses
+no injectivity of an unstable Steinberg-stage map. It identifies surjectivity
+of the existing `milnorToKernel` with the remaining all-rank containment
+`ker(toElementary F) ≤ stage F 2`. That containment, Milnor-map injectivity,
+comparison bijectivity and positive product marking are still open.
 
 Compose the two tracks with the existing positive K2 Q comparison, opposite
 and finite-module transports. Prove naturality and the positive marking of
@@ -563,13 +604,22 @@ that `H` is universal, but does not make perfectness automatic.
 The precise smaller topological obligation is: for a connected source and
 simply connected target, perfect source pi1 and surjective actual H2 imply
 perfect pi1 of the actual homotopy fiber. It requires the low-degree homology
-sequence and H1/abelianization, plus an actual regular-coefficient chain
-comparison for the pullback cover of BGL. Existing covering-homology and
+sequence and H1/abelianization, plus an actual covering-fiber coefficient chain
+comparison for the pullback cover of BGL. Existing simply-connected-cover and
 simply-connected-source Whitehead interfaces do not supply that case: the
 pullback cover has pi1 equal to the generally nontrivial elementary group.
 Perfectness of the elementary quotient alone is insufficient, as a product
 with a nonzero abelian kernel shows. This route is an investigated proof plan,
 not a newly formalized theorem.
+`LocalCoefficients.PullbackCoveringHomology` now closes the same-universe
+chain supplier with the free module on the actual covering fibers and their
+genuine monodromy. Its original-chain arrow square has the literal second
+projection from the pullback subtype as lower map. No connectedness,
+source-cover simple connectedness or base-pi1 bijectivity is assumed.
+The mixed-universe transport and actual plus-cover/fiber application remain
+separate. The low-degree relative-chain argument still needs marked cycle
+normalization and descent; checked scratch cap identities alone do not prove
+actual-fiber perfectness.
 
 ## Q5: low-degree actions, signs, and the origin DVR
 
@@ -650,9 +700,28 @@ the inverse of the literal `automorphismFirstCube` class. For the actual upper
 free rank-n field-module object, the determinant is `(r^n)^-1`, with rank zero
 and the chosen-zero object included. The rank-one value is `r^-1`.
 Both subsequent leaves have independent ordinary mathematical acceptance.
-The remaining principal calibration must compute the original K0 connecting
-map on the localized multiplication-by-uniformizer cube; it is not a premise
-supplied by these scalar-operation theorems.
+`FiniteModules.PrincipalObjectBoundary` now computes the original degree-zero
+Serre boundary on the literal positive cube of an inverted self-conflation
+endomorphism, including zero cokernels. It gives the original supported
+cokernel object class with positive sign. The actual-target proof retains
+the original localization lift and correction paths. For a commutative
+Noetherian ring and regular `r`, its original `closedConnectingHom r 0`
+sends the actual localized rank-one scalar cube to the original quotient-ring
+rank-one object class. The unit case is included.
+
+`LowDegreeScalarAction.UniverseNaturality` proves operation and object-class
+naturality for the original `universalKMap` in independent small categorical
+universes. The canonical `smallKUniverseEquiv` therefore preserves scalar
+actions, object classes and literal positive scalar cubes, with both
+essential-smallness hypotheses and no linear instance on either model.
+`FieldSymbols` defines a positive rank-one K1 class using the original
+determinant inverse and proves equality with the literal matrix cube.
+The actual scalar K1 operation gives its bilinear field unit product and
+original tensor-extension naturality. `DvrSymbols` proves unit-unit boundary
+zero for actual localization, principal, fraction and local-DVR boundaries.
+Its upper product is explicitly lowered by the canonical universe comparison.
+These products have not yet been identified with the ordered Steinberg/Milnor
+comparison. The unit-uniformizer boundary value remains a separate computation.
 
 Derive the raw boundary and then its corrected version through the fixed
 `D_Q`, `mu_+`, `T`, and `N`. Check both ordered inputs `{u,pi}` and `{pi,u}`

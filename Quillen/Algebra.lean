@@ -40,6 +40,7 @@ public import Quillen.Algebra.Group.StableQuotientInvariance
 public import Quillen.Algebra.Group.StableSteinberg
 public import Quillen.Algebra.Group.StableSteinbergCentrality
 public import Quillen.Algebra.Group.StableSteinbergNaturality
+public import Quillen.Algebra.Group.StableSteinbergRankTwo
 public import Quillen.Algebra.Group.StableSteinbergSymbols
 public import Quillen.Algebra.Group.StableSteinbergTorus
 public import Quillen.Algebra.Group.StableSteinbergUniversal

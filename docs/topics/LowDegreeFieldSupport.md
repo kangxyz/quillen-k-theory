@@ -181,10 +181,15 @@ supplied interfaces with its original field-map square.
 [`SteinbergFiberComparison`](../../Quillen/KTheory/Field/SteinbergFiberComparison.lean)
 constructs the actual plus-map fiber central extension and the resulting
 map from the Steinberg kernel to original finite-projective right-module K2.
-Finite-module transport must be a subsequent explicit composition. Kernel symbol
-generation, Milnor-map injectivity, fiber perfectness, comparison isomorphism,
-field naturality of the topological comparison and positive product marking
-remain separate obligations.
+Finite-module transport must be a subsequent explicit composition.
+[`SteinbergFiberNaturality`](../../Quillen/KTheory/Field/SteinbergFiberNaturality.lean)
+proves the exact original field-extension square.
+[`SteinbergFiberSurjectivity`](../../Quillen/KTheory/Field/SteinbergFiberSurjectivity.lean)
+proves surjectivity under explicit perfectness of the actual fiber group.
+[`StableSteinbergRankTwo`](../../Quillen/Algebra/Group/StableSteinbergRankTwo.lean)
+identifies the defect subgroup with the original rank-two kernel. Full kernel
+containment in that stage, Milnor-map injectivity, actual fiber perfectness,
+comparison isomorphism and positive product marking remain open.
 
 ## Low-degree identity-automorphism operations
 
@@ -212,8 +217,7 @@ model or formal-quotient linear instance.
 [`ObjectClass`](../../Quillen/KTheory/LowDegreeScalarAction/ObjectClass.lean)
 identifies the action on the original object class with `automorphismClass`,
 hence the inverse positive cube. Its upper free rank-n field-module determinant
-is `(r^n)^-1`, including rank zero. Principal K0 boundary calibration and
-ordered symbol marking remain separate.
+is `(r^n)^-1`, including rank zero.
 
 The source-coordinate contraction formula in
 [`SourceContractionBoundary`](../../Quillen/Topology/HomotopyFiber/SourceContractionBoundary.lean)
@@ -223,8 +227,25 @@ supply boundary geometry without assuming a calibration equation.
 [`PrincipalRankOne`](../../Quillen/Aglib/Algebra/Category/FGModuleCat/PrincipalRankOne.lean)
 retains the literal multiplication/quotient maps and actual localized scalar
 automorphism. Regularity supplies monicity; Noetherianity supplies the
-categorical short-exact and conflation statements. These providers do not
-close the remaining principal K0 boundary calibration.
+categorical short-exact and conflation statements.
+[`PrincipalObjectBoundary`](../../Quillen/GTheory/FiniteModules/PrincipalObjectBoundary.lean)
+now computes the original positive self-conflation cube boundary, including
+zero cokernels. For a Noetherian commutative ring and regular `r`, the original
+closed boundary of the actual localized rank-one cube is the original
+quotient-ring rank-one object class, with positive sign.
+[`UniverseNaturality`](../../Quillen/KTheory/LowDegreeScalarAction/UniverseNaturality.lean)
+preserves actual scalar operations, object classes and positive cubes through
+the original canonical model-universe comparison, with both smallness
+hypotheses and no linear instances on the models.
+
+[`FieldSymbols`](../../Quillen/KTheory/LowDegreeScalarAction/FieldSymbols.lean)
+defines the original scalar-operation product on positive rank-one unit
+classes and proves bilinearity and actual tensor-extension naturality.
+[`DvrSymbols`](../../Quillen/KTheory/LowDegreeScalarAction/DvrSymbols.lean)
+proves its unit-unit boundary is neutral for the original localization,
+principal, fraction and local-DVR maps, explicitly lowering the upper model.
+The unit-uniformizer value, Steinberg relation and comparison with the
+Milnor/Steinberg map remain separate obligations.
 
 ## DVR tame kernel and split residue
 
@@ -253,8 +274,8 @@ existing diagram constructor.
 ## Remaining boundary
 
 Q1 and Q2 achieve the first native milestone. Matsumoto and positive symbol
-marking, actual finite-field Quillen G2 vanishing, principal K0 boundary
-calibration, ordered Quillen boundary compatibility, origin-DVR Quillen unit
+marking, actual finite-field Quillen G2 vanishing, unit-uniformizer residue,
+ordered Quillen boundary compatibility, origin-DVR Quillen unit
 generation remain open. R5's distinct sheaf-stalk transport and the first and
 third affine localization consequences have a separately validated proposal.
 R5 retarget patches are unapplied. The field-determinant and closed-support

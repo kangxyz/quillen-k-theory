@@ -16,9 +16,11 @@ The original source coordinate and full postcomposed path are retained.
 
 noncomputable section
 open scoped Topology
-universe u
+universe u v w z
 namespace Quillen.HomotopyFiber
-variable {X Y A B : Type u} [TopologicalSpace X] [TopologicalSpace Y]
+section Maps
+variable {X : Type u} {Y : Type v} {A : Type w} {B : Type z}
+  [TopologicalSpace X] [TopologicalSpace Y]
   [TopologicalSpace A] [TopologicalSpace B] {p : C(X, A)} {q : C(Y, B)}
 
 /-- The exact fiber map with a displayed equality of target basepoints. -/
@@ -32,6 +34,11 @@ def mapAt (u : C(X, Y)) (v : C(A, B)) (sq : v.comp p = q.comp u)
     apply Continuous.prodMk
     · fun_prop
     · exact (ContinuousMap.continuous_postcomp v).comp (by fun_prop)
+
+end Maps
+
+variable {X Y A B : Type u} [TopologicalSpace X] [TopologicalSpace Y]
+  [TopologicalSpace A] [TopologicalSpace B] {p : C(X, A)} {q : C(Y, B)}
 
 theorem mapAt_weak (u : C(X, Y)) (v : C(A, B)) (sq : v.comp p = q.comp u)
     (hu : IsWeakHomotopyEquivalence u) (hv : IsWeakHomotopyEquivalence v)

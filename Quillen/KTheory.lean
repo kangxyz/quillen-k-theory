@@ -199,6 +199,8 @@ public import Quillen.KTheory.Field.ScalarExtensionComparison
 public import Quillen.KTheory.Field.StableMatrixLoop
 public import Quillen.KTheory.Field.StableMatrixMarking
 public import Quillen.KTheory.Field.SteinbergFiberComparison
+public import Quillen.KTheory.Field.SteinbergFiberNaturality
+public import Quillen.KTheory.Field.SteinbergFiberSurjectivity
 public import Quillen.KTheory.FiniteSupport.Decomposition
 public import Quillen.KTheory.FiniteSupport.FilteredStages
 public import Quillen.KTheory.FiniteSupport.FiniteProduct
@@ -220,12 +222,15 @@ public import Quillen.KTheory.GrothendieckComparison.PathPotential
 public import Quillen.KTheory.GrothendieckComparison.Retraction
 public import Quillen.KTheory.GrothendieckGroup.Basic
 public import Quillen.KTheory.GrothendieckGroup.Map
+public import Quillen.KTheory.LowDegreeScalarAction.DvrSymbols
 public import Quillen.KTheory.LowDegreeScalarAction.ExactNaturality
+public import Quillen.KTheory.LowDegreeScalarAction.FieldSymbols
 public import Quillen.KTheory.LowDegreeScalarAction.IdentityAutomorphism
 public import Quillen.KTheory.LowDegreeScalarAction.ObjectClass
 public import Quillen.KTheory.LowDegreeScalarAction.ScalarUnit
 public import Quillen.KTheory.LowDegreeScalarAction.SerreBoundary
 public import Quillen.KTheory.LowDegreeScalarAction.SmallModelBoundary
+public import Quillen.KTheory.LowDegreeScalarAction.UniverseNaturality
 public import Quillen.KTheory.Map.Basic
 public import Quillen.KTheory.Map.CoherenceData
 public import Quillen.KTheory.Map.CommonAmbient

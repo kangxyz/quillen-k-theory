@@ -699,6 +699,7 @@ import QuillenTest.PrincipalMapFactorization
 import QuillenTest.PrincipalPerfectCofinality
 import QuillenTest.PrincipalPerfectLocalization
 import QuillenTest.PrincipalProjectiveExtension
+import QuillenTest.PrincipalScalarBoundary
 import QuillenTest.PrincipalStrictCofinality
 import QuillenTest.PrincipalStrictImageClosure
 import QuillenTest.PrincipalStrictWeakImage

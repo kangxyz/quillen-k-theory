@@ -48,6 +48,7 @@ public import Quillen.Aglib.Algebra.Category.Ring.Finite
 public import Quillen.Aglib.Algebra.Group.ExactTransport
 public import Quillen.Aglib.Algebra.Group.FiniteAdjacentComplex
 public import Quillen.Aglib.Algebra.Group.FiniteAdjacentSection
+public import Quillen.Aglib.Algebra.Group.Hom.CentralLifts
 public import Quillen.Aglib.Algebra.Group.Hom.Exact
 public import Quillen.Aglib.Algebra.Group.Hom.KernelComparison
 public import Quillen.Aglib.Algebra.Group.MayerVietoris
