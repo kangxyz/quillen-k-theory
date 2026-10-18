@@ -24,11 +24,9 @@ independently constructed regular-affine equivalence. The more general
 `AlgebraicGeometry.Scheme.Modules.schemeKToG_bijective_of_finite_resolutions` retains its admissible
 kernel-closure and actual finite-resolution premises.
 
-## Moved general-theory imports
+## General prerequisites
 
-The following retired imports moved to general-theory candidates. Import their current owners directly.
-
-| Retired import | Current owner |
-| --- | --- |
-| `Quillen.AlgebraicGeometry.Scheme.Regular.FiniteProjectiveResolution` | `Quillen.Aglib.Algebra.Homology.ModuleCat.FiniteProjectiveResolution` |
-| `Quillen.AlgebraicGeometry.Scheme.Regular.LocalPrincipalDomain` | `Quillen.Aglib.RingTheory.RegularLocalRing.PrincipalDomain` |
+The current general interfaces are
+[`FiniteProjectiveResolution`](../../../Aglib/Algebra/Homology/ModuleCat/FiniteProjectiveResolution.lean)
+and [`PrincipalDomain`](../../../Aglib/RingTheory/RegularLocalRing/PrincipalDomain.lean).
+Their regular-scheme applications retain the hypotheses above.

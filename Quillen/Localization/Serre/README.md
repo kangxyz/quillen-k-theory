@@ -109,5 +109,5 @@ own conditions. The source links above give the current statements and their
 exact hypotheses.
 
 For perfect-complex localization, support, and Mayer–Vietoris, use
-[Thomason–Trobaugh interfaces](../../../docs/topics/PerfectComplexes.md). For geometric K/G categories
-and their canonical maps, continue with [Scheme K/G-theory](../../../docs/topics/SchemeKTheory.md).
+[Thomason–Trobaugh interfaces](../../AlgebraicGeometry/PerfectComplexes/README.md). For geometric K/G categories
+and their canonical maps, continue with [Scheme K/G-theory](../../AlgebraicGeometry/Scheme/README.md).

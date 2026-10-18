@@ -79,9 +79,7 @@ See [PerfectSupport.lean](PerfectSupport.lean).
 
 - Supply any needed general stable cofiber excision, replacement cofiber preservation, and higher raw-spectrum/telescope coherence. The categorical stable localization has no asserted standard stable model structure or triangulation.
 
-The broader interface and verification boundaries are in [Scope.md](../../../docs/reference/Scope.md).
-Successful compilation and foundation audits concern the encoded statements;
-they do not supply any of these missing comparisons.
+The broader comparison boundaries are in [scope summary](../../../docs/SCOPE.md).
 
 ## Source interfaces
 

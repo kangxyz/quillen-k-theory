@@ -35,3 +35,8 @@ representative and its apex. For an exact structure the required restricted
 pullback instances are supplied by its axioms and their consequences;
 arbitrary pairs of morphism properties do not automatically define an exact
 category. The specialization is `E.QCategory`.
+
+## Q-span naturality
+
+[`SpanIsoNaturality`](SpanIsoNaturality.lean) exposes
+`CategoryTheory.ExactCategory.ExactStructure.qSpan_iso_naturality`.

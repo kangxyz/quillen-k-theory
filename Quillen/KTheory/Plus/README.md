@@ -32,7 +32,7 @@ coordinate and retains the outer path direction. The actual comparison's
 component label is `grade(input) - grade(basepoint)`; the zero-stage label is
 `[P] - [rankOnePower n]`. Positive comparisons use the original loop-degree
 shift and mapped-track transport, with no dimension-parity factor. See
-[standard comparison normalization](../../../docs/reference/StandardSignMigration.md).
+[standard comparison normalization](StandardComparison.md).
 
 The comparison homotopy equivalences retain those exact standard forward maps and the
 original track. The product uses discrete original K₀ and the particular
@@ -50,7 +50,7 @@ and all-degree K-map equality are proved in the focused tensor imports above.
 Raw module and ring universes are independent; the original finite-projective
 source remains `Category.{u, u}`, and mixed-ring-universe comparisons lift the
 target explicitly. The original K-map and topological ring-change interfaces
-retain their common-ring-universe bounds. The [plus guide](../../../docs/topics/PlusConstruction.md)
+retain their common-ring-universe bounds. The [homological comparison](#homological-plus-certificate-and-q-comparison)
 records these scopes and the plus certificate's coefficient universe `u + 1`.
 Automatic comparison and ordinary uniqueness on actual Hausdorff CW spaces for original
 `IsPlusConstruction.{u,u,u}` certificates are now included. Common-universe
@@ -70,7 +70,7 @@ times this specific plus model. Its product-to-loop map has ordinary homotopy
 naturality under common-universe ring change; positive K-group comparisons
 retain their basepoint corrections. No natural chosen inverse or infinite-loop
 splitting is asserted. At stage `(n, P)` the standard class is `[P] - [R^n]`;
-[standard normalization](../../../docs/reference/StandardSignMigration.md) records the direct refactor.
+[standard normalization](StandardComparison.md) gives the actual sign formulas.
 
 The matrix-image ring-change functor has the additive scalar-extension Hom
 universal property for arbitrary ambient target modules, with independent
@@ -84,7 +84,7 @@ countable or locally finite restrictions. Mixed spaces retain a displayed
 common coefficient universe. Actual CW structures are required; arbitrary
 CW-homotopy-type transport, coherence relative to prescribed under-source
 tracks and a natural chosen inverse remain separate. See
-[the classical CW guide](../../../docs/topics/ClassicalCWPlus.md).
+[the classical CW guide](../../Topology/PlusConstruction/ClassicalCW.md).
 
 ## Original covering and fiber homology
 
@@ -143,9 +143,9 @@ ring are included throughout; no regularity, noetherian, flatness, or invariant
 basis number assumption is added to these ring-specific statements.
 
 The [documentation map](../../../docs/README.md) supplies the neighboring topics;
-[exact-category guide](../../../docs/topics/ExactCategories.md) records the original Q/K interface,
-and [spectral and Bass guide](../../../docs/topics/SpectraAndBass.md) records the separate spectral theory.
-[classical CW guide](../../../docs/topics/ClassicalCWPlus.md) describes comparison and ordinary
+[exact-category guide](../README.md) records the original Q/K interface,
+and [spectral and Bass guide](../Bass/README.md) records the separate spectral theory.
+[classical CW guide](../../Topology/PlusConstruction/ClassicalCW.md) describes comparison and ordinary
 uniqueness for original plus maps on actual Hausdorff CW subtypes, including
 the mixed-universe theorem and its coefficient bound.
 
@@ -329,7 +329,7 @@ The statements above keep the following mathematical boundaries explicit:
 - Independent universes in raw scalar extension do not enlarge the common
   ring universe of the topological naturality theorem.
 
-## Related reading and verification
+## Mathematical background
 
 The mathematical background includes Grayson's
 [*Higher algebraic K-theory II*](https://www.graysonfamily.org/dan/Papers/HigherAlgKThyII.pdf),
@@ -339,9 +339,5 @@ and Miller–Palmer's
 These references provide background; the public statements and hypotheses are
 the Lean declarations identified above.
 
-Run `bash scripts/check.sh --rehash` for the integrated library and independent
-client. It checks imports, source structure, placeholders, script tests,
-compilation, environment and text lint, and both explicit transitive axiom
-audits. The allowed axioms are `propext`, `Classical.choice`, and `Quot.sound`.
-These checks concern encoded proofs and their foundation dependencies; they do
-not by themselves certify correspondence with a classical source theorem.
+Validation policy is in [CONTRIBUTING](../../../CONTRIBUTING.md#tests-and-checks)
+and the [global trust boundary](../../../docs/ARCHITECTURE.md#trust-checks).

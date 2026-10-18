@@ -50,7 +50,7 @@ identifies the induced first homotopy-group normalization of the loop space with
 the standard left-component normalization. It does not identify the entire
 identity-cofiber and suffix-removal paths. The separate fibration theorem still
 retains its hypotheses above. Scalar-boundary applications and their geometric
-comparison questions are in [perfect-complex guide](../../../docs/topics/PerfectComplexes.md).
+comparison questions are in [perfect-complex guide](../../AlgebraicGeometry/PerfectComplexes/README.md).
 
 ## Spectrum comparison hypotheses
 

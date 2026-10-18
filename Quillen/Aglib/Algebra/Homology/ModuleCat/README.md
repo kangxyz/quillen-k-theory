@@ -25,3 +25,6 @@ with projective-dimension bounds or the stated PID specialization.
 | Import | Interface |
 | --- | --- |
 | `Quillen.Aglib.Algebra.Homology.ModuleCat.FiniteProjectiveResolution` | Actual finite-projective resolutions and finite-free PID resolutions |
+
+The current finite-projective resolution interface is
+[`FiniteProjectiveResolution`](FiniteProjectiveResolution.lean).

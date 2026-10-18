@@ -34,9 +34,6 @@ The positive Bass row for `K_m(S) := PerfectK(Spec S,m)` is exact for every comm
 
 The fine Laurent `[T]` terminal formula and its actual O/O(-1) zero-locus class remain open. The lower negative-chart scalar must be related to `T⁻¹`, its unit class inverted, and the original supported cone of `tautologicalLineInclusion ≫ prod.fst` compared through its positive trivialization and negative polynomial coordinate. Transport through original excision and the same native Phi inverse must determine whether the original operation gives `x` or `x⁻¹`. A natural section of the literal terminal arrow, with its proved sign, remains to be constructed. Exactness and the relative positive sign alone do not determine it. Keep all Nil contributions; classical ring-K identification, Nil vanishing, and homotopy invariance are separate.
 
-## Evidence and mathematical acceptance
-
-The historical [recovered-comparison record](../../../docs/development/evidence/TTRecoveredComparisons.json), [fine-completion/raw-pasting record](../../../docs/development/evidence/TTFineCompletionAndRawPasting.json), [seed-iteration record](../../../docs/development/evidence/TTBassSeedIteration.json), [cube record](../../../docs/development/evidence/TTBassCube.json), and [current-stage record](../../../docs/development/evidence/TTCurrentStageLocalization.json) retain their own source and checked scope. They support their encoded constructions; compilation, review bookkeeping, and origin audits do not identify a construction with classical Kᴮ.
 
 ## Original raw-cell route
 
@@ -83,10 +80,8 @@ the shared H0/chart/bottom families, and `MWholeNative`'s actual 139-simplex.
 Their chosen triangles, twelve whole shared edges, chart pauses and continuous
 three-side collapse remain unchanged. The generic finite scalar extension is
 owned by `SimplexCubeExtension` and `SimplexCubeFaces`. The separate unit
-construction uses its own original faces and scalar extension. Their retained
-prior review and compiler scopes are in [the cube evidence](../../../docs/development/evidence/TTBassCube.json);
-the new source-cell progress is in
-[the current evidence](../../../docs/development/evidence/TTFineCompletionAndRawPasting.json).
+construction uses its own original faces and scalar extension. Recorded cube and source-cell evidence is in the
+[global evidence registry](../../../docs/evidence/README.md#recorded-source-cell-scope).
 
 The current polynomial cube has complete scalar intersections; these must not
 be listed as unproved. The unresolved higher overlap boundary is a different
@@ -152,3 +147,5 @@ These additional names use the same objects, hypotheses, and original maps as th
 | `MWholeScalarFaces` | [Constructed results and their conditions](#constructed-results-and-their-conditions) |
 | `ConnectingLoopPathClass`, `Quillen.BassLaurentUnitBoundary.scalar_forward_changeWeak_boundary` | [Constructed results and their conditions](#constructed-results-and-their-conditions) |
 | `perfectAcyclicSupportedKEquiv`, `qcqsPerfectConnectingHom_comp_relative`, `Quillen.PerfectComplexes.polynomialScalarForwardKOneClass_restrict_rankOne`, `laurentGlobalUnit` | [Original Laurent boundary and splitting](#original-laurent-boundary-and-splitting) |
+
+Source and validation records are in the [global evidence registry](../../../docs/evidence/README.md).

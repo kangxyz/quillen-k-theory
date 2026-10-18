@@ -3,15 +3,16 @@
 Contributions should provide reusable mathematical definitions, proofs, or
 interfaces. Keep hypotheses explicit and follow the conventions of
 [mathlib](https://leanprover-community.github.io/contribute/style.html).
-The [architecture](docs/development/Architecture.md) describes the current mathematical
-owners; [scope](docs/reference/Scope.md) records the remaining comparisons.
+The [architecture](docs/ARCHITECTURE.md) describes the current mathematical
+owners; [scope](docs/SCOPE.md) records the remaining comparisons.
 
 ## Adding mathematics
 
 New general theory intended for Aglib belongs in the
-[local candidate subtree](Quillen/Aglib/README.md). Its native namespaces and
-general dependency closure prepare a later upstream move; application adapters
-keep their ordinary Quillen owners.
+[local candidate source tree](Quillen/Aglib/README.md). Follow the
+[candidate authoring policy](docs/DEVELOPMENT.md#aglib-candidates) for admission.
+Its native namespaces and general dependency closure prepare a later upstream
+move; application adapters keep their ordinary Quillen owners.
 
 Place source in the nearest mathematical owner under `Quillen/`. Add a subject
 or subdirectory when it has actual source and a useful consumer. Split modules
@@ -123,7 +124,7 @@ Batteries environment lint, and native mathlib text lint; then builds the
 downstream package and explicitly replays both axiom audits. Library compilation
 uses `autoImplicit = false`, the mathlib standard linter set, and warnings as
 errors. The allowed foundation axioms are `propext`, `Classical.choice`, and
-`Quot.sound`; see [the audit boundary](docs/development/Architecture.md#trust-checks).
+`Quot.sound`; see [the audit boundary](docs/ARCHITECTURE.md#trust-checks).
 
 ## Typechecking performance
 
@@ -150,7 +151,7 @@ Use profiles to select a bounded change, then compare matched unprofiled runs
 with the same threads, options, outputs, and cache treatment. Alternate variants
 and record durations; profiling overhead is not a production speed comparison.
 Current measurements and their scope are recorded in
-[Performance.md](docs/development/Performance.md).
+[Performance.md](docs/PERFORMANCE.md).
 
 ## API evolution
 
@@ -159,22 +160,25 @@ constructions distinct interfaces and state exact hypotheses for comparisons.
 Module paths and declaration namespaces should reflect mathematical ownership.
 Use one canonical interface for each construction, with minimal necessary
 hypotheses and mathlib naming conventions. Update the relevant source-family README or focused mathematical/API guide
-when imports or interfaces change. Keep the [API index](docs/reference/API.md)
-concise and link to that authority, preserving hypotheses and canonical maps.
+when imports or interfaces change. Use the [source-family index](Quillen/README.md)
+to locate that authority, preserving hypotheses and canonical maps.
 
 The library uses `0.x` versions. Breaking import or API changes require a minor
 version bump and concise release notes; compatible corrections use patch
 releases. Consumers should pin a release tag or commit. Update
-[scope](docs/reference/Scope.md) when mathematical coverage changes and the
-relevant source-family guide linked by the [documentation map](docs/README.md#mathematical-topics) when its objects,
+[scope](docs/SCOPE.md) when mathematical coverage changes and the
+relevant source-family guide linked by the [source-family index](Quillen/README.md) when its objects,
 theorem inputs, canonical maps, or comparison boundary change.
 
 ## Documentation
 
 The [documentation map](docs/README.md) owns package-wide navigation. Global
-`docs/` files contain concise summaries, reading routes, status/compatibility
-indexes and operational guidance. Mathematical content and API/interfaces live
-in their occupied source families under `Quillen/`, in a README or focused guide
+`docs/` owns navigation, cross-family scope, architecture, measured performance,
+compatibility/history, source/runtime evidence, provenance and workflow.
+Candidate-specific authoring is in [development policy](docs/DEVELOPMENT.md#aglib-candidates);
+this contributor guide remains the setup, general authoring and check authority.
+Mathematical content and current API/interfaces live in their occupied source
+families under `Quillen/`, in a README or focused guide
 linked from it. Reuse the natural owner; do not duplicate a mathematical chapter
 or create empty future structure. Retain the existing `docs/` spelling.
 

@@ -8,10 +8,11 @@
 | `KTheory.Bass.TwoChartAdditive` | Additive two-chart contraction and preservation of split exact sequences |
 | `KTheory.Bass.StrictLaurentSeedStable` | Transparent `Track.SeedStableFactorization` and `SeedStableFormula` for an actual track and supplied seed |
 
-The [spectrum guide](../../../docs/topics/SpectraAndBass.md) distinguishes original
-connective groups, recursive Bass cokernels, finite-stage bottom groups, and
-telescope maps. The [perfect guide](../../../docs/topics/PerfectComplexes.md) records the
-geometric seed and support/localization comparisons. A generic diagram
+The [iterated S-spectrum guide](../../Waldhausen/SConstruction/Iterated/README.md)
+owns the original connective groups. This family distinguishes recursive Bass
+cokernels, finite-stage bottom groups and telescope maps. The
+[perfect-complex guide](../../AlgebraicGeometry/PerfectComplexes/README.md)
+owns the geometric seed and support/localization comparisons. A generic diagram
 interface, finite-stage isomorphism, or stable self-comparison does not supply
 an additional rectification or telescope-identification theorem.
 
@@ -232,7 +233,6 @@ slice of a supplied equivariant whole null. The
 [perfect-complex application](../../AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassComparison.md#native-current-stage-full-open-localization)
 constructs these equivariance equations for the original supported/full-open
 null and proves the integer-base current-stage fiber lift stable under its
-open-immersion, compactness and quasi-separatedness hypotheses. Its
-[current evidence](../../../docs/development/evidence/TTCurrentStageLocalization.json)
-keeps that result separate from classical TT identification and the older raw
-O-cell route.
+open-immersion, compactness and quasi-separatedness hypotheses. That result remains separate from classical TT identification and the older
+raw O-cell route. [Recorded evidence](../../../docs/evidence/README.md#tt-source-and-validation-records)
+is maintained with the global documentation.

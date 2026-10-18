@@ -26,7 +26,7 @@ complete library. The [source-family guides](Quillen/README.md) describe focused
 ## Documentation and checks
 
 Start with the [documentation map](docs/README.md).
-[Mathematical scope](docs/reference/Scope.md) summarizes coverage and remaining
+[Mathematical scope](docs/SCOPE.md) summarizes coverage and remaining
 comparisons; exact hypotheses and API authority live with source families.
 Constructed interfaces do not supply their required inputs.
 

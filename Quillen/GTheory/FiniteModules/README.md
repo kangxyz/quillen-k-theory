@@ -4,14 +4,10 @@
 
 | Import | Interface |
 | --- | --- |
+| `Aglib.Algebra.Category.ModuleCat.Finite` | Native finite-module category |
 | `Quillen.GTheory.FiniteModules.PrincipalObjectBoundary` | Positive original Serre self-conflation boundary and literal principal rank-one quotient calibration over Noetherian commutative rings at regular elements, including zero cokernels and units |
 | `Quillen.GTheory.FiniteModules.LocalizationSequence` | Finite-module G-localization |
 
-## Migration to 0.5.0
-
-| Previous import | Current owner |
-| --- | --- |
-| `Quillen.GTheory.FiniteModules.Basic` | `Aglib.Algebra.Category.ModuleCat.Finite` |
 
 ## Finite-module G-localization and closed support
 

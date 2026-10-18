@@ -35,5 +35,7 @@ checks commutation detection, orientation and inverse lifted transport.
 These regular systems support the simply-connected homological weak Whitehead
 and supplied-cover twisted Whitehead theorems. Actual metric realization and
 loop geometry also construct the domination used in the exact original-Q
-comparison above. See the [foundations guide](../../../../docs/topics/HomotopyFoundations.md) for their
+comparison above. See the [foundations guide](../../../Topology/README.md) for their
 hypotheses, original maps and covering boundary.
+
+[`PrincipalDomain`](PrincipalDomain.lean) provides the current local principal-domain interface.

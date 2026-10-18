@@ -2,7 +2,7 @@
 
 The library is organized by mathematical objects and reusable interfaces.
 Source ownership and import dependencies support extension without a fixed
-list of future topics. The [documentation map](../README.md) connects the current
+list of future topics. The [documentation map](README.md) connects the current
 reader guides and references.
 
 ## Source boundaries
@@ -17,8 +17,8 @@ reader guides and references.
 | `examples/downstream/` | Independently configured client package and audit |
 | `Tools/` and `scripts/` | Lint, source discovery, generation, cache, and checks |
 | `Quillen/**/README.md` and focused family guides | Mathematical results, API/interfaces, exact hypotheses, consumers and remaining inputs at source owners |
-| `docs/` | Concise global summaries, navigation, compatibility/status indexes and operational guidance |
-| `docs/development/` | Global architecture, build/trust operations and measured performance |
+| `docs/` | Global summaries, navigation, compatibility/history, workflow, evidence/provenance and operations |
+| `docs/ARCHITECTURE.md`, `docs/PERFORMANCE.md` | Architecture, trust operations and performance; setup/checks remain in `CONTRIBUTING.md` and candidate workflow in `docs/DEVELOPMENT.md` |
 
 QuillenTest, tools, and clients depend on the library. Implementation source imports
 individual dependencies, avoiding broad facades. The structural checker rejects
@@ -26,7 +26,7 @@ cycles and reverse dependencies on tests, tools, or clients.
 
 Accepted shared algebra, exact-category, module-sheaf and cohomology interfaces
 are owned by Aglib. Further general implementations live in the local
-[Quillen/Aglib candidate tree](../../Quillen/Aglib/README.md), under their intended
+[Quillen/Aglib candidate tree](../Quillen/Aglib/README.md), under their intended
 mathematical subjects. Specialized applications import these focused leaves.
 Relocation preserves existing declaration names and chosen maps; a candidate
 module prefix does not assert upstream admission. Each declaration has one local
@@ -70,7 +70,7 @@ sheaf interfaces, rather than repeated in their applications.
 A module's path records its owner. Its declaration namespace should describe
 the mathematical construction and need not mirror the path. Geometric interfaces
 use `AlgebraicGeometry.Scheme` and `Quillen.PerfectComplexes`; generic constructions have
-their own canonical namespaces. See the [source-family guides](../../Quillen/README.md) for actual namespaces and interfaces.
+their own canonical namespaces. See the [source-family guides](../Quillen/README.md) for actual namespaces and interfaces.
 
 ## Import generation and extension
 
@@ -85,7 +85,7 @@ The generated root imports every library module. Clients can use a smaller
 individual module or topic import. The generator wraps long import lines and
 gives oversized import-only facades a local long-file bound derived from their
 generated size; the other style linters remain enabled. CI checks generation
-against the current source graph. See [CONTRIBUTING.md](../../CONTRIBUTING.md) for
+against the current source graph. See [CONTRIBUTING.md](../CONTRIBUTING.md) for
 extension rules.
 
 ## Trust checks
@@ -113,7 +113,7 @@ modules, affected consumers, and changed trust-check inputs. Reconcile combined
 changes before reusing coverage. The phase, commit identity, a missing receipt,
 or a different checkout alone does not require complete compilation, fresh
 dependency replay, or rerunning every audit and source suite. See
-[the validation policy](../../CONTRIBUTING.md#tests-and-checks) for cache recovery
+[the validation policy](../CONTRIBUTING.md#tests-and-checks) for cache recovery
 and the exceptional fault-recovery conditions for a whole-library rebuild.
 Missing coverage alone calls for the uncovered affected checks. Outside fault
 recovery, a literal full rebuild or replay requires an explicit user request

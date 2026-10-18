@@ -95,8 +95,7 @@ completion now has the actual cone and same-null stable fiber comparison, with
 its original signed boundary. Auxiliary-supported cofinality, honest K₀
 exactness and the initial signed cone are proved. Their original supported
 seeds, whole null-transition equations, finite/telescope maps and stable r_Z∞
-now have strict builds, independent ordinary review and matching private-origin
-foundation coverage. The native auxiliary fiber-forget localization now has
+are constructed. The native auxiliary fiber-forget localization now has
 its actual union-support fiber, original seed/whole-null transfer and telescope
 cone/fiber comparison, including the signed boundary. Final fine stability
 requires compact P,Q,T and quasi-separated Q; the structural identities and
@@ -113,10 +112,9 @@ finite coefficient Models by `CoefficientTwoChartStableSequence`. The original
 ambient and supported middle rows, connective seeds and full fine transition
 ranges have their additional geometric proofs; the generic structural
 interface alone does not imply them.
-See [Scope.md](../../../../docs/reference/Scope.md) for the global frontier and
-[Architecture.md](../../../../docs/development/Architecture.md#trust-checks) for the foundation
-audit boundary. Compilation and axiom audits concern encoded proofs; they do
-not identify a spectral construction with an external classical theory.
+See [scope summary](../../../../docs/SCOPE.md) for the global frontier and
+[recorded evidence](../../../../docs/evidence/README.md#affine-supported-construction-record)
+for historical source and validation scope.
 
 ## Actual affine coefficient objects
 

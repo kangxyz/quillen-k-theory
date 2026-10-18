@@ -6,9 +6,9 @@ to establish correctness. Before adopting the proof, restore the standard
 200,000 budget or settle a necessary finite local increase with an adjacent
 explanation, then recompile the module. Keep package defaults unchanged and
 retain a finite limit. Targeted profiling helps settle the retained budget;
-the [contributor guide](../../CONTRIBUTING.md) gives the pinned profiling command.
+the [contributor guide](../CONTRIBUTING.md) gives the pinned profiling command.
 This development reference records measurements and resource requirements;
-mathematical interfaces and hypotheses belong to the [topic guides](../README.md).
+mathematical interfaces and hypotheses belong to the [source-family guides](../Quillen/README.md).
 
 ## Vector-bundle instance inference
 
@@ -49,7 +49,7 @@ numbers as a performance requirement.
 ## Mixed-cylinder naturality
 
 The outer naturality proof of
-[`mixedDeformationMap`](../../Quillen/Waldhausen/Additivity/DeformationMap.lean)
+[`mixedDeformationMap`](../Quillen/Waldhausen/Additivity/DeformationMap.lean)
 normalizes nested interval and grid reindexings. Under the pinned compiler,
 the unchanged declaration exhausts both 200,000 and 400,000 heartbeats and
 passes strict compilation with its local 800,000-heartbeat allowance.
@@ -58,7 +58,7 @@ unchanged. This records a compilation resource requirement. A speed improvement
 for this declaration remains open.
 
 The chosen-zero variant
-[`normalizedMixedMap`](../../Quillen/Waldhausen/Additivity/NormalizedDeformationMap.lean)
+[`normalizedMixedMap`](../Quillen/Waldhausen/Additivity/NormalizedDeformationMap.lean)
 also retains its original construction and proofs. Its outer naturality
 requires a declaration-local 550,000-heartbeat allowance: strict compilation
 fails at 540,000 and passes at 550,000. This is the smallest tested passing
@@ -68,7 +68,7 @@ default-budget optimization; no speed improvement is claimed for this change.
 ## Stable seed factorization types
 
 The four supported and ambient seed-factorization theorems in
-[`CoefficientSupportedBassSeedStable`](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedBassSeedStable.lean)
+[`CoefficientSupportedBassSeedStable`](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/CoefficientSupportedBassSeedStable.lean)
 compiled at the earlier `adbfc33d` snapshot, while the pinned declaration
 linter's `checkType` exhausted the default 200,000 heartbeats on their types.
 That checker uses complete transparency when revalidating stored types, so

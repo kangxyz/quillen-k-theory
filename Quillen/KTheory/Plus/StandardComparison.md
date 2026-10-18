@@ -1,15 +1,10 @@
 # The standard original completion comparison
 
-The 0.7.0 source integration directly refactors the public completion-to-Q-loop
-comparison to the standard sign. A stage `(n, P)` has class `[P] - [R^n]`.
-The Q-construction, positive object generators, K-groups, canonical exact-functor
-K-maps, algebraic completion grades and loop-degree shifts retain their
-definitions. This change affects the comparison map and its prescribed track.
-The [native-owner migration index](../../../docs/reference/API.md#migration-and-native-ownership) remains applicable.
-
-The package version describes source integration and does not identify a
-published tag. Lean remains 4.34.1 and the dependency pins are unchanged.
-[Scope](../../../docs/reference/Scope.md#verification) records current merged verification.
+The public completion-to-Q-loop comparison has the standard sign. A stage
+`(n, P)` has class `[P] - [R^n]`. The Q-construction, positive object generators,
+K-groups, canonical exact-functor K-maps, algebraic completion grades and
+loop-degree shifts retain their definitions. The specified map and track below
+give the normalization.
 
 ## The actual map and track
 
@@ -46,14 +41,10 @@ induces homotopy-group inversion in every positive degree, without a
 dimension-parity factor. Generic reversal reverses concatenation order;
 inversion is used as a group map only in the already commutative K targets.
 
-## Client changes
+## Current clients
 
-Use `Quillen.KTheory.Plus` for the standard comparison, exact homotopy
-equivalences, actual ambient and zero-component naturality homotopies, positive
-comparisons and stage labels. Replace a definitional equality to the generic
-loop/fiber inverse with `completionToOriginalQLoops_eq_reversal_fiberInverse`.
-When selecting a stage for a K₀ class, use the requested class itself with the
-standard stage label; remove the former inversion compensation.
+Use `Quillen.KTheory.Plus` for the standard comparison, exact equivalences,
+naturality homotopies, positive comparisons and component labels.
 
 The [normalization client](../../../examples/downstream/Consumer/StandardSignMigration.lean)
 checks the standard stage labels and component classifiers. The
@@ -80,6 +71,6 @@ Ambient, zero-component and product forward-map naturality use ordinary
 homotopies under common-universe ring change. Their unit-evaluation tracks are
 not identified with the separately prescribed comparison tracks. A natural
 chosen inverse, strict pointedness, H-space, A∞ or infinite-loop splitting is
-not supplied. See [ring plus comparison](../../../docs/topics/PlusConstruction.md) for
-the actual maps and [classical CW comparisons](../../../docs/topics/ClassicalCWPlus.md)
+not supplied. See [ring plus comparison](README.md) for
+the actual maps and [classical CW comparisons](../../Topology/PlusConstruction/ClassicalCW.md)
 for the separate actual-CW and coefficient-universe hypotheses.

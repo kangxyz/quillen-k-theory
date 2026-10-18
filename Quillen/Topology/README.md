@@ -26,7 +26,7 @@ Use `Quillen.Topology` for the combined surface or a focused module below.
 The geometric foundations supply the exact original-Q comparison and K₀–plus
 product; their application contracts belong to the
 [ring plus family](../KTheory/Plus/README.md). Verification coverage and collective
-limits remain in the [scope summary](../../docs/reference/Scope.md).
+limits remain in the [scope summary](../../docs/SCOPE.md).
 
 ## Public imports
 
@@ -63,4 +63,4 @@ certificates. These adapters do not enlarge a smaller coefficient quantifier.
 Arbitrary CW-homotopy-type transport and prescribed-track coherent uniqueness
 are not supplied. The original-Q homotopy equivalence and product retain the
 exact standard maps and original plus model; their chosen inverses are not
-asserted natural. See [mathematical scope](../../docs/reference/Scope.md).
+asserted natural. See [mathematical scope](../../docs/SCOPE.md).

@@ -1,37 +1,13 @@
-# Aglib candidates
+# Aglib candidate interfaces
 
-This directory holds maintained general-theory source developed in Quillen for
-later inclusion in Aglib. Follow the [shared candidate policy](https://github.com/kangxyz/aglib/blob/main/doc/DEVELOPMENT.md#downstream-candidates-for-aglib).
+`Quillen.Aglib` is the current import prefix for local general-theory candidates;
+declaration namespaces describe the native mathematical objects. Existing names,
+objects, hypotheses and chosen comparison maps are preserved. The prefix records
+local ownership and does not assert upstream admission. Q/K/G/S, Waldhausen,
+spectra and specialized projective-line constructions retain their application owners.
 
-Use `Quillen/Aglib/` as the source location and `Quillen.Aglib` as the temporary
-module prefix. Mirror the intended Aglib mathematical path below it. Keep
-native mathematical declaration namespaces, so migration normally changes
-imports rather than the meaning or names of the interfaces. A package-root
-`Aglib/` tree would shadow the upstream dependency and must not be used here.
-
-Before adding a candidate, check existing Mathlib and Aglib APIs. Keep its
-imports in Mathlib, Aglib, or explicitly designated general candidate leaves;
-keep host applications and their adapters outside this subtree. Coordinate
-one implementation owner across downstream libraries. Record the intended
-upstream module, exact hypotheses and current consumer in the module docstring,
-and describe interfaces and main results in each occupied family's README.
-
-Candidates are enrolled and checked as ordinary Quillen production modules.
-They are not scratch, a separate Lake library, or proof of upstream acceptance.
-Once an accepted upstream revision is pinned, retarget the consumers and remove
-the local implementation; avoid duplicate implementations and default legacy
-facades.
-
-Existing general-theory implementations are staged here before admission to
-Aglib. Specialized applications remain in their mathematical host families and
-import the focused candidate leaves. Mixed files separate their general
-constructions from their curve, arithmetic or K-theory endpoints.
-
-The candidate module prefix records the temporary implementation owner. Source
-relocation preserves existing declaration names, objects, hypotheses and chosen
-comparison maps; it does not by itself redesign the public mathematical API.
-Future upstream admission selects canonical native namespaces and removes the
-accepted local implementation together with its old imports.
+Candidate authoring follows the
+[development policy](../../docs/DEVELOPMENT.md#aglib-candidates).
 
 ## Mathematical interfaces and results
 
@@ -55,30 +31,8 @@ family guides for implementation dependencies. Existing public mathematical
 namespaces are preserved; original Q/K/G/S, Waldhausen, spectrum and specialized
 curve/projective-line constructions remain in their application owners.
 
-## Local Aglib candidates in 0.9.0
-
-General algebraic geometry and its algebraic, categorical and homological
-prerequisites awaiting upstream admission live below `Quillen.Aglib`. Import
-their precise mathematical leaves from the [candidate tree](README.md).
-Existing public declaration namespaces and chosen comparison maps are preserved;
-this change reorganizes implementation ownership and splits mixed sources.
-
-The source modules for moved general implementations use the new candidate
-paths. Application modules keep their existing paths and import their lower
-candidate prerequisites. No duplicate implementation or default forwarding
-module is retained for a moved source. Q/K/G/S, Waldhausen, spectra and the
-specialized projective-line applications remain in their mathematical owners.
-
-
-Current native affine/derived compatibility is recorded in the
-[derived-category guide](AlgebraicGeometry/Modules/DerivedCategory/README.md#native-affine-and-derived-compatibility),
-and the retired copied shift interface is documented with
-[derived base change](AlgebraicGeometry/Modules/BaseChange/Derived/README.md#native-shift-interface).
-The [scheme coherent guide](../AlgebraicGeometry/Scheme/Coherent/README.md#finite-type-interfaces-and-coherent-specialization)
-distinguishes lower finite-type interfaces from coherent specializations.
-The [module-category guide](Algebra/Category/ModuleCat/README.md)
-owns the actual scalar-base-change transformation and its unit equation.
-
-Supplied upstream interfaces use precise native Aglib leaves; local candidates
-retain their general source families and application constructions remain in
-Quillen. See the occupied family guides above for actual hypotheses and maps.
+Current affine/derived interfaces are in the
+[derived-category guide](AlgebraicGeometry/Modules/DerivedCategory/README.md),
+[derived base change](AlgebraicGeometry/Modules/BaseChange/Derived/README.md),
+[coherent/finite-type interfaces](../AlgebraicGeometry/Scheme/Coherent/README.md),
+and [scalar base change](Algebra/Category/ModuleCat/README.md).

@@ -1,10 +1,5 @@
 # QuillenComparison interfaces
 
-## Migration to 0.5.0
-
-| Previous import | Current owner |
-| --- | --- |
-| `Quillen.Waldhausen.QuillenComparison.SpanNaturality` | `Quillen.CategoryTheory.QConstruction.SpanIsoNaturality` |
 
 ## Comparison with exact-category Q
 
@@ -20,4 +15,4 @@ constructs `deloopingHomotopyEquiv E` to `E.KSpace`. Its based zigzag gives
 `comparisonK E n` forward, for every `n` and without an equivalence premise.
 `comparisonKEquiv_exactFunctor_naturality` commutes with Waldhausen
 `KMap F.waldhausenExact n` and exact-category `F.KMap n` in their common universes.
-See [exact-category guide](../../../docs/topics/ExactCategories.md).
+See [exact-category guide](../../KTheory/README.md).

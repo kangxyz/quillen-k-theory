@@ -150,9 +150,8 @@ equivariance or tower-coherence premise. At the integer parameter,
 identifies the ambient and supported Models by their original projection and
 preserves both maps. This Model-level identification does not itself assert
 an all-stage identification with classical `Kᴮ` or the auxiliary-support and
-signed-boundary comparison. The
-[current-stage evidence](../../../../docs/development/evidence/TTCurrentStageLocalization.json)
-records the selected source, review and validation scope.
+signed-boundary comparison. Recorded source and validation scope is in the
+[global evidence registry](../../../../docs/evidence/README.md#tt-source-and-validation-records).
 
 ## Finite-stage excision and bottom groups
 

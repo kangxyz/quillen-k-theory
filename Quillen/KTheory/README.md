@@ -16,17 +16,17 @@ specified by the declaration and its linked topic guide.
 
 | Input | Objects and canonical maps | Guide |
 | --- | --- | --- |
-| Exact structure `E` | `E.QCategory`, `E.KSpace`, `E.kBasepoint`, `E.K n`, `E.SmallK n` | [Exact categories](../../docs/topics/ExactCategories.md) |
+| Exact structure `E` | `E.QCategory`, `E.KSpace`, `E.kBasepoint`, `E.K n`, `E.SmallK n` | [Exact categories](README.md) |
 | Exact functor `F` | `F.mapQ`, `F.KMap n`, `F.smallKMap n` | [Exact functors](README.md#exact-functors-and-their-canonical-maps) |
 | Bundled small exact category | `Quillen.SmallExactCategory.ofExactStructure`, `KFunctor n` | [Size conventions](../CategoryTheory/SmallModel/README.md#equivalences-and-universe-boundaries) |
-| Waldhausen structure `W` | `W.Delooping`, `W.kBasepoint`, `W.K n` | [Waldhausen theory](../../docs/topics/Waldhausen.md) |
+| Waldhausen structure `W` | `W.Delooping`, `W.kBasepoint`, `W.K n` | [Waldhausen theory](../Waldhausen/README.md) |
 | Bundled small Waldhausen category | `Quillen.Waldhausen.SmallWaldhausenCategory.KFunctor n` | [Chosen zero and functoriality](../Waldhausen/README.md#exact-functors-and-the-chosen-zero) |
-| Scheme `X` | `AlgebraicGeometry.Scheme.K X n`, `G X n`, `restrictK`, `restrictG`, `KToG` | [Scheme K/G-theory](../../docs/topics/SchemeKTheory.md) |
+| Scheme `X` | `AlgebraicGeometry.Scheme.K X n`, `G X n`, `restrictK`, `restrictG`, `KToG` | [Scheme K/G-theory](../AlgebraicGeometry/Scheme/README.md) |
 | Strict/local perfect complexes | `Quillen.PerfectComplexes.StrictPerfect`, `Perfect`, `StrictK`, `PerfectK` | [Perfect complexes](../AlgebraicGeometry/PerfectComplexes/README.md#complexes-and-support) |
 | Commuting path square | `Path.Homotopy.squareProjectionReturnMap`, `squareProjectionReturnTrack` | [Original path returns](../Topology/Path/SquareProjectionReturn.lean) |
-| Based prespectrum | `Quillen.LoopPrespectrum`, signed stable groups, actual fibers and telescopes | [Spectra](../../docs/topics/SpectraAndBass.md) |
+| Based prespectrum | `Quillen.LoopPrespectrum`, signed stable groups, actual fibers and telescopes | [Spectra](../Topology/Prespectrum/README.md) |
 | Ring-indexed Bass recursion | `Quillen.Bass.negativeKFunctor i` on `CommRingCat` | [Bass groups](Bass/README.md#bass-cokernels-and-the-original-laurent-seed) |
-| Projective completion | `Quillen.FiniteProjectiveModule.StableCompletion.Completion`, `ZeroComponent`, `stableZeroMap` | [Ring plus model](../../docs/topics/PlusConstruction.md) |
+| Projective completion | `Quillen.FiniteProjectiveModule.StableCompletion.Completion`, `ZeroComponent`, `stableZeroMap` | [Ring plus model](Plus/README.md) |
 
 The historical underscore spellings of the path-return constructors remain
 transparent deprecated aliases of these canonical names.
@@ -168,4 +168,4 @@ The constructions here are connective. Negative groups, localization tails,
 resolution, and dévissage have their own inputs and comparison theorems;
 the K₀ presentation alone does not supply them. The common-universe and
 small-presentation comparisons above retain their stated universe boundaries.
-See [Scope.md](../../docs/reference/Scope.md) for those families and the remaining global comparisons.
+See [scope summary](../../docs/SCOPE.md) for those families and the remaining global comparisons.

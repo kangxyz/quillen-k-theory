@@ -14,9 +14,10 @@
   [CONTRIBUTING.md](CONTRIBUTING.md#tests-and-checks); a phase transition alone
   does not request the complete check pipeline or a whole-library rebuild.
 - For new general theory intended for Aglib, follow the
-  [candidate convention](Quillen/Aglib/README.md) before choosing an implementation
+  [candidate convention](docs/DEVELOPMENT.md#aglib-candidates) before choosing an implementation
   owner; keep application adapters outside that subtree.
-- Keep package-wide summaries, navigation and operational guidance in `docs/`.
+- Keep history, workflow, evidence/provenance, package summaries and operational
+  guidance in `docs/`.
   Source-family READMEs and focused guides under `Quillen/` own mathematical
   results, API/interfaces, exact hypotheses and remaining inputs. Maintain one
   authority and update inbound links when moving content.

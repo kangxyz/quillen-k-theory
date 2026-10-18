@@ -29,7 +29,7 @@ The proofs construct the required covers, commuting lifts and canonical double
 cylinders from the original data. No finite-dimensional, countable or locally
 finite restriction is imposed. Actual CW structures are required; the result
 does not transport a bare assertion of CW homotopy type or assert coherence
-relative to prescribed tracks. See [verification](../../../docs/reference/Scope.md#verification)
+relative to prescribed tracks. See [verification](../../../docs/SCOPE.md#verification)
 for the current integrated checking scope.
 
 ## Exact same-universe automatic theorem
@@ -174,5 +174,5 @@ and [tests](../../../QuillenTest/ClassicalCWPlusMixedUniverse.lean) check the or
 successor certificates, cancellation endpoints and pointwise transport laws.
 
 See [homotopy foundations](../README.md) for the homological and
-metric tools, [API](../../../docs/reference/API.md) for focused imports, and
-[scope](../../../docs/reference/Scope.md) for collective boundaries and verification scope.
+metric tools, [API](../../README.md) for focused imports, and
+[scope](../../../docs/SCOPE.md) for collective boundaries and verification scope.

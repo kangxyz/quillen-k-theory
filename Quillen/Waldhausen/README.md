@@ -99,5 +99,5 @@ In the general comparison theorems, independent universes mean independent objec
 Iterated S-spectra and negative Bass groups have separate constructions.
 Approximation does not discharge the fibration section condition; positive cofinality
 does not give a K₀ equivalence; bounded-term comparison retains its abelian ambient
-category and term closures. See [Scope.md](../../docs/reference/Scope.md) for remaining global
+category and term closures. See [scope summary](../../docs/SCOPE.md) for remaining global
 and geometric comparisons.
