@@ -1,0 +1,1783 @@
+{
+  "scope": "Original current-stage parameter Bass localization, with the selected full-open null and integer specialization.",
+  "owners": [
+    "docs/topics/PerfectComplexes.md",
+    "docs/topics/SpectraAndBass.md",
+    "docs/development/TTLocalization.md"
+  ],
+  "base_head": "fd1d66a707d2d658bc5aa556b9f03506e56dee7c",
+  "archive": {
+    "file": "quillen-tt-complete-buildable-sources-20261018T0354Z.zip",
+    "sha256": "0c77015c074d1bbb9b50ef37a64aa2651fd5a02154ac7494e16f7d1a6d7c9420",
+    "archive_manifest_verified_entries": 7223,
+    "merged_source_manifest_verified_files": 6180,
+    "baseline_files_verified": 6032,
+    "baseline_files_replaced": 0
+  },
+  "selection": {
+    "library_modules": 118,
+    "test_modules": 30,
+    "new_lean_files": 148,
+    "same_bytes": 141,
+    "module_docstring_only_changes": 6,
+    "archive_receipt_identity_mismatches": 0,
+    "missing_imports": 0,
+    "target": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterCurrentFullFiber",
+    "target_recursive_project_imports": 1658,
+    "new_library_modules_in_target_closure": 117,
+    "trailing_blank_line_only_changes": 1
+  },
+  "sources": [
+    {
+      "input_module": "Quillen.Aglib.AlgebraicGeometry.Products.IntegerBaseCoefficientRow",
+      "archive_path": "merged-source/Quillen/Aglib/AlgebraicGeometry/Products/IntegerBaseCoefficientRow.lean",
+      "input_sha256": "51d007dc7d91e3693b2bae47129ef08264a863aeeb0d343ed1325c325ad6245b",
+      "module": "Quillen.Aglib.AlgebraicGeometry.Products.IntegerBaseCoefficientRow",
+      "path": "Quillen/Aglib/AlgebraicGeometry/Products/IntegerBaseCoefficientRow.lean",
+      "adopted_sha256": "87b2b300544235a8e292cf9f333713a8bf61bf704634a171824d83c42c7bb0f2",
+      "change": "module-docstring-only",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-integer-row01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseCanonicalRow",
+      "archive_path": "merged-source/Quillen/Aglib/AlgebraicGeometry/Spec/PolynomialLaurent/IntegerBaseCanonicalRow.lean",
+      "input_sha256": "286eb2aedd90b97643ef1278661af035240311e50344baaba1ecbcae11593abf",
+      "module": "Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseCanonicalRow",
+      "path": "Quillen/Aglib/AlgebraicGeometry/Spec/PolynomialLaurent/IntegerBaseCanonicalRow.lean",
+      "adopted_sha256": "3a45b5d14678d9abfd8196099a7e4d6052e412bf07de97cea7aecb9616b67d3c",
+      "change": "module-docstring-only",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-canonical-row01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseLaurentCoefficient",
+      "archive_path": "merged-source/Quillen/Aglib/AlgebraicGeometry/Spec/PolynomialLaurent/IntegerBaseLaurentCoefficient.lean",
+      "input_sha256": "65e3e3a4b46b9f4b62ab14b4fd2e983247a2005c4c7560a1ec80d93810cf03de",
+      "module": "Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseLaurentCoefficient",
+      "path": "Quillen/Aglib/AlgebraicGeometry/Spec/PolynomialLaurent/IntegerBaseLaurentCoefficient.lean",
+      "adopted_sha256": "b0ca9a075f8dbf605f39867086344d0eab5bcd731d69d381a33f98c704a47f49",
+      "change": "module-docstring-only",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-laurent-coefficient02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseLaurentParameter",
+      "archive_path": "merged-source/Quillen/Aglib/AlgebraicGeometry/Spec/PolynomialLaurent/IntegerBaseLaurentParameter.lean",
+      "input_sha256": "0e87b4fabcc2bc6e7f836715ddf130658d0e964c3d473aa757a1b13437200288",
+      "module": "Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseLaurentParameter",
+      "path": "Quillen/Aglib/AlgebraicGeometry/Spec/PolynomialLaurent/IntegerBaseLaurentParameter.lean",
+      "adopted_sha256": "f923df08a22b4dc226c30e41c31b3530d575dd20f5572add8a3db565ee66d916",
+      "change": "module-docstring-only",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-laurent-parameter01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseParameterRow",
+      "archive_path": "merged-source/Quillen/Aglib/AlgebraicGeometry/Spec/PolynomialLaurent/IntegerBaseParameterRow.lean",
+      "input_sha256": "d7b63cfdeedfc1c9e4bed500dec09c1ff15a73f5c4660a2382a9a617e41c591c",
+      "module": "Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseParameterRow",
+      "path": "Quillen/Aglib/AlgebraicGeometry/Spec/PolynomialLaurent/IntegerBaseParameterRow.lean",
+      "adopted_sha256": "9838d871c6fb9f6d676b6a84dc4d11a27dc7a9d6611762e05f598d5c4090a348",
+      "change": "module-docstring-only",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-parameter-row01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseSpecSquare",
+      "archive_path": "merged-source/Quillen/Aglib/AlgebraicGeometry/Spec/PolynomialLaurent/IntegerBaseSpecSquare.lean",
+      "input_sha256": "6723c1ad541a1698285b9d7648cab36d21d524388bd2a33c7eadff43fe81ec8a",
+      "module": "Quillen.Aglib.AlgebraicGeometry.Spec.PolynomialLaurent.IntegerBaseSpecSquare",
+      "path": "Quillen/Aglib/AlgebraicGeometry/Spec/PolynomialLaurent/IntegerBaseSpecSquare.lean",
+      "adopted_sha256": "99e7ce21a584910e430faf5d5306550399147575a5fd1dc95364b378115b6704",
+      "change": "module-docstring-only",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-spec-square01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.Aglib.CategoryTheory.Endofunctor.FixedWords",
+      "archive_path": "merged-source/Quillen/Aglib/CategoryTheory/Endofunctor/FixedWords.lean",
+      "input_sha256": "080af012f66911bb8e42e2130d79ad588ccdcc99162014d43b5ce92902a11f53",
+      "module": "Quillen.Aglib.CategoryTheory.Endofunctor.FixedWords",
+      "path": "Quillen/Aglib/CategoryTheory/Endofunctor/FixedWords.lean",
+      "adopted_sha256": "080af012f66911bb8e42e2130d79ad588ccdcc99162014d43b5ce92902a11f53",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-fixed-words01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalOpenPairDiagram",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalOpenPairDiagram.lean",
+      "input_sha256": "f67682be11000b90c9bfd1e13a267d57d7c6f8f2b7c48882143d743ec0010b46",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalOpenPairDiagram",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalOpenPairDiagram.lean",
+      "adopted_sha256": "f67682be11000b90c9bfd1e13a267d57d7c6f8f2b7c48882143d743ec0010b46",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-open-pair01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalOpenPairNull",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalOpenPairNull.lean",
+      "input_sha256": "f622e69d720354c6ba547ba3288c91d678b2e43a581af485a4e301b6611108d8",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalOpenPairNull",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalOpenPairNull.lean",
+      "adopted_sha256": "f622e69d720354c6ba547ba3288c91d678b2e43a581af485a4e301b6611108d8",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-open-null01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientModels",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientModels.lean",
+      "input_sha256": "69c74fe393e26628fe04956c8fe5d659af970eedbe6145aa5e3bf0859c414670",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientModels",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientModels.lean",
+      "adopted_sha256": "69c74fe393e26628fe04956c8fe5d659af970eedbe6145aa5e3bf0859c414670",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-parameter-coefficient01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientNull",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientNull.lean",
+      "input_sha256": "fa2df72db0e795745549943681d9c217d2acc369fe004db85b68ebc53037754f",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientNull",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientNull.lean",
+      "adopted_sha256": "fa2df72db0e795745549943681d9c217d2acc369fe004db85b68ebc53037754f",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-spec-full-null05/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientRestriction",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientRestriction.lean",
+      "input_sha256": "08ff25a50b7c36eab0d0778a409eaa89ef43de90246f01799c60834d51884eb7",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientRestriction",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientRestriction.lean",
+      "adopted_sha256": "08ff25a50b7c36eab0d0778a409eaa89ef43de90246f01799c60834d51884eb7",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-full-restriction01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientSeed",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientSeed.lean",
+      "input_sha256": "3ccdd67645c6c7641f25b5db24259922f43dc480875f124d6abca609c0f4bef2",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientSeed",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientSeed.lean",
+      "adopted_sha256": "3ccdd67645c6c7641f25b5db24259922f43dc480875f124d6abca609c0f4bef2",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-parameter-seed-maps03/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientSeedCompatibility",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientSeedCompatibility.lean",
+      "input_sha256": "7714a0168a9f24ba2256b0e50780fce6284c0479716543e27938ce25c9162d9b",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientSeedCompatibility",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientSeedCompatibility.lean",
+      "adopted_sha256": "7714a0168a9f24ba2256b0e50780fce6284c0479716543e27938ce25c9162d9b",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-parameter-seed03/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientSquare",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientSquare.lean",
+      "input_sha256": "e2768550eec08627abb662db4b3852435b793fb78895b39467eac3399c336979",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientSquare",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientSquare.lean",
+      "adopted_sha256": "e2768550eec08627abb662db4b3852435b793fb78895b39467eac3399c336979",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-parameter-square03/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientTelescope",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientTelescope.lean",
+      "input_sha256": "85832736f21b8fd2065774bca5751cfd9acd0026cd9f16770e715fbcea9f0815",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientTelescope",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientTelescope.lean",
+      "adopted_sha256": "85832736f21b8fd2065774bca5751cfd9acd0026cd9f16770e715fbcea9f0815",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-parameter-telescope01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientTrack",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientTrack.lean",
+      "input_sha256": "a7a82e2c67a23e95e79a6456574bd8febfa689015e12185a99ca1b3da8c10e65",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientTrack",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientTrack.lean",
+      "adopted_sha256": "a7a82e2c67a23e95e79a6456574bd8febfa689015e12185a99ca1b3da8c10e65",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-parameter-track05/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientUnit",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientUnit.lean",
+      "input_sha256": "232d87843d76141580d48882a171b4488d1e11344dc27ad32fc6f5237af78837",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterCoefficientUnit",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterCoefficientUnit.lean",
+      "adopted_sha256": "232d87843d76141580d48882a171b4488d1e11344dc27ad32fc6f5237af78837",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-parameter-unit01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterFineRestrictionSquare",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterFineRestrictionSquare.lean",
+      "input_sha256": "e7bb86f6ce06322a78c2d5d8b4fd8b0fe0857bbb1c0cd06a613eeb8a6d420e8c",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterFineRestrictionSquare",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterFineRestrictionSquare.lean",
+      "adopted_sha256": "e7bb86f6ce06322a78c2d5d8b4fd8b0fe0857bbb1c0cd06a613eeb8a6d420e8c",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-fine-restriction-square01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterFineTelescope",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterFineTelescope.lean",
+      "input_sha256": "feb272d85610834c2e63cf96be37c8552c97a625b06230f192e4619689a61979",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterFineTelescope",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterFineTelescope.lean",
+      "adopted_sha256": "feb272d85610834c2e63cf96be37c8552c97a625b06230f192e4619689a61979",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-fine-telescope01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterFiniteNull",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterFiniteNull.lean",
+      "input_sha256": "1a9c7772c98d623a4a82f0926f156223a6c75213671986acf221635b6a689540",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterFiniteNull",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterFiniteNull.lean",
+      "adopted_sha256": "1a9c7772c98d623a4a82f0926f156223a6c75213671986acf221635b6a689540",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-spec-finite-null01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterFullRestrictionSquare",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterFullRestrictionSquare.lean",
+      "input_sha256": "d7bcbc69156ac6c68fc6475c42a857fed9f1453c4f4f93c5d0c9209d5e35486c",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterFullRestrictionSquare",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterFullRestrictionSquare.lean",
+      "adopted_sha256": "d7bcbc69156ac6c68fc6475c42a857fed9f1453c4f4f93c5d0c9209d5e35486c",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-full-restriction-square04/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterFullRestrictionTelescope",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterFullRestrictionTelescope.lean",
+      "input_sha256": "28fabc51d3996a40f3e60d8e59ba2f1b6e167d6c2b3bc029b0b2989fbf1f3491",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterFullRestrictionTelescope",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterFullRestrictionTelescope.lean",
+      "adopted_sha256": "28fabc51d3996a40f3e60d8e59ba2f1b6e167d6c2b3bc029b0b2989fbf1f3491",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-parameter-restriction-telescope01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterFullRestrictionTelescopeSquare",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterFullRestrictionTelescopeSquare.lean",
+      "input_sha256": "7aece5ff13813960a6b96bc715b3efaf97b1853126c1fe29821d3169b14f3fdb",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterFullRestrictionTelescopeSquare",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterFullRestrictionTelescopeSquare.lean",
+      "adopted_sha256": "7aece5ff13813960a6b96bc715b3efaf97b1853126c1fe29821d3169b14f3fdb",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-full-restriction-telescope-square01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterIdentityModels",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterIdentityModels.lean",
+      "input_sha256": "7314cfd37db78eb50b9648a38dd957c44fbf8dc1573d4fa0a2deedf4ebc6cc21",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterIdentityModels",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterIdentityModels.lean",
+      "adopted_sha256": "7314cfd37db78eb50b9648a38dd957c44fbf8dc1573d4fa0a2deedf4ebc6cc21",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-identity-models03/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterIteratedOpenIdentification",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterIteratedOpenIdentification.lean",
+      "input_sha256": "ae84a8e4559c25890d874488e4bc24e0468ab9c4367cc5f837e031eb4e8c5633",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterIteratedOpenIdentification",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterIteratedOpenIdentification.lean",
+      "adopted_sha256": "ae84a8e4559c25890d874488e4bc24e0468ab9c4367cc5f837e031eb4e8c5633",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-iterated-open-identification02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterTelescopeCells",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterTelescopeCells.lean",
+      "input_sha256": "3a03b9d4084e7294f1711e8b7bfdf3dcf775e3dd8f2f3cb3ece193935a4cb57b",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterTelescopeCells",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterTelescopeCells.lean",
+      "adopted_sha256": "3a03b9d4084e7294f1711e8b7bfdf3dcf775e3dd8f2f3cb3ece193935a4cb57b",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-parameter-telescope-cells01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterTelescopeNull",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterTelescopeNull.lean",
+      "input_sha256": "5ab9eae628b6a39e15d6d96b5db1d12915431db9d4e2c3027c08eab30ea1992f",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterTelescopeNull",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterTelescopeNull.lean",
+      "adopted_sha256": "5ab9eae628b6a39e15d6d96b5db1d12915431db9d4e2c3027c08eab30ea1992f",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-spec-telescope-null01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedCoefficientGeometry",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedCoefficientGeometry.lean",
+      "input_sha256": "0d15ba244a48364a4820a0a7c9fb4e65d22b1eda90567741e6fc872a08622075",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedCoefficientGeometry",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedCoefficientGeometry.lean",
+      "adopted_sha256": "0d15ba244a48364a4820a0a7c9fb4e65d22b1eda90567741e6fc872a08622075",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-supported-geometry02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedPairDiagram",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedPairDiagram.lean",
+      "input_sha256": "8e2be178f2bba7c8f4853cc4df94720edb08ba1bf00daafd479ecaf48c337c1a",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedPairDiagram",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedPairDiagram.lean",
+      "adopted_sha256": "8e2be178f2bba7c8f4853cc4df94720edb08ba1bf00daafd479ecaf48c337c1a",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-pair-diagram01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedPairModel",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedPairModel.lean",
+      "input_sha256": "d48970f67f05c6a4d0c0d9cccf184fca3e84f5ce3531b2805d23ed482b2447ab",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedPairModel",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedPairModel.lean",
+      "adopted_sha256": "d48970f67f05c6a4d0c0d9cccf184fca3e84f5ce3531b2805d23ed482b2447ab",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-pair-model01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedPairReindex",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedPairReindex.lean",
+      "input_sha256": "651bfdeb16e1442d829e6b8f28d716291d33a34489fb48db22f5116bf8f3b694",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedPairReindex",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedPairReindex.lean",
+      "adopted_sha256": "651bfdeb16e1442d829e6b8f28d716291d33a34489fb48db22f5116bf8f3b694",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-pair-reindex01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterCoefficientModels",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterCoefficientModels.lean",
+      "input_sha256": "0365c1bfe1d3f1379b85e796abfbc1b9ef87a2cc0b0932b5084a2e51da735aa6",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterCoefficientModels",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterCoefficientModels.lean",
+      "adopted_sha256": "0365c1bfe1d3f1379b85e796abfbc1b9ef87a2cc0b0932b5084a2e51da735aa6",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-supported-models02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterCoefficientSeed",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterCoefficientSeed.lean",
+      "input_sha256": "fce7617e6c82677e3a93b513a75120d63902e3577431c9f8dbf069813684bca8",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterCoefficientSeed",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterCoefficientSeed.lean",
+      "adopted_sha256": "fce7617e6c82677e3a93b513a75120d63902e3577431c9f8dbf069813684bca8",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-supported-seed02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterCoefficientTelescope",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterCoefficientTelescope.lean",
+      "input_sha256": "a88964cd85381ea3d8ba15304136c4d0777ff1b5a1ef0ebf5fc063c72aa33c98",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterCoefficientTelescope",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterCoefficientTelescope.lean",
+      "adopted_sha256": "a88964cd85381ea3d8ba15304136c4d0777ff1b5a1ef0ebf5fc063c72aa33c98",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-supported-telescope01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterCoefficientTrack",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterCoefficientTrack.lean",
+      "input_sha256": "5d75113ff42c24b3c316088b0500e92bf4413001b4d8bf9e9e1a69ae1dd1a60c",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterCoefficientTrack",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterCoefficientTrack.lean",
+      "adopted_sha256": "5d75113ff42c24b3c316088b0500e92bf4413001b4d8bf9e9e1a69ae1dd1a60c",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-supported-track01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterCoefficientUnit",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterCoefficientUnit.lean",
+      "input_sha256": "7a699d24574d7d21c99fc2858071423b49f83c6a71d5327d4ac5017c572459fd",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterCoefficientUnit",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterCoefficientUnit.lean",
+      "adopted_sha256": "7a699d24574d7d21c99fc2858071423b49f83c6a71d5327d4ac5017c572459fd",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-supported-unit03/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterGeometry",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterGeometry.lean",
+      "input_sha256": "b3d446c03426c5fb66dcf0311847ad20ddc39f81f40bb05504434e95d3c78943",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterGeometry",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterGeometry.lean",
+      "adopted_sha256": "b3d446c03426c5fb66dcf0311847ad20ddc39f81f40bb05504434e95d3c78943",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-parameter-geometry01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterTelescopeCells",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterTelescopeCells.lean",
+      "input_sha256": "fbc615465d24c46089b50c5809fb69b43c0a79d5d27d3a2b63bf66d486869728",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterTelescopeCells",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterTelescopeCells.lean",
+      "adopted_sha256": "fbc615465d24c46089b50c5809fb69b43c0a79d5d27d3a2b63bf66d486869728",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-supported-telescope-cells01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterTelescopeForget",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterTelescopeForget.lean",
+      "input_sha256": "e35d95c2b4a328fa263e3e477a2d8a306b2911aabb41fe7412954e07104772f3",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterTelescopeForget",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedParameterTelescopeForget.lean",
+      "adopted_sha256": "e35d95c2b4a328fa263e3e477a2d8a306b2911aabb41fe7412954e07104772f3",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-supported-telescope-forget01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterCurrentFullFiber",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterCurrentFullFiber.lean",
+      "input_sha256": "8c86294d1ff229e0d11788c8321a4d45bea64b60cff937ef3e8d37098e2520cc",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterCurrentFullFiber",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterCurrentFullFiber.lean",
+      "adopted_sha256": "8c86294d1ff229e0d11788c8321a4d45bea64b60cff937ef3e8d37098e2520cc",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-current-full-fiber03/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterCurrentNull",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterCurrentNull.lean",
+      "input_sha256": "99a67d780e26262c05ef6c957e32399646bc1c1b7103aadf1be085710548d1f3",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterCurrentNull",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterCurrentNull.lean",
+      "adopted_sha256": "99a67d780e26262c05ef6c957e32399646bc1c1b7103aadf1be085710548d1f3",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-parameter-current-null02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterFullCurrentNull",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterFullCurrentNull.lean",
+      "input_sha256": "d8e6fb4c8a2c59f85cd199abe436f2f03c4196d66d4816a021c968e897ba4872",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterFullCurrentNull",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterFullCurrentNull.lean",
+      "adopted_sha256": "d8e6fb4c8a2c59f85cd199abe436f2f03c4196d66d4816a021c968e897ba4872",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-parameter-full-null01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterFullFiberComparison",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterFullFiberComparison.lean",
+      "input_sha256": "ef209fee0d77f0790a96f7561727e0eb6b8182863c37b516e15029ae278611ea",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterFullFiberComparison",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterFullFiberComparison.lean",
+      "adopted_sha256": "ef209fee0d77f0790a96f7561727e0eb6b8182863c37b516e15029ae278611ea",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-full-fiber03/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterIteratedFullFiber",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterIteratedFullFiber.lean",
+      "input_sha256": "f2eb8a670854bdb7e7117760d91d4cdfb3c8e1e62925054f8204e25a0a7ef233",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterIteratedFullFiber",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterIteratedFullFiber.lean",
+      "adopted_sha256": "f2eb8a670854bdb7e7117760d91d4cdfb3c8e1e62925054f8204e25a0a7ef233",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-parameter-iterated-fiber01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterIteratedFullNull",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterIteratedFullNull.lean",
+      "input_sha256": "89644f681788aab8936a69c7b901d1842effead629cfb3ec764058e001a962b3",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterIteratedFullNull",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterIteratedFullNull.lean",
+      "adopted_sha256": "89644f681788aab8936a69c7b901d1842effead629cfb3ec764058e001a962b3",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-parameter-iterated-null01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterIteratedTwistedFiber",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterIteratedTwistedFiber.lean",
+      "input_sha256": "27d4eedd712f89b3f322991d7d08711a8184152fe04e432de215628fa1053ede",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterIteratedTwistedFiber",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterIteratedTwistedFiber.lean",
+      "adopted_sha256": "27d4eedd712f89b3f322991d7d08711a8184152fe04e432de215628fa1053ede",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-iterated-twisted-fiber01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterLaurentNull",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterLaurentNull.lean",
+      "input_sha256": "2f9ca4582dacddbfe0c85bd360695d6e84a8b4d174fd5753600d72002dfb5595",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterLaurentNull",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterLaurentNull.lean",
+      "adopted_sha256": "2f9ca4582dacddbfe0c85bd360695d6e84a8b4d174fd5753600d72002dfb5595",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-parameter-null01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterLaurentTrack",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterLaurentTrack.lean",
+      "input_sha256": "421ebd9cb30e577e5ddbce5e86ade99495ff01c84702179bf8340498a8599c8e",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterLaurentTrack",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterLaurentTrack.lean",
+      "adopted_sha256": "421ebd9cb30e577e5ddbce5e86ade99495ff01c84702179bf8340498a8599c8e",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-parameter-track01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterLaurentUnit",
+      "archive_path": "merged-source/Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterLaurentUnit.lean",
+      "input_sha256": "0981e9acb0df4cab3b8b089427650d9e61e4281ed0b8a09de7adcd86afd073fa",
+      "module": "Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterLaurentUnit",
+      "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterLaurentUnit.lean",
+      "adopted_sha256": "0981e9acb0df4cab3b8b089427650d9e61e4281ed0b8a09de7adcd86afd073fa",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-parameter-unit01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.AssociatedStrength",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/AssociatedStrength.lean",
+      "input_sha256": "56fc25237d685a30df993bd7bc49cd1850a7b5a2788eed739d8520b2e4a4221f",
+      "module": "Quillen.KTheory.Bass.AssociatedStrength",
+      "path": "Quillen/KTheory/Bass/AssociatedStrength.lean",
+      "adopted_sha256": "56fc25237d685a30df993bd7bc49cd1850a7b5a2788eed739d8520b2e4a4221f",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-associated-strength01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.ConeDiagramNull",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/ConeDiagramNull.lean",
+      "input_sha256": "ef3821b20c80759f94418095957f824d68020dc27bb085516574e51228b15f7a",
+      "module": "Quillen.KTheory.Bass.ConeDiagramNull",
+      "path": "Quillen/KTheory/Bass/ConeDiagramNull.lean",
+      "adopted_sha256": "ef3821b20c80759f94418095957f824d68020dc27bb085516574e51228b15f7a",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-cone-null03/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.ConeTrackDoubleTime",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/ConeTrackDoubleTime.lean",
+      "input_sha256": "2c31010eed3cc72a09fd0f506db194323c49700004ef7a25cb8115905dd5482b",
+      "module": "Quillen.KTheory.Bass.ConeTrackDoubleTime",
+      "path": "Quillen/KTheory/Bass/ConeTrackDoubleTime.lean",
+      "adopted_sha256": "2c31010eed3cc72a09fd0f506db194323c49700004ef7a25cb8115905dd5482b",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-cone-time01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.FiniteLoopConjugacy",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/FiniteLoopConjugacy.lean",
+      "input_sha256": "9d8384c1edd9f943f1a9b757eaeff408b3ba4a8b49e7ad98f85dab2c56e105b4",
+      "module": "Quillen.KTheory.Bass.FiniteLoopConjugacy",
+      "path": "Quillen/KTheory/Bass/FiniteLoopConjugacy.lean",
+      "adopted_sha256": "9d8384c1edd9f943f1a9b757eaeff408b3ba4a8b49e7ad98f85dab2c56e105b4",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-loop-conjugacy01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.FiniteSeedRotation",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/FiniteSeedRotation.lean",
+      "input_sha256": "b875d18d7365ee932ed6dbfff0aeea28e7540a4690947dfb22a9e428d1808792",
+      "module": "Quillen.KTheory.Bass.FiniteSeedRotation",
+      "path": "Quillen/KTheory/Bass/FiniteSeedRotation.lean",
+      "adopted_sha256": "b875d18d7365ee932ed6dbfff0aeea28e7540a4690947dfb22a9e428d1808792",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-finite-seed-rotation01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.FiniteTrackEquivariance",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/FiniteTrackEquivariance.lean",
+      "input_sha256": "a687eb6aad800c1391cb752df60df2829e61d83788ce27f911bd3e76c6228000",
+      "module": "Quillen.KTheory.Bass.FiniteTrackEquivariance",
+      "path": "Quillen/KTheory/Bass/FiniteTrackEquivariance.lean",
+      "adopted_sha256": "a687eb6aad800c1391cb752df60df2829e61d83788ce27f911bd3e76c6228000",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-finite-equivariance01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.FiniteTwistedRotation",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/FiniteTwistedRotation.lean",
+      "input_sha256": "5512ce2a998a834d1c86ebb01b78b3df3210aaafb8320cb838aa70c7953ce267",
+      "module": "Quillen.KTheory.Bass.FiniteTwistedRotation",
+      "path": "Quillen/KTheory/Bass/FiniteTwistedRotation.lean",
+      "adopted_sha256": "5512ce2a998a834d1c86ebb01b78b3df3210aaafb8320cb838aa70c7953ce267",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-finite-twisted-rotation01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.FiniteTwistedTail",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/FiniteTwistedTail.lean",
+      "input_sha256": "83b40f908d85823252dd54115f5bbb0cc414e2abb713171749380ec8be1bac74",
+      "module": "Quillen.KTheory.Bass.FiniteTwistedTail",
+      "path": "Quillen/KTheory/Bass/FiniteTwistedTail.lean",
+      "adopted_sha256": "83b40f908d85823252dd54115f5bbb0cc414e2abb713171749380ec8be1bac74",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-finite-twisted-tail01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.GeometricChiCell",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/GeometricChiCell.lean",
+      "input_sha256": "2eb7b1e9233e21b9f87132378f3cc6a2899d3ae58fe1732ceae4cc99adfdca86",
+      "module": "Quillen.KTheory.Bass.GeometricChiCell",
+      "path": "Quillen/KTheory/Bass/GeometricChiCell.lean",
+      "adopted_sha256": "2eb7b1e9233e21b9f87132378f3cc6a2899d3ae58fe1732ceae4cc99adfdca86",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-chi-cell01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.GeometricChiCellEvaluation",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/GeometricChiCellEvaluation.lean",
+      "input_sha256": "a9df538726a2509cc7edc0ef311ba49b4aade388c8ace268497e6cfb0386ad7f",
+      "module": "Quillen.KTheory.Bass.GeometricChiCellEvaluation",
+      "path": "Quillen/KTheory/Bass/GeometricChiCellEvaluation.lean",
+      "adopted_sha256": "a9df538726a2509cc7edc0ef311ba49b4aade388c8ace268497e6cfb0386ad7f",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-chi-evaluation01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.GeometricChiComparisonCells",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/GeometricChiComparisonCells.lean",
+      "input_sha256": "eaeffbd24e5f53c5f0b78106dfac08eea9b57bc44583d1908a110f5bc799bf56",
+      "module": "Quillen.KTheory.Bass.GeometricChiComparisonCells",
+      "path": "Quillen/KTheory/Bass/GeometricChiComparisonCells.lean",
+      "adopted_sha256": "eaeffbd24e5f53c5f0b78106dfac08eea9b57bc44583d1908a110f5bc799bf56",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-chi-comparison-cells01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.GeometricChiPermutation",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/GeometricChiPermutation.lean",
+      "input_sha256": "60fa3af6b76b798a34e54fd9eb08c23a5cffb42446ecd0c8aa7f5671f0cfe216",
+      "module": "Quillen.KTheory.Bass.GeometricChiPermutation",
+      "path": "Quillen/KTheory/Bass/GeometricChiPermutation.lean",
+      "adopted_sha256": "60fa3af6b76b798a34e54fd9eb08c23a5cffb42446ecd0c8aa7f5671f0cfe216",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-chi-permutation01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.GeometricChiScalar",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/GeometricChiScalar.lean",
+      "input_sha256": "45ff4496758c65260b10dcb9669b2c740fc0d0016d2ceec91c3d825eaeafc522",
+      "module": "Quillen.KTheory.Bass.GeometricChiScalar",
+      "path": "Quillen/KTheory/Bass/GeometricChiScalar.lean",
+      "adopted_sha256": "45ff4496758c65260b10dcb9669b2c740fc0d0016d2ceec91c3d825eaeafc522",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-chi-scalar03/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.GeometricConeAction",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/GeometricConeAction.lean",
+      "input_sha256": "d85d64265ca19f7f439f7c6da5385579e8803d2628c9924a505c53decc96d94e",
+      "module": "Quillen.KTheory.Bass.GeometricConeAction",
+      "path": "Quillen/KTheory/Bass/GeometricConeAction.lean",
+      "adopted_sha256": "d85d64265ca19f7f439f7c6da5385579e8803d2628c9924a505c53decc96d94e",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-cone-action01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.GeometricConeBetaRecursion",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/GeometricConeBetaRecursion.lean",
+      "input_sha256": "d4d4a03142b3577dde06c6e9d75d15aa47917472f2c858417a0866004b24f09c",
+      "module": "Quillen.KTheory.Bass.GeometricConeBetaRecursion",
+      "path": "Quillen/KTheory/Bass/GeometricConeBetaRecursion.lean",
+      "adopted_sha256": "d4d4a03142b3577dde06c6e9d75d15aa47917472f2c858417a0866004b24f09c",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-beta-recursion01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.GeometricConeExternalCells",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/GeometricConeExternalCells.lean",
+      "input_sha256": "486ae13fda700d30b932d8506e72459022d7da8bfe24874529a04895d07b699d",
+      "module": "Quillen.KTheory.Bass.GeometricConeExternalCells",
+      "path": "Quillen/KTheory/Bass/GeometricConeExternalCells.lean",
+      "adopted_sha256": "486ae13fda700d30b932d8506e72459022d7da8bfe24874529a04895d07b699d",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-cone-external-cells01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.GeometricConeExternalSquare",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/GeometricConeExternalSquare.lean",
+      "input_sha256": "27ed680c4e386d77179643e40f13934be93ab32fb8ff2235f7df0994e0daf7ff",
+      "module": "Quillen.KTheory.Bass.GeometricConeExternalSquare",
+      "path": "Quillen/KTheory/Bass/GeometricConeExternalSquare.lean",
+      "adopted_sha256": "27ed680c4e386d77179643e40f13934be93ab32fb8ff2235f7df0994e0daf7ff",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-cone-external-square01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.GeometricConeExternalTransport",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/GeometricConeExternalTransport.lean",
+      "input_sha256": "d5f12af09ee8312813bc66f5511b66b5e4ac68897d3f8332f5cbc30b880a4082",
+      "module": "Quillen.KTheory.Bass.GeometricConeExternalTransport",
+      "path": "Quillen/KTheory/Bass/GeometricConeExternalTransport.lean",
+      "adopted_sha256": "d5f12af09ee8312813bc66f5511b66b5e4ac68897d3f8332f5cbc30b880a4082",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-cone-external01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.GeometricConeFixedWordAction",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/GeometricConeFixedWordAction.lean",
+      "input_sha256": "b36fbcc13f1ac0309c124ae6572e0d4998060342edff668bdd41aec04ed55963",
+      "module": "Quillen.KTheory.Bass.GeometricConeFixedWordAction",
+      "path": "Quillen/KTheory/Bass/GeometricConeFixedWordAction.lean",
+      "adopted_sha256": "b36fbcc13f1ac0309c124ae6572e0d4998060342edff668bdd41aec04ed55963",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-word-action01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.GeometricConeFixedWordRecursion",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/GeometricConeFixedWordRecursion.lean",
+      "input_sha256": "12fee799e365266f750dbe36cff33162a176b04a2f2e8504bb81798aa858d9bc",
+      "module": "Quillen.KTheory.Bass.GeometricConeFixedWordRecursion",
+      "path": "Quillen/KTheory/Bass/GeometricConeFixedWordRecursion.lean",
+      "adopted_sha256": "12fee799e365266f750dbe36cff33162a176b04a2f2e8504bb81798aa858d9bc",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-word-recursion01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.GeometricConeFixedWords",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/GeometricConeFixedWords.lean",
+      "input_sha256": "eaf8df9bd1504c9367d9fee84badbf3331c7a57761770a7a07cec77b193bb824",
+      "module": "Quillen.KTheory.Bass.GeometricConeFixedWords",
+      "path": "Quillen/KTheory/Bass/GeometricConeFixedWords.lean",
+      "adopted_sha256": "eaf8df9bd1504c9367d9fee84badbf3331c7a57761770a7a07cec77b193bb824",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-geometric-words01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.GeometricConeWordNaturality",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/GeometricConeWordNaturality.lean",
+      "input_sha256": "d8cc25921d052c4e9373ca60a32998cfca878f5e6c24cc63563a2ff06da6665d",
+      "module": "Quillen.KTheory.Bass.GeometricConeWordNaturality",
+      "path": "Quillen/KTheory/Bass/GeometricConeWordNaturality.lean",
+      "adopted_sha256": "d8cc25921d052c4e9373ca60a32998cfca878f5e6c24cc63563a2ff06da6665d",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-cone-word-naturality02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.IteratedStrengthNaturality",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/IteratedStrengthNaturality.lean",
+      "input_sha256": "9efb4a180815606a6e785f24f8e248b5eff595b1e9ff9e731ff0ef077cf36587",
+      "module": "Quillen.KTheory.Bass.IteratedStrengthNaturality",
+      "path": "Quillen/KTheory/Bass/IteratedStrengthNaturality.lean",
+      "adopted_sha256": "9efb4a180815606a6e785f24f8e248b5eff595b1e9ff9e731ff0ef077cf36587",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-strength-naturality01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.IteratedStrengthSuccessor",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/IteratedStrengthSuccessor.lean",
+      "input_sha256": "df6d014dd2ea20d4d5e11ecadd365af36121d39eb8369491b5fb8fa7dfc59b4a",
+      "module": "Quillen.KTheory.Bass.IteratedStrengthSuccessor",
+      "path": "Quillen/KTheory/Bass/IteratedStrengthSuccessor.lean",
+      "adopted_sha256": "df6d014dd2ea20d4d5e11ecadd365af36121d39eb8369491b5fb8fa7dfc59b4a",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-strength-successor01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.LoopFactorCells",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/LoopFactorCells.lean",
+      "input_sha256": "d3f5d1bb9594978121fde3d86ca90a27f3994c7dd6ab892c4f4dd15f41263d48",
+      "module": "Quillen.KTheory.Bass.LoopFactorCells",
+      "path": "Quillen/KTheory/Bass/LoopFactorCells.lean",
+      "adopted_sha256": "d3f5d1bb9594978121fde3d86ca90a27f3994c7dd6ab892c4f4dd15f41263d48",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-loop-factor-cells01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.NaturalModelUnitTrack",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/NaturalModelUnitTrack.lean",
+      "input_sha256": "49062f34512fcc343e2f447a53d545757339e54c79c0670bb74345528a1f6339",
+      "module": "Quillen.KTheory.Bass.NaturalModelUnitTrack",
+      "path": "Quillen/KTheory/Bass/NaturalModelUnitTrack.lean",
+      "adopted_sha256": "49062f34512fcc343e2f447a53d545757339e54c79c0670bb74345528a1f6339",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-model-unit-track01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.NormalizedDiagramNull",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/NormalizedDiagramNull.lean",
+      "input_sha256": "0d878c27c82a3bc761ab0d8f56fd47a803ab3d8ebb37489ea7877490e3e030ce",
+      "module": "Quillen.KTheory.Bass.NormalizedDiagramNull",
+      "path": "Quillen/KTheory/Bass/NormalizedDiagramNull.lean",
+      "adopted_sha256": "0d878c27c82a3bc761ab0d8f56fd47a803ab3d8ebb37489ea7877490e3e030ce",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-normalized-null02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.NormalizedStageNaturality",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/NormalizedStageNaturality.lean",
+      "input_sha256": "fd45dccd7a1ea5a2111e4e3737dbf61f988b3028a3ae566a1e1846e50983d896",
+      "module": "Quillen.KTheory.Bass.NormalizedStageNaturality",
+      "path": "Quillen/KTheory/Bass/NormalizedStageNaturality.lean",
+      "adopted_sha256": "fd45dccd7a1ea5a2111e4e3737dbf61f988b3028a3ae566a1e1846e50983d896",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-stage-naturality02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeBassFunctorIdentification",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeBassFunctorIdentification.lean",
+      "input_sha256": "5d2d6a22ddaa39c435b3a518e0bbb24bcc46ab0de4ead0a6496f5430021c908d",
+      "module": "Quillen.KTheory.Bass.SchemeBassFunctorIdentification",
+      "path": "Quillen/KTheory/Bass/SchemeBassFunctorIdentification.lean",
+      "adopted_sha256": "5d2d6a22ddaa39c435b3a518e0bbb24bcc46ab0de4ead0a6496f5430021c908d",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-bass-functor01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeCoefficientSeedNaturality",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeCoefficientSeedNaturality.lean",
+      "input_sha256": "1f035a265332d26d3bd5548e2ad78496b5fc792b29122ede3a5aeb2496acf15c",
+      "module": "Quillen.KTheory.Bass.SchemeCoefficientSeedNaturality",
+      "path": "Quillen/KTheory/Bass/SchemeCoefficientSeedNaturality.lean",
+      "adopted_sha256": "1f035a265332d26d3bd5548e2ad78496b5fc792b29122ede3a5aeb2496acf15c",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-scheme-coefficient-seed01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeConeObjectIdentification",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeConeObjectIdentification.lean",
+      "input_sha256": "68ba024ced768d682c6186af472b61575d23070b64c0596c3b44a15ddcb3f48b",
+      "module": "Quillen.KTheory.Bass.SchemeConeObjectIdentification",
+      "path": "Quillen/KTheory/Bass/SchemeConeObjectIdentification.lean",
+      "adopted_sha256": "68ba024ced768d682c6186af472b61575d23070b64c0596c3b44a15ddcb3f48b",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-cone-object01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeConeValueIdentification",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeConeValueIdentification.lean",
+      "input_sha256": "bbf24d58cdce1e8342851a0701899745a06e22792b43d11c2bb18bbc7c847b21",
+      "module": "Quillen.KTheory.Bass.SchemeConeValueIdentification",
+      "path": "Quillen/KTheory/Bass/SchemeConeValueIdentification.lean",
+      "adopted_sha256": "bbf24d58cdce1e8342851a0701899745a06e22792b43d11c2bb18bbc7c847b21",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-cone-value01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeCurrentStageTelescope",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeCurrentStageTelescope.lean",
+      "input_sha256": "fa218488f391ca59c4daa40c51ff8f1cfbe1d5fe536c1affbb1a379b927c5756",
+      "module": "Quillen.KTheory.Bass.SchemeCurrentStageTelescope",
+      "path": "Quillen/KTheory/Bass/SchemeCurrentStageTelescope.lean",
+      "adopted_sha256": "fa218488f391ca59c4daa40c51ff8f1cfbe1d5fe536c1affbb1a379b927c5756",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-current-telescope01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeInputNull",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeInputNull.lean",
+      "input_sha256": "45d5e9124bf63815d86bd61bac5c1aebbe3554050a83832a2f4d704ca8af8727",
+      "module": "Quillen.KTheory.Bass.SchemeInputNull",
+      "path": "Quillen/KTheory/Bass/SchemeInputNull.lean",
+      "adopted_sha256": "45d5e9124bf63815d86bd61bac5c1aebbe3554050a83832a2f4d704ca8af8727",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-input-null03/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeInputTelescope",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeInputTelescope.lean",
+      "input_sha256": "33abaa95f6f176742265f51153af21d55041a4f206aebb18b64a575a68251d3d",
+      "module": "Quillen.KTheory.Bass.SchemeInputTelescope",
+      "path": "Quillen/KTheory/Bass/SchemeInputTelescope.lean",
+      "adopted_sha256": "33abaa95f6f176742265f51153af21d55041a4f206aebb18b64a575a68251d3d",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-input-telescope01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeInputTransition",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeInputTransition.lean",
+      "input_sha256": "6a25cdadb8a1a2020098929a36e58e862febb33787709ae5147e1418da6d7d34",
+      "module": "Quillen.KTheory.Bass.SchemeInputTransition",
+      "path": "Quillen/KTheory/Bass/SchemeInputTransition.lean",
+      "adopted_sha256": "6a25cdadb8a1a2020098929a36e58e862febb33787709ae5147e1418da6d7d34",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-input-transition02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeIteratedInputNull",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeIteratedInputNull.lean",
+      "input_sha256": "997ad9ff5fe589f96d4f2e94ed75fed18f952d31eb490ff5f76c111efa41e47f",
+      "module": "Quillen.KTheory.Bass.SchemeIteratedInputNull",
+      "path": "Quillen/KTheory/Bass/SchemeIteratedInputNull.lean",
+      "adopted_sha256": "997ad9ff5fe589f96d4f2e94ed75fed18f952d31eb490ff5f76c111efa41e47f",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-iterated-input-null02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeIteratedSeedInduction",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeIteratedSeedInduction.lean",
+      "input_sha256": "5f22fcbf1a583d45e2cd3953d883fc8263e28ed8fc2f4e8c64800da9e4492de1",
+      "module": "Quillen.KTheory.Bass.SchemeIteratedSeedInduction",
+      "path": "Quillen/KTheory/Bass/SchemeIteratedSeedInduction.lean",
+      "adopted_sha256": "5f22fcbf1a583d45e2cd3953d883fc8263e28ed8fc2f4e8c64800da9e4492de1",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-scheme-induction02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeIteratedSeedNullComparison",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeIteratedSeedNullComparison.lean",
+      "input_sha256": "225ce1deab511507f644edb8e230c1432a3d465c2dad7205a7aea81474b7732f",
+      "module": "Quillen.KTheory.Bass.SchemeIteratedSeedNullComparison",
+      "path": "Quillen/KTheory/Bass/SchemeIteratedSeedNullComparison.lean",
+      "adopted_sha256": "225ce1deab511507f644edb8e230c1432a3d465c2dad7205a7aea81474b7732f",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-iterated-null-comparison01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeIteratedSeedTelescope",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeIteratedSeedTelescope.lean",
+      "input_sha256": "c0e7da935d6f34bdfa4f4381e765cb40de7a281a109a31f51e574c791cc14be4",
+      "module": "Quillen.KTheory.Bass.SchemeIteratedSeedTelescope",
+      "path": "Quillen/KTheory/Bass/SchemeIteratedSeedTelescope.lean",
+      "adopted_sha256": "c0e7da935d6f34bdfa4f4381e765cb40de7a281a109a31f51e574c791cc14be4",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-scheme-telescope02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeIteratedSeedTransition",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeIteratedSeedTransition.lean",
+      "input_sha256": "64cdda512f07a91bd9e8bea74ac91296f8ca6c3f6e23be459a0b3ac85597404b",
+      "module": "Quillen.KTheory.Bass.SchemeIteratedSeedTransition",
+      "path": "Quillen/KTheory/Bass/SchemeIteratedSeedTransition.lean",
+      "adopted_sha256": "64cdda512f07a91bd9e8bea74ac91296f8ca6c3f6e23be459a0b3ac85597404b",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-scheme-transition01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeLoopConeSeedIdentification",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeLoopConeSeedIdentification.lean",
+      "input_sha256": "b7e93a8197c17214f2a894f6e7ac914e5cca6271ca944db975d177a2e0714d38",
+      "module": "Quillen.KTheory.Bass.SchemeLoopConeSeedIdentification",
+      "path": "Quillen/KTheory/Bass/SchemeLoopConeSeedIdentification.lean",
+      "adopted_sha256": "b7e93a8197c17214f2a894f6e7ac914e5cca6271ca944db975d177a2e0714d38",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-loop-cone-seed02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeLoopConeSeedPointwiseIdentification",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeLoopConeSeedPointwiseIdentification.lean",
+      "input_sha256": "0ea4d7e0d6c9e7b8871d4f9793bfd7d4a647d04d2abba16749a86c6f9e53855f",
+      "module": "Quillen.KTheory.Bass.SchemeLoopConeSeedPointwiseIdentification",
+      "path": "Quillen/KTheory/Bass/SchemeLoopConeSeedPointwiseIdentification.lean",
+      "adopted_sha256": "0ea4d7e0d6c9e7b8871d4f9793bfd7d4a647d04d2abba16749a86c6f9e53855f",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-loop-cone-seed-pointwise01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeLoopConeTrackIdentification",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeLoopConeTrackIdentification.lean",
+      "input_sha256": "9c95e7be729b6b0965fc7bdecf5917cfac63637d6c55e49bc1a1a8c5412cd041",
+      "module": "Quillen.KTheory.Bass.SchemeLoopConeTrackIdentification",
+      "path": "Quillen/KTheory/Bass/SchemeLoopConeTrackIdentification.lean",
+      "adopted_sha256": "9c95e7be729b6b0965fc7bdecf5917cfac63637d6c55e49bc1a1a8c5412cd041",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-loop-cone-track-identification01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeLoopSeedFactor",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeLoopSeedFactor.lean",
+      "input_sha256": "8072d658c056230df442dfda6c899921bbbfcb2dfef0696eb15d30aadc83ef8d",
+      "module": "Quillen.KTheory.Bass.SchemeLoopSeedFactor",
+      "path": "Quillen/KTheory/Bass/SchemeLoopSeedFactor.lean",
+      "adopted_sha256": "8072d658c056230df442dfda6c899921bbbfcb2dfef0696eb15d30aadc83ef8d",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-loop-seed-factor01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeNormalizedLoopInto",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeNormalizedLoopInto.lean",
+      "input_sha256": "e31021c671bb7a31f83987e8935822a4ada2aabf5a40f4bd31cff09e748e8fcc",
+      "module": "Quillen.KTheory.Bass.SchemeNormalizedLoopInto",
+      "path": "Quillen/KTheory/Bass/SchemeNormalizedLoopInto.lean",
+      "adopted_sha256": "e31021c671bb7a31f83987e8935822a4ada2aabf5a40f4bd31cff09e748e8fcc",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-normalized-loop01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeSeedCospanIdentification",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeSeedCospanIdentification.lean",
+      "input_sha256": "e2148bba4326b10953e2f6900d9063c977525c5b54e20f9be66550052c02f554",
+      "module": "Quillen.KTheory.Bass.SchemeSeedCospanIdentification",
+      "path": "Quillen/KTheory/Bass/SchemeSeedCospanIdentification.lean",
+      "adopted_sha256": "e2148bba4326b10953e2f6900d9063c977525c5b54e20f9be66550052c02f554",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-seed-cospan-identification01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeSeedEndpointIdentification",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeSeedEndpointIdentification.lean",
+      "input_sha256": "b80229760c823344b3bfb2d44998d45e4561f010fa42a9e79cce1d09760d79d4",
+      "module": "Quillen.KTheory.Bass.SchemeSeedEndpointIdentification",
+      "path": "Quillen/KTheory/Bass/SchemeSeedEndpointIdentification.lean",
+      "adopted_sha256": "b80229760c823344b3bfb2d44998d45e4561f010fa42a9e79cce1d09760d79d4",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-seed-endpoint01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeSeedObjectIdentification",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeSeedObjectIdentification.lean",
+      "input_sha256": "b8105a1cd2edbdd3bfbdd4b39120ef09c9eada741fa09a8f569e318d873f6a9b",
+      "module": "Quillen.KTheory.Bass.SchemeSeedObjectIdentification",
+      "path": "Quillen/KTheory/Bass/SchemeSeedObjectIdentification.lean",
+      "adopted_sha256": "b8105a1cd2edbdd3bfbdd4b39120ef09c9eada741fa09a8f569e318d873f6a9b",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-seed-object01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeSeedRotation",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeSeedRotation.lean",
+      "input_sha256": "25e56e959826e8d6ff37159a6e2908d07b132e63d912cd1cf248c88ff17f78f4",
+      "module": "Quillen.KTheory.Bass.SchemeSeedRotation",
+      "path": "Quillen/KTheory/Bass/SchemeSeedRotation.lean",
+      "adopted_sha256": "25e56e959826e8d6ff37159a6e2908d07b132e63d912cd1cf248c88ff17f78f4",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-scheme-seed-rotation28/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeSeedRotationPointwise",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeSeedRotationPointwise.lean",
+      "input_sha256": "ac05af5439c6ece290051cb95f02cce3f63501ffa11ba08e1949acab68de6704",
+      "module": "Quillen.KTheory.Bass.SchemeSeedRotationPointwise",
+      "path": "Quillen/KTheory/Bass/SchemeSeedRotationPointwise.lean",
+      "adopted_sha256": "ac05af5439c6ece290051cb95f02cce3f63501ffa11ba08e1949acab68de6704",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-seed-rotation-pointwise06/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeTwistedAdjacent",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeTwistedAdjacent.lean",
+      "input_sha256": "a26189edb315a248e3d90a2f9127698024e17249ef68c9b837c17adc2fa172f9",
+      "module": "Quillen.KTheory.Bass.SchemeTwistedAdjacent",
+      "path": "Quillen/KTheory/Bass/SchemeTwistedAdjacent.lean",
+      "adopted_sha256": "a26189edb315a248e3d90a2f9127698024e17249ef68c9b837c17adc2fa172f9",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-twisted-adjacent01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeTwistedConjugacy",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeTwistedConjugacy.lean",
+      "input_sha256": "bfcc5ffe0a6a70915e306f6cb2de8cab1365c208310fa38b1b3edc17dd019452",
+      "module": "Quillen.KTheory.Bass.SchemeTwistedConjugacy",
+      "path": "Quillen/KTheory/Bass/SchemeTwistedConjugacy.lean",
+      "adopted_sha256": "bfcc5ffe0a6a70915e306f6cb2de8cab1365c208310fa38b1b3edc17dd019452",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-twisted-conjugacy01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeTwistedInputMaps",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeTwistedInputMaps.lean",
+      "input_sha256": "e1eef2db0500108427d1a58052df9eec7bf7b0a56bcec7308ffab72ac438b84d",
+      "module": "Quillen.KTheory.Bass.SchemeTwistedInputMaps",
+      "path": "Quillen/KTheory/Bass/SchemeTwistedInputMaps.lean",
+      "adopted_sha256": "e1eef2db0500108427d1a58052df9eec7bf7b0a56bcec7308ffab72ac438b84d",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-twisted-input01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeTwistedNull",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeTwistedNull.lean",
+      "input_sha256": "29104b9a2aa5d63bbf52ff45b4900525b51ffcbeceee9637b1456d0791419585",
+      "module": "Quillen.KTheory.Bass.SchemeTwistedNull",
+      "path": "Quillen/KTheory/Bass/SchemeTwistedNull.lean",
+      "adopted_sha256": "29104b9a2aa5d63bbf52ff45b4900525b51ffcbeceee9637b1456d0791419585",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-twisted-null02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeTwistedSuccessor",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeTwistedSuccessor.lean",
+      "input_sha256": "67528f230fff1ae929879b337cf3767628be7ae36915400f2e4c2da2f5c9a357",
+      "module": "Quillen.KTheory.Bass.SchemeTwistedSuccessor",
+      "path": "Quillen/KTheory/Bass/SchemeTwistedSuccessor.lean",
+      "adopted_sha256": "67528f230fff1ae929879b337cf3767628be7ae36915400f2e4c2da2f5c9a357",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-scheme-twisted-successor07/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeTwistedTelescope",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeTwistedTelescope.lean",
+      "input_sha256": "27d764b7be443fbb1e10925f160bcf582d58c08618c85791f601895ea676b2ef",
+      "module": "Quillen.KTheory.Bass.SchemeTwistedTelescope",
+      "path": "Quillen/KTheory/Bass/SchemeTwistedTelescope.lean",
+      "adopted_sha256": "27d764b7be443fbb1e10925f160bcf582d58c08618c85791f601895ea676b2ef",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-twisted-telescope01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.SchemeTwistedTransitions",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/SchemeTwistedTransitions.lean",
+      "input_sha256": "5c484d99e10b03093ed158223b8727d546450557a01a31e3079fa8cc70edbd99",
+      "module": "Quillen.KTheory.Bass.SchemeTwistedTransitions",
+      "path": "Quillen/KTheory/Bass/SchemeTwistedTransitions.lean",
+      "adopted_sha256": "5c484d99e10b03093ed158223b8727d546450557a01a31e3079fa8cc70edbd99",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-twisted-transitions01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.StrictDiagramIndexChange",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/StrictDiagramIndexChange.lean",
+      "input_sha256": "f2039e841a764f65fb1b0b240225839aac618e135bc1da867b27dd8c443febe3",
+      "module": "Quillen.KTheory.Bass.StrictDiagramIndexChange",
+      "path": "Quillen/KTheory/Bass/StrictDiagramIndexChange.lean",
+      "adopted_sha256": "f2039e841a764f65fb1b0b240225839aac618e135bc1da867b27dd8c443febe3",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-index-change01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.StrictDiagramIndexIteration",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/StrictDiagramIndexIteration.lean",
+      "input_sha256": "98eb5eb5f311e131778ade2b0d1aeaad7af65d54e4f91c7ec454c184d4bf4ae5",
+      "module": "Quillen.KTheory.Bass.StrictDiagramIndexIteration",
+      "path": "Quillen/KTheory/Bass/StrictDiagramIndexIteration.lean",
+      "adopted_sha256": "98eb5eb5f311e131778ade2b0d1aeaad7af65d54e4f91c7ec454c184d4bf4ae5",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-index-iteration01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.StrictDiagramIndexRow",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/StrictDiagramIndexRow.lean",
+      "input_sha256": "3ca9cea4afbf6825b4e2577e9f9343707254e2e5224f8c9d4d983009c937f926",
+      "module": "Quillen.KTheory.Bass.StrictDiagramIndexRow",
+      "path": "Quillen/KTheory/Bass/StrictDiagramIndexRow.lean",
+      "adopted_sha256": "3ca9cea4afbf6825b4e2577e9f9343707254e2e5224f8c9d4d983009c937f926",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-index-row01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.StrictDiagramIndexRowNaturality",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/StrictDiagramIndexRowNaturality.lean",
+      "input_sha256": "8d3cb6723b79aaaa8378a6c4d3e2e16b69a27b5ec520568a986766b0c1e21a8c",
+      "module": "Quillen.KTheory.Bass.StrictDiagramIndexRowNaturality",
+      "path": "Quillen/KTheory/Bass/StrictDiagramIndexRowNaturality.lean",
+      "adopted_sha256": "8d3cb6723b79aaaa8378a6c4d3e2e16b69a27b5ec520568a986766b0c1e21a8c",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-index-row-naturality01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.StrictDiagramIndexRowTelescope",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/StrictDiagramIndexRowTelescope.lean",
+      "input_sha256": "e4e99b463d146ec8e6096c4abbbf01b74c5777afc6fe1b1b771534536de3233f",
+      "module": "Quillen.KTheory.Bass.StrictDiagramIndexRowTelescope",
+      "path": "Quillen/KTheory/Bass/StrictDiagramIndexRowTelescope.lean",
+      "adopted_sha256": "e4e99b463d146ec8e6096c4abbbf01b74c5777afc6fe1b1b771534536de3233f",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-index-row-telescope01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.StrictDiagramIndexRowTelescopeNaturality",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/StrictDiagramIndexRowTelescopeNaturality.lean",
+      "input_sha256": "092da8e54e81306deb11fbf4e65f734bab1bc16be67063360436b9b7245877ec",
+      "module": "Quillen.KTheory.Bass.StrictDiagramIndexRowTelescopeNaturality",
+      "path": "Quillen/KTheory/Bass/StrictDiagramIndexRowTelescopeNaturality.lean",
+      "adopted_sha256": "092da8e54e81306deb11fbf4e65f734bab1bc16be67063360436b9b7245877ec",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-index-row-telescope-naturality02/accepted.json"
+    },
+    {
+      "input_module": "Quillen.KTheory.Bass.StrictDiagramIndexTelescope",
+      "archive_path": "merged-source/Quillen/KTheory/Bass/StrictDiagramIndexTelescope.lean",
+      "input_sha256": "b96da83849cf43c90fad639c892b9c61e9b7596721973fb87da1d00b97997f4f",
+      "module": "Quillen.KTheory.Bass.StrictDiagramIndexTelescope",
+      "path": "Quillen/KTheory/Bass/StrictDiagramIndexTelescope.lean",
+      "adopted_sha256": "b96da83849cf43c90fad639c892b9c61e9b7596721973fb87da1d00b97997f4f",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-index-telescope01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.Topology.Prespectrum.FiberLiftNaturality",
+      "archive_path": "merged-source/Quillen/Topology/Prespectrum/FiberLiftNaturality.lean",
+      "input_sha256": "7cdf1fcebb32a8c83c4e56f4b2c8ea3d120de2d11790f3a4d72e2f0c8feb6824",
+      "module": "Quillen.Topology.Prespectrum.FiberLiftNaturality",
+      "path": "Quillen/Topology/Prespectrum/FiberLiftNaturality.lean",
+      "adopted_sha256": "7cdf1fcebb32a8c83c4e56f4b2c8ea3d120de2d11790f3a4d72e2f0c8feb6824",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-fiber-lift03/accepted.json"
+    },
+    {
+      "input_module": "Quillen.Topology.Prespectrum.FiniteLoopInnerRotation",
+      "archive_path": "merged-source/Quillen/Topology/Prespectrum/FiniteLoopInnerRotation.lean",
+      "input_sha256": "4c645c6de845629b4df8ac4e31cfb2d59df3961b349bb0c2abeeead8074ef199",
+      "module": "Quillen.Topology.Prespectrum.FiniteLoopInnerRotation",
+      "path": "Quillen/Topology/Prespectrum/FiniteLoopInnerRotation.lean",
+      "adopted_sha256": "4c645c6de845629b4df8ac4e31cfb2d59df3961b349bb0c2abeeead8074ef199",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-inner-rotation01/accepted.json"
+    },
+    {
+      "input_module": "Quillen.Topology.Prespectrum.StrictSquareSeedNaturality",
+      "archive_path": "merged-source/Quillen/Topology/Prespectrum/StrictSquareSeedNaturality.lean",
+      "input_sha256": "27be01e6e89fd5ee760ebf7e7fb2c22eb3d0b9076ca7400cfa7408ab0039266a",
+      "module": "Quillen.Topology.Prespectrum.StrictSquareSeedNaturality",
+      "path": "Quillen/Topology/Prespectrum/StrictSquareSeedNaturality.lean",
+      "adopted_sha256": "27be01e6e89fd5ee760ebf7e7fb2c22eb3d0b9076ca7400cfa7408ab0039266a",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-seed-naturality01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.FiberLiftNaturality",
+      "archive_path": "merged-source/QuillenTest/FiberLiftNaturality.lean",
+      "input_sha256": "f527f670b5a17d42958ea4b34f65c269fcedc5248d0bfa1e83dc3cf3da2a2dac",
+      "module": "QuillenTest.FiberLiftNaturality",
+      "path": "QuillenTest/FiberLiftNaturality.lean",
+      "adopted_sha256": "f527f670b5a17d42958ea4b34f65c269fcedc5248d0bfa1e83dc3cf3da2a2dac",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-fiber-lift-test01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.FixedConeWords",
+      "archive_path": "merged-source/QuillenTest/FixedConeWords.lean",
+      "input_sha256": "894addec85d8677c68ddeb7c5275223f34ca3aa08d0135ce05f934181196db52",
+      "module": "QuillenTest.FixedConeWords",
+      "path": "QuillenTest/FixedConeWords.lean",
+      "adopted_sha256": "894addec85d8677c68ddeb7c5275223f34ca3aa08d0135ce05f934181196db52",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-fixed-regression01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.GeometricConeAction",
+      "archive_path": "merged-source/QuillenTest/GeometricConeAction.lean",
+      "input_sha256": "34112731cba5d715139eef00c457169d0beb3d629fb4b452b8a0cc71a70582d0",
+      "module": "QuillenTest.GeometricConeAction",
+      "path": "QuillenTest/GeometricConeAction.lean",
+      "adopted_sha256": "34112731cba5d715139eef00c457169d0beb3d629fb4b452b8a0cc71a70582d0",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-action-final01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.GeometricConeFixedWordAction",
+      "archive_path": "merged-source/QuillenTest/GeometricConeFixedWordAction.lean",
+      "input_sha256": "d2957e06e4153b5f5faa704f1e0fe522ad7abd0aae2b5576260eaa867bb43e3a",
+      "module": "QuillenTest.GeometricConeFixedWordAction",
+      "path": "QuillenTest/GeometricConeFixedWordAction.lean",
+      "adopted_sha256": "d2957e06e4153b5f5faa704f1e0fe522ad7abd0aae2b5576260eaa867bb43e3a",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-action-regression01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.GlobalOpenPairNull",
+      "archive_path": "merged-source/QuillenTest/GlobalOpenPairNull.lean",
+      "input_sha256": "3a6b8b0b66710173a1a4c2a4aaf8deb576cbef162c96ec2d729a2ccb6034e156",
+      "module": "QuillenTest.GlobalOpenPairNull",
+      "path": "QuillenTest/GlobalOpenPairNull.lean",
+      "adopted_sha256": "3a6b8b0b66710173a1a4c2a4aaf8deb576cbef162c96ec2d729a2ccb6034e156",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-null-test01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.GlobalParameterCoefficientNull",
+      "archive_path": "merged-source/QuillenTest/GlobalParameterCoefficientNull.lean",
+      "input_sha256": "d8732c5d01f352c454178a6badb4ebd3e0ec26dcfe04dd8bd41ad205055ccd05",
+      "module": "QuillenTest.GlobalParameterCoefficientNull",
+      "path": "QuillenTest/GlobalParameterCoefficientNull.lean",
+      "adopted_sha256": "d8732c5d01f352c454178a6badb4ebd3e0ec26dcfe04dd8bd41ad205055ccd05",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-spec-full-null-test01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.GlobalParameterCoefficientSeed",
+      "archive_path": "merged-source/QuillenTest/GlobalParameterCoefficientSeed.lean",
+      "input_sha256": "5990a8a8c261d246d5bc930b0bbded6b62c882009b30ce322b8ae16fa7105a31",
+      "module": "QuillenTest.GlobalParameterCoefficientSeed",
+      "path": "QuillenTest/GlobalParameterCoefficientSeed.lean",
+      "adopted_sha256": "5990a8a8c261d246d5bc930b0bbded6b62c882009b30ce322b8ae16fa7105a31",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-right-seed-regression01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.GlobalParameterIdentityModels",
+      "archive_path": "merged-source/QuillenTest/GlobalParameterIdentityModels.lean",
+      "input_sha256": "ec5598795d746782d8e74a7939554d09858a921d3cbf40b50f559a9a787762b4",
+      "module": "QuillenTest.GlobalParameterIdentityModels",
+      "path": "QuillenTest/GlobalParameterIdentityModels.lean",
+      "adopted_sha256": "ec5598795d746782d8e74a7939554d09858a921d3cbf40b50f559a9a787762b4",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-identity-test01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.GlobalParameterTelescopeNull",
+      "archive_path": "merged-source/QuillenTest/GlobalParameterTelescopeNull.lean",
+      "input_sha256": "6631f01f3f962617dcc7b5e24ebfc038457ec206a4eab08e0fac546022918981",
+      "module": "QuillenTest.GlobalParameterTelescopeNull",
+      "path": "QuillenTest/GlobalParameterTelescopeNull.lean",
+      "adopted_sha256": "6631f01f3f962617dcc7b5e24ebfc038457ec206a4eab08e0fac546022918981",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-spec-telescope-null-test01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.GlobalSupportedParameterModels",
+      "archive_path": "merged-source/QuillenTest/GlobalSupportedParameterModels.lean",
+      "input_sha256": "8948fdf727eed8241abd1e8e80c85ea171124f74de284b0df47c71d7fe0613b6",
+      "module": "QuillenTest.GlobalSupportedParameterModels",
+      "path": "QuillenTest/GlobalSupportedParameterModels.lean",
+      "adopted_sha256": "8948fdf727eed8241abd1e8e80c85ea171124f74de284b0df47c71d7fe0613b6",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-parameter-test01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.ParameterCurrentFullFiber",
+      "archive_path": "merged-source/QuillenTest/ParameterCurrentFullFiber.lean",
+      "input_sha256": "11b3df9e8da929a3df2dc1d1ffec37d3bd7e142ec5434d6bed4ce0a786efbac8",
+      "module": "QuillenTest.ParameterCurrentFullFiber",
+      "path": "QuillenTest/ParameterCurrentFullFiber.lean",
+      "adopted_sha256": "11b3df9e8da929a3df2dc1d1ffec37d3bd7e142ec5434d6bed4ce0a786efbac8",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-current-full-fiber-test02/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.ParameterFullCurrentNull",
+      "archive_path": "merged-source/QuillenTest/ParameterFullCurrentNull.lean",
+      "input_sha256": "f9db20d9c4bdd728eadee6a51794ba81a9c71b7820b5ab731b6b796b96288947",
+      "module": "QuillenTest.ParameterFullCurrentNull",
+      "path": "QuillenTest/ParameterFullCurrentNull.lean",
+      "adopted_sha256": "f9db20d9c4bdd728eadee6a51794ba81a9c71b7820b5ab731b6b796b96288947",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-full-null-test01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.ParameterFullFiberComparison",
+      "archive_path": "merged-source/QuillenTest/ParameterFullFiberComparison.lean",
+      "input_sha256": "10862501e68dbaf6891f2c2f940ddd656a732a6d28cc2ba9f9d62a216ed46fd5",
+      "module": "QuillenTest.ParameterFullFiberComparison",
+      "path": "QuillenTest/ParameterFullFiberComparison.lean",
+      "adopted_sha256": "10862501e68dbaf6891f2c2f940ddd656a732a6d28cc2ba9f9d62a216ed46fd5",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-full-fiber-test02/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.ParameterIteratedFullFiber",
+      "archive_path": "merged-source/QuillenTest/ParameterIteratedFullFiber.lean",
+      "input_sha256": "ba19598ddd58bb2a23a2fac5b3681d817e100f1c4277916a4680ea5033868b2d",
+      "module": "QuillenTest.ParameterIteratedFullFiber",
+      "path": "QuillenTest/ParameterIteratedFullFiber.lean",
+      "adopted_sha256": "ba19598ddd58bb2a23a2fac5b3681d817e100f1c4277916a4680ea5033868b2d",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-parameter-iterated-fiber-test01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.ParameterIteratedFullNull",
+      "archive_path": "merged-source/QuillenTest/ParameterIteratedFullNull.lean",
+      "input_sha256": "b2cf184656184c7be32f06140b648cf4372ac07dcd78176648e7331a0c7aeb36",
+      "module": "QuillenTest.ParameterIteratedFullNull",
+      "path": "QuillenTest/ParameterIteratedFullNull.lean",
+      "adopted_sha256": "ade91f3640e0ba7a245d5b9ea3ab0a27db3ebd5a728a8b2a8a5e90b7ccdbf0be",
+      "change": "trailing-blank-line-only",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-iterated-null-test01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.ParameterLaurentTracks",
+      "archive_path": "merged-source/QuillenTest/ParameterLaurentTracks.lean",
+      "input_sha256": "32faf53fcab718e0e0b5b0cb217a348a092aae3953d38044e1ed0572b775306d",
+      "module": "QuillenTest.ParameterLaurentTracks",
+      "path": "QuillenTest/ParameterLaurentTracks.lean",
+      "adopted_sha256": "32faf53fcab718e0e0b5b0cb217a348a092aae3953d38044e1ed0572b775306d",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-parameter-final01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.SchemeCoefficientSeedNaturality",
+      "archive_path": "merged-source/QuillenTest/SchemeCoefficientSeedNaturality.lean",
+      "input_sha256": "c76071c46e7d7cf6727cd70f57fa488f4c568c53c01cf66a79dd191919707de7",
+      "module": "QuillenTest.SchemeCoefficientSeedNaturality",
+      "path": "QuillenTest/SchemeCoefficientSeedNaturality.lean",
+      "adopted_sha256": "c76071c46e7d7cf6727cd70f57fa488f4c568c53c01cf66a79dd191919707de7",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-scheme-seed-regression01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.SchemeCurrentStageTelescope",
+      "archive_path": "merged-source/QuillenTest/SchemeCurrentStageTelescope.lean",
+      "input_sha256": "7e4e3eee2eae787e294e641aec36a30f8fcfcf91546e0d42803382dce385f0f9",
+      "module": "QuillenTest.SchemeCurrentStageTelescope",
+      "path": "QuillenTest/SchemeCurrentStageTelescope.lean",
+      "adopted_sha256": "7e4e3eee2eae787e294e641aec36a30f8fcfcf91546e0d42803382dce385f0f9",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-current-test02/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.SchemeInputNull",
+      "archive_path": "merged-source/QuillenTest/SchemeInputNull.lean",
+      "input_sha256": "4b4c2c2e887527cd001f4f8207b6be5b749cb9a739b72e0584ad1e5bb47180fa",
+      "module": "QuillenTest.SchemeInputNull",
+      "path": "QuillenTest/SchemeInputNull.lean",
+      "adopted_sha256": "4b4c2c2e887527cd001f4f8207b6be5b749cb9a739b72e0584ad1e5bb47180fa",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-input-null-test02/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.SchemeInputTelescope",
+      "archive_path": "merged-source/QuillenTest/SchemeInputTelescope.lean",
+      "input_sha256": "e40ba5eff7e44b1de52b174f40629596b381fd1e93465eee8076484a7e2a4e1b",
+      "module": "QuillenTest.SchemeInputTelescope",
+      "path": "QuillenTest/SchemeInputTelescope.lean",
+      "adopted_sha256": "e40ba5eff7e44b1de52b174f40629596b381fd1e93465eee8076484a7e2a4e1b",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-input-telescope-test01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.SchemeIteratedSeedTransition",
+      "archive_path": "merged-source/QuillenTest/SchemeIteratedSeedTransition.lean",
+      "input_sha256": "5b22eb433e3599f55b8aa0814a982ce4bf81f98789aa9d4b4d8fddcba855528b",
+      "module": "QuillenTest.SchemeIteratedSeedTransition",
+      "path": "QuillenTest/SchemeIteratedSeedTransition.lean",
+      "adopted_sha256": "5b22eb433e3599f55b8aa0814a982ce4bf81f98789aa9d4b4d8fddcba855528b",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-iterated-regression02/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.SchemeTwistedAdjacent",
+      "archive_path": "merged-source/QuillenTest/SchemeTwistedAdjacent.lean",
+      "input_sha256": "4d26826d90cd3a0e2a83488f974f8d05d5a627e23133330d7b85b52c2077cfcb",
+      "module": "QuillenTest.SchemeTwistedAdjacent",
+      "path": "QuillenTest/SchemeTwistedAdjacent.lean",
+      "adopted_sha256": "4d26826d90cd3a0e2a83488f974f8d05d5a627e23133330d7b85b52c2077cfcb",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-adjacent-test01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.SchemeTwistedInputMaps",
+      "archive_path": "merged-source/QuillenTest/SchemeTwistedInputMaps.lean",
+      "input_sha256": "bc983838274780831e4c44d36350da25810367b68a0c6c5ec5d4885da2d21d83",
+      "module": "QuillenTest.SchemeTwistedInputMaps",
+      "path": "QuillenTest/SchemeTwistedInputMaps.lean",
+      "adopted_sha256": "bc983838274780831e4c44d36350da25810367b68a0c6c5ec5d4885da2d21d83",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-stable-twisted-input-test01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.SchemeTwistedTelescope",
+      "archive_path": "merged-source/QuillenTest/SchemeTwistedTelescope.lean",
+      "input_sha256": "fedeac00bf3d77a56acc8148f946bdfb35ed63245eda4853a5538ecaef8f830f",
+      "module": "QuillenTest.SchemeTwistedTelescope",
+      "path": "QuillenTest/SchemeTwistedTelescope.lean",
+      "adopted_sha256": "fedeac00bf3d77a56acc8148f946bdfb35ed63245eda4853a5538ecaef8f830f",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-c0-twisted-test02/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.StrictDiagramIndexChange",
+      "archive_path": "merged-source/QuillenTest/StrictDiagramIndexChange.lean",
+      "input_sha256": "4b508adb2fc7f45d35c0c8a72c9a217b9aa543571c23faa7912321f522e57b23",
+      "module": "QuillenTest.StrictDiagramIndexChange",
+      "path": "QuillenTest/StrictDiagramIndexChange.lean",
+      "adopted_sha256": "4b508adb2fc7f45d35c0c8a72c9a217b9aa543571c23faa7912321f522e57b23",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-index-regression01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.StrictDiagramSpecIndex",
+      "archive_path": "merged-source/QuillenTest/StrictDiagramSpecIndex.lean",
+      "input_sha256": "ac9a903a42a570124cdde81518b105119a12760d2d3e4009fcd59dabf6f033ac",
+      "module": "QuillenTest.StrictDiagramSpecIndex",
+      "path": "QuillenTest/StrictDiagramSpecIndex.lean",
+      "adopted_sha256": "ac9a903a42a570124cdde81518b105119a12760d2d3e4009fcd59dabf6f033ac",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-spec-regression01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.StrictSquareSeedNaturality",
+      "archive_path": "merged-source/QuillenTest/StrictSquareSeedNaturality.lean",
+      "input_sha256": "8bd8f5e1ebedec08f2f973c4c321d53cd7d24c467991aa222a1c08d14ff84764",
+      "module": "QuillenTest.StrictSquareSeedNaturality",
+      "path": "QuillenTest/StrictSquareSeedNaturality.lean",
+      "adopted_sha256": "8bd8f5e1ebedec08f2f973c4c321d53cd7d24c467991aa222a1c08d14ff84764",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-seed-regression01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.SupportedParameterCoefficient",
+      "archive_path": "merged-source/QuillenTest/SupportedParameterCoefficient.lean",
+      "input_sha256": "dd1028f5d192de4baadf5bfe8e0bbcb990deba8b7cadea7feaefe19929f3883e",
+      "module": "QuillenTest.SupportedParameterCoefficient",
+      "path": "QuillenTest/SupportedParameterCoefficient.lean",
+      "adopted_sha256": "dd1028f5d192de4baadf5bfe8e0bbcb990deba8b7cadea7feaefe19929f3883e",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-supported-regression01/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.SupportedParameterCoefficientSeed",
+      "archive_path": "merged-source/QuillenTest/SupportedParameterCoefficientSeed.lean",
+      "input_sha256": "fbeed36df73b6e1fd2f5d8c228912ecf23fc437f078ac56d5b716dbb6de8637c",
+      "module": "QuillenTest.SupportedParameterCoefficientSeed",
+      "path": "QuillenTest/SupportedParameterCoefficientSeed.lean",
+      "adopted_sha256": "fbeed36df73b6e1fd2f5d8c228912ecf23fc437f078ac56d5b716dbb6de8637c",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-supported-seed-regression02/accepted.json"
+    },
+    {
+      "input_module": "QuillenTest.SupportedParameterCoefficientTelescope",
+      "archive_path": "merged-source/QuillenTest/SupportedParameterCoefficientTelescope.lean",
+      "input_sha256": "aae1d318d1a182ea4a0deda8ee8870d48040b4bf99fdf78e3616f5b5d9875aed",
+      "module": "QuillenTest.SupportedParameterCoefficientTelescope",
+      "path": "QuillenTest/SupportedParameterCoefficientTelescope.lean",
+      "adopted_sha256": "aae1d318d1a182ea4a0deda8ee8870d48040b4bf99fdf78e3616f5b5d9875aed",
+      "change": "byte-identical",
+      "archive_receipt": "continuation-fd1d66a/checks/fd-left-supported-telescope-regression01/accepted.json"
+    }
+  ],
+  "source_correspondence": {
+    "identity_module_paths_and_namespaces": true,
+    "declarations_statements_proofs_imports_options_and_authors": "Unchanged outside six first module-docstring blocks and one surplus final newline in a test. The test repair removes exactly the last LF; all preceding bytes and all tokens are identical.",
+    "general_candidates": 7,
+    "source_correspondence_report_sha256": "f0d97b7c166f10d60d1d25c813fdb1429646ed35b2c329ede75bae0e226724c8",
+    "source_correspondence_report_scope": "Initial 142-identical/six-docstring mapping before the separately recorded final test-whitespace repair.",
+    "final_style_repair": {
+      "path": "QuillenTest/ParameterIteratedFullNull.lean",
+      "input_sha256": "b2cf184656184c7be32f06140b648cf4372ac07dcd78176648e7331a0c7aeb36",
+      "adopted_sha256": "ade91f3640e0ba7a245d5b9ea3ab0a27db3ebd5a728a8b2a8a5e90b7ccdbf0be",
+      "change": "Exactly one final LF removed; statements/proofs/imports/options/credits unchanged.",
+      "repair_record_sha256": "5293c421104549ae56a72535cd41a912ac566542346e68bdc5b4e873a8e3c653"
+    }
+  },
+  "dependency_pins": {
+    "mathlib": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+    "Aglib": "25c37780264f0da94f5bb6bd31cc089d26f2da80"
+  },
+  "pin_files_sha256": {
+    "lean-toolchain": "d5edba4e4b8faad9c1baeadb265716d20d03be4d1a2647dc5e35b0c0325bea7b",
+    "lakefile.toml": "b12444714879dee3f63745b5a8d315eef61cf1f760876e601aefe0a81d878bf4",
+    "lake-manifest.json": "6c483bef7086c87a8d77f25be2f4a2d0c00f787ecafa11b2305a99dddcd3389d"
+  },
+  "baseline_ci": {
+    "url": "https://github.com/kangxyz/quillen-k-theory/actions/runs/39090675312",
+    "head": "fd1d66a707d2d658bc5aa556b9f03506e56dee7c",
+    "conclusion": "success"
+  },
+  "historical_evidence_boundary": "All supplied continuation receipt source identities and recorded exits were checked mechanically. Receipts remain evidence of their own environment; current local compilation/lint/tests/trust are recorded separately. No archive claim is treated as an instruction or as a mathematical completion verdict. Earlier TTRecoveredComparisons retains its original source/review scope.",
+  "mathematical_review": {
+    "kind": "Independent ordinary mathematical adoption and target-correspondence review; no established-status action.",
+    "basis": "Immutable 0354 source. Integrated declarations/proofs/imports/options/namespaces/credits remain unchanged; six module-owner/current-consumer prose additions and one surplus final LF in a test are the verified nonmathematical deltas.",
+    "core": {
+      "verdict": "Supported in all 69 assigned core modules; no blocking defect found.",
+      "report_sha256": "66d8f2937b6f8104ca492346ff09e6bdbab23343d78e4730f850ac55d52241f9",
+      "inventory_sha256": "5803958c4e25a973ce1997d5c894adcc18c5d6652699cf6a95db8de5efdb6363",
+      "covered_results": [
+        "GeometricChiPermutation.comparison",
+        "GeometricConeAction.permutation_equivariant",
+        "GeometricConeFixedWordAction.betaAt_equivariant and wordAt_equivariant",
+        "SchemeIteratedSeedTransition.seed_cone_rotation and originalTransition_stageMap",
+        "SchemeNaturalSeed.twisted_adjacent and conjugatingIso_hom",
+        "SchemeNaturalSeed.model_telescopeMap_stable and model_conjugacyTelescopeMap_stable",
+        "SchemeIteratedSeedTelescope.model_iteratedTwistedTelescopeMap_stable",
+        "SchemeInputTelescope/SchemeTwistedInputMaps/SchemeIteratedSeedNullComparison input squares",
+        "SchemeInputNull/SchemeTwistedNull/SchemeIteratedSeedNullComparison whole-null squares",
+        "StrictDiagramIndexTelescope and StrictDiagramIndexRowTelescope telescopeIso",
+        "StrictSquareSeedNaturality.sourceSeed_naturality and SchemeCoefficientSeedNaturality.seed_naturality",
+        "NaturalModelUnitTrack.ofModelUnits_equivariant",
+        "LoopPrespectrum.homotopyFiberLift_naturality and homotopyFiberLift_isStableEquivalence_iff"
+      ],
+      "conditions": "Stable generic comparisons use genuine Model diagrams. Input maps require the stated Equivariant data; null transport requires every null time slice to be equivariant, with independent scalar time. Row/index isomorphisms retain their explicit seed square. The zigzag does not assert literal equality of current and base-seed-iterate transitions."
+    },
+    "global_models": {
+      "verdict": "Supported in all 49 assigned global/geometry/support/fiber modules; no blocking defect found.",
+      "report_sha256": "409192a28852c856eed33d51120ee033c9adf2d2d1f1ac8c100fa1702a2754f2",
+      "inventory_sha256": "751349f5d86f1598a8ee0a7a6fa2410d0a972ffbbcf9ce83a6dad44de604f035",
+      "covered_endpoint_namespace": "Quillen.PerfectComplexes.ParameterFullCurrentNull",
+      "covered_endpoints": [
+        "currentLift_spec_isStableEquivalence",
+        "currentLift_integer_isStableEquivalence",
+        "currentLift_integer_signed_isIso"
+      ],
+      "conditions": "The Spec-row theorem keeps an open arrow over the integer Spec, compact source and target, and quasi-separated target. The integer theorem requires exactly open f:P→Q, CompactSpace P, CompactSpace Q and QuasiSeparatedSpace Q. It does not assert stability at arbitrary nonaffine parameter schemes."
+    },
+    "connection_reconciliation": "The core provides C→N→T←I with strict input squares and selected whole-null equations. Actual forget/changeWeak/openRestriction maps realize the required equivariances. ParameterFullCurrentNull.timeSlice_equivariant follows from fullOpenNull_laurentInterchange with independent null and scalar times, using the proved zeroToOpen_weak and the actual zero transformation. The three source/ambient/open objects are genuine Model diagrams. Global row/fine comparisons supply both map squares and every-time null equality. Thus the core hypotheses are discharged for the native endpoint."
+  },
+  "verification": {
+    "state": "passed",
+    "scope": "Affected-scope final local validation; compatible unchanged baseline evidence and artifacts retained. No local whole-library build or full-pipeline replay.",
+    "production_compilation": {
+      "state": "passed",
+      "exit_code": 0,
+      "selected_modules_built": 118,
+      "built_outside_selection": 0,
+      "elapsed_seconds": 517.25,
+      "reused_import_modules": 5165,
+      "reused_imports_by_prefix": {
+        "Aesop": 132,
+        "Aglib": 181,
+        "Batteries": 75,
+        "ImportGraph": 10,
+        "LeanSearchClient": 4,
+        "Mathlib": 3185,
+        "Plausible": 13,
+        "ProofWidgets": 10,
+        "Qq": 14,
+        "Quillen": 1541
+      },
+      "compiler_setup_options": [
+        {
+          "options": {
+            "autoImplicit": false,
+            "warningAsError": true,
+            "weak.linter.mathlibStandardSet": true,
+            "weak.linter.style.longFile": 1500
+          },
+          "module_count": 118
+        }
+      ],
+      "source_and_semantic_repairs": 0,
+      "owned_process_group_gone": true,
+      "coverage_report_sha256": "bcd7c29e57be77dc42bf3339a80b454ea706ef2908d4c9eb0cdc8f9fbfc234b7",
+      "build_log_sha256": "910076d6a53aac81805b8059f98d409f426fc5f0bc82c5210cb104e85cc46691"
+    },
+    "checks": [
+      {
+        "label": "final-imports",
+        "exit_code": 0,
+        "elapsed_seconds": 13.06,
+        "sources_unchanged": true,
+        "receipt_sha256": "59a7e2c1e1763cddaa223cfd497236d824675033f127d06d327d559c54c132bb",
+        "log_sha256": "bd9eb582fe605f96b25670a830a6c9f67aa2dec8458cd705e7af7988848f5355"
+      },
+      {
+        "label": "final-layout",
+        "exit_code": 0,
+        "elapsed_seconds": 12.13,
+        "sources_unchanged": true,
+        "receipt_sha256": "3f1d5877a4bbb782aa62676f9af8188912b1d60397ed1274df2e087f363a3997",
+        "log_sha256": "a6152e5b73a518cc438112c2a989b5cc26fb59c59d3c2c968fc3990e90cdd83e"
+      },
+      {
+        "label": "final-placeholders",
+        "exit_code": 0,
+        "elapsed_seconds": 5.11,
+        "sources_unchanged": true,
+        "receipt_sha256": "c2722d26c3afc4e22d09d7ced52aa6230d70114e673c4e215ec9de6b41ec0728",
+        "log_sha256": "3d4c0a80c5a888289250be23db0b6a2b4ce6fcb734d6cfb2bf8aa250390f9dce"
+      },
+      {
+        "label": "final-tests-retry1",
+        "exit_code": 0,
+        "elapsed_seconds": 110.98,
+        "sources_unchanged": true,
+        "receipt_sha256": "ee7fe6ecaa1ac747b72cbe2ceaec2e0a31f8e291a986c1adcb500b4a02a902ba",
+        "log_sha256": "ad7070a3bc1db046481b25b69931a7f24f786adea4751c12a76257c48324dea8",
+        "resource_record_sha256": "caf749f53d84b761417f512824a396be48d8a111c64a266a816072e2ec3f4e3d"
+      },
+      {
+        "label": "final-scoped-lint",
+        "exit_code": 0,
+        "elapsed_seconds": 34.38,
+        "sources_unchanged": true,
+        "receipt_sha256": "fc1129211b89c57f16fdd6e3003b57605f81987cd62e7e532ccb39b87a0dbb36",
+        "log_sha256": "8376e17defe0936f2d38323153bdceda8a9002f659c6971ecc9ede318286da7b",
+        "resource_record_sha256": "a3910f1b25d9dde3dee335d51ce6547b9c92051f4ea7d3175da643fdfe5ed140"
+      },
+      {
+        "label": "final-scoped-trust",
+        "exit_code": 0,
+        "elapsed_seconds": 8.71,
+        "sources_unchanged": true,
+        "receipt_sha256": "8858990479205e2edf4e2c10572b4b144e7cfac258890eb7e6b7710a31ed45cf",
+        "log_sha256": "1a19cbc6b3a90b95f9dc85d506f5b1d468e5f614bbfc4ef54dc1d07e55d72cde",
+        "resource_record_sha256": "57bfac067b1618d062a5ec2c6f9f81e1d0449adfc3731b60ce12a89b4767b4cc"
+      },
+      {
+        "label": "final-style-test",
+        "exit_code": 0,
+        "elapsed_seconds": 14.69,
+        "sources_unchanged": true,
+        "receipt_sha256": "6659b82e54b80f204cd2fa6946e89dfd3a38ab0b087801c1845e8dadbe208044",
+        "log_sha256": "91053fb7fcc09c40806f00d6007b178168c81857c1d9627600b91af9389171c1",
+        "resource_record_sha256": "d166213c478d26fce4c6251db4ec90c93bfcd686c7e4e84f9498e76ce8c4717f"
+      }
+    ],
+    "source_structure": {
+      "facades": 13,
+      "library_modules": 4824,
+      "test_modules": 1110,
+      "imports_layout_cycles_placeholders_custom_assumptions": "passed",
+      "reuse_basis": "Only one surplus final LF in one test changed after the source checks; imports, declaration tokens, paths, pins, options and placeholder inputs are identical."
+    },
+    "tests": {
+      "covered_current_targets": 30,
+      "initial_successful_test_builds": 30,
+      "retained_unchanged_test_passes": 29,
+      "repaired_test_builds": 1,
+      "repaired_target": "QuillenTest.ParameterIteratedFullNull",
+      "unexpected_builds": 0,
+      "exit_code": 0
+    },
+    "environment_and_native_text_lint": {
+      "modules": 118,
+      "declarations": 665,
+      "default_environment_linters": 15,
+      "native_text": true,
+      "tool_sha256": "8980b027e274a5896d60edbe8b5f6e30cfb638369d9f199fccd87bc8f55aabef"
+    },
+    "trust": {
+      "modules": 118,
+      "declarations": 665,
+      "selection": "exact defining-module origin, including private/generated and non-Quillen namespaces;moduleData.constNames+foldStage2;dedup;checked kernel membership",
+      "allowed_transitive_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "aggregate": "all118 imported together;no Quillen root/full facade import"
+    },
+    "input_identity": {
+      "candidate_files": 148,
+      "guarded_static_tool_and_pin_files": 12,
+      "guarded_changed_facades": 7,
+      "absent_lint_exclusions_unchanged": true,
+      "all_167_guarded_files_unchanged_during_each_original_check": true,
+      "original_validation_adoption_map_sha256": "b831a9e1e27bd7249dab62a30db619c28246de27b50e2df49ee7d881d935a3a2",
+      "current_adoption_map_sha256": "a385e655a0b9a9db27cfc6fd421344be7be8261dd4984ead24a53eadca8106f8",
+      "final_repaired_test_all_148_current_hashes_match": true
+    },
+    "documentation_links": {
+      "documents": 10,
+      "new_relative_links_checked": 74,
+      "new_markdown_anchors_checked": 13,
+      "errors": []
+    },
+    "runtime": {
+      "lean": "leanprover/lean4:v4.34.1",
+      "compiler_threads": 2,
+      "LEAN_NUM_THREADS": "1",
+      "default_heartbeat_budget_unchanged": 200000,
+      "resource_guard_disabled": false,
+      "all_owned_process_groups_gone": true
+    },
+    "operational_preflight": {
+      "initial_tests_exit_code": 125,
+      "state": "Lake/Lean not launched; sandbox denied process-sampling preflight.",
+      "resolution": "The exact guarded tests were retried successfully with process-monitoring permission; successful source checks were retained. No guard or check was disabled.",
+      "receipt_sha256": "3d23709b53bd3a4fa25dce4617326083101cbb440b7aadb6b05deedfc6e4f442"
+    },
+    "final_validation_report_sha256": "4baf88c728c80129abc83cb83b506c83fb3cd849218462f5ae83b7b2e99b8ad7",
+    "coverage_boundary": "This records the selected native declarations and their actual hypotheses. It does not provide the missing classical-object/auxiliary-support/boundary comparisons. Prior baseline CI retains its own source identity.",
+    "final_style_reconciliation": {
+      "repair": "Remove exactly one surplus final LF in QuillenTest/ParameterIteratedFullNull.lean.",
+      "current_evidence": "The repaired test is compiled freshly on its new source hash.",
+      "retained_evidence": "All 118 production sources and 29 other tests retain their successful fingerprints. Compatible source/lint/trust/production-compile results are retained. Earlier receipts are preserved on their original basis.",
+      "report_sha256": "6c18d7a9343d27eb648ab8f7cdf26b48bafb0bb353d2a74f5095aea9f74436e5"
+    }
+  },
+  "mathematical_conclusion": {
+    "supplied": "The original current-stage parameter global-section Bass telescope has its canonical selected-null basic full-open stable fiber comparison, in every signed degree, for a qcqs ambient scheme and quasi-compact open. The target-specific unit/map/whole-null compatibilities are proved.",
+    "classical_TT_7_4": "Not supplied in the full maintained classical-object and auxiliary-support scope.",
+    "remaining_target_comparisons": [
+      "All-stage identification of the parameter current-stage completion with the original raw-perfect/bounded-flat-perfect objects, their forward seeds, original class maps and canonical whole null. The integer projection Model isomorphisms alone identify stage-zero data.",
+      "The current-stage auxiliary-support diagram with acyclicity opens U∪T, T and U∩T for T=X−Z, preserving its actual enlargement/restriction arrows.",
+      "Identification with the original raw/classical signed boundary and the earlier geometric K1→K0 boundary. Signed stable isomorphisms alone are not that equation."
+    ],
+    "route_boundary": "The old prescribed raw O4/L/P/O route remains separate. Its completion is not a premise of the newly supplied native basic endpoint; another direct classical comparison may suffice.",
+    "primary_target_reference": {
+      "title": "Thomason–Trobaugh, Higher Algebraic K-Theory of Schemes and of Derived Categories (1990)",
+      "url": "https://www.sas.rochester.edu/mth/sites/doug-ravenel/otherpapers/Thomason-Trobaugh.pdf",
+      "locators": "3.1 and 3.5.3 (printed 312–314), 6.3–6.4 (357–360), 7.4 (365).",
+      "use": "Target definitions and correspondence only; the primary paper is not used as an imported proof of the new Lean endpoint."
+    }
+  },
+  "dependency_worktree_boundary": {
+    "Aglib_foreign_changes_preserved": [
+      "AGENTS.md",
+      "doc/DEVELOPMENT.md",
+      "doc/WORK_PLAN.md",
+      "scripts/README.md",
+      "scripts/check.sh",
+      "scripts/check_kernel.py",
+      "scripts/prepare_build_cache.py",
+      "scripts/test_ci_cache.py",
+      "scripts/test_kernel.py"
+    ],
+    "scope": "Foreign documentation and operational scripts only; no Aglib Lean source, pin, build_serial.py, library_sources.py or resource_guard.py change. Modified dependency check/cache scripts are not used by these checks.",
+    "R5_dependency_pin": "The separate R5 Quillen dependency checkout and unrelated foundation worktree are not updated."
+  }
+}

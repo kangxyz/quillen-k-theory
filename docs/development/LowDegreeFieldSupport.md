@@ -141,6 +141,16 @@ A whole-root incremental attempt was stopped when the changed upstream
 tensor leaf expanded into unrelated projective-line developments; its
 partial cache progress is retained and no new whole-root pass is claimed.
 
+Integration with main revision `a9f226c6` preserves all changed non-facade
+Lean sources byte-for-byte from their owning branch; the proof bodies have
+no overlapping changes. Its nineteen new general Aglib-candidate providers
+passed normal focused compilation under Aglib `16aa08a9`. A joint strict
+import check of those nineteen and the seven new providers also passed.
+Regenerated import roots, library layout and source-token checks passed for
+4914 production and 1113 trust-test modules. Existing scoped proof evidence
+is retained at the unchanged implementation identities; this integration
+check is not a new whole-root compilation or audit.
+
 The subsequent native Dedekind construction retains the exact
 `smallTorsion R⁰` localization term. Its categorical transport, point dévissage,
 quotient assembly, canonical residue-field comparison and residue-field

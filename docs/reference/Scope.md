@@ -19,11 +19,13 @@ interface or a successful compilation does not supply an additional comparison.
 | Waldhausen theory | S-construction, additivity, Q/S comparison, and approximation/cofinality/fibration with their stated input data |
 | Classical K₀ | Exact and Waldhausen object presentations, original object classes, inverse identities, and all-class exact-functor naturality |
 | Field determinant and finite support | Actual stable field determinant and elementary kernel; original projective/finite-module Q K1 determinant with literal positive matrix-cube equation over every field and rank including zero; all positive finite-support K-groups with original evaluation/inclusion equations, including K1 and K2 |
-| Native Dedekind support | Actual primary decomposition, ideal-power residue dévissage and positive residue-field G-assembly; original native boundary coordinates and finite-family lifting under explicit generic-G1 injectivity; actual local-DVR boundaries after generic tensor extension equal global residue coordinates in positive supported degree; the scheme-boundary comparison remains open |
+| Native Dedekind support | Actual primary decomposition, ideal-power residue dévissage and positive residue-field G-assembly; original local-DVR/global boundary coordinates and finite-family lifting under explicit generic-G1 injectivity; original principal scheme boundary agrees with native localization and local-DVR boundaries in all degrees |
 | Closed-point coherent support | Locally Noetherian finite-S splitting and canonical finite-family reconstruction; Noetherian upper coherent support assembly from public field spectra in all positive degrees, with original pushforwards and an injective closed-point family |
-| Affine public G transport | Same-original-category model-universe equivalence, public scheme residue-pushforward comparison and literal localization pullback square for Noetherian rings and arbitrary submonoids, in all degrees; no scheme-boundary comparison is inferred |
-| Milnor symbols | Original integer tensor quotient, symbols and field maps; all-finite-field Milnor K2 vanishing; actual-DVR ordered tame map and tame kernel equal to the unit-symbol span; actual Quillen-K2 comparison remains open |
-| Split-residue DVR | Original generic finite-module G map injective in every degree under a ring section of the actual residue map; no smooth-curve origin realization or Quillen unit-generation theorem is inferred |
+| Affine public G transport | Same-original-category model-universe equivalence, public scheme residue-pushforward comparison, literal localization pullback and original principal boundary squares for Noetherian rings, in all degrees |
+| Milnor symbols | Direct Aglib uniform/tensor interfaces and their marked comparison; all-finite-field Milnor K2 vanishing; actual-DVR ordered tame map and tame kernel equal to the unit-symbol span |
+| Stable Steinberg comparisons | Actual universal central lifting, bilinear Steinberg symbols and canonical Milnor-to-kernel map; actual plus-map fiber central extension and kernel-to-original-K2 map; generation, fiber perfectness, isomorphism and positive product marking remain open |
+| Low-degree scalar actions | Original identity-automorphism/scalar operations, both variable laws, actual Serre/SmallModel boundary compatibility and signed object-class determinant; principal boundary calibration remains open |
+| Split-residue DVR | Original generic finite-module G map injective in every degree under a ring section of the actual residue map; a separate, unapplied geometric-origin section and trait-injectivity proposal is accepted; Quillen unit generation remains open |
 | Ring plus comparison | Independent homological stable-BGL model, exact standard zero-component Q-loop homotopy equivalence, original K₀-times-plus product, and ordinary forward-map ring-change naturality |
 | Finite-projective scalar extension | Matrix-image change of rings, additive Hom universal property and literal noncommutative balanced-tensor identification with exact finite-projective base change |
 | Classical CW plus comparison | Constructed comparison homotopy equivalences and ordinary uniqueness for original plus maps on actual Hausdorff CW spaces, with an explicit common coefficient universe for mixed spaces |
@@ -45,6 +47,7 @@ interface or a successful compilation does not supply an additional comparison.
 | Bass groups and finite stages | Affine/scheme/supported cokernel recursions, strict Laurent seed and iterates, raw one-step comparisons, an objectwise first-to-second seed map, and natural finite-stage bottom-group isomorphisms |
 | Ambient and supported Bass telescopes | Fine transitions and original inclusions invertible for d ≥ −i on qcqs ambient schemes; original negative/connective group isomorphisms and support-forgetting squares, with compact removed open for the supported telescope |
 | Original nonpositive localization | Recurring exact original ambient/supported Bass groups for qcqs ambient and compact removed open, fixed same-null fine boundary, and the geometric positive boundary joined at literal K₀ by exactness |
+| Native current-stage localization | Same-null full-open lift stable at the integer parameter for open `f : P ⟶ Q`, compact P,Q and quasi-separated Q, via the actual iterated-seed/twisted/normalized/current zigzag |
 | Full-open coefficient models | Original restriction/null diagrams, signed finite cone comparisons, fine and graded Bass towers/telescopes, pointwise geometric evaluation and graded telescope vanishing |
 
 The subject guides cover [exact categories](../topics/ExactCategories.md),
@@ -211,8 +214,8 @@ equations, finite/telescope comparisons and stable r_Z∞ are also proved.
 Native auxiliary fiber-forget localization now retains the actual union-support
 fiber, original forward seeds, whole canonical null and same-null telescope
 cone/fiber maps with their signed boundary. Final fine stability requires
-compact P,Q,T and quasi-separated Q. Completed geometric evaluation remains
-separate. Intrinsic Laurent unit K₁
+compact P,Q,T and quasi-separated Q. Evaluation along the older raw-cell
+route remains separate. Intrinsic Laurent unit K₁
 classes and native O/O(−1) two-summand chart formulas are proved, without a
 projective-line K-equivalence or initial-seed preservation claim. The canonical
 native flat-base-change mate now covers all intrinsic perfect inputs, and
@@ -395,6 +398,59 @@ coherent raw tower.
 These constructions do not identify classical Kᴮ. The current dependency plan is in the
 [TT localization roadmap](../development/TTLocalization.md).
 
+Actual global bounded-flat sections now restrict to the existing
+coefficient-first Models through [GlobalSectionChangeIndex](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionChangeIndex.lean).
+Restriction retains literal evaluation, one global chosen zero and the
+original Laurent actions. The ambient, supported and coarse rows have stable
+finite-stage and actual telescope restrictions, preserving their original
+`B^i(seed)` transitions, inclusions and whole cylinders. The same original
+zero-to-supported-section null gives the global coarse fiber lift; its
+stability needs only the open immersion. The corresponding full-open fiber
+stability requires compact source and ambient schemes and quasi-separated
+ambient scheme. These compare constructions against the already available
+fine localization result.
+
+The finite interchange interfaces `κ`, `ρ` and `χ` retain their original
+loop, overlap, cone and source-null parameters and are stable on actual finite
+Model stages. Normalized stage maps `B^i F → Ω^i C^i F` are stable for Model
+input. The fixed cyclic/reversal loop words and the new-loop slide retain
+their actual evaluation formulas and independent residual Bass loop.
+The geometric two-cone permutation has all sixteen cell formulas,
+involutivity and naturality in both diagrams and scheme maps. The strict
+square/pushout and four-dimensional double-square totalizations supply their
+actual quotient targets. General product braid and external-factor track
+equations preserve the specified nested pullbacks.
+
+The actual scalar-action equivariance, whole geometric chi factorization and
+specified fixed-word seed squares now give the all-stage zigzag
+`I → T ← N ← C`: original `B^i(seed)` telescope, twisted-normalized,
+unpermuted normalized and current-stage telescope. Each map preserves the
+original inclusions and cylinders and is stable for Model input. The
+current-stage and iterated-seed transitions remain separately defined.
+
+The original parameter supported/full-open diagram supplies the equivariance
+of its actual maps and every slice of the selected null. In
+[ParameterCurrentFullFiber](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterCurrentFullFiber.lean),
+`Quillen.PerfectComplexes.ParameterFullCurrentNull.currentLift_integer_isStableEquivalence`
+proves the same-null `currentLift f (op integerBase)` stable for an open
+immersion `f : P ⟶ Q`, compact `P,Q` and quasi-separated `Q`.
+`currentLift_integer_signed_isIso` covers every integer degree. Original
+projection isomorphisms identify the ambient/supported Models and both maps
+at the integer parameter. The theorem concerns these native current-stage
+objects; the Model-level projection does not itself identify every classical
+stage, auxiliary-support diagram or signed boundary.
+
+The older raw O four-cube, with eight prescribed faces and chosen earlier
+fillers, belongs to a separate cell route. The native endpoint does not assume
+its completion. The
+[telescope guide](../topics/SpectraAndBass.md#current-stage-and-iterated-seed-telescopes)
+and [perfect-complex guide](../topics/PerfectComplexes.md#native-current-stage-full-open-localization)
+record the current interfaces. The
+[current-stage evidence](../development/evidence/TTCurrentStageLocalization.json)
+records this source/review scope; the
+[recovered-comparison evidence](../development/evidence/TTRecoveredComparisons.json)
+retains the earlier baseline and its then-open comparison boundaries.
+
 ## Ring plus construction
 
 For every unital ring `R : Type u`, including noncommutative rings and the
@@ -425,11 +481,12 @@ tracks and a natural chosen inverse remain separate. See
 
 ## Remaining comparisons
 
-- Field/support programme: Matsumoto and positive symbol marking, actual finite-field Quillen G2 vanishing, low-degree actions and ordered Quillen boundary compatibility, origin-DVR Quillen unit generation, and literal `Scheme.boundaryG` comparison. The original native ring local-DVR boundary square is supplied; its finite-family lifting still assumes original generic-G1 injectivity. R5 retarget proposals remain unapplied.
+- Field/support programme: kernel symbol generation, actual fiber perfectness, Matsumoto isomorphism and positive marking, actual finite-field Quillen G2 vanishing, principal K0 boundary calibration, ordered Quillen boundary compatibility and origin-DVR Quillen unit generation. Original native principal-scheme/local-DVR boundary squares are supplied. A separate, unapplied R5 proposal identifies its literal sheaf-stalk boundary and proves the first and third affine localization consequences; finite-family lifting retains original generic-G1 injectivity. R5 retarget proposals remain unapplied.
 
-- Identification of the constructed fine completion with the original raw all-stage geometric tower and classical nonconnective groups. Fine ambient/supported stabilization and bijectivity of the original negative-class maps are supplied under the stated qcqs/compact-open hypotheses.
-- Full all-iterate comparison with the original geometric Bass tower, the Laurent splitting and original fine [T] terminal boundary, including the zero-section class and possible Nil terms. The positive exact row on PerfectK(Spec R) and the original relative scalar-to-cofiber boundary are proved; they do not close these remaining comparisons.
-- Complete original raw iterate/telescope evaluation and classical Thomason–Trobaugh identification, retaining the original K₀ image and signed boundary. The native overlap four-cube and complete L/P/O descent remain open. Equality of the fine and geometric boundaries and arbitrary-pair boundary naturality are separate. Existing support-enlargement maps must be identified with the auxiliary T, T∪U and T∩U towers and their localization sequence. Normalized one-step evaluation and basic/auxiliary-supported constructed section localization are supplied.
+- Classical identification of the native current-stage completion and original selected null diagram. The stable iterated-seed/current-stage zigzag, original geometric action, whole chi factorization and specified fixed-word compatibility are supplied; a direct equality of current and iterated-seed transitions is not a premise of this route.
+- If the older raw-cell route is selected, complete its original all-stage tower/telescope comparison with the fine completion. Fine ambient/supported stabilization and bijectivity of the original negative-class maps are supplied under the stated qcqs/compact-open hypotheses; the native current-stage theorem uses the separate zigzag above.
+- The Laurent splitting and original fine [T] terminal boundary, including the zero-section class and possible Nil terms. The positive exact row on PerfectK(Spec R) and the original relative scalar-to-cofiber boundary are proved; they do not close these remaining comparisons.
+- Complete the remaining classical Thomason–Trobaugh object and null-diagram identification, retaining the original K₀ image and signed boundary. The older raw iterate/telescope evaluation, overlap four-cube and complete L/P/O descent retain their separate route boundary; they are not prerequisites of the native current-stage endpoint. Equality of the fine and geometric boundaries and arbitrary-pair boundary naturality are separate. Existing support-enlargement maps must be identified with the auxiliary T, T∪U and T∩U towers and their localization sequence. Normalized one-step evaluation and basic/auxiliary-supported constructed section localization are supplied.
 - Proj identification, the full twisting-sheaf family, and the general projective-bundle formula. Intrinsic-perfect D+ generation and both actual affine model K-map inverse laws are supplied over every commutative ring. Both actual native qcqs model inverse laws and identification of geometric G with the EXISTING native inverse are supplied, together with original compact-open supported Phi bijectivity, in every natural degree including zero. Literal forward maps, signs and product normalization are retained. Native projection perfection and exact coefficient/support preservation hold on general quasi-compact bases. The separate specialized endpoint-unit/connecting and arbitrary-base-map comparisons remain open.
 - General-source perfect preservation by derived direct image, unrestricted unbounded derived pushforward, and general bounded-below flat-base-change invertibility.
 - Strict/local equivalence on arbitrary nonaffine schemes and perfect pullback on arbitrary non-quasi-compact schemes.

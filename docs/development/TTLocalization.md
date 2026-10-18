@@ -1,13 +1,23 @@
 # Thomason–Trobaugh localization roadmap
 
-Current source integration starts from
-`492454b306a1a1a26d5701d0503f5aaf127b9367`, Lean 4.34.1 and the unchanged
-pinned mathlib/Aglib dependencies. The selected fine-completion and raw-pasting
-sources, ordinary review scopes and affected-scope validation are recorded in
-[the current integration evidence](evidence/TTFineCompletionAndRawPasting.json).
-The earlier [seed-iteration evidence](evidence/TTBassSeedIteration.json) retains
-its own prior-stage source and validation boundary. Historical run records do
-not by themselves identify the dependency closure of the integrated candidate.
+The current-stage source addition starts from
+`fd1d66a707d2d658bc5aa556b9f03506e56dee7c`, with Lean 4.34.1 and the
+unchanged pinned mathlib/Aglib dependencies. Its selected source correspondence,
+independent review and incremental validation belong to
+[the current-stage evidence](evidence/TTCurrentStageLocalization.json).
+The source archive is
+`quillen-tt-complete-buildable-sources-20261018T0354Z.zip`.
+
+The earlier
+[recovered-comparison evidence](evidence/TTRecoveredComparisons.json) retains
+its baseline-16cc1d0 integration scope and the then-open finite/all-stage
+comparison obligations. It distinguishes reconstructed sources from original
+archived bytes and does not claim historical recovery for reconstructions.
+The [fine-completion and raw-pasting evidence](evidence/TTFineCompletionAndRawPasting.json)
+retains its baseline-492454 scope, and the
+[seed-iteration evidence](evidence/TTBassSeedIteration.json) its earlier
+one-step boundary. Reuse these records at their actual source and checked
+scope; the current-stage record supplies the new route's correspondence.
 
 This roadmap records proof obligations and their actual consumers. Planned
 assertions are not library theorems until their source proofs and corresponding
@@ -37,7 +47,7 @@ Derived Categories*, The Grothendieck Festschrift III, Progress in Mathematics
 [DOI](https://doi.org/10.1007/978-0-8176-4576-2_10),
 [original paper](https://www.sas.rochester.edu/mth/sites/doug-ravenel/otherpapers/Thomason-Trobaugh.pdf).
 
-Three targets must be distinguished:
+Four targets must be distinguished:
 
 1. **Implemented connective localization.** The canonical relative/open
    comparison is bijective in positive degrees, injective at zero, and retains
@@ -49,21 +59,30 @@ Three targets must be distinguished:
    completion, and the same constructed whole null gives the stable supported
    fiber comparison with its original signed boundary. Coefficient maps and
    the original seed, inclusion and cylinder data are retained.
-3. **Classical, global TT localization.** Identifying the completed objects
+3. **Native current-stage full-open localization.** For an open immersion
+   `f : P ⟶ Q`, compact `P,Q` and quasi-separated `Q`, the actual
+   `currentLift f (op integerBase)` is stable in every signed degree. The
+   original scalar seeds and full-open null are retained through the stable
+   zigzag `I → T ← N ← C` described below; no generic equivariance premise
+   remains at this endpoint.
+4. **Classical, global TT localization.** Identifying the completed objects
    with classical `Kᴮ` and identifying its original null diagram remain
    separate branches. Original nonnegative and recursive negative groups
    are now identified with the fine completion under the stated qcqs and
    compact-open hypotheses below. The native
    global coarse-to-fine section-completion comparison and both basic and
-   auxiliary-supported fiber sequences are now supplied. Completed geometric
-   evaluation and classical identification remain separate.
+   auxiliary-supported fiber sequences are now supplied. The older raw-cell
+   evaluation route and classical identification retain their separate
+   boundaries.
 
 The affine constructed transfer, native global completion comparison and
 global localization with auxiliary support are supplied. The actual fine
 transition/inclusion range and original-group nonpositive localization
-sequence are also supplied. Completed raw geometric evaluation, boundary
-identification and the auxiliary original-group tower comparisons retain
-distinct obligations; file or theorem counts do not measure their distance.
+sequence are also supplied. The new route additionally proves the native
+current-stage same-null basic endpoint. Classical all-stage object/null-diagram
+identification, auxiliary-support transport and the signed boundary retain
+distinct obligations. The older raw-cell producer remains a separate route;
+its missing O four-cube is not a premise of this native endpoint.
 
 ## Verified proof checkpoints
 
@@ -179,6 +198,107 @@ with eight prescribed faces and compatible L/P/O quotient attachments remain
 the next source-cell obligation. They are required for actual second-stage
 `PlusPasting`/`MinusPasting`, before coherent raw iteration and its telescope.
 
+## Global restriction and finite interchange
+
+The global-section comparison uses actual cocartesian sections over all
+schemes, with the original geometric pseudofunctor and chosen-zero family.
+It restricts along the coefficient base-product functor to the existing
+coefficient-first Models. This construction is separate from the finite
+normalization route below.
+
+| Interface | Supplied construction and conditions |
+| --- | --- |
+| [SectionChangeIndex](../../Quillen/Aglib/CategoryTheory/FiberedCategory/SectionChangeIndex.lean) and Laws/Zero/Unit | Arbitrary index restriction, literal evaluation/reindexing and preservation of the same global zero and evaluation-lifted identity actions. Waldhausen adapters retain exact fiber transitions and their explicit small/large/mixed universe bounds. |
+| [GlobalSectionChangeIndex](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionChangeIndex.lean), [GlobalSectionChangeIndexLaws](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionChangeIndexLaws.lean), [GlobalSectionUnit](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionUnit.lean), [GlobalSectionLaurentAction](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionLaurentAction.lean) | Actual `Schemeᵒᵖ ⥤ Model.{u+1}`, original scalar units, coefficient restriction and exact categorical inverse; no compactness premise. |
+| [GlobalSupportedModels](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedModels.lean), [GlobalOpenModels](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalOpenModels.lean), [GlobalFullOpenModels](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalFullOpenModels.lean) | Actual supported, coarse-open and fine-open rows, exact zero-preserving maps and strict restriction/evaluation squares for an open immersion. |
+| [GlobalSectionTelescope](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionTelescope.lean), [GlobalLocalizationTelescopeStable](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalLocalizationTelescopeStable.lean) | Ambient, supported and coarse finite/telescope restrictions are stable, preserving the actual `B^i(seed)` transitions, inclusions and cylinders. Supported/coarse rows retain the open immersion. |
+| [GlobalSectionLocalizationNull](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionLocalizationNull.lean), [GlobalSectionLocalizationNullSeed](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionLocalizationNullSeed.lean), [GlobalSectionLocalizationFiniteNull](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionLocalizationFiniteNull.lean), [GlobalSectionLocalizationTelescopeNull](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionLocalizationTelescopeNull.lean) | The original reversed zero-to-supported-section null, its every-time seed equation and the same finite/telescope null under restriction. |
+| [GlobalSectionCoarseFiber](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionCoarseFiber.lean) | Actual coarse same-null `fiberMap` and its stable restriction comparison; only the open immersion. |
+| [GlobalSectionFullOpenFiber](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionFullOpenFiber.lean) | Actual full-open same-null `fiberMap`; final stability requires compact P,Q and quasi-separated Q plus the open immersion. Structural whole-null/restriction identities need only the open immersion. |
+
+The finite normalized comparison uses the actual loop strength `κ`, forward
+pushout comparison `ρ` and strict-square cone comparison `χ`.
+[LoopStable](../../Quillen/KTheory/Bass/LoopStable.lean), [PushoutStable](../../Quillen/KTheory/Bass/PushoutStable.lean) and
+[SquareConeStable](../../Quillen/KTheory/Bass/SquareConeStable.lean) supply their stable finite Model
+specializations. [FiniteConeTopology](../../Quillen/KTheory/Bass/FiniteConeTopology.lean) derives the
+necessary topology and all-point growth for finite unlooped cones and loops.
+[NormalizedStageMap](../../Quillen/KTheory/Bass/NormalizedStageMap.lean) then constructs stable
+`B^i F → Ω^i C^i F` with the original fixed-order iterated `κ`.
+The actual finite-loop cyclic/reversal words, transpose and new-loop slide
+retain all input times and the residual Bass loop independently.
+
+The geometric double-cone permutation is in
+[GeometricConeTarget](../../Quillen/KTheory/Bass/GeometricConeTarget.lean) and its Cells/Involution/Naturality/
+SchemeNaturality owners. All sixteen quotient-cell formulas, the actual
+inverse and both naturality directions are supplied, including independent
+`r,s,t,v` in the deepest cell. Its target uses the original inverse scheme
+swaps. The generic strict-square/pushout and four-dimensional double-square
+constructions retain the actual pointwise-cone target. The general
+integer-base braid, scalar pullback, external-factor and external-track
+equations keep their specified nested pullbacks without compactness.
+
+The original finite comparison boundaries are now extended by the following
+all-stage results. The historical
+[recovered-comparison record](evidence/TTRecoveredComparisons.json) continues
+to describe its earlier source closure, including the then-unselected
+`FixedWords` candidate; the new candidate and its concrete Bass consumers
+belong to [the current-stage record](evidence/TTCurrentStageLocalization.json).
+
+## Native current-stage localization
+
+For a scheme-indexed Model diagram and its actual Laurent track, let `I` be
+the telescope with the original `B^i(seed)` transitions, `T` the
+fixed-word twisted-normalized telescope, `N` the unpermuted normalized
+telescope and `C` the current-stage telescope. The actual maps are
+
+```text
+I ──iteratedTwistedTelescopeMap──▶ T ◀──conjugacyTelescopeMap── N ◀──telescopeMap── C.
+```
+
+The current and iterated-seed transitions remain separately defined.
+[SchemeCurrentStageTelescope](../../Quillen/KTheory/Bass/SchemeCurrentStageTelescope.lean),
+[SchemeTwistedTelescope](../../Quillen/KTheory/Bass/SchemeTwistedTelescope.lean)
+and [SchemeIteratedSeedTelescope](../../Quillen/KTheory/Bass/SchemeIteratedSeedTelescope.lean)
+prove these maps stable for genuine Model input, retaining every original
+inclusion and cylinder. The local geometric ingredients are now supplied:
+`GeometricConeInterchange.permutation_equivariant` for the actual twice-cone
+action; `GeometricChiPermutation.comparison` for the whole geometric chi
+factorization; fixed-word equivariance and `wordAt_seed_square`; and
+`SchemeIteratedSeedTransition.originalTransition_stageMap` for every original
+seed-iterate adjacent square. Their focused owners and generic hypotheses are
+in the [spectrum guide](../topics/SpectraAndBass.md#current-stage-and-iterated-seed-telescopes).
+
+The perfect-complex application keeps the original integer-base product pair,
+its actual supported full subcategory, original chosen zero and scalar track.
+[ParameterLaurentNull](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterLaurentNull.lean)
+proves the two-time scalar/null interchange. The three-object comparisons
+preserve actual support forgetting, full-open restriction and the whole
+selected null. Integral Spec-row geometry, row Models, seed squares and
+restriction/telescope squares compare the iterated-seed lift to the existing
+fine localization lift in
+[ParameterIteratedFullFiber](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterIteratedFullFiber.lean).
+
+The endpoint in
+[ParameterCurrentFullFiber](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterCurrentFullFiber.lean)
+is the declaration
+`Quillen.PerfectComplexes.ParameterFullCurrentNull.currentLift_integer_isStableEquivalence`.
+It assumes exactly `[IsOpenImmersion f]`, `[CompactSpace P]`,
+`[CompactSpace Q]` and `[QuasiSeparatedSpace Q]` and concludes
+`IsStableEquivalence (currentLift f (op integerBase))`.
+`currentLift_integer_signed_isIso f d` supplies the isomorphism for every
+`d : ℤ`. The current-stage scalar seed is unchanged.
+[GlobalParameterIdentityModels](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterIdentityModels.lean)
+identifies the integer-parameter ambient and supported Models by the original
+projection, preserving both maps. Those Model isomorphisms do not themselves
+supply every classical stage/seed/null comparison or auxiliary-support signed
+diagram. The theorem is therefore recorded at its native basic-pair scope.
+
+The older raw O four-cube with its prescribed eight faces, half-height midpoint
+and chosen earlier fillers remains a different target. Its three excluded
+drafts and the conditional whole-value `NativeParameterEvaluation` interfaces
+retain their historical scope. The current zigzag does not construct that
+cube, and the native endpoint does not depend on it.
+
 ## Actual affine objects
 
 Fix `R : CommRingCat.{u}`, `j : U ⟶ Spec R` with `[IsOpenImmersion j]`.
@@ -282,8 +402,10 @@ identification is required for this constructed section-completion result.
 
 ## Concrete remaining-work plan
 
-The remaining work separates the constructed fine completion from the
-original raw geometric tower and the classical null diagram. Fine seed
+The remaining work separates the native current-stage theorem from classical
+object and null-diagram identification. The older raw geometric cell route
+retains its own unfinished producer, while the new stable zigzag bypasses it
+for the native basic-pair endpoint. Fine seed
 preservation, recursive chart middle exactness, the equality case of the
 transition range and canonical telescope legs are now supplied. The classical
 Laurent `[T]` boundary formula and its O/O(-1) sign remain independent targets;
@@ -299,9 +421,12 @@ levelwise weakness; the original composition and identity cubes are supplied.
 The fine ambient/supported groups and nonpositive exact sequence are now
 available under the precise hypotheses above.
 
-The current [integration evidence](evidence/TTFineCompletionAndRawPasting.json)
-keeps source identity, ordinary review, historical checks and current
-validation separate. Reuse compatible earlier coverage at its actual scope;
+The [fine-completion evidence](evidence/TTFineCompletionAndRawPasting.json) retains
+its historical integration scope. The
+[recovered-comparison evidence](evidence/TTRecoveredComparisons.json) retains
+the earlier finite-comparison package. The current
+[current-stage evidence](evidence/TTCurrentStageLocalization.json) records the
+new all-stage route, independent reviews and affected-scope validation. Reuse compatible earlier coverage at its actual scope;
 compilation and origin audits do not supply a classical comparison. The
 polynomial zero-evaluation splitting remains distinct from the unresolved
 geometric zero-locus class and Laurent terminal-boundary calculation.
@@ -336,10 +461,13 @@ claim.
 
 ### E. Compare to the original raw geometric completion (E2)
 
-The comparison target is the actual raw bounded-flat/perfect geometric Bass
-construction, with its chosen pullbacks, original normalization/composition
-tracks and independent comparison, loop and structure coordinates. The strict
-fine section tower cannot be substituted for this target.
+This subsection retains the older raw-cell comparison target: the actual
+bounded-flat/perfect geometric Bass construction, with its chosen pullbacks,
+original normalization/composition tracks and independent comparison, loop and
+structure coordinates. The strict fine section tower cannot be substituted
+for that target. The native current-stage theorem above follows another
+route and does not require this O-cell producer. If the raw route is used
+for classical identification, its full stated correspondence is still needed.
 
 | Interface | Available result and precise remaining consumer |
 | --- | --- |
@@ -395,8 +523,10 @@ strict transformations. The raw maps have prescribed homotopy identity and
 composition laws. This API cannot be applied directly to them to declare a
 functorial raw second stage. A proposed induction on source-cell depth and
 finite coefficient words remains a proof plan; no well-founded recursive
-coherence theorem is asserted. E2 must cover every ambient, open and
-auxiliary-supported row required by the final classical diagram.
+coherence theorem is asserted for that cell producer. A classical
+identification through E2 must cover every ambient, open and
+auxiliary-supported row required by its final diagram. This remaining
+raw-cell work does not retract the native current-stage theorem above.
 
 ### P. Prove the necessary projective-line K-equivalence (B1)
 
@@ -775,11 +905,15 @@ Specify the classical model by the original raw perfect/bounded-flat-perfect
 spectrum, native polynomial/Laurent squares, original cone/loop stages and
 forward Laurent transitions, followed by their homotopy colimit (TT 6.4).
 If an ordinary colimit is used, prove its cofibration-replacement comparison.
-E2 must produce the actual comparison to this model; a renamed section
-completion is insufficient. B2's original class maps must agree with these
-spectrum maps in every nonnegative and negative degree.
+A proposed classical identification must produce the actual all-stage
+comparison to this model, either from the native current-stage construction
+or through the separate E2 raw-cell route. The integer-parameter Model
+projection isomorphisms alone do not establish that comparison. B2's original
+class maps must agree with the selected spectrum maps in every nonnegative
+and negative degree.
 
-For T=X−Z and Y=X−U, compare the whole G7 null diagram with the raw diagram
+For T=X−Z and Y=X−U, compare the whole G7 null diagram with the specified
+classical diagram
 on (X,Y∩Z), (X,Z), (U,U∩Z). Their acyclicity opens are U∪T, T, U∩T.
 Under qcqs X and quasi-compact U,T, construct all three stable comparison
 maps, the original support-enlargement/restriction squares, and coherence with
@@ -791,40 +925,43 @@ c_support,(n−1) ∘ boundary_section
   = boundary_classical ∘ c_open,n.
 ```
 
-The classical boundary is the boundary of the specified raw null diagram;
+The classical boundary is the boundary of the specified classical null diagram;
 defining a conjugate boundary without identifying it does not close B3.
 Obtain the basic sequence by Z=X. State the library's actual stable
 fiber-sequence notion; all-signed stability is not a levelwise homotopy
-equivalence claim. This final milestone requires G7, completed E2 and B2,
-with no remaining target-specific localization hypothesis.
+equivalence claim. This final milestone requires the accepted classical
+object/seed/null correspondence, G7's auxiliary support diagram and B2's
+original-group comparison, with no remaining target-specific localization
+hypothesis. The new basic-pair current-stage theorem does not by itself
+supply that auxiliary-support or signed-boundary transport.
 
 ### Parallel allocation and decision points
 
 ```mermaid
 flowchart TD
-  G7[Constructed basic and auxiliary same-null fine localization] --> TT[Classical TT 7.4]
-  CU[Original Raw1 identity and composition cubes] --> LPO[Compatible L/P/O cells and actual second projection pasting]
-  LP[Whole Laurent and six-face polynomial native cells] --> LPO
-  OD[Original quotient descent and whole-family recovery] --> LPO
-  LPO --> RI[Coherent raw iteration and seed naturality]
-  RI --> RT[Raw telescope and original null-diagram comparison]
-  RT --> TT
-  FT[Fine seed, middle exactness and full transition range] --> FG[Original fine telescope groups and nonpositive sequence]
-  FG --> BC[Geometric boundary and auxiliary original-group diagram correspondence]
+  FT[Fine same-null basic localization] --> NF[Native current-stage basic fiber lift]
+  ZZ[Original seed-iterate / twisted / normalized / current zigzag] --> NF
+  NF --> CI[Classical all-stage object and null correspondence]
+  CI --> TT[Classical TT 7.4]
+  G7[Constructed auxiliary-support fine localization] --> AB[Auxiliary-support and signed-boundary transport]
+  AB --> TT
+  FG[Original fine telescope groups and nonpositive sequence] --> AB
   PP[Original projective-line inverse laws and positive Bass row] --> LB[Original Laurent T terminal formula and classical splitting]
-  LB --> BC
-  BC --> TT
+  LB --> AB
+  LPO[Older raw O producer and complete L/P/O cells] -. alternative cell route .-> RT[Raw iteration and telescope correspondence]
+  RT -.-> CI
 ```
 
-Continue from the [handoff](TTContinuationHandoff.md): the original Laurent
-`[T]` terminal formula and sign, the overlap four-cube and complete raw
-second-projection/iteration route, and original boundary/auxiliary-tower
-correspondences. E2-C/N/S/W, both first-stage cubes, same-null G7, P1–P5,
-the positive Bass row, fine range/telescope maps and original nonpositive
-localization are inputs at their recorded scopes. Reuse their exact source
-and affected-client coverage. General projective-bundle and arbitrary-base-map
-comparisons retain their own boundaries.
-
+Continue from the [handoff](TTContinuationHandoff.md): determine the precise
+classical stage/seed/null correspondence for the native endpoint, transport
+the auxiliary-support and signed-boundary diagram, and finish any required
+original Laurent `[T]` terminal formula and sign. The older overlap four-cube
+and raw second-projection/iteration construction remain a separately
+specified route. Scalar-action equivariance, the whole chi factorization,
+fixed-word seed compatibility and the original seed-iterate/current-stage
+zigzag are now supplied and must not be reassigned as open native inputs.
+Reuse each result's exact source and affected-client coverage. General
+projective-bundle and arbitrary-base-map comparisons retain their own boundaries.
 
 
 Use bounded mathematics at Sol 6.1/max for supported transfer, tensor/line
@@ -839,11 +976,13 @@ At each coherent milestone, check exact sources, actual assumptions/maps,
 strict builds and private-origin foundation coverage; independently review
 uncovered mathematical claims and consumers. Reuse matched unchanged coverage.
 Regenerate/enroll the accepted leaves, then build affected facades and meaningful
-clients. Final classical closure has a separate whole-library boundary:
-`bash scripts/check.sh --rehash`, including the full QuillenTest facade and both
-explicit axiom audits. Passing that pipeline does not supply absent raw, geometric-boundary or
-classical-identification proofs. Local commits require their separately authorized, checked scope;
-they do not mark these remaining proofs complete.
+clients. Complete release coverage may combine compatible baseline evidence
+with new checks of the changed and affected scope under
+[CONTRIBUTING](../../CONTRIBUTING.md#tests-and-checks). A milestone, handoff or
+release alone does not require a whole-library replay. Successful checks do
+not supply absent geometric-boundary or classical-identification proofs.
+Local commits require their separately authorized, checked scope; they do
+not mark these remaining proofs complete.
 
 Continue the selected route while it yields useful evidence. A failed direct
 conversion triggers a generic transport repair; failure of the P¹ attachment

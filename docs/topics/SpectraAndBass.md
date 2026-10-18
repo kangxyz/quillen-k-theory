@@ -9,8 +9,9 @@ stage. For qcqs ambient schemes, the actual fine transition and inclusion at
 stage `i` are isomorphisms in every degree `d ≥ -i`. The original negative
 class maps are therefore natural isomorphisms to this fine telescope; the
 supported result also assumes a quasi-compact removed open. Identification
-with the original raw all-stage tower and classical nonconnective K-theory
-remains separate.
+with classical nonconnective K-theory remains separate. The original
+iterated-seed and current-stage telescopes now have the actual stable zigzag
+and same-null localization application described below.
 
 For a quasi-compact open of an affine scheme, a separate quotient-graded Bass
 telescope has zero stable groups in every integer degree. Its constructed
@@ -337,6 +338,165 @@ compare the original strict, raw bounded-flat, and perfect seeds without a
 supplied compatibility premise. These comparisons do not identify the entire
 original geometric tower with the strict tower.
 
+## Finite Bass interchange and normalized stages
+
+Write `B` for the actual strict Bass endofunctor, `C` for its unlooped
+square cone, and `Ω` for parameter looping. The forward comparisons are
+
+```text
+κ : B(ΩF) → Ω(BF),
+ρ : Pushout(Bf,Bg) → B(Pushout(f,g)),
+χ : C(BS) → B(CS).
+```
+
+Here `S` is an actual strict natural square, and `C(S)` uses its original
+constant-overlap comparison. [LoopStrength](../../Quillen/KTheory/Bass/LoopStrength.lean) constructs
+`κ` from the Bass image of the original evaluation homotopy.
+[LoopFactor](../../Quillen/KTheory/Bass/LoopFactor.lean) retains its actual cone-loop factorization
+and double-loop transpose. [PushoutStrength](../../Quillen/KTheory/Bass/PushoutStrength.lean) constructs
+the coefficient-natural forward `ρ`, preserving both inclusions and the whole
+overlap cylinder. [PushoutCofiberSquare](../../Quillen/KTheory/Bass/PushoutCofiberSquare.lean) gives its
+positive-direction cofiber square. [SquareConeStrength](../../Quillen/KTheory/Bass/SquareConeStrength.lean)
+constructs `χ` from that square and the forward cofiber comparison, retaining
+every cone time and source-null time slice. These definitions do not choose
+inverse comparison maps.
+
+The stability owners [LoopStable](../../Quillen/KTheory/Bass/LoopStable.lean),
+[PushoutStable](../../Quillen/KTheory/Bass/PushoutStable.lean) and
+[SquareConeStable](../../Quillen/KTheory/Bass/SquareConeStable.lean) discharge their point HEP, T1 and
+all-point linear-growth hypotheses on actual finite Model stages. The
+general growth statements keep their explicit topological assumptions.
+For a growth offset `c`, the homotopy set at every point of level `n+c+2`
+is subsingleton in each degree `k < n+2`. The general `κ` theorem requires
+this bound, levelwise T1 and chosen-point HEP on `F`; the general `ρ` theorem
+requires them on all three original diagrams. The finite `χ` theorem starts
+with an actual strict square of Model diagrams.
+[FiniteConeTopology](../../Quillen/KTheory/Bass/FiniteConeTopology.lean) also supplies those hypotheses for
+finite unlooped cones followed by finite parameter loops of Model diagrams;
+looping loses one degree per loop and retains arbitrary loop components.
+The resulting cones are not assumed to carry a new Model structure.
+[IteratedLoopStrength](../../Quillen/KTheory/Bass/IteratedLoopStrength.lean) iterates the same `κ` in a fixed
+order. [NormalizedStageMap](../../Quillen/KTheory/Bass/NormalizedStageMap.lean) constructs stable maps
+`B^i F → Ω^i C^i F` for genuine Model input, with the full functor-association
+equalities retained as transports. A stable map at every stage does not
+supply a map of the original seed towers.
+
+The generic point-set interchange is in [PushoutInterchange](../../Quillen/Topology/Prespectrum/PushoutInterchange.lean) and
+[PushoutInterchangeIso](../../Quillen/Topology/Prespectrum/PushoutInterchangeIso.lean): four strict corner squares give the
+interchange of two reduced pushouts, with its actual transpose inverse and
+nine-stratum naturality. It needs no local compactness, separation or point
+HEP. [StrictSquarePushout](../../Quillen/Topology/Prespectrum/StrictSquarePushout.lean) and its Naturality/Cells owners extend
+this to the original square cone.
+[StrictDoubleSquareCone](../../Quillen/Topology/Prespectrum/StrictDoubleSquareCone.lean) and its Naturality/Cells owners give the
+two totalizations of an actual four-dimensional strict arrow diagram `E`. Their
+target is `totalFunctor.obj (coneSquare (comparisonMap E))`, and all sixteen cells exchange
+whole parameter blocks, retaining four independent times in the deepest cell.
+The geometric target transports and point-set involution are described in
+the [perfect-complex guide](PerfectComplexes.md#geometric-double-cone-permutation).
+
+[DoubleLaurentInclusion](../../Quillen/KTheory/Bass/DoubleLaurentInclusion.lean)
+compares the geometric and cone-loop constructions after the displayed
+double-Laurent inclusion. One face formula uses the actual opposite scheme
+swap; the other retains the coefficient point without that swap. They
+quantify the original based loop and its independent time. These restricted
+identities establish neither equality nor inequality of the unrestricted
+comparison maps. The whole relation needed by the new iteration route is
+proved separately in
+[GeometricChiPermutation](../../Quillen/KTheory/Bass/GeometricChiPermutation.lean):
+`GeometricChiPermutation.comparison` factors the actual `chiGeom` through
+`LoopFactor.coneStrength` followed by the parameter loop of the genuine
+geometric permutation.
+
+The generic `loops`, `loopDiagram`, `loopDiagram_obj` and
+`loopDiagram_postcomp` declarations live in
+[LoopTranspose](../../Quillen/Topology/Prespectrum/LoopTranspose.lean), in the
+native namespace `Quillen.LoopPrespectrum.FiniteParameterLooping`.
+Finite parameter looping has generic evaluation, cyclic and reversal words in
+[FiniteLoopWords](../../Quillen/Topology/Prespectrum/FiniteLoopWords.lean). These use the original double-loop
+transpose. [FiniteLoopWordSlide](../../Quillen/Topology/Prespectrum/FiniteLoopWordSlide.lean) slides a new loop through
+the specified reversal for any actual diagram map `A → ΩB`, retaining its
+association transport. [FiniteLoopStrengthWords](../../Quillen/KTheory/Bass/FiniteLoopStrengthWords.lean) proves
+that the cyclic and reversal words commute with the fixed iterated `κ`.
+The permuted tuple contains the input-loop times; the residual Bass value and
+its original loop time remain independent. These are the stated words, with
+no general symmetric-group or cone-permutation coherence inferred. Reversal
+changes the order of loop coordinates; it does not reverse each path's time.
+No arithmetic sign on stable groups is inferred from these word identities.
+
+[WholeSeedCospan](../../Quillen/KTheory/Bass/WholeSeedCospan.lean) preserves the complete original
+null/unit/null word under a strict square map and a same-time unit-track
+equation. [GeometricSeedCospan](../../Quillen/KTheory/Bass/GeometricSeedCospan.lean) supplies that equation for
+the specified induced `bassTrack` by cancellation of the actual inverse
+index swap. [GlobalSchemeLaurentTrack](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSchemeLaurentTrack.lean) instantiates the
+source track with the actual forward Laurent unit on all global scheme
+sections. This gives the finite common-target seed cospan, with its original
+two half clocks and independent output-loop coordinate. It does not identify
+the induced `bassTrack` with a separately chosen current-stage action.
+
+The exact adjacent-stage statement in
+[SchemeCurrentStageSquare](../../Quillen/KTheory/Bass/SchemeCurrentStageSquare.lean) is
+`currentTransition_stageMap`. Its `currentTransition` applies
+`seed (stageTrack A i)` and the specified association cast; its
+`normalizedTransition` applies `loopMap i (seed (coneTrack A i))` and its own
+association cast. The theorem intertwines these two maps via `stageMap`.
+The original `strictDiagramTransition = B^i(seed A)` has a separate
+comparison to the twisted-normalized transitions below. The all-stage route
+therefore retains both transition definitions rather than identifying them.
+
+## Current-stage and iterated-seed telescopes
+
+For a scheme-indexed Model diagram `M`, put `F = M ⋙ prespectrumFunctor`
+and let `A` be its original Laurent track. Write `C`, `N`, `T` and `I` for
+the following actual telescopes. These are local telescope labels; the unlooped cone functor is described in the preceding
+section.
+
+| Telescope | Objects and transitions | Comparison owner |
+| --- | --- | --- |
+| `C = currentTelescope A` | Original finite Bass objects with the scalar seed formed at each current stage | [SchemeCurrentStageTelescope](../../Quillen/KTheory/Bass/SchemeCurrentStageTelescope.lean) |
+| `N = normalizedTelescope A` | The i-fold parameter loops of the i-fold unlooped cone, with the current cone seed and its association cast | [SchemeCurrentStageTelescope](../../Quillen/KTheory/Bass/SchemeCurrentStageTelescope.lean) |
+| `T = twistedTelescope A` | The same normalized objects with the prescribed cyclic/insertion-word transitions | [SchemeTwistedTelescope](../../Quillen/KTheory/Bass/SchemeTwistedTelescope.lean) |
+| `I = iteratedTelescope A` | Original finite Bass objects with `strictDiagramTransition squareFunctor (seed A)`, namely `B^i(seed A)` | [SchemeIteratedInputNull](../../Quillen/KTheory/Bass/SchemeIteratedInputNull.lean) |
+
+The natural maps form `I → T ← N ← C`. In the native namespace
+`Quillen.KTheory.Bass.SchemeNaturalSeed`, `telescopeMap` gives `C → N`
+and `conjugacyTelescopeMap` gives `N → T`.
+`Quillen.KTheory.Bass.SchemeIteratedSeedTelescope.iteratedTwistedTelescopeMap`
+gives `I → T`. Each owner proves the actual cylinder and inclusion equations;
+its `model_*_stable` theorem gives stability at every scheme parameter for
+genuine Model input. Finite Model topology discharges the T1 and growth
+conditions. No new Model structure on normalized cones is assumed.
+
+The local geometric input is now explicit.
+[GeometricConeAction](../../Quillen/KTheory/Bass/GeometricConeAction.lean) proves
+whole scalar-action equivariance of the original two-cone permutation.
+[GeometricConeFixedWords](../../Quillen/KTheory/Bass/GeometricConeFixedWords.lean)
+instantiates the general
+[fixed-word candidate](../../Quillen/Aglib/CategoryTheory/Endofunctor/README.md),
+and [GeometricConeFixedWordAction](../../Quillen/KTheory/Bass/GeometricConeFixedWordAction.lean)
+proves equivariance of those specified words.
+[SchemeTwistedConjugacy](../../Quillen/KTheory/Bass/SchemeTwistedConjugacy.lean)
+supplies `wordAt_seed_square` and `twisted_adjacent`.
+[SchemeSeedRotation](../../Quillen/KTheory/Bass/SchemeSeedRotation.lean) uses
+the whole chi factorization and original seed cospan; then
+`Quillen.KTheory.Bass.SchemeIteratedSeedTransition.originalTransition_stageMap`
+in [SchemeIteratedSeedTransition](../../Quillen/KTheory/Bass/SchemeIteratedSeedTransition.lean)
+proves every original adjacent square against the unchanged finite `stageMap`.
+The rotation-only induction helper retains its conditional statement; this
+geometric specialization supplies its local inputs.
+
+[SchemeInputTelescope](../../Quillen/KTheory/Bass/SchemeInputTelescope.lean),
+[SchemeTwistedInputMaps](../../Quillen/KTheory/Bass/SchemeTwistedInputMaps.lean)
+and [SchemeInputNull](../../Quillen/KTheory/Bass/SchemeInputNull.lean), with
+their twisted/iterated null owners, preserve actual input maps and every time
+slice of a supplied equivariant whole null. The
+[perfect-complex application](PerfectComplexes.md#native-current-stage-full-open-localization)
+constructs these equivariance equations for the original supported/full-open
+null and proves the integer-base current-stage fiber lift stable under its
+open-immersion, compactness and quasi-separatedness hypotheses. Its
+[current evidence](../development/evidence/TTCurrentStageLocalization.json)
+keeps that result separate from classical TT identification and the older raw
+O-cell route.
+
 ## Finite bottom groups and telescope class maps
 
 Write `Eᵢ(R) = (boundedFlatAffineSectionBassDiagram i).obj R` for the actual
@@ -561,9 +721,10 @@ foundation coverage. The native auxiliary fiber-forget localization now has
 its actual union-support fiber, original seed/whole-null transfer and telescope
 cone/fiber comparison, including the signed boundary. Final fine stability
 requires compact P,Q,T and quasi-separated Q; the structural identities and
-fiber-to-coarse stability need only the open immersion. Completed geometric
-evaluation and classical nonconnective Thomason–Trobaugh identification remain
-open.
+fiber-to-coarse stability need only the open immersion. The older raw-cell
+evaluation route and classical nonconnective Thomason–Trobaugh identification
+retain their separate boundaries. The native basic-pair current-stage theorem
+is described above.
 The connective S-spectrum comparison does not settle these questions.
 The conditional `Bass.TwoChartStableSpan` and `TwoChartStableSequence` now
 provide the signed span quotient, natural all-degree Bass short exact row,

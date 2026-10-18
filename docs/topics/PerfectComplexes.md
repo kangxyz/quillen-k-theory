@@ -13,8 +13,10 @@ This guide owns the perfect objects, supported/relative models, and their
 connective geometric localization comparisons. The generic spectrum and
 Bass-recursion interfaces are in [SpectraAndBass.md](SpectraAndBass.md);
 scheme K/G and generic sheaf geometry are in [SchemeKTheory.md](SchemeKTheory.md).
-Full nonconnective
-Thomason–Trobaugh localization remains open; see [Scope.md](../reference/Scope.md#spectra-and-bass-groups).
+The original current-stage full-open lift now has an all-integer stable
+localization theorem, described below. Identification with classical
+Thomason–Trobaugh localization retains the boundary in
+[Scope.md](../reference/Scope.md#spectra-and-bass-groups).
 The K-theory declarations below belong to `Quillen.PerfectComplexes` unless another
 namespace is specified. Their source is under
 `Quillen.AlgebraicGeometry.PerfectComplexes`. The general sheaf-complex interfaces
@@ -495,6 +497,144 @@ actual null/unit moving squares and compare the single strict, raw, and perfect
 seeds without a compatibility assumption. Full all-iterate comparison with the
 original geometric tower remains a separate obligation.
 
+### Global sections and coefficient restriction
+
+[GlobalSectionChangeIndex](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionChangeIndex.lean) constructs the actual global
+bounded-flat section Model over `Scheme.{u}ᵒᵖ`, using the geometric
+pseudofunctor, original fiber Waldhausen structures and one chosen-zero
+family. Its values lie in `Model.{u+1}`. Restriction along the coefficient
+base-product functor lands in the existing coefficient-first Models.
+[GlobalSectionChangeIndexLaws](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionChangeIndexLaws.lean) identifies the underlying
+functor and evaluation literally and proves exactness of the categorical
+inverse. The general change-index construction and its explicit universe
+bounds are described in the
+[fibered-category guide](../../Quillen/Aglib/CategoryTheory/FiberedCategory/README.md#change-of-index).
+
+[GlobalSupportedModels](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedModels.lean) and
+[GlobalSupportedRow](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedRow.lean) retain sections whose original
+evaluated complex is acyclic on the specified open. The support inclusion,
+coefficient restriction and their evaluation square use the same zero.
+[GlobalOpenModels](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalOpenModels.lean) changes only the weak class to the
+actual coarse-open class; [GlobalFullOpenModels](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalFullOpenModels.lean) gives the
+original restriction to the fine global row on the open scheme. Exactness and
+the supported/coarse categorical inverses are supplied by
+[GlobalLocalizationEquivalence](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalLocalizationEquivalence.lean).
+
+The ambient, supported and coarse rows retain their original forward Laurent
+actions and base seeds. Their finite maps and quotient telescopes are in
+[GlobalSectionTelescope](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionTelescope.lean),
+[GlobalSupportedTelescope](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSupportedTelescope.lean) and
+[GlobalOpenTelescope](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalOpenTelescope.lean). Every transition is the actual
+`B^i` of that row's base seed. Restriction commutes with these transitions,
+preserves every original inclusion and cylinder, and is stable at each finite
+stage and on the telescope. The ambient comparison needs no compactness;
+the supported and coarse comparisons retain the open-immersion hypothesis.
+
+[GlobalSectionLocalizationNull](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionLocalizationNull.lean) constructs the reversed
+zero-to-supported-section null.
+[GlobalSectionLocalizationFiniteNull](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionLocalizationFiniteNull.lean),
+[GlobalSectionLocalizationNullSeed](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionLocalizationNullSeed.lean) and
+[GlobalSectionLocalizationTelescopeNull](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionLocalizationTelescopeNull.lean)
+preserve every time slice of the same null and its actual seed-transition
+equation.
+[GlobalSectionCoarseFiber](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionCoarseFiber.lean) proves the resulting global
+coarse fiber lift stable in every integer degree for an open immersion
+`f : P ⟶ Q` over `Spec R`, without compactness assumptions.
+[GlobalSectionFullOpenFiber](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalSectionFullOpenFiber.lean) postcomposes with actual
+full-open restriction and compares the same-null lift to the existing fine
+fiber. Its stability requires compact `P.left`, compact `Q.left` and
+quasi-separated `Q.left`, as well as the open immersion. The structural
+restriction and whole-null equations need only the open immersion. These
+compare global-section and coefficient-section constructions; constructed
+fine localization was already available independently.
+
+### Native current-stage full-open localization
+
+Let `f : P ⟶ Q` be an open immersion of schemes. The parameter Models in
+[GlobalOpenPairDiagram](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalOpenPairDiagram.lean)
+use the actual integer-base products. Their supported objects are the original
+global sections whose evaluated complexes are acyclic on the corresponding
+open product. The supported inclusion retains its chosen zero; `fullMap`
+changes the weak class and then applies the actual full-open restriction.
+[ParameterLaurentTrack](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterLaurentTrack.lean)
+gives their original forward scalar actions. The independent null and scalar
+times commute in
+[ParameterLaurentNull](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterLaurentNull.lean).
+
+[ParameterFullCurrentNull](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterFullCurrentNull.lean)
+transports that same selected null to the current, normalized and twisted
+telescopes. In
+[ParameterFullFiberComparison](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterFullFiberComparison.lean),
+`Quillen.PerfectComplexes.ParameterFullCurrentNull.currentLift f X` is the
+homotopy-fiber lift of `currentForget f` along `currentOpen f`, using
+`currentNull f` at the scheme parameter `X`. Its stability is equivalent to
+that of the normalized and twisted lifts through the actual three-object
+comparison squares and every value of the original null.
+
+The iterated-seed model uses the original `B^i(seed)` transitions.
+[ParameterIteratedFullFiber](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterIteratedFullFiber.lean)
+compares its same-null lift, at every integral Spec-row coefficient, to the
+existing fine localization lift.
+[ParameterIteratedTwistedFiber](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterIteratedTwistedFiber.lean)
+then connects this lift to the twisted model. The telescope route is
+`I → T ← N ← C`, where `I` is iterated-seed, `T` twisted-normalized,
+`N` unpermuted normalized and `C` current-stage; the
+[spectrum guide](SpectraAndBass.md#current-stage-and-iterated-seed-telescopes)
+gives the generic maps. Each comparison preserves support forgetting,
+full-open restriction and the whole selected null.
+
+[ParameterCurrentFullFiber](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/ParameterCurrentFullFiber.lean)
+proves
+`Quillen.PerfectComplexes.ParameterFullCurrentNull.currentLift_integer_isStableEquivalence`:
+for `[IsOpenImmersion f]`, `[CompactSpace P]`, `[CompactSpace Q]` and
+`[QuasiSeparatedSpace Q]`, the actual map `currentLift f (op integerBase)`
+is a stable equivalence. `currentLift_integer_signed_isIso` states the induced
+isomorphism in every degree `d : ℤ`. These theorems expose no additional
+equivariance or tower-coherence premise. At the integer parameter,
+[GlobalParameterIdentityModels](../../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalParameterIdentityModels.lean)
+identifies the ambient and supported Models by their original projection and
+preserves both maps. This Model-level identification does not itself assert
+an all-stage identification with classical `Kᴮ` or the auxiliary-support and
+signed-boundary comparison. The
+[current-stage evidence](../development/evidence/TTCurrentStageLocalization.json)
+records the selected source, review and validation scope.
+
+### Geometric double-cone permutation
+
+[GeometricSquareInterchange](../../Quillen/KTheory/Bass/GeometricSquareInterchange.lean) uses the four actual
+independent-variable swaps in the arbitrary-scheme index square.
+[GeometricSquareInvertibility](../../Quillen/KTheory/Bass/GeometricSquareInvertibility.lean) identifies its original
+index-induced square map as an isomorphism. The forward strength maps retain
+their separate finite stable-equivalence statements. The actual two-cone target transport is in
+[GeometricConeTarget](../../Quillen/KTheory/Bass/GeometricConeTarget.lean), and
+[GeometricConeCells](../../Quillen/KTheory/Bass/GeometricConeCells.lean) gives all sixteen formulas for its
+point-set permutation. The two whole parameter blocks are exchanged; the
+coefficient point uses the specified opposite swap for its actual pair of
+factors, with the literal identity on an empty factor. In the deepest
+overlap/overlap cell the coefficient point is unchanged and `r,s,t,v` remain
+independent, as do any loop and structure times.
+[GeometricConeInvolution](../../Quillen/KTheory/Bass/GeometricConeInvolution.lean) proves involutivity, while
+[GeometricConeNaturality](../../Quillen/KTheory/Bass/GeometricConeNaturality.lean) and
+[GeometricConeSchemeNaturality](../../Quillen/KTheory/Bass/GeometricConeSchemeNaturality.lean) give naturality in the
+spectrum diagram and scheme map on those same cells.
+
+This permutation is the geometric instance of the strict four-dimensional
+double-square totalization in
+[StrictDoubleSquareCone](../../Quillen/Topology/Prespectrum/StrictDoubleSquareCone.lean). Its quotient cells and inverse
+naturality are actual point-set statements. External-factor braid and track
+transport have separate general owners in the
+[scheme-product guide](../../Quillen/Aglib/AlgebraicGeometry/Products/README.md).
+[GeometricConeAction](../../Quillen/KTheory/Bass/GeometricConeAction.lean) proves
+`GeometricConeInterchange.permutation_equivariant` for the actual twice-cone
+action, with the original inverse index maps and the same scalar time.
+[GeometricConeFixedWordAction](../../Quillen/KTheory/Bass/GeometricConeFixedWordAction.lean)
+propagates this through the specified finite words. These are inputs to the
+[current-stage telescope route](#native-current-stage-full-open-localization).
+The geometric four-dimensional permutation does not construct the older raw
+overlap O four-cube with its prescribed faces and earlier fillers; that
+separate route is recorded under
+[raw identity and second-stage coherence](#raw-identity-and-second-stage-coherence).
+
 ### Finite-stage excision and bottom groups
 
 For `f : E ⟶ F`, the canonical cone-fiber comparison is
@@ -757,6 +897,15 @@ specified earlier cubes and chart squares as entire faces. In particular,
 `CoefficientBassSeedChosenSquareRange` preserves a supplied range condition;
 it does not prove the concrete chosen-boundary range. These interfaces do not
 supply the missing recursive closure.
+
+[NativeParameterEvaluation](../../Quillen/Topology/Prespectrum/NativeParameterEvaluation.lean)
+provides conditional `PathLift` and `HomotopyLift` interfaces for whole values
+under an arbitrary evaluator. It preserves native reversal, concatenation,
+horizontal composition and pause clocks at every level and input; the
+evaluator need not be continuous. The paths, homotopies and whole-value lift
+equations are inputs. These operation lemmas construct no concrete geometric
+lift, and equality after an arbitrary evaluator does not identify unevaluated
+carrier points or the prescribed midpoint of the raw O boundary.
 
 ### Telescope, localization map, and supported self-comparison
 
@@ -1107,7 +1256,9 @@ chart/cylinder faces of Hc, without openness, compactness or flatness.
 The original source-null/seed comparison and complete raw iteration remain
 separate. Its exact native strict build, private-origin trust, enrollment and
 affected-client integration pass at the current source identity.
-Completed geometric evaluation and classical Kᴮ identification are also open.
+Evaluation along the older raw-cell route and classical Kᴮ identification
+retain their separate boundaries; the native current-stage basic endpoint
+is supplied above.
 The detailed dependency plan is
 in the [TT localization roadmap](../development/TTLocalization.md).
 
@@ -1115,7 +1266,8 @@ in the [TT localization roadmap](../development/TTLocalization.md).
 
 - Complete the Laurent-unit connecting-map and zero-section class formulas and retain possible Nil contributions; the normalized forward scalar K₁ comparison is proved.
 - Extend the proved fine ambient/supported range and original-group identifications through the remaining auxiliary-support tower comparisons. Existing support-enlargement maps must be identified with the actual T, T∪U and T∩U section towers and their exact localization maps.
-- Compare all iterates with the complete original raw geometric Bass tower and identify its classical groups and signed localization boundary. The original nonpositive groups already have the same-null fine localization sequence above. Its equality with the geometric boundary, arbitrary-pair boundary naturality, the Laurent [T] terminal formula and O/O(-1) sign, classical Laurent splitting and nonconnective descent remain open; retain possible Nil terms.
+- Identify the native current-stage telescope objects and selected null diagram with the intended classical nonconnective theory. The actual iterated-seed/current-stage zigzag, geometric action equivariance, whole geometric chi factorization and fixed-word seed squares are supplied; equality of the two different transition definitions is not used by that route.
+- Complete any separately required comparison with the older raw geometric cell tower and identify the classical groups and signed localization boundary. The raw overlap O four-cube belongs to that separate route and is not a premise of the native current-stage theorem. The original nonpositive groups already have the same-null fine localization sequence above. Its equality with the geometric boundary, arbitrary-pair boundary naturality, the Laurent [T] terminal formula and O/O(-1) sign, classical Laurent splitting and nonconnective descent remain open; retain possible Nil terms.
 - Identify the separate natural projected-diagonal endpoint comparisons and establish the general projective-bundle formula, Proj identification, and full twisting-sheaf family. Both actual native qcqs inverse laws and geometric G identification are proved, and the compact-open supported Phi bijection retains its original forward map. Intrinsic-perfect native projection perfection, original open K-map naturality and exact coefficient/support preservation hold on every quasi-compact base. Arbitrary-base-map naturality remains separate. The older finite-coefficient retract criterion retains its own uniform-window premises.
 - Extend perfect preservation to the claimed general-source/unbounded direct-image scope, and establish general bounded-below flat-base-change invertibility beyond the available QC-single and open specializations.
 - Extend strict/local equivalence to arbitrary nonaffine schemes and perfect pullback to arbitrary non-quasi-compact schemes; compare the Waldhausen and triangulated-derived Grothendieck presentations.

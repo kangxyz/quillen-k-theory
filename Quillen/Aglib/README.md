@@ -39,12 +39,15 @@ accepted local implementation together with its old imports.
 | --- | --- |
 | [Module constructions](Algebra/Module/README.md) | Finite-projective retracts, finite defect parametrices, matrix presentations and balanced scalar extension |
 | [Module complexes](Algebra/Homology/ModuleCat/README.md) | Ordinary complex, tensor, exactness and homology interfaces |
+| [Endofunctor words](CategoryTheory/Endofunctor/README.md) | Specified finite words from a natural square automorphism, with explicit association and recursive component formulas |
 | [Exact-category filtrations](CategoryTheory/ExactCategory/Filtration/README.md) | Actual filtrations, factors and additive-invariant formulas under their conflation hypotheses |
 | [Displayed colimits](CategoryTheory/Limits/README.md) | Lower-ideal gluing and pointwise pushout interchange |
+| [Fibers and cocartesian sections](CategoryTheory/FiberedCategory/README.md) | Literal change of index, evaluation, reindexing and preservation of one chosen-zero family |
 | [Paths and homotopies](Topology/Path/README.md) | Whole path reconstruction, pointwise evaluation and exact homotopy pasting for coefficient Bass carriers |
 | [Regular-local algebra](RingTheory/RegularLocalRing/README.md) | Local algebra and finite projective-dimension bounds with the original hypotheses |
 | [Scheme module sheaves](AlgebraicGeometry/Modules/README.md) | Coherent/quasicoherent operations, ordinary and derived complexes, and intrinsic perfect-complex theory |
-| [Polynomial/Laurent spectra](AlgebraicGeometry/Spec/PolynomialLaurent/README.md) | Canonical affine schemes, ring maps, coordinates, base-change squares and open immersions |
+| [Scheme products](AlgebraicGeometry/Products/README.md) | Independent-factor swaps, their braid equation, scalar pullback, external-factor transport and integral coefficient/product row isomorphisms |
+| [Polynomial/Laurent spectra](AlgebraicGeometry/Spec/PolynomialLaurent/README.md) | Canonical affine schemes, ring maps, coordinates, base-change squares, open immersions, the arbitrary-scheme index square and its integral Spec-row/unit comparisons |
 
 Public import entry: `Quillen.Aglib`. Prefer the focused leaves described in the
 family guides for implementation dependencies. Existing public mathematical
