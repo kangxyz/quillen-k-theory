@@ -123,53 +123,42 @@ class AssessedAglibTests(unittest.TestCase):
         self.assertEqual(lean_imports(text),['Aglib.A']);self.assertFalse(is_import_surface(text))
         self.assertEqual(lean_imports('import Aglib.«run_cmd»\n'),['Aglib.run_cmd'])
     def test_runner_recomputes_plan_and_rejects_edited_targets_and_source_drift(self):
+        from ci_adapter import QuillenAdapter
         plan=self.plan();path=self.directory/'plan.json';path.write_text(json.dumps(plan))
-        command=[sys.executable,str(self.root/'scripts/check_run.py'),'--source-only','--source-checked',
-                 '--plan',str(path),'--aglib-source',str(self.source)]
-        result=subprocess.run(command,capture_output=True,text=True)
-        self.assertEqual(result.returncode,0,result.stderr)
+        adapter=QuillenAdapter(scope_file=path,aglib_source=self.source)
+        self.assertEqual(adapter.select_scope(self.root)['scope'],plan)
         plan['providers']=[];path.write_text(json.dumps(plan))
-        self.assertEqual(subprocess.run(command,capture_output=True).returncode,2)
+        with self.assertRaisesRegex(ValueError,'stale'):
+            adapter.select_scope(self.root)
         path.write_text(json.dumps(self.plan()))
         self.write(self.root,'Quillen/P.lean','import Aglib.A\ndef p := a + 1\n')
-        self.assertEqual(subprocess.run(command,capture_output=True).returncode,2)
+        with self.assertRaisesRegex(ValueError,'stale'):
+            adapter.select_scope(self.root)
     def test_assessed_committed_head_rejects_actual_control_and_source_set_drift(self):
+        from check_run import verify_assessed_inputs
         self.commit(self.root)
         plan=select(self.root,base=self.base,head='HEAD',aglib_source=self.source)
-        path=self.directory/'head-plan.json';path.write_text(json.dumps(plan))
-        command=[sys.executable,str(self.root/'scripts/check_run.py'),'--source-only','--source-checked',
-                 '--plan',str(path),'--aglib-source',str(self.source)]
         runner=self.root/'scripts/check_run.py';original=runner.read_text()
         runner.write_text(original+'\n# Unexpected actual working-tree control.\n')
-        result=subprocess.run(command,capture_output=True,text=True)
-        self.assertEqual(result.returncode,2);self.assertIn('validation control differs',result.stderr)
+        with self.assertRaisesRegex(ValueError,'validation control differs'):
+            verify_assessed_inputs(self.root,plan)
         runner.write_text(original)
         self.write(self.root,'Unexpected.lean','def unexpected := 1\n')
-        result=subprocess.run(command,capture_output=True,text=True)
-        self.assertEqual(result.returncode,2);self.assertIn('Unclassified Lean source',result.stderr)
-    def test_ci_source_only_flow_fetches_objects_before_lean(self):
+        with self.assertRaisesRegex(ValueError,'Unclassified Lean source'):
+            verify_assessed_inputs(self.root,plan)
+    def test_ci_source_only_acquisition_follows_accepted_ancestor(self):
+        from ci_adapter import QuillenAdapter
+        from unittest.mock import patch
         head=self.commit(self.root)
-        workflow=(Path(__file__).resolve().parents[1]/'.github/workflows/ci.yml').read_text()
-        step=workflow.split('      - name: Select affected checks before installing Lean\n',1)[1].split('      - name:',1)[0]
-        body=step.split('        run: |\n',1)[1]
-        script='\n'.join(line[10:] if line.startswith('          ') else line for line in body.splitlines())
-        script=script.replace('https://github.com/kangxyz/aglib.git',str(self.source))
-        runtime=self.directory/'runtime';runtime.mkdir()
-        environment=dict(os.environ,EVENT_NAME='push',BASE_SHA=self.base,FULL='false',
-                         DEFAULT_BRANCH='main',RUNNER_TEMP=str(runtime),
-                         GITHUB_OUTPUT=str(runtime/'output'),GITHUB_ENV=str(runtime/'environment'))
-        result=subprocess.run(['bash','-eo','pipefail','-c',script],cwd=self.root,
-                              env=environment,capture_output=True,text=True)
-        self.assertEqual(result.returncode,0,result.stderr)
-        plan=json.loads((runtime/'check-scope.json').read_text())
-        self.assertEqual(plan['revision'],head)
-        self.assertEqual(plan['dependency_assessment']['old'],self.old)
-        self.assertEqual(plan['dependency_assessment']['new'],self.new)
-        self.assertTrue((runtime/'aglib-scope-source/.git').is_dir())
-        command=[sys.executable,str(self.root/'scripts/check_run.py'),'--source-only','--source-checked',
-                 '--plan',str(runtime/'check-scope.json'),'--aglib-source',str(runtime/'aglib-scope-source')]
-        result=subprocess.run(command,capture_output=True,text=True)
-        self.assertEqual(result.returncode,0,result.stderr)
+        baseline={'base':self.base,'verified_base':self.base,'head':head}
+        with patch('ci_adapter.accepted_baseline',return_value=baseline) as accepted, \
+             patch('ci_adapter.acquire_assessment_source',return_value=self.source) as acquire:
+            payload=QuillenAdapter().plan(self.root,'owner/repo','main',head)
+        self.assertEqual(payload['scope']['base'],self.base)
+        self.assertEqual(payload['scope']['dependency_assessment']['old'],self.old)
+        self.assertEqual(payload['scope']['dependency_assessment']['new'],self.new)
+        self.assertEqual(acquire.call_args.args[:3],(self.root,self.base,head))
+        self.assertIn('protocol',accepted.call_args.kwargs)
     def test_deleted_external_module_retains_old_consumer_edge(self):
         (self.source/'Aglib/A.lean').unlink()
         revision=self.commit(self.source);self.write_pins(revision)

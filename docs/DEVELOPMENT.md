@@ -57,85 +57,76 @@ accepted local implementation together with its old imports.
 
 ## Affected check scope
 
-`bash scripts/check.sh` compares local Lean sources with `HEAD`. Use `--base REF
---head REF` for a committed comparison, with the head checked out. `--source-only`
-runs generated-import, layout, placeholder and Python tooling checks without
-Lean. All normal invocations keep existing artifacts; `--rehash` checks Lake
-traces without cleaning. `--full` is an explicit comprehensive diagnostic scope
-and is never inferred from missing cache data, missing Git history, pins or an
-unclassified path. CI fetches complete comparison history and exposes a default
-false `workflow_dispatch` full-scope input; a normal dispatch compares `HEAD^`.
-A zero-before new branch recovers the default-branch merge base when it provides
-an independent comparison. A true initial commit uses `--base EMPTY_TREE`, with
-all added sources as its actual changed scope. Missing or tautological comparison
-bases stop with an actionable error.
+`bash scripts/check.sh` is a thin launcher for the independently pinned
+`lean-incremental-ci` package. Install that distribution or select its tooling
+checkout explicitly with `LEAN_CI_TOOLING_ROOT=/absolute/path/to/aglib`. The
+checkout supplies `ci/lean_ci`; it is independent of the mathematical Aglib pin
+in `lakefile.toml`. No ambient sibling checkout or mutable branch supplies tooling.
+The reviewed shared-tooling revision for this adapter and CI is
+`3a4d549981ced306d89d3ed55418c9e6a25f86c4`.
 
-Python regressions follow changed tooling through `check_scope.py`'s explicit
-fixture mapping. Ordinary proof and documentation changes retain cheap source
-checks without unrelated Python suites. Plans retain documentation/tooling paths
-even when no Lean work is selected; new tooling needs an explicit regression
-selection, and unknown paths fail clearly. `--full` retains comprehensive tooling
-diagnostics. CI's source-only step consumes the same plan as its native checks.
-For failed final checks, use the contributor guide's
-[direct scoped repair commands](../CONTRIBUTING.md#tests-and-checks) and retain
-completed categories.
+The local entry compares tracked and untracked source bytes with `HEAD`.
+`--base REF` widens that comparison; `--base REF --head REF` selects a committed
+comparison with its head checked out. `--source-only` runs generated-import,
+layout, placeholder and selected Python checks without Lean or dependency setup.
+Source enrollment and absent configuration candidates are observed before
+selection. Global pin/configuration or checker changes still require the existing
+explicit invalidation assessment; missing history or caches never imply full
+scope. `--aglib-source PATH` retains the exact Git-object assessment of a changed
+Aglib pin. `--plan PATH` verifies a previously selected scope against current
+inputs. `--full` is an explicit comprehensive diagnostic and replays selected
+test sources; normal final checks use their selected build evidence.
 
-The selector reads both old and current import graphs, so renamed/deleted modules
-still select their surviving consumers. Selected providers and the `Quillen`
-root compile in one native Lake graph, retaining valid cached artifacts. The
-configured full-library environment lint runs once with
-`lake lint --no-build -- --no-build`, followed by one whole-workspace native
-text check with `lake exe lint-style`, before selected tests or clients build.
-Both Lake and the Batteries driver receive a no-build flag. The lint runtime
-executables are prepared incrementally under the resource guard.
-The `QuillenTest` driver is a Lean library: compiling its selected modules executes
-their compile-time assertions, and compatible cached test artifacts retain that
-coverage. Normal checks do not elaborate the same test sources a second time;
-explicit `--full` diagnostics replay the selected test sources. Separate axiom
-audits retain their explicit replay. Selected tests and clients retain scoped
-lint and their complete selected audit coverage. Test-only edits still require
-the full library lint basis, while selecting only their affected test targets
-and clients. Broad lint coverage does not request `--full`, rehashing or a cache
-clean; Lake builds only missing or invalid artifacts in the required closure.
-The existing axiom-audit bodies are copied into the verification directory with
-only their import list scoped to the selected production/client modules. Their
-origin predicate, checked-kernel requirement and allowed axioms remain unchanged.
-An audit-body change selects the complete corresponding trust surface because
-that body governs it. The scoped linter copy permits an empty defining-declaration
-set for import-only facades while retaining all environment and native text
-checks. Selected production audit, test and client coverage is recorded separately in
-`.lake/verification/.../scope.json`; a partial plan retains those boundaries
-alongside the standard full-library lint. Global toolchain, manifest, Lake-option, exclusion or Lean-checker
-changes stop for an explicit invalidation/scope assessment.
+Both local and committed entries declare the same shared native recipe. It runs
+cheap source checks, deterministic preparation, one root Lake graph, root checks,
+then one downstream graph and its accepted check groups. The root graph includes
+selected providers, `Quillen`, tests and the required lint runtimes. The production
+lint commands remain `lake lint --no-build -- --no-build` and
+`lake exe lint-style`, once each. Selected tests retain the scoped Lean driver.
+The scoped audit programs replace only their template import lists; origin,
+checked-kernel and allowed-axiom predicates remain unchanged. No normal invocation
+elaborates a selected compile-time test twice.
 
-Client declaration checks use batches of at most eight defining modules, each
-with its actual dependency environment. The runner certifies import-only client
-surfaces from their source; the generated `Consumer` root must also match the
-maintained generator. These zero-origin surfaces still receive every native
-text check. Client audits expand their imports to every reachable defining
-`Consumer` module and apply the unchanged audit body, including private and
-generated declarations. `client-scope.json` records source certificates, the
-origin union and any overlap between audit batches. Set `QUILLEN_CHECK_JOBS`
-from 1 to 7 (default 1) to run independent client checks concurrently; guarded
-CI retains the capped toolchain and a separate process group and resource
-receipt for each batch. This bounds import mappings without changing the
-selected source builds or the lint and foundation predicates.
+Client declaration checks retain batches of at most eight defining modules with
+their real dependency environment. Import-only client surfaces retain source
+certificates and native text checks; the generated `Consumer` facade must match
+the maintained generator. Client audits cover the complete reachable union of
+defining Consumer origins, including private and generated declarations. The
+shared runner owns execution and resource limits; Quillen does not maintain a
+second process scheduler. Existing remote wrapper profiles and Aglib resource
+variable aliases pass through the shared runtime.
 
-CI computes scope before installing Lean or restoring dependencies. Pure Markdown
-and `docs/` evidence changes perform only static checks and skip cache checkout,
-restore, export and publication. Relevant compilation uses the already pinned
-Aglib `build_serial.py` cache probe and resource guard. Dependency proof-cache
-fetches retain the selected source import scope. The full library lint basis
-and exact Batteries/Mathlib runtime imports receive incremental guarded tooling
-preparation when needed, preserving compatible artifacts. Every selected build writes
-native mappings via that existing helper's `--outputs` argument. Only after all
-selected lint, test and trust checks succeed are those same mappings combined for
-publication; export does not invoke another build or introduce wider targets.
-`--plan PATH` consumes the CI selector's JSON and rejects changed scope inputs.
-`--source-checked` reuses the preceding successful static check on the same inputs.
-`--ci --native-outputs PATH` writes verified mappings; it requires resolved pinned
-Aglib tooling. Fresh verification directories prevent overwriting earlier evidence.
-CI prints only recorded operational receipt fields and their exact locators;
-complete receipts and probe logs are retained in the run's
-`quillen-check-receipts-RUN_ID-RUN_ATTEMPT` artifact. These process summaries do
-not certify proof coverage or supply unrecorded compiler counts.
+Native local checks use a prepared workspace. Resolve the pinned root dependencies
+using the normal setup guide, and create the fixed ignored client container with
+`mkdir -p examples/downstream/.lake` before starting the final check. This keeps
+source-enrollment and absent-configuration guards intact; checking does not weaken
+them to create a cold workspace. The remaining package link setup is idempotent.
+A missing prerequisite stops with an actionable diagnostic. Source-only checks
+create no cache directory.
+
+The shared entry prints its evidence directory. Set `--state /absolute/scratch/path`
+(or `LEAN_CI_STATE`) to retain it across retries; state, progress and exported
+mappings live outside the source checkout. Repeat the same entry after repair:
+Lake keeps valid artifacts and the shared progress store reuses checks with
+matching source, imports, checker, generated program, runtime and environment.
+`--progress PATH` may select an existing compatible progress store. Source/style
+checks explicitly bind their complete input boundary. Changed inputs invalidate
+the affected evidence; local success remains working-tree evidence.
+`scope.json`, `client-scope.json` and generated audit recovery files are retained
+with the invocation. These source files exist before native checks can fail;
+their presence does not mean that an audit ran. Direct scoped repair commands in
+[CONTRIBUTING](../CONTRIBUTING.md#tests-and-checks) remain available.
+
+CI uses the shared `EvidenceProtocol` to select an actual successful native
+ancestor from exact reviewed workflow/recipe identities. It never uses
+`event.before`, a previous push, or a full-build fallback. A requested comparison
+may only widen that verified ancestor. Exact old/new Aglib source objects are
+acquired before pin assessment when needed. The source and native phases consume
+the same plan, require clean committed HEAD and bind the independently pinned
+tooling implementation. Finalization reconstructs every required task and receipt
+before native publication. Root and client mapping groups retain their workspace
+identity and native JSONL format; exporting them never rebuilds targets.
+
+A newly authored workflow/recipe is not admitted as successful historical evidence
+merely by generating its own hashes. Its source identity requires actual owner
+review. Historical receipts retain their original policy and source meaning.

@@ -4,11 +4,6 @@ on:
   push:
   pull_request:
   workflow_dispatch:
-    inputs:
-      full:
-        description: Explicit comprehensive diagnostic scope
-        type: boolean
-        default: false
 
 permissions:
   contents: read
@@ -36,81 +31,33 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - name: Select affected checks before installing Lean
-        id: scope
-        env:
-          EVENT_NAME: ${{ github.event_name }}
-          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
-          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
-          FULL: ${{ inputs.full || false }}
-        run: |
-          args=(--head HEAD --output "$RUNNER_TEMP/check-scope.json" --github-output "$GITHUB_OUTPUT")
-          if [[ "$FULL" == true ]]; then
-            args+=(--full)
-          elif [[ "$EVENT_NAME" == workflow_dispatch ]]; then
-            args+=(--base HEAD^)
-          elif [[ -z "$BASE_SHA" || "$BASE_SHA" =~ ^0+$ ]]; then
-            if git rev-parse --verify HEAD^ >/dev/null 2>&1; then
-              base=$(git merge-base HEAD "refs/remotes/origin/$DEFAULT_BRANCH") || {
-                echo "Cannot recover a trustworthy default-branch comparison base." >&2
-                exit 2
-              }
-              if [[ "$base" == "$(git rev-parse HEAD)" ]]; then
-                echo "The default branch supplies no independent comparison basis." >&2
-                exit 2
-              fi
-              args+=(--base "$base")
-            else
-              args+=(--base EMPTY_TREE)
-            fi
-          else
-            args+=(--base "$BASE_SHA")
-          fi
-          # This is source acquisition only: no Lean installation or Lake resolution.
-          comparison_base=''
-          for ((i=0; i<${#args[@]}; i++)); do
-            if [[ "${args[i]}" == --base ]]; then comparison_base="${args[i+1]}"; fi
-          done
-          if [[ -n "$comparison_base" && "$comparison_base" != EMPTY_TREE ]]; then
-            pins=$(python3 - "$comparison_base" <<'PY'
-          import subprocess, sys, tomllib
-          def pin(revision):
-              result = subprocess.run(['git', 'show', revision + ':lakefile.toml'], capture_output=True, text=True)
-              if result.returncode:
-                  return ''
-              entries = [entry for entry in tomllib.loads(result.stdout).get('require', []) if entry.get('name') == 'Aglib']
-              return entries[0].get('rev', '') if len(entries) == 1 else ''
-          old, new = pin(sys.argv[1]), pin('HEAD')
-          if old != new:
-              print(old, new)
-          PY
-            )
-            if [[ -n "$pins" ]]; then
-              read -r old_pin new_pin <<< "$pins"
-              [[ "$old_pin" =~ ^[0-9a-f]{40}$ && "$new_pin" =~ ^[0-9a-f]{40}$ ]] || {
-                echo 'Assessed Aglib source acquisition requires exact commit pins.' >&2; exit 2;
-              }
-              aglib_source="$RUNNER_TEMP/aglib-scope-source"
-              git init -q "$aglib_source"
-              git -C "$aglib_source" fetch --no-tags --depth=1 https://github.com/kangxyz/aglib.git "$old_pin" "$new_pin"
-              args+=(--aglib-source "$aglib_source")
-              echo "QUILLEN_AGLIB_SOURCE=$aglib_source" >> "$GITHUB_ENV"
-            fi
-          fi
-          python3 scripts/check_scope.py "${args[@]}"
-      - name: Check source organization
-        run: bash scripts/check.sh --source-only --plan "$RUNNER_TEMP/check-scope.json"
-      # Tooling is pinned independently of accepted mathematical dependencies.
+      # Shared execution tooling has its own immutable pin, separate from mathematics.
       - name: Check out shared native Lake cache tooling
-        if: steps.scope.outputs.lean == 'true'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: kangxyz/aglib
-          ref: e3f6c759d2a1ece1387518aecba7393a863718a9
+          ref: 3a4d549981ced306d89d3ed55418c9e6a25f86c4
           path: .cache-tooling
           persist-credentials: false
+      - name: Exclude independent tooling checkout from project enrollment
+        run: echo "/.cache-tooling/" >> .git/info/exclude
+      - name: Configure independently pinned shared execution
+        run: |
+          echo "LEAN_CI_TOOLING_ROOT=$GITHUB_WORKSPACE/.cache-tooling" >> "$GITHUB_ENV"
+          echo "QUILLEN_CI_STATE=$RUNNER_TEMP/quillen-ci-state" >> "$GITHUB_ENV"
+          echo "PYTHONDONTWRITEBYTECODE=1" >> "$GITHUB_ENV"
+      - name: Select accepted ancestor and affected checks before installing Lean
+        id: scope
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 scripts/check_run.py plan --state "$QUILLEN_CI_STATE" \
+            --repository "$GITHUB_REPOSITORY" --default-branch "${{ github.event.repository.default_branch }}" \
+            --head "$(git rev-parse HEAD)" --github-output "$GITHUB_OUTPUT"
+      - name: Check source organization
+        run: python3 scripts/check_run.py source --state "$QUILLEN_CI_STATE"
       - name: Install the pinned Lean toolchain
-        if: steps.scope.outputs.lean == 'true'
+        if: steps.scope.outputs.native == 'true'
         env:
           ELAN_HOME: ${{ runner.temp }}/elan
         run: |
@@ -120,37 +67,37 @@ jobs:
           echo "$ELAN_HOME/bin" >> "$GITHUB_PATH"
           "$ELAN_HOME/bin/elan" toolchain install "$(cat lean-toolchain)"
       - name: Restore exact pinned dependencies
-        if: steps.scope.outputs.lean == 'true'
+        if: steps.scope.outputs.native == 'true'
         id: dependency-cache
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: .lake/packages
           key: third-party-v2-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
       - name: Fetch matching Mathlib dependency proof cache
-        if: steps.scope.outputs.lean == 'true'
+        if: steps.scope.outputs.native == 'true'
         id: proof-cache
-        run: bash scripts/cache.sh --ci --plan "$RUNNER_TEMP/check-scope.json"
+        run: bash scripts/cache.sh --ci --plan "$QUILLEN_CI_STATE/scope.json"
       - name: Save fetched pinned dependencies
-        if: steps.scope.outputs.lean == 'true' && steps.dependency-cache.outputs.cache-hit != 'true'
+        if: steps.scope.outputs.native == 'true' && steps.dependency-cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: .lake/packages
           key: third-party-v2-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json') }}
       - name: Compute project cache configuration
-        if: steps.scope.outputs.lean == 'true'
+        if: steps.scope.outputs.native == 'true'
         id: project-cache-config
         run: |
           config_hash=$(python3 scripts/cache_key.py)
           echo "hash=$config_hash" >> "$GITHUB_OUTPUT"
       - name: Restore shared native Lake artifacts and pinned upstream CI artifacts
-        if: steps.scope.outputs.lean == 'true'
+        if: steps.scope.outputs.native == 'true'
         id: native-cache
         uses: ./.cache-tooling/.github/actions/lake-cache
         with:
           mode: restore
           repositories: kangxyz/aglib
       - name: Restore incremental project builds
-        if: steps.scope.outputs.lean == 'true'
+        if: steps.scope.outputs.native == 'true'
         id: project-cache
         uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
@@ -163,20 +110,25 @@ jobs:
             project-build-v3-${{ runner.os }}-${{ runner.arch }}-${{ steps.project-cache-config.outputs.hash }}-${{ hashFiles('*.lean', 'Quillen/**/*.lean', 'QuillenTest/**/*.lean', 'Tools/**/*.lean', 'examples/downstream/**/*.lean', '!examples/downstream/.lake/**') }}-
             project-build-v3-${{ runner.os }}-${{ runner.arch }}-${{ steps.project-cache-config.outputs.hash }}-
             project-build-v2-${{ runner.os }}-${{ runner.arch }}-${{ steps.project-cache-config.outputs.hash }}-
-      - name: Check selected providers before affected tests and clients
-        if: steps.scope.outputs.lean == 'true'
+      - name: Build the complete library and audit the independent client
+        if: steps.scope.outputs.native == 'true'
         id: checks
         timeout-minutes: 300
         run: |
           lean --version
-          bash scripts/check.sh --ci --rehash --source-checked --plan "$RUNNER_TEMP/check-scope.json" --native-outputs "$RUNNER_TEMP/native-outputs.jsonl"
+          python3 scripts/check_run.py native --state "$QUILLEN_CI_STATE"
+      - name: Finalize required check coverage
+        id: finalize
+        run: |
+          python3 scripts/check_run.py finalize --state "$QUILLEN_CI_STATE" --outputs "$RUNNER_TEMP/native-outputs.jsonl"
       - name: Publish native artifacts for downstream dependencies
         id: native-stage
-        if: ${{ steps.scope.outputs.lean == 'true' && steps.checks.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        if: ${{ steps.scope.outputs.native == 'true' && steps.finalize.outcome == 'success' && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         uses: ./.cache-tooling/.github/actions/lake-cache
         with:
           mode: publish
           mappings: ${{ runner.temp }}/native-outputs.jsonl
+          coverage: ${{ runner.temp }}/native-outputs.jsonl.coverage.json
       - name: Save native artifacts, including partial build progress
         if: ${{ always() && steps.native-cache.outputs.cache-key != '' }}
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
@@ -185,17 +137,17 @@ jobs:
           key: ${{ steps.native-cache.outputs.cache-key }}
       - name: Report guarded check receipts
         if: ${{ always() && steps.checks.outcome != 'skipped' }}
-        run: python3 scripts/check_receipts.py "$QUILLEN_VERIFY_DIR"
+        run: python3 scripts/check_receipts.py "$QUILLEN_CI_STATE"
       - name: Retain complete guarded check receipts
-        if: ${{ always() && steps.scope.outputs.lean == 'true' }}
+        if: ${{ always() && steps.scope.outputs.native == 'true' }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: quillen-check-receipts-${{ github.run_id }}-${{ github.run_attempt }}
           include-hidden-files: true
           if-no-files-found: ignore
           path: |
-            ${{ env.QUILLEN_VERIFY_DIR }}/**/*.json
-            ${{ env.QUILLEN_VERIFY_DIR }}/**/*.log
+            ${{ runner.temp }}/quillen-ci-state/**/*.json
+            ${{ runner.temp }}/quillen-ci-state/**/*.log
             ${{ env.QUILLEN_VERIFY_DIR }}-cache.json
       - name: Save incremental outputs, including partial failed checks
         if: ${{ always() && steps.proof-cache.outcome == 'success' && steps.project-cache.outcome == 'success' && steps.checks.outcome != 'skipped' }}
@@ -218,7 +170,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: kangxyz/aglib
-          ref: e3f6c759d2a1ece1387518aecba7393a863718a9
+          ref: 3a4d549981ced306d89d3ed55418c9e6a25f86c4
           path: .cache-tooling
           persist-credentials: false
       - name: Publish immutable public native cache asset

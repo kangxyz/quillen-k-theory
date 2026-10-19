@@ -91,9 +91,8 @@ lake build Quillen.KTheory.API
 
 Final validation runs the configured full-library environment lint once and the
 whole-workspace native text lint once, before selected tests and downstream
-clients. The runner builds selected providers and `Quillen` in one native Lake
-graph, preserving compatible cached artifacts, then prepares the native lint
-executables as needed. The full library import basis is required even when only
+clients. The shared runner builds selected providers, `Quillen`, tests and lint
+runtimes in one native Lake graph, preserving compatible cached artifacts. The full library import basis is required even when only
 one source changed; it does not select full diagnostics or replay every test.
 The standard commands are:
 
@@ -112,28 +111,28 @@ repair after a full lint failure, the existing scoped runner remains available:
 lake env lean --run Tools/LintScoped.lean Quillen.KTheory.API
 ```
 
-After a final-check repair, resume the failed module or category and retain
-completed provider checks. For the same selected scope, use the module names
-and existing verification directory from the failed command. For example:
+After a final-check repair, repeat the shared entry with the same external
+`--state PATH` to retain compatible completed checks. Its printed evidence
+directory contains the generated recovery programs. Direct scoped repair is also
+available; substitute that directory for `RUN` below. For example:
 
 ```sh
 # Provider lint repair: compile the repaired source, then rerun its scoped lint.
 lake build Quillen.KTheory.API
-lake env lean --run .lake/verification/RUN/LintScoped.lean Quillen.KTheory.API
+lake env lean --run RUN/LintScoped.lean Quillen.KTheory.API
 # A late test failure: compile and lint just that selected test.
 lake build QuillenTest.ActionTranslationNaturality
-lake env lean --run .lake/verification/RUN/LintScoped.lean QuillenTest.ActionTranslationNaturality
+lake env lean --run RUN/LintScoped.lean QuillenTest.ActionTranslationNaturality
 # A late client failure, from examples/downstream:
 cd examples/downstream
 lake build Consumer.AffineClosed
-lake env lean --run ../../.lake/verification/RUN/LintScoped.lean Consumer.AffineClosed
+lake env lean --run RUN/LintScoped.lean Consumer.AffineClosed
 # Rerun each failed or unrun audit chunk prepared for this scope.
-lake env lean ../../.lake/verification/RUN/client-audit-0.lean
+lake env lean RUN/client-audit-0.lean
 ```
 
 Replace `RUN` and the examples with the actual selected paths and modules.
-Multi-batch client audits are prepared as `client-audit-N.lean`; a single batch
-uses `client-audit.lean`. Replay only failed or unrun chunks, retaining completed
+Client audit batches are prepared as `client-audit-N.lean`. Replay only failed or unrun chunks, retaining completed
 compatible checks. Complete any still-affected trust/client checks from the existing selected
 commands; reselect when the import closure changes. The isolated lint runner
 also handles import-only facades and tests without named declarations.
@@ -166,9 +165,9 @@ bash scripts/check.sh --full --rehash
 ```
 
 The pipeline checks generated imports, module boundaries, placeholders, and
-script tests; builds production modules in one native graph and runs the full
-library environment lint and whole-workspace text lint before maintained tests
-and downstream clients. It replays test assertions and both
+script tests; builds selected production/test modules and lint runtimes in one
+native graph and runs the full library environment lint and whole-workspace text
+lint before downstream clients. It replays test assertions and both
 axiom audits, and includes Batteries environment lint and native mathlib text
 lint. Normal CI keeps selected test/build/audit scopes without comprehensive
 test replay. Library compilation

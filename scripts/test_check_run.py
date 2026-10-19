@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 """Check lossless client scope reduction and guarded independent scheduling."""
-from functools import partial
 import copy
 import json
 import os
@@ -8,12 +7,11 @@ from pathlib import Path
 import tempfile
 import sys
 import types
-import threading
-import time
 import unittest
 from unittest.mock import patch
 
-from check_run import client_check_scope, execute, merge_native_outputs, parallel_checks, scoped_lint_source
+from check_run import client_check_scope, scoped_lint_source
+from ci_adapter import tasks, binding, QuillenAdapter, PROTOCOL, LEGACY_HEAD, prepare
 from generate_imports import generated_files
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -133,168 +131,88 @@ class ClientScopeTests(unittest.TestCase):
             scoped_lint_source(original.replace('if decls.isEmpty then', 'if false then'))
 
 
-class NativeOutputTests(unittest.TestCase):
-    def test_merge_keeps_one_header_and_every_provider_test_and_client_mapping(self):
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            mappings = []
-            for index, phase in enumerate(('provider', 'test', 'client')):
-                path = root / (phase + '.jsonl')
-                path.write_text(f'"2026-03-17"\n[{index},"{index:016x}.ltar"]\n')
-                mappings.append(path)
-            output = root / 'export/outputs.jsonl'
-            merge_native_outputs(mappings, output)
-            self.assertEqual(output.read_text(), '"2026-03-17"\n' + ''.join(
-                f'[{index},"{index:016x}.ltar"]\n' for index in range(3)))
-
-    def test_bad_header_or_row_fails_before_publishing_an_output(self):
-        for text in ('', '"older-format"\n', '"2026-03-17"\n"2026-03-17"\n',
-                     '"2026-03-17"\n[1]\n', '"2026-03-17"\ninvalid\n'):
-            with self.subTest(text=text), tempfile.TemporaryDirectory() as temporary:
-                root = Path(temporary)
-                mapping = root / 'bad.jsonl'
-                mapping.write_text(text)
-                output = root / 'outputs.jsonl'
-                with self.assertRaises(ValueError):
-                    merge_native_outputs([mapping], output)
-                self.assertFalse(output.exists())
-
-
-class SchedulingTests(unittest.TestCase):
-    def test_parallel_jobs_are_bounded_and_every_disjoint_check_finishes(self):
-        lock = threading.Lock()
-        state = {'active': 0, 'peak': 0}
-        completed = []
-
-        def check(index):
-            with lock:
-                state['active'] += 1
-                state['peak'] = max(state['peak'], state['active'])
-            time.sleep(0.01)
-            with lock:
-                completed.append(index)
-                state['active'] -= 1
-
-        parallel_checks([partial(check, index) for index in range(19)], 7)
-        self.assertEqual(sorted(completed), list(range(19)))
-        self.assertGreater(state['peak'], 1)
-        self.assertLessEqual(state['peak'], 7)
-        for jobs in [0, 8]:
-            with self.assertRaises(ValueError):
-                parallel_checks([], jobs)
-
-    def test_failure_is_propagated_only_after_already_dispatched_checks_settle(self):
-        completed = []
-
-        def check(index):
-            time.sleep(0.01)
-            completed.append(index)
-            if index == 0:
-                raise RuntimeError('failed check')
-
-        with self.assertRaisesRegex(RuntimeError, 'failed check'):
-            parallel_checks([partial(check, index) for index in range(9)], 7)
-        self.assertEqual(sorted(completed), list(range(9)))
-
-
-
-class FullLibraryLintPolicyTests(unittest.TestCase):
+class RecipeTests(ClientScopeTests):
     def setUp(self):
-        self.tmp = tempfile.TemporaryDirectory(prefix='quillen-source-lint-')
-        self.root = Path(self.tmp.name).resolve()
-        self.calls = []
-        sources = {
-            'Quillen/A.lean': 'def a := 1\n',
-            'Quillen/Dependent.lean': 'import Quillen.A\ndef dependent := a\n',
-            'Quillen.lean': 'import Quillen.A Quillen.Dependent\n',
-            'QuillenTest/Changed.lean': 'import Quillen.A\nexample : True := trivial\n',
-            'QuillenTest/Dependent.lean': 'import Quillen.Dependent\nexample : True := trivial\n',
-            'QuillenTest/Axioms.lean': 'import Quillen\n-- audit\n',
-            'examples/downstream/Consumer/Shared.lean': 'def shared := 1\n',
-            'examples/downstream/Consumer/Changed.lean': 'import Consumer.Shared\ndef changed := shared\n',
-            'examples/downstream/Consumer/Dependent.lean': 'import Consumer.Changed\ndef dependent := changed\n',
-            'examples/downstream/Consumer.lean': 'import Consumer.Changed Consumer.Dependent\n',
-            'examples/downstream/Audit.lean': 'import Consumer\n-- audit\n',
-        }
-        for name, source in sources.items():
-            target = self.root / name
-            target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_text(source)
-        (self.root / 'Tools').mkdir()
-        (self.root / 'Tools/LintScoped.lean').write_bytes((ROOT / 'Tools/LintScoped.lean').read_bytes())
+        super().setUp()
+        self.write('Tools/LintScoped.lean', (ROOT / 'Tools/LintScoped.lean').read_text())
+        self.write('QuillenTest/Axioms.lean', 'import Quillen\n-- unchanged audit body\n')
+        self.write('examples/downstream/Audit.lean', 'import Consumer\n-- unchanged client body\n')
+        self.scope = dict(lean=True, full=False, providers=['Quillen.A'],
+                          tests=['QuillenTest.T'], clients=['Consumer', 'Consumer.Use'],
+                          trust=True, client_trust=True, tooling_tests=[])
+        self.directory = self.root / 'verification'
+
+    def recipe(self, **changes):
+        scope = dict(self.scope, **changes)
+        return tasks(self.root, {'scope': scope}, 'check', self.directory)
+
+    def test_single_root_and_client_graph_preserve_lint_and_audit_predicates(self):
+        required = self.recipe()
+        graphs = [task for task in required if task['kind'] in ('build', 'graph-build')]
+        self.assertEqual([task['id'] for task in graphs], ['root/build', 'client/build'])
+        self.assertEqual(graphs[0]['command'][:-2],
+                         ['lake', '--rehash', 'build', 'Quillen.A', 'Quillen', 'QuillenTest.T',
+                          'Batteries.Tactic.Lint', 'Mathlib.Tactic.Linter.TextBased',
+                          'batteries/runLinter', 'lint-style'])
+        self.assertEqual(graphs[1]['command'][3:-2], ['Consumer', 'Consumer.Use'])
+        self.assertEqual(sum(task['id'] == 'full-native-lint' for task in required), 1)
+        self.assertEqual(next(t for t in required if t['id'] == 'full-native-lint')['command'],
+                         ['lake', 'lint', '--no-build', '--', '--no-build'])
+        self.assertEqual(next(t for t in required if t['id'] == 'full-native-style')['command'],
+                         ['lake', 'exe', 'lint-style'])
+        self.assertFalse(any(t['id'].startswith('diagnostic/') for t in required))
+        audit = next(t for t in required if t['id'] == 'axioms')
+        self.assertEqual(audit['generated'], 'import Quillen.A\n-- unchanged audit body\n')
+        self.assertEqual(audit['command'][audit['generated_argument_index']], audit['generated_path'])
+        client_scope = client_check_scope(self.root, self.scope['clients'])
+        audits = [task for task in required if task['id'].startswith('client-audit/')]
+        self.assertTrue(all('import ' + name + '\n' in ''.join(t['generated'] for t in audits)
+                            for name in client_scope['audit_origin_union']))
+        # Recovery inputs exist even before native build/lint can fail.
+        self.assertEqual((self.directory / 'axioms.lean').read_text(), audit['generated'])
+        self.assertEqual(json.loads((self.directory / 'client-scope.json').read_text()), client_scope)
+        self.assertTrue(all(t['kind'] == 'check' for t in required if
+                            t['id'].startswith(('source/', 'client-lint/', 'client-audit/'))))
+
+    def test_full_diagnostic_only_replays_test_source(self):
+        required = self.recipe(full=True)
+        replay = [task for task in required if task['id'].startswith('diagnostic/')]
+        self.assertEqual([task['command'] for task in replay],
+                         [['lake', 'env', 'lean', '-j2', 'QuillenTest/T.lean']])
+
+    def test_static_source_only_recipe_needs_no_environment_or_native_work(self):
+        required = self.recipe(lean=False)
+        self.assertEqual([task['id'] for task in required],
+                         ['source/imports', 'source/layout', 'source/placeholders'])
+        self.assertTrue(all(t['input_boundary'] for t in required))
+
+    def test_source_and_native_phases_are_the_same_recipe_partition(self):
+        plan = {'scope': self.scope}
+        full = tasks(self.root, plan, 'check', self.directory)
+        source = tasks(self.root, plan, 'source', self.directory)
+        native = tasks(self.root, plan, 'native', self.directory)
+        self.assertEqual(full, source + native)
+
+    def test_exact_historical_allowlist_does_not_self_admit_candidate(self):
+        self.assertEqual(PROTOCOL.legacy_heads, frozenset({LEGACY_HEAD}))
+        self.assertEqual(PROTOCOL.core_recipes, frozenset())
+        self.assertEqual(set(PROTOCOL.workflows.values()), {'legacy'})
+
+    def test_local_native_preparation_requires_containers_before_observation(self):
+        with self.assertRaisesRegex(ValueError, 'before final checks'):
+            prepare(self.root, mode='local')
+        self.assertFalse((self.root / 'examples/downstream/.lake').exists())
         (self.root / '.lake/packages').mkdir(parents=True)
-        self.plan = dict(schema=1, lean=True, full=False, base=None, trust=True, client_trust=True,
-            providers=['Quillen.A', 'Quillen.Dependent'],
-            provider_batches=[['Quillen.A'], ['Quillen.Dependent']],
-            tests=['QuillenTest.Changed', 'QuillenTest.Dependent'],
-            clients=['Consumer', 'Consumer.Changed', 'Consumer.Dependent'],
-            changed=['Quillen/A.lean', 'QuillenTest/Changed.lean',
-                     'examples/downstream/Consumer/Changed.lean', 'examples/downstream/Consumer.lean'])
+        (self.root / 'examples/downstream/.lake').mkdir()
+        prepare(self.root, mode='local')
+        self.assertEqual((self.root / 'examples/downstream/.lake/packages').resolve(),
+                         (self.root / '.lake/packages').resolve())
 
-    def tearDown(self):
-        self.tmp.cleanup()
-
-    def run_stub(self, plan):
-        original = copy.deepcopy(plan)
-        directory = self.root / 'verification'
-        def run(command, **kwargs):
-            self.calls.append(list(command))
-        with patch('check_run.subprocess.run', side_effect=run), patch.dict(os.environ, {
-                'QUILLEN_VERIFY_DIR': str(directory), 'QUILLEN_CHECK_JOBS': '1'}):
-            execute(self.root, plan)
-        self.assertEqual(plan, original)
-        return directory
-
-    def linted_modules(self):
-        return [module for command in self.calls if '--run' in command
-                for module in command[command.index('--run') + 2:]]
-
-    def test_one_full_lint_and_native_graph_keep_selected_tests_clients_and_audits(self):
-        original_scope = client_check_scope(self.root, self.plan['clients'])
-        directory = self.run_stub(self.plan)
-        self.assertEqual(self.calls.count(['lake', 'lint', '--no-build', '--', '--no-build']), 1)
-        self.assertEqual(self.calls.count(['lake', 'exe', 'lint-style']), 1)
-        self.assertEqual(self.calls[0],
-                         ['lake', 'build', 'Quillen.A', 'Quillen.Dependent', 'Quillen'])
-        self.assertEqual(self.linted_modules(),
-                         [*self.plan['tests'], 'Consumer.Changed', 'Consumer.Dependent', 'Consumer'])
-        self.assertIn(['lake', 'build', *self.plan['tests']], self.calls)
-        self.assertIn(['lake', 'build', *self.plan['clients']], self.calls)
-        self.assertEqual(json.loads((directory / 'client-scope.json').read_text()), original_scope)
-        self.assertIn('import Quillen.Dependent\n', (directory / 'axioms.lean').read_text())
-        audits = ''.join(path.read_text() for path in directory.glob('client-audit*.lean'))
-        self.assertTrue(all('import ' + module + '\n' in audits
-                            for module in original_scope['audit_origin_union']))
-        self.assertFalse(any(command[-1].endswith('QuillenTest/Changed.lean')
-                             for command in self.calls))
-
-    def test_no_changed_lean_sources_still_runs_full_lint_and_selected_checks(self):
-        self.plan['changed'] = ['lake-manifest.json', 'CONTRIBUTING.md']
-        self.run_stub(self.plan)
-        self.assertEqual(self.calls.count(['lake', 'lint', '--no-build', '--', '--no-build']), 1)
-        self.assertIn('QuillenTest.Dependent', self.linted_modules())
-        self.assertIn('Consumer.Dependent', self.linted_modules())
-
-    def test_full_initial_and_legacy_plans_do_not_duplicate_full_lint(self):
-        for override in [{'full': True}, {'base': 'EMPTY_TREE'}, {'legacy': True}]:
-            with self.subTest(override=override):
-                self.calls = []
-                plan = dict(self.plan, changed=[])
-                if 'legacy' in override:
-                    del plan['changed']
-                else:
-                    plan.update(override)
-                self.run_stub(plan)
-                self.assertEqual(self.calls.count(['lake', 'lint', '--no-build', '--', '--no-build']), 1)
-                self.assertEqual(self.calls.count(['lake', 'exe', 'lint-style']), 1)
-                import shutil
-                shutil.rmtree(self.root / 'verification')
-
-    def test_static_scope_still_has_no_lean_or_cache_work(self):
-        with patch('check_run.subprocess.run') as run:
-            execute(self.root, dict(lean=False, changed=['not/a/module']))
-        run.assert_not_called()
-        self.assertFalse((self.root / '.lake/verification').exists())
+    def test_shared_execution_is_the_only_runner(self):
+        source = (ROOT / 'scripts/check_run.py').read_text()
+        self.assertIn('application.check(', source)
+        for forbidden in ('def execute(', 'ThreadPoolExecutor', 'def merge_native_outputs(', 'def parallel_checks('):
+            self.assertNotIn(forbidden, source)
 
 
 if __name__ == '__main__':

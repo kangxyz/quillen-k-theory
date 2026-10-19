@@ -155,177 +155,92 @@ def run(command, *, env, receipt):
                          ['exe', 'cache', 'get', 'Mathlib.Direct', 'Mathlib.Resolved'])
 
 
-class GuardedCheckTests(unittest.TestCase):
-    def setUp(self):
-        self.tmp = tempfile.TemporaryDirectory(prefix='quillen-ci-commands-')
-        self.root = Path(self.tmp.name).resolve()
-        (self.root / 'scripts').mkdir()
-        for name in ('check_run.py', 'check_scope.py', 'library_sources.py'):
-            shutil.copyfile(ROOT / 'scripts' / name, self.root / 'scripts' / name)
-        (self.root / 'Tools').mkdir()
-        shutil.copyfile(ROOT / 'Tools/LintScoped.lean', self.root / 'Tools/LintScoped.lean')
-        (self.root / 'QuillenTest').mkdir()
-        (self.root / 'QuillenTest/Axioms.lean').write_text('import Quillen\n-- audit\n')
-        (self.root / 'driver.py').write_text('''import sys
-sys.path.insert(0, 'scripts')
-from pathlib import Path
-from check_run import execute
-plan = dict(lean=True, providers=['Quillen.P'], provider_batches=[['Quillen.P']],
-            tests=['QuillenTest.T'], clients=['Consumer.Use'], trust=True,
-            client_trust=True, full=False, base=None)
-if '--source-only' not in sys.argv:
-    try:
-        execute(Path.cwd(), plan, ci='--ci' in sys.argv, rehash='--rehash' in sys.argv)
-    except Exception as error:
-        print(str(error), file=sys.stderr)
-        raise SystemExit(getattr(error, 'returncode', 2))
-''')
-        (self.root / 'examples/downstream').mkdir(parents=True)
-        (self.root / 'examples/downstream/Audit.lean').write_text('import Consumer\n-- audit\n')
-        (self.root / 'examples/downstream/Consumer').mkdir()
-        (self.root / 'examples/downstream/Consumer/Use.lean').write_text(
-            'import Quillen.P\ndef use := 1\n')
-        self.aglib = self.root / '.lake/packages/Aglib/scripts'
-        self.aglib.mkdir(parents=True)
-        (self.root / 'bin').mkdir()
-        self.log = self.root / 'commands.jsonl'
-        (self.aglib / 'build_serial.py').write_text('''
-from contextlib import contextmanager
-import json, os, sys
-def build_threads(): return int(os.environ['AGLIB_BUILD_THREADS'])
-@contextmanager
-def capped_toolchain(root, threads=1):
-    yield dict(os.environ, CAPPED_THREADS=str(threads), LEAN_NUM_THREADS='1',
-               LEAN=os.environ['CAPPED_LEAN'])
-if __name__ == '__main__':
-    with open(os.environ['COMMAND_LOG'], 'a') as out:
-        out.write(json.dumps({'kind':'build', 'argv':sys.argv[1:], 'cwd':os.getcwd()})+'\\n')
-''')
-        (self.aglib / 'resource_guard.py').write_text('''
-import json, os, subprocess
-def limits():
-    return {'lean_memory_mb':int(os.environ['AGLIB_LEAN_MEMORY_MB']),
-            'rss_limit_mb':int(os.environ['AGLIB_RSS_LIMIT_MB']),
-            'lean_threads':1, 'max_active_lean':1}
-def run(command, *, cwd, env, receipt, budget):
-    with open(os.environ['COMMAND_LOG'], 'a') as out:
-        out.write(json.dumps({'kind':'guard', 'argv':command, 'budget':budget,
-                             'threads':env['CAPPED_THREADS'], 'cwd':str(cwd),
-                             'receipt':str(receipt)})+'\\n')
-    return subprocess.call(command, cwd=cwd, env=env)
-''')
-        python = self.root / 'bin/python3'
-        python.write_text('''#!/usr/bin/env bash
-if [[ "${1:-}" == - || "${1:-}" == */build_serial.py ]]; then
-  exec "$REAL_PYTHON" "$@"
-fi
-exit 0
-''')
-        python.chmod(0o755)
-        lake = self.root / 'bin/lake'
-        lake.write_text('#!' + sys.executable + '\n' + '''
-import os, subprocess, sys
-if os.environ.get('FAIL_LINT') and '--run' in sys.argv[1:]:
-    raise SystemExit(41)
-if sys.argv[1:2] == ['env']:
-    raise SystemExit(subprocess.call(sys.argv[2:]))
-''')
-        lake.chmod(0o755)
-        self.capped_lean = self.root / 'bin/capped-lean'
-        self.capped_lean.write_text('#!' + sys.executable + '\n' + '''
-import json, os, sys
-with open(os.environ['ACTUAL_LEAN_LOG'], 'a') as output:
-    output.write(json.dumps(sys.argv[1:]) + '\\n')
-''')
-        self.capped_lean.chmod(0o755)
-        self.env = dict(os.environ, PATH=str(self.root / 'bin') + ':' + os.environ['PATH'],
-                        REAL_PYTHON=sys.executable, COMMAND_LOG=str(self.log),
-                        CAPPED_LEAN=str(self.capped_lean),
-                        ACTUAL_LEAN_LOG=str(self.root / 'actual-lean.jsonl'),
-                        QUILLEN_VERIFY_DIR=str(self.root / 'verification'),
-                        AGLIB_LEAN_MEMORY_MB='12800', AGLIB_RSS_LIMIT_MB='13824',
-                        AGLIB_BUILD_THREADS='2')
-        self.env.pop('QUILLEN_REHASH', None)
+class SharedResourcePolicyTests(unittest.TestCase):
+    def test_adapter_retains_remote_profile_and_resource_aliases(self):
+        from ci_adapter import create_application
+        runtime = create_application(ROOT).runtime
+        config = runtime.resource_config
+        self.assertIn('R5_LEAN_REMOTE_PROFILE', config.names('profile'))
+        self.assertIn('AGLIB_BUILD_THREADS', config.names('build_thread'))
+        self.assertIn('AGLIB_LEAN_MEMORY_MB', config.names('memory'))
+        self.assertIn('AGLIB_RSS_LIMIT_MB', config.names('rss'))
+        self.assertEqual(type(runtime).__module__, 'lean_ci.runtime')
 
-    def tearDown(self):
-        self.tmp.cleanup()
+    def test_emitted_r5_remote_profile_preserves_managed_wrapper_and_caps(self):
+        from ci_adapter import create_application
+        from lean_ci.build import capped_toolchain, build_threads
+        from lean_ci.resources import limits, capped_command, frontend_args
+        from unittest.mock import patch
+        with tempfile.TemporaryDirectory(prefix='quillen-r5-profile-') as temporary:
+            sysroot = Path(temporary).resolve()
+            (sysroot / 'bin').mkdir()
+            wrapper = sysroot / 'bin/lean'
+            wrapper.write_text('#!/bin/sh\nexit 99\n')
+            wrapper.chmod(0o755)
+            profile = {'schema_version': 1, 'jobs': 3, 'threads': 5,
+                       'lean_memory_mib': 8192, 'rss_limit_mib': 12288,
+                       'lean': str(wrapper)}
+            environment = {'PATH': os.environ.get('PATH', ''),
+                           'R5_LEAN_REMOTE_PROFILE': json.dumps(profile),
+                           'LEAN': str(wrapper), 'LEAN_SYSROOT': str(sysroot),
+                           'AGLIB_BUILD_THREADS': '1', 'AGLIB_LEAN_MEMORY_MB': '64',
+                           'AGLIB_RSS_LIMIT_MB': '128'}
+            with patch.dict(os.environ, environment, clear=True):
+                runtime = create_application(ROOT).runtime
+            config = runtime.resource_config
+            budget = limits(runtime.environment, physical_bytes=64 * 1024**3, config=config)
+            self.assertEqual(budget['remote_profile'], profile)
+            self.assertEqual((budget['lake_jobs'], budget['max_active_lean'],
+                              budget['lean_threads'], budget['native_build_threads'],
+                              budget['lean_memory_mb'], budget['rss_limit_mb']),
+                             (3, 3, 5, 5, 8192, 12288))
+            self.assertEqual(build_threads(runtime.environment, config), 5)
+            with patch('lean_ci.build.subprocess.check_output',
+                       side_effect=AssertionError('managed profile queried Elan')):
+                with capped_toolchain(ROOT, threads=1, environment=runtime.environment, config=config) as inherited:
+                    self.assertEqual(inherited['LEAN'], str(wrapper))
+                    self.assertEqual(inherited['LEAN_SYSROOT'], str(sysroot))
+                    self.assertEqual(inherited['LAKE_OVERRIDE_LEAN'], 'true')
+                    self.assertEqual(inherited['LEAN_NUM_THREADS'], '3')
+                    self.assertEqual(inherited['PATH'].split(os.pathsep)[0], str(wrapper.parent))
+                    self.assertEqual(capped_command(['lake', 'env', 'lean', '--run', 'Tool.lean'],
+                                                     inherited, config),
+                                     ['lake', 'env', str(wrapper), '--run', 'Tool.lean'])
+                    self.assertEqual(frontend_args(environment=inherited, config=config),
+                                     [str(wrapper), '-j5', '-M8192'])
 
-    def run_check(self, *arguments):
-        return subprocess.run([sys.executable, 'driver.py', *arguments], cwd=self.root,
-                              env=self.env, capture_output=True, text=True)
-
-    def test_ci_uses_shared_policy_and_preserves_native_commands(self):
-        result = self.run_check('--ci', '--rehash')
-        self.assertEqual(result.returncode, 0, result.stderr)
-        entries = [json.loads(line) for line in self.log.read_text().splitlines()]
-        builds = [entry for entry in entries if entry['kind'] == 'build']
-        self.assertEqual(builds[0]['argv'][-1], 'Quillen.P')
-        self.assertEqual(builds[1]['argv'][-1], 'QuillenTest.T')
-        self.assertEqual(builds[2]['argv'][-1], 'Consumer.Use')
-        guarded = [entry for entry in entries if entry['kind'] == 'guard']
-        lean_commands = [entry['argv'] for entry in guarded if entry['argv'][:2] == ['lake', 'env']]
-        self.assertTrue(all(command[2] == str(self.capped_lean) for command in lean_commands))
-        self.assertTrue(any(command[-1] == 'Quillen.P' and '--run' in command for command in lean_commands))
-        for entry in guarded:
-            self.assertEqual(entry['threads'], '2')
-            self.assertEqual(entry['budget'], {'lean_memory_mb':12800, 'rss_limit_mb':13824,
-                'lean_threads':1, 'max_active_lean':1, 'native_build_threads':2})
-        self.assertEqual(guarded[-1]['cwd'], str(self.root / 'examples/downstream'))
-
-    def test_ci_audits_execute_capped_lean_even_with_poisoned_bare_lean(self):
-        bare_lean = self.root / 'bin/lean'
-        bare_lean.write_text('#!/bin/sh\nexit 97\n')
-        bare_lean.chmod(0o755)
-        result = self.run_check('--ci')
-        self.assertEqual(result.returncode, 0, result.stderr)
-        commands = [json.loads(line) for line in
-                    (self.root / 'actual-lean.jsonl').read_text().splitlines()]
-        self.assertTrue(any(command[-1].endswith('/axioms.lean') for command in commands))
-        self.assertTrue(any(command[-1].endswith('/client-audit.lean') for command in commands))
-        self.assertTrue(any('--run' in command for command in commands))
-
-    def test_ci_rewrites_only_exact_lake_env_lean_prefix(self):
-        alternate = self.root / 'bin/lean-other'
-        alternate.write_text('#!/bin/sh\nexit 0\n')
-        alternate.chmod(0o755)
-        script = self.root / 'scripts/check_run.py'
-        source = script.read_text()
-        original = "['lake', 'env', 'lean', '--run', str(lint_runner),"
-        self.assertIn(original, source)
-        script.write_text(source.replace(original, "['lake', 'env', 'lean-other', '--run', str(lint_runner),"))
-        result = self.run_check('--ci')
-        self.assertEqual(result.returncode, 0, result.stderr)
-        entries = [json.loads(line) for line in self.log.read_text().splitlines()]
-        self.assertTrue(any(entry['argv'][:3] == ['lake', 'env', 'lean-other']
-                            for entry in entries if entry['kind'] == 'guard'))
-
-    def test_source_only_needs_no_dependency_or_toolchain(self):
-        shutil.rmtree(self.root / '.lake')
-        result = self.run_check('--source-only', '--ci')
-        self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertFalse(self.log.exists())
-
-    def test_ci_native_lint_failure_stops_before_audits(self):
-        self.env['FAIL_LINT'] = '1'
-        result = self.run_check('--ci')
-        self.assertEqual(result.returncode, 41, result.stderr)
-        self.assertNotIn('/axioms.lean', self.log.read_text())
-
-    def test_relative_receipt_root_stays_at_project_root_for_client(self):
-        self.env['QUILLEN_VERIFY_DIR'] = 'verification'
-        result = self.run_check('--ci')
-        self.assertEqual(result.returncode, 0, result.stderr)
-        entries = [json.loads(line) for line in self.log.read_text().splitlines()]
-        guarded = [entry for entry in entries if entry['kind'] == 'guard']
-        self.assertEqual(guarded[-1]['receipt'],
-                         str(self.root / 'verification/client-audit.json'))
-
-    def test_explicit_receipt_root_must_be_fresh(self):
-        Path(self.env['QUILLEN_VERIFY_DIR']).mkdir()
-        result = self.run_check('--ci')
-        self.assertEqual(result.returncode, 2, result.stderr)
-        self.assertIn('fresh QUILLEN_VERIFY_DIR', result.stderr)
-        self.assertFalse(self.log.exists())
+    def test_source_only_shared_execution_needs_no_lean_or_dependency(self):
+        from ci_adapter import create_application
+        from unittest.mock import patch
+        from lean_ci.resources import run as guarded_run
+        from functools import partial
+        with tempfile.TemporaryDirectory(prefix='quillen-shared-static-') as temporary:
+            directory = Path(temporary)
+            root = directory / 'project';root.mkdir()
+            (root/'scripts').mkdir()
+            for name in ('generate_imports.py','check_library_layout.py','check_placeholders.py'):
+                (root/'scripts'/name).write_text('pass\n')
+            (root/'.gitignore').write_text('__pycache__/\n')
+            def git(*arguments):
+                return subprocess.check_output(['git',*arguments],cwd=root)
+            git('init','-q');git('add','.')
+            git('-c','user.name=Fixture','-c','user.email=fixture@example.invalid',
+                'commit','-qm','source-only fixture')
+            application = create_application(root,source_only=True)
+            with patch.object(application.runtime,'compiler_identity',side_effect=AssertionError('Lean queried')), \
+                 patch.dict(os.environ,{'PYTHONDONTWRITEBYTECODE':'1'}), \
+                 patch('lean_ci.runtime.resources.run', side_effect=partial(guarded_run, sampler=lambda group: [])):
+                result = application.check(state=directory/'state')
+            self.assertEqual(result['status'],'complete')
+            self.assertEqual(result['performed_checks'],
+                             ['source/imports','source/layout','source/placeholders'])
+            self.assertFalse((root/'.lake').exists())
+            # Compatible continuation reuses the individual source checks.
+            with patch.object(application.runtime,'compiler_identity',side_effect=AssertionError('Lean queried')), \
+                 patch.dict(os.environ,{'PYTHONDONTWRITEBYTECODE':'1'}), \
+                 patch('lean_ci.runtime.resources.run', side_effect=partial(guarded_run, sampler=lambda group: [])):
+                resumed = application.check(state=directory/'state')
+            self.assertEqual(resumed['reused_checks'],result['performed_checks'])
 
 
 if __name__ == '__main__':

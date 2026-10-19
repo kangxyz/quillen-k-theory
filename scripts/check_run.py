@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Execute a selected check plan, retaining compatible Lake outputs."""
 import argparse
-from concurrent.futures import ThreadPoolExecutor
-from functools import partial
 import hashlib
 import importlib.util
 import json
@@ -10,9 +8,8 @@ import os
 from pathlib import Path
 import subprocess
 import sys
-import tempfile
 
-from check_scope import GLOBAL_INPUTS, git, select, snapshot
+from check_scope import snapshot
 from library_sources import is_import_surface, lean_imports, module_path
 
 
@@ -121,188 +118,6 @@ def scoped_lint_source(text, *, text_only=False):
     return text
 
 
-def parallel_checks(calls, jobs):
-    if not 1 <= jobs <= 7:
-        raise ValueError('Concurrent check jobs must be between 1 and 7')
-    if jobs == 1:
-        for call in calls:
-            call()
-    else:
-        # Every call owns a temporary toolchain, process group and distinct receipt.
-        # Executor shutdown waits for all already-dispatched groups before raising.
-        with ThreadPoolExecutor(max_workers=jobs) as pool:
-            futures = [pool.submit(call) for call in calls]
-            for future in futures:
-                future.result()
-
-
-def batch_phase(phase, index, count):
-    return phase if count == 1 else f'{phase}-{index}'
-
-
-def merge_native_outputs(mappings, output):
-    """Preserve Lake's versioned JSONL format across successful build batches."""
-    rows = []
-    for path in mappings:
-        lines = path.read_text().splitlines()
-        if not lines or json.loads(lines[0]) != '2026-03-17':
-            raise ValueError(f'Unsupported native output mapping header: {path}')
-        for number, line in enumerate(lines[1:], 2):
-            row = json.loads(line)
-            if not isinstance(row, list) or len(row) != 2:
-                raise ValueError(f'Invalid native output mapping: {path}:{number}')
-            rows.append(line)
-    output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text('"2026-03-17"\n' + ''.join(row + '\n' for row in rows))
-
-
-def execute(root, plan, *, ci=False, rehash=False, output=None):
-    if not plan['lean']:
-        print('Static scope: no Lean, dependency cache, or native cache work selected.')
-        return
-    aglib = root / '.lake/packages/Aglib/scripts'
-    if ci and not all((aglib / name).is_file() for name in ('build_serial.py', 'resource_guard.py')):
-        raise ValueError('Resolve the pinned Aglib dependency before guarded CI checks')
-    requested = os.environ.get('QUILLEN_VERIFY_DIR')
-    if requested:
-        directory = Path(requested)
-        if not directory.is_absolute():
-            directory = root / directory
-        if directory.exists():
-            raise ValueError('Use a fresh QUILLEN_VERIFY_DIR for each check invocation')
-        directory.mkdir(parents=True, exist_ok=False)
-    else:
-        (root / '.lake/verification').mkdir(parents=True, exist_ok=True)
-        directory = Path(tempfile.mkdtemp(prefix='checks-', dir=root / '.lake/verification'))
-    (directory / 'scope.json').write_text(json.dumps(plan, indent=2) + '\n')
-    lake = ['lake'] + (['--rehash'] if rehash else [])
-    if ci:
-        sys.path.insert(0, str(aglib))
-        from build_serial import build_threads, capped_toolchain
-        from resource_guard import limits, run
-
-    def safe(phase, command, cwd=root):
-        print(f'{phase}: {" ".join(command)}', flush=True)
-        if not ci:
-            subprocess.run(command, cwd=cwd, check=True)
-            return
-        budget = limits()
-        budget['native_build_threads'] = build_threads()
-        with capped_toolchain(cwd, threads=budget['native_build_threads']) as environment:
-            command = list(command)
-            if command[:3] == ['lake', 'env', 'lean']:
-                command[2] = environment['LEAN']
-            code = run(command, cwd=cwd, env=environment,
-                       receipt=directory / f'{phase}.json', budget=budget)
-            if code:
-                raise subprocess.CalledProcessError(code, command)
-
-    mappings = []
-    lint_runtime_ready = False
-    lint_runner = directory / 'LintScoped.lean'
-    lint_text = (root / 'Tools/LintScoped.lean').read_text()
-    lint_runner.write_text(scoped_lint_source(lint_text))
-
-    def build(phase, modules, cwd=root):
-        if not modules:
-            return
-        if ci:
-            mapping = directory / f'{phase}-outputs.jsonl'
-            command = [sys.executable, str(aglib / 'build_serial.py'), '--root', str(cwd),
-                       '--receipt-dir', str(directory / phase), '--outputs', str(mapping)]
-            if rehash:
-                command.append('--rehash')
-            subprocess.run([*command, *modules], cwd=cwd, check=True)
-            mappings.append(mapping)
-        else:
-            safe(phase, [*lake, 'build', *modules], cwd)
-
-    def lint_runtime():
-        nonlocal lint_runtime_ready
-        if not lint_runtime_ready:
-            safe('lint-runtime', [*lake, 'build', 'Batteries.Tactic.Lint',
-                                  'Mathlib.Tactic.Linter.TextBased'])
-            lint_runtime_ready = True
-
-    def lint(phase, modules, cwd=root):
-        if modules:
-            lint_runtime()
-            safe(phase, ['lake', 'env', 'lean', '--run', str(lint_runner), *modules], cwd)
-
-    def prepare_audit(phase, template, import_name, modules):
-        if not modules:
-            return
-        text = (root / template).read_text()
-        marker = f'import {import_name}\n'
-        if text.count(marker) != 1:
-            raise ValueError(f'Cannot scope changed audit template: {template}')
-        scoped = directory / f'{phase}.lean'
-        scoped.write_text(text.replace(marker, ''.join(f'import {module}\n' for module in modules)))
-        return scoped
-
-    def audit(phase, template, import_name, modules, cwd=root):
-        scoped = prepare_audit(phase, template, import_name, modules)
-        if scoped is not None:
-            safe(phase, ['lake', 'env', 'lean', '-j2', str(scoped)], cwd)
-
-    # One native graph retains shared dependency work and prepares the full
-    # library import basis required by the configured Quillen lint driver.
-    build('providers', list(dict.fromkeys([*plan['providers'], 'Quillen'])))
-    safe('native-lint-runtime', [*lake, 'build', 'batteries/runLinter', 'lint-style'])
-    # Lake and the Batteries driver each receive their own no-build option.
-    safe('full-native-lint', [*lake, 'lint', '--no-build', '--', '--no-build'])
-    safe('full-native-style', [*lake, 'exe', 'lint-style'])
-    if plan['trust']:
-        audit('axioms', 'QuillenTest/Axioms.lean', 'Quillen', plan['providers'])
-    build('tests', plan['tests'])
-    lint('test-lint', plan['tests'])
-    # QuillenTest is a lean_lib test driver, with compile-time assertions and no
-    # runtime main. A successful selected build (or compatible cached artifact)
-    # supplies this coverage. Only explicit comprehensive diagnostics replay it.
-    if plan['full']:
-        for index, module in enumerate(plan['tests']):
-            safe(f'test-{index}', ['lake', 'env', 'lean', '-j2', module.replace('.', '/') + '.lean'])
-    if plan['clients']:
-        client = root / 'examples/downstream'
-        (client / '.lake').mkdir(exist_ok=True)
-        packages = client / '.lake/packages'
-        if not packages.exists():
-            packages.symlink_to(root / '.lake/packages', target_is_directory=True)
-        scope = client_check_scope(root, plan['clients'])
-        (directory / 'client-scope.json').write_text(json.dumps(scope, indent=2) + '\n')
-        # Keep every exact recovery input available even if build or lint fails.
-        # Preparing audit sources does not execute or discharge their predicates.
-        client_audits = []
-        if plan['client_trust']:
-            for index, batch in enumerate(scope['audit_batches']):
-                phase = batch_phase('client-audit', index, len(scope['audit_batches']))
-                scoped = prepare_audit(phase, 'examples/downstream/Audit.lean', 'Consumer', batch)
-                client_audits.append((phase, scoped))
-        build('client-build', plan['clients'], client)
-        jobs = int(os.environ.get('QUILLEN_CHECK_JOBS', '1'))
-        if scope['environment_batches'] or scope['facade_text_modules']:
-            lint_runtime()
-        calls = [partial(safe, batch_phase('client-lint', index,
-                          len(scope['environment_batches'])),
-                         ['lake', 'env', 'lean', '--run', str(lint_runner), *batch], client)
-                 for index, batch in enumerate(scope['environment_batches'])]
-        if scope['facade_text_modules']:
-            text_runner = directory / 'LintFacadeText.lean'
-            text_runner.write_text(scoped_lint_source(lint_text, text_only=True))
-            calls.append(partial(safe, 'client-facade-text',
-                                ['lake', 'env', 'lean', '--run', str(text_runner),
-                                 *scope['facade_text_modules']], client))
-        parallel_checks(calls, jobs)
-        parallel_checks([partial(safe, phase, ['lake', 'env', 'lean', '-j2', str(scoped)], client)
-                         for phase, scoped in client_audits], jobs)
-    # Export only successful, verified selected build mappings. No second build
-    # and no additional targets are introduced at the publication boundary.
-    if output:
-        if not ci:
-            raise ValueError('--native-outputs requires --ci')
-        merge_native_outputs(mappings, output)
-
-
 def verify_assessed_inputs(root, plan):
     """Do not execute worktree controls or Lean sources different from assessed head objects."""
     assessment = plan.get('dependency_assessment')
@@ -324,65 +139,63 @@ def verify_assessed_inputs(root, plan):
             raise ValueError('Actual assessed Lean source set/content differs from selected head')
 
 
+def load_tooling(root, tooling_root=None):
+    """Load an installed distribution or an explicitly selected tooling checkout."""
+    value = tooling_root or os.environ.get('LEAN_CI_TOOLING_ROOT')
+    if value:
+        checkout = Path(value).expanduser().resolve()
+        package = checkout / 'ci'
+        if not (package / 'lean_ci/__init__.py').is_file():
+            raise ValueError('Tooling checkout does not provide ci/lean_ci: ' + str(checkout))
+        sys.path.insert(0, str(package))
+        os.environ['LEAN_CI_TOOLING_ROOT'] = str(checkout)
+    try:
+        import lean_ci
+    except ImportError as error:
+        raise ValueError('Install pinned lean-incremental-ci or set LEAN_CI_TOOLING_ROOT') from error
+    return lean_ci
+
+
 def main():
+    root = Path(__file__).resolve().parents[1]
+    os.environ['PYTHONDONTWRITEBYTECODE'] = '1'
+    # The strict committed lifecycle is provided by the same Application as local checks.
+    if len(sys.argv) > 1 and sys.argv[1] in ('plan', 'source', 'native', 'finalize'):
+        try:
+            load_tooling(root)
+            from lean_ci.cli import main as lifecycle
+            return lifecycle([*sys.argv[1:], '--adapter', 'scripts/ci_adapter.py', '--root', str(root)])
+        except (OSError, ValueError, ImportError) as error:
+            print('Check error: ' + str(error), file=sys.stderr)
+            return 2
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-only', action='store_true')
-    parser.add_argument('--source-checked', action='store_true',
-                        help='reuse successful source checks for the same unchanged inputs')
-    parser.add_argument('--ci', action='store_true')
-    parser.add_argument('--rehash', action='store_true')
     parser.add_argument('--base')
     parser.add_argument('--head')
     parser.add_argument('--full', action='store_true')
     parser.add_argument('--plan', type=Path)
-    parser.add_argument('--aglib-source', type=Path,
-                        default=os.environ.get('QUILLEN_AGLIB_SOURCE'),
-                        help='local exact old/new Aglib Git objects for incremental assessment')
+    parser.add_argument('--aglib-source', type=Path, default=os.environ.get('QUILLEN_AGLIB_SOURCE'))
+    parser.add_argument('--tooling-root', type=Path)
+    parser.add_argument('--state', type=Path, default=os.environ.get('LEAN_CI_STATE'))
+    parser.add_argument('--progress', type=Path)
     parser.add_argument('--native-outputs', type=Path)
+    parser.add_argument('--rehash', action='store_true', help='compatibility: native graphs always rehash')
     args = parser.parse_args()
-    root = Path(__file__).resolve().parents[1]
     try:
-        if args.plan:
-            if args.base or args.head or args.full:
-                raise ValueError('--plan cannot be combined with --base/--head/--full')
-            plan = json.loads(args.plan.read_text())
-            if plan['head']:
-                modified = git(root, 'diff', '--name-only', plan['revision']).splitlines()
-                untracked = git(root, 'ls-files', '--others', '--exclude-standard', '--',
-                                'Quillen', 'QuillenTest', 'Tools', 'examples/downstream',
-                                *sorted(GLOBAL_INPUTS)).splitlines()
-                if git(root, 'rev-parse', 'HEAD').strip() != plan['revision'] or any(
-                        path.endswith('.lean') or path in GLOBAL_INPUTS
-                        for path in modified + untracked):
-                    raise ValueError('Checked-out Lean/check configuration differs from the selected head')
-            if plan != select(root, plan['base'], plan['head'], plan['full'],
-                              aglib_source=args.aglib_source):
-                raise ValueError('Selected scope is stale; regenerate the plan for these inputs')
-        else:
-            plan = select(root, args.base, args.head, args.full, aglib_source=args.aglib_source)
-        verify_assessed_inputs(root, plan)
-        if not args.source_checked:
-            for command in ([sys.executable, 'scripts/generate_imports.py', '--check'],
-                            [sys.executable, 'scripts/check_library_layout.py'],
-                            [sys.executable, 'scripts/check_placeholders.py']):
-                subprocess.run(command, cwd=root, check=True)
-            for test in plan['tooling_tests']:
-                subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s', 'scripts',
-                                '-p', test + '.py'], cwd=root, check=True)
-        if args.source_only:
-            return 0
-        if 'dependency_assessment' in plan:
-            from dependency_scope import verify_runtime
-            verify_runtime(root / '.lake/packages/Aglib', plan['dependency_assessment']['new'])
-        execute(root, plan, ci=args.ci, rehash=args.rehash or os.environ.get('QUILLEN_REHASH') == '1',
-                output=args.native_outputs)
-    except subprocess.CalledProcessError as error:
-        return error.returncode if error.returncode > 0 else 128 - error.returncode
-    except (OSError, ValueError, KeyError) as error:
-        print(f'Check failed: {error}', file=sys.stderr)
+        load_tooling(root, args.tooling_root)
+        from lean_ci.cli import load_application
+        application = load_application(root, Path('scripts/ci_adapter.py'), local=True)
+        application.adapter = type(application.adapter)(source_only=args.source_only, full=args.full,
+                                         head=args.head, aglib_source=args.aglib_source, scope_file=args.plan)
+        result = application.check(state=args.state, requested_base=args.base,
+                                   progress=args.progress, outputs=args.native_outputs)
+        print(json.dumps(result, indent=2))
+        return 0
+    except (OSError, ValueError, ImportError, subprocess.SubprocessError) as error:
+        print('Check error: ' + str(error), file=sys.stderr)
         return 2
-    return 0
 
 
 if __name__ == '__main__':
+    sys.dont_write_bytecode = True
     raise SystemExit(main())

@@ -18,6 +18,8 @@ GLOBAL_INPUTS = {'lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'lakef
 TOOL_TESTS = {
     'check.sh': ['test_check_script'],
     'check_run.py': ['test_check_script', 'test_cache_sources', 'test_check_run', 'test_check_scope'],
+    'ci_adapter.py': ['test_check_run', 'test_check_script', 'test_check_scope', 'test_cache_sources'],
+    'ci_policy.py': ['test_check_run', 'test_check_script'],
     'check_scope.py': ['test_check_script', 'test_check_scope'],
     'dependency_scope.py': ['test_check_scope'],
     'cache.sh': ['test_check_script', 'test_cache_ci', 'test_cache_sources'],
@@ -224,7 +226,7 @@ def select(root, base=None, head=None, full=False, *, aglib_source=None):
             {p: hashlib.sha256(text.encode()).hexdigest() for p, text in sorted(current.items())},
             sort_keys=True, separators=(',', ':')).encode()).hexdigest()
         checker_paths = ['scripts/check_scope.py', 'scripts/dependency_scope.py',
-                         'scripts/library_sources.py', 'scripts/check_run.py']
+                         'scripts/library_sources.py', 'scripts/check_run.py', 'scripts/ci_adapter.py', 'scripts/ci_policy.py']
         from dependency_scope import _source_input
         assessment['validation_source_sha256'] = {
             p: hashlib.sha256(content).hexdigest() if content is not None else None
