@@ -445,6 +445,8 @@ public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutO
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveDependentTransport
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteEdge
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteParameter
+public import
+  Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteParameterNaturality
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteSourceSheetAction
 public import
   Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteSourceSheetParameters
@@ -465,6 +467,8 @@ public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveWhis
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNodeTransport
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceProductNodes
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceReanchorAttachment
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceWeakZeroCone
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceWeakZeroSimplex
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceWhiskering
 public import Quillen.Waldhausen.SConstruction.Iterated.CompositionHomotopyNaturality
 public import Quillen.Waldhausen.SConstruction.Iterated.ConeFiberExcision
@@ -519,6 +523,7 @@ public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumTransformatio
 public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumZeroNaturality
 public import Quillen.Waldhausen.SConstruction.Iterated.ProjectionPasteLift
 public import Quillen.Waldhausen.SConstruction.Iterated.PushoutConeFiniteStructure
+public import Quillen.Waldhausen.SConstruction.Iterated.RealizationMixedWeakProduct
 public import Quillen.Waldhausen.SConstruction.Iterated.RealizationSimplexComposition
 public import Quillen.Waldhausen.SConstruction.Iterated.RelativeCylinder
 public import Quillen.Waldhausen.SConstruction.Iterated.RelativeHomotopyRealization
@@ -565,6 +570,7 @@ public import Quillen.Waldhausen.SConstruction.Iterated.SimplexLiftOperations
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexLiftPasting
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexLiftReassociation
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexLiftSquareOperations
+public import Quillen.Waldhausen.SConstruction.Iterated.SimplexMixedWeakProduct
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexParameterPaths
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexPathEmbedding
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexPrespectrum
@@ -572,6 +578,8 @@ public import Quillen.Waldhausen.SConstruction.Iterated.SimplexProductDiagram
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexTriangleLift
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexTriangleSourceTransport
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexTriangleWhiskering
+public import Quillen.Waldhausen.SConstruction.Iterated.SimplexWeakPrepend
+public import Quillen.Waldhausen.SConstruction.Iterated.SimplexWeakPrependLift
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexWhiskering
 public import Quillen.Waldhausen.SConstruction.Iterated.StableDetection
 public import Quillen.Waldhausen.SConstruction.Iterated.StableFunctoriality

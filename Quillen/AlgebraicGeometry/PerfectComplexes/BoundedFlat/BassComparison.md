@@ -138,6 +138,12 @@ are in [GlobalAuxiliaryParameterTelescopeSquares](GlobalAuxiliaryParameterTelesc
 and [GlobalAuxiliaryParameterTelescopeNull](GlobalAuxiliaryParameterTelescopeNull.lean).
 Their structural comparisons do not add compactness assumptions.
 
+The finite directed weak-zero construction retains this same canonical
+localization null before any proposed raw comparison. Its marked edge,
+whole normalization face and weak-first/target-isomorphism product are in
+[geometric connecting maps](GeometricBoundary.md#canonical-weak-zero-and-homotopy-null-comparison).
+These primitive families do not supply the full raw-row null square.
+
 ## Native current-stage full-open localization
 
 Let `f : P ⟶ Q` be an open immersion of schemes. The parameter Models in
@@ -326,10 +332,13 @@ classical interpretation remain separate.
 identity/composition cubes and objectwise second seed, the remaining
 coefficient overlap-cell attachment, and the integer-base raw construction
 on arbitrary schemes. In the latter construction, whole one-step evaluation
-naturality and the prescribed transition-identity square are constructed.
-The remaining mixed seed compatibility, scheme-arrow composition and
-coherent raw iteration have their distinct boundaries there. None is a
-premise of the strict/fine section-completion results in this guide.
+naturality, the prescribed initial mixed seed comparison and the
+transition-identity square are constructed. There is also a whole
+polynomial-span composition law and supported raw first-step objects with
+original Laurent seeds. The remaining cone/step composition, supported
+row/null comparison and coherent raw iteration have their distinct
+boundaries there. None is a premise of the strict/fine section-completion
+results in this guide.
 
 ## Telescope, localization map, and supported self-comparison
 
@@ -708,6 +717,9 @@ These additional names use the same objects, hypotheses, and original maps as th
 | `GlobalAuxiliaryParameterTelescopeSquares`, `GlobalAuxiliaryParameterTelescopeNull`, `ParameterAuxiliaryCurrentFiber`, `ParameterAuxiliaryCurrentLocalization` | [Global sections](#global-sections-and-coefficient-restriction) and [current-stage localization](#native-current-stage-full-open-localization) |
 | `currentNegativeConnecting_eq_original`, `basicConnecting_original_negative_square`, `boundedFlatCoefficientFineConnecting_perfectClass_sign` | [Original classes and geometric connecting maps](GeometricBoundary.md) |
 | `InputNaturality.stepHomotopy`, `InputIdentity.mapHomotopy`, `InputIdentitySeedSquare.square` | [Original raw evaluation](RawEvaluation.md) |
+| `InputSeedNaturality.comparison`, `InputCompositionSpan.homotopy` | [Mixed seed routes and span composition](RawEvaluation.md#mixed-evaluation-input-and-seed-routes) |
+| `GlobalSupportedRawBass.step`, `GlobalSupportedRawBass.transition`, `pullbackCompIso_two_routes` | [Supported raw first-stage rows](RawEvaluation.md#supported-raw-first-stage-rows) |
+| `InputWeakZero.family_null`, `InputWeakZeroProduct.native`, `homotopyFiberLiftNaturalityHomotopy` | [Canonical weak-zero and full null-square interfaces](GeometricBoundary.md#canonical-weak-zero-and-homotopy-null-comparison) |
 
 ## Upstream coefficient primitives
 

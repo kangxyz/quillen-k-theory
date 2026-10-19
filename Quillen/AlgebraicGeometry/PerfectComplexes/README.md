@@ -79,12 +79,14 @@ strict/fine/current/normalized interfaces.
   normalized-row lifts already have internal same-null localization,
   original negative-class comparisons and signed positive geometric formulas.
   Their full classical correspondence is the additional target.
-- Complete mixed seed/input/evaluation compatibility and scheme-arrow
-  composition for the integer-base raw construction, including any needed
-  higher coherence of the chosen source-null comparison. Its whole one-step
-  evaluation naturality, raw map identity and prescribed transition-identity
-  square are constructed. The separate coefficient raw overlap-cell and
-  coherent all-stage producer retain their own attachment obligations.
+- Complete the raw cone/step composition cube and higher compatibility of
+  the chosen input-null, identity and composition data. Whole one-step
+  evaluation naturality, the initial mixed seed relative comparison, raw map
+  identity, prescribed transition-identity square and polynomial-span
+  composition are constructed. The supported raw first stage has its actual
+  objectwise rows and seeds; raw row maps and the full localization-null
+  comparison remain separate. The coefficient overlap-cell and coherent
+  all-stage producer retain their own attachment obligations.
 - Compute the original Laurent `[T]` terminal operation and the actual
   O/O(-1) zero-locus class under the same native Phi inverse. A natural section
   must retain its proved sign. Keep possible Nil terms; classical Laurent
@@ -140,3 +142,7 @@ links the other source owners.
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientFinePerfectConnecting`, `CoefficientAuxiliaryFinePerfectConnecting` | Single-minus geometric boundary formulas on every original perfect class, including K₁ to supported K₀ |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterNormalizedBasicOriginalBoundary`, `ParameterAuxiliaryNormalizedRowBoundary` | Original negative groups and degree casts in intrinsic normalized-row boundary squares |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputNaturality`, `GlobalRawBassInputIdentitySeedSquare` | Whole raw one-step evaluation naturality and the prescribed transition-identity square |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedNaturality` | Relative comparison of the two original mixed input/evaluation/seed routes, with complete carrier faces and joins |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionSpan` | Whole polynomial-span composition with original terminal chart pauses; no cone/step composition law inferred |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawGeometry`, `GlobalSupportedRawRows`, `GlobalSupportedRawStep` | Actual qc-ambient open-pair charts and objectwise parameter-looped cones/seeds; the complete three-row wrappers require compact source and ambient, without compact auxiliary open or quasi-separatedness |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputWeakZero`, `GlobalBassEvaluationInputWeakZeroProduct` | Original directed weak-zero localization null and target-isomorphism postcomposition, with whole native recovery |

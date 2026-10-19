@@ -47,10 +47,13 @@ native current-stage and normalized-row localization, one-step raw evaluation,
 and the specified classical target. Basic and auxiliary same-null lifts,
 original negative-class squares and the single-minus positive geometric
 boundary formulas have their exact conditions in those owners. The remaining
-raw mixed/composition/iteration, classical forward-transition and whole-null
-correspondence must not be inferred from generic strict Model presentation
-interfaces. This is a scope distinction, not a substitute for the source
-statements or their acceptance evidence.
+raw cone/step composition and coherent iteration, supported raw row/null
+comparison, and classical forward-transition and whole-null correspondence
+must not be inferred from generic strict Model presentation interfaces.
+The initial mixed seed relative comparison and polynomial-span composition
+are constructed; supported raw charts, objectwise cones/seeds and finite
+directed weak-zero null families keep their own exact scope. This summary
+does not replace the source statements or their acceptance evidence.
 
 ## Verification
 

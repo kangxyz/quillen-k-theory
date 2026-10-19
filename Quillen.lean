@@ -952,6 +952,7 @@ public import Quillen.Aglib.RingTheory.RegularLocalRing.QuotientLifting
 public import Quillen.Aglib.Topology.Path.CarrierHalfPaths
 public import Quillen.Aglib.Topology.Path.EvaluationFactorExtraction
 public import Quillen.Aglib.Topology.Path.EvaluationOperations
+public import Quillen.Aglib.Topology.Path.FamilyExtension
 public import Quillen.Aglib.Topology.Path.HomotopyEvaluationTrans
 public import Quillen.Aglib.Topology.Path.HomotopyPathSlice
 public import Quillen.Aglib.Topology.Path.MappedProjectionRectangle
@@ -1290,6 +1291,8 @@ public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetNative
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetOverlap
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetOverlapReanchor
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.BassProjectionFourEdgeTargetSource
 public import
@@ -2390,16 +2393,93 @@ public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassE
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedCarrier
 public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedCarrierDesc
+public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedCornerNodes
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvalBinary
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvalBinaryEnds
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvalFace
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvalNullNative
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvalNullParam
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvalProduct
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvalRails
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvaluationCarrier
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvaluationConjugation
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvaluationNull
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvaluationNullChart
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvaluationNullCone
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvaluationNullRails
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvaluationNullUnit
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvaluationUnitNative
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvaluationUnitNerve
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvaluationUnitNodes
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedInputFace
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedInputNull
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedInputNullCells
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedInputNullParam
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedInputRails
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedInputUnit
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedInputUnitNodes
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedNaturality
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedPostFace
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedPostMap
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedPostNodes
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedPostNullSeams
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedPostProduct
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedPostRows
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedPostSourceSeam
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedPostTargetSeam
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedPostUnit
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedProductRails
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedProductSeams
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedRawAttachment
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedRawMap
 public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedRawTargetSeam
+public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedRawUnit
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedRoutes
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedSourceSeam
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedStrictAttachment
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedStrictFace
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedStrictMap
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedStrictNodes
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedStrictNullSeams
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedStrictTargetSeam
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedTransitionFace
 public import
@@ -2449,6 +2529,10 @@ public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputTriplePostNodes
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputTriplePreNodes
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputWeakZero
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputWeakZeroProduct
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationModelComposition
 public import
@@ -2513,6 +2597,47 @@ public import
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterTelescopeCells
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterTelescopeNull
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCharts
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionBottomNodes
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionBottomReferences
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionBottomSeams
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCarrierBottom
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCarrierCharts
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCarrierTop
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionChartNative
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionCharts
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionPolynomial
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionSpan
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalAttach
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalCells
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalColumns
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalProducts
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalRows
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalSeams
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTerminalSecond
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTopAssoc
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTopInternalNodes
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTopPieces
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTopVertex
+public import
+  Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTopWord
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputCompositionTransformations
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputDescNative
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputDescNodes
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalRawBassInputDescSimplex
@@ -2642,6 +2767,11 @@ public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterTelescopeCells
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedParameterTelescopeForget
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawCharts
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawGeometry
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawRows
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawSquare
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRawStep
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedRow
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedSections
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedTelescope
@@ -3178,6 +3308,8 @@ public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedPullbackForgetComparison
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedPullbackForgetIso
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedPullbackInputForgetIso
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedRawPullbackCoherence
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedRawPullbackTrack
 public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedReferenceReindex
 public import
   Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.SupportedReindexEqualityTransport
@@ -4888,6 +5020,7 @@ public import Quillen.Topology.HELP.HomotopyInvariance
 public import Quillen.Topology.HELP.IntervalEndpoints
 public import Quillen.Topology.HELP.Nullhomotopic
 public import Quillen.Topology.HELP.PairLifting
+public import Quillen.Topology.HELP.PathCubeExtension
 public import Quillen.Topology.HELP.PointCylinder
 public import Quillen.Topology.HELP.RelativeCylinder
 public import Quillen.Topology.HELP.RelativeInverse
@@ -5470,6 +5603,7 @@ public import Quillen.Topology.Prespectrum.FiberConnectivity
 public import Quillen.Topology.Prespectrum.FiberDetection
 public import Quillen.Topology.Prespectrum.FiberHomotopySquare
 public import Quillen.Topology.Prespectrum.FiberLiftConnecting
+public import Quillen.Topology.Prespectrum.FiberLiftHomotopyNaturality
 public import Quillen.Topology.Prespectrum.FiberLiftNaturality
 public import Quillen.Topology.Prespectrum.FiberNaturality
 public import Quillen.Topology.Prespectrum.FiberOmega
@@ -5577,6 +5711,7 @@ public import Quillen.Topology.Prespectrum.RelativeHomotopyFactorEvaluation
 public import Quillen.Topology.Prespectrum.RelativeHomotopyHorizontal
 public import Quillen.Topology.Prespectrum.RelativeHomotopyIntertwining
 public import Quillen.Topology.Prespectrum.RelativeHomotopyLevels
+public import Quillen.Topology.Prespectrum.RelativeHomotopyLevelsEvaluation
 public import Quillen.Topology.Prespectrum.RelativeHomotopyLoop
 public import Quillen.Topology.Prespectrum.RelativeHomotopyNullWordEvaluation
 public import Quillen.Topology.Prespectrum.RelativeHomotopyOperationEvaluation
@@ -6342,6 +6477,8 @@ public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveCutO
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveDependentTransport
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteEdge
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteParameter
+public import
+  Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteParameterNaturality
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteSourceSheetAction
 public import
   Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveFiniteSourceSheetParameters
@@ -6362,6 +6499,8 @@ public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNerveWhis
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceNodeTransport
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceProductNodes
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceReanchorAttachment
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceWeakZeroCone
+public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceWeakZeroSimplex
 public import Quillen.Waldhausen.SConstruction.Iterated.CommonReferenceWhiskering
 public import Quillen.Waldhausen.SConstruction.Iterated.CompositionHomotopyNaturality
 public import Quillen.Waldhausen.SConstruction.Iterated.ConeFiberExcision
@@ -6416,6 +6555,7 @@ public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumTransformatio
 public import Quillen.Waldhausen.SConstruction.Iterated.PrespectrumZeroNaturality
 public import Quillen.Waldhausen.SConstruction.Iterated.ProjectionPasteLift
 public import Quillen.Waldhausen.SConstruction.Iterated.PushoutConeFiniteStructure
+public import Quillen.Waldhausen.SConstruction.Iterated.RealizationMixedWeakProduct
 public import Quillen.Waldhausen.SConstruction.Iterated.RealizationSimplexComposition
 public import Quillen.Waldhausen.SConstruction.Iterated.RelativeCylinder
 public import Quillen.Waldhausen.SConstruction.Iterated.RelativeHomotopyRealization
@@ -6462,6 +6602,7 @@ public import Quillen.Waldhausen.SConstruction.Iterated.SimplexLiftOperations
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexLiftPasting
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexLiftReassociation
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexLiftSquareOperations
+public import Quillen.Waldhausen.SConstruction.Iterated.SimplexMixedWeakProduct
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexParameterPaths
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexPathEmbedding
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexPrespectrum
@@ -6469,6 +6610,8 @@ public import Quillen.Waldhausen.SConstruction.Iterated.SimplexProductDiagram
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexTriangleLift
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexTriangleSourceTransport
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexTriangleWhiskering
+public import Quillen.Waldhausen.SConstruction.Iterated.SimplexWeakPrepend
+public import Quillen.Waldhausen.SConstruction.Iterated.SimplexWeakPrependLift
 public import Quillen.Waldhausen.SConstruction.Iterated.SimplexWhiskering
 public import Quillen.Waldhausen.SConstruction.Iterated.StableDetection
 public import Quillen.Waldhausen.SConstruction.Iterated.StableFunctoriality
@@ -6577,4 +6720,4 @@ Use thematic facades or individual module imports for smaller dependencies.
 -/
 
 -- The import-only facade follows the discovered source graph.
-set_option linter.style.longFile 6700
+set_option linter.style.longFile 6900

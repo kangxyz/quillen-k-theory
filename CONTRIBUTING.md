@@ -90,9 +90,14 @@ lake build Quillen.KTheory.API
 ```
 
 Incremental validation also covers the applicable environment and text linters
-and relevant tests. During the task's final validation, after building the
-changed defining modules, run CI's default environment and native text linters
-on those modules with:
+and relevant tests. Normal incremental checks lint only added or modified local
+source modules, while compilation still covers affected providers, tests and
+clients and both trust audits retain their full selected coverage. Unmodified dependent modules remain in the build and test scope. Changed
+import-only facades retain their existing native text checks. Explicit
+comprehensive diagnostics and an initial baseline still lint all selected
+modules. During the task's final validation, after building the changed
+defining modules, run CI's default environment and native text linters on those
+modules with:
 
 ```sh
 lake env lean --run Tools/LintScoped.lean Quillen.KTheory.API

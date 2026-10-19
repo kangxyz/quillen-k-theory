@@ -40,6 +40,19 @@ Existing records in the table above remain the basis for their own identified
 source and runtime only. Source guides present the current objects and
 interfaces; these records do not claim the complete classical TT comparison.
 
+## Later checkpoint and dependency upgrade
+
+The [continuation record](TTCheckpointContinuation20261019.json) identifies
+the later 2026-10-19 archive, its faithful overlap merge, proof encoding
+repairs and the exact Aglib upgrade. It distinguishes source review, retained
+checks, fresh native checks and compiler output reuse. Resource and execution
+changes retain their own provenance; they do not alter the mathematical
+statements or close the remaining classical comparison.
+
+The second mathematical batch is published at the user's request while its
+remaining native validation continues. The continuation record distinguishes
+completed checks from pending compile, regression and foundation coverage.
+
 ## P1–P5 continuation record
 
 `TTContinuationChecks.json` identifies the 2026-10-15 selection for affine

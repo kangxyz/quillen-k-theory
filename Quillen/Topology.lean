@@ -288,6 +288,7 @@ public import Quillen.Topology.HELP.HomotopyInvariance
 public import Quillen.Topology.HELP.IntervalEndpoints
 public import Quillen.Topology.HELP.Nullhomotopic
 public import Quillen.Topology.HELP.PairLifting
+public import Quillen.Topology.HELP.PathCubeExtension
 public import Quillen.Topology.HELP.PointCylinder
 public import Quillen.Topology.HELP.RelativeCylinder
 public import Quillen.Topology.HELP.RelativeInverse
@@ -870,6 +871,7 @@ public import Quillen.Topology.Prespectrum.FiberConnectivity
 public import Quillen.Topology.Prespectrum.FiberDetection
 public import Quillen.Topology.Prespectrum.FiberHomotopySquare
 public import Quillen.Topology.Prespectrum.FiberLiftConnecting
+public import Quillen.Topology.Prespectrum.FiberLiftHomotopyNaturality
 public import Quillen.Topology.Prespectrum.FiberLiftNaturality
 public import Quillen.Topology.Prespectrum.FiberNaturality
 public import Quillen.Topology.Prespectrum.FiberOmega
@@ -977,6 +979,7 @@ public import Quillen.Topology.Prespectrum.RelativeHomotopyFactorEvaluation
 public import Quillen.Topology.Prespectrum.RelativeHomotopyHorizontal
 public import Quillen.Topology.Prespectrum.RelativeHomotopyIntertwining
 public import Quillen.Topology.Prespectrum.RelativeHomotopyLevels
+public import Quillen.Topology.Prespectrum.RelativeHomotopyLevelsEvaluation
 public import Quillen.Topology.Prespectrum.RelativeHomotopyLoop
 public import Quillen.Topology.Prespectrum.RelativeHomotopyNullWordEvaluation
 public import Quillen.Topology.Prespectrum.RelativeHomotopyOperationEvaluation

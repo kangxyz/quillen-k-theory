@@ -32,6 +32,63 @@ comparison assumes weakness of the original canonical fiber map. The
 minus comes from the original level-one stabilization and loop transpose,
 without changing either boundary or inserting a degree-dependent class twist.
 
+## Canonical weak-zero and homotopy null comparison
+
+The auxiliary localization null is the reversal of the actual objectwise
+weak transformation `ParameterAuxiliarySupport.zeroToFull`. The construction
+requires objectwise weakness; it assumes no isomorphism from zero to the
+composite.
+[GlobalBassEvaluationInputWeakZero](GlobalBassEvaluationInputWeakZero.lean)
+keeps this directed edge separate from the full isomorphism-reference
+nodes. For an open immersion, arbitrary auxiliary open and scheme
+parameter, `InputWeakZero.null_native` and `family_null` recover the entire
+original `fullNull`, including its clock and level-zero loop coordinate.
+The old finite normalization simplex survives as a whole face. The
+specified affine cone is based and structure-compatible with independent
+height and normalization coordinates. Its null-slice coefficient and
+Laurent equations do not assert whole-family naturality for independently
+chosen normalization nodes.
+
+[GlobalBassEvaluationInputWeakZeroProduct](GlobalBassEvaluationInputWeakZeroProduct.lean)
+postcomposes that original null with a supplied independently varying
+target isomorphism-reference family. `InputWeakZeroProduct.native` uses
+the actual realization-grid parameter, preserving both native parameters
+and the separate structure time. The weak first coordinate is monotone;
+only the isomorphism second coordinate can reset along the grid. The
+construction never inverts the weak transformation. It supplies neither
+a weak-by-weak product nor arbitrary source-normalization precomposition,
+and it does not identify the realization-product interior with the
+separately selected affine cone.
+
+For homotopy-commuting diagrams, the generic
+[FiberLiftHomotopyNaturality](../../../Topology/Prespectrum/FiberLiftHomotopyNaturality.lean)
+retains explicit nulls `N : f ≫ r ~ 0` and `N' : f' ≫ r' ~ 0` for
+`f : S ⟶ A`, `r : A ⟶ O` and their primed counterparts. With comparisons
+`s : S ⟶ S'`, `a : A ⟶ A'`, `o : O ⟶ O'`, its arrow homotopies are
+`Hf : f ≫ a ~ s ≫ f'` and `Hr : a ≫ r' ~ r ≫ o`.
+It additionally takes a whole null square `Q`: the prescribed second-arrow
+track followed by the postcomposed `N` is compared with the precomposed
+`N'`, along `Hf` followed by `r'` and the constant zero edge.
+
+`homotopyFiberLiftNaturalityHomotopy` has exactly `Hf` as its first
+coordinate and `Q` as its fiber-path coordinate. The four complete edge
+equations, joint continuity, basedness and structure compatibility are
+part of `Q`; comparison, null-path and structure times remain independent.
+Three stable comparisons transport stability of the specified lifts.
+`stableFiberLiftConnecting_homotopySquare` gives their original signed
+boundary equation in degree `d : ℤ`, assuming the two actual lifts are
+invertible in that degree. Writing `δ_d, δ'_d` for those boundaries, it is
+`δ_d ≫ H_d(s) = H_(d+1)(o) ≫ δ'_d`, with `H_d` also denoting the induced
+map on stable groups. The construction neither chooses replacement inverse
+tracks nor constructs an application-specific null square.
+
+The finite weak-zero recipes recover the canonical localization null at
+their Model interface. A comparison with the supported raw cones and
+seeds still requires the actual whole row-null square, including any
+finite-stage and telescope-cylinder equations. Equality of induced stable
+maps, scalar carrier extension or the objectwise Bass `sourceNull` does
+not supply that square.
+
 ## Basic positive geometric boundary
 
 Fix `R : CommRingCat.{u}`, `P,Q : Over (Spec R)` and `f : P ⟶ Q` with

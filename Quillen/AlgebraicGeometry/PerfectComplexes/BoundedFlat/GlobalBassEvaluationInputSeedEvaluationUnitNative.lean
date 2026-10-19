@@ -97,6 +97,13 @@ theorem family_eq (n : ℕ) :
   rintro ⟨s, t, x⟩
   exact native f r n s t x
 
+/-- The same common family is the entire original inner intertwining comparison. -/
+theorem raw_family_eq (n : ℕ) :
+    family f r n = ((rawPasting f r).level n).toContinuousMap := by
+  apply ContinuousMap.ext
+  rintro ⟨s, t, x⟩
+  exact raw_native f r n s t x
+
 /-- The independent original structure coordinate is preserved throughout the whole square. -/
 theorem family_structure (n : ℕ) (s t v : unitInterval)
     (x : (prespectrum (globalModel.obj (op Y))).space n) :

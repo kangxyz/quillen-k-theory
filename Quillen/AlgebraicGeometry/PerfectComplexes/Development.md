@@ -88,13 +88,18 @@ interfaces do not construct a recursive producer for every raw cell tree.
 
 The integer-base route constructs raw scheme-arrow maps, their source-null
 and unit comparisons, whole one-step evaluation naturality, and raw map
-identity. `GlobalRawBassInputIdentitySeedSquare.square` also constructs the
+identity. `GlobalRawBass.InputIdentitySeedSquare.square` also constructs the
 prescribed higher square for the chosen transition-input identity homotopy
-and fixed whole raw map identity. The remaining mixed
-`longRoute.RelHomotopy shortRoute`, higher coherence of the separately chosen
-`InputNull.originalNullComparison`, scheme-arrow composition and coherent
-all-stage iteration remain distinct. The prescribed transition-identity square is therefore part of the available
-raw one-step interface.
+and fixed whole raw map identity.
+`GlobalBassEvaluation.InputSeedNaturality.comparison` constructs the original
+`longRoute.RelHomotopy shortRoute` from all five native faces and complete
+whole-word joins. `GlobalRawBass.InputCompositionSpan.homotopy` gives the
+actual polynomial-span composition, including its chart pauses. The
+terminal-column, row and seam identities construct the full second H1 half;
+the first/second join, remaining external seams and complete cone/step
+composition cube remain open. Higher coherence of the separately chosen
+`InputNull.originalNullComparison` and coherent all-stage iteration retain
+their own targets.
 
 A literal prespectrum-valued functor and strict transformations are inputs
 to `strictDiagramIterate`. Homotopy identity and composition data do not
@@ -104,6 +109,27 @@ midpoint. A comparison through the raw route must cover every required
 ambient, open and auxiliary-supported stage with its actual transition and
 whole null. These obligations do not retract the internal current-stage
 or normalized-row localization theorems.
+
+The supported raw construction fixes the original integer-base charts on
+qc-ambient open pairs. For an open immersion `j : U ⟶ X` with compact
+`U,X` and arbitrary `T : X.Opens`, its three vanishing opens are
+`T ⊔ j.opensRange`, `T`, and `j ⁻¹ᵁ T`. Its split geometric tracks,
+original overlap pushout, parameter-looped cone and forward Laurent seed
+are objectwise constructions, without compactness of `T`, quasi-separatedness,
+flatness or an extra Cartesian premise. Categorical triple-pullback
+associativity preserves the actual supported arrows but does not provide
+relative R2 pastings or raw functoriality. Raw row maps, evaluation/seed
+naturality and the original whole localization-null comparison remain to
+be constructed.
+
+The canonical localization `fullNull` itself has a finite directed weak-zero
+realization, with exact null recovery and target-isomorphism postcomposition.
+Its weak zero-to-composite edge must not be replaced by an isomorphism node.
+Generic path-family extension extends an actual carrier-valued boundary;
+it does not lift an arbitrary native family or supply its attachments.
+Generic fiber-lift naturality still takes the complete null square `Q`.
+These supplied primitives therefore do not constitute an all-successor
+recipe or the supported raw same-null comparison.
 
 ## Classical object and same-null correspondence
 
@@ -159,6 +185,9 @@ unless supplied by their own identified arguments.
 | --- | --- |
 | `ParameterFullCurrentNull.currentLift_integer_isStableEquivalence`, `ParameterAuxiliaryCurrentFiber.currentLift_integer_isStableEquivalence` | [Current-stage and auxiliary localization](BoundedFlat/BassComparison.md#native-current-stage-full-open-localization) |
 | `InputNaturality.stepHomotopy`, `InputIdentity.mapHomotopy`, `InputIdentitySeedSquare.square` | [Original raw evaluation](BoundedFlat/RawEvaluation.md) |
+| `InputSeedNaturality.comparison`, `InputCompositionSpan.homotopy` | [Mixed seed routes and partial raw composition](BoundedFlat/RawEvaluation.md#mixed-evaluation-input-and-seed-routes) |
+| `GlobalSupportedRawBass.step`, `GlobalSupportedRawBass.transition` | [Objectwise supported raw first stage](BoundedFlat/RawEvaluation.md#supported-raw-first-stage-rows) |
+| `InputWeakZero.family_null`, `InputWeakZeroProduct.native`, `stableFiberLiftConnecting_homotopySquare` | [Canonical null and its full-square comparison interface](BoundedFlat/GeometricBoundary.md#canonical-weak-zero-and-homotopy-null-comparison) |
 | `currentNegativeConnecting_eq_original`, `basicConnecting_original_negative_square` | [Original negative classes and boundaries](BoundedFlat/GeometricBoundary.md#original-negative-classes-and-boundaries) |
 | `boundedFlatCoefficientFineConnecting_perfectClass_sign`, `boundedFlatCoefficientAuxiliaryFineConnecting_perfectClass_sign` | [Signed original perfect-class formulas](BoundedFlat/GeometricBoundary.md) |
 | `ConnectingLoopPathClass`, `Quillen.BassLaurentUnitBoundary.scalar_forward_changeWeak_boundary`, `polynomialScalarForwardKOneClass_restrict_rankOne`, `laurentGlobalUnit` | [Original Laurent boundary and splitting](#original-laurent-boundary-and-splitting) |

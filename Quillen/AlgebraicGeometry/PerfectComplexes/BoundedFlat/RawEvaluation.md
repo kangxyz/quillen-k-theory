@@ -133,8 +133,37 @@ producer for every raw cell tree. Likewise,
 [NativeParameterEvaluation](../../../Topology/Prespectrum/NativeParameterEvaluation.lean)
 preserves supplied whole-value path and homotopy lifts under an arbitrary
 evaluator; it neither constructs a geometric lift nor identifies unevaluated
-carrier nodes from equality of their values. Contractibility does not replace
-a missing prescribed attachment or a previously chosen filler.
+carrier nodes from equality of their values.
+
+[FamilyExtension](../../../Aglib/Topology/Path/FamilyExtension.lean) curries
+an actual scalar extension on a closed parameter subset with both fixed
+endpoint caps into a path family, recovering each complete supplied side.
+The endpoints may differ, and no separation hypothesis on the target is
+required. [PathCubeExtension](../../../Topology/HELP/PathCubeExtension.lean)
+uses scalar boundary extension in dimension `n+1` to extend fixed-endpoint
+path families in dimension `n`; path time is coordinate zero and the old
+cube coordinates remain the tail. The scalar extension input is available
+for the actual full-reference isomorphism-node nerve in
+`CommonReferenceNerveCubeExtension.exists_cube_extension`, by its contraction
+at the identity-reference node and boundary-inclusion HEP. Thus a supplied
+continuous boundary path family in that carrier extends with exact side
+recovery, including the empty boundary of a zero-dimensional cube. This does not lift an
+arbitrary native family into the carrier, prove its full dependent-node
+attachments, or recover prescribed native values of a newly selected
+interior. Those data remain part of each geometric application.
+
+[BassProjectionFourEdgeTargetOverlapReanchor](BassProjectionFourEdgeTargetOverlapReanchor.lean)
+keeps the complete 31-node H0 target overlap under a reference change
+`δ : E'.functor ≅ E.functor`. `nodes_reanchor` includes the original anchors;
+`overlap_reanchor` and `cell_reanchor` preserve both old times and every
+specified continuous overlap clock. `overlap_reanchor_family` retains an
+arbitrary external parameter family, without compactness or local compactness
+of that parameter space. Its supplier
+[CommonReferenceNerveFiniteParameterNaturality](../../../Waldhausen/SConstruction/Iterated/CommonReferenceNerveFiniteParameterNaturality.lean)
+takes a full dependent-node square, proved here by `pair_whiskering`.
+Neither equality after native evaluation nor a choice of new filler enters
+these identities. The polynomial attachment sectors and whole target-cone
+action remain separate constructions.
 
 ## Integer-base raw objects on arbitrary schemes
 
@@ -210,6 +239,35 @@ strictBass.map g.op ≫ stepEvaluation X
 homotopy. Comparison time, loop time, degree-zero input-loop time and spectrum
 structure time remain independent.
 
+## Mixed evaluation, input and seed routes
+
+For every scheme arrow `g : X ⟶ Y`,
+[GlobalBassEvaluationInputSeedNaturality](GlobalBassEvaluationInputSeedNaturality.lean)
+constructs `InputSeedNaturality.comparison g` with the exact type
+`(InputSeedWords.longRoute g).RelHomotopy (InputSeedWords.shortRoute g)`.
+The long route is `inputFirst.trans (seedSecond.trans transitionThird)`;
+the short route is `seedFirst.trans evaluationSecond`. These are the
+previously chosen input, evaluation and seed homotopies, with the original
+strict-seed endpoint transport and half/quarter clocks.
+
+`InputSeedRoutes.surfaces` constructs the six-face
+boundary from five complete native carrier surfaces and their five whole
+word joins A–E. Its input, postcomposition, strict-preinput, evaluation and
+transition faces retain the ordinary and shifted reference anchors and both
+separate tips. The raw-post face keeps its original square and cone-cylinder
+halves. The moving evaluation face keeps the binary-normalization and
+source-null halves. All dependent-node and anchor equalities are proved
+before native evaluation.
+
+`long_native` and `short_native` recover both entire routes after the
+actual positive-cone inclusion. The mapped-relative extension then gives
+the comparison, with no caller-supplied face agreement, square or filler.
+`comparison_apply` retains independent comparison, route and seed/loop
+coordinates and the separate prespectrum structure time, including level
+zero. This closes the prescribed initial mixed seed comparison. It is not
+an all-stage naturality or a higher identity/composition law for the
+separately chosen raw input-null comparison.
+
 ## Prescribed global identity square and remaining coherence
 
 [GlobalRawBassInputIdentityComparison](GlobalRawBassInputIdentityComparison.lean)
@@ -229,16 +287,123 @@ whole routes from six compatible carrier faces, descends their original
 null clocks and includes the resulting positive family into that fixed
 `mapHomotopy`. This transition-identity square is a constructed interface.
 
-Several further compatibilities remain distinct. The mixed
-`longRoute.RelHomotopy shortRoute` must compare the already selected seed and
-input/evaluation routes. The identity square above does not export higher
-coherence of the separately chosen `InputNull.originalNullComparison`.
-Scheme-arrow composition, higher seed compatibility, a coherent arbitrary
-raw-stage construction, comparison with the coefficient raw stage, and the
-forward-transition and same-null classical bridges must retain their own
-specified maps and tracks. Neither an arrowwise homotopy nor an objectwise
-stable equivalence permits `strictDiagramIterate` to be applied to a raw
-assignment lacking literal functor and transformation laws.
+## Span composition and the remaining cone boundary
+
+For composable `f : X ⟶ Y` and `g : Y ⟶ Z`,
+[GlobalRawBassInputCompositionSpan](GlobalRawBassInputCompositionSpan.lean)
+constructs `InputCompositionSpan.homotopy` between the actual maps
+
+```text
+spanMap (f ≫ g)  ~  spanMap g ≫ spanMap f.
+```
+
+The first half moves the three original vertices through their geometric
+composition rectangle. The second is the reverse of the specified
+five-piece span reassociation. The two chart formulas therefore retain
+an explicit terminal pause. `homotopy_cylinder_lower`,
+`homotopy_cylinder_upper` and `homotopy_structure` retain the complete
+cylinder values and an independent structure time.
+
+`GlobalRawBassInputCompositionPolynomial` and
+`GlobalRawBassInputCompositionTransformations` provide the original
+polynomial and transformation composition squares.
+`GlobalRawBassInputCompositionCharts` gives both complete chart squares.
+The `CarrierCharts`, `CarrierBottom`, `BottomSeams` and `CarrierTop` owners
+supply the direct H0 face, two chart faces, Laurent-composition bottom and
+whole span-composition top, with the proved bottom/chart joins and original
+top clocks. These five faces do not form the complete cone comparison cube.
+
+The terminal attachments and cells recover four original H1 parameter
+regions. [GlobalRawBassInputCompositionTerminalColumns](GlobalRawBassInputCompositionTerminalColumns.lean)
+proves `InputCompositionTerminalColumns.column_nodes`, identifying all five full nodes of the postcomposed polynomial column with
+the product column. `InputCompositionTerminalRows.row_nodes` identifies the five product-row
+nodes with the precomposed input row, including their anchors.
+`InputCompositionTerminalSeams.plus_middle` and `minus_middle` are entire carrier edge
+equalities. [GlobalRawBassInputCompositionTerminalSecond](GlobalRawBassInputCompositionTerminalSecond.lean)
+uses them to glue the positive product, input surface and reversed inverse
+product into the complete second H1 half. Its `face_native` keeps the
+original half/quarter/quarter overlap allocation.
+
+The join between the first and second H1 halves and the remaining external
+cube seams must still be proved. The available node equalities, native
+region formulas and whole second half do not supply the complete H1 face,
+six-face comparison cube or raw cone/step composition law.
+
+## Supported raw first-stage rows
+
+[GlobalSupportedRawGeometry](GlobalSupportedRawGeometry.lean) uses the actual
+integer-base polynomial and Laurent products on
+`A : Scheme.QuasiCompactOpenPairs.{u}`. This pair category requires only
+compactness of the ambient scheme. Its four maps are the existing
+projection, Laurent projection, positive chart and inverse chart. Their
+whole underlying arrows are those of `GlobalIndex`, and the inverse-image
+projection squares are proved pullbacks.
+
+For an open immersion `j : U ⟶ X` with compact `U` and `X`, and arbitrary
+`T : X.Opens`, [GlobalSupportedRawRows](GlobalSupportedRawRows.lean) forms
+the three rows vanishing on `T ⊔ j.opensRange`, on `T`, and on `j ⁻¹ᵁ T`.
+The pair arrows have the contravariant directions needed for support
+enlargement and restriction. Polynomial and Laurent products remain in
+this same pair category. No compactness of `T`, quasi-separatedness,
+flatness of a scheme arrow or extra Cartesian-square premise is required
+for these objects and charts.
+
+[GlobalSupportedRawCharts](GlobalSupportedRawCharts.lean) realizes the
+original supported geometric pullbacks as Model arrows. Its
+`plusCompositionIso` and `minusCompositionIso` retain the pair-equality
+transport, supported composition and all three original chosen-zero
+normalizations. The four evaluation isomorphisms keep both evaluation
+normalizations. Whole support forgetting uses faithful categorical
+inclusion, rather than injectivity of a K-group map.
+
+[SupportedRawPullbackTrack](SupportedRawPullbackTrack.lean) identifies the
+realized maps with the canonically normalized exact pullbacks.
+`compositionHomotopy` is the original composition track followed by binary
+normalization. `compositionComparison_whole_level` compares this split
+track with the total normalized transformation as a complete two-time
+continuous map. Its boundary retyping uses
+[RelativeHomotopyLevelsEvaluation](../../../Topology/Prespectrum/RelativeHomotopyLevelsEvaluation.lean),
+which preserves that whole map after the original triangle is constructed.
+[SupportedRawPullbackCoherence](SupportedRawPullbackCoherence.lean)
+proves equality of the two supported categorical triple-pullback routes
+for arbitrary three composable open-pair arrows, retaining the functor
+associator and scheme-composition transport. Faithful support forgetting
+reduces it to the original ambient equation. This categorical equality
+is not a relative R2 pasting or a raw prespectrum functor law.
+
+[GlobalSupportedRawSquare](GlobalSupportedRawSquare.lean) uses the reversed
+positive split track followed by the forward inverse-chart split track as
+its overlap. The original reduced homotopy pushout and its Laurent
+comparison retain this full overlap cylinder.
+[GlobalSupportedRawStep](GlobalSupportedRawStep.lean) defines
+`GlobalSupportedRawBass.step A : LoopPrespectrum.{u+1}` by parameter
+looping its mapping cone. `sourceNull_apply` retains the positive split
+track followed by the literal cone null, each with its original half-clock.
+The unit is the forward `GlobalSchemeLaurentTrack.laurentScalar` on the
+actual supported pullback. `pullbackUnitIso_hom_original` recovers its
+whole termwise component. The objectwise `transition` uses exactly this
+unit and source null, and `transition_apply` retains the full conjugated
+loop word.
+
+These are first-step objects and seeds on the three rows and their nested
+products. Raw maps for the actual row arrows, supported evaluation/seed
+naturality, the original localization-null comparison and a uniform
+successor remain additional constructions. This Bass `sourceNull` differs
+from the canonical localization `fullNull`; the latter's directed weak-zero
+interface is described in
+[geometric connecting maps](GeometricBoundary.md#canonical-weak-zero-and-homotopy-null-comparison).
+
+## Remaining higher coherence
+
+The initial mixed seed comparison and prescribed transition-identity square
+above are constructed. Higher coherence of the separately chosen
+`InputNull.originalNullComparison`, the complete cone/step composition cube,
+a same-convention raw second stage and a coherent arbitrary-stage producer
+still require their specified data. Comparison with the coefficient raw
+stage and the classical forward-transition and whole-null diagrams remains
+separate. Neither an arrowwise homotopy nor an objectwise stable equivalence
+permits `strictDiagramIterate` to be applied to a raw assignment lacking
+literal functor and transformation laws.
 
 Source and validation identities are recorded in the
 [evidence registry](../../../../docs/evidence/README.md#tt-source-and-validation-records).

@@ -137,7 +137,7 @@ if Path.cwd().name == 'downstream':
         self.assertIn('assign its regression selection', result.stderr)
         self.assertFalse(self.log.exists())
 
-    def test_provider_lint_precedes_affected_consumers_and_tests(self):
+    def test_changed_provider_lint_precedes_affected_builds_without_unchanged_lint(self):
         self.write('Quillen/P.lean', 'def p := 2\n')
         result = self.run_check('--rehash')
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -152,15 +152,12 @@ if Path.cwd().name == 'downstream':
         self.assertIn('--run', commands[2])
         lints = [cmd for cmd in commands if '--run' in cmd]
         self.assertEqual([cmd[cmd.index('--run') + 2:] for cmd in lints],
-                         [['Quillen.P'], ['Quillen.C'], ['QuillenTest.T'], ['Consumer.Use']])
-        for module, lint_command in zip(
-                ('Quillen.P', 'Quillen.C', 'QuillenTest.T', 'Consumer.Use'), lints):
-            self.assertLess(commands.index(['--rehash', 'build', module]),
-                            commands.index(lint_command))
-        self.assertLess(commands.index(lints[0]),
-                        commands.index(['--rehash', 'build', 'Quillen.C']))
-        self.assertLess(commands.index(lints[1]),
-                        commands.index(['--rehash', 'build', 'QuillenTest.T']))
+                         [['Quillen.P']])
+        self.assertLess(commands.index(['--rehash', 'build', 'Quillen.P']),
+                        commands.index(lints[0]))
+        for module in ('Quillen.C', 'QuillenTest.T', 'Consumer.Use'):
+            self.assertLess(commands.index(lints[0]),
+                            commands.index(['--rehash', 'build', module]))
         self.assertNotIn('Quillen.U', str(commands))
         self.assertNotIn(['--rehash', 'build', 'Quillen'], commands)
         self.assertFalse(any('QuillenTest/T.lean' in cmd for cmd in commands))

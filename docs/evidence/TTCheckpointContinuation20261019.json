@@ -1,0 +1,428 @@
+{
+  "schema_version": 1,
+  "kind": "TT checkpoint continuation and incremental native validation",
+  "date": "2026-10-20",
+  "status": "Mathematical source integrated at user request; remaining native validation in progress",
+  "source": {
+    "archive": "quillen-tt-8273990-checkpoint-20261019T1255Z.tar.gz",
+    "archive_sha256": "7efa24658f8cf2df13106e2db8144e8c863cd884f8be5cfea08e4ffb9b352cb1",
+    "archive_mathematical_baseline": "8273990b7977bd87edfe94cd2be91dec64de79aa",
+    "prior_source_config_vector_sha256": "2aa5c09c49da054f422b31d6e1d135a9e25ae3132eb9362c725ff84eae32d3e7",
+    "selection": {
+      "new_library_leaves": 87,
+      "changed_prior_library_leaves": 1,
+      "unchanged_merged_overlap_leaves": 2,
+      "new_test_leaves": 16,
+      "new_downstream_client_leaves": 16,
+      "changed_prior_downstream_client_leaves": 0,
+      "incoming_scoped_final_library_modules": 551,
+      "newly_finalized_prior_matching_modules": 20,
+      "reviewed_frontier_leaves_outside_archive_final_scope": 7
+    },
+    "overlap_merge": {
+      "manifest_sha256": "c1f87738785059d0e3ff972bf05848e02c76dd00b3d4cc55d4e5fa0ecb8eea9f",
+      "changed_module": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalBassEvaluationInputSeedEvaluationUnitNative.lean",
+      "changed_sha256": "66d600cbfcb7bfb972266256793fe2f1ca6d74e143d7c68bd91ae50e4ae31c60",
+      "change": "Add incoming raw_family_eq verbatim. Preserve every prior accepted public declaration, proof, canonical value, hypothesis and import, plus all prior test-name repairs. CornerNodes and RawUnit keep their validated prior bytes."
+    },
+    "excluded": [
+      "All project/tmp drafts and scratch history",
+      "Incoming generated facades, tooling, configuration and historical validation manifests"
+    ],
+    "prior_client_style_repair_absorbs_incoming_change": {
+      "path": "examples/downstream/Consumer/GlobalRawBassInputIdentitySeedSquare.lean",
+      "before": "a7be15d4a18976ed713891a3f1cf3c51e4681ecc1d686c35ce6c6f7566c731ea",
+      "after": "6a68c3c6b88a45ce829e1e42ba59378ba0f8af0d359c957ce08e0734b60d5175",
+      "old": "actual_square",
+      "new": "actualSquare",
+      "occurrences": 5,
+      "scope": "Identifier-only client definition and its intra-file references; all other bytes unchanged. Exactly matches incoming1255 client."
+    },
+    "integration_parent": "55ddf56a71cc37c461a6f1e817e84f9250dcaffc",
+    "source_config_vector": {
+      "paths": 7295,
+      "sha256": "2e121340730569a18295434779078f8fd009b0780569999046bf52310eac49b6",
+      "algorithm": "SHA256 of the UTF-8 concatenation of entries sorted by repository-relative path: path + NUL + lowercase SHA256(file bytes) + LF. Paths: Quillen.lean, QuillenTest.lean; all recursive *.lean under Quillen/, QuillenTest/, Tools/, examples/downstream/, excluding .lake directories; and lake-manifest.json, lakefile.toml, lean-toolchain at root and examples/downstream/."
+    },
+    "proof_encoding_repairs": [
+      {
+        "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassProjectionFourEdgeTargetOverlapReanchor.lean",
+        "incoming_sha256": "b9c3af758c431f8de400b9296fa11738be45324f4009aa566ed558568c8db486",
+        "accepted_sha256": "310df4fe2081e3d267c0aaeeffb067427608f01d10a0029f98d9e0ce069b5dff",
+        "default_heartbeat_budget": 200000,
+        "proof": "Private abstract full-node parameter transport bridge; concrete overlap unfolded once, all31node equalities supplied by original nodes_reanchor. Publicstatements/data/imports/hypotheses unchanged.",
+        "targeted_build_run": "remote-de8884783c3b4fe0afcc3029ff3ca63f",
+        "targeted_source_content_sha256": "28fe9e313bd2f99d26179ed4a05483467a3bdaa7b8896895e33a8a5ff653e8eb",
+        "exit_code": 0,
+        "group_closed": true,
+        "rejected_budget_trial": "Default200000 and finite declaration-local400000 both timed out;400000 removed. Only typedbridge repair retained.",
+        "targeted_dependency": "16aa08a90198d76be0bec47dd640b5c992acd9d7; latest52e coverage pending"
+      },
+      {
+        "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/SupportedRawPullbackCoherence.lean",
+        "incoming_sha256": "c66393a6db5d536f12ed81dcbc8295bdfdc912f17bd62f690bfa1d626c6adc88",
+        "accepted_sha256": "d9de3a1de35974e5ac189f4a7b74f63ced0e8df11b3f35f31b3d3794bc3394e6",
+        "default_heartbeat_budget": 200000,
+        "proof": "Add private pullback_forget_obj proved by rfl. Extend only the faithful-forgetting simpa normalization with Functor.comp_obj, pullback_forget_obj, ObjectProperty.FullSubcategory.comp_hom and Arrow.comp_right. Apply the same ambient boundedFlatPerfectPullbackCompIso_two_routes at the same forgotten original input object.",
+        "public_statement_and_associator_transport_unchanged": true,
+        "added_public_hypotheses": [],
+        "targeted_build_run": "remote-4a283e8e9a3044ec9893d0409af5bf21",
+        "targeted_source_content_sha256": "68171bf962107f5977c1aaa20511ce620be50f5dfeff84bcbe59ca3d098596e4",
+        "exit_code": 0,
+        "group_closed": true,
+        "targeted_dependency": "16aa08a90198d76be0bec47dd640b5c992acd9d7; latest52e coverage pending"
+      },
+      {
+        "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalRawBassInputCompositionTerminalColumns.lean",
+        "incoming_sha256": "1a3acc0e1561acdffbcef9d3ff2d58ffc734708e7402c050498bc6b61689cc93",
+        "accepted_sha256": "b50a48b802036a0e9aa395ce500b929a346836d4bc08591d34a6c29bb7fe3a5e",
+        "default_heartbeat_budget": 200000,
+        "proof": "Private smallIso_transport_trans over abstract functors composes the two original equality transports and the original complete composition isomorphism. The public polynomial_anchor_normal proof supplies the original Laurent postcomposition of hk Z, exact DoubleSquareTrack.middle_eq, columnGeom and boundedFlatNormalizedPullbackCompIso. It bypasses conversion of ProjectionReference.nodes ... 5.",
+        "public_statements_and_canonical_data_unchanged": true,
+        "targeted_dependency": "52e09db47998f139064acf48a2d3a64494d0dd9a",
+        "targeted_build_run": "remote-ba2628e8d7c44a54b4f2ac523ace2886",
+        "targeted_source_content_sha256": "507936163b1d124464ff94df03466cd543e989de5becb699508fed7415d02b2b",
+        "exit_code": 0,
+        "group_closed": true,
+        "superseded_candidate": "0f853ed22435953872abf1b1f26fb36745f7a146b9d7612eeb7451c397c1213c"
+      }
+    ],
+    "validation_git_label": "d9a38d0077b5fd1a33dd12bf2df1fdf7753ccc6b plus frozen dirty/new mathematical and control bytes; subsequent55dd tooling-only commit preserves every running input hash."
+  },
+  "ordinary_source_review": {
+    "reports": {
+      "raw": {
+        "report_sha256": "4720cafbba6adbd343c9c4e2c3ac160523643cb3a025699625b4427d961f0246",
+        "coverage_sha256": "e21d4832a0dd1e5033e4ff12d27f5bee081baf356698c2614f48cc4daf6cabeb",
+        "verdict": "Positive ordinary mathematical/source-interface review; no established-status action; native validation remains separate."
+      },
+      "geometry": {
+        "report_sha256": "4b08ce81cad6c058c1d254179a918ef2f3932c5aad3d1bd302ff42c4e074f33a",
+        "coverage_sha256": "b57223ef6d07ec8c39e8782eb3e8b46bb44232a9dbd1b145d98849eae399dfd5",
+        "verdict": "Positive ordinary mathematical/source-interface review; no established-status action; native validation remains separate."
+      },
+      "supported": {
+        "report_sha256": "3c336b25dec394f83794e0236c30ae73e411f40ef42fe5a03056d504ffc2ef11",
+        "coverage_sha256": "ec706da643d2bebca83388e9a700aed92bb5fe5c08f07b20d0c0f790f9022515",
+        "verdict": "Positive ordinary mathematical/source-interface review; no established-status action; native validation remains separate."
+      }
+    },
+    "independent_hash_rows_reconciled": 175,
+    "all_90_candidate_production_paths_covered": true,
+    "milestones": [
+      "Exact prescribed initial longRoute.RelHomotopy shortRoute, with five whole native faces and complete carrier word seams; no supplied filler",
+      "Original polynomial-span composition and chart/carrier/terminal cells, with complete second H1 half",
+      "Actual qc-ambient supported raw objectwise rows/charts/cones/Laurent seeds, categorical triple associativity and full-node overlap reanchoring",
+      "Directed weak-zero normalization/null primitives and weak-first, isomorphism-reference-second product; explicit fixed-endpoint and whole-null-square generic interfaces"
+    ]
+  },
+  "validation": {
+    "status": "Full compile, regression/client and foundation verification continues; not claimed complete",
+    "pins": {
+      "Lean": "4.34.1",
+      "Aglib": "52e09db47998f139064acf48a2d3a64494d0dd9a",
+      "mathlib": "d13f23b723b8a846827a245b89c10fc7d3f11612"
+    },
+    "resource_upper_bounds": {
+      "frontends": 8,
+      "threads_per_frontend": 4,
+      "lean_memory_mib": 12800,
+      "tree_rss_mib": 110592,
+      "file_descriptor_floor": 65536
+    },
+    "scope": {
+      "full": false,
+      "providers": 2442,
+      "provider_layers": 205,
+      "tests": 603,
+      "downstream_clients": 90,
+      "root_trust": true,
+      "client_trust": true,
+      "tooling_tests": [
+        "test_cache_ci",
+        "test_cache_sources",
+        "test_check_run",
+        "test_check_scope",
+        "test_check_script",
+        "test_import_generation",
+        "test_library_layout",
+        "test_placeholders"
+      ],
+      "plan_sha256": "8fa666d113b6790952f8ccb9ad769c002b449d7638c930e6839f2463da095d5e"
+    },
+    "source_only": {
+      "status": "passed",
+      "generated_facades_and_layout": "passed",
+      "placeholders": "passed",
+      "native_selected_tooling_tests": 135,
+      "basis": "117 unchanged compatible script checks retained;18 source-lint policy checks passed on byte-identical candidate code. No changed Lean source bytes during publication."
+    },
+    "execution_binding": {
+      "source_vector": "2e121340730569a18295434779078f8fd009b0780569999046bf52310eac49b6",
+      "source_paths": 7295,
+      "plan_sha256": "8fa666d113b6790952f8ccb9ad769c002b449d7638c930e6839f2463da095d5e",
+      "binding_sha256": "c4fcaba0e51c02c67d384e98fe112b76667435f45aa42403104dc83530942933",
+      "adapter_sha256": "cf86e63bfbb0b6dff2b0cf285917e6a721a8026aa66a65266da89cb63397dd70",
+      "providers": 2442,
+      "layers": 205,
+      "tests": 603,
+      "clients": 90,
+      "scope_reconciled_after_private_proof_only": true,
+      "status": "Historical async execution binding; subsequent compile-only snapshot identified separately. Mathematical vector remains exact."
+    },
+    "old16aa_evidence_boundary": "Earlier provider prefix (75 targets/1245 declarations), tests and foundation receipts keep their old source/dependency basis; they are not relabeled as52e. Latest affected scope receives fresh checks using matching native artifacts.",
+    "retained_latest_pin_prefix": {
+      "run": "remote-b6526f918ae7409ba5627d54370e2b1d",
+      "source_content_sha256": "d64f31cebca17ce7f0d0f5186587f4cb0fe6ec299ff3b8030a6ac8a3e57e545a",
+      "source_config_vector_sha256": "2e121340730569a18295434779078f8fd009b0780569999046bf52310eac49b6",
+      "layers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "providers": 872,
+      "declarations": 13918,
+      "default_environment_linters": 15,
+      "native_text": "passed",
+      "run_end": "User requested a graceful stop for elastic admission; cancelled exit143 with group_closed=true and no input drift or proof failure.",
+      "old_admission": "owned_process_tree; fixed-policy evidence, not relabelled elastic",
+      "continuation": "Exact original plan/source/control identities, closed successful receipts and original module lists are bound before skipping completed provider phases; remaining providers, root trust,603tests,90clients and all client-origin audits remain required."
+    },
+    "elastic_transition": {
+      "server_observed_utc": "2026-10-19T18:07:54Z",
+      "pool_schema": 2,
+      "policy": "elastic-sampled-v1",
+      "activation": "Confirmed active but idle after old fixed leases closed; no manual pool alteration by this task.",
+      "native_flags_and_mathematical_inputs": "unchanged",
+      "ceilings_are_not_reservations": true,
+      "controller_source_sha256": "5d43246628b2332e8e6680a7f9515a023b54eea26a756a75eda14d00bb8d2e9c",
+      "actual_continuation": "Closed compatible original20-26 prefix; retained with original7x4 resource policy",
+      "actual_continuation_run": "remote-fb76eb155445499986eb443834f193e9",
+      "actual_source_content_sha256": "562e8b1b1d1aa219fefd2f2f64643b352dcbc759d381c0fd68442d51a52cefee",
+      "actual_admission_mode": "elastic",
+      "deployed_worker_sha256": "ddd5a7c9e2eced94d80c3b7883a6c1d288c37b67a731a8d585b11e125e2445f5",
+      "check_only": {
+        "run": "remote-54824c7398e644dc8863f9897aa17803",
+        "exit_code": 0,
+        "group_closed": true,
+        "compiler_events": 0
+      },
+      "continuation_guard_tests": 8
+    },
+    "scheduling": {
+      "status": "Historical dependency-ready lint run stopped on user scope correction; compile-only run active",
+      "method": "Dependency-ready provider checks, reusing unchanged native build, all default scoped linters and native text checks before dependent release. The original full plan retains all final audits/tests/clients.",
+      "original_provider_layers": 205,
+      "scheduler_sha256": "8019a593375ec3496d6e99ea0868c8f797342122d5a779582b8d2d47a3d08396",
+      "dependency_certificate_gzip_sha256": "61b391b71147d1ab0abafaf8f4334f23a9349dd6251da13e2703293adfff5db8",
+      "dependency_certificate_logical_sha256": "b758806e40d0e9cdec091fb34c8f0326f8c16b5e01b284529e98fab4dd3d074c",
+      "synthetic_scheduler_tests": 15,
+      "retention_binder_tests": 9,
+      "engineering_review_sha256": "1c67607da5efb4ef0e795d99e7ff117810ff0b70364eb0694769a44c3e231afb",
+      "hash_cache_policy": "One serial initial prerequisite warm with rehash and native output facets; successful same-facet no-build postcondition. Later coordinators and independent native leaf checks omit rehash under unchanged full input guards and exclusive artifact ownership. Lean source input hashes remain fresh in the pinned native implementation.",
+      "native_control_files_unchanged": 24,
+      "linux_smoke": {
+        "run": "remote-c9a4586801a445068d59099390a87f1b",
+        "receipt_sha256": "1e5eb8cbc206dfb76b25d0263bcba78b7e3c86f280e5cbb5b0f455e17520820e",
+        "exit_code": 0,
+        "group_closed": true,
+        "input_drift": [],
+        "compiler_events": 0,
+        "checks": [
+          "actual eight-slot managed profile",
+          "frozen full source/config/dependency/control vectors",
+          "both retained closed segments",
+          "complete dependency graph",
+          "Linux subreaper adoption of detached orphan",
+          "owned descendant cleanup",
+          "unrelated sibling preservation"
+        ]
+      },
+      "retained_prefix": {
+        "fixed_run": "remote-b6526f918ae7409ba5627d54370e2b1d",
+        "fixed_layers": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19
+        ],
+        "fixed_providers": 872,
+        "fixed_linted_declarations": 13918,
+        "elastic_run": "remote-fb76eb155445499986eb443834f193e9",
+        "elastic_layers": [
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26
+        ],
+        "elastic_providers": 267,
+        "elastic_linted_declarations": 3855,
+        "total_providers": 1139,
+        "total_linted_declarations": 17773,
+        "all_default_environment_linters": 15,
+        "native_text": "passed",
+        "elastic_stop": "Graceful cancellation at completed layer26;143/closed/no input drift;25of25 frontends successful,0incomplete. Original fixed/elastic resource policies retain their actual provenance."
+      },
+      "shared_cache_condition": "OURworkspace/privatebuildoutputs/hash/trace/archivepathsexclusive;no destructivecleanup/replacement. GlobalnativecacheISSHAREDwithotherworkspacewriters;normalcontentaddressedinsertandmappingfallbackaccepted. DonotclaimALLglobalmappingwritesatomic/locked: reviewerfoundwriteOutputsCoreoverwriteIO.FS.writeFile;warmimportsusevalidprivatetracesfirst, newleaflookupfailuresfallbackcachemiss.",
+      "historical_async_run": "remote-dc0e941235394f7689ed84b9494a911b",
+      "historical_async_completed_providers": 240,
+      "historical_combined_checked_providers": 1379,
+      "current_compile_run": {
+        "run": "remote-20b7730f34c6461f9175a84ecc23f20d",
+        "source_content_sha256": "2d6e67619a12341827dc9d00692a17f546bebdb1f7aece0b34adbce65b0ac7f1",
+        "scope": "One native Lake dependency graph for all 2442 selected provider targets; compatible artifacts reused. No source lint in this phase.",
+        "mathematical_source_config_vector_sha256": "2e121340730569a18295434779078f8fd009b0780569999046bf52310eac49b6",
+        "state": "running at source publication",
+        "remaining_phases": [
+          "Changed-source lint only",
+          "Selected test and downstream builds",
+          "Complete selected root and client-origin foundation audits"
+        ]
+      }
+    },
+    "approved_runtime_helpers": {
+      "scripts/build_serial.py": "66fdc8dc202a54d568e52fc94651a9c47789cc16009bdd069812b1c9616d0413",
+      "scripts/resource_guard.py": "97c396e48d952582a4a525e1fc17551e16193e32e06fe73cb7785c9a33dc6b40",
+      "boundary": "Task-private managed resource bridge; pinned Aglib mathematical sources and configurations remain exact. Native validation predicates are unchanged."
+    },
+    "lint_scope_correction": {
+      "basis": "User explicitly requested stopping source lint of unchanged local modules after upgrading Aglib. Compile/test/client affected scope and full foundation coverage remain selected.",
+      "projection_sha256": "f4d41f9159b56fab7ab33b281318aed32481c385a01e670de525a3abde359b4a",
+      "changed_Lean_files": 128,
+      "changed_defining_providers": 88,
+      "changed_test_modules": 16,
+      "changed_client_modules": 16,
+      "changed_import_only_facades": 8,
+      "changed_provider_lints_already_passed": 25,
+      "remaining_changed_provider_lints": 63,
+      "historical_other_lint_passes": "Retained as actual evidence, not additional current obligations. Unchanged modules are no longer relinted solely because of an upstream change."
+    },
+    "source_lint_policy_change": {
+      "check_run_sha256": "46442e5a13180810f2fd516906ebbec3ff22c18cf54ea22af994433859e7afdc",
+      "test_check_run_sha256": "56f63000b1ebd56fb611b071003807ffc8c57da487af961a4d13956bcefb060e",
+      "focused_tests": 18,
+      "compile_target_scope_unchanged": true,
+      "full_root_and_client_origin_audits_unchanged": true,
+      "all_default_lint_predicates_unchanged": true,
+      "normal_incremental_lint": "Added or modified local source paths only; explicit comprehensive and initial-baseline behavior retained.",
+      "driver_tests": 23,
+      "driver_test_sha256": "c1fe647c2d7995a578df7e18751a165adf01512406b3292267223efc3e5f4b29"
+    }
+  },
+  "mathematical_limits": [
+    "Complete the composition H1 first/second join, external cube seams and original cone/step composition law",
+    "Separate higher identity/composition coherence for the chosen InputNull comparison and coherent all-stage raw construction",
+    "Construct supported raw row maps and the full comparison with the same canonical G7 localization null, including required R2 and successor data",
+    "Supply prescribed native-family carrier lifts/recovery or application-specific whole null squares where the generic interfaces explicitly require them",
+    "Independent coefficient/raw, forward-transition, telescope and classical same-null comparisons remain separate"
+  ],
+  "documentation": {
+    "policy": "Current mathematics/interfaces in source families; summaries/workflow/performance/evidence in docs/.",
+    "candidate_manifest_sha256": "d361ecee365b6ccd2abef702452d00fc8b482a74c719989fbe003f2cd1d01d39",
+    "relative_links_checked": 273,
+    "fragments_checked": 49,
+    "original_anchors_preserved": true,
+    "additional_publication_document_relative_links_checked": 25
+  },
+  "interpretation": "Scoped acceptance of the encoded constructions and their exact hypotheses; no established-status or full classical TT 7.4 completion claim.",
+  "dependency_update": {
+    "old_aglib": "16aa08a90198d76be0bec47dd640b5c992acd9d7",
+    "aglib": "52e09db47998f139064acf48a2d3a64494d0dd9a",
+    "pin_files": [
+      "lakefile.toml",
+      "lake-manifest.json",
+      "examples/downstream/lake-manifest.json"
+    ],
+    "lean_toolchain_unchanged": "leanprover/lean4:v4.34.1",
+    "mathlib_unchanged": "d13f23b723b8a846827a245b89c10fc7d3f11612",
+    "source_inventory_sha256": "bc36ec342fa1e019bb7994c272b7c9d421a88a4995383055424dbba53063c56c",
+    "production_source_delta": {
+      "new": 594,
+      "modified": 101,
+      "deleted": 0
+    },
+    "invalidation": "Recompute the combined old/new actual import reverse closure and union the local continuation delta. Native input caches determine the required compilation frontier. A pin change alone does not select the full library.",
+    "status": "Exact root/downstream52e pins adopted; all10 locked dependency GitHEADs and11 native configuration boundaries checked; latest scoped execution released.",
+    "assessment": {
+      "method": "Exact old/new source Git objects plus complete union import graph, actual Quillen reverse closure and native import-only filtering/topological layers; all other global options and dependency pins verified unchanged.",
+      "external_changed_production_roots": 695,
+      "assessment_kind": "exact-aglib-pin-v1",
+      "union_graph_sha256": "6194abf08107476626caea48fe3ba731b081a08699ac3d12b548b13fc3e2556c",
+      "old_tree": "976d2ff5b1e0abc9d6c256cc4a0df2fa44293f08",
+      "new_tree": "646ec1f9112c577c619a7626b65bc8ca34c51850",
+      "checks": "Native normal CLI recomputes the assessment and rejects edited targets, changed global inputs, actual head-control drift or mathematical source drift; rootGit-less remote transfer uses separately frozen source/config and control hashes."
+    }
+  },
+  "ci_publication_repair": {
+    "observed_baseline": "d9a38d0077b5fd1a33dd12bf2df1fdf7753ccc6b",
+    "run_id": 39279100202,
+    "checks": "success",
+    "publication": "failed: downstream native artifact cache disabled and repeated batch-mapping version headers",
+    "repair": [
+      "Explicit LAKE_ARTIFACT_CACHE=true in the CI library job",
+      "Merge successful mappings with one validated version header; malformed exports fail closed"
+    ],
+    "bounded_validation": {
+      "python_tests": 51,
+      "native_lake_synthetic_stage_positive_exit": 0,
+      "native_lake_synthetic_stage_missing_artifact_exit": 1
+    },
+    "boundary": "Mechanics tested; actual repaired CI publication has not yet been observed. Assessed-upgrade CLI integration is a subsequent tool change with separate checks.",
+    "warm_restored_outputs": {
+      "result": "Pinned Lake4.34.1 materialized missing nativecache client archive from existing local archive with --rehash --no-build; cache stage passed. Provider/client olean hashes and mtimes unchanged.",
+      "followup_sha256": "db712b8f33604483fa9a2cc68250555f0319d7700bf5c1b1233e0217023b7829",
+      "boundary": "Two-package packaging fixture, not current Quillen compilation/publication coverage."
+    },
+    "assessed_upgrade_flow": "CI obtains exact old/new Aglib source objects before Lean setup; the selector and normal runner recompute actual scope. It never treats a new pin as an automatic full-library rebuild.",
+    "delivered_commit": "55ddf56a71cc37c461a6f1e817e84f9250dcaffc",
+    "merge_and_push": "completed and remote main verified; no mathematical source/config changes in this9pathdelivery",
+    "tooling_delivery_ci": {
+      "run": 39293817227,
+      "url": "https://github.com/kangxyz/quillen-k-theory/actions/runs/39293817227",
+      "status": "completed",
+      "conclusion": "success",
+      "boundary": "Tooling-only delivery: selected Python/source checks passed; mathematical build and cache publication were correctly skipped for this diff. Actual repaired cache publication remains a separate operational observation."
+    }
+  },
+  "delivery": {
+    "basis": "User explicitly requested merging and pushing the complete second mathematical batch before waiting for remaining verification or tooling work.",
+    "scope": "All selected1255 mathematical source, generated public interfaces, associated tests/clients, six source/summary guides and the requested Aglib pin update.",
+    "validation_boundary": "Source reviews and identified native checks are recorded above. Full new-snapshot validation is still running; no blanket green-CI or completed-native-suite claim."
+  }
+}

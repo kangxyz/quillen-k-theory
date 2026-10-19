@@ -12,7 +12,7 @@ import subprocess
 import sys
 import tempfile
 
-from check_scope import GLOBAL_INPUTS, git, select, snapshot
+from check_scope import AUDITS, GLOBAL_INPUTS, git, identity, select, snapshot
 from library_sources import is_import_surface, lean_imports, module_path
 
 
@@ -156,10 +156,42 @@ def merge_native_outputs(mappings, output):
     output.write_text('"2026-03-17"\n' + ''.join(row + '\n' for row in rows))
 
 
+def source_lint_scope(root, plan):
+    """Normal lint checks changed source, independently of affected build/audit closure."""
+    if plan.get('full') or plan.get('base') == 'EMPTY_TREE' or 'changed' not in plan:
+        return None  # Explicit diagnostics, initial baseline, and conservative manual plans.
+    paths = plan['changed']
+    if not isinstance(paths, list) or any(not isinstance(p, str) for p in paths) or len(paths) != len(set(paths)):
+        raise ValueError('Changed source paths must be a list of unique strings')
+    modules = set()
+    for name in paths:
+        path = Path(name)
+        if path.is_absolute() or '..' in path.parts or path.as_posix() != name:
+            raise ValueError('Invalid changed source path: ' + name)
+        if not name.endswith('.lean') or name in AUDITS | GLOBAL_INPUTS or name.startswith('Tools/'):
+            continue
+        if not (name in {'Quillen.lean', 'QuillenTest.lean', 'examples/downstream/Consumer.lean'} or
+                name.startswith(('Quillen/', 'QuillenTest/', 'examples/downstream/Consumer/'))):
+            raise ValueError('Unclassified changed Lean source: ' + name)
+        source = root / path
+        if source.is_symlink() or not source.resolve().is_relative_to(root.resolve()):
+            raise ValueError('Redirected changed Lean source: ' + name)
+        if not source.exists():
+            continue  # Removed sources have no current declarations to lint.
+        if not source.is_file():
+            raise ValueError('Changed Lean source is not a file: ' + name)
+        modules.add(identity(name))
+    return modules
+
+
 def execute(root, plan, *, ci=False, rehash=False, output=None):
     if not plan['lean']:
         print('Static scope: no Lean, dependency cache, or native cache work selected.')
         return
+    source_modules = source_lint_scope(root, plan)
+    def lint_targets(modules, *, client=False):
+        return list(modules) if source_modules is None else [module for module in modules
+            if ('client:' if client else '') + module in source_modules]
     aglib = root / '.lake/packages/Aglib/scripts'
     if ci and not all((aglib / name).is_file() for name in ('build_serial.py', 'resource_guard.py')):
         raise ValueError('Resolve the pinned Aglib dependency before guarded CI checks')
@@ -247,13 +279,13 @@ def execute(root, plan, *, ci=False, rehash=False, output=None):
 
     for index, modules in enumerate(plan['provider_batches']):
         build(f'providers-{index}', modules)
-        lint(f'provider-lint-{index}', modules)
+        lint(f'provider-lint-{index}', lint_targets(modules))
     if plan['full'] or plan['base'] == 'EMPTY_TREE':
         safe('full-native-style', [*lake, 'exe', 'lint-style'])
     if plan['trust']:
         audit('axioms', 'QuillenTest/Axioms.lean', 'Quillen', plan['providers'])
     build('tests', plan['tests'])
-    lint('test-lint', plan['tests'])
+    lint('test-lint', lint_targets(plan['tests']))
     # QuillenTest is a lean_lib test driver, with compile-time assertions and no
     # runtime main. A successful selected build (or compatible cached artifact)
     # supplies this coverage. Only explicit comprehensive diagnostics replay it.
@@ -267,6 +299,10 @@ def execute(root, plan, *, ci=False, rehash=False, output=None):
         if not packages.exists():
             packages.symlink_to(root / '.lake/packages', target_is_directory=True)
         scope = client_check_scope(root, plan['clients'])
+        scope['selected_lint_modules'] = lint_targets(scope['selected_lint_modules'], client=True)
+        scope['environment_batches'] = [selected for batch in scope['environment_batches']
+                                        if (selected := lint_targets(batch, client=True))]
+        scope['facade_text_modules'] = lint_targets(scope['facade_text_modules'], client=True)
         (directory / 'client-scope.json').write_text(json.dumps(scope, indent=2) + '\n')
         # Keep every exact recovery input available even if build or lint fails.
         # Preparing audit sources does not execute or discharge their predicates.
@@ -278,7 +314,8 @@ def execute(root, plan, *, ci=False, rehash=False, output=None):
                 client_audits.append((phase, scoped))
         build('client-build', plan['clients'], client)
         jobs = int(os.environ.get('QUILLEN_CHECK_JOBS', '1'))
-        lint_runtime()
+        if scope['environment_batches'] or scope['facade_text_modules']:
+            lint_runtime()
         calls = [partial(safe, batch_phase('client-lint', index,
                           len(scope['environment_batches'])),
                          ['lake', 'env', 'lean', '--run', str(lint_runner), *batch], client)

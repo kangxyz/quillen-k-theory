@@ -951,6 +951,7 @@ public import Quillen.Aglib.RingTheory.RegularLocalRing.QuotientLifting
 public import Quillen.Aglib.Topology.Path.CarrierHalfPaths
 public import Quillen.Aglib.Topology.Path.EvaluationFactorExtraction
 public import Quillen.Aglib.Topology.Path.EvaluationOperations
+public import Quillen.Aglib.Topology.Path.FamilyExtension
 public import Quillen.Aglib.Topology.Path.HomotopyEvaluationTrans
 public import Quillen.Aglib.Topology.Path.HomotopyPathSlice
 public import Quillen.Aglib.Topology.Path.MappedProjectionRectangle
