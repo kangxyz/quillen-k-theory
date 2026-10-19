@@ -9,7 +9,7 @@ import sys
 import tempfile
 import unittest
 
-from cache_sources import mathlib_cache_roots
+from cache_sources import mathlib_cache_roots, workspace_imports
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -51,6 +51,20 @@ class CacheSourceTests(unittest.TestCase):
         self.write('Quillen.lean', 'import Aglib.Missing\n')
         with self.assertRaisesRegex(ValueError, 'Missing reachable pinned Aglib source'):
             mathlib_cache_roots(self.root)
+
+    def test_plan_fetches_only_selected_import_closure_and_linter_runtime(self):
+        self.write('Quillen/P.lean', 'import Aglib.P\n')
+        self.write('Quillen/Unrelated.lean', 'import Mathlib.Unrelated\n')
+        self.write('QuillenTest/T.lean', 'import Quillen.P\nimport Mathlib.Test\n')
+        self.write('examples/downstream/Consumer/Use.lean', 'import Quillen.P\n')
+        self.write('Tools/LintScoped.lean', 'import Mathlib.Tactic.Linter.TextBased\n')
+        self.write('.lake/packages/Aglib/Aglib/P.lean', 'import Mathlib.Provider\n')
+        plan = dict(lean=True, providers=['Quillen.P'], tests=['QuillenTest.T'],
+                    clients=['Consumer.Use'])
+        self.assertEqual(mathlib_cache_roots(self.root, workspace_imports(self.root, plan)),
+                         ['Mathlib.Provider', 'Mathlib.Tactic.Linter.TextBased', 'Mathlib.Test'])
+        with self.assertRaisesRegex(ValueError, 'Static scope'):
+            workspace_imports(self.root, dict(lean=False))
 
     def test_root_import_uses_the_pinned_aglib_root(self):
         self.write('Quillen.lean', 'import Aglib\n')
@@ -146,8 +160,28 @@ class GuardedCheckTests(unittest.TestCase):
         self.tmp = tempfile.TemporaryDirectory(prefix='quillen-ci-commands-')
         self.root = Path(self.tmp.name).resolve()
         (self.root / 'scripts').mkdir()
-        shutil.copyfile(ROOT / 'scripts/check.sh', self.root / 'scripts/check.sh')
+        for name in ('check_run.py', 'check_scope.py', 'library_sources.py'):
+            shutil.copyfile(ROOT / 'scripts' / name, self.root / 'scripts' / name)
+        (self.root / 'Tools').mkdir()
+        shutil.copyfile(ROOT / 'Tools/LintScoped.lean', self.root / 'Tools/LintScoped.lean')
+        (self.root / 'QuillenTest').mkdir()
+        (self.root / 'QuillenTest/Axioms.lean').write_text('import Quillen\n-- audit\n')
+        (self.root / 'driver.py').write_text('''import sys
+sys.path.insert(0, 'scripts')
+from pathlib import Path
+from check_run import execute
+plan = dict(lean=True, providers=['Quillen.P'], provider_batches=[['Quillen.P']],
+            tests=['QuillenTest.T'], clients=['Consumer.Use'], trust=True,
+            client_trust=True, full=False, base=None)
+if '--source-only' not in sys.argv:
+    try:
+        execute(Path.cwd(), plan, ci='--ci' in sys.argv, rehash='--rehash' in sys.argv)
+    except Exception as error:
+        print(str(error), file=sys.stderr)
+        raise SystemExit(getattr(error, 'returncode', 2))
+''')
         (self.root / 'examples/downstream').mkdir(parents=True)
+        (self.root / 'examples/downstream/Audit.lean').write_text('import Consumer\n-- audit\n')
         self.aglib = self.root / '.lake/packages/Aglib/scripts'
         self.aglib.mkdir(parents=True)
         (self.root / 'bin').mkdir()
@@ -170,12 +204,12 @@ def limits():
     return {'lean_memory_mb':int(os.environ['AGLIB_LEAN_MEMORY_MB']),
             'rss_limit_mb':int(os.environ['AGLIB_RSS_LIMIT_MB']),
             'lean_threads':1, 'max_active_lean':1}
-def run(command, *, env, receipt, budget):
+def run(command, *, cwd, env, receipt, budget):
     with open(os.environ['COMMAND_LOG'], 'a') as out:
         out.write(json.dumps({'kind':'guard', 'argv':command, 'budget':budget,
-                             'threads':env['CAPPED_THREADS'], 'cwd':os.getcwd(),
+                             'threads':env['CAPPED_THREADS'], 'cwd':str(cwd),
                              'receipt':str(receipt)})+'\\n')
-    return subprocess.call(command, env=env)
+    return subprocess.call(command, cwd=cwd, env=env)
 ''')
         python = self.root / 'bin/python3'
         python.write_text('''#!/usr/bin/env bash
@@ -188,7 +222,7 @@ exit 0
         lake = self.root / 'bin/lake'
         lake.write_text('#!' + sys.executable + '\n' + '''
 import os, subprocess, sys
-if os.environ.get('FAIL_LINT') and 'lint' in sys.argv[1:]:
+if os.environ.get('FAIL_LINT') and '--run' in sys.argv[1:]:
     raise SystemExit(41)
 if sys.argv[1:2] == ['env']:
     raise SystemExit(subprocess.call(sys.argv[2:]))
@@ -214,7 +248,7 @@ with open(os.environ['ACTUAL_LEAN_LOG'], 'a') as output:
         self.tmp.cleanup()
 
     def run_check(self, *arguments):
-        return subprocess.run(['bash', 'scripts/check.sh', *arguments], cwd=self.root,
+        return subprocess.run([sys.executable, 'driver.py', *arguments], cwd=self.root,
                               env=self.env, capture_output=True, text=True)
 
     def test_ci_uses_shared_policy_and_preserves_native_commands(self):
@@ -222,15 +256,13 @@ with open(os.environ['ACTUAL_LEAN_LOG'], 'a') as output:
         self.assertEqual(result.returncode, 0, result.stderr)
         entries = [json.loads(line) for line in self.log.read_text().splitlines()]
         builds = [entry for entry in entries if entry['kind'] == 'build']
-        self.assertEqual(builds[0]['argv'][-2:], ['Quillen', 'QuillenTest'])
-        self.assertEqual(builds[1]['argv'][-1], 'Consumer')
+        self.assertEqual(builds[0]['argv'][-1], 'Quillen.P')
+        self.assertEqual(builds[1]['argv'][-1], 'QuillenTest.T')
+        self.assertEqual(builds[2]['argv'][-1], 'Consumer.Use')
         guarded = [entry for entry in entries if entry['kind'] == 'guard']
-        self.assertEqual([entry['argv'] for entry in guarded], [
-            ['lake', '--rehash', 'test'], ['lake', '--rehash', 'lint'],
-            ['lake', '--rehash', 'exe', 'lint-style'],
-            ['lake', 'env', str(self.capped_lean), '-j2', 'QuillenTest/Axioms.lean'],
-            ['lake', 'env', str(self.capped_lean), '-j2', 'Audit.lean'],
-        ])
+        lean_commands = [entry['argv'] for entry in guarded if entry['argv'][:2] == ['lake', 'env']]
+        self.assertTrue(all(command[2] == str(self.capped_lean) for command in lean_commands))
+        self.assertTrue(any(command[-1] == 'Quillen.P' and '--run' in command for command in lean_commands))
         for entry in guarded:
             self.assertEqual(entry['threads'], '2')
             self.assertEqual(entry['budget'], {'lean_memory_mb':12800, 'rss_limit_mb':13824,
@@ -243,24 +275,26 @@ with open(os.environ['ACTUAL_LEAN_LOG'], 'a') as output:
         bare_lean.chmod(0o755)
         result = self.run_check('--ci')
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual([json.loads(line) for line in
-                          (self.root / 'actual-lean.jsonl').read_text().splitlines()],
-                         [['-j2', 'QuillenTest/Axioms.lean'], ['-j2', 'Audit.lean']])
+        commands = [json.loads(line) for line in
+                    (self.root / 'actual-lean.jsonl').read_text().splitlines()]
+        self.assertTrue(any(command[-1].endswith('/axioms.lean') for command in commands))
+        self.assertTrue(any(command[-1].endswith('/client-audit.lean') for command in commands))
+        self.assertTrue(any('--run' in command for command in commands))
 
     def test_ci_rewrites_only_exact_lake_env_lean_prefix(self):
         alternate = self.root / 'bin/lean-other'
         alternate.write_text('#!/bin/sh\nexit 0\n')
         alternate.chmod(0o755)
-        script = self.root / 'scripts/check.sh'
+        script = self.root / 'scripts/check_run.py'
         source = script.read_text()
-        original = 'safe style lake ${lake_args[@]+"${lake_args[@]}"} exe lint-style'
+        original = "['lake', 'env', 'lean', '--run', str(lint_runner),"
         self.assertIn(original, source)
-        script.write_text(source.replace(original, 'safe style lake env lean-other sentinel'))
+        script.write_text(source.replace(original, "['lake', 'env', 'lean-other', '--run', str(lint_runner),"))
         result = self.run_check('--ci')
         self.assertEqual(result.returncode, 0, result.stderr)
         entries = [json.loads(line) for line in self.log.read_text().splitlines()]
-        self.assertIn(['lake', 'env', 'lean-other', 'sentinel'],
-                      [entry['argv'] for entry in entries if entry['kind'] == 'guard'])
+        self.assertTrue(any(entry['argv'][:3] == ['lake', 'env', 'lean-other']
+                            for entry in entries if entry['kind'] == 'guard'))
 
     def test_source_only_needs_no_dependency_or_toolchain(self):
         shutil.rmtree(self.root / '.lake')
@@ -272,7 +306,7 @@ with open(os.environ['ACTUAL_LEAN_LOG'], 'a') as output:
         self.env['FAIL_LINT'] = '1'
         result = self.run_check('--ci')
         self.assertEqual(result.returncode, 41, result.stderr)
-        self.assertNotIn('QuillenTest/Axioms.lean', self.log.read_text())
+        self.assertNotIn('/axioms.lean', self.log.read_text())
 
     def test_relative_receipt_root_stays_at_project_root_for_client(self):
         self.env['QUILLEN_VERIFY_DIR'] = 'verification'

@@ -3,15 +3,17 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 ci_mode=0
-if [[ "${1:-}" == --ci ]]; then
-  ci_mode=1
-  shift
-fi
-if (( $# )); then
-  echo "Usage: $0 [--ci]" >&2
-  exit 2
-fi
-modules_text="$(python3 scripts/cache_sources.py --resolve-deps)"
+scope_args=()
+while (( $# )); do
+  case "$1" in
+    --ci) ci_mode=1; shift ;;
+    --plan)
+      [[ $# -ge 2 ]] || { echo "--plan requires a path" >&2; exit 2; }
+      scope_args=(--plan "$2"); shift 2 ;;
+    *) echo "Usage: $0 [--ci] [--plan PATH]" >&2; exit 2 ;;
+  esac
+done
+modules_text="$(python3 scripts/cache_sources.py --resolve-deps ${scope_args[@]+"${scope_args[@]}"})"
 modules=()
 while IFS= read -r module; do
   [[ -n "$module" ]] && modules+=("$module")

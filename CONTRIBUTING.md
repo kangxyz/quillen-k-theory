@@ -71,7 +71,19 @@ Normal authoring, maintenance, documentation, review, merge, integration, and
 release must use incremental checks and reuse trusted build artifacts and
 compatible validation evidence. Reconcile the combined changes,
 then build only changed or missing required leaf modules and their affected
-consumers:
+consumers. The normal local and CI adapter selects the reverse import closure:
+
+```sh
+bash scripts/check.sh
+bash scripts/check.sh --base BASE_COMMIT --head HEAD
+```
+
+The first command compares tracked and untracked local sources with `HEAD`;
+the second compares the specified committed snapshots. Run the second command
+with its selected head checked out. Documentation and documentation-evidence
+JSON changes run static checks without Lean or cache work. See the
+[scope adapter](docs/DEVELOPMENT.md#affected-check-scope) for ordering, cache
+publication and unavailable-input behavior. For an explicit leaf while developing:
 
 ```sh
 lake build Quillen.KTheory.API
@@ -110,18 +122,19 @@ throughout that closure and the absence of a usable matching cache first. A user
 may explicitly request a literal full rebuild or replay; honor its exact scope
 without assuming broader work.
 
-The complete pipeline below remains available for explicit comprehensive
-diagnostics and declared CI coverage. It is not a normal local acceptance step
+The complete pipeline below remains available for explicitly requested comprehensive
+diagnostics. It is not a normal local acceptance step
 and does not itself request a clean rebuild:
 
 ```sh
-bash scripts/check.sh --rehash
+bash scripts/check.sh --full --rehash
 ```
 
 The pipeline checks generated imports, module boundaries, placeholders, and
-script tests; builds the library and maintained tests; runs `lake test`,
-Batteries environment lint, and native mathlib text lint; then builds the
-downstream package and explicitly replays both axiom audits. Library compilation
+script tests; compiles and lints production modules in dependency layers before
+maintained tests and downstream clients. It replays test assertions and both
+axiom audits, and includes Batteries environment lint and native mathlib text
+lint. Normal CI uses the selected scope rather than this diagnostic scope. Library compilation
 uses `autoImplicit = false`, the mathlib standard linter set, and warnings as
 errors. The allowed foundation axioms are `propext`, `Classical.choice`, and
 `Quot.sound`; see [the audit boundary](docs/ARCHITECTURE.md#trust-checks).

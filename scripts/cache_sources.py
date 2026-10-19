@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Collect Mathlib cache roots through the reachable pinned Aglib sources."""
 import argparse
+import json
 from pathlib import Path
 import subprocess
 import sys
@@ -11,7 +12,28 @@ from library_sources import (
 )
 
 
-def workspace_imports(root: Path) -> set[str]:
+def workspace_imports(root: Path, plan: dict | None = None) -> set[str]:
+    if plan is not None:
+        if not plan.get('lean'):
+            raise ValueError('Static scope does not request dependency cache work')
+        client = Path('examples/downstream')
+        pending = ([module_path(name) for name in plan['providers'] + plan['tests']] +
+                   [client / module_path(name) for name in plan['clients']] +
+                   [Path('Tools/LintScoped.lean')])
+        seen, imports = set(), set()
+        while pending:
+            path = pending.pop()
+            if path in seen:
+                continue
+            seen.add(path)
+            for name in lean_imports((root / path).read_text()):
+                imports.add(name)
+                local = module_path(name)
+                if name.split('.')[0] == 'Consumer':
+                    local = client / local
+                if (root / local).is_file():
+                    pending.append(local)
+        return imports
     sources = (source_modules(root) | test_modules(root) |
                downstream_sources(root) | tool_sources(root))
     return {name for path in sources for name in lean_imports((root / path).read_text())}
@@ -46,10 +68,12 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument('--resolve-deps', action='store_true')
+    parser.add_argument('--plan', type=Path)
     args = parser.parse_args()
     try:
         # Invalid local source inputs fail before dependency resolution/download.
-        imports = workspace_imports(args.root)
+        plan = json.loads(args.plan.read_text()) if args.plan else None
+        imports = workspace_imports(args.root, plan)
         if args.resolve_deps:
             subprocess.run(['lake', 'resolve-deps'], cwd=args.root, check=True,
                            stdout=sys.stderr)
