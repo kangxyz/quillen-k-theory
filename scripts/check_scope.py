@@ -14,6 +14,45 @@ AUDITS = {'QuillenTest/Axioms.lean', CLIENT + 'Audit.lean'}
 GLOBAL_INPUTS = {'lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'lakefile.lean',
                  CLIENT + 'lean-toolchain', CLIENT + 'lake-manifest.json',
                  CLIENT + 'lakefile.toml', CLIENT + 'lakefile.lean', 'scripts/nolints.json'}
+TOOL_TESTS = {
+    'check.sh': ['test_check_script'],
+    'check_run.py': ['test_check_script', 'test_cache_sources', 'test_check_run'],
+    'check_scope.py': ['test_check_script'],
+    'cache.sh': ['test_check_script', 'test_cache_ci', 'test_cache_sources'],
+    'cache_ci.py': ['test_cache_ci', 'test_cache_sources'],
+    'cache_sources.py': ['test_cache_sources', 'test_cache_ci', 'test_check_script'],
+    'cache_key.py': ['test_cache_key'],
+    'check_receipts.py': ['test_check_receipts'],
+    'generate_imports.py': ['test_import_generation', 'test_library_layout'],
+    'check_library_layout.py': ['test_library_layout'],
+    'check_placeholders.py': ['test_placeholders'],
+    'library_sources.py': ['test_import_generation', 'test_library_layout', 'test_placeholders',
+                           'test_cache_sources', 'test_cache_ci', 'test_check_script'],
+}
+
+
+def tooling_tests(root, paths, full=False):
+    selected = set()
+    for path in paths:
+        if path.endswith('.md'):
+            continue
+        if path.startswith('scripts/test_') and path.endswith('.py'):
+            if not (root / path).is_file():
+                raise ValueError(f'Deleted regression {path} needs an explicit replacement fixture')
+            selected.add(Path(path).stem)
+        elif path.startswith('scripts/'):
+            if path == 'scripts/nolints.json':
+                continue  # Its global input assessment is handled separately.
+            if Path(path).name not in TOOL_TESTS or Path(path).parent != Path('scripts'):
+                raise ValueError(f'Unclassified tooling path: {path}; assign its regression selection')
+            selected.update(TOOL_TESTS[Path(path).name])
+        elif path == '.github/workflows/ci.yml':
+            selected.add('test_check_script')
+        elif path.startswith('.github/'):
+            raise ValueError(f'Unclassified tooling path: {path}; assign its regression selection')
+    if full:
+        selected.update(path.stem for path in (root / 'scripts').glob('test_*.py'))
+    return sorted(selected)
 
 
 def git(root, *arguments):
@@ -104,6 +143,7 @@ def select(root, base=None, head=None, full=False):
         paths = git(root, 'diff', '--name-only', '--no-renames', 'HEAD',
                     *([head] if head else [])).splitlines()
     paths += git(root, 'ls-files', '--others', '--exclude-standard').splitlines() if not head else []
+    paths = sorted(set(paths))
     for path in paths:
         if path in GLOBAL_INPUTS:
             if not full and not initial:
@@ -113,9 +153,11 @@ def select(root, base=None, head=None, full=False):
                   path.startswith(('docs/', 'scripts/', '.github/')) or
                   path in {'LICENSE', '.gitignore', 'AGENTS.md'}):
             raise ValueError(f'Unclassified changed path: {path}; assign an explicit scope')
+    regressions = tooling_tests(root, paths, full)
     if not full and not any(path.endswith('.lean') for path in paths):
         return dict(schema=1, revision=revision, base=base, head=head, full=False,
-                    changed=[], providers=[], tests=[], clients=[], provider_batches=[],
+                    changed=paths, tooling_tests=regressions,
+                    providers=[], tests=[], clients=[], provider_batches=[],
                     trust=False, client_trust=False, lean=False)
     # A missing or shallow base is an error, never a request for whole-library work.
     old = {} if initial else snapshot(root, base or revision)
@@ -159,7 +201,8 @@ def select(root, base=None, head=None, full=False):
         clients = sorted(module_name(path[len(CLIENT):]) for path in current if
                          path.startswith(CLIENT + 'Consumer/') and not is_import_surface(current[path]))
     return dict(schema=1, revision=revision, base=base, head=head, full=full,
-                changed=sorted(changed), providers=providers, tests=tests, clients=clients,
+                changed=sorted(set(paths) | changed), tooling_tests=regressions,
+                providers=providers, tests=tests, clients=clients,
                 provider_batches=provider_batches(providers, current),
                 trust=trust, client_trust=client_trust,
                 lean=bool(providers or tests or clients))

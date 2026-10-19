@@ -213,7 +213,7 @@ def execute(root, plan, *, ci=False, rehash=False, output=None):
             lint_runtime()
             safe(phase, ['lake', 'env', 'lean', '--run', str(lint_runner), *modules], cwd)
 
-    def audit(phase, template, import_name, modules, cwd=root):
+    def prepare_audit(phase, template, import_name, modules):
         if not modules:
             return
         text = (root / template).read_text()
@@ -222,7 +222,12 @@ def execute(root, plan, *, ci=False, rehash=False, output=None):
             raise ValueError(f'Cannot scope changed audit template: {template}')
         scoped = directory / f'{phase}.lean'
         scoped.write_text(text.replace(marker, ''.join(f'import {module}\n' for module in modules)))
-        safe(phase, ['lake', 'env', 'lean', '-j2', str(scoped)], cwd)
+        return scoped
+
+    def audit(phase, template, import_name, modules, cwd=root):
+        scoped = prepare_audit(phase, template, import_name, modules)
+        if scoped is not None:
+            safe(phase, ['lake', 'env', 'lean', '-j2', str(scoped)], cwd)
 
     for index, modules in enumerate(plan['provider_batches']):
         build(f'providers-{index}', modules)
@@ -245,9 +250,17 @@ def execute(root, plan, *, ci=False, rehash=False, output=None):
         packages = client / '.lake/packages'
         if not packages.exists():
             packages.symlink_to(root / '.lake/packages', target_is_directory=True)
-        build('client-build', plan['clients'], client)
         scope = client_check_scope(root, plan['clients'])
         (directory / 'client-scope.json').write_text(json.dumps(scope, indent=2) + '\n')
+        # Keep every exact recovery input available even if build or lint fails.
+        # Preparing audit sources does not execute or discharge their predicates.
+        client_audits = []
+        if plan['client_trust']:
+            for index, batch in enumerate(scope['audit_batches']):
+                phase = batch_phase('client-audit', index, len(scope['audit_batches']))
+                scoped = prepare_audit(phase, 'examples/downstream/Audit.lean', 'Consumer', batch)
+                client_audits.append((phase, scoped))
+        build('client-build', plan['clients'], client)
         jobs = int(os.environ.get('QUILLEN_CHECK_JOBS', '1'))
         lint_runtime()
         calls = [partial(safe, batch_phase('client-lint', index,
@@ -261,11 +274,8 @@ def execute(root, plan, *, ci=False, rehash=False, output=None):
                                 ['lake', 'env', 'lean', '--run', str(text_runner),
                                  *scope['facade_text_modules']], client))
         parallel_checks(calls, jobs)
-        if plan['client_trust']:
-            parallel_checks([partial(audit, batch_phase('client-audit', index,
-                                     len(scope['audit_batches'])),
-                                     'examples/downstream/Audit.lean', 'Consumer', batch, client)
-                             for index, batch in enumerate(scope['audit_batches'])], jobs)
+        parallel_checks([partial(safe, phase, ['lake', 'env', 'lean', '-j2', str(scoped)], client)
+                         for phase, scoped in client_audits], jobs)
     # Export only successful, verified selected build mappings. No second build
     # and no aggregate roots are introduced at the publication boundary.
     if output:
@@ -290,14 +300,6 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     try:
-        static_commands = ([sys.executable, 'scripts/generate_imports.py', '--check'],
-                        [sys.executable, 'scripts/check_library_layout.py'],
-                        [sys.executable, 'scripts/check_placeholders.py'],
-                        [sys.executable, '-m', 'unittest', 'discover', '-s', 'scripts', '-p', 'test_*.py'])
-        for command in (() if args.source_checked else static_commands):
-            subprocess.run(command, cwd=root, check=True)
-        if args.source_only:
-            return 0
         if args.plan:
             if args.base or args.head or args.full:
                 raise ValueError('--plan cannot be combined with --base/--head/--full')
@@ -315,6 +317,16 @@ def main():
                 raise ValueError('Selected scope is stale; regenerate the plan for these inputs')
         else:
             plan = select(root, args.base, args.head, args.full)
+        if not args.source_checked:
+            for command in ([sys.executable, 'scripts/generate_imports.py', '--check'],
+                            [sys.executable, 'scripts/check_library_layout.py'],
+                            [sys.executable, 'scripts/check_placeholders.py']):
+                subprocess.run(command, cwd=root, check=True)
+            for test in plan['tooling_tests']:
+                subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s', 'scripts',
+                                '-p', test + '.py'], cwd=root, check=True)
+        if args.source_only:
+            return 0
         execute(root, plan, ci=args.ci, rehash=args.rehash or os.environ.get('QUILLEN_REHASH') == '1',
                 output=args.native_outputs)
     except subprocess.CalledProcessError as error:

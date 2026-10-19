@@ -1,18 +1,8 @@
 # Agent guidance
 
 - Follow [CONTRIBUTING.md](CONTRIBUTING.md) for source, checks and documentation.
-- Use incremental checks and preserve trusted caches and compatible validation
-  throughout normal work, including review, merge, integration, and publication.
-  Include applicable compilation, declaration/text-style lint, affected
-  `QuillenTest` and client tests, and source/trust checks; build success alone
-  does not supply separate lint or test coverage.
-  Develop with incremental compilation and its diagnostics. Run independent
-  lint and tests only at the task's final validation before delivery;
-  helper returns, internal commits and merges do not trigger them. Reuse valid
-  evidence and rerun only failed or newly affected checks after final-check repairs.
-  Follow the affected-scope checks in
-  [CONTRIBUTING.md](CONTRIBUTING.md#tests-and-checks); a phase transition alone
-  does not request the complete check pipeline or a whole-library rebuild.
+- Follow the [normal task recipe](docs/DEVELOPMENT.md#normal-task): prove and compile the exact changed leaf in the prepared workspace. Preserve caches and compatible validation across review, merge, integration and publication; missing artifacts, receipts or a phase transition do not assign a whole-library rebuild.
+- At meaningful final delivery, include applicable declaration/text-style lint, affected `QuillenTest`/client tests and source/trust checks, with provider compilation/lint before expensive consumers. Reuse completed categories after repairs. Helper returns, commits and merges do not trigger standalone lint/tests; compilation alone does not supply their separate coverage. [CONTRIBUTING.md](CONTRIBUTING.md#tests-and-checks) owns the commands and scope.
 - For new general theory intended for Aglib, follow the
   [candidate convention](docs/DEVELOPMENT.md#aglib-candidates) before choosing an implementation
   owner; keep application adapters outside that subtree.

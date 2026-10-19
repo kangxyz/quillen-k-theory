@@ -21,7 +21,9 @@ class CheckScriptTests(unittest.TestCase):
             shutil.copyfile(ROOT / 'scripts' / name, self.root / 'scripts' / name)
         for name in ('generate_imports.py', 'check_library_layout.py', 'check_placeholders.py'):
             (self.root / 'scripts' / name).write_text('pass\n')
-        self.write('scripts/test_fixture.py', 'import unittest\nclass Fixture(unittest.TestCase):\n    def test_static(self): pass\n')
+        self.write('scripts/test_fixture.py', 'import os, unittest\nclass Fixture(unittest.TestCase):\n'
+                   '    def test_static(self):\n'
+                   '        self.assertNotEqual(os.environ.get("FAIL_UNRELATED"), "1")\n')
         (self.root / 'Tools').mkdir(exist_ok=True)
         shutil.copyfile(ROOT / 'Tools/LintScoped.lean', self.root / 'Tools/LintScoped.lean')
         self.write('.gitignore', '.lake/\nbin/\ncommands.log\n__pycache__/\n')
@@ -46,6 +48,11 @@ with open(os.environ['RUN_LOG'], 'a') as output:
     output.write(json.dumps([os.getcwd(), sys.argv[1:]]) + '\\n')
 if '--run' in sys.argv and os.environ.get('FAIL_LINT') == '1':
     raise SystemExit(10)
+if Path.cwd().name == 'downstream':
+    if 'build' in sys.argv and os.environ.get('FAIL_CLIENT_BUILD') == '1':
+        raise SystemExit(17)
+    if '--run' in sys.argv and os.environ.get('FAIL_CLIENT_LINT') == '1':
+        raise SystemExit(18)
 ''')
         lake.chmod(0o755)
         self.env = dict(os.environ, PATH=str(self.root / 'bin') + ':' + os.environ['PATH'],
@@ -84,6 +91,51 @@ if '--run' in sys.argv and os.environ.get('FAIL_LINT') == '1':
         self.assertFalse(self.log.exists())
         self.assertFalse(output.exists())
         self.assertFalse((self.root / '.lake/verification').exists())
+
+    def test_proof_and_docs_changes_select_no_unrelated_python_suites(self):
+        from check_scope import select
+        self.env['FAIL_UNRELATED'] = '1'
+        self.write('docs/evidence.json', '{}\n')
+        plan = select(self.root)
+        self.assertEqual(plan['changed'], ['docs/evidence.json'])
+        self.assertEqual(plan['tooling_tests'], [])
+        self.assertFalse(plan['lean'])
+        self.write('Quillen/P.lean', 'def p := 2\n')
+        plan = select(self.root)
+        self.assertIn('docs/evidence.json', plan['changed'])
+        self.assertEqual(plan['tooling_tests'], [])
+        result = self.run_check()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertNotIn('Ran ', result.stderr)
+
+    def test_changed_tool_runs_its_named_regression_only(self):
+        from check_scope import select
+        self.env['FAIL_UNRELATED'] = '1'
+        self.write('scripts/cache_key.py', '# changed cache configuration helper\n')
+        self.write('scripts/test_cache_key.py',
+                   'import unittest\nfrom pathlib import Path\nclass Selected(unittest.TestCase):\n'
+                   '    def test_selected(self):\n'
+                   '        Path(".lake/selected-regression").write_text("ran")\n')
+        plan = select(self.root)
+        self.assertEqual(plan['tooling_tests'], ['test_cache_key'])
+        result = self.run_check('--source-only')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertTrue((self.root / '.lake/selected-regression').is_file())
+        self.assertFalse(self.log.exists())
+
+    def test_runner_edits_select_all_direct_regressions(self):
+        from check_scope import select
+        runner = self.root / 'scripts/check_run.py'
+        runner.write_text(runner.read_text() + '\n# Changed runner input.\n')
+        self.assertEqual(select(self.root)['tooling_tests'],
+                         ['test_cache_sources', 'test_check_run', 'test_check_script'])
+
+    def test_unknown_tooling_requires_explicit_regression_selection(self):
+        self.write('scripts/new_helper.py', '# unassigned regression scope\n')
+        result = self.run_check('--source-only')
+        self.assertEqual(result.returncode, 2, result.stderr)
+        self.assertIn('assign its regression selection', result.stderr)
+        self.assertFalse(self.log.exists())
 
     def test_provider_lint_precedes_affected_consumers_and_tests(self):
         self.write('Quillen/P.lean', 'def p := 2\n')
@@ -144,6 +196,62 @@ if '--run' in sys.argv and os.environ.get('FAIL_LINT') == '1':
         result = self.run_check()
         self.assertEqual(result.returncode, 10, result.stderr)
         self.assertEqual(len(self.commands()), 3)
+
+    def test_client_failure_keeps_selected_recovery_audit(self):
+        self.write('examples/downstream/Consumer/Use.lean',
+                   'import Quillen.C\ndef use := c + 1\n')
+        for variable, code in [('FAIL_CLIENT_BUILD', 17), ('FAIL_CLIENT_LINT', 18)]:
+            with self.subTest(failure=variable):
+                self.env.pop('FAIL_CLIENT_BUILD', None)
+                self.env.pop('FAIL_CLIENT_LINT', None)
+                self.env[variable] = '1'
+                self.log.write_text('')
+                before = set((self.root / '.lake/verification').glob('*'))
+                result = self.run_check()
+                self.assertEqual(result.returncode, code, result.stderr)
+                created = set((self.root / '.lake/verification').iterdir()) - before
+                self.assertEqual(len(created), 1)
+                directory = created.pop()
+                plan = json.loads((directory / 'scope.json').read_text())
+                self.assertTrue(plan['client_trust'])
+                self.assertTrue((directory / 'LintScoped.lean').is_file())
+                source = (directory / 'client-audit.lean').read_text()
+                self.assertIn('-- audit body', source)
+                for module in plan['clients']:
+                    self.assertIn(f'import {module}\n', source)
+                self.assertFalse(any(cmd[-1].endswith('/client-audit.lean')
+                                     for cmd in self.commands()))
+
+    def test_client_batch_failures_keep_every_exact_audit_without_running_them(self):
+        origins = ['Consumer.Use'] + [f'Consumer.Extra{index}' for index in range(9)]
+        for index in range(9):
+            self.write(f'examples/downstream/Consumer/Extra{index}.lean',
+                       f'import Quillen.C\nprivate def extra{index} := c\n')
+        self.write('examples/downstream/Consumer.lean',
+                   ''.join(f'import {module}\n' for module in origins))
+        template = (self.root / 'examples/downstream/Audit.lean').read_text()
+        for variable, code in [('FAIL_CLIENT_BUILD', 17), ('FAIL_CLIENT_LINT', 18)]:
+            with self.subTest(failure=variable):
+                self.env.pop('FAIL_CLIENT_BUILD', None)
+                self.env.pop('FAIL_CLIENT_LINT', None)
+                self.env[variable] = '1'
+                self.log.write_text('')
+                before = set((self.root / '.lake/verification').glob('*'))
+                result = self.run_check()
+                self.assertEqual(result.returncode, code, result.stderr)
+                created = set((self.root / '.lake/verification').iterdir()) - before
+                self.assertEqual(len(created), 1)
+                directory = created.pop()
+                scope = json.loads((directory / 'client-scope.json').read_text())
+                self.assertEqual(scope['audit_origin_union'], sorted(origins))
+                self.assertEqual(len(scope['audit_batches']), 2)
+                self.assertEqual({path.name for path in directory.glob('client-audit*.lean')},
+                                 {'client-audit-0.lean', 'client-audit-1.lean'})
+                for index, batch in enumerate(scope['audit_batches']):
+                    source = (directory / f'client-audit-{index}.lean').read_text()
+                    self.assertEqual(source, template.replace('import Consumer\n',
+                                     ''.join(f'import {module}\n' for module in batch)))
+                self.assertFalse(any('/client-audit' in cmd[-1] for cmd in self.commands()))
 
     def test_unknown_flags_and_missing_base_fail_without_lake(self):
         for args in (['--unknown'], ['--base', 'missing-base']):
@@ -236,6 +344,7 @@ if '--run' in sys.argv and os.environ.get('FAIL_LINT') == '1':
 
     def test_ci_gates_every_lean_bootstrap_and_export_has_no_build_step(self):
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()
+        self.assertIn('bash scripts/check.sh --source-only --plan "$RUNNER_TEMP/check-scope.json"', workflow)
         for name in ('Check out shared native Lake cache tooling', 'Install the pinned Lean toolchain',
                      'Restore exact pinned dependencies', 'Fetch matching Mathlib dependency proof cache',
                      'Compute project cache configuration', 'Restore incremental project builds'):

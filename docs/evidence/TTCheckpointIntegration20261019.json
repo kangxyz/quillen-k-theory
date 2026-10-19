@@ -800,5 +800,49 @@
     ]
   },
   "interpretation": "Scoped source acceptance records the encoded constructions with their stated hypotheses. It is neither a fresh whole-library build claim nor completion of classical TT 7.4 or the comparison with classical nonconnective K-theory.",
-  "landing_note": "Validated source checkpoint before reconciling later local incremental-tooling commits; subsequent compatible control-only merges retain this identified native execution basis and require their own affected Python regression checks."
+  "landing_note": "Reconciled the later local main incremental tooling/regression-selection and prepared-audit recovery commits. Native predicate bodies and mathematical source/config vector unchanged;49affected Python regressions and static checks passed on the merged runner. Prior native coverage is retained on its exact execution basis.",
+  "compatible_tooling_merge": {
+    "incoming_main": "33194bd88f596416e2f4374c49492e940c5c7970",
+    "mathematical_source_vector_unchanged": "2aa5c09c49da054f422b31d6e1d135a9e25ae3132eb9362c725ff84eae32d3e7",
+    "current_owned_file_sha256": {
+      "scripts/check_run.py": "176e0467bd19c6f3ddafb6df3e75b6164bc08753175d681ae8e64f30dfe47960",
+      "scripts/check_scope.py": "9ce28411d276061f63720eba35416bf9b1be9b70fea5d7d8ea8b1de9d1f8ed3b",
+      "scripts/test_check_run.py": "a34c7e324c6cb1d84ccd394ca332741748066c6b9136eaa01e7288b4935981c1",
+      "scripts/test_check_script.py": "8094c85f1b570b03a0d8d55ae113a01bf318e0246dff0ea4a26dcf321f9cf09e",
+      "scripts/test_cache_sources.py": "e320e522a1d10fa1b655acc1d9402cb330598e87369ff221888d9e7f90f73dbc",
+      "CONTRIBUTING.md": "f2749eb2fda6684af9b90dff96a233214e1530ea93db606013c022d2e62cfa03"
+    },
+    "selected_source_only_tests": {
+      "test_cache_sources": 16,
+      "test_check_run": 10,
+      "test_check_script": 23
+    },
+    "selected_tests_passed": 49,
+    "static_checks": "passed",
+    "source_only_receipt_sha256": "d1fa86ecd982b3452de3ffe5cef26dd49e10f39ca336ec39d273a6d59fac4143",
+    "correspondence": {
+      "basis": "Previously validated3523000 native core evidence; control-only merge33194; Lean/config vector2aa5 unchanged",
+      "unchanged_AST_functions": {
+        "chunks": true,
+        "client_check_scope": true,
+        "scoped_lint_source": true,
+        "parallel_checks": true,
+        "batch_phase": true,
+        "safe": true,
+        "build": true,
+        "lint_runtime": true,
+        "lint": true
+      },
+      "prepare_audit_source_prefix_matches_previous_native_audit": true,
+      "main_matches_incoming_incremental_selector_AST": true,
+      "unchanged_native_predicate_template_sha256": {
+        "Tools/LintScoped.lean": "8980b027e274a5896d60edbe8b5f6e30cfb638369d9f199fccd87bc8f55aabef",
+        "examples/downstream/Audit.lean": "ebe7a0aaab7d95a70622a2ed53e4a35017426f7b345ecca01cb906047bc893e0",
+        "QuillenTest/Axioms.lean": "4403edb9751e6dc8be050001210a491ebe75ac510e696df12a58e47102b34f60"
+      },
+      "Lean_pin_diff_from_first_checkpoint": [],
+      "execution_correspondence": "Same certified graph, import substitution, native audit body and safe lake env lean -j2 PATH commands; exact chunk sources are now prepared before client build/lint. Invocation remains after all selected client lint calls pass. Existing batch_phase names unchanged.",
+      "prior_acceptance_remains_applicable": "717 providers,root87556,140tests,60clients defaultlint/text,179clientorigin/629declarationaudit on unchanged Lean/config/predicate inputs. No native replay performed."
+    }
+  }
 }
