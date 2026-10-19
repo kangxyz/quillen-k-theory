@@ -4,6 +4,22 @@
 authoring, incremental checks and dependency changes. This page owns the
 candidate-specific authoring and admission workflow and the affected-check adapter.
 
+## Normal task
+
+Use the prepared workspace: encode/prove, compile the exact changed leaf, and
+repair from its diagnostics. For example:
+
+```sh
+lake build Quillen.KTheory.Functor
+```
+
+At meaningful final delivery, run the selected check once:
+`bash scripts/check.sh --base ACCEPTED_COMMIT`. Use a consumer only for a concrete
+interface question. After a failure, keep completed categories and use the
+[direct scoped repair commands](../CONTRIBUTING.md#tests-and-checks). Consult
+setup, dependency/cache or environment guidance only for an actual missing or
+invalid input; preserve the prepared workspace and matching evidence.
+
 ## Aglib candidates
 
 The [`Quillen/Aglib/` source tree](../Quillen/Aglib/README.md) holds maintained
@@ -53,6 +69,16 @@ A zero-before new branch recovers the default-branch merge base when it provides
 an independent comparison. A true initial commit uses `--base EMPTY_TREE`, with
 all added sources as its actual changed scope. Missing or tautological comparison
 bases stop with an actionable error.
+
+Python regressions follow changed tooling through `check_scope.py`'s explicit
+fixture mapping. Ordinary proof and documentation changes retain cheap source
+checks without unrelated Python suites. Plans retain documentation/tooling paths
+even when no Lean work is selected; new tooling needs an explicit regression
+selection, and unknown paths fail clearly. `--full` retains comprehensive tooling
+diagnostics. CI's source-only step consumes the same plan as its native checks.
+For failed final checks, use the contributor guide's
+[direct scoped repair commands](../CONTRIBUTING.md#tests-and-checks) and retain
+completed categories.
 
 The selector reads both old and current import graphs, so renamed/deleted modules
 still select their surviving consumers. Changed providers compile in dependency

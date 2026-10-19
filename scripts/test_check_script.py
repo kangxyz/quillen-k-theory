@@ -21,7 +21,9 @@ class CheckScriptTests(unittest.TestCase):
             shutil.copyfile(ROOT / 'scripts' / name, self.root / 'scripts' / name)
         for name in ('generate_imports.py', 'check_library_layout.py', 'check_placeholders.py'):
             (self.root / 'scripts' / name).write_text('pass\n')
-        self.write('scripts/test_fixture.py', 'import unittest\nclass Fixture(unittest.TestCase):\n    def test_static(self): pass\n')
+        self.write('scripts/test_fixture.py', 'import os, unittest\nclass Fixture(unittest.TestCase):\n'
+                   '    def test_static(self):\n'
+                   '        self.assertNotEqual(os.environ.get("FAIL_UNRELATED"), "1")\n')
         (self.root / 'Tools').mkdir(exist_ok=True)
         shutil.copyfile(ROOT / 'Tools/LintScoped.lean', self.root / 'Tools/LintScoped.lean')
         self.write('.gitignore', '.lake/\nbin/\ncommands.log\n__pycache__/\n')
@@ -84,6 +86,44 @@ if '--run' in sys.argv and os.environ.get('FAIL_LINT') == '1':
         self.assertFalse(self.log.exists())
         self.assertFalse(output.exists())
         self.assertFalse((self.root / '.lake/verification').exists())
+
+    def test_proof_and_docs_changes_select_no_unrelated_python_suites(self):
+        from check_scope import select
+        self.env['FAIL_UNRELATED'] = '1'
+        self.write('docs/evidence.json', '{}\n')
+        plan = select(self.root)
+        self.assertEqual(plan['changed'], ['docs/evidence.json'])
+        self.assertEqual(plan['tooling_tests'], [])
+        self.assertFalse(plan['lean'])
+        self.write('Quillen/P.lean', 'def p := 2\n')
+        plan = select(self.root)
+        self.assertIn('docs/evidence.json', plan['changed'])
+        self.assertEqual(plan['tooling_tests'], [])
+        result = self.run_check()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertNotIn('Ran ', result.stderr)
+
+    def test_changed_tool_runs_its_named_regression_only(self):
+        from check_scope import select
+        self.env['FAIL_UNRELATED'] = '1'
+        self.write('scripts/cache_key.py', '# changed cache configuration helper\n')
+        self.write('scripts/test_cache_key.py',
+                   'import unittest\nfrom pathlib import Path\nclass Selected(unittest.TestCase):\n'
+                   '    def test_selected(self):\n'
+                   '        Path(".lake/selected-regression").write_text("ran")\n')
+        plan = select(self.root)
+        self.assertEqual(plan['tooling_tests'], ['test_cache_key'])
+        result = self.run_check('--source-only')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertTrue((self.root / '.lake/selected-regression').is_file())
+        self.assertFalse(self.log.exists())
+
+    def test_unknown_tooling_requires_explicit_regression_selection(self):
+        self.write('scripts/new_helper.py', '# unassigned regression scope\n')
+        result = self.run_check('--source-only')
+        self.assertEqual(result.returncode, 2, result.stderr)
+        self.assertIn('assign its regression selection', result.stderr)
+        self.assertFalse(self.log.exists())
 
     def test_provider_lint_precedes_affected_consumers_and_tests(self):
         self.write('Quillen/P.lean', 'def p := 2\n')
@@ -236,6 +276,7 @@ if '--run' in sys.argv and os.environ.get('FAIL_LINT') == '1':
 
     def test_ci_gates_every_lean_bootstrap_and_export_has_no_build_step(self):
         workflow = (ROOT / '.github/workflows/ci.yml').read_text()
+        self.assertIn('bash scripts/check.sh --source-only --plan "$RUNNER_TEMP/check-scope.json"', workflow)
         for name in ('Check out shared native Lake cache tooling', 'Install the pinned Lean toolchain',
                      'Restore exact pinned dependencies', 'Fetch matching Mathlib dependency proof cache',
                      'Compute project cache configuration', 'Restore incremental project builds'):

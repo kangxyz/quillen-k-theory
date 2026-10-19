@@ -66,7 +66,7 @@ jobs:
           fi
           python3 scripts/check_scope.py "${args[@]}"
       - name: Check source organization
-        run: bash scripts/check.sh --source-only
+        run: bash scripts/check.sh --source-only --plan "$RUNNER_TEMP/check-scope.json"
       # Tooling is pinned independently of accepted mathematical dependencies.
       - name: Check out shared native Lake cache tooling
         if: steps.scope.outputs.lean == 'true'

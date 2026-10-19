@@ -151,14 +151,6 @@ def main():
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     try:
-        static_commands = ([sys.executable, 'scripts/generate_imports.py', '--check'],
-                        [sys.executable, 'scripts/check_library_layout.py'],
-                        [sys.executable, 'scripts/check_placeholders.py'],
-                        [sys.executable, '-m', 'unittest', 'discover', '-s', 'scripts', '-p', 'test_*.py'])
-        for command in (() if args.source_checked else static_commands):
-            subprocess.run(command, cwd=root, check=True)
-        if args.source_only:
-            return 0
         if args.plan:
             if args.base or args.head or args.full:
                 raise ValueError('--plan cannot be combined with --base/--head/--full')
@@ -176,6 +168,16 @@ def main():
                 raise ValueError('Selected scope is stale; regenerate the plan for these inputs')
         else:
             plan = select(root, args.base, args.head, args.full)
+        if not args.source_checked:
+            for command in ([sys.executable, 'scripts/generate_imports.py', '--check'],
+                            [sys.executable, 'scripts/check_library_layout.py'],
+                            [sys.executable, 'scripts/check_placeholders.py']):
+                subprocess.run(command, cwd=root, check=True)
+            for test in plan['tooling_tests']:
+                subprocess.run([sys.executable, '-m', 'unittest', 'discover', '-s', 'scripts',
+                                '-p', test + '.py'], cwd=root, check=True)
+        if args.source_only:
+            return 0
         execute(root, plan, ci=args.ci, rehash=args.rehash or os.environ.get('QUILLEN_REHASH') == '1',
                 output=args.native_outputs)
     except subprocess.CalledProcessError as error:

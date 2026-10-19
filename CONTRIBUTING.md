@@ -103,6 +103,29 @@ the slow default checks and generated declarations; it reads existing artifacts
 without starting builds. Reuse compatible lint and test coverage outside the
 affected scope, and run the relevant tests for the changed inputs.
 
+After a final-check repair, resume the failed module or category and retain
+completed provider checks. For the same selected scope, use the module names
+and existing verification directory from the failed command. For example:
+
+```sh
+# Provider lint repair: compile the repaired source, then rerun its scoped lint.
+lake build Quillen.KTheory.API
+lake env lean --run .lake/verification/RUN/LintScoped.lean Quillen.KTheory.API
+# A late test failure: compile and lint just that selected test.
+lake build QuillenTest.ActionTranslationNaturality
+lake env lean --run .lake/verification/RUN/LintScoped.lean QuillenTest.ActionTranslationNaturality
+# A late client failure, from examples/downstream:
+cd examples/downstream
+lake build Consumer.AffineClosed
+lake env lean --run ../../.lake/verification/RUN/LintScoped.lean Consumer.AffineClosed
+lake env lean ../../.lake/verification/RUN/client-audit.lean
+```
+
+Replace `RUN` and the examples with the actual selected paths and modules.
+Complete any still-affected trust/client checks from the existing selected
+commands; reselect when the import closure changes. The isolated lint runner
+also handles import-only facades and tests without named declarations.
+
 A merge, commit, branch switch, checkout, version bump, or publication does not
 by itself require a whole-target build, fresh dependency replay, full audit, or
 Python/source suite. Complete release coverage may combine compatible existing
