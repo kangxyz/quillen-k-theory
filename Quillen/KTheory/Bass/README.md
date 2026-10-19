@@ -16,6 +16,14 @@ owns the geometric seed and support/localization comparisons. A generic diagram
 interface, finite-stage isomorphism, or stable self-comparison does not supply
 an additional rectification or telescope-identification theorem.
 
+The focused [sign comparisons](SignComparisons.md) retain ordered Laurent
+quotients, geometric swaps, finite loop words and original negative classes.
+[Row interfaces](RowInterfaces.md) retain cone/loop refinement, independent
+tensor forward cells, whole input/null squares and sequential or
+ordinary-colimit presentations. The
+[geometric boundary guide](../../AlgebraicGeometry/PerfectComplexes/BoundedFlat/GeometricBoundary.md)
+keeps their original perfect-complex class and sign conventions.
+
 ## Global sections and finite Bass interchange
 
 | Import after `Quillen.` | Principal interface |

@@ -182,6 +182,9 @@ if '--source-only' not in sys.argv:
 ''')
         (self.root / 'examples/downstream').mkdir(parents=True)
         (self.root / 'examples/downstream/Audit.lean').write_text('import Consumer\n-- audit\n')
+        (self.root / 'examples/downstream/Consumer').mkdir()
+        (self.root / 'examples/downstream/Consumer/Use.lean').write_text(
+            'import Quillen.P\ndef use := 1\n')
         self.aglib = self.root / '.lake/packages/Aglib/scripts'
         self.aglib.mkdir(parents=True)
         (self.root / 'bin').mkdir()

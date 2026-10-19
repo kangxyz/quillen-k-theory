@@ -21,6 +21,25 @@ review bookkeeping and origin audits do not identify a completion with classical
 Kᴮ. Mathematical gaps remain in the
 [comparison guide](../../Quillen/AlgebraicGeometry/PerfectComplexes/Development.md).
 
+## TT checkpoint integration
+
+The 2026-10-19 incoming checkpoint is identified by archive SHA-256
+`db42f0db5d16f23f2c03173ce2f535dd30b25214c4b69296250a864547f4a748`.
+Its mathematical baseline is `8273990b7977bd87edfe94cd2be91dec64de79aa`;
+the native integration starts at
+`1c47383a1704c2cc829fcd5fd41b981aa307d548`, retaining the later incremental
+check policy. Archive plans and validation manifests keep their historical
+scope; they are not current workflow instructions or blanket mathematical
+acceptance for additional working source.
+
+The [integration record](TTCheckpointIntegration20261019.json) identifies the
+final source selection, independent source-review scope, compatible retained
+checks, fresh native checks and exceptions. The selected core checks passed:
+717 providers, 140 tests, 60 client targets and complete client-origin audits.
+Existing records in the table above remain the basis for their own identified
+source and runtime only. Source guides present the current objects and
+interfaces; these records do not claim the complete classical TT comparison.
+
 ## P1–P5 continuation record
 
 `TTContinuationChecks.json` identifies the 2026-10-15 selection for affine

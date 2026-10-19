@@ -1,0 +1,118 @@
+/-
+Copyright (c) 2026 OpenAI. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: OpenAI
+-/
+module
+
+public import Quillen.AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputSeedEvaluationUnitNodes
+
+/-!
+# The entire original evaluation-unit pasting in its complete-node simplex
+
+The raw transformation, both nested ofLevels transports, the reversed first triangle and the
+second triangle are unchanged. The lift identifies the entire native family at every level,
+including its independent zero-level loop and prespectrum structure coordinates.
+-/
+@[expose] public section
+noncomputable section
+set_option autoImplicit false
+set_option backward.isDefEq.respectTransparency false
+set_option backward.defeqAttrib.useBackward true
+open CategoryTheory CategoryTheory.Functor AlgebraicGeometry Opposite Convexity
+open Quillen.Waldhausen Quillen.Waldhausen.IteratedS Quillen.LoopPrespectrum
+open Quillen.SimplexParameters
+open scoped Simplicial Topology unitInterval
+universe u
+namespace Quillen.PerfectComplexes.GlobalBassEvaluation.InputSeedEvaluationUnit
+open GlobalSectionChangeIndex
+
+variable {X Y : Scheme.{u}} (f : X ⟶ Y) (r : (Γ(X, ⊤))ˣ)
+
+/-- The exact inner intertwining comparison stored in the original evaluation-unit pasting. -/
+def rawPasting :
+    ((evaluationOldUnit f r).trans (evaluationComparison f)).RelHomotopy
+      ((evaluationComparison f).trans (evaluationNewUnit f r)) :=
+  prespectrumTransformationIntertwiningHomotopy
+    (globalModel.map f.op) (evaluationRawMap f)
+    (evaluationModel (op Y)) (evaluationModel (op X))
+    (sectionUnit f r).hom (evaluationRawUnit f r) (evaluationComparisonIso f).hom
+    (fun _ => (globalModel.obj (op X)).waldhausen.weq_iso _ inferInstance)
+    (fun K => normalizedWeakTransformation_weak
+      (boundedFlatPerfectPullback_exact f) (boundedFlatPerfectPullback_exact f)
+      (boundedFlatPerfectPullbackUnitIso f r).hom
+      (fun _ => (boundedFlatPerfectWaldhausen X).weq_iso _ inferInstance)
+      (AsSmall.down.obj K))
+    (fun A => (boundedFlatPerfectWaldhausen X).smallModel.weq_iso _
+      (inferInstanceAs (IsIso ((evaluationComparisonIso f).app A).hom)))
+    (evaluation_unit_square f r)
+
+/-- The exact inner comparison has the original four-node, two-triangle lift. -/
+theorem raw_native :
+    HomotopyLift (simplex f r) scalarParameter (rawPasting f r) :=
+  SimplexIntertwiningLift.native
+    (globalModel.map f.op) (evaluationRawMap f)
+    (evaluationModel (op Y)) (evaluationModel (op X))
+    (sectionUnit f r) (evaluationComparisonIso f)
+    (evaluationRawUnit f r) _ _ _ (evaluation_unit_square f r)
+
+private theorem ofLevels_whole {E D : LoopPrespectrum.{u}}
+    {f g f' g' : E ⟶ D} {H K : Homotopy f g}
+    (J L : H.RelHomotopy K) (H' K' : Homotopy f' g')
+    (hH : ∀ n, H'.level n = H.level n) (hK : ∀ n, K'.level n = K.level n)
+    (hJL : J = L) (n : ℕ) :
+    ((J.ofLevels H' K' hH hK).level n).toContinuousMap =
+      (L.level n).toContinuousMap := by
+  cases hJL
+  rfl
+
+attribute [local irreducible] prespectrumTransformationIntertwiningHomotopy
+
+/-- The final original ofLevels wrapper changes no point of the entire level family. -/
+theorem original_level (n : ℕ) :
+    ((evaluationUnitPasting f r).level n).toContinuousMap =
+      ((rawPasting f r).level n).toContinuousMap := by
+  unfold evaluationUnitPasting
+  refine ofLevels_whole _ (rawPasting f r) _ _ _ _ ?_ n
+  rfl
+
+/-- The whole actual original evaluation-unit pasting, with every original clock, is lifted. -/
+theorem native :
+    HomotopyLift (simplex f r) scalarParameter (evaluationUnitPasting f r) := by
+  intro n s t x
+  exact (raw_native f r n s t x).trans
+    (DFunLike.congr_fun (original_level f r n) (s, (t, x))).symm
+
+/-- The entire square as a continuous map in both original comparison times and source point. -/
+def family (n : ℕ) :
+    C(unitInterval × (unitInterval × (prespectrum (globalModel.obj (op Y))).space n),
+      (prespectrum (modelOf (boundedFlatPerfectWaldhausen X))).space n) :=
+  (prespectrumSimplexFamily (simplex f r) n).comp
+    ⟨fun z => (scalarParameter (z.1, z.2.1), z.2.2), by fun_prop⟩
+
+/-- Equality of whole continuous maps retains every native level, not only a boundary edge. -/
+theorem family_eq (n : ℕ) :
+    family f r n = ((evaluationUnitPasting f r).level n).toContinuousMap := by
+  apply ContinuousMap.ext
+  rintro ⟨s, t, x⟩
+  exact native f r n s t x
+
+/-- The independent original structure coordinate is preserved throughout the whole square. -/
+theorem family_structure (n : ℕ) (s t v : unitInterval)
+    (x : (prespectrum (globalModel.obj (op Y))).space n) :
+    family f r (n + 1)
+        (s, (t, (prespectrum (globalModel.obj (op Y))).structureMap n x v)) =
+      (prespectrum (modelOf (boundedFlatPerfectWaldhausen X))).structureMap n
+        (family f r n (s, (t, x))) v :=
+  prespectrumSimplexFamily_structure (simplex f r) n (scalarParameter (s, t)) x v
+
+/-- Level zero keeps its original loop coordinate separate from both comparison times. -/
+theorem zero_apply (s t v : unitInterval)
+    (x : Path (stagePoint 0 (globalModel.obj (op Y)))
+      (stagePoint 0 (globalModel.obj (op Y)))) :
+    (show Path (stagePoint 0 (modelOf (boundedFlatPerfectWaldhausen X)))
+      (stagePoint 0 (modelOf (boundedFlatPerfectWaldhausen X))) from
+        family f r 0 (s, (t, x))) v =
+      stageSimplexBarycentric (simplex f r) 0 (scalarParameter (s, t), x v) := rfl
+
+end Quillen.PerfectComplexes.GlobalBassEvaluation.InputSeedEvaluationUnit

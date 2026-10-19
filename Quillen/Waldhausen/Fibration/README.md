@@ -60,3 +60,28 @@ Its endpoint supplies original K0 surjectivity. These data are not inferred
 from a generic prespectrum fiber sequence; the
 [prespectrum family](../../Topology/Prespectrum/README.md) owns that lower
 stable topology.
+
+## Original boundary and signed stable boundary
+
+[LevelOneConnectingComparison](LevelOneConnectingComparison.lean) keeps the
+original based fiber homeomorphism, canonical fiber map and geometric
+connecting homomorphism at level one. Its square retains the complete
+original acyclic null.
+
+[StableConnectingComparison](StableConnectingComparison.lean) compares
+`changeWeakConnectingHom` with the existing signed `stableFiberConnecting`
+through `originalKStableEquiv`. The square has one explicit minus: the
+original K-equivalence uses the structure map from level one to its first
+stable stage. `originalKStableEquiv_connecting_sign` and its homomorphism
+square retain the original canonical comparison and the degree cast
+`((n + 1 : ℕ) : ℤ) = (n : ℤ) + 1`.
+`originalKStableEquiv_liftConnecting_sign` gives the same convention for
+`stableFiberLiftConnecting` of the original arrows and specified null.
+
+The statements include K₁ to K₀. They assume weakness of the original
+canonical fiber map; an application may discharge that premise by the
+fibration theorem above with its actual joint data and second-endpoint
+section. The [perfect-complex boundary guide](../../AlgebraicGeometry/PerfectComplexes/BoundedFlat/GeometricBoundary.md)
+constructs its evaluation and whole-null comparisons before applying this
+sign formula. These conventions do not identify a classical nonconnective
+boundary.

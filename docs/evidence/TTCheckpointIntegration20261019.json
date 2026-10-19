@@ -1,0 +1,804 @@
+{
+  "schema_version": 1,
+  "kind": "TT checkpoint source integration and scoped native validation",
+  "status": "passed selected native core acceptance",
+  "date": "2026-10-19",
+  "source": {
+    "archive": "quillen-tt-8273990-checkpoint-20261019T1004Z.zip",
+    "archive_sha256": "db42f0db5d16f23f2c03173ce2f535dd30b25214c4b69296250a864547f4a748",
+    "archive_mathematical_baseline": "8273990b7977bd87edfe94cd2be91dec64de79aa",
+    "integration_parent": "1c47383a1704c2cc829fcd5fd41b981aa307d548",
+    "selection": {
+      "new_library_leaves": 710,
+      "new_test_leaves": 139,
+      "new_downstream_client_leaves": 58,
+      "regenerated_facades": 9,
+      "archive_scoped_final_library_modules": 448,
+      "archive_scoped_final_modules_already_in_baseline": 1,
+      "additional_changed_dependencies": 156,
+      "additional_working_library_leaves": 107
+    },
+    "excluded": [
+      "17 explicit draft sources",
+      "66 project tmp paths",
+      "archive-generated facades and archive tooling/configuration"
+    ],
+    "source_config_vector": {
+      "paths": 7176,
+      "sha256": "2aa5c09c49da054f422b31d6e1d135a9e25ae3132eb9362c725ff84eae32d3e7",
+      "algorithm": "SHA256 of the UTF-8 concatenation of entries sorted by repository-relative path: path + NUL + lowercase SHA256(file bytes) + LF. Paths: Quillen.lean, QuillenTest.lean; all recursive *.lean under Quillen/, QuillenTest/, Tools/, examples/downstream/, excluding .lake directories; and lake-manifest.json, lakefile.toml, lean-toolchain at root and examples/downstream/."
+    },
+    "archive_source_delta": [
+      {
+        "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalBassEvaluationInputSeedCornerNodes.lean",
+        "before": "205c928dbf490cfd271a8c3814c0ab31314f7b7cdafd360aeaa95c198069eade",
+        "after": "638d552c497503fe917ec2419f8adf7cf6ecd6f641c540fd2d9dbed72572c0e3"
+      },
+      {
+        "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalBassEvaluationInputSeedEvaluationUnitNative.lean",
+        "before": "c5809ad7c577d8380d35a0156d933e22e30adba568eae3d00ca4c4b4da8e0a3e",
+        "after": "120b25c17cad09ee9210e8f572c74470233a2c8bf824c8be2b194637b98401c2"
+      },
+      {
+        "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalBassEvaluationInputSeedRawUnit.lean",
+        "before": "40cb1293f8f32eee68e1851e9eb594c79bda8d3b65454ab5acf700becf6e7a1a",
+        "after": "869fdf97a622c38377a6ff203c2bf33d7b663809eecf18e57e6e32fb092bbf10"
+      },
+      {
+        "path": "QuillenTest/GlobalRawBassInputIdentitySeedSquare.lean",
+        "before": "6ebf76d1075cdf4766ccfded70f71ddfcc8b7622460c5051ec9f0eb8fc9c8b51",
+        "after": "c653f33ef2243d1a7d0774904d2b3ca88cdd7379b528f30123dbd39e5be03164"
+      },
+      {
+        "path": "QuillenTest/TensorUnitPrism.lean",
+        "before": "3b99b1a5bcc2a86cd384480579e138713bfa8253235b6e6f64225a976b13dddb",
+        "after": "47e04a8063895874086c50dabf9bc4497c30b1d2e69cedeb2ddbcfddb526cec6"
+      },
+      {
+        "path": "QuillenTest/ZigzagSequentializationColimit.lean",
+        "before": "378df9d86968a6ee6db5abac3ae187049feb5affb44f40c2375c5c61ae3c9967",
+        "after": "7bd87b63a4196ee5364b3dd3bd308083b562b92b0c5e67fbfe436e5cb857cb0b"
+      },
+      {
+        "path": "examples/downstream/Consumer/GlobalRawBassInputIdentitySeedSquare.lean",
+        "before": "a7be15d4a18976ed713891a3f1cf3c51e4681ecc1d686c35ce6c6f7566c731ea",
+        "after": "6a68c3c6b88a45ce829e1e42ba59378ba0f8af0d359c957ce08e0734b60d5175"
+      }
+    ],
+    "test_identifier_repairs": [
+      {
+        "path": "QuillenTest/GlobalRawBassInputIdentitySeedSquare.lean",
+        "old": "original_square",
+        "new": "originalSquare",
+        "occurrences": 14,
+        "before": "6ebf76d1075cdf4766ccfded70f71ddfcc8b7622460c5051ec9f0eb8fc9c8b51",
+        "after": "c653f33ef2243d1a7d0774904d2b3ca88cdd7379b528f30123dbd39e5be03164",
+        "scope": "Identifier-only definition naming and its intra-file references; all other bytes unchanged."
+      },
+      {
+        "path": "QuillenTest/TensorUnitPrism.lean",
+        "old": "whole_tensor_boundary",
+        "new": "wholeTensorBoundary",
+        "occurrences": 1,
+        "before": "3b99b1a5bcc2a86cd384480579e138713bfa8253235b6e6f64225a976b13dddb",
+        "after": "47e04a8063895874086c50dabf9bc4497c30b1d2e69cedeb2ddbcfddb526cec6",
+        "scope": "Identifier-only definition naming and its intra-file references; all other bytes unchanged."
+      },
+      {
+        "path": "QuillenTest/ZigzagSequentializationColimit.lean",
+        "old": "full_ordinary_colimit",
+        "new": "fullOrdinaryColimit",
+        "occurrences": 1,
+        "before": "378df9d86968a6ee6db5abac3ae187049feb5affb44f40c2375c5c61ae3c9967",
+        "after": "7bd87b63a4196ee5364b3dd3bd308083b562b92b0c5e67fbfe436e5cb857cb0b",
+        "scope": "Identifier-only definition naming and its intra-file references; all other bytes unchanged."
+      }
+    ],
+    "client_identifier_repair": {
+      "path": "examples/downstream/Consumer/GlobalRawBassInputIdentitySeedSquare.lean",
+      "before": "a7be15d4a18976ed713891a3f1cf3c51e4681ecc1d686c35ce6c6f7566c731ea",
+      "after": "6a68c3c6b88a45ce829e1e42ba59378ba0f8af0d359c957ce08e0734b60d5175",
+      "old": "actual_square",
+      "new": "actualSquare",
+      "occurrences": 5,
+      "scope": "Identifier-only client definition and its intra-file references; all other bytes unchanged. Exactly matches incoming1255 client."
+    }
+  },
+  "pins": {
+    "Lean": "4.34.1",
+    "Aglib": "16aa08a90198d76be0bec47dd640b5c992acd9d7",
+    "mathlib": "d13f23b723b8a846827a245b89c10fc7d3f11612"
+  },
+  "validation": {
+    "source_only": {
+      "command": "bash scripts/check.sh --source-only",
+      "exit_code": 0,
+      "script_tests": 118,
+      "checks": [
+        "generated imports",
+        "import policy and local dependency cycles",
+        "proof placeholders and custom assumptions",
+        "check-runner unit tests"
+      ],
+      "followup_source_token_check": {
+        "command": "python3 scripts/check_placeholders.py",
+        "exit_code": 0,
+        "basis": "After the three production proof/encoding repairs; subsequent three test-name and one client-name edits change only identifiers and references, introducing no assumptions/placeholders."
+      },
+      "final_receipt_sha256": "5472098333ac441fd57b541e14816e61ee2a689fbc31758397b458e473b379d3",
+      "basis": "Final changed Python runner/fixtures passed118tests and native static predicates; compatible coverage retained after the single identifier-only client repair.",
+      "invocation_logical_source_vector": "c449a6e4c5a83ecce3884b34f1f89616e730c193289b43c23c5e42fb7b66978f",
+      "retained_final_delta": "After the118-test/source-only success, only actual_square\u2192actualSquare changed5client identifiers; imports, headers, tooling/tests/global config and all forbidden-token predicates are unchanged. Its affected build/lint and full client audit were freshly checked."
+    },
+    "scope": {
+      "full": false,
+      "providers": 717,
+      "provider_layers": 44,
+      "tests": 140,
+      "downstream_clients": 60,
+      "root_trust_audit": true,
+      "downstream_trust_audit": true,
+      "plan_sha256": "be5b3620c670608276398413038eaf3204721d1f9004a85b904b47639434dffc"
+    },
+    "native_core": {
+      "status": "passed",
+      "retained_provider_layers": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43
+      ],
+      "retained_provider_targets": 717,
+      "retention_basis": "Every retained provider layer and its dependency closure match final source on its producer basis. Later proof repairs were outside previously checked layers. The three test-name edits and one client-name edit are identifier-only with no production/root-audit input delta. The51passed defining client modules and Consumer facade text have unchanged sources/dependencies after the final client-name repair.",
+      "retained_scope_note": "Each retained producer run failed after its recorded successful provider layers, either in a later layer or at test naming lint. Only successful target-layer build/cache-validation/default-lint receipts are reused; no partial producer run is claimed to pass overall.",
+      "retained_runs": [
+        {
+          "retained_run": "remote-5a7c3f42e9574e508bedc12c5591bcf8",
+          "retained_source_digest": "b898f335c430a48a4ea7a5b9dea21f8ce96fe899bd149a397c5aac7c91d1b3ec",
+          "retained_run_exit_code": 1,
+          "fully_checked_original_batches": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "provider_targets": 386
+        },
+        {
+          "retained_run": "remote-3b12a6eb0f4545f1b70621044117abbe",
+          "retained_source_digest": "435c85bbabcdb4a9865be117162a56f164754487fad21f1fb1dca106e0a11ae2",
+          "retained_run_exit_code": 1,
+          "fully_checked_original_batches": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ],
+          "provider_targets": 204
+        },
+        {
+          "retained_run": "remote-87d65b473b284205a4f9f836a0b01634",
+          "retained_source_digest": "bd91213d9c474eb4fc22707478839a87e1cc6c2c897d0e036788d507e15176d1",
+          "retained_run_exit_code": 1,
+          "fully_checked_original_batches": [
+            23,
+            24
+          ],
+          "provider_targets": 30
+        },
+        {
+          "retained_run": "remote-0c2f0792d88443eeae6fa57ed7719645",
+          "retained_source_digest": "605c4def87ad329abd91132d17a32098bf8abccb368678c3f1816f55dce36741",
+          "retained_run_exit_code": 1,
+          "fully_checked_original_batches": [
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43
+          ],
+          "provider_targets": 97,
+          "root_trust": {
+            "exit_code": 0,
+            "project_declarations": 87556,
+            "foundations": "Only standard Lean logical foundations, including private helpers."
+          },
+          "test_build_cache_validation": {
+            "selected_targets": 140,
+            "build_exit_code": 0,
+            "cache_probe_exit_code": 0
+          },
+          "remaining_failure": "Aggregate test environment naming lint: three definition names; fixed by identifier-only edits. Native test text lint and client checks had not run."
+        }
+      ],
+      "test_client_build_recovery": {
+        "run": "remote-8545d73850264a5ba44080be34cbac83",
+        "source_content_sha256": "f5ddd2e69a05f62bdd96f7ef8de79bd169b63697126086c7021b04fd78728a0c",
+        "logical_source_config_vector_sha256": "c449a6e4c5a83ecce3884b34f1f89616e730c193289b43c23c5e42fb7b66978f",
+        "run_exit_code": 1,
+        "group_closed": true,
+        "selected_tests": {
+          "targets": 140,
+          "build_exit_code": 0,
+          "cache_probe_exit_code": 0,
+          "default_environment_text_lint_exit_code": 0,
+          "declarations": 398,
+          "default_linters": 15
+        },
+        "selected_clients": {
+          "targets": 60,
+          "build_exit_code": 0,
+          "cache_probe_exit_code": 0
+        },
+        "remaining_failure": "Aggregate client lint could not map a present pinned Aglib artifact; client environment/text lint and client origin audit remain pending. No failed aggregate client lint pass is claimed."
+      },
+      "final_recovery": {
+        "basis": {
+          "native_head": "1c47383a1704c2cc829fcd5fd41b981aa307d548",
+          "logical_source_config_paths": 7176,
+          "logical_source_config_vector_sha256": "2aa5c09c49da054f422b31d6e1d135a9e25ae3132eb9362c725ff84eae32d3e7",
+          "scope_plan_sha256": "be5b3620c670608276398413038eaf3204721d1f9004a85b904b47639434dffc",
+          "fresh_source_digest": "a09f833b98d0cc265962d5de020d77979fc3f3841cc83ef796bf9e6da4654ad7",
+          "fresh_run": "remote-b812f4492f99425290e39b555212b90f",
+          "prior_client_lint_source_digest": "72dd6269c58c207be9af0a28ff9b826ae39b90763c0c5301468a695135996394",
+          "prior_client_lint_run": "remote-f441028c7c5d4774aca35e6535e11e8d",
+          "sole_Lean_delta_from_C449": "Consumer.GlobalRawBassInputIdentitySeedSquare actual_square->actualSquare (5 references), SHA6a68c3c6b88a45ce829e1e42ba59378ba0f8af0d359c957ce08e0734b60d5175",
+          "new_1255_archive_coverage": "Not an input; subsequent adoption requires new affected checks"
+        },
+        "coverage": {
+          "providers": {
+            "retained_count": 717,
+            "retained_original_layers": 44,
+            "build_cache_default_env_text": "PASS, no replay"
+          },
+          "root_trust": {
+            "retained_project_declarations": 87556,
+            "status": "PASS, no replay"
+          },
+          "tests": {
+            "retained_modules": 140,
+            "retained_declarations": 398,
+            "default_linters": 15,
+            "build_cache_environment_and_native_text": "PASS, no replay"
+          },
+          "clients": {
+            "built_targets": 60,
+            "retained_unchanged_targets": 58,
+            "fresh_native_built_targets": [
+              "Consumer.GlobalRawBassInputIdentitySeedSquare",
+              "Consumer"
+            ],
+            "fresh_native_driver_graph_jobs": 11778,
+            "fresh_cached_no_build_probe": "PASS for changed leaf and Consumer root",
+            "selected_lint_targets": 60,
+            "defining_lint_targets": 59,
+            "certified_facade_text_targets": [
+              "Consumer"
+            ],
+            "retained_defining_lint_batches": [
+              0,
+              1,
+              2,
+              3,
+              5,
+              6,
+              7
+            ],
+            "retained_defining_lint_modules": 51,
+            "retained_defining_lint_declarations": 68,
+            "fresh_defining_lint_batch": 4,
+            "fresh_defining_lint_modules": 8,
+            "fresh_defining_lint_declarations": 23,
+            "total_selected_defining_lint_declarations": 91,
+            "defining_default_linter_count": 15,
+            "native_text_targets": 60,
+            "facade_own_declarations": 0,
+            "facade_minimal_environment_registered_linter_count": 14,
+            "lint_environment_boundary": "Each declaration batch loads real dependencies; unrelated pure-facade-only imports are omitted.",
+            "client_audit_chunks": 23,
+            "client_audit_defining_origin_union": [
+              "Consumer.AffineClosed",
+              "Consumer.AffineDerivedPushforward",
+              "Consumer.AuxiliaryFinePerfectConnecting",
+              "Consumer.AuxiliaryNativeConnecting",
+              "Consumer.AuxiliaryNegativeBoundary",
+              "Consumer.AuxiliaryNormalizedOriginalPositiveBoundary",
+              "Consumer.AuxiliaryNormalizedPositiveBoundary",
+              "Consumer.AuxiliaryPerfectBoundaryProjection",
+              "Consumer.BalancedRightTensor",
+              "Consumer.BalancedTensorBaseChange",
+              "Consumer.CWDoubleCylinder",
+              "Consumer.CWDoubleCylinderRecognition",
+              "Consumer.CWGlobalLifting",
+              "Consumer.CWGlobalNeighborhood",
+              "Consumer.CWNeighborhoodSeed",
+              "Consumer.CWSimplyConnectedCover",
+              "Consumer.CWSkeletalContractions",
+              "Consumer.CWSkeletonAttachment",
+              "Consumer.CWSkeletonNeighborhood",
+              "Consumer.CWUniverseTransport",
+              "Consumer.ChosenCoverCore",
+              "Consumer.ClassicalCWDiskPair",
+              "Consumer.ClassicalCWEndpointHomotopy",
+              "Consumer.ClassicalCWPlus",
+              "Consumer.ClassicalCWPlusAutomatic",
+              "Consumer.ClassicalCWPlusMixedUniverse",
+              "Consumer.ClassicalCWQuotient",
+              "Consumer.ClassicalCWWhitehead",
+              "Consumer.ClosedGTheory",
+              "Consumer.CoefficientAuxiliaryConnectingEvaluation",
+              "Consumer.CoefficientFinePerfectConnecting",
+              "Consumer.CoefficientFullOpenComparison",
+              "Consumer.CoefficientInitialConnecting",
+              "Consumer.CoefficientInitialTelescopeConnecting",
+              "Consumer.CoefficientSupportAcyclicKComparison",
+              "Consumer.CommonReferenceNerveCutOpenMappedRelativeExtension",
+              "Consumer.CommonUniversePlus",
+              "Consumer.CoordinatePermutation",
+              "Consumer.CoverCoefficientTransport",
+              "Consumer.CoverHomotopyTransfer",
+              "Consumer.CoveringPathClasses",
+              "Consumer.CoveringSingularSimplices",
+              "Consumer.CubicalBoundaryAddition",
+              "Consumer.CubicalBoundaryInduction",
+              "Consumer.DedekindResidueSupport",
+              "Consumer.DerivedPushforwardComparison",
+              "Consumer.Devissage",
+              "Consumer.DoubleCylinderThinCover",
+              "Consumer.DoubleIdentityInterchange",
+              "Consumer.EmptySupportedModels",
+              "Consumer.ExactFunctor",
+              "Consumer.FiberConnecting",
+              "Consumer.FiniteFieldKTwo",
+              "Consumer.FiniteFlatPushforward",
+              "Consumer.FiniteHELP",
+              "Consumer.FiniteProjectiveBaseChangeUnitCoherence",
+              "Consumer.FinitePushforward",
+              "Consumer.FiniteResidueLocalization",
+              "Consumer.FiniteSimplexStraightening",
+              "Consumer.FiniteTermK",
+              "Consumer.FirstObstruction",
+              "Consumer.FullOpenGradedSectionStable",
+              "Consumer.FullOpenSectionComparison",
+              "Consumer.GTheory",
+              "Consumer.GilletWaldhausenReduction",
+              "Consumer.GlobalBassEvaluation",
+              "Consumer.GlobalBassEvaluationInputChartPrism",
+              "Consumer.GlobalBassEvaluationInputMixed",
+              "Consumer.GlobalBassEvaluationInputNative",
+              "Consumer.GlobalBassEvaluationInputPositive",
+              "Consumer.GlobalBassEvaluationInputSheets",
+              "Consumer.GlobalBassEvaluationInputSpan",
+              "Consumer.GlobalBassEvaluationInputSpanNative",
+              "Consumer.GlobalBassEvaluationInputSpanTargetColumn",
+              "Consumer.GlobalBassEvaluationInputTarget",
+              "Consumer.GlobalBassEvaluationInputWhole",
+              "Consumer.GlobalEvaluationCommutingParameter",
+              "Consumer.GlobalRawBassInput",
+              "Consumer.GlobalRawBassInputDesc",
+              "Consumer.GlobalRawBassInputIdentity",
+              "Consumer.GlobalRawBassInputIdentityCarrier",
+              "Consumer.GlobalRawBassInputIdentityComparison",
+              "Consumer.GlobalRawBassInputIdentityFaces",
+              "Consumer.GlobalRawBassInputIdentityMap",
+              "Consumer.GlobalRawBassInputIdentityNodes",
+              "Consumer.GlobalRawBassInputIdentityPositive",
+              "Consumer.GlobalRawBassInputIdentitySeedCarrier",
+              "Consumer.GlobalRawBassInputIdentitySeedSquare",
+              "Consumer.GrothendieckComparison",
+              "Consumer.HomologicalWhiteheadSimplyConnected",
+              "Consumer.IntegralChainEvaluation",
+              "Consumer.KGroupAdditivity",
+              "Consumer.Localization",
+              "Consumer.LoopComponentProduct",
+              "Consumer.LoopReversal",
+              "Consumer.LowDegreeFieldSupport",
+              "Consumer.MappingCylinderAcyclicity",
+              "Consumer.MetricCoverRadius",
+              "Consumer.MetricOrderCutoff",
+              "Consumer.MetricOrderEquiconnection",
+              "Consumer.MetricOrderHomotopyEquiv",
+              "Consumer.MetricOrderLoops",
+              "Consumer.MetricOrderRealization",
+              "Consumer.MetricOrderReconstruction",
+              "Consumer.MilnorDvrBoundary",
+              "Consumer.MilnorDvrNormalization",
+              "Consumer.MilnorInterfaces",
+              "Consumer.MilnorKTwoEquivalence",
+              "Consumer.MixedComparison",
+              "Consumer.N4Cancellation",
+              "Consumer.N4RestrictedComparison",
+              "Consumer.N4RestrictedUniqueness",
+              "Consumer.N4TwistedCylinder",
+              "Consumer.NativeDoubleForwardQuotient",
+              "Consumer.NativeLaurentKOne",
+              "Consumer.NormalizedBasicAbsoluteBoundary",
+              "Consumer.NormalizedBasicLocalization",
+              "Consumer.NormalizedBasicOriginalClasses",
+              "Consumer.NormalizedBasicPositiveBoundary",
+              "Consumer.NormalizedOriginalNegativeBoundary",
+              "Consumer.NormalizedRowBoundaryComparison",
+              "Consumer.NormalizedSupportForget",
+              "Consumer.NumerableDomination",
+              "Consumer.NumerableRealization",
+              "Consumer.OrderedConnectorInterpolation",
+              "Consumer.OrderedNerveReturn",
+              "Consumer.OriginalCompletionLoopLabels",
+              "Consumer.OriginalNegativeBoundary",
+              "Consumer.OriginalPlusProduct",
+              "Consumer.OriginalQLoopHomotopyEquiv",
+              "Consumer.ParameterAmbientDoubleSign",
+              "Consumer.ParameterAuxiliaryBasicNull",
+              "Consumer.ParameterAuxiliaryBottomSource",
+              "Consumer.ParameterDoubleCorrection",
+              "Consumer.ParameterInitialAmbientPerfectClasses",
+              "Consumer.PathClassCovering",
+              "Consumer.PathClassUniversality",
+              "Consumer.PerfectFoundations",
+              "Consumer.PointRelativeHomology",
+              "Consumer.PosetLoop",
+              "Consumer.PositiveSymbolMarking",
+              "Consumer.PrincipalScalarBoundary",
+              "Consumer.ProductUnitInterchange",
+              "Consumer.ProjectiveCompletionLoopNaturality",
+              "Consumer.ProjectiveCompletionLoops",
+              "Consumer.QLoopComponentProduct",
+              "Consumer.RealizationDomination",
+              "Consumer.RealizationWhitehead",
+              "Consumer.Regular",
+              "Consumer.RegularCoveringChains",
+              "Consumer.RegularLocalCoefficients",
+              "Consumer.RelativeRows",
+              "Consumer.Resolution",
+              "Consumer.RestrictionFunctoriality",
+              "Consumer.RingPlusNaturality",
+              "Consumer.RingScalarExtension",
+              "Consumer.Scheme",
+              "Consumer.SimplexIntertwiningLift",
+              "Consumer.SimplexStraighteningStep",
+              "Consumer.SmallModel",
+              "Consumer.SpecUnitPairNaturality",
+              "Consumer.SpecUnitPairs",
+              "Consumer.SphericalHomotopyAddition",
+              "Consumer.SphericalSimplex",
+              "Consumer.StandardSignMigration",
+              "Consumer.SteinbergFiberInjectivity",
+              "Consumer.StickBreaking",
+              "Consumer.StrictFiniteFlatPushforward",
+              "Consumer.SupportedParameterDoubleCorrection",
+              "Consumer.SupportedParameterDoubleUnit",
+              "Consumer.SupportedUnitInterchange",
+              "Consumer.Topology",
+              "Consumer.TwistedWhiteheadSuppliedCovers",
+              "Consumer.UnreducedConeHomology",
+              "Consumer.UnreducedFirstObstruction",
+              "Consumer.WaldhausenAdditivity",
+              "Consumer.WaldhausenFibration",
+              "Consumer.WaldhausenGrothendieckComparison",
+              "Consumer.WaldhausenStableConnecting"
+            ],
+            "client_audit_union_modules": 179,
+            "client_audit_origin_overlaps": {},
+            "client_audited_unique_declarations": 629,
+            "audit_chunk_counts_observed_unordered": [
+              15,
+              13,
+              9,
+              16,
+              22,
+              15,
+              24,
+              15,
+              49,
+              17,
+              44,
+              20,
+              16,
+              60,
+              17,
+              23,
+              52,
+              57,
+              46,
+              39,
+              32,
+              10,
+              18
+            ],
+            "audit_predicate": "Original native Audit.lean body unchanged: actual Consumer origins including private/generated declarations, checked kernel membership required, collectAxioms allowed only propext/Classical.choice/Quot.sound",
+            "status": "PASS"
+          }
+        },
+        "controls": {
+          "effective_profile": {
+            "allow_cpu_oversubscription": false,
+            "jobs": 7,
+            "lean_memory_mib": 12800,
+            "rss_limit_mib": 98304,
+            "threads": 4
+          },
+          "peak_frontends": 7,
+          "peak_rss_bytes": 33211006976,
+          "frontend_invocations": 26,
+          "elapsed_seconds": 77.64574067294598,
+          "per_phase_receipts": 26,
+          "all_phase_profile_and_tooling_hashes_recorded": true,
+          "fd_soft_floor": 65536,
+          "vm_max_map_count": 65530,
+          "host_global_setting_changed": false,
+          "worker_sha256": "2da6b366cb032de2bb82c37e14b3f968fcb195acf5710b2520bbd2c5faca5ec6",
+          "worker_handback_sha256": "2da6b366cb032de2bb82c37e14b3f968fcb195acf5710b2520bbd2c5faca5ec6",
+          "managed_helper_overlay_sha256": {
+            "build_serial.py": "66fdc8dc202a54d568e52fc94651a9c47789cc16009bdd069812b1c9616d0413",
+            "resource_guard.py": "97c396e48d952582a4a525e1fc17551e16193e32e06fe73cb7785c9a33dc6b40"
+          },
+          "helper_overlay_is_pristine16aa": false,
+          "Aglib_HEAD": "16aa08a90198d76be0bec47dd640b5c992acd9d7",
+          "external_readonly_profile_file_sha256": "b3ca1251d1b06bffb06383c8f19e629a4ac3482c0de32344437ec9fec78c08e6",
+          "profile_file_note": "External defaults8; this execution uses explicit CLI7/4/12800/98304, confirmed by every managed phase receipt",
+          "adapter_sha256": "0235151c324d6b4ba0a3d7fe8d92b66435bf6c330f216eafcc1f569c426d406c",
+          "entry_helper_sha256": "f726ab9e90c9689ced268bef5b53c1785f097cf574adcce332814e89a7525029"
+        },
+        "all_native_groups_closed": true,
+        "final_core_packet_sha256": "4ba1a29ab2a101d398ccc115c704ca6b1663c2714aa9fe684cfb11f499b9dbbf",
+        "phase_receipt_set_sha256": "7b8887e1bde91092513fc37a01028708588c5a6d71ee17da3759edd38b08f469"
+      }
+    },
+    "optional_cache_publication": "Lake output-mapping/archive packing separated from native source build, cache validation, lint, tests and trust predicates. No cache-publication completion claim.",
+    "proof_encoding_repairs": [
+      {
+        "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalBassEvaluationInputSeedEvaluationUnitNative.lean",
+        "run": "remote-9fbdee3b19a548a985ef68f3e249054a",
+        "source_digest": "6f61d1a8222e2b0fd71688504e797892bb671696532c4f3816508e845edb30b8",
+        "exit_code": 0,
+        "group_closed": true,
+        "fresh_frontends": 1,
+        "maxHeartbeats": 200000,
+        "frontend_memory_limit_mib": 12800,
+        "change": "Explicit equivalent endpoint type and equality of whole relative homotopies before projecting; constructor body, public statements, maps, clocks and trust boundary unchanged.",
+        "frontend_threads": 4
+      },
+      {
+        "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalBassEvaluationInputSeedRawUnit.lean",
+        "run": "remote-0c411f8e7db64c7ebe02bfa85de2f7db",
+        "source_digest": "dec778f1a81a7ce07105ba0c62178bbee69d9671929b313fab0bd5e913ceb09f",
+        "exit_code": 0,
+        "group_closed": true,
+        "fresh_frontends": 1,
+        "maxHeartbeats": 200000,
+        "frontend_memory_limit_mib": 12800,
+        "frontend_threads": 4,
+        "change": "Only evaluation_unit proof: explicitly typed the existing comparison isomorphism and named intermediate equalities. Public statements, definitions, maps, clocks and trust conditions unchanged."
+      },
+      {
+        "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalBassEvaluationInputSeedCornerNodes.lean",
+        "run": "remote-8f042210b4264d0ca88fa025eba31641",
+        "source_digest": "e115d30e667a5415652842275ead8c076ead88c31ee468416a37ae85e86edade",
+        "exit_code": 0,
+        "group_closed": true,
+        "fresh_frontends": 1,
+        "frontend_memory_limit_mib": 12800,
+        "frontend_threads": 4,
+        "maxHeartbeats": {
+          "private_pre_total_anchor": 400000,
+          "all_other_declarations": 200000
+        },
+        "change": "Original source transport proved separately, then propagated by congruence and supplied with whole canonical anchors to generic Model-arrow reassociation. Seven public declarations/proofs, original private target statement and all data remain byte-identical. Finite local conversion allowance has adjacent explanation.",
+        "default_environment_text_lint": {
+          "run": "remote-9e2ae646d27441508c202773f2177eb9",
+          "exit_code": 0,
+          "group_closed": true,
+          "maxHeartbeats": 200000,
+          "modules": 1,
+          "declarations": 12,
+          "linters": 15,
+          "native_text": "passed"
+        }
+      }
+    ],
+    "client_check_implementation": {
+      "owned_source_sha256": {
+        "scripts/check_run.py": "bd3caeb6660bcce1f1a95a4c20dffdf332b22f35a49dbd3481f6cb6c9d641fbe",
+        "scripts/test_check_run.py": "a34c7e324c6cb1d84ccd394ca332741748066c6b9136eaa01e7288b4935981c1",
+        "scripts/test_cache_sources.py": "e320e522a1d10fa1b655acc1d9402cb330598e87369ff221888d9e7f90f73dbc"
+      },
+      "regression_tests_added": 10,
+      "fixture_repair": "Existing command-stub test now creates the Consumer.Use source named in its plan; no assertion weakened.",
+      "coverage_manifest_sha256": "1603671767f8dabc4645567321cac2bb0d51ffd443ee976b139851d6b2d75067",
+      "selected_lint_targets": 60,
+      "defining_lint_targets": 59,
+      "defining_lint_batches": 8,
+      "facade_text_targets": [
+        "Consumer"
+      ],
+      "facade_certificates": {
+        "Consumer": {
+          "path": "examples/downstream/Consumer.lean",
+          "source_sha256": "fd9d2839d6a7b2148a01f5422c79b888790bdd33e9c7b6c917a3e59fab794cad",
+          "kind": "generator-and-source-certified-import-only",
+          "own_defining_origins": 0
+        },
+        "Consumer.PublicLibraries": {
+          "path": "examples/downstream/Consumer/PublicLibraries.lean",
+          "source_sha256": "e968950345094b4e7ac2511ee08c3c5255f72f3887789f5aaba735829f4b2cbd",
+          "kind": "source-certified-import-only",
+          "own_defining_origins": 0
+        }
+      },
+      "audit_defining_origins": 179,
+      "audit_batches": 23,
+      "audit_origin_overlaps": {},
+      "environment_boundary": "Each declaration batch loads real dependencies; unrelated pure-facade-only imports are omitted.",
+      "native_predicates": "Unchanged15default linters/exclusions/native text predicates and unchanged client audit body, actual-origin predicate, checked-kernel requirement and standard-three-axiom allowlist.",
+      "execution": "Passed using retained51-module lint/Consumer text and fresh8-module lint plus all179-origin audit chunks.",
+      "defining_linter_count": 15,
+      "facade_minimal_environment_registered_linters": 14,
+      "facade_vacuous_declarations": 0
+    },
+    "runtime_controls": {
+      "upper_bounds": {
+        "frontends": 7,
+        "threads_per_frontend": 4,
+        "lean_memory_mib": 12800,
+        "tree_rss_mib": 98304
+      },
+      "resource_admission": "Shared parent-managed wrapper/profile and resource pool; per-batch process groups and receipts.",
+      "file_descriptor_soft_limit": 65536,
+      "mapping_diagnostic": {
+        "host_limit": 65530,
+        "sampled_peak_maps": 64483,
+        "sampled_peak_fds": 13,
+        "sample_interval_seconds": 0.1,
+        "interpretation": "Mapping exhaustion strongly suggested; no failing mmap errno captured. Raising FD limit did not resolve aggregate imports.",
+        "finite_setting_trial": "65530 to262144 write denied; setting remained65530; no privilege bypass."
+      },
+      "managed_helper_overlay": {
+        "Aglib_Lean_source_HEAD": "16aa08a90198d76be0bec47dd640b5c992acd9d7",
+        "helper_changes_retained_read_only": {
+          "scripts/build_serial.py": {
+            "base_sha256": "d8a17817fb612923fc8edae53956715cf517286bf2e5c4fa9ef4e4613c8c98a3",
+            "current_sha256": "66fdc8dc202a54d568e52fc94651a9c47789cc16009bdd069812b1c9616d0413",
+            "size": 6773,
+            "mtime_ns": 1792422302269545232,
+            "mtime_utc": "2026-10-19T15:05:02Z",
+            "ctime_ns": 1792422302269545232,
+            "mode": "0o644"
+          },
+          "scripts/resource_guard.py": {
+            "base_sha256": "6823119b2c785f99cf8143ef97c8bd5b4cdd442697213510abe483e46d67b0fb",
+            "current_sha256": "97c396e48d952582a4a525e1fc17551e16193e32e06fe73cb7785c9a33dc6b40",
+            "size": 14528,
+            "mtime_ns": 1792422302269545232,
+            "mtime_utc": "2026-10-19T15:05:02Z",
+            "ctime_ns": 1792422302269545232,
+            "mode": "0o644"
+          }
+        },
+        "worker_sha256": "2da6b366cb032de2bb82c37e14b3f968fcb195acf5710b2520bbd2c5faca5ec6",
+        "classification": "Actual managed runtime control overlay, not pristine pinned helper bytes. Full98+/15\u2212diff reviewed; actual profile export and guarded receipt match. Lean source/dependency pins and native lint/audit predicates remain unchanged."
+      },
+      "resource_profile_config_sha256": "b3ca1251d1b06bffb06383c8f19e629a4ac3482c0de32344437ec9fec78c08e6",
+      "resource_profile_config_defaults": {
+        "frontends": 8,
+        "threads": 4,
+        "lean_memory_mib": 12800,
+        "tree_rss_mib": 110592
+      },
+      "effective_control_selection": "Explicit phase CLI overrides select7frontends/4threads/12800MiB/98304MiB, confirmed by actual managed wrapper/receipts. Config defaults were modified externally after the task resource-only update; file retained read-only. Effective controls are distinct from config-file hash/defaults."
+    }
+  },
+  "ordinary_source_review": {
+    "kind": "Ordinary mathematical/source-interface review reconciliation; no established-status action",
+    "reports": {
+      "raw": {
+        "sha256": "c587db59b507dc2d199b68df66747dc1b895bfa3cfa5d69279ac9d7e13a47acb",
+        "scope": "Original one-step raw evaluation, whole mixed Q, map identity and positive-support/seed-carrier interfaces, including23 working raw leaves; prescribed mixed route and higher chosen-null coherence remain open."
+      },
+      "signed": {
+        "sha256": "4ad42bf9d0e1994053177fb85159f01c74095b40f5740b928fbe1c55b77c76b0",
+        "inspected_source_files": 88,
+        "scope": "All-index negative comparisons and nonnegative original geometric boundary formulas with actual maps, casts, supports, zeros and minus sign."
+      },
+      "rows": {
+        "sha256": "191c4cdc953012d635a21d14fcd1b816882eb2a89c1cbeb36154a12e9fe63af3",
+        "source_leaves": 161,
+        "concrete_consumers": 14,
+        "scope": "Finite/stable rows, tensor/presentation/null transport and strict-M/whole-track-A sequential interfaces with their actual hypotheses."
+      }
+    },
+    "supported_milestones": [
+      "Original negative all-index corrections and positive geometric connecting formulas with actual maps/casts/zeros/supports and minus",
+      "Original one-step raw evaluation/mixedQ/identity and prescribed transition-identity seed square, plus explicit carrier/relative-extension interfaces",
+      "Finite/stable Bass rows, tensor/presentation/null transport and strict-Model sequential interfaces with their actual premises"
+    ],
+    "routine_repair": "Principal reconciled three faithful private proof/encoding repairs and one documented finite declaration-local budget with eligible ordinary source review; no new public hypothesis, map, data, mathematical premise or trust boundary.",
+    "coverage_rows_matched_to_archive_basis": 425,
+    "coverage_note": "Coverage rows include dependencies and consumers and are not a count of distinct newly admitted modules. Verdicts apply to the named milestones and their explicit hypotheses, not blanket classical TT completion."
+  },
+  "mathematical_limits": [
+    "Prescribed mixed longRoute.RelHomotopy shortRoute remains",
+    "Higher coherence for the chosen InputNull.originalNullComparison remains separate",
+    "Composition/all-stage raw constructions and independent forward-transition/classical-cup identifications remain",
+    "Classical supported restriction diagram with the same canonical localization null is not completed by these interfaces"
+  ],
+  "documentation": {
+    "policy": "Mathematical content and current interfaces in source families; summaries, workflow, performance and evidence under docs/.",
+    "guides": [
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/RawEvaluation.md",
+      "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GeometricBoundary.md",
+      "Quillen/KTheory/Bass/SignComparisons.md",
+      "Quillen/KTheory/Bass/RowInterfaces.md"
+    ]
+  },
+  "interpretation": "Scoped source acceptance records the encoded constructions with their stated hypotheses. It is neither a fresh whole-library build claim nor completion of classical TT 7.4 or the comparison with classical nonconnective K-theory.",
+  "landing_note": "Validated source checkpoint before reconciling later local incremental-tooling commits; subsequent compatible control-only merges retain this identified native execution basis and require their own affected Python regression checks."
+}

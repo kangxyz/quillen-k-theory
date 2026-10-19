@@ -20,13 +20,48 @@ R. W. Thomason and T. Trobaugh, *Higher Algebraic K-Theory of Schemes and of Der
 
 ## Constructed results and their conditions
 
-[Connective localization](Localization.md) identifies the canonical relative/open endpoint in positive degrees, is injective at zero, and preserves the actual K₀ image and original boundary. [Auxiliary support](SupportedOpen/README.md) supplies naturality, excision, and connective Mayer–Vietoris.
+[Connective localization](Localization.md) identifies the canonical
+relative/open endpoint in positive degrees, is injective at zero and keeps
+the actual K₀ image. [Auxiliary support](SupportedOpen/README.md) supplies
+naturality, excision and connective Mayer–Vietoris.
 
-[Bounded-flat section comparisons](BoundedFlat/BassComparison.md) give the actual fine transition and inclusion range `d ≥ -i`, with the original finite-bottom comparison followed by the original inclusion. Ambient schemes are qcqs; supported completion additionally requires compact removed open. Nonnegative comparisons use original evaluation and stage zero. These are identifications with the constructed fine completion.
+[Bounded-flat section comparisons](BoundedFlat/BassComparison.md) identify
+original perfect and Bass-recursive negative groups with the constructed
+fine completion. The unchanged stage-`i` transition and inclusion are
+invertible in degree `d ≥ -i`. Ambient comparisons assume qcqs schemes;
+supported completion also requires a compact removed open. Nonnegative
+classes use original evaluation and stage-zero inclusion.
 
-The native current-stage map `ParameterFullCurrentNull.currentLift f (op integerBase)` is stable in every signed degree for an open immersion `f : P ⟶ Q`, compact `P,Q`, and quasi-separated `Q`. The stable route `I → T ← N ← C` preserves support forgetting, full-open restriction, and every value of the selected null. The original current-stage scalar seed is retained. No generic equivariance premise remains at this endpoint.
+For an open immersion `f : P ⟶ Q` with compact `P,Q` and quasi-separated
+`Q`, `ParameterFullCurrentNull.currentLift f (op integerBase)` is stable in
+every signed degree. The route `I → T ← N ← C` preserves support forgetting,
+full-open restriction and every value of the original null. With an
+additional compact auxiliary open `T : Q.Opens`,
+`ParameterAuxiliaryCurrentFiber.currentLift f T (op integerBase)` has the
+corresponding all-signed localization theorem for the actual enlargement,
+supported restriction and selected null.
 
-The [projective-line K-equivalences](ProjectiveLine/README.md) retain the existing two-summand map, exact geometric coefficients, both affine and native qcqs inverse laws, and compact-open supported bijectivity in every natural degree, including zero. These facts do not identify classical Kᴮ.
+The [row interfaces](../../KTheory/Bass/RowInterfaces.md) give independent
+tensor cells, normalized forward operations, input squares, proper-row
+presentations and ordinary-colimit presentations for the specified strict
+Model diagrams and tracks. Their basic and auxiliary fiber lifts retain
+the original whole null. Generic sequentialization retains its actual
+strict Model/track, factorization and topology hypotheses; applying it to a
+classical raw diagram still requires that diagram's specified correspondence.
+
+[Original classes and geometric connecting maps](BoundedFlat/GeometricBoundary.md)
+identifies the current and normalized-row negative classes and their intrinsic
+boundary with the existing fine negative localization boundary, including
+K₀ to the first negative group. In nonnegative target degree `n`, the same
+fixed perfect class maps identify the stable boundary with **minus** the
+original `qcqsPerfectConnectingHom`, or its auxiliary-supported analogue.
+These formulas include K₁ to supported K₀ and retain the original integer
+cast. They must not be summarized as an unsigned geometric-boundary square.
+
+The [projective-line K-equivalences](ProjectiveLine/README.md) retain the
+two-summand map, geometric coefficients, affine and native qcqs inverse
+laws, and compact-open supported bijectivity in every natural degree.
+None of these internal comparisons alone identifies classical Kᴮ.
 
 ## Original Laurent boundary and splitting
 
@@ -37,115 +72,96 @@ The fine Laurent `[T]` terminal formula and its actual O/O(-1) zero-locus class 
 
 ## Original raw-cell route
 
-This subsection retains the older raw-cell comparison target: the actual
-bounded-flat/perfect geometric Bass construction, with its chosen pullbacks,
-original normalization/composition tracks and independent comparison, loop and
-structure coordinates. The strict fine section tower cannot be substituted
-for that target. The native current-stage theorem above follows another
-route and does not require this O-cell producer. If the raw route is used
-for classical identification, its full stated correspondence is still needed.
+[Original raw evaluation](BoundedFlat/RawEvaluation.md) fixes both the
+coefficient bounded-flat/perfect convention and the distinct integer-base
+convention on arbitrary schemes. Each keeps its original pullbacks,
+normalization tracks, source null, forward unit, and independent comparison,
+loop and structure coordinates.
 
-| Interface | Available result and precise remaining consumer |
-| --- | --- |
-| E2-C/N/S/W: original one-step evaluation | `CoefficientSectionEvaluationComposition`, `CoefficientSectionEvaluationTopology` and `CoefficientSectionEvaluationSeedComparison` construct the normalized composition equation, both chart faces and moving cylinder, original source-null pasting, whole one-step seed homotopy and levelwise weak cone evaluation. No caller-supplied coherence, openness, compactness or flatness is added to these native identities. Perfect/stable comparisons retain their separate hypotheses. |
-| Raw1 composition | `MWholeNativeCube` constructs the six original composition faces with twelve whole edges, basepoints, level-zero loops and independent structure time. `MWholeCubeConsumers` gives the original comparison, cone and parameter-looped step composition with its literal Laurent inclusion track. |
-| Raw1 identity | `CoefficientBassUnitNativeCube.interiorCube` constructs the actual six-face original identity cube. `CoefficientBassUnitCubeConsumers` gives the whole comparison square, cone identity and `stepIdentity`; no unit filler remains to be supplied. |
-| Objectwise second stage | `CoefficientBassActualSeedComparison.comparison` descends both actual mixed fillers to the original two-chart seed square. `CoefficientBassSeedIteration.stepMap` is its objectwise first-to-second parameter-looped map, with literal inclusion, cylinder and output-loop formulas. |
-| Fixed chosen faces | The seed-carrier, chosen-cube and chosen-chart augmentation owners preserve earlier selected cubes, their entire chart squares, whole reference nodes and original clocks. `CoefficientBassSeedChosenSquareRange` preserves a supplied range condition; it does not prove the concrete chosen-boundary range. No functorial extension choice or recursive carrier for arbitrary raw cell trees is asserted. |
-| Parameterized original quotient descent | `Topology.Prespectrum.PushoutConeFamily` accepts four typed L/P+/P−/O families with their quotient attachments, based values and independent structure laws. For any locally compact external parameter it descends the original pushout and reduced cone, commutes strictly with parameter restriction and then loops independently. `PushoutConeFamilyRecovery.ofFamily_desc` recovers the complete supplied family. `CoefficientBassCompositionCellDescent` recovers the original M cone/step composition. |
-| Laurent and polynomial source cells | `CoefficientBassRaw1LaurentFamily` gives both entire Laurent relative comparisons. `CoefficientBassRaw1PolynomialCommonPasting` pastes three original cap cubes; its Sides, LaurentFace and Top owners supply all six scalar faces, including the unchanged eighteen-node Laurent bottom and original unreduced tip. `CoefficientBassRaw1PolynomialCommonPastingNative` retains arbitrary genuine polynomial input, based values and independent structure time. |
-| Native target and lower attachments | `CoefficientBassRaw1LaurentNativeCell.family` and `CoefficientBassRaw1PolynomialNativeCells.plus/minus` are jointly continuous families into the full original target Bass cone. The polynomial cells have the original top, based and structure laws. `CoefficientBassRaw1PolynomialNativeAttachments.plus_zero/minus_zero` identifies each entire height-zero face with the Laurent family after the actual source chart map, independently of the target chart. |
-| E2-I: remaining raw producer | Construct the O family with comparison, route, cone-height and overlap coordinates, all eight prescribed three-faces and whole intersections including the original half-height midpoint. Retain chosen old fillers and all L/P/O quotient attachments; assemble `PushoutConeFamily (I × I)`, recover both entire cone routes and loop to actual `PlusPasting`/`MinusPasting` for `CoefficientBassSecondCoefficientProjection`. Then supply second-stage identity/composition and full coefficient naturality of the seed before producing all raw stages and transition homotopies. |
-| E2-T: remaining telescope comparison | From actual stage comparisons `E_n` and whole transition homotopies `J_n`, use `Telescope.mapOfHomotopies` and its T1 stable-equivalence theorem. Retain stage/initial/cylinder formulas, coefficient and restriction squares and the same-null signed boundary comparison. |
+The coefficient route has original one-step evaluation, identity and
+composition cubes, and the objectwise second seed. Its selected Laurent
+and polynomial source cells have their complete prescribed attachments.
+The separate overlap family still needs its compatible eight three-faces,
+whole intersections and source-chart attachments before descent gives the
+specified second coefficient projection. Supplied chosen carriers and range
+interfaces do not construct a recursive producer for every raw cell tree.
 
-The one-step normalized composition uses actual evaluation maps `e_i`,
-section reindexing `S_f`, geometric pullback `P_f`, evaluation isomorphism
-`κ_f` and original normalized composition `β(f,g)`. Its component equation is
+The integer-base route constructs raw scheme-arrow maps, their source-null
+and unit comparisons, whole one-step evaluation naturality, and raw map
+identity. `GlobalRawBassInputIdentitySeedSquare.square` also constructs the
+prescribed higher square for the chosen transition-input identity homotopy
+and fixed whole raw map identity. The remaining mixed
+`longRoute.RelHomotopy shortRoute`, higher coherence of the separately chosen
+`InputNull.originalNullComparison`, scheme-arrow composition and coherent
+all-stage iteration remain distinct. The prescribed transition-identity square is therefore part of the available
+raw one-step interface.
 
-```text
-κ_(f≫g)(x); β(f,g)(E_i x)
-  = transportS(x); κ_g(S_f x); P_g(κ_f(x)).
-```
-
-`transportS` is the actual strict section-reindexing composition equality.
-The cone/null/seed comparison retains both normalization choices and the
-original geometric split track. Its whole loop-coordinate equation uses
-independent comparison, loop and structure times. The constructed fine
-initial seed is now connective-invertible under qcqs hypotheses; this does
-not imply an all-stage raw producer.
-
-The composition geometry is built from `SplitTripleSimplex` and
-`TripleNativeEvaluation`, the common 18-node original double-square rectangle,
-the shared H0/chart/bottom families, and `MWholeNative`'s actual 139-simplex.
-Their chosen triangles, twelve whole shared edges, chart pauses and continuous
-three-side collapse remain unchanged. The generic finite scalar extension is
-owned by `SimplexCubeExtension` and `SimplexCubeFaces`. The separate unit
-construction uses its own original faces and scalar extension. Recorded cube and source-cell evidence is in the
-[global evidence registry](../../../docs/evidence/README.md#recorded-source-cell-scope).
-
-The current polynomial cube has complete scalar intersections; these must not
-be listed as unproved. The unresolved higher overlap boundary is a different
-object. The generic descent does not construct its geometric attachments,
-and equality after native evaluation does not imply equality of the dependent
-scalar reference nodes. Contractibility cannot repair an unclosed prescribed
-boundary or replace a previously chosen whole filler. Retain genuine Laurent
-and polynomial input domains rather than replacing them by images of the
-common corner.
-
-`strictDiagramIterate` requires a literal prespectrum-valued functor and
-strict transformations. The raw maps have prescribed homotopy identity and
-composition laws. This API cannot be applied directly to them to declare a
-functorial raw second stage. A proposed induction on source-cell depth and
-finite coefficient words remains a proof plan; no well-founded recursive
-coherence theorem is asserted for that cell producer. A classical
-identification through E2 must cover every ambient, open and
-auxiliary-supported row required by its final diagram. This remaining
-raw-cell work does not retract the native current-stage theorem above.
+A literal prespectrum-valued functor and strict transformations are inputs
+to `strictDiagramIterate`. Homotopy identity and composition data do not
+satisfy that interface by themselves. Likewise, equality after evaluation
+does not identify dependent scalar reference nodes or a prescribed
+midpoint. A comparison through the raw route must cover every required
+ambient, open and auxiliary-supported stage with its actual transition and
+whole null. These obligations do not retract the internal current-stage
+or normalized-row localization theorems.
 
 ## Classical object and same-null correspondence
 
 Specify the classical model by the original raw perfect/bounded-flat-perfect
 spectrum, native polynomial/Laurent squares, original cone/loop stages and
 forward Laurent transitions, followed by their homotopy colimit (TT 6.4).
-If an ordinary colimit is used, prove its cofibration-replacement comparison.
-A proposed classical identification must produce the actual all-stage
-comparison to this model, either from the native current-stage construction
-or through the separate E2 raw-cell route. The integer-parameter Model
-projection isomorphisms alone do not establish that comparison. B2's original
-class maps must agree with the selected spectrum maps in every nonnegative
-and negative degree.
+The forward operation must be the specified Laurent-unit cup action followed
+by cone boundary, with its original functorial homotopies. The independent
+returned tensor comparisons and their iterated strictifications provide
+concrete inputs; their equality with every required classical raw forward
+leg still needs the actual target correspondence.
 
-For T=X−Z and Y=X−U, compare the whole G7 null diagram with the specified
-classical diagram
-on (X,Y∩Z), (X,Z), (U,U∩Z). Their acyclicity opens are U∪T, T, U∩T.
-Under qcqs X and quasi-compact U,T, construct all three stable comparison
-maps, the original support-enlargement/restriction squares, and coherence with
-the same whole canonical null. Then transport the actual stable fiber lift
-and prove, in each signed degree, the original boundary equation
+If an ordinary colimit is used, apply the cofibration-replacement and
+sequentialization comparison to this identified diagram. A theorem about
+an arbitrary supplied strict Model diagram and track cannot substitute for
+that application. The integer-parameter Model projection isomorphisms alone
+also do not identify all raw stages or their transitions. Original class
+maps must agree with the selected spectrum maps in every nonnegative and
+negative degree.
+
+For `T = X − Z` and `Y = X − U`, the classical auxiliary diagram has objects
+on `(X,Y∩Z)`, `(X,Z)`, `(U,U∩Z)`, whose acyclicity opens are `U∪T`, `T`,
+`U∩T`. Internal section/current/normalized comparisons already retain these
+three rows, original enlargement/restriction and the same whole selected
+null. Under qcqs `X` and quasi-compact `U,T`, a classical identification must
+add comparisons to the **specified classical** three objects and its
+canonical null, preserving the complete diagram.
+
+Only then may its actual stable fiber lift and boundary be transported. In
+each signed source degree `d`, the required boundary square is
 
 ```text
-c_support,(n−1) ∘ boundary_section
-  = boundary_classical ∘ c_open,n.
+c_support,d−1 ∘ δ_native,d = δ_classical,d ∘ c_open,d.
 ```
 
-The classical boundary is the boundary of the specified classical null diagram;
-defining a conjugate boundary without identifying it does not close B3.
-Obtain the basic sequence by Z=X. State the library's actual stable
-fiber-sequence notion; all-signed stability is not a levelwise homotopy
-equivalence claim. This final milestone requires the accepted classical
-object/seed/null correspondence, G7's auxiliary support diagram and B2's
-original-group comparison, with no remaining target-specific localization
-hypothesis. The new basic-pair current-stage theorem does not by itself
-supply that auxiliary-support or signed-boundary transport.
+The maps `c` must be the required original-class comparisons. The known
+single-minus formulas under the fixed positive perfect classes must be
+reconciled with the chosen classical boundary convention; no unsigned
+square follows merely from exactness. Defining a conjugate boundary without
+identifying the classical null diagram does not prove this correspondence.
+The basic case takes `Z = X`.
+
+State the library's actual stable fiber-sequence notion: all-signed stability
+is not a levelwise homotopy-equivalence assertion. The final comparison
+requires the classical object, forward-transition, class and whole-null
+correspondence together. Classical Laurent splitting, Nil vanishing,
+homotopy invariance and nonconnective descent are additional statements
+unless supplied by their own identified arguments.
 
 ## Declaration locators
 
-These additional names use the same objects, hypotheses, and original maps as the linked construction sections. They are locators within those interfaces, not stronger comparison statements.
-
-| Declaration / module | Construction and conditions |
+| Declaration / module | Current interface |
 | --- | --- |
-| `MWholeScalarFaces` | [Constructed results and their conditions](#constructed-results-and-their-conditions) |
-| `ConnectingLoopPathClass`, `Quillen.BassLaurentUnitBoundary.scalar_forward_changeWeak_boundary` | [Constructed results and their conditions](#constructed-results-and-their-conditions) |
-| `perfectAcyclicSupportedKEquiv`, `qcqsPerfectConnectingHom_comp_relative`, `Quillen.PerfectComplexes.polynomialScalarForwardKOneClass_restrict_rankOne`, `laurentGlobalUnit` | [Original Laurent boundary and splitting](#original-laurent-boundary-and-splitting) |
+| `ParameterFullCurrentNull.currentLift_integer_isStableEquivalence`, `ParameterAuxiliaryCurrentFiber.currentLift_integer_isStableEquivalence` | [Current-stage and auxiliary localization](BoundedFlat/BassComparison.md#native-current-stage-full-open-localization) |
+| `InputNaturality.stepHomotopy`, `InputIdentity.mapHomotopy`, `InputIdentitySeedSquare.square` | [Original raw evaluation](BoundedFlat/RawEvaluation.md) |
+| `currentNegativeConnecting_eq_original`, `basicConnecting_original_negative_square` | [Original negative classes and boundaries](BoundedFlat/GeometricBoundary.md#original-negative-classes-and-boundaries) |
+| `boundedFlatCoefficientFineConnecting_perfectClass_sign`, `boundedFlatCoefficientAuxiliaryFineConnecting_perfectClass_sign` | [Signed original perfect-class formulas](BoundedFlat/GeometricBoundary.md) |
+| `ConnectingLoopPathClass`, `Quillen.BassLaurentUnitBoundary.scalar_forward_changeWeak_boundary`, `polynomialScalarForwardKOneClass_restrict_rankOne`, `laurentGlobalUnit` | [Original Laurent boundary and splitting](#original-laurent-boundary-and-splitting) |
 
-Source and validation records are in the [global evidence registry](../../../docs/evidence/README.md).
+Source selections and validation records are in the
+[global evidence registry](../../../docs/evidence/README.md).

@@ -82,6 +82,19 @@ checks. Production, test and client coverage is recorded separately in
 coverage. Global toolchain, manifest, Lake-option, exclusion or Lean-checker
 changes stop for an explicit invalidation/scope assessment.
 
+Client declaration checks use batches of at most eight defining modules, each
+with its actual dependency environment. The runner certifies import-only client
+surfaces from their source; the generated `Consumer` root must also match the
+maintained generator. These zero-origin surfaces still receive every native
+text check. Client audits expand their imports to every reachable defining
+`Consumer` module and apply the unchanged audit body, including private and
+generated declarations. `client-scope.json` records source certificates, the
+origin union and any overlap between audit batches. Set `QUILLEN_CHECK_JOBS`
+from 1 to 7 (default 1) to run independent client checks concurrently; guarded
+CI retains the capped toolchain and a separate process group and resource
+receipt for each batch. This bounds import mappings without changing the
+selected source builds or the lint and foundation predicates.
+
 CI computes scope before installing Lean or restoring dependencies. Pure Markdown
 and `docs/` evidence changes perform only static checks and skip cache checkout,
 restore, export and publication. Relevant compilation uses the already pinned

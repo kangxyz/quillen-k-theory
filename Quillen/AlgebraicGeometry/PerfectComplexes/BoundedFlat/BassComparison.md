@@ -1,6 +1,12 @@
 # Bounded-flat sections and Bass comparisons
 
-Cocartesian bounded-flat sections provide strict coefficient diagrams without replacing the original geometric evaluation maps. The fine completion, raw one-step comparison, and native current-stage theorem retain distinct hypotheses. [Affine graded objects](../Affine/README.md), [scheme Bass groups](../Bass/README.md), and [remaining classical comparisons](../Development.md) are their adjacent authorities.
+Cocartesian bounded-flat sections provide strict coefficient diagrams while
+retaining the original geometric evaluation maps. This guide develops their
+fine finite stages, original classes, telescope and same-null localization.
+[Raw evaluation](RawEvaluation.md), [geometric connecting maps](GeometricBoundary.md),
+[affine graded objects](../Affine/README.md) and [scheme Bass groups](../Bass/README.md)
+keep their own interfaces. The [classical comparison boundary](../Development.md)
+requires the specified object, transitions and whole null diagram.
 
 ## Bass groups and geometric spectral comparisons
 
@@ -103,6 +109,35 @@ restriction and whole-null equations need only the open immersion. These
 compare global-section and coefficient-section constructions; constructed
 fine localization was already available independently.
 
+For an actual empty open source,
+[GlobalEmptySupportedModels](GlobalEmptySupportedModels.lean) identifies the
+original support-forgetful arrow as a Model isomorphism. Its exact inverse
+retains the same section and chosen zero. The parameter version
+[GlobalEmptySupportedParameterModels](GlobalEmptySupportedParameterModels.lean)
+preserves the original products, pair pullbacks, forward Laurent unit and
+whole tracks in both directions. The acyclicity input is the
+[ordinary empty-scheme complex theorem](../../../Aglib/AlgebraicGeometry/Modules/Complex/Empty.lean);
+it has no boundedness, flatness or perfectness hypothesis.
+
+The auxiliary support diagram is also explicit. For an open immersion
+`f : P ⟶ Q` and `T : Q.Opens`,
+[ParameterAuxiliarySupportMaps](ParameterAuxiliarySupportMaps.lean) uses the
+three supported Models vanishing on `T ⊔ f.opensRange`, on `T`, and on
+`f ⁻¹ᵁ T`. Its original enlargement and restriction preserve the chosen zero
+and the actual ambient forgetful maps. `ParameterAuxiliarySupportTrack`,
+`ParameterAuxiliarySupportNull` and the finite/telescope-null owners retain
+the forward Laurent tracks and every value of the original null.
+
+At integral Spec-row coefficients,
+[GlobalAuxiliaryCoefficientPairs](GlobalAuxiliaryCoefficientPairs.lean) and
+the `GlobalAuxiliaryParameterCoefficient` Models/Diagrams/Rows/Unit/Track/Seed
+owners compare those same three Models with their original fine coefficient
+Models. The finite and telescope comparison maps are stable, preserving
+every original inclusion and cylinder. The precise map and null equations
+are in [GlobalAuxiliaryParameterTelescopeSquares](GlobalAuxiliaryParameterTelescopeSquares.lean)
+and [GlobalAuxiliaryParameterTelescopeNull](GlobalAuxiliaryParameterTelescopeNull.lean).
+Their structural comparisons do not add compactness assumptions.
+
 ## Native current-stage full-open localization
 
 Let `f : P ⟶ Q` be an open immersion of schemes. The parameter Models in
@@ -148,10 +183,27 @@ isomorphism in every degree `d : ℤ`. These theorems expose no additional
 equivariance or tower-coherence premise. At the integer parameter,
 [GlobalParameterIdentityModels](GlobalParameterIdentityModels.lean)
 identifies the ambient and supported Models by their original projection and
-preserves both maps. This Model-level identification does not itself assert
-an all-stage identification with classical `Kᴮ` or the auxiliary-support and
-signed-boundary comparison. Recorded source and validation scope is in the
+preserves both maps. The auxiliary lift below and the original-class
+boundary comparisons use further assembled map and whole-null squares;
+classical raw-stage identification retains its separate target. Source and
+validation identities are in the
 [global evidence registry](../../../../docs/evidence/README.md#tt-source-and-validation-records).
+
+The auxiliary lift in
+[ParameterAuxiliaryCurrentFiber](ParameterAuxiliaryCurrentFiber.lean) is
+formed from the actual support enlargement, restriction and selected whole
+null. Its current, normalized, twisted and iterated versions retain the
+same three-object comparison squares.
+[ParameterAuxiliaryCurrentLocalization](ParameterAuxiliaryCurrentLocalization.lean)
+proves `currentLift_integer_isStableEquivalence` and
+`currentLift_integer_signed_isIso` for the original open immersion, compact
+`P`, `Q`, `T`, and quasi-separated `Q`. The Spec-row theorem keeps the same
+hypotheses at every original affine coefficient parameter. Its fiber
+projection is precisely the original enlargement. This constructs the
+auxiliary current-stage localization as well as the basic full-open case.
+Its original negative classes and positive geometric sign are described in
+[geometric connecting maps](GeometricBoundary.md); identification with the
+specified classical raw object remains separate.
 
 ## Finite-stage excision and bottom groups
 
@@ -270,145 +322,14 @@ classical interpretation remain separate.
 
 ## Raw identity and second-stage coherence
 
-The original Raw1 polynomial-span unit is supplied by
-[`CoefficientPolynomialUnit`](CoefficientPolynomialUnit.lean)
-and `CoefficientPolynomialSpanUnit`: both original inclusion tracks keep their
-exact times, and the whole identity cylinder is retained. `NormalizedUnitCoherence`,
-`NormalizedUnitTrack`, `NormalizedUnitRoutes` and `OriginalUnitSquare` derive it
-from the genuine geometric units and actual chosen-zero normalization.
-`CoefficientBassUnitCharts` supplies the two original Laurent chart squares.
-[`CoefficientBassUnitNativeCube`](CoefficientBassUnitNativeCube.lean)
-constructs the actual six-face identity cube, and `CoefficientBassUnitCubeConsumers`
-gives the whole comparison square, cone identity and parameter-looped step identity.
-The original inputs, chart tracks, basepoints and independent times are retained;
-no cube filler is supplied by the caller.
-
-The original coefficient seed now has both actual mixed comparisons.
-[`CoefficientBassPositiveActualMixedFiller`](CoefficientBassPositiveActualMixedFiller.lean)
-and [`CoefficientBassNegativeActualMixedFiller`](CoefficientBassNegativeActualMixedFiller.lean)
-construct the whole relative homotopies between their respective original
-mixed routes. Their continuous carrier surfaces retain the separate tips,
-original concatenation times and native evaluation in every level, including
-zero. These constructions apply to every commutative ring `R`, every
-`P : Over (Spec R)` and every coefficient object `a : Under R`.
-
-[`CoefficientBassSeedPushoutComparison`](CoefficientBassSeedPushoutComparison.lean)
-descends the two mixed comparisons to the actual two-chart seed square.
-[`CoefficientBassActualSeedComparison.comparison`](CoefficientBassActualSeedComparison.lean)
-supplies its negative comparison input from the constructed filler. Thus the
-original comparison followed by the Laurent seed is homotopic to the actual
-polynomial-span seed map followed by the second comparison.
-[`CoefficientBassSeedIteration`](CoefficientBassSeedIteration.lean)
-uses this chosen whole square to construct `coneMap` and its parameter-looped
-map `stepMap : boundedFlatCoefficientBassStep P a ⟶
-boundedFlatCoefficientBassSecondStep P a`. The cone inclusion, entire cylinder
-and independent output-loop coordinate have explicit formulas. This is the
-objectwise application of Bass to the original seed. A functorial second
-coefficient stage, coherent all-iterate raw tower and classical telescope
-identification remain separate obligations. The fine initial seed and its
-connective telescope comparison have the scope stated above.
-
-`CoefficientBassSecondCoefficientProjection` constructs the actual polynomial
-and Laurent coefficient squares and span map; its two relative-pasting types
-name remaining obligations and contain no supplied fillers.
-`CoefficientBassCompositeJ0Polynomial`, `CoefficientBassCompositeJ0Attachment`
-and `CoefficientBassCompositeJ0ShiftedPolynomial` retain the original composite
-polynomial movement and its ordinary and shifted attachments.
-`MWholeConeCylinder` records the complete moving null square of the chosen
-cone-composition homotopy, and `MWholeNerveTripleCompactNative` gives native
-evaluation of the precomposed and postcomposed cubes. These additional faces
-do not assert higher categorical coherence.
-
-[`SplitTripleSimplex`](SplitTripleSimplex.lean)
-and `SplitTripleParameters` place the normalized triple and all four binary
-normalization intermediates in one actual eight-slot diagram. Its six complete
-displayed-component triangles have compatible whole-level scalar lifts.
-[`TripleNativeEvaluation`](TripleNativeEvaluation.lean)
-now identifies their assembled evaluation with the EXPORTED original triple
-comparison at every level, both times and every input, including the full
-degree-zero loop coordinate. The two faithful producer factorizations preserve
-whole values. [`DoubleSquareMergedSimplex`](DoubleSquareMergedSimplex.lean)
-provides the larger common 18-node diagram and full original faces.
-`DoubleSquareRectangleNative`, `DoubleSquareOriginalRectangle` and
-`DoubleSquareRectangleFaces` prove the whole original rectangle evaluation,
-complete geometric route faces and continuous three-side collapse. Generic
-`ScalarChartPause` retains its boundary and side-lift premises. The joint Bass
-family and all six compatible original composition surfaces now belong to
-one actual 139-simplex. `MWholeNativeCube` constructs the original interior
-cube with twelve whole shared edges, independent times and the unchanged
-level-zero input. `MWholeCubeConsumers` gives the whole original comparison
-square, cone composition and parameter-looped step composition, retaining
-the literal Laurent inclusion track.  The unit cube is constructed by the separate unit owners
-above; the raw tower remains open. The [TT roadmap](../Development.md)
-records their exact role in genuine Raw2 and all-level geometric evaluation.
-
-The raw second-projection problem now has reusable parameterized descent in
-[`Topology/Prespectrum/PushoutConeFamily`](../../../Topology/Prespectrum/PushoutConeFamily.lean)
-and `PushoutConeFamilyRecovery`. The four supplied families (Laurent, two
-polynomial cylinders, and overlap cylinder) descend through the original
-pushout and reduced cone for any locally compact external parameter.
-Restriction along any continuous map commutes strictly with descent and
-independent parameter looping.
-The recovery theorem retains an entire already chosen family; the actual
-`BassMWhole.compositionCells` consumer recovers the existing cone and step
-composition with its original clocks.
-
-`CoefficientBassRaw1LaurentFamily` constructs the whole Laurent comparison.
-The polynomial `CoefficientBassRaw1PolynomialCommonPasting` family is an actual
-three-cube with all six scalar faces: its two complete comparison words, fixed
-source/target faces, original eighteen-node Laurent bottom and unreduced tip.
-`CoefficientBassRaw1PolynomialCommonPastingNative` retains genuine polynomial
-inputs, based values and independent structure time. The stronger native
-`CoefficientBassRaw1LaurentNativeCell` and `CoefficientBassRaw1PolynomialNativeCells`
-place the Laurent and both polynomial cells in the original full target Bass
-cone. `CoefficientBassRaw1PolynomialNativeAttachments` identifies both entire
-height-zero polynomial faces with the Laurent family after the actual source
-chart map; height one is the original cone point. No scalar P-face-intersection
-obligation remains for this selected three-cube.
-
-The remaining source-cell problem is the compatible overlap family: its
-four coordinates are comparison time, route time, cone height and overlap
-time. Its eight three-dimensional faces must have all whole intersections,
-including the original half-height midpoint and chosen earlier fillers.
-Complete Laurent/polynomial/overlap attachment equations and actual
-`PlusPasting`/`MinusPasting` must still be assembled before the generic descent
-produces the second coefficient map. The assembled `PushoutConeFamily (I × I)`
-must recover both entire cone routes before parameter looping yields the
-actual pasting. This does not yet give second-stage
-identity/composition, seed naturality, or a coherent raw all-stage tower.
-The selected carrier-augmentation and chosen-chart range modules preserve
-specified earlier cubes and chart squares as entire faces. In particular,
-`CoefficientBassSeedChosenSquareRange` preserves a supplied range condition;
-it does not prove the concrete chosen-boundary range. These interfaces do not
-supply the missing recursive closure.
-
-[NativeParameterEvaluation](../../../Topology/Prespectrum/NativeParameterEvaluation.lean)
-provides conditional `PathLift` and `HomotopyLift` interfaces for whole values
-under an arbitrary evaluator. It preserves native reversal, concatenation,
-horizontal composition and pause clocks at every level and input; the
-evaluator need not be continuous. The paths, homotopies and whole-value lift
-equations are inputs. These operation lemmas construct no concrete geometric
-lift, and equality after an arbitrary evaluator does not identify unevaluated
-carrier points or the prescribed midpoint of the raw O boundary.
-
-The original coefficient Bass comparison now has scalar lifts for both
-complete chart pauses.
-[`BassMergedBoundarySimplex`](BassMergedBoundarySimplex.lean)
-places those whole chart surfaces and the prescribed Laurent bottom
-L(r,cylinder(t,x)) in one common 44-simplex. All six reference/full-node
-equalities are proved;
-[`BassMergedScalarBoundary`](BassMergedScalarBoundary.lean)
-retains literal shared chart/bottom edges at their original speeds, including
-degree-zero loops and independent structure time.
-[`BassH0Native`](BassH0Native.lean)
-now evaluates the entire prescribed H0 cylinder surface in a separate actual
-30-simplex, retaining both projection rectangles and their five full shared
-nodes. All four original scalar edges, point and independent structure
-coordinates are proved at every level, including zero. The joint H0/chart/bottom
-family, whole H1/M faces and genuine six-face composition cylinder remain
-separate. The generic
-varying-family composition theorem supplies the actual realization-product
-parameter and does not supply these remaining geometric faces.
+[Original raw evaluation](RawEvaluation.md) develops the coefficient
+identity/composition cubes and objectwise second seed, the remaining
+coefficient overlap-cell attachment, and the integer-base raw construction
+on arbitrary schemes. In the latter construction, whole one-step evaluation
+naturality and the prescribed transition-identity square are constructed.
+The remaining mixed seed compatibility, scheme-arrow composition and
+coherent raw iteration have their distinct boundaries there. None is a
+premise of the strict/fine section-completion results in this guide.
 
 ## Telescope, localization map, and supported self-comparison
 
@@ -477,7 +398,7 @@ pulled-back open. These self-comparisons alone do not supply stabilization or fu
 
 ## Relative-open sections and scalar cofibers
 
-Native joint scheme/coefficient sections now supply global coarse/fine/graded
+Native joint scheme/coefficient sections supply global coarse/fine/graded
 Models, actual cofinality and K₀ image exactness, canonical nulls, original
 Laurent seeds and whole seed/null compatibility. `CoefficientOpenBassTower`
 and `CoefficientOpenBassTelescope` retain those finite stages and transitions;
@@ -487,14 +408,14 @@ quasi-compact opens. `CoefficientSupportedSections` and
 `CoefficientSupportedOpenModels` supply the actual auxiliary-supported Models,
 with supported cofinality and completed localization supplied by the dedicated interfaces below.
 `SupportedOpen.GrothendieckPullback`, `ImageQuotientPullback` and
-`CoefficientSupportedOpenGrading` now supply the actual supported quotient
+`CoefficientSupportedOpenGrading` supply the actual supported quotient
 and G_Z/q_Z, retaining original relative-image witnesses; their coefficient
 action needs compact P/Q, while pointwise grading has no compactness premise.
 Their cofinality, canonical null, signed cones, and completed localization are supplied by the dedicated supported interfaces below.
 `CoefficientSectionEvaluationNaturality`, `CoefficientSectionEvaluationUnit`
 and `CoefficientLaurentEvaluation` preserve the actual evaluation tracks and
-forward units. Seed/iterate/telescope geometric comparison and classical Kᴮ
-identification remain open; see the [TT roadmap](../Development.md).
+forward units. Complete raw-iterate/telescope geometric comparison and classical Kᴮ
+identification remain open; see the [classical comparison boundary](../Development.md).
 
 `BoundedFlat.OpenConeComparison` proves the actual geometric acyclic-support
 cone stably equivalent to the original coarse relative-open S-prespectrum in
@@ -666,12 +587,12 @@ with the same whole null and original signed boundary. The downstream
 diagram isomorphisms and their natural inverses.
 
 For arbitrary open arrows over `Spec R`, `BoundedFlat.CoefficientOpenSections`
-and `CoefficientOpenGrading` now construct actual global C/F/G and coefficient-natural
+and `CoefficientOpenGrading` construct actual global C/F/G and coefficient-natural
 r/q, using the joint native geometry and one global zero. C/F/r require no
 compactness; the graded coefficient diagram requires compact source and ambient
 schemes. Global cofinality, honest K₀ image exactness, canonical nulls and
 original Laurent seed/tower transfer are proved. The actual native supported
-cone and same-null fiber now compare stably to the fine completion for qcqs
+cone and same-null fiber compare stably to the fine completion for qcqs
 ambient schemes and compact opens, with the original signed boundary, in
 `CoefficientFullOpenBassLocalization` and its Models/Seed/Tower/Telescope owners.
 
@@ -681,13 +602,13 @@ coefficient-natural null and all-integer initial cone comparison in
 `CoefficientSupportedOpenNull` and `CoefficientSupportedOpenConeStable`.
 Cofinality and cone stability require compact P,Q,T and quasi-separated Q;
 image/kernel requires compact P,Q, and q₀ surjectivity only compact P.
-`CoefficientSupportedOpenBassSeed` and `SeedCompatibility` now supply the
-original supported seeds and every whole-null seed square. The accepted
+`CoefficientSupportedOpenBassSeed` and `SeedCompatibility` supply the
+original supported seeds and every whole-null seed square. The original
 `CoefficientSupportedOpenBassTower` and `BassTelescope` retain the literal finite
 stages, original telescope null, all-signed graded vanishing and stable r_Z∞,
 under the same compact P,Q,T and quasi-separated Q conditions for the final
 comparison. `CoefficientSupportedFiberLocalizationModels` and its
-Seed/Tower/Telescope owners now construct the actual union-support fiber,
+Seed/Tower/Telescope owners construct the actual union-support fiber,
 literal forget/changeWeak maps and the same-joint-zero whole null.
 `CoefficientSupportedFullOpenBassLocalization` supplies its same-null stable
 fiber comparison to this fine supported completion and original signed
@@ -695,89 +616,61 @@ boundary. Fiber-to-coarse stability and structural identities need only the
 open immersion; final fine stability requires compact P,Q,T and
 quasi-separated Q. This is constructed section-completion localization.
 
-`CoefficientSectionEvaluationSourceLeg` supplies original source-leg movement and raw-cone two-time interchange. `CoefficientSectionEvaluationTopology` supplies the actual e/V levelwise equivalences and span/cone/loop HEP/T1. `CoefficientSectionEvaluationComposition` proves normalized pasting, the relative split-track comparison, and both chart/cylinder faces, without openness, compactness, or flatness. The source-null/seed comparison is supplied by `CoefficientSectionEvaluationSeedComparison`; complete original raw iteration remains open as described in the raw-cell section.
+`CoefficientSectionEvaluationSourceLeg` supplies original source-leg movement and raw-cone two-time interchange. `CoefficientSectionEvaluationTopology` supplies the actual e/V levelwise equivalences and span/cone/loop HEP/T1. `CoefficientSectionEvaluationComposition` proves normalized pasting, the relative split-track comparison, and both chart/cylinder faces, without openness, compactness, or flatness. The source-null/seed comparison is supplied by `CoefficientSectionEvaluationSeedComparison`; complete original raw iteration retains the boundary in [raw evaluation](RawEvaluation.md).
 
 The projective-line geometric inputs have their own [source-family authority](../ProjectiveLine/README.md): determinant-normalized tensor and pullback mates, intrinsic-perfect quasicoherent/strict representatives, actual derived projection perfection, natural generation on genuine roofs, and both original K-inverse laws. Older objectwise projection or strictification criteria do not retract those later results. The [classical comparison guide](../Development.md) keeps the raw-cell and external classical Kᴮ boundaries separate from the native current-stage endpoint above.
 
 ## Finite normalization and original group interfaces
 
-The finite normalization owner is [NormalizedStageMap](../../../KTheory/Bass/NormalizedStageMap.lean):
-the actual loop/pushout/cone strengths `κ,ρ,χ` produce stable maps
-`B^i F → Ω^i C^i F` for Model input, preserving association transports.
-Fixed cyclic/reversal loop words and the new-loop slide retain their exact
-evaluation formulas and the independent residual Bass loop. The geometric
-permutation in [GeometricConeTarget](../../../KTheory/Bass/GeometricConeTarget.lean) has sixteen
-point-set cell formulas, involutivity and naturality in diagrams and schemes.
-Its generic strict-square and four-dimensional double-square quotient
-arguments preserve the actual target and all independent cell parameters.
-The product braid and external-factor/track transport are separate generic
-equations on the original nested products.
+The [finite normalization and telescope guide](../../../KTheory/Bass/README.md#current-stage-and-iterated-seed-telescopes)
+keeps the actual strengths, fixed loop words and stable zigzag
+`I → T ← N ← C`. Original `B^i(seed)` transitions and current-stage seed
+transitions remain separately defined; the comparison uses their proved
+adjacent squares. The [row interfaces](../../../KTheory/Bass/RowInterfaces.md)
+construct independent tensor cells, normalized forward operations, input
+squares, row presentations and ordinary-colimit presentations for the stated
+strict Model diagrams and tracks.
 
-The new all-stage route uses the stable zigzag `I → T ← N ← C`:
-original `B^i(seed)` telescope, fixed-word twisted-normalized telescope,
-unpermuted normalized telescope and current-stage telescope.
-[SchemeIteratedSeedTransition](../../../KTheory/Bass/SchemeIteratedSeedTransition.lean)
-proves `originalTransition_stageMap` for every original seed transition.
-[SchemeCurrentStageTelescope](../../../KTheory/Bass/SchemeCurrentStageTelescope.lean),
-[SchemeTwistedTelescope](../../../KTheory/Bass/SchemeTwistedTelescope.lean)
-and [SchemeIteratedSeedTelescope](../../../KTheory/Bass/SchemeIteratedSeedTelescope.lean)
-preserve the original inclusions and whole cylinders. Their Model
-specializations prove the three comparison maps stable. Current and iterated
-seed transitions remain separately defined; direct equality is not used.
-Whole geometric chi factorization, actual scalar-action equivariance and
-the specified fixed-word seed squares supply the local inputs.
+The coefficient transformations `r` and `q`, canonical null, original
+Laurent units and Bass seeds use one coherent choice of coarse/fine/graded
+Models and section zeros. Their two-time interchange and whole seed equation
+retain those exact tracks. The initial cone comparison uses the honest K₀
+image quotient, restriction K₀ injectivity in degree one, and positive
+cofinality. Its null input is this constructed null before passage to a
+telescope.
 
-[ParameterFullCurrentNull](ParameterFullCurrentNull.lean),
-[ParameterFullFiberComparison](ParameterFullFiberComparison.lean)
-and [ParameterIteratedTwistedFiber](ParameterIteratedTwistedFiber.lean)
-retain the actual support inclusion, full-open restriction and every slice
-of the original selected null. Integral Spec-row comparisons connect the
-iterated lift to the existing fine localization lift.
-[ParameterCurrentFullFiber](ParameterCurrentFullFiber.lean)
-then proves
-`Quillen.PerfectComplexes.ParameterFullCurrentNull.currentLift_integer_isStableEquivalence`
-under exactly `[IsOpenImmersion f]`, `[CompactSpace P]`, `[CompactSpace Q]`
-and `[QuasiSeparatedSpace Q]`.
-`currentLift_integer_signed_isIso f d` gives the induced isomorphism for every
-`d : ℤ`. No equivariance or transition-coherence premise is exposed by this
-endpoint. The original projection Model isomorphisms in
-[GlobalParameterIdentityModels](GlobalParameterIdentityModels.lean)
-preserve both maps at the integer parameter; their all-stage classical
-interpretation is a separate task.
-
-The coefficient transformations r and q, canonical null N, original Laurent
-units and Bass seeds belong to one coherent choice of C/F/G and section zeros.
-The two-time interchange and whole seed equation retain those exact tracks.
-The initial cone comparison uses the honest K₀ image quotient, restriction K₀
-injectivity at degree one, and positive cofinality. Its generic null parameter
-is discharged by this same constructed N before the telescope application.
-
-Use `E_i = B^i(E₀)`, the actual transitions `t_i = B^i(η)` and `N_i` for the
-original Bass recursion. Let `a_d` be its common-corner map and `Δ_d` the
-positive-minus-inverse chart difference in stable degree d. The following
-fine results retain these actual maps rather than chosen abstract isomorphisms.
+The finite stages `E_i = B^i(E₀)` have actual transitions
+`t_i = B^i(η)`, where `η` is the original seed. The following results retain
+the common-corner map and positive-minus-inverse chart difference in each
+stable degree, together with these original transitions and inclusions.
 
 | Interface | Supplied result and conditions |
 | --- | --- |
-| B2-A/B: actual spectral row | `ModelDiagramTwoChartStableSequence` and `CoefficientTwoChartStableSequence` realize the original signed span quotient and natural all-degree short exact row for the actual ambient, open, supported and auxiliary-supported finite Models under their original constructor hypotheses. Polynomial zero evaluation, finite Model excision and cone collapse supply the structural inputs. |
-| B2-C: original middle exactness | `CoefficientBassMiddleIteration`, `CoefficientBassNegativeMiddleExactness` and the corresponding supported MiddleTransport/MiddleIteration/NegativeMiddleExactness owners preserve the whole common-corner/signed-difference row through independent-variable product transport and actual K₁ contractions. Ambient schemes are qcqs; the supported negative middle row additionally has compact removed open. The natural splitting and contraction transport, rather than right exactness alone, supply the induction. |
-| B2-D: original connective seed | `CoefficientBassConnectiveInvertibility` identifies the original raw seed with the signed forward-unit quotient and actual fine spectral left map. `CoefficientBassFineConnectiveInvertibility` transports it through the whole one-step evaluation. `CoefficientSupportedConnectiveInvertibility` uses the original finite support-to-ambient cone square and whole-null transition naturality. Ambient is qcqs; the supported theorem also requires compact removed open. No geometric first-coordinate boundary identification is assumed. |
-| B2-E: full transition range | `CoefficientBassFineRangeInvertibility` and `CoefficientSupportedFineRangeInvertibility` prove the original stage-i transition invertible for every `d ≥ -i`, including equality. The bottom chart exactness controls the endpoint of the inter-stage short-exact-row induction. |
-| B2-F: canonical original legs | FineTelescopeComparison proves the original stage-i inclusion invertible in that same range. The negative comparison is the original finite-bottom map followed by that inclusion, and its Laurent quotient equation is retained. ConnectiveTelescopeComparison uses the original stage-zero evaluation and inclusion; no different colimit leg is substituted. T1 is supplied by the actual Model levels. |
-| B2-G: original forget/restriction | The finite supported comparison and `CoefficientSupportedNegativeForgetComparison` need only an open immersion and compact ambient. `CoefficientSupportedNegativeTelescopeForget` uses compact removed open and qcqs ambient, retaining original quotient and inclusion faces. `CoefficientFullOpenBassRestriction` gives the literal open row/action/seed/telescope and equality of the actual localization map with original restriction on every cylinder. The latter equality needs only the open immersion; the original negative-map square needs compact endpoints. |
-| Original nonpositive localization | `Bass.SupportedLocalizationExactness` and `Bass.SupportedLocalizationBoundary` use the same-null fine cone sequence and both actual identity-projection legs to give recurring exact original Bass groups for qcqs ambient and compact removed open. The geometric K₁-to-supported-K₀ map joins by exactness; equality with the fine boundary is not asserted. |
+| Actual spectral row | `ModelDiagramTwoChartStableSequence` and `CoefficientTwoChartStableSequence` realize the original signed span quotient and natural all-degree short exact row for the actual ambient, open, supported and auxiliary-supported finite Models under their original constructor hypotheses. Polynomial zero evaluation, finite Model excision and cone collapse supply the structural inputs. |
+| Original middle exactness | `CoefficientBassMiddleIteration`, `CoefficientBassNegativeMiddleExactness` and the corresponding supported MiddleTransport/MiddleIteration/NegativeMiddleExactness owners preserve the whole common-corner/signed-difference row through independent-variable product transport and actual K₁ contractions. Ambient schemes are qcqs; the supported negative middle row additionally has compact removed open. The natural splitting and contraction transport, rather than right exactness alone, supply the induction. |
+| Original connective seed | `CoefficientBassConnectiveInvertibility` identifies the original raw seed with the signed forward-unit quotient and actual fine spectral left map. `CoefficientBassFineConnectiveInvertibility` transports it through the whole one-step evaluation. `CoefficientSupportedConnectiveInvertibility` uses the original finite support-to-ambient cone square and whole-null transition naturality. Ambient is qcqs; the supported theorem also requires compact removed open. No geometric first-coordinate boundary identification is assumed. |
+| Full transition range | `CoefficientBassFineRangeInvertibility` and `CoefficientSupportedFineRangeInvertibility` prove the original stage-i transition invertible for every `d ≥ -i`, including equality. The bottom chart exactness controls the endpoint of the inter-stage short-exact-row induction. |
+| Canonical original legs | FineTelescopeComparison proves the original stage-i inclusion invertible in that same range. The negative comparison is the original finite-bottom map followed by that inclusion, and its Laurent quotient equation is retained. ConnectiveTelescopeComparison uses the original stage-zero evaluation and inclusion; no different colimit leg is substituted. T1 is supplied by the actual Model levels. |
+| Original forget/restriction | The finite supported comparison and `CoefficientSupportedNegativeForgetComparison` need only an open immersion and compact ambient. `CoefficientSupportedNegativeTelescopeForget` uses compact removed open and qcqs ambient, retaining original quotient and inclusion faces. `CoefficientFullOpenBassRestriction` gives the literal open row/action/seed/telescope and equality of the actual localization map with original restriction on every cylinder. The latter equality needs only the open immersion; the original negative-map square needs compact endpoints. |
+| Original nonpositive localization | `Bass.SupportedLocalizationExactness` and `Bass.SupportedLocalizationBoundary` use the same-null fine cone sequence and both actual identity-projection legs to give recurring exact original Bass groups for qcqs ambient and compact removed open. Current and normalized-row negative-class squares identify their own intrinsic boundary with this original negative boundary. The geometric K₁-to-supported-K₀ comparison has the explicit minus under the original stable perfect classes. |
 
-The accepted fine range and telescope statements do not identify the original
-raw geometric tower or classical Kᴮ. The remaining group-diagram tasks are
-arbitrary-pair naturality of the transported boundary, its equality with the
-geometric/classical boundary, and the auxiliary-support tower correspondences.
-`Bass.SupportedEnlargement` already defines original negative
-support-enlargement maps, identity/composition, degree-zero inclusion and
-forget compatibility. What remains is their comparison with the actual T,
-T∪U and T∩U section towers, original restriction/enlargement squares and
-exact localization sequence. Compactness of P,Q,T and quasi-separatedness
-of Q belong to the final auxiliary fine comparison. No missing-map claim
-should replace this precise correspondence obligation.
+The current/fine corrections on the original negative classes are identity
+in every natural index, under the ambient qcqs and supported compact-open
+hypotheses. Their proof uses the actual geometric quotient-swap sign and
+loop-reversal sign separately; see
+[finite Bass signs](../../../KTheory/Bass/SignComparisons.md). The auxiliary
+Spec-row comparisons above preserve the original enlargement, restriction
+and entire null through the finite stages and telescopes. Their independent
+normalized classes and intrinsic boundary are developed in
+[geometric connecting maps](GeometricBoundary.md).
+
+These identifications concern the constructed fine/current/normalized rows.
+The positive geometric boundary on every original perfect class has a single
+minus with the unchanged class maps and degree cast. An unsigned geometric
+square is therefore not asserted. Classical object, forward-transition and
+whole-null correspondence, together with any separately required
+arbitrary-pair naturality, retain their exact targets in the
+[classical comparison guide](../Development.md).
 
 ## Declaration locators
 
@@ -812,6 +705,9 @@ These additional names use the same objects, hypotheses, and original maps as th
 | `BoundedFlat.CoefficientSupportedFineRangeInvertibility`, `BoundedFlat.CoefficientSupportedFineTelescopeComparison`, `BoundedFlat.CoefficientSupportedConnectiveTelescopeComparison` | [Finite normalization and original group interfaces](#finite-normalization-and-original-group-interfaces) |
 | `BoundedFlat.CoefficientSupportedNegativeTelescopeForget` | [Finite normalization and original group interfaces](#finite-normalization-and-original-group-interfaces) |
 | `BoundedFlat.CoefficientFullOpenBassRestriction` | [Finite normalization and original group interfaces](#finite-normalization-and-original-group-interfaces) |
+| `GlobalAuxiliaryParameterTelescopeSquares`, `GlobalAuxiliaryParameterTelescopeNull`, `ParameterAuxiliaryCurrentFiber`, `ParameterAuxiliaryCurrentLocalization` | [Global sections](#global-sections-and-coefficient-restriction) and [current-stage localization](#native-current-stage-full-open-localization) |
+| `currentNegativeConnecting_eq_original`, `basicConnecting_original_negative_square`, `boundedFlatCoefficientFineConnecting_perfectClass_sign` | [Original classes and geometric connecting maps](GeometricBoundary.md) |
+| `InputNaturality.stepHomotopy`, `InputIdentity.mapHomotopy`, `InputIdentitySeedSquare.square` | [Original raw evaluation](RawEvaluation.md) |
 
 ## Upstream coefficient primitives
 

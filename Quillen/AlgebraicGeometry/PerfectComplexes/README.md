@@ -8,7 +8,9 @@ Strict-perfect and locally perfect complexes have different models and compariso
 - [Auxiliary support and Mayer–Vietoris](SupportedOpen/README.md)
 - [Projective-line K-equivalences](ProjectiveLine/README.md)
 - [Affine and graded objects](Affine/README.md)
-- [Bounded-flat section comparisons](BoundedFlat/BassComparison.md)
+- [Bounded-flat sections, finite groups and localization](BoundedFlat/BassComparison.md)
+- [Original raw Bass evaluation and coherence](BoundedFlat/RawEvaluation.md)
+- [Original classes and geometric connecting maps](BoundedFlat/GeometricBoundary.md)
 - [Scheme Bass groups](Bass/README.md)
 - [Classical comparison boundaries](Development.md)
 
@@ -19,9 +21,14 @@ complexes, vector-bundle comparisons, derived pullback, localization, support
 excision, and Mayer–Vietoris. The original restriction maps and relative
 homotopy-fiber boundaries remain the public maps. Localization has an exact
 image endpoint in degree zero. Separate functorial Bass groups are defined by
-cokernel recursion. For a quasi-compact open of a qcqs scheme, these original
-nonpositive groups now have a recurring localization sequence transported
-from the same-null fine completion; its maps and boundary are described below.
+cokernel recursion. For a quasi-compact open of a qcqs scheme, the original
+nonpositive groups have a recurring localization sequence from the same-null
+fine completion. Their independently defined current and normalized-row
+classes preserve that original negative boundary. In nonnegative target
+degrees the stable boundary on the unchanged perfect classes is the negative
+of the original geometric connecting map, including K₁ to supported K₀.
+The [connecting-map guide](BoundedFlat/GeometricBoundary.md) keeps the exact
+class maps, degree casts and auxiliary-support hypotheses.
 
 This guide owns the perfect objects, supported/relative models, and their
 connective geometric localization comparisons. The generic spectrum and
@@ -63,23 +70,46 @@ See [PerfectSupport.lean](PerfectSupport.lean).
 
 ## Remaining obligations
 
-- Complete the Laurent-unit connecting-map and zero-section class formulas and retain possible Nil contributions; the normalized forward scalar K₁ comparison is proved.
+The following comparison targets remain separate from the constructed
+strict/fine/current/normalized interfaces.
 
-- Extend the proved fine ambient/supported range and original-group identifications through the remaining auxiliary-support tower comparisons. Existing support-enlargement maps must be identified with the actual T, T∪U and T∩U section towers and their exact localization maps.
+- Identify the specified classical raw spectrum, forward Laurent cup/boundary
+  transitions and whole localization null diagram through all required
+  ambient, open and auxiliary-supported stages. The current-stage and
+  normalized-row lifts already have internal same-null localization,
+  original negative-class comparisons and signed positive geometric formulas.
+  Their full classical correspondence is the additional target.
+- Complete mixed seed/input/evaluation compatibility and scheme-arrow
+  composition for the integer-base raw construction, including any needed
+  higher coherence of the chosen source-null comparison. Its whole one-step
+  evaluation naturality, raw map identity and prescribed transition-identity
+  square are constructed. The separate coefficient raw overlap-cell and
+  coherent all-stage producer retain their own attachment obligations.
+- Compute the original Laurent `[T]` terminal operation and the actual
+  O/O(-1) zero-locus class under the same native Phi inverse. A natural section
+  must retain its proved sign. Keep possible Nil terms; classical Laurent
+  splitting, homotopy invariance and nonconnective descent are separate.
+- Identify the separate projected-diagonal endpoints and establish the general
+  projective-bundle formula, Proj identification and full twisting-sheaf
+  family. Both native qcqs inverse laws, geometric G identification and the
+  compact-open supported Phi bijection retain their original maps. Intrinsic
+  projection perfection and original open K-map naturality hold over
+  quasi-compact bases; arbitrary-base-map naturality remains separate. The
+  older finite-coefficient retract criterion keeps its uniform-window input.
+- Extend perfect preservation to the claimed general-source/unbounded
+  direct-image scope and general bounded-below flat-base-change invertibility
+  beyond the available QC-single and open specializations.
+- Extend strict/local equivalence to arbitrary nonaffine schemes and perfect
+  pullback to arbitrary non-quasi-compact schemes; compare Waldhausen and
+  triangulated-derived Grothendieck presentations.
+- Supply any separately required general stable cofiber excision, replacement
+  cofiber preservation and higher raw-spectrum coherence. The categorical
+  stable localization has no asserted standard stable model structure or
+  triangulation.
 
-- Identify the native current-stage telescope objects and selected null diagram with the intended classical nonconnective theory. The actual iterated-seed/current-stage zigzag, geometric action equivariance, whole geometric chi factorization and fixed-word seed squares are supplied; equality of the two different transition definitions is not used by that route.
-
-- Complete any separately required comparison with the older raw geometric cell tower and identify the classical groups and signed localization boundary. The raw overlap O four-cube belongs to that separate route and is not a premise of the native current-stage theorem. The original nonpositive groups already have the same-null fine localization sequence above. Its equality with the geometric boundary, arbitrary-pair boundary naturality, the Laurent [T] terminal formula and O/O(-1) sign, classical Laurent splitting and nonconnective descent remain open; retain possible Nil terms.
-
-- Identify the separate natural projected-diagonal endpoint comparisons and establish the general projective-bundle formula, Proj identification, and full twisting-sheaf family. Both actual native qcqs inverse laws and geometric G identification are proved, and the compact-open supported Phi bijection retains its original forward map. Intrinsic-perfect native projection perfection, original open K-map naturality and exact coefficient/support preservation hold on every quasi-compact base. Arbitrary-base-map naturality remains separate. The older finite-coefficient retract criterion retains its own uniform-window premises.
-
-- Extend perfect preservation to the claimed general-source/unbounded direct-image scope, and establish general bounded-below flat-base-change invertibility beyond the available QC-single and open specializations.
-
-- Extend strict/local equivalence to arbitrary nonaffine schemes and perfect pullback to arbitrary non-quasi-compact schemes; compare the Waldhausen and triangulated-derived Grothendieck presentations.
-
-- Supply any needed general stable cofiber excision, replacement cofiber preservation, and higher raw-spectrum/telescope coherence. The categorical stable localization has no asserted standard stable model structure or triangulation.
-
-The broader comparison boundaries are in [scope summary](../../../docs/SCOPE.md).
+[Classical comparison boundaries](Development.md) fixes the target and its
+source locators. The [cross-family scope summary](../../../docs/SCOPE.md)
+links the other source owners.
 
 ## Source interfaces
 
@@ -99,8 +129,14 @@ The broader comparison boundaries are in [scope summary](../../../docs/SCOPE.md)
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.FullOpenSectionRestrictionModel` | Original strict chosen-zero restriction Model map |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSectionChangeIndex`, `GlobalSectionChangeIndexLaws`, `GlobalSectionUnit`, `GlobalSectionLaurentAction` | Actual all-scheme `globalModel`, coefficient restriction, literal evaluation and original forward units |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSupportedModels`, `GlobalOpenModels`, `GlobalFullOpenModels` | Actual supported/coarse/fine global rows, same zero and exact restriction squares |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalEmptySupportedModels`, `GlobalEmptySupportedParameterModels` | Empty-open support forgetting is a Model isomorphism preserving the section, zero, products, pair pullbacks, forward unit and tracks |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSectionTelescope`, `GlobalSupportedTelescope`, `GlobalOpenTelescope` | Stable finite/telescope restriction preserving actual `B^i(seed)` transitions and cylinder faces |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalSectionCoarseFiber`, `GlobalSectionFullOpenFiber` | Actual same-null coarse/full-open `fiberMap`, its restriction equation and all-integer stability |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterFullCurrentNull`, `ParameterFullFiberComparison`, `ParameterIteratedTwistedFiber` | Original full-open null and `currentLift`, `normalizedLift`, `twistedLift`; same-null stability equivalences |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterIteratedFullFiber`, `ParameterCurrentFullFiber` | `Quillen.PerfectComplexes.ParameterFullCurrentNull.iteratedLift_spec_isStableEquivalence`, `currentLift_integer_isStableEquivalence` and `currentLift_integer_signed_isIso` |
 | `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalParameterIdentityModels` | Original projection Model isomorphisms at the integer parameter, with support-forgetting and full-restriction squares |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterAuxiliarySupportMaps`, `ParameterAuxiliaryCurrentFiber`, `ParameterAuxiliaryCurrentLocalization` | Actual union/auxiliary/inverse-open rows, original maps and whole null; all-signed current lift under compact P,Q,T and quasi-separated Q |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterAuxiliaryNormalizedRowLocalization`, `ParameterNormalizedBasicLocalization` | Independent normalized-row path-space lifts, maps, nulls and stable localization with their original compact-open hypotheses |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.CoefficientFinePerfectConnecting`, `CoefficientAuxiliaryFinePerfectConnecting` | Single-minus geometric boundary formulas on every original perfect class, including K₁ to supported K₀ |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.ParameterNormalizedBasicOriginalBoundary`, `ParameterAuxiliaryNormalizedRowBoundary` | Original negative groups and degree casts in intrinsic normalized-row boundary squares |
+| `AlgebraicGeometry.PerfectComplexes.BoundedFlat.GlobalBassEvaluationInputNaturality`, `GlobalRawBassInputIdentitySeedSquare` | Whole raw one-step evaluation naturality and the prescribed transition-identity square |

@@ -13,8 +13,8 @@ and open comparisons in the source guides. It does not replace those boundaries.
 | ClassicalCWPlus | [actual classical CW comparisons](../Quillen/Topology/PlusConstruction/ClassicalCW.md), [constructed CW covers](../Quillen/Topology/CWComplex/README.md) |
 | HomotopyFoundations | [topological source families](../Quillen/Topology/README.md) |
 | SchemeKTheory | [scheme K/G-theory](../Quillen/AlgebraicGeometry/Scheme/README.md), [projective-line geometry](../Quillen/AlgebraicGeometry/Scheme/ProjectiveLine/README.md) |
-| PerfectComplexes | [perfect-complex K-theory](../Quillen/AlgebraicGeometry/PerfectComplexes/README.md), [localization](../Quillen/AlgebraicGeometry/PerfectComplexes/Localization.md), [coefficient Bass comparisons](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassComparison.md) |
-| SpectraAndBass | [stable topology](../Quillen/Topology/Prespectrum/README.md), [iterated S-spectrum](../Quillen/Waldhausen/SConstruction/Iterated/README.md), [Bass constructions](../Quillen/KTheory/Bass/README.md), [geometric comparisons](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassComparison.md) |
+| PerfectComplexes | [perfect-complex K-theory](../Quillen/AlgebraicGeometry/PerfectComplexes/README.md), [localization](../Quillen/AlgebraicGeometry/PerfectComplexes/Localization.md), [bounded-flat section comparisons](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/BassComparison.md), [original raw evaluation](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/RawEvaluation.md), [original classes and geometric boundaries](../Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GeometricBoundary.md) |
+| SpectraAndBass | [stable topology](../Quillen/Topology/Prespectrum/README.md), [iterated S-spectrum](../Quillen/Waldhausen/SConstruction/Iterated/README.md), [Bass constructions](../Quillen/KTheory/Bass/README.md), [finite signs](../Quillen/KTheory/Bass/SignComparisons.md), [row/tensor and sequential presentations](../Quillen/KTheory/Bass/RowInterfaces.md) |
 
 ## Low-degree current status
 
@@ -40,12 +40,26 @@ See [geometric comparison boundaries](../Quillen/AlgebraicGeometry/PerfectComple
 Degree-zero image statements, explicit small-model/coefficient universes and
 conditional theorem-family inputs must remain attached to their interfaces.
 
+## TT comparison scope
+
+The source guides distinguish the constructed strict/fine completion,
+native current-stage and normalized-row localization, one-step raw evaluation,
+and the specified classical target. Basic and auxiliary same-null lifts,
+original negative-class squares and the single-minus positive geometric
+boundary formulas have their exact conditions in those owners. The remaining
+raw mixed/composition/iteration, classical forward-transition and whole-null
+correspondence must not be inferred from generic strict Model presentation
+interfaces. This is a scope distinction, not a substitute for the source
+statements or their acceptance evidence.
+
 ## Verification
 
-The code release at `69e542b4` has the principal's accepted mathematical and
-native validation basis. This Markdown-only reorganization preserves code,
-dependencies, examples and compatible build/audit evidence. Link checks measure
-documentation consistency; they do not prove a missing mathematical comparison.
+The historical code release at `69e542b4` has the principal's accepted
+mathematical and native validation basis. Later source integrations keep
+their own revision, runtime and checked coverage in the
+[evidence registry](evidence/README.md). Markdown link checks measure
+navigation consistency; they do not prove a mathematical comparison or
+validate new Lean content.
 
 The published code validation at `69e542b4` also passed the complete
 [code CI workflow](https://github.com/kangxyz/quillen-k-theory/actions/runs/39145674137),
