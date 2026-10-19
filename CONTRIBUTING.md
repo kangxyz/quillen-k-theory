@@ -256,4 +256,19 @@ Explain affected interfaces and theorem hypotheses. A pin or toolchain change
 alone does not require fresh compilation of unaffected libraries; normal local
 acceptance remains incremental.
 
+For the narrowly supported Aglib-only revision transition, select with
+`python3 scripts/check_scope.py --aglib-source /absolute/path/to/aglib --output scope.json`.
+The source path must be a real Git worktree root containing both exact pinned
+commit objects; selection reads their blobs without network, Lean, or checkout
+mutation. All three root/downstream pin owners must change together solely in
+Aglib's `rev`/`inputRev`; other global changes still require separate assessment.
+The selector recomputes old/new dependency closure and emits a portable assessment,
+which the normal runner recomputes before accepting a plan:
+`bash scripts/check.sh --aglib-source /absolute/path/to/aglib --plan scope.json`.
+CI fetches exact source objects before selection and sets `QUILLEN_AGLIB_SOURCE`
+for the source-only and execution consumers. An unchecked plan
+is not a pin assessment. Actual runtime mathematical sources and configuration
+must match the new pin; independently guarded runtime helper overlays confer no
+exception to mathematical source drift.
+
 Contributions are licensed under Apache-2.0.

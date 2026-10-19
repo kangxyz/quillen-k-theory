@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Select changed Lean modules and actual reverse-import consumers without Lake."""
 import argparse
+import hashlib
 import io
 import json
 from pathlib import Path
@@ -16,8 +17,9 @@ GLOBAL_INPUTS = {'lean-toolchain', 'lake-manifest.json', 'lakefile.toml', 'lakef
                  CLIENT + 'lakefile.toml', CLIENT + 'lakefile.lean', 'scripts/nolints.json'}
 TOOL_TESTS = {
     'check.sh': ['test_check_script'],
-    'check_run.py': ['test_check_script', 'test_cache_sources', 'test_check_run'],
-    'check_scope.py': ['test_check_script'],
+    'check_run.py': ['test_check_script', 'test_cache_sources', 'test_check_run', 'test_check_scope'],
+    'check_scope.py': ['test_check_script', 'test_check_scope'],
+    'dependency_scope.py': ['test_check_scope'],
     'cache.sh': ['test_check_script', 'test_cache_ci', 'test_cache_sources'],
     'cache_ci.py': ['test_cache_ci', 'test_cache_sources'],
     'cache_sources.py': ['test_cache_sources', 'test_cache_ci', 'test_check_script'],
@@ -27,7 +29,7 @@ TOOL_TESTS = {
     'check_library_layout.py': ['test_library_layout'],
     'check_placeholders.py': ['test_placeholders'],
     'library_sources.py': ['test_import_generation', 'test_library_layout', 'test_placeholders',
-                           'test_cache_sources', 'test_cache_ci', 'test_check_script'],
+                           'test_cache_sources', 'test_cache_ci', 'test_check_script', 'test_check_scope'],
 }
 
 
@@ -126,7 +128,7 @@ def provider_batches(providers, current):
     return batches
 
 
-def select(root, base=None, head=None, full=False):
+def select(root, base=None, head=None, full=False, *, aglib_source=None):
     revision = git(root, 'rev-parse', '--verify', head or 'HEAD').strip()
     initial = base == 'EMPTY_TREE'
     if full and base:
@@ -144,9 +146,17 @@ def select(root, base=None, head=None, full=False):
                     *([head] if head else [])).splitlines()
     paths += git(root, 'ls-files', '--others', '--exclude-standard').splitlines() if not head else []
     paths = sorted(set(paths))
+    assessment = None
+    external_roots, external_graph = [], {}
+    if aglib_source is not None and any(path in GLOBAL_INPUTS for path in paths):
+        if full or initial:
+            raise ValueError('Assessed Aglib mode requires an actual incremental comparison base')
+        from dependency_scope import assess
+        external_roots, external_graph, assessment = assess(
+            root, base or revision, head, GLOBAL_INPUTS, aglib_source)
     for path in paths:
         if path in GLOBAL_INPUTS:
-            if not full and not initial:
+            if not full and not initial and assessment is None:
                 raise ValueError(f'{path} changes global validation inputs; assess invalidation and '
                                  'supply an explicit diagnostic --full only if intended')
         elif not (path.endswith('.lean') or path.endswith('.md') or
@@ -154,7 +164,7 @@ def select(root, base=None, head=None, full=False):
                   path in {'LICENSE', '.gitignore', 'AGENTS.md'}):
             raise ValueError(f'Unclassified changed path: {path}; assign an explicit scope')
     regressions = tooling_tests(root, paths, full)
-    if not full and not any(path.endswith('.lean') for path in paths):
+    if not full and assessment is None and not any(path.endswith('.lean') for path in paths):
         return dict(schema=1, revision=revision, base=base, head=head, full=False,
                     changed=paths, tooling_tests=regressions,
                     providers=[], tests=[], clients=[], provider_batches=[],
@@ -173,7 +183,10 @@ def select(root, base=None, head=None, full=False):
             for dependency in lean_imports(text):
                 key = 'client:' + dependency if dependency.split('.')[0] == 'Consumer' else dependency
                 reverse.setdefault(key, set()).add(identity(path))
-    affected = {identity(path) for path in changed}
+    for module, dependencies in external_graph.items():
+        for name in dependencies:
+            reverse.setdefault(name, set()).add(module)
+    affected = {identity(path) for path in changed} | set(external_roots)
     pending = list(affected)
     while pending:
         for consumer in reverse.get(pending.pop(), ()):
@@ -200,12 +213,24 @@ def select(root, base=None, head=None, full=False):
     if client_trust and not clients:
         clients = sorted(module_name(path[len(CLIENT):]) for path in current if
                          path.startswith(CLIENT + 'Consumer/') and not is_import_surface(current[path]))
-    return dict(schema=1, revision=revision, base=base, head=head, full=full,
+    result = dict(schema=1, revision=revision, base=base, head=head, full=full,
                 changed=sorted(set(paths) | changed), tooling_tests=regressions,
                 providers=providers, tests=tests, clients=clients,
                 provider_batches=provider_batches(providers, current),
                 trust=trust, client_trust=client_trust,
                 lean=bool(providers or tests or clients))
+    if assessment is not None:
+        assessment['local_lean_sha256'] = hashlib.sha256(json.dumps(
+            {p: hashlib.sha256(text.encode()).hexdigest() for p, text in sorted(current.items())},
+            sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+        checker_paths = ['scripts/check_scope.py', 'scripts/dependency_scope.py',
+                         'scripts/library_sources.py', 'scripts/check_run.py']
+        from dependency_scope import _source_input
+        assessment['validation_source_sha256'] = {
+            p: hashlib.sha256(content).hexdigest() if content is not None else None
+            for p in checker_paths for content in [_source_input(root, head, p)]}
+        result['dependency_assessment'] = assessment
+    return result
 
 
 def main():
@@ -214,11 +239,13 @@ def main():
     parser.add_argument('--base')
     parser.add_argument('--head')
     parser.add_argument('--full', action='store_true')
+    parser.add_argument('--aglib-source', type=Path,
+                        help='verify an exact incremental Aglib pin transition from local Git objects')
     parser.add_argument('--output', type=Path)
     parser.add_argument('--github-output', type=Path)
     args = parser.parse_args()
     try:
-        plan = select(args.root, args.base, args.head, args.full)
+        plan = select(args.root, args.base, args.head, args.full, aglib_source=args.aglib_source)
         data = json.dumps(plan, indent=2) + '\n'
         if args.output:
             args.output.parent.mkdir(parents=True, exist_ok=True)

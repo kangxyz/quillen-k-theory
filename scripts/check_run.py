@@ -12,7 +12,7 @@ import subprocess
 import sys
 import tempfile
 
-from check_scope import GLOBAL_INPUTS, git, select
+from check_scope import GLOBAL_INPUTS, git, select, snapshot
 from library_sources import is_import_surface, lean_imports, module_path
 
 
@@ -138,6 +138,22 @@ def parallel_checks(calls, jobs):
 
 def batch_phase(phase, index, count):
     return phase if count == 1 else f'{phase}-{index}'
+
+
+def merge_native_outputs(mappings, output):
+    """Preserve Lake's versioned JSONL format across successful build batches."""
+    rows = []
+    for path in mappings:
+        lines = path.read_text().splitlines()
+        if not lines or json.loads(lines[0]) != '2026-03-17':
+            raise ValueError(f'Unsupported native output mapping header: {path}')
+        for number, line in enumerate(lines[1:], 2):
+            row = json.loads(line)
+            if not isinstance(row, list) or len(row) != 2:
+                raise ValueError(f'Invalid native output mapping: {path}:{number}')
+            rows.append(line)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text('"2026-03-17"\n' + ''.join(row + '\n' for row in rows))
 
 
 def execute(root, plan, *, ci=False, rehash=False, output=None):
@@ -281,8 +297,28 @@ def execute(root, plan, *, ci=False, rehash=False, output=None):
     if output:
         if not ci:
             raise ValueError('--native-outputs requires --ci')
-        output.parent.mkdir(parents=True, exist_ok=True)
-        output.write_text(''.join(path.read_text() for path in mappings))
+        merge_native_outputs(mappings, output)
+
+
+def verify_assessed_inputs(root, plan):
+    """Do not execute worktree controls or Lean sources different from assessed head objects."""
+    assessment = plan.get('dependency_assessment')
+    if assessment is None:
+        return
+    for name, expected in assessment['validation_source_sha256'].items():
+        target = root / name
+        if any(path.is_symlink() for path in (target, *target.parents)):
+            raise ValueError('Redirected assessed validation control: ' + name)
+        actual = hashlib.sha256(target.read_bytes()).hexdigest() if target.is_file() else None
+        if actual != expected:
+            raise ValueError('Actual assessed validation control differs from selected input: ' + name)
+    if plan['head']:
+        current = snapshot(root)
+        digest = hashlib.sha256(json.dumps(
+            {name: hashlib.sha256(text.encode()).hexdigest() for name, text in sorted(current.items())},
+            sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+        if digest != assessment['local_lean_sha256']:
+            raise ValueError('Actual assessed Lean source set/content differs from selected head')
 
 
 def main():
@@ -296,6 +332,9 @@ def main():
     parser.add_argument('--head')
     parser.add_argument('--full', action='store_true')
     parser.add_argument('--plan', type=Path)
+    parser.add_argument('--aglib-source', type=Path,
+                        default=os.environ.get('QUILLEN_AGLIB_SOURCE'),
+                        help='local exact old/new Aglib Git objects for incremental assessment')
     parser.add_argument('--native-outputs', type=Path)
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
@@ -313,10 +352,12 @@ def main():
                         path.endswith('.lean') or path in GLOBAL_INPUTS
                         for path in modified + untracked):
                     raise ValueError('Checked-out Lean/check configuration differs from the selected head')
-            if plan != select(root, plan['base'], plan['head'], plan['full']):
+            if plan != select(root, plan['base'], plan['head'], plan['full'],
+                              aglib_source=args.aglib_source):
                 raise ValueError('Selected scope is stale; regenerate the plan for these inputs')
         else:
-            plan = select(root, args.base, args.head, args.full)
+            plan = select(root, args.base, args.head, args.full, aglib_source=args.aglib_source)
+        verify_assessed_inputs(root, plan)
         if not args.source_checked:
             for command in ([sys.executable, 'scripts/generate_imports.py', '--check'],
                             [sys.executable, 'scripts/check_library_layout.py'],
@@ -327,6 +368,9 @@ def main():
                                 '-p', test + '.py'], cwd=root, check=True)
         if args.source_only:
             return 0
+        if 'dependency_assessment' in plan:
+            from dependency_scope import verify_runtime
+            verify_runtime(root / '.lake/packages/Aglib', plan['dependency_assessment']['new'])
         execute(root, plan, ci=args.ci, rehash=args.rehash or os.environ.get('QUILLEN_REHASH') == '1',
                 output=args.native_outputs)
     except subprocess.CalledProcessError as error:

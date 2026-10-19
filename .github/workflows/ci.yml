@@ -26,6 +26,8 @@ jobs:
     timeout-minutes: 360
     env:
       LEAN_NUM_THREADS: 1
+      # Every package producing publication mappings, including clients, must cache its artifacts.
+      LAKE_ARTIFACT_CACHE: 'true'
       AGLIB_BUILD_THREADS: 2
       AGLIB_LEAN_MEMORY_MB: 12800
       AGLIB_RSS_LIMIT_MB: 13824
@@ -63,6 +65,37 @@ jobs:
             fi
           else
             args+=(--base "$BASE_SHA")
+          fi
+          # This is source acquisition only: no Lean installation or Lake resolution.
+          comparison_base=''
+          for ((i=0; i<${#args[@]}; i++)); do
+            if [[ "${args[i]}" == --base ]]; then comparison_base="${args[i+1]}"; fi
+          done
+          if [[ -n "$comparison_base" && "$comparison_base" != EMPTY_TREE ]]; then
+            pins=$(python3 - "$comparison_base" <<'PY'
+          import subprocess, sys, tomllib
+          def pin(revision):
+              result = subprocess.run(['git', 'show', revision + ':lakefile.toml'], capture_output=True, text=True)
+              if result.returncode:
+                  return ''
+              entries = [entry for entry in tomllib.loads(result.stdout).get('require', []) if entry.get('name') == 'Aglib']
+              return entries[0].get('rev', '') if len(entries) == 1 else ''
+          old, new = pin(sys.argv[1]), pin('HEAD')
+          if old != new:
+              print(old, new)
+          PY
+            )
+            if [[ -n "$pins" ]]; then
+              read -r old_pin new_pin <<< "$pins"
+              [[ "$old_pin" =~ ^[0-9a-f]{40}$ && "$new_pin" =~ ^[0-9a-f]{40}$ ]] || {
+                echo 'Assessed Aglib source acquisition requires exact commit pins.' >&2; exit 2;
+              }
+              aglib_source="$RUNNER_TEMP/aglib-scope-source"
+              git init -q "$aglib_source"
+              git -C "$aglib_source" fetch --no-tags --depth=1 https://github.com/kangxyz/aglib.git "$old_pin" "$new_pin"
+              args+=(--aglib-source "$aglib_source")
+              echo "QUILLEN_AGLIB_SOURCE=$aglib_source" >> "$GITHUB_ENV"
+            fi
           fi
           python3 scripts/check_scope.py "${args[@]}"
       - name: Check source organization

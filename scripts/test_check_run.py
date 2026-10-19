@@ -10,7 +10,7 @@ import time
 import unittest
 from unittest.mock import patch
 
-from check_run import client_check_scope, parallel_checks, scoped_lint_source
+from check_run import client_check_scope, merge_native_outputs, parallel_checks, scoped_lint_source
 from generate_imports import generated_files
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -128,6 +128,33 @@ class ClientScopeTests(unittest.TestCase):
         self.assertIn('let exclusions ← readExclusions', adapted)
         with self.assertRaisesRegex(ValueError, 'interface changed'):
             scoped_lint_source(original.replace('if decls.isEmpty then', 'if false then'))
+
+
+class NativeOutputTests(unittest.TestCase):
+    def test_merge_keeps_one_header_and_every_provider_test_and_client_mapping(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            mappings = []
+            for index, phase in enumerate(('provider', 'test', 'client')):
+                path = root / (phase + '.jsonl')
+                path.write_text(f'"2026-03-17"\n[{index},"{index:016x}.ltar"]\n')
+                mappings.append(path)
+            output = root / 'export/outputs.jsonl'
+            merge_native_outputs(mappings, output)
+            self.assertEqual(output.read_text(), '"2026-03-17"\n' + ''.join(
+                f'[{index},"{index:016x}.ltar"]\n' for index in range(3)))
+
+    def test_bad_header_or_row_fails_before_publishing_an_output(self):
+        for text in ('', '"older-format"\n', '"2026-03-17"\n"2026-03-17"\n',
+                     '"2026-03-17"\n[1]\n', '"2026-03-17"\ninvalid\n'):
+            with self.subTest(text=text), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                mapping = root / 'bad.jsonl'
+                mapping.write_text(text)
+                output = root / 'outputs.jsonl'
+                with self.assertRaises(ValueError):
+                    merge_native_outputs([mapping], output)
+                self.assertFalse(output.exists())
 
 
 class SchedulingTests(unittest.TestCase):

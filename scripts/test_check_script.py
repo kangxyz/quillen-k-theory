@@ -128,7 +128,7 @@ if Path.cwd().name == 'downstream':
         runner = self.root / 'scripts/check_run.py'
         runner.write_text(runner.read_text() + '\n# Changed runner input.\n')
         self.assertEqual(select(self.root)['tooling_tests'],
-                         ['test_cache_sources', 'test_check_run', 'test_check_script'])
+                         ['test_cache_sources', 'test_check_run', 'test_check_scope', 'test_check_script'])
 
     def test_unknown_tooling_requires_explicit_regression_selection(self):
         self.write('scripts/new_helper.py', '# unassigned regression scope\n')
@@ -375,7 +375,8 @@ if __name__ == '__main__':
     a = p.parse_args()
     with open(os.environ['RUN_LOG'], 'a') as log:
         log.write(json.dumps([os.getcwd(), ['serial-build', *a.targets]]) + '\\n')
-    Path(a.outputs).write_text(''.join(json.dumps({'target': name}) + '\\n' for name in a.targets))
+    Path(a.outputs).write_text('"2026-03-17"\\n' + ''.join(
+        json.dumps([index, {'target': name}]) + '\\n' for index, name in enumerate(a.targets)))
 ''')
         self.write(aglib + 'resource_guard.py', '''import subprocess
 def limits(): return {}
@@ -388,8 +389,12 @@ def run(command, *, cwd, env, receipt, budget):
         self.assertEqual(result.returncode, 0, result.stderr)
         selected = [cmd[1:] for cmd in self.commands() if cmd[0] == 'serial-build']
         self.assertEqual(selected, [['Quillen.P'], ['Quillen.C'], ['QuillenTest.T'], ['Consumer.Use']])
-        self.assertEqual([json.loads(row)['target'] for row in output.read_text().splitlines()],
+        rows = output.read_text().splitlines()
+        self.assertEqual(rows[0], '"2026-03-17"')
+        self.assertEqual([json.loads(row)[1]['target'] for row in rows[1:]],
                          [name for batch in selected for name in batch])
+        self.assertIn("LAKE_ARTIFACT_CACHE: 'true'",
+                      (ROOT / '.github/workflows/ci.yml').read_text())
 
     def test_cache_enrolls_native_tool_imports_with_modern_modifiers(self):
         shutil.copyfile(ROOT / 'scripts/cache.sh', self.root / 'scripts/cache.sh')
