@@ -46,7 +46,7 @@ import json, os, sys
 from pathlib import Path
 with open(os.environ['RUN_LOG'], 'a') as output:
     output.write(json.dumps([os.getcwd(), sys.argv[1:]]) + '\\n')
-if '--run' in sys.argv and os.environ.get('FAIL_LINT') == '1':
+if 'lint' in sys.argv and os.environ.get('FAIL_LINT') == '1':
     raise SystemExit(10)
 if Path.cwd().name == 'downstream':
     if 'build' in sys.argv and os.environ.get('FAIL_CLIENT_BUILD') == '1':
@@ -137,42 +137,35 @@ if Path.cwd().name == 'downstream':
         self.assertIn('assign its regression selection', result.stderr)
         self.assertFalse(self.log.exists())
 
-    def test_changed_provider_lint_precedes_affected_builds_without_unchanged_lint(self):
+    def test_one_full_provider_lint_precedes_selected_tests_and_clients(self):
         self.write('Quillen/P.lean', 'def p := 2\n')
         result = self.run_check('--rehash')
         self.assertEqual(result.returncode, 0, result.stderr)
         commands = self.commands()
-        builds = [cmd for cmd in commands if 'build' in cmd]
-        self.assertEqual(builds, [['--rehash', 'build', 'Quillen.P'],
-                                  ['--rehash', 'build', 'Batteries.Tactic.Lint', 'Mathlib.Tactic.Linter.TextBased'],
-                                  ['--rehash', 'build', 'Quillen.C'],
-                                  ['--rehash', 'build', 'QuillenTest.T'],
-                                  ['--rehash', 'build', 'Consumer.Use']])
-        self.assertIn('Quillen.P', commands[2])
-        self.assertIn('--run', commands[2])
-        lints = [cmd for cmd in commands if '--run' in cmd]
-        self.assertEqual([cmd[cmd.index('--run') + 2:] for cmd in lints],
-                         [['Quillen.P']])
-        self.assertLess(commands.index(['--rehash', 'build', 'Quillen.P']),
-                        commands.index(lints[0]))
-        for module in ('Quillen.C', 'QuillenTest.T', 'Consumer.Use'):
-            self.assertLess(commands.index(lints[0]),
+        self.assertEqual(commands[0], ['--rehash', 'build', 'Quillen.C', 'Quillen.P', 'Quillen'])
+        full_lint = ['--rehash', 'lint', '--no-build', '--', '--no-build']
+        self.assertEqual(commands.count(full_lint), 1)
+        self.assertEqual(commands.count(['--rehash', 'exe', 'lint-style']), 1)
+        self.assertEqual([cmd[cmd.index('--run') + 2:] for cmd in commands if '--run' in cmd],
+                         [['QuillenTest.T'], ['Consumer.Use']])
+        for module in ('QuillenTest.T', 'Consumer.Use'):
+            self.assertLess(commands.index(full_lint),
                             commands.index(['--rehash', 'build', module]))
-        self.assertNotIn('Quillen.U', str(commands))
-        self.assertNotIn(['--rehash', 'build', 'Quillen'], commands)
         self.assertFalse(any('QuillenTest/T.lean' in cmd for cmd in commands))
         audit = next((self.root / '.lake/verification').glob('*/axioms.lean')).read_text()
         self.assertIn('import Quillen.P\n', audit)
         self.assertNotIn('import Quillen\n', audit)
 
-    def test_test_only_edit_does_not_select_producer_build_or_client(self):
+    def test_test_only_edit_keeps_full_library_lint_without_selecting_clients(self):
         self.write('QuillenTest/T.lean', 'import Quillen.C\nexample : True := by trivial\n')
         result = self.run_check()
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual([cmd for cmd in self.commands() if 'build' in cmd],
-                         [['build', 'QuillenTest.T'],
-                          ['build', 'Batteries.Tactic.Lint', 'Mathlib.Tactic.Linter.TextBased']])
-        self.assertFalse(any('QuillenTest/T.lean' in cmd for cmd in self.commands()))
+        commands = self.commands()
+        self.assertEqual(commands[0], ['build', 'Quillen'])
+        self.assertEqual(commands.count(['lint', '--no-build', '--', '--no-build']), 1)
+        self.assertIn(['build', 'QuillenTest.T'], commands)
+        self.assertFalse(any('Consumer' in str(cmd) for cmd in commands))
+        self.assertFalse(any('QuillenTest/T.lean' in cmd for cmd in commands))
 
     def test_explicit_full_diagnostics_replay_only_selected_test_sources(self):
         result = self.run_check('--full')
@@ -187,12 +180,15 @@ if Path.cwd().name == 'downstream':
         self.assertTrue(any(cmd[-1].endswith('/axioms.lean') for cmd in commands))
         self.assertTrue(any(cmd[-1].endswith('/client-audit.lean') for cmd in commands))
 
-    def test_lint_failure_stops_before_dependent_build(self):
+    def test_full_lint_failure_stops_before_test_client_builds_and_audits(self):
         self.write('Quillen/P.lean', 'def p := 2\n')
         self.env['FAIL_LINT'] = '1'
         result = self.run_check()
         self.assertEqual(result.returncode, 10, result.stderr)
         self.assertEqual(len(self.commands()), 3)
+        self.assertEqual(self.commands()[-1], ['lint', '--no-build', '--', '--no-build'])
+        self.assertFalse(any('QuillenTest' in str(cmd) or 'Consumer' in str(cmd)
+                             or 'axioms.lean' in str(cmd) for cmd in self.commands()))
 
     def test_client_failure_keeps_selected_recovery_audit(self):
         self.write('examples/downstream/Consumer/Use.lean',
@@ -261,7 +257,7 @@ if Path.cwd().name == 'downstream':
         result = self.run_check()
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(self.commands()[0], ['build', 'Quillen'])
-        self.assertIn('--run', self.commands()[2])
+        self.assertEqual(self.commands()[2], ['lint', '--no-build', '--', '--no-build'])
 
     def test_rename_and_deleted_edges_select_surviving_consumers(self):
         from check_scope import select
@@ -385,7 +381,8 @@ def run(command, *, cwd, env, receipt, budget):
         result = self.run_check('--ci', '--native-outputs', str(output))
         self.assertEqual(result.returncode, 0, result.stderr)
         selected = [cmd[1:] for cmd in self.commands() if cmd[0] == 'serial-build']
-        self.assertEqual(selected, [['Quillen.P'], ['Quillen.C'], ['QuillenTest.T'], ['Consumer.Use']])
+        self.assertEqual(selected, [['Quillen.C', 'Quillen.P', 'Quillen'],
+                                    ['QuillenTest.T'], ['Consumer.Use']])
         rows = output.read_text().splitlines()
         self.assertEqual(rows[0], '"2026-03-17"')
         self.assertEqual([json.loads(row)[1]['target'] for row in rows[1:]],

@@ -49,12 +49,15 @@ checks, fresh native checks and compiler output reuse. Resource and execution
 changes retain their own provenance; they do not alter the mathematical
 statements or close the remaining classical comparison.
 
-The complete second mathematical batch is merged and pushed. All selected
-native checks passed: 2,442 provider targets, 603 tests, 90 downstream targets,
-changed-source lint and facade text checks, and foundation audits covering
-88,996 project declarations and 671 client declarations from 195 disjoint
-defining origins. Independent GitHub CI and repaired cache publication remain
-separate observations in the continuation record.
+The complete second mathematical batch is merged and pushed. Native checks
+passed for 2,442 provider targets, 603 tests, 90 downstream targets and foundation
+audits covering 88,996 project declarations and 671 client declarations from
+195 disjoint defining origins. The configured full-library environment lint
+subsequently passed in one invocation (267.5 seconds); whole-workspace native
+text lint passed all 7,289 sources (5.8 seconds). Historical scoped checks retain
+their actual basis. Normal production lint now uses the full-library entry once.
+Independent GitHub CI and repaired cache publication remain separate observations
+in the continuation record.
 
 ## P1–P5 continuation record
 

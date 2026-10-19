@@ -81,31 +81,31 @@ For failed final checks, use the contributor guide's
 completed categories.
 
 The selector reads both old and current import graphs, so renamed/deleted modules
-still select their surviving consumers. Changed providers compile in dependency
-layers, and each layer passes the existing default scoped environment and native
-text checks before affected dependent layers, tests or clients compile. The
-`QuillenTest` driver is a Lean library: compiling its selected modules executes
+still select their surviving consumers. Selected providers and the `Quillen`
+root compile in one native Lake graph, retaining valid cached artifacts. The
+configured full-library environment lint runs once with
+`lake lint --no-build -- --no-build`, followed by one whole-workspace native
+text check with `lake exe lint-style`, before selected tests or clients build.
+Both Lake and the Batteries driver receive a no-build flag. The lint runtime
+executables are prepared incrementally under the resource guard.
+The `QuillenTest` driver is a Lean library: compiling its selected modules executes
 their compile-time assertions, and compatible cached test artifacts retain that
 coverage. Normal checks do not elaborate the same test sources a second time;
 explicit `--full` diagnostics replay the selected test sources. Separate axiom
-audits retain their explicit replay. Test-only edits select test
-targets without requesting producer builds; Lake may recover a genuinely missing
-import artifact. Unchanged import-only facades are not blanket build targets.
-Changed facades compile and receive text checks; actual tests or clients that
-import a broad facade retain that real import closure. In particular, the public
-library clients can require the cached complete library as their import basis.
-Missing compatible artifacts may require that actual dependency closure; the
-selector never substitutes unrelated roots.
-
+audits retain their explicit replay. Selected tests and clients retain scoped
+lint and their complete selected audit coverage. Test-only edits still require
+the full library lint basis, while selecting only their affected test targets
+and clients. Broad lint coverage does not request `--full`, rehashing or a cache
+clean; Lake builds only missing or invalid artifacts in the required closure.
 The existing axiom-audit bodies are copied into the verification directory with
 only their import list scoped to the selected production/client modules. Their
 origin predicate, checked-kernel requirement and allowed axioms remain unchanged.
 An audit-body change selects the complete corresponding trust surface because
 that body governs it. The scoped linter copy permits an empty defining-declaration
 set for import-only facades while retaining all environment and native text
-checks. Production, test and client coverage is recorded separately in
-`.lake/verification/.../scope.json`; a partial plan does not claim whole-library
-coverage. Global toolchain, manifest, Lake-option, exclusion or Lean-checker
+checks. Selected production audit, test and client coverage is recorded separately in
+`.lake/verification/.../scope.json`; a partial plan retains those boundaries
+alongside the standard full-library lint. Global toolchain, manifest, Lake-option, exclusion or Lean-checker
 changes stop for an explicit invalidation/scope assessment.
 
 Client declaration checks use batches of at most eight defining modules, each
@@ -125,9 +125,9 @@ CI computes scope before installing Lean or restoring dependencies. Pure Markdow
 and `docs/` evidence changes perform only static checks and skip cache checkout,
 restore, export and publication. Relevant compilation uses the already pinned
 Aglib `build_serial.py` cache probe and resource guard. Dependency proof-cache
-fetches follow only the selected source imports and the scoped linter runtime.
-The linter's exact Batteries/Mathlib imports receive incremental guarded tooling
-preparation when needed; this does not request a project-root build. Every selected build writes
+fetches retain the selected source import scope. The full library lint basis
+and exact Batteries/Mathlib runtime imports receive incremental guarded tooling
+preparation when needed, preserving compatible artifacts. Every selected build writes
 native mappings via that existing helper's `--outputs` argument. Only after all
 selected lint, test and trust checks succeed are those same mappings combined for
 publication; export does not invoke another build or introduce wider targets.

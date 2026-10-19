@@ -89,24 +89,28 @@ publication and unavailable-input behavior. For an explicit leaf while developin
 lake build Quillen.KTheory.API
 ```
 
-Incremental validation also covers the applicable environment and text linters
-and relevant tests. Normal incremental checks lint only added or modified local
-source modules, while compilation still covers affected providers, tests and
-clients and both trust audits retain their full selected coverage. Unmodified dependent modules remain in the build and test scope. Changed
-import-only facades retain their existing native text checks. Explicit
-comprehensive diagnostics and an initial baseline still lint all selected
-modules. During the task's final validation, after building the changed
-defining modules, run CI's default environment and native text linters on those
-modules with:
+Final validation runs the configured full-library environment lint once and the
+whole-workspace native text lint once, before selected tests and downstream
+clients. The runner builds selected providers and `Quillen` in one native Lake
+graph, preserving compatible cached artifacts, then prepares the native lint
+executables as needed. The full library import basis is required even when only
+one source changed; it does not select full diagnostics or replay every test.
+The standard commands are:
+
+```sh
+lake lint --no-build -- --no-build
+lake exe lint-style
+```
+
+The first no-build option protects Lake's builtin checks; the option after `--`
+protects the configured Batteries driver. The default environment checks include
+slow checks and generated declarations. Selected tests and clients retain their
+scoped environment/text lint and complete selected trust audits. For a narrow
+repair after a full lint failure, the existing scoped runner remains available:
 
 ```sh
 lake env lean --run Tools/LintScoped.lean Quillen.KTheory.API
 ```
-
-Pass additional defining module names as needed. The scoped runner includes
-the slow default checks and generated declarations; it reads existing artifacts
-without starting builds. Reuse compatible lint and test coverage outside the
-affected scope, and run the relevant tests for the changed inputs.
 
 After a final-check repair, resume the failed module or category and retain
 completed provider checks. For the same selected scope, use the module names
@@ -162,10 +166,12 @@ bash scripts/check.sh --full --rehash
 ```
 
 The pipeline checks generated imports, module boundaries, placeholders, and
-script tests; compiles and lints production modules in dependency layers before
-maintained tests and downstream clients. It replays test assertions and both
+script tests; builds production modules in one native graph and runs the full
+library environment lint and whole-workspace text lint before maintained tests
+and downstream clients. It replays test assertions and both
 axiom audits, and includes Batteries environment lint and native mathlib text
-lint. Normal CI uses the selected scope rather than this diagnostic scope. Library compilation
+lint. Normal CI keeps selected test/build/audit scopes without comprehensive
+test replay. Library compilation
 uses `autoImplicit = false`, the mathlib standard linter set, and warnings as
 errors. The allowed foundation axioms are `propext`, `Classical.choice`, and
 `Quot.sound`; see [the audit boundary](docs/ARCHITECTURE.md#trust-checks).

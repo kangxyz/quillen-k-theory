@@ -159,7 +159,7 @@
       "generated_facades_and_layout": "passed",
       "placeholders": "passed",
       "native_selected_tooling_tests": 135,
-      "basis": "117 unchanged compatible script checks retained;18 source-lint policy checks passed on byte-identical candidate code. No changed Lean source bytes during publication."
+      "basis": "Historical source-only evidence from 11a14abf: 117 unchanged compatible script checks retained;18 source-lint policy checks passed on byte-identical candidate code. No changed Lean source bytes during publication."
     },
     "execution_binding": {
       "source_vector": "2e121340730569a18295434779078f8fd009b0780569999046bf52310eac49b6",
@@ -328,7 +328,7 @@
       "boundary": "Task-private managed resource bridge; pinned Aglib mathematical sources and configurations remain exact. Native validation predicates are unchanged."
     },
     "lint_scope_correction": {
-      "basis": "User explicitly requested stopping source lint of unchanged local modules after upgrading Aglib. Compile/test/client affected scope and full foundation coverage remain selected.",
+      "basis": "Historical assistant-selected changed-source-only policy. The assistant misread the user's objection to repeated lint invocations; the user clarified that lint should run over the full library once. Historical scoped results retain their original inputs and coverage; current full-library checks are recorded in full_library_lint.",
       "projection_sha256": "f4d41f9159b56fab7ab33b281318aed32481c385a01e670de525a3abde359b4a",
       "changed_Lean_files": 128,
       "changed_defining_providers": 88,
@@ -339,7 +339,8 @@
       "remaining_changed_provider_lints": 0,
       "historical_other_lint_passes": "Retained as actual evidence, not additional current obligations. Unchanged modules are no longer relinted solely because of an upstream change.",
       "retained_changed_provider_lints": 25,
-      "fresh_changed_provider_lints": 63
+      "fresh_changed_provider_lints": 63,
+      "status": "historical; superseded by one standard full-library invocation"
     },
     "source_lint_policy_change": {
       "check_run_sha256": "46442e5a13180810f2fd516906ebbec3ff22c18cf54ea22af994433859e7afdc",
@@ -348,9 +349,10 @@
       "compile_target_scope_unchanged": true,
       "full_root_and_client_origin_audits_unchanged": true,
       "all_default_lint_predicates_unchanged": true,
-      "normal_incremental_lint": "Added or modified local source paths only; explicit comprehensive and initial-baseline behavior retained.",
+      "normal_incremental_lint": "Historical changed-source-only policy, introduced through the assistant misunderstanding and now removed. Current production lint runs once over the configured Quillen root.",
       "driver_tests": 23,
-      "driver_test_sha256": "c1fe647c2d7995a578df7e18751a165adf01512406b3292267223efc3e5f4b29"
+      "driver_test_sha256": "c1fe647c2d7995a578df7e18751a165adf01512406b3292267223efc3e5f4b29",
+      "status": "historical control change; superseded by standard full-library lint"
     },
     "completed_native_validation": {
       "status": "passed",
@@ -550,7 +552,7 @@
       "all_owned_groups_closed": true,
       "input_drift": [],
       "remaining_owned_elastic_claims": 0,
-      "mathematical_inputs_and_native_predicates": "Full original 2442/603/90 selection and complete root/client trust coverage retained. Only added or modified local source is linted. Runtime helper overlay and mathematical source/config vector remain identified separately above.",
+      "mathematical_inputs_and_native_predicates": "Historical validation run 83d retains its original selected build and audit scope of 2,442 providers, 603 tests and 90 clients, with changed-source lint coverage. The subsequent standard full-library and workspace text checks below use the same mathematical source/configuration vector and native predicates.",
       "independent_ci": {
         "run": 39317940641,
         "url": "https://github.com/kangxyz/quillen-k-theory/actions/runs/39317940641",
@@ -558,6 +560,91 @@
         "status": "in_progress",
         "active_step": "Check selected providers before affected tests and clients",
         "boundary": "Independent GitHub CI and repaired cache publication remain unobserved; the completed remote native checks do not assert their outcome."
+      }
+    },
+    "full_library_lint": {
+      "status": "passed",
+      "user_intent": "Run the standard full-library environment lint once, followed by one whole-workspace native text check; do not split production lint by defining module or dependency layer.",
+      "source_commit": "e7ef308d6747dd422f1a713cb95c35dced477ba3",
+      "source_content_sha256": "485a5b6b3abb1c7284cd38f029d994fa5f4a6efb3ed9932c5bbaa16735bbbc93",
+      "logical_Lean_config_vector_sha256": "2e121340730569a18295434779078f8fd009b0780569999046bf52310eac49b6",
+      "run": "remote-94ee7e34581d491595730fd577218121",
+      "acceptance_packet_sha256": "f9b5d2c94089f673765d00e11b066f6decf3c200f4f5034666bee0c45567576c",
+      "outer_receipt_sha256": "3aaf8c3f9e9d667a3f89bfb29275e859136fc351f111c6b423a690f2d74e76e1",
+      "environment": {
+        "command": [
+          "lake",
+          "lint",
+          "--no-build",
+          "--",
+          "--no-build"
+        ],
+        "invocations": 1,
+        "configured_driver": "batteries/runLinter",
+        "configured_root": "Quillen",
+        "coverage_basis": "Native configured driver imports root Quillen once with Batteries.Tactic.Lint; getDeclsInPackage Quillen selects current-stage declarations and imported declarations by defining-module prefix; getChecks slow=true/runOnly=none/runAlways=none. Standard predicates/exclusions unchanged. No extra declaration-count audit.",
+        "emitted_summary": "-- Linting passed for Quillen.",
+        "declaration_count": "not emitted by successful standard driver; not substituted from prior scoped/audit counts",
+        "receipt": {
+          "sha256": "8f55bbd31554528d0cf428600d18b1e3a0724ec85a690acf2fce1019a5bdf22c",
+          "exit_code": 0,
+          "owned_group_gone": true,
+          "duration_seconds": 267.4760535657406
+        },
+        "builtin_registry_boundary": "Separate builtin Lean environment registry emitted no registered environment linters; configured Batteries slow/default driver subsequently emitted Linting passed for Quillen."
+      },
+      "native_workspace_text": {
+        "command": [
+          "lake",
+          "exe",
+          "lint-style"
+        ],
+        "invocations": 1,
+        "source_count": 7289,
+        "receipt": {
+          "sha256": "11094451c80cd8ad0da6b213f74c558ec0a63d7ddc808e1abb2b0fc660c61cd3",
+          "exit_code": 0,
+          "owned_group_gone": true,
+          "duration_seconds": 5.844577521085739
+        }
+      },
+      "runtime_preparation": {
+        "command": [
+          "lake",
+          "build",
+          "batteries/runLinter",
+          "lint-style"
+        ],
+        "receipt": {
+          "sha256": "d03a40ab5bd0c57e9f1a837d1c114830e192b99611bdec09bf588f731b25b0f3",
+          "exit_code": 0,
+          "owned_group_gone": true,
+          "duration_seconds": 26.301427707076073
+        },
+        "output_producing_Lean_compilers": 2,
+        "boundary": "Only missing lint-executable native target closure; normal C/link jobs as needed. No rehash, cache clean, force build, provider/test/client/audit replay."
+      },
+      "resources": {
+        "mode": "elastic",
+        "profile_sha256": "55efb47f1a69c5a0d4a9f231b9b09328a6433a186906c351c98441a0fd7f2e57",
+        "wall_seconds": 306.64033092558384,
+        "sampled_owned_process_CPU_seconds": 2105.56,
+        "peak_owned_tree_RSS_bytes": 11500871680,
+        "FD_floor": 65536
+      },
+      "all_owned_groups_closed": true,
+      "input_drift": [],
+      "earlier_coverage": "Compatible completed provider, test, client and foundation checks retain their original scope and inputs. Quillen root was a target in the closed native build of 2,442 providers on this exact Lean/configuration vector; these checks were not replayed.",
+      "orchestration_change": {
+        "check_run_sha256": "4f5b880d032fdc0c2317765512b406ad69e5c6b948de02e46ac8e4da8f94a161",
+        "focused_tests": {
+          "check_run": 16,
+          "check_script": 23
+        },
+        "test_check_run_sha256": "b4472768250f48c4ab19d2d85db5bbe4f0d4eb9386a9ec299ea25cbb287588ef",
+        "test_check_script_sha256": "56df2a5bdb5c58dffef301e7c8af0599eeb89dfe1f7b3cde22ef5bee78dbe682",
+        "behavior": "Build selected providers plus Quillen in one cached native graph, prepare lint executables, then invoke full environment lint and native workspace text once before selected tests and clients. Remove changed-source filtering and per-provider lint processes. Existing selected test/client lint and complete selected audits remain intact.",
+        "validation_boundary": "The real native commands above ran on the unchanged mathematical snapshot; focused tests check the revised orchestration and its failure ordering. No repeated full pipeline is required for a control-only change."
       }
     }
   },
@@ -647,7 +734,7 @@
   "delivery": {
     "basis": "User explicitly requested merging and pushing the complete second mathematical batch before waiting for remaining verification or tooling work.",
     "scope": "All selected1255 mathematical source, generated public interfaces, associated tests/clients, six source/summary guides and the requested Aglib pin update.",
-    "validation_boundary": "All selected native compilation/cache, changed-source lint, facade text, regression/client and foundation checks passed. Independent GitHub CI remains in progress; no CI-publication success is asserted.",
+    "validation_boundary": "Selected native compilation/cache, regression/client and foundation checks passed. Standard full-library lint subsequently passed once, and whole-workspace native text lint passed all 7,289 sources. Independent GitHub CI and cache publication remain separate observations.",
     "source_commit": "11a14abf348baf56751bae21d0c1e8019a1c6f36",
     "merge_and_push": "completed; remote main verified"
   }
