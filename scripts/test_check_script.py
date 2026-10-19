@@ -48,6 +48,11 @@ with open(os.environ['RUN_LOG'], 'a') as output:
     output.write(json.dumps([os.getcwd(), sys.argv[1:]]) + '\\n')
 if '--run' in sys.argv and os.environ.get('FAIL_LINT') == '1':
     raise SystemExit(10)
+if Path.cwd().name == 'downstream':
+    if 'build' in sys.argv and os.environ.get('FAIL_CLIENT_BUILD') == '1':
+        raise SystemExit(17)
+    if '--run' in sys.argv and os.environ.get('FAIL_CLIENT_LINT') == '1':
+        raise SystemExit(18)
 ''')
         lake.chmod(0o755)
         self.env = dict(os.environ, PATH=str(self.root / 'bin') + ':' + os.environ['PATH'],
@@ -184,6 +189,31 @@ if '--run' in sys.argv and os.environ.get('FAIL_LINT') == '1':
         result = self.run_check()
         self.assertEqual(result.returncode, 10, result.stderr)
         self.assertEqual(len(self.commands()), 3)
+
+    def test_client_failure_keeps_selected_recovery_audit(self):
+        self.write('examples/downstream/Consumer/Use.lean',
+                   'import Quillen.C\ndef use := c + 1\n')
+        for variable, code in [('FAIL_CLIENT_BUILD', 17), ('FAIL_CLIENT_LINT', 18)]:
+            with self.subTest(failure=variable):
+                self.env.pop('FAIL_CLIENT_BUILD', None)
+                self.env.pop('FAIL_CLIENT_LINT', None)
+                self.env[variable] = '1'
+                self.log.write_text('')
+                before = set((self.root / '.lake/verification').glob('*'))
+                result = self.run_check()
+                self.assertEqual(result.returncode, code, result.stderr)
+                created = set((self.root / '.lake/verification').iterdir()) - before
+                self.assertEqual(len(created), 1)
+                directory = created.pop()
+                plan = json.loads((directory / 'scope.json').read_text())
+                self.assertTrue(plan['client_trust'])
+                self.assertTrue((directory / 'LintScoped.lean').is_file())
+                source = (directory / 'client-audit.lean').read_text()
+                self.assertIn('-- audit body', source)
+                for module in plan['clients']:
+                    self.assertIn(f'import {module}\n', source)
+                self.assertFalse(any(cmd[-1].endswith('/client-audit.lean')
+                                     for cmd in self.commands()))
 
     def test_unknown_flags_and_missing_base_fail_without_lake(self):
         for args in (['--unknown'], ['--base', 'missing-base']):

@@ -91,7 +91,7 @@ def execute(root, plan, *, ci=False, rehash=False, output=None):
             safe(phase, ['lake', 'env', 'lean', '--run', str(lint_runner),
                          *modules], cwd)
 
-    def audit(phase, template, import_name, modules, cwd=root):
+    def prepare_audit(phase, template, import_name, modules):
         if not modules:
             return
         text = (root / template).read_text()
@@ -100,7 +100,12 @@ def execute(root, plan, *, ci=False, rehash=False, output=None):
             raise ValueError(f'Cannot scope changed audit template: {template}')
         scoped = directory / f'{phase}.lean'
         scoped.write_text(text.replace(marker, ''.join(f'import {module}\n' for module in modules)))
-        safe(phase, ['lake', 'env', 'lean', '-j2', str(scoped)], cwd)
+        return scoped
+
+    def audit(phase, template, import_name, modules, cwd=root):
+        scoped = prepare_audit(phase, template, import_name, modules)
+        if scoped is not None:
+            safe(phase, ['lake', 'env', 'lean', '-j2', str(scoped)], cwd)
 
     for index, modules in enumerate(plan['provider_batches']):
         build(f'providers-{index}', modules)
@@ -123,10 +128,15 @@ def execute(root, plan, *, ci=False, rehash=False, output=None):
         packages = client / '.lake/packages'
         if not packages.exists():
             packages.symlink_to(root / '.lake/packages', target_is_directory=True)
+        # Keep the documented repair inputs available even if build or lint
+        # fails. Preparing this source does not execute or discharge the audit.
+        client_audit = (prepare_audit('client-audit', 'examples/downstream/Audit.lean',
+                                      'Consumer', plan['clients'])
+                        if plan['client_trust'] else None)
         build('client-build', plan['clients'], client)
         lint('client-lint', plan['clients'], client)
-        if plan['client_trust']:
-            audit('client-audit', 'examples/downstream/Audit.lean', 'Consumer', plan['clients'], client)
+        if client_audit is not None:
+            safe('client-audit', ['lake', 'env', 'lean', '-j2', str(client_audit)], client)
     # Export only successful, verified selected build mappings. No second build
     # and no aggregate roots are introduced at the publication boundary.
     if output:
