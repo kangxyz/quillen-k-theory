@@ -2,7 +2,7 @@
   "schema_version": 1,
   "kind": "TT checkpoint continuation and incremental native validation",
   "date": "2026-10-20",
-  "status": "Mathematical source integrated at user request; remaining native validation in progress",
+  "status": "Mathematical source merged and pushed; all selected native validation passed",
   "source": {
     "archive": "quillen-tt-8273990-checkpoint-20261019T1255Z.tar.gz",
     "archive_sha256": "7efa24658f8cf2df13106e2db8144e8c863cd884f8be5cfea08e4ffb9b352cb1",
@@ -56,7 +56,8 @@
         "exit_code": 0,
         "group_closed": true,
         "rejected_budget_trial": "Default200000 and finite declaration-local400000 both timed out;400000 removed. Only typedbridge repair retained.",
-        "targeted_dependency": "16aa08a90198d76be0bec47dd640b5c992acd9d7; latest52e coverage pending"
+        "targeted_dependency": "16aa08a90198d76be0bec47dd640b5c992acd9d7 (original targeted check)",
+        "latest_pin_coverage": "Exact accepted source covered by the completed selected provider build, changed-source lint and foundation audits recorded in completed_native_validation."
       },
       {
         "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/SupportedRawPullbackCoherence.lean",
@@ -70,7 +71,8 @@
         "targeted_source_content_sha256": "68171bf962107f5977c1aaa20511ce620be50f5dfeff84bcbe59ca3d098596e4",
         "exit_code": 0,
         "group_closed": true,
-        "targeted_dependency": "16aa08a90198d76be0bec47dd640b5c992acd9d7; latest52e coverage pending"
+        "targeted_dependency": "16aa08a90198d76be0bec47dd640b5c992acd9d7 (original targeted check)",
+        "latest_pin_coverage": "Exact accepted source covered by the completed selected provider build, changed-source lint and foundation audits recorded in completed_native_validation."
       },
       {
         "path": "Quillen/AlgebraicGeometry/PerfectComplexes/BoundedFlat/GlobalRawBassInputCompositionTerminalColumns.lean",
@@ -84,10 +86,12 @@
         "targeted_source_content_sha256": "507936163b1d124464ff94df03466cd543e989de5becb699508fed7415d02b2b",
         "exit_code": 0,
         "group_closed": true,
-        "superseded_candidate": "0f853ed22435953872abf1b1f26fb36745f7a146b9d7612eeb7451c397c1213c"
+        "superseded_candidate": "0f853ed22435953872abf1b1f26fb36745f7a146b9d7612eeb7451c397c1213c",
+        "latest_pin_coverage": "Exact accepted source covered by the completed selected provider build, changed-source lint and foundation audits recorded in completed_native_validation."
       }
     ],
-    "validation_git_label": "d9a38d0077b5fd1a33dd12bf2df1fdf7753ccc6b plus frozen dirty/new mathematical and control bytes; subsequent55dd tooling-only commit preserves every running input hash."
+    "validation_git_label": "Published source commit 11a14abf348baf56751bae21d0c1e8019a1c6f36; retained checks preserve their original control and runtime identities.",
+    "integrated_commit": "11a14abf348baf56751bae21d0c1e8019a1c6f36"
   },
   "ordinary_source_review": {
     "reports": {
@@ -117,7 +121,7 @@
     ]
   },
   "validation": {
-    "status": "Full compile, regression/client and foundation verification continues; not claimed complete",
+    "status": "All selected native checks passed",
     "pins": {
       "Lean": "4.34.1",
       "Aglib": "52e09db47998f139064acf48a2d3a64494d0dd9a",
@@ -227,7 +231,7 @@
       "continuation_guard_tests": 8
     },
     "scheduling": {
-      "status": "Historical dependency-ready lint run stopped on user scope correction; compile-only run active",
+      "status": "Historical dependency-ready run retained; replacement compile-only and final native runs passed and closed",
       "method": "Dependency-ready provider checks, reusing unchanged native build, all default scoped linters and native text checks before dependent release. The original full plan retains all final audits/tests/clients.",
       "original_provider_layers": 205,
       "scheduler_sha256": "8019a593375ec3496d6e99ea0868c8f797342122d5a779582b8d2d47a3d08396",
@@ -308,12 +312,14 @@
         "source_content_sha256": "2d6e67619a12341827dc9d00692a17f546bebdb1f7aece0b34adbce65b0ac7f1",
         "scope": "One native Lake dependency graph for all 2442 selected provider targets; compatible artifacts reused. No source lint in this phase.",
         "mathematical_source_config_vector_sha256": "2e121340730569a18295434779078f8fd009b0780569999046bf52310eac49b6",
-        "state": "running at source publication",
-        "remaining_phases": [
-          "Changed-source lint only",
-          "Selected test and downstream builds",
-          "Complete selected root and client-origin foundation audits"
-        ]
+        "state": "passed and closed",
+        "remaining_phases": [],
+        "exit_code": 0,
+        "group_closed": true,
+        "input_drift": [],
+        "followup_run": "remote-83d1cf95e0824eb8a822d48ddb1aa373",
+        "outer_receipt_sha256": "ec779762c2eb948a6832007bf3c1fe84a29732436c3bfc0975c37e7d561c1af8",
+        "native_graph_receipt_sha256": "d53105e6db4cc0b00f3aa5825e333d16ee059aac3c46672c88cae41872461fbb"
       }
     },
     "approved_runtime_helpers": {
@@ -329,9 +335,11 @@
       "changed_test_modules": 16,
       "changed_client_modules": 16,
       "changed_import_only_facades": 8,
-      "changed_provider_lints_already_passed": 25,
-      "remaining_changed_provider_lints": 63,
-      "historical_other_lint_passes": "Retained as actual evidence, not additional current obligations. Unchanged modules are no longer relinted solely because of an upstream change."
+      "changed_provider_lints_already_passed": 88,
+      "remaining_changed_provider_lints": 0,
+      "historical_other_lint_passes": "Retained as actual evidence, not additional current obligations. Unchanged modules are no longer relinted solely because of an upstream change.",
+      "retained_changed_provider_lints": 25,
+      "fresh_changed_provider_lints": 63
     },
     "source_lint_policy_change": {
       "check_run_sha256": "46442e5a13180810f2fd516906ebbec3ff22c18cf54ea22af994433859e7afdc",
@@ -343,6 +351,214 @@
       "normal_incremental_lint": "Added or modified local source paths only; explicit comprehensive and initial-baseline behavior retained.",
       "driver_tests": 23,
       "driver_test_sha256": "c1fe647c2d7995a578df7e18751a165adf01512406b3292267223efc3e5f4b29"
+    },
+    "completed_native_validation": {
+      "status": "passed",
+      "source_commit": "11a14abf348baf56751bae21d0c1e8019a1c6f36",
+      "acceptance_packet_sha256": "c1c688dec23c6b28e5f69b668b5ba264d56ac4ea07f92da9c1578c7eb6747d54",
+      "coverage": {
+        "actual_native_audit_summary": "only standard Lean logical foundations",
+        "audit_allowlist_from_unchanged_templates": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ],
+        "changed_client_lint": {
+          "declarations": 42,
+          "modules": 16,
+          "native_default_linters": 15,
+          "native_environment_chunks": 6,
+          "native_text": true
+        },
+        "changed_provider_lint": {
+          "fresh": 63,
+          "fresh_declarations": 1100,
+          "native_default_linters": 15,
+          "native_text": true,
+          "retained_same_input": 25,
+          "total": 88
+        },
+        "changed_test_lint": {
+          "declarations": 154,
+          "modules": 16,
+          "native_default_linters": 15,
+          "native_text": true
+        },
+        "client_build_targets": 90,
+        "client_trust": {
+          "audit_batches": 25,
+          "checked_kernel_presence": true,
+          "counts_not_associated_with_chunk_index": "concurrent native stdout does not label its summary lines; no additional audit performed",
+          "declaration_count_sum": 671,
+          "declaration_count_sum_basis": "25 native emitted counts; source-certified origin closures are disjoint, so this sum is also the deduplicated union count",
+          "defining_origin_union": 195,
+          "exact_Consumer_origin_including_private_generated": true,
+          "native_counts_in_stdout_emission_order": [
+            15,
+            13,
+            9,
+            16,
+            22,
+            15,
+            25,
+            32,
+            33,
+            23,
+            17,
+            14,
+            20,
+            18,
+            47,
+            57,
+            16,
+            32,
+            57,
+            52,
+            39,
+            39,
+            32,
+            10,
+            18
+          ],
+          "original_selected_clients": 90,
+          "overlapping_defining_origins": 0
+        },
+        "providers_compile_or_native_cache_verified": 2442,
+        "root_trust": {
+          "checked_kernel_presence": true,
+          "declarations_including_private": 88996,
+          "exact_defining_origin_and_Quillen_namespace_selection": true,
+          "selected_provider_scope": 2442
+        },
+        "source_certified_facade_text": {
+          "Consumer": 1,
+          "all_native_text_predicates_unchanged": true,
+          "own_defining_declarations": 0,
+          "root": 7,
+          "text_only_runtime_registered_linters": 14
+        },
+        "tests_build_targets": 603
+      },
+      "runs": {
+        "compile_only": {
+          "SOURCE": "2d6e67619a12341827dc9d00692a17f546bebdb1f7aece0b34adbce65b0ac7f1",
+          "closed": true,
+          "compiler_failures": 0,
+          "compiler_success": 119,
+          "historical_control_sha256": "3e3d38778c920552d28dcd0f7f00bae2e3f18122dde1cda16b3ecd22791477f6",
+          "input_drift": [],
+          "linters_executed": false,
+          "native_graph_receipt": {
+            "path": ".lake/verification/checks-aglib52e-remote-20b7730f34c6461f9175a84ecc23f20d/provider-build/graph-build.json",
+            "sha256": "d53105e6db4cc0b00f3aa5825e333d16ee059aac3c46672c88cae41872461fbb"
+          },
+          "outer_receipt": {
+            "path": "logs/remote-20b7730f34c6461f9175a84ecc23f20d/receipt.json",
+            "sha256": "ec779762c2eb948a6832007bf3c1fe84a29732436c3bfc0975c37e7d561c1af8"
+          },
+          "output_producing_compiler_invocations": 119,
+          "run": "remote-20b7730f34c6461f9175a84ecc23f20d",
+          "wall_seconds": 2270.3154788911343
+        },
+        "final_native": {
+          "SOURCE": "485a5b6b3abb1c7284cd38f029d994fa5f4a6efb3ed9932c5bbaa16735bbbc93",
+          "closed": true,
+          "compiler_accounting": {
+            "active": 0,
+            "failed": 0,
+            "output_producing_starts": 120,
+            "starts": 156,
+            "successful": 156
+          },
+          "input_drift": [],
+          "outer_receipt": {
+            "path": "logs/remote-83d1cf95e0824eb8a822d48ddb1aa373/receipt.json",
+            "sha256": "b1e2a2c7f83eb27bb804c17c10fccf38da08e7acdfb9f211c281de58693406e8"
+          },
+          "output_split": {
+            "client_and_dependency_closure": 50,
+            "test_and_driver_closure": 70
+          },
+          "peak_frontends": 8,
+          "peak_rss_bytes": 35752366080,
+          "run": "remote-83d1cf95e0824eb8a822d48ddb1aa373",
+          "wall_seconds": 698.197309076786
+        }
+      },
+      "resource_mode": "elastic",
+      "profile_sha256": "55efb47f1a69c5a0d4a9f231b9b09328a6433a186906c351c98441a0fd7f2e57",
+      "worker_sha256": "ddd5a7c9e2eced94d80c3b7883a6c1d288c37b67a731a8d585b11e125e2445f5",
+      "controller_sha256": "5d43246628b2332e8e6680a7f9515a023b54eea26a756a75eda14d00bb8d2e9c",
+      "binding_sha256": "a2e24e2d244dbcde1fa0e3fd833156cc8ab9ecbd871e946e78f8a17c222646d2",
+      "adapter_sha256": "9209222b30b55893febfa00ebc624033128c8fab1090cc41dd809d1af6b4804a",
+      "original_scope_plan_sha256": "8fa666d113b6790952f8ccb9ad769c002b449d7638c930e6839f2463da095d5e",
+      "source_lint_projection_sha256": "f4d41f9159b56fab7ab33b281318aed32481c385a01e670de525a3abde359b4a",
+      "retained_25_lint_packet_sha256": "a574d0c69f82ed21387e2dc0027d0d0bc603d9ce66d69263a1714dffc455f699",
+      "phase_receipt_sha256": {
+        "native/axioms.json": "9b1792349b9a7ba500a2deb17335d65477279bedddc4eb1e3561870e26a405eb",
+        "native/client-audit-0.json": "fe7ddb04a9285bf4096dc3d9dda2ca3e6911ed9991c5bdaf4685bf288b894b2d",
+        "native/client-audit-1.json": "03976d7456f04904127823adacf03b42ddba3d5eb363a64047dbfe9b9dbc7259",
+        "native/client-audit-10.json": "466d7474cf942ce3da53b799220dc03279c6d2a9f564078218aaae5e9b01fff5",
+        "native/client-audit-11.json": "4c4ef8f4e138ce28b0380b46eacc43f05cf93e0e4fac236d94be0e872130c591",
+        "native/client-audit-12.json": "6f3d45d77cb73c4e9c4f284cb265156d4c0b4c86d3925c4d1176e31abda619fa",
+        "native/client-audit-13.json": "8d124af6a71985c3c3a928af90fb2308a44ae340831e481050bca33d07430152",
+        "native/client-audit-14.json": "471c8ebf2f0aa92b96a23de0d2e5ef13dee7cbfc9a604d14b7a1ca294fdccc7b",
+        "native/client-audit-15.json": "c43d262bd527d61b6da9de700b651fe7b0525d299c3b6031d3fdc0bc222766fb",
+        "native/client-audit-16.json": "dc5e19628ae473b69aae23e62108e14bc5981f8b378f7f563260352cb209a75e",
+        "native/client-audit-17.json": "7865a729c598c5a0fb90fba85fd20a0797dee67ee533f0a9c586fdb46aa6b8ed",
+        "native/client-audit-18.json": "ee92027d2e3f9695fed1ee4c01aea366baac425da98801c39f936121e9b39232",
+        "native/client-audit-19.json": "fd941a22e0c43002489812b96a8bea0a0c0b5622029bf9ab9ba7fe9228559f3c",
+        "native/client-audit-2.json": "4cec301b5a0f33f3bb8e23a75e200fd3597c4e0edd958b0d869dc4d3f0d9fb47",
+        "native/client-audit-20.json": "d7e17db013ab3e80d4beb24468fe650f32192e6b29aaca11dd263a110db0ae74",
+        "native/client-audit-21.json": "87f90fc9678b52d068e2a01f086d4f843ce9710f2b89079b0cd32c97e7dd3c27",
+        "native/client-audit-22.json": "f09b9dcd05fd74b99718ec43d50c9ff87c14d84fca81856f97959a4aeea028a4",
+        "native/client-audit-23.json": "426e9f3156a4af531e10e63738051d5aafed4ce4cabcdde633cf3b854da58f35",
+        "native/client-audit-24.json": "9ca80bc17cad024dbcb9f78b290191ca11fe1c9b1dd676594ecd9e1b8278d404",
+        "native/client-audit-3.json": "1c8ee4c72e48fb074cab36e711c913f89c8a0c2f6a5ae19b069decb323593aef",
+        "native/client-audit-4.json": "b430670468b903f3794328619f8ca4c2faeea51448edd540aa996b253b80d574",
+        "native/client-audit-5.json": "9052355ac887f4e8dfecc1a9456234f18db42c7762b832e6b60fd71233a48016",
+        "native/client-audit-6.json": "8f4a13bb18f67a4af55eec976143fb930c5c4047f756276d31877edf4ed7b2d0",
+        "native/client-audit-7.json": "2774f98928581e41e710a48e174cc058365086a5b32c670baf2bd2f4ab8c4b4d",
+        "native/client-audit-8.json": "39c532f2397355523fd8e5fce6feb42644c07713d14163b09855c0043a2515e6",
+        "native/client-audit-9.json": "24ec05d722fd9437e1976c4aad42453dcf5c8189135cd80e059a1b890a73d010",
+        "native/client-build/cached-check.json": "a80563f6b5134a7b87416585d280341ba4e4652cc4c96b9be4108dbfac0a2e62",
+        "native/client-build/graph-build.json": "a42709311ed9312fd9577aa18ca3c2a929849d236192fc5fe90f1f4ee7c85253",
+        "native/client-facade-text.json": "fd748d9b35ca150cde6f2e8dc10d6c9aaa8343cc985be5a259302d0491bd0030",
+        "native/client-lint-0.json": "f00cdb89b1bb6b185501ad4bec09c894bc6628192e02e68450842227cd005b84",
+        "native/client-lint-1.json": "e3f875db42806cc786ee8ba9518c912b10e89b991ce0fd91ac28178eb718b6c0",
+        "native/client-lint-2.json": "3763c13d577439c102d462db8b43f814dd130fc84aebc6e31d0b4917cea9f51d",
+        "native/client-lint-3.json": "4974a7b1082bad2f98081881cd880a72a3efd691e11700cb9a105d14d45fd798",
+        "native/client-lint-4.json": "9f26dc799002165635ee9faecb4b5bb9ea5e1d8161e205faee5535183a67f857",
+        "native/client-lint-5.json": "80637820669c5d3aa6b4d33ad551f8b8f1dc3f7f8db5c348d1cc23f22ec7d1ad",
+        "native/lint-runtime.json": "336bb3f6097bd730ec2b69cf751fd6f2f4448926722a759852bc4c90948f1065",
+        "native/provider-lint-0.json": "392a52e17f50b25733a3a368c77ef3c9989417396689ec53a7ff78aadb7a5b19",
+        "native/providers-0/cached-check.json": "b0b8b6612d9a9230685694a68925cbf9bdc3157124bf3cf822626bf84f66b50e",
+        "native/test-lint.json": "ac93e9ac3eee4f20e9c72d32f9a072969ed1e3169f86488a6bbdf62aa4bc9abe",
+        "native/tests/cached-check.json": "0f7dc52b0685782520c5acd04f3666bc5c90ed2e0d4737677dcd2a71d428f09c",
+        "native/tests/graph-build.json": "35810b6b45ad1901c33821fdfe0532a728f181e1c93cffcd301e73e9b688d199",
+        "root-facade-lint-runtime.json": "612b69f9ba8d173bfd5eac562bf5acc98bfc8b03a72e0f2915ca59266ef45196",
+        "root-facade-text.json": "fd5523edd6a6033e854367314d2acfb7a1974df0db7123fc77534f7bdbf4e7f4"
+      },
+      "expected_cache_probe_misses": {
+        "phases": [
+          "native/client-build/cached-check.json",
+          "native/tests/cached-check.json"
+        ],
+        "exit_code": 3,
+        "interpretation": "Native missing-artifact probes fall back to their successful graph builds; these probes are not failed checks."
+      },
+      "all_owned_groups_closed": true,
+      "input_drift": [],
+      "remaining_owned_elastic_claims": 0,
+      "mathematical_inputs_and_native_predicates": "Full original 2442/603/90 selection and complete root/client trust coverage retained. Only added or modified local source is linted. Runtime helper overlay and mathematical source/config vector remain identified separately above.",
+      "independent_ci": {
+        "run": 39317940641,
+        "url": "https://github.com/kangxyz/quillen-k-theory/actions/runs/39317940641",
+        "observed_at_utc": "2026-10-19T20:53:50.171734+00:00",
+        "status": "in_progress",
+        "active_step": "Check selected providers before affected tests and clients",
+        "boundary": "Independent GitHub CI and repaired cache publication remain unobserved; the completed remote native checks do not assert their outcome."
+      }
     }
   },
   "mathematical_limits": [
@@ -418,11 +634,21 @@
       "status": "completed",
       "conclusion": "success",
       "boundary": "Tooling-only delivery: selected Python/source checks passed; mathematical build and cache publication were correctly skipped for this diff. Actual repaired cache publication remains a separate operational observation."
+    },
+    "current_mathematical_delivery_ci": {
+      "run": 39317940641,
+      "url": "https://github.com/kangxyz/quillen-k-theory/actions/runs/39317940641",
+      "observed_at_utc": "2026-10-19T20:53:50.171734+00:00",
+      "status": "in_progress",
+      "active_step": "Check selected providers before affected tests and clients",
+      "boundary": "Independent GitHub CI and repaired cache publication remain unobserved; the completed remote native checks do not assert their outcome."
     }
   },
   "delivery": {
     "basis": "User explicitly requested merging and pushing the complete second mathematical batch before waiting for remaining verification or tooling work.",
     "scope": "All selected1255 mathematical source, generated public interfaces, associated tests/clients, six source/summary guides and the requested Aglib pin update.",
-    "validation_boundary": "Source reviews and identified native checks are recorded above. Full new-snapshot validation is still running; no blanket green-CI or completed-native-suite claim."
+    "validation_boundary": "All selected native compilation/cache, changed-source lint, facade text, regression/client and foundation checks passed. Independent GitHub CI remains in progress; no CI-publication success is asserted.",
+    "source_commit": "11a14abf348baf56751bae21d0c1e8019a1c6f36",
+    "merge_and_push": "completed; remote main verified"
   }
 }

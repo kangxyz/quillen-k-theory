@@ -49,9 +49,12 @@ checks, fresh native checks and compiler output reuse. Resource and execution
 changes retain their own provenance; they do not alter the mathematical
 statements or close the remaining classical comparison.
 
-The second mathematical batch is published at the user's request while its
-remaining native validation continues. The continuation record distinguishes
-completed checks from pending compile, regression and foundation coverage.
+The complete second mathematical batch is merged and pushed. All selected
+native checks passed: 2,442 provider targets, 603 tests, 90 downstream targets,
+changed-source lint and facade text checks, and foundation audits covering
+88,996 project declarations and 671 client declarations from 195 disjoint
+defining origins. Independent GitHub CI and repaired cache publication remain
+separate observations in the continuation record.
 
 ## P1–P5 continuation record
 
